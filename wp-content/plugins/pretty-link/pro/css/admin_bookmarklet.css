@@ -1,0 +1,11 @@
+.bookmarklet-updated {
+  background-color: #ffffa0;
+}
+
+label.plp-bookmarklet-col-1 {
+  display: inline-block !important;
+  width: 100px !important;
+  min-width: 100px !important;
+  max-width: 100px !important;
+}
+

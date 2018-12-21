@@ -1,0 +1,35 @@
+.advanced_toggle {
+  line-height: 34px;
+  font-size: 12px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.edit_report {
+  height: 50px;
+}
+
+.report_name {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.report_actions {
+  padding-top: 5px;
+}
+
+.filter_toggle {
+  line-height: 34px;
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+
+.filter_pane {
+  background-color: white;
+  border: 2px solid #777777;
+  height: 275px;
+  width: 600px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+

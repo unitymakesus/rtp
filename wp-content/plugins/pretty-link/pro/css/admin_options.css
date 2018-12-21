@@ -1,0 +1,26 @@
+.toggle {
+  cursor: pointer;
+}
+
+#option-pane {
+  padding-left: 15px;
+}
+
+td.social-button-checkbox {
+  padding: 0px;
+  margin: 0px;
+  padding-right: 3px;
+}
+
+td.social-button-image {
+  padding: 0px;
+  margin: 0px;
+  padding-right: 10px;
+}
+
+ul.twit-creds-list {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}

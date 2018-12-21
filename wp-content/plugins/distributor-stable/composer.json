@@ -1,0 +1,31 @@
+{
+  "name": "10up/distributor",
+  "type": "wordpress-plugin",
+  "authors": [
+  	{
+  		"name": "Taylor Lovett",
+  		"email": "taylor.lovett@10up.com"
+  	}
+  ],
+  "require": {
+  	"php": ">=5.6",
+    "yahnis-elsts/plugin-update-checker": "^4.4"
+  },
+  "autoload": {
+  	"psr-4": {
+  		"Distributor\\": "includes/classes/"
+  	}
+  },
+  "require-dev": {
+    "10up/wp_mock": "dev-dev",
+    "10up/phpcs-composer": "dev-master",
+    "phpunit/phpunit": "^6.5",
+    "10up/wpassure": "~0.9"
+  },
+  "scripts": {
+    "lint": "phpcs .",
+    "lint-fix": "phpcbf ."
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
