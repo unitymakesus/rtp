@@ -39,9 +39,9 @@ $settings = $this->main->get_settings();
 
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
                         <?php if(isset($event->data->featured_image) and $this->masonry_like_grid ): ?>
-                                <div class="mec-masonry-img" ><img src="<?php echo $event->data->featured_image['thumblist']; ?>"></div>
+                                <div class="mec-masonry-img" ><?php echo get_the_post_thumbnail($event->data->ID , 'thumblist'); ?></div>
                         <?php elseif( isset($event->data->featured_image) and isset($event->data->featured_image['full']) and trim($event->data->featured_image['full'])): ?>
-                                <div class="mec-masonry-img" ><img src="<?php echo $event->data->featured_image['full']; ?>"></div>
+                                <div class="mec-masonry-img" ><?php echo get_the_post_thumbnail($event->data->ID , 'full'); ?></div>
                         <?php endif; ?>
 
                         <div class="mec-masonry-content mec-event-grid-modern">

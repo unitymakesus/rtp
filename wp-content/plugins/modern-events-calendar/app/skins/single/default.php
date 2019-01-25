@@ -10,6 +10,7 @@ defined('MECEXEC') or die();
                 <h1 class="mec-single-title"><?php the_title(); ?></h1>
                 <div class="mec-single-event-description mec-events-content"><?php the_content(); ?></div>
             </div>
+            <div class="mec-event-info-mobile"></div>
 
             <!-- Export Module -->
             <?php echo $this->main->module('export.details', array('event'=>$event)); ?>
@@ -43,7 +44,7 @@ defined('MECEXEC') or die();
         <?php if(!is_active_sidebar('mec-single-sidebar')): ?>
         <div class="col-md-4">
 
-            <div class="mec-event-meta mec-color-before mec-frontbox">
+            <div class="mec-event-info-desktop mec-event-meta mec-color-before mec-frontbox">
                 <?php
                     // Event Date and Time
                     if(isset($event->data->meta['mec_date']['start']) and !empty($event->data->meta['mec_date']['start']))
@@ -213,9 +214,11 @@ defined('MECEXEC') or die();
 
                 <!-- Register Booking Button -->
                 <?php if($this->main->can_show_booking_module($event)): ?>
-                <?php $data_lity = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity = 'data-lity'; ?>
-                <a class="mec-booking-button mec-bg-color" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
-                <?php endif ?>
+                    <?php $data_lity = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity = 'data-lity'; ?>
+                    <a class="mec-booking-button mec-bg-color" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                <?php elseif(isset($event->data->meta['mec_more_info']) and trim($event->data->meta['mec_more_info']) and $event->data->meta['mec_more_info'] != 'http://'): ?>
+                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                <?php endif; ?>
                 
             </div>
 
@@ -246,7 +249,7 @@ defined('MECEXEC') or die();
         </div>
         <?php else: ?>
         <div class="col-md-4">
-            <div class="mec-event-meta mec-color-before mec-frontbox">
+            <div class="mec-event-info-desktop mec-event-meta mec-color-before mec-frontbox">
                 <?php
                 $single = new MEC_skin_single();
 
@@ -420,7 +423,9 @@ defined('MECEXEC') or die();
                 <?php if($this->main->can_show_booking_module($event) and $single->found_value('register_btn', $settings) == 'on'): ?>
                     <?php $data_lity = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity = 'data-lity'; ?>
                     <a class="mec-booking-button mec-bg-color" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
-                <?php endif ?>
+                <?php elseif($single->found_value('register_btn', $settings) == 'on' and isset($event->data->meta['mec_more_info']) and trim($event->data->meta['mec_more_info']) and $event->data->meta['mec_more_info'] != 'http://'): ?>
+                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                <?php endif; ?>
             </div>
 
             <!-- Speakers Module -->

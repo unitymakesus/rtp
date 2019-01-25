@@ -199,22 +199,40 @@ class MEC
     {
         // MEC File library
         $file = MEC::getInstance('app.libraries.filesystem', 'MEC_file');
-        
-        // Get current locale
-        $locale = apply_filters('plugin_locale', get_locale(), 'mec');
-        
-        // WordPress language directory /wp-content/languages/mec-en_US.mo
-		$language_filepath = WP_LANG_DIR.DS.'mec-'.$locale.'.mo';
-        
-        // If language file exists on WordPress language directory use it
-		if($file->exists($language_filepath))
-        {
-            load_textdomain('mec', $language_filepath);
-        }
-        // Otherwise use MEC plugin directory /path/to/plugin/languages/mec-en_US.mo
-		else
-        {
-			load_plugin_textdomain('mec', false, dirname(plugin_basename(__FILE__)).DS.'languages'.DS);
+        if (!$this->getPRO()) {
+            // Get current locale
+            $locale = apply_filters('plugin_locale', get_locale(), 'modern-events-calendar-lite');
+            
+            // WordPress language directory /wp-content/languages/mec-en_US.mo
+            $language_filepath = WP_LANG_DIR.DS.'modern-events-calendar-lite-'.$locale.'.mo';
+            
+            // If language file exists on WordPress language directory use it
+            if($file->exists($language_filepath))
+            {
+                load_textdomain('modern-events-calendar-lite', $language_filepath);
+            }
+            // Otherwise use MEC plugin directory /path/to/plugin/languages/modern-events-calendar-lite-en_US.mo
+            else
+            {
+                load_plugin_textdomain('modern-events-calendar-lite', false, dirname(plugin_basename(__FILE__)).DS.'languages'.DS);
+            }
+        } else {
+            // Get current locale
+            $locale = apply_filters('plugin_locale', get_locale(), 'mec');
+            
+            // WordPress language directory /wp-content/languages/mec-en_US.mo
+            $language_filepath = WP_LANG_DIR.DS.'mec-'.$locale.'.mo';
+            
+            // If language file exists on WordPress language directory use it
+            if($file->exists($language_filepath))
+            {
+                load_textdomain('mec', $language_filepath);
+            }
+            // Otherwise use MEC plugin directory /path/to/plugin/languages/mec-en_US.mo
+            else
+            {
+                load_plugin_textdomain('mec', false, dirname(plugin_basename(__FILE__)).DS.'languages'.DS);
+            }
         }
     }
     

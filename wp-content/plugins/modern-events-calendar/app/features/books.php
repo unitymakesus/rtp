@@ -445,13 +445,13 @@ class MEC_feature_books extends MEC_base
         {
             $confirmed = get_post_meta($post_id, 'mec_confirmed', true);
             
-            echo '<a href="'.$this->main->add_qs_var('mec_confirmed', $confirmed).'">'.$this->get_confirmation_label($confirmed).'</a>';
+            echo '<a href="'.$this->main->add_qs_var('mec_confirmed', $confirmed).'">'.$this->main->get_confirmation_label($confirmed).'</a>';
         }
         elseif($column_name == 'verification')
         {
             $verified = get_post_meta($post_id, 'mec_verified', true);
             
-            echo '<a href="'.$this->main->add_qs_var('mec_verified', $verified).'">'.$this->get_verification_label($verified).'</a>';
+            echo '<a href="'.$this->main->add_qs_var('mec_verified', $verified).'">'.$this->main->get_verification_label($verified).'</a>';
         }
         elseif($column_name == 'transaction')
         {
@@ -681,8 +681,8 @@ class MEC_feature_books extends MEC_base
                     $price = get_post_meta($post_id, 'mec_price', true);
                     $booker = get_userdata($booker_id);
                     
-                    $confirmed = $this->get_confirmation_label(get_post_meta($post_id, 'mec_confirmed', true));
-                    $verified = $this->get_verification_label(get_post_meta($post_id, 'mec_verified', true));
+                    $confirmed = $this->main->get_confirmation_label(get_post_meta($post_id, 'mec_confirmed', true));
+                    $verified = $this->main->get_verification_label(get_post_meta($post_id, 'mec_verified', true));
 
                     foreach($attendees as $attendee)
                     {
@@ -739,8 +739,8 @@ class MEC_feature_books extends MEC_base
                     $price = get_post_meta($post_id, 'mec_price', true);
                     $booker = get_userdata($booker_id);
                     
-                    $confirmed = $this->get_confirmation_label(get_post_meta($post_id, 'mec_confirmed', true));
-                    $verified = $this->get_verification_label(get_post_meta($post_id, 'mec_verified', true));
+                    $confirmed = $this->main->get_confirmation_label(get_post_meta($post_id, 'mec_confirmed', true));
+                    $verified = $this->main->get_verification_label(get_post_meta($post_id, 'mec_verified', true));
 
                     foreach($attendees as $attendee)
                     {
@@ -809,7 +809,7 @@ class MEC_feature_books extends MEC_base
             $transaction['event_id'] = $event_id;
 
             // Calculate price of bookings
-            $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets);
+            $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, array(), $date);
 
             $transaction['price_details'] = $price_details;
             $transaction['total'] = $price_details['total'];
@@ -879,36 +879,6 @@ class MEC_feature_books extends MEC_base
                     break;
             }
         }
-    }
-    
-    /**
-     * Get Label for booking confirmation
-     * @author Webnus <info@webnus.biz>
-     * @param int $confirmed
-     * @return string
-     */
-    public function get_confirmation_label($confirmed = 1)
-    {
-        if($confirmed == '1') $label = __('Confirmed', 'mec');
-        elseif($confirmed == '-1') $label = __('Rejected', 'mec');
-        else $label = __('Pending', 'mec');
-        
-        return $label;
-    }
-    
-    /**
-     * Get Label for booking verification
-     * @author Webnus <info@webnus.biz>
-     * @param int $verified
-     * @return string
-     */
-    public function get_verification_label($verified = 1)
-    {
-        if($verified == '1') $label = __('Verified', 'mec');
-        elseif($verified == '-1') $label = __('Canceled', 'mec');
-        else $label = __('Waiting', 'mec');
-        
-        return $label;
     }
     
     /**
@@ -994,7 +964,7 @@ class MEC_feature_books extends MEC_base
                         $ticket['name'] = $first_attendee['name'];
                         $ticket['email'] = $first_attendee['email'];
                         $ticket['reg'] = $first_attendee['reg'];
-                        $ticket['variations'] = $first_attendee['variations'];
+                        $ticket['variations'] = isset($first_attendee['variations']) ? $first_attendee['variations'] : array();
 
                         $rendered_tickets[] = $ticket;
                     }
@@ -1029,9 +999,13 @@ class MEC_feature_books extends MEC_base
 
                 // Tickets
                 $event_tickets = isset($event->data->tickets) ? $event->data->tickets : array();
+
+                // Booking Date
+                $date_ex = explode(':', $book['date']);
+                $occurrence = $date_ex[0];
                 
                 // Calculate price of bookings
-                $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, $raw_variations);
+                $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, $raw_variations, $occurrence);
                 
                 $book['tickets'] = $validated_tickets;
                 $book['price_details'] = $price_details;
@@ -1088,7 +1062,9 @@ class MEC_feature_books extends MEC_base
         $date = $ex[0];
         
         $availability = $this->book->get_tickets_availability($event_id, $date);
-        $this->main->response(array('success'=>1, 'availability'=>$availability));
+        $prices = $this->book->get_tickets_prices($event_id, current_time('Y-m-d'), 'price_label');
+
+        $this->main->response(array('success'=>1, 'availability'=>$availability, 'prices'=>$prices));
     }
 
     public function bbf_date_tickets_booking_form()

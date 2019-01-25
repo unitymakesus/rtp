@@ -8,7 +8,7 @@
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -739,7 +739,7 @@ window.tsf = {
 				$additionsElement.css( { 'maxWidth' : 'initial' } );
 
 				switch ( hoverAdditionsPlacement ) {
-					case 'before' :
+					case 'before':
 						let additionsWidth = $additionsElement[0].getBoundingClientRect().width;
 
 						additionsWidth = additionsMaxWidth < additionsWidth ? additionsMaxWidth : additionsWidth;
@@ -752,7 +752,7 @@ window.tsf = {
 						additionsOffset += leftOffset;
 						break;
 
-					case 'after' :
+					case 'after':
 						additionsOffset += leftOffset + textWidth + prefixMaxWidth;
 						break;
 				}
@@ -802,22 +802,22 @@ window.tsf = {
 
 			if ( _hasPrefixValue ) {
 				switch ( hoverPrefixPlacement ) {
-					case 'before' :
+					case 'before':
 						_placeholder = _hoverPrefixValue + _placeholder;
 						break;
 
-					case 'after' :
+					case 'after':
 						_placeholder = _placeholder + _hoverPrefixValue;
 						break;
 				}
 			}
 			if ( _hasAdditionsValue ) {
 				switch ( hoverAdditionsPlacement ) {
-					case 'before' :
+					case 'before':
 						_placeholder = _hoverAdditionsValue + _placeholder;
 						break;
 
-					case 'after' :
+					case 'after':
 						_placeholder = _placeholder + _hoverAdditionsValue;
 						break;
 				}
@@ -851,22 +851,22 @@ window.tsf = {
 			} else {
 				if ( hoverPrefixValue.length ) {
 					switch ( hoverPrefixPlacement ) {
-						case 'before' :
+						case 'before':
 							text = hoverPrefixValue + text;
 							break;
 
-						case 'after' :
+						case 'after':
 							text = text + hoverPrefixValue;
 							break;
 					}
 				}
 				if ( hoverAdditionsValue.length ) {
 					switch ( hoverAdditionsPlacement ) {
-						case 'before' :
+						case 'before':
 							text = hoverAdditionsValue + text;
 							break;
 
-						case 'after' :
+						case 'after':
 							text = text + hoverAdditionsValue;
 							break;
 					}
@@ -899,9 +899,9 @@ window.tsf = {
 			if ( ! pixels || ! reference ) return;
 
 			let test = {
-				'e': pixels,
-				'text' : tsf.unescapeString( reference.innerHTML ),
-				'guidelines' : tsf.params.inputGuidelines.title.search.pixels,
+				'e':          pixels,
+				'text':       tsf.unescapeString( reference.innerHTML ),
+				'guidelines': tsf.params.inputGuidelines.title.search.pixels,
 			};
 
 			tsf.updatePixelCounter( test );
@@ -987,40 +987,57 @@ window.tsf = {
 		jQuery( '#tsf-title-tagline-toggle :input' ).on( 'click', changeHomePageAdditionsVisibility );
 
 		/**
+		 * Updates private/protected title prefix upon Gutenberg's Post visibility switch.
+		 *
+		 * @function
+		 * @param {!jQuery.Event} event
+		 * @return {undefined}
+		 */
+		const updateVisibility = ( visibility ) => {
+
+			isPrivate = false;
+			isPasswordProtected = false;
+
+			switch ( visibility ) {
+				case 'password':
+					isPasswordProtected = true;
+					break;
+
+				case 'private':
+					isPrivate = true;
+					break;
+
+				default:
+				case 'public':
+					break;
+			}
+			setHoverPrefixValue();
+			enqueueTriggerInput();
+		}
+		jQuery( document ).on( 'tsf-updated-gutenberg-visibility', ( event, visibility ) => updateVisibility( visibility ) );
+
+		/**
 		 * Updates private/protected title prefix upon Post visibility switch.
 		 *
 		 * @function
 		 * @param {!jQuery.Event} event
 		 * @return {undefined}
 		 */
-		const updateVisibility = function( event ) {
+		const updateClassicVisibility = ( event ) => {
 			let value = jQuery( '#visibility' ).find( 'input:radio:checked' ).val();
 
-			isPrivate = false;
-			isPasswordProtected = false;
-
-			switch ( value ) {
-				case 'password' :
-					let p = jQuery( '#visibility' ).find( '#post_password' ).val();
-					// A falsy-password (like '0'), will return true in "SOME OF" WP's front-end PHP, false in WP's JS before submitting...
-					// It won't invoke WordPress' password protection. TODO FIXME: file WP Core bug report.
-					isPasswordProtected = p ? !! p.length : false;
-					break;
-
-				case 'private' :
-					isPrivate = true;
-					break;
-
-				default :
-				case 'public' :
-					break;
+			if ( 'password' === value ) {
+				let p = jQuery( '#visibility' ).find( '#post_password' ).val();
+				// A falsy-password (like '0'), will return true in "SOME OF" WP's front-end PHP, false in WP's JS before submitting...
+				// It won't invoke WordPress' password protection. TODO FIXME: file WP Core bug report.
+				let hasProtection = p ? !! p.length : false;
+				if ( ! hasProtection ) {
+					value = 'public';
+				}
 			}
-
-			//* @TODO move all of the above to a global state handler?
-			setHoverPrefixValue();
-			enqueueTriggerInput();
+			updateVisibility( value );
 		}
-		jQuery( '#visibility .save-post-visibility' ).on( 'click', updateVisibility );
+		jQuery( '#visibility .save-post-visibility' ).on( 'click', updateClassicVisibility );
 
 		/**
 		 * Updates used separator and all examples thereof.
@@ -1416,8 +1433,8 @@ window.tsf = {
 
 			let test = {
 				'e': counter,
-				'text' : tsf.unescapeString( reference.innerHTML ),
-				'guidelines' : tsf.params.inputGuidelines.description.search.chars,
+				'text': tsf.unescapeString( reference.innerHTML ),
+				'guidelines': tsf.params.inputGuidelines.description.search.chars,
 			};
 
 			tsf.updateCharacterCounter( test );
@@ -1579,21 +1596,21 @@ window.tsf = {
 			let val = '';
 			switchActive:
 			switch ( what ) {
-				case 'twitter' :
+				case 'twitter':
 					val = twTitleValue;
 					if ( twLocked || twPHLocked ) {
 						val = val.length ? val : $twTitle.prop( 'placeholder' );
 						break switchActive;
 					}
 					// get next if not set.
-				case 'og' :
+				case 'og':
 					val = val.length ? val : ogTitleValue;
 					if ( ogLocked || ogPHLocked ) {
 						val = val.length ? val : $ogTitle.prop( 'placeholder' );
 						break switchActive;
 					}
 					// get next if not set.
-				case 'reference' :
+				case 'reference':
 					val = val.length ? val : referenceValue;
 					break;
 			}
@@ -1701,21 +1718,21 @@ window.tsf = {
 			let val = '';
 			switchActive:
 			switch ( what ) {
-				case 'twitter' :
+				case 'twitter':
 					val = twDescValue;
 					if ( twLocked || twPHLocked ) {
 						val = val.length ? val : $twDesc.prop( 'placeholder' );
 						break switchActive;
 					}
 					// get next if not set.
-				case 'og' :
+				case 'og':
 					val = val.length ? val : ogDescValue;
 					if ( ogLocked || ogPHLocked ) {
 						val = val.length ? val : $ogDesc.prop( 'placeholder' );
 						break switchActive;
 					}
 					// get next if not set.
-				case 'reference' :
+				case 'reference':
 					if ( ! val.length ) {
 						if ( $descriptions.val().length ) {
 							val = referenceValue;

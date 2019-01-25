@@ -384,7 +384,7 @@ class MEC_gateway_stripe extends MEC_gateway
         {
             \Stripe\Charge::create(array
             (
-                'amount'=>(isset($transaction['price']) ? ($transaction['price']*100) : 0),
+                'amount'=>(isset($transaction['price']) ? ((int) ($transaction['price']*100)) : 0),
                 'currency'=>$this->main->get_currency_code(),
                 'card'=>$token,
                 'description'=>sprintf(__('MEC Transaction ID: %s', 'mec'), $transaction_id)

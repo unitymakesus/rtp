@@ -647,20 +647,18 @@ class MEC_skins extends MEC_base
         // If no fields specified
         if(!count($this->sf_options)) return '';
         
-        $fields = '';
+        $fields = $end_div = '';
         $first_row = 'not-started';
 
         foreach($this->sf_options as $field=>$options)
         {
             $type = isset($options['type']) ? $options['type'] : '';
             
-            // Field is disabled
-            if(!trim($type)) continue;
-            
             if(in_array($field, array('category', 'location', 'organizer', 'label')) and $first_row == 'not-started')
             {
                 $first_row = 'started';
                 $fields .= '<div class="mec-dropdown-wrap">';
+                $end_div = '</div>';
             }
             
             if(!in_array($field, array('category', 'location', 'organizer', 'label')) and $first_row == 'started')

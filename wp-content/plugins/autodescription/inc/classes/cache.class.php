@@ -8,7 +8,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -284,6 +284,7 @@ class Cache extends Sitemaps {
 			 * @NOTE Other caching plugins can override these groups. Therefore this
 			 * does NOT work.
 			 * @TODO make this work.
+			 * @see 'object' switch-index.
 			 */
 			case 'objectflush':
 				//* @NOTE false can't pass.

@@ -84,7 +84,7 @@ if($this->style == 'colorful')
                 </ul>
             </div>
         <?php elseif($this->style == 'classic'): ?>
-            <div class="mec-event-image"><a href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['medium']; ?></a></div>
+            <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['medium']; ?></a></div>
             <div class="mec-event-content">
                 <?php if(isset($settings['multiple_day_show_method']) && $settings['multiple_day_show_method'] == 'all_days') : ?>
                     <div class="mec-event-date mec-bg-color"><?php echo date_i18n($this->date_format_classic_1, strtotime($event->date['start']['date'])); ?></div>
@@ -122,7 +122,7 @@ if($this->style == 'colorful')
                 <?php endif; ?>
                 <div class="mec-event-detail"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></div>
             </div>
-            <div class="mec-event-image"><a href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['medium']; ?></a></div>
+            <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['medium']; ?></a></div>
             <div class="mec-event-content">
                 <h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->title; ?></a><?php echo $event_color; ?></h4>
                 <p><?php echo (isset($location['address']) ? $location['address'] : ''); ?></p>
@@ -141,7 +141,7 @@ if($this->style == 'colorful')
         <?php elseif($this->style == 'novel'): ?>
             <div class="novel-grad-bg"></div>
             <div class="mec-event-content">
-                <div class="mec-event-image"><a href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumblist']; ?></a></div>
+                <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumblist']; ?></a></div>
                 <div class="mec-event-detail-wrap">
                     <h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->title; ?></a></h4>
                     <?php if(isset($settings['multiple_day_show_method']) && $settings['multiple_day_show_method'] == 'all_days') : ?>

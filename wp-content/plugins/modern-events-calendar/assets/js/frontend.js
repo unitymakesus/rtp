@@ -985,10 +985,13 @@ var mecSingleEventDisplayer = {
 
             if (settings.style == 'novel')
             {
-                $('.mec-single-event-novel').colourBrightness();
-                $('.mec-single-event-novel').each(function () {
-                    $(this).colourBrightness()
-                });
+                if ($('.mec-single-event-novel').length > 0)
+                {
+                    $('.mec-single-event-novel').colourBrightness();
+                    $('.mec-single-event-novel').each(function () {
+                        $(this).colourBrightness()
+                    });
+                }
             }
         }
         
@@ -1399,9 +1402,11 @@ var mecSingleEventDisplayer = {
             var owl = $("#mec-owl-calendar-d-table-"+settings.id+"-"+month_id);
             owl.owlCarousel(
             {
-                items : 22, //22 items above 1000px browser width
                 responsiveClass: true,
                 responsive: {
+                    0: {
+                        items: 2,
+                    },
                     479: {
                         items: 4,
                     },
@@ -1413,6 +1418,9 @@ var mecSingleEventDisplayer = {
                     },
                     1000: {
                         items: 19,
+                    },
+                    1200: {
+                        items: 22,
                     }
                 },
                 dots: false,
@@ -1941,7 +1949,6 @@ var mecSingleEventDisplayer = {
         });
         function initMasonry()
         {
-            console.log()
             var $container = $("#mec_skin_"+settings.id+" .mec-event-masonry");
             var $grid = $container.isotope({
                 filter: '*',
@@ -1956,8 +1963,12 @@ var mecSingleEventDisplayer = {
                     queue: false
                 }
             });
-            console.log(settings.masonry_like_grid);
             if (settings.masonry_like_grid == 1) $grid.isotope({ sortBy: 'date' });
+
+            // Fix Elementor tab
+            $('.elementor-tabs').find('.elementor-tab-title').click(function(){
+                $grid.isotope({ sortBy: 'date' });
+            });
 
             $("#mec_skin_"+settings.id+" .mec-events-masonry-cats a").click(function()
             {
@@ -2163,6 +2174,16 @@ var mecSingleEventDisplayer = {
 
                 mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
             });
+            $("#mec_skin_"+settings.id+" .mec-event-image a img").off('click').on('click', function(e)
+            {
+                e.preventDefault();
+                var href = $(this).parent().attr('href');
+
+                var id = $(this).parent().data('event-id');
+                var occurrence = get_parameter_by_name('occurrence', href);
+
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+            });
         }
         
         function loadMore()
@@ -2356,6 +2377,16 @@ var mecSingleEventDisplayer = {
                 var href = $(this).attr('href');
 
                 var id = $(this).data('event-id');
+                var occurrence = get_parameter_by_name('occurrence', href);
+
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+            });
+            $("#mec_skin_"+settings.id+" .mec-event-image a img").off('click').on('click', function(e)
+            {
+                e.preventDefault();
+                var href = $(this).parent().attr('href');
+
+                var id = $(this).parent().data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
                 mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
@@ -2981,7 +3012,7 @@ function get_parameter_by_name(name, url)
         });
 
         // Register Booking Smooth Scroll
-        $('a[href="#mec-events-meta-group-booking"]').click(function()
+        $('a[href^="#mec-events-meta-group-booking"]').click(function()
         {
             if(location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname)
             {
@@ -3001,5 +3032,15 @@ function get_parameter_by_name(name, url)
                 }
             }
         });
+
+        // Load Information widget under title in mobile/tablet
+        if ($('.single-mec-events .mec-single-event:not(".mec-single-modern")').length > 0) {
+            var html = $('.single-mec-events .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox')[0].outerHTML;
+            if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 960) {
+                $('.single-mec-events .col-md-4 .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox').remove();
+                $('.single-mec-events .mec-event-info-mobile').html(html)
+            }
+        }
+        
     });
 })(jQuery);

@@ -230,7 +230,7 @@ class MEC_factory extends MEC_base
         wp_enqueue_script('wp-color-picker');
         
         // Include jQuery date picker
-        wp_enqueue_script('jquery-ui-datepicker');
+        //wp_enqueue_script('jquery-ui-datepicker');
         
         // Include MEC backend script file
         wp_enqueue_script('mec-backend-script', $this->main->asset('js/backend.js'), array('wp-color-picker', 'jquery-ui-datepicker'));

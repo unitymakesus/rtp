@@ -10,9 +10,10 @@ $ix = $this->main->get_ix_options();
         <a href="<?php echo $this->main->remove_qs_var('tab'); ?>" class="nav-tab"><?php echo __('Google Cal. Import', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-g-calendar-export'); ?>" class="nav-tab"><?php echo __('Google Cal. Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-f-calendar-import'); ?>" class="nav-tab"><?php echo __('Facebook Cal. Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-meetup-import'); ?>" class="nav-tab"><?php echo __('Meetup Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab nav-tab-active"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-export'); ?>" class="nav-tab"><?php echo __('Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-import'); ?>" class="nav-tab"><?php echo __('Import', 'mec'); ?></a>
-        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab nav-tab-active"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-thirdparty'); ?>" class="nav-tab"><?php echo __('Third Party Plugins', 'mec'); ?></a>
     </h2>
     <div class="mec-container">
@@ -51,6 +52,16 @@ $ix = $this->main->get_ix_options();
                     <p id="mec_sync_f_import_cron" class="mec-col-12 <?php echo (isset($ix['sync_f_import']) and $ix['sync_f_import'] == '1') ? '' : 'mec-util-hidden'; ?>"><strong><?php _e('Important Note', 'mec'); ?>: </strong><?php echo sprintf(__("Set a cronjob to call %s file atleast once per day otherwise it won't import any event from Facebook.", 'mec'), '<code>'.$cron.'</code>'); ?></p>
                 </div>
                 <?php endif; ?>
+
+                <div class="mec-form-row">
+                    <input type="hidden" name="ix[sync_meetup_import]" value="0" />
+                    <label class="mec-col-3" for="mec_ix_sync_meetup_import">
+                        <input type="checkbox" id="mec_ix_sync_meetup_import" name="ix[sync_meetup_import]" value="1" <?php echo (isset($ix['sync_meetup_import']) and $ix['sync_meetup_import'] == '1') ? 'checked="checked"' : ''; ?> onchange="jQuery('#mec_sync_meetup_import_cron').toggleClass('mec-util-hidden');" />
+                        <?php _e('Auto Meetup Import', 'mec'); ?>
+                    </label>
+                    <?php $cron = MEC_ABSPATH.'app'.DS.'crons'.DS.'meetup-import.php'; ?>
+                    <p id="mec_sync_meetup_import_cron" class="mec-col-12 <?php echo (isset($ix['sync_meetup_import']) and $ix['sync_meetup_import'] == '1') ? '' : 'mec-util-hidden'; ?>"><strong><?php _e('Important Note', 'mec'); ?>: </strong><?php echo sprintf(__("Set a cronjob to call %s file atleast once per day otherwise it won't import any event from Meetup.", 'mec'), '<code>'.$cron.'</code>'); ?></p>
+                </div>
 
                 <div class="mec-options-fields">
                     <input type="hidden" name="mec-ix-action" value="save-sync-options" />

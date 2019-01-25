@@ -5,6 +5,9 @@ defined('MECEXEC') or die();
 $event_id = $event->ID;
 $reg_fields = $this->main->get_reg_fields($event_id);
 
+$date_ex = explode(':', $date);
+$occurrence = $date_ex[0];
+
 $ticket_variations = $this->main->ticket_variations($event_id);
 $event_tickets = isset($event->data->tickets) ? $event->data->tickets : array();
 
@@ -18,7 +21,7 @@ $first_for_all = (!isset($this->settings['booking_first_for_all']) or (isset($th
         <?php $j = 0; foreach($tickets as $ticket_id=>$count): if(!$count) continue; $ticket = $event_tickets[$ticket_id]; for($i = 1; $i <= $count; $i++): $j++; ?>
         <li class="mec-book-ticket-container <?php echo (($j > 1 and $first_for_all) ? 'mec-util-hidden' : ''); ?>">
 
-            <h4><span class="mec-ticket-name"><?php echo $ticket['name']; ?></span><span class="mec-ticket-price"><?php echo $ticket['price_label']; ?></span></h4>
+            <h4><span class="mec-ticket-name"><?php echo $ticket['name']; ?></span><span class="mec-ticket-price"><?php echo $this->book->get_ticket_price_label($ticket, current_time('Y-m-d')); ?></span></h4>
             
             <div class="mec-book-field-name mec-reg-mandatory" data-ticket-id="<?php echo $j; ?>">
                 <label for="mec_book_reg_field_name<?php echo $j; ?>"><?php _e('Name', 'mec'); ?></label>
@@ -77,7 +80,7 @@ $first_for_all = (!isset($this->settings['booking_first_for_all']) or (isset($th
                 </label>
 
                 <?php /** Paragraph **/ elseif($reg_field['type'] == 'p'): ?>
-                <p><?php _e($reg_field['content'], 'mec'); ?></p>
+                <p><?php _e(stripslashes($reg_field['content']), 'mec'); ?></p>
 
                 <?php endif; ?>
             </div>
@@ -101,7 +104,7 @@ $first_for_all = (!isset($this->settings['booking_first_for_all']) or (isset($th
             <label>
                 <input type="hidden" name="book[first_for_all]" value="0" />
                 <input type="checkbox" name="book[first_for_all]" value="1" checked="checked" id="mec_book_first_for_all<?php echo $uniqueid; ?>" onchange="mec_toggle_first_for_all<?php echo $uniqueid; ?>();" />
-                <?php _e("Fill other attendees's information like the first form.", 'mec'); ?>
+                <?php _e("Fill other attendees information like the first form.", 'mec'); ?>
             </label>
         </li>
         <?php endif; ?>

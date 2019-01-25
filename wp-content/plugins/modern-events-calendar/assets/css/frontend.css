@@ -1163,7 +1163,6 @@
 	.mec-fes-sub-button{width: 100%;}
 	.mec-available-color-row span.color-selected{background-color: #fdd700; border: 3px solid #fff; box-sizing: content-box; box-shadow: 0 0 0 2px #437df9; }
 	.mec-fes-loading:before{content: url('../img/ajax-loader.gif'); background: transparent; border-style: none; display: block; margin-left: 47%;}
-	@media only screen and (max-width: 960px) {.mec-fes-submit-wide{display:none;} }
 
 	.mec-fes-form #mec_meta_box_hourly_schedule_days .mec-form-row input[type="text"] { width: 23%; margin-right: 1.4%; }
 	.mec-fes-form #mec_meta_box_hourly_schedule_days .mec-form-row { border-bottom: 1px solid #e8e8e8; padding-bottom: 15px; }
@@ -1192,7 +1191,7 @@
 	.mec-wrap .mec-totalcal-box .col-md-3, .mec-wrap .mec-totalcal-box .col-md-4, .mec-wrap .mec-totalcal-box .col-md-5 { width: 100%; float: none; padding-bottom: 20px; clear: both; overflow: hidden;}
 	}
 	@media only screen and (min-width: 768px) and (max-width: 960px) {
-	.mec-wrap .mec-totalcal-box .col-md-4 { position: absolute; right: 10px; top: 20px; width: initial;}
+	.mec-wrap .mec-totalcal-box .col-md-4 { position: relative; right: 10px; top: 20px; width: initial;}
 	.mec-wrap .mec-totalcal-box .col-md-5 { padding-bottom: 0;}
 	.mec-wrap .mec-totalcal-box { padding: 37px 5px; }
 	}
@@ -1699,8 +1698,8 @@
 	/* MEC Toggle List
 	-------------------------------- */
 	.mec-events-toggle { max-width: 960px; margin-left: auto; margin-right: auto; }
-	.mec-events-toggle .mec-toggle-item{border:1px solid #e4e4e4;margin-bottom:15px;box-shadow:0 10px 15px #f3f3f3;cursor: pointer;}
-	.mec-events-toggle .mec-toggle-item-inner {position:relative;padding:30px 60px 30px 15px; background: #fff;transition:all .3s ease;}
+	.mec-events-toggle .mec-toggle-item{border:1px solid #e4e4e4;margin-bottom:15px;box-shadow:0 10px 15px #f3f3f3;}
+	.mec-events-toggle .mec-toggle-item-inner {cursor: pointer;position:relative;padding:30px 60px 30px 15px; background: #fff;transition:all .3s ease;}
 	.mec-events-toggle .mec-toggle-item-inner:hover { background: #fbfbfb;}
 	.mec-toggle-item-col {float: left;width: 180px;margin-top: -6px;border-right: 1px solid #e3e3e3;margin-right: 15px;}
 	.mec-toggle-item-col .mec-event-date {font-size: 38px;line-height: 40px;float:left;margin-right: 8px;}
@@ -1718,6 +1717,9 @@
 	.mec-events-toggle .mec-toggle-content h1.mec-single-title, .mec-events-toggle .mec-toggle-content .mec-single-event-bar { display: none; }
 	.mec-events-toggle .media-links a{ margin-bottom:0;}
 	.mec-events-toggle .mec-toggle-content .mec-toggle-meta{margin-bottom:14px;}
+	.mec-events-toggle #mec_speakers_details.mec-frontbox { padding: 0; margin: 0; }
+	.mec-events-toggle .mec-toggle-item h3.mec-speakers { border: none; text-align: left;}
+	.mec-events-toggle .mec-toggle-item h3.mec-speakers:before { content: "\e063"; font-family: simple-line-icons; border: none; position: relative; display: inline-block; left: unset; bottom: unset; font-size: 22px; font-weight: normal; padding: 0 11px 0 28px; vertical-align: middle; }
 	@media only screen and (max-width: 767px) {
 	.mec-toggle-item-col {float: none;width: 100%;border-right: none;margin-bottom: 5px;}
 	}
@@ -2156,6 +2158,20 @@
 	.mec-toggle-month-divider .mec-wrap .mec-month-divider:first-of-type { border-top: none; }
 	.mec-toggle-month-divider .mec-event-list-accordion .mec-month-divider:not(:first-of-type) ~ article { display:none; }
 	.mec-skin-list-events-container:not(.mec-toggle-month-divider) .mec-month-divider i { display: none;}
+	.mec-toogle-inner-month-divider .mec-toggle-item-col .mec-event-month { display: inline-block; padding-top: 0; }
+	.mec-toogle-inner-month-divider .mec-toggle-item-col .mec-event-date { font-size: 14px; line-height: 14px; float: none; display: inline-block; margin-right: 0; font-weight: 700; }
+	.mec-events-toggle .mec-toogle-inner-month-divider.mec-toggle-item-inner { padding: 20px 60px 30px 15px; }
+	.mec-toogle-inner-month-divider .mec-toggle-month-inner-image { float: left; clear: right; width: 100px; margin-right: 20px; margin-left: 10px; }
+	.mec-toogle-inner-month-divider .mec-toggle-item-col .mec-event-detail { margin-top: -6px; }
+	.mec-toogle-inner-month-divider .mec-toggle-item-col { float: none; width: 100%; margin-top: 10px; display: block; border: none; }
+	.mec-events-toggle .mec-toogle-inner-month-divider .mec-toggle-title { font-size: 19px; display: block; padding-top: 10px; }
+	@media only screen and (max-width: 768px) {
+	.mec-events-toggle .mec-toogle-inner-month-divider .mec-toggle-title { font-size: 14px; padding-top: 0; }
+	.mec-toogle-inner-month-divider .mec-toggle-item-col { margin-top: 0; }
+	.mec-toogle-inner-month-divider .mec-toggle-month-inner-image { width: 70px; }
+	}
+
+	
 
 	/* # Featured/Canceled Label
 	================================================== */
@@ -2211,6 +2227,41 @@
 	.mec-hourly-schedule-speaker-details { padding-left: 0;}
 	.mec-hourly-schedule-speaker-info { width: 90%; margin: 0 auto;}
 	}
+
+	/* # Profile page
+	================================================== */
+	.mec-profile .mec-profile-bookings { border: 2px solid #e6e6e6; text-align: center; }
+	.mec-profile .mec-profile-bookings tbody tr:first-child { background: #f7f7f7; font-weight: bold; text-transform: capitalize; }
+	.mec-profile .mec-profile-bookings tbody tr { border-bottom: 1px solid #e6e6e6; font-size: 14px; }
+	.mec-profile .mec-profile-bookings tbody tr td { border: 1px solid #e6e6e6; padding: 10px; }
+	.mec-profile .mec-profile-bookings tbody tr td:nth-child(1) { width: 4%; }
+	.mec-profile .mec-profile-bookings tbody tr td:nth-child(2) { width: 37%; }
+	.mec-profile .mec-profile-bookings tbody tr td:nth-child(3) { width: 24%; }
+	.mec-profile .mec-profile-bookings tbody tr td:nth-child(4) { width: 15%; }
+	.mec-profile .mec-profile-bookings tbody tr td:nth-child(5) { width: 10%; }
+	.mec-profile .mec-profile-bookings tbody tr td:nth-child(6) { width: 10%; }
+	.mec-profile .mec-event-status { padding: 5px 10px; color: #fff; border-radius: 2px; font-size: 12px; line-height: 12px; letter-spacing: 0.4px; }
+	.mec-profile .mec-event-status.mec-book-confirmed { background: #50d477; }
+	.mec-profile .mec-event-status.mec-book-pending { background: #fcbe69; }
+	.mec-profile .mec-event-status.mec-book-rejected { background: #fe686a; }
+	.mec-profile .mec-event-date { font-size: 12px; color: #888; }
+	.mec-profile .mec-booking-number-of-attendees { font-size: 13px; color: #888; }
+	.mec-profile .mec-booking-number-of-attendees i, .mec-profile .mec-profile-bookings-view-invoice i { font-size: 15px; color: #008aff; vertical-align: text-bottom; margin-right: 4px; }
+	
+	.mec-booking-attendees { background: #fff; padding: 10px; }
+	.mec-booking-attendees { width: 750px; text-align: center; }
+	.mec-booking-attendees-wrapper { border: 2px solid #e6e6e6; font-size: 14px; }
+	.mec-booking-attendees-head { display: table; width: 100%; background: #f7f7f7; border-bottom: 1px solid #e6e6e6; font-weight: bold; }
+	.mec-booking-attendees-head span,
+	.mec-booking-attendees-head-content>span { vertical-align: middle; display: table-cell; padding: 7px; border-right: 1px solid #e6e6e6; }
+	.mec-booking-attendees-head-content { display: table; width: 100%; border-bottom: 1px solid #e6e6e6; }
+	.mec-booking-attendees-wrapper .mec-booking-attendees-head-content:last-child { border: none; }
+	.mec-booking-attendees-head span:nth-child(1), .mec-booking-attendees-head-content>span:nth-child(1) { width: 4%; }
+	.mec-booking-attendees-head span:nth-child(2), .mec-booking-attendees-head-content>span:nth-child(2) { width: 20%; }
+	.mec-booking-attendees-head span:nth-child(3), .mec-booking-attendees-head-content>span:nth-child(3) { width: 24%; }
+	.mec-booking-attendees-head span:nth-child(4), .mec-booking-attendees-head-content>span:nth-child(4) { width: 26%; }
+	.mec-booking-attendees-head span:nth-child(5), .mec-booking-attendees-head-content>span:nth-child(5) { width: 26%; }
+	@media only screen and (max-width: 759px) { .mec-booking-attendees { width: 470px; } .mec-booking-attendees-head span,.mec-booking-attendees-head-content>span { word-break: break-all; }}
 
 
 	/* # Booking Modal

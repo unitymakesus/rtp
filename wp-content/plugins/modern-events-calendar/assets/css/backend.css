@@ -282,7 +282,7 @@
 	.w-box-child p{ color:#666; margin-top: 10px;}
 	.w-box.support {background: #fff url(../img/support.png) no-repeat top right;}
 	.w-box.support .w-box-head {width: 50%; color: #ff876c;}
-	.w-box-content pre {text-align: left; white-space: pre-line; font-size: 13px;}
+	.w-box-content pre { text-align: left; background: #f5f5f5; font-size: 13px; padding: 20px 25px; height: 480px; overflow-y: scroll; }
 	.w-box.change-log .w-box-head {color: #01c6d9;}
 
 	#webnus-dashboard .button { border: 0; background: transparent; box-shadow: none; color: #e74c3c; font-weight: 700; } 

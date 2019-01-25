@@ -76,29 +76,10 @@ function eae_register_ui() {
  * @return void
  */
 function eae_register_settings() {
-    register_setting( 'email-address-encoder', 'eae_search_in', array(
-        'type' => 'string',
-        'default' => 'filters',
-        'sanitize_callback' => 'sanitize_text_field',
-    ) );
-
-    register_setting( 'email-address-encoder', 'eae_technique', array(
-        'type' => 'string',
-        'default' => 'entities',
-        'sanitize_callback' => 'sanitize_text_field',
-    ) );
-
-    register_setting( 'email-address-encoder', 'eae_filter_priority', array(
-        'type' => 'integer',
-        'default' => 1000,
-        'sanitize_callback' => 'sanitize_text_field',
-    ) );
-
-    register_setting( 'email-address-encoder', 'eae_notices', array(
-        'type' => 'integer',
-        'default' => 0,
-        'sanitize_callback' => 'intval',
-    ) );
+    register_setting( 'email-address-encoder', 'eae_search_in', 'sanitize_text_field' );
+    register_setting( 'email-address-encoder', 'eae_technique', 'sanitize_text_field' );
+    register_setting( 'email-address-encoder', 'eae_filter_priority', 'absint' );
+    register_setting( 'email-address-encoder', 'eae_notices', 'absint' );
 }
 
 /**
@@ -107,6 +88,14 @@ function eae_register_settings() {
  * @return void
  */
 function eae_uninstall_hook() {
+    if ( ! function_exists( 'get_plugins' ) ) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
+    if ( array_key_exists( 'email-encoder-premium/email-address-encoder.php', get_plugins() ) ) {
+        return;
+    }
+
     delete_option( 'eae_search_in' );
     delete_option( 'eae_technique' );
     delete_option( 'eae_filter_priority' );
@@ -133,7 +122,7 @@ function eae_options_page() {
 }
 
 /**
- * Callback to add "Settings" link to the plugin's action links.
+ * Callback to add links to the plugin's action links.
  *
  * @param array $links
  * @param string $file
@@ -145,13 +134,21 @@ function eae_plugin_actions_links( $links, $file ) {
         return $links;
     }
 
-    $link = sprintf(
-        '<a href="%s">%s</a>',
-        admin_url( 'options-general.php?page=email-address-encoder' ),
-        __( 'Settings', 'email-address-encoder' )
-    );
-
-    return array_merge( array( $link ), $links );
+    return array_merge( array(
+        sprintf(
+            '<a target="_blank" rel="noopener" href="https://encoder.till.im/guide?utm_source=wp-plugin&amp;utm_medium=action-link">%s</a>',
+            __( 'FAQ', 'email-address-encoder' )
+        ),
+        sprintf(
+            '<a target="_blank" rel="noopener" href="https://encoder.till.im/download?utm_source=wp-plugin&amp;utm_medium=action-link">%s</a>',
+            __( 'Premium', 'email-address-encoder' )
+        ),
+        sprintf(
+            '<a href="%s">%s</a>',
+            admin_url( 'options-general.php?page=email-address-encoder' ),
+            __( 'Settings', 'email-address-encoder' )
+        ),
+    ), $links );
 }
 
 /**
@@ -169,7 +166,7 @@ function eae_enqueue_script() {
     wp_enqueue_script(
         'dismissible-notices',
         plugins_url( 'dismiss-notice.js', __FILE__ ),
-        array( 'jquery', 'common' )
+        array( 'jquery' )
     );
 }
 
@@ -245,6 +242,22 @@ function eae_transmit_email() {
         return;
     }
 
+    $host = parse_url( get_home_url(), PHP_URL_HOST );
+
+    if (
+        $host === 'localhost' ||
+        filter_var( $host, FILTER_VALIDATE_IP ) ||
+        preg_match( '/\.(dev|test|local)$/', $host ) ||
+        preg_match( '/^(dev|test|staging)\./', $host )
+    ) {
+        return add_settings_error(
+            'eae_notify_email',
+            'invalid',
+            sprintf( __( 'Sorry, "%s" doesn’t appear to be a production domain.', 'email-address-encoder' ), $host ),
+            'error'
+        );
+    }
+
     check_admin_referer( 'subscribe' );
 
     $response = wp_remote_post( 'https://encoder.till.im/api/subscribe', array(
@@ -258,14 +271,12 @@ function eae_transmit_email() {
     ) );
 
     if ( is_wp_error( $response ) || $response[ 'response' ][ 'code' ] !== 200 ) {
-        add_settings_error(
+        return add_settings_error(
             'eae_notify_email',
             'invalid',
             __( 'Whoops, something went wrong. Please try again.', 'email-address-encoder' ),
             'error'
         );
-
-        return;
     }
 
     add_settings_error(

@@ -134,6 +134,12 @@ if($this->getPRO())
                     </li>
 
                     <li id="" class="pr-be-group-menu-li">
+                        <a href="#user_profile_options" id="" class="wns-be-group-tab-link-a">
+                            <span class="pr-be-group-menu-title"><?php _e('User Profile', 'mec'); ?></span>
+                        </a>
+                    </li>
+
+                    <li id="" class="pr-be-group-menu-li">
                         <a href="#exceptional_option" id="" class="wns-be-group-tab-link-a">
                             <span class="pr-be-group-menu-title"><?php _e('Exceptional Days', 'mec'); ?></span>
                         </a>
@@ -633,7 +639,7 @@ if($this->getPRO())
                             <div class="mec-form-row">
                                 <label>
                                     <input type="hidden" name="mec[settings][google_recaptcha_fes]" value="0" />
-                                    <input value="1" type="checkbox" name="mec[settings][google_recaptcha_fes]" <?php if(isset($settings['google_recaptcha_fes']) and $settings['google_recaptcha_fes']) echo 'checked="checked"'; ?> /> <?php _e('Enable on "Frontend Event Submittion" form', 'mec'); ?>
+                                    <input value="1" type="checkbox" name="mec[settings][google_recaptcha_fes]" <?php if(isset($settings['google_recaptcha_fes']) and $settings['google_recaptcha_fes']) echo 'checked="checked"'; ?> /> <?php _e('Enable on "Frontend Event Submission" form', 'mec'); ?>
                                 </label>
                             </div>
                             <div class="mec-form-row">
@@ -950,6 +956,13 @@ if($this->getPRO())
                                 </div>
                                 <a class="mec-tooltip" title="<?php esc_attr_e("Event Note shows on Frontend Submission Form and Edit Event in backend.", 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
                             </div>
+                        </div>
+                    </div>
+
+                    <div id="user_profile_options" class="mec-options-fields">
+                        <h4 class="mec-form-subtitle"><?php _e('User Profile', 'mec'); ?></h4>
+                        <div class="mec-form-row">
+                            <p><?php echo sprintf(__('Put %s shortcode into your desired page. Then users are able to see history of their bookings.', 'mec'), '<code>[MEC_profile]</code>'); ?></p>
                         </div>
                     </div>
 

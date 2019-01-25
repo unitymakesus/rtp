@@ -51,7 +51,8 @@ class MEC_feature_ix extends MEC_base
         // Import APIs
         $this->factory->action('init', array($this, 'include_google_api'));
         $this->factory->action('init', array($this, 'include_facebook_api'));
-        
+        $this->factory->action('init', array($this, 'include_meetup_api'));
+
         // MEC IX Action
         $mec_ix_action = isset($_GET['mec-ix-action']) ? sanitize_text_field($_GET['mec-ix-action']) : '';
         
@@ -85,6 +86,17 @@ class MEC_feature_ix extends MEC_base
     public function include_facebook_api()
     {
     }
+
+    /**
+     * Import Meetup API libraries
+     * @author Webnus <info@webnus.biz>
+     */
+    public function include_meetup_api()
+    {
+        if(class_exists('Meetup')) return;
+
+        MEC::import('app.api.Meetup.meetup', false);
+    }
     
     /**
      * Add the IX menu
@@ -108,6 +120,7 @@ class MEC_feature_ix extends MEC_base
         elseif($tab == 'MEC-sync') $this->ix_sync();
         elseif($tab == 'MEC-g-calendar-export') $this->ix_g_calendar_export();
         elseif($tab == 'MEC-f-calendar-import') $this->ix_f_calendar_import();
+        elseif($tab == 'MEC-meetup-import') $this->ix_meetup_import();
         elseif($tab == 'MEC-import') $this->ix_import();
         elseif($tab == 'MEC-thirdparty') $this->ix_thirdparty();
         else $this->ix_g_calendar_import();
@@ -141,7 +154,12 @@ class MEC_feature_ix extends MEC_base
         if($this->action == 'save-sync-options')
         {
             // Save options
-            $this->main->save_ix_options(array('sync_g_import'=>$this->ix['sync_g_import'], 'sync_g_export'=>$this->ix['sync_g_export'], 'sync_f_import'=>$this->ix['sync_f_import']));
+            $this->main->save_ix_options(array(
+                'sync_g_import'=>isset($this->ix['sync_g_import']) ? $this->ix['sync_g_import'] : 0,
+                'sync_g_export'=>isset($this->ix['sync_g_export']) ? $this->ix['sync_g_export'] : 0,
+                'sync_f_import'=>isset($this->ix['sync_f_import']) ? $this->ix['sync_f_import'] : 0,
+                'sync_meetup_import'=>isset($this->ix['sync_meetup_import']) ? $this->ix['sync_meetup_import'] : 0,
+            ));
         }
         
         $path = MEC::import('app.features.ix.sync', true, true);
@@ -189,7 +207,7 @@ class MEC_feature_ix extends MEC_base
         $uploaded = move_uploaded_file($feed_file['tmp_name'], $target_path);
 
         // Error on Upload
-        if(!$uploaded) return array('success' => 0, 'message' => __("An error ocurred during the file upload! Please check permissions!", 'mec'));
+        if(!$uploaded) return array('success' => 0, 'message' => __("An error occurred during the file upload! Please check permissions!", 'mec'));
 
         // Import
         do_action('mec_import_file', $target_path);
@@ -2291,6 +2309,379 @@ class MEC_feature_ix extends MEC_base
         
         return array('success'=>1, 'data'=>$post_ids);
     }
+
+    /**
+     * Show content of meetup import tab
+     * @author Webnus <info@webnus.biz>
+     * @return void
+     */
+    public function ix_meetup_import()
+    {
+        // Current Action
+        $this->action = isset($_POST['mec-ix-action']) ? sanitize_text_field($_POST['mec-ix-action']) : '';
+        $this->ix = isset($_POST['ix']) ? $_POST['ix'] : array();
+
+        $this->response = array();
+        if($this->action == 'meetup-import-start') $this->response = $this->meetup_import_start();
+        elseif($this->action == 'meetup-import-do') $this->response = $this->meetup_import_do();
+
+        $path = MEC::import('app.features.ix.import_meetup', true, true);
+
+        ob_start();
+        include $path;
+        echo $output = ob_get_clean();
+    }
+
+    public function meetup_import_start()
+    {
+        $api_key = isset($this->ix['meetup_api_key']) ? $this->ix['meetup_api_key'] : NULL;
+        $group_url = isset($this->ix['meetup_group_url']) ? $this->ix['meetup_group_url'] : NULL;
+
+        if(!trim($api_key) or !trim($group_url)) return array('success'=>0, 'error'=>__('Both of API key and Group URL are required!', 'mec'));
+
+        // Save options
+        $this->main->save_ix_options(array('meetup_api_key'=>$api_key, 'meetup_group_url'=>$group_url));
+
+        // Timezone
+        $timezone = $this->main->get_timezone();
+
+        $data = array();
+
+        try
+        {
+            $meetup = new Meetup(array(
+                'key' => $api_key
+            ));
+
+            $events = $meetup->getEvents(array(
+                'urlname' => $group_url,
+            ));
+
+            $m_events = array();
+            $group_name = '';
+
+            foreach($events as $event)
+            {
+                $title = $event->name;
+                if(trim($title) == '') continue;
+
+                if(isset($event->group)) $group_name = $event->group->name;
+
+                $start = (int) ($event->time/1000);
+                $end = (int) (($event->time+$event->duration)/1000);
+
+                $start_date = new DateTime(date('Y-m-d H:i:s', $start), new DateTimeZone('UTC'));
+                $start_date->setTimezone(new DateTimeZone($timezone));
+
+                $end_date = new DateTime(date('Y-m-d H:i:s', $end), new DateTimeZone('UTC'));
+                $end_date->setTimezone(new DateTimeZone($timezone));
+
+                $m_events[] = array('id'=>$event->id, 'title'=>$title, 'start'=>$start_date->format('Y-m-d H:i:s'), 'end'=>$end_date->format('Y-m-d H:i:s'));
+            }
+
+            $data['title'] = $group_name;
+            $data['events'] = $m_events;
+            $data['count'] = count($m_events);
+        }
+        catch(Exception $e)
+        {
+            $error = $e->getMessage();
+            return array('success'=>0, 'error'=>$error);
+        }
+
+        return array('success'=>1, 'data'=>$data);
+    }
+
+    public function meetup_import_do()
+    {
+        $m_events = isset($_POST['m-events']) ? $_POST['m-events'] : array();
+        if(!count($m_events)) return array('success'=>0, 'error'=>__('Please select some events to import!', 'mec'));
+
+        $api_key = isset($this->ix['meetup_api_key']) ? $this->ix['meetup_api_key'] : NULL;
+        $group_url = isset($this->ix['meetup_group_url']) ? $this->ix['meetup_group_url'] : NULL;
+
+        if(!trim($api_key) or !trim($group_url)) return array('success'=>0, 'error'=>__('Both of API key and Group URL are required!', 'mec'));
+
+        // Timezone
+        $timezone = $this->main->get_timezone();
+
+        // MEC File
+        $file = $this->getFile();
+        $wp_upload_dir = wp_upload_dir();
+
+        $post_ids = array();
+        foreach($m_events as $m_event)
+        {
+            try
+            {
+                $meetup = new Meetup(array(
+                    'key' => $api_key
+                ));
+
+                $event = $meetup->getEvent(array(
+                    'urlname' => $group_url,
+                    'id' => $m_event,
+                    'fields' => 'event_hosts,featured_photo,series,short_link'
+                ));
+            }
+            catch(Exception $e)
+            {
+                continue;
+            }
+
+            // Check if Series already Imported
+            $series_id = NULL;
+            if(isset($event->series) and isset($event->series->id))
+            {
+                $series_id = $event->series->id;
+
+                $post_id = $this->db->select("SELECT `post_id` FROM `#__postmeta` WHERE `meta_value`='$series_id' AND `meta_key`='mec_meetup_series_id'", 'loadResult');
+                if($post_id) continue;
+            }
+
+            // Event Title and Content
+            $title = $event->name;
+            $description = $event->description;
+            $mcal_id = $event->id;
+
+            // Event location
+            $location = isset($event->venue) ? $event->venue : NULL;
+            $location_id = 1;
+
+            // Import Event Locations into MEC locations
+            if(isset($this->ix['import_locations']) and $this->ix['import_locations'] and $location)
+            {
+                $address = isset($location->address_1) ? $location->address_1 : '';
+                $address .= isset($location->city) ? ', '.$location->city : '';
+                $address .= isset($location->state) ? ', '.$location->state : '';
+                $address .= isset($location->localized_country_name) ? ', '.$location->localized_country_name : '';
+
+                $location_id = $this->main->save_location(array
+                (
+                    'name'=>trim($location->name),
+                    'latitude'=>trim($location->lat),
+                    'longitude'=>trim($location->lon),
+                    'address'=>$address
+                ));
+            }
+
+            // Event Organizer
+            $organizers = isset($event->event_hosts) ? $event->event_hosts : NULL;
+            $main_organizer_id = 1;
+            $additional_organizer_ids = array();
+
+            // Import Event Organizer into MEC organizers
+            if(isset($this->ix['import_organizers']) and $this->ix['import_organizers'] and $organizers)
+            {
+                $o = 1;
+                foreach($organizers as $organizer)
+                {
+                    $organizer_id = $this->main->save_organizer(array
+                    (
+                        'name'=>$organizer->name,
+                        'thumbnail'=>((isset($organizer->photo) and isset($organizer->photo->photo_link)) ? $organizer->photo->photo_link : NULL)
+                    ));
+
+                    if($o == 1) $main_organizer_id = $organizer_id;
+                    else $additional_organizer_ids[] = $organizer_id;
+
+                    $o++;
+                }
+            }
+
+            // Event Start Date and Time
+            $start = (int) ($event->time/1000);
+
+            $date_start = new DateTime(date('Y-m-d H:i:s', $start), new DateTimeZone('UTC'));
+            $date_start->setTimezone(new DateTimeZone($timezone));
+
+            $start_date = $date_start->format('Y-m-d');
+            $start_hour = $date_start->format('g');
+            $start_minutes = $date_start->format('i');
+            $start_ampm = $date_start->format('A');
+
+            // Event End Date and Time
+            $end = (int) (($event->time+$event->duration)/1000);
+
+            $date_end = new DateTime(date('Y-m-d H:i:s', $end), new DateTimeZone('UTC'));
+            $date_end->setTimezone(new DateTimeZone($timezone));
+
+            $end_date = $date_end->format('Y-m-d');
+            $end_hour = $date_end->format('g');
+            $end_minutes = $date_end->format('i');
+            $end_ampm = $date_end->format('A');
+
+            // Meetup Link
+            $more_info = isset($event->link) ? $event->link : (isset($event->short_link) ? $event->short_link : '');
+
+            // Fee Options
+            $fee = 0;
+            if(isset($event->fee)) $fee = $event->fee->amount.' '.$event->fee->currency;
+
+            // Event Time Options
+            $allday = 0;
+
+            // Recurring Event
+            if(isset($event->series) and $event->series)
+            {
+                $repeat_status = 1;
+
+                $interval = NULL;
+                $year = NULL;
+                $month = NULL;
+                $day = NULL;
+                $week = NULL;
+                $weekday = NULL;
+                $weekdays = NULL;
+
+                if(isset($event->series->weekly))
+                {
+                    $repeat_type = 'weekly';
+                    $interval = isset($event->series->weekly->interval) ? $event->series->weekly->interval*7 : 7;
+                }
+                elseif(isset($event->series->monthly))
+                {
+                    $repeat_type = 'monthly';
+
+                    $year = '*';
+                    $month = '*';
+
+                    $s = $start_date;
+                    $e = $end_date;
+
+                    $_days = array();
+                    while(strtotime($s) <= strtotime($e))
+                    {
+                        $_days[] = date('d', strtotime($s));
+                        $s = date('Y-m-d', strtotime('+1 Day', strtotime($s)));
+                    }
+
+                    $day = ','.implode(',', array_unique($_days)).',';
+
+                    $week = '*';
+                    $weekday = '*';
+                }
+                else $repeat_type = '';
+
+                // Custom Week Days
+                if($repeat_type == 'weekly' and isset($event->series->weekly->days_of_week) and is_array($event->series->weekly->days_of_week) and count($event->series->weekly->days_of_week))
+                {
+                    $weekdays = ','.trim(implode(',', $event->series->weekly->days_of_week), ', ').',';
+                    $interval = NULL;
+
+                    $repeat_type = 'certain_weekdays';
+                }
+
+                $finish = isset($event->series->end_date) ? date('Y-m-d', ($event->series->end_date/1000)) : NULL;
+            }
+            // Single Event
+            else
+            {
+                $repeat_status = 0;
+                $repeat_type = '';
+                $interval = NULL;
+                $finish = $end_date;
+                $year = NULL;
+                $month = NULL;
+                $day = NULL;
+                $week = NULL;
+                $weekday = NULL;
+                $weekdays = NULL;
+            }
+
+            $args = array
+            (
+                'title'=>$title,
+                'content'=>$description,
+                'location_id'=>$location_id,
+                'organizer_id'=>$main_organizer_id,
+                'date'=>array
+                (
+                    'start'=>array(
+                        'date'=>$start_date,
+                        'hour'=>$start_hour,
+                        'minutes'=>$start_minutes,
+                        'ampm'=>$start_ampm,
+                    ),
+                    'end'=>array(
+                        'date'=>$end_date,
+                        'hour'=>$end_hour,
+                        'minutes'=>$end_minutes,
+                        'ampm'=>$end_ampm,
+                    ),
+                    'repeat'=>array(),
+                    'allday'=>$allday,
+                    'comment'=>'',
+                    'hide_time'=>0,
+                    'hide_end_time'=>0,
+                ),
+                'start'=>$start_date,
+                'start_time_hour'=>$start_hour,
+                'start_time_minutes'=>$start_minutes,
+                'start_time_ampm'=>$start_ampm,
+                'end'=>$end_date,
+                'end_time_hour'=>$end_hour,
+                'end_time_minutes'=>$end_minutes,
+                'end_time_ampm'=>$end_ampm,
+                'repeat_status'=>$repeat_status,
+                'repeat_type'=>$repeat_type,
+                'interval'=>$interval,
+                'finish'=>$finish,
+                'year'=>$year,
+                'month'=>$month,
+                'day'=>$day,
+                'week'=>$week,
+                'weekday'=>$weekday,
+                'weekdays'=>$weekdays,
+                'meta'=>array
+                (
+                    'mec_source'=>'meetup',
+                    'mec_meetup_id'=>$mcal_id,
+                    'mec_meetup_series_id'=>$series_id,
+                    'mec_more_info'=>$more_info,
+                    'mec_more_info_title'=>__('Check at Meetup', 'mec'),
+                    'mec_more_info_target'=>'_self',
+                    'mec_cost'=>$fee,
+                    'mec_meetup_url'=>$group_url,
+                    'mec_allday'=>$allday
+                )
+            );
+
+            $post_id = $this->db->select("SELECT `post_id` FROM `#__postmeta` WHERE `meta_value`='$mcal_id' AND `meta_key`='mec_meetup_id'", 'loadResult');
+
+            // Insert the event into MEC
+            $post_id = $this->main->save_event($args, $post_id);
+            $post_ids[] = $post_id;
+
+            // Set location to the post
+            if($location_id) wp_set_object_terms($post_id, (int) $location_id, 'mec_location');
+
+            // Set organizer to the post
+            if($main_organizer_id) wp_set_object_terms($post_id, (int) $main_organizer_id, 'mec_organizer');
+
+            // Set Additional Organizers
+            if(count($additional_organizer_ids))
+            {
+                foreach($additional_organizer_ids as $additional_organizer_id) wp_set_object_terms($post_id, (int) $additional_organizer_id, 'mec_organizer', true);
+                update_post_meta($post_id, 'mec_additional_organizer_ids', $additional_organizer_ids);
+            }
+
+            // Featured Image
+            if(!has_post_thumbnail($post_id) and isset($event->featured_photo) and isset($event->featured_photo->photo_link))
+            {
+                $photo = $this->main->get_web_page($event->featured_photo->photo_link);
+                $file_name = md5($post_id).'.'.$this->main->get_image_type_by_buffer($photo);
+
+                $path = rtrim($wp_upload_dir['path'], DS.' ').DS.$file_name;
+                $url = rtrim($wp_upload_dir['url'], '/ ').'/'.$file_name;
+
+                $file->write($path, $photo);
+                $this->main->set_featured_image($url, $post_id);
+            }
+        }
+
+        return array('success'=>1, 'data'=>$post_ids);
+    }
     
     public function export_all_events_do()
     {
@@ -2611,12 +3002,12 @@ class MEC_feature_ix extends MEC_base
                 {
                     $freq = '';
                     $mec_days = explode(',', trim($data->mec->days, ','));
-                    
+
                     $days = '';
-                    foreach($mec_days as $mec_day) $days .= date('Ymd', strtotime($mec_day)).',';
-                    
+                    foreach($mec_days as $mec_day) $days .= date('Ymd\THis\Z', strtotime($mec_day.' '.$data->time['start'])).'/'.date('Ymd\THis\Z', strtotime($mec_day.' '.$data->time['end'])).',';
+
                     // Add RDATE
-                    $recurrence[] = trim('RDATE;VALUE=DATE:'.trim($days, ', '), '; ');
+                    $recurrence[] = trim('RDATE;VALUE=PERIOD:'.trim($days, ', '), '; ');
                 }
                 
                 $rrule = 'RRULE:FREQ='.$freq.';'
@@ -2751,7 +3142,7 @@ class MEC_feature_ix extends MEC_base
     public function f_calendar_import_start()
     {
         $fb_page_link = isset($this->ix['facebook_import_page_link']) ? $this->ix['facebook_import_page_link'] : NULL;
-        if(!trim($fb_page_link)) return array('success'=>0, 'message'=>__("Please insert your facebook page's link.", 'mec'));
+        if(!trim($fb_page_link)) return array('success'=>0, 'message'=>__("Please insert your Facebook page's link.", 'mec'));
         
         // Save options
         $this->main->save_ix_options(array('facebook_import_page_link'=>$fb_page_link));
@@ -2759,7 +3150,7 @@ class MEC_feature_ix extends MEC_base
         $fb_page = $this->f_calendar_import_get_page($fb_page_link);
         
         $fb_page_id = isset($fb_page['id']) ? $fb_page['id'] : 0;
-        if(!$fb_page_id) return array('success'=>0, 'message'=>__("We couldn't recognize your Facebook page. Please check it and provide us a valid facebook page link.", 'mec'));
+        if(!$fb_page_id) return array('success'=>0, 'message'=>__("We couldn't recognize your Facebook page. Please check it and provide us a valid Facebook page link.", 'mec'));
         
         $events = array();
         $next_page = 'https://graph.facebook.com/v2.8/'.$fb_page_id.'/events/?access_token='.$this->fb_access_token;

@@ -10,9 +10,10 @@ $ix_options = $this->main->get_ix_options();
         <a href="<?php echo $this->main->remove_qs_var('tab'); ?>" class="nav-tab"><?php echo __('Google Cal. Import', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-g-calendar-export'); ?>" class="nav-tab"><?php echo __('Google Cal. Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-f-calendar-import'); ?>" class="nav-tab nav-tab-active"><?php echo __('Facebook Cal. Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-meetup-import'); ?>" class="nav-tab"><?php echo __('Meetup Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-export'); ?>" class="nav-tab"><?php echo __('Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-import'); ?>" class="nav-tab"><?php echo __('Import', 'mec'); ?></a>
-        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-thirdparty'); ?>" class="nav-tab"><?php echo __('Third Party Plugins', 'mec'); ?></a>
     </h2>
     <div class="mec-container">
@@ -23,7 +24,7 @@ $ix_options = $this->main->get_ix_options();
             <div class="mec-facebook-import">
                 <form id="mec_facebook_import_form" action="<?php echo $this->main->get_full_url(); ?>" method="POST">
                     <h3><?php _e('Import from Facebook Calendar', 'mec'); ?></h3>
-                    <p class="description"><?php _e('Import all of your facebook events into MEC.', 'mec'); ?></p>
+                    <p class="description"><?php _e('Import all of your Facebook events into MEC.', 'mec'); ?></p>
                     <div class="mec-form-row">
                         <label class="mec-col-3" for="mec_ix_facebook_import_page_link"><?php _e('Facebook Page Link', 'mec'); ?></label>
                         <div class="mec-col-4">

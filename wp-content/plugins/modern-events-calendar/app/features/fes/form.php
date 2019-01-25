@@ -18,6 +18,7 @@ jQuery(document).ready(function()
         jQuery("#mec_fes_form").addClass("mec-fes-loading");
         jQuery(".mec-fes-form-cntt").hide();
         jQuery(".mec-fes-form-sdbr").hide();
+        jQuery(".mec-fes-submit-wide").hide();
 
         
         // Fix WordPress editor issue
@@ -40,6 +41,7 @@ jQuery(document).ready(function()
                 jQuery("#mec_fes_form").removeClass("mec-fes-loading");
                 jQuery(".mec-fes-form-cntt").show();
                 jQuery(".mec-fes-form-sdbr").show();
+                jQuery(".mec-fes-submit-wide").show();
                 
                 if(response.success == "1")
                 {
@@ -411,16 +413,6 @@ $this->factory->params('footer', $javascript);
             </div>
             <?php endif; ?>
             
-            <div class="mec-form-row mec-fes-submit-wide">
-                <?php if($this->main->get_recaptcha_status('fes')): ?><div class="mec-form-row mec-google-recaptcha"><div class="g-recaptcha" data-sitekey="<?php echo $this->settings['google_recaptcha_sitekey']; ?>"></div></div><?php endif; ?>
-                <button class="mec-fes-sub-button" type="submit"><?php _e('Submit', 'mec'); ?></button>
-                <div class="mec-util-hidden">
-                    <input type="hidden" name="mec[post_id]" value="<?php echo $post_id; ?>" id="mec_fes_post_id" class="mec-fes-post-id" />
-                    <input type="hidden" name="action" value="mec_fes_form" />
-                    <?php wp_nonce_field('mec_fes_form'); ?>
-                </div>
-            </div>
-            <div class="mec-util-hidden" id="mec_fes_form_message"></div>
         </div>
         
         <div class="mec-fes-form-sdbr">
@@ -620,17 +612,16 @@ $this->factory->params('footer', $javascript);
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-
-            <div class="mec-form-row mec-fes-submit-mobile">
-                <?php if($this->main->get_recaptcha_status('fes')): ?><div class="mec-form-row mec-google-recaptcha"><div class="g-recaptcha" data-sitekey="<?php echo $this->settings['google_recaptcha_sitekey']; ?>"></div></div><?php endif; ?>
-                <button class="mec-fes-sub-button" type="submit"><?php _e('Submit', 'mec'); ?></button>
-                <div class="mec-util-hidden">
-                    <input type="hidden" name="mec[post_id]" value="<?php echo $post_id; ?>" id="mec_fes_post_id" class="mec-fes-post-id" />
-                    <input type="hidden" name="action" value="mec_fes_form" />
-                    <?php wp_nonce_field('mec_fes_form'); ?>
-                </div>
-            </div>
-            <div class="mec-util-hidden" id="mec_fes_form_message"></div>
         </div>
+        <div class="mec-form-row mec-fes-submit-wide">
+            <?php if($this->main->get_recaptcha_status('fes')): ?><div class="mec-form-row mec-google-recaptcha"><div class="g-recaptcha" data-sitekey="<?php echo $this->settings['google_recaptcha_sitekey']; ?>"></div></div><?php endif; ?>
+            <button class="mec-fes-sub-button" type="submit"><?php _e('Submit', 'mec'); ?></button>
+            <div class="mec-util-hidden">
+                <input type="hidden" name="mec[post_id]" value="<?php echo $post_id; ?>" id="mec_fes_post_id" class="mec-fes-post-id" />
+                <input type="hidden" name="action" value="mec_fes_form" />
+                <?php wp_nonce_field('mec_fes_form'); ?>
+            </div>
+        </div>
+        <div class="mec-util-hidden" id="mec_fes_form_message"></div>
     </form>
 </div>

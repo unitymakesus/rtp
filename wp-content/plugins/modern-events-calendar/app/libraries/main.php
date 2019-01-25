@@ -295,6 +295,8 @@ class MEC_main extends MEC_base
     public function get_post_content($post_id)
     {
         $post = get_post($post_id);
+        if(!$post) return NULL;
+
         return str_replace(']]>', ']]&gt;', apply_filters('the_content', $post->post_content));
     }
     
@@ -1554,6 +1556,14 @@ class MEC_main extends MEC_base
 
             $dates = isset($transaction['date']) ? explode(':', $transaction['date']) : array(date('Y-m-d'), date('Y-m-d'));
 
+            // Get Booking Post
+            $booking = $book->get_bookings_by_transaction_id($transaction_id);
+
+            $booking_time = isset($booking[0]) ? get_post_meta($booking[0]->ID, 'mec_booking_time', true) : NULL;
+            if(!$booking_time) $booking_time = $dates[0];
+
+            $booking_time = date('Y-m-d', strtotime($booking_time));
+
             // Include the tFPDF Class
             if(!class_exists('tFPDF')) require_once MEC_ABSPATH.'app'.DS.'api'.DS.'TFPDF'.DS.'tfpdf.php';
 
@@ -1608,7 +1618,7 @@ class MEC_main extends MEC_base
                     $pdf->Write(6, $attendee['email']);
                     $pdf->Ln();
 
-                    $pdf->Write(6, ((isset($event->tickets[$attendee['id']]) ? __($this->m('ticket', __('Ticket', 'mec'))).': '.$event->tickets[$attendee['id']]['name'] : '').' '.(isset($event->tickets[$attendee['id']]) ? $event->tickets[$attendee['id']]['price_label'] : '')));
+                    $pdf->Write(6, ((isset($event->tickets[$attendee['id']]) ? __($this->m('ticket', __('Ticket', 'mec'))).': '.$event->tickets[$attendee['id']]['name'] : '').' '.(isset($event->tickets[$attendee['id']]) ? $book->get_ticket_price_label($event->tickets[$attendee['id']], $booking_time) : '')));
 
                     // Ticket Variations
                     if(isset($attendee['variations']) and is_array($attendee['variations']) and count($attendee['variations']))
@@ -2155,7 +2165,7 @@ class MEC_main extends MEC_base
             <span onclick="mec_reg_fields_remove('.$key.');" class="mec_reg_field_remove">'.__('Remove', 'mec').'</span>
             <div>
                 <input type="hidden" name="mec[reg_fields]['.$key.'][type]" value="p" />
-                <textarea name="mec[reg_fields]['.$key.'][content]">'.(isset($values['content']) ? htmlentities($values['content']) : '').'</textarea>
+                <textarea name="mec[reg_fields]['.$key.'][content]">'.(isset($values['content']) ? htmlentities(stripslashes($values['content'])) : '').'</textarea>
                 <p class="description">'.__('HTML and shortcode are allowed.').'</p>
             </div>
         </li>';
@@ -3319,10 +3329,16 @@ class MEC_main extends MEC_base
         
         $allday = (isset($event['allday']) ? $event['allday'] : 0);
         $time_comment = (isset($event['time_comment']) ? $event['time_comment'] : '');
-        
+        $hide_time = ((isset($event['date']) and isset($event['date']['hide_time'])) ? $event['date']['hide_time'] : 0);
+        $hide_end_time = ((isset($event['date']) and isset($event['date']['hide_end_time'])) ? $event['date']['hide_end_time'] : 0);
+
         $day_start_seconds = $this->time_to_seconds($this->to_24hours($start_time_hour, $start_time_ampm), $start_time_minutes);
         $day_end_seconds = $this->time_to_seconds($this->to_24hours($end_time_hour, $end_time_ampm), $end_time_minutes);
-        
+
+        update_post_meta($post_id, 'mec_allday', $allday);
+        update_post_meta($post_id, 'mec_hide_time', $hide_time);
+        update_post_meta($post_id, 'mec_hide_end_time', $hide_end_time);
+
         update_post_meta($post_id, 'mec_start_date', $event['start']);
         update_post_meta($post_id, 'mec_start_time_hour', $start_time_hour);
         update_post_meta($post_id, 'mec_start_time_minutes', $start_time_minutes);
@@ -3347,7 +3363,7 @@ class MEC_main extends MEC_base
             'end'=>array('date'=>$event['end'], 'hour'=>$end_time_hour, 'minutes'=>$end_time_minutes, 'ampm'=>$end_time_ampm),
             'repeat'=>((isset($event['date']) and isset($event['date']['repeat']) and is_array($event['date']['repeat'])) ? $event['date']['repeat'] : array()),
             'allday'=>$allday,
-            'hide_time'=>0,
+            'hide_time'=>((isset($event['date']) and isset($event['date']['hide_time'])) ? $event['date']['hide_time'] : 0),
             'hide_end_time'=>((isset($event['date']) and isset($event['date']['hide_end_time'])) ? $event['date']['hide_end_time'] : 0),
             'comment'=>$time_comment,
         );
@@ -4027,7 +4043,7 @@ class MEC_main extends MEC_base
             $JSON = $this->get_web_page('https://ipapi.co/'.$ip.'/json/');
             $data = json_decode($JSON, true);
         }
-
+        
         // Second provide returns X instead of false in case of error!
         return (isset($data['timezone']) and strtolower($data['timezone']) != 'x') ? $data['timezone'] : false;
     }
@@ -4316,5 +4332,35 @@ class MEC_main extends MEC_base
     public function get_pro_link()
     {
         return 'https://webnus.net/pricing/#plugins';
+    }
+
+    /**
+     * Get Label for booking confirmation
+     * @author Webnus <info@webnus.biz>
+     * @param int $confirmed
+     * @return string
+     */
+    public function get_confirmation_label($confirmed = 1)
+    {
+        if($confirmed == '1') $label = __('Confirmed', 'mec');
+        elseif($confirmed == '-1') $label = __('Rejected', 'mec');
+        else $label = __('Pending', 'mec');
+
+        return $label;
+    }
+
+    /**
+     * Get Label for booking verification
+     * @author Webnus <info@webnus.biz>
+     * @param int $verified
+     * @return string
+     */
+    public function get_verification_label($verified = 1)
+    {
+        if($verified == '1') $label = __('Verified', 'mec');
+        elseif($verified == '-1') $label = __('Canceled', 'mec');
+        else $label = __('Waiting', 'mec');
+
+        return $label;
     }
 }

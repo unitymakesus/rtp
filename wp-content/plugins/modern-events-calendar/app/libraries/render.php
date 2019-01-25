@@ -406,8 +406,8 @@ class MEC_render extends MEC_base
         else
         {
             $data->time = array(
-                'start'=>$this->main->get_time($meta['mec_start_day_seconds']),
-                'end'=>($hide_end_time ? '' : $this->main->get_time($meta['mec_end_day_seconds']))
+                'start'=>(isset($meta['mec_start_day_seconds']) ? $this->main->get_time($meta['mec_start_day_seconds']) : ''),
+                'end'=>($hide_end_time ? '' : (isset($meta['mec_end_day_seconds']) ? $this->main->get_time($meta['mec_end_day_seconds']) : ''))
             );
         }
 

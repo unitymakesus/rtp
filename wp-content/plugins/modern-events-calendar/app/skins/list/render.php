@@ -59,7 +59,7 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                         <a class="mec-booking-button" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')); ?></a>
                     </div>
                 <?php elseif($this->style == 'classic'): ?>
-                    <div class="mec-event-image"><a href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumbnail']; ?></a></div>
+                    <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumbnail']; ?></a></div>
                     <?php if(isset($settings['multiple_day_show_method']) && $settings['multiple_day_show_method'] == 'all_days') : ?>
                         <div class="mec-event-date mec-color"><i class="mec-sl-calendar"></i> <?php echo date_i18n($this->date_format_classic_1, strtotime($event->date['start']['date'])); ?></div>
                     <?php else: ?>
@@ -89,7 +89,7 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                     ?>
                     <div class="mec-topsec">
                         <div class="col-md-3 mec-event-image-wrap mec-col-table-c">
-                            <div class="mec-event-image"><a href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumblist']; ?></a></div>
+                            <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumblist']; ?></a></div>
                         </div>
                         <div class="col-md-6 mec-col-table-c mec-event-content-wrap">
                             <div class="mec-event-content">
@@ -144,7 +144,12 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                     <div class="mec-events-toggle">
                         <!-- toggle item start -->
                         <div class="mec-toggle-item">
-                            <div class="mec-toggle-item-inner" id="" tabindex="0" aria-controls="" aria-expanded="false">
+                            <div class="mec-toggle-item-inner<?php if ( $this->toggle_month_divider == '1' ) echo ' mec-toogle-inner-month-divider'; ?>" id="" tabindex="0" aria-controls="" aria-expanded="false">
+                                <?php if ( $this->toggle_month_divider == '1' ) : ?>
+                                <div class="mec-toggle-month-inner-image">
+                                    <a href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumbnail']; ?></a>
+                                </div>
+                                <?php endif; ?>
                                 <div class="mec-toggle-item-col">
                                     <?php if(isset($settings['multiple_day_show_method']) && $settings['multiple_day_show_method'] == 'all_days') : ?>
                                         <div class="mec-event-date"><?php echo date_i18n($this->date_format_acc_1, strtotime($event->date['start']['date'])); ?></div>

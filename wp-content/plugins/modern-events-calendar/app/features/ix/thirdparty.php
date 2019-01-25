@@ -10,10 +10,11 @@ $third_parties = $this->main->get_integrated_plugins_for_import();
         <a href="<?php echo $this->main->remove_qs_var('tab'); ?>" class="nav-tab"><?php echo __('Google Cal. Import', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-g-calendar-export'); ?>" class="nav-tab"><?php echo __('Google Cal. Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-f-calendar-import'); ?>" class="nav-tab"><?php echo __('Facebook Cal. Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-meetup-import'); ?>" class="nav-tab"><?php echo __('Meetup Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-export'); ?>" class="nav-tab"><?php echo __('Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-import'); ?>" class="nav-tab"><?php echo __('Import', 'mec'); ?></a>
-        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab"><?php echo __('Synchronization', 'mec'); ?></a>
-        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-import'); ?>" class="nav-tab nav-tab-active"><?php echo __('Third Party Plugins', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-thirdparty'); ?>" class="nav-tab nav-tab-active"><?php echo __('Third Party Plugins', 'mec'); ?></a>
     </h2>
     <div class="mec-container">
         <div class="import-content w-clearfix extra">
@@ -105,7 +106,7 @@ $third_parties = $this->main->get_integrated_plugins_for_import();
                         <div class="mec-error"><?php echo $this->response['message']; ?></div>
                     <?php else: ?>
                         <div class="mec-success"><?php echo sprintf(__('%s events successfully imported to your website.', 'mec'), '<strong>'.$this->response['data'].'</strong>'); ?></div>
-                        <div class="info-msg"><strong><?php _e('Attention', 'mec'); ?>:</strong> <?php _e("Although we tried our best to make the events completely compatible with MEC but some modification might be needed. We suggest you to edit the imported listings one by one on MEC edit event page and make sure thay're correct.", 'mec'); ?></div>
+                        <div class="info-msg"><strong><?php _e('Attention', 'mec'); ?>:</strong> <?php _e("Although we tried our best to make the events completely compatible with MEC but some modification might be needed. We suggest you to edit the imported listings one by one on MEC edit event page and make sure they are correct.", 'mec'); ?></div>
                     <?php endif; ?>
                 </div>
             <?php endif; ?>

@@ -58,7 +58,7 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
                 <h1> <?php echo sprintf(__('Welcome %s', 'mec'), $current_user->user_firstname); ?> </h1>
                 <div class="w-welcome">
                     <p>
-                        <?php echo sprintf(__('%s - Most Powerful & Easy to Use Events Management System', 'mec'), '<strong>'.($this->getPRO() ? __('Modern Event Calendar', 'mec') : __('Modern Event Calendar (Lite)', 'mec')).'</strong>'); ?>
+                        <?php echo sprintf(__('%s - Most Powerful & Easy to Use Events Management System', 'mec'), '<strong>'.($this->getPRO() ? __('Modern Events Calendar', 'mec') : __('Modern Events Calendar (Lite)', 'mec')).'</strong>'); ?>
                         <?php if(!$this->getPRO()): ?>
                         <span><a href="https://wordpress.org/support/plugin/modern-events-calendar-lite/reviews/#new-post" target="_blank"><?php echo _x('Rate the plugin ★★★★★', 'plugin rate', 'mec'); ?></a></span>
                         <?php endif; ?>

@@ -53,7 +53,7 @@ class MEC_book extends MEC_base
             
             $total_tickets_count += $count;
             
-            $t_price = (isset($event_tickets[$ticket_id]) and isset($event_tickets[$ticket_id]['price'])) ? $event_tickets[$ticket_id]['price'] : 0;
+            $t_price = (isset($event_tickets[$ticket_id]) and isset($event_tickets[$ticket_id]['price'])) ? $this->get_ticket_price($event_tickets[$ticket_id], current_time('Y-m-d')) : 0;
             $total = $total+($t_price*$count);
         }
         
@@ -217,6 +217,7 @@ class MEC_book extends MEC_base
         update_post_meta($book_id, 'mec_event_id', $event_id);
         update_post_meta($book_id, 'mec_date', $transaction['date']);
         update_post_meta($book_id, 'mec_ticket_id', $ticket_ids);
+        update_post_meta($book_id, 'mec_booking_time', current_time('Y-m-d H:i:s'));
 
         $price = isset($transaction['price']) ? $transaction['price'] : (isset($transaction['total']) ? $transaction['total'] : 0);
         update_post_meta($book_id, 'mec_price', $price);
@@ -636,5 +637,62 @@ class MEC_book extends MEC_base
     public function get_transaction_id_book_id($book_id)
     {
         return get_post_meta($book_id, 'mec_transaction_id', true);
+    }
+
+    public function get_ticket_price_label($ticket, $date)
+    {
+        return $this->get_ticket_price_key($ticket, $date, 'price_label');
+    }
+
+    public function get_ticket_price($ticket, $date)
+    {
+        return $this->get_ticket_price_key($ticket, $date, 'price');
+    }
+
+    public function get_ticket_price_key($ticket, $date, $key)
+    {
+        $data = isset($ticket[$key]) ? $ticket[$key] : NULL;
+        $price_dates = (isset($ticket['dates']) and is_array($ticket['dates'])) ? $ticket['dates'] : array();
+
+        if(!count($price_dates)) return $data;
+
+        $time = strtotime($date);
+        foreach($price_dates as $price_date)
+        {
+            $start = $price_date['start'];
+            $end = $price_date['end'];
+
+            if($time >= strtotime($start) and $time <= strtotime($end))
+            {
+                if($key == 'price_label') $data = $price_date['label'];
+                else $data = $price_date[$key];
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Returns tickets prices of an event for a certain date
+     * @author Webnus <info@webnus.biz>
+     * @param int $event_id
+     * @param string $date
+     * @param string $key
+     * @return array
+     */
+    public function get_tickets_prices($event_id, $date, $key = 'price')
+    {
+        $prices = array();
+        $tickets = get_post_meta($event_id, 'mec_tickets', true);
+
+        // No Ticket Found!
+        if(!is_array($tickets) or (is_array($tickets) and !count($tickets))) return $prices;
+
+        foreach($tickets as $ticket_id=>$ticket)
+        {
+            $prices[$ticket_id] = $this->get_ticket_price_key($ticket, $date, $key);
+        }
+
+        return $prices;
     }
 }

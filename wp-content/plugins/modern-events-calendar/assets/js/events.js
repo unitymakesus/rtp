@@ -203,7 +203,7 @@ jQuery(document).ready(function($)
     });
     
     mec_location_toggle();
-    mec_organizer_toggle()
+    mec_organizer_toggle();
     
     $('#mec_repeat').on('change', function()
     {
@@ -255,6 +255,16 @@ jQuery(document).ready(function($)
         
         $('#mec_tickets').append(html);
         $('#mec_new_ticket_key').val(parseInt(key)+1);
+
+        $('.mec_add_price_date_button').off('click').on('click', function()
+        {
+            mec_handle_add_price_date_button(this);
+        });
+    });
+
+    $('.mec_add_price_date_button').off('click').on('click', function()
+    {
+        mec_handle_add_price_date_button(this);
     });
 
     $('#mec_add_hourly_schedule_day_button').on('click', function()
@@ -392,6 +402,12 @@ function mec_hourly_schedule_remove(day, i)
     jQuery("#mec_hourly_schedule_row"+day+'_'+i).remove();
 }
 
+function mec_hourly_schedule_day_remove(day)
+{
+    console.log('here', day);
+    jQuery("#mec_meta_box_hourly_schedule_day_"+day).remove();
+}
+
 function mec_ticket_remove(i)
 {
     jQuery("#mec_ticket_row"+i).remove();
@@ -453,4 +469,27 @@ function mec_reg_fields_option_remove(field_key, key)
 function mec_reg_fields_remove(key)
 {
     jQuery("#mec_reg_fields_"+key).remove();
+}
+
+function mec_handle_add_price_date_button(e)
+{
+    var key = jQuery(e).data('key');
+    var p = jQuery('#mec_new_ticket_price_key_'+key).val();
+    var html = jQuery('#mec_new_ticket_price_raw_'+key).html().replace(/:i:/g, key).replace(/:j:/g, p);
+
+    jQuery('#mec-ticket-price-dates-'+key).append(html);
+    jQuery('#mec_new_ticket_price_key_'+key).val(parseInt(p)+1);
+    jQuery('#mec-ticket-price-dates-'+key+' .new_added').datepicker(
+    {
+        changeYear: true,
+        changeMonth: true,
+        dateFormat: 'yy-mm-dd',
+        gotoCurrent: true,
+        yearRange: 'c-3:c+5',
+    });
+}
+
+function mec_ticket_price_remove(ticket_key, price_key)
+{
+    jQuery("#mec_ticket_price_raw_"+ticket_key+"_"+price_key).remove();
 }

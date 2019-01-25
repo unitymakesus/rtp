@@ -93,7 +93,7 @@ switch ( $instance ) :
 		<?php
 
 		$pixel_info = $this->make_info(
-			__( 'The pixel counter computes whether the input will fit on search engine Result Pages.', 'autodescription' ),
+			__( 'The pixel counter computes whether the input will fit on search engine result pages.', 'autodescription' ),
 			'',
 			false
 		);
@@ -255,7 +255,7 @@ switch ( $instance ) :
 					'cache_object',
 					esc_html__( 'Enable object cache?', 'autodescription' )
 					. ' ' . $this->make_info( __( 'Object cache generally works faster than transient cache.', 'autodescription' ), '', false ),
-					esc_html__( 'An object cache handler has been detected. If you enable this option, you might wish to disable description and Schema transient caching.', 'autodescription' ),
+					esc_html__( 'An object cache handler has been detected. If you enable this option, you might wish to disable the Schema.org transient caching.', 'autodescription' ),
 					false
 				),
 				true

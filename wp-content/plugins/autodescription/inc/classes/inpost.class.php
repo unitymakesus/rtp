@@ -8,7 +8,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2018 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -164,7 +164,7 @@ class Inpost extends Profile {
 		if ( $this->is_front_page_by_id( $this->get_the_real_ID() ) ) {
 			if ( $this->can_access_settings() ) {
 				$schema = \is_rtl() ? '%2$s - %1$s' : '%1$s - %2$s';
-				$title = sprintf(
+				$title  = sprintf(
 					$schema,
 					\__( 'Homepage SEO Settings', 'autodescription' ),
 					$this->make_info(
@@ -240,7 +240,7 @@ class Inpost extends Profile {
 			}
 		} elseif ( isset( $object->taxonomy ) ) {
 			//* Singular name.
-			$type = $this->get_tax_type_label( $object->taxonomy );
+			$type    = $this->get_tax_type_label( $object->taxonomy );
 			$is_term = true;
 		}
 

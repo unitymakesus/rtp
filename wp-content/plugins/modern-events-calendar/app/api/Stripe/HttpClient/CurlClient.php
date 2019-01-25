@@ -163,9 +163,6 @@ class CurlClient implements ClientInterface
         $opts[CURLOPT_TIMEOUT] = $this->timeout;
         $opts[CURLOPT_HEADERFUNCTION] = $headerCallback;
         $opts[CURLOPT_HTTPHEADER] = $headers;
-        if (!Stripe::$verifySslCerts) {
-            $opts[CURLOPT_SSL_VERIFYPEER] = false;
-        }
 
         curl_setopt_array($curl, $opts);
         $rbody = curl_exec($curl);

@@ -655,87 +655,93 @@ class MEC_feature_events extends MEC_base
             </div>
             <div id="mec_meta_box_hourly_schedule_days">
                 <?php $d = 0; foreach($hourly_schedules as $day): ?>
-                <h4><?php echo isset($day['title']) ? $day['title'] : sprintf(__('Day %s', 'mec'), $d+1); ?></h4>
-                <div id="mec_meta_box_hourly_schedule_form">
-                    <div class="mec-form-row">
-                        <div class="mec-col-1"><label for="mec_add_hourly_schedule_day<?php echo $d; ?>_title"><?php echo __('Title', 'mec'); ?></label></div>
-                        <div class="mec-col-11"><input type="text" id="mec_add_hourly_schedule_day<?php echo $d; ?>_title" name="mec[hourly_schedules][<?php echo $d; ?>][title]" value="<?php echo isset($day['title']) ? $day['title'] : ''; ?>" class="widefat"></div>
-                    </div>
-                    <div class="mec-form-row">
-                        <button class="button mec-add-hourly-schedule-button" type="button" id="mec_add_hourly_schedule_button<?php echo $d; ?>" data-day="<?php echo $d; ?>"><?php _e('Add', 'mec'); ?></button>
-                        <span class="description"><?php esc_attr_e('Add new hourly schedule row', 'mec'); ?></span>
-                    </div>
-                    <div id="mec_hourly_schedules<?php echo $d; ?>">
-                        <?php $i = 0; foreach($day['schedules'] as $key=>$hourly_schedule): if(!is_numeric($key)) continue; $i = max($i, $key); ?>
-                        <div class="mec-form-row mec-box" id="mec_hourly_schedule_row<?php echo $d; ?>_<?php echo $key; ?>">
-                            <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][from]" placeholder="<?php esc_attr_e('From e.g. 8:15', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['from']); ?>" />
-                            <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][to]" placeholder="<?php esc_attr_e('To e.g. 8:45', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['to']); ?>" />
-                            <input class="mec-col-3" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][title]" placeholder="<?php esc_attr_e('Title', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['title']); ?>" />
-                            <input class="mec-col-6" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][description]" placeholder="<?php esc_attr_e('Description', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['description']); ?>" />
-                            <button class="button" type="button" onclick="mec_hourly_schedule_remove(<?php echo $d; ?>, <?php echo $key; ?>)"><?php _e('Remove', 'mec'); ?></button>
-                            <?php if($speakers_status): ?>
-                            <div class="mec-col-12 mec-hourly-schedule-form-speakers">
-                                <strong><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></strong>
-                                <?php foreach($speakers as $speaker): ?>
-                                    <label><input type="checkbox" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][speakers][]" value="<?php echo $speaker->term_id; ?>" <?php echo (isset($hourly_schedule['speakers']) and in_array($speaker->term_id, $hourly_schedule['speakers'])) ? 'checked="checked"' : ''; ?>><?php echo $speaker->name; ?></label>
-                                <?php endforeach; ?>
-                            </div>
-                            <?php endif; ?>
+                <div id="mec_meta_box_hourly_schedule_day_<?php echo $d; ?>">
+                    <h4><?php echo isset($day['title']) ? $day['title'] : sprintf(__('Day %s', 'mec'), $d+1); ?></h4>
+                    <div id="mec_meta_box_hourly_schedule_form<?php echo $d; ?>">
+                        <div class="mec-form-row">
+                            <div class="mec-col-1"><label for="mec_add_hourly_schedule_day<?php echo $d; ?>_title"><?php echo __('Title', 'mec'); ?></label></div>
+                            <div class="mec-col-10"><input type="text" id="mec_add_hourly_schedule_day<?php echo $d; ?>_title" name="mec[hourly_schedules][<?php echo $d; ?>][title]" value="<?php echo isset($day['title']) ? $day['title'] : ''; ?>" class="widefat"></div>
+                            <div class="mec-col-1"><button class="button" type="button" onclick="mec_hourly_schedule_day_remove(<?php echo $d; ?>)"><?php echo __('Remove', 'mec'); ?></button></div>
                         </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <input type="hidden" id="mec_new_hourly_schedule_key<?php echo $d; ?>" value="<?php echo $i+1; ?>" />
-                <div class="mec-util-hidden" id="mec_new_hourly_schedule_raw<?php echo $d; ?>">
-                    <div class="mec-form-row mec-box" id="mec_hourly_schedule_row<?php echo $d; ?>_:i:">
-                        <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][from]" placeholder="<?php esc_attr_e('From e.g. 8:15', 'mec'); ?>" />
-                        <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][to]" placeholder="<?php esc_attr_e('To e.g. 8:45', 'mec'); ?>" />
-                        <input class="mec-col-3" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][title]" placeholder="<?php esc_attr_e('Title', 'mec'); ?>" />
-                        <input class="mec-col-6" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][description]" placeholder="<?php esc_attr_e('Description', 'mec'); ?>" />
-                        <button class="button" type="button" onclick="mec_hourly_schedule_remove(<?php echo $d; ?>, :i:)"><?php _e('Remove', 'mec'); ?></button>
-                        <?php if($speakers_status): ?>
-                        <div class="mec-col-12 mec-hourly-schedule-form-speakers">
-                            <strong><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></strong>
-                            <?php foreach($speakers as $speaker): ?>
-                                <label><input type="checkbox" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][speakers][]" value="<?php echo $speaker->term_id; ?>"><?php echo $speaker->name; ?></label>
+                        <div class="mec-form-row">
+                            <button class="button mec-add-hourly-schedule-button" type="button" id="mec_add_hourly_schedule_button<?php echo $d; ?>" data-day="<?php echo $d; ?>"><?php _e('Add', 'mec'); ?></button>
+                            <span class="description"><?php esc_attr_e('Add new hourly schedule row', 'mec'); ?></span>
+                        </div>
+                        <div id="mec_hourly_schedules<?php echo $d; ?>">
+                            <?php $i = 0; foreach($day['schedules'] as $key=>$hourly_schedule): if(!is_numeric($key)) continue; $i = max($i, $key); ?>
+                                <div class="mec-form-row mec-box" id="mec_hourly_schedule_row<?php echo $d; ?>_<?php echo $key; ?>">
+                                    <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][from]" placeholder="<?php esc_attr_e('From e.g. 8:15', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['from']); ?>" />
+                                    <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][to]" placeholder="<?php esc_attr_e('To e.g. 8:45', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['to']); ?>" />
+                                    <input class="mec-col-3" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][title]" placeholder="<?php esc_attr_e('Title', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['title']); ?>" />
+                                    <input class="mec-col-6" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][description]" placeholder="<?php esc_attr_e('Description', 'mec'); ?>" value="<?php echo esc_attr($hourly_schedule['description']); ?>" />
+                                    <button class="button" type="button" onclick="mec_hourly_schedule_remove(<?php echo $d; ?>, <?php echo $key; ?>)"><?php _e('Remove', 'mec'); ?></button>
+                                    <?php if($speakers_status): ?>
+                                        <div class="mec-col-12 mec-hourly-schedule-form-speakers">
+                                            <strong><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></strong>
+                                            <?php foreach($speakers as $speaker): ?>
+                                                <label><input type="checkbox" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][<?php echo $key; ?>][speakers][]" value="<?php echo $speaker->term_id; ?>" <?php echo (isset($hourly_schedule['speakers']) and in_array($speaker->term_id, $hourly_schedule['speakers'])) ? 'checked="checked"' : ''; ?>><?php echo $speaker->name; ?></label>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
                             <?php endforeach; ?>
                         </div>
-                        <?php endif; ?>
+                    </div>
+                    <input type="hidden" id="mec_new_hourly_schedule_key<?php echo $d; ?>" value="<?php echo $i+1; ?>" />
+                    <div class="mec-util-hidden" id="mec_new_hourly_schedule_raw<?php echo $d; ?>">
+                        <div class="mec-form-row mec-box" id="mec_hourly_schedule_row<?php echo $d; ?>_:i:">
+                            <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][from]" placeholder="<?php esc_attr_e('From e.g. 8:15', 'mec'); ?>" />
+                            <input class="mec-col-1" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][to]" placeholder="<?php esc_attr_e('To e.g. 8:45', 'mec'); ?>" />
+                            <input class="mec-col-3" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][title]" placeholder="<?php esc_attr_e('Title', 'mec'); ?>" />
+                            <input class="mec-col-6" type="text" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][description]" placeholder="<?php esc_attr_e('Description', 'mec'); ?>" />
+                            <button class="button" type="button" onclick="mec_hourly_schedule_remove(<?php echo $d; ?>, :i:)"><?php _e('Remove', 'mec'); ?></button>
+                            <?php if($speakers_status): ?>
+                                <div class="mec-col-12 mec-hourly-schedule-form-speakers">
+                                    <strong><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></strong>
+                                    <?php foreach($speakers as $speaker): ?>
+                                        <label><input type="checkbox" name="mec[hourly_schedules][<?php echo $d; ?>][schedules][:i:][speakers][]" value="<?php echo $speaker->term_id; ?>"><?php echo $speaker->name; ?></label>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
                 <?php $d++; endforeach; ?>
             </div>
             <input type="hidden" id="mec_new_hourly_schedule_day_key" value="<?php echo $d; ?>" />
             <div class="mec-util-hidden" id="mec_new_hourly_schedule_day_raw">
-                <h4><?php echo __('Day :dd:', 'mec'); ?></h4>
-                <div id="mec_meta_box_hourly_schedule_form:d:">
-                    <div class="mec-form-row">
-                        <div class="mec-col-1"><label for="mec_add_hourly_schedule_day:d:_title"><?php echo __('Title', 'mec'); ?></label></div>
-                        <div class="mec-col-11"><input type="text" id="mec_add_hourly_schedule_day:d:_title" name="mec[hourly_schedules][:d:][title]" value="<?php echo __('Day :dd:', 'mec'); ?>" class="widefat"></div>
-                    </div>
-                    <div class="mec-form-row">
-                        <button class="button mec-add-hourly-schedule-button" type="button" id="mec_add_hourly_schedule_button:d:" data-day=":d:"><?php _e('Add', 'mec'); ?></button>
-                        <span class="description"><?php esc_attr_e('Add new hourly schedule row', 'mec'); ?></span>
-                    </div>
-                    <div id="mec_hourly_schedules:d:">
-                    </div>
-                </div>
-                <input type="hidden" id="mec_new_hourly_schedule_key:d:" value="1" />
-                <div class="mec-util-hidden" id="mec_new_hourly_schedule_raw:d:">
-                    <div class="mec-form-row mec-box" id="mec_hourly_schedule_row:d:_:i:">
-                        <input class="mec-col-1" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][from]" placeholder="<?php esc_attr_e('From e.g. 8:15', 'mec'); ?>" />
-                        <input class="mec-col-1" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][to]" placeholder="<?php esc_attr_e('To e.g. 8:45', 'mec'); ?>" />
-                        <input class="mec-col-3" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][title]" placeholder="<?php esc_attr_e('Title', 'mec'); ?>" />
-                        <input class="mec-col-6" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][description]" placeholder="<?php esc_attr_e('Description', 'mec'); ?>" />
-                        <button class="button" type="button" onclick="mec_hourly_schedule_remove(:d:, :i:)"><?php _e('Remove', 'mec'); ?></button>
-                        <?php if($speakers_status): ?>
-                        <div class="mec-col-12 mec-hourly-schedule-form-speakers">
-                            <strong><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></strong>
-                            <?php foreach($speakers as $speaker): ?>
-                                <label><input type="checkbox" name="mec[hourly_schedules][:d:][schedules][:i:][speakers][]" value="<?php echo $speaker->term_id; ?>"><?php echo $speaker->name; ?></label>
-                            <?php endforeach; ?>
+                <div id="mec_meta_box_hourly_schedule_day_:d:">
+                    <h4><?php echo __('Day :dd:', 'mec'); ?></h4>
+                    <div id="mec_meta_box_hourly_schedule_form:d:">
+                        <div class="mec-form-row">
+                            <div class="mec-col-1"><label for="mec_add_hourly_schedule_day:d:_title"><?php echo __('Title', 'mec'); ?></label></div>
+                            <div class="mec-col-10"><input type="text" id="mec_add_hourly_schedule_day:d:_title" name="mec[hourly_schedules][:d:][title]" value="<?php echo __('Day :dd:', 'mec'); ?>" class="widefat"></div>
+                            <div class="mec-col-1"><button class="button" type="button" onclick="mec_hourly_schedule_day_remove(:d:)"><?php echo __('Remove', 'mec'); ?></button></div>
                         </div>
-                        <?php endif; ?>
+                        <div class="mec-form-row">
+                            <button class="button mec-add-hourly-schedule-button" type="button" id="mec_add_hourly_schedule_button:d:" data-day=":d:"><?php _e('Add', 'mec'); ?></button>
+                            <span class="description"><?php esc_attr_e('Add new hourly schedule row', 'mec'); ?></span>
+                        </div>
+                        <div id="mec_hourly_schedules:d:">
+                        </div>
+                    </div>
+                    <input type="hidden" id="mec_new_hourly_schedule_key:d:" value="1" />
+                    <div class="mec-util-hidden" id="mec_new_hourly_schedule_raw:d:">
+                        <div class="mec-form-row mec-box" id="mec_hourly_schedule_row:d:_:i:">
+                            <input class="mec-col-1" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][from]" placeholder="<?php esc_attr_e('From e.g. 8:15', 'mec'); ?>" />
+                            <input class="mec-col-1" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][to]" placeholder="<?php esc_attr_e('To e.g. 8:45', 'mec'); ?>" />
+                            <input class="mec-col-3" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][title]" placeholder="<?php esc_attr_e('Title', 'mec'); ?>" />
+                            <input class="mec-col-6" type="text" name="mec[hourly_schedules][:d:][schedules][:i:][description]" placeholder="<?php esc_attr_e('Description', 'mec'); ?>" />
+                            <button class="button" type="button" onclick="mec_hourly_schedule_remove(:d:, :i:)"><?php _e('Remove', 'mec'); ?></button>
+                            <?php if($speakers_status): ?>
+                            <div class="mec-col-12 mec-hourly-schedule-form-speakers">
+                                <strong><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></strong>
+                                <?php foreach($speakers as $speaker): ?>
+                                    <label><input type="checkbox" name="mec[hourly_schedules][:d:][schedules][:i:][speakers][]" value="<?php echo $speaker->term_id; ?>"><?php echo $speaker->name; ?></label>
+                                <?php endforeach; ?>
+                            </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -902,6 +908,39 @@ class MEC_feature_events extends MEC_base
                             </label>
                             <button class="button" type="button" onclick="mec_ticket_remove(<?php echo $key; ?>);"><?php _e('Remove', 'mec'); ?></button>
                         </div>
+                        <div id="mec_price_per_dates_container">
+                            <div class="mec-form-row">
+                                <h4><?php _e('Price per Date', 'mec'); ?></h4>
+                                <button class="button mec_add_price_date_button" type="button" data-key="<?php echo $key; ?>"><?php _e('Add', 'mec'); ?></button>
+                            </div>
+                            <div id="mec-ticket-price-dates-<?php echo $key; ?>">
+                                <?php if(isset($ticket['dates']) and count($ticket['dates'])): ?>
+                                <?php $j = 0; foreach($ticket['dates'] as $p=>$price_date): if(!is_numeric($p)) continue; $j = max($j, $p); ?>
+                                    <div id="mec_ticket_price_raw_<?php echo $key; ?>_<?php echo $p; ?>">
+                                        <div class="mec-form-row">
+                                            <input class="mec-col-3 mec_date_picker" type="text" name="mec[tickets][<?php echo $key; ?>][dates][<?php echo $p; ?>][start]" value="<?php echo isset($price_date['start']) ? $price_date['start'] : date('Y-m-d'); ?>" placeholder="<?php esc_attr_e('Start', 'mec'); ?>" />
+                                            <input class="mec-col-3 mec_date_picker" type="text" name="mec[tickets][<?php echo $key; ?>][dates][<?php echo $p; ?>][end]" value="<?php echo isset($price_date['end']) ? $price_date['end'] : date('Y-m-d', strtotime('+10 days')); ?>" placeholder="<?php esc_attr_e('End', 'mec'); ?>" />
+                                            <input class="mec-col-3" type="text" name="mec[tickets][<?php echo $key; ?>][dates][<?php echo $p; ?>][price]" value="<?php echo isset($price_date['price']) ? $price_date['price'] : ''; ?>" placeholder="<?php esc_attr_e('Price', 'mec'); ?>" />
+                                            <input class="mec-col-2" type="text" name="mec[tickets][<?php echo $key; ?>][dates][<?php echo $p; ?>][label]" value="<?php echo isset($price_date['label']) ? $price_date['label'] : ''; ?>" placeholder="<?php esc_attr_e('Label', 'mec'); ?>" />
+                                            <button class="button mec-col-1" type="button" onclick="mec_ticket_price_remove(<?php echo $key; ?>, <?php echo $p; ?>)"><?php _e('Remove', 'mec'); ?></button>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
+                            <input type="hidden" id="mec_new_ticket_price_key_<?php echo $key; ?>" value="<?php echo $j+1; ?>" />
+                            <div class="mec-util-hidden" id="mec_new_ticket_price_raw_<?php echo $key; ?>">
+                                <div id="mec_ticket_price_raw_<?php echo $key; ?>_:j:">
+                                    <div class="mec-form-row">
+                                        <input class="mec-col-3 new_added" type="text" name="mec[tickets][<?php echo $key; ?>][dates][:j:][start]" value="<?php echo date('Y-m-d'); ?>" placeholder="<?php esc_attr_e('Start', 'mec'); ?>" />
+                                        <input class="mec-col-3 new_added" type="text" name="mec[tickets][<?php echo $key; ?>][dates][:j:][end]" value="<?php echo date('Y-m-d', strtotime('+10 days')); ?>" placeholder="<?php esc_attr_e('End', 'mec'); ?>" />
+                                        <input class="mec-col-3" type="text" name="mec[tickets][<?php echo $key; ?>][dates][:j:][price]" placeholder="<?php esc_attr_e('Price', 'mec'); ?>" />
+                                        <input class="mec-col-2" type="text" name="mec[tickets][<?php echo $key; ?>][dates][:j:][label]" placeholder="<?php esc_attr_e('Label', 'mec'); ?>" />
+                                        <button class="button mec-col-1" type="button" onclick="mec_ticket_price_remove(<?php echo $key; ?>, :j:)"><?php _e('Remove', 'mec'); ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
                     <?php endforeach; ?>
                 </div>
@@ -970,8 +1009,28 @@ class MEC_feature_events extends MEC_base
                             <input id="mec_tickets_unlimited_:i:" type="checkbox" value="1" name="mec[tickets][:i:][unlimited]" />
                             <?php _e('Unlimited', 'mec'); ?>
                         </label>
-                        <button class="button" type="button" onclick="mec_ticket_remove(:i:);"><?php _e('Remove', 'mec'); ?></button>
+                        <button class="button" type="button" onclick="mec_ticket_remove(:i:)"><?php _e('Remove', 'mec'); ?></button>
 					</div>
+                    <div id="mec_price_per_dates_container_:i:">
+                        <div class="mec-form-row">
+                            <h4><?php _e('Price per Date', 'mec'); ?></h4>
+                            <button class="button mec_add_price_date_button" type="button" data-key=":i:"><?php _e('Add', 'mec'); ?></button>
+                        </div>
+                        <div id="mec-ticket-price-dates-:i:">
+                        </div>
+                        <input type="hidden" id="mec_new_ticket_price_key_:i:" value="1" />
+                        <div class="mec-util-hidden" id="mec_new_ticket_price_raw_:i:">
+                            <div id="mec_ticket_price_raw_:i:_:j:">
+                                <div class="mec-form-row">
+                                    <input class="mec-col-3 new_added" type="text" name="mec[tickets][:i:][dates][:j:][start]" value="<?php echo date('Y-m-d'); ?>" placeholder="<?php esc_attr_e('Start', 'mec'); ?>" />
+                                    <input class="mec-col-3 new_added" type="text" name="mec[tickets][:i:][dates][:j:][end]" value="<?php echo date('Y-m-d', strtotime('+10 days')); ?>" placeholder="<?php esc_attr_e('End', 'mec'); ?>" />
+                                    <input class="mec-col-3" type="text" name="mec[tickets][:i:][dates][:j:][price]" placeholder="<?php esc_attr_e('Price', 'mec'); ?>" />
+                                    <input class="mec-col-2" type="text" name="mec[tickets][:i:][dates][:j:][label]" placeholder="<?php esc_attr_e('Label', 'mec'); ?>" />
+                                    <button class="button mec-col-1" type="button" onclick="mec_ticket_price_remove(:i:, :j:)"><?php _e('Remove', 'mec'); ?></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1603,6 +1662,19 @@ class MEC_feature_events extends MEC_base
         
         $tickets = isset($_mec['tickets']) ? $_mec['tickets'] : array();
         unset($tickets[':i:']);
+
+        // Unset Ticket Dats
+        if(count($tickets))
+        {
+            $new_tickets = array();
+            foreach($tickets as $key=>$ticket)
+            {
+                unset($ticket['dates'][':j:']);
+                $new_tickets[$key] = $ticket;
+            }
+
+            $tickets = $new_tickets;
+        }
         
         update_post_meta($post_id, 'mec_tickets', $tickets);
         

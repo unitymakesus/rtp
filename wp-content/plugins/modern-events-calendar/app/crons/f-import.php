@@ -195,5 +195,5 @@ do
 }
 while($next_page);
 
-echo sprintf(__('%s facebook events imported/updated.', 'mec'), count($posts));
+echo sprintf(__('%s Facebook events imported/updated.', 'mec'), count($posts));
 exit;

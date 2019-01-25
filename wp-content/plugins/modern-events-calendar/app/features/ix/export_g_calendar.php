@@ -14,9 +14,10 @@ if($ix_options['google_export_token']) $this->action = 'google-calendar-export-s
         <a href="<?php echo $this->main->remove_qs_var('tab'); ?>" class="nav-tab"><?php echo __('Google Cal. Import', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-g-calendar-export'); ?>" class="nav-tab nav-tab-active"><?php echo __('Google Cal. Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-f-calendar-import'); ?>" class="nav-tab"><?php echo __('Facebook Cal. Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-meetup-import'); ?>" class="nav-tab"><?php echo __('Meetup Import', 'mec'); ?></a>
+        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-export'); ?>" class="nav-tab"><?php echo __('Export', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-import'); ?>" class="nav-tab"><?php echo __('Import', 'mec'); ?></a>
-        <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-sync'); ?>" class="nav-tab"><?php echo __('Synchronization', 'mec'); ?></a>
         <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-thirdparty'); ?>" class="nav-tab"><?php echo __('Third Party Plugins', 'mec'); ?></a>
     </h2>
     <div class="mec-container">
@@ -130,7 +131,7 @@ jQuery("#mec_g_calendar_export_form_do").on('submit', function(e)
     jQuery('#mec_ix_google_export_do_message').hide();
     
     // Add loading Class to the button
-    jQuery("#mec_ix_google_export_do_form_button").addClass('loading').text("<?php esc_attr_e('Importing ...', 'mec'); ?>");
+    jQuery("#mec_ix_google_export_do_form_button").addClass('loading').text("<?php esc_attr_e('Exporting ...', 'mec'); ?>");
     
     var options = jQuery("#mec_g_calendar_export_form_do").serialize();
     jQuery.ajax(

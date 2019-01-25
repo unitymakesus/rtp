@@ -4,7 +4,7 @@ Donate link: https://webnus.net
 Tags: Event, Events, Calendar, Booking, Schedule, Organizer, Venue
 Requires at least: 4.0.0
 Tested up to: 5.0
-Stable tag: 3.3.5
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -191,6 +191,31 @@ You can see [plugin documentation here](https://webnus.net/dox/modern-events-cal
 22. Widget
 
 == Changelog ==
+
+= 3.4.0 =
+- Added: Profile shortcode to show user bookings’ details
+- Added: Import from Meetup
+- Added: Auto sync for importing meetup events
+- Added: Ability to remove hourly schedule days
+- Added: Ability to change ticket price per time periods (Pro)
+- Fixed: Issue in Meetup and Stripe API
+- Fixed: Daily view in mobile and tablet
+- Fixed: Custom color in masonry category
+- Fixed: Masonry in Elementor tab
+- Fixed: Typography issues
+- Fixed: Google reCaptcha in Frontend submission form
+- Fixed: Booking smooth scroll (Pro)
+- Fixed: Event information displaying order in single event page (default skin)
+- Fixed: Date-picker in backend
+- Fixed: Display Grid clean and Monthly View when search box is enable
+- Fixed: Load languages in Lite version
+- Fixed: Load speaker in accordion toggle view
+- Fixed: Alt tag for images in Masonry view
+- Fixed: Modal view when click on thumbnails
+- Fixed: Console error (colorBrightness when no event exists)
+- Fixed: HTML tags in paragraph field of booking form both in backend and frontend (Pro)
+- Fixed: Invalid occurrence date in single event pages
+- Fixed: Some minor issues
 
 = 3.3.5 =
 - Compatibility: WordPress v5.0
