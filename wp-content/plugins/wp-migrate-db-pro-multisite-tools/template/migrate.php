@@ -1,6 +1,6 @@
 <?php
-if ( $this->is_valid_licence() ) {
-	global $loaded_profile, $wpdb;
+if ( $this->license->is_valid_licence() ) {
+	global $wpdb;
 	$table_prefix = $wpdb->base_prefix;
 
 	if ( isset( $loaded_profile['multisite_subsite_export'] ) ) {
@@ -10,18 +10,16 @@ if ( $this->is_valid_licence() ) {
 	if ( isset( $loaded_profile['select_subsite'] ) ) {
 		$loaded_profile['mst_selected_subsite'] = $loaded_profile['select_subsite'];
 	}
-	if ( isset( $loaded_profile['mst_select_subsite'] ) ) {
-		$this->wpmdbpro->lock_url_find_replace_row = true;
-	}
+
 	?>
 	<div class="option-section mst-options">
 
 		<label class="mst checkbox-label" for="mst-select-subsite">
 			<input type="checkbox" name="mst_select_subsite" value="1" data-available="1" id="mst-select-subsite"<?php echo( isset( $loaded_profile['mst_select_subsite'] ) ? ' checked="checked"' : '' ); ?> />
-			<span class="action-text savefile"><?php echo $this->get_string( 'export_subsite_option' ); ?></span>
-			<span class="action-text pull" style="display: none;"><?php echo is_multisite() ? $this->get_string( 'pull_subsite_option' ) : $this->get_string( 'pull_from_subsite_option' ); ?></span>
-			<span class="action-text push" style="display: none;"><?php echo is_multisite() ? $this->get_string( 'push_subsite_option' ) : $this->get_string( 'push_to_subsite_option' ); ?></span>
-			<span class="action-text find_replace" style="display:none;"><?php echo $this->get_string( 'find_replace_subsite_option' ); ?></span>
+			<span class="action-text savefile"><?php echo $instance->get_string( 'export_subsite_option' ); ?></span>
+			<span class="action-text pull" style="display: none;"><?php echo is_multisite() ? $instance->get_string( 'pull_subsite_option' ) : $instance->get_string( 'pull_from_subsite_option' ); ?></span>
+			<span class="action-text push" style="display: none;"><?php echo is_multisite() ? $instance->get_string( 'push_subsite_option' ) : $instance->get_string( 'push_to_subsite_option' ); ?></span>
+			<span class="action-text find_replace" style="display:none;"><?php echo $instance->get_string( 'find_replace_subsite_option' ); ?></span>
 		</label>
 
 		<div class="indent-wrap expandable-content">
@@ -29,9 +27,9 @@ if ( $this->is_valid_licence() ) {
 				<?php
 				printf(
 					'<option value="">%1$s</option>',
-					esc_html( '-- ' . $this->get_string( 'select_subsite' ) . ' --' )
+					esc_html( '-- ' . $instance->get_string( 'select_subsite' ) . ' --' )
 				);
-				$subsites = $this->subsites_list();
+				$subsites = $this->util->subsites_list();
 
 				if ( ! empty( $subsites ) ) {
 					foreach ( $subsites as $blog_id => $subsite_path ) {
@@ -52,8 +50,8 @@ if ( $this->is_valid_licence() ) {
 			<div class="new-prefix-field">
 				<label>
 					<?php echo esc_html( __( 'New Table Name Prefix', 'wp-migrate-db-pro-multisite-tools' ) ) . ':'; ?>
-					<input type="hidden" id="new-prefix-hidden" class="new-prefix" name="new_prefix" value="<?php echo esc_attr( ! empty( $loaded_profile['new_prefix'] ) ? $loaded_profile['new_prefix'] : $table_prefix ); ?>"/>
-					<input type="text" id="new-prefix" size="15" name="new_prefix" class="new-prefix code" placeholder="<?php echo esc_attr( __( 'New Prefix', 'wp-migrate-db-pro-multisite-tools' ) ); ?>" value="<?php echo esc_attr( ! empty( $loaded_profile['new_prefix'] ) ? $loaded_profile['new_prefix'] : $table_prefix ); ?>" autocomplete="off"/>
+					<input type="hidden" id="new-prefix-hidden" class="new-prefix" name="new_prefix" value="<?php echo esc_attr( ! empty( $loaded_profile['new_prefix'] ) ? $loaded_profile['new_prefix'] : $table_prefix ); ?>" />
+					<input type="text" id="new-prefix" size="15" name="new_prefix" class="new-prefix code" placeholder="<?php echo esc_attr( __( 'New Prefix', 'wp-migrate-db-pro-multisite-tools' ) ); ?>" value="<?php echo esc_attr( ! empty( $loaded_profile['new_prefix'] ) ? $loaded_profile['new_prefix'] : $table_prefix ); ?>" autocomplete="off" />
 					<span id="new-prefix-readonly" class="new-prefix"><?php echo esc_attr( ! empty( $loaded_profile['new_prefix'] ) ? $loaded_profile['new_prefix'] : $table_prefix ); ?></span>
 				</label>
 			</div>
@@ -64,7 +62,7 @@ if ( $this->is_valid_licence() ) {
 		</p>
 
 		<p class="mst-different-plugin-version-notice inline-message warning" style="display: none; margin: 10px 0 0 0;">
-			<strong><?php _e( 'Version Mismatch', 'wp-migrate-db-pro-multisite-tools' ); ?></strong> &mdash; <?php printf( __( 'We have detected you have version <span class="mst-remote-version"></span> of WP Migrate DB Pro Multisite Tools at <span class="mst-remote-location"></span> but are using %1$s here. Please go to the <a href="%2$s">Plugins page</a> on both installs and check for updates.', 'wp-migrate-db-pro-multisite-tools' ), $GLOBALS['wpmdb_meta'][ $this->plugin_slug ]['version'], network_admin_url( 'plugins.php' ) ); ?>
+			<strong><?php _e( 'Version Mismatch', 'wp-migrate-db-pro-multisite-tools' ); ?></strong> &mdash; <?php printf( __( 'We have detected you have version <span class="mst-remote-version"></span> of WP Migrate DB Pro Multisite Tools at <span class="mst-remote-location"></span> but are using %1$s here. Please go to the <a href="%2$s">Plugins page</a> on both installs and check for updates.', 'wp-migrate-db-pro-multisite-tools' ), $GLOBALS['wpmdb_meta'][ $this->props->plugin_slug ]['version'], network_admin_url( 'plugins.php' ) ); ?>
 		</p>
 
 		<p class="mst-different-prefix-notice inline-message warning" style="display: none; margin: 10px 0 0 0;">
