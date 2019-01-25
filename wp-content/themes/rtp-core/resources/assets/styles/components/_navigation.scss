@@ -1,0 +1,53 @@
+// Top Nav
+.topbar-wrapper {
+  background: $color-grey-dark;
+
+  .rtp-logo {
+    height: 25px;
+
+    @media #{$small-and-down} {
+      height: 20px;
+    }
+  }
+
+  .topbar {
+    height: 40px;
+  }
+
+  .topbar-menu-wrapper {
+    height: 100%;
+  }
+
+  .topbar-menu {
+    height: 100%;
+
+    ul {
+      height: 100%;
+    }
+
+    li {
+      height: 100%;
+      padding: 5px 10px;
+
+      a {
+        color: $color-white;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: normal;
+
+        @media #{$small-and-down} {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  // Active the current site item
+  .current-site {
+    background: $color-white;
+
+    a {
+      color: $color-grey-dark !important;
+    }
+  }
+}
