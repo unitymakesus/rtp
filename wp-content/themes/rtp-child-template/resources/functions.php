@@ -1,97 +1,140 @@
 <?php
 
-/**
- * Do not edit anything in this file unless you know what you're doing
- */
-
-use Roots\Sage\Config;
-use Roots\Sage\Container;
+namespace App;
 
 /**
- * Helper function for prettying up errors
- * @param string $message
- * @param string $subtitle
- * @param string $title
+ * Theme assets
  */
-$sage_error = function ($message, $subtitle = '', $title = '') {
-    $title = $title ?: __('Sage &rsaquo; Error', 'sage');
-    $footer = '<a href="https://roots.io/sage/docs/">roots.io/sage/docs/</a>';
-    $message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p><p>{$footer}</p>";
-    wp_die($message, $title);
-};
+add_action('wp_enqueue_scripts', function () {
+  // Unenqueue files from parent theme
+  wp_dequeue_style('sage/main.css');
+  wp_dequeue_script('sage/main.js');
+
+  // Enqueue files for child theme (which include the above as imports)
+  wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
+  wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), ['jquery'], null, true);
+
+  // Set array of theme customizations for JS
+  // wp_localize_script( 'sage/main.js', 'simple_options', array('fonts' => get_theme_mod('theme_fonts'), 'colors' => get_theme_mod('theme_color')) );
+}, 100);
 
 /**
- * Ensure compatible version of PHP is used
+ * REMOVE WP EMOJI
  */
-if (version_compare('7.1', phpversion(), '>=')) {
-    $sage_error(__('You must be using PHP 7.1 or greater.', 'sage'), __('Invalid PHP version', 'sage'));
+ remove_action('wp_head', 'print_emoji_detection_script', 7);
+ remove_action('wp_print_styles', 'print_emoji_styles');
+ remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+ remove_action( 'admin_print_styles', 'print_emoji_styles' );
+
+/**
+ * Enable plugins to manage the document title
+ * @link https://developer.wordpress.org/reference/functions/add_theme_support/#title-tag
+ */
+add_theme_support('title-tag');
+
+/**
+ * Register navigation menus
+ * @link https://developer.wordpress.org/reference/functions/register_nav_menus/
+ */
+register_nav_menus([
+    'primary_navigation' => __('Primary Navigation', 'sage'),
+    'social_links' => __('Social Links', 'sage')
+]);
+
+/**
+ * Enable post thumbnails
+ * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
+ */
+add_theme_support('post-thumbnails');
+
+/**
+ * Enable HTML5 markup support
+ * @link https://developer.wordpress.org/reference/functions/add_theme_support/#html5
+ */
+add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
+
+/**
+ * Enable selective refresh for widgets in customizer
+ * @link https://developer.wordpress.org/themes/advanced-topics/customizer-api/#theme-support-in-sidebars
+ */
+add_theme_support('customize-selective-refresh-widgets');
+
+/**
+ * Use main stylesheet for visual editor
+ * @see resources/assets/styles/layouts/_tinymce.scss
+ */
+add_editor_style(asset_path('styles/main.css'));
+
+/**
+* Add support for Gutenberg.
+*
+* @link https://wordpress.org/gutenberg/handbook/reference/theme-support/
+*/
+add_theme_support( 'align-wide' );
+add_theme_support( 'disable-custom-colors' );
+add_theme_support( 'wp-block-styles' );
+
+/**
+ * Enqueue editor styles for Gutenberg
+ */
+function simple_editor_styles() {
+  wp_enqueue_style( 'simple-gutenberg-style', asset_path('styles/main.css') );
 }
+// add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\simple_editor_styles' );
 
 /**
- * Ensure compatible version of WordPress is used
+ * Add image quality
  */
-if (version_compare('4.7.0', get_bloginfo('version'), '>=')) {
-    $sage_error(__('You must be using WordPress 4.7.0 or greater.', 'sage'), __('Invalid WordPress version', 'sage'));
-}
+add_filter('jpeg_quality', function($arg){return 100;});
 
 /**
- * Ensure dependencies are loaded
+ * Enable logo uploader in customizer
  */
-if (!class_exists('Roots\\Sage\\Container')) {
-    if (!file_exists($composer = __DIR__.'/../vendor/autoload.php')) {
-        $sage_error(
-            __('You must run <code>composer install</code> from the Sage directory.', 'sage'),
-            __('Autoloader not found.', 'sage')
-        );
-    }
-    require_once $composer;
-}
+add_image_size('simple-logo', 200, 200, false);
+add_image_size('simple-logo-2x', 400, 400, false);
+add_theme_support('custom-logo', array(
+  'size' => 'simple-logo-2x'
+));
 
 /**
- * Sage required files
- *
- * The mapped array determines the code library included in your theme.
- * Add or remove files to the array as needed. Supports child theme overrides.
+ * Add image sizes
  */
-array_map(function ($file) use ($sage_error) {
-    $file = "../app/{$file}.php";
-    if (!locate_template($file, true, true)) {
-        $sage_error(sprintf(__('Error locating <code>%s</code> for inclusion.', 'sage'), $file), 'File not found');
-    }
-}, ['helpers', 'setup']);
+add_image_size('tiny-thumbnail', 80, 80, true);
+add_image_size('small-thumbnail', 150, 150, true);
+add_image_size('medium-square-thumbnail', 400, 400, true);
+
+add_filter( 'image_size_names_choose', function( $sizes ) {
+  return array_merge( $sizes, array(
+    'tiny-thumbnail' => __( 'Tiny Thumbnail' ),
+    'small-thumbnail' => __( 'Small Thumbnail' ),
+    'medium-square-thumbnail' => __( 'Medium Square Thumbnail' ),
+  ) );
+} );
 
 /**
- * Here's what's happening with these hooks:
- * 1. WordPress initially detects theme in themes/sage/resources
- * 2. Upon activation, we tell WordPress that the theme is actually in themes/sage/resources/views
- * 3. When we call get_template_directory() or get_template_directory_uri(), we point it back to themes/sage/resources
- *
- * We do this so that the Template Hierarchy will look in themes/sage/resources/views for core WordPress themes
- * But functions.php, style.css, and index.php are all still located in themes/sage/resources
- *
- * This is not compatible with the WordPress Customizer theme preview prior to theme activation
- *
- * get_template_directory()   -> /srv/www/example.com/current/web/app/themes/sage/resources
- * get_stylesheet_directory() -> /srv/www/example.com/current/web/app/themes/sage/resources
- * locate_template()
- * ├── STYLESHEETPATH         -> /srv/www/example.com/current/web/app/themes/sage/resources/views
- * └── TEMPLATEPATH           -> /srv/www/example.com/current/web/app/themes/sage/resources
+ * Register sidebars
  */
-array_map(
-    'add_filter',
-    ['theme_file_path', 'theme_file_uri', 'parent_theme_file_path', 'parent_theme_file_uri'],
-    array_fill(0, 4, 'dirname')
-);
-Container::getInstance()
-    ->bindIf('config', function () {
-        return new Config([
-            'assets' => require dirname(__DIR__).'/config/assets.php',
-            'theme' => require dirname(__DIR__).'/config/theme.php',
-            'view' => require dirname(__DIR__).'/config/view.php',
-        ]);
-    }, true);
-
-/**
- * Manually include parent theme's functions.php file
- */
-require_once( get_stylesheet_directory() . '/functions.php' );
+add_action('widgets_init', function () {
+  $config = [
+    'before_widget' => '<section class="widget %1$s %2$s">',
+    'after_widget'  => '</section>',
+    'before_title'  => '<h3>',
+    'after_title'   => '</h3>'
+  ];
+  register_sidebar([
+    'name'          => __('Footer-Social-Left', 'sage'),
+    'id'            => 'footer-social-left'
+  ] + $config);
+  register_sidebar([
+    'name'          => __('Footer-Social-Right', 'sage'),
+    'id'            => 'footer-social-right'
+  ] + $config);
+  register_sidebar([
+    'name'          => __('Footer-Utility-Left', 'sage'),
+    'id'            => 'footer-utility-left'
+  ] + $config);
+  register_sidebar([
+    'name'          => __('Footer-Utility-Right', 'sage'),
+    'id'            => 'footer-utility-right'
+  ] + $config);
+});
