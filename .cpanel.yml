@@ -1,5 +1,5 @@
 ---
 deployment:
  tasks:
-  - export DEPLOYPATH=/home/rtpmulti/public_html/
+  - export DEPLOYPATH=/home/rtporg/public_html/
   - /bin/cp -R * $DEPLOYPATH
