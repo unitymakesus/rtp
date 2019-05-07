@@ -8,7 +8,7 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 /**
  * @package SecuritySafe
- * @version 1.2.2
+ * @version 1.2.3
  */
 /*
  * Plugin Name: Security Safe
@@ -16,7 +16,7 @@ if ( !defined( 'ABSPATH' ) ) {
  * Description: Security Safe - Security, Hardening, Auditing & Privacy
  * Author: Sovereign Stack, LLC
  * Author URI: https://sovstack.com
- * Version: 1.2.2
+ * Version: 1.2.3
  * Text Domain: security-safe
  * Domain Path:  /languages
  * License: GPLv3 or later
@@ -93,7 +93,7 @@ if ( !function_exists( 'security_safe' ) ) {
  */
 function securitysafe_set_constants()
 {
-    define( 'SECSAFE_VERSION', '1.2.2' );
+    define( 'SECSAFE_VERSION', '1.2.3' );
     define( 'SECSAFE_NAME', 'Security Safe' );
     define( 'SECSAFE_SLUG', 'security-safe' );
     define( 'SECSAFE_OPTIONS', 'securitysafe_options' );

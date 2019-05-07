@@ -15,35 +15,10 @@ html {
 }
 
 body {
-  @for $i from 1 through length($body-fonts-list) {
-    &[data-font="#{$i}"] {
-      font-family: nth($body-fonts-list, $i);
+  font-family: 'Poppins', sans-serif;
 
-      h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, blockquote {
-        font-family: nth($header-fonts-list, $i);
-      }
-
-      &[data-buttons="1"] .btn {
-        font-family: nth($header-fonts-list, $i);
-      }
-
-      .et_bloom_optin.et_bloom_optin .et_bloom_form_container h2, .et_bloom_optin.et_bloom_optin .et_bloom_form_container h2 span, .et_bloom_optin.et_bloom_optin .et_bloom_form_container h2 strong {
-        font-family: nth($header-fonts-list, $i) !important;
-        font-size: rem-calc(36px) !important;
-      }
-
-      .et_bloom_optin.et_bloom_optin .et_bloom_form_container p {
-        font-family: nth($body-fonts-list, $i) !important;
-        font-size: 1rem !important;
-      }
-    }
-  }
-  @for $j from 1 through length($themes-list) {
-    &[data-color="#{nth($themes-list, $j)}"] {
-      h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
-        color: nth($color-1-list, $j);
-      }
-    }
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, blockquote {
+    font-family: 'Poppins', sans-serif;
   }
 
   &[data-font="3"] {
@@ -89,12 +64,6 @@ a {
       color: $color-white;
     }
   }
-
-  @for $n from 1 through length($themes-list) {
-    [data-color="#{nth($themes-list, $n)}"] & {
-      color: nth($color-link-list, $n);
-    }
-  }
 }
 
 .main {
@@ -128,15 +97,10 @@ a {
         position: absolute;
         left: 10px;
         speak: none;
+        color: $primary-color;
 
         html[data-contrast="true"] & {
           color: $color-white;
-        }
-
-        @for $n from 1 through length($themes-list) {
-          [data-color="#{nth($themes-list, $n)}"] & {
-            color: nth($color-bullet-list, $n);
-          }
         }
       }
     }

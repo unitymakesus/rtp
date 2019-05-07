@@ -3,8 +3,8 @@ Contributors: arshidkv12
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=H5F3Z6S3MNTXA&lc=IN&item_name=wp%2dlogin%2dlimit&amount=5%2e00&currency_code=USD&button_subtype=services&bn=PP%2dBuyNowBF%3abtn_buynowCC_LG%2egif%3aNonHosted
 Tags: cf7, contact form 7, contact form 7 db, contact form db, contact form seven, contact form storage, export contact form, save contact form, wpcf7
 Requires at least: 4.8
-Tested up to: 5.0
-Stable tag: 1.2.4.5
+Tested up to: 5.1.1
+Stable tag: 1.2.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 5.3
@@ -14,18 +14,20 @@ Save and manage Contact Form 7 messages. Never lose important data. It is lightw
 
 == Description ==
 
-The "CFDB7" plugin saves contact form 7 submissions to your WordPress database. Export the data to a csv file.
+The "CFDB7" plugin saves contact form 7 submissions to your WordPress database. Export the data to a CSV file.
 By simply installing the plugin, it will automatically begin to capture form submissions from contact form 7.
 
 = Features of CFDB 7 =
 
 * No configuration is needed
-* Single database table for all forms
-* Easy to use ang lightweight plugin
+* Save Contact Form 7 form submitted data to the database.
+* Single database table for all contact form 7 forms
+* Easy to use and lightweight plugin
 * Developer friendly & easy to customize
-* No configuration is needed
+* Display all created contact form 7 form list.
+* Export CF7 DB data in CSV file
 
-Support : [http://www.ciphercoin.com/contact/](http://www.ciphercoin.com/contact/)
+Support : [http://www.ciphercoin.com/contact/](https://www.ciphercoin.com/contact/)
 Extensions : [Contact form 7 more Add-ons](https://ciphercoin.com/contact-form-7-database-cfdb7-add-ons/)
 
 == Installation ==
@@ -69,4 +71,7 @@ Fixed admin notification bug
 
 == 1.2.4.3 ==
 Responsive issue fixed 
+
+== 1.2.4.6 ==
+Optimized csv export memory usage 
 

@@ -1,13 +1,13 @@
 <?php
 /*
 Plugin name: Contact Form CFDB7
-Plugin URI: http://ciphercoin.com/
+Plugin URI: https://ciphercoin.com/
 Description: Save and manage Contact Form 7 messages. Never lose important data. Contact Form CFDB7 plugin is an add-on for the Contact Form 7 plugin.
 Author: Arshid
 Author URI: http://ciphercoin.com/
 Text Domain: contact-form-cfdb7
 Domain Path: /languages/
-Version: 1.2.4.5
+Version: 1.2.4.6
 */
 
 function cfdb7_create_table(){

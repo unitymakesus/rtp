@@ -1,14 +1,14 @@
-# Copyright (C) 2018 Pretty Links
+# Copyright (C) 2019 Pretty Links
 # This file is distributed under the same license as the Pretty Links package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pretty Links 2.1.7\n"
+"Project-Id-Version: Pretty Links 2.1.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pretty-link\n"
-"POT-Creation-Date: 2018-08-15 18:02:18+00:00\n"
+"POT-Creation-Date: 2019-05-01 03:50:25+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Pretty Links | Manage Pretty Links"
 msgstr ""
 
-#. #-#-#-#-#  pretty-link.pot (Pretty Links 2.1.7)  #-#-#-#-#
+#. #-#-#-#-#  pretty-link.pot (Pretty Links 2.1.9)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: app/controllers/PrliAppController.php:37
 #: app/controllers/PrliAppController.php:46 app/views/links/list.php:12
@@ -177,41 +177,41 @@ msgstr ""
 msgid "Your Pretty Link Group was Successfully Deleted"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:52
+#: app/controllers/PrliLinksController.php:53
 msgid "Links in Group: "
 msgstr ""
 
 #: app/controllers/PrliLinksController.php:98
-#: app/controllers/PrliLinksController.php:119
+#: app/controllers/PrliLinksController.php:124
 msgid "Your Pretty Link was Successfully Created"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:152
+#: app/controllers/PrliLinksController.php:163
 msgid "Your Pretty Link was Successfully Updated"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:167
+#: app/controllers/PrliLinksController.php:178
 msgid "Your links were updated successfully"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:184
-#: app/controllers/PrliLinksController.php:224
+#: app/controllers/PrliLinksController.php:195
+#: app/controllers/PrliLinksController.php:245
 msgid "You are unauthorized to view this page."
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:191
+#: app/controllers/PrliLinksController.php:207
 msgid "Your Pretty Link was Successfully Reset"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:198
+#: app/controllers/PrliLinksController.php:219
 msgid "Your Pretty Link was Successfully Destroyed"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:211
+#: app/controllers/PrliLinksController.php:232
 msgid "Your links were deleted successfully"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:502
+#: app/controllers/PrliLinksController.php:523
 msgid "Pretty Link Cleanup Visitor Locks"
 msgstr ""
 
@@ -417,8 +417,8 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:63 app/views/links/list.php:76
-#: app/views/links/list.php:79
+#: app/helpers/PrliLinksHelper.php:63 app/views/links/list.php:77
+#: app/views/links/list.php:80
 msgid "- No Change -"
 msgstr ""
 
@@ -470,40 +470,40 @@ msgstr ""
 msgid "Parameter Forwarding Enabled"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:114 app/views/groups/list.php:63
+#: app/helpers/PrliLinksHelper.php:115 app/views/groups/list.php:63
 #: app/views/groups/list.php:66
 msgid "Edit %s"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:115
+#: app/helpers/PrliLinksHelper.php:116
 msgid ""
 "Are you sure you want to delete your %s Pretty Link? This will delete the "
 "Pretty Link and all of the statistical data about it in your database."
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:115
+#: app/helpers/PrliLinksHelper.php:116
 msgid "Delete %s"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:116
+#: app/helpers/PrliLinksHelper.php:117
 msgid ""
 "Are you sure you want to reset your %s Pretty Link? This will delete all of "
 "the statistical data about this Pretty Link in your database."
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:116
+#: app/helpers/PrliLinksHelper.php:117
 msgid "Reset %s"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:119 app/views/clicks/list.php:161
+#: app/helpers/PrliLinksHelper.php:120 app/views/clicks/list.php:161
 msgid "View clicks for %s"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:124
+#: app/helpers/PrliLinksHelper.php:125
 msgid "Post %s to Twitter"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:125
+#: app/helpers/PrliLinksHelper.php:126
 msgid "Send %s in an Email"
 msgstr ""
 
@@ -938,14 +938,14 @@ msgstr ""
 
 #: app/views/clicks/list.php:43 app/views/groups/edit.php:54
 #: app/views/groups/new.php:58 app/views/links/edit.php:16
-#: app/views/links/list.php:92 app/views/links/new.php:15
+#: app/views/links/list.php:93 app/views/links/new.php:15
 #: pro/app/views/reports/custom-report.php:22
 #: pro/app/views/reports/edit.php:109 pro/app/views/reports/new.php:109
 msgid "Cancel"
 msgstr ""
 
 #: app/views/clicks/list.php:64 app/views/groups/list.php:24
-#: app/views/links/list.php:35 pro/app/views/reports/list.php:20
+#: app/views/links/list.php:36 pro/app/views/reports/list.php:20
 msgid "Reset"
 msgstr ""
 
@@ -1028,7 +1028,7 @@ msgstr ""
 
 #: app/views/groups/edit.php:30 app/views/groups/list.php:39
 #: app/views/groups/list.php:81 app/views/groups/new.php:36
-#: app/views/links/list.php:51 app/views/links/list.php:152
+#: app/views/links/list.php:52 app/views/links/list.php:153
 #: pro/app/views/reports/edit.php:85 pro/app/views/reports/list.php:30
 #: pro/app/views/reports/list.php:70 pro/app/views/reports/new.php:85
 msgid "Name"
@@ -1045,7 +1045,7 @@ msgid ""
 msgstr ""
 
 #: app/views/groups/edit.php:54 app/views/links/edit.php:16
-#: app/views/links/list.php:93 app/views/options/form.php:194
+#: app/views/links/list.php:94 app/views/options/form.php:194
 #: pro/app/views/reports/edit.php:109
 msgid "Update"
 msgstr ""
@@ -1055,14 +1055,14 @@ msgid "Add Group"
 msgstr ""
 
 #: app/views/groups/list.php:40 app/views/groups/list.php:68
-#: app/views/groups/list.php:82 app/views/links/list.php:56
-#: app/views/links/list.php:157 app/views/options/form.php:39
+#: app/views/groups/list.php:82 app/views/links/list.php:57
+#: app/views/links/list.php:158 app/views/options/form.php:39
 #: pro/app/views/reports/list.php:32 pro/app/views/reports/list.php:72
 msgid "Links"
 msgstr ""
 
 #: app/views/groups/list.php:41 app/views/groups/list.php:83
-#: app/views/links/list.php:55 app/views/links/list.php:156
+#: app/views/links/list.php:56 app/views/links/list.php:157
 #: pro/app/views/reports/list.php:33 pro/app/views/reports/list.php:73
 msgid "Created"
 msgstr ""
@@ -1168,8 +1168,8 @@ msgstr ""
 msgid "Advanced Options"
 msgstr ""
 
-#: app/views/links/form.php:91 app/views/links/list.php:54
-#: app/views/links/list.php:78 app/views/links/list.php:155
+#: app/views/links/form.php:91 app/views/links/list.php:55
+#: app/views/links/list.php:79 app/views/links/list.php:156
 #: pro/app/views/options/autocreate.php:30 pro/app/views/reports/edit.php:86
 #: pro/app/views/reports/new.php:86
 msgid "Group"
@@ -1274,47 +1274,47 @@ msgstr ""
 msgid "Permalink Settings"
 msgstr ""
 
-#: app/views/links/list.php:44
+#: app/views/links/list.php:45
 msgid "Back to Groups"
 msgstr ""
 
-#: app/views/links/list.php:53 app/views/links/list.php:154
+#: app/views/links/list.php:54 app/views/links/list.php:155
 msgid "Clicks / Uniq"
 msgstr ""
 
-#: app/views/links/list.php:67
+#: app/views/links/list.php:68
 msgid "Bulk Edit"
 msgstr ""
 
-#: app/views/links/list.php:74
+#: app/views/links/list.php:75
 msgid "Basic Link Options"
 msgstr ""
 
-#: app/views/links/list.php:75 app/views/shared/tinymce_form_popup.php:59
+#: app/views/links/list.php:76 app/views/shared/tinymce_form_popup.php:59
 msgid "Redirect Type"
 msgstr ""
 
-#: app/views/links/list.php:81
+#: app/views/links/list.php:82
 msgid "Track"
 msgstr ""
 
-#: app/views/links/list.php:83 app/views/shared/tinymce_form_popup.php:76
+#: app/views/links/list.php:84 app/views/shared/tinymce_form_popup.php:76
 msgid "Nofollow"
 msgstr ""
 
-#: app/views/links/list.php:85
+#: app/views/links/list.php:86
 msgid "Forward Params"
 msgstr ""
 
-#: app/views/links/list.php:93
+#: app/views/links/list.php:94
 msgid "Bulk Update"
 msgstr ""
 
-#: app/views/links/list.php:103
+#: app/views/links/list.php:104
 msgid "No Pretty Links were found, %sCreate One%s"
 msgstr ""
 
-#: app/views/links/list.php:142
+#: app/views/links/list.php:143
 msgid "Target URL:"
 msgstr ""
 

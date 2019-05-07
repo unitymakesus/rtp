@@ -2,7 +2,7 @@
 
 @section('content')
   @while(have_posts()) @php the_post() @endphp
-    <article class="{!! post_class() !!}">
+    <article {!! post_class() !!}>
       @include('partials.page-header')
       @include('partials.content-page')
     </article>

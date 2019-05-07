@@ -18,14 +18,11 @@ class PrliLinksController extends PrliBaseController {
 
     // "new()" has its own submenu so we don't need a route for it here
     switch($action) {
-      case 'list-form':
-        return self::list_form($params);
+      // POST ACTIONS
       case 'quick-create':
         return self::quick_create_link($params);
       case 'create':
         return self::create_link($params);
-      case 'edit':
-        return self::edit_link($params);
       case 'bulk-update':
         return self::bulk_update_links($params);
       case 'update':
@@ -36,6 +33,10 @@ class PrliLinksController extends PrliBaseController {
         return self::destroy_link($params);
       case 'bulk-destroy':
         return self::bulk_destroy_links($params);
+
+      // GET ACTIONS
+      case 'edit':
+        return self::edit_link($params);
       default:
         return self::list_links($params);
     }
@@ -54,11 +55,6 @@ class PrliLinksController extends PrliBaseController {
     self::display_links_list($params, $prli_message);
   }
 
-  public function list_form($params) {
-    if(apply_filters('prli-link-list-process-form', true))
-      self::display_links_list($params, PrliUtils::get_main_message());
-    }
-
   public static function new_link($params) {
     global $prli_group;
     $groups = $prli_group->getAll('',' ORDER BY name');
@@ -69,6 +65,10 @@ class PrliLinksController extends PrliBaseController {
 
   public static function quick_create_link($params) {
     global $prli_link, $prli_group, $prli_options;
+
+    if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'update-options' ) ) {
+      die( 'Security Check' );
+    }
 
     $params = self::get_params_array();
     $errors = $prli_link->validate($_POST);
@@ -102,6 +102,11 @@ class PrliLinksController extends PrliBaseController {
 
   public static function create_link($params) {
     global $prli_link, $prli_group;
+
+    if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'update-options' ) ) {
+      die( 'Security Check' );
+    }
+
     $errors = $prli_link->validate($_POST);
 
     $errors = apply_filters( "prli_validate_link", $errors );
@@ -123,6 +128,7 @@ class PrliLinksController extends PrliBaseController {
 
   public static function edit_link($params) {
     global $prli_group, $prli_link;
+
     $groups = $prli_group->getAll('',' ORDER BY name');
 
     $record = $prli_link->getOne( $params['id'] );
@@ -133,6 +139,11 @@ class PrliLinksController extends PrliBaseController {
 
   public static function update_link($params) {
     global $prli_link, $prli_group;
+
+    if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'update-options' ) ) {
+      die( 'Security Check' );
+    }
+
     $errors = $prli_link->validate($_POST);
     $id = $_POST['id'];
 
@@ -187,6 +198,11 @@ class PrliLinksController extends PrliBaseController {
 
   public static function reset_link($params) {
     global $prli_link;
+
+    if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'link-actions' ) ) {
+      die( 'Security Check' );
+    }
+
     $prli_link->reset( $params['id'] );
     $prli_message = __("Your Pretty Link was Successfully Reset", 'pretty-link');
     self::display_links_list($params, $prli_message, '', 1);
@@ -194,6 +210,11 @@ class PrliLinksController extends PrliBaseController {
 
   public static function destroy_link($params) {
     global $prli_link;
+
+    if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'link-actions' ) ) {
+      die( 'Security Check' );
+    }
+
     $prli_link->destroy( $params['id'] );
     $prli_message = __("Your Pretty Link was Successfully Destroyed", 'pretty-link');
     self::display_links_list($params, $prli_message, '', 1);

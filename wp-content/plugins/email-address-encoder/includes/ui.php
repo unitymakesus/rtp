@@ -3,7 +3,7 @@
 
     <h1><?php _e( 'Email Address Encoder', 'email-address-encoder' ); ?></h1>
 
-    <?php if ( get_option( 'eae_notices', '0' ) !== '1' && ( ! defined( 'EAE_DISABLE_NOTICES' ) || ! EAE_DISABLE_NOTICES ) ) : ?>
+    <?php if ( get_option( 'eae_notices', '0' ) != '1' && ( ! defined( 'EAE_DISABLE_NOTICES' ) || ! EAE_DISABLE_NOTICES ) ) : ?>
 
         <div class="card" style="float: left; margin-bottom: 0; margin-right: 1.25rem;">
             <h2 class="title">
@@ -67,7 +67,7 @@
                             <br>
                             <label>
                                 <input type="radio" name="eae_search_in" value="filters" disabled>
-                                <?php _e( 'Full page scan', 'email-address-encoder' ); ?>
+                                <?php _e( 'Full-page scanner', 'email-address-encoder' ); ?>
                                 (<a target="_blank" rel="noopener" href="https://encoder.till.im/download?utm_source=wp-plugin&utm_medium=setting"><?php _e( 'Premium only', 'email-address-encoder' ); ?></a>)
                                 <p class="description">
                                     <small><?php _e( 'Protects all email addresses on your site.', 'email-address-encoder' ); ?></small>
@@ -76,7 +76,7 @@
                             <br>
                             <label>
                                 <input type="radio" name="eae_search_in" value="void" <?php checked( 'void', get_option( 'eae_search_in' ) ); ?>>
-                                <?php _e( 'Nothing', 'email-address-encoder' ); ?>
+                                <?php _e( 'Nothing, don’t do anything', 'email-address-encoder' ); ?>
                                 <p class="description">
                                     <small><?php _e( 'Turns off email protection.', 'email-address-encoder' ); ?></small>
                                 </p>
@@ -120,6 +120,16 @@
                                 (<a target="_blank" rel="noopener" href="https://encoder.till.im/download?utm_source=wp-plugin&utm_medium=setting"><?php _e( 'Premium only', 'email-address-encoder' ); ?></a>)
                                 <p class="description">
                                     <small><?php _e( 'Offers the best protection, but requires JavaScript.', 'email-address-encoder' ); ?></small>
+                                </p>
+                            </label>
+                            <br>
+
+                            <label>
+                                <input type="radio" name="eae_technique" value="rot47" disabled>
+                                <?php _e( 'Polymorphous ROT47/CSS', 'email-address-encoder' ); ?>
+                                (<a target="_blank" rel="noopener" href="https://encoder.till.im/download?utm_source=wp-plugin&utm_medium=setting"><?php _e( 'Premium only', 'email-address-encoder' ); ?></a>)
+                                <p class="description">
+                                    <small><?php _e( 'State-of-the-art protection against smart robots, but requires JavaScript.', 'email-address-encoder' ); ?></small>
                                 </p>
                             </label>
 

@@ -288,7 +288,7 @@ class Detect extends Render {
 	 * @since 2.5.2
 	 *
 	 * @param array $plugins Array of array for constants, classes and / or functions to check for plugin existence.
-	 * @return boolean True if ALL functions classes and constants exists or false if plugin constant, class or function not detected.
+	 * @return bool True if ALL functions classes and constants exists or false if plugin constant, class or function not detected.
 	 */
 	public function detect_plugin_multi( array $plugins ) {
 
@@ -708,8 +708,8 @@ class Detect extends Render {
 	/**
 	 * Detect if the current screen type is a page or taxonomy.
 	 *
-	 * @staticvar array $is_page
 	 * @since 2.3.1
+	 * @staticvar array $is_page
 	 *
 	 * @param string $type the Screen type
 	 * @return bool true if post type is a page or post
@@ -741,12 +741,10 @@ class Detect extends Render {
 	 * @since 3.1.0 Removed caching.
 	 *
 	 * @param string $locale Required, the locale.
-	 * @param bool $use_cache Set to false to bypass the cache.
 	 * @return bool Whether the input $locale is in the current WordPress locale.
 	 */
 	public function check_wp_locale( $locale = '' ) {
-		if ( empty( $locale ) ) return false;
-		return $cache[ $locale ] = is_int( strpos( \get_locale(), $locale ) );
+		return false !== strpos( \get_locale(), $locale );
 	}
 
 	/**

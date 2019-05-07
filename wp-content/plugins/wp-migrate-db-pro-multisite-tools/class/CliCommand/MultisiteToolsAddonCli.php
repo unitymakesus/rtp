@@ -6,7 +6,6 @@ use DeliciousBrains\WPMDB\Common\Cli\Cli;
 use DeliciousBrains\WPMDB\Common\FormData\FormData;
 use DeliciousBrains\WPMDB\Common\MigrationState\MigrationStateManager;
 use DeliciousBrains\WPMDB\Common\Profile\ProfileManager;
-use DeliciousBrains\WPMDB\Common\Properties\DynamicProperties;
 use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Sql\Table;
 use DeliciousBrains\WPMDB\Common\Sql\TableHelper;
@@ -26,7 +25,6 @@ class MultisiteToolsAddonCli extends MultisiteToolsAddon {
 	function __construct(
 		Addon $addon,
 		Properties $properties,
-		DynamicProperties $dynamic_properties,
 		Multisite $multisite,
 		Util $util,
 		MigrationStateManager $migration_state_manager,
@@ -40,7 +38,6 @@ class MultisiteToolsAddonCli extends MultisiteToolsAddon {
 		parent::__construct(
 			$addon,
 			$properties,
-			$dynamic_properties,
 			$multisite,
 			$util,
 			$migration_state_manager,

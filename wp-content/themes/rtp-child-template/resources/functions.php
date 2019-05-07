@@ -63,7 +63,7 @@ add_theme_support('customize-selective-refresh-widgets');
  * Use main stylesheet for visual editor
  * @see resources/assets/styles/layouts/_tinymce.scss
  */
-add_editor_style(asset_path('styles/main.css'));
+// add_editor_style(asset_path('styles/main.css'));
 
 /**
 * Add support for Gutenberg.
@@ -77,9 +77,9 @@ add_theme_support( 'wp-block-styles' );
 /**
  * Enqueue editor styles for Gutenberg
  */
-function simple_editor_styles() {
-  wp_enqueue_style( 'simple-gutenberg-style', asset_path('styles/main.css') );
-}
+// function simple_editor_styles() {
+//   wp_enqueue_style( 'simple-gutenberg-style', asset_path('styles/main.css') );
+// }
 // add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\simple_editor_styles' );
 
 /**

@@ -21,7 +21,7 @@ class PostmanSettingsRegistry {
 
 		// only administrators should be able to trigger this
 		if ( PostmanUtils::isAdmin() ) {
-						$sanitizer = new PostmanInputSanitizer();
+			$sanitizer = new PostmanInputSanitizer();
 			register_setting( PostmanAdminController::SETTINGS_GROUP_NAME, PostmanOptions::POSTMAN_OPTIONS, array(
 					$sanitizer,
 					'sanitize',
@@ -100,6 +100,8 @@ class PostmanSettingsRegistry {
 					$this,
 					'headers_callback',
 			), PostmanAdminController::MESSAGE_HEADERS_OPTIONS, PostmanAdminController::MESSAGE_HEADERS_SECTION );
+
+			// Fallback
 
 			// the Email Validation section
 			add_settings_section( PostmanAdminController::EMAIL_VALIDATION_SECTION, __( 'Validation', Postman::TEXT_DOMAIN ), array(
@@ -212,6 +214,16 @@ class PostmanSettingsRegistry {
 				$this,
 				'slack_token_callback',
 			), PostmanAdminController::NOTIFICATIONS_SLACK_CRED, 'slack_credentials' );
+
+            add_settings_field( PostmanOptions::NOTIFICATION_USE_CHROME, _x( 'Push to chrome extension', 'Configuration Input Field', Postman::TEXT_DOMAIN ), array(
+                $this,
+                'notification_use_chrome_callback',
+            ), PostmanAdminController::NOTIFICATIONS_OPTIONS, PostmanAdminController::NOTIFICATIONS_SECTION );
+
+            add_settings_field( PostmanOptions::NOTIFICATION_CHROME_UID, _x( 'Chrome Extension UID', 'Configuration Input Field', Postman::TEXT_DOMAIN ), array(
+                $this,
+                'notification_chrome_uid_callback',
+            ), PostmanAdminController::NOTIFICATIONS_OPTIONS, PostmanAdminController::NOTIFICATIONS_SECTION );
 
 		}
 	}
@@ -414,6 +426,15 @@ class PostmanSettingsRegistry {
 		$this->printSelectOption( __( 'Slack', Postman::TEXT_DOMAIN ), 'slack', $currentKey );
 		printf( '</select><br/><span class="postman_input_description">%s</span>', $inputDescription );
 	}
+
+	public function notification_use_chrome_callback() {
+        $value = $this->options->useChromeExtension();
+        printf( '<input type="checkbox" id="input_%2$s" class="input_%2$s" name="%1$s[%2$s]" %3$s />', PostmanOptions::POSTMAN_OPTIONS, PostmanOptions::NOTIFICATION_USE_CHROME, $value ? 'checked="checked"' : '' );
+    }
+
+    public function notification_chrome_uid_callback() {
+        printf( '<input type="password" id="input_%2$s" class="input_%2$s" name="%1$s[%2$s]" value="%3$s" />', PostmanOptions::POSTMAN_OPTIONS, PostmanOptions::NOTIFICATION_CHROME_UID, PostmanUtils::obfuscatePassword( $this->options->getNotificationChromeUid() ) );
+    }
 
 	public function pushover_user_callback() {
 		printf( '<input type="password" id="pushover_user" name="%s[%s]" value="%s" />', PostmanOptions::POSTMAN_OPTIONS, PostmanOptions::PUSHOVER_USER, $this->options->getPushoverUser() );

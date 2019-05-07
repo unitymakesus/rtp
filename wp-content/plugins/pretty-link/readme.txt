@@ -2,9 +2,9 @@
 Contributors: supercleanse
 Donate link: https://prettylinks.com
 Tags: links, link, url, urls, affiliate, affiliates, pretty, marketing, redirect, redirection, forward, plugin, twitter, tweet, rewrite, shorturl, hoplink, hop, shortlink, short, shorten, shortening, click, clicks, track, tracking, tiny, tinyurl, budurl, shrinking, domain, shrink, mask, masking, cloak, cloaking, slug, slugs, admin, administration, stats, statistics, stat, statistic, email, ajax, javascript, ui, csv, download, page, post, pages, posts, shortcode, seo, automation, widget, widgets, dashboard
-Requires at least: 4.7
-Tested up to: 4.9
-Stable tag: 2.1.7
+Requires at least: 4.9
+Tested up to: 5.2
+Stable tag: 2.1.9
 
 Shrink, beautify, track, manage and share any URL on or off of your WordPress website. Create links that look how you want using your own domain name!
 
@@ -65,6 +65,13 @@ http://blairwilliams.com/w7a
 3. Make sure you have changed your permalink Common Settings in Settings -> Permalinks away from "Default" to something else. I prefer using custom and then "/%year%/%month%/%postname%/" for the simplest possible URL slugs with the best performance.
 
 == Changelog ==
+= 2.1.9 =
+* Fixed some security issues
+
+= 2.1.8 =
+* Fixed broken charts in dashboard widget
+* Fixed duplicate social buttons
+* Fixed warning of "invalid argument supplied to foreach"
 
 = 2.1.7 =
 * Changed clipboard library

@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Pretty Links Beginner Edition
+Plugin Name: Pretty Links
 Plugin URI: https://prettylinks.com/pl/plugin-uri
 Description: Shrink, track and share any URL on the Internet from your WordPress website!
-Version: 2.1.7
+Version: 2.1.9
 Author: Blair Williams
 Author URI: http://blairwilliams.com
 Text Domain: pretty-link
@@ -55,7 +55,7 @@ define('PRLI_VENDOR_LIB_URL',PRLI_URL.'/vendor/lib');
 define('PRLI_BROWSER_URL','https://d14715w921jdje.cloudfront.net/browser');
 define('PRLI_OS_URL','https://d14715w921jdje.cloudfront.net/os');
 
-define('PRLI_EDITION', 'pretty-link-beginner');
+define('PRLI_EDITION', 'pretty-link-lite');
 
 // Let's give pretty link plenty of room to work with
 $mem = abs(intval(@ini_get('memory_limit')));

@@ -5,6 +5,10 @@
  * @package WP_Smush
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 ?>
 
 <div class="sui-dialog wp-smush-list-dialog" aria-hidden="true" id="wp-smush-list-dialog">
@@ -26,7 +30,7 @@
 			<div class="sui-box-footer">
 				<div class="sui-actions-right">
 					<span class="add-dir-loader"></span>
-					<button class="sui-modal-close sui-button sui-button-primary wp-smush-select-dir" disabled>
+					<button class="sui-modal-close sui-button sui-button-blue wp-smush-select-dir" disabled>
 						<?php esc_html_e( 'SMUSH', 'wp-smushit' ); ?>
 					</button>
 				</div>

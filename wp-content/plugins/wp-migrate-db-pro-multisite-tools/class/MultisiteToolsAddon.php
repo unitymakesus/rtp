@@ -4,6 +4,7 @@ namespace DeliciousBrains\WPMDBMST;
 
 use DeliciousBrains\WPMDB\Common\FormData\FormData;
 use DeliciousBrains\WPMDB\Common\MigrationState\MigrationStateManager;
+use DeliciousBrains\WPMDB\Common\MigrationState\StateDataContainer;
 use DeliciousBrains\WPMDB\Common\Multisite\Multisite;
 use DeliciousBrains\WPMDB\Common\Profile\ProfileManager;
 use DeliciousBrains\WPMDB\Common\Properties\DynamicProperties;
@@ -11,6 +12,7 @@ use DeliciousBrains\WPMDB\Common\Properties\Properties;
 use DeliciousBrains\WPMDB\Common\Sql\Table;
 use DeliciousBrains\WPMDB\Common\Sql\TableHelper;
 use DeliciousBrains\WPMDB\Common\Util\Util;
+use DeliciousBrains\WPMDB\Container;
 use DeliciousBrains\WPMDB\Pro\Addon\Addon;
 use DeliciousBrains\WPMDB\Pro\Addon\AddonAbstract;
 use DeliciousBrains\WPMDB\Pro\UI\Template;
@@ -60,12 +62,13 @@ class MultisiteToolsAddon extends AddonAbstract {
 	 */
 	private $form_data_class;
 
-	const MDB_VERSION_REQUIRED = '1.8.6';
+	const MDB_VERSION_REQUIRED = '1.9.6';
+	protected $blog_id;
+	private $container;
 
 	public function __construct(
 		Addon $addon,
 		Properties $properties,
-		DynamicProperties $dynamic_properties,
 		Multisite $multisite,
 		Util $util,
 		MigrationStateManager $migration_state_manager,
@@ -76,15 +79,15 @@ class MultisiteToolsAddon extends AddonAbstract {
 		ProfileManager $profile_manager
 	) {
 
-		parent::__construct( $addon, $properties, $dynamic_properties );
+		parent::__construct( $addon, $properties );
 
 		$this->plugin_slug        = 'wp-migrate-db-pro-multisite-tools';
 		$this->plugin_version     = $GLOBALS['wpmdb_meta']['wp-migrate-db-pro-multisite-tools']['version'];
 		$plugin_file_path         = dirname( __DIR__ ) . '/wp-migrate-db-pro-media-files.php';
 		$this->plugin_dir_path    = plugin_dir_path( $plugin_file_path );
 		$this->plugin_folder_name = basename( $this->plugin_dir_path );
-		$this->addon_name         = $this->addon->get_plugin_name( 'wp-migrate-db-pro-multisite-tools/wp-migrate-db-pro-multisite-tools.php' );
-		$this->template_path      = $this->plugin_dir_path . 'template/';
+
+		$this->template_path = $this->plugin_dir_path . 'template/';
 
 
 		$this->accepted_fields = array(
@@ -110,6 +113,7 @@ class MultisiteToolsAddon extends AddonAbstract {
 		if ( ! $this->meets_version_requirements( self::MDB_VERSION_REQUIRED ) ) {
 			return;
 		}
+		$this->addon_name = $this->addon->get_plugin_name( 'wp-migrate-db-pro-multisite-tools/wp-migrate-db-pro-multisite-tools.php' );
 
 		add_action( 'wpmdb_before_migration_options', array( $this, 'migration_form_controls' ) );
 		add_action( 'wpmdb_load_assets', array( $this, 'load_assets' ) );
@@ -142,6 +146,8 @@ class MultisiteToolsAddon extends AddonAbstract {
 			add_filter( 'wpmdbmf_exclude_local_media_file_from_removal', array( $this, 'filter_mf_exclude_local_media_file_from_removal', ), 10, 4 );
 			add_filter( 'wpmdbmf_file_to_download', array( $this, 'filter_mf_file_to_download', ), 10, 3 );
 		}
+
+		$this->container = Container::getInstance();
 	}
 
 	/**
@@ -207,16 +213,19 @@ class MultisiteToolsAddon extends AddonAbstract {
 	/**
 	 * Return subsite id if subsite selected.
 	 *
-	 * @param WPMDB_Base $plugin_instance
 	 *
 	 * @return int Will return 0 if not doing MST migration.
 	 *
 	 * Will return 0 if not doing MST migration.
 	 */
-	public function selected_subsite( &$plugin_instance = null ) {
+	public function selected_subsite() {
 		$blog_id = 0;
 
-		if ( empty( $this->state_data ) ) {
+		$existing_state_data = Util::get_state_data();
+
+		if ( ! empty( $existing_state_data ) ) {
+			$this->state_data = $existing_state_data;
+		} else {
 			$this->state_data = $this->migration_state_manager->set_post_data();
 		}
 
@@ -521,7 +530,7 @@ class MultisiteToolsAddon extends AddonAbstract {
 			return $table_name;
 		}
 
-		$new_prefix = $this->util->profile_value( 'new_prefix' );
+		$new_prefix = $this->util->profile_value( 'new_prefix', $this->form_data );
 
 		if ( empty( $new_prefix ) ) {
 			return $table_name;
@@ -563,14 +572,19 @@ class MultisiteToolsAddon extends AddonAbstract {
 	 * @return bool
 	 */
 	public function filter_table_row( $row, $table_name, $action, $stage ) {
-		$use     = true;
-		$blog_id = $this->selected_subsite();
+		$use = true;
+
+		if ( $this->blog_id ) {
+			$blog_id = $this->blog_id;
+		} else {
+			$blog_id = $this->selected_subsite();
+		}
 
 		if ( 1 > $blog_id || 'backup' == $stage ) {
 			return $use;
 		}
 
-		$new_prefix = $this->util->profile_value( 'new_prefix' );
+		$new_prefix = $this->util->profile_value( 'new_prefix', $this->form_data );
 
 		if ( empty( $new_prefix ) ) {
 			return $row;
@@ -633,6 +647,8 @@ class MultisiteToolsAddon extends AddonAbstract {
 	 */
 	public function filter_find_and_replace( $tmp_find_replace_pairs, $intent, $site_url ) {
 		$blog_id = $this->selected_subsite();
+
+		$this->state_data = $this->migration_state_manager->set_post_data();
 
 		if ( 1 > $blog_id ) {
 			return $tmp_find_replace_pairs;
@@ -721,7 +737,7 @@ class MultisiteToolsAddon extends AddonAbstract {
 			return $table_name;
 		}
 
-		$new_prefix = $this->util->profile_value( 'new_prefix' );
+		$new_prefix = $this->util->profile_value( 'new_prefix', $this->form_data );
 
 		if ( empty( $new_prefix ) ) {
 			return $table_name;
@@ -1054,15 +1070,21 @@ class MultisiteToolsAddon extends AddonAbstract {
 	 */
 	public function filter_get_alter_queries( $queries ) {
 		$blog_id = $this->selected_subsite();
+		$state_data = $this->state_data;
+
+		if ( ! isset( $this->state_data['site_details'] ) ) {
+			$this->migration_state_manager->get_migration_state( $this->state_data['remote_state_id'] );
+			$state_data = $this->migration_state_manager->state_data;
+		}
 
 		if ( 1 > $blog_id ) {
 			return $queries;
 		}
 
-		if ( is_multisite() && 'pull' === $this->state_data['intent'] && ! empty( $this->state_data['tables'] ) ) {
+		if ( is_multisite() && 'pull' === $state_data['intent'] && ! empty( $state_data['tables'] ) ) {
 			global $wpdb;
 
-			$tables = explode( ',', $this->state_data['tables'] );
+			$tables = explode( ',', $state_data['tables'] );
 
 			$target_users_table    = null;
 			$source_users_table    = null;
@@ -1070,27 +1092,32 @@ class MultisiteToolsAddon extends AddonAbstract {
 			$source_usermeta_table = null;
 			$posts_imported        = false;
 			$target_posts_table    = null;
+			$target_postmeta_table = null;
 			$comments_imported     = false;
 			$target_comments_table = null;
 			foreach ( $tables as $table ) {
 				if ( empty( $source_users_table ) && $this->table_helper->table_is( 'users', $table ) ) {
 					$target_users_table = $table;
-					$source_users_table = $this->filter_finalize_target_table_name( $table, $this->state_data['intent'], $this->state_data['site_details'] );
+					$source_users_table = $this->filter_finalize_target_table_name( $table, $state_data['intent'], $state_data['site_details'] );
 					continue;
 				}
 				if ( empty( $source_usermeta_table ) && $this->table_helper->table_is( 'usermeta', $table ) ) {
 					$target_usermeta_table = $table;
-					$source_usermeta_table = $this->filter_finalize_target_table_name( $table, $this->state_data['intent'], $this->state_data['site_details'] );
+					$source_usermeta_table = $this->filter_finalize_target_table_name( $table, $state_data['intent'], $state_data['site_details'] );
 					continue;
 				}
 				if ( ! $posts_imported && $this->table_helper->table_is( 'posts', $table ) ) {
 					$posts_imported     = true;
-					$target_posts_table = $this->filter_finalize_target_table_name( $table, $this->state_data['intent'], $this->state_data['site_details'] );
+					$target_posts_table = $this->filter_finalize_target_table_name( $table, $state_data['intent'], $state_data['site_details'] );
+					continue;
+				}
+				if ( $this->table_helper->table_is( 'postmeta', $table ) ) {
+					$target_postmeta_table = $this->filter_finalize_target_table_name( $table, $state_data['intent'], $state_data['site_details'] );
 					continue;
 				}
 				if ( ! $comments_imported && $this->table_helper->table_is( 'comments', $table ) ) {
 					$comments_imported     = true;
-					$target_comments_table = $this->filter_finalize_target_table_name( $table, $this->state_data['intent'], $this->state_data['site_details'] );
+					$target_comments_table = $this->filter_finalize_target_table_name( $table, $state_data['intent'], $state_data['site_details'] );
 					continue;
 				}
 			}
@@ -1098,7 +1125,7 @@ class MultisiteToolsAddon extends AddonAbstract {
 			// Find users that already exist and update their content to adopt existing user id and remove from import.
 			if ( ! empty( $source_users_table ) ) {
 				$updated_user_ids           = array();
-				$temp_prefix                = $this->state_data['temp_prefix'];
+				$temp_prefix                = $state_data['temp_prefix'];
 				$temp_source_users_table    = $temp_prefix . $source_users_table;
 				$temp_source_usermeta_table = $temp_prefix . $source_usermeta_table;
 
@@ -1172,6 +1199,15 @@ class MultisiteToolsAddon extends AddonAbstract {
 						SET p.post_author = u.id
 						WHERE p.post_author = u.wpmdb_user_id
 						;\n";
+				}
+
+				if ( ! is_null( $target_postmeta_table ) ) {
+					$queries[]['query'] = "
+										UPDATE `{$target_postmeta_table}`
+										SET {$target_postmeta_table}.meta_value = {$user_ids['target_id']}
+										WHERE {$target_postmeta_table}.meta_key = '_edit_last'
+										AND {$target_postmeta_table}.meta_value = {$user_ids['source_id']};
+										";
 				}
 
 				if ( $comments_imported ) {
@@ -1332,8 +1368,9 @@ class MultisiteToolsAddon extends AddonAbstract {
 	 */
 	protected function update_usermeta_for_imported_users( $queries, $user_ids, $temp_source_usermeta_table, $target_usermeta_table, $blog_id ) {
 		global $wpdb;
+		$prefix = $wpdb->prefix;
 
-		$blog_id_string = 1 === (int) $blog_id ? 'wp_' : "wp_{$blog_id}_";
+		$blog_id_string = 1 === (int) $blog_id ? $prefix : "{$prefix}{$blog_id}_";
 
 		$sql = "SELECT meta_value as value
 			FROM `{$temp_source_usermeta_table}`

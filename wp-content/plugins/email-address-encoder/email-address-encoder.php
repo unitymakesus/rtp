@@ -3,7 +3,7 @@
 Plugin Name: Email Address Encoder
 Plugin URI: https://encoder.till.im/
 Description: A lightweight plugin that protects email addresses from email-harvesting robots by encoding them into decimal and hexadecimal entities.
-Version: 1.0.14
+Version: 1.0.19
 Author: Till Krüss
 Author URI: https://till.im/
 Text Domain: email-address-encoder
@@ -21,6 +21,29 @@ if ( ! defined( 'EAE_FILTER_PRIORITY' ) ) {
     define(
         'EAE_FILTER_PRIORITY',
         (integer) get_option( 'eae_filter_priority', 1000 )
+    );
+}
+
+/**
+ * Define regular expression constant, unless it has already been defined.
+ */
+if ( ! defined( 'EAE_REGEXP' ) ) {
+    define(
+        'EAE_REGEXP',
+        '{
+            (?:mailto:)?
+            (?:
+                [-!#$%&*+/=?^_`.{|}~\w\x80-\xFF]+
+            |
+                ".*?"
+            )
+            \@
+            (?:
+                [-a-z0-9\x80-\xFF]+(\.[-a-z0-9\x80-\xFF]+)*\.[a-z]+
+            |
+                \[[\d.a-fA-F:]+\]
+            )
+        }xi'
     );
 }
 
@@ -70,7 +93,10 @@ function eae_register_shortcode() {
  * @return string Encoded given text
  */
 function eae_shortcode( $attributes, $content = '' ) {
-    return eae_encode_str( $content );
+    // override encoding function with the 'eae_method' filter
+    $method = apply_filters( 'eae_method', 'eae_encode_str' );
+
+    return $method( $content );
 }
 
 /**
@@ -98,28 +124,21 @@ function eae_encode_emails( $string ) {
     // override encoding function with the 'eae_method' filter
     $method = apply_filters( 'eae_method', 'eae_encode_str' );
 
-    // override regex pattern with the 'eae_regexp' filter
-    $regexp = apply_filters(
-        'eae_regexp',
-        '{
-            (?:mailto:)?
-            (?:
-                [-!#$%&*+/=?^_`.{|}~\w\x80-\xFF]+
-            |
-                ".*?"
-            )
-            \@
-            (?:
-                [-a-z0-9\x80-\xFF]+(\.[-a-z0-9\x80-\xFF]+)*\.[a-z]+
-            |
-                \[[\d.a-fA-F:]+\]
-            )
-        }xi'
-    );
+    // override regular expression with the 'eae_regexp' filter
+    $regexp = apply_filters( 'eae_regexp', EAE_REGEXP );
 
-    return preg_replace_callback( $regexp, function ( $matches ) use ( $method ) {
-        return $method( $matches[0] );
-    }, $string );
+    $callback = function ( $matches ) use ( $method ) {
+        return $method( $matches[ 0 ] );
+    };
+
+    // override callback method with the 'eae_email_callback' filter
+    if ( has_filter( 'eae_email_callback' ) ) {
+        $callback = apply_filters( 'eae_email_callback', $callback, $method );
+
+        return preg_replace_callback( $regexp, $callback, $string );
+    }
+
+    return preg_replace_callback( $regexp, $callback, $string );
 }
 
 /**
@@ -144,20 +163,16 @@ function eae_encode_str( $string, $hex = false ) {
     $seed = mt_rand( 0, (int) abs( crc32( $string ) / strlen( $string ) ) );
 
     foreach ( $chars as $key => $char ) {
-
         $ord = ord( $char );
 
         if ( $ord < 128 ) { // ignore non-ascii chars
-
             $r = ( $seed * ( 1 + $key ) ) % 100; // pseudo "random function"
 
-            if ( $r > 60 && $char !== '@' && $char !== '.' ) ; // plain character (not encoded), except @-signs and dots
+            if ( $r > 75 && $char !== '@' && $char !== '.' ); // plain character (not encoded), except @-signs and dots
             else if ( $hex && $r < 25 ) $chars[ $key ] = '%' . bin2hex( $char ); // hex
             else if ( $r < 45 ) $chars[ $key ] = '&#x' . dechex( $ord ) . ';'; // hexadecimal
-            else $chars[ $key ] = '&#' . $ord . ';'; // decimal (ascii)
-
+            else $chars[ $key ] = "&#{$ord};"; // decimal (ascii)
         }
-
     }
 
     return implode( '', $chars );

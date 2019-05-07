@@ -3,7 +3,7 @@ Contributors: sovstack, freemius
 Tags: disable XML-RPC, security, wp security, privacy, security audit, file permissions, brute force login
 Requires at least: 3.5
 Requires PHP: 5.3
-Tested up to: 5.0
+Tested up to: 5.1
 Stable tag: trunk
 
 A plugin to quickly implement WordPress hardening and security techniques.
@@ -46,6 +46,12 @@ Features:
 6. Content Settings
 
 == Changelog ==
+
+= 1.2.3 (High Priority) = 
+*Release Date - 1 March 2019*
+* Security: Updated Freemius SDK
+* Improvement: Updated PHP version checks
+* Tested up to: 5.1
 
 = 1.2.2 (High Priority) = 
 *Release Date - 9 December 2018*

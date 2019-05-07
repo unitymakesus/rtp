@@ -43,7 +43,7 @@ $img_style = '';
 // if an image id was given
 if ( $this->selected_image_id ) {
 	$arr_image = wp_get_attachment_image_src( $this->selected_image_id );
-	// and if there is an valid image
+	// and if there is a valid image
 	if ( $arr_image ) {
 		// show the image and set the id as param value
 		$img_url = $arr_image[0];

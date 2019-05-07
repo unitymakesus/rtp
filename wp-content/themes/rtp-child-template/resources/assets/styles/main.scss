@@ -1,4 +1,5 @@
 // Import parent theme styles
-@import "/../../../../unity-core/resources/assets/styles/main";
+@import "/../../../../rtp-core/resources/assets/styles/main";
 
 // Import child theme overrides into this file
+@import "components/landing-graphic";

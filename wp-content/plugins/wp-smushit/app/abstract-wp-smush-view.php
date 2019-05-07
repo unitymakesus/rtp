@@ -5,6 +5,10 @@
  * @package WP_Smush
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Abstract class WP_Smush_View.
  */
@@ -145,11 +149,6 @@ abstract class WP_Smush_View {
 	public function smush_upgrade_notice() {
 		// Return, If a pro user, or not super admin, or don't have the admin privileges.
 		if ( WP_Smush::is_pro() || ! current_user_can( 'edit_others_posts' ) || ! is_super_admin() ) {
-			return;
-		}
-
-		// No need to show it on bulk smush.
-		if ( isset( $_GET['page'] ) && 'smush' === $_GET['page'] ) {
 			return;
 		}
 
@@ -309,17 +308,19 @@ abstract class WP_Smush_View {
 	 * Render the page
 	 */
 	public function render() {
-		// Shared UI wrapper.
-		echo '<div class="sui-wrap">';
+		// Shared UI wrapper with accessible color option.
+		$classes = $this->settings->get( 'accessible_colors' ) ? 'sui-wrap sui-color-accessible' : 'sui-wrap';
+		echo '<div class="' . esc_attr( $classes ) . '">';
 
 		// Load page header.
 		$this->render_page_header();
 
-		$hide_quick_setup = false !== get_site_option( 'skip-smush-setup' );
+		$hide_quick_setup = false !== get_option( 'skip-smush-setup' );
 
 		// Show configure screen for only a new installation and for only network admins.
-		if ( ( ! is_multisite() && ! $hide_quick_setup ) || ( is_network_admin() && $this->settings->is_network_enabled() && ! $hide_quick_setup ) ) {
-			$this->view( 'modals/quick-setup' );
+		if ( ( ! is_multisite() && ! $hide_quick_setup ) || ( is_multisite() && ! is_network_admin() && ! $this->settings->is_network_enabled() && ! $hide_quick_setup ) ) {
+			$this->view( 'modals/onboarding' );
+			$this->view( 'modals/checking-files' );
 		}
 
 		$this->render_inner_content();
@@ -471,6 +472,7 @@ abstract class WP_Smush_View {
 				<?php if ( ! is_network_admin() && ( 'bulk' === $this->get_current_tab() || 'gallery_page_wp-smush-nextgen-bulk' === $this->page_id ) ) : ?>
 					<?php $data_type = 'gallery_page_wp-smush-nextgen-bulk' === $current_screen->id ? 'nextgen' : 'media'; ?>
 					<button class="sui-button wp-smush-scan" data-tooltip="<?php esc_attr_e( 'Lets you check if any images can be further optimized. Useful after changing settings.', 'wp-smushit' ); ?>" data-type="<?php echo esc_attr( $data_type ); ?>">
+						<i class="sui-icon-update" aria-hidden="true"></i>
 						<?php esc_html_e( 'Re-Check Images', 'wp-smushit' ); ?>
 					</button>
 				<?php endif; ?>

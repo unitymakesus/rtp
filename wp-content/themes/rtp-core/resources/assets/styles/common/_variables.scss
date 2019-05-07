@@ -1,82 +1,30 @@
-/** Fonts */
-$font-bitter:                 "Bitter", serif;
-$font-source-sans-pro:        "Source Sans Pro", sans-serif;
-$font-didact-gothic:          "Didact Gothic", sans-serif;
-$font-arimo:                  "Arimo", sans-serif;
-$font-fjalla-one:             "Fjalla One", sans-serif;
-$font-crimson-text:           "Crimson Text", serif;
-$font-dancing-script:         "Dancing Script", cursive;
-$font-open-sans:              "Open Sans", sans-serif;
-$font-libre-baskerville:      "Libre Baskerville", serif;
-$font-ovo:                    "Ovo", serif;
-$font-muli:                   "Muli", sans-serif;
-
-$body-fonts-list: $font-source-sans-pro, $font-arimo, $font-crimson-text, $font-open-sans, $font-libre-baskerville, $font-muli;
-$header-fonts-list: $font-bitter, $font-didact-gothic, $font-fjalla-one, $font-dancing-script, $font-open-sans, $font-ovo;
-
 /** Colors */
 // Neutrals
 $color-black:                 #000;
-$color-grey-dark:             #66666E;
-$color-grey-medium:           #9999A1;
-$color-grey-light:            #C5C5CC;
+$color-slate:                 #333F48;
+$color-grey-dark:             #7C878E;
+$color-grey-medium:           #A2AAAD;
+$color-grey-light:            #C7C9C7;
 $color-white:                 #FFF;
 
-// Bright
-$color-bright-1:              #2E827C;
-$color-bright-2:              #2EC4B6;
-$color-bright-3:              #FF9F1C;
-$color-bright-4:              #FFBF69;
-$color-bright-5:              $color-white;
+// Master Brand
+$color-unc:                   #4B9CD3;
+$color-duke:                  #012169;
+$color-ncsu:                  #C00;
 
-// Chrome
-$color-chrome-1:              $color-black;
-$color-chrome-2:              $color-grey-dark;
-$color-chrome-3:              $color-grey-medium;
-$color-chrome-4:              $color-grey-light;
-$color-chrome-5:              #F9F9FC;
+// Accents
+$color-nccu:                  #82052A;
+$color-orange:                #FC4C02;
+$color-purple:                #654EA3;
 
-// Executive
-$color-executive-1:           #001514;
-$color-executive-2:           #6B0504;
-$color-executive-3:           #A3320B;
-$color-executive-4:           #E6AF2E;
-$color-executive-5:           #FBFFFE;
+// Frontier
+$color-mint:                  #47D7AC;
 
-// Grass
-$color-grass-1:               #114B5F;
-$color-grass-2:               #1A936F;
-$color-grass-3:               #88D498;
-$color-grass-4:               #C6DABF;
-$color-grass-5:               #F3E9D2;
-
-// Ocean
-$color-ocean-1:               #00171F;
-$color-ocean-2:               #003459;
-$color-ocean-3:               #007EA7;
-$color-ocean-4:               #00A8E8;
-$color-ocean-5:               $color-white;
-
-// Sunrise
-$color-sunrise-1:             #CC5803;
-$color-sunrise-2:             #E2711D;
-$color-sunrise-3:             #FF9505;
-$color-sunrise-4:             #FFB627;
-$color-sunrise-5:             #FFF1DB;
-
-$primary-color:               $color-black;
-$secondary-color:             $color-grey-dark;
-$success-color:               #88D498;
-$error-color:                 #A3320B;
-$link-color:                  #007EA7;
-
-$themes-list: "bright", "chrome", "executive", "grass", "ocean", "sunrise";
-$color-1-list: $color-bright-1, $color-chrome-1, $color-executive-1, $color-grass-1, $color-ocean-1, $color-sunrise-1;
-$color-bullet-list: $color-bright-4, $color-chrome-3, $color-executive-4, $color-grass-4, $color-ocean-4, $color-sunrise-4;
-$color-link-list: $color-bright-2, $color-chrome-1, $color-executive-3, $color-grass-2, $color-ocean-3, $color-sunrise-1;
-$color-primary-list: $color-bright-3, $color-chrome-1, $color-executive-4, $color-grass-4, $color-ocean-4, $color-sunrise-4;
-$color-secondary-list: $color-bright-1, $color-chrome-2, $color-executive-3, $color-grass-1, $color-ocean-2, $color-sunrise-1;
-$color-tertiary-list: $color-bright-5, $color-chrome-5, $color-executive-5, $color-grass-5, $color-ocean-5, $color-sunrise-5;
+$primary-color:               $color-slate;
+$secondary-color:             $color-black;
+$success-color:               $color-mint;
+$error-color:                 $color-ncsu;
+$link-color:                  $color-unc;
 $opacity-list: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
 
 /** Buttons */

@@ -11,23 +11,24 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit();
 }
 
+if ( ! class_exists( 'WP_Smush_Settings' ) ) {
+	if ( ! defined( 'WP_SMUSH_PREFIX' ) ) {
+		define( 'WP_SMUSH_PREFIX', 'wp-smush-' );
+	}
+	/* @noinspection PhpIncludeInspection */
+	include_once plugin_dir_path( __FILE__ ) . '/core/class-wp-smush-settings.php';
+}
+$keep_data = WP_Smush_Settings::get_instance()->get( 'keep_data' );
+
 // Check if someone want to keep the stats and settings.
-if ( defined( 'WP_SMUSH_PRESERVE_STATS' ) && WP_SMUSH_PRESERVE_STATS ) {
+if ( ( defined( 'WP_SMUSH_PRESERVE_STATS' ) && WP_SMUSH_PRESERVE_STATS ) || true === $keep_data ) {
 	return;
 }
 
 global $wpdb;
 
 $smushit_keys = array(
-	'auto',
-	'original',
-	'lossy',
-	'backup',
-	'resize',
-	'png_to_jpg',
 	'resize-sizes',
-	'nextgen',
-	'strip_exif',
 	'resmush-list',
 	'resize_sizes',
 	'transparent_png',
@@ -44,20 +45,17 @@ $smushit_keys = array(
 	'install-type',
 	'lossy-updated',
 	'version',
-	'networkwide',
 	'dir_path',
 	'scan',
-	'last_settings',
-	's3',
 	'settings',
 	'cdn_status',
+	'lazy_load',
 );
 
 $db_keys = array(
 	'skip-smush-setup',
 	'smush_global_stats',
-	'smush_option',
-	'smush-directory-path-hash-updated'
+	'smush-directory-path-hash-updated',
 );
 
 // Cache Keys.

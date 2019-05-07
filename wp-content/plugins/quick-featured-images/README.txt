@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: categories, images, featured images, filter, random, remove, replace, thumbnails, posts, pages, tags
 Requires at least: 3.8
 Requires PHP: 5.2
-Tested up to: 4.9.7
-Stable tag: 13.3.2
+Tested up to: 5.1
+Stable tag: 13.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,16 +29,17 @@ The plugin 'Quick Featured Images' helps you bulk managing featured images, sett
 You get the free version here. If you want to include **audios, videos and custom post types** and get more options then take a look the **premium version** [Quick Featured Images Pro](https://www.quickfeaturedimages.com/).
 
 = What users said =
-* **&quot;Simply the best for bulk featured image&quot;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/simply-the-best-324/) by Syamsul Alam on January 21, 2018
-* **&quot;Easy, fast and superb!&quot;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/easy-fast-and-superb/) by alexeyvorobyov1994 on August 29, 2017
-* **&quot;Made adding 10,000 featured images a breeze.&quot;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/super-helpful-30/) by synchronista on July 28, 2017
+* **&#8220;Doing the job perfect&#8221;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/doing-the-job-perfect/) by stigbarrett on February 14, 2019
+* **&#8220;Must be part of wordpress core&#8221;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/mag-ni-fi-cient-must-be-part-of-wordpress-core/) by Marc73 on November 2, 2018
+* **&#8220;Working great, just as expected, has lost of options. must-have!&#8221;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/working-great-has-lost-of-options/) by Yury on September 17, 2018
+* **&#8220;Simply the best for bulk featured image&#8221;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/simply-the-best-324/) by Syamsul Alam on January 21, 2018
+* **&#8220;Easy, fast and superb!&#8221;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/easy-fast-and-superb/) by alexeyvorobyov1994 on August 29, 2017
+* **&#8220;Made adding 10,000 featured images a breeze.&#8221;** in [Reviews at wordpress.org](https://wordpress.org/support/topic/super-helpful-30/) by synchronista on July 28, 2017
 * **Number 7** in [8 Plugins to Help Supercharge Your WordPress Media Library](https://www.elegantthemes.com/blog/tips-tricks/8-plugins-to-help-supercharge-your-wordpress-media-library) by John Hughes on April 6, 2017
-* **&quot;&hellip;can be a great asset for a variety of situations&hellip;&quot;** in [How to Use WordPress to Bulk Edit Featured Images](https://www.greengeeks.com/tutorials/article/how-to-use-wordpress-to-bulk-edit-featured-images/) by Josh Dargie on March 6, 2017
 * Mentioned in a comment of [What are must-have WordPress plugins for developer?](https://www.quora.com/What-are-must-have-WordPress-plugins-for-developer/answer/Joel-Rivera-2) by Joel Rivera on February 7, 2017
-* **&quot;The plugin is fast, and it works great on big WordPress websites.&quot;** in [How to make WP display featured image on excerpts?](http://hostileblog.com/wp-display-featured-image/) by Pramod on July 16, 2016
-* **&quot;The plugin offers great features for handling the post thumbnails including bulk editing, overview, replace and much more.&quot;** in [6+ Best Plugins To Fix Featured Image Issues in WordPress](https://85ideas.com/plugins/best-plugins-fix-featured-image-issues-wordpress/) by Editorial Staff on December 3, 2015
-* Mentioned under **&quot;Essential Plugins&quot;** on slide #24 in [The Plugins That Will Make Your Business Sink or Swim](http://www.slideshare.net/HeatherWilde/wordpress-plugins-52971643) by Heather Wilde on September 15, 2015
-* **Number 1** in [Best WordPress Plugins For Featured Image](http://www.phuntu.com/wordpress/best-wordpress-plugins-for-featured-image/) on June 20, 2015
+* **&#8220;The plugin is fast, and it works great on big WordPress websites.&#8221;** in [How to make WP display featured image on excerpts?](http://hostileblog.com/wp-display-featured-image/) by Pramod on July 16, 2016
+* **&#8220;The plugin offers great features for handling the post thumbnails including bulk editing, overview, replace and much more.&#8221;** in [6+ Best Plugins To Fix Featured Image Issues in WordPress](https://85ideas.com/plugins/best-plugins-fix-featured-image-issues-wordpress/) by Editorial Staff on December 3, 2015
+* Mentioned under **&#8220;Essential Plugins&#8221;** on slide #24 in [The Plugins That Will Make Your Business Sink or Swim](http://www.slideshare.net/HeatherWilde/wordpress-plugins-52971643) by Heather Wilde on September 15, 2015
 
 See more comments under [Reviews](https://wordpress.org/plugins/quick-featured-images/#reviews).
 
@@ -142,7 +143,7 @@ You can add, change and delete every rule whenever you want. So you get an **pre
 
 After an image is removed from the library all preset rules assigned with that image will be removed automatically.
 
-The rules take effect when a post is saved in the backend &ndash; e.g. on the post edit page &ndash; or in the frontend &ndash; e.g. via a &quot;Create Post&quot; form by Gravity Forms.
+The rules take effect when a post is saved in the backend &ndash; e.g. on the post edit page &ndash; or in the frontend &ndash; e.g. via a &#8220;Create Post&#8221; form by Gravity Forms.
 
 = Automatic Default Featured Images: Options =
 
@@ -190,7 +191,7 @@ There is no User Support provided for this plugin. If you are having trouble wit
 
 **Notice: This plugin has no Undo function!** This plugin is provided under the terms of the GPL, including the following:
 
-BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM &quot;AS IS&quot; WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. **THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.** SHOULD THE PROGRAM PROVE DEFECTIVE, **YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION**.
+BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM &#8220;AS IS&#8221; WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. **THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.** SHOULD THE PROGRAM PROVE DEFECTIVE, **YOU ASSUME THE COST OF ALL NECESSARY SERVICING, REPAIR OR CORRECTION**.
 
 == Installation ==
 
@@ -265,7 +266,7 @@ Yes. It works either activated for all sites (network wide) or activated in each
 
 No. The featured images you have already set will remain set if you deactivate or delete the plugin.
 
-= Why does the plugin say &quot;No matches found&quot; after confirmation? =
+= Why does the plugin say &#8220;No matches found&#8221; after confirmation? =
 
 This could be the case if the images were not uploaded via WordPress' own media uploader. If you have uploaded images via FTP or other ways the plugin can not find images.
 
@@ -291,8 +292,12 @@ If you want to contribute a translation of the plugin in your language it would 
 
 == Changelog ==
 
+= 13.3.3 =
+* Added checkered background for transparent thumbnails
+* Tested successfully with WordPress 5.1
+
 = 13.3.2 =
-* Refactored 'Default Images' for more rebostness
+* Refactored 'Default Images' for more robustness
 * Updated translations
 * Tested successfully with WordPress 4.9.7
 * In PRO version: Added support of Facebook images, added Export/Import of rules on page 'Default Images'
@@ -472,7 +477,7 @@ Added spanish translation for the main texts of the plugin
 * Updated *.pot file and german translation
 
 = 11.1 =
-* Fixed bug which yielded the error message &quot;No matches found&quot; at the Confirmation step
+* Fixed bug which yielded the error message &#8220;No matches found&#8221; at the Confirmation step
 * Fixed wrong links in the Confirmation list if cache was used
 
 = 11.0 =
@@ -496,8 +501,11 @@ Added spanish translation for the main texts of the plugin
 
 == Upgrade Notice ==
 
+= 13.3.3 =
+Added checkered background for transparent thumbnails, tested with WordPress 5.1
+
 = 13.3.2 =
-Refactored page Default Images for more rebostness, tested with WordPress 4.9.7
+Refactored page Default Images for more robustness, tested with WordPress 4.9.7
 
 = 13.3.1 =
 Added greek translation, changed labels, updated WP translations, tested with WordPress 4.9.1

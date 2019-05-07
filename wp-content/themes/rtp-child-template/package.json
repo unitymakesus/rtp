@@ -76,9 +76,13 @@
     "yargs": "~11.0.0"
   },
   "dependencies": {
+    "gsap": "^2.1.2",
+    "imports-loader": "^0.8.0",
     "jquery": "^3.3.1",
     "macy": "^2.3.1",
     "materialize-css": "^1.0.0",
+    "scrollmagic": "^2.0.6",
+    "snapsvg": "^0.5.1",
     "webfontloader": "^1.6.28"
   }
 }

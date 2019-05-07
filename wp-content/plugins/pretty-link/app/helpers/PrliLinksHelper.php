@@ -110,10 +110,11 @@ class PrliLinksHelper {
   public static function link_list_actions($link, $pretty_link_url) {
     global $prli_options;
 
+    $link_nonce = wp_create_nonce( 'link-actions' );
     ?>
     <a href="<?php echo admin_url('admin.php?page=pretty-link&action=edit&id=' . $link->id); ?>" title="<?php printf( __('Edit %s', 'pretty-link'), $link->slug ); ?>"><i class="pl-list-icon pl-icon-edit"></i></a>
-    <a href="<?php echo admin_url('admin.php?page=pretty-link&action=destroy&id=' . $link->id); ?>" onclick="return confirm('<?php printf( __('Are you sure you want to delete your %s Pretty Link? This will delete the Pretty Link and all of the statistical data about it in your database.', 'pretty-link'), $link->name ); ?>');" title="<?php printf( __('Delete %s', 'pretty-link'), $link->slug ); ?>"><i class="pl-list-icon pl-icon-cancel"></i></a>
-    <a href="<?php echo admin_url('admin.php?page=pretty-link&action=reset&id=' . $link->id); ?>" onclick="return confirm('<?php printf( __('Are you sure you want to reset your %s Pretty Link? This will delete all of the statistical data about this Pretty Link in your database.', 'pretty-link'), $link->name ); ?>');" title="<?php printf( __('Reset %s', 'pretty-link'), $link->name ); ?>"><i class="pl-list-icon pl-icon-reply"></i></a>
+    <a href="<?php echo admin_url("admin.php?page=pretty-link&action=destroy&id={$link->id}&_wpnonce={$link_nonce}"); ?>" onclick="return confirm('<?php printf( __('Are you sure you want to delete your %s Pretty Link? This will delete the Pretty Link and all of the statistical data about it in your database.', 'pretty-link'), $link->name ); ?>');" title="<?php printf( __('Delete %s', 'pretty-link'), $link->slug ); ?>"><i class="pl-list-icon pl-icon-cancel"></i></a>
+    <a href="<?php echo admin_url("admin.php?page=pretty-link&action=reset&id={$link->id}&_wpnonce={$link_nonce}"); ?>" onclick="return confirm('<?php printf( __('Are you sure you want to reset your %s Pretty Link? This will delete all of the statistical data about this Pretty Link in your database.', 'pretty-link'), $link->name ); ?>');" title="<?php printf( __('Reset %s', 'pretty-link'), $link->name ); ?>"><i class="pl-list-icon pl-icon-reply"></i></a>
     <?php
       if( $link->track_me and $prli_options->extended_tracking!='count' ):
         ?><a href="<?php echo admin_url("admin.php?page=pretty-link-clicks&l={$link->id}"); ?>" title="<?php printf( __('View clicks for %s', 'pretty-link'), $link->slug ); ?>"><i class="pl-list-icon pl-icon-chart-line"></i></a><?php

@@ -327,9 +327,9 @@ class AdminPageFiles extends AdminPage
         // https://endoflife.software/programming-languages/server-side-scripting/php
         // https://secure.php.net/ChangeLog-7.php
         $latest_versions['PHP'] = array(
-            '7.3.0' => '7.3.0',
-            '7.2.0' => '7.2.13',
-            '7.1.0' => '7.1.25',
+            '7.3.0' => '7.3.2',
+            '7.2.0' => '7.2.14',
+            '7.1.0' => '7.1.26',
         );
         $php_min = '7.1.0';
         $ok = array();

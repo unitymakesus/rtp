@@ -9,6 +9,10 @@
  * @copyright (c) 2018, Incsub (http://incsub.com)
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Class WP_Smush_Ajax for storing all Ajax related functionality.
  *
@@ -66,6 +70,8 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		add_action( 'wp_ajax_ignore_bulk_image', array( $this, 'ignore_bulk_image' ) );
 		// Handle Smush Bulk Ajax.
 		add_action( 'wp_ajax_wp_smushit_bulk', array( $this, 'process_smush_request' ) );
+		// Remove from skip list.
+		add_action( 'wp_ajax_remove_from_skip_list', array( $this, 'remove_from_skip_list' ) );
 
 		/**
 		 * DIRECTORY SMUSH
@@ -80,6 +86,11 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		add_action( 'wp_ajax_smush_toggle_cdn', array( $this, 'toggle_cdn' ) );
 		// Update stats box and CDN status.
 		add_action( 'wp_ajax_get_cdn_stats', array( $this, 'get_cdn_stats' ) );
+
+		/**
+		 * Lazy loading
+		 */
+		add_action( 'wp_ajax_smush_toggle_lazy_load', array( $this, 'smush_toggle_lazy_load' ) );
 	}
 
 	/***************************************
@@ -91,8 +102,8 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 	 * Process ajax action for skipping Smush setup.
 	 */
 	public function skip_smush_setup() {
-		check_ajax_referer( 'smush_quick_setup', '_wpnonce' );
-		update_site_option( 'skip-smush-setup', true );
+		check_ajax_referer( 'smush_quick_setup' );
+		update_option( 'skip-smush-setup', true );
 		wp_send_json_success();
 	}
 
@@ -104,21 +115,15 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 
 		$quick_settings = array();
 		// Get the settings from $_POST.
-		if ( ! empty( $_POST['smush_settings'] ) && is_array( $_POST['smush_settings'] ) ) {
-			$quick_settings = $_POST['smush_settings'];
+		if ( ! empty( $_POST['smush_settings'] ) ) {
+			$quick_settings = json_decode( wp_unslash( $_POST['smush_settings'] ) );
 		}
 
 		// Check the last settings stored in db.
 		$settings = $this->settings->get();
 
 		// Available settings for free/pro version.
-		$available = array(
-			'auto',
-			'lossy',
-			'strip_exif',
-			'resize',
-			'original',
-		);
+		$available = array( 'auto', 'lossy', 'strip_exif', 'original', 'usage' );
 
 		foreach ( WP_Smush::get_instance()->core()->settings as $name => $values ) {
 			// Update only specified settings.
@@ -132,22 +137,18 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 			}
 
 			// Update value in settings.
-			$settings[ $name ] = in_array( WP_SMUSH_PREFIX . $name, $quick_settings, true );
+			$settings[ $name ] = (bool) $quick_settings->{$name};
+
+			// If Smush originals is selected, enable backups.
+			if ( 'original' === $name && $settings[ $name ] && WP_Smush::is_pro() ) {
+				$settings['backup'] = true;
+			}
 		}
 
-		// Update resize width and height settings if set.
-		$resize_sizes['width']  = isset( $_POST['wp-smush-resize_width'] ) ? intval( $_POST['wp-smush-resize_width'] ) : 0;
-		$resize_sizes['height'] = isset( $_POST['wp-smush-resize_height'] ) ? intval( $_POST['wp-smush-resize_height'] ) : 0;
-
-		// @todo: Improve the hardcoded 500 value
-		$resize_sizes['width']  = $resize_sizes['width'] > 0 && $resize_sizes['width'] < 500 ? 500 : $resize_sizes['width'];
-		$resize_sizes['height'] = $resize_sizes['height'] > 0 && $resize_sizes['height'] < 500 ? 500 : $resize_sizes['height'];
-
 		// Update the resize sizes.
-		$this->settings->set_setting( WP_SMUSH_PREFIX . 'resize_sizes', $resize_sizes );
 		$this->settings->set_setting( WP_SMUSH_PREFIX . 'settings', $settings );
 
-		update_site_option( 'skip-smush-setup', true );
+		update_option( 'skip-smush-setup', true );
 
 		wp_send_json_success();
 	}
@@ -273,7 +274,6 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 			);
 		}
 
-		$core->initialise();
 		// Pass on the attachment id to smush single function.
 		$core->mod->smush->smush_single( $attachment_id );
 	}
@@ -347,7 +347,9 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		// Save settings only if networkwide settings are disabled.
 		if ( ( ! is_multisite() || ! $this->settings->is_network_enabled() ) && ( ! isset( $_REQUEST['process_settings'] ) || 'false' != $_REQUEST['process_settings'] ) ) {
 			// Save Settings.
-			$this->settings->process_options();
+			$this->settings->save( false );
+			// Fetch the new settings.
+			$this->settings->init();
 		}
 
 		// If there aren't any images in the library, return the notice.
@@ -366,10 +368,9 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 			wp_send_json_success(
 				array(
 					'notice'      => $resp,
-					'super_smush' => $core->mod->smush->lossy_enabled,
+					'super_smush' => WP_Smush::is_pro() && $this->settings->get( 'lossy' ),
 				)
 			);
-
 		}
 
 		// Default Notice, to be displayed at the top of page. Show a message, at the top.
@@ -386,18 +387,18 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		// If a user manually runs smush check.
 		$return_ui = isset( $_REQUEST['get_ui'] ) && 'true' == $_REQUEST['get_ui'] ? true : false;
 
-		// Update the variables.
-		$core->initialise();
-
-		// Logic: If none of the required settings is on, don't need to resmush any of the images
-		// We need at least one of these settings to be on, to check if any of the image needs resmush
+		/**
+		 * Logic: If none of the required settings is on, don't need to resmush any of the images
+		 * We need at least one of these settings to be on, to check if any of the image needs resmush.
+		 */
 
 		// Initialize Media Library Stats.
 		if ( 'nextgen' !== $type && empty( $core->remaining_count ) ) {
-			$core->setup_global_stats();
+			// Force update to clear caches.
+			$core->setup_global_stats( true );
 		}
 
-		// Intialize NextGen Stats.
+		// Initialize NextGen Stats.
 		if ( 'nextgen' === $type && is_object( $core->nextgen->ng_admin ) && empty( $core->nextgen->ng_admin->remaining_count ) ) {
 			$core->nextgen->ng_admin->setup_image_counts();
 		}
@@ -406,7 +407,7 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 
 		$remaining_count = 'nextgen' === $type ? $core->nextgen->ng_admin->remaining_count : $core->remaining_count;
 
-		if ( 0 == $remaining_count && ! $core->mod->smush->lossy_enabled && ! $core->mod->smush->smush_original && $core->mod->smush->keep_exif ) {
+		if ( 0 === (int) $remaining_count && ( ! WP_Smush::is_pro() || ! $this->settings->get( 'lossy' ) ) && ( ! $this->settings->get( 'original' ) || ! WP_Smush::is_pro() ) && ! $this->settings->get( 'strip_exif' ) ) {
 			delete_option( $key );
 			delete_site_option( WP_SMUSH_PREFIX . 'run_recheck' );
 			wp_send_json_success( array( 'notice' => $resp ) );
@@ -454,15 +455,14 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 
 				// If the image is already smushed.
 				if ( is_array( $smush_data ) && ! empty( $smush_data['stats'] ) ) {
-
 					// If we need to optmise losslessly, add to resmush list.
-					$smush_lossy = $core->mod->smush->lossy_enabled && ! $smush_data['stats']['lossy'];
+					$smush_lossy = WP_Smush::is_pro() && $this->settings->get( 'lossy' ) && ! $smush_data['stats']['lossy'];
 
 					// If we need to strip exif, put it in resmush list.
-					$strip_exif = ! $core->mod->smush->keep_exif && isset( $smush_data['stats']['keep_exif'] ) && ( 1 == $smush_data['stats']['keep_exif'] );
+					$strip_exif = $this->settings->get( 'strip_exif' ) && isset( $smush_data['stats']['keep_exif'] ) && ( 1 == $smush_data['stats']['keep_exif'] );
 
 					// If Original image needs to be smushed.
-					$smush_original = $core->mod->smush->smush_original && empty( $smush_data['sizes']['full'] );
+					$smush_original = $this->settings->get( 'original' ) && WP_Smush::is_pro() && empty( $smush_data['sizes']['full'] );
 
 					if ( $smush_lossy || $strip_exif || $smush_original ) {
 						$should_resmush = true;
@@ -481,37 +481,39 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 					// If the image needs to be resmushed add it to the list.
 					if ( $should_resmush ) {
 						$resmush_list[] = 'nextgen' === $type ? $attachment_k : $attachment;
-						continue;
-					} else {
-						if ( 'nextgen' !== $type ) {
-							$resize_savings     = get_post_meta( $attachment, WP_SMUSH_PREFIX . 'resize_savings', true );
-							$conversion_savings = WP_Smush_Helper::get_pngjpg_savings( $attachment );
+					}
 
-							// Increase the smushed count.
-							$smushed_count++;
-							// Get the resized image count.
-							if ( ! empty( $resize_savings ) ) {
-								$resized_count++;
-							}
+					/**
+					 * Calculate stats during re-check images action.
+					 */
+					if ( 'nextgen' !== $type ) {
+						$resize_savings     = get_post_meta( $attachment, WP_SMUSH_PREFIX . 'resize_savings', true );
+						$conversion_savings = WP_Smush_Helper::get_pngjpg_savings( $attachment );
 
-							// Get the image count.
-							$image_count += ( ! empty( $smush_data['sizes'] ) && is_array( $smush_data['sizes'] ) ) ? count( $smush_data['sizes'] ) : 0;
-
-							// If the image is in resmush list, and it was super smushed earlier.
-							$super_smushed_count += ( $smush_data['stats']['lossy'] ) ? 1 : 0;
-
-							// Add to the stats.
-							$stats['size_before'] += ! empty( $smush_data['stats'] ) ? $smush_data['stats']['size_before'] : 0;
-							$stats['size_before'] += ! empty( $resize_savings['size_before'] ) ? $resize_savings['size_before'] : 0;
-							$stats['size_before'] += ! empty( $conversion_savings['size_before'] ) ? $conversion_savings['size_before'] : 0;
-
-							$stats['size_after'] += ! empty( $smush_data['stats'] ) ? $smush_data['stats']['size_after'] : 0;
-							$stats['size_after'] += ! empty( $resize_savings['size_after'] ) ? $resize_savings['size_after'] : 0;
-							$stats['size_after'] += ! empty( $conversion_savings['size_after'] ) ? $conversion_savings['size_after'] : 0;
-
-							$stats['savings_resize']     += ! empty( $resize_savings ) ? $resize_savings['bytes'] : 0;
-							$stats['savings_conversion'] += ! empty( $conversion_savings ) ? $conversion_savings['bytes'] : 0;
+						// Increase the smushed count.
+						$smushed_count ++;
+						// Get the resized image count.
+						if ( ! empty( $resize_savings ) ) {
+							$resized_count ++;
 						}
+
+						// Get the image count.
+						$image_count += ( ! empty( $smush_data['sizes'] ) && is_array( $smush_data['sizes'] ) ) ? count( $smush_data['sizes'] ) : 0;
+
+						// If the image is in resmush list, and it was super smushed earlier.
+						$super_smushed_count += ( $smush_data['stats']['lossy'] ) ? 1 : 0;
+
+						// Add to the stats.
+						$stats['size_before'] += ! empty( $smush_data['stats'] ) ? $smush_data['stats']['size_before'] : 0;
+						$stats['size_before'] += ! empty( $resize_savings['size_before'] ) ? $resize_savings['size_before'] : 0;
+						$stats['size_before'] += ! empty( $conversion_savings['size_before'] ) ? $conversion_savings['size_before'] : 0;
+
+						$stats['size_after'] += ! empty( $smush_data['stats'] ) ? $smush_data['stats']['size_after'] : 0;
+						$stats['size_after'] += ! empty( $resize_savings['size_after'] ) ? $resize_savings['size_after'] : 0;
+						$stats['size_after'] += ! empty( $conversion_savings['size_after'] ) ? $conversion_savings['size_after'] : 0;
+
+						$stats['savings_resize']     += ! empty( $resize_savings ) ? $resize_savings['bytes'] : 0;
+						$stats['savings_conversion'] += ! empty( $conversion_savings ) ? $conversion_savings['bytes'] : 0;
 					}
 				}
 			}// End of Foreach Loop
@@ -519,6 +521,7 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 			// Store the resmush list in Options table.
 			update_option( $key, $resmush_list, false );
 		}
+
 		// Get updated stats for Nextgen.
 		if ( 'nextgen' === $type ) {
 			// Reinitialize Nextgen stats.
@@ -554,19 +557,20 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		}
 
 		if ( ! empty( $count ) ) {
+			/* translators: %1$d - number of images, %2$s - opening a tag, %3$s - closing a tag */
 			$message = sprintf( esc_html__( 'Image check complete, you have %1$d images that need smushing. %2$sBulk smush now!%3$s', 'wp-smushit' ), $count, '<a href="#" class="wp-smush-trigger-bulk">', '</a>' );
 			$resp    = '<div class="sui-notice-top sui-notice-warning sui-can-dismiss">
 					<div class="sui-notice-content">
 						<p>' . $message . '</p>
 					</div>
 					<span class="sui-notice-dismiss">
-						<a role="button" href="#" aria-label="' . __( 'Dismiss', 'wp-smushit' ) . '" class="sui-icon-check"></a>
+						<a role="button" href="#" aria-label="' . __( 'Dismiss', 'wp-smushit' ) . '" class="sui-icon-check" id="bulk-smush-top-notice-close"></a>
 					</span>
 				</div>';
 		}
 
 		// Directory Smush Stats
-		// Include directory smush stats if not requested for nextgen.
+		// Include directory smush stats if not requested for NextGen.
 		if ( 'nextgen' !== $type ) {
 			// Append the directory smush stats.
 			$dir_smush_stats = get_option( 'dir_smush_stats' );
@@ -604,8 +608,8 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		}
 
 		$return['notice']      = $resp;
-		$return['super_smush'] = $core->mod->smush->lossy_enabled;
-		if ( $core->mod->smush->lossy_enabled && 'nextgen' === $type ) {
+		$return['super_smush'] = WP_Smush::is_pro() && $this->settings->get( 'lossy' );
+		if ( WP_Smush::is_pro() && $this->settings->get( 'lossy' ) && 'nextgen' === $type ) {
 			$ss_count                    = $core->mod->db->super_smushed_count( 'nextgen', $core->nextgen->ng_stats->get_ngg_images( 'smushed' ) );
 			$return['super_smush_stats'] = sprintf( '<strong><span class="smushed-count">%d</span>/%d</strong>', $ss_count, $core->nextgen->ng_admin->total_count );
 		}
@@ -706,7 +710,7 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 			wp_send_json_error(
 				array(
 					'error'         => 'missing_id',
-					'error_message' => WP_Smush_Helper::filter_error( esc_html__( 'No attachment ID was received', 'wp-smushit' ) ),
+					'error_message' => WP_Smush_Helper::filter_error( esc_html__( 'No attachment ID was received.', 'wp-smushit' ) ),
 					'file_name'     => 'undefined',
 					'show_warning'  => intval( $smush->show_warning() ),
 				)
@@ -726,6 +730,24 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 
 		$attachment_id = (int) $_REQUEST['attachment_id'];
 		$original_meta = wp_get_attachment_metadata( $attachment_id, true );
+
+		/**
+		 * This is often not set when images are imported to the database, without properly adding the meta values.
+		 * Causes PHP Warning: Illegal string offset 'file' message.
+		 */
+		if ( ! isset( $original_meta['file'] ) ) {
+			wp_send_json_error(
+				array(
+					'error'         => 'no_file_meta',
+					'error_message' => WP_Smush_Helper::filter_error( esc_html__( 'No file data found in image meta.', 'wp-smushit' ) ),
+					'file_name'     => printf(
+						/* translators: %d - attachment ID */
+						esc_html__( 'undefined (attachment ID: %d)', 'wp-smushit' ),
+						(int) $attachment_id
+					),
+				)
+			);
+		}
 
 		// Try to get the file name from path.
 		$file_name = explode( '/', $original_meta['file'] );
@@ -856,6 +878,23 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 		);
 	}
 
+	/**
+	 * Remove the image meta that is making the image skip bulk smush.
+	 *
+	 * @since 3.0
+	 */
+	public function remove_from_skip_list() {
+		wp_verify_nonce( 'wp-smush-remove-skipped' );
+
+		if ( ! isset( $_POST['id'] ) ) {
+			wp_send_json_error();
+		}
+
+		delete_post_meta( absint( $_POST['id'] ), 'wp-smush-ignore-bulk' );
+
+		wp_send_json_success();
+	}
+
 	/***************************************
 	 *
 	 * DIRECTORY SMUSH
@@ -910,22 +949,30 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 			);
 		}
 
-		$param = sanitize_text_field( wp_unslash( $_POST['param'] ) );
+		$param = isset( $_POST['param'] ) ? sanitize_text_field( wp_unslash( $_POST['param'] ) ) : '';
 
 		$this->settings->set( 'cdn', 'true' === $param );
 
 		if ( 'true' === $param ) {
-			// Maybe this is not the place for this here. Check CDN settings on page load.
+			// Maybe here is not the place for this. Check CDN settings on page load.
 			$status = $this->settings->get_setting( WP_SMUSH_PREFIX . 'cdn_status' );
+			$smush  = WP_Smush::get_instance();
 
 			if ( ! $status ) {
-				$status = WP_Smush::get_instance()->api()->check();
-				$data   = $this->process_cdn_status( $status );
+				$status = $smush->api()->check();
+				$data   = $smush->core()->mod->cdn->process_cdn_status( $status );
 				$this->settings->set_setting( WP_SMUSH_PREFIX . 'cdn_status', $data );
 			}
+
+			$smush->core()->mod->cdn->schedule_cron();
+
+			// Clear HB page cache.
+			do_action( 'wphb_clear_page_cache' );
 		} else {
 			// Remove CDN settings if disabling.
 			$this->settings->delete_setting( WP_SMUSH_PREFIX . 'cdn_status' );
+
+			WP_Smush::get_instance()->core()->mod->cdn->unschedule_cron();
 		}
 
 		wp_send_json_success();
@@ -939,42 +986,63 @@ class WP_Smush_Ajax extends WP_Smush_Module {
 	public function get_cdn_stats() {
 		$current_status = $this->settings->get_setting( WP_SMUSH_PREFIX . 'cdn_status' );
 
+		$smush = WP_Smush::get_instance();
+
 		if ( isset( $current_status->cdn_enabling ) && $current_status->cdn_enabling ) {
-			$status = WP_Smush::get_instance()->api()->enable();
+			$status = $smush->api()->enable();
 		} else {
-			$status = WP_Smush::get_instance()->api()->check();
+			$status = $smush->api()->check();
 		}
 
-		$data = $this->process_cdn_status( $status );
+		$data = $smush->core()->mod->cdn->process_cdn_status( $status );
 		$this->settings->set_setting( WP_SMUSH_PREFIX . 'cdn_status', $data );
 
 		// At this point we already know that $status->data is valid.
 		wp_send_json_success( $data );
 	}
 
-	/**
-	 * Process CDN status.
+	/***************************************
 	 *
-	 * @since 3.0
+	 * Lazy loading
 	 *
-	 * @param $status
-	 *
-	 * @return mixed
+	 * @since 3.2.0
 	 */
-	private function process_cdn_status( $status ) {
-		$status = json_decode( $status['body'] );
 
-		// Error from API.
-		if ( ! $status->success ) {
+	/**
+	 * Toggle lazy loading module.
+	 *
+	 * Handles "Activate" button press on the disabled lazy loading meta box.
+	 * Handles "Deactivate" button press on the lazy loading meta box.
+	 * Refreshes page on success.
+	 *
+	 * @since 3.2.0
+	 */
+	public function smush_toggle_lazy_load() {
+		check_ajax_referer( 'save_wp_smush_options' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
 				array(
-					'message' => $status->data->message,
+					'message' => __( 'User can not modify options', 'wp-smushit' ),
 				),
-				$status->data->error_code
+				403
 			);
 		}
 
-		return $status->data;
+		$param = isset( $_POST['param'] ) ? sanitize_text_field( wp_unslash( $_POST['param'] ) ) : false;
+
+		if ( 'true' === $param ) {
+			$settings = $this->settings->get_setting( WP_SMUSH_PREFIX . 'lazy_load' );
+
+			// No settings, during init - set defaults.
+			if ( ! $settings ) {
+				$this->settings->init_lazy_load_defaults();
+			}
+		}
+
+		$this->settings->set( 'lazy_load', 'true' === $param );
+
+		wp_send_json_success();
 	}
 
 }

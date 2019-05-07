@@ -4,6 +4,7 @@
   nav {
     background: none;
     height: auto;
+    box-shadow: none;
 
     & > .container > .row {
       &::after {
@@ -54,11 +55,11 @@
       max-width: 200px;
       text-align: center;
 
-      @for $n from 1 through length($themes-list) {
-        [data-color="#{nth($themes-list, $n)}"] & {
-          color: nth($color-1-list, $n);
-        }
-      }
+      // @for $n from 1 through length($themes-list) {
+      //   [data-color="#{nth($themes-list, $n)}"] & {
+      //     color: nth($color-1-list, $n);
+      //   }
+      // }
     }
 
     @media #{$medium-and-down} {
@@ -130,7 +131,7 @@ nav {
       text-decoration: none;
       font-weight: normal;
       padding: 1rem 15px;
-      color: $color-black;
+      color: $color-grey-dark;
       font-size: 1.1rem;
 
       [data-font="3"] & {

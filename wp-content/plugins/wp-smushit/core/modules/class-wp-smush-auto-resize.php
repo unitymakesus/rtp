@@ -10,10 +10,14 @@
  * @copyright (c) 2018, Incsub (http://incsub.com)
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Class WP_Smush_Auto_Resize
  */
-class WP_Smush_Auto_Resize extends WP_Smush_Module {
+class WP_Smush_Auto_Resize extends WP_Smush_Content {
 
 	/**
 	 * Is auto detection enabled.
@@ -33,7 +37,7 @@ class WP_Smush_Auto_Resize extends WP_Smush_Module {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_resize_assets' ) );
 
 		// Set a flag to media library images.
-		add_action( 'smush_image_src_before_cdn', array( $this, 'set_image_flag' ), 99, 2 );
+		add_action( 'smush_cdn_image_tag', array( $this, 'skip_image_resize_detection' ) );
 
 		// Generate markup for the template engine.
 		add_action( 'wp_footer', array( $this, 'generate_markup' ) );
@@ -70,7 +74,7 @@ class WP_Smush_Auto_Resize extends WP_Smush_Module {
 		// Required scripts for front end.
 		wp_enqueue_script(
 			'smush-resize-detection',
-			WP_SMUSH_URL . 'app/assets/js/resize-detection.min.js',
+			WP_SMUSH_URL . 'app/assets/js/smush-rd.min.js',
 			array( 'jquery' ),
 			WP_SMUSH_VERSION,
 			true
@@ -79,7 +83,7 @@ class WP_Smush_Auto_Resize extends WP_Smush_Module {
 		// Required styles for front end.
 		wp_enqueue_style(
 			'smush-resize-detection',
-			WP_SMUSH_URL . 'app/assets/css/resize-detection.min.css',
+			WP_SMUSH_URL . 'app/assets/css/smush-rd.min.css',
 			array(),
 			WP_SMUSH_VERSION
 		);
@@ -100,29 +104,6 @@ class WP_Smush_Auto_Resize extends WP_Smush_Module {
 	}
 
 	/**
-	 * Set image flag attribute to img tag.
-	 *
-	 * In order to highlight images, let's set a flag to
-	 * image so that it can be easily detected in front end.
-	 *
-	 * @param string $src   Image src.
-	 * @param object $image Image tag object.
-	 *
-	 * @return mixed
-	 */
-	public function set_image_flag( $src, $image ) {
-		// No need to add attachment id if auto detection is not enabled.
-		if ( ! $this->can_auto_detect ) {
-			return $src;
-		}
-
-		// Set image flag attribute.
-		$image->setAttribute( 'data-smush-image', true );
-
-		return $src;
-	}
-
-	/**
 	 * Generate markup for the template engine.
 	 *
 	 * @since 2.9
@@ -134,25 +115,50 @@ class WP_Smush_Auto_Resize extends WP_Smush_Module {
 		}
 		?>
 		<div id="smush-image-bar-toggle" class="closed">
-            <i class="sui-icon-loader" aria-hidden="true"> </i>
+			<i class="sui-icon-loader" aria-hidden="true"> </i>
 		</div>
 		<div id="smush-image-bar" class="closed">
 			<h3><?php esc_html_e( 'Image Issues', 'wp-smushit' ); ?></h3>
 			<p>
-				<?php esc_html_e( 'The images listed below are being resized to fit a container. To avoid serving oversized or blurry image, try to match the images to their container sizes.', 'wp-smushit' ); ?>
+				<?php esc_html_e( 'The images listed below are being resized to fit a container. To avoid serving oversized or blurry images, try to match the images to their container sizes.', 'wp-smushit' ); ?>
 			</p>
 
 			<div id="smush-image-bar-items-bigger">
 				<strong><?php esc_html_e( 'Oversized', 'wp-smushit' ); ?></strong>
 			</div>
 			<div id="smush-image-bar-items-smaller">
-				<strong><?php esc_html_e( 'Under', 'wp-smushit' ); ?></strong>
+				<strong><?php esc_html_e( 'Undersized', 'wp-smushit' ); ?></strong>
 			</div>
 			<p>
 				<?php esc_html_e( 'Note: It’s not always easy to make this happen, fix up what you can.', 'wp-smushit' ); ?>
 			</p>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Exclude images that are hosted on CDN and have auto resize enabled.
+	 *
+	 * @since 3.2.0
+	 *
+	 * @param string $image  Image tag.
+	 *
+	 * @return string
+	 */
+	public function skip_image_resize_detection( $image ) {
+		// No need to add attachment id if auto detection is not enabled.
+		if ( ! $this->can_auto_detect ) {
+			return $image;
+		}
+
+		// CDN with auto resize need to be enabled.
+		if ( ! $this->settings->get( 'cdn' ) || ! $this->settings->get( 'auto_resize' ) ) {
+			return $image;
+		}
+
+		$this->add_attribute( $image, 'data-resize-detection', '0' );
+
+		return $image;
 	}
 
 }

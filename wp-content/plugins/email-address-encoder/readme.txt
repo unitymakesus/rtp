@@ -3,9 +3,9 @@ Contributors: tillkruess
 Donate link: https://www.paypal.me/tillkruss
 Tags: antispam, anti spam, spam, email, e-mail, mail, spider, crawler, harvester, robots, spambot, block, obfuscate, obfuscation, encode, encoder, encoding, encrypt, encryption, protect, protection
 Requires at least: 2.0
-Tested up to: 5.0
+Tested up to: 5.1
 Requires PHP: 5.3
-Stable tag: 1.0.14
+Stable tag: 1.0.19
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -28,9 +28,10 @@ Other content (like phone numbers) can be protected using `[encode]` shortcode:
 
 * **Full-page protection** that catches all email addresses
 * **Hardened protection** using JavaScript and CSS techniques
-* Built-in plugin support for **ACF**, **WooCommerce** and many others
+* Improved **phone number** protection
+* Built-in plugin support for **ACF**, **Jetpack**, **WooCommerce** and many others
 
-Check out the [Premium](https://encoder.till.im/scanner?utm_source=wp-plugin&amp;utm_medium=readme) version of Email Address Encoder.
+Check out the [Premium](https://encoder.till.im/download?utm_source=wp-plugin&amp;utm_medium=readme) version of Email Address Encoder.
 
 == Installation ==
 
@@ -57,15 +58,46 @@ You can use the "Page Scanner" found under _Settings -> Email Encoder_ to see wh
 
 = How can I filter other parts of my site? =
 
-[This guide](https://encoder.till.im/guide) will help you encode all email addresses that aren’t caught.
+[This guide](https://encoder.till.im/guide?utm_source=wp-plugin&amp;utm_medium=readme) will help you encode all email addresses that aren’t caught.
 
 == Screenshots ==
 
 1. Settings: Configure the plugin to your needs.
 2. Protection: This is how email addresses will look like under the hood.
 3. [Premium] Hardened protection: A preview of JavaScript and CSS based techniques
+4. [Premium] Phone number protection using polymorphous ROT47/CSS
 
 == Changelog ==
+
+= 1.0.19 =
+
+* Defer loading of email detector script
+* Use plugin version as cache buster
+* Add "Polymorphous ROT47/CSS" to techniques
+
+= 1.0.18 =
+
+* Show warning when incompatible plugins are installed
+* Fixed saving of dismissed notices
+
+= 1.0.17 =
+
+* Offload email detection to web worker
+* Flush WP Super Cache and Cachify when saving settings
+* Ignore emails in admin bar, debug bar and query monitor
+
+= 1.0.16 =
+
+* Avoid fatal error when using PHP 5.5 or lesser
+
+= 1.0.15 =
+
+* Added `EAE_REGEXP` constant
+* Added `eae_email_callback` filter
+* Added unprotected email detector to admin bar
+* Respect `eae_method` filter in shortcode
+* Fixed issue with notices not hiding in some cases
+* Flush page cache when saving settings (W3 Total Cache; WP Rocket; LiteSpeed Cache; JCH Optimize)
 
 = 1.0.14 =
 

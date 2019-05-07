@@ -1,13 +1,13 @@
 === Smush Image Compression and Optimization ===
 Plugin Name: Smush Image Compression and Optimization
-Version: 3.0.2
+Version: 3.2.0.1
 Author: WPMU DEV
 Author URI: https://premium.wpmudev.org/
 Contributors: WPMUDEV, alexdunae
-Tags: image, resize, optimize, optimise, compress, performance, optimisation, optimise JPG, WebP, photography, optimizer, Smush WordPress Compression, Smush.it
+Tags: image, resize, optimize, optimise, compress, performance, optimisation, lazy load, WebP, photography, optimizer, Smush WordPress Compression, Smush.it
 Requires at least: 4.6
-Tested up to: 5.0.1
-Stable tag: 3.0.2
+Tested up to: 5.1.1
+Stable tag: 3.2.0.1
 Requires PHP: 5.2.4
 License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
@@ -23,6 +23,7 @@ Compress and optimize (or optimise) image files, improve performance and boost y
 Smush has been benchmarked and tested number one for speed and quality and is the [award-winning](https://torquemag.io/2018/04/smush-image-compression-wins-2018-plugin-madness/), back-to-back proven crowd favorite image optimization plugin for WordPress.
 
 - Lossless Compression – Strip unused data without affecting image quality
+- Lazy Loader -  Defer offscreen images with the flip of a switch
 - Bulk Smush – Optimize up to 50 images with one click
 - Image Resizing – Set a max width and height and large images will scale down as they are being compressed
 - Incorrect Size Image Detection – Quickly locate images that are slowing down your site
@@ -40,7 +41,7 @@ Smush has been benchmarked and tested number one for speed and quality and is th
 Some image compression tools destroy images with as much as a 30% loss in quality. Our servers strip hidden bulky information from your images and reduce file size without affecting the appearance.
 
 [youtube https://www.youtube.com/watch?v=BDtgVJZEajg&feature=youtu.be]
- 
+
 Smush meticulously scans every image you upload – or have already added to your site – cuts all the unnecessary data and scales it for you before adding it to your media library.
 
 ### Compress any Image in any Directory
@@ -63,6 +64,9 @@ No matter what plugins you use to better manage your WordPress media library, Sm
 
 ### Incorrect Size Image Detection
 Smush now includes a wrong size image finder. Activate and your images will be highlighted with smart tips for scaling your images. Quickly locate the images that are keeping you from getting that perfect 100 on your Google PageSpeed test.
+
+### Defer Offscreen Images
+Smush has lazy load built-in. If your page has a bunch of images below the fold, lazy loading will drastically speed up your page by serving only the images being viewed and delaying others further down the page.
 
 ★★★★★
 > “I had no idea that my page load time was being dragged down by the images. The plugin nearly halved the time it took.” - [karlcw](http://profiles.wordpress.org/karlcw)
@@ -90,7 +94,7 @@ The faster your site loads, the more Google, Bing, Yahoo and other search engine
 
 Smush can take care of all your image compression needs, for free!
 
-However, if you’d like Super Smush lossy compression, fast CDN image delivery, WebP conversion, automatic resizing, the ability to optimize images up to 32MB, bulk smush optimization for all your images in just one-click, auto-convert PNG to JPEG, the ability to Smush and make a copy of your full-sized images (to restore them at any point) you can always take the next step with [WP Smush Pro](https://premium.wpmudev.org/project/wp-smush-pro/?utm_source=wordpress.org&utm_medium=readme) along with her whole team of WordPress optimization hero friends (security, SEO, performance, support and maintenance automation) for unlimited sites – perfect for agencies and freelancers offering site maintenance services.
+However, if you’d like Super Smush lossy compression, fast CDN image delivery, WebP conversion, automatic resizing, the ability to optimize images up to 32MB, bulk smush optimization for all your images in just one-click, auto-convert PNG to JPEG, the ability to Smush and make a copy of your full-sized images (to restore them at any point) you can always take the next step with [WP Smush Pro](https://premium.wpmudev.org/project/wp-smush-pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=smush-readme&utm_content=wp_smush_pro#trial) along with her whole team of WordPress optimization hero friends (security, SEO, performance, support and maintenance automation) for unlimited sites – perfect for agencies and freelancers offering site maintenance services.
 
 ### Privacy
 
@@ -111,7 +115,7 @@ This means your images were not properly scaled for where they are being display
 
 = Does Smush delete or replace my original full-size images? =
 
-Nope. WordPress crops and resizes every image you upload for embedding on your site. By default, Smush only compresses these cropped and resized images, not your original full-size images. To compress your original full-sized images use [Smush Pro](https://premium.wpmudev.org/project/wp-smush-pro/?utm_source=wordpress.org&utm_medium=readme).
+Nope. WordPress crops and resizes every image you upload for embedding on your site. By default, Smush only compresses these cropped and resized images, not your original full-size images. To compress your original full-sized images use [Smush Pro](https://premium.wpmudev.org/project/wp-smush-pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=smush-readme&utm_content=smush_pro#trial).
 
 = What type of file should I use for my images (GIF, PNG, JPG)? =
 
@@ -131,7 +135,7 @@ Yes! EXIF data stores camera settings, focal length, date, time and location inf
 
 = I just ran bulk smush and some of my images didn't get compressed? =
 
-First, check to see if you're receiving any server errors. If your images seem to be processing correctly check the file size of the images being skipped. Images over 1mb will be skipped. To compress images up to 32mb get [Smush Pro](https://premium.wpmudev.org/project/wp-smush-pro/?utm_source=wordpress.org&utm_medium=readme).
+First, check to see if you're receiving any server errors. If your images seem to be processing correctly check the file size of the images being skipped. Images over 1mb will be skipped. To compress images up to 32mb get [Smush Pro](https://premium.wpmudev.org/project/wp-smush-pro/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=smush-readme&utm_content=wp_smush_pro#trial).
 
 = I activated Smush and I don’t see any difference in image quality. How am I supposed to know if Smush is working? =
 
@@ -155,6 +159,53 @@ It depends what side of the pond you live on...but whether you say optimize, opt
 3. Smush will find and optimize images for you.
 
 == Changelog ==
+
+= 3.2.0.1 =
+
+* Fix: CDN upgrade link not showing when bandwidth is over limit
+
+= 3.2.0 =
+
+* New: Image lazy loading
+* New: CDN support for mapped domains in multisite
+* New: Auto update free version of the plugin to Pro if Dashboard plugin is installed and activated
+* New: Options to preserve settings and data on plugin uninstall
+* New: Option to reset settings to defaults
+* New: Ignore images with errors during bulk Smush
+* Enhance: Performance
+* Enhance: Clean up outdated and deprecated code
+* Enhance: Onboarding experience
+* Enhance: Skip auto resized images on CDN from highlighting in image resize detection tab
+* Enhance: Directory Smush where wp-content is placed in a custom location
+* Fix: [NextGEN Gallery] bug with stats count
+* Fix: Translation strings and typos
+* Fix: wp_smush_skip_folder filter
+* Fix: Recalculate stats when clicking 'Re-check status' button
+* Fix: Illegal string offset 'file' warning in PHP
+
+= 3.1.1 =
+
+* Fix: Auto Smush in Gutenberg
+* Fix: Image backup in Gutenberg
+
+= 3.1.0 =
+
+* New: Onboarding experience for new installs
+* New: WP CLI support for bulk/single image Smush and bulk restore
+* New: Color accessibility settings
+* New: Compatibility with Beaver Builder
+* Enhance: CDN image detection
+* Enhance: Compatibility with Hustle
+* Enhance: Add upgrade link in Plugins section for the free version
+* Enhance: Remove activation tooltips
+* Enhance: CSS for highlighting incorrectly sized images
+* Enhance: Preserve stats during options updates
+* Enhance: CDN will now only accept JPG/PNG/GIF images - no more warnings in browser console
+* Enhance: Support for Edge browser (and some older browser versions)
+* Fix: Browser console errors with CDN auto resizing and webp images
+* Fix: Directory Smush errors on subsites in multisite environments
+* Fix: Fix CDN not enabling on subsites in multisite
+* Fix: JavaScript error during bulk Smush on free version of the plugin
 
 = 3.0.2 =
 
@@ -669,10 +720,10 @@ Fix: Compatibility issues with latest WP Offload Media (WP Offload S3) update
 
 == About Us ==
 WPMU DEV is a premium supplier of quality WordPress plugins, services and support. Learn more here:
-[https://premium.wpmudev.org/](https://premium.wpmudev.org/?utm_source=wordpress.org&utm_medium=readme)
+[https://premium.wpmudev.org/](https://premium.wpmudev.org/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=smush-readme&utm_content=wpmu_dev_link)
 
 Don't forget to stay up to date on everything WordPress from the Internet's number one resource:
-[WPMU DEV Blog](https://premium.wpmudev.org/blog/?utm_source=wordpress.org&utm_medium=readme)
+[WPMU DEV Blog](https://premium.wpmudev.org/blog/?utm_source=wordpress.org&utm_medium=readme&utm_campaign=smush-readme&utm_content=wpmu_dev_blog_link)
 
 Hey, one more thing... we hope you [enjoy our free offerings](http://profiles.wordpress.org/WPMUDEV/) as much as we've loved making them for you!
 

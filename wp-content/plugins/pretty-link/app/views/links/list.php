@@ -31,8 +31,9 @@ $url_params = "&group={$group}&size={$size}&search={$search}"
         <div class="submit" style="display: inline;"><input class="button button-primary" type="submit" name="Submit" value="Search"/>
         <?php
         if(!empty($search_str)) {
+          $link_nonce = wp_create_nonce( 'link-actions' );
           ?>
-           &nbsp; <a href="<?php echo admin_url('admin.php?page=pretty-link&action=reset'); ?>" class="button"><?php _e('Reset', 'pretty-link'); ?></a>
+           &nbsp; <a href="<?php echo admin_url("admin.php?page=pretty-link&action=reset&_wpnonce={$link_nonce}"); ?>" class="button"><?php _e('Reset', 'pretty-link'); ?></a>
           <?php
         }
         ?>

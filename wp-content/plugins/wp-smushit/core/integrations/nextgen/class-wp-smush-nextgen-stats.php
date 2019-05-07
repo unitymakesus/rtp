@@ -11,6 +11,10 @@
  * @copyright (c) 2016, Incsub (http://incsub.com)
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Class WP_Smush_Nextgen_Stats
  */
@@ -102,7 +106,7 @@ class WP_Smush_Nextgen_Stats extends WP_Smush_Nextgen {
 		$offset = 0;
 
 		// Check type of images being queried.
-		if ( ! in_array( $type, array( 'smushed', 'unsmushed' ) ) ) {
+		if ( ! in_array( $type, array( 'smushed', 'unsmushed' ), true ) ) {
 			return false;
 		}
 
@@ -118,6 +122,8 @@ class WP_Smush_Nextgen_Stats extends WP_Smush_Nextgen {
 					if ( class_exists( 'Ngg_Serializable' ) ) {
 						$serializer = new Ngg_Serializable();
 						$meta       = $serializer->unserialize( $attachment->meta_data );
+					} elseif ( class_exists( 'C_NextGen_Serializable' ) && method_exists( 'C_NextGen_Serializable', 'unserialize' ) ) {
+						$meta = C_NextGen_Serializable::unserialize( $attachment->meta_data );
 					} else {
 						$meta = unserialize( $attachment->meta_data );
 					}
@@ -573,16 +579,16 @@ class WP_Smush_Nextgen_Stats extends WP_Smush_Nextgen {
 	 * @return string
 	 */
 	function show_resmush( $show_resmush, $wp_smush_data ) {
-		$smush = WP_Smush::get_instance()->core()->mod->smush;
+		$smush = WP_Smush::get_instance()->core()->mod;
 
 		// Resmush: Show resmush link, Check if user have enabled smushing the original and full image was skipped.
-		if ( $smush->smush_original ) {
+		if ( $smush->settings->get( 'original' ) && WP_Smush::is_pro() ) {
 			// IF full image was not smushed.
 			if ( ! empty( $wp_smush_data ) && empty( $wp_smush_data['sizes']['full'] ) ) {
 				$show_resmush = true;
 			}
 		}
-		if ( ! $smush->keep_exif ) {
+		if ( $smush->settings->get( 'strip_exif' ) ) {
 			// If Keep Exif was set to tru initially, and since it is set to false now.
 			if ( ! empty( $wp_smush_data['stats']['keep_exif'] ) && $wp_smush_data['stats']['keep_exif'] == 1 ) {
 				$show_resmush = true;

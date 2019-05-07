@@ -1,25 +1,25 @@
 .wp-block-cover-image {
-  &.has-background-dim {
-    @for $j from 1 through length($opacity-list) {
-      &.has-background-dim-#{nth($opacity-list, $j)} {
-        @for $k from 1 through length($themes-list) {
-          [data-color="#{nth($themes-list, $k)}"] &::before {
-            background: rgba(nth($color-1-list, $k), (nth($opacity-list, $j) / 100));
-          }
-        }
-      }
-    }
-  }
+  // &.has-background-dim {
+  //   @for $j from 1 through length($opacity-list) {
+  //     &.has-background-dim-#{nth($opacity-list, $j)} {
+  //       @for $k from 1 through length($themes-list) {
+  //         [data-color="#{nth($themes-list, $k)}"] &::before {
+  //           background: rgba(nth($color-1-list, $k), (nth($opacity-list, $j) / 100));
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   .wp-block-cover-image-text, .wp-block-cover-image h2 {
     margin-top: 0;
     font-size: 2.5rem;
 
-    @for $i from 1 through length($header-fonts-list) {
-      [data-font="#{$i}"] & {
-        font-family: nth($header-fonts-list, $i);
-      }
-    }
+    // @for $i from 1 through length($header-fonts-list) {
+    //   [data-font="#{$i}"] & {
+    //     font-family: nth($header-fonts-list, $i);
+    //   }
+    // }
   }
 }
 

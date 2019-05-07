@@ -158,13 +158,13 @@ class PrliAppController extends PrliBaseController {
         'prli-admin-shared',
         PRLI_CSS_URL.'/admin_shared.css',
         array(
+          'pl-ui-smoothness',
           'wp-pointer',
           'prli-simplegrid',
           'prli-social',
         ),
         PRLI_VERSION
       );
-
 
       wp_register_script(
         'prli-tooltip',
@@ -228,7 +228,7 @@ class PrliAppController extends PrliBaseController {
     }
 
     if( $hook === 'pretty-links_page_pretty-link-clicks' ) {
-      wp_enqueue_script('google-visualization-api', 'https://www.google.com/jsapi', null, PRLI_VERSION);
+      wp_enqueue_script('google-visualization-api', 'https://www.gstatic.com/charts/loader.js', null, PRLI_VERSION);
       wp_enqueue_style('pl-reports', PRLI_CSS_URL.'/admin_reports.css', null, PRLI_VERSION);
       wp_enqueue_script('pl-reports', PRLI_JS_URL.'/admin_reports.js', array('jquery','google-visualization-api'), PRLI_VERSION);
       wp_localize_script('pl-reports', 'PrliReport', PrliReportsController::chart_data());
@@ -438,4 +438,3 @@ class PrliAppController extends PrliBaseController {
     update_option('prli_about_notice_version',PRLI_VERSION);
   }
 }
-
