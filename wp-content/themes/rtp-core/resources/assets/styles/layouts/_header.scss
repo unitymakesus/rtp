@@ -1,5 +1,8 @@
 .banner {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  background: $color-white;
+  z-index: 100;
 
   nav {
     background: none;
@@ -132,7 +135,6 @@ nav {
       font-weight: normal;
       padding: 1rem 15px;
       color: $color-grey-dark;
-      font-size: 1.1rem;
 
       [data-font="3"] & {
         font-size: 1.2rem;

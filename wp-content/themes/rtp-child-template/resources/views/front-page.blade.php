@@ -3,12 +3,9 @@
 @section('content')
   @while(have_posts()) @php the_post() @endphp
     <article {!! post_class() !!}>
-
-      <div class="spacer"></div>
-
       <div id="landing-graphic">
-        <div id="landing-graphic-pin" class="landing-graphic-scene">
-          <svg id="svg-text" viewBox="0 0 325 130">
+        <div id="landing-graphic-pin" class="landing-graphic-pin">
+          <svg id="svg-text" viewBox="0 0 325 126">
             <defs>
               <linearGradient id="rtp-gradient" x1="0" x2="100%" y1="0" y2="0" gradientUnits="userSpaceOnUse" >
                 <stop stop-color="#4B9CD3" offset="0%"/>
@@ -22,15 +19,24 @@
               <tspan id="svg-people" font-size="40" x="10" dy="35">People</tspan>
               <tspan id="svg-plus" font-size="40" dx="6" dy="0">+</tspan>
               <tspan id="svg-ideas" font-size="40" dx="6" dy="0">Ideas</tspan>
-              <tspan id="svg-convene" font-size="40" x="10" dy="35">Convene</tspan>
+              <tspan id="svg-converge" font-size="40" x="10" dy="35">Converge</tspan>
             </text>
+            <rect id="svg-bar" fill="url(#rtp-gradient)" x="50%" y="46" width="0" height="30" />
           </svg>
+        </div>
 
-          <div id="gradient-bar"></div>
+        <div id="landing-graphic-swipe" class="landing-graphic-swipe">
+          <img src="{{ App\asset_path('images/architecture-744215.jpg') }}" alt="Architectural patterns" />
+          <div id="landing-banner-gradient" class="landing-banner-gradient">
+            <div class="badge"><span>RTP</span></div>
+            <h1>Where people and ideas converge<br />to reimagine and reinvent.</h1>
+          </div>
         </div>
       </div>
 
-      <section class="placeholder"></section>
+      <section class="placeholder">
+        <img src="{{ App\asset_path('images/rtp-home-page-filler.jpg') }}" alt="Placeholder mockup" />
+      </section>
 
     </article>
   @endwhile

@@ -132,8 +132,10 @@ let webpackConfig = {
       "TweenMax": path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js'),
       "TimelineLite": path.resolve('node_modules', 'gsap/src/uncompressed/TimelineLite.js'),
       "TimelineMax": path.resolve('node_modules', 'gsap/src/uncompressed/TimelineMax.js'),
+      "EasePack": path.resolve('node_modules', 'gsap/EasePack.js'),
       "ScrollMagic": path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'),
       "animation.gsap": path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'),
+      "debug": path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js'),
     },
   },
   resolveLoader: {

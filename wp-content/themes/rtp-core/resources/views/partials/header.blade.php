@@ -1,40 +1,20 @@
-<section class="topbar-wrapper">
-  <div class="topbar container-wide">
-    @if (has_nav_menu('top_bar'))
-      <div class="topbar-menu-wrapper flex flex-center space-between">
-        <div class="topbar-menu flex flex-center space-around">
-          <img class="rtp-logo" src="@asset('images/Logo.svg')" alt="RTP Logo" />
-          {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
+<header class="banner header-inline" role="banner">
+  <section class="topbar-wrapper">
+    <div class="topbar container-wide">
+      @if (has_nav_menu('top_bar'))
+        <div class="topbar-menu-wrapper flex flex-center space-between">
+          <div class="topbar-menu flex flex-center space-around">
+            <img class="rtp-logo" src="@asset('images/Logo.svg')" alt="RTP Logo" />
+            {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
+          </div>
         </div>
-      </div>
-    @endif
-  </div>
-</section>
+      @endif
+    </div>
+  </section>
 
-@php
-  $header_color = get_theme_mod( 'header_color' );
-  $text_color = get_theme_mod( 'header_text_color' );
-  $logo_width = get_theme_mod( 'header_logo_width' );
-  $cta_text = get_theme_mod( 'header_cta_text' );
-  $cta_link = get_theme_mod( 'header_cta_link' );
-  $cta_target_bool = get_theme_mod( 'header_cta_target' );
-  $cta_target = '';
-
-  if ($cta_target_bool == true) {
-    $cta_target = 'target="_blank" rel="noopener"';
-  }
-@endphp
-<header class="banner header-inline" role="banner" style="background-color: {{ $header_color }}">
   <nav class="nav-primary" role="navigation">
-    <div class="navbar flex flex-center space-between" data-text-color="{{ $text_color }}">
-      @php
-        if (!empty($logo_width)) {
-          $custom_logo_width = 'style=width:' . $logo_width . 'px;';
-        } else {
-          $custom_logo_width = '';
-        }
-      @endphp
-      <a class="logo" href="{{ home_url('/') }}" rel="home" {{ $custom_logo_width }}>
+    <div class="navbar flex flex-center space-between">
+      <a class="logo" href="{{ home_url('/') }}" rel="home">
         @if (has_custom_logo())
           @php
             $custom_logo_id = get_theme_mod( 'custom_logo' );
@@ -56,11 +36,6 @@
         </div>
         <div class="navbar-menu flex flex-center space-between">
           {!! wp_nav_menu(['theme_location' => 'primary_navigation', 'container' => FALSE, 'menu_class' => 'flex flex-center space-between']) !!}
-          @if (!empty($cta_text) && !empty($cta_link))
-            <div class="cta-link">
-              <a href="{{ $cta_link }}" class="btn" {{ $cta_target }}>{{ $cta_text }}</a>
-            </div>
-          @endif
         @endif
       </div>
     </div>
