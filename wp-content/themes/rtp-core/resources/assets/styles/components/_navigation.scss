@@ -27,18 +27,14 @@
 
     li {
       height: 100%;
-      padding: 5px 10px;
+      padding: 5px 15px;
 
       a {
         color: $color-white;
         text-decoration: none;
         text-transform: uppercase;
-        font-size: 13px;
+        font-size: 0.7rem;
         font-weight: normal;
-
-        @media #{$small-and-down} {
-          font-size: 12px;
-        }
       }
     }
   }
@@ -47,7 +43,7 @@
     background: $color-white;
 
     a {
-      color: $color-grey-dark !important;
+      color: $color-slate !important;
     }
   }
 }

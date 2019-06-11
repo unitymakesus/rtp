@@ -43,7 +43,7 @@ export default {
     // Tween
     var imgTween = new TimelineMax();
     imgTween.to(['#svg-bar', '#svg-people', '#svg-ideas'], 0, {autoAlpha:0}, 0)
-      .to('#landing-banner-gradient', 0.5, {className: '+=open'}, 0)
+      .to('#landing-banner-wrapper', 0.5, {className: '+=open'}, 0)
 
     // Scene
     new ScrollMagic.Scene({triggerElement:'#landing-graphic-swipe', triggerHook: '0.5', duration: '0'})

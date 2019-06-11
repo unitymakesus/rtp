@@ -9,9 +9,9 @@
             <defs>
               <linearGradient id="rtp-gradient" x1="0" x2="100%" y1="0" y2="0" gradientUnits="userSpaceOnUse" >
                 <stop stop-color="#4B9CD3" offset="0%"/>
-                <stop stop-color="#012169" offset="25%"/>
-                <stop stop-color="#82052A" offset="50%"/>
-                <stop stop-color="#CC0000" offset="75%"/>
+                <stop stop-color="#012169" offset="33%"/>
+                <stop stop-color="#82052A" offset="66%"/>
+                <stop stop-color="#CC0000" offset="99%"/>
               </linearGradient>
             </defs>
             <text fill="url(#rtp-gradient)">
@@ -27,9 +27,12 @@
 
         <div id="landing-graphic-swipe" class="landing-graphic-swipe">
           <img src="{{ App\asset_path('images/architecture-744215.jpg') }}" alt="Architectural patterns" />
-          <div id="landing-banner-gradient" class="landing-banner-gradient">
-            <div class="badge"><span>RTP</span></div>
-            <h1>Where people and ideas converge<br />to reimagine and reinvent.</h1>
+          <div id="landing-banner-wrapper" class="landing-banner-wrapper">
+            <div class="landing-banner-gradient">
+              <div class="badge"><span>RTP</span></div>
+              <h1>More than 55,000 innovators come together in Research Triangle Park every day to push the boundaries of what's possible.</h1>
+            </div>
+            <div class="cta-anchor-bar"><a href="#">Lorem ipsum dolor sit amet. <span class="arrow">@svg('images/arrow-right')</span></a></div>
           </div>
         </div>
       </div>
