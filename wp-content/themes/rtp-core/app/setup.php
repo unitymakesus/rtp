@@ -17,9 +17,6 @@ add_action('wp_enqueue_scripts', function () {
     if (is_single() && comments_open() && get_option('thread_comments')) {
         wp_enqueue_script('comment-reply');
     }
-
-    // Set array of theme customizations for JS
-    wp_localize_script( 'sage/main.js', 'simple_options', array('fonts' => get_theme_mod('theme_fonts'), 'colors' => get_theme_mod('theme_color')) );
 }, 100);
 
 /**
@@ -30,10 +27,10 @@ add_action('after_setup_theme', function () {
      * Enable features from Soil when plugin is activated
      * @link https://roots.io/plugins/soil/
      */
-    add_theme_support('soil-clean-up');
-    add_theme_support('soil-jquery-cdn');
-    add_theme_support('soil-nav-walker');
-    add_theme_support('soil-nice-search');
+    // add_theme_support('soil-clean-up');
+    // add_theme_support('soil-jquery-cdn');
+    // add_theme_support('soil-nav-walker');
+    // add_theme_support('soil-nice-search');
     // add_theme_support('soil-relative-urls');
 
     /**
@@ -96,9 +93,9 @@ add_action('after_setup_theme', function () {
     /**
      * Enqueue editor styles for Gutenberg
      */
-    function simple_editor_styles() {
-      wp_enqueue_style( 'simple-gutenberg-style', asset_path('styles/main.css') );
-    }
+    // function simple_editor_styles() {
+    //   wp_enqueue_style( 'simple-gutenberg-style', asset_path('styles/main.css') );
+    // }
     // add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\simple_editor_styles' );
 
     /**
@@ -109,10 +106,10 @@ add_action('after_setup_theme', function () {
     /**
      * Enable logo uploader in customizer
      */
-    add_image_size('simple-logo', 200, 200, false);
-    add_image_size('simple-logo-2x', 400, 400, false);
+    add_image_size('rtp-logo', 200, 200, false);
+    add_image_size('rtp-logo-2x', 400, 400, false);
     add_theme_support('custom-logo', array(
-      'size' => 'simple-logo-2x'
+      'size' => 'rtp-logo-2x'
     ));
 
     /**

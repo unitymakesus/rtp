@@ -12,7 +12,7 @@ add_filter('breadcrumb_trail_object', function() {
   $breadcrumbs = new \Breadcrumb_Trail($args);
   $post_type = $post->post_type;
 
-  if ($post_type == "simple-team") {
+  if ($post_type == "rtp-team") {
     array_splice($breadcrumbs->items, 1, 0, '<a href="/team/">Team</a>');
   }
 

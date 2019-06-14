@@ -165,6 +165,10 @@ nav {
   }
 
   li {
+    &::before {
+      display: none;
+    }
+    
     &.menu-item-has-children {
       a {
         cursor: default;

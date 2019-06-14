@@ -44,6 +44,24 @@ figure.post-thumbnail {
   }
 }
 
+.alignleft {
+  float: left;
+  margin: 0 1em 1em 0;
+
+  @media #{$medium-and-up} {
+    max-width: 50%;
+  }
+}
+
+.alignright {
+  float: right;
+  margin: 0 0 1em 1em;
+
+  @media #{$medium-and-up} {
+    max-width: 50%;
+  }
+}
+
 .alignwide {
   margin-left: -80px;
   margin-right: -80px;

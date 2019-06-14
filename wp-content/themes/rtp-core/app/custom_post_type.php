@@ -5,15 +5,15 @@ namespace App;
 function create_post_type() {
   $argsTeam = array(
     'labels' => array(
-				'name' => 'People',
-				'singular_name' => 'Person',
+				'name' => 'Team',
+				'singular_name' => 'Team Member',
 				'add_new' => 'Add New',
-				'add_new_item' => 'Add New Person',
+				'add_new_item' => 'Add New Team Member',
 				'edit' => 'Edit',
-				'edit_item' => 'Edit Person',
-				'new_item' => 'New Person',
-				'view_item' => 'View Person',
-				'search_items' => 'Search People',
+				'edit_item' => 'Edit Team Member',
+				'new_item' => 'New Team Member',
+				'view_item' => 'View Team Member',
+				'search_items' => 'Search Team',
 				'not_found' =>  'Nothing found in the Database.',
 				'not_found_in_trash' => 'Nothing found in Trash',
 				'parent_item_colon' => ''
@@ -39,7 +39,7 @@ function create_post_type() {
       'slug' => 'bio'
     )
   );
-  register_post_type( 'simple-team', $argsTeam );
+  register_post_type( 'rtp-team', $argsTeam );
 }
 add_action( 'init', __NAMESPACE__.'\\create_post_type' );
 
@@ -57,7 +57,7 @@ function create_taxonomies() {
 		'hierarchical' => true,
 		'rewrite' => false
 	);
-	register_taxonomy('simple-team-category', 'simple-team', $argsTeamCategories);
+	register_taxonomy('rtp-team-category', 'rtp-team', $argsTeamCategories);
 
 }
 add_action( 'init', __NAMESPACE__.'\\create_taxonomies' );

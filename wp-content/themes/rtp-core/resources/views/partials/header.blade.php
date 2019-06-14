@@ -18,8 +18,8 @@
         @if (has_custom_logo())
           @php
             $custom_logo_id = get_theme_mod( 'custom_logo' );
-            $logo = wp_get_attachment_image_src( $custom_logo_id , 'simple-logo' );
-            $logo_2x = wp_get_attachment_image_src( $custom_logo_id, 'simple-logo-2x' );
+            $logo = wp_get_attachment_image_src( $custom_logo_id , 'rtp-logo' );
+            $logo_2x = wp_get_attachment_image_src( $custom_logo_id, 'rtp-logo-2x' );
           @endphp
           <img src="{{ $logo[0] }}"
                srcset="{{ $logo[0] }} 1x, {{ $logo_2x[0] }} 2x"

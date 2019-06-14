@@ -112,6 +112,18 @@ add_filter('sage/display_sidebar', function ($display) {
 });
 
 /**
+ * Remove prefixes from category and tag archive titles
+ */
+add_filter( 'get_the_archive_title', function ($title) {
+  if ( is_category() ) {
+    $title = single_cat_title( '', false );
+  } elseif ( is_tag() ) {
+    $title = single_tag_title( '', false );
+  }
+  return $title;
+});
+
+/**
  * If there's a subtitle, auto add it after the titles
  */
 if ( ! is_admin() ) { // Don't touch anything inside of the WordPress Dashboard, yet.

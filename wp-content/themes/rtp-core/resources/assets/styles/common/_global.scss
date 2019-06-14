@@ -79,6 +79,28 @@ body {
       }
     }
   }
+
+  &.m3x {
+    .flex-item {
+      display: flex;
+      position: relative;
+
+      @media #{$small-and-up} {
+        width: 33.33%;
+      }
+    }
+  }
+
+  &.l4x {
+    .flex-item {
+      display: flex;
+      position: relative;
+
+      @media #{$medium-and-up} {
+        width: 25%;
+      }
+    }
+  }
 }
 
 .space-between {

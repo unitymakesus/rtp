@@ -51,41 +51,43 @@ h5, .h5 {
   text-transform: uppercase;
 }
 
-a {
-  text-decoration: underline;
-  font-weight: bold;
-  transition: all 0.3s;
+.entry-content, .fl-module-content.fl-module-content {
+  a {
+    text-decoration: underline;
+    font-weight: bold;
+    transition: all 0.3s;
 
-  &:hover, &:active {
-    text-decoration-style: double;
-    // color: $color-green;
+    &:hover, &:active {
+      text-decoration-style: double;
+      // color: $color-green;
 
-    html[data-contrast="true"] & {
-      color: $color-white;
+      html[data-contrast="true"] & {
+        color: $color-white;
+      }
     }
   }
 }
 
-.main {
-  p, li, dt, dd {
-    line-height: 1.6em;
+p, li, dt, dd {
+  line-height: 1.6em;
+}
+
+dt {
+  font-weight: bold;
+  clear: both;
+}
+
+dd {
+  margin-bottom: 1em;
+  margin-left: 2em;
+
+  @media #{$xsmall-and-down} {
+    margin-left: 1em;
   }
+}
 
-  dt {
-    font-weight: bold;
-    clear: both;
-  }
-
-  dd {
-    margin-bottom: 1em;
-    margin-left: 2em;
-
-    @media #{$xsmall-and-down} {
-      margin-left: 1em;
-    }
-  }
-
-  ul {
+.entry-content {
+  ul:not(.select-dropdown) {
     li {
       list-style: none;
       position: relative;

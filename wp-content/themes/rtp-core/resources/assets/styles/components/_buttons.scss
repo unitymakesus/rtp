@@ -1,10 +1,13 @@
 .btn {
-  padding: 10px 2rem;
   height: auto;
   font-weight: 700;
 
   [data-font="3"] & {
     font-weight: 500;
+  }
+
+  &:not(.btn-small) {
+    padding: 10px 2rem;
   }
 }
 
@@ -40,3 +43,15 @@ a.btn {
 //     }
 //   }
 // }
+
+.fl-builder-content.fl-builder-content a.fl-button.fl-button {
+  @extend .btn;
+  // @extend .btn-primary;
+
+  border: none;
+  font-size: 1em;
+
+  span {
+    color: inherit;
+  }
+}
