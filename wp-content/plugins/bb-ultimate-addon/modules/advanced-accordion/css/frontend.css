@@ -1,0 +1,159 @@
+.uabb-adv-accordion-button {
+	cursor: pointer;
+	display: table;
+    -webkit-transition: all 15ms linear;
+       -moz-transition: all 15ms linear;
+         -o-transition: all 15ms linear;
+            transition: all 15ms linear;
+
+}
+.uabb-adv-accordion-button-label {
+	display: table-cell;
+	width: 100%;
+    vertical-align: middle;
+}
+.uabb-adv-accordion-icon-wrap {
+	display: table-cell;
+	line-height: 1em;
+	/*opacity: .5;
+	filter: alpha(opacity = 50);*/
+	vertical-align: middle;
+}
+
+.uabb-adv-accordion-button-icon {
+	text-align: center;
+    display: block;
+}
+
+.uabb-adv-after-text .uabb-adv-accordion-button-label {
+	padding-right: 20px;
+}
+
+.uabb-adv-before-text .uabb-adv-accordion-button-label {
+	padding-left: 20px;
+}
+
+.uabb-adv-accordion-content {
+	display: none;
+	/*padding: 20px;*/
+}
+
+.uabb-adv-accordion-content p:last-of-type {
+    margin: 0;
+}
+
+/* Animation */
+.uabb-adv-accordion-icon-animation {
+	position: relative;
+	overflow: hidden;
+}
+
+.uabb-adv-accordion-open-icon {
+	position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+/* Push out from Top */
+.uabb-adv-push-out-top .uabb-adv-accordion-open-icon {
+    -webkit-transform: translate(0, -100%);
+        -ms-transform: translate(0, -100%);
+            transform: translate(0, -100%);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-top .uabb-adv-accordion-close-icon {
+    -webkit-transform: translate(0, 100%);
+        -ms-transform: translate(0, 100%);
+            transform: translate(0, 100%);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-top .uabb-adv-accordion-open-icon {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+}
+
+/* Push out from Right */
+.uabb-adv-push-out-right .uabb-adv-accordion-open-icon {
+    -webkit-transform: translate(100%, -100%);
+        -ms-transform: translate(100%, -100%);
+            transform: translate(100%, -100%);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-right .uabb-adv-accordion-close-icon {
+    -webkit-transform: translate(-100%, 0);
+        -ms-transform: translate(-100%, 0);
+            transform: translate(-100%, 0);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-right .uabb-adv-accordion-open-icon {
+   position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-transform: translate(0, -100%);
+        -ms-transform: translate(0, -100%);
+            transform: translate(0, -100%);
+}
+
+/* Push out from Bottom */
+.uabb-adv-push-out-bottom .uabb-adv-accordion-open-icon {
+    -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-bottom .uabb-adv-accordion-close-icon {
+    -webkit-transform: translate(0, -100%);
+        -ms-transform: translate(0, -100%);
+            transform: translate(0, -100%);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-bottom .uabb-adv-accordion-open-icon {
+   position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-transform: translate(0, -100%);
+        -ms-transform: translate(0, -100%);
+            transform: translate(0, -100%);
+}
+
+/* Push out from Left */
+.uabb-adv-push-out-left .uabb-adv-accordion-open-icon {
+    -webkit-transform: translate(-100%, 0);
+        -ms-transform: translate(-100%, 0);
+            transform: translate(-100%, 0);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-left .uabb-adv-accordion-close-icon {
+    -webkit-transform: translate(100%, 0);
+        -ms-transform: translate(100%, 0);
+            transform: translate(100%, 0);
+}
+
+.uabb-adv-accordion-item-active .uabb-adv-push-out-left .uabb-adv-accordion-open-icon {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+            transform: translate(0, 0);
+}
+
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor.uabb-accordion-desc *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor.uabb-accordion-desc *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor.uabb-accordion-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;   
+}
+.uabb-module-content .uabb-text-editor.uabb-accordion-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+    font-weight: inherit;
+}

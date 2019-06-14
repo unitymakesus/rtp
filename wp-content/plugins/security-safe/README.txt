@@ -1,9 +1,9 @@
 === Security Safe ===
 Contributors: sovstack, freemius
-Tags: disable XML-RPC, security, wp security, privacy, security audit, file permissions, brute force login
+Tags: firewall, disable XML-RPC, security, wp security, privacy, security audit, file permissions, brute force login
 Requires at least: 3.5
 Requires PHP: 5.3
-Tested up to: 5.1
+Tested up to: 5.2.1
 Stable tag: trunk
 
 A plugin to quickly implement WordPress hardening and security techniques.
@@ -14,6 +14,7 @@ Security Safe is a free wp security plugin.
 
 Features:
 
+* Firewall With Logs and Charts
 * Disable XML-RPC.php
 * Hide WordPress CMS Version
 * Hide Script Versions
@@ -25,7 +26,7 @@ Features:
 * Login Security
 * Brute Force Protection
 * Content Copyright Protection
-* Multi-Site Compatible
+* 404 Error Logging
 * Turn On/Off All Security Policies Easily
 
 == Installation ==
@@ -47,14 +48,42 @@ Features:
 
 == Changelog ==
 
+= 2.0.2 (High Priority) = 
+*Release Date - 10 June 2019*
+* Improvement: In some outlying circumstances, the db tables do not get created. A failsafe was added to create the tables if the insertion of a record failed.
+* Bug Fix: The new db tables get created if the plugin is disabled and then enabled, but not after an update process.
+
+= 2.0.0 (Low Priority) = 
+*Release Date - 10 June 2019*
+
+* Bug Fix: Security Safe would unintentionally recommend a lower version of PHP if the user had a newer version higher than the known versions.
+* Added Feature: Log 404 Errors
+* Added Feature: Log Successful and Failed Logins
+* Added Feature: Manage Blacklist / Whitelist IP Addresses
+* Added Feature: Log Blocked Access Attempts
+* Added Feature: Log Security Vulnerability Probing
+* Added Feature: Statistics and Charts
+* Improvement: Force Local Logins setting now records blocked attempts.
+* Improvement: Cleaned up some PHP Notices in error log.
+* Improvement: Updated namespacing to support future plugins
+* Improvement: Updated directory structure for better scalability
+* Improvement: Minor code standardization updates
+* Improvement: Performance testing and optimization
+* Improvement: Minor styling updates
+* Improvement: Updated PHP version checks
+* Security: Added additional security to prevent XSS
+* Tested up to: 5.2.1
+
 = 1.2.3 (High Priority) = 
 *Release Date - 1 March 2019*
+
 * Security: Updated Freemius SDK
 * Improvement: Updated PHP version checks
 * Tested up to: 5.1
 
 = 1.2.2 (High Priority) = 
 *Release Date - 9 December 2018*
+
 * NOTE: PHP 5.6 and 7.0 are now identified as no longer supported due to end of life.
 * Improvement: Converted plugin variables to constants for efficiency and updated all references
 * Improvement: Updated PHP version checks
@@ -62,10 +91,12 @@ Features:
 
 = 1.2.1 (Medium Priority) =
 *Release Date - 22 September 2018*
+
 * Bug Fix: WP-CLI does not properly set variables and causes fatal error when attemptimg to load plugin. Thank you Brian Medlin.
 
 = 1.2.0 (High Priority) =
 *Release Date - 22 September 2018*
+
 * Improvement: Automatically display file permission issues at the top of the list of files.
 * Improvement: Removed Composer autoloading to increase efficiency
 * Improvement: Reduced PHP memory usage to increase performance
@@ -129,7 +160,7 @@ Features:
 
 * Bug Fix: Reference to wp-content was incorrect as a fallback default value when using custom plugin directory outside of wp-content directory.
 * Security: Prevent Administrators of a multisite environment from modifying settings unless they are Super Admin.
-* Added Support: Add support for backup logging. (Backup Feature Coming Soon!)
+* Added Support: Add support for backup logging.
 * Tested Multi-site Compatibility
 * Improvement: Increased plugin load efficiency
 
@@ -175,6 +206,7 @@ Features:
 
 = 1.1.2 (Medium Priority) =
 *Release Date - 20 February 2018*
+
 * Bug Fix: Icon CSS conflict with other icon plugins
 
 = 1.1.1 (Low Priority) =

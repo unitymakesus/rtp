@@ -1,0 +1,76 @@
+.uabb-team-wrap{
+	overflow: hidden;
+}
+.uabb-team-wrap .uabb-team-separator {
+	font-size: 0;
+	line-height: 0;
+}
+
+.uabb-team-wrap .uabb-image-content,
+.uabb-team-wrap .uabb-image .uabb-photo-img {
+	width: 100%;
+}
+
+.uabb-team-wrap h1,
+.uabb-team-wrap h2,
+.uabb-team-wrap h3,
+.uabb-team-wrap h4,
+.uabb-team-wrap h5,
+.uabb-team-wrap h6 {
+	margin: 0;
+}
+.uabb-team-wrap .uabb-team-name,
+.uabb-team-wrap .uabb-team-desgn,
+.uabb-team-wrap .uabb-team-desc {
+	overflow: hidden;
+}
+
+.uabb-team-wrap .uabb-team-desgn-text,
+.uabb-team-wrap .uabb-team-desc-text {
+	display: block;
+}
+
+.uabb-team-wrap .uabb-imgicon-wrap .uabb-image-content img {
+	box-sizing: border-box;
+    -webkit-transition: all 0.9s;
+    transition: all 0.9s;
+}
+
+.uabb-team-wrap .uabb-img-grayscale img {
+  -webkit-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+          filter: grayscale(100%);
+  		  filter: gray;
+}
+
+.uabb-team-wrap .uabb-team-content {
+	overflow: hidden;
+}
+
+.uabb-team-wrap .uabb-team-image,
+.uabb-team-wrap .uabb-image-content {
+	overflow: hidden;	
+}
+/* Align
+---------------------------------------------------*/
+
+.uabb-team-left {
+	text-align: left;
+}
+.uabb-team-center {
+	text-align: center;
+}
+.uabb-team-right {
+	text-align: right;
+}
+
+/* Social Icon */
+.uabb-team-social {
+	text-align: center;
+}
+.uabb-team-social .uabb-team-icon-link {
+	box-shadow: none;
+	display: inline-block;
+    font-size: 0;
+	vertical-align: top;
+}

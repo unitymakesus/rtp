@@ -1,0 +1,365 @@
+.uabb-hotspot-hover {
+    z-index: 9;
+}
+
+.uabb-hotspot-container,
+.uabb-hotspot-container * {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.uabb-hotspot-container img {
+    border: none;
+    box-shadow: none;
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+}
+.uabb-hotspot-container {
+    position: relative;
+    clear: both;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
+.uabb-hotspot-container .uabb-hotspot-items {
+    overflow: hidden;
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item {
+    position: absolute;
+    text-align: center;
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item .uabb-hotspot-tooltip {
+    text-decoration: none;
+    border: none;
+    border-radius: 0;
+    background: 0 0;
+    text-align: center;
+    cursor: pointer;
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item.uabb-hotspot-hover .uabb-hotspot-tooltip {
+    -webkit-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
+    -webkit-animation: none;
+    animation: none;
+    cursor: pointer;
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item .uabb-hotspot-tooltip:focus {
+    outline: 0
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item .uabb-hotspot-text span {
+    display: inline-block;
+    border-radius: 0;
+}
+
+.uabb-hotspot-items .uabb-hotspot-text,
+.uabb-hotspot-items .uabb-hotspot-tooltip {
+    -wekit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
+
+.uabb-hotspot-tooltip-content {
+    position: absolute;
+    z-index: 9;
+    width: 200px;
+    text-align: center;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    cursor: default;
+    pointer-events: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+}
+
+.uabb-hotspot-container .uabb-hotspot-tooltip-content p:last-of-type,
+.uabb-hotspot-container .uabb-hotspot-text p:last-of-type {
+    margin: 0;
+}
+
+.uabb-tooltip-style-curved .uabb-hotspot-tooltip-content.uabb-text-editor,
+.uabb-tooltip-style-round .uabb-hotspot-tooltip-content.uabb-text-editor {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
+/* Text editor support */
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;   
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+    font-weight: inherit;
+}
+
+/* Curved Tooltip Style */
+
+.uabb-tooltip-style-curved .uabb-hotspot-tooltip-content {
+    bottom: 50%;
+    border-radius: 20px;
+    min-height: 60px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.uabb-tooltip-style-curved .uabb-hotspot-svg {
+    position: absolute;
+    top: 54%;
+}
+
+/* Classic Tooltip Style */
+
+.uabb-tooltip-style-classic .uabb-hotspot-tooltip-content {
+    -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+    transition: opacity 0.2s, -webkit-transform 0.2s;
+    transition: opacity 0.2s, transform 0.2s;
+    transition: opacity 0.2s, transform 0.2s, -webkit-transform 0.2s;
+}
+
+.uabb-tooltip-style-classic .uabb-hotspot-tooltip-content:after {
+    content: '';
+    border: solid transparent;
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: transparent;
+    border-width: 10px;
+}
+
+.uabb-hotspot-hover .uabb-tooltip-style-classic .uabb-hotspot-tooltip-content {
+    -webkit-transform: perspective(1000px) rotate3d(1,0,0,0deg);
+    transform: perspective(1000px) rotate3d(1,0,0,0deg);
+}
+
+.uabb-hotspot-hover .uabb-tooltip-style-classic .uabb-hotspot-tooltip-content {
+    pointer-events: auto;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    -webkit-transform: translate3d(0,0,0) rotate3d(0,0,0,0);
+    transform: translate3d(0,0,0) rotate3d(0,0,0,0);
+}
+
+/* Round Tooltip Style */
+
+.uabb-tooltip-style-round .uabb-hotspot-tooltip-content,
+.uabb-tooltip-style-round .uabb-hotspot-svg {
+    -webkit-transform: translate3d(0,10px,0);
+    transform: translate3d(0,10px,0);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+}
+
+.uabb-tooltip-style-round .uabb-hotspot-tooltip-content {
+
+    height: 100px;
+    width: 100px;
+    padding-top: 25px;
+    left: 50%;
+    margin-left: -50px;
+    margin-bottom: 20px;
+    bottom: 100%;
+    border-radius: 50%;
+    text-align: center;
+
+    display: -webkit-box;
+
+    display: -ms-flexbox;
+
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+.uabb-tooltip-style-round .uabb-hotspot-svg {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    margin-top: -7px;
+}
+
+.uabb-tooltip-style-round .uabb-hotspot-tooltip-content p {
+
+    -webkit-transform: translate3d(0,15px,0);
+    transform: translate3d(0,15px,0);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+}
+
+.uabb-hotspot-hover .uabb-tooltip-style-round .uabb-hotspot-tooltip-content,
+.uabb-hotspot-hover .uabb-tooltip-style-round .uabb-hotspot-tooltip-content p {
+    pointer-events: auto;
+    -webkit-transform: translate3d(0,0,0) scale3d(1,1,1);
+    transform: translate3d(0,0,0) scale3d(1,1,1);
+}
+.uabb-hotspot-hover .uabb-tooltip-style-round .uabb-hotspot-tooltip-content,
+.uabb-hotspot-hover .uabb-tooltip-style-round .uabb-hotspot-tooltip-content p {
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+
+.uabb-hotspot-wrap .uabb-imgicon-wrap .uabb-icon-wrap {
+    display: block;
+}
+
+.uabb-hspot-sonar {
+    width: 150px;
+    left: 50%;
+    height: 150px;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+    -webkit-transition: opacity .25s cubic-bezier(1,0,0,1);
+    transition: opacity .25s cubic-bezier(1,0,0,1);
+    z-index: 1;
+    pointer-events:none;
+}
+
+.uabb-hspot-sonar g {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+}
+
+.uabb-hotspot-hover .uabb-hspot-sonar g {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -webkit-animation-name: hotspot-sonar;
+            animation-name: hotspot-sonar;
+    -webkit-animation-duration: 1.8s;
+            animation-duration: 1.8s;
+    -webkit-animation-timing-function: linear;
+            animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+}
+
+.uabb-hotspot-hover .uabb-hspot-sonar g:nth-child(2) {
+    -webkit-animation-delay: .6s;
+            animation-delay: .6s;
+}
+
+.uabb-hotspot-hover .uabb-hspot-sonar g:nth-child(3) {
+    -webkit-animation-delay: 1.2s;
+            animation-delay: 1.2s;
+}
+
+.uabb-hotspot-hover .uabb-hspot-sonar g:nth-child(4) {
+    -webkit-animation-delay: 1.8s;
+            animation-delay: 1.8s;
+}
+
+.internet-explorer11 .uabb-tooltip-style-round .uabb-hotspot-tooltip-content p,
+.internet-explorer11 .uabb-tooltip-style-curved .uabb-hotspot-tooltip-content p {
+    max-width: 100px;
+}
+
+.internet-explorer11 .uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item.uabb-hotspot-hover .uabb-hotspot-tooltip {
+    -webkit-transform: none;
+    transform: none;    
+}
+
+.internet-explorer11 .uabb-tooltip-style-classic .uabb-hotspot-tooltip-content {
+    transform: translateY(-50%) translateX(-100%) !important;
+}
+.internet-explorer .uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item.uabb-hotspot-hover .uabb-hotspot-tooltip {
+    -webkit-transform: none;
+    transform: none;    
+}
+
+
+@-webkit-keyframes hotspot-sonar {
+    0% {
+        -webkit-transform: scale(0);
+                transform: scale(0);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+
+    50% {
+        -webkit-transform: scale(1.5);
+                transform: scale(1.5);
+        opacity: 1;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    }
+
+    100% {
+        -webkit-transform: scale(3);
+                transform: scale(3);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+}
+
+
+@keyframes hotspot-sonar {
+    0% {
+        -webkit-transform: scale(0);
+                transform: scale(0);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+
+    50% {
+        -webkit-transform: scale(1.5);
+                transform: scale(1.5);
+        opacity: 1;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    }
+
+    100% {
+        -webkit-transform: scale(3);
+                transform: scale(3);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+}
+
+@media only screen and (max-device-width: 1024px) {
+    .uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item a.uabb-hotspot-tooltip {
+        cursor: default;
+    }
+}
+
+@media only screen and (max-device-width: 768px) {
+    .uabb-hotspot-tooltip-content {
+        width: 120px;
+    }
+}
+
+@media only screen and (max-device-width: 320px) {
+    .uabb-hotspot-tooltip-content {
+        width: auto;
+    }
+}
+

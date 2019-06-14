@@ -355,6 +355,9 @@ class Advanced_Excerpt {
 			}
 			
 			$read_more = str_replace( '{title}', get_the_title(), $read_more );
+			$read_more = do_shortcode( $read_more );
+			$read_more = apply_filters( 'advanced_excerpt_read_more_text', $read_more );
+
 			$ellipsis .= sprintf( $link_template, get_permalink(), $read_more, $screen_reader_html );
 
 		}

@@ -1,0 +1,345 @@
+.uabb-tabs .uabb-text-editor p:last-of-type {
+    margin-bottom: 0; 
+}
+/*****************************/
+/* Default Tab Style */
+/*****************************/
+
+.uabb-tabs > nav li > * {
+   margin: 0;
+}
+.uabb-tabs *,
+.uabb-tabs *:after,
+.uabb-tabs *:before { 
+    -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+.uabb-tabs .clearfix:before,
+.uabb-tabs .clearfix:after {
+    content: ''; display: table;
+}
+
+.uabb-tabs .clearfix:after {
+    clear: both;
+}
+
+.uabb-tabs > nav ul li a {
+    text-decoration: none;
+    outline: none;
+    box-shadow:none;
+}
+
+.uabb-tabs > nav ul li a:before {
+    line-height: normal;
+}
+
+.uabb-tabs {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/*****************************/
+/* Nav */
+/*****************************/
+
+div.uabb-tabs > nav {
+    text-align: center;
+    overflow: visible;
+}
+
+.uabb-tabs > nav ul {
+    position: relative;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    -ms-box-orient: horizontal;
+    -ms-box-pack: center;
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+}
+
+.fl-module-content .uabb-tabs > nav ul li {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin: 0;
+}
+
+.uabb-tabs > nav a {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.uabb-tabs > nav a span,
+.uabb-tabs > nav a .uabb-tab-title {
+    vertical-align: middle;
+    color: inherit;
+    display: inline-block;
+}
+
+.uabb-tabs > nav a:focus {
+    outline: none;
+}
+
+/*****************************/
+/* Icons */
+/*****************************/
+
+.uabb-tabs-icon {
+    z-index: 10;
+    display: inline-block;
+    vertical-align: middle;
+    text-transform: none;
+    speak: none;
+    -webkit-backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.uabb-tabs-icon .dashicons::before {
+    vertical-align: initial;
+}
+
+/*****************************/
+/* Content */
+/*****************************/
+
+.uabb-content-wrap {
+    position: relative;
+}
+
+.uabb-content-wrap .section {
+    display: none;
+}
+
+.uabb-content-wrap .section.uabb-content-current {
+    display: block;
+}
+
+.uabb-content-wrap .section p {
+    padding: 0;
+}
+
+/* Individual tab styles */
+
+/*****************************/
+/* Bar */
+/*****************************/
+
+.uabb-tabs > nav ul li a,
+.uabb-tabs > nav .uabb-tabs-icon .ua-icon,
+.uabb-tabs > nav .uabb-tab-title {
+    -webkit-transition: all 150ms linear;
+       -moz-transition: all 150ms linear;
+         -o-transition: all 150ms linear;
+            transition: all 150ms linear;
+}
+
+/*****************************/
+/* Top Line */
+/*****************************/
+
+.uabb-tabs-style-topline > nav li:not(:last-child) {
+    border-right: none;
+}
+
+.uabb-tabs-style-topline > nav li.uabb-tab-current {
+    border-bottom: none;
+}
+
+.uabb-tabs-style-topline > nav a,
+.uabb-tabs-style-topline > nav a * {
+    -webkit-transition: color 150ms;
+        transition: color 150ms;
+}
+
+.uabb-tabs-style-topline > nav a {
+    padding: 0.65em 0 0.5em;
+    line-height: 1;
+}
+
+.uabb-tabs-style-topline > nav li.uabb-tab-current a {
+    background: none;
+}
+
+.uabb-tabs-style-topline > nav .uabb-tabs-icon {
+    display: block;
+    margin: 0;
+}
+
+
+/*****************************/
+/* Falling Icon
+/*****************************/
+
+.uabb-tabs-style-iconfall {
+    overflow: visible;
+}
+
+.uabb-tabs-style-iconfall > nav a {
+    display: inline-block;
+    overflow: visible;
+    padding: 1em 0 2em;
+    line-height: 1;
+    -webkit-transition: color 150ms cubic-bezier(0.7,0,0.3,1); 
+    transition: color 150ms cubic-bezier(0.7,0,0.3,1);
+}
+
+.uabb-tabs-style-iconfall > nav a span {
+    font-weight: 700;
+}
+
+.uabb-tabs-style-iconfall > nav li::before {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    margin-left: -20px;
+    width: 40px;
+    content: '';
+    opacity: 0;
+    -webkit-transition: -webkit-transform 150ms linear;
+    transition: transform 150ms linear;
+    -webkit-transform: scale3d(0,1,1);
+    transform: scale3d(0,1,1);
+}
+
+.uabb-tabs-style-iconfall > nav li.uabb-tab-current::before {
+    opacity: 1;
+    -webkit-transform: scale3d(1,1,1);
+    transform: scale3d(1,1,1);
+}
+
+.uabb-tabs-style-iconfall > .uabb-tabs-nav .uabb-tabs-icon {
+    display: block;
+    margin: 0 0 1em;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 150ms, opacity 150ms;
+    transition: transform 150ms, opacity 150ms;
+    -webkit-transform: translate3d(0,-100px,0);
+    transform: translate3d(0,-100px,0);
+    pointer-events: none;
+}
+
+.uabb-tabs-style-iconfall > nav li.uabb-tab-current .uabb-tabs-icon {
+    opacity: 1;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+/*****************************/
+/* Line Box */
+/*****************************/
+
+.uabb-tabs.uabb-tabs-style-linebox > nav ul li {
+    margin: 0 0.5em;
+    -webkit-flex: none;
+    flex: none;
+}
+
+.uabb-tabs.uabb-tabs-style-linebox > nav ul {
+    margin: 0 -0.5em;
+}
+
+.uabb-tabs.uabb-tabs-style-linebox > nav a {
+    padding: 0 1.5em;
+    font-weight: 700;
+    -webkit-transition: color 150ms;
+    transition: color 150ms;
+}
+
+.uabb-tabs.uabb-tabs-style-linebox > nav a::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    content: '';
+    -webkit-transition: background-color 150ms, -webkit-transform 150ms;
+    transition: background-color 150ms, transform 150ms;
+    -webkit-transition-timing-function: ease, cubic-bezier(0.7,0,0.3,1);
+    transition-timing-function: ease, cubic-bezier(0.7,0,0.3,1);
+    -webkit-transform: translate3d(0,100%,0) translate3d(0,-3px,0);
+    transform: translate3d(0,100%,0) translate3d(0,-3px,0);
+}
+
+.uabb-tabs.uabb-tabs-style-linebox > nav li.uabb-tab-current a::after {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+/*****************************/
+/* Responsive Accordion */
+/*****************************/
+.uabb-tabs .uabb-tab-acc-title {
+    display: none;
+    cursor: pointer;
+    -webkit-transition: all 150ms linear;
+    transition: all 150ms linear;
+    position: relative;
+}
+
+.uabb-tabs .uabb-title-tag,
+.uabb-tabs .uabb-acc-icon {
+    display: table-cell;
+}
+
+.uabb-tabs .uabb-title-tag {
+    width: 100%;
+}
+
+.uabb-tabs .uabb-tab-acc-title .uabb-acc-icon {
+    font-size: 20px;
+    line-height: 30px;
+    vertical-align: middle;
+    
+}
+
+.uabb-tabs .uabb-content-current .uabb-tab-acc-title .uabb-acc-icon i {
+    -webkit-transition: all 150ms linear;
+    transition: all 150ms linear;
+    -wenkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.uabb-tabs .uabb-content-wrap .section .uabb-content {
+    display: none;
+}
+
+.uabb-tabs .uabb-content-wrap .section.uabb-content-current > .uabb-content {
+    display: block;
+}
+
+.uabb-tabs-nav .uabb-tabs-icon {
+    line-height: normal;
+}
+
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor.uabb-tabs-desc *:not(a):not(div.mejs-audio) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor.uabb-tabs-desc *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor.uabb-tabs-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(div.mejs-audio) {
+    font-size: inherit;
+    line-height: inherit;   
+}
+.uabb-module-content .uabb-text-editor.uabb-tabs-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+    font-weight: inherit;
+}

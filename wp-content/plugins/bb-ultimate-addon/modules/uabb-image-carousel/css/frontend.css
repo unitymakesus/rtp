@@ -1,0 +1,385 @@
+.uabb-image-carousel {
+    position: relative;
+    text-align: center;
+    /*overflow: hidden;*/
+}
+
+.internet-explorer9 .uabb-background-mask .uabb-overlay-icon {
+    top: 50%;
+    position: absolute;
+    transform: translateX(-50%) translateY(-50%);
+    left: 50%;
+}
+
+.uabb-image-carousel-item {
+    float: left;
+    text-align: center;
+    display: none;
+}
+
+.uabb-image-carousel-link a,
+.uabb-image-carousel-link img {
+    display: block;
+}
+
+.uabb-image-carousel-content {
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+}
+
+.uabb-image-carousel img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
+}
+
+
+/* Slider */
+
+.uabb-image-carousel .slick-prev i,
+.uabb-image-carousel .slick-next i,
+.uabb-image-carousel .slick-prev i:hover,
+.uabb-image-carousel .slick-next i:hover,
+.uabb-image-carousel .slick-prev i:focus,
+.uabb-image-carousel .slick-next i:focus {
+    font-size: 20px;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    box-sizing: content-box;
+}
+
+.uabb-image-carousel .slick-prev,
+.uabb-image-carousel .slick-next,
+.uabb-image-carousel .slick-prev:hover,
+.uabb-image-carousel .slick-prev:focus,
+.uabb-image-carousel .slick-next:hover,
+.uabb-image-carousel .slick-next:focus {
+    display: block;
+    position: absolute;
+    font-size: 0;
+    line-height: 0;
+    width: auto;
+    height: auto;
+    top: 50%;
+    padding: 0;
+    cursor: pointer;
+    color: #000;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+.uabb-image-carousel .slick-prev:hover:before,
+.uabb-image-carousel .slick-prev:focus:before,
+.uabb-image-carousel .slick-next:hover:before,
+.uabb-image-carousel .slick-next:focus:before {
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+
+.uabb-image-carousel .slick-prev.slick-disabled:before,
+.uabb-image-carousel .slick-next.slick-disabled:before {
+    opacity: .25;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+}
+
+.uabb-image-carousel .slick-prev:before,
+.uabb-image-carousel .slick-next:before {
+    content: '';
+    font-size: 0;
+    line-height: 0;
+}
+
+.uabb-image-carousel .slick-prev:before,
+.uabb-image-carousel .slick-next:before {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.uabb-image-carousel .slick-prev,
+.uabb-image-carousel .slick-prev:hover {
+    left: -20px;
+    z-index: 1;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+}
+
+/*[dir='rtl'] .uabb-image-carousel .slick-prev {
+    right: -20px;
+    z-index: 1;
+    left: auto;
+    -webkit-transform: translate(50%, -50%);
+            transform: translate(50%, -50%);
+}*/
+
+.uabb-image-carousel .slick-next,
+.uabb-image-carousel .slick-next:hover {
+    right: -20px;
+    z-index: 1;
+    -webkit-transform: translate(50%, -50%);
+            transform: translate(50%, -50%);
+}
+
+/*[dir='rtl'] .uabb-image-carousel .slick-next {
+    right: auto;
+    left: -20px;
+    z-index: 1;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+}
+*/
+
+.uabb-image-carousel.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.uabb-image-carousel .slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.uabb-image-carousel .slick-list:focus {
+    outline: none;
+}
+
+.uabb-image-carousel .slick-list.dragging {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.uabb-image-carousel.slick-slider .slick-track,
+.uabb-image-carousel.slick-slider .slick-list {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.uabb-image-carousel .slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+}
+
+.uabb-image-carousel .slick-track:before,
+.uabb-image-carousel .slick-track:after {
+    display: table;
+    content: '';
+}
+
+.uabb-image-carousel .slick-track:after {
+    clear: both;
+}
+
+.uabb-image-carousel .slick-loading .slick-track {
+    visibility: hidden;
+}
+
+.uabb-image-carousel .slick-slide {
+    display: none;
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
+
+/*[dir='rtl'] .uabb-image-carousel .slick-slide {
+    float: right;
+}*/
+
+.uabb-image-carousel .slick-slide img {
+    display: block;
+}
+
+.uabb-image-carousel .slick-slide.slick-loading img {
+    display: none;
+}
+
+.uabb-image-carousel .slick-slide.dragging img {
+    pointer-events: none;
+}
+
+.uabb-image-carousel.slick-initialized .slick-slide {
+    display: block;
+}
+
+.uabb-image-carousel .slick-loading .slick-slide {
+    visibility: hidden;
+}
+
+.uabb-image-carousel .slick-vertical .slick-slide {
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+}
+
+.uabb-image-carousel .slick-arrow.slick-hidden {
+    display: none;
+}
+
+.uabb-image-carousel .slick-arrow,
+.uabb-image-carousel .slick-arrow:active,
+.uabb-image-carousel .slick-arrow:hover,
+.uabb-image-carousel .slick-arrow:focus {
+    box-shadow: none;
+}
+
+
+/* End Slick Slider */
+
+
+/* Caption */
+
+.uabb-image-carousel-caption {
+    font-size: 13px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.uabb-image-carousel-caption-below {
+    padding: 15px;
+}
+
+.uabb-image-carousel-caption-hover {
+    background: rgba(0, 0, 0, 0.7);
+    bottom: 0;
+    color: #fff;
+    left: 0;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    padding: 10px 15px;
+    position: absolute;
+    right: 0;
+    -webkit-transition: opacity 0.3s linear;
+    transition: opacity 0.3s linear;
+}
+
+.uabb-image-carousel-content:hover .uabb-image-carousel-caption-hover {
+    opacity: 100;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=10000)";
+    filter: alpha(opacity=100);
+}
+
+
+/* Overlay */
+
+.uabb-background-mask {
+    background: rgba(0, 0, 0, .5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    overflow: hidden;
+    -webkit-transition: all 150ms linear;
+    transition: all 150ms linear;
+}
+
+.uabb-background-mask .uabb-overlay-icon i {
+    line-height: 1em;
+    width: 1.3em;
+    height: 1em;
+}
+
+.uabb-background-mask .uabb-caption {
+    margin-bottom: 10px;
+}
+
+.uabb-background-mask .uabb-inner-mask {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+}
+
+
+/* From Left */
+
+.uabb-background-mask.from-left {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+
+/* From Right */
+
+.uabb-background-mask.from-right {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+}
+
+
+/* From Top */
+
+.uabb-background-mask.from-top {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+}
+
+
+/* From Bottom */
+
+.uabb-background-mask.from-bottom {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+}
+
+
+/* After Hover  */
+
+.uabb-image-carousel-content:hover .uabb-background-mask {
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    -webkit-transform: translate(0);
+    transform: translate(0);
+    -webkit-transition-delay: 150ms;
+    transition-delay: 150ms;
+}
+
+.uabb-image-carousel .uabb-image-carousel-content .uabb-gallery-img,
+.uabb-masonary-content .uabb-image-carousel-content .uabb-gallery-img {
+    -webkit-transition: all 300ms linear;
+    transition: all 300ms linear;
+}
+
+.uabb-image-carousel.zoom-in .uabb-image-carousel-content:hover .uabb-gallery-img,
+.uabb-masonary-content.zoom-in .uabb-image-carousel-content:hover .uabb-gallery-img,
+.uabb-image-carousel.zoom-out .uabb-image-carousel-content .uabb-gallery-img,
+.uabb-masonary-content.zoom-out .uabb-image-carousel-content .uabb-gallery-img {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+
+.uabb-image-carousel.zoom-out .uabb-image-carousel-content:hover .uabb-gallery-img,
+.uabb-masonary-content.zoom-out .uabb-image-carousel-content:hover .uabb-gallery-img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}

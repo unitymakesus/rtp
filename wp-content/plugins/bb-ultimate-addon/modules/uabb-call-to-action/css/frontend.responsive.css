@@ -1,0 +1,19 @@
+/* Inline Alignment
+---------------------------------------------------*/
+
+.uabb-cta-inline {
+	display: block;
+	text-align: center;
+}
+.uabb-cta-inline .uabb-cta-text,
+.uabb-cta-inline .uabb-cta-button {
+	display: block;
+}
+.uabb-cta-inline .uabb-cta-text {
+	width: auto;
+}
+.uabb-cta-inline .uabb-cta-button {
+	padding-left: 0;
+	padding-top: 20px;
+	width: auto;
+}

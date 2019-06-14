@@ -1,0 +1,43 @@
+/* Vertical Align*/
+.uabb-list-icon-wrap .uabb-icon-wrap,
+.uabb-list-icon-wrap .uabb-list-icon-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.uabb-list-icon-wrap {
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+      -webkit-box-align: center;
+         -ms-flex-align: center;
+            align-items: center;
+}
+
+.uabb-list-icon-text h1.uabb-list-icon-text-heading,
+.uabb-list-icon-text h2.uabb-list-icon-text-heading,
+.uabb-list-icon-text h3.uabb-list-icon-text-heading,
+.uabb-list-icon-text h4.uabb-list-icon-text-heading,
+.uabb-list-icon-text h5.uabb-list-icon-text-heading,
+.uabb-list-icon-text h6.uabb-list-icon-text-heading {
+    padding: 0;
+    margin: 0;
+}
+
+.fl-module-list-icon .uabb-list-icon {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+.uabb-list-icon-text * {
+	margin: 0;
+}

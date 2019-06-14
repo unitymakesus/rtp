@@ -1,0 +1,768 @@
+/* Fix Edit issue */
+.fl-builder-edit .uabb-ib1-block {
+    pointer-events: none;
+}
+
+.uabb-active-live-preview .uabb-ib1-block {
+    pointer-events: auto;
+}
+
+.uabb-image-wrap {
+    position: relative;
+    overflow: hidden;
+}
+.uabb-ib1-block {
+    width: 100%;
+    position: relative;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: inline-block
+}
+.uabb-ib1-block img {
+    width: 100%;
+    max-width: 100%!important;
+    display: block;
+    border-radius: 0!important;
+    box-shadow: none!important;
+    padding: 0;
+    margin: 0;
+    border: none
+}
+.uabb-ib1-block .uabb-ib1-title {
+    margin: 0;
+    padding: .7em 15px;
+    display: block;
+    text-align: left;
+    position: relative;
+    width: 100%;
+    z-index: 5;
+    opacity: 1
+}
+.uabb-ib1-block .title-left {
+    text-align: left;
+}
+.uabb-ib1-block .title-right {
+    text-align: right;
+}
+.uabb-ib1-block .title-center {
+    text-align: center;
+}
+.uabb-ib1-block .uabb-ib1-title i {
+    float: right;
+    font-size: 1em;
+    line-height: 1.2;
+    padding-right: 0
+}
+.uabb-ib1-block .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-ib1-block .uabb-back-icon {
+    text-align: center;
+    line-height: 1;
+    padding: 15px 1.5em 0;
+}
+.uabb-ib1-block .uabb-ib1-description p {
+    margin: 0
+}
+.uabb-ib1-block .mask .uabb-ib1-description {
+    text-align: center;
+    padding: 15px 1.5em 0;
+    margin-bottom: 0;
+    display: block;
+}
+
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;   
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+    font-weight: inherit;
+}
+
+a.uabb-link {
+    text-decoration: none;
+    cursor: pointer
+}
+.uabb-ib1-block a.uabb-link {
+    display: table;
+    position: relative;
+    margin: 15px auto 0;
+    padding: .3em .6em;
+    text-decoration: none;
+    cursor: pointer;
+}
+.uabb-ib1-block.uabb-bb-box a.uabb-link {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    color: transparent !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-decoration: none;
+    cursor: pointer
+}
+.uabb-ib1-block.uabb-ib1-hover .mask.solid-background {
+    opacity: 1;
+    background: #000
+}
+.uabb-ib1-block.uabb-banner-block-custom-height img {
+    width: auto;
+    max-width: initial!important;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%)
+}
+.uabb-ib1-block.uabb-banner-block-custom-height .uabb-ib1-title {
+    position: absolute;
+}
+.uabb-banner-style01 .mask {
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style01.uabb-ib1-hover .mask {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style02 .mask {
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style02.uabb-ib1-hover .mask {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style03 .mask {
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style03.uabb-ib1-hover .mask {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style04 .mask {
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style04.uabb-ib1-hover .mask {
+    opacity: 1;
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style11 img {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-block-custom-height.uabb-banner-style11 img {
+    -webkit-transform: translateX(-50%) scale(1.05);
+    -moz-transform: translateX(-50%) scale(1.05);
+    -ms-transform: translateX(-50%) scale(1.05);
+    -o-transform: translateX(-50%) scale(1.05);
+    transform: translateX(-50%) scale(1.05)
+}
+.uabb-banner-style11.uabb-ib1-hover img {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1)
+}
+.uabb-banner-block-custom-height.uabb-banner-style11.uabb-ib1-hover img {
+    -webkit-transform: translateX(-50%) scale(1);
+    -moz-transform: translateX(-50%) scale(1);
+    -ms-transform: translateX(-50%) scale(1);
+    -o-transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1)
+}
+.uabb-banner-style11.uabb-ib1-hover .mask {
+    opacity: 1
+}
+.uabb-banner-style11 a,
+.uabb-banner-style11 p {
+    opacity: 0;
+    -webkit-transform: scale(2);
+    -moz-transform: scale(2);
+    -o-transform: scale(2);
+    -ms-transform: scale(2);
+    transform: scale(2);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style11.uabb-ib1-hover a,
+.uabb-banner-style11.uabb-ib1-hover p {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    opacity: 1
+}
+.uabb-banner-style12 img {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-block-custom-height.uabb-banner-style12 img {
+    -webkit-transform: translateX(-50%) scale(1);
+    -moz-transform: translateX(-50%) scale(1);
+    -ms-transform: translateX(-50%) scale(1);
+    -o-transform: translateX(-50%) scale(1);
+    transform: translateX(-50%) scale(1)
+}
+.uabb-banner-style12.uabb-ib1-hover img {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05)
+}
+.uabb-banner-block-custom-height.uabb-banner-style12.uabb-ib1-hover img {
+    -webkit-transform: translateX(-50%) scale(1.05);
+    -moz-transform: translateX(-50%) scale(1.05);
+    -ms-transform: translateX(-50%) scale(1.05);
+    -o-transform: translateX(-50%) scale(1.05);
+    transform: translateX(-50%) scale(1.05)
+}
+.uabb-banner-style12.uabb-ib1-hover .mask {
+    opacity: 1
+}
+.uabb-banner-style12 a,
+.uabb-banner-style12 p {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -o-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style12.uabb-ib1-hover a,
+.uabb-banner-style12.uabb-ib1-hover p {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    opacity: 1
+}
+.uabb-banner-style13 img {
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style13.uabb-ib1-hover img {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05)
+}
+.uabb-banner-block-custom-height.uabb-banner-style13.uabb-ib1-hover img {
+    -webkit-transform: translateX(-50%) scale(1.05);
+    -moz-transform: translateX(-50%) scale(1.05);
+    -ms-transform: translateX(-50%) scale(1.05);
+    -o-transform: translateX(-50%) scale(1.05);
+    transform: translateX(-50%) scale(1.05)
+}
+.uabb-banner-style13.uabb-ib1-hover .mask {
+    opacity: 1
+}
+.uabb-banner-style13 .mask p {
+    -moz-transform: translateY(50px);
+    -ms-transform: translateY(50px);
+    -o-transform: translateY(50px);
+    -webkit-transform: translateY(50px);
+    transform: translateY(50px);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style13.uabb-ib1-hover .mask p {
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style21 .mask,
+.uabb-banner-style21 .mask.uabb-ib1-hover {
+    opacity: 1
+}
+.uabb-banner-style21 .mask {
+    -moz-transform: translate(-100%, -100px) rotate(-180deg);
+    -ms-transform: translate(-100%, -100px) rotate(-180deg);
+    -o-transform: translate(-100%, -100px) rotate(-180deg);
+    -webkit-transform: translate(-100%, -100px) rotate(-180deg);
+    transform: translate(-100%, -100px) rotate(-180deg)
+}
+.uabb-banner-style21.uabb-ib1-hover .mask {
+    -webkit-transform: translate(0);
+    -moz-transform: translate(0);
+    -o-transform: translate(0);
+    -ms-transform: translate(0);
+    transform: translate(0)
+}
+.uabb-banner-style21 .uabb-back-icon {
+    -webkit-transform: translateX(-100%) rotate(-360deg);
+    -moz-transform: translateX(-100%) rotate(-360deg);
+    -o-transform: translateX(-100%) rotate(-360deg);
+    -ms-transform: translateX(-100%) rotate(-360deg);
+    transform: translateX(-100%) rotate(-360deg);
+    -webkit-transition: all 100ms linear;
+    -moz-transition: all 100ms linear;
+    -o-transition: all 100ms linear;
+    -ms-transition: all 100ms linear;
+    transition: all 100ms linear
+}
+.uabb-banner-style21.uabb-ib1-hover .uabb-back-icon {
+    -webkit-transform: translateX(0) rotate(0);
+    -moz-transform: translateX(0) rotate(0);
+    -o-transform: translateX(0) rotate(0);
+    -ms-transform: translateX(0) rotate(0);
+    transform: translateX(0) rotate(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style21 .mask p {
+    -webkit-transform: translateX(-100%) rotate(-90deg);
+    -moz-transform: translateX(-100%) rotate(-90deg);
+    -o-transform: translateX(-100%) rotate(-90deg);
+    -ms-transform: translateX(-100%) rotate(-90deg);
+    transform: translateX(-100%) rotate(-90deg);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style21.uabb-ib1-hover .mask p {
+    -webkit-transform: translateX(0) rotate(0);
+    -moz-transform: translateX(0) rotate(0);
+    -o-transform: translateX(0) rotate(0);
+    -ms-transform: translateX(0) rotate(0);
+    transform: translateX(0) rotate(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style21 .mask a {
+    -webkit-transform: translateY(-200px);
+    -moz-transform: translateY(-200px);
+    -o-transform: translateY(-200px);
+    -ms-transform: translateY(-200px);
+    transform: translateY(-200px);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style21.uabb-ib1-hover .mask a {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style22 .mask,
+.uabb-banner-style22 .mask.uabb-ib1-hover {
+    opacity: 1
+}
+.uabb-banner-style22 .mask {
+    -moz-transform: translate(100%, -100px) rotate(180deg);
+    -ms-transform: translate(100%, -100px) rotate(180deg);
+    -o-transform: translate(100%, -100px) rotate(180deg);
+    -webkit-transform: translate(100%, -100px) rotate(180deg);
+    transform: translate(100%, -100px) rotate(180deg)
+}
+.uabb-banner-style22.uabb-ib1-hover .mask {
+    -webkit-transform: translate(0);
+    -moz-transform: translate(0);
+    -o-transform: translate(0);
+    -ms-transform: translate(0);
+    transform: translate(0)
+}
+.uabb-banner-style22 .uabb-back-icon {
+    -webkit-transform: translateX(100%) rotate(360deg);
+    -moz-transform: translateX(100%) rotate(360deg);
+    -o-transform: translateX(100%) rotate(360deg);
+    -ms-transform: translateX(100%) rotate(360deg);
+    transform: translateX(100%) rotate(360deg);
+    -webkit-transition: all 100ms linear;
+    -moz-transition: all 100ms linear;
+    -o-transition: all 100ms linear;
+    -ms-transition: all 100ms linear;
+    transition: all 100ms linear
+}
+.uabb-banner-style22.uabb-ib1-hover .uabb-back-icon {
+    -webkit-transform: translateX(0) rotate(0);
+    -moz-transform: translateX(0) rotate(0);
+    -o-transform: translateX(0) rotate(0);
+    -ms-transform: translateX(0) rotate(0);
+    transform: translateX(0) rotate(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style22 .mask p {
+    -webkit-transform: translateX(100%) rotate(90deg);
+    -moz-transform: translateX(100%) rotate(90deg);
+    -o-transform: translateX(100%) rotate(90deg);
+    -ms-transform: translateX(100%) rotate(90deg);
+    transform: translateX(100%) rotate(90deg);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style22.uabb-ib1-hover .mask p {
+    -webkit-transform: translateX(0) rotate(0);
+    -moz-transform: translateX(0) rotate(0);
+    -o-transform: translateX(0) rotate(0);
+    -ms-transform: translateX(0) rotate(0);
+    transform: translateX(0) rotate(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style22 .mask a {
+    -webkit-transform: translateY(-200px);
+    -moz-transform: translateY(-200px);
+    -o-transform: translateY(-200px);
+    -ms-transform: translateY(-200px);
+    transform: translateY(-200px);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style22.uabb-ib1-hover .mask a {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition-delay: 300ms;
+    -moz-transition-delay: 300ms;
+    -o-transition-delay: 300ms;
+    -ms-transition-delay: 300ms;
+    transition-delay: 300ms
+}
+.uabb-banner-style31 img {
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style31.uabb-ib1-hover img {
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%)
+}
+.uabb-banner-block-custom-height.uabb-banner-style31.uabb-ib1-hover img {
+    -webkit-transform: translateX(-50%) translateY(-100%);
+    -moz-transform: translateX(-50%) translateY(-100%);
+    -ms-transform: translateX(-50%) translateY(-100%);
+    -o-transform: translateX(-50%) translateY(-100%);
+    transform: translateX(-50%) translateY(-100%)
+}
+.uabb-banner-style31 .mask {
+    opacity: 1;
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    transform: translateY(100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style31.uabb-ib1-hover .mask {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0)
+}
+.uabb-banner-style32 {
+    display: block
+}
+.uabb-banner-style32 img {
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style32.uabb-ib1-hover img {
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    transform: translateY(100%)
+}
+.uabb-banner-block-custom-height.uabb-banner-style32.uabb-ib1-hover img {
+    -webkit-transform: translateX(-50%) translateY(100%);
+    -moz-transform: translateX(-50%) translateY(100%);
+    -ms-transform: translateX(-50%) translateY(100%);
+    -o-transform: translateX(-50%) translateY(100%);
+    transform: translateX(-50%) translateY(100%)
+}
+.uabb-banner-style32 .mask {
+    opacity: 1;
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    transform: translateY(-100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style32.uabb-ib1-hover .mask {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0)
+}
+.uabb-banner-style33 {
+    display: block
+}
+.uabb-banner-style33 img {
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style33.uabb-ib1-hover img {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%)
+}
+.uabb-banner-style33 .mask {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style33.uabb-ib1-hover .mask {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -o-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0)
+}
+.uabb-banner-style34 {
+    display: block
+}
+.uabb-banner-style34 img {
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style34.uabb-ib1-hover img {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%)
+}
+.uabb-banner-style34 .mask {
+    opacity: 1;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+    -webkit-transition: all 300ms linear;
+    -moz-transition: all 300ms linear;
+    -o-transition: all 300ms linear;
+    -ms-transition: all 300ms linear;
+    transition: all 300ms linear
+}
+.uabb-banner-style34.uabb-ib1-hover .mask {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -o-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0)
+}
+
+.uabb-ib1-button-outter {
+    padding: 15px 1.5em 0px;
+}
+
+/* Button Transition Reduced */ 
+.uabb-ib1-block .uabb-transparent-btn:hover,
+.uabb-ib1-block .uabb-flat-btn:hover,
+.uabb-ib1-block .uabb-gradient-btn:hover {
+    transition: all linear 100ms;
+}

@@ -1,0 +1,14 @@
+/*
+* UABB Table setting form CSS
+*/
+
+table.fl-form-table .fl-builder-field-multiple .fl-field-label,
+table.fl-form-table .fl-builder-field-multiple .fl-builder-field-actions {
+    vertical-align: middle !important;
+}
+
+.fl-field-control .fl-field-description .uabb-table-description {
+	line-height: 1em; 
+	margin-top: 7px;
+}
+

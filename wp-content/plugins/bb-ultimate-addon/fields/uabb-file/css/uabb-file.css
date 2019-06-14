@@ -1,0 +1,26 @@
+/* File Fields */
+.fl-file-field .fl-file-select,
+.fl-file-field.fl-file-empty .fl-file-preview {
+	display: none;
+}
+.fl-file-field.fl-file-empty .fl-file-select {
+	display: block;
+}
+.fl-file-field .fl-file-preview-img {
+	float: left;
+	line-height: 0;
+	margin: 5px 0;
+}
+.fl-file-field .fl-file-preview-img img {
+	max-width: 60px;
+}
+.fl-file-field .fl-file-preview-filename {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 7px 0 5px 11px;
+}
+.fl-file-field .fl-file-replace,
+.fl-file-field .fl-file-remove {
+	margin: 0 0 0 11px;
+}

@@ -1,0 +1,236 @@
+/* Title
+---------------------------------------------------*/
+
+body a.infobox-title-link {
+	text-decoration: none;
+}
+body h1.uabb-infobox-title,
+body h2.uabb-infobox-title,
+body h3.uabb-infobox-title,
+body h4.uabb-infobox-title,
+body h5.uabb-infobox-title,
+body h6.uabb-infobox-title {
+	margin: 0;
+	padding: 0;
+	/*line-height: 1em;*/
+}
+
+/* Text
+---------------------------------------------------*/
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;	
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+	font-weight: inherit;
+}
+
+
+/* Editor Fix */
+.uabb-infobox-content .uabb-infobox-text p:last-of-type {
+    margin-bottom: 0;
+}
+
+.uabb-infobox-content .uabb-infobox-text p {
+	padding: 0 0 10px 0;
+}
+
+.fl-builder-content .uabb-infobox-text h1,
+.fl-builder-content .uabb-infobox-text h2,
+.fl-builder-content .uabb-infobox-text h3,
+.fl-builder-content .uabb-infobox-text h4,
+.fl-builder-content .uabb-infobox-text h5,
+.fl-builder-content .uabb-infobox-text h6 {
+    margin: 0;
+}
+
+/* Button
+---------------------------------------------------*/
+
+/*.uabb-infobox-button {
+	padding: 10px 0 0 0;
+}*/
+
+/* Global Icons Photo Styling
+---------------------------------------------------*/
+
+.infobox-icon-above-title .uabb-infobox-left-right-wrap,
+.infobox-icon-below-title .uabb-infobox-left-right-wrap,
+.infobox-photo-above-title .uabb-infobox-left-right-wrap,
+.infobox-photo-below-title .uabb-infobox-left-right-wrap {
+	display: block;
+	min-width: 100%;
+	width: 100%;
+}
+
+/* Icons
+---------------------------------------------------*/
+
+/* Above/Below Title */
+.infobox-icon-above-title .uabb-icon {
+	display: block;
+}
+.infobox-icon-below-title .uabb-icon {
+	display: block;
+}
+
+/* Left/Right of Title */
+.infobox-icon-left-title .uabb-infobox-title,
+.infobox-icon-right-title .uabb-infobox-title, 
+.infobox-icon-left-title .uabb-imgicon-wrap,
+.infobox-icon-right-title .uabb-imgicon-wrap{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+
+.infobox-icon-left-title .left-title-image,
+.infobox-icon-right-title .right-title-image{
+	display: inline-block;
+	width: 100%;
+}
+
+.infobox-icon-left-title .uabb-imgicon-wrap {
+	margin-right: 20px;
+}
+
+.infobox-icon-right-title .uabb-imgicon-wrap{
+	margin-left: 20px;
+}
+
+
+/* Left/Right */
+.infobox-icon-left .uabb-infobox-left-right-wrap,
+.infobox-icon-right .uabb-infobox-left-right-wrap{
+	display: inline-block;
+	width: 100%;
+}
+
+.infobox-icon-left .uabb-imgicon-wrap,
+.infobox-icon-right .uabb-imgicon-wrap{
+	display: inline-block;
+	vertical-align: top;
+}
+.infobox-icon-left .uabb-infobox-content,
+.infobox-icon-right .uabb-infobox-content{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.infobox-icon-left .uabb-imgicon-wrap{
+	margin-right: 20px;
+}
+
+.infobox-icon-right .uabb-imgicon-wrap{
+	margin-left: 20px;
+}
+
+/* Photos
+---------------------------------------------------*/
+
+/* Above/Below Title */
+.infobox-photo-above-title .uabb-imgicon-wrap {
+	display: block;
+	/*margin-bottom: 20px;*/
+}
+.infobox-photo-below-title .uabb-imgicon-wrap {
+	display: block;
+	margin: 10px 0 15px;
+}
+
+/* Left/Right of Title */
+.infobox-photo-left-title .uabb-infobox-title,
+.infobox-photo-right-title .uabb-infobox-title, 
+.infobox-photo-left-title .uabb-imgicon-wrap,
+.infobox-photo-right-title .uabb-imgicon-wrap{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.infobox-photo-left-title .uabb-infobox-title-wrap, 
+.infobox-icon-left-title .uabb-infobox-title-wrap,
+.infobox-photo-right-title .uabb-infobox-title-wrap, 
+.infobox-icon-right-title .uabb-infobox-title-wrap {
+	vertical-align: middle;
+}
+
+
+.infobox-photo-left-title .uabb-imgicon-wrap {
+	margin-right: 20px;
+}
+
+.infobox-photo-right-title .uabb-imgicon-wrap{
+	margin-left: 20px;
+}
+
+
+/* Left/Right */
+.infobox-photo-left .uabb-infobox-left-right-wrap,
+.infobox-photo-right .uabb-infobox-left-right-wrap{
+	display: inline-block;
+	width: 100%;
+}
+
+.infobox-photo-left .uabb-imgicon-wrap,
+.infobox-photo-right .uabb-imgicon-wrap{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.infobox-photo-left .uabb-infobox-content,
+.infobox-photo-right .uabb-infobox-content{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.infobox-photo-left .uabb-imgicon-wrap{
+	margin-right: 20px;
+}
+
+.infobox-photo-right .uabb-imgicon-wrap{
+	margin-left: 20px;
+}
+
+/* Flex Properties */
+.fl-module-info-box .fl-module-content {
+    
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    flex-shrink: 1;
+}
+
+.fl-module-info-box .uabb-separator-parent {
+	line-height: 0;
+}
+
+/* Module Link */
+.fl-module-info-box .uabb-infobox-module-link{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 4;
+}
+
+.uabb-infobox-content .uabb-infobox-title-prefix {
+	padding: 0;
+	margin: 0;
+}

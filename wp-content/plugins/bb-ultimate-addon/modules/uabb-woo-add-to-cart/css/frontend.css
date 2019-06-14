@@ -1,0 +1,64 @@
+.uabb-woo-add-to-cart {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.uabb-woo-add-to-cart .button {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+}
+a.uabb-creative-transparent-btn:hover .uabb-atc-btn-text,
+a.uabb-creative-transparent-btn:hover .uabb-atc-icon-align,
+a.uabb-creative-transparent-btn:hover .uabb-atc-select-text,
+.uabb-woo-add-to-cart a.uabb-creative-transparent-btn.added::before,
+.uabb-woo-add-to-cart a.uabb-creative-transparent-btn.loading::before {
+    position: relative;
+    z-index: 9;
+}
+.uabb-woo-add-to-cart .uabb-creative-transparent-btn {
+    overflow: hidden;
+}
+.uabb-woo-add-to-cart .uabb-button {
+    padding: 10px 24px;
+}
+.uabb-woo-add-to-cart .uabb-atc-align-icon-before {
+    margin-right: 8px;
+}
+
+.uabb-woo-add-to-cart .uabb-atc-align-icon-after {
+    margin-left: 8px;
+    float: right;
+}
+
+.uabb-woo-add-to-cart .added_to_cart {
+    margin-left: 8px;
+}
+
+/* WooDefault Loader */
+.uabb-woo-add-to-cart a.add_to_cart_button.loading::before {
+    font-family: 'WooCommerce';
+    content: '\e01c';
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    /*position: absolute;*/
+    float: right;
+    margin-left: 10px;
+    display: inline-block;
+    top: auto;
+    /*right: 1em;*/
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+.uabb-woo-add-to-cart a.add_to_cart_button.added::before {
+    font-family: 'WooCommerce';
+    /*position: absolute;*/
+    top: auto;
+   /* right: 1em;*/
+    float: right;
+    content: '\e017';
+    vertical-align: bottom;
+    margin-left: 10px;
+}

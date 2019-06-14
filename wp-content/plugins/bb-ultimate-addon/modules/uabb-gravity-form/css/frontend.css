@@ -1,0 +1,164 @@
+/* Column CSS */
+
+.uabb-gf-style .gform_body .ginput_container_radio .gfield_radio li label,
+.uabb-gf-style .gform_body .ginput_container_checkbox .gfield_checkbox li label {
+    padding-right: 16px;
+}
+
+.uabb-gf-style input[type=submit] {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+/* Style 2 End */
+
+/* Default Style */
+.uabb-gf-style .gform_body ul {
+    list-style: none;
+    margin-left: 0;
+}
+
+.gform_wrapper .gfield_required {
+    color: #790000;
+    margin-left: 4px;
+}
+
+.gform_wrapper .gfield_radio li label {
+	vertical-align: bottom;
+	margin-left: 4px;
+}
+
+.gform_wrapper .gfield_checkbox li label {
+	vertical-align: bottom;
+	margin-left: 2px;
+}
+
+.uabb-gf-style .gform_wrapper.gform_validation_error .gform_body ul li.gfield.gfield_error:not(.gf_left_half):not(.gf_right_half) {
+    max-width: 100%;
+}
+
+.gform_wrapper li.gfield.gfield_error,
+.gform_wrapper li.gfield.gfield_error.gfield_contains_required.gfield_creditcard_warning {
+    margin-top: 16px;
+    padding-bottom: 6px;
+    padding-top: 8px;
+}
+
+.gform_wrapper .field_description_below .gfield_description {
+    padding-top: 16px;
+}
+
+.gform_wrapper .description, .gform_wrapper .gfield_description, .gform_wrapper .gsection_description, .gform_wrapper .instruction {
+    font-size: .813em;
+}
+
+.uabb-gf-style form .gform_body .gfield_label {
+    display: block;
+    text-align: left;
+}
+
+.gform_wrapper .top_label .gfield_label {
+    line-height: 3;
+}
+
+.gform_wrapper .ginput_container.ginput_container_checkbox input,
+.gform_wrapper .ginput_container.ginput_container_radio input {
+    vertical-align: baseline;
+}
+
+.gform_wrapper label.gfield_label {
+    font-weight: 700;
+}
+
+.gform_wrapper .ginput_complex.ginput_container span label {
+    font-size: .813em;
+}
+
+/* Error Message */
+.gform_wrapper li.gfield.gfield_error, .gform_wrapper li.gfield.gfield_error.gfield_contains_required.gfield_creditcard_warning {
+    background-color: rgba(255,223,224,.25);
+    border-top: 1px solid #C89797;
+    border-bottom: 1px solid #C89797;
+}
+
+.gform_wrapper li.gfield_error input:not([type='radio']):not([type='checkbox']):not([type='submit']):not([type='button']):not([type='image']):not([type='file']), .gform_wrapper li.gfield_error textarea {
+    border: 1px solid #790000;
+}
+
+.gform_wrapper .gfield_error .gfield_label {
+    color: #790000;
+}
+
+.gform_wrapper.gform_validation_error form .gform_body ul li.gfield.gfield_error:not(.gf_left_half):not(.gf_right_half),
+.gform_wrapper.gf_browser_chrome .gform_body {
+    max-width: 100% !important;
+}
+
+.uabb-gf-style .gform_wrapper ul.gform_fields li.gfield:not( .gf_left_half):not(.gf_left_third):not(.gf_middle_third) {
+    padding-right: 0;
+}
+
+/* Radio button and Checkbox */
+
+.gfield_checkbox li {   
+    position: relative;
+    padding-left: 40px;
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+    cursor: pointer;
+}
+
+.uabb-gf-style .gform_wrapper ul.gfield_radio li, 
+.uabb-gf-style .gform_wrapper ul.gfield_checkbox li {
+    margin-bottom: 10px;
+    padding-left: 0; 
+}
+
+.uabb-gf-style .gform_wrapper ul.gfield_radio li label, 
+.uabb-gf-style .gform_wrapper ul.gfield_checkbox li label {
+    display: inline-block;
+    line-height: 1.2;
+}
+
+.gform_wrapper .gfield_checkbox li, .gform_wrapper .gfield_radio li {
+    line-height: 1.2;
+}
+
+.gform_wrapper .ginput_container_select .chosen-container-single .chosen-single  {
+    position: inherit;
+    overflow: hidden;
+    padding: inherit;
+    height: inherit;
+    border: inherit;
+    border-radius: inherit;
+    background: none;
+    box-shadow: none;
+    color: #444;
+}
+
+.gform_wrapper .ginput_container_select .chosen-container-active.chosen-with-drop .chosen-single {
+    box-shadow: none; 
+    border: inherit;
+}
+
+.gform_wrapper .chosen-container.chosen-container-single .chosen-single div {
+    position: absolute;
+    top: 50%;
+    transform: translateY( calc(-50% - 2px ) );
+    right: 0;
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+
+.gform_wrapper .ginput_container_select .chosen-container-active.chosen-with-drop .chosen-single {
+    background: inherit;
+    box-shadow: none; 
+    border-color: inherit;
+    border: inherit;
+}
+

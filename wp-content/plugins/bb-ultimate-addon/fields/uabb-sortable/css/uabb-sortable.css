@@ -1,0 +1,32 @@
+/* Sortable */
+
+.uabb-sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 60%;
+}
+.uabb-sortable li {
+  margin: 0 3px 3px 3px;
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  cursor: move;
+}
+.uabb-sortable li:before{
+  content: "\e9ac";
+  font-family: 'Ultimate-Icons';
+  margin-right: 5px;
+}
+.uabb-sortable-wrap input[type="text"] {
+  display: none;
+}
+
+.uabb-sortable .content:after {
+    clear: none;
+    content: '';
+    display: none;
+}
+.uabb-sortable .content:before {
+    clear: none;
+    display: inline-block;
+}

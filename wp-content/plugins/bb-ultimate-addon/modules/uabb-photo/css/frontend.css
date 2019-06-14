@@ -1,0 +1,14 @@
+.uabb-photo-content.uabb-img-grayscale img {
+  -webkit-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+          filter: grayscale(100%);
+  		  filter: gray;
+}
+
+.uabb-photo-content .uabb-photo-caption {
+	pointer-events: none;
+}
+
+.uabb-photo-img {
+    max-height: inherit;
+}

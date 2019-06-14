@@ -1,0 +1,222 @@
+.uabb-number .uabb-number-string {
+	margin: 0;
+}
+
+.uabb-number,
+.uabb-number .uabb-number-circle-container,
+.uabb-number .uabb-number-semi-circle-container {
+	margin: 0 auto; 
+}
+
+.uabb-number.uabb-number-photo-left,
+.uabb-number.uabb-number-photo-right,
+.uabb-number.uabb-number-icon-left,
+.uabb-number.uabb-number-icon-right,
+/*.uabb-number.uabb-number-icon-left-title,*/
+.uabb-number.uabb-number-icon-left-right /*,
+.uabb-number.uabb-number-photo-left-title,
+.uabb-number.uabb-number-photo-left-right*/ {
+	display: inline-block;
+}
+
+.uabb-number-before-text,
+.uabb-number-after-text {
+	display: block;
+}
+.uabb-number-before-text { 
+	margin-bottom: 10px; 
+}
+.uabb-number-after-text { 
+	margin-top: 10px; 
+}
+
+.uabb-counter-before-text {
+	float: left;
+}
+
+.uabb-counter-after-text {
+	float: right;
+}
+
+.uabb-number .uabb-number-string { 
+	line-height: 1;
+	word-wrap: normal;
+	/*white-space: nowrap;*/ 
+	/*overflow: hidden;*/
+}
+
+.uabb-number-icon-left-title .uabb-number-text,
+.uabb-number-icon-right-title .uabb-number-text,
+.uabb-number-photo-left-title .uabb-number-text,
+.uabb-number-photo-right-title .uabb-number-text,
+.uabb-number-icon-left.uabb-number,
+.uabb-number-icon-right.uabb-number,
+.uabb-number-photo-left.uabb-number,
+.uabb-number-photo-right.uabb-number {
+	width: 100%;
+}
+
+.uabb-number .uabb-number-text,
+.uabb-number .uabb-number-circle-container,
+.uabb-number .uabb-number-semi-circle-container {
+	position: relative;
+	z-index: 4;
+	/*text-align: center;*/
+}
+
+.uabb-number .uabb-number-circle-container .uabb-number-text,
+.uabb-number .uabb-number-semi-circle-container .uabb-number-text {
+	text-align: center;
+}
+
+/* Default Layout CSS */
+
+/* Image/ Icon Left - Right of All Text */
+.uabb-number-icon-left .uabb-imgicon-wrap,
+.uabb-number-icon-left .uabb-number-text,
+.uabb-number-photo-left .uabb-imgicon-wrap,
+.uabb-number-photo-left .uabb-number-text,
+.uabb-number-icon-left-title .uabb-imgicon-wrap,
+.uabb-number-icon-left-title .uabb-number-string,
+.uabb-number-photo-left-title .uabb-imgicon-wrap,
+.uabb-number-photo-left-title .uabb-number-string {
+	display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+}
+.uabb-number-icon-right .uabb-imgicon-wrap,
+.uabb-number-icon-right .uabb-number-text,
+.uabb-number-photo-right .uabb-imgicon-wrap,
+.uabb-number-photo-right .uabb-number-text,
+.uabb-number-icon-right-title .uabb-imgicon-wrap,
+.uabb-number-icon-right-title .uabb-number-string,
+.uabb-number-photo-right-title .uabb-imgicon-wrap,
+.uabb-number-photo-right-title .uabb-number-string {
+	display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+}
+
+/* Default Sapcing on position */
+.uabb-number-icon-left .uabb-imgicon-wrap,
+.uabb-number-photo-left .uabb-imgicon-wrap,
+.uabb-number-icon-left-title .uabb-imgicon-wrap,
+.uabb-number-photo-left-title .uabb-imgicon-wrap {
+	padding-right: 20px;
+}
+.uabb-number-icon-right .uabb-imgicon-wrap,
+.uabb-number-photo-right .uabb-imgicon-wrap,
+.uabb-number-icon-right-title .uabb-imgicon-wrap,
+.uabb-number-photo-right-title .uabb-imgicon-wrap{
+	padding-left: 20px;
+}
+
+.uabb-number-icon-above-title .uabb-imgicon-wrap,
+.uabb-number-photo-above-title .uabb-imgicon-wrap{
+	margin-bottom: 15px;
+}
+
+.uabb-number-icon-below-title .uabb-imgicon-wrap,
+.uabb-number-photo-below-title .uabb-imgicon-wrap{
+	margin-top: 15px;
+}
+
+/* Control Default Line height and margin */
+.uabb-number-icon-left .uabb-number-string,
+.uabb-number-icon-right .uabb-number-string,
+.uabb-number-photo-left .uabb-number-string,
+.uabb-number-photo-right .uabb-number-string{
+	margin: 0;
+	line-height: 1em;
+}
+
+.uabb-number-icon-below-title .uabb-number-string,
+.uabb-number-icon-above-title .uabb-number-string,
+.uabb-number-photo-below-title .uabb-number-string,
+.uabb-number-photo-above-title .uabb-number-string{
+	margin: 0;
+}
+
+/* Before - After text margin */
+/*.uabb-number-icon-below-title .uabb-number-before-text,
+.uabb-number-icon-above-title .uabb-number-before-text,
+.uabb-number-photo-below-title .uabb-number-before-text,
+.uabb-number-photo-above-title .uabb-number-before-text{
+	margin-bottom: 10px;
+}
+
+.uabb-number-icon-above-title .uabb-number-after-text,
+.uabb-number-icon-below-title .uabb-number-after-text,
+.uabb-number-photo-above-title .uabb-number-after-text,
+.uabb-number-photo-below-title .uabb-number-after-text{
+	margin-top: 10px;
+}*/
+
+/* Bar Css */
+
+/*.uabb-number.uabb-number-bars .uabb-number-text{ text-align: left; }*/
+.uabb-number .uabb-number-bar{ 
+	/*text-align: right;*/
+	padding: 5px; 
+}
+ 
+/*.uabb-number-position-default .uabb-number-before-text, 
+.uabb-number-position-above .uabb-number-before-text,
+.uabb-number-position-above .uabb-number-before-text,
+.uabb-number-position-below .uabb-number-before-text,
+.uabb-number-position-below .uabb-number-before-text{
+	margin-bottom: 10px;
+}
+
+.uabb-number-position-default .uabb-number-after-text,
+.uabb-number-position-above .uabb-number-after-text,
+.uabb-number-position-above .uabb-number-after-text,
+.uabb-number-position-below .uabb-number-after-text,
+.uabb-number-position-below .uabb-number-after-text{
+	margin-top: 10px;
+}*/
+
+.uabb-number .uabb-number-position-above .uabb-number-bar {
+	 margin-top: 5px;
+}
+.uabb-number .uabb-number-position-below .uabb-number-bar {
+	margin-bottom: 5px;
+}
+
+.uabb-number .svg-container{
+	display: inline-block;
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: auto;
+	padding-bottom: 100%;
+}
+
+.uabb-number .svg-container .svg{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+
+/*** 
+ * Left of Only Title
+ * Right Of Only Title 
+ ***/
+/*.uabb-number .uabb-left-title-image .uabb-number-icon,
+.uabb-number .uabb-right-title-image .uabb-number-icon {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.uabb-number .uabb-left-title-image .uabb-number-icon{
+	margin-right: 15px;
+}
+
+.uabb-number .uabb-right-title-image .uabb-number-icon{
+	margin-left: 15px;
+}
+*/

@@ -1,0 +1,14 @@
+.uabb-business-hours {
+    display: inline-block;
+    width: calc( 100%/2 );
+}
+.uabb-business-day {
+    width: calc( 100%/2 );
+    display: inline-block;
+}
+.uabb-business-hours-wrap {
+    display: flex;
+}
+.uabb-business-hours-container{
+    overflow: hidden;
+}

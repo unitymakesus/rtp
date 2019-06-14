@@ -1,0 +1,147 @@
+.uabb-layout-circular,
+.uabb-layout-semi-circular {
+    text-align: center;
+}
+.uabb-pb-container .uabb-pb-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.uabb-pb-container .uabb-pb-list li {
+    margin: 0;
+}
+.uabb-progress-bar-wrapper.uabb-layout-circular,
+.uabb-progress-bar-wrapper.uabb-layout-semi-circular {
+    position: relative;
+    z-index: 10;
+    margin: auto;
+}
+
+.uabb-layout-circular .uabb-percent-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 3;
+}
+
+.uabb-layout-semi-circular .uabb-percent-wrap {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-100%);
+    -moz-transform: translate(-50%,-100%);
+    -ms-transform: translate(-50%,-100%);
+    transform: translate(-50%,-100%);
+    z-index: 3;
+}
+
+.uabb-layout-semi-circular .uabb-svg-wrap {
+    padding-bottom: 50%;
+}
+
+.uabb-svg-wrap {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    padding-bottom: 100%;
+}
+
+.uabb-svg-wrap svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.uabb-layout-semi-circular .uabb-svg-wrap svg,
+.uabb-layout-circular .uabb-svg-wrap svg {
+    height: 100%;
+}
+
+.uabb-layout-circular .uabb-svg-wrap svg {
+    border-radius: 50%;
+}
+
+.uabb-vertical-center .uabb-progress-info {
+	display: table;
+    width: 100%;
+    min-width: 0;
+}
+
+.uabb-layout-horizontal.uabb-progress-bar-style-style4 .uabb-progress-value span {
+    transform: translateX(50%);
+    display: inline-block;
+}
+
+.uabb-vertical-center .uabb-progress-title,
+.uabb-vertical-center .uabb-progress-value {
+	display: table-cell;
+    vertical-align: middle;
+}
+
+.uabb-progress-value {
+	/*padding: 10px;*/
+    font-size: 16px;
+    line-height: 1.3;
+    padding-left: .5em;
+    white-space: nowrap;
+    text-align: right;
+    width: 1px;
+}
+
+.uabb-semi-progress-before {
+    float: left;
+}
+
+.uabb-semi-progress-after {
+    float: right;
+}
+
+.uabb-progress-title {
+	/*padding: 10px;*/
+    line-height: 1.3;
+    text-align: left;
+    text-transform: uppercase;
+   	margin: 0 !important;
+}
+
+.uabb-progress-box {
+	position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.uabb-progress-bar {
+	position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.uabb-layout-vertical .uabb-progress-bar {
+    height: 0;
+}
+
+.uabb-progress-bar-style-style3 .uabb-progress-box .uabb-progress-info,
+.uabb-progress-bar-style-style4 .uabb-progress-box .uabb-progress-info {
+    position: relative;
+    height: 100%;
+}
+
+.uabb-progress-bar-style-style3 .uabb-progress-value {
+    text-align: center;
+}
+
+.uabb-layout-horizontal.uabb-progress-bar-style-style2 .uabb-progress-bar,
+.uabb-layout-horizontal.uabb-progress-bar-style-style1 .uabb-progress-bar {
+    height: 100%;
+}

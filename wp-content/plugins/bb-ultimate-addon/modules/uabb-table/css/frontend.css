@@ -1,0 +1,122 @@
+/*
+* UABB Table module
+*/
+
+.uabb-table .before-icon,
+.uabb-table .after-icon {
+    vertical-align: middle;
+}
+
+.uabb-table .after-icon {
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+.uabb-table .before-icon {
+    margin-left: 0;
+    margin-right: 8px;
+}
+
+.uabb-table {
+    display: flex;
+}
+
+.uabb-table .uabb-table-wrapper {
+    height: 100%;
+}
+
+.fl-module-uabb-table .table-data {
+	margin-bottom: 15px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -moz-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.uabb-table .entries-wrapper, .uabb-table .search-wrapper {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.fl-module-uabb-table .uabb-table-wrapper .uabb-table-inner-wrap {
+    border-collapse: collapse;
+	margin: 0;
+}
+
+.fl-module-uabb-table .entries-wrapper .select-filter {
+    padding: 10px 10px 10px 10px;
+    height: auto;
+    margin-left: 10px;
+}
+
+.fl-module-uabb-table .search-wrapper .search-input {
+    margin-left: 10px;
+}
+
+.uabb-table .uabb-table-title{
+	padding: 20px 0;
+	margin: 0;
+}
+
+.uabb-table:after {
+	clear: both;
+}
+
+.uabb-table {
+	margin-left: auto;
+	margin-right: auto;
+	zoom:1;
+}
+
+.uabb-table .uabb-table-element-box {
+   -webkit-flex-grow: 1;
+   -ms-flex-positive: 1;
+	-webkit-box-flex: 1;
+           flex-grow: 1;
+}
+
+.uabb-table .uabb-table-header .table-header-th, 
+.uabb-table .uabb-table-features .table-body-td {
+    vertical-align: middle;
+}
+
+.uabb-table .uabb-table-wrapper {
+    text-align: center;
+    position: relative;
+}
+
+.uabb-table .uabb-table-header .table-header-th {
+    overflow-wrap: normal;
+}
+
+.uabb-table .uabb-sort-icon {
+    float: right;
+    transform: translateY(50%);
+}
+
+.uabb-table .uabb-table-header .table-header-tr .table-header-th .th-style .head-inner-text, 
+.uabb-table .uabb-table-header .table-header-tr .table-header-th .th-style {
+    background: none;
+}
+
+.uabb-table .table-header-th .th-style {
+    padding-right: 15px;
+}
+
+.uabb-table-inner-wrap {
+    width:100%;
+}

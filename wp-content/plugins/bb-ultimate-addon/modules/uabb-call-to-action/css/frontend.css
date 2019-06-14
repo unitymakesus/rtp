@@ -1,0 +1,77 @@
+/* Stacked Alignment
+---------------------------------------------------*/
+
+.uabb-cta-left {
+	text-align: left;
+}
+.uabb-cta-center {
+	text-align: center;
+}
+.uabb-cta-right {
+	text-align: right;
+}
+
+/* Inline Alignment
+---------------------------------------------------*/
+
+.uabb-cta-inline {
+	display: table;
+	width: 100%;
+}
+.uabb-cta-inline .uabb-cta-text,
+.uabb-cta-inline .uabb-cta-button {
+	display: table-cell;
+	vertical-align: middle;
+}
+.uabb-cta-inline .uabb-cta-text {
+	/*width: 70%;*/
+}
+.uabb-cta-inline .uabb-cta-button {
+	padding-left: 30px;
+	text-align: center;
+	/*width: 30%;*/
+}
+
+/* Title
+---------------------------------------------------*/
+
+body h1.uabb-cta-title,
+body h2.uabb-cta-title,
+body h3.uabb-cta-title,
+body h4.uabb-cta-title,
+body h5.uabb-cta-title,
+body h6.uabb-cta-title {
+	margin: 0;
+	padding: 0 0 10px 0;
+}
+
+/* Description
+--------------------------------------------------*/
+
+.uabb-cta-text-content p { 
+   margin: 0;
+   padding: 0 0 10px 0;
+}
+
+/* Button
+---------------------------------------------------*/
+
+.uabb-cta-stacked .uabb-cta-button {
+	padding-top: 20px;
+}
+
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;	
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+	font-weight: inherit;
+}

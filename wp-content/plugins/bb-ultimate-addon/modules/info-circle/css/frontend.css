@@ -1,0 +1,129 @@
+.uabb-info-circle-wrap {
+	margin: auto;
+	width: 100%;
+	height: 500px;
+	max-width: 100%;
+	position: relative;
+	box-sizing: border-box;
+}
+.uabb-info-circle-in {
+	width: 60%;
+	height: 60%;
+	left: 50%;
+	top: 50%;
+	overflow: hidden;
+	display: none;
+}
+.active .uabb-info-circle-in {
+    display: block;
+}
+
+.uabb-info-circle-icon-content .uabb-info-circle-content {
+	z-index: 1;
+}
+.uabb-info-circle-wrap .uabb-info-circle-content {
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+	top: 50%;
+	text-align: center;
+	width: 100%;
+	-webkit-transition: inherit;
+	transition: inherit;
+}
+.uabb-info-circle-wrap .uabb-info-circle-desc p:last-of-type {
+	margin-bottom: 0;
+}
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;	
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+	font-weight: inherit;
+}
+
+.uabb-info-circle-wrap .uabb-info-circle,
+.uabb-info-circle-wrap:before {
+	border-radius: 50%;
+	position: absolute;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	-ms-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+.uabb-info-circle-wrap .uabb-info-circle-out {
+	width: 80%;
+	height: 80%;
+	left: 50%;
+	top: 50%;
+}
+
+.uabb-info-circle-wrap:before {
+	content: ' ';
+	width: calc(80% + 1px);
+	height: calc(80% + 1px);
+	left: 50%;
+	top: 50%;
+	z-index: 1;
+	position: absolute;
+	pointer-events: none;
+}
+
+/* After Implementation */
+.uabb-info-circle .uabb-imgicon-wrap {
+	display: block;
+	height: 100%;
+	position: relative;
+}
+
+.uabb-info-circle .uabb-icon-wrap {
+	border-radius: 50%;
+}
+
+.uabb-info-circle .uabb-icon i {
+	display: inline-block;
+}
+
+.uabb-info-circle-wrap .uabb-image .uabb-photo-img,
+.uabb-info-circle-wrap .uabb-icon-wrap i,
+.uabb-info-circle-wrap .uabb-icon-wrap i:before {
+	-webkit-transition: all .3s ease-in-out;
+	transition: all .3s ease-in-out;
+	box-sizing: content-box;
+}
+
+.uabb-info-circle .uabb-imgicon-wrap .uabb-photo-img {
+	max-width: none;
+}
+
+.uabb-info-circle-small {
+	z-index: 2;
+}
+
+/* grayscale */
+.uabb-info-circle-wrap .active .uabb-info-circle-small.grayscale {
+	-webkit-filter: grayscale(100%); /* Chrome, Safari, Opera */
+	filter: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="filter"><feColorMatrix type="matrix" color-interpolation-filters="sRGB" values="0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0.2126 0.7152 0.0722 0 0 0 0 0 1 0" /></filter></svg>#filter');
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-filter: gray;
+	filter: gray;
+}
+
+/* Change Image Style */
+.change-img .uabb-imgicon-wrap:last-child,
+.active .change-img .uabb-imgicon-wrap:first-child {
+	display: none;
+}
+
+.active .change-img .uabb-imgicon-wrap:last-child {
+	display: block;
+}

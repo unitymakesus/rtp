@@ -1,0 +1,392 @@
+/* UABB Advanced Menu */
+
+.uabb-creative-menu ul,
+.uabb-creative-menu li {
+	list-style: none !important;
+	margin: 0;
+	padding: 0;
+}
+.uabb-creative-menu .menu:before,
+.uabb-creative-menu .menu:after {
+	content: '';
+	display: table;
+	clear: both;
+}
+
+/*  Horizontal Menu */
+
+.uabb-creative-menu .menu {
+	position: relative;
+	padding-left: 0;
+}
+.uabb-creative-menu li {
+	position: relative;
+}
+.uabb-creative-menu a {
+	display: block;
+	line-height: 1;
+	text-decoration: none;
+}
+.uabb-creative-menu .menu a {
+    box-shadow: none;
+}
+.uabb-creative-menu a:hover {
+	text-decoration: none;
+}
+.uabb-creative-menu .sub-menu {
+	min-width: 220px;
+    margin: 0;
+}
+.uabb-creative-menu-horizontal {
+    font-size: 0;
+}
+.uabb-creative-menu-horizontal li,
+.uabb-creative-menu-horizontal > li {
+    font-size: medium;
+}
+.uabb-creative-menu-horizontal > li > .uabb-has-submenu-container > a > span.menu-item-text {
+    display: inline-block;
+}
+
+/* Expanded Menu */
+
+.fl-module[data-node] .uabb-creative-menu .uabb-creative-menu-expanded .sub-menu {
+	background-color: transparent;
+	-webkit-box-shadow: none;
+	-ms-box-shadow: none;
+	box-shadow: none;
+}
+
+/* Submenus */
+
+.uabb-creative-menu .uabb-has-submenu:focus,
+.uabb-creative-menu .uabb-has-submenu .sub-menu:focus,
+.uabb-creative-menu .uabb-has-submenu-container:focus {
+	outline: 0;
+}
+.uabb-creative-menu .uabb-has-submenu-container {
+	position: relative;
+}
+
+/* Submenu - accordion, expanded */
+
+.uabb-creative-menu .uabb-creative-menu-accordion .uabb-has-submenu > .sub-menu {
+	display: none;
+}
+
+/* Toggle - General */
+
+.uabb-creative-menu .uabb-menu-toggle {
+	cursor: pointer;
+}
+
+.uabb-creative-menu .uabb-toggle-arrows .uabb-menu-toggle:before,
+.uabb-creative-menu .uabb-toggle-none .uabb-menu-toggle:before {
+	border-color: #333;
+}
+.uabb-creative-menu .uabb-menu-expanded .uabb-menu-toggle {
+	display: none;
+}
+
+/* Mobile menu - Hamburger icon */
+
+.uabb-creative-menu-mobile-toggle {
+	position: relative;
+	padding: 8px;
+	background-color: transparent;
+	border: none;
+	color: #333;
+	border-radius: 0;
+	cursor: pointer;
+    display: inline-block;
+    z-index: 5;
+}
+.uabb-creative-menu-mobile-toggle.text {
+	width: 100%;
+	text-align: center;
+}
+.uabb-creative-menu-mobile-toggle.hamburger .uabb-creative-menu-mobile-toggle-label,
+.uabb-creative-menu-mobile-toggle.hamburger-label .uabb-creative-menu-mobile-toggle-label {
+	display: inline-block;
+	margin-left: 10px;
+	vertical-align: middle;
+}
+.uabb-creative-menu-mobile-toggle.hamburger .uabb-svg-container,
+.uabb-creative-menu-mobile-toggle.hamburger-label .uabb-svg-container {
+	display: inline-block;
+	position: relative;
+	width: 1.4em;
+	height: 1.4em;
+	vertical-align: middle;
+}
+.uabb-creative-menu-mobile-toggle.hamburger .hamburger-menu,
+.uabb-creative-menu-mobile-toggle.hamburger-label .hamburger-menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.uabb-creative-menu-mobile-toggle.hamburger .hamburger-menu rect,
+.uabb-creative-menu-mobile-toggle.hamburger-label .hamburger-menu rect {
+	fill: currentColor;
+}
+.uabb-creative-menu.off-canvas .uabb-off-canvas-menu .uabb-menu-close-btn {
+	width: 20px;
+	height: 10px;
+	position: absolute;
+	right: 20px;
+	top: 20px;
+	cursor: pointer;
+	display: block;
+    z-index: 99;
+}
+
+/* Overlay */
+
+.uabb-creative-menu .uabb-menu-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.uabb-creative-menu .uabb-menu-overlay > ul.menu {
+	text-align: center;
+    position: relative;
+    top: 50%;
+	width: 40%;
+    height: 60%;
+    margin: 0 auto;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.uabb-creative-menu .uabb-overlay-fade {
+	opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 0.5s, visibility 0s 0.5s;
+    transition: opacity 0.5s, visibility 0s 0.5s;
+}
+
+.uabb-creative-menu.menu-open .uabb-overlay-fade {
+	opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.5s;
+    transition: opacity 0.5s;
+}
+
+.uabb-creative-menu .uabb-overlay-slide-down {
+	visibility: hidden;
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+    -webkit-transition: -webkit-transform 0.4s ease-in-out, visibility 0s 0.4s;
+    transition: transform 0.4s ease-in-out, visibility 0s 0.4s;
+}
+
+.uabb-creative-menu.menu-open .uabb-overlay-slide-down {
+	visibility: visible;
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+    -webkit-transition: -webkit-transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
+}
+
+.uabb-creative-menu .uabb-overlay-scale {
+	visibility: hidden;
+    opacity: 0;
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    -webkit-transition: -webkit-transform 0.2s, opacity 0.2s, visibility 0s 0.2s;
+    transition: transform 0.2s, opacity 0.2s, visibility 0s 0.2s;
+}
+
+.uabb-creative-menu.menu-open .uabb-overlay-scale {
+	visibility: visible;
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+    transition: transform 0.4s, opacity 0.4s;
+}
+ 
+.uabb-creative-menu .uabb-overlay-door {
+	visibility: hidden;
+	width: 0;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+	-webkit-transition: width 0.5s 0.3s, visibility 0s 0.8s;
+	transition: width 0.5s 0.3s, visibility 0s 0.8s;
+}
+
+.uabb-creative-menu.menu-open .uabb-overlay-door {
+	visibility: visible;
+    width: 100%;
+    -webkit-transition: width 0.5s;
+    transition: width 0.5s;
+}
+
+.uabb-creative-menu .uabb-overlay-door > ul.menu {
+	left: 0;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+.uabb-creative-menu .uabb-overlay-door > ul,
+.uabb-creative-menu .uabb-overlay-door .uabb-menu-close-btn {
+	opacity: 0;
+	-webkit-transition: opacity 0.3s 0.5s;
+	transition: opacity 0.3s 0.5s;
+}
+
+.uabb-creative-menu.menu-open .uabb-overlay-door > ul,
+.uabb-creative-menu.menu-open .uabb-overlay-door .uabb-menu-close-btn {
+	opacity: 1;
+	-webkit-transition-delay: 0.5s;
+	transition-delay: 0.5s;
+}
+
+.uabb-creative-menu.menu-close .uabb-overlay-door > ul,
+.uabb-creative-menu.menu-close .uabb-overlay-door .uabb-menu-close-btn {
+	-webkit-transition-delay: 0s;
+	transition-delay: 0s;
+}
+
+.uabb-creative-menu .uabb-menu-overlay .uabb-toggle-arrows .uabb-has-submenu-container a > span {
+	padding-right: 0 !important;
+}
+
+.uabb-creative-menu .uabb-menu-overlay .uabb-menu-close-btn {
+	position: absolute;
+    display: block;
+	width: 55px;
+    height: 45px;
+	right: 40px;
+    top: 40px;
+    overflow: hidden;
+    border: none;
+    outline: none;
+    z-index: 100;
+	font-size: 30px;
+	cursor: pointer;
+    background-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: background-color 0.3s;
+    transition: background-color 0.3s;
+}
+
+.uabb-creative-menu .uabb-menu-overlay .uabb-menu-close-btn:before,
+.uabb-creative-menu .uabb-menu-overlay .uabb-menu-close-btn:after {
+	content: '';
+	position: absolute;
+	left: 50%;
+    width: 2px;
+    height: 40px;
+    background-color: #ffffff;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    -webkit-transform: translateY(0) rotate(45deg);
+    transform: translateY(0) rotate(45deg);
+}
+
+.uabb-creative-menu .uabb-menu-overlay .uabb-menu-close-btn:after {
+	-webkit-transform: translateY(0) rotate(-45deg);
+    transform: translateY(0) rotate(-45deg);
+}
+
+/* Off Canvas */
+
+.uabb-creative-menu .uabb-off-canvas-menu .menu {
+	margin-top: 40px;
+}
+
+.uabb-creative-menu.off-canvas .uabb-clear {
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99998;
+    background: rgba(0,0,0,0.0);
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 300px;
+    height: 100%;
+    transform: translate3d(-320px, 0px, 0px);
+    background: rgb(55, 58, 71);
+    padding: 60px 20px;
+    -webkit-transition: all 0.8s;
+    transition: transform 0.8s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    perspective: 1000;
+    backface-visibility: hidden;
+}
+
+.menu-open.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-left {
+    transform: translate3d(0px, 0px, 0px);
+    transition: transform 0.8s ease;
+}
+
+.uabb-creative-menu .menu > li > a,
+.uabb-creative-menu .menu > li > .uabb-has-submenu-container a {
+    outline: 0;
+}
+
+.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99999;
+    width: 300px;
+    height: 100%;
+    transform: translate3d(320px, 0px, 0px);
+    background: rgb(55, 58, 71);
+    padding: 60px 20px; 
+    -webkit-transition: all 0.8s;
+    transition: transform 0.8s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    perspective: 1000;
+    backface-visibility: hidden;
+}
+
+.menu-open.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-right {
+    transform: translate3d(0px, 0px, 0px);
+    transition: transform 0.8s ease;
+}
+.uabb-creative-menu.off-canvas.menu-open .uabb-clear {
+	visibility: visible;
+	opacity: 1;
+}
+
+@media ( max-width: 992px ) {
+	.uabb-creative-menu .uabb-menu-overlay .uabb-menu-close-btn {
+		right: 20px;
+	    top: 20px;
+	}
+}

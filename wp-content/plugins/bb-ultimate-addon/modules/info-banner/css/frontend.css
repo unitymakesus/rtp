@@ -1,0 +1,734 @@
+
+/* Module Link */
+.fl-module-info-banner .uabb-infobanner-module-link{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9;
+}
+.uabb-ultb3-box .uabb-ultb3-title {
+    margin: 0;
+}
+.uabb-ultb3-desc p:last-child {
+    margin: 0;
+}
+.uabb-ultb3-desc {
+    margin-bottom: 24px;
+}
+
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;   
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+    font-weight: inherit;
+}
+
+.uabb-ultb3-align-left {
+    text-align: left
+}
+.uabb-ultb3-align-center {
+    text-align: center
+}
+.uabb-ultb3-align-right {
+    text-align: right
+}
+
+.uabb-ultb3-box {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    /*background: #f2f2f2;*/
+    overflow: hidden;
+}
+.uabb-ultb3-img {
+    top: 0;
+    left: 0;
+    border: 0;
+    box-shadow: none;
+    max-width: none !important;
+    width: auto !important;
+    float: none;
+    margin: 0 auto;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    -webkit-transition: all 300ms linear;
+       -moz-transition: all 300ms linear;
+            transition: all 300ms linear
+}
+.uabb-ultb3-box-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2
+}
+.uabb-ultb3-info {
+    padding: 25px;
+    position: relative;
+    z-index: 5;
+    width: 100%;
+}
+.uabb-ultb3-img.uabb-ultb3-img-top-center {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%)
+}
+.uabb-ultb3-img.uabb-ultb3-img-top-right {
+    left: auto;
+    right: 0
+}
+.uabb-ultb3-img.uabb-ultb3-img-center-left {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%)
+}
+.uabb-ultb3-img.uabb-ultb3-img-center {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%)
+}
+.uabb-ultb3-img.uabb-ultb3-img-center-right {
+    left: auto;
+    right: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+.uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ultb3-img.uabb-ultb3-img-bottom-center,
+.uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    top: auto;
+    bottom: 0
+}
+.uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+}
+.uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    right: 0;
+    left: auto
+}
+
+
+/***
+ * Slide Down
+ **********************************************/
+
+/* Top Reference Postion */
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-top-right {
+    top: -30px
+}
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-top-right {
+    top: 0
+}
+
+/* Center Left Postion */
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%)
+}
+
+/* Center Left Postion Hover */
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-47%);
+       -moz-transform: translateY(-47%);
+        -ms-transform: translateY(-47%);
+         -o-transform: translateY(-47%);
+            transform: translateY(-47%)
+}
+
+/* Center Postion */
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%)
+}
+
+/* Center Postion Hover */
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -47%);
+       -moz-transform: translate(-50%, -47%);
+        -ms-transform: translate(-50%, -47%);
+         -o-transform: translate(-50%, -47%);
+            transform: translate(-50%, -47%)
+}
+
+/* Center Right Postion */
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%)
+}
+
+/* Center Right Postion Hover */
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-47%);
+       -moz-transform: translateY(-47%);
+        -ms-transform: translateY(-47%);
+         -o-transform: translateY(-47%);
+            transform: translateY(-47%)
+}
+
+/* Slide Down Bottom Reference Position */
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-bottom-center,
+.uabb-ib-slide-down .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    bottom: 0
+}
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center,
+.uabb-ib-slide-down:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    bottom: -30px
+}
+
+
+/***
+ * Slide Up
+ **********************************************/
+
+/* Top Reference Postion */
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-top-right {
+    top: 0
+}
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-top-right {
+    top: -20px
+}
+
+/* Center Left Postion */
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%)
+}
+
+/* Center Left Postion Hover */
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-60%);
+       -moz-transform: translateY(-60%);
+        -ms-transform: translateY(-60%);
+         -o-transform: translateY(-60%);
+            transform: translateY(-60%)
+}
+
+/* Center Postion */
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%)
+}
+
+/* Center Postion Hover */
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -60%);
+       -moz-transform: translate(-50%, -60%);
+        -ms-transform: translate(-50%, -60%);
+         -o-transform: translate(-50%, -60%);
+            transform: translate(-50%, -60%)
+}
+
+/* Center Right Postion */
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%)
+}
+/* Center Right Postion Hover */
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-55%);
+       -moz-transform: translateY(-55%);
+        -ms-transform: translateY(-55%);
+         -o-transform: translateY(-55%);
+            transform: translateY(-55%)
+}
+
+/* Slide Up Bottom Postion Reference */
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-bottom-center,
+.uabb-ib-slide-up .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    bottom: -50px
+}
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center,
+.uabb-ib-slide-up:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    bottom: 0
+}
+
+/***
+ * Slide Left
+ **********************************************/
+
+ /* Slide Left Left Postion Reference */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    left: 0
+}
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    left: -30px
+}
+
+/* Slide Left Top Center Postion */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-top-center {
+    -webkit-transform: translateX(-35%);
+       -moz-transform: translateX(-35%);
+        -ms-transform: translateX(-35%);
+         -o-transform: translateX(-35%);
+            transform: translateX(-35%)
+}
+
+/* Slide Left Top Center Postion Hover */
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-top-center {
+    -webkit-transform: translateX(-40%);
+       -moz-transform: translateX(-40%);
+        -ms-transform: translateX(-40%);
+         -o-transform: translateX(-40%);
+            transform: translateX(-40%)
+}
+
+/* Slide Left Right Postion Reference */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    right: -40px
+}
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    right: 0
+}
+
+/* Slide Left Center Postion */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%)
+}
+
+/* Slide Left Center Postion Hover */
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-55%, -50%);
+       -moz-transform: translate(-55%, -50%);
+        -ms-transform: translate(-55%, -50%);
+         -o-transform: translate(-55%, -50%);
+            transform: translate(-55%, -50%)
+}
+
+/* Slide Left Center Right Postion */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translate(25%, -50%);
+       -moz-transform: translate(25%, -50%);
+        -ms-transform: translate(25%, -50%);
+         -o-transform: translate(25%, -50%);
+            transform: translate(25%, -50%)
+}
+
+/* Slide Left Center Right Postion Hover */ 
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translate(20%, -50%);
+       -moz-transform: translate(20%, -50%);
+        -ms-transform: translate(20%, -50%);
+         -o-transform: translate(20%, -50%);
+            transform: translate(20%, -50%)
+}
+
+/* Slide Left Bottom Left Postion */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-bottom-left {
+    left: 0
+}
+
+/* Slide Left Bottom Left Postion Hover */
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left {
+    left: -40px
+}
+
+/* Slide Left Bottom Center Postion */
+.uabb-ib-slide-left .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translate(-50%);
+       -moz-transform: translate(-50%);
+        -ms-transform: translate(-50%);
+         -o-transform: translate(-50%);
+            transform: translate(-50%)
+}
+
+/* Slide Left Bottom Center Postion Hover */
+.uabb-ib-slide-left:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translate(-55%);
+       -moz-transform: translate(-55%);
+        -ms-transform: translate(-55%);
+         -o-transform: translate(-55%);
+            transform: translate(-55%)
+}
+
+/***
+ * Slide Right
+ **********************************************/
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    left: -40px
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    left: 0
+}
+
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-top-center {
+    -webkit-transform: translateX(-60%);
+       -moz-transform: translateX(-60%);
+        -ms-transform: translateX(-60%);
+         -o-transform: translateX(-60%);
+            transform: translateX(-60%)
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-top-center {
+    -webkit-transform: translateX(-65%);
+       -moz-transform: translateX(-65%);
+        -ms-transform: translateX(-65%);
+         -o-transform: translateX(-65%);
+            transform: translateX(-65%)
+}
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    right: 0
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    right: -20px
+}
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%)
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-45%, -50%);
+       -moz-transform: translate(-45%, -50%);
+        -ms-transform: translate(-45%, -50%);
+         -o-transform: translate(-45%, -50%);
+            transform: translate(-45%, -50%)
+}
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translate(0, -50%);
+       -moz-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+         -o-transform: translate(0, -50%);
+            transform: translate(0, -50%)
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translate(10%, -50%);
+       -moz-transform: translate(10%, -50%);
+        -ms-transform: translate(10%, -50%);
+         -o-transform: translate(10%, -50%);
+            transform: translate(10%, -50%)
+}
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-bottom-left {
+    left: -50px
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left {
+    left: 0
+}
+.uabb-ib-slide-right .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translate(-50%);
+       -moz-transform: translate(-50%);
+        -ms-transform: translate(-50%);
+         -o-transform: translate(-50%);
+            transform: translate(-50%)
+}
+.uabb-ib-slide-right:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translate(-45%);
+       -moz-transform: translate(-45%);
+        -ms-transform: translate(-45%);
+         -o-transform: translate(-45%)
+            transform: translate(-45%);
+}
+
+/***
+ * Pan
+ **********************************************/
+/*  Top Left 
+    Top Right 
+    Bottom Left
+    Bottom Right */
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    -webkit-transform: rotate(5deg) scale(1.1);
+       -moz-transform: rotate(5deg) scale(1.1);
+        -ms-transform: rotate(5deg) scale(1.1);
+         -o-transform: rotate(5deg) scale(1.1);
+            transform: rotate(5deg) scale(1.1);
+}
+
+/* Top Right - Top Left - Ref */
+.uabb-ib-pan .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-pan .uabb-ultb3-img.uabb-ultb3-img-top-right {
+    top: -15px;
+}
+
+/* Bottom Right - Bottom Left - Ref */*
+.uabb-ib-pan .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-pan .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    bottom: -15px;
+}
+
+
+/* Top Center */
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-top-center {
+    -webkit-transform: translateX(-50%) rotate(5deg) scale(1.1);
+       -moz-transform: translateX(-50%) rotate(5deg) scale(1.1);
+        -ms-transform: translateX(-50%) rotate(5deg) scale(1.1);
+         -o-transform: translateX(-50%) rotate(5deg) scale(1.1);
+            transform: translateX(-50%) rotate(5deg) scale(1.1);
+}
+
+/* Center Left */
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-50%) rotate(5deg) scale(1.1);
+       -moz-transform: translateY(-50%) rotate(5deg) scale(1.1);
+        -ms-transform: translateY(-50%) rotate(5deg) scale(1.1);
+         -o-transform: translateY(-50%) rotate(5deg) scale(1.1);
+            transform: translateY(-50%) rotate(5deg) scale(1.1);
+}
+
+/* Center */
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+       -moz-transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+        -ms-transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+         -o-transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+            transform: translate(-50%, -50%) rotate(5deg) scale(1.1);
+}
+
+/* Center Right */
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-50%) rotate(5deg) scale(1.1);
+       -moz-transform: translateY(-50%) rotate(5deg) scale(1.1);
+        -ms-transform: translateY(-50%) rotate(5deg) scale(1.1);
+         -o-transform: translateY(-50%) rotate(5deg) scale(1.1);
+            transform: translateY(-50%) rotate(5deg) scale(1.1);
+}
+
+/* Bottom Center */
+.uabb-ib-pan:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translateX(-50%) rotate(5deg) scale(1.1);
+       -moz-transform: translateX(-50%) rotate(5deg) scale(1.1);
+        -ms-transform: translateX(-50%) rotate(5deg) scale(1.1);
+         -o-transform: translateX(-50%) rotate(5deg) scale(1.1);
+            transform: translateX(-50%) rotate(5deg) scale(1.1);
+}
+
+/***
+ * Zoom Out
+ **********************************************/
+
+/* Top Left Default */
+/* Top Right Default */
+/* Bottom Left Default */
+/* Bottom Right Default */
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    -webkit-transform: scale(1.1);
+       -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+         -o-transform: scale(1.1);
+            transform: scale(1.1);
+}
+
+/* Top Right Default */
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-top-right {
+    right: 0;
+}
+
+/* Top Left */
+/* Top Right */
+/* Bottom Left */
+/* Bottom Right */
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    -webkit-transform: scale(1);
+       -moz-transform: scale(1);
+        -ms-transform: scale(1);
+         -o-transform: scale(1);
+            transform: scale(1);
+}
+
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translateX(-50%) scale(1.1);
+       -moz-transform: translateX(-50%) scale(1.1);
+        -ms-transform: translateX(-50%) scale(1.1);
+         -o-transform: translateX(-50%) scale(1.1);
+            transform: translateX(-50%) scale(1.1);
+}
+
+
+/* Top Center */
+/* Bottom Center */
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translateX(-50%) scale(1);
+       -moz-transform: translateX(-50%) scale(1);
+        -ms-transform: translateX(-50%) scale(1);
+         -o-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1);
+}
+
+/* Center Left */
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-50%) scale(1.1);
+       -moz-transform: translateY(-50%) scale(1.1);
+        -ms-transform: translateY(-50%) scale(1.1);
+         -o-transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.1);
+}
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-center-left {
+    -webkit-transform: translateY(-50%) scale(1);
+       -moz-transform: translateY(-50%) scale(1);
+        -ms-transform: translateY(-50%) scale(1);
+         -o-transform: translateY(-50%) scale(1);
+            transform: translateY(-50%) scale(1);
+}
+
+/* Center Right */
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-50%) scale(1.1);
+       -moz-transform: translateY(-50%) scale(1.1);
+        -ms-transform: translateY(-50%) scale(1.1);
+         -o-transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.1);
+} 
+.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-center-right {
+    -webkit-transform: translateY(-50%) scale(1);
+       -moz-transform: translateY(-50%) scale(1);
+        -ms-transform: translateY(-50%) scale(1);
+         -o-transform: translateY(-50%) scale(1);
+            transform: translateY(-50%) scale(1);
+}        
+
+/* Center Center */
+.uabb-ib-zoom-out .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%) scale(1.1);
+       -moz-transform: translate(-50%, -50%) scale(1.1);
+        -ms-transform: translate(-50%, -50%) scale(1.1);
+         -o-transform: translate(-50%, -50%) scale(1.1);
+            transform: translate(-50%, -50%) scale(1.1);
+}.uabb-ib-zoom-out:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%) scale(1);
+       -moz-transform: translate(-50%, -50%) scale(1);
+        -ms-transform: translate(-50%, -50%) scale(1);
+         -o-transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
+}
+
+
+
+
+/***
+ * Zoom In
+ **********************************************/
+
+/* Top Left */
+/* Top Right */
+/* Bottom Left */
+/* Bottom Right */
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-top-left,
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-top-right,
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-left,
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-right {
+    -webkit-transform: scale(1.15);
+       -moz-transform: scale(1.15);
+        -ms-transform: scale(1.15);
+         -o-transform: scale(1.15);
+            transform: scale(1.15);
+}
+
+/* Top Center */
+/* Bottom Center */
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-top-center,
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-bottom-center {
+    -webkit-transform: translateX(-50%) scale(1.15);
+       -moz-transform: translateX(-50%) scale(1.15);
+        -ms-transform: translateX(-50%) scale(1.15);
+         -o-transform: translateX(-50%) scale(1.15);
+            transform: translateX(-50%) scale(1.15);
+}
+
+/* Center Left */
+/* Center Right */
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-center-left,
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-center-right { 
+    -webkit-transform: translateY(-50%) scale(1.15);
+       -moz-transform: translateY(-50%) scale(1.15);
+        -ms-transform: translateY(-50%) scale(1.15);
+         -o-transform: translateY(-50%) scale(1.15);
+            transform: translateY(-50%) scale(1.15);
+}
+
+/* Center */
+.uabb-ib-zoom-in:hover .uabb-ultb3-img.uabb-ultb3-img-center {
+    -webkit-transform: translate(-50%, -50%) scale(1.1);
+       -moz-transform: translate(-50%, -50%) scale(1.1);
+        -ms-transform: translate(-50%, -50%) scale(1.1);
+         -o-transform: translate(-50%, -50%) scale(1.1);
+            transform: translate(-50%, -50%) scale(1.1);
+}

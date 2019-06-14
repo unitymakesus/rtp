@@ -1,0 +1,65 @@
+/*.uabb-fancy-text-prefix {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.uabb-fancy-text-suffix {
+    display: inline-block;
+    vertical-align: middle;
+}*/
+
+/*** Typed CSS ***/
+/*.uabb-fancy-text-wrap {
+    display: inline-block;
+    vertical-align: middle;
+}*/
+
+/*.uabb-typed-main-wrap{
+	display: inline-block;
+    vertical-align: middle;
+}*/
+/*.uabb-typed-main {
+    display: inline-block;
+    /*vertical-align: middle;*/
+
+/*}*/
+
+/*span.typed-cursor {
+    display: inline-block;*/
+    /*vertical-align: middle;*/
+/*}*/
+
+/*** Slide CSS ***/
+
+.uabb-fancy-text-slide_up .uabb-fancy-text-prefix {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.uabb-fancy-text-slide_up .uabb-fancy-text-suffix {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.uabb-fancy-text-main.uabb-slide-main {
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    box-sizing: content-box;
+    /*padding: 0px 20px;*/
+}
+
+
+.uabb-slide-block {
+    display: block;
+    vertical-align: middle;
+}
+
+span.uabb-slide_text {
+    display: inline-block;
+}
+
+.uabb-fancy-text-slide_up .uabb-fancy-text-main.uabb-slide-main {
+    max-width: 100%;
+}

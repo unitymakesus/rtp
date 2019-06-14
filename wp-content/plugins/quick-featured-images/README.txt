@@ -4,8 +4,8 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: categories, images, featured images, filter, random, remove, replace, thumbnails, posts, pages, tags
 Requires at least: 3.8
 Requires PHP: 5.2
-Tested up to: 5.1
-Stable tag: 13.3.3
+Tested up to: 5.2.1
+Stable tag: 13.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -292,6 +292,9 @@ If you want to contribute a translation of the plugin in your language it would 
 
 == Changelog ==
 
+= 13.3.4 =
+* Tested successfully with WordPress 5.2.1
+
 = 13.3.3 =
 * Added checkered background for transparent thumbnails
 * Tested successfully with WordPress 5.1
@@ -500,6 +503,9 @@ Added spanish translation for the main texts of the plugin
 
 
 == Upgrade Notice ==
+
+= 13.3.4 =
+Tested with WordPress 5.2.1
 
 = 13.3.3 =
 Added checkered background for transparent thumbnails, tested with WordPress 5.1

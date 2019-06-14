@@ -1,0 +1,470 @@
+.uabb-dual-button {
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.uabb-dual-button .uabb-dual-button-wrapper { 
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    text-align: center;
+    max-width: 100%;
+}
+
+.uabb-dual-button .uabb-btn {
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
+.uabb-btn-one .uabb-btn-one-text,
+.uabb-btn-two .uabb-btn-two-text {
+    color: inherit;
+}
+
+/* Global Horizontal Style */
+.uabb-dual-button .uabb-btn-horizontal {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; 
+    position: relative;
+}
+/* End Global Horizontal Style */
+
+/* Middle Text */ 
+.uabb-dual-button .uabb-middle-text {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 32px;
+    line-height: 32px;
+    width: 32px;
+    z-index: 2;
+    -webkit-transform: translate(50%,-50%);
+       -moz-transform: translate(50%,-50%);
+         -o-transform: translate(50%,-50%);
+        -ms-transform: translate(50%,-50%);
+            transform: translate(50%,-50%);
+    -webkit-box-sizing: content-box;
+       -moz-box-sizing: content-box;
+            box-sizing: content-box;
+    -webkit-border-radius: 100%;
+       -moz-border-radius: 100%;
+            border-radius: 100%;
+}
+
+.uabb-dual-button .uabb-middle-text .uabb-icon i {
+    line-height: inherit;
+}
+
+
+/* Remove Default icon csss */
+.uabb-dual-button-wrapper .uabb-icon {
+    display: block;
+}
+
+.uabb-dual-button .uabb-dual-button-one .uabb-btn.uabb-btn-one,
+.uabb-dual-button .uabb-dual-button-two .uabb-btn.uabb-btn-two {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+/* Transparent Styles */
+/* Fade Background */
+.uabb-btn-one.uabb-transparent-fade,
+.uabb-btn-two.uabb-transparent-fade {
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
+/* Transparent Style Common Classes */
+.uabb-btn-one.uabb-transparent-fill-top,
+.uabb-btn-two.uabb-transparent-fill-top,
+.uabb-btn-one.uabb-transparent-fill-bottom,
+.uabb-btn-two.uabb-transparent-fill-bottom,
+.uabb-btn-one.uabb-transparent-fill-left,
+.uabb-btn-two.uabb-transparent-fill-left,
+.uabb-btn-one.uabb-transparent-fill-right,
+.uabb-btn-two.uabb-transparent-fill-right,
+.uabb-btn-one.uabb-transparent-fill-center,
+.uabb-btn-two.uabb-transparent-fill-center,
+.uabb-btn-one.uabb-transparent-fill-diagonal,
+.uabb-btn-two.uabb-transparent-fill-diagonal,
+.uabb-btn-one.uabb-transparent-fill-horizontal,
+.uabb-btn-two.uabb-transparent-fill-horizontal {
+    position: relative;
+}
+
+.uabb-btn-one.uabb-transparent-fill-top .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-top .uabb-btn-two-text,
+.uabb-btn-one.uabb-transparent-fill-bottom .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-bottom .uabb-btn-two-text,
+.uabb-btn-one.uabb-transparent-fill-left .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-left .uabb-btn-two-text,
+.uabb-btn-one.uabb-transparent-fill-right .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-right .uabb-btn-two-text,
+.uabb-btn-one.uabb-transparent-fill-center .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-center .uabb-btn-two-text,
+.uabb-btn-one.uabb-transparent-fill-diagonal .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-diagonal .uabb-btn-two-text,
+.uabb-btn-one.uabb-transparent-fill-horizontal .uabb-btn-one-text,
+.uabb-btn-two.uabb-transparent-fill-horizontal .uabb-btn-two-text {
+    position: relative;
+    z-index: 2;
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
+.uabb-btn-one.uabb-transparent-fill-top:after,
+.uabb-btn-two.uabb-transparent-fill-top:after,
+.uabb-btn-one.uabb-transparent-fill-bottom:after,
+.uabb-btn-two.uabb-transparent-fill-bottom:after,
+.uabb-btn-one.uabb-transparent-fill-left:after,
+.uabb-btn-two.uabb-transparent-fill-left:after,
+.uabb-btn-one.uabb-transparent-fill-right:after,
+.uabb-btn-two.uabb-transparent-fill-right:after,
+.uabb-btn-one.uabb-transparent-fill-center:after,
+.uabb-btn-two.uabb-transparent-fill-center:after,
+.uabb-btn-one.uabb-transparent-fill-diagonal:after,
+.uabb-btn-two.uabb-transparent-fill-diagonal:after,
+.uabb-btn-one.uabb-transparent-fill-horizontal:after,
+.uabb-btn-two.uabb-transparent-fill-horizontal:after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+        -ms-transition: all 0.3s;
+         -o-transition: all 0.3s;
+            transition: all 0.3s;
+}
+
+/* Fill Background From Top */
+.uabb-btn-one.uabb-transparent-fill-top:after,
+.uabb-btn-two.uabb-transparent-fill-top:after {
+    top: 0;
+    width: 100%;
+    height: 0;
+    left: 0;
+}
+
+/* Fill Background From Bottom */
+.uabb-btn-one.uabb-transparent-fill-bottom:after,
+.uabb-btn-two.uabb-transparent-fill-bottom:after {
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    left: 0;
+}
+
+/* Fill Background From Left */
+.uabb-btn-one.uabb-transparent-fill-left:after,
+.uabb-btn-two.uabb-transparent-fill-left:after {
+    width: 0;
+    top: 0;
+    height: 100%;
+    left: 0;
+}
+
+/* Fill Background From Right */
+.uabb-btn-one.uabb-transparent-fill-right:after,
+.uabb-btn-two.uabb-transparent-fill-right:after {
+    width: 0;
+    top: 0;
+    height: 100%;
+    right: 0;
+}
+
+/* Fill Background From Center */
+.uabb-btn-one.uabb-transparent-fill-center:after,
+.uabb-btn-two.uabb-transparent-fill-center:after {
+    width: 0;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+       -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+         -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+}
+
+/* Fill Background From Diagonal */
+.uabb-btn-one.uabb-transparent-fill-diagonal:after,
+.uabb-btn-two.uabb-transparent-fill-diagonal:after {
+    width: 100%;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate( 45deg );
+       -moz-transform: translateX(-50%) translateY(-50%) rotate( 45deg );
+        -ms-transform: translateX(-50%) translateY(-50%) rotate( 45deg );
+         -o-transform: translateX(-50%) translateY(-50%) rotate( 45deg );
+            transform: translateX(-50%) translateY(-50%) rotate( 45deg );
+}
+
+.uabb-btn.uabb-transparent-fill-diagonal {
+    display: inline-block;
+    overflow: hidden;
+}
+
+/* Fill Background From Horizontal */
+.uabb-btn-one.uabb-transparent-fill-horizontal:after,
+.uabb-btn-two.uabb-transparent-fill-horizontal:after {
+    width: 100%;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+       -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+         -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+}
+
+/* Flat Styles */
+
+/* Common Classes styles */
+.uabb-btn-one.uabb-animate_to_right,
+.uabb-btn-two.uabb-animate_to_right,
+.uabb-btn-one.uabb-animate_to_left,
+.uabb-btn-two.uabb-animate_to_left,
+.uabb-btn-one.uabb-animate_from_top,
+.uabb-btn-two.uabb-animate_from_top,
+.uabb-btn-one.uabb-animate_from_bottom,
+.uabb-btn-two.uabb-animate_from_bottom {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Image Icon Wrap common styles */
+.uabb-btn-one.uabb-animate_to_right .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_to_right .uabb-imgicon-wrap,
+.uabb-btn-one.uabb-animate_to_left .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_to_left .uabb-imgicon-wrap,
+.uabb-btn-one.uabb-animate_from_top .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_from_top .uabb-imgicon-wrap,
+.uabb-btn-one.uabb-animate_from_bottom .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_from_bottom .uabb-imgicon-wrap {
+    bottom: 0;
+    height: 100%;
+    margin: 0;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    overflow: hidden;
+    -webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+            transition: all 0.3s;
+    -webkit-transform: translateY(0);
+       -moz-transform: translateY(0);
+         -o-transform: translateY(0);
+        -ms-transform: translateY(0);
+            transform: translateY(0);
+}
+
+/* Icon Image making vertically center */
+.uabb-btn-one.uabb-animate_to_right i:before,
+.uabb-btn-two.uabb-animate_to_right i:before,
+.uabb-btn-one.uabb-animate_to_left i:before,
+.uabb-btn-two.uabb-animate_to_left i:before,
+.uabb-btn-one.uabb-animate_from_top i:before,
+.uabb-btn-two.uabb-animate_from_top i:before,
+.uabb-btn-one.uabb-animate_from_bottom i:before,
+.uabb-btn-two.uabb-animate_from_bottom i:before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+       -moz-transform: translateX(-50%) translateY(-50%);
+         -o-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+}
+
+.uabb-btn-one.uabb-animate_to_right .uabb-image-simple,
+.uabb-btn-two.uabb-animate_to_right .uabb-image-simple,
+.uabb-btn-one.uabb-animate_to_left .uabb-image-simple,
+.uabb-btn-two.uabb-animate_to_left .uabb-image-simple,
+.uabb-btn-one.uabb-animate_from_top .uabb-image-simple,
+.uabb-btn-two.uabb-animate_from_top .uabb-image-simple,
+.uabb-btn-one.uabb-animate_from_bottom .uabb-image-simple,
+.uabb-btn-two.uabb-animate_from_bottom .uabb-image-simple {
+    height: 100%;
+}
+
+.uabb-btn-one.uabb-animate_to_right .uabb-image-content,
+.uabb-btn-two.uabb-animate_to_right .uabb-image-content,
+.uabb-btn-one.uabb-animate_to_left .uabb-image-content,
+.uabb-btn-two.uabb-animate_to_left .uabb-image-content,
+.uabb-btn-one.uabb-animate_from_top .uabb-image-content,
+.uabb-btn-two.uabb-animate_from_top .uabb-image-content,
+.uabb-btn-one.uabb-animate_from_bottom .uabb-image-content,
+.uabb-btn-two.uabb-animate_from_bottom .uabb-image-content {
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+       -moz-transform: translate(0, -50%);
+         -o-transform: translate(0, -50%);
+        -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+}
+
+/* Hiding Text For Custom */
+.uabb-vertical-custom .uabb-btn-one.uabb-animate_to_right .uabb-btn-one-text,
+.uabb-vertical-custom .uabb-btn-two.uabb-animate_to_right .uabb-btn-two-text,
+.uabb-vertical-custom .uabb-btn-one.uabb-animate_to_left .uabb-btn-one-text,
+.uabb-vertical-custom .uabb-btn-two.uabb-animate_to_left .uabb-btn-two-text,
+.uabb-vertical-custom .uabb-btn-one.uabb-animate_from_top .uabb-btn-one-text,
+.uabb-vertical-custom .uabb-btn-two.uabb-animate_from_top .uabb-btn-two-text,
+.uabb-vertical-custom .uabb-btn-one.uabb-animate_from_bottom .uabb-btn-one-text,
+.uabb-vertical-custom .uabb-btn-two.uabb-animate_from_bottom .uabb-btn-two-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Hiding Text common styles */
+.uabb-btn-one.uabb-animate_to_right .uabb-btn-one-text,
+.uabb-btn-two.uabb-animate_to_right .uabb-btn-two-text,
+.uabb-btn-one.uabb-animate_to_left .uabb-btn-one-text,
+.uabb-btn-two.uabb-animate_to_left .uabb-btn-two-text,
+.uabb-btn-one.uabb-animate_from_top .uabb-btn-one-text,
+.uabb-btn-two.uabb-animate_from_top .uabb-btn-two-text,
+.uabb-btn-one.uabb-animate_from_bottom .uabb-btn-one-text,
+.uabb-btn-two.uabb-animate_from_bottom .uabb-btn-two-text {
+    /*display: inline-block;*/
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all .3s;
+       -moz-transition: all .3s;
+        -ms-transition: all .3s;
+         -o-transition: all .3s;
+            transition: all .3s;
+    -webkit-backface-visibility: hidden;
+       -moz-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
+
+/* Animate Icon To Right */
+.uabb-btn-one.uabb-animate_to_right .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_to_right .uabb-imgicon-wrap {
+    left: -100%;
+    top: 0;
+}
+
+/* Animate Icon To Left */
+.uabb-btn-one.uabb-animate_to_left .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_to_left .uabb-imgicon-wrap {
+    right: -100%;
+    top: 0;
+}
+
+/* Animate Icon From Top */
+.uabb-btn-one.uabb-animate_from_top .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_from_top .uabb-imgicon-wrap {
+    top: -100%;
+    left: 0;
+}
+
+/* Animate Icon From Bottom */
+.uabb-btn-one.uabb-animate_from_bottom .uabb-imgicon-wrap,
+.uabb-btn-two.uabb-animate_from_bottom .uabb-imgicon-wrap {
+    bottom: -100%;
+    left: 0;
+}
+
+/* Image Icon styling */
+.uabb-dual-button-wrapper .uabb-imgicon-wrap .uabb-image-content,
+.uabb-dual-button-wrapper .uabb-imgicon-wrap .uabb-icon-wrap {
+    display: block;
+}
+
+.uabb-dual-button-wrapper .uabb-btn-img-icon {
+    display: inline-block;
+}
+
+.uabb-btn-img-icon.before.uabb-btn-one-img-icon,
+.uabb-btn-img-icon.before.uabb-btn-two-img-icon {
+    float: left;
+    z-index: 1;
+}
+
+.uabb-btn-img-icon.after.uabb-btn-one-img-icon,
+.uabb-btn-img-icon.after.uabb-btn-two-img-icon {
+    float: right;
+    z-index: 1;
+}
+
+
+/* Vertical Button Styles */
+.uabb-dual-button-wrapper.uabb-vertical {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+}
+    
+.uabb-dual-button-one.uabb-btn-vertical {
+    position: relative;
+}
+
+.uabb-dual-button-wrapper.uabb-vertical .uabb-dual-button-one .uabb-middle-text {
+    left: 50%;
+    top: 100%;
+    -webkit-transform: translate(-50%,-50%);
+       -moz-transform: translate(-50%,-50%);
+         -o-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+}
+
+.uabb-dual-button-wrapper.uabb-vertical {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+/* IE 9 Fix */
+.internet-explorer9 .uabb-dual-button .uabb-btn-horizontal,
+.internet-explorer8 .uabb-dual-button .uabb-btn-horizontal {
+    float: left;
+}
+.internet-explorer9 .uabb-module-content .uabb-horizontal-custom .uabb-btn,
+.internet-explorer8 .uabb-module-content .uabb-horizontal-custom .uabb-btn {
+    min-height: auto;
+    padding: 10px 15px;
+}

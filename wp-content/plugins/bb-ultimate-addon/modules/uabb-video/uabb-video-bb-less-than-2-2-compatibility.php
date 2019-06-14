@@ -1,0 +1,623 @@
+<?php
+/**
+ * Register the module and its form settings for beaver builder version less than 2.2.
+ * Applicable for UABB version 1.13.2 and before.
+ * Converted font, text size, and text transform settings to a responsive typography setting.
+ *
+ * @package UABB Video Module
+ */
+
+FLBuilder::register_module(
+	'UABBVideo',
+	array(
+		'general'          => array(
+			'title'    => __( 'General', 'uabb' ), // Tab title.
+			'sections' => array( // Tab Sections.
+				'general'      => array( // Section.
+					'title'  => __( 'Video', 'uabb' ), // Section Title.
+					'fields' => array( // Section Fields.
+						'video_type'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Video Type', 'uabb' ),
+							'default' => 'youtube',
+							'options' => array(
+								'youtube' => __( 'YouTube', 'uabb' ),
+								'vimeo'   => __( 'Vimeo', 'uabb' ),
+							),
+							'toggle'  => array(
+								'youtube' => array(
+									'fields'   => array( 'youtube_link', 'end', 'start' ),
+									'sections' => array( 'video_option' ),
+									'tabs'     => array( 'yt_subscribe_bar' ),
+								),
+								'vimeo'   => array(
+									'fields'   => array( 'vimeo_link', 'start' ),
+									'sections' => array( 'vimeo_option' ),
+								),
+							),
+						),
+						'youtube_link' => array(
+							'type'        => 'text',
+							'label'       => __( 'Link', 'uabb' ),
+							'default'     => 'https://www.youtube.com/watch?v=HJRzUQMhJMQ',
+							'description' => UABBVideo::get_description( 'youtube_link' ),
+							'connections' => array( 'url' ),
+						),
+						'vimeo_link'   => array(
+							'type'        => 'text',
+							'label'       => __( 'Link', 'uabb' ),
+							'default'     => 'https://vimeo.com/274860274',
+							'description' => UABBVideo::get_description( 'vimeo_link' ),
+							'connections' => array( 'url' ),
+						),
+						'start'        => array(
+							'type'        => 'unit',
+							'label'       => __( 'Start Time', 'uabb' ),
+							'default'     => '',
+							'maxlength'   => '5',
+							'size'        => '6',
+							'description' => 'sec',
+							'help'        => __( 'Specify a start time (in seconds).', 'uabb' ),
+						),
+						'end'          => array(
+							'type'        => 'unit',
+							'label'       => __( 'End Time', 'uabb' ),
+							'default'     => '',
+							'max-length'  => '5',
+							'size'        => '6',
+							'description' => 'sec',
+							'help'        => __( 'Specify a End time (in seconds).', 'uabb' ),
+						),
+						'aspect_ratio' => array(
+							'type'    => 'select',
+							'label'   => __( 'Aspect Ratio', 'uabb' ),
+							'default' => '16_9',
+							'options' => array(
+								'16_9' => __( '16:9', 'uabb' ),
+								'4_3'  => __( '4:3', 'uabb' ),
+								'3_2'  => __( '3:2', 'uabb' ),
+							),
+						),
+					),
+				),
+				'video_option' => array(
+					'title'  => __( 'Video Options', 'uabb' ),
+					'fields' => array(
+						'yt_autoplay'       => array(
+							'type'    => 'select',
+							'label'   => __( 'AutoPlay', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'no' => array(
+									'tabs' => array( 'thumbnail' ),
+								),
+							),
+							'help'    => __( 'Thumbnail will not display if AutoPlay mode is enabled. ', 'uabb' ),
+						),
+						'yt_suggested'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Suggested Videos', 'uabb' ),
+							'default' => 'hide',
+							'options' => array(
+								'no'  => __( 'Hide', 'uabb' ),
+								'yes' => __( 'Show', 'uabb' ),
+							),
+						),
+						'yt_controls'       => array(
+							'type'    => 'select',
+							'label'   => __( 'Player Control', 'uabb' ),
+							'default' => 'show',
+							'options' => array(
+								'yes' => __( 'Show', 'uabb' ),
+								'no'  => __( 'Hide', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'yt_modestbranding' ),
+								),
+							),
+						),
+						'yt_mute'           => array(
+							'type'    => 'select',
+							'label'   => __( 'Mute', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+						'yt_modestbranding' => array(
+							'type'    => 'select',
+							'label'   => __( 'Modest Branding', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'This option lets you use a YouTube player that does not show a YouTube logo.', 'uabb' ),
+						),
+						'yt_privacy'        => array(
+							'type'    => 'select',
+							'label'   => __( 'Privacy Mode', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( "When you turn on privacy mode, YouTube won't store information about visitors on your website unless they play the video.", 'uabb' ),
+						),
+					),
+				),
+				'vimeo_option' => array(
+					'title'  => __( 'Video option', 'uabb' ),
+					'fields' => array(
+						'vimeo_autoplay' => array(
+							'type'    => 'select',
+							'label'   => __( 'Autoplay', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'no' => array(
+									'tabs' => array( 'thumbnail' ),
+								),
+							),
+							'help'    => __( 'Thumbnail will not display if AutoPlay mode is enabled.', 'uabb' ),
+						),
+						'vimeo_loop'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Loop', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Choose a video to play continuously in a loop. The video will automatically start again after reaching the end.', 'uabb' ),
+						),
+						'vimeo_title'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Intro Title', 'uabb' ),
+							'default' => 'show',
+							'options' => array(
+								'yes' => __( 'Show', 'uabb' ),
+								'no'  => __( 'Hide', 'uabb' ),
+							),
+							'help'    => __( 'Displays title of the video.', 'uabb' ),
+						),
+						'vimeo_portrait' => array(
+							'type'    => 'select',
+							'label'   => __( 'Intro Portrait', 'uabb' ),
+							'default' => 'show',
+							'options' => array(
+								'yes' => __( 'Show', 'uabb' ),
+								'no'  => __( 'Hide', 'uabb' ),
+							),
+							'help'    => __( 'Displays the author’s profile image.', 'uabb' ),
+						),
+						'vimeo_byline'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Intro Byline', 'uabb' ),
+							'default' => 'show',
+							'options' => array(
+								'yes' => __( 'Show', 'uabb' ),
+								'no'  => __( 'Hide', 'uabb' ),
+							),
+							'help'    => __( 'Displays the author’s name of the video.', 'uabb' ),
+						),
+						'vimeo_color'    => array(
+							'type'       => 'color',
+							'label'      => __( 'Controls Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+						),
+					),
+				),
+			),
+		),
+		'thumbnail'        => array(
+			'title'    => __( 'Thumbnail', 'uabb' ),
+			'sections' => array(
+				'section_image_overlay' => array(
+					'title'  => __( 'Thumbnail & Overlay', 'uabb' ),
+					'fields' => array(
+						'show_image_overlay'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Thumbnail', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Custom Thumbnail', 'uabb' ),
+								'no'  => __( 'Default Thumbnail', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'image_overlay' ),
+								),
+								'no'  => array(
+									'fields' => array( 'yt_thumbnail_size' ),
+								),
+							),
+						),
+						'yt_thumbnail_size'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Default Thumbnail Size', 'uabb' ),
+							'default' => 'maxresdefault',
+							'options' => array(
+								'maxresdefault' => __( 'Maximum Resolution', 'uabb' ),
+								'hqdefault'     => __( 'High Quality', 'uabb' ),
+								'mqdefault'     => __( 'Medium Quality', 'uabb' ),
+								'sddefault'     => __( 'Standard Quality', 'uabb' ),
+							),
+						),
+						'image_overlay'       => array(
+							'type'        => 'photo',
+							'label'       => __( 'Select Custom Thumbnail', 'uabb' ),
+							'show_remove' => true,
+							'connections' => array( 'photo' ),
+						),
+						'image_overlay_color' => array(
+							'type'       => 'color',
+							'label'      => __( 'Overlay color', 'uabb' ),
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-video__outer-wrap:before',
+								'property' => 'background',
+							),
+						),
+					),
+				),
+				'section_play_icon'     => array(
+					'title'  => __( 'Play Button', 'uabb' ),
+					'fields' => array(
+						'play_source'                => array(
+							'type'    => 'select',
+							'label'   => __( 'Image/Icon', 'uabb' ),
+							'default' => 'default',
+							'options' => array(
+								'image'   => __( 'Image', 'uabb' ),
+								'icon'    => __( 'Icon', 'uabb' ),
+								'default' => __( 'Default', 'uabb' ),
+							),
+							'toggle'  => array(
+								'image'   => array(
+									'fields' => array(
+										'play_img',
+										'play_img_size',
+									),
+								),
+								'icon'    => array(
+									'fields' => array( 'play_icon', 'play_icon', 'play_icon_color', 'play_icon_hover_color' ),
+								),
+								'default' => array(
+									'fields' => array(
+										'play_default_icon_bg',
+										'play_default_icon_bg_hover',
+									),
+								),
+							),
+						),
+						'play_img'                   => array(
+							'type'        => 'photo',
+							'label'       => __( 'Select Image', 'uabb' ),
+							'show_remove' => true,
+							'connections' => array( 'photo' ),
+						),
+						'play_icon'                  => array(
+							'type'        => 'icon',
+							'label'       => __( 'Select Icon', 'uabb' ),
+							'default'     => 'far fa-play-circle',
+							'show_remove' => true,
+						),
+						'play_icon_size'             => array(
+							'type'        => 'unit',
+							'label'       => __( 'Size', 'uabb' ),
+							'default'     => '75',
+							'maxlength'   => '5',
+							'size'        => '6',
+							'description' => 'px',
+						),
+						'play_default_icon_bg'       => array(
+							'type'       => 'color',
+							'label'      => __( 'Background Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-youtube-icon-bg,.uabb-vimeo-icon-bg',
+								'property' => 'fill',
+							),
+						),
+						'play_default_icon_bg_hover' => array(
+							'type'       => 'color',
+							'label'      => __( 'Hover Background Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'play_icon_color'            => array(
+							'type'       => 'color',
+							'label'      => __( 'Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-video__play-icon',
+								'property' => 'color',
+							),
+						),
+						'play_icon_hover_color'      => array(
+							'type'       => 'color',
+							'label'      => __( 'Hover Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'hover_animation'            => array(
+							'type'    => 'select',
+							'label'   => __( 'Hover Animation', 'uabb' ),
+							'default' => '',
+							'options' => array(
+								''                => __( 'None', 'uabb' ),
+								'float'           => __( 'Float', 'uabb' ),
+								'sink'            => __( 'Sink', 'uabb' ),
+								'wobble-vertical' => __( 'Wobble Vertical', 'uabb' ),
+							),
+						),
+					),
+				),
+			),
+		),
+		'yt_subscribe_bar' => array(
+			'title'    => __( 'YouTube Subscribe Bar', 'uabb' ),
+			'sections' => array(
+				'enable_subscribe_bar'    => array(
+					'title'  => __( 'YouTube Subscribe Bar', 'uabb' ),
+					'fields' => array(
+						'yt_subscribe_enable' => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Subscribe Bar', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'select_options', 'yt_subscribe_text' ),
+									'sections' => array( 'subscribe_field_options' ),
+								),
+							),
+						),
+						'select_options'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Select Channel ID/Channel Name', 'uabb' ),
+							'default' => 'channel_id',
+							'options' => array(
+								'channel_id'   => __( 'Channel ID', 'uabb' ),
+								'channel_name' => __( 'Channel Name', 'uabb' ),
+							),
+							'toggle'  => array(
+								'channel_name' => array(
+									'fields' => array( 'yt_channel_name' ),
+								),
+								'channel_id'   => array(
+									'fields' => array( 'yt_channel_id' ),
+								),
+							),
+						),
+						'yt_channel_name'     => array(
+							'type'        => 'text',
+							'label'       => __( 'YouTube Channel Name', 'uabb' ),
+							'default'     => 'TheBrainstormForce',
+							'description' => UABBVideo::get_description( 'yt_channel_name' ),
+						),
+						'yt_channel_id'       => array(
+							'type'        => 'text',
+							'label'       => __( 'YouTube Channel ID', 'uabb' ),
+							'default'     => 'UCtFCcrvupjyaq2lax_7OQQg',
+							'description' => UABBVideo::get_description( 'yt_channel_id' ),
+						),
+						'yt_subscribe_text'   => array(
+							'type'        => 'text',
+							'label'       => __( 'Subscribe to channel text', 'uabb' ),
+							'default'     => 'Subscribe to our YouTube Channel',
+							'connections' => array( 'string', 'html' ),
+						),
+					),
+				),
+				'subscribe_field_options' => array(
+					'title'  => __( 'Settings', 'uabb' ),
+					'fields' => array(
+						'show_count'                    => array(
+							'type'    => 'select',
+							'label'   => __( 'Show Subscribers Count', 'uabb' ),
+							'default' => 'yes',
+							'options' => array(
+								'no'  => __( 'No', 'uabb' ),
+								'yes' => __( 'Yes', 'uabb' ),
+							),
+						),
+						'subscribe_text_color'          => array(
+							'type'       => 'color',
+							'label'      => __( 'Text Color', 'uabb' ),
+							'default'    => 'ffffff',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '
+								.uabb-subscribe-bar-prefix',
+								'property' => 'color',
+							),
+						),
+						'subscribe_text_bg_color'       => array(
+							'type'       => 'color',
+							'label'      => __( 'Background Color', 'uabb' ),
+							'default'    => '1b1b1b',
+							'show_reset' => 'true',
+							'show_alpha' => 'true',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-bar',
+								'property' => 'background-color',
+							),
+						),
+						'subscribe_text_font'           => array(
+							'type'    => 'font',
+							'label'   => __( 'Font', 'uabb' ),
+							'default' => array(
+								'family' => 'Default',
+								'weight' => 300,
+							),
+							'preview' => array(
+								'type'     => 'font',
+								'selector' => '.uabb-subscribe-bar-prefix',
+							),
+						),
+						'subscribe_text_font_size'      => array(
+							'type'        => 'unit',
+							'label'       => __( 'Font size', 'uabb' ),
+							'default'     => '',
+							'description' => 'px',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-bar-prefix',
+								'property' => 'font-size',
+								'unit'     => 'px',
+							),
+							'responsive'  => array(
+								'placeholder' => array(
+									'default'    => '',
+									'medium'     => '',
+									'responsive' => '',
+								),
+							),
+						),
+						'subscribe_text_line_height'    => array(
+							'type'        => 'unit',
+							'label'       => __( 'Line height', 'uabb' ),
+							'default'     => '',
+							'description' => 'em',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-bar-prefix',
+								'property' => 'line-height',
+								'unit'     => 'em',
+							),
+							'responsive'  => array(
+								'placeholder' => array(
+									'default'    => '',
+									'medium'     => '',
+									'responsive' => '',
+								),
+							),
+						),
+						'subscribe_text_letter_spacing' => array(
+							'type'        => 'unit',
+							'label'       => __( 'Letter Spacing', 'uabb' ),
+							'default'     => '',
+							'description' => 'px',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-bar-prefix',
+								'property' => 'letter-spacing',
+								'unit'     => 'px',
+							),
+							'responsive'  => array(
+								'placeholder' => array(
+									'default'    => '',
+									'medium'     => '',
+									'responsive' => '',
+								),
+							),
+						),
+						'subscribe_text_transform'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Transform', 'uabb' ),
+							'default' => '',
+							'options' => array(
+								''           => __( 'Default', 'uabb' ),
+								'uppercase'  => __( 'UPPERCASE', 'uabb' ),
+								'lowercase'  => __( 'lowercase', 'uabb' ),
+								'capitalize' => __( 'Capitalize', 'uabb' ),
+							),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-bar-prefix',
+								'property' => 'text-transform',
+							),
+						),
+						'subscribe_padding'             => array(
+							'type'        => 'dimension',
+							'label'       => __( 'Padding', 'uabb' ),
+							'default'     => '',
+							'description' => 'px',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-bar',
+								'property' => 'padding',
+								'unit'     => 'px',
+							),
+							'responsive'  => array(
+								'placeholder' => array(
+									'default'    => '',
+									'medium'     => '',
+									'responsive' => '',
+								),
+							),
+						),
+						'subscribe_bar_responsive'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Stack on', 'uabb' ),
+							'default' => 'none',
+							'options' => array(
+								'none'    => __( 'None', 'uabb' ),
+								'desktop' => __( 'Desktop', 'uabb' ),
+								'tablet'  => __( 'Tablet', 'uabb' ),
+								'mobile'  => __( 'Mobile', 'uabb' ),
+							),
+							'toggle'  => array(
+								'desktop' => array(
+									'fields' => array( 'subscribe_bar_spacing' ),
+								),
+								'tablet'  => array(
+									'fields' => array( 'subscribe_bar_spacing' ),
+								),
+								'mobile'  => array(
+									'fields' => array( 'subscribe_bar_spacing' ),
+								),
+							),
+						),
+						'subscribe_bar_spacing'         => array(
+							'type'        => 'unit',
+							'label'       => __( 'Spacing', 'uabb' ),
+							'description' => 'px',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-subscribe-responsive-desktop .uabb-subscribe-bar-prefix',
+								'property' => 'margin-bottom',
+								'unit'     => 'px',
+							),
+						),
+					),
+				),
+			),
+		),
+	)
+);

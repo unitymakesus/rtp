@@ -1,0 +1,27 @@
+.infobox-photo-left,
+.infobox-photo-right {
+	display: block;
+}
+.infobox-photo-left .infobox-photo,
+.infobox-photo-left-text .infobox-photo {
+	display: block;
+	margin-bottom: 15px;
+	padding-left: 0;
+	padding-right: 0;
+	width: auto;
+}
+.infobox-photo-right .infobox-photo,
+.infobox-photo-right-text .infobox-photo {
+	display: block;
+	margin-top: 25px;
+	padding-left: 0;
+	padding-right: 0;
+	width: auto;
+}
+.infobox-photo-left .infobox-content,
+.infobox-photo-left-text .infobox-content,
+.infobox-photo-right .infobox-content,
+.infobox-photo-right-text .infobox-content {
+	display: block;
+	width: auto;
+}

@@ -1,0 +1,6 @@
+.uabb-date-wrap .uabb-countdown-custom-fields label,
+.uabb-evergreen-wrap .uabb-countdown-custom-fields label {
+  line-height: 2em;
+  float: left;
+  margin-left: 5px;
+}

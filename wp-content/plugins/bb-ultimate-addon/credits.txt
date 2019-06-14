@@ -1,0 +1,49 @@
+The following sets forth attribution notices for third party libraries that may be contained in portions of the plugin.
+
+-----
+
+# Images in Demos 
+
+https://pixabay.com/
+http://www.conceptcarz.com/
+http://www.desktopmachine.com/
+http://www.freepik.com/
+https://www.pexels.com/
+https://www.sitebuilderreport.com/
+https://unsplash.com/
+http://www.pixeden.com/
+https://visualhunt.com/
+
+-----
+
+# Ultimate Addon Font Icons
+
+https://linearicons.com/free
+http://www.flaticon.com/
+http://fontawesome.io/
+http://www.entypo.com/
+http://hawcons.com/preview/
+http://www.elegantthemes.com/blog/freebie-of-the-week/free-line-style-icons
+http://colebemis.com/feather/
+https://dribbble.com/shots/928458-80-Shades-of-White-Icons
+http://zurb.com/playground/foundation-icon-fonts-3
+https://github.com/WordPress/dashicons
+
+-----
+
+# JS
+skip-link-focus-fix.js ( https://github.com/Automattic/Next/pull/136 )
+Slick slider ( http://kenwheeler.github.io )
+
+-----
+
+# CSS
+Slick slider ( http://kenwheeler.github.io )
+Animate.css ( http://daneden.me/animate )
+
+-----
+
+https://www.pexels.com/photo/restaurant-lunch-eating-people-8305/
+http://www.freepik.com/free-vector/hand-drawn-picnic-food-pattern_886441.htm
+
+-----

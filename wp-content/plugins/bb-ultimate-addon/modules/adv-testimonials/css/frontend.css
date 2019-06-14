@@ -1,0 +1,226 @@
+/* Wrappers */
+.uabb-module-testimonials .bx-wrapper {
+	margin: 0 auto 35px;
+}
+.uabb-testimonials-wrap { 
+	position: relative; 
+}
+.uabb-testimonials-wrap .uabb-testimonial {
+	position: absolute;
+	top: 0;
+	visibility: hidden;
+}
+.uabb-testimonials-wrap .uabb-testimonial:first-child,
+.uabb-testimonials-loaded .uabb-testimonial {
+	position: relative;
+	visibility: visible;
+}
+.uabb-testimonials-wrap .uabb-slider-prev .fa,
+.uabb-testimonials-wrap .uabb-slider-next .fa {
+	/*opacity: 0.8;*/
+	-webkit-transition: opacity 0.2s;
+	   -moz-transition: opacity 0.2s;
+	     -o-transition: opacity 0.2s;
+	    -ms-transition: opacity 0.2s;
+	        transition: opacity 0.2s;
+	font-size: 14px;
+	height: 25px;
+	width: 25px;
+	line-height: 25px;
+}
+.uabb-testimonials-wrap .fa:hover {
+	opacity: 1;
+}
+
+
+/* Wide */
+.uabb-testimonials.wide {
+	text-align: center;
+}
+.uabb-testimonials-wrap.wide .uabb-slider-next,
+.uabb-testimonials-wrap.wide .uabb-slider-prev {
+	position: absolute;
+	top: 50%;
+	margin-top:-10px;
+	right: 0px;
+}
+.uabb-testimonials-wrap.wide .fa {
+	font-size: 23px;
+	position: relative;
+	z-index: 1;
+}
+.uabb-testimonials-wrap.wide .uabb-slider-prev {
+	left: 0px !important;
+}
+
+/* Compact */
+.uabb-testimonial-author .uabb-testimonial-author-name {
+	margin: 0;
+	padding: 0;
+}
+
+/* Navigation CSS */
+.uabb-slider-prev {
+    left: -5px;
+    text-align: center;
+}
+.uabb-slider-next {
+    right: -5px;
+    text-align: center;
+}
+.uabb-slider-next, .uabb-slider-prev {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY( -50% );
+       -moz-transform: translateY( -50% );
+        -ms-transform: translateY( -50% );
+         -o-transform: translateY( -50% );
+            transform: translateY( -50% );
+}
+
+.uabb-slider-prev .fa:before,
+.uabb-slider-next .fa:before {
+	width: 26px;
+    display: inline-block;
+}
+
+
+/* Css For Left Alignment*/
+.uabb-testimonials.uabb-testimonial-left .uabb-testimonial-photo.uabb-testimonial-left {
+	display: table-cell;
+	vertical-align: top;
+	text-align: center;
+}
+
+.uabb-testimonials.uabb-testimonial-left .uabb-testimonial-photo.uabb-testimonial-left .uabb-imgicon-wrap {
+	margin-right: 20px;
+}
+
+/* Css For Right Alignment*/
+
+.uabb-testimonials.uabb-testimonial-right .uabb-testimonial-photo.uabb-testimonial-right {
+	display: table-cell;
+	vertical-align: top;
+	text-align: center;
+}
+
+.uabb-testimonials.uabb-testimonial-right .uabb-testimonial-photo.uabb-testimonial-right .uabb-imgicon-wrap {
+	margin-left: 20px;
+}
+
+.uabb-testimonials.uabb-testimonial-right {
+	direction: rtl;
+}
+
+.uabb-testimonials.uabb-testimonial-right .uabb-testimonial-info.uabb-testimonial-right {
+    direction: ltr;
+}
+.uabb-testimonial-info.uabb-testimonial-right {
+	text-align: right;
+}
+
+/* Css For Top Alignment*/
+.uabb-testimonial-info.uabb-testimonial-top {
+	text-align: center;
+	display: block;
+}
+.uabb-testimonial-photo.uabb-testimonial-top {
+	text-align: center;
+}
+
+
+.uabb-testimonial-info {
+	display: table-cell;
+	vertical-align: top;
+}
+.uabb-testimonials .uabb-testimonial {
+	display: table;
+	width: 100%;
+}
+.uabb-testimonial .uabb-icon i {
+    float: none;
+}
+.uabb-testimonial-photo.uabb-testimonial-top {
+	margin-bottom: 20px;
+}
+
+/* Css For Without Slider*/
+.uabb-testimonials.slider-no,
+.uabb-testimonials.box {
+	display: block;
+	position: relative;
+}
+.uabb-testimonials.slider-no .uabb-testimonial,
+.uabb-testimonials.box .uabb-testimonial {
+	display: table;
+}
+.testimonial-arrow-down {
+    border-right: 26px solid transparent;
+    left: 22%;
+    position: absolute;
+    top: 100%;
+}
+
+
+/* Image style circle */
+.uabb-testimonial .uabb-photo-content{
+	overflow: hidden;
+}
+
+.uabb-testimonial-info .uabb-testimonial-author-description * {
+	margin: 0 auto;
+}
+
+.uabb-testimonials-wrap .bx-prev i,
+.uabb-testimonials-wrap .bx-next i {
+	box-sizing: content-box;
+}
+
+.uabb-testimonial .uabb-rating{
+	line-height: normal;
+}
+.uabb-testimonial .uabb-rating__wrap{
+	display: inline-block;
+}
+.uabb-testimonial .uabb-rating__wrap:after{
+	content: "";
+	display: table;
+	clear: both;
+}
+.uabb-testimonial .uabb-rating .uabb-rating__ico{
+	float: right;
+	padding-left: 2px;
+	cursor: pointer;
+	color: #FFB300;
+}
+.uabb-testimonial .uabb-rating__ico:last-child{
+	padding-left: 0;
+}
+.uabb-testimonial .uabb-rating__input{
+	display: none;
+}
+.uabb-testimonial .uabb-rating .uabb-rating__wrap .fa {
+    font-family: FontAwesome !important;
+}
+.uabb-testimonial .uabb-rating__input.uabb-checked ~ .uabb-rating__ico:before
+{
+	content: "\f005";
+}
+
+/* Text
+---------------------------------------------------*/
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;    
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+    font-weight: inherit;
+}

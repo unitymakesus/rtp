@@ -1,0 +1,132 @@
+/**
+* Pricing Table Columns
+*
+* Column layouts for pricing table
+*/
+
+/* Hide Ledgend on Desktop */
+.uabb-pricing-table-features .uabb-pricing-ledgend {
+	display: none;
+}
+
+.uabb-pricing-table {
+     display: flex;
+}
+
+.uabb-pricing-table-column {
+     height: 100%;
+}
+
+/* List Item Reset
+*================ */
+
+.uabb-pricing-table .uabb-pricing-table-features li:first-child {
+    margin-top: 10px;
+}
+
+.uabb-pricing-table .uabb-pricing-table-features li:last-child {
+    margin-bottom: 10px;
+}
+
+.uabb-pricing-table .uabb-creative-button-wrap {
+	margin: 20px;
+}
+
+.uabb-pricing-table .uabb-featured-pricing-box {
+	position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 100%;
+    /*border: 1px solid #e2e2e2;*/
+    padding: 15px 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+}
+.uabb-pricing-table .uabb-pricing-table-title{
+	padding: 20px 0;
+	margin: 0;
+}
+
+.uabb-pricing-table:after {
+	clear: both;
+}
+.uabb-pricing-table {
+	margin-left: auto;
+	margin-right: auto;
+	zoom:1;
+}
+.uabb-pricing-table [class^='uabb-pricing-table-col-'] {
+	float: left;
+	position: relative;
+	min-height: 1px;
+}
+.uabb-pricing-table .uabb-pricing-table-col-8 { width: 12.5%; }
+.uabb-pricing-table .uabb-pricing-table-col-7 { width: 14.28%; }
+.uabb-pricing-table .uabb-pricing-table-col-6 { width: 16.66%; }
+.uabb-pricing-table .uabb-pricing-table-col-5 { width: 20%; }
+.uabb-pricing-table .uabb-pricing-table-col-4 { width: 25%; }
+.uabb-pricing-table .uabb-pricing-table-col-3 { width: 33.33%; }
+.uabb-pricing-table .uabb-pricing-table-col-2 { width: 50%; }
+.uabb-pricing-table .uabb-pricing-table-col-1 { width: 100%; }
+
+.uabb-pricing-table .uabb-pricing-element-box,
+.uabb-pricing-table .uabb-pricing-legend-box {
+   -webkit-flex-grow: 1;
+   -ms-flex-positive: 1;
+	-webkit-box-flex: 1;
+           flex-grow: 1;
+}
+
+/**
+* Pricing Boxes
+*
+* The actual pricing boxes
+*/
+
+.uabb-pricing-table .uabb-pricing-table-column {
+	text-align: center;
+	position: relative;
+}
+
+
+.uabb-pricing-table .uabb-pricing-table-column .uabb-pricing-table-price {
+	padding: 20px 0;
+	position: relative;
+	z-index: 2;
+	letter-spacing: -2px;
+}
+.uabb-pricing-table .uabb-pricing-table-column h2 {
+	margin: 0;
+	padding: 20px;
+}
+.uabb-pricing-table .uabb-pricing-table-column .uabb-pricing-table-duration {
+	font-weight: normal;
+	font-size: 0.5em;
+	display: inline-block;
+	position: relative;
+	bottom: 4px;
+	letter-spacing: 0px;
+	line-height: normal;
+	opacity: 0.85;
+}
+.uabb-pricing-table .uabb-pricing-table-features {
+	margin: 0;
+	list-style-type: none;
+	padding: 0;
+}
+.uabb-pricing-table .uabb-pricing-table-features li {
+	padding: 14px 30px;
+	margin: 0;
+	list-style-type: none;    
+}
+.uabb-pricing-table .uabb-pricing-table-features li:last-child {
+	border-bottom: 0;
+}
+.uabb-pricing-table a.uabb-button {
+	margin: 0 15px;
+}
+.uabb-pricing-table a.uabb-button .uabb-button-text {
+	line-height: 18px;
+}

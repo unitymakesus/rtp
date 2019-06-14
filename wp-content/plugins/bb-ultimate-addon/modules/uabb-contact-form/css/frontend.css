@@ -1,0 +1,314 @@
+.uabb-input-group {
+	position: relative;
+	width: 100%;
+}
+
+.uabb-input-group-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+
+.uabb-contact-form .uabb-io-padding-right {
+    padding-right: 5px;
+}
+
+.uabb-contact-form .uabb-io-padding-left {
+    padding-left: 5px;
+}
+
+.uabb-contact-form .uabb-inline-group {
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
+}
+
+.uabb-contact-form .uabb-input-group-wrap input[type=text],
+.uabb-contact-form .uabb-input-group-wrap input[type=tel],
+.uabb-contact-form .uabb-input-group-wrap input[type=email] {
+	width: 100%;
+}
+
+.uabb-contact-form textarea,
+.uabb-contact-form input[type=text],
+.uabb-contact-form input[type=tel],
+.uabb-contact-form input[type=email] {
+	font-family: inherit;
+	display: inline-block;
+	border-width: 2px; 
+	border-style: solid;
+	line-height: normal;
+	height: auto;
+	width: 100%;
+	outline: none;
+	vertical-align: middle;
+    padding: 16px 15px;
+    margin: 0;
+}
+
+.uabb-contact-form textarea:focus,
+.uabb-contact-form input[type=tel]:focus,
+.uabb-contact-form input[type=email]:focus,
+.uabb-contact-form input[type=text]:focus {
+	-webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+/* Style 2 CSS */
+
+.uabb-form-style2 input[type=text],
+.uabb-form-style2 input[type=tel],
+.uabb-form-style2 input[type=email] {
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	background: transparent;
+}
+
+.uabb-form-style2 textarea {
+	background: transparent;
+}
+
+.uabb-form-style2 .uabb-io-padding-right {
+    padding-right: 15px;
+}
+
+.uabb-form-style2 .uabb-io-padding-left {
+    padding-left: 15px;
+}
+
+/* Style 2 Css End */
+.uabb-contact-form .uabb-contact-form-submit {
+	border: none;
+	-webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+  		 -o-transition: all 0.3s;
+  			transition: all 0.3s;
+}
+
+.uabb-contact-form .uabb-contact-form-submit:focus {
+	outline: 0;
+}
+
+.uabb-contact-form textarea {
+	min-height: 130px;
+}
+.uabb-contact-form .uabb-contact-required {
+	font-style: italic;
+	font-size: 12px;
+}
+.uabb-contact-form label {
+	display: inline-block;
+	margin: 0 10px 0 0;
+}
+.uabb-contact-form .uabb-contact-error {
+	color: #DD4420;
+	display: none;
+	font-size: 12px;
+	margin-top: 2px;
+}
+.uabb-contact-form .uabb-email .uabb-contact-error {
+	margin-right: 10%;
+}
+.uabb-contact-form .uabb-input-group-wrap .uabb-error textarea,
+.uabb-contact-form .uabb-input-group-wrap .uabb-error input[type=text],
+.uabb-contact-form .uabb-input-group-wrap .uabb-error input[type=tel],
+.uabb-contact-form .uabb-input-group-wrap .uabb-error input[type=email] {
+	border-color: #DD4420;
+}
+.uabb-contact-form .uabb-error .uabb-contact-error {
+	display: inline-block;
+}
+.uabb-send-error,
+.uabb-success,
+.uabb-success-none,
+.uabb-success-msg {
+	position: relative;
+	left: 5px;
+}
+
+.uabb-success-none,
+.uabb-send-error {
+	margin-top: 10px;
+	display: inline-block;
+}
+
+.uabb-success,
+.uabb-success-none,
+.uabb-success-msg {
+	color: #29BB41;
+}
+
+.uabb-contact-form .uabb-send-error {
+	color: #DD6420;
+}
+.uabb-disabled {
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+.uabb-form-error-message {
+	clear: both;
+	display: none;
+	font-weight: bold;
+	position: absolute;
+    opacity: 0;
+    padding: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+    -webkit-transition: opacity .15s ease-in-out;
+    transition: opacity .15s ease-in-out;
+    opacity: 1;
+    right: 15px;
+}
+.uabb-form-error-message-required:before {
+	content: '!';
+	color: #f2f2f2;
+}
+.uabb-form-outter-textarea,
+.uabb-form-outter {
+	position: relative;
+}
+
+.uabb-form-error-message-required {
+	width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    background: #FF5050;
+    border-radius: 50%;
+}
+
+.uabb-form-error-message span {
+	color: #FF5050;
+	font-size: 0.8em;
+}
+
+.uabb-form-error-message-required span {
+	display: none;
+}
+
+.uabb-form-error-email,
+.uabb-form-error-phone {
+	clear: both;
+	color: #FF5050;
+	display: none;
+	padding-top: 8px;
+	font-weight: bold;
+	position: absolute;
+    opacity: 0;
+    padding: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-align: center;
+    -webkit-transition: opacity .15s ease-in-out;
+    transition: opacity .15s ease-in-out;
+    opacity: 1;
+    height: 1.2em;
+    line-height: 1.2em;
+    right: 15px;
+}
+
+/* Text editor support */
+
+.uabb-module-content .uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;	
+}
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+	font-weight: inherit;
+}
+
+/* Text editor support */
+
+.uabb-success-msg.uabb-text-editor *:not(a) {
+    color: inherit;
+}
+.uabb-success-msg.uabb-text-editor *:not(i) {
+    font-family: inherit;
+}
+.uabb-success-msg.uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    font-size: inherit;
+    line-height: inherit;	
+}
+.uabb-success-msg.uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+	font-weight: inherit;
+}
+
+.uabb-input-group-wrap .uabb-input-group .uabb-error input::-webkit-input-placeholder,
+.uabb-input-group-wrap .uabb-input-group .uabb-error textarea::-webkit-input-placeholder {
+	color: #DD4420 !important;
+}
+
+.uabb-input-group-wrap .uabb-input-group .uabb-error input:-moz-placeholder,
+.uabb-input-group-wrap .uabb-input-group .uabb-error textarea:-moz-placeholder { 		/* Firefox 18- */
+	color: #DD4420 !important;
+}
+
+.uabb-input-group-wrap .uabb-input-group .uabb-error input::-moz-placeholder,
+.uabb-input-group-wrap .uabb-input-group .uabb-error textarea::-moz-placeholder {  	/* Firefox 19+ */
+	color: #DD4420 !important;
+}
+
+.uabb-input-group-wrap .uabb-input-group .uabb-error input:-ms-input-placeholder,
+.uabb-input-group-wrap .uabb-input-group .uabb-error textarea:-ms-input-placeholder {  
+	color: #DD4420 !important;
+}
+
+.uabb-send-error,
+.uabb-success-none {
+	display: block;
+}
+
+/* Terms Checkbox and Text CSS */
+
+.uabb-contact-form .uabb-terms-checkbox .checkbox-label {
+	height: 26px;
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;
+}
+
+.uabb-contact-form .uabb-terms-checkbox-text {
+	margin: 10px 0;
+}
+
+.uabb-contact-form .uabb-terms-checkbox input[type="checkbox"] {
+	display: none;
+}
+
+.uabb-contact-form .uabb-terms-checkbox input[type="checkbox"] + span:before {
+	content: '';
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 1px;
+    border-style: solid;
+    border-radius: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.uabb-contact-form .uabb-input-group-wrap input[type="checkbox"]:checked + span:before {
+    content: "\2714";
+    color: #3A3A3A;
+    font-size: 20px;
+    line-height: 18px;
+    font-weight: bold;
+    padding-top: 2px;
+}
+
+/* Terms Checkbox and Text CSS end */

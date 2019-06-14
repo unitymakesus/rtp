@@ -1,0 +1,108 @@
+/* Column CSS */
+
+
+.uabb-cf7-style .wpcf7-form-control-wrap,
+.uabb-cf7-style label{
+	display: block;
+}
+
+.uabb-cf7-style input[type=tel],
+.uabb-cf7-style input[type=email],
+.uabb-cf7-style input[type=text],
+.uabb-cf7-style input[type=url],
+.uabb-cf7-style input[type=number],
+.uabb-cf7-style input[type=date],
+.uabb-cf7-style textarea,
+.uabb-cf7-style select {
+	display: block;
+	font-family: inherit;
+	line-height: normal;
+	height: auto;
+	outline: none;
+    padding: 16px 15px;
+    width: 100%;
+}
+.uabb-cf7-style input[type=checkbox],
+.uabb-cf7-style input[type=file] {
+	display: inline-block;
+	border: none;
+	vertical-align: middle;
+}
+
+.uabb-cf7-style input[type=submit],
+.uabb-cf7-style input[type=submit]:hover, 
+.uabb-cf7-style input[type=submit]:active,
+.uabb-cf7-style input[type=submit]:focus {
+	display: block;
+	border: none;
+	top: 0;
+}
+
+.uabb-cf7-style textarea:focus,
+.uabb-cf7-style input:focus {
+	-webkit-box-shadow: none;
+            box-shadow: none;
+}
+
+/* Style 2 Styling */
+.uabb-cf7-form-style2 form input[type=tel],
+.uabb-cf7-form-style2 form input[type=email],
+.uabb-cf7-form-style2 form input[type=text],
+.uabb-cf7-form-style2 form input[type=url],
+.uabb-cf7-form-style2 form input[type=number],
+.uabb-cf7-form-style2 form input[type=checkbox],
+.uabb-cf7-form-style2 form input[type=date],
+.uabb-cf7-form-style2 form input[type=file],
+.uabb-cf7-form-style2 form textarea,
+.uabb-cf7-form-style2 form select  {
+	background: transparent;
+}
+
+.uabb-cf7-form-style2 form input[type=tel]:focus,
+.uabb-cf7-form-style2 form input[type=email]:focus,
+.uabb-cf7-form-style2 form input[type=text]:focus,
+.uabb-cf7-form-style2 form input[type=url]:focus,
+.uabb-cf7-form-style2 form input[type=number]:focus,
+.uabb-cf7-form-style2 form input[type=checkbox]:focus,
+.uabb-cf7-form-style2 form input[type=date]:focus,
+.uabb-cf7-form-style2 form input[type=file]:focus,
+.uabb-cf7-form-style2 form textarea:focus,
+.uabb-cf7-form-style2 form select:focus {
+	background: transparent;
+}
+
+/* Style 2 End */
+@media only screen and (min-width: 769px) {
+.uabb-cf7-style .uabb-cf7-col-1 {
+	width: 100%;
+    padding: 0 10px;
+    clear: left;
+}
+.uabb-cf7-style .uabb-cf7-col-2 {
+	width: 50%;
+	float: left;
+    padding: 0 10px;
+}
+.uabb-cf7-style .uabb-cf7-col-3 {
+	width: 33.33%;
+	float: left;
+    padding: 0 10px;
+}
+.uabb-cf7-style .uabb-cf7-col-4 {
+	width: 25%;
+	float: left;
+    padding: 0 10px;
+}
+
+.uabb-cf7-style .uabb-cf7-col-5 {
+	width: 20%;
+	float: left;
+    padding: 0 10px;
+}
+
+.uabb-cf7-style .uabb-cf7-col-6 {
+	width: 16.66%;
+	float: left;
+    padding: 0 10px;
+}
+}
