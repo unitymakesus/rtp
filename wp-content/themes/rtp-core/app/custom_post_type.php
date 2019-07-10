@@ -3,17 +3,17 @@
 namespace App;
 
 function create_post_type() {
-  $argsTeam = array(
+  $argsPeople = array(
     'labels' => array(
-				'name' => 'Team',
-				'singular_name' => 'Team Member',
+				'name' => 'People',
+				'singular_name' => 'Person',
 				'add_new' => 'Add New',
-				'add_new_item' => 'Add New Team Member',
+				'add_new_item' => 'Add New Person',
 				'edit' => 'Edit',
-				'edit_item' => 'Edit Team Member',
-				'new_item' => 'New Team Member',
-				'view_item' => 'View Team Member',
-				'search_items' => 'Search Team',
+				'edit_item' => 'Edit Person',
+				'new_item' => 'New Person',
+				'view_item' => 'View Person',
+				'search_items' => 'Search People',
 				'not_found' =>  'Nothing found in the Database.',
 				'not_found_in_trash' => 'Nothing found in Trash',
 				'parent_item_colon' => ''
@@ -39,16 +39,16 @@ function create_post_type() {
       'slug' => 'bio'
     )
   );
-  register_post_type( 'rtp-team', $argsTeam );
+  register_post_type( 'rtp-people', $argsPeople );
 }
 add_action( 'init', __NAMESPACE__.'\\create_post_type' );
 
 function create_taxonomies() {
 
-	$argsTeamCategories = array(
+	$argsPeopleCategories = array(
 		'labels' => array(
-			'name' => __( 'Types' ),
-			'singular_name' => __( 'Type' )
+			'name' => __( 'Teams' ),
+			'singular_name' => __( 'Team' )
 		),
 		'publicly_queryable' => true,
 		'show_ui' => true,
@@ -57,7 +57,7 @@ function create_taxonomies() {
 		'hierarchical' => true,
 		'rewrite' => false
 	);
-	register_taxonomy('rtp-team-category', 'rtp-team', $argsTeamCategories);
+	register_taxonomy('rtp-team', 'rtp-people', $argsPeopleCategories);
 
 }
 add_action( 'init', __NAMESPACE__.'\\create_taxonomies' );
