@@ -23,7 +23,32 @@ if ( isset( $settings->creative_menu_close_icon_size ) && '' == $settings->creat
 }
 
 ?>
-
+<?php if ( 'off-canvas' == $settings->creative_mobile_menu_type ) { ?>
+	.fl-node-<?php echo $id; ?> .uabb-creative-menu.off-canvas .menu > li > a,
+		.fl-node-<?php echo $id; ?> .uabb-creative-menu.off-canvas .menu > li > .uabb-has-submenu-container > a {
+			<?php
+			if ( isset( $settings->creative_menu_link_spacing ) && '' != $settings->creative_menu_link_spacing && isset( $settings->creative_menu_link_spacing_dimension_top ) && ( '' == $settings->creative_menu_link_spacing_dimension_top || '0' == $settings->creative_menu_link_spacing_dimension_top ) && isset( $settings->creative_menu_link_spacing_dimension_bottom ) && ( '' == $settings->creative_menu_link_spacing_dimension_bottom || '0' == $settings->creative_menu_link_spacing_dimension_bottom ) && isset( $settings->creative_menu_link_spacing_dimension_left ) && ( '' == $settings->creative_menu_link_spacing_dimension_left || '0' == $settings->creative_menu_link_spacing_dimension_left ) && isset( $settings->creative_menu_link_spacing_dimension_right ) && ( '' == $settings->creative_menu_link_spacing_dimension_right || '0' == $settings->creative_menu_link_spacing_dimension_right ) ) {
+				echo $settings->creative_menu_link_spacing;
+				?>
+				;
+			<?php } else { ?>
+				<?php
+				if ( isset( $settings->creative_menu_link_spacing_dimension_top ) ) {
+					echo ( '' != $settings->creative_menu_link_spacing_dimension_top ) ? 'padding-top:' . $settings->creative_menu_link_spacing_dimension_top . 'px;' : 'padding-top: 10px;';
+				}
+				if ( isset( $settings->creative_menu_link_spacing_dimension_bottom ) ) {
+					echo ( '' != $settings->creative_menu_link_spacing_dimension_bottom ) ? 'padding-bottom:' . $settings->creative_menu_link_spacing_dimension_bottom . 'px;' : 'padding-bottom: 10px;';
+				}
+				if ( isset( $settings->creative_menu_link_spacing_dimension_left ) ) {
+					echo ( '' != $settings->creative_menu_link_spacing_dimension_left ) ? 'padding-left:' . $settings->creative_menu_link_spacing_dimension_left . 'px;' : 'padding-left: 10px;';
+				}
+				if ( isset( $settings->creative_menu_link_spacing_dimension_right ) ) {
+					echo ( '' != $settings->creative_menu_link_spacing_dimension_right ) ? 'padding-right:' . $settings->creative_menu_link_spacing_dimension_right . 'px;' : 'padding-right: 10px;';
+				}
+}
+	?>
+		}
+<?php } ?>
 /* Menu alignment */
 
 .fl-node-<?php echo $id; ?> .uabb-creative-menu .menu {
@@ -248,10 +273,11 @@ if ( 'right' == $settings->creative_menu_alignment ) {
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .uabb-menu-toggle:before,
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .sub-menu .uabb-menu-toggle:before {
 		content: '\f107';
-		font-family: 'fontAwesome';
+		font-family: 'Font Awesome 5 Free';
 		z-index: 1;
 		font-size: inherit;
 		line-height: 0;
+		font-weight: 900;
 		<?php
 		if ( $settings->creative_menu_responsive_link_color ) {
 			?>
@@ -263,9 +289,10 @@ if ( 'right' == $settings->creative_menu_alignment ) {
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .uabb-menu-toggle:before,
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .sub-menu .uabb-menu-toggle:before {
 		content: '\f067';
-		font-family: 'fontAwesome';
+		font-family: 'Font Awesome 5 Free';
 		font-size: 0.7em;
 		z-index: 1;
+		font-weight: 900;
 		<?php
 		if ( $settings->creative_menu_responsive_link_color ) {
 			?>
@@ -279,10 +306,11 @@ if ( ( ( 'horizontal' == $settings->creative_menu_layout || 'vertical' == $setti
 	?>
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu .uabb-menu-toggle:before {
 		content: '\f107';
-		font-family: 'fontAwesome';
+		font-family: 'Font Awesome 5 Free';
 		z-index: 1;
 		font-size: inherit;
 		line-height: 0;
+		font-weight: 900;
 	}
 	<?php
 
@@ -291,9 +319,10 @@ if ( ( ( 'horizontal' == $settings->creative_menu_layout || 'vertical' == $setti
 	?>
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu .uabb-menu-toggle:before {
 		content: '\f067';
-		font-family: 'fontAwesome';
+		font-family: 'Font Awesome 5 Free';
 		font-size: 0.7em;
 		z-index: 1;
+		font-weight: 900;
 	}
 	<?php
 }
@@ -978,15 +1007,17 @@ if ( '' != $settings->creative_menu_border_hover_color ) {
 	}
 	<?php
 } else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		// Border - Settings.
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'submenu_border',
-				'selector'     => ".fl-node-$id .uabb-creative-menu .uabb-creative-menu-vertical .sub-menu, .fl-node-$id .uabb-creative-menu .uabb-creative-menu-horizontal .sub-menu",
-			)
-		);
+	if ( isset( $settings->creative_submenu_border_settings_option ) && 'yes' == $settings->creative_submenu_border_settings_option ) {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			// Border - Settings.
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'submenu_border',
+					'selector'     => ".fl-node-$id .uabb-creative-menu .uabb-creative-menu-vertical .sub-menu, .fl-node-$id .uabb-creative-menu .uabb-creative-menu-horizontal .sub-menu",
+				)
+			);
+		}
 	}
 }
 
@@ -1096,43 +1127,44 @@ if ( ! $version_bb_check ) {
 
 /* Toggle button */
 <?php if ( isset( $settings->creative_menu_mobile_toggle ) && 'expanded' != $settings->creative_menu_mobile_toggle ) { ?>
-
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle {
 		<?php
 		if ( ! empty( $settings->creative_menu_mobile_toggle_color ) ) {
 			echo 'color: #' . $settings->creative_menu_mobile_toggle_color . ';';
 		}
-		if ( ! $version_bb_check ) {
-			if ( isset( $settings->creative_menu_link_text_transform ) ) {
-				echo 'text-transform: ' . $settings->creative_menu_link_text_transform . ';';
-			}
-			if ( 'Default' != $settings->creative_menu_link_font_family['family'] ) {
-				?>
-				<?php FLBuilderFonts::font_css( $settings->creative_menu_link_font_family ); ?>
-			<?php } ?>
-			<?php if ( 'custom' == $settings->creative_menu_link_font_size && $settings->creative_menu_link_font_size_custom ) { ?>
-				font-size: <?php echo $settings->creative_menu_link_font_size_custom; ?>px;
-			<?php } ?>
-			<?php
-		} else {
-			if ( 'custom' == $settings->creative_menu_link_typo ) {
-				if ( isset( $settings->creative_submenu_link_font_typo['text_transform'] ) ) {
-					echo 'text-transform: ' . $settings->creative_submenu_link_font_typo['text_transform'] . ';';
-				}
-				if ( isset( $settings->creative_submenu_link_font_typo['font_family'] ) ) {
-					echo 'font-family:' . $settings->creative_submenu_link_font_typo['font_family'] . ';';
-				}
-				if ( isset( $settings->creative_submenu_link_font_typo['font_weight'] ) ) {
-					echo 'weight:' . $settings->creative_submenu_link_font_typo['font_weight'] . ';';
-				}
-				if ( isset( $settings->creative_menu_link_typo['font_size']['length'] ) ) {
-					echo 'font-size:' . $settings->creative_menu_link_typo['font_size']['length'] . 'px;';
-				}
-			}
-		}
 		?>
-
 	}
+<?php if ( ! $version_bb_check ) { ?>
+	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle {
+		<?php
+		if ( isset( $settings->creative_menu_link_text_transform ) ) {
+			echo 'text-transform: ' . $settings->creative_menu_link_text_transform . ';';
+		}
+		if ( 'Default' != $settings->creative_menu_link_font_family['family'] ) {
+			?>
+			<?php FLBuilderFonts::font_css( $settings->creative_menu_link_font_family ); ?>
+		<?php } ?>
+		<?php if ( 'custom' == $settings->creative_menu_link_font_size && $settings->creative_menu_link_font_size_custom ) { ?>
+			font-size: <?php echo $settings->creative_menu_link_font_size_custom; ?>px;
+		<?php
+}
+		?>
+	}
+<?php
+} else {
+	if ( 'custom' == $settings->creative_menu_link_typo ) {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'creative_menu_link_font_typo',
+					'selector'     => ".fl-node-$id .uabb-creative-menu-mobile-toggle",
+				)
+			);
+		}
+	}
+}
+?>
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle-container,
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text {
 		text-align: <?php echo $settings->creative_menu_navigation_alignment; ?>;
@@ -1993,31 +2025,6 @@ if ( ! $version_bb_check ) {
 	}
 
 	/* Links */
-
-	.fl-node-<?php echo $id; ?> .uabb-creative-menu.off-canvas .menu > li > a,
-	.fl-node-<?php echo $id; ?> .uabb-creative-menu.off-canvas .menu > li > .uabb-has-submenu-container > a {
-		<?php
-		if ( isset( $settings->creative_menu_link_spacing ) && '' != $settings->creative_menu_link_spacing && isset( $settings->creative_menu_link_spacing_dimension_top ) && ( '' == $settings->creative_menu_link_spacing_dimension_top || '0' == $settings->creative_menu_link_spacing_dimension_top ) && isset( $settings->creative_menu_link_spacing_dimension_bottom ) && ( '' == $settings->creative_menu_link_spacing_dimension_bottom || '0' == $settings->creative_menu_link_spacing_dimension_bottom ) && isset( $settings->creative_menu_link_spacing_dimension_left ) && ( '' == $settings->creative_menu_link_spacing_dimension_left || '0' == $settings->creative_menu_link_spacing_dimension_left ) && isset( $settings->creative_menu_link_spacing_dimension_right ) && ( '' == $settings->creative_menu_link_spacing_dimension_right || '0' == $settings->creative_menu_link_spacing_dimension_right ) ) {
-			echo $settings->creative_menu_link_spacing;
-			?>
-			;
-		<?php } else { ?>
-			<?php
-			if ( isset( $settings->creative_menu_link_spacing_dimension_top ) ) {
-				echo ( '' != $settings->creative_menu_link_spacing_dimension_top ) ? 'padding-top:' . $settings->creative_menu_link_spacing_dimension_top . 'px;' : 'padding-top: 10px;';
-			}
-			if ( isset( $settings->creative_menu_link_spacing_dimension_bottom ) ) {
-				echo ( '' != $settings->creative_menu_link_spacing_dimension_bottom ) ? 'padding-bottom:' . $settings->creative_menu_link_spacing_dimension_bottom . 'px;' : 'padding-bottom: 10px;';
-			}
-			if ( isset( $settings->creative_menu_link_spacing_dimension_left ) ) {
-				echo ( '' != $settings->creative_menu_link_spacing_dimension_left ) ? 'padding-left:' . $settings->creative_menu_link_spacing_dimension_left . 'px;' : 'padding-left: 10px;';
-			}
-			if ( isset( $settings->creative_menu_link_spacing_dimension_right ) ) {
-				echo ( '' != $settings->creative_menu_link_spacing_dimension_right ) ? 'padding-right:' . $settings->creative_menu_link_spacing_dimension_right . 'px;' : 'padding-right: 10px;';
-			}
-}
-?>
-	}
 
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu.off-canvas .menu > li,
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu.off-canvas .sub-menu > li {

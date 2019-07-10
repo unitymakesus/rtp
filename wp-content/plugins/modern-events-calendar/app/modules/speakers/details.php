@@ -66,8 +66,8 @@ if(!count($speakers)) return false;
                         <a href="<?php echo $twitter; ?>" target="_blank"><i class="mec-fa-twitter"></i></a>
                         <?php endif; ?>
                         <!-- Speaker Google Plus -->
-                        <?php if($gplus = trim(get_term_meta($speaker['id'], 'gplus', true))): ?>
-                        <a href="<?php echo $gplus; ?>" target="_blank"><i class="mec-fa-google-plus"></i></a>
+                        <?php if($instagram = trim(get_term_meta($speaker['id'], 'instagram', true))): ?>
+                        <a href="<?php echo $instagram; ?>" target="_blank"><i class="mec-fa-instagram"></i></a>
                         <?php endif; ?>
                     </div>
                     <!-- Speaker Description -->

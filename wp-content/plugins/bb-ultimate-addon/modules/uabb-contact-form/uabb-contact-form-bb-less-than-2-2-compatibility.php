@@ -897,7 +897,7 @@ FLBuilder::register_module(
 							'show_reset' => true,
 							'preview'    => array(
 								'type'     => 'css',
-								'selector' => '.uabb-contact-form .uabb-contact-form-submit',
+								'selector' => '.uabb-contact-form .uabb-contact-form-submit .uabb-contact-form-button-text',
 								'property' => 'color',
 							),
 						),

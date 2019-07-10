@@ -296,7 +296,7 @@
         $(this).one('load error', function() {
           if (++count === total) { callback(); }
         }).each(function() {
-          if (this.complete) { $(this).load(); }
+          if (this.complete) { $(this).trigger( 'load' ) }
         });
       });
     };
@@ -341,7 +341,7 @@
       // check for any updates to the controls (like hideControlOnEnd updates)
       if (slider.settings.controls) { updateDirectionControls(); }
       // if touchEnabled is true, setup the touch events
-      if (slider.settings.touchEnabled && !slider.settings.ticker) { initTouch(); }
+      if (navigator.maxTouchPoints > 0) { initTouch(); }
       // if keyboardEnabled is true, setup the keyboard events
       if (slider.settings.keyboardEnabled && !slider.settings.ticker) {
         $(document).keydown(keyPress);

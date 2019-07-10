@@ -23,24 +23,28 @@
 		 *
 		 * @since 1.9
 		 * @method refreshPreview
+		 * @param {Function} callback
 		 */
-		refreshPreview: function()
+		refreshPreview: function( callback )
 		{
 			var width;
 
-			if ( ! $( '.fl-responsive-preview' ).length || 'default' == this._mode ) {
-				return;
-			}
-			else if ( 'responsive' == this._mode ) {
-				width = FLBuilderConfig.global.responsive_breakpoint >= 320 ? 320 : FLBuilderConfig.global.responsive_breakpoint;
-				FLBuilderSimulateMediaQuery.update( width );
-			}
-			else if ( 'medium' == this._mode ) {
-				width = FLBuilderConfig.global.medium_breakpoint >= 769 ? 769 : FLBuilderConfig.global.medium_breakpoint;
-				FLBuilderSimulateMediaQuery.update( width );
-			}
+			if ( $( '.fl-responsive-preview' ).length && 'default' !== this._mode ) {
 
-			FLBuilder._resizeLayout();
+				if ( 'responsive' == this._mode ) {
+					width = FLBuilderConfig.global.responsive_breakpoint >= 320 ? 320 : FLBuilderConfig.global.responsive_breakpoint;
+					FLBuilderSimulateMediaQuery.update( width, callback );
+				}
+				else if ( 'medium' == this._mode ) {
+					width = FLBuilderConfig.global.medium_breakpoint >= 769 ? 769 : FLBuilderConfig.global.medium_breakpoint;
+					FLBuilderSimulateMediaQuery.update( width, callback );
+				}
+
+				FLBuilder._resizeLayout();
+
+			} else if ( callback ) {
+				callback();
+			}
 		},
 
 		/**
@@ -65,10 +69,13 @@
 		 */
 		_bind: function()
 		{
-			FLBuilder.addHook( 'settings-form-init', this._initSettingsForms );
-			FLBuilder.addHook( 'settings-lightbox-closed', this._clearPreview );
+			FLBuilder.addHook( 'endEditingSession', this._clearPreview );
+			FLBuilder.addHook( 'didEnterRevisionPreview', this._clearPreview );
+			FLBuilder.addHook( 'responsiveEditing', this._menuToggleClicked );
+			FLBuilder.addHook( 'preview-init', this._switchAllSettingsToCurrentMode );
 
 			$( 'body' ).delegate( '.fl-field-responsive-toggle', 'click', this._settingToggleClicked );
+			$( 'body' ).delegate( '.fl-responsive-preview-message button', 'click', this._previewToggleClicked );
 		},
 
 		/**
@@ -83,6 +90,7 @@
 			// Don't simulate media queries for stylesheets that match these paths.
 			FLBuilderSimulateMediaQuery.ignore( [
 				FLBuilderConfig.pluginUrl,
+				'fl-builder-preview',
 				'fl-theme-builder',
 				'/wp-includes/',
 				'/wp-admin/',
@@ -93,10 +101,10 @@
 
 			// Reparse stylesheets that match these paths on each update.
 			FLBuilderSimulateMediaQuery.reparse( [
-				FLBuilderConfig.postId + '-layout-draft.css?',
-				FLBuilderConfig.postId + '-layout-draft-partial.css?',
-				FLBuilderConfig.postId + '-layout-preview.css?',
-				FLBuilderConfig.postId + '-layout-preview-partial.css?',
+				FLBuilderConfig.postId + '-layout-draft.css',
+				FLBuilderConfig.postId + '-layout-draft-partial.css',
+				FLBuilderConfig.postId + '-layout-preview.css',
+				FLBuilderConfig.postId + '-layout-preview-partial.css',
 				'fl-builder-global-css',
 				'fl-builder-layout-css'
 			] );
@@ -169,6 +177,9 @@
 			// Resize the layout.
 			FLBuilder._resizeLayout();
 
+			// Preview all responsive settings.
+			this._previewFields();
+
 			// Broadcast the switch.
 			FLBuilder.triggerHook( 'responsive-editing-switched', mode );
 		},
@@ -226,64 +237,17 @@
 
 				if ( undefined !== element && element ) {
 
-					setTimeout( function(){
-
 						var win     = $( window ),
 							content = $( '.fl-responsive-preview-content' );
 
-						if ( ! content.length || win.height() < content.height() ) {
-							$( 'html, body' ).animate( {
-								scrollTop: element.offset().top - 100
-							}, 250 );
+						if ( content.length ) {
+							content.scrollTop( 0 );
+							content.scrollTop( element.offset().top - 150 );
+						} else {
+							$( 'html, body' ).scrollTop( element.offset().top - 100 );
 						}
-						else {
-							scrollTo( 0, 0 );
-						}
-
-					}, 250 );
 				}
 			} );
-		},
-
-		/**
-		 * Clears the responsive editing preview and reverts
-		 * to the default view.
-		 *
-		 * @since 1.9
-		 * @access private
-		 * @method _clearPreview
-		 */
-		_clearPreview: function()
-		{
-			FLBuilderResponsiveEditing._switchToAndScroll( 'default' );
-		},
-
-		/**
-		 * Callback for when the responsive toggle of a setting
-		 * is clicked.
-		 *
-		 * @since 1.9
-		 * @access private
-		 * @method _settingToggleClicked
-		 */
-		_settingToggleClicked: function()
-		{
-			var toggle  = $( this ),
-				mode    = toggle.data( 'mode' );
-
-			if ( 'default' == mode ) {
-				mode  = 'medium';
-			}
-			else if ( 'medium' == mode ) {
-				mode  = 'responsive';
-			}
-			else {
-				mode  = 'default';
-			}
-
-			FLBuilderResponsiveEditing._switchAllSettingsTo( mode );
-
-			toggle.siblings( '.fl-field-responsive-setting:visible' ).find( 'input' ).focus();
 		},
 
 		/**
@@ -314,237 +278,156 @@
 
 			$( '.fl-field-responsive-toggle' ).addClass( className ).data( 'mode', mode );
 			$( '.fl-field-responsive-setting-' + mode ).css( 'display', 'inline-block' );
+		},
 
+		/**
+		 * Switches all responsive settings in a settings form
+		 * to the current mode.
+		 *
+		 * @since 2.2
+		 * @access private
+		 * @method _switchAllSettingsToCurrentMode
+		 */
+		_switchAllSettingsToCurrentMode: function()
+		{
+			var self = FLBuilderResponsiveEditing;
+
+			self._switchAllSettingsTo( self._mode );
+
+			FLBuilder.triggerHook( 'responsive-editing-switched', self._mode );
+		},
+
+		/**
+		 * Callback for when the responsive toggle of a setting
+		 * is clicked.
+		 *
+		 * @since 1.9
+		 * @access private
+		 * @method _settingToggleClicked
+		 */
+		_settingToggleClicked: function()
+		{
+			var toggle  = $( this ),
+				mode    = toggle.data( 'mode' );
+
+			if ( 'default' == mode ) {
+				mode  = 'medium';
+			}
+			else if ( 'medium' == mode ) {
+				mode  = 'responsive';
+			}
+			else {
+				mode  = 'default';
+			}
+
+			FLBuilderResponsiveEditing._switchAllSettingsTo( mode );
+			FLBuilderResponsiveEditing._switchToAndScroll( mode );
+
+			toggle.siblings( '.fl-field-responsive-setting:visible' ).find( 'input' ).focus();
+		},
+
+		/**
+		 * Callback for when the main menu item is clicked.
+		 *
+		 * @since 2.2
+		 * @access private
+		 * @method _menuToggleClicked
+		 */
+		_menuToggleClicked: function()
+		{
+			var mode = FLBuilderResponsiveEditing._mode;
+
+			if ( 'default' == mode ) {
+				mode = 'medium';
+			} else if ( 'medium' == mode ) {
+				mode = 'responsive';
+			} else {
+				mode = 'default';
+			}
+
+			FLBuilder.MainMenu.hide();
+			FLBuilderResponsiveEditing._switchAllSettingsTo( mode );
 			FLBuilderResponsiveEditing._switchToAndScroll( mode );
 		},
 
 		/**
-		 * Initializes responsive settings in settings forms.
+		 * Callback for when the switch buttons of the responsive
+		 * preview header are clicked.
 		 *
-		 * @since 1.9
+		 * @since 2.2
 		 * @access private
-		 * @method _initSettingsForms
+		 * @method _previewToggleClicked
 		 */
-		_initSettingsForms: function()
+		_previewToggleClicked: function()
 		{
-			var self = FLBuilderResponsiveEditing;
-
-			if ( Number( FLBuilderConfig.global.responsive_enabled ) ) {
-
-				self._initFields( 'dimension', 'input', 'keyup', self._spacingFieldKeyup, [
-					'margin',
-					'padding'
-				] );
-
-				self._initFields( 'dimension', 'input', 'keyup', self._textFieldKeyup );
-				self._initFields( 'unit', 'input', 'keyup', self._textFieldKeyup );
-			}
-
-			self._switchAllSettingsTo( self._mode );
+			var mode = $( this ).data( 'mode' );
+			FLBuilderResponsiveEditing._switchAllSettingsTo( mode );
+			FLBuilderResponsiveEditing._switchToAndScroll( mode );
 		},
 
 		/**
-		 * Initializes responsive logic for fields when
-		 * an event occurs.
+		 * Clears the responsive editing preview and reverts
+		 * to the default view.
 		 *
 		 * @since 1.9
 		 * @access private
-		 * @method _initFields
-		 * @param {String} type
-		 * @param {String} selector
-		 * @param {String} event
-		 * @param {Function} callback
-		 * @param {Array} names
+		 * @method _clearPreview
 		 */
-		_initFields: function( type, selector, event, callback, names )
+		_clearPreview: function()
 		{
-			var form   = $( '.fl-builder-settings' ),
-				fields = form.find( '.fl-field' ).has( '.fl-field-responsive-setting' ),
-				field  = null,
-				name   = null,
-				i      = 0;
-
-			for ( ; i < fields.length; i++ ) {
-
-				field = fields.eq( i );
-				name  = field.attr( 'id' ).replace( 'fl-field-', '' );
-
-				if ( 'object' == typeof names && $.inArray( name, names ) < 0 ) {
-					continue;
-				}
-				if ( type != field.attr( 'data-type' ) ) {
-					continue;
-				}
-				if ( undefined !== field.attr( 'data-responsive-init' ) ) {
-					continue;
-				}
-
-				field.find( '.fl-field-responsive-setting-default ' + selector ).on( event, callback );
-				field.find( '.fl-field-responsive-setting-medium ' + selector ).on( event, callback );
-				field.find( '.fl-field-responsive-setting-responsive ' + selector ).on( event, callback );
-				field.find( '.fl-field-responsive-setting-default ' + selector ).trigger( event );
-				field.attr( 'data-responsive-init', 1 );
-			}
+			FLBuilderResponsiveEditing._switchToAndScroll( 'default' );
 		},
 
 		/**
-		 * Returns the fields object for an element.
+		 * Callback for when the responsive preview changes
+		 * to live preview CSS for responsive fields.
 		 *
 		 * @since 1.9
 		 * @access private
-		 * @method _getFields
-		 * @param {Object} element
-		 * @param {String} selector
-		 * @return {Object}
+		 * @method _previewFields
 		 */
-		_getFields: function( element, selector )
+		_previewFields: function()
 		{
-			var field = $( element ).closest( '.fl-field' );
+			var mode = FLBuilderResponsiveEditing._mode,
+				form = $( '.fl-builder-settings:visible' );
 
-			return {
-				'default'    : field.find( '.fl-field-responsive-setting-default ' + selector ),
-				'medium'     : field.find( '.fl-field-responsive-setting-medium ' + selector ),
-				'responsive' : field.find( '.fl-field-responsive-setting-responsive ' + selector )
-			};
-		},
-
-		/**
-		 * Callback for the keyup event on a text field.
-		 *
-		 * @since 1.9
-		 * @access private
-		 * @method _textFieldKeyup
-		 */
-		_textFieldKeyup: function()
-		{
-			var fields = FLBuilderResponsiveEditing._getFields( this, 'input' );
-
-			fields.default.each( function( i ) {
-
-				var defaultPlaceholder = fields.default.eq( i ).attr( 'placeholder' ),
-					defaultValue       = fields.default.eq( i ).val(),
-					mediumValue        = fields.medium.eq( i ).val();
-
-				// Medium placeholder
-				if ( '' == defaultValue ) {
-					fields.medium.eq( i ).attr( 'placeholder', ( undefined === defaultPlaceholder ? '' : defaultPlaceholder ) );
-				}
-				else {
-					fields.medium.eq( i ).attr( 'placeholder', defaultValue );
-				}
-
-				// Responsive placeholder
-				if ( '' == mediumValue ) {
-					fields.responsive.eq( i ).attr( 'placeholder', fields.medium.eq( i ).attr( 'placeholder' ) );
-				}
-				else {
-					fields.responsive.eq( i ).attr( 'placeholder', mediumValue );
-				}
-			} );
-		},
-
-		/**
-		 * Callback for the keyup event on a spacing field.
-		 *
-		 * @since 1.9
-		 * @access private
-		 * @method _spacingFieldKeyup
-		 */
-		_spacingFieldKeyup: function()
-		{
-			var form                 = $( '.fl-builder-settings' ),
-				type                 = 'row',
-				name                 = $( this ).closest( '.fl-field' ).attr( 'id' ).replace( 'fl-field-', '' ),
-				fields               = FLBuilderResponsiveEditing._getFields( this, 'input' ),
-				config               = FLBuilderConfig.global,
-				configPrefix         = null,
-				defaultGlobalVal     = null,
-				mediumGlobalVal      = null,
-				responsiveGlobalVal  = null;
-
-			// Get the node type
-			if ( form.hasClass( 'fl-builder-row-settings' ) ) {
-				type = 'row';
-			}
-			else if ( form.hasClass( 'fl-builder-col-settings' ) ) {
-				type = 'col';
-			}
-			else if ( form.hasClass( 'fl-builder-module-settings' ) ) {
-				type = 'module';
+			if ( 0 === form.length || undefined === form.attr( 'data-node' ) ) {
+				return;
 			}
 
-			// Spoof global column defaults since we don't have a setting for those.
-			$.extend( config, {
-				col_margins            : 0,
-				col_margins_medium     : '',
-				col_margins_responsive : '',
-				col_padding            : 0,
-				col_padding_medium     : '',
-				col_padding_responsive : ''
+			FLBuilder.triggerHook( 'responsive-editing-before-preview-fields', mode );
+
+			form.find( '.fl-builder-settings-tab' ).each( function() {
+
+				var tab = $( this );
+				tab.css( 'display', 'block' );
+
+				tab.find( '.fl-field-responsive-setting-' + mode + ':visible' ).each( function() {
+
+					var field = $( this ),
+						parent = field.closest( '.fl-field' ),
+						type = parent.data( 'type' ),
+						preview = parent.data( 'preview' ),
+						hasConnection = parent.find( '.fl-field-connection-visible' ).length;
+
+					if ( 'refresh' == preview.type ) {
+						return;
+					}
+
+					if ( hasConnection ) {
+						if ( 'photo' === type && 'default' !== mode ) {
+							field.find( '.fl-photo-remove' ).trigger( 'click' );
+						}
+					} else{
+						field.find( 'input' ).trigger( 'keyup' );
+						field.find( 'select' ).trigger( 'change' );
+					}
+				} );
+
+				tab.css( 'display', '' );
 			} );
 
-			// Set the global values
-			configPrefix         = type + '_' + name + ( 'margin' === name ? 's' : '' );
-			defaultGlobalVal     = config[ configPrefix ];
-			mediumGlobalVal      = config[ configPrefix + '_medium' ];
-			responsiveGlobalVal  = config[ configPrefix + '_responsive' ];
-
-			// Loop through the fields.
-			fields.default.each( function( i ) {
-
-				var dimension            = fields.default.eq( i ).attr( 'name' ).split( '_' ).pop(),
-					defaultVal           = fields.default.eq( i ).val(),
-					mediumVal            = fields.medium.eq( i ).val(),
-					responsiveVal        = fields.responsive.eq( i ).val(),
-					moduleGlobalVal      = null,
-					moduleResponsiveVal  = null;
-
-				// Medium value
-				if ( '' === mediumGlobalVal ) {
-
-					if ( '' !== defaultVal ) {
-						fields.medium.eq( i ).attr( 'placeholder', defaultVal );
-					}
-					else if ( '' !== defaultGlobalVal ) {
-						fields.medium.eq( i ).attr( 'placeholder', defaultGlobalVal );
-					}
-				}
-
-				// Responsive value
-				if ( '' === responsiveGlobalVal ) {
-
-					if ( 'module' === type && Number( config.auto_spacing ) ) {
-
-						moduleGlobalVal     = '' === mediumGlobalVal ? Number( defaultGlobalVal ) : mediumGlobalVal;
-						moduleResponsiveVal = '' === mediumVal ? Number( defaultVal ) : mediumVal;
-
-						if ( '' !== moduleResponsiveVal && ( moduleResponsiveVal > moduleGlobalVal || moduleResponsiveVal < 0 ) ) {
-							fields.responsive.eq( i ).attr( 'placeholder', moduleGlobalVal );
-						}
-						else if ( '' !== moduleResponsiveVal ) {
-							fields.responsive.eq( i ).attr( 'placeholder', moduleResponsiveVal );
-						}
-						else {
-							fields.responsive.eq( i ).attr( 'placeholder', moduleGlobalVal );
-						}
-					}
-					else if ( ! Number( config.auto_spacing ) || ( 'padding' === name && 'top|bottom'.indexOf( dimension ) > -1 ) ) {
-
-						if ( '' !== mediumVal ) {
-							fields.responsive.eq( i ).attr( 'placeholder', mediumVal );
-						}
-						else if ( '' !== mediumGlobalVal ) {
-							fields.responsive.eq( i ).attr( 'placeholder', mediumGlobalVal );
-						}
-						else if ( '' !== defaultVal ) {
-							fields.responsive.eq( i ).attr( 'placeholder', defaultVal );
-						}
-						else if ( '' !== defaultGlobalVal ) {
-							fields.responsive.eq( i ).attr( 'placeholder', defaultGlobalVal );
-						}
-					}
-				}
-			} );
+			FLBuilder.triggerHook( 'responsive-editing-after-preview-fields', mode );
 		},
 	};
 

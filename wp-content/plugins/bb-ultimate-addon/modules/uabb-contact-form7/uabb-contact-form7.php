@@ -48,17 +48,6 @@ class UABBContactForm7Module extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For alignment settings.
-			if ( isset( $settings->input_text_align ) ) {
-				$settings->input_text_align = $settings->input_text_align;
-			}
-			if ( isset( $settings->form_text_align ) ) {
-				$settings->form_text_align = $settings->form_text_align;
-			}
-			if ( isset( $settings->btn_align ) ) {
-				$settings->btn_align = $settings->btn_align;
-			}
-
 			// Handle opacity settings.
 			$helper->handle_opacity_inputs( $settings, 'input_background_color_opc', 'input_background_color' );
 			$helper->handle_opacity_inputs( $settings, 'form_bg_color_opc', 'form_bg_color' );
@@ -78,6 +67,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->form_title_font_family['family'] ) ) {
 
 					$settings->form_title_typo['font_family'] = $settings->form_title_font_family['family'];
+					unset( $settings->form_title_font_family['family'] );
 				}
 				if ( isset( $settings->form_title_font_family['weight'] ) ) {
 
@@ -86,6 +76,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_title_typo['font_weight'] = $settings->form_title_font_family['weight'];
 					}
+					unset( $settings->form_title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->form_title_font_size_unit ) ) {
@@ -94,12 +85,14 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_title_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_title_font_size_unit );
 			}
 			if ( isset( $settings->form_title_font_size_unit_medium ) ) {
 				$settings->form_title_typo_medium['font_size'] = array(
 					'length' => $settings->form_title_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_title_font_size_unit_medium );
 			}
 			if ( isset( $settings->form_title_font_size_unit_responsive ) ) {
 
@@ -107,6 +100,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_title_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_title_font_size_unit_responsive );
 			}
 			if ( isset( $settings->form_title_line_height_unit ) ) {
 
@@ -114,23 +108,26 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_title_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->form_title_line_height_unit );
 			}
 			if ( isset( $settings->form_title_line_height_unit_medium ) ) {
 				$settings->form_title_typo_medium['line_height'] = array(
 					'length' => $settings->form_title_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->form_title_line_height_unit_medium );
 			}
 			if ( isset( $settings->form_title_line_height_unit_responsive ) ) {
 				$settings->form_title_typo_responsive['line_height'] = array(
 					'length' => $settings->form_title_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->form_title_line_height_unit_responsive );
 			}
 			if ( isset( $settings->form_title_transform ) ) {
 
 				$settings->form_title_typo['text_transform'] = $settings->form_title_transform;
-
+				unset( $settings->form_title_transform );
 			}
 			if ( isset( $settings->form_title_letter_spacing ) ) {
 
@@ -138,6 +135,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_title_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_title_letter_spacing );
 			}
 
 			// Compatibility for form description.
@@ -152,6 +150,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->form_desc_font_family['family'] ) ) {
 
 					$settings->form_desc_typo['font_family'] = $settings->form_desc_font_family['family'];
+					unset( $settings->form_desc_font_family['family'] );
 				}
 				if ( isset( $settings->form_desc_font_family['weight'] ) ) {
 
@@ -160,6 +159,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_desc_typo['font_weight'] = $settings->form_desc_font_family['weight'];
 					}
+					unset( $settings->form_desc_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->form_desc_font_size_unit ) ) {
@@ -168,12 +168,14 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_desc_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_desc_font_size_unit );
 			}
 			if ( isset( $settings->form_desc_font_size_unit_medium ) ) {
 				$settings->form_desc_typo_medium['font_size'] = array(
 					'length' => $settings->form_desc_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_desc_font_size_unit_medium );
 			}
 			if ( isset( $settings->form_desc_font_size_unit_responsive ) ) {
 
@@ -181,6 +183,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_desc_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_desc_font_size_unit_responsive );
 			}
 			if ( isset( $settings->form_desc_line_height_unit ) ) {
 
@@ -188,23 +191,26 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_desc_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->form_desc_line_height_unit );
 			}
 			if ( isset( $settings->form_desc_line_height_unit_medium ) ) {
 				$settings->form_desc_typo_medium['line_height'] = array(
 					'length' => $settings->form_desc_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->form_desc_line_height_unit_medium );
 			}
 			if ( isset( $settings->form_desc_line_height_unit_responsive ) ) {
 				$settings->form_desc_typo_responsive['line_height'] = array(
 					'length' => $settings->form_desc_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->form_desc_line_height_unit_responsive );
 			}
 			if ( isset( $settings->form_desc_transform ) ) {
 
 				$settings->form_desc_typo['text_transform'] = $settings->form_desc_transform;
-
+				unset( $settings->form_desc_transform );
 			}
 			if ( isset( $settings->form_desc_letter_spacing ) ) {
 
@@ -212,6 +218,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->form_desc_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->form_desc_letter_spacing );
 			}
 
 			// Compatibility for form labels.
@@ -226,6 +233,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->label_font_family['family'] ) ) {
 
 					$settings->form_label_typo['font_family'] = $settings->label_font_family['family'];
+					unset( $settings->label_font_family['family'] );
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
@@ -234,6 +242,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_label_typo['font_weight'] = $settings->label_font_family['weight'];
 					}
+					unset( $settings->label_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->label_font_size_unit ) ) {
@@ -242,12 +251,14 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->label_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->label_font_size_unit );
 			}
 			if ( isset( $settings->label_font_size_unit_medium ) ) {
 				$settings->form_label_typo_medium['font_size'] = array(
 					'length' => $settings->label_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->label_font_size_unit_medium );
 			}
 			if ( isset( $settings->label_font_size_unit_responsive ) ) {
 
@@ -255,6 +266,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->label_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->label_font_size_unit_responsive );
 			}
 			if ( isset( $settings->label_line_height_unit ) ) {
 
@@ -262,23 +274,26 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->label_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->label_line_height_unit );
 			}
 			if ( isset( $settings->label_line_height_unit_medium ) ) {
 				$settings->form_label_typo_medium['line_height'] = array(
 					'length' => $settings->label_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->label_line_height_unit_medium );
 			}
 			if ( isset( $settings->label_line_height_unit_responsive ) ) {
 				$settings->form_label_typo_responsive['line_height'] = array(
 					'length' => $settings->label_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->label_line_height_unit_responsive );
 			}
 			if ( isset( $settings->label_transform ) ) {
 
 				$settings->form_label_typo['text_transform'] = $settings->label_transform;
-
+				unset( $settings->label_transform );
 			}
 			if ( isset( $settings->label_letter_spacing ) ) {
 
@@ -286,6 +301,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->label_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->label_letter_spacing );
 			}
 
 			// Compatibility for form inputs.
@@ -300,6 +316,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->form_input_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -308,6 +325,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_input_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -316,12 +334,14 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->form_input_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 
@@ -329,6 +349,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -336,23 +357,26 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 				$settings->form_input_typo_medium['line_height'] = array(
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 				$settings->form_input_typo_responsive['line_height'] = array(
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 
 				$settings->form_input_typo['text_transform'] = $settings->transform;
-
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 
@@ -360,6 +384,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->letter_spacing );
 			}
 
 			// Compatibility for form radio check-boxes.
@@ -374,6 +399,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->radio_checkbox_font_family['family'] ) ) {
 
 					$settings->form_radio_typo['font_family'] = $settings->radio_checkbox_font_family['family'];
+					unset( $settings->radio_checkbox_font_family['family'] );
 				}
 				if ( isset( $settings->radio_checkbox_font_family['weight'] ) ) {
 
@@ -382,6 +408,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_radio_typo['font_weight'] = $settings->radio_checkbox_font_family['weight'];
 					}
+					unset( $settings->radio_checkbox_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->radio_checkbox_font_size_unit ) ) {
@@ -390,12 +417,14 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->radio_checkbox_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->radio_checkbox_font_size_unit );
 			}
 			if ( isset( $settings->radio_checkbox_font_size_unit_medium ) ) {
 				$settings->form_radio_typo_medium['font_size'] = array(
 					'length' => $settings->radio_checkbox_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->radio_checkbox_font_size_unit_medium );
 			}
 			if ( isset( $settings->radio_checkbox_font_size_unit_responsive ) ) {
 
@@ -403,11 +432,12 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->radio_checkbox_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->radio_checkbox_font_size_unit_responsive );
 			}
 			if ( isset( $settings->radio_checkbox_transform ) ) {
 
 				$settings->form_radio_typo['text_transform'] = $settings->radio_checkbox_transform;
-
+				unset( $settings->radio_checkbox_transform );
 			}
 			if ( isset( $settings->radio_checkbox_letter_spacing ) ) {
 
@@ -415,6 +445,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->radio_checkbox_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->radio_checkbox_letter_spacing );
 			}
 
 			// Compatibility for form button.
@@ -429,6 +460,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->btn_font_family['family'] ) ) {
 
 					$settings->form_button_typo['font_family'] = $settings->btn_font_family['family'];
+					unset( $settings->btn_font_family['family'] );
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
@@ -437,6 +469,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_button_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
+					unset( $settings->btn_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->btn_font_size_unit ) ) {
@@ -445,12 +478,14 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit );
 			}
 			if ( isset( $settings->btn_font_size_unit_medium ) ) {
 				$settings->form_button_typo_medium['font_size'] = array(
 					'length' => $settings->btn_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_medium );
 			}
 			if ( isset( $settings->btn_font_size_unit_responsive ) ) {
 
@@ -458,6 +493,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_responsive );
 			}
 			if ( isset( $settings->btn_line_height_unit ) ) {
 
@@ -465,23 +501,26 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit );
 			}
 			if ( isset( $settings->btn_line_height_unit_medium ) ) {
 				$settings->form_button_typo_medium['line_height'] = array(
 					'length' => $settings->btn_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_medium );
 			}
 			if ( isset( $settings->btn_line_height_unit_responsive ) ) {
 				$settings->form_button_typo_responsive['line_height'] = array(
 					'length' => $settings->btn_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_responsive );
 			}
 			if ( isset( $settings->btn_text_transform ) ) {
 
 				$settings->form_button_typo['text_transform'] = $settings->btn_text_transform;
-
+				unset( $settings->btn_text_transform );
 			}
 			if ( isset( $settings->btn_letter_spacing ) ) {
 
@@ -489,31 +528,41 @@ class UABBContactForm7Module extends FLBuilderModule {
 					'length' => $settings->btn_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_letter_spacing );
 			}
 
 			// Handle old border settings.
-			if ( ! empty( $settings->input_border_color ) && ( ! isset( $settings->input_border ) || empty( $settings->input_border ) ) ) {
+			if ( isset( $settings->input_border_color ) ) {
 
 				$settings->input_border            = array();
 				$settings->input_border_medium     = array();
 				$settings->input_border_responsive = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->input_border_color ) && ! empty( $settings->input_border_color ) ) {
+				if ( isset( $settings->input_border_color ) ) {
 					$settings->input_border['style'] = 'solid';
 					$settings->input_border['color'] = $settings->input_border_color;
 
 					if ( isset( $settings->input_border_width_dimension_top ) && isset( $settings->input_border_width_dimension_right ) && isset( $settings->input_border_width_dimension_bottom ) && isset( $settings->input_border_width_dimension_left ) ) {
+						if ( empty( $settings->input_border_width_dimension_top ) && empty( $settings->input_border_width_dimension_right ) && empty( $settings->input_border_width_dimension_bottom ) && empty( $settings->input_border_width_dimension_left ) ) {
+							$settings->input_border['width'] = array(
+								'top'    => 1,
+								'right'  => 1,
+								'bottom' => 1,
+								'left'   => 1,
+							);
+						} else {
 							$settings->input_border['width'] = array(
 								'top'    => $settings->input_border_width_dimension_top,
 								'right'  => $settings->input_border_width_dimension_right,
 								'bottom' => $settings->input_border_width_dimension_bottom,
 								'left'   => $settings->input_border_width_dimension_left,
 							);
-						unset( $settings->input_border_width_dimension_top );
-						unset( $settings->input_border_width_dimension_right );
-						unset( $settings->input_border_width_dimension_bottom );
-						unset( $settings->input_border_width_dimension_left );
+							unset( $settings->input_border_width_dimension_top );
+							unset( $settings->input_border_width_dimension_right );
+							unset( $settings->input_border_width_dimension_bottom );
+							unset( $settings->input_border_width_dimension_left );
+						}
 					}
 
 					if ( isset( $settings->input_border_width_dimension_top_medium ) && isset( $settings->input_border_width_dimension_right_medium ) && isset( $settings->input_border_width_dimension_bottom_medium ) && isset( $settings->input_border_width_dimension_left_medium ) ) {
@@ -559,16 +608,21 @@ class UABBContactForm7Module extends FLBuilderModule {
 			}
 
 			// Validation border settings.
-			if ( ! empty( $settings->validation_border_color ) && ( ! isset( $settings->validation_border ) || empty( $settings->validation_border ) ) ) {
+			// Border style, color, and width.
+			if ( isset( $settings->validation_border_color ) ) {
+				$settings->validation_border          = array();
+				$settings->validation_border['style'] = 'solid';
+				$settings->validation_border['color'] = $settings->validation_border_color;
 
-				$settings->validation_border = array();
-
-				// Border style, color, and width.
-				if ( isset( $settings->validation_border_color ) ) {
-					$settings->validation_border['style'] = 'solid';
-					$settings->validation_border['color'] = $settings->validation_border_color;
-
-					if ( isset( $settings->validation_border_width ) ) {
+				if ( isset( $settings->validation_border_width ) ) {
+					if ( empty( $settings->validation_border_width ) ) {
+						$settings->validation_border['width'] = array(
+							'top'    => 1,
+							'right'  => 1,
+							'bottom' => 1,
+							'left'   => 1,
+						);
+					} else {
 						$settings->validation_border['width'] = array(
 							'top'    => $settings->validation_border_width,
 							'right'  => $settings->validation_border_width,
@@ -577,11 +631,9 @@ class UABBContactForm7Module extends FLBuilderModule {
 						);
 						unset( $settings->validation_border_width );
 					}
-
-					unset( $settings->validation_border_color );
 				}
-
-				// Border radius.
+				unset( $settings->validation_border_color );
+					// Border radius.
 				if ( isset( $settings->validation_border_radius ) ) {
 					$settings->validation_border['radius'] = array(
 						'top_left'     => $settings->validation_border_radius,
@@ -593,83 +645,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					unset( $settings->validation_border_radius );
 				}
 			}
-
-			// Unset the old values.
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size_unit );
-				unset( $settings->btn_font_size_unit_medium );
-				unset( $settings->btn_font_size_unit_responsive );
-				unset( $settings->btn_line_height_unit );
-				unset( $settings->btn_line_height_unit_medium );
-				unset( $settings->btn_line_height_unit_responsive );
-				unset( $settings->btn_text_transform );
-				unset( $settings->btn_letter_spacing );
-			}
-			if ( isset( $settings->radio_checkbox_font_family ) ) {
-				unset( $settings->radio_checkbox_font_family );
-				unset( $settings->radio_checkbox_font_size_unit );
-				unset( $settings->radio_checkbox_font_size_unit_medium );
-				unset( $settings->radio_checkbox_font_size_unit_responsive );
-				unset( $settings->radio_checkbox_transform );
-				unset( $settings->radio_checkbox_letter_spacing );
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
-				unset( $settings->letter_spacing );
-			}
-			if ( isset( $settings->label_font_family ) ) {
-				unset( $settings->label_font_family );
-				unset( $settings->label_font_size_unit );
-				unset( $settings->label_font_size_unit_medium );
-				unset( $settings->label_font_size_unit_responsive );
-				unset( $settings->label_line_height_unit );
-				unset( $settings->label_line_height_unit_medium );
-				unset( $settings->label_line_height_unit_responsive );
-				unset( $settings->label_transform );
-				unset( $settings->label_letter_spacing );
-			}
-			if ( isset( $settings->form_desc_font_family ) ) {
-				unset( $settings->form_desc_font_family );
-				unset( $settings->form_desc_font_size_unit );
-				unset( $settings->form_desc_font_size_unit_medium );
-				unset( $settings->form_desc_font_size_unit_responsive );
-				unset( $settings->form_desc_line_height_unit );
-				unset( $settings->form_desc_line_height_unit_medium );
-				unset( $settings->form_desc_line_height_unit_responsive );
-				unset( $settings->form_desc_transform );
-				unset( $settings->form_desc_letter_spacing );
-			}
-			if ( isset( $settings->form_title_font_family ) ) {
-				unset( $settings->form_title_font_family );
-				unset( $settings->form_title_font_size_unit );
-				unset( $settings->form_title_font_size_unit_medium );
-				unset( $settings->form_title_font_size_unit_responsive );
-				unset( $settings->form_title_line_height_unit );
-				unset( $settings->form_title_line_height_unit_medium );
-				unset( $settings->form_title_line_height_unit_responsive );
-				unset( $settings->form_title_transform );
-				unset( $settings->form_title_letter_spacing );
-			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For alignment settings.
-			if ( isset( $settings->input_text_align ) ) {
-				$settings->input_text_align = $settings->input_text_align;
-			}
-			if ( isset( $settings->form_text_align ) ) {
-				$settings->form_text_align = $settings->form_text_align;
-			}
-			if ( isset( $settings->btn_align ) ) {
-				$settings->btn_align = $settings->btn_align;
-			}
 
 			// Handle opacity settings.
 			$helper->handle_opacity_inputs( $settings, 'input_background_color_opc', 'input_background_color' );
@@ -690,6 +666,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->btn_font_family['family'] ) ) {
 
 					$settings->form_button_typo['font_family'] = $settings->btn_font_family['family'];
+					unset( $settings->btn_font_family['family'] );
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
@@ -698,6 +675,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_button_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
+					unset( $settings->btn_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->btn_font_size['desktop'] ) && ! isset( $settings->form_button_typo['font_size'] ) ) {
@@ -745,6 +723,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 			}
 			if ( isset( $settings->btn_text_transform ) ) {
 				$settings->form_button_typo['text_transform'] = $settings->btn_text_transform;
+				unset( $settings->btn_text_transform );
 			}
 
 			// For form title typography settings.
@@ -759,6 +738,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->form_title_font_family['family'] ) ) {
 
 					$settings->form_title_typo['font_family'] = $settings->form_title_font_family['family'];
+					unset( $settings->form_title_font_family['family'] );
 				}
 				if ( isset( $settings->form_title_font_family['weight'] ) ) {
 
@@ -767,6 +747,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_title_typo['font_weight'] = $settings->form_title_font_family['weight'];
 					}
+					unset( $settings->form_title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->form_title_font_size['desktop'] ) && ! isset( $settings->form_title_typo['font_size'] ) ) {
@@ -825,6 +806,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->form_desc_font_family['family'] ) ) {
 
 					$settings->form_desc_typo['font_family'] = $settings->form_desc_font_family['family'];
+					unset( $settings->form_desc_font_family['family'] );
 				}
 				if ( isset( $settings->form_desc_font_family['weight'] ) ) {
 
@@ -833,6 +815,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_desc_typo['font_weight'] = $settings->form_desc_font_family['weight'];
 					}
+					unset( $settings->form_desc_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->form_desc_font_size['desktop'] ) && ! isset( $settings->form_desc_typo['font_size'] ) ) {
@@ -891,6 +874,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->label_font_family['family'] ) ) {
 
 					$settings->form_label_typo['font_family'] = $settings->label_font_family['family'];
+					unset( $settings->label_font_family['family'] );
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
@@ -899,6 +883,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_label_typo['font_weight'] = $settings->label_font_family['weight'];
 					}
+					unset( $settings->label_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->label_font_size['desktop'] ) && ! isset( $settings->form_label_typo['font_size'] ) ) {
@@ -957,6 +942,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->form_input_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -965,6 +951,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_input_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) && ! isset( $settings->form_input_typo['font_size'] ) ) {
@@ -1023,6 +1010,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 				if ( isset( $settings->radio_checkbox_font_family['family'] ) ) {
 
 					$settings->form_radio_typo['font_family'] = $settings->radio_checkbox_font_family['family'];
+					unset( $settings->radio_checkbox_font_family['family'] );
 				}
 				if ( isset( $settings->radio_checkbox_font_family['weight'] ) ) {
 
@@ -1031,6 +1019,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 					} else {
 						$settings->form_radio_typo['font_weight'] = $settings->radio_checkbox_font_family['weight'];
 					}
+					unset( $settings->radio_checkbox_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->radio_checkbox_font_size['desktop'] ) && ! isset( $settings->form_radio_typo['font_size'] ) ) {
@@ -1093,6 +1082,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->form_spacing );
 			}
 
 			// Form inputs padding settings.
@@ -1135,72 +1125,78 @@ class UABBContactForm7Module extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->input_padding );
 			}
 
-			// Handle old border settings.
-			if ( ! empty( $settings->input_border_color ) && ( ! isset( $settings->input_border ) || empty( $settings->input_border ) ) ) {
+			// Border style, color, and width.
+			if ( isset( $settings->input_border_color ) ) {
+				$settings->input_border          = array();
+				$settings->input_border['style'] = 'solid';
+				$settings->input_border['color'] = $settings->input_border_color;
+				unset( $settings->input_border_color );
+				// Input border settings.
+				if ( isset( $settings->input_border_width ) ) {
 
-				$settings->input_border = array();
+					$value = '';
+					$value = str_replace( 'px', '', $settings->input_border_width );
 
-				// Border style, color, and width.
-				if ( isset( $settings->input_border_color ) && ! empty( $settings->input_border_color ) ) {
+					$output       = array();
+					$uabb_default = array_filter( preg_split( '/\s*;\s*/', $value ) );
 
-					$settings->input_border['style'] = 'solid';
-					$settings->input_border['color'] = $settings->input_border_color;
+					$input_border_width_dimension_top    = '';
+					$input_border_width_dimension_bottom = '';
+					$input_border_width_dimension_left   = '';
+					$input_border_width_dimension_right  = '';
 
-					// Input border settings.
-					if ( isset( $settings->input_border_width ) ) {
-
-						$value = '';
-						$value = str_replace( 'px', '', $settings->input_border_width );
-
-						$output       = array();
-						$uabb_default = array_filter( preg_split( '/\s*;\s*/', $value ) );
-
-						$settings->input_border_width_dimension_top    = '';
-						$settings->input_border_width_dimension_bottom = '';
-						$settings->input_border_width_dimension_left   = '';
-						$settings->input_border_width_dimension_right  = '';
-
-						foreach ( $uabb_default as $val ) {
-							$new      = explode( ':', $val );
-							$output[] = $new;
-						}
-						for ( $i = 0; $i < count( $output ); $i++ ) {
-							switch ( $output[ $i ][0] ) {
-								case 'padding-top':
-									$settings->input_border_width_dimension_top = (int) $output[ $i ][1];
-									break;
-								case 'padding-bottom':
-									$settings->input_border_width_dimension_bottom = (int) $output[ $i ][1];
-									break;
-								case 'padding-right':
-									$settings->input_border_width_dimension_right = (int) $output[ $i ][1];
-									break;
-								case 'padding-left':
-									$settings->input_border_width_dimension_left = (int) $output[ $i ][1];
-									break;
-								case 'padding':
-									$settings->input_border_width_dimension_top    = (int) $output[ $i ][1];
-									$settings->input_border_width_dimension_bottom = (int) $output[ $i ][1];
-									$settings->input_border_width_dimension_left   = (int) $output[ $i ][1];
-									$settings->input_border_width_dimension_right  = (int) $output[ $i ][1];
-									break;
-							}
+					foreach ( $uabb_default as $val ) {
+						$new      = explode( ':', $val );
+						$output[] = $new;
+					}
+					for ( $i = 0; $i < count( $output ); $i++ ) {
+						switch ( $output[ $i ][0] ) {
+							case 'padding-top':
+								$input_border_width_dimension_top = (int) $output[ $i ][1];
+								break;
+							case 'padding-bottom':
+								$input_border_width_dimension_bottom = (int) $output[ $i ][1];
+								break;
+							case 'padding-right':
+								$input_border_width_dimension_right = (int) $output[ $i ][1];
+								break;
+							case 'padding-left':
+								$input_border_width_dimension_left = (int) $output[ $i ][1];
+								break;
+							case 'padding':
+								$input_border_width_dimension_top    = (int) $output[ $i ][1];
+								$input_border_width_dimension_bottom = (int) $output[ $i ][1];
+								$input_border_width_dimension_left   = (int) $output[ $i ][1];
+								$input_border_width_dimension_right  = (int) $output[ $i ][1];
+								break;
 						}
 					}
-					if ( isset( $settings->input_border_width_dimension_top ) && isset( $settings->input_border_width_dimension_right ) && isset( $settings->input_border_width_dimension_bottom ) && isset( $settings->input_border_width_dimension_left ) ) {
-							$settings->input_border['width'] = array(
-								'top'    => $settings->input_border_width_dimension_top,
-								'right'  => $settings->input_border_width_dimension_right,
-								'bottom' => $settings->input_border_width_dimension_bottom,
-								'left'   => $settings->input_border_width_dimension_left,
-							);
-					}
-
-					unset( $settings->input_border_width_dimension );
 				}
+				if ( isset( $input_border_width_dimension_top ) && isset( $input_border_width_dimension_right ) && isset( $input_border_width_dimension_bottom ) && isset( $input_border_width_dimension_left ) ) {
+					if ( empty( $input_border_width_dimension_top ) && empty( $input_border_width_dimension_right ) && empty( $input_border_width_dimension_bottom ) && empty( $input_border_width_dimension_left ) ) {
 
+						$settings->input_border['width'] = array(
+							'top'    => 1,
+							'right'  => 1,
+							'bottom' => 1,
+							'left'   => 1,
+						);
+					} else {
+						$settings->input_border['width'] = array(
+							'top'    => $input_border_width_dimension_top,
+							'right'  => $input_border_width_dimension_right,
+							'bottom' => $input_border_width_dimension_bottom,
+							'left'   => $input_border_width_dimension_left,
+						);
+						unset( $input_border_width_dimension_top );
+						unset( $input_border_width_dimension_right );
+						unset( $input_border_width_dimension_bottom );
+						unset( $input_border_width_dimension_left );
+					}
+				}
 				// Border radius.
 				if ( isset( $settings->input_border_radius ) ) {
 					$settings->input_border['radius'] = array(
@@ -1209,22 +1205,28 @@ class UABBContactForm7Module extends FLBuilderModule {
 						'bottom_left'  => $settings->input_border_radius,
 						'bottom_right' => $settings->input_border_radius,
 					);
-
 					unset( $settings->input_border_radius );
 				}
 			}
-
 			// validation border settings.
-			if ( ! empty( $settings->validation_border_color ) && ( ! isset( $settings->validation_border ) || empty( $settings->validation_border ) ) ) {
-
+			// Border style, color, and width.
+			if ( isset( $settings->validation_border_color ) ) {
 				$settings->validation_border = array();
 
-				// Border style, color, and width.
-				if ( isset( $settings->validation_border_color ) ) {
-					$settings->validation_border['style'] = 'solid';
-					$settings->validation_border['color'] = $settings->validation_border_color;
+				$settings->validation_border['style'] = 'solid';
 
-					if ( isset( $settings->validation_border_width ) ) {
+				$settings->validation_border['color'] = $settings->validation_border_color;
+				unset( $settings->validation_border_color );
+
+				if ( isset( $settings->validation_border_width ) ) {
+					if ( empty( $settings->validation_border_width ) ) {
+						$settings->validation_border['width'] = array(
+							'top'    => 1,
+							'right'  => 1,
+							'bottom' => 1,
+							'left'   => 1,
+						);
+					} else {
 						$settings->validation_border['width'] = array(
 							'top'    => $settings->validation_border_width,
 							'right'  => $settings->validation_border_width,
@@ -1233,9 +1235,7 @@ class UABBContactForm7Module extends FLBuilderModule {
 						);
 						unset( $settings->validation_border_width );
 					}
-					unset( $settings->validation_border_color );
 				}
-
 				// Border radius.
 				if ( isset( $settings->validation_border_radius ) ) {
 					$settings->validation_border['radius'] = array(
@@ -1244,11 +1244,9 @@ class UABBContactForm7Module extends FLBuilderModule {
 						'bottom_left'  => $settings->validation_border_radius,
 						'bottom_right' => $settings->validation_border_radius,
 					);
-
 					unset( $settings->validation_border_radius );
 				}
 			}
-
 			// Validation spacing settings.
 			if ( isset( $settings->validation_spacing ) ) {
 
@@ -1289,38 +1287,112 @@ class UABBContactForm7Module extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->validation_spacing );
 			}
-
 			// Unset the old values.
-			if ( isset( $settings->radio_checkbox_font_family ) ) {
-				unset( $settings->radio_checkbox_font_family );
-				unset( $settings->radio_checkbox_font_size );
+			if ( isset( $settings->radio_checkbox_font_size['desktop'] ) ) {
+				unset( $settings->radio_checkbox_font_size['desktop'] );
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->line_height );
+			if ( isset( $settings->radio_checkbox_font_size['medium'] ) ) {
+				unset( $settings->radio_checkbox_font_size['medium'] );
 			}
-			if ( isset( $settings->label_font_family ) ) {
-				unset( $settings->label_font_family );
-				unset( $settings->label_font_size );
-				unset( $settings->label_line_height );
+			if ( isset( $settings->radio_checkbox_font_size['small'] ) ) {
+				unset( $settings->radio_checkbox_font_size['small'] );
 			}
-			if ( isset( $settings->form_desc_font_family ) ) {
-				unset( $settings->form_desc_font_family );
-				unset( $settings->form_desc_font_size );
-				unset( $settings->form_desc_line_height );
+			// Unset the old values.
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
 			}
-			if ( isset( $settings->form_title_font_family ) ) {
-				unset( $settings->form_title_font_family );
-				unset( $settings->form_title_font_size );
-				unset( $settings->form_title_line_height );
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
 			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size );
-				unset( $settings->btn_line_height );
-				unset( $settings->btn_text_transform );
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->label_font_size['desktop'] ) ) {
+				unset( $settings->label_font_size['desktop'] );
+			}
+			if ( isset( $settings->label_font_size['medium'] ) ) {
+				unset( $settings->label_font_size['medium'] );
+			}
+			if ( isset( $settings->label_font_size['small'] ) ) {
+				unset( $settings->label_font_size['small'] );
+			}
+			if ( isset( $settings->label_line_height['desktop'] ) ) {
+				unset( $settings->label_line_height['desktop'] );
+			}
+			if ( isset( $settings->label_line_height['medium'] ) ) {
+				unset( $settings->label_line_height['medium'] );
+			}
+			if ( isset( $settings->label_line_height['small'] ) ) {
+				unset( $settings->label_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->form_desc_font_size['desktop'] ) ) {
+				unset( $settings->form_desc_font_size['desktop'] );
+			}
+			if ( isset( $settings->form_desc_font_size['medium'] ) ) {
+				unset( $settings->form_desc_font_size['medium'] );
+			}
+			if ( isset( $settings->form_desc_font_size['small'] ) ) {
+				unset( $settings->form_desc_font_size['small'] );
+			}
+			if ( isset( $settings->form_desc_line_height['desktop'] ) ) {
+				unset( $settings->form_desc_line_height['desktop'] );
+			}
+			if ( isset( $settings->form_desc_line_height['medium'] ) ) {
+				unset( $settings->form_desc_line_height['medium'] );
+			}
+			if ( isset( $settings->form_desc_line_height['small'] ) ) {
+				unset( $settings->form_desc_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->form_title_font_size['desktop'] ) ) {
+				unset( $settings->form_title_font_size['desktop'] );
+			}
+			if ( isset( $settings->form_title_font_size['medium'] ) ) {
+				unset( $settings->form_title_font_size['medium'] );
+			}
+			if ( isset( $settings->form_title_font_size['small'] ) ) {
+				unset( $settings->form_title_font_size['small'] );
+			}
+			if ( isset( $settings->form_title_line_height['desktop'] ) ) {
+				unset( $settings->form_title_line_height['desktop'] );
+			}
+			if ( isset( $settings->form_title_line_height['medium'] ) ) {
+				unset( $settings->form_title_line_height['medium'] );
+			}
+			if ( isset( $settings->form_title_line_height['small'] ) ) {
+				unset( $settings->form_title_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->btn_font_size['desktop'] ) ) {
+				unset( $settings->btn_font_size['desktop'] );
+			}
+			if ( isset( $settings->btn_font_size['medium'] ) ) {
+				unset( $settings->btn_font_size['medium'] );
+			}
+			if ( isset( $settings->btn_font_size['small'] ) ) {
+				unset( $settings->btn_font_size['small'] );
+			}
+			if ( isset( $settings->btn_line_height['desktop'] ) ) {
+				unset( $settings->btn_line_height['desktop'] );
+			}
+			if ( isset( $settings->btn_line_height['medium'] ) ) {
+				unset( $settings->btn_line_height['medium'] );
+			}
+			if ( isset( $settings->btn_line_height['small'] ) ) {
+				unset( $settings->btn_line_height['small'] );
 			}
 		}
 

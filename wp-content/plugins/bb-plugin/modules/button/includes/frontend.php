@@ -1,8 +1,8 @@
 <div class="<?php echo $module->get_classname(); ?>">
 	<?php if ( isset( $settings->click_action ) && 'lightbox' == $settings->click_action ) : ?>
-		<a href="<?php echo 'video' == $settings->lightbox_content_type ? $settings->lightbox_video_link : '#'; ?>" class="fl-button fl-button-lightbox<?php if ( 'enable' == $settings->icon_animation ) : ?> fl-button-icon-animation<?php endif; ?>" role="button">
+		<a href="<?php echo 'video' == $settings->lightbox_content_type ? $settings->lightbox_video_link : '#'; ?>" class="fl-button fl-button-lightbox<?php echo ( 'enable' == $settings->icon_animation ) ? ' fl-button-icon-animation' : ''; ?>" role="button">
 	<?php else : ?>
-		<a href="<?php echo $settings->link; ?>" target="<?php echo $settings->link_target; ?>" class="fl-button<?php if ( 'enable' == $settings->icon_animation ) : ?> fl-button-icon-animation<?php endif; ?>" role="button"<?php echo $module->get_rel(); ?>>
+		<a href="<?php echo $settings->link; ?>" target="<?php echo $settings->link_target; ?>" class="fl-button<?php echo ( 'enable' == $settings->icon_animation ) ? ' fl-button-icon-animation' : ''; ?>" role="button"<?php echo $module->get_rel(); ?>>
 	<?php endif; ?>
 		<?php if ( ! empty( $settings->icon ) && ( 'before' == $settings->icon_position || ! isset( $settings->icon_position ) ) ) : ?>
 		<i class="fl-button-icon fl-button-icon-before <?php echo $settings->icon; ?>" aria-hidden="true"></i>

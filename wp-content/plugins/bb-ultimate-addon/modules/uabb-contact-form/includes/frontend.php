@@ -190,7 +190,7 @@ if ( 'show' == $settings->msg_toggle && '50' == $settings->msg_width ) {
 			if ( isset( $settings->btn_icon ) && isset( $settings->btn_icon_position ) ) {
 				echo ( '' != $settings->btn_icon && 'before' == $settings->btn_icon_position ) ? '<i class="' . $settings->btn_icon . '"></i>' : ''; }
 			?>
-			<span><?php echo $settings->btn_text; ?></span>
+			<span class="uabb-contact-form-button-text"><?php echo $settings->btn_text; ?></span>
 			<?php
 			if ( isset( $settings->btn_icon ) && isset( $settings->btn_icon_position ) ) {
 				echo ( '' != $settings->btn_icon && 'after' == $settings->btn_icon_position ) ? '<i class="' . $settings->btn_icon . '"></i>' : ''; }

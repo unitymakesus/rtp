@@ -71,33 +71,11 @@ class UABBTeamModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->text_alignment ) ) {
-				$settings->text_alignment = $settings->text_alignment;
-			}
-
-			// Handle link param.
-			foreach ( $settings->icons as $icon ) {
-				if ( isset( $icon->link ) ) {
-					if ( isset( $icon->link_target ) ) {
-						$icon->link_target = $icon->link_target;
-					}
+			if ( isset( $settings->custom_link_nofollow ) ) {
+				if ( '1' == $settings->custom_link_nofollow || 'yes' == $settings->custom_link_nofollow ) {
+					$settings->custom_link_nofollow = 'yes';
 				}
 			}
-			if ( isset( $settings->custom_link ) ) {
-				$settings->custom_link_target = $settings->custom_link_target;
-
-				$settings->custom_link_nofollow = ( '1' == $settings->custom_link_nofollow ) ? 'yes' : '';
-			}
-
-			// Handling link param.
-			if ( isset( $settings->custom_link_target ) ) {
-				$settings->custom_link_target = $settings->custom_link_target;
-			}
-			if ( isset( $settings->custom_link_nofollow ) ) {
-				$settings->custom_link_nofollow = $settings->custom_link_nofollow;
-			}
-
 			// Handle opacity old values.
 			$helper->handle_opacity_inputs( $settings, 'text_bg_color_opc', 'text_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );
@@ -114,6 +92,7 @@ class UABBTeamModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->name_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -122,6 +101,7 @@ class UABBTeamModule extends FLBuilderModule {
 					} else {
 						$settings->name_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -130,18 +110,21 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->name_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 				$settings->name_typo_responsive['font_size'] = array(
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -149,21 +132,25 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 				$settings->name_typo_medium['line_height'] = array(
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 				$settings->name_typo_responsive['line_height'] = array(
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->name_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 
@@ -171,6 +158,7 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->letter_spacing );
 			}
 
 			// For designation typography settings.
@@ -185,6 +173,7 @@ class UABBTeamModule extends FLBuilderModule {
 				if ( isset( $settings->desg_font_family['family'] ) ) {
 
 					$settings->desg_typo['font_family'] = $settings->desg_font_family['family'];
+					unset( $settings->desg_font_family['family'] );
 				}
 				if ( isset( $settings->desg_font_family['weight'] ) ) {
 
@@ -193,6 +182,7 @@ class UABBTeamModule extends FLBuilderModule {
 					} else {
 						$settings->desg_typo['font_weight'] = $settings->desg_font_family['weight'];
 					}
+					unset( $settings->desg_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->desg_font_size_unit ) ) {
@@ -201,18 +191,21 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->desg_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->desg_font_size_unit );
 			}
 			if ( isset( $settings->desg_font_size_unit_medium ) ) {
 				$settings->desg_typo_medium['font_size'] = array(
 					'length' => $settings->desg_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->desg_font_size_unit_medium );
 			}
 			if ( isset( $settings->desg_font_size_unit_responsive ) ) {
 				$settings->desg_typo_responsive['font_size'] = array(
 					'length' => $settings->desg_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->desg_font_size_unit_responsive );
 			}
 			if ( isset( $settings->desg_line_height_unit ) ) {
 
@@ -220,21 +213,25 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->desg_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->desg_line_height_unit );
 			}
 			if ( isset( $settings->desg_line_height_unit_medium ) ) {
 				$settings->desg_typo_medium['line_height'] = array(
 					'length' => $settings->desg_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->desg_line_height_unit_medium );
 			}
 			if ( isset( $settings->desg_line_height_unit_responsive ) ) {
 				$settings->desg_typo_responsive['line_height'] = array(
 					'length' => $settings->desg_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->desg_line_height_unit_responsive );
 			}
 			if ( isset( $settings->desg_transform ) ) {
 				$settings->desg_typo['text_transform'] = $settings->desg_transform;
+				unset( $settings->desg_transform );
 			}
 			if ( isset( $settings->desg_letter_spacing ) ) {
 
@@ -242,6 +239,7 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->desg_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->desg_letter_spacing );
 			}
 
 			// For description typography settings.
@@ -256,6 +254,7 @@ class UABBTeamModule extends FLBuilderModule {
 				if ( isset( $settings->desc_font_family['family'] ) ) {
 
 					$settings->desc_typo['font_family'] = $settings->desc_font_family['family'];
+					unset( $settings->desc_font_family['family'] );
 				}
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
 
@@ -264,6 +263,7 @@ class UABBTeamModule extends FLBuilderModule {
 					} else {
 						$settings->desc_typo['font_weight'] = $settings->desc_font_family['weight'];
 					}
+					unset( $settings->desc_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size_unit ) ) {
@@ -272,18 +272,21 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->desc_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit );
 			}
 			if ( isset( $settings->desc_font_size_unit_medium ) ) {
 				$settings->desc_typo_medium['font_size'] = array(
 					'length' => $settings->desc_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit_medium );
 			}
 			if ( isset( $settings->desc_font_size_unit_responsive ) ) {
 				$settings->desc_typo_responsive['font_size'] = array(
 					'length' => $settings->desc_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit_responsive );
 			}
 			if ( isset( $settings->desc_line_height_unit ) ) {
 
@@ -291,21 +294,25 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit );
 			}
 			if ( isset( $settings->desc_line_height_unit_medium ) ) {
 				$settings->desc_typo_medium['line_height'] = array(
 					'length' => $settings->desc_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit_medium );
 			}
 			if ( isset( $settings->desc_line_height_unit_responsive ) ) {
 				$settings->desc_typo_responsive['line_height'] = array(
 					'length' => $settings->desc_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit_responsive );
 			}
 			if ( isset( $settings->desc_transform ) ) {
 				$settings->desc_typo['text_transform'] = $settings->desc_transform;
+				unset( $settings->desc_transform );
 			}
 			if ( isset( $settings->desc_letter_spacing ) ) {
 
@@ -313,58 +320,15 @@ class UABBTeamModule extends FLBuilderModule {
 					'length' => $settings->desc_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			// Unset the old values.
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
-				unset( $settings->letter_spacing );
-			}
-			if ( isset( $settings->desg_font_family ) ) {
-				unset( $settings->desg_font_family );
-				unset( $settings->desg_font_size_unit );
-				unset( $settings->desg_font_size_unit_medium );
-				unset( $settings->desg_font_size_unit_responsive );
-				unset( $settings->desg_line_height_unit );
-				unset( $settings->desg_line_height_unit_medium );
-				unset( $settings->desg_line_height_unit_responsive );
-				unset( $settings->desg_transform );
-				unset( $settings->desg_letter_spacing );
-			}
-			if ( isset( $settings->desc_font_family ) ) {
-				unset( $settings->desc_font_family );
-				unset( $settings->desc_font_size_unit );
-				unset( $settings->desc_font_size_unit_medium );
-				unset( $settings->desc_font_size_unit_responsive );
-				unset( $settings->desc_line_height_unit );
-				unset( $settings->desc_line_height_unit_medium );
-				unset( $settings->desc_line_height_unit_responsive );
-				unset( $settings->desc_transform );
 				unset( $settings->desc_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
-			// Handle link param.
-			foreach ( $settings->icons as $icon ) {
-				if ( isset( $icon->link ) ) {
-					if ( isset( $icon->link_target ) ) {
-						$icon->link_target = $icon->link_target;
-					}
+			if ( isset( $settings->custom_link_nofollow ) ) {
+				if ( '1' == $settings->custom_link_nofollow || 'yes' == $settings->custom_link_nofollow ) {
+					$settings->custom_link_nofollow = 'yes';
 				}
 			}
-
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->text_alignment ) ) {
-				$settings->text_alignment = $settings->text_alignment;
-			}
-
 			// Handle opacity old values.
 			$helper->handle_opacity_inputs( $settings, 'text_bg_color_opc', 'text_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );
@@ -381,6 +345,7 @@ class UABBTeamModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->name_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -389,6 +354,7 @@ class UABBTeamModule extends FLBuilderModule {
 					} else {
 						$settings->name_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) && ! isset( $settings->name_typo['font_size'] ) ) {
@@ -447,6 +413,7 @@ class UABBTeamModule extends FLBuilderModule {
 				if ( isset( $settings->desg_font_family['family'] ) ) {
 
 					$settings->desg_typo['font_family'] = $settings->desg_font_family['family'];
+					unset( $settings->desg_font_family['family'] );
 				}
 				if ( isset( $settings->desg_font_family['weight'] ) ) {
 
@@ -455,6 +422,7 @@ class UABBTeamModule extends FLBuilderModule {
 					} else {
 						$settings->desg_typo['font_weight'] = $settings->desg_font_family['weight'];
 					}
+					unset( $settings->desg_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->desg_font_size['desktop'] ) && ! isset( $settings->desg_typo['font_size'] ) ) {
@@ -513,6 +481,7 @@ class UABBTeamModule extends FLBuilderModule {
 				if ( isset( $settings->desc_font_family['family'] ) ) {
 
 					$settings->desc_typo['font_family'] = $settings->desc_font_family['family'];
+					unset( $settings->desc_font_family['family'] );
 				}
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
 
@@ -521,6 +490,7 @@ class UABBTeamModule extends FLBuilderModule {
 					} else {
 						$settings->desc_typo['font_weight'] = $settings->desc_font_family['weight'];
 					}
+					unset( $settings->desc_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size['desktop'] ) && ! isset( $settings->desc_typo['font_size'] ) ) {
@@ -651,20 +621,61 @@ class UABBTeamModule extends FLBuilderModule {
 				unset( $settings->text_spacing );
 			}
 			// Unset the old values.
-			if ( isset( $settings->desc_font_family ) ) {
-				unset( $settings->desc_font_family );
-				unset( $settings->desc_font_size );
-				unset( $settings->desc_line_height );
+			if ( isset( $settings->desc_font_size['desktop'] ) ) {
+				unset( $settings->desc_font_size['desktop'] );
 			}
-			if ( isset( $settings->desg_font_family ) ) {
-				unset( $settings->desg_font_family );
-				unset( $settings->desg_font_size );
-				unset( $settings->desg_line_height );
+			if ( isset( $settings->desc_font_size['medium'] ) ) {
+				unset( $settings->desc_font_size['medium'] );
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->line_height );
+			if ( isset( $settings->desc_font_size['small'] ) ) {
+				unset( $settings->desc_font_size['small'] );
+			}
+			if ( isset( $settings->desc_line_height['desktop'] ) ) {
+				unset( $settings->desc_line_height['desktop'] );
+			}
+			if ( isset( $settings->desc_line_height['medium'] ) ) {
+				unset( $settings->desc_line_height['medium'] );
+			}
+			if ( isset( $settings->desc_line_height['small'] ) ) {
+				unset( $settings->desc_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->desg_font_size['desktop'] ) ) {
+				unset( $settings->desg_font_size['desktop'] );
+			}
+			if ( isset( $settings->desg_font_size['medium'] ) ) {
+				unset( $settings->desg_font_size['medium'] );
+			}
+			if ( isset( $settings->desg_font_size['small'] ) ) {
+				unset( $settings->desg_font_size['small'] );
+			}
+			if ( isset( $settings->desg_line_height['desktop'] ) ) {
+				unset( $settings->desg_line_height['desktop'] );
+			}
+			if ( isset( $settings->desg_line_height['medium'] ) ) {
+				unset( $settings->desg_line_height['medium'] );
+			}
+			if ( isset( $settings->desg_line_height['small'] ) ) {
+				unset( $settings->desg_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
+			}
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
+			}
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
 			}
 		}
 

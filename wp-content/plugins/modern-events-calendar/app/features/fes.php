@@ -620,7 +620,7 @@ class MEC_feature_fes extends MEC_base
         elseif($repeat_type == 'certain_weekdays')
         {
             $repeat_interval = 1;
-            $plus_date = '+'.$repeat_end_at_occurrences*$repeat_interval.' Weekdays';
+            $plus_date = '+' . ceil(($repeat_end_at_occurrences * $repeat_interval) * (7/count($certain_weekdays))) . ' days';
             
             $weekdays = ','.implode(',', $certain_weekdays).',';
         }
@@ -671,20 +671,20 @@ class MEC_feature_fes extends MEC_base
             $week = '*';
             $weekday = '*';
         }
-        
+
         // "In Days" and "Not In Days"
-        $in_days = '';
-        $not_in_days = '';
-        
         $in_days_arr = (isset($mec['in_days']) and is_array($mec['in_days']) and count($mec['in_days'])) ? array_unique($mec['in_days']) : array();
         $not_in_days_arr = (isset($mec['not_in_days']) and is_array($mec['not_in_days']) and count($mec['not_in_days'])) ? array_unique($mec['not_in_days']) : array();
-        
+
+        $in_days = '';
         if(count($in_days_arr)) foreach($in_days_arr as $key=>$in_day_arr) if(is_numeric($key)) $in_days .= $in_day_arr.',';
+
+        $not_in_days = '';
         if(count($not_in_days_arr)) foreach($not_in_days_arr as $key=>$not_in_day_arr) if(is_numeric($key)) $not_in_days .= $not_in_day_arr.',';
-        
+
         $in_days = trim($in_days, ', ');
         $not_in_days = trim($not_in_days, ', ');
-        
+
         update_post_meta($post_id, 'mec_in_days', $in_days);
         update_post_meta($post_id, 'mec_not_in_days', $not_in_days);
         
@@ -698,11 +698,8 @@ class MEC_feature_fes extends MEC_base
         }
         else $repeat_end_date = '0000-00-00';
 
-        // Set the end date if repeat type is custom_days. It's needed to show main date of event in addition to custom days
-        if($repeat_end == 'never' and $repeat_type == 'custom_days') $repeat_end_date = $end_date;
-
         // If event is not repeating then set the end date of event correctly
-        if(!$repeat_status) $repeat_end_date = $end_date;
+        if(!$repeat_status or $repeat_type == 'custom_days') $repeat_end_date = $end_date;
 
         // Add parameters to the $event
         $event['end'] = $repeat_end_date;
@@ -745,6 +742,10 @@ class MEC_feature_fes extends MEC_base
             
             $this->db->q("UPDATE `#__mec_events` SET ".trim($q, ', ')." WHERE `id`='$mec_event_id'");
         }
+
+        // Update Schedule
+        $schedule = $this->getSchedule();
+        $schedule->reschedule($post_id, $schedule->get_reschedule_maximum($repeat_type));
 
         // Hourly Schedule Options
         $raw_hourly_schedules = isset($mec['hourly_schedules']) ? $mec['hourly_schedules'] : array();
@@ -796,8 +797,8 @@ class MEC_feature_fes extends MEC_base
         elseif($status == 'publish') $message = __('The event published.', 'mec');
         
         // Trigger Event
-        if($method == 'updated') do_action('mec_fes_updated', $post_id);
-        else do_action('mec_fes_added', $post_id);
+        if($method == 'updated') do_action('mec_fes_updated', $post_id , 'update');
+        else do_action('mec_fes_added', $post_id , '');
         
         $this->main->response(array('success'=>1, 'message'=>$message, 'data'=>array('post_id'=>$post_id)));
     }

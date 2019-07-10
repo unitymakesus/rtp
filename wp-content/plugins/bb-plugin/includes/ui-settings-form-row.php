@@ -1,12 +1,22 @@
 <script type="text/html" id="tmpl-fl-builder-settings-row">
+	<#
+	var connections = false
+	if ( 'undefined' !== typeof data.field.connections ) {
+		connections = true
+	}
+	#>
 	<# if ( data.isMultiple && data.supportsMultiple && data.template.length ) {
 		var values = data.value,
 			button = FLBuilderStrings.addField.replace( '%s', data.field.label ),
 			i	   = 0;
 
 		data.name += '[]';
-	#>
-	<tbody id="fl-field-{{data.rootName}}" class="fl-field fl-builder-field-multiples" data-type="form" data-preview='{{{data.preview}}}'>
+
+		var limit = 0;
+		if ( 'undefined' !== typeof data.field.limit ) {
+			limit = data.field.limit
+		} #>
+	<tbody id="fl-field-{{data.rootName}}" class="fl-field fl-builder-field-multiples" data-limit="{{limit}}" data-type="form" data-preview='{{{data.preview}}}' data-connections="{{{connections}}}">
 		<# for( ; i < values.length; i++ ) {
 			data.index = i;
 			data.value = values[ i ];
@@ -32,7 +42,7 @@
 		</tr>
 	</tbody>
 	<# } else { #>
-	<tr id="fl-field-{{data.name}}" class="fl-field{{data.rowClass}}" data-type="{{data.field.type}}" data-preview='{{{data.preview}}}'>
+	<tr id="fl-field-{{data.name}}" class="fl-field{{data.rowClass}}" data-type="{{data.field.type}}" data-preview='{{{data.preview}}}' data-connections="{{{connections}}}">
 		<# var field = FLBuilderSettingsForms.renderField( data ); #>
 		{{{field}}}
 	</tr>

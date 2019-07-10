@@ -83,6 +83,21 @@ if(isset($styling['container_large_width']) && $styling['container_large_width']
 		}
 	}
 }
+$title_color = $title_color_hover = $content_color = '';
+if(isset($styling['title_color']) && $styling['title_color'])
+{
+	$title_color = $styling['title_color'];
+}
+
+if(isset($styling['title_color_hover']) && $styling['title_color_hover'])
+{
+	$title_color_hover = $styling['title_color_hover'];
+}
+
+if(isset($styling['content_color']) && $styling['content_color'])
+{
+	$content_color = $styling['content_color'];
+}
 
 ob_start();
 
@@ -105,7 +120,7 @@ if($mec_p_fontfamily_arr): ?>
 if($color && $color != '#40d9f1'): ?>
 	/* == TextColors
 		---------------- */
-	.mec-wrap.colorskin-custom .mec-calendar.mec-event-calendar-classic .mec-selected-day,.mec-wrap.colorskin-custom .mec-color, .mec-wrap.colorskin-custom .mec-event-sharing-wrap .mec-event-sharing > li:hover a, .mec-wrap.colorskin-custom .mec-color-hover:hover, .mec-wrap.colorskin-custom .mec-color-before *:before ,.mec-wrap.colorskin-custom .mec-widget .mec-event-grid-classic.owl-carousel .owl-nav i,.mec-wrap.colorskin-custom .mec-event-list-classic a.magicmore:hover,.mec-wrap.colorskin-custom .mec-event-grid-simple:hover .mec-event-title,.mec-wrap.colorskin-custom .mec-single-event .mec-event-meta dd.mec-events-event-categories:before,.mec-wrap.colorskin-custom .mec-single-event-date:before,.mec-wrap.colorskin-custom .mec-single-event-time:before,.mec-wrap.colorskin-custom .mec-events-meta-group.mec-events-meta-group-venue:before,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-previous-month i,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-next-month,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-previous-month:hover,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-next-month:hover,.mec-wrap.colorskin-custom .mec-calendar.mec-event-calendar-classic dt.mec-selected-day:hover,.mec-wrap.colorskin-custom .mec-infowindow-wp h5 a:hover, .colorskin-custom .mec-events-meta-group-countdown .mec-end-counts h3,.mec-calendar .mec-calendar-side .mec-next-month i,.mec-wrap .mec-totalcal-box i,.mec-calendar .mec-event-article .mec-event-title a:hover,.mec-attendees-list-details .mec-attendee-profile-link a:hover, .mec-next-event-details li i,.mec-next-event-details a,.mec-wrap.colorskin-custom .mec-events-masonry-cats a.mec-masonry-cat-selected
+	.mec-wrap.colorskin-custom .mec-totalcal-box .mec-totalcal-view span:hover,.mec-wrap.colorskin-custom .mec-calendar.mec-event-calendar-classic .mec-selected-day,.mec-wrap.colorskin-custom .mec-color, .mec-wrap.colorskin-custom .mec-event-sharing-wrap .mec-event-sharing > li:hover a, .mec-wrap.colorskin-custom .mec-color-hover:hover, .mec-wrap.colorskin-custom .mec-color-before *:before ,.mec-wrap.colorskin-custom .mec-widget .mec-event-grid-classic.owl-carousel .owl-nav i,.mec-wrap.colorskin-custom .mec-event-list-classic a.magicmore:hover,.mec-wrap.colorskin-custom .mec-event-grid-simple:hover .mec-event-title,.mec-wrap.colorskin-custom .mec-single-event .mec-event-meta dd.mec-events-event-categories:before,.mec-wrap.colorskin-custom .mec-single-event-date:before,.mec-wrap.colorskin-custom .mec-single-event-time:before,.mec-wrap.colorskin-custom .mec-events-meta-group.mec-events-meta-group-venue:before,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-previous-month i,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-next-month,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-previous-month:hover,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-side .mec-next-month:hover,.mec-wrap.colorskin-custom .mec-calendar.mec-event-calendar-classic dt.mec-selected-day:hover,.mec-wrap.colorskin-custom .mec-infowindow-wp h5 a:hover, .colorskin-custom .mec-events-meta-group-countdown .mec-end-counts h3,.mec-calendar .mec-calendar-side .mec-next-month i,.mec-wrap .mec-totalcal-box i,.mec-calendar .mec-event-article .mec-event-title a:hover,.mec-attendees-list-details .mec-attendee-profile-link a:hover,.mec-wrap.colorskin-custom .mec-next-event-details li i,.mec-next-event-details a,.mec-wrap.colorskin-custom .mec-events-masonry-cats a.mec-masonry-cat-selected
 	{color: <?php echo $color; ?>}
 
 	/* == Backgrounds
@@ -119,9 +134,9 @@ if($color && $color != '#40d9f1'): ?>
 		------------------ */
 	.mec-wrap.colorskin-custom .mec-single-event .mec-speakers-details ul li .mec-speaker-avatar a:hover img,.mec-wrap.colorskin-custom .mec-event-list-modern .mec-event-sharing > li:hover a i,.mec-wrap.colorskin-custom .mec-event-list-modern .mec-event-sharing .mec-event-share:hover .mec-event-sharing-icon,.mec-wrap.colorskin-custom .mec-event-list-standard .mec-month-divider span:before,.mec-wrap.colorskin-custom .mec-single-event .mec-social-single:before,.mec-wrap.colorskin-custom .mec-single-event .mec-frontbox-title:before,.mec-wrap.colorskin-custom .mec-calendar .mec-calendar-events-side .mec-table-side-day, .mec-wrap.colorskin-custom .mec-border-color, .mec-wrap.colorskin-custom .mec-border-color-hover:hover, .colorskin-custom .mec-single-event .mec-frontbox-title:before, .colorskin-custom .mec-single-event .mec-events-meta-group-booking form > h4:before, .mec-wrap.colorskin-custom .mec-totalcal-box .mec-totalcal-view span.mec-totalcalview-selected,.mec-wrap .mec-totalcal-box .mec-totalcal-view span.mec-totalcalview-selected,.event-carousel-type1-head .mec-event-date-carousel:after,.mec-wrap.colorskin-custom .mec-events-masonry-cats a.mec-masonry-cat-selected,.mec-wrap.colorskin-custom .mec-events-masonry-cats a:hover
 	{border-color: <?php echo $color; ?>;}
-	.mec-event-countdown-style3 .mec-event-date:after
+	.mec-wrap.colorskin-custom .mec-event-countdown-style3 .mec-event-date:after,.mec-wrap.colorskin-custom .mec-month-divider span:before
 	{border-bottom-color:<?php echo $color; ?>;}
-	.mec-wrap article.mec-event-countdown-style1 .mec-event-countdown-part2:after
+	.mec-wrap.colorskin-custom  article.mec-event-countdown-style1 .mec-event-countdown-part2:after
 	{border-color: transparent transparent transparent <?php echo $color; ?>;}
 <?php endif;
 
@@ -134,11 +149,30 @@ if($mec_container_normal_width): ?>
 }
 <?php endif;
 
+
 if($mec_container_large_width): ?>
 @media only screen and (min-width: 1600px) {
 	.mec-container {
 		width: <?php echo $mec_container_large_width; ?>;
 	}
+}
+<?php endif;
+
+if($title_color): ?>
+.mec-wrap h1 a, .mec-wrap h2 a, .mec-wrap h3 a, .mec-wrap h4 a, .mec-wrap h5 a, .mec-wrap h6 a,.entry-content .mec-wrap h1 a, .entry-content .mec-wrap h2 a, .entry-content .mec-wrap h3 a,.entry-content  .mec-wrap h4 a, .entry-content .mec-wrap h5 a, .entry-content .mec-wrap h6 a {
+	color: <?php echo $title_color; ?> !important;
+}
+<?php endif;
+
+if($title_color_hover): ?>
+.mec-wrap.colorskin-custom h1 a:hover, .mec-wrap.colorskin-custom h2 a:hover, .mec-wrap.colorskin-custom h3 a:hover, .mec-wrap.colorskin-custom h4 a:hover, .mec-wrap.colorskin-custom h5 a:hover, .mec-wrap.colorskin-custom h6 a:hover,.entry-content .mec-wrap.colorskin-custom h1 a:hover, .entry-content .mec-wrap.colorskin-custom h2 a:hover, .entry-content .mec-wrap.colorskin-custom h3 a:hover,.entry-content  .mec-wrap.colorskin-custom h4 a:hover, .entry-content .mec-wrap.colorskin-custom h5 a:hover, .entry-content .mec-wrap.colorskin-custom h6 a:hover {
+	color: <?php echo $title_color_hover; ?> !important;
+}
+<?php endif;
+
+if($content_color): ?>
+.mec-wrap.colorskin-custom .mec-event-description {
+	color: <?php echo $content_color; ?>;
 }
 <?php endif;
 

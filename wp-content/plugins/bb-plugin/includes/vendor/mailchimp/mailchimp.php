@@ -8,7 +8,7 @@
  * @author Drew McLellan <drew.mclellan@gmail.com>
  * @version 2.4
  */
-class MailChimp
+class FLBuilderMailChimp
 {
     private $api_key;
     private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';

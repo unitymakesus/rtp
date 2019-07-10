@@ -147,6 +147,7 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Icon Color', 'uabb' ),
 								'default'    => '',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 
 							/* Background Color Dependent on Icon Style **/
@@ -155,6 +156,7 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Background Color', 'uabb' ),
 								'default'    => '',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 							'icon_bg_color_opc' => array(
 								'type'        => 'text',
@@ -171,6 +173,7 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Border Color', 'uabb' ),
 								'default'    => '',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 
 							/* Gradient Color Option */

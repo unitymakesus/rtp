@@ -14,7 +14,11 @@ $date_format1 = isset($settings['next_event_module_date_format1']) ? $settings['
 // Next Event Method
 $method = isset($settings['next_event_module_method']) ? $settings['next_event_module_method'] : 'occurrence';
 
-$date = $event->date;
+$date = '';
+if ( !empty($event->date) )
+{
+    $date = $event->date;
+}
 
 $start_date = (isset($date['start']) and isset($date['start']['date'])) ? $date['start']['date'] : date('Y-m-d');
 if(isset($_GET['occurrence']) and trim($_GET['occurrence'])) $start_date = sanitize_text_field($_GET['occurrence']);
@@ -26,7 +30,7 @@ if($method == 'event')
     $start_minutes = (isset($date['start']) and isset($date['start']['minutes'])) ? $date['start']['minutes'] : 0;
     $start_ampm = (isset($date['start']) and isset($date['start']['ampm'])) ? $date['start']['ampm'] : 'AM';
 
-    $next = $this->get_next_event($method, array
+    $next = $this->get_next_event(array
     (
         'show_past_events'=>0,
         'sk-options'=>array

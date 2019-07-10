@@ -27,8 +27,8 @@ final class FLBuilderUserTemplatesPostType {
 	 * @return void
 	 */
 	static public function register() {
-		$admin_access 	 = FLBuilderUserAccess::current_user_can( 'builder_admin' );
-		$can_edit 		 = FLBuilderUserAccess::current_user_can( 'unrestricted_editing' );
+		$admin_access    = FLBuilderUserAccess::current_user_can( 'builder_admin' );
+		$can_edit        = FLBuilderUserAccess::current_user_can( 'unrestricted_editing' );
 		$can_edit_global = FLBuilderUserAccess::current_user_can( 'global_node_editing' );
 		$menu_name       = FLBuilderModel::get_branding();
 
@@ -38,8 +38,8 @@ final class FLBuilderUserTemplatesPostType {
 		}
 
 		$args = apply_filters( 'fl_builder_register_template_post_type_args', array(
-			'public'            => $admin_access && $can_edit ? true : false,
-			'labels'            => array(
+			'public'              => $admin_access && $can_edit ? true : false,
+			'labels'              => array(
 				'name'               => _x( 'Templates', 'Custom post type label.', 'fl-builder' ),
 				'singular_name'      => _x( 'Template', 'Custom post type label.', 'fl-builder' ),
 				'menu_name'          => $menu_name,
@@ -55,20 +55,20 @@ final class FLBuilderUserTemplatesPostType {
 				'not_found'          => _x( 'Nothing found.', 'Custom post type label.', 'fl-builder' ),
 				'not_found_in_trash' => _x( 'Nothing found in Trash.', 'Custom post type label.', 'fl-builder' ),
 			),
-			'supports'          => array(
+			'supports'            => array(
 				'title',
 				'revisions',
 				'page-attributes',
 				'thumbnail',
 			),
-			'taxonomies'		=> array(
-				'fl-builder-template-category'
+			'taxonomies'          => array(
+				'fl-builder-template-category',
 			),
-			'menu_icon'			=> 'dashicons-welcome-widgets-menus',
-			'menu_position'		=> 64,
-			'publicly_queryable' 	=> $can_edit || $can_edit_global,
-			'exclude_from_search'	=> true,
-			'show_in_rest'			=> true,
+			'menu_icon'           => 'dashicons-welcome-widgets-menus',
+			'menu_position'       => 64,
+			'publicly_queryable'  => $can_edit || $can_edit_global,
+			'exclude_from_search' => true,
+			'show_in_rest'        => true,
 		) );
 
 		register_post_type( 'fl-builder-template', $args );
@@ -81,10 +81,14 @@ final class FLBuilderUserTemplatesPostType {
 	 * @return void
 	 */
 	static public function register_taxonomies() {
-		// Register the template category tax.
+		/**
+		 * Register the template category taxonomy.
+		 * @see fl_builder_register_template_category_args
+		 */
 		$args = apply_filters( 'fl_builder_register_template_category_args', array(
 			'labels'            => array(
-				'name'              => _x( 'Categories', 'Custom taxonomy label.', 'fl-builder' ),
+				/* translators: %s: branded builder name */
+				'name'              => sprintf( _x( '%s Categories', 'Custom taxonomy label.', 'fl-builder' ), FLBuilderModel::get_branding() ),
 				'singular_name'     => _x( 'Category', 'Custom taxonomy label.', 'fl-builder' ),
 				'search_items'      => _x( 'Search Categories', 'Custom taxonomy label.', 'fl-builder' ),
 				'all_items'         => _x( 'All Categories', 'Custom taxonomy label.', 'fl-builder' ),
@@ -103,7 +107,10 @@ final class FLBuilderUserTemplatesPostType {
 
 		register_taxonomy( 'fl-builder-template-category', array( 'fl-builder-template', 'fl-theme-layout' ), $args );
 
-		// Register the template type tax.
+		/**
+		 * Register the template type taxonomy.
+		 * @see fl_builder_register_template_type_args
+		 */
 		$args = apply_filters( 'fl_builder_register_template_type_args', array(
 			'label'             => _x( 'Type', 'Custom taxonomy label.', 'fl-builder' ),
 			'hierarchical'      => false,

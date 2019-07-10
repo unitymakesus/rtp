@@ -15,7 +15,7 @@
 							<h4><?php echo $cap_data['label']; ?><i class="dashicons dashicons-editor-help" title="<?php echo esc_html( $cap_data['description'] ); ?>"></i></h4>
 							<?php if ( FLBuilderAdminSettings::multisite_support() && ! is_network_admin() ) : ?>
 							<label class="fl-ua-override-ms-label">
-								<input class="fl-ua-override-ms-cb" type="checkbox" name="fl_ua_override_ms[<?php echo $cap; ?>]" value="1" <?php if ( isset( $raw_settings[ $cap ] ) ) { echo 'checked';} ?> />
+								<input class="fl-ua-override-ms-cb" type="checkbox" name="fl_ua_override_ms[<?php echo $cap; ?>]" value="1" <?php echo ( isset( $raw_settings[ $cap ] ) ) ? 'checked' : ''; ?> />
 								<?php _e( 'Override network settings?', 'fl-builder' ); ?>
 							</label>
 							<?php endif; ?>
@@ -24,8 +24,10 @@
 						<?php if ( 0 === $i % 2 || count( $group_data ) == $i ) : ?>
 						<div class="clear"></div>
 						<?php endif; ?>
-					<?php $i++;
-endforeach; ?>
+						<?php
+						$i++;
+						endforeach;
+					?>
 				</div>
 
 			<?php endforeach; ?>

@@ -33,11 +33,11 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 		if ( $this->api_instance ) {
 			return $this->api_instance;
 		}
-		if ( ! class_exists( 'Mailchimp' ) ) {
+		if ( ! class_exists( 'FLBuilderMailChimp' ) ) {
 			require_once FL_BUILDER_DIR . 'includes/vendor/mailchimp/mailchimp.php';
 		}
 
-		$this->api_instance = new Mailchimp( $api_key );
+		$this->api_instance = new FLBuilderMailChimp( $api_key );
 
 		return $this->api_instance;
 	}
@@ -56,8 +56,8 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API key.
@@ -94,13 +94,13 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your MailChimp account under Account > Extras > API Keys.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your MailChimp account under Account > Extras > API Keys.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -119,11 +119,11 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$post_data      = FLBuilderModel::get_post_data();
-		$account_data   = $this->get_account_data( $account );
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$post_data    = FLBuilderModel::get_post_data();
+		$account_data = $this->get_account_data( $account );
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		// Lists field
@@ -131,7 +131,7 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 			$api = $this->get_api( $account_data['api_key'] );
 
 			if ( ! isset( $post_data['list_id'] ) ) {
-				$lists = $api->getLists();
+				$lists             = $api->getLists();
 				$response['html'] .= $this->render_list_field( $lists, $settings );
 			}
 		} catch ( Exception $e ) {
@@ -149,10 +149,11 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 					$list_id = $settings->list_id;
 				}
 
-				$groups = $api->interestGroupings( $list_id );
+				$groups            = $api->interestGroupings( $list_id );
 				$response['html'] .= $this->render_groups_field( $list_id, $groups, $settings );
 			}
-		} catch ( Exception $e ) {}
+		} catch ( Exception $e ) {
+		}
 
 		return $response;
 	}
@@ -180,13 +181,13 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select fl-builder-mailchimp-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select fl-builder-mailchimp-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -221,14 +222,14 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'groups', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-mailchimp-group-select',
-			'type'          => 'select',
-			'label'         => _x( 'Groups', 'MailChimp list group.', 'fl-builder' ),
-			'multi-select'	=> true,
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class'    => 'fl-builder-service-field-row',
+			'class'        => 'fl-builder-mailchimp-group-select',
+			'type'         => 'select',
+			'label'        => _x( 'Groups', 'MailChimp list group.', 'fl-builder' ),
+			'multi-select' => true,
+			'options'      => $options,
+			'preview'      => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -257,7 +258,7 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 		} else {
 
 			try {
-				$api     = $this->get_api( $account_data['api_key'] );
+				$api = $this->get_api( $account_data['api_key'] );
 				/**
 				 * Use this filter to enable double opt-ins for MailChimp integrations.
 				 * Returning true enables double opt-ins; returning false enables single opt-ins.
@@ -265,8 +266,8 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 				 * @see fl_builder_mailchimp_double_option
 				 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
 				 */
-				$double  = apply_filters( 'fl_builder_mailchimp_double_option', false );
-				$data    = array(
+				$double = apply_filters( 'fl_builder_mailchimp_double_option', false );
+				$data   = array(
 					'email'        => $email,
 					'double_optin' => (bool) $double,
 				);
@@ -308,7 +309,7 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 					// Get the subgroup names from the API and add to the $data array.
 					if ( count( $groups ) > 0 ) {
 
-						$subgroup_ids = array();
+						$subgroup_ids  = array();
 						$groups_result = $api->interestGroupings( $settings->list_id );
 
 						if ( is_array( $groups_result ) && count( $groups_result ) > 0 ) {
@@ -337,6 +338,7 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 
 				if ( $api->getLastError() ) {
 					$response['error'] = sprintf(
+						/* translators: %s: error */
 						__( 'There was an error subscribing to MailChimp. %s', 'fl-builder' ),
 						$api->getLastError()
 					);

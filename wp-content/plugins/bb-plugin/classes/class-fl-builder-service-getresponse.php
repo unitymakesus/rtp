@@ -56,8 +56,8 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API key.
@@ -90,13 +90,13 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your GetResponse account under My Account > API & OAuth.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your GetResponse account under My Account > API & OAuth.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -115,12 +115,12 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( $account_data['api_key'] );
-		$lists          = $api->getCampaigns();
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( $account_data['api_key'] );
+		$lists        = $api->getCampaigns();
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( ! $lists ) {
@@ -154,25 +154,25 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
 		FLBuilder::render_settings_field( 'cycle_day', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-cycleday-select',
-			'type'          => 'select',
-			'label'         => _x( 'Cycle Day', 'Day of autoresponder cycle.', 'fl-builder' ),
-			'help'          => __( 'This should match the cycle day settings for the selected list\'s Autoresponder.', 'fl-builder' ),
-			'options'       => range( 0, 30 ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-cycleday-select',
+			'type'      => 'select',
+			'label'     => _x( 'Cycle Day', 'Day of autoresponder cycle.', 'fl-builder' ),
+			'help'      => __( 'This should match the cycle day settings for the selected list\'s Autoresponder.', 'fl-builder' ),
+			'options'   => range( 0, 30 ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -207,15 +207,15 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 				// Fix, name should not be empty
 				if ( ! $name ) {
 					$names = explode( '@', $email );
-					$name = $names[0];
+					$name  = $names[0];
 				}
 
 				$cyle_day = isset( $settings->cycle_day ) ? $settings->cycle_day : 0;
 
 				$data = array(
-					'email' => $email,
-					'name'  => $name,
-					'campaign' => array(
+					'email'      => $email,
+					'name'       => $name,
+					'campaign'   => array(
 						'campaignId' => $settings->list_id,
 					),
 					'dayOfCycle' => $cyle_day,
@@ -223,8 +223,8 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 
 				// Check if email exists
 				$get_contact = $api->getContacts(array(
-					'query' => array(
-						'email' => $email,
+					'query'  => array(
+						'email'      => $email,
 						'campaignId' => $settings->list_id,
 					),
 					'fields' => 'name, email',
@@ -243,6 +243,7 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 				}
 			} catch ( Exception $e ) {
 				$response['error'] = sprintf(
+					/* translators: %s: error */
 					__( 'There was an error subscribing to GetResponse. %s', 'fl-builder' ),
 					$e->getMessage()
 				);

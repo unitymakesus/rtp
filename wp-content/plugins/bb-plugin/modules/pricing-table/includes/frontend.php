@@ -9,12 +9,13 @@
 
 	for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 
-		if ( ! is_object( $settings->pricing_columns[ $i ] ) ) { continue;
+		if ( ! is_object( $settings->pricing_columns[ $i ] ) ) {
+			continue;
 		}
 
 		$pricing_column = $settings->pricing_columns[ $i ];
 
-	?>
+		?>
 	<div class="fl-pricing-table-col-<?php echo $columns; ?>">
 		<div class="fl-pricing-table-column fl-pricing-table-column-<?php echo $i; ?>">
 			<div class="fl-pricing-table-inner-wrap">
@@ -24,10 +25,15 @@
 					<span class="fl-pricing-table-duration"><?php echo $pricing_column->duration; ?></span>
 				</div>
 				<ul class="fl-pricing-table-features">
-					<?php if ( ! empty( $pricing_column->features ) ) { foreach ( $pricing_column->features as $feature ) : ?>
+					<?php
+					if ( ! empty( $pricing_column->features ) ) {
+						foreach ( $pricing_column->features as $feature ) :
+							?>
 					<li><?php echo trim( $feature ); ?></li>
-					<?php endforeach;
-}; ?>
+											<?php
+					endforeach;
+					};
+					?>
 				</ul>
 
 				<?php $module->render_button( $i ); ?>
@@ -37,7 +43,7 @@
 			</div>
 		</div>
 	</div>
-	<?php
+		<?php
 
 	endfor;
 

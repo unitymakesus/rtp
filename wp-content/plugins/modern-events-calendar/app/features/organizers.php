@@ -261,7 +261,13 @@ class MEC_feature_organizers extends MEC_base
 					<option <?php if($organizer_id == $organizer->term_id) echo 'selected="selected"'; ?> value="<?php echo $organizer->term_id; ?>"><?php echo $organizer->name; ?></option>
 					<?php endforeach; ?>
 				</select>
-				<a class="mec-tooltip" title="<?php esc_attr_e('Choose one of saved organizers or insert new one below.', 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                <span class="mec-tooltip">
+                    <div class="box top">
+                        <h5 class="title"><?php _e('Organizer', 'mec'); ?></h5>
+                        <div class="content"><p><?php esc_attr_e('Choose one of saved organizers or insert new one below.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/organizer-and-other-organizer/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                    </div>
+                    <i title="" class="dashicons-before dashicons-editor-help"></i>
+                </span>	                 
 			</div>
 			<div id="mec_organizer_new_container">
 				<div class="mec-form-row">

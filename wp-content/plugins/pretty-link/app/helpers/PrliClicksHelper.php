@@ -104,5 +104,16 @@ class PrliClicksHelper {
     return compact( 'count_where_clause', 'sort_str', 'sdir_str', 'search_str',
                     'where_clause', 'order_by', 'sort_params', 'page_params' );
   }
+
+  /**
+   * Remove nefarious characters from a cell value
+   *
+   * @param  string $value Cell value
+   *
+   * @return string
+   */
+  public static function esc_spreadsheet_cell( $value ) {
+    return preg_replace( '/^[-=+@]*/', '', $value );
+  }
 }
 

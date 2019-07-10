@@ -24,8 +24,8 @@ class FLBuilderUserSettings {
 	static public function get() {
 		$meta     = get_user_meta( get_current_user_id(), 'fl_builder_user_settings', true );
 		$defaults = array(
-			'skin' 		=> 'light',
-			'lightbox' 	=> null,
+			'skin'     => 'light',
+			'lightbox' => null,
 		);
 
 		if ( ! $meta ) {
@@ -52,7 +52,7 @@ class FLBuilderUserSettings {
 	 * @return array
 	 */
 	static public function save_ui_skin( $name ) {
-		$settings = self::get();
+		$settings         = self::get();
 		$settings['skin'] = $name;
 
 		return array(
@@ -69,7 +69,7 @@ class FLBuilderUserSettings {
 	 * @return array
 	 */
 	static public function save_lightbox_position( $data ) {
-		$settings = self::get();
+		$settings             = self::get();
 		$settings['lightbox'] = $data;
 
 		return self::update( $settings );

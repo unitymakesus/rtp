@@ -444,9 +444,11 @@ class UABBPhotoModule extends FLBuilderModule {
 			// Link handling.
 			if ( isset( $settings->link_target ) ) {
 				$settings->link_url_target = $settings->link_target;
+				unset( $settings->link_target );
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				$settings->link_url_nofollow = $settings->link_nofollow;
+				$settings->link_url_nofollow = ( '1' == $settings->link_nofollow ) ? 'yes' : '';
+				unset( $settings->link_nofollow );
 			}
 
 			// Opacity.
@@ -461,11 +463,14 @@ class UABBPhotoModule extends FLBuilderModule {
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
-			// Link handling.
 			if ( isset( $settings->link_target ) ) {
 				$settings->link_url_target = $settings->link_target;
+				unset( $settings->link_target );
 			}
-
+			if ( isset( $settings->link_nofollow ) ) {
+				$settings->link_url_nofollow = ( '1' == $settings->link_nofollow ) ? 'yes' : '';
+				unset( $settings->link_nofollow );
+			}
 			// Opacity.
 			$helper->handle_opacity_inputs( $settings, 'style_bg_color_opc', 'style_bg_color' );
 

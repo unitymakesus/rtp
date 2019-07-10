@@ -63,14 +63,21 @@ $this->factory->params('footer', $javascript);
     <div class="mec-fes-list-top-actions">
         <a href="<?php echo $this->link_add_event(); ?>"><?php echo __('Add new', 'mec'); ?></a>
     </div>
+    <?php do_action('mec_fes_list'); ?>
     <ul>
-        <?php while($query->have_posts()): $query->the_post(); ?>
+        <?php 
+            while($query->have_posts()): $query->the_post();
+            // Show Post Status
+            global $post;
+            $status = $this->main->get_event_label_status(trim($post->post_status));
+        ?>
         <li id="mec_fes_event_<?php echo get_the_ID(); ?>">
             <span class="mec-event-title"><a href="<?php echo $this->link_edit_event(get_the_ID()); ?>"><?php the_title(); ?></a></span>
             <span class="mec-fes-event-view"><a href="<?php the_permalink(); ?>"><?php _e('View', 'mec'); ?></a></span>
             <?php if(current_user_can('delete_post', get_the_ID())): ?>
             <span class="mec-fes-event-remove" data-confirmed="0" data-id="<?php echo get_the_ID(); ?>"><?php _e('Remove', 'mec'); ?></span>
             <?php endif; ?>
+            <span class="mec-fes-event-view mec-event-status <?php echo $status['status_class']; ?>"><?php echo $status['label']; ?></span>
         </li>
         <?php endwhile; wp_reset_postdata(); // Restore original Post Data ?>
     </ul>

@@ -100,7 +100,7 @@
     font-size: inherit;
     line-height: inherit;   
 }
-.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
+.uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b):not(i) {
     font-weight: inherit;
 }
 
@@ -248,7 +248,7 @@
 
 .uabb-hspot-sonar g {
     -webkit-transform: scale(0);
-            transform: scale(0);
+    transform: scale(0);
 }
 
 .uabb-hotspot-hover .uabb-hspot-sonar g {
@@ -362,4 +362,95 @@
         width: auto;
     }
 }
+
+/* Tour feature start */
+.uabb-hotspot-hover .uabb-tour {
+    display: none;
+}
+.uabb-hotspot-item .uabb-tour {
+    display: block;
+    margin-top: 1em;
+}
+.uabb-hotspot-item .uabb-tour .uabb-hotspot-tour-tooltip-list-group {
+    list-style: none;
+    float: right;
+    margin-bottom: 0px;
+    margin-left: 0.8em;
+}
+.uabb-actual-step {
+    margin-right: 0.5em;
+}
+.uabb-hotspot-item .uabb-tour .uabb-hotspot-tour-tooltip-list-group .uabb-hotspot-tour-tooltip-list-group-item {
+    display: inline-block;
+    float: left;
+}
+.uabb-hotspot-hover .uabb-tour .uabb-hotspot-tour-tooltip-list-group .uabb-hotspot-tour-tooltip-list-group-item:first-of-type {
+    margin-right: 0.8em;
+}
+.uabb-hotspot-item .uabb-tour .inactive {
+    pointer-events: none;
+    cursor: default;
+    text-decoration:none;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.uabb-hotspot-end {
+    display: block;
+    text-align: right;
+    padding-top: 4px;
+    margin-bottom: -5px;
+}
+.uabb-hotspot-hover .uabb-hotspot-end .uabb-tour-end {
+    cursor: pointer;
+    display: block;
+    margin-top: 0.5em;
+}
+.uabb-hotspot-hover .uabb-hotspot-tooltip-content .uabb-tour .uabb-actual-step,
+.uabb-hotspot-hover .uabb-hotspot-tooltip-content .uabb-tour .uabb-hotspot-tour-tooltip-list-group,
+.uabb-hotspot-hover .uabb-hotspot-tooltip-content .uabb-hotspot-end .uabb-tour-end  {
+    font-size: 0.85em ;
+}
+.uabb-hotspot-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.57);
+}
+.uabb-overlay-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateX(-50%)translateY(-50%);
+    -ms-transform: translateX(-50%)translateY(-50%);
+    transform: translateX(-50%)translateY(-50%);
+}
+.uabb-overlay-button .uabb-button {
+    cursor: pointer;
+}
+.uabb-tour .uabb-hotspot-tour-tooltip-list-group .uabb-hotspot-tour-tooltip-list-group-item .uabb-prev ,
+.uabb-tour .uabb-hotspot-tour-tooltip-list-group .uabb-hotspot-tour-tooltip-list-group-item .uabb-next {
+    cursor: pointer;
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item .uabb-icon-wrap .uabb-icon i, 
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-item .uabb-icon-wrap .uabb-icon i:before {
+    height: auto;
+    width: auto;
+}
+
+/*Hide non active maraker */
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-marker-nonactive {
+    visibility: hidden;
+}
+.uabb-hotspot-container .uabb-hotspot-items .uabb-hotspot-marker-nonactive.uabb-hotspot-hover {
+    visibility: visible;
+}
+.uabb-button-wrap .uabb-creative-flat-btn .uabb-button-text {
+    -webkit-backface-visibility: visible;
+    -moz-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
 

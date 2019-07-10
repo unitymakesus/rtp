@@ -29,7 +29,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				'icon'            => 'editor-table.svg',
 			)
 		);
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		add_filter( 'fl_builder_render_settings_field', array( $this, 'uabb_price_box_settings_field' ), 10, 3 );
 	}
 
@@ -153,11 +153,6 @@ class UABBPricingTableModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For aligning legend column's features alignment.
-			if ( isset( $settings->legend_align ) ) {
-				$settings->legend_align = $settings->legend_align;
-			}
-
 			// For Title typo.
 			if ( ! isset( $settings->title_typo ) || ! is_array( $settings->title_typo ) ) {
 
@@ -168,6 +163,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 			if ( isset( $settings->title_typography_font_family ) ) {
 				if ( isset( $settings->title_typography_font_family['family'] ) ) {
 					$settings->title_typo['font_family'] = $settings->title_typography_font_family['family'];
+					unset( $settings->title_typography_font_family['family'] );
 				}
 				if ( isset( $settings->title_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->title_typography_font_family['weight'] ) {
@@ -175,6 +171,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_typography_font_family['weight'];
 					}
+					unset( $settings->title_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->title_typography_font_size_unit ) ) {
@@ -182,6 +179,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->title_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_typography_font_size_unit );
 			}
 			if ( isset( $settings->title_typography_font_size_unit_medium ) ) {
 
@@ -189,6 +187,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->title_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->title_typography_font_size_unit_responsive ) ) {
 
@@ -196,6 +195,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->title_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->title_typography_line_height_unit ) ) {
 
@@ -203,6 +203,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->title_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_typography_line_height_unit );
 			}
 			if ( isset( $settings->title_typography_line_height_unit_medium ) ) {
 
@@ -210,6 +211,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->title_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->title_typography_line_height_unit_responsive ) ) {
 
@@ -217,15 +219,18 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->title_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->title_transform ) ) {
 				$settings->title_typo['text_transform'] = $settings->title_transform;
+				unset( $settings->title_transform );
 			}
 			if ( isset( $settings->title_letter_spacing ) ) {
 				$settings->title_typo['letter_spacing'] = array(
 					'length' => $settings->title_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_letter_spacing );
 			}
 
 			// For columns features title typo.
@@ -238,6 +243,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 			if ( isset( $settings->feature_typography_font_family ) ) {
 				if ( isset( $settings->feature_typography_font_family['family'] ) ) {
 					$settings->feature_typo['font_family'] = $settings->feature_typography_font_family['family'];
+					unset( $settings->feature_typography_font_family['family'] );
 				}
 				if ( isset( $settings->feature_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->feature_typography_font_family['weight'] ) {
@@ -245,6 +251,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->feature_typo['font_weight'] = $settings->feature_typography_font_family['weight'];
 					}
+					unset( $settings->feature_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->feature_typography_font_size_unit ) ) {
@@ -252,6 +259,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->feature_typography_font_size_unit );
 			}
 			if ( isset( $settings->feature_typography_font_size_unit_medium ) ) {
 
@@ -259,6 +267,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->feature_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->feature_typography_font_size_unit_responsive ) ) {
 
@@ -266,6 +275,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->feature_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->feature_typography_line_height_unit ) ) {
 
@@ -273,6 +283,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->feature_typography_line_height_unit );
 			}
 			if ( isset( $settings->feature_typography_line_height_unit_medium ) ) {
 
@@ -280,6 +291,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->feature_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->feature_typography_line_height_unit_responsive ) ) {
 
@@ -287,9 +299,11 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->feature_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->feature_content_transform ) ) {
 				$settings->feature_typo['text_transform'] = $settings->feature_content_transform;
+				unset( $settings->feature_content_transform );
 			}
 			if ( isset( $settings->features_align ) ) {
 				$settings->feature_typo['text_align'] = $settings->features_align;
@@ -300,6 +314,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->feature_content_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->feature_content_letter_spacing );
 			}
 
 			// For Price Typo.
@@ -312,6 +327,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 			if ( isset( $settings->price_typography_font_family ) ) {
 				if ( isset( $settings->price_typography_font_family['family'] ) ) {
 					$settings->price_typo['font_family'] = $settings->price_typography_font_family['family'];
+					unset( $settings->price_typography_font_family['family'] );
 				}
 				if ( isset( $settings->price_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->price_typography_font_family['weight'] ) {
@@ -319,6 +335,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->price_typo['font_weight'] = $settings->price_typography_font_family['weight'];
 					}
+					unset( $settings->price_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->price_typography_font_size_unit ) ) {
@@ -327,6 +344,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_typography_font_size_unit );
 			}
 			if ( isset( $settings->price_typography_font_size_unit_medium ) ) {
 
@@ -334,6 +352,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->price_typography_font_size_unit_responsive ) ) {
 
@@ -341,6 +360,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->price_typography_line_height_unit ) ) {
 
@@ -348,7 +368,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_line_height_unit,
 					'unit'   => 'em',
 				);
-
+				unset( $settings->price_typography_line_height_unit );
 			}
 			if ( isset( $settings->price_typography_line_height_unit_medium ) ) {
 
@@ -356,6 +376,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->price_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->price_typography_line_height_unit_responsive ) ) {
 
@@ -363,6 +384,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->price_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->price_typography_letter_spacing ) ) {
 
@@ -370,6 +392,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->price_typography_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_typography_letter_spacing );
 			}
 
 			// For Duration Typo.
@@ -384,6 +407,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				if ( isset( $settings->duration_typography_font_family['family'] ) ) {
 
 					$settings->duration_typo['font_family'] = $settings->duration_typography_font_family['family'];
+					unset( $settings->duration_typography_font_family['family'] );
 				}
 				if ( isset( $settings->duration_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->duration_typography_font_family['weight'] ) {
@@ -391,6 +415,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->duration_typo['font_weight'] = $settings->duration_typography_font_family['weight'];
 					}
+					unset( $settings->duration_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->duration_typography_font_size_unit ) ) {
@@ -399,6 +424,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->duration_typography_font_size_unit );
 			}
 			if ( isset( $settings->duration_typography_font_size_unit_medium ) ) {
 
@@ -406,6 +432,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->duration_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->duration_typography_font_size_unit_responsive ) ) {
 
@@ -413,6 +440,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->duration_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->duration_typography_line_height_unit ) ) {
 
@@ -420,6 +448,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->duration_typography_line_height_unit );
 			}
 			if ( isset( $settings->duration_typography_line_height_unit_medium ) ) {
 
@@ -427,6 +456,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->duration_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->duration_typography_line_height_unit_responsive ) ) {
 
@@ -434,9 +464,11 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->duration_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->duration_typography_transform ) ) {
 				$settings->duration_typo['text_transform'] = $settings->duration_typography_transform;
+				unset( $settings->duration_typography_transform );
 			}
 			if ( isset( $settings->duration_typography_letter_spacing ) ) {
 
@@ -444,6 +476,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					'length' => $settings->duration_typography_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->duration_typography_letter_spacing );
 			}
 			for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) {
 
@@ -465,6 +498,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 							$settings->pricing_columns[ $i ]->button_typo->font_weight = $settings->pricing_columns[ $i ]->button_typography_font_family->weight;
 						}
 					}
+					unset( $settings->pricing_columns[ $i ]->button_typography_font_family );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit ) ) {
 
@@ -472,6 +506,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_typography_font_size_unit,
 						'unit'   => 'px',
 					);
+					unset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit_medium ) ) {
 
@@ -479,6 +514,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_typography_font_size_unit_medium,
 						'unit'   => 'px',
 					);
+					unset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit_medium );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit_responsive ) ) {
 
@@ -486,6 +522,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_typography_font_size_unit_responsive,
 						'unit'   => 'px',
 					);
+					unset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit_responsive );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit ) ) {
 
@@ -493,6 +530,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_typography_line_height_unit,
 						'unit'   => 'em',
 					);
+					unset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit_medium ) ) {
 
@@ -500,6 +538,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_typography_line_height_unit_medium,
 						'unit'   => 'em',
 					);
+					unset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit_medium );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit_responsive ) ) {
 
@@ -507,9 +546,11 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_typography_line_height_unit_responsive,
 						'unit'   => 'em',
 					);
+					unset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit_responsive );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_transform ) ) {
 					$settings->pricing_columns[ $i ]->button_typo->text_transform = $settings->pricing_columns[ $i ]->button_transform;
+					unset( $settings->pricing_columns[ $i ]->button_transform );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_letter_spacing ) ) {
 
@@ -517,17 +558,12 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->button_letter_spacing,
 						'unit'   => 'px',
 					);
-				}
-				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_family ) ) {
-					unset( $settings->pricing_columns[ $i ]->button_typography_font_family );
-					unset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit );
-					unset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit_medium );
-					unset( $settings->pricing_columns[ $i ]->button_typography_font_size_unit_responsive );
-					unset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit );
-					unset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit_medium );
-					unset( $settings->pricing_columns[ $i ]->button_typography_line_height_unit_responsive );
-					unset( $settings->pricing_columns[ $i ]->button_transform );
 					unset( $settings->pricing_columns[ $i ]->button_letter_spacing );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->btn_link_nofollow ) ) {
+					if ( '1' == $settings->pricing_columns[ $i ]->btn_link_nofollow || 'yes' == $settings->pricing_columns[ $i ]->btn_link_nofollow ) {
+						$settings->pricing_columns[ $i ]->btn_link_nofollow = 'yes';
+					}
 				}
 				if ( ! isset( $settings->pricing_columns[ $i ]->featured_typo ) || ! is_object( $settings->pricing_columns[ $i ]->featured_typo ) ) {
 
@@ -539,6 +575,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					if ( isset( $settings->pricing_columns[ $i ]->featured_font_family->family ) ) {
 
 						$settings->pricing_columns[ $i ]->featured_typo->font_family = $settings->pricing_columns[ $i ]->featured_font_family->family;
+						unset( $settings->pricing_columns[ $i ]->featured_font_family->family );
 					}
 					if ( isset( $settings->pricing_columns[ $i ]->featured_font_family->weight ) ) {
 						if ( 'regular' == $settings->pricing_columns[ $i ]->featured_font_family->weight ) {
@@ -546,6 +583,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						} else {
 							$settings->pricing_columns[ $i ]->featured_typo->font_weight = $settings->pricing_columns[ $i ]->featured_font_family->weight;
 						}
+						unset( $settings->pricing_columns[ $i ]->featured_font_family->weight );
 					}
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size_unit ) ) {
@@ -554,12 +592,14 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->featured_font_size_unit,
 						'unit'   => 'px',
 					);
+					unset( $settings->pricing_columns[ $i ]->featured_font_size_unit );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size_unit_medium ) ) {
 					$settings->pricing_columns[ $i ]->featured_typo_medium->font_size = (object) array(
 						'length' => $settings->pricing_columns[ $i ]->featured_font_size_unit_medium,
 						'unit'   => 'px',
 					);
+					unset( $settings->pricing_columns[ $i ]->featured_font_size_unit_medium );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size_unit_responsive ) ) {
 
@@ -567,6 +607,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->featured_font_size_unit_responsive,
 						'unit'   => 'px',
 					);
+					unset( $settings->pricing_columns[ $i ]->featured_font_size_unit_responsive );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height_unit ) ) {
 
@@ -574,21 +615,25 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->featured_line_height_unit,
 						'unit'   => 'em',
 					);
+					unset( $settings->pricing_columns[ $i ]->featured_line_height_unit );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height_unit_medium ) ) {
 					$settings->pricing_columns[ $i ]->featured_typo_medium->line_height = (object) array(
 						'length' => $settings->pricing_columns[ $i ]->featured_line_height_unit_medium,
 						'unit'   => 'em',
 					);
+					unset( $settings->pricing_columns[ $i ]->featured_line_height_unit_medium );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height_unit_responsive ) ) {
 					$settings->pricing_columns[ $i ]->featured_typo_responsive->line_height = (object) array(
 						'length' => $settings->pricing_columns[ $i ]->featured_line_height_unit_responsive,
 						'unit'   => 'em',
 					);
+					unset( $settings->pricing_columns[ $i ]->featured_line_height_unit_responsive );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_transform ) ) {
 					$settings->pricing_columns[ $i ]->featured_typo->text_transform = $settings->pricing_columns[ $i ]->featured_transform;
+					unset( $settings->pricing_columns[ $i ]->featured_transform );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_letter_spacing ) ) {
 
@@ -596,16 +641,6 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->pricing_columns[ $i ]->featured_letter_spacing,
 						'unit'   => 'px',
 					);
-				}
-				if ( isset( $settings->pricing_columns[ $i ]->featured_font_family ) ) {
-					unset( $settings->pricing_columns[ $i ]->featured_font_family );
-					unset( $settings->pricing_columns[ $i ]->featured_font_size_unit );
-					unset( $settings->pricing_columns[ $i ]->featured_font_size_unit_medium );
-					unset( $settings->pricing_columns[ $i ]->featured_font_size_unit_responsive );
-					unset( $settings->pricing_columns[ $i ]->featured_line_height_unit );
-					unset( $settings->pricing_columns[ $i ]->featured_line_height_unit_medium );
-					unset( $settings->pricing_columns[ $i ]->featured_line_height_unit_responsive );
-					unset( $settings->pricing_columns[ $i ]->featured_transform );
 					unset( $settings->pricing_columns[ $i ]->featured_letter_spacing );
 				}
 				if ( ! isset( $settings->legend_column->legend_typo ) || ! is_object( $settings->legend_column->legend_typo ) ) {
@@ -618,6 +653,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					if ( isset( $settings->legend_column->legend_font_family->family ) ) {
 
 						$settings->legend_column->legend_typo->font_family = $settings->legend_column->legend_font_family->family;
+						unset( $settings->legend_column->legend_font_family->family );
 					}
 					if ( isset( $settings->legend_column->legend_font_family->weight ) ) {
 						if ( 'regular' == $settings->legend_column->legend_font_family->weight ) {
@@ -625,6 +661,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						} else {
 							$settings->legend_column->legend_typo->font_weight = $settings->legend_column->legend_font_family->weight;
 						}
+						unset( $settings->legend_column->legend_font_family->weight );
 					}
 				}
 				if ( isset( $settings->legend_column->legend_font_size_unit ) ) {
@@ -633,6 +670,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->legend_column->legend_font_size_unit,
 						'unit'   => 'px',
 					);
+					unset( $settings->legend_column->legend_font_size_unit );
 				}
 				if ( isset( $settings->legend_column->legend_font_size_unit_medium ) ) {
 
@@ -640,6 +678,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->legend_column->legend_font_size_unit_medium,
 						'unit'   => 'px',
 					);
+					unset( $settings->legend_column->legend_font_size_unit_medium );
 				}
 				if ( isset( $settings->legend_column->legend_font_size_unit_responsive ) ) {
 
@@ -647,6 +686,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->legend_column->legend_font_size_unit_responsive,
 						'unit'   => 'px',
 					);
+					unset( $settings->legend_column->legend_font_size_unit_responsive );
 				}
 				if ( isset( $settings->legend_column->legend_line_height_unit ) ) {
 
@@ -654,6 +694,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->legend_column->legend_line_height_unit,
 						'unit'   => 'em',
 					);
+					unset( $settings->legend_column->legend_line_height_unit );
 				}
 				if ( isset( $settings->legend_column->legend_line_height_unit_medium ) ) {
 
@@ -661,6 +702,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->legend_column->legend_line_height_unit_medium,
 						'unit'   => 'em',
 					);
+					unset( $settings->legend_column->legend_line_height_unit_medium );
 				}
 				if ( isset( $settings->legend_column->legend_line_height_unit_responsive ) ) {
 
@@ -668,75 +710,21 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'length' => $settings->legend_column->legend_line_height_unit_responsive,
 						'unit'   => 'em',
 					);
+					unset( $settings->legend_column->legend_line_height_unit_responsive );
 				}
 				if ( isset( $settings->legend_column->legend_transform ) ) {
 					$settings->legend_column->legend_typo->text_transform = $settings->legend_column->legend_transform;
+					unset( $settings->legend_column->legend_transform );
 				}
 				if ( isset( $settings->legend_column->legend_letter_spacing ) ) {
 					$settings->legend_column->legend_typo->letter_spacing = (object) array(
 						'length' => $settings->legend_column->legend_letter_spacing,
 						'unit'   => 'px',
 					);
-				}
-				if ( isset( $settings->legend_column->legend_font_family ) ) {
-					unset( $settings->legend_column->legend_font_family );
-					unset( $settings->legend_column->legend_font_size_unit );
-					unset( $settings->legend_column->legend_font_size_unit_medium );
-					unset( $settings->legend_column->legend_font_size_unit_responsive );
-					unset( $settings->legend_column->legend_line_height_unit );
-					unset( $settings->legend_column->legend_line_height_unit_medium );
-					unset( $settings->legend_column->legend_line_height_unit_responsive );
-					unset( $settings->legend_column->legend_transform );
 					unset( $settings->legend_column->legend_letter_spacing );
 				}
 			}
-
-			if ( isset( $settings->feature_typography_font_family ) ) {
-				unset( $settings->feature_typography_font_family );
-				unset( $settings->feature_typography_font_size_unit );
-				unset( $settings->feature_typography_font_size_unit_medium );
-				unset( $settings->feature_typography_font_size_unit_responsive );
-				unset( $settings->feature_typography_line_height_unit );
-				unset( $settings->feature_typography_line_height_unit_medium );
-				unset( $settings->feature_typography_line_height_unit_responsive );
-				unset( $settings->feature_content_transform );
-				unset( $settings->feature_content_letter_spacing );
-			}
-			if ( isset( $settings->title_typography_font_family ) ) {
-				unset( $settings->title_typography_font_family );
-				unset( $settings->title_typography_font_size_unit );
-				unset( $settings->title_typography_font_size_unit_medium );
-				unset( $settings->title_typography_font_size_unit_responsive );
-				unset( $settings->title_typography_line_height_unit );
-				unset( $settings->title_typography_line_height_unit_medium );
-				unset( $settings->title_typography_line_height_unit_responsive );
-				unset( $settings->title_transform );
-				unset( $settings->title_letter_spacing );
-			}
-			if ( isset( $settings->price_typography_font_family ) ) {
-				unset( $settings->price_typography_font_family );
-				unset( $settings->price_typography_font_size_unit );
-				unset( $settings->price_typography_font_size_unit_medium );
-				unset( $settings->price_typography_font_size_unit_responsive );
-				unset( $settings->price_typography_line_height );
-				unset( $settings->price_typography_line_height_unit_medium );
-				unset( $settings->price_typography_line_height_unit_responsive );
-				unset( $settings->price_typography_letter_spacing );
-			}
-			if ( isset( $settings->duration_typography_font_family ) ) {
-				unset( $settings->duration_typography_font_family );
-				unset( $settings->duration_typography_font_size_unit );
-				unset( $settings->duration_typography_font_size_unit_medium );
-				unset( $settings->duration_typography_line_height_unit_responsive );
-				unset( $settings->duration_typography_transform );
-				unset( $settings->duration_typography_letter_spacing );
-			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For aligning legend column's features alignment.
-			if ( isset( $settings->legend_align ) ) {
-				$settings->legend_align = $settings->legend_align;
-			}
 
 			// For Title typo.
 			if ( ! isset( $settings->title_typo ) || ! is_array( $settings->title_typo ) ) {
@@ -749,6 +737,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 
 				if ( isset( $settings->title_typography_font_family['family'] ) ) {
 					$settings->title_typo['font_family'] = $settings->title_typography_font_family['family'];
+					unset( $settings->title_typography_font_family['family'] );
 				}
 				if ( isset( $settings->title_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->title_typography_font_family['weight'] ) {
@@ -756,6 +745,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_typography_font_family['weight'];
 					}
+					unset( $settings->title_typography_font_family['weight'] );
 				}
 			}
 
@@ -814,6 +804,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 
 				if ( isset( $settings->feature_typography_font_family['family'] ) ) {
 					$settings->feature_typo['font_family'] = $settings->feature_typography_font_family['family'];
+					unset( $settings->feature_typography_font_family['family'] );
 				}
 				if ( isset( $settings->feature_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->feature_typography_font_family['weight'] ) {
@@ -821,6 +812,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->feature_typo['font_weight'] = $settings->feature_typography_font_family['weight'];
 					}
+					unset( $settings->feature_typography_font_family['weight'] );
 				}
 			}
 
@@ -883,6 +875,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 
 				if ( isset( $settings->price_typography_font_family['family'] ) ) {
 					$settings->price_typo['font_family'] = $settings->price_typography_font_family['family'];
+					unset( $settings->price_typography_font_family['family'] );
 				}
 				if ( isset( $settings->price_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->price_typography_font_family['weight'] ) {
@@ -890,6 +883,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->price_typo['font_weight'] = $settings->price_typography_font_family['weight'];
 					}
+					unset( $settings->price_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->price_typography_font_size['small'] ) ) {
@@ -947,6 +941,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				if ( isset( $settings->duration_typography_font_family['family'] ) ) {
 
 					$settings->duration_typo['font_family'] = $settings->duration_typography_font_family['family'];
+					unset( $settings->duration_typography_font_family['family'] );
 				}
 				if ( isset( $settings->duration_typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->duration_typography_font_family['weight'] ) {
@@ -954,6 +949,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					} else {
 						$settings->duration_typo['font_weight'] = $settings->duration_typography_font_family['weight'];
 					}
+					unset( $settings->duration_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->duration_typography_font_size['small'] ) ) {
@@ -1020,6 +1016,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 							$settings->pricing_columns[ $i ]->button_typo->font_weight = $settings->pricing_columns[ $i ]->button_typography_font_family->weight;
 						}
 					}
+					unset( $settings->pricing_columns[ $i ]->button_typography_font_family );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_size->desktop ) ) {
 
@@ -1065,9 +1062,11 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_family ) ) {
-					unset( $settings->pricing_columns[ $i ]->button_typography_font_family );
+				if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_size ) ) {
+
 					unset( $settings->pricing_columns[ $i ]->button_typography_font_size );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height ) ) {
 					unset( $settings->pricing_columns[ $i ]->button_typography_line_height );
 				}
 				if ( ! isset( $settings->pricing_columns[ $i ]->featured_typo ) || ! is_object( $settings->pricing_columns[ $i ]->featured_typo ) ) {
@@ -1080,6 +1079,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					if ( isset( $settings->pricing_columns[ $i ]->featured_font_family->family ) ) {
 
 						$settings->pricing_columns[ $i ]->featured_typo->font_family = $settings->pricing_columns[ $i ]->featured_font_family->family;
+						unset( $settings->pricing_columns[ $i ]->featured_font_family->family );
 					}
 					if ( isset( $settings->pricing_columns[ $i ]->featured_font_family->weight ) ) {
 						if ( 'regular' == $settings->pricing_columns[ $i ]->featured_font_family->weight ) {
@@ -1087,6 +1087,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						} else {
 							$settings->pricing_columns[ $i ]->featured_typo->font_weight = $settings->pricing_columns[ $i ]->featured_font_family->weight;
 						}
+						unset( $settings->pricing_columns[ $i ]->featured_font_family->weight );
 					}
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size->desktop ) ) {
@@ -1135,10 +1136,23 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->featured_font_family ) ) {
-					unset( $settings->pricing_columns[ $i ]->featured_font_family );
-					unset( $settings->pricing_columns[ $i ]->featured_font_size );
-					unset( $settings->pricing_columns[ $i ]->featured_line_height );
+				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size->desktop ) ) {
+					unset( $settings->pricing_columns[ $i ]->featured_font_size->desktop );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size->medium ) ) {
+					unset( $settings->pricing_columns[ $i ]->featured_font_size->medium );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->featured_font_size->small ) ) {
+					unset( $settings->pricing_columns[ $i ]->featured_font_size->small );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->desktop ) ) {
+					unset( $settings->pricing_columns[ $i ]->featured_line_height->desktop );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->medium ) ) {
+					unset( $settings->pricing_columns[ $i ]->featured_line_height->medium );
+				}
+				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->small ) ) {
+					unset( $settings->pricing_columns[ $i ]->featured_line_height->small );
 				}
 				if ( ! isset( $settings->legend_column->legend_typo ) || ! is_object( $settings->legend_column->legend_typo ) ) {
 
@@ -1150,6 +1164,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					if ( isset( $settings->legend_column->legend_font_family->family ) ) {
 
 						$settings->legend_column->legend_typo->font_family = $settings->legend_column->legend_font_family->family;
+						unset( $settings->legend_column->legend_font_family->family );
 					}
 					if ( isset( $settings->legend_column->legend_font_family->weight ) ) {
 						if ( 'regular' == $settings->legend_column->legend_font_family->weight ) {
@@ -1157,6 +1172,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						} else {
 							$settings->legend_column->legend_typo->font_weight = $settings->legend_column->legend_font_family->weight;
 						}
+						unset( $settings->legend_column->legend_font_family->weight );
 					}
 				}
 				if ( isset( $settings->legend_column->legend_font_size->desktop ) ) {
@@ -1204,31 +1220,100 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->legend_column->legend_font_family ) ) {
-					unset( $settings->legend_column->legend_font_family );
-					unset( $settings->legend_column->legend_font_size );
-					unset( $settings->legend_column->legend_line_height );
+				if ( isset( $settings->legend_column->legend_font_size->desktop ) ) {
+					unset( $settings->legend_column->legend_font_size->desktop );
+				}
+				if ( isset( $settings->legend_column->legend_font_size->medium ) ) {
+					unset( $settings->legend_column->legend_font_size->medium );
+				}
+				if ( isset( $settings->legend_column->legend_font_size->small ) ) {
+					unset( $settings->legend_column->legend_font_size->small );
+				}
+				if ( isset( $settings->legend_column->legend_line_height->desktop ) ) {
+					unset( $settings->legend_column->legend_line_height->desktop );
+				}
+				if ( isset( $settings->legend_column->legend_line_height->medium ) ) {
+					unset( $settings->legend_column->legend_line_height->medium );
+				}
+				if ( isset( $settings->legend_column->legend_line_height->small ) ) {
+					unset( $settings->legend_column->legend_line_height->small );
 				}
 			}
-			if ( isset( $settings->title_typography_font_family ) ) {
-				unset( $settings->title_typography_font_family );
-				unset( $settings->title_typography_font_size_unit );
-				unset( $settings->title_typography_line_height_unit );
+			// Unset the old values.
+			if ( isset( $settings->title_typography_font_size_unit['desktop'] ) ) {
+				unset( $settings->title_typography_font_size_unit['desktop'] );
 			}
-			if ( isset( $settings->feature_typography_font_family ) ) {
-				unset( $settings->feature_typography_font_family );
-				unset( $settings->feature_typography_font_size );
-				unset( $settings->feature_typography_line_height );
+			if ( isset( $settings->title_typography_font_size_unit['medium'] ) ) {
+				unset( $settings->title_typography_font_size_unit['medium'] );
 			}
-			if ( isset( $settings->price_typography_font_family ) ) {
-				unset( $settings->price_typography_font_family );
-				unset( $settings->price_typography_font_size_unit );
-				unset( $settings->price_typography_line_height_unit );
+			if ( isset( $settings->title_typography_font_size_unit['small'] ) ) {
+				unset( $settings->title_typography_font_size_unit['small'] );
 			}
-			if ( isset( $settings->duration_typography_font_family ) ) {
-				unset( $settings->duration_typography_font_family );
-				unset( $settings->duration_typography_font_size_unit );
-				unset( $settings->duration_typography_line_height_unit );
+			if ( isset( $settings->title_typography_line_height_unit['desktop'] ) ) {
+				unset( $settings->title_typography_line_height_unit['desktop'] );
+			}
+			if ( isset( $settings->title_typography_line_height_unit['medium'] ) ) {
+				unset( $settings->title_typography_line_height_unit['medium'] );
+			}
+			if ( isset( $settings->title_typography_line_height_unit['small'] ) ) {
+				unset( $settings->title_typography_line_height_unit['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->feature_typography_font_size['desktop'] ) ) {
+				unset( $settings->feature_typography_font_size['desktop'] );
+			}
+			if ( isset( $settings->feature_typography_font_size['medium'] ) ) {
+				unset( $settings->feature_typography_font_size['medium'] );
+			}
+			if ( isset( $settings->feature_typography_font_size['small'] ) ) {
+				unset( $settings->feature_typography_font_size['small'] );
+			}
+			if ( isset( $settings->feature_typography_line_height['desktop'] ) ) {
+				unset( $settings->feature_typography_line_height['desktop'] );
+			}
+			if ( isset( $settings->feature_typography_line_height['medium'] ) ) {
+				unset( $settings->feature_typography_line_height['medium'] );
+			}
+			if ( isset( $settings->feature_typography_line_height['small'] ) ) {
+				unset( $settings->feature_typography_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->price_typography_font_size_unit['desktop'] ) ) {
+				unset( $settings->price_typography_font_size_unit['desktop'] );
+			}
+			if ( isset( $settings->price_typography_font_size_unit['medium'] ) ) {
+				unset( $settings->price_typography_font_size_unit['medium'] );
+			}
+			if ( isset( $settings->price_typography_font_size_unit['small'] ) ) {
+				unset( $settings->price_typography_font_size_unit['small'] );
+			}
+			if ( isset( $settings->feature_typography_line_height['desktop'] ) ) {
+				unset( $settings->feature_typography_line_height['desktop'] );
+			}
+			if ( isset( $settings->feature_typography_line_height['medium'] ) ) {
+				unset( $settings->feature_typography_line_height['medium'] );
+			}
+			if ( isset( $settings->feature_typography_line_height['small'] ) ) {
+				unset( $settings->feature_typography_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->duration_typography_font_size_unit['desktop'] ) ) {
+				unset( $settings->duration_typography_font_size_unit['desktop'] );
+			}
+			if ( isset( $settings->duration_typography_font_size_unit['medium'] ) ) {
+				unset( $settings->duration_typography_font_size_unit['medium'] );
+			}
+			if ( isset( $settings->duration_typography_font_size_unit['small'] ) ) {
+				unset( $settings->duration_typography_font_size_unit['small'] );
+			}
+			if ( isset( $settings->duration_typography_line_height_unit['desktop'] ) ) {
+				unset( $settings->duration_typography_line_height_unit['desktop'] );
+			}
+			if ( isset( $settings->duration_typography_line_height_unit['medium'] ) ) {
+				unset( $settings->duration_typography_line_height_unit['medium'] );
+			}
+			if ( isset( $settings->duration_typography_line_height_unit['small'] ) ) {
+				unset( $settings->duration_typography_line_height_unit['small'] );
 			}
 		}
 		return $settings;

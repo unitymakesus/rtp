@@ -15,12 +15,12 @@ class FLPostSliderModule extends FLBuilderModule {
 	 */
 	public function __construct() {
 		parent::__construct(array(
-			'name'          	=> __( 'Posts Slider', 'fl-builder' ),
-			'description'   	=> __( 'Display a slider of your WordPress posts.', 'fl-builder' ),
-			'category'      	=> __( 'Posts', 'fl-builder' ),
-			'editor_export' 	=> false,
-			'partial_refresh'   => true,
-			'icon'				=> 'slides.svg',
+			'name'            => __( 'Posts Slider', 'fl-builder' ),
+			'description'     => __( 'Display a slider of your WordPress posts.', 'fl-builder' ),
+			'category'        => __( 'Posts', 'fl-builder' ),
+			'editor_export'   => false,
+			'partial_refresh' => true,
+			'icon'            => 'slides.svg',
 		));
 
 		$this->add_css( 'jquery-bxslider' );
@@ -28,13 +28,29 @@ class FLPostSliderModule extends FLBuilderModule {
 	}
 
 	/**
+	 * Ensure backwards compatibility with old settings.
+	 *
+	 * @since 2.2
+	 * @param object $settings A module settings object.
+	 * @param object $helper A settings compatibility helper.
+	 * @return object
+	 */
+	public function filter_settings( $settings, $helper ) {
+
+		// Handle old opacity inputs.
+		$helper->handle_opacity_inputs( $settings, 'text_bg_opacity', 'text_bg_color' );
+
+		return $settings;
+	}
+
+	/**
 	 * Remove pagination parameters
 	 *
-	 * @param array $query_args 	Generated query args to override
-	 * @return array 				Updated query args
+	 * @param array $query_args     Generated query args to override
+	 * @return array                Updated query args
 	 */
 	public function remove_pagination_args( $query_args ) {
-		$query_args['paged'] = 0;
+		$query_args['paged']  = 0;
 		$query_args['offset'] = isset( $this->settings->offset ) ? $this->settings->offset : 0;
 		return $query_args;
 	}
@@ -45,14 +61,14 @@ class FLPostSliderModule extends FLBuilderModule {
 	 * Gets a post ID and returns the url for the 'full' size of the attachment
 	 * set as featured image.
 	 *
-	 * @param  int $id 	 The post ID.
+	 * @param  int $id   The post ID.
 	 * @since  1.5.9
 	 * @return string    The featured image url for the 'full' size.
 	 */
 	public function get_full_img_src( $id ) {
 		$thumb_id = get_post_thumbnail_id( $id );
-		$size = isset( $this->settings->thumb_size ) ? $this->settings->thumb_size : 'medium';
-		$img = wp_get_attachment_image_src( $thumb_id, $size );
+		$size     = isset( $this->settings->thumb_size ) ? $this->settings->thumb_size : 'medium';
+		$img      = wp_get_attachment_image_src( $thumb_id, $size );
 		return $img[0];
 	}
 
@@ -61,7 +77,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	 *
 	 * Gets a post ID and returns an array containing the featured image data.
 	 *
-	 * @param  int $id 	 The post ID.
+	 * @param  int $id   The post ID.
 	 * @since  1.5.9
 	 * @return array    The image data.
 	 */
@@ -80,8 +96,8 @@ class FLPostSliderModule extends FLBuilderModule {
 	 * Get all the query parameters and build an array with posts ID's as keys
 	 * and the featured image's url (in 'full size') as values.
 	 *
-	 * @since 	1.5.9
-	 * @return 	array 	the array with all the posts ID's and featured image url's.
+	 * @since   1.5.9
+	 * @return  array   the array with all the posts ID's and featured image url's.
 	 *
 	 */
 	public function _build_posts_array() {
@@ -132,8 +148,8 @@ class FLPostSliderModule extends FLBuilderModule {
 
 	/**
 	 * Render post slider query based from the settings
-	 * @since 	1.9.3
-	 * @return 	object The query results
+	 * @since   1.9.3
+	 * @return  object The query results
 	 */
 	public function get_query() {
 		// if not, create a default query with it
@@ -166,7 +182,7 @@ class FLPostSliderModule extends FLBuilderModule {
 			if ( 'thumb' == $this->settings->image_type ) {
 
 				// get image source and data
-				$src = $this->_get_uncropped_url( $id );
+				$src        = $this->_get_uncropped_url( $id );
 				$photo_data = $this->_get_img_data( $id );
 
 				// get alignment option, otherwise set the default to "left"
@@ -174,13 +190,13 @@ class FLPostSliderModule extends FLBuilderModule {
 
 				// set params
 				$photo_settings = array(
-					'align'         => $align,
-					'crop'          => $this->settings->thumb_crop,
-					'link_type'     => 'url',
-					'link_url'      => get_the_permalink( $id ),
-					'photo'         => $photo_data,
-					'photo_src'     => $src,
-					'photo_source'  => 'library',
+					'align'        => $align,
+					'crop'         => $this->settings->thumb_crop,
+					'link_type'    => 'url',
+					'link_url'     => get_the_permalink( $id ),
+					'photo'        => $photo_data,
+					'photo_src'    => $src,
+					'photo_source' => 'library',
 				);
 
 				// render image
@@ -218,17 +234,17 @@ class FLPostSliderModule extends FLBuilderModule {
 			if ( 'background' == $this->settings->image_type ) {
 
 				// get image source and data
-				$src = $this->_get_uncropped_url( $id );
+				$src        = $this->_get_uncropped_url( $id );
 				$photo_data = $this->_get_img_data( $id );
 
 				// set params
 				$photo_settings = array(
-					'align'         => 'center',
-					'link_type'     => 'url',
-					'link_url'      => get_the_permalink( $id ),
-					'photo'         => $photo_data,
-					'photo_src'     => $src,
-					'photo_source'  => 'library',
+					'align'        => 'center',
+					'link_type'    => 'url',
+					'link_url'     => get_the_permalink( $id ),
+					'photo'        => $photo_data,
+					'photo_src'    => $src,
+					'photo_source' => 'library',
 				);
 
 				// render image
@@ -257,7 +273,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		$tag = ! empty( $this->settings->title_tag ) ? $this->settings->title_tag : 'h2';
 
 		// build markup
-		$title = '<' . $tag . ' class="fl-post-slider-title" itemprop="headline">';
+		$title  = '<' . $tag . ' class="fl-post-slider-title" itemprop="headline">';
 		$title .= '<a href="' . get_the_permalink( $id ) . '" rel="bookmark" title="' . the_title_attribute( array(
 			'echo' => false,
 			'post' => $id,
@@ -304,13 +320,13 @@ class FLPostSliderModule extends FLBuilderModule {
 	 */
 	public function render_slider_gradient_bg() {
 
-		if ( empty( $this->settings->text_bg_color ) || empty( $this->settings->text_bg_opacity ) ) {
+		if ( empty( $this->settings->text_bg_color ) ) {
 			return;
 		}
 
 		// set defaults
-		$color_start = 'rgba(' . implode( ',', FLBuilderColor::hex_to_rgb( $this->settings->text_bg_color ) ) . ',' . ( $this->settings->text_bg_opacity / 100 ) . ')';
-		$color_end = 'rgba(' . implode( ',', FLBuilderColor::hex_to_rgb( $this->settings->text_bg_color ) ) . ',0)';
+		$color_start = $this->settings->text_bg_color;
+		$color_end   = 'rgba(' . implode( ',', FLBuilderColor::hex_to_rgb( $this->settings->text_bg_color ) ) . ',0)';
 
 		// check if bg_gradient is set to "yes"
 		if ( isset( $this->settings->bg_gradient ) && 'yes' == $this->settings->bg_gradient ) {
@@ -319,17 +335,17 @@ class FLPostSliderModule extends FLBuilderModule {
 			if ( isset( $this->settings->text_position ) ) {
 				switch ( $this->settings->text_position ) {
 					case 'left':
-						$direction = 'left';
+						$direction    = 'left';
 						$wk_direction = 'left top, right top';
 						$ie_direction = 'to right';
 						break;
 					case 'right':
-						$direction = 'right';
+						$direction    = 'right';
 						$wk_direction = 'right top, left top';
 						$ie_direction = 'to left';
 						break;
 					case 'bottom':
-						$direction = 'bottom';
+						$direction    = 'bottom';
 						$wk_direction = 'left bottom, left top';
 						$ie_direction = 'to top';
 						break;
@@ -338,7 +354,7 @@ class FLPostSliderModule extends FLBuilderModule {
 			}
 
 			// build csss gradient code
-			$bg = 'background: #' . $this->settings->text_bg_color . ';';
+			$bg  = 'background: #' . $this->settings->text_bg_color . ';';
 			$bg .= 'background: -ms-linear-gradient(' . $direction . ', ' . $color_start . ' 0%, ' . $color_end . ' 100%);';
 			$bg .= 'background: -moz-linear-gradient(' . $direction . ', ' . $color_start . ' 0%, ' . $color_end . ' 100%);';
 			$bg .= 'background: -o-linear-gradient(' . $direction . ', ' . $color_start . ' 0%, ' . $color_end . ' 100%);';
@@ -349,8 +365,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		} else {
 
 			// if gradient isn't selected, set the background with default values
-			$bg = 'background-color: #' . $this->settings->text_bg_color . ';';
-			$bg .= 'background-color: ' . $color_start . ';';
+			$bg = 'background-color: ' . $color_start . ';';
 		}
 
 		echo $bg;
@@ -362,93 +377,100 @@ class FLPostSliderModule extends FLBuilderModule {
  * Register the module and its form settings.
  */
 FLBuilder::register_module('FLPostSliderModule', array(
-	'slider'      => array(
-		'title'         => __( 'Slider', 'fl-builder' ),
-		'sections'      => array(
-			'general'       => array(
-				'title'         => '',
-				'fields'        => array(
-					'height'        => array(
-						'type'          => 'text',
-						'label'         => __( 'Height', 'fl-builder' ),
-						'default'       => '400',
-						'maxlength'     => '4',
-						'size'          => '5',
-						'description'   => 'px',
-						'help'          => __( 'This setting is the minimum height of the post slider. Content will expand the height automatically.', 'fl-builder' ),
+	'slider'  => array(
+		'title'    => __( 'Slider', 'fl-builder' ),
+		'sections' => array(
+			'general'  => array(
+				'title'  => '',
+				'fields' => array(
+					'height'             => array(
+						'type'    => 'unit',
+						'label'   => __( 'Height', 'fl-builder' ),
+						'default' => '400',
+						'units'   => array( 'px' ),
+						'slider'  => array(
+							'max'  => 500,
+							'step' => 10,
+						),
+						'help'    => __( 'This setting is the minimum height of the post slider. Content will expand the height automatically.', 'fl-builder' ),
 					),
-					'auto_play'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Auto Play', 'fl-builder' ),
-						'default'       => 'true',
-						'options'       => array(
-							'false'         => __( 'No', 'fl-builder' ),
-							'true'          => __( 'Yes', 'fl-builder' ),
+					'auto_play'          => array(
+						'type'    => 'select',
+						'label'   => __( 'Auto Play', 'fl-builder' ),
+						'default' => 'true',
+						'options' => array(
+							'false' => __( 'No', 'fl-builder' ),
+							'true'  => __( 'Yes', 'fl-builder' ),
 						),
 					),
-					'speed'         => array(
-						'type'          => 'text',
-						'label'         => __( 'Delay', 'fl-builder' ),
-						'default'       => '5',
-						'size'          => '5',
-						'description'   => _x( 'seconds', 'Value unit for form field of time in seconds. Such as: "5 seconds"', 'fl-builder' ),
-					),
-					'slider_loop'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Loop', 'fl-builder' ),
-						'default'       => 'false',
-						'options'       => array(
-							'false'            	=> __( 'No', 'fl-builder' ),
-							'true'				=> __( 'Yes', 'fl-builder' ),
+					'slider_loop'        => array(
+						'type'    => 'select',
+						'label'   => __( 'Loop', 'fl-builder' ),
+						'default' => 'false',
+						'options' => array(
+							'false' => __( 'No', 'fl-builder' ),
+							'true'  => __( 'Yes', 'fl-builder' ),
 						),
 					),
-					'transition'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Transition', 'fl-builder' ),
-						'default'       => 'horizontal',
-						'options'       => array(
-							'fade'              => __( 'Fade', 'fl-builder' ),
-							'horizontal'   		=> _x( 'Slide', 'Transition type.', 'fl-builder' ),
+					'speed'              => array(
+						'type'    => 'unit',
+						'label'   => __( 'Delay', 'fl-builder' ),
+						'default' => '5',
+						'units'   => array( 'seconds' ),
+						'slider'  => array(
+							'max'  => 10,
+							'step' => .5,
+						),
+					),
+					'transition'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Transition', 'fl-builder' ),
+						'default' => 'horizontal',
+						'options' => array(
+							'fade'       => __( 'Fade', 'fl-builder' ),
+							'horizontal' => _x( 'Slide', 'Transition type.', 'fl-builder' ),
 						),
 					),
 					'transitionDuration' => array(
-						'type'          => 'text',
-						'label'         => __( 'Transition Speed', 'fl-builder' ),
-						'default'       => '1',
-						'size'          => '5',
-						'description'   => _x( 'seconds', 'Value unit for form field of time in seconds. Such as: "5 seconds"', 'fl-builder' ),
+						'type'    => 'unit',
+						'label'   => __( 'Transition Speed', 'fl-builder' ),
+						'default' => '1',
+						'units'   => array( 'seconds' ),
+						'slider'  => array(
+							'max'  => 10,
+							'step' => .5,
+						),
 					),
-					'posts_per_page' => array(
-						'type'          => 'text',
-						'label'         => __( 'Number of Posts', 'fl-builder' ),
-						'default'       => '10',
-						'size'          => '4',
+					'posts_per_page'     => array(
+						'type'    => 'unit',
+						'label'   => __( 'Number of Posts', 'fl-builder' ),
+						'default' => '10',
 					),
 				),
 			),
-			'controls'       => array(
-				'title'         => __( 'Slider Controls', 'fl-builder' ),
-				'fields'        => array(
-					'pagination'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Show Dots', 'fl-builder' ),
-						'default'       => 'yes',
-						'options'       => array(
-							'no'			=> __( 'No', 'fl-builder' ),
-							'yes'       	=> __( 'Yes', 'fl-builder' ),
+			'controls' => array(
+				'title'  => __( 'Slider Controls', 'fl-builder' ),
+				'fields' => array(
+					'pagination' => array(
+						'type'    => 'select',
+						'label'   => __( 'Show Dots', 'fl-builder' ),
+						'default' => 'yes',
+						'options' => array(
+							'no'  => __( 'No', 'fl-builder' ),
+							'yes' => __( 'Yes', 'fl-builder' ),
 						),
 					),
-					'navigation'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Show Arrows', 'fl-builder' ),
-						'default'       => 'no',
-						'options'       => array(
-							'no'            => __( 'No', 'fl-builder' ),
-							'yes'        	=> __( 'Yes', 'fl-builder' ),
+					'navigation' => array(
+						'type'    => 'select',
+						'label'   => __( 'Show Arrows', 'fl-builder' ),
+						'default' => 'no',
+						'options' => array(
+							'no'  => __( 'No', 'fl-builder' ),
+							'yes' => __( 'Yes', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'yes'			=> array(
-								'sections'		=> array( 'nav_arrow_color' ),
+						'toggle'  => array(
+							'yes' => array(
+								'sections' => array( 'nav_arrow_color' ),
 							),
 						),
 					),
@@ -457,360 +479,375 @@ FLBuilder::register_module('FLPostSliderModule', array(
 
 		),
 	),
-	'layout'        => array(
-		'title'         => __( 'Layout', 'fl-builder' ),
-		'sections'      => array(
+	'layout'  => array(
+		'title'    => __( 'Layout', 'fl-builder' ),
+		'sections' => array(
 			'featured_img' => array(
-				'title'         => '',
-				'fields'        => array(
-					'show_thumb'    => array(
-						'type'          => 'select',
-						'label'         => __( 'Show Featured Image?', 'fl-builder' ),
-						'default'       => 'show',
-						'options'       => array(
-							'show'		    => __( 'Show', 'fl-builder' ),
-							'hide'          => __( 'Hide', 'fl-builder' ),
+				'title'  => '',
+				'fields' => array(
+					'show_thumb' => array(
+						'type'    => 'select',
+						'label'   => __( 'Show Featured Image?', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'show'    => array(
-								'sections'      => array( 'image' ),
-								'fields'        => array( 'text_position', 'text_width' ),
+						'toggle'  => array(
+							'show' => array(
+								'sections' => array( 'image' ),
+								'fields'   => array( 'text_position', 'text_width' ),
 							),
 						),
 					),
 				),
 			),
 			'image'        => array(
-				'title'         => __( 'Featured Image', 'fl-builder' ),
-				'fields'        => array(
-					'image_type'    => array(
-						'type'          => 'select',
-						'label'         => __( 'Image', 'fl-builder' ),
-						'default'       => 'background',
-						'options'       => array(
-							'background'    => __( 'Background', 'fl-builder' ),
-							'thumb'         => __( 'Thumbnail', 'fl-builder' ),
+				'title'  => __( 'Featured Image', 'fl-builder' ),
+				'fields' => array(
+					'image_type' => array(
+						'type'    => 'select',
+						'label'   => __( 'Image', 'fl-builder' ),
+						'default' => 'background',
+						'options' => array(
+							'background' => __( 'Background', 'fl-builder' ),
+							'thumb'      => __( 'Thumbnail', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'background'    => array(
-								'fields'        => array( 'text_position', 'thumb_size' ),
+						'toggle'  => array(
+							'background' => array(
+								'fields' => array( 'text_position', 'thumb_size' ),
 							),
-							'thumb'         => array(
-								'fields'        => array( 'thumb_crop', 'thumb_size', 'thumb_text_position' ),
+							'thumb'      => array(
+								'fields' => array( 'thumb_crop', 'thumb_size', 'thumb_text_position' ),
 							),
 						),
 					),
-					'thumb_size'    => array(
-						'type'          => 'photo-sizes',
-						'label'         => __( 'Size', 'fl-builder' ),
-						'default'       => 'large',
+					'thumb_size' => array(
+						'type'    => 'photo-sizes',
+						'label'   => __( 'Size', 'fl-builder' ),
+						'default' => 'large',
 					),
-					'thumb_crop'    => array(
-						'type'          => 'select',
-						'label'         => __( 'Crop', 'fl-builder' ),
-						'default'       => 'landscape',
-						'options'       => array(
-							''              => _x( 'None', 'Photo Crop.', 'fl-builder' ),
-							'landscape'     => __( 'Landscape', 'fl-builder' ),
-							'panorama'      => __( 'Panorama', 'fl-builder' ),
-							'portrait'      => __( 'Portrait', 'fl-builder' ),
-							'square'        => __( 'Square', 'fl-builder' ),
-							'circle'        => __( 'Circle', 'fl-builder' ),
+					'thumb_crop' => array(
+						'type'    => 'select',
+						'label'   => __( 'Crop', 'fl-builder' ),
+						'default' => 'landscape',
+						'options' => array(
+							''          => _x( 'None', 'Photo Crop.', 'fl-builder' ),
+							'landscape' => __( 'Landscape', 'fl-builder' ),
+							'panorama'  => __( 'Panorama', 'fl-builder' ),
+							'portrait'  => __( 'Portrait', 'fl-builder' ),
+							'square'    => __( 'Square', 'fl-builder' ),
+							'circle'    => __( 'Circle', 'fl-builder' ),
 						),
 					),
 				),
 			),
-			'info'          => array(
-				'title'         => __( 'Post Info', 'fl-builder' ),
-				'fields'        => array(
+			'info'         => array(
+				'title'  => __( 'Post Info', 'fl-builder' ),
+				'fields' => array(
 					'show_author'   => array(
-						'type'          => 'select',
-						'label'         => __( 'Author', 'fl-builder' ),
-						'default'       => '1',
-						'options'       => array(
-							'1'             => __( 'Show', 'fl-builder' ),
-							'0'             => __( 'Hide', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Author', 'fl-builder' ),
+						'default' => '1',
+						'options' => array(
+							'1' => __( 'Show', 'fl-builder' ),
+							'0' => __( 'Hide', 'fl-builder' ),
 						),
 					),
 					'show_date'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Date', 'fl-builder' ),
-						'default'       => '1',
-						'options'       => array(
-							'1'             => __( 'Show', 'fl-builder' ),
-							'0'             => __( 'Hide', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Date', 'fl-builder' ),
+						'default' => '1',
+						'options' => array(
+							'1' => __( 'Show', 'fl-builder' ),
+							'0' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'1'             => array(
-								'fields'        => array( 'date_format' ),
+						'toggle'  => array(
+							'1' => array(
+								'fields' => array( 'date_format' ),
 							),
 						),
 					),
 					'date_format'   => array(
-						'type'          => 'select',
-						'label'         => __( 'Date Format', 'fl-builder' ),
-						'default'       => 'default',
-						'options'       => array(
-							'default'		=> __( 'Default', 'fl-builder' ),
-							'M j, Y'        => date( 'M j, Y' ),
-							'F j, Y'        => date( 'F j, Y' ),
-							'm/d/Y'         => date( 'm/d/Y' ),
-							'm-d-Y'         => date( 'm-d-Y' ),
-							'd M Y'         => date( 'd M Y' ),
-							'd F Y'         => date( 'd F Y' ),
-							'Y-m-d'         => date( 'Y-m-d' ),
-							'Y/m/d'         => date( 'Y/m/d' ),
+						'type'    => 'select',
+						'label'   => __( 'Date Format', 'fl-builder' ),
+						'default' => 'default',
+						'options' => array(
+							'default' => __( 'Default', 'fl-builder' ),
+							'M j, Y'  => date( 'M j, Y' ),
+							'F j, Y'  => date( 'F j, Y' ),
+							'm/d/Y'   => date( 'm/d/Y' ),
+							'm-d-Y'   => date( 'm-d-Y' ),
+							'd M Y'   => date( 'd M Y' ),
+							'd F Y'   => date( 'd F Y' ),
+							'Y-m-d'   => date( 'Y-m-d' ),
+							'Y/m/d'   => date( 'Y/m/d' ),
 						),
 					),
 					'show_comments' => array(
-						'type'          => 'select',
-						'label'         => __( 'Comments', 'fl-builder' ),
-						'default'       => '1',
-						'options'       => array(
-							'1'             => __( 'Show', 'fl-builder' ),
-							'0'             => __( 'Hide', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Comments', 'fl-builder' ),
+						'default' => '1',
+						'options' => array(
+							'1' => __( 'Show', 'fl-builder' ),
+							'0' => __( 'Hide', 'fl-builder' ),
 						),
 					),
 				),
 			),
-			'content'       => array(
-				'title'         => __( 'Content', 'fl-builder' ),
-				'fields'        => array(
-					'show_content'  => array(
-						'type'          => 'select',
-						'label'         => __( 'Content', 'fl-builder' ),
-						'default'       => '1',
-						'options'       => array(
-							'1'             => __( 'Show', 'fl-builder' ),
-							'0'             => __( 'Hide', 'fl-builder' ),
+			'content'      => array(
+				'title'  => __( 'Content', 'fl-builder' ),
+				'fields' => array(
+					'show_content'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Content', 'fl-builder' ),
+						'default' => '1',
+						'options' => array(
+							'1' => __( 'Show', 'fl-builder' ),
+							'0' => __( 'Hide', 'fl-builder' ),
 						),
 					),
 					'show_more_link' => array(
-						'type'          => 'select',
-						'label'         => __( 'More Link', 'fl-builder' ),
-						'default'       => '0',
-						'options'       => array(
-							'1'             => __( 'Show', 'fl-builder' ),
-							'0'             => __( 'Hide', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'More Link', 'fl-builder' ),
+						'default' => '0',
+						'options' => array(
+							'1' => __( 'Show', 'fl-builder' ),
+							'0' => __( 'Hide', 'fl-builder' ),
 						),
 					),
 					'more_link_text' => array(
-						'type'          => 'text',
-						'label'         => __( 'More Link Text', 'fl-builder' ),
-						'default'       => __( 'Read More', 'fl-builder' ),
+						'type'    => 'text',
+						'label'   => __( 'More Link Text', 'fl-builder' ),
+						'default' => __( 'Read More', 'fl-builder' ),
 					),
 				),
 			),
 		),
 	),
 
-	'style'         => array( // Tab
-		'title'         => __( 'Style', 'fl-builder' ), // Tab title
-		'sections'      => array( // Tab Sections
-			'title'         => array(
-				'title'         => __( 'Heading', 'fl-builder' ),
-				'fields'        => array(
-					'title_tag'     => array(
-						'type'          => 'select',
-						'label'         => __( 'Heading Tag', 'fl-builder' ),
-						'default'       => 'h2',
-						'options'       => array(
-							'h1'            => 'h1',
-							'h2'            => 'h2',
-							'h3'            => 'h3',
-							'h4'            => 'h4',
-							'h5'            => 'h5',
-							'h6'            => 'h6',
+	'style'   => array( // Tab
+		'title'    => __( 'Style', 'fl-builder' ), // Tab title
+		'sections' => array( // Tab Sections
+			'title'           => array(
+				'title'  => __( 'Heading', 'fl-builder' ),
+				'fields' => array(
+					'title_tag'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Heading Tag', 'fl-builder' ),
+						'default' => 'h2',
+						'options' => array(
+							'h1' => 'h1',
+							'h2' => 'h2',
+							'h3' => 'h3',
+							'h4' => 'h4',
+							'h5' => 'h5',
+							'h6' => 'h6',
 						),
 					),
-					'title_size'    => array(
-						'type'          => 'select',
-						'label'         => __( 'Heading Size', 'fl-builder' ),
-						'default'       => 'default',
-						'options'       => array(
-							'default'       => __( 'Default', 'fl-builder' ),
-							'custom'        => __( 'Custom', 'fl-builder' ),
+					'title_size'        => array(
+						'type'    => 'select',
+						'label'   => __( 'Heading Size', 'fl-builder' ),
+						'default' => 'default',
+						'options' => array(
+							'default' => __( 'Default', 'fl-builder' ),
+							'custom'  => __( 'Custom', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'custom'        => array(
-								'fields'        => array( 'title_custom_size' ),
+						'toggle'  => array(
+							'custom' => array(
+								'fields' => array( 'title_custom_size' ),
 							),
 						),
 					),
 					'title_custom_size' => array(
-						'type'          => 'text',
-						'label'         => __( 'Heading Size', 'fl-builder' ),
-						'default'       => '24',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
+						'type'    => 'unit',
+						'label'   => __( 'Heading Size', 'fl-builder' ),
+						'default' => '24',
+						'units'   => array( 'px' ),
+						'slider'  => true,
+						'preview' => array(
+							'type'      => 'css',
+							'selector'  => '.fl-post-slider-title',
+							'property'  => 'font-size',
+							'unit'      => 'px',
+							'important' => true,
+						),
 					),
 				),
 			),
-			'text_position' => array(
-				'title'         => __( 'Text', 'fl-builder' ),
-				'fields'        => array(
-					'text_position' => array(
-						'type'          => 'select',
-						'label'         => __( 'Position', 'fl-builder' ),
-						'default'       => 'left',
-						'help'          => __( 'The position will move the content layout selections left, right or bottom over the background of the slide.', 'fl-builder' ),
-						'options'       => array(
-							'left'          => __( 'Left', 'fl-builder' ),
-							'right'         => __( 'Right', 'fl-builder' ),
-							'bottom'        => __( 'Bottom', 'fl-builder' ),
+			'text_position'   => array(
+				'title'  => __( 'Text', 'fl-builder' ),
+				'fields' => array(
+					'text_position'       => array(
+						'type'    => 'select',
+						'label'   => __( 'Position', 'fl-builder' ),
+						'default' => 'left',
+						'help'    => __( 'The position will move the content layout selections left, right or bottom over the background of the slide.', 'fl-builder' ),
+						'options' => array(
+							'left'   => __( 'Left', 'fl-builder' ),
+							'right'  => __( 'Right', 'fl-builder' ),
+							'bottom' => __( 'Bottom', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'left'        => array(
-								'fields'        => array( 'text_width' ),
+						'toggle'  => array(
+							'left'  => array(
+								'fields' => array( 'text_width' ),
 							),
-							'right'        => array(
-								'fields'        => array( 'text_width' ),
+							'right' => array(
+								'fields' => array( 'text_width' ),
 							),
 						),
 					),
 					'thumb_text_position' => array(
-						'type'          => 'select',
-						'label'         => __( 'Position', 'fl-builder' ),
-						'default'       => 'left',
-						'help'          => __( 'The position will move the content layout selections left or right or center of the thumbnail of the slide.', 'fl-builder' ),
-						'options'       => array(
-							'left'          => __( 'Left', 'fl-builder' ),
-							'right'         => __( 'Right', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Position', 'fl-builder' ),
+						'default' => 'left',
+						'help'    => __( 'The position will move the content layout selections left or right or center of the thumbnail of the slide.', 'fl-builder' ),
+						'options' => array(
+							'left'  => __( 'Left', 'fl-builder' ),
+							'right' => __( 'Right', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'left'        => array(
-								'fields'        => array( 'text_width' ),
+						'toggle'  => array(
+							'left'  => array(
+								'fields' => array( 'text_width' ),
 							),
-							'right'        => array(
-								'fields'        => array( 'text_width' ),
+							'right' => array(
+								'fields' => array( 'text_width' ),
 							),
 						),
 					),
-					'text_width'   => array(
-						'type'          => 'text',
-						'label'         => __( 'Text Width', 'fl-builder' ),
-						'default'       => '50',
-						'description'   => '%',
-						'maxlength'     => '3',
-						'size'          => '5',
+					'text_width'          => array(
+						'type'    => 'unit',
+						'label'   => __( 'Text Width', 'fl-builder' ),
+						'default' => '50',
+						'units'   => array( '%' ),
+						'slider'  => true,
 					),
-					'text_padding' => array(
-						'type'          => 'text',
-						'label'         => __( 'Text Padding', 'fl-builder' ),
-						'default'       => '50',
-						'description'   => 'px',
-						'maxlength'     => '4',
-						'size'          => '5',
+					'text_padding'        => array(
+						'type'    => 'unit',
+						'label'   => __( 'Text Padding', 'fl-builder' ),
+						'default' => '50',
+						'units'   => array( 'px' ),
+						'slider'  => true,
 					),
 				),
 			),
-			'text_style'    => array(
-				'title'         => __( 'Colors', 'fl-builder' ),
-				'fields'        => array(
-					'text_color'    => array(
-						'type'          => 'color',
-						'label'         => __( 'Text Color', 'fl-builder' ),
-						'show_reset'    => true,
-						'default'		=> 'ffffff',
-						'preview'		=> array(
-							'type'			=> 'css',
-							'rules'			=> array(
+			'text_style'      => array(
+				'title'  => __( 'Colors', 'fl-builder' ),
+				'fields' => array(
+					'text_color'       => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Text Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'default'     => 'ffffff',
+						'preview'     => array(
+							'type'  => 'css',
+							'rules' => array(
 								array(
-									'selector'	=> '.fl-post-slider-background .fl-post-slider-content, .fl-post-slider-thumb, .fl-post-slider-no-thumb',
-									'property'	=> 'color',
+									'selector' => '.fl-post-slider-background .fl-post-slider-content, .fl-post-slider-thumb, .fl-post-slider-no-thumb',
+									'property' => 'color',
 								),
 							),
 						),
 					),
-					'link_color'    => array(
-						'type'          => 'color',
-						'label'         => __( 'Link Color', 'fl-builder' ),
-						'show_reset'    => true,
-						'default'		=> 'cccccc',
-						'preview'		=> array(
-							'type'			=> 'css',
-							'rules'			=> array(
+					'link_color'       => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Link Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'default'     => 'cccccc',
+						'preview'     => array(
+							'type'  => 'css',
+							'rules' => array(
 								array(
-									'selector'	=> '.fl-post-slider-content a',
-									'property'	=> 'color',
+									'selector' => '.fl-post-slider-content a',
+									'property' => 'color',
 								),
 							),
 						),
 
 					),
 					'link_hover_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Link Hover Color', 'fl-builder' ),
-						'default'		=> 'ffffff',
-						'show_reset'    => true,
-					),
-					'text_bg_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Text Background Color', 'fl-builder' ),
-						'help'          => __( 'The color applies to the overlay behind text over the background selections.', 'fl-builder' ),
-						'default'		=> '333333',
-						'show_reset'    => true,
-					),
-					'text_bg_opacity' => array(
-						'type'          => 'text',
-						'label'         => __( 'Text Background Opacity', 'fl-builder' ),
-						'default'       => '50',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => '%',
-					),
-					'bg_gradient' => array(
-						'type'          => 'select',
-						'label'         => __( 'Text Background Gradient', 'fl-builder' ),
-						'default'       => 'no',
-						'options'       => array(
-							'no'           => __( 'No', 'fl-builder' ),
-							'yes'          => __( 'Yes', 'fl-builder' ),
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Link Hover Color', 'fl-builder' ),
+						'default'     => 'ffffff',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type' => 'none',
 						),
 					),
-					'text_bg_height' => array(
-						'type'          => 'select',
-						'label'         => __( 'Text Background Height', 'fl-builder' ),
-						'default'       => '100%',
-						'help'          => __( 'Auto will allow the overlay to fit however long the text content is. 100% will fit the overlay to the top and bottom of the slide.', 'fl-builder' ),
-						'options'       => array(
-							'auto'          => _x( 'Auto', 'Background height.', 'fl-builder' ),
-							'100%'          => '100%',
+					'text_bg_color'    => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Text Background Color', 'fl-builder' ),
+						'help'        => __( 'The color applies to the overlay behind text over the background selections.', 'fl-builder' ),
+						'default'     => '333333',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+					),
+					'bg_gradient'      => array(
+						'type'    => 'select',
+						'label'   => __( 'Text Background Gradient', 'fl-builder' ),
+						'default' => 'no',
+						'options' => array(
+							'no'  => __( 'No', 'fl-builder' ),
+							'yes' => __( 'Yes', 'fl-builder' ),
+						),
+					),
+					'text_bg_height'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Text Background Height', 'fl-builder' ),
+						'default' => '100%',
+						'help'    => __( 'Auto will allow the overlay to fit however long the text content is. 100% will fit the overlay to the top and bottom of the slide.', 'fl-builder' ),
+						'options' => array(
+							'auto' => _x( 'Auto', 'Background height.', 'fl-builder' ),
+							'100%' => '100%',
 						),
 					),
 				),
 			),
 			'nav_arrow_color' => array(
-				'title'         => 'Nav Arrows',
-				'fields'        => array(
-					'arrows_bg_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Arrows Background Color', 'fl-builder' ),
-						'show_reset'    => true,
-						'show_alpha'	=> true,
+				'title'  => 'Nav Arrows',
+				'fields' => array(
+					'arrows_bg_color'   => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Arrows Background Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
 					),
-					'arrows_bg_style' => array(
-						'type'          => 'select',
-						'label'         => __( 'Arrows Background Style', 'fl-builder' ),
-						'default' 		=> 'circle',
-						'options'       => array(
-							'circle'    	=> __( 'Circle', 'fl-builder' ),
-							'square'        => __( 'Square', 'fl-builder' ),
+					'arrows_bg_style'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Arrows Background Style', 'fl-builder' ),
+						'default' => 'circle',
+						'options' => array(
+							'circle' => __( 'Circle', 'fl-builder' ),
+							'square' => __( 'Square', 'fl-builder' ),
 						),
 					),
 					'arrows_text_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Arrows Color', 'fl-builder' ),
-						'show_reset'    => true,
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Arrows Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '.fl-post-slider-navigation path',
+							'property' => 'fill',
+						),
 					),
 				),
 			),
 		),
 	),
 
-	'content'   => array(
-		'title'         => __( 'Content', 'fl-builder' ),
-		'file'          => FL_BUILDER_DIR . 'includes/loop-settings.php',
+	'content' => array(
+		'title' => __( 'Content', 'fl-builder' ),
+		'file'  => FL_BUILDER_DIR . 'includes/loop-settings.php',
 	),
 ));

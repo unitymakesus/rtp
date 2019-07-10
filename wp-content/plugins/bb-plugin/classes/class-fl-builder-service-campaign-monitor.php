@@ -44,8 +44,8 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API key.
@@ -80,13 +80,13 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your Campaign Monitor account under Account Settings > API Key.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Campaign Monitor account under Account Settings > API Key.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -105,13 +105,13 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$post_data      = FLBuilderModel::get_post_data();
-		$account_data   = $this->get_account_data( $account );
-		$api            = new CS_REST_General( $account_data );
-		$result         = $api->get_clients();
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$post_data    = FLBuilderModel::get_post_data();
+		$account_data = $this->get_account_data( $account );
+		$api          = new CS_REST_General( $account_data );
+		$result       = $api->get_clients();
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( $result->was_successful() ) {
@@ -150,13 +150,13 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'client_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-campaign-monitor-client-select',
-			'type'          => 'select',
-			'label'         => _x( 'Client', 'A client account in Campaign Monitor.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-campaign-monitor-client-select',
+			'type'      => 'select',
+			'label'     => _x( 'Client', 'A client account in Campaign Monitor.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -201,13 +201,13 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -235,8 +235,8 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to Campaign Monitor. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$api    = new CS_Rest_Subscribers( $settings->list_id, $account_data );
-			$data   = array(
+			$api  = new CS_Rest_Subscribers( $settings->list_id, $account_data );
+			$data = array(
 				'EmailAddress' => $email,
 				'Resubscribe'  => true,
 			);

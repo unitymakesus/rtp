@@ -24,9 +24,16 @@
 		include FL_BUILDER_CACHE_HELPER_DIR . 'includes/admin-settings-cache-plugins.php';
 	}
 
-	$debug = get_option( 'fl_debug_mode', false ); ?>
+	$debug = get_transient( 'fl_debug_mode' );
+	if ( $debug ) {
+		$expire_opt = get_option( '_transient_timeout_fl_debug_mode' );
+		$datetime1  = new DateTime( 'now' );
+		$datetime2  = new DateTime( date( 'Y-m-d H:i:s', $expire_opt ) );
+		$interval   = $datetime1->diff( $datetime2 );
+	}
+	?>
 	<?php $header = ( $debug ) ? __( 'Debug Mode Enabled', 'fl-builder' ) : __( 'Debug Mode Disabled', 'fl-builder' ); ?>
-	<h3 class="fl-settings-form-header"><?php echo $header ?></h3>
+	<h3 class="fl-settings-form-header"><?php echo $header; ?></h3>
 
 	<form id="debug-form" action="<?php FLBuilderAdminSettings::render_form_action( 'tools' ); ?>" method="post">
 		<div class="fl-settings-form-content">
@@ -35,13 +42,14 @@
 		<?php else : ?>
 			<p><?php _e( 'Copy this unique URL and send it to support as directed.', 'fl-builder' ); ?></p>
 		<?php endif; ?>
-			<?php if ( $debug ) :
+			<?php
+			if ( $debug ) :
 				$url = add_query_arg( array(
 					'fldebug' => $debug,
 				), site_url() );
 				?>
 				<p><?php printf( '<code>%s</code>', $url ); ?></p>
-
+				<p><?php printf( 'Link will expire in <strong>%s</strong>', $interval->format( '%d days %h hours %i minutes' ) ); ?></p>
 			<?php endif; ?>
 		</div>
 		<p class="submit">
@@ -55,7 +63,7 @@ if ( FLBuilderUsage::show_settings() ) {
 	$usage = get_site_option( 'fl_builder_usage_enabled', false );
 
 	$endpoint = is_network_admin() ? 'settings.php?page=fl-builder-multisite-settings#tools' : 'options-general.php?page=fl-builder-settings#tools';
-	$url   = wp_nonce_url( network_admin_url( $endpoint ), 'stats_enable' );
+	$url      = wp_nonce_url( network_admin_url( $endpoint ), 'stats_enable' );
 	if ( '1' == $usage ) {
 		$text = __( 'Disable', 'fl-builder' );
 		$url  = add_query_arg( array(
@@ -67,9 +75,10 @@ if ( FLBuilderUsage::show_settings() ) {
 			'fl_usage' => 1,
 		), $url );
 	}
-	$btn = sprintf( '<a class="button button-primary" href="%s">%s</a>', $url, $text ); ?>
+	$btn = sprintf( '<a class="button button-primary" href="%s">%s</a>', $url, $text );
+	?>
 	<hr />
-	<h3 class="fl-settings-form-header"><?php echo __( 'Send Usage Data', 'fl-builder' ) ?></h3>
+	<h3 class="fl-settings-form-header"><?php echo __( 'Send Usage Data', 'fl-builder' ); ?></h3>
 
 	<p><?php _e( 'If enabled we will send anonymous usage stats to help improve the plugin.', 'fl-builder' ); ?></p>
 

@@ -28,7 +28,7 @@ class WPML_UABB_VideoGallery extends WPML_Beaver_Builder_Module_With_Items {
 	 * @since 1.13.0
 	 */
 	public function get_fields() {
-		return array( 'youtube_link', 'vimeo_link', 'title', 'tags', 'default_filter', 'filters_heading_text' );
+		return array( 'youtube_link', 'vimeo_link', 'title', 'tags', 'filters_all_text', 'default_filter', 'filters_heading_text' );
 	}
 
 	/**
@@ -50,6 +50,9 @@ class WPML_UABB_VideoGallery extends WPML_Beaver_Builder_Module_With_Items {
 
 			case 'tags':
 				return esc_html__( 'Video Gallery : Categories', 'uabb' );
+
+			case 'filters_all_text':
+				return esc_html__( 'Video Gallery : "All" Tab Label', 'uabb' );
 
 			case 'default_filter':
 				return esc_html__( 'Video Gallery : Category Name', 'uabb' );
@@ -80,6 +83,9 @@ class WPML_UABB_VideoGallery extends WPML_Beaver_Builder_Module_With_Items {
 				return 'LINE';
 
 			case 'tags':
+				return 'LINE';
+
+			case 'filters_all_text':
 				return 'LINE';
 
 			case 'default_filter':

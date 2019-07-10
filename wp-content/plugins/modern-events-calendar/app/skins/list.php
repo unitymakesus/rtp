@@ -108,6 +108,9 @@ class MEC_skin_list extends MEC_skins
         
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+
+        // Image popup
+        $this->image_popup = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : 0;
         
         // From Widget
         $this->widget = (isset($this->atts['widget']) and trim($this->atts['widget'])) ? true : false;
@@ -143,7 +146,7 @@ class MEC_skin_list extends MEC_skins
         // Pagination Options
         $this->paged = get_query_var('paged', 1);
         $this->limit = (isset($this->skin_options['limit']) and trim($this->skin_options['limit'])) ? $this->skin_options['limit'] : 12;
-        
+
         $this->args['posts_per_page'] = $this->limit;
         $this->args['paged'] = $this->paged;
         

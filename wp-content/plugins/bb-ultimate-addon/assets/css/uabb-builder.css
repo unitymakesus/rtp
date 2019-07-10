@@ -173,3 +173,12 @@ html.uabb-active-live-preview .fl-builder-shortcode-mask {
 .uabb-docs-list .uabb-docs-list-item a:hover {
 	border-bottom: 1px dotted #000;
 }
+.fl-field-description .uabb-docs-particle .uabb-docs-particle-link {
+	color: #FF0000;
+}
+.fl-field-description .uabb-docs-particle .uabb-docs-particle-link,
+.fl-field-description .uabb-docs-particle {
+	font-size: 15px;
+	line-height: 1.5em;
+	padding-top: 15px;
+}

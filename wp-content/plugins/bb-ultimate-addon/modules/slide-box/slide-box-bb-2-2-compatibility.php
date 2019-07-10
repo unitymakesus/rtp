@@ -76,6 +76,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-slide-box-section .uabb-icon-wrap .uabb-icon i:before',
@@ -89,6 +90,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -197,6 +199,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 					),
 				),
@@ -283,6 +286,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 
 						'front_icon_border_hover_color' => array(
@@ -291,6 +295,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'mobile_view'                   => array(
 							'type'    => 'select',
@@ -375,28 +380,18 @@ FLBuilder::register_module(
 				'cta_type_text'   => array( // Section.
 					'title'  => __( 'Text', 'uabb' ), // Section Title.
 					'fields' => array( // Section Fields.
-						'link'        => array(
-							'type'        => 'link',
-							'label'       => __( 'Link', 'uabb' ),
-							'help'        => __( 'The link applies to the entire module. If choosing a call to action type below, this link will also be used for the text or button.', 'uabb' ),
-							'preview'     => array(
+						'link'     => array(
+							'type'          => 'link',
+							'label'         => __( 'Link', 'uabb' ),
+							'help'          => __( 'The link applies to the entire module. If choosing a call to action type below, this link will also be used for the text or button.', 'uabb' ),
+							'preview'       => array(
 								'type' => 'none',
 							),
-							'connections' => array( 'url' ),
+							'connections'   => array( 'url' ),
+							'show_target'   => true,
+							'show_nofollow' => true,
 						),
-						'link_target' => array(
-							'type'    => 'select',
-							'label'   => __( 'Link Target', 'uabb' ),
-							'default' => '_self',
-							'options' => array(
-								'_self'  => __( 'Same Window', 'uabb' ),
-								'_blank' => __( 'New Window', 'uabb' ),
-							),
-							'preview' => array(
-								'type' => 'none',
-							),
-						),
-						'cta_text'    => array(
+						'cta_text' => array(
 							'type'    => 'text',
 							'label'   => __( 'Text', 'uabb' ),
 							'default' => __( 'Read More', 'uabb' ),
@@ -481,6 +476,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => 'f6f6f6',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -495,6 +491,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Hover/Focus Color', 'uabb' ),
 							'default'     => 'e5e5e5',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -545,6 +542,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'default'     => 'f6f6f6',
 							'connections' => array( 'color' ),
 							'preview'     => array(
@@ -587,7 +585,7 @@ FLBuilder::register_module(
 						),
 						'overlay_icon'          => array(
 							'type'        => 'icon',
-							'default'     => 'fa fa-plus-square-o',
+							'default'     => 'fas fa-plus-square-o',
 							'label'       => __( 'Icon', 'uabb' ),
 							'show_remove' => true,
 						),
@@ -597,6 +595,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 
 						'overlay_icon_bg_color' => array(
@@ -633,6 +632,7 @@ FLBuilder::register_module(
 							'default'     => 'ffffff',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'dropdown_plus_icon_color' => array(
 							'type'        => 'color',
@@ -640,6 +640,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'dropdown_icon_bg_color'   => array(
 							'type'        => 'color',
@@ -773,6 +774,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -787,6 +789,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -853,6 +856,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-slide-box-section-content',
@@ -866,6 +870,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'front_desc_margin_top'    => array(
 							'type'    => 'unit',
@@ -944,6 +949,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'property'  => 'color',
@@ -1011,6 +1017,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'label'       => __( 'Description Color', 'uabb' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -1080,6 +1087,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-callout-cta-link',

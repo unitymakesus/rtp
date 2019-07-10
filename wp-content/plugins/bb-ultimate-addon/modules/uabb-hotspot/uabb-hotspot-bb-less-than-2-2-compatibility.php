@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_settings_form(
-	'hotspot_coordinates_form', array(
+	'hotspot_coordinates_form',
+	array(
 		'title' => __( 'Markers', 'uabb' ),
 		'tabs'  => array(
 			'general'    => array(
@@ -408,16 +409,16 @@ FLBuilder::register_settings_form(
 						),
 					),
 					'hotspot_animation' => array(
-						'title'  => __( 'Animation', 'uabb' ),
+						'title'  => __( 'Marker Animation', 'uabb' ),
 						'fields' => array(
 							'show_animation'  => array(
 								'type'    => 'select',
-								'label'   => __( 'Show Animation', 'uabb' ),
+								'label'   => __( 'Icon Animation', 'uabb' ),
 								'default' => 'no',
-								'help'    => __( 'If enabled this animation will be shown depending on Trigger selected in Action tab. Default will be on Hover', 'uabb' ),
 								'options' => array(
-									'yes' => __( 'Yes', 'uabb' ),
-									'no'  => __( 'No', 'uabb' ),
+									'always' => __( 'Always ', 'uabb' ),
+									'yes'    => __( 'On Hover', 'uabb' ),
+									'no'     => __( 'None', 'uabb' ),
 								),
 								'toggle'  => array(
 									'yes' => array(
@@ -497,8 +498,9 @@ FLBuilder::register_settings_form(
 								'label'   => __( 'Trigger On', 'uabb' ),
 								'default' => 'hover',
 								'options' => array(
-									'hover' => __( 'Hover', 'uabb' ),
-									'click' => __( 'Click', 'uabb' ),
+									'hover'  => __( 'Hover', 'uabb' ),
+									'click'  => __( 'Click', 'uabb' ),
+									'always' => __( 'Always', 'uabb' ),
 								),
 							),
 							'tooltip_padding_dimension' => array(
@@ -756,8 +758,9 @@ FLBuilder::register_settings_form(
  * Register the module and its form settings.
  */
 FLBuilder::register_module(
-	'UABBHotspot', array(
-		'general'        => array( // Tab.
+	'UABBHotspot',
+	array(
+		'general'          => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
 				'title' => array( // Section.
@@ -808,16 +811,16 @@ FLBuilder::register_module(
 
 			),
 		),
-		'marker_section' => array( // Tab.
-			'title'    => __( 'Marker', 'uabb' ), // Tab title.
+		'marker_section'   => array( // Tab.
+			'title'    => __( 'Markers', 'uabb' ), // Tab title.
 			'sections' => array(
 				'hotspot_markers' => array( // Section.
-					'title'  => __( 'Marker', 'uabb' ), // Section Title.
+					'title'  => __( 'Markers', 'uabb' ), // Section Title.
 					'fields' => array( // Section Fields.
 						'hotspot_marker' => array(
 							'type'         => 'form',
 							'form'         => 'hotspot_coordinates_form',
-							'label'        => __( 'Markers', 'uabb' ),
+							'label'        => __( 'Marker', 'uabb' ),
 							'preview_text' => 'hotspot_marker_type', // ID of a field to use for the preview.
 							'multiple'     => true,
 						),
@@ -825,5 +828,136 @@ FLBuilder::register_module(
 				),
 			),
 		),
+		'hotspot_tour_tab' => array(
+			'title'    => __( 'Hotspot Tour', 'uabb' ),
+			'sections' => array(
+				'section_tour_enable'      => array(
+					'title'  => __( 'Hotspot Tour Settings ', 'uabb' ),
+					'fields' => array(
+						'hotspot_tour'              => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Tour', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'hotspot_tour_repeat', 'hotspot_nonactive_markers' ),
+									'sections' => array( 'section_autoplay_options' ),
+								),
+							),
+						),
+						'hotspot_tour_repeat'       => array(
+							'type'    => 'select',
+							'label'   => __( 'Repeat Tour', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+						'hotspot_nonactive_markers' => array(
+							'type'    => 'select',
+							'label'   => __( 'Hide Non-Active Markers', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				), // Section End.
+				'section_autoplay_options' => array(
+					'title'  => __( 'Autoplay Settings ', 'uabb' ),
+					'fields' => array(
+						'hotspot_tour_autoplay' => array(
+							'type'    => 'select',
+							'label'   => __( 'Autoplay', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'tour_interval', 'autoplay_options', '' ),
+									'sections' => array( 'section_overlay_button' ),
+								),
+							),
+							'help'    => __( 'Note: Tour autoplay option will only work on the frontend.', 'uabb' ),
+						),
+						'tour_interval'         => array(
+							'type'        => 'unit',
+							'label'       => __( 'Interval between Tooltips', 'uabb' ),
+							'default'     => '4',
+							'placeholder' => 'auto',
+							'maxlength'   => '9',
+							'size'        => '8',
+							'units'       => array( 'sec' ),
+							'slider'      => array(
+								'sec' => array(
+									'min'  => 1,
+									'max'  => 9,
+									'step' => 1,
+								),
+							),
+							'help'        => __( 'Next tooltip will be displayed after this time interval.', 'uabb' ),
+
+						),
+						'autoplay_options'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Launch Tour', 'uabb' ),
+							'default' => 'auto',
+							'options' => array(
+								'click' => __( 'On Button Click', 'uabb' ),
+								'auto'  => __( 'When Module is in Viewport', 'uabb' ),
+							),
+							'toggle'  => array(
+								'click' => array(
+									'sections' => array( 'section_overlay_button' ),
+								),
+							),
+						),
+					),
+				),
+				'section_overlay_button'   => array(
+					'title'  => __( 'Overlay Button ', 'uabb' ),
+					'fields' => array(
+						'button'                 => array(
+							'type'         => 'form',
+							'label'        => __( 'Button Settings', 'uabb' ),
+							'form'         => 'button_form_field', // ID of a registered form.
+							'preview_text' => 'text', // ID of a field to use for the preview text.
+						),
+						'overlay_pos_horizontal' => array(
+							'type'   => 'unit',
+							'label'  => __( 'Horizontal', 'uabb' ),
+							'units'  => array( '%' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 0.1,
+								),
+							),
+						),
+						'overlay_pos_vertical'   => array(
+							'type'   => 'unit',
+							'label'  => __( 'Vertical position', 'uabb' ),
+							'units'  => array( '%' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 0.1,
+								),
+							),
+						),
+					),
+				),
+			),
+		), // hotspot_tour end.
 	)
 );

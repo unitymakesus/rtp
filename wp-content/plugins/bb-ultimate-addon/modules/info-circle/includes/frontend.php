@@ -21,7 +21,7 @@ $settings->autoplay_time = ( '' != $settings->autoplay_time ) ? $settings->autop
 			<div class="uabb-info-circle-icon-content uabb-ic-<?php echo $circle_item_count; ?> <?php echo ( 1 == $circle_item_count ) ? 'active' : ''; ?>">
 
 			<?php if ( 'hover' == $settings->info_trigger_type && ( 'icon' == $item->cta || 'both' == $item->cta ) ) : ?>
-					<a href='<?php echo $item->cta_link; ?>' target='<?php echo $item->cta_link_target; ?>' <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->cta_link_target, 0, 1 ); ?>> <!-- Link on Icon -->
+					<a href='<?php echo $item->cta_link; ?>' target='<?php echo $item->cta_link_target; ?>' <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->cta_link_target, $item->cta_link_nofollow, 1 ); ?>> <!-- Link on Icon -->
 				<?php endif; ?>
 
 					<div class="uabb-info-circle uabb-info-circle-small uabb-circle-<?php echo $circle_item_count; ?> <?php echo $img_active_effect; ?>" data-circle-id="<?php echo $circle_item_count; ?>">

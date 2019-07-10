@@ -6,7 +6,12 @@
  */
 
 ?>
-
+jQuery(document).ready(function() {
+	new UABBPhotoGallery({
+		id: '<?php echo $id; ?>',
+		layout:'<?php echo $settings->layout; ?>',
+	});
+});
 jQuery(document).ready(function( $ ) {
 	<?php if ( 'lightbox' == $settings->click_action ) : ?>
 		<?php

@@ -25,7 +25,8 @@ $user_organizer_count_l = wp_count_terms('mec_organizer', array(
     'parent'=>0
 ));
 
-$version = NULL;
+$version = $verify = NULL;
+
 if($this->getPRO())
 {
     // Get MEC New Update
@@ -33,6 +34,7 @@ if($this->getPRO())
 
     $v = $envato->get_MEC_info('version');
     $version = isset($v->version) ? $v->version : NULL;
+    $verify = $envato->get_MEC_info('dl');
 }
 
 // MEC Database
@@ -57,15 +59,21 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
             <div class="w-col-sm-9">
                 <h1> <?php echo sprintf(__('Welcome %s', 'mec'), $current_user->user_firstname); ?> </h1>
                 <div class="w-welcome">
-                    <p>
+                    <!-- <p> -->
                         <?php echo sprintf(__('%s - Most Powerful & Easy to Use Events Management System', 'mec'), '<strong>'.($this->getPRO() ? __('Modern Events Calendar', 'mec') : __('Modern Events Calendar (Lite)', 'mec')).'</strong>'); ?>
                         <?php if(!$this->getPRO()): ?>
                         <span><a href="https://wordpress.org/support/plugin/modern-events-calendar-lite/reviews/#new-post" target="_blank"><?php echo _x('Rate the plugin ★★★★★', 'plugin rate', 'mec'); ?></a></span>
                         <?php endif; ?>
                         <?php if(version_compare(MEC_VERSION , $version, '<')): ?>
-                        <a class="mec-tooltip" title="<?php esc_attr_e("Update $version is ready for download.", 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                        <span class="mec-tooltip">
+                            <div class="box">
+                                <h5 class="title"><?php _e('Update', 'mec'); ?></h5>
+                                <div class="content"><p><?php esc_attr_e("Update $version is ready for download.", 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/category/installation/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                            </div>
+                            <i title="" class="dashicons-before dashicons-editor-help"></i>
+                        </span>
                         <?php endif; ?>
-                    </p>
+                    <!-- </p> -->
                 </div>
             </div>
             <div class="w-col-sm-3">
@@ -77,7 +85,7 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
     <div class="welcome-content w-clearfix extra">
 
         <?php if(!$this->getPRO()): ?>
-        <div class="w-row">
+        <div class="w-row mec-pro-notice">
             <div class="w-col-sm-12">
                 <div class="info-msg"><?php echo sprintf(__("You're using %s version of Modern Events Calendar. To use advanced booking system, modern skins like Agenda, Timetable, Masonry, Yearly View, Available Spots, etc you should %s to the Pro version.", 'mec'), '<strong>'.__('lite', 'mec').'</strong>', '<a class="info-msg-link" href="'.$this->get_pro_link().'" target="_blank">'.__('upgrade', 'wpl').'</a>'); ?></div>
             </div>
@@ -85,6 +93,93 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
         <?php endif; ?>
 
         <div class="w-row">
+            <div class="w-col-sm-12">
+                <div class="w-box mec-intro-section">
+                    <div class="w-box-content mec-intro-section-welcome">
+                        <h3><?php _e('Getting started with Modern Events Calendar' , 'mec'); ?></h3>
+                        <p><?php _e('In this short video, you can learn how to make an event and put a calendar on your website. Please watch this 2 minutes video to the end.' , 'mec'); ?></p>
+                    </div>
+                    <div class="w-box-content mec-intro-section-ifarme">
+                        <iframe width="784" height="441" src="https://www.youtube.com/embed/FV_X341oyiw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>   
+                    </div>
+                    <div class="w-box-content mec-intro-section-links wp-core-ui">
+                        <a class="mec-intro-section-link-tag button button-primary button-hero" href="<?php esc_html_e(admin_url( 'post-new.php?post_type=mec-events' )); ?>" target="_blank"><?php esc_html_e('Add New Event' , 'mec'); ?>
+                        <a class="mec-intro-section-link-tag button button-secondary button-hero" href="<?php esc_html_e(admin_url( 'admin.php?page=MEC-settings' )); ?>" target="_blank"><?php esc_html_e('Settings' , 'mec'); ?>
+                        <a class="mec-intro-section-link-tag button button-secondary button-hero" href="https://webnus.net/dox/modern-events-calendar/" target="_blank"><?php esc_html_e('Documentation' , 'mec'); ?></a>
+                    </div>
+                </div>
+            </div>
+            <?php if($this->getPRO()) : ?>
+            <div class="w-col-sm-12">
+                <div class="w-box mec-activation">
+                    <div class="w-box-head">
+                        <?php _e('MEC Activate', 'mec'); ?>
+                    </div>
+                    <div class="w-box-content">
+                        <p><?php echo esc_html__('In order to use all plugin features and options, please enter your purchase code.', 'mec'); ?></p>
+                        <div class="box-mec-avtivation">
+                            <?php 
+                                $mec_options = get_option('mec_options');
+                                $one_license = $five_license = $ten_license = $product_license = '';
+                                if ( !empty($mec_options) && isset($mec_options['product_name']) ):
+                                    if ( $mec_options['product_name'] == '1 License for MEC Plugin' )
+                                    {
+                                        $one_license = 'checked';
+                                    } 
+                                    elseif ( $mec_options['product_name'] == '5 License for MEC Plugin' )
+                                    {
+                                        $five_license = 'checked';
+                                    }
+                                    elseif ( $mec_options['product_name'] == '10 License for MEC Plugin' )
+                                    {
+                                        $ten_license = 'checked';
+                                    }
+                                    if ( $mec_options['product_name'] != '' )
+                                    {
+                                        $product_license = $mec_options['purchase_code'];
+                                    }
+                                endif;
+                            ?>
+                            <form id="MECActivation" action="#" method="post">
+                                <div class="LicenseType">
+                                    <input type="radio" id="OneLicense" name="MECLicense" value="1 License for MEC Plugin" class="<?php echo esc_html($one_license); ?>" />
+                                    <label for="OneLicense"><span></span>1 License</label>
+                                    <input type="radio" id="FiveLicense" value="5 License for MEC Plugin" name="MECLicense" class="<?php echo esc_html($five_license); ?>" />
+                                    <label for="FiveLicense"><span></span>5 License</label>
+                                    <input type="radio" id="TenLicense" value="10 License for MEC Plugin" name="MECLicense" class="<?php echo esc_html($ten_license); ?>" />
+                                    <label for="TenLicense"><span></span>10 License</label>
+                                </div>
+                                <div class="LicenseField">
+                                    <input type="password" placeholder="Put your purchase code here" name="MECPurchaseCode" value="<?php echo esc_html($product_license); ?>">
+                                    <input type="submit">
+                                    <?php
+                                    $license_status = '';
+                                    if(!empty($mec_options['purchase_code']) && !is_null($verify))
+                                    {
+                                        $license_status = 'PurchaseSuccess';
+                                    } 
+                                    elseif ( !empty($mec_options['purchase_code']) && is_null($verify) )
+                                    {
+                                        $license_status = 'PurchaseError';
+                                    }
+                                    ?>
+                                    <div class="MECPurchaseStatus <?php echo esc_html($license_status); ?>"></div>
+                                </div>
+                                <div class="MECLicenseMessage"></div>
+                            </form>
+                        </div>
+
+                        <div class="box-addons-activation">
+                            <?php $mec_options = get_option('mec_options'); ?>
+                            <div class="box-addon-activation-toggle-head"><i class="mec-sl-plus"></i><span><?php _e('Activate Addons', 'mec'); ?></span></div>
+                            <div class="box-addon-activation-toggle-content">
+                                <?php do_action( 'addons_activation' ); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
             <?php if(current_user_can('read')): ?>
             <div class="w-col-sm-3">
                 <div class="w-box doc">
@@ -103,53 +198,17 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
             <div class="w-col-sm-3">
                 <div class="w-box doc">
                     <div class="w-box-child mec-count-child">
-                        <p><?php echo '<p class="mec_dash_count">'.$user_location_count_l.'</p> '.__('Location', 'mec'); ?></p>
+                        <p><?php echo '<p class="mec_dash_count">'.$user_location_count_l.'</p> '.__('Locations', 'mec'); ?></p>
                     </div>
                 </div>
             </div>            
             <div class="w-col-sm-3">
                 <div class="w-box doc">
                     <div class="w-box-child mec-count-child">
-                        <p><?php echo '<p class="mec_dash_count">'.$user_organizer_count_l.'</p> '. __('Organizer', 'mec'); ?></p>
+                        <p><?php echo '<p class="mec_dash_count">'.$user_organizer_count_l.'</p> '. __('Organizers', 'mec'); ?></p>
                     </div>
                 </div>
             </div>           
-            <?php endif; ?>
-            <div class="w-col-sm-<?php echo ($box_support ? '6' : '12'); ?>">
-                <div class="w-box doc">
-                    <div class="w-box-head">
-                        <?php _e('Documentation', 'mec'); ?>
-                    </div>
-                    <div class="w-box-content">
-                        <p><?php echo esc_html__('Our documentation is simple and functional with full details and cover all essential aspects from beginning to the most advanced parts.', 'mec'); ?></p>
-                        <div class="w-button">
-                            <a href="http://webnus.net/dox/modern-events-calendar/" target="_blank"><?php echo esc_html__('DOCUMENTATION', 'mec'); ?></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php if($box_support): ?>
-            <div class="w-col-sm-6">
-                <div class="w-box support">
-                    <div class="w-box-head">
-                        <?php echo esc_html__('Support Forum', 'mec'); ?>
-                    </div>
-                    <div class="w-box-content">
-                        <?php if(!$this->getPRO()): ?>
-                            <p><?php echo esc_html__("Webnus is elite and trusted author with high percentage of satisfied user. If you want to use this service you need to upgrade your plugin to Pro version. Click on the following button.", 'mec'); ?></p>
-                        <?php else: ?>
-                            <p><?php echo esc_html__("Webnus is elite and trusted author with high percentage of satisfied user. If you have any issues please don't hesitate to contact us, we will reply as soon as possible.", 'mec'); ?></p>
-                        <?php endif; ?>
-                        <div class="w-button">
-                            <?php if(!$this->getPRO()): ?>
-                                <a href="https://webnus.net/pricing/#plugins" target="_blank"><?php echo esc_html__('GO PREMIUM', 'mec'); ?></a>
-                            <?php else: ?>
-                                <a href="https://webnus.ticksy.com/" target="_blank"><?php echo esc_html__('OPEN A TICKET', 'mec'); ?></a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <?php endif; ?>
         </div>
         <?php if($box_stats): ?>
@@ -193,6 +252,10 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
 
                             foreach($results as $result)
                             {
+                                if (!class_exists($result['gateway'])) {
+                                    continue;
+                                }
+
                                 $gateway = new $result['gateway'];
                                 $stats[] = array('label'=>$gateway->title(), 'count'=>$result['count']);
 
@@ -200,7 +263,6 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
                                 $data .= ((int) $result['count']).',';
                                 $bg_colors .= "'".$gateway->color()."',";
                             }
-
                             echo '<canvas id="mec_gateways_chart" width="300" height="300"></canvas>';
                             echo '<script type="text/javascript">
                                 jQuery(document).ready(function()

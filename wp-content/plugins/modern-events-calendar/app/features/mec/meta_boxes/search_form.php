@@ -49,6 +49,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     </select>
                 </div>
                 <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_list_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][list][speaker][type]" id="mec_sf_list_speaker">
+						<option value="0" <?php if(isset($sf_options_list['speaker']) and isset($sf_options_list['speaker']['type']) and $sf_options_list['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_list['speaker']) and isset($sf_options_list['speaker']['type']) and $sf_options_list['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_list_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][list][tag][type]" id="mec_sf_list_tag">
+						<option value="0" <?php if(isset($sf_options_list['tag']) and isset($sf_options_list['tag']['type']) and $sf_options_list['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_list['tag']) and isset($sf_options_list['tag']['type']) and $sf_options_list['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
                     <label class="mec-col-12" for="mec_sf_list_label"><?php echo $this->main->m('taxonomy_label', __('Label', 'mec')); ?></label>
                     <select class="mec-col-12" name="mec[sf-options][list][label][type]" id="mec_sf_list_label">
 						<option value="0" <?php if(isset($sf_options_list['label']) and isset($sf_options_list['label']['type']) and $sf_options_list['label']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
@@ -93,6 +107,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     <select class="mec-col-12" name="mec[sf-options][grid][organizer][type]" id="mec_sf_grid_organizer">
                         <option value="0" <?php if(isset($sf_options_grid['organizer']) and isset($sf_options_grid['organizer']['type']) and $sf_options_grid['organizer']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
                         <option value="dropdown" <?php if(isset($sf_options_grid['organizer']) and isset($sf_options_grid['organizer']['type']) and $sf_options_grid['organizer']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_grid_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][grid][speaker][type]" id="mec_sf_grid_speaker">
+                        <option value="0" <?php if(isset($sf_options_grid['speaker']) and isset($sf_options_grid['speaker']['type']) and $sf_options_grid['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_grid['speaker']) and isset($sf_options_grid['speaker']['type']) and $sf_options_grid['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_grid_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][grid][tag][type]" id="mec_sf_grid_tag">
+						<option value="0" <?php if(isset($sf_options_grid['tag']) and isset($sf_options_grid['tag']['type']) and $sf_options_grid['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_grid['tag']) and isset($sf_options_grid['tag']['type']) and $sf_options_grid['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
                     </select>
                 </div>
                 <div class="mec-form-row">
@@ -143,6 +171,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     </select>
                 </div>
                 <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_agenda_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][agenda][speaker][type]" id="mec_sf_agenda_speaker">
+                        <option value="0" <?php if(isset($sf_options_agenda['speaker']) and isset($sf_options_agenda['speaker']['type']) and $sf_options_agenda['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_agenda['speaker']) and isset($sf_options_agenda['speaker']['type']) and $sf_options_agenda['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_agenda_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][agenda][tag][type]" id="mec_sf_agenda_tag">
+						<option value="0" <?php if(isset($sf_options_agenda['tag']) and isset($sf_options_agenda['tag']['type']) and $sf_options_agenda['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_agenda['tag']) and isset($sf_options_agenda['tag']['type']) and $sf_options_agenda['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
                     <label class="mec-col-12" for="mec_sf_agenda_label"><?php echo $this->main->m('taxonomy_label', __('Label', 'mec')); ?></label>
                     <select class="mec-col-12" name="mec[sf-options][agenda][label][type]" id="mec_sf_agenda_label">
                         <option value="0" <?php if(isset($sf_options_agenda['label']) and isset($sf_options_agenda['label']['type']) and $sf_options_agenda['label']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
@@ -173,6 +215,41 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     <select class="mec-col-12" name="mec[sf-options][full_calendar][category][type]" id="mec_sf_full_calendar_category">
                         <option value="0" <?php if(isset($sf_options_full_calendar['category']) and isset($sf_options_full_calendar['category']['type']) and $sf_options_full_calendar['category']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
                         <option value="dropdown" <?php if(isset($sf_options_full_calendar['category']) and isset($sf_options_full_calendar['category']['type']) and $sf_options_full_calendar['category']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_full_calendar_location"><?php echo $this->main->m('taxonomy_location', __('Location', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][full_calendar][location][type]" id="mec_sf_full_calendar_location">
+						<option value="0" <?php if(isset($sf_options_full_calendar['location']) and isset($sf_options_full_calendar['location']['type']) and $sf_options_full_calendar['location']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_full_calendar['location']) and isset($sf_options_full_calendar['location']['type']) and $sf_options_full_calendar['location']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_full_calendar_organizer"><?php echo $this->main->m('taxonomy_organizer', __('Organizer', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][full_calendar][organizer][type]" id="mec_sf_full_calendar_organizer">
+						<option value="0" <?php if(isset($sf_options_full_calendar['organizer']) and isset($sf_options_full_calendar['organizer']['type']) and $sf_options_full_calendar['organizer']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_full_calendar['organizer']) and isset($sf_options_full_calendar['organizer']['type']) and $sf_options_full_calendar['organizer']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_full_calendar_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][full_calendar][speaker][type]" id="mec_sf_full_calendar_speaker">
+						<option value="0" <?php if(isset($sf_options_full_calendar['speaker']) and isset($sf_options_full_calendar['speaker']['type']) and $sf_options_full_calendar['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_full_calendar['speaker']) and isset($sf_options_full_calendar['speaker']['type']) and $sf_options_full_calendar['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_full_calendar_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][full_calendar][tag][type]" id="mec_sf_full_calendar_tag">
+						<option value="0" <?php if(isset($sf_options_full_calendar['tag']) and isset($sf_options_full_calendar['tag']['type']) and $sf_options_full_calendar['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_full_calendar['tag']) and isset($sf_options_full_calendar['tag']['type']) and $sf_options_full_calendar['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_full_calendar_label"><?php echo $this->main->m('taxonomy_label', __('Label', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][full_calendar][label][type]" id="mec_sf_full_calendar_label">
+						<option value="0" <?php if(isset($sf_options_full_calendar['label']) and isset($sf_options_full_calendar['label']['type']) and $sf_options_full_calendar['label']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_full_calendar['label']) and isset($sf_options_full_calendar['label']['type']) and $sf_options_full_calendar['label']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
                     </select>
                 </div>
                 <div class="mec-form-row">
@@ -213,6 +290,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     <select class="mec-col-12" name="mec[sf-options][monthly_view][organizer][type]" id="mec_sf_monthly_view_organizer">
 						<option value="0" <?php if(isset($sf_options_monthly_view['organizer']) and isset($sf_options_monthly_view['organizer']['type']) and $sf_options_monthly_view['organizer']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
                         <option value="dropdown" <?php if(isset($sf_options_monthly_view['organizer']) and isset($sf_options_monthly_view['organizer']['type']) and $sf_options_monthly_view['organizer']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_monthly_view_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][monthly_view][speaker][type]" id="mec_sf_monthly_view_speaker">
+						<option value="0" <?php if(isset($sf_options_monthly_view['speaker']) and isset($sf_options_monthly_view['speaker']['type']) and $sf_options_monthly_view['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_monthly_view['speaker']) and isset($sf_options_monthly_view['speaker']['type']) and $sf_options_monthly_view['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_monthly_view_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][monthly_view][tag][type]" id="mec_sf_monthly_view_tag">
+						<option value="0" <?php if(isset($sf_options_monthly_view['tag']) and isset($sf_options_monthly_view['tag']['type']) and $sf_options_monthly_view['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_monthly_view['tag']) and isset($sf_options_monthly_view['tag']['type']) and $sf_options_monthly_view['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
                     </select>
                 </div>
                 <div class="mec-form-row">
@@ -263,6 +354,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     </select>
                 </div>
                 <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_yearly_view_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][yearly_view][speaker][type]" id="mec_sf_yearly_view_speaker">
+                        <option value="0" <?php if(isset($sf_options_yearly_view['speaker']) and isset($sf_options_yearly_view['speaker']['type']) and $sf_options_yearly_view['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_yearly_view['speaker']) and isset($sf_options_yearly_view['speaker']['type']) and $sf_options_yearly_view['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_yearly_view_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][yearly_view][tag][type]" id="mec_sf_yearly_view_tag">
+						<option value="0" <?php if(isset($sf_options_yearly_view['tag']) and isset($sf_options_yearly_view['tag']['type']) and $sf_options_yearly_view['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_yearly_view['tag']) and isset($sf_options_yearly_view['tag']['type']) and $sf_options_yearly_view['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
                     <label class="mec-col-12" for="mec_sf_yearly_view_label"><?php echo $this->main->m('taxonomy_label', __('Label', 'mec')); ?></label>
                     <select class="mec-col-12" name="mec[sf-options][yearly_view][label][type]" id="mec_sf_yearly_view_label">
                         <option value="0" <?php if(isset($sf_options_yearly_view['label']) and isset($sf_options_yearly_view['label']['type']) and $sf_options_yearly_view['label']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
@@ -310,6 +415,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     </select>
                 </div>
                 <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_map_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][map][speaker][type]" id="mec_sf_map_speaker">
+						<option value="0" <?php if(isset($sf_options_map['speaker']) and isset($sf_options_map['speaker']['type']) and $sf_options_map['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_map['speaker']) and isset($sf_options_map['speaker']['type']) and $sf_options_map['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_map_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][map][tag][type]" id="mec_sf_map_tag">
+						<option value="0" <?php if(isset($sf_options_map['tag']) and isset($sf_options_map['tag']['type']) and $sf_options_map['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_map['tag']) and isset($sf_options_map['tag']['type']) and $sf_options_map['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
                     <label class="mec-col-12" for="mec_sf_map_label"><?php echo $this->main->m('taxonomy_label', __('Label', 'mec')); ?></label>
                     <select class="mec-col-12" name="mec[sf-options][map][label][type]" id="mec_sf_map_label">
 						<option value="0" <?php if(isset($sf_options_map['label']) and isset($sf_options_map['label']['type']) and $sf_options_map['label']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
@@ -347,6 +466,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     <select class="mec-col-12" name="mec[sf-options][daily_view][organizer][type]" id="mec_sf_daily_view_organizer">
 						<option value="0" <?php if(isset($sf_options_daily_view['organizer']) and isset($sf_options_daily_view['organizer']['type']) and $sf_options_daily_view['organizer']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
                         <option value="dropdown" <?php if(isset($sf_options_daily_view['organizer']) and isset($sf_options_daily_view['organizer']['type']) and $sf_options_daily_view['organizer']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_daily_view_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][daily_view][speaker][type]" id="mec_sf_daily_view_speaker">
+						<option value="0" <?php if(isset($sf_options_daily_view['speaker']) and isset($sf_options_daily_view['speaker']['type']) and $sf_options_daily_view['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_daily_view['speaker']) and isset($sf_options_daily_view['speaker']['type']) and $sf_options_daily_view['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_daily_view_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][daily_view][tag][type]" id="mec_sf_daily_view_tag">
+						<option value="0" <?php if(isset($sf_options_daily_view['tag']) and isset($sf_options_daily_view['tag']['type']) and $sf_options_daily_view['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_daily_view['tag']) and isset($sf_options_daily_view['tag']['type']) and $sf_options_daily_view['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
                     </select>
                 </div>
                 <div class="mec-form-row">
@@ -397,6 +530,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     </select>
                 </div>
                 <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_weekly_view_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][weekly_view][speaker][type]" id="mec_sf_weekly_view_speaker">
+						<option value="0" <?php if(isset($sf_options_weekly_view['speaker']) and isset($sf_options_weekly_view['speaker']['type']) and $sf_options_weekly_view['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_weekly_view['speaker']) and isset($sf_options_weekly_view['speaker']['type']) and $sf_options_weekly_view['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_weekly_view_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][weekly_view][tag][type]" id="mec_sf_weekly_view_tag">
+						<option value="0" <?php if(isset($sf_options_weekly_view['tag']) and isset($sf_options_weekly_view['tag']['type']) and $sf_options_weekly_view['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_weekly_view['tag']) and isset($sf_options_weekly_view['tag']['type']) and $sf_options_weekly_view['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
                     <label class="mec-col-12" for="mec_sf_weekly_view_label"><?php echo $this->main->m('taxonomy_label', __('Label', 'mec')); ?></label>
                     <select class="mec-col-12" name="mec[sf-options][weekly_view][label][type]" id="mec_sf_weekly_view_label">
 						<option value="0" <?php if(isset($sf_options_weekly_view['label']) and isset($sf_options_weekly_view['label']['type']) and $sf_options_weekly_view['label']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
@@ -441,6 +588,20 @@ $sf_options = get_post_meta($post->ID, 'sf-options', true);
                     <select class="mec-col-12" name="mec[sf-options][timetable][organizer][type]" id="mec_sf_timetable_organizer">
                         <option value="0" <?php if(isset($sf_options_timetable['organizer']) and isset($sf_options_timetable['organizer']['type']) and $sf_options_timetable['organizer']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
                         <option value="dropdown" <?php if(isset($sf_options_timetable['organizer']) and isset($sf_options_timetable['organizer']['type']) and $sf_options_timetable['organizer']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_timetable_speaker"><?php echo $this->main->m('taxonomy_speaker', __('Speaker', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][timetable][speaker][type]" id="mec_sf_timetable_speaker">
+                        <option value="0" <?php if(isset($sf_options_timetable['speaker']) and isset($sf_options_timetable['speaker']['type']) and $sf_options_timetable['speaker']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_timetable['speaker']) and isset($sf_options_timetable['speaker']['type']) and $sf_options_timetable['speaker']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
+                    </select>
+                </div>
+                <div class="mec-form-row">
+                    <label class="mec-col-12" for="mec_sf_timetable_tag"><?php echo $this->main->m('taxonomy_tag', __('Tag', 'mec')); ?></label>
+                    <select class="mec-col-12" name="mec[sf-options][timetable][tag][type]" id="mec_sf_timetable_tag">
+						<option value="0" <?php if(isset($sf_options_timetable['tag']) and isset($sf_options_timetable['tag']['type']) and $sf_options_timetable['tag']['type'] == '0') echo 'selected="selected"'; ?>><?php _e('Disabled', 'mec'); ?></option>
+                        <option value="dropdown" <?php if(isset($sf_options_timetable['tag']) and isset($sf_options_timetable['tag']['type']) and $sf_options_timetable['tag']['type'] == 'dropdown') echo 'selected="selected"'; ?>><?php _e('Dropdown', 'mec'); ?></option>
                     </select>
                 </div>
                 <div class="mec-form-row">

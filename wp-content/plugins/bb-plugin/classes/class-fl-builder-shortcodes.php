@@ -26,18 +26,18 @@ final class FLBuilderShortcodes {
 	 * @return string
 	 */
 	static public function insert_layout( $attrs ) {
-		$builder_active = in_the_loop() && FLBuilderModel::is_builder_active();
-		$post_type 		= isset( $attrs['type'] ) ? $attrs['type'] : get_post_types();
+		$builder_active = FLBuilderModel::is_builder_active();
+		$post_type      = isset( $attrs['type'] ) ? $attrs['type'] : get_post_types();
 		$site_id        = isset( $attrs['site'] ) ? absint( $attrs['site'] ) : null;
-		$args  	   		= array(
-			'post_type' 	 => $post_type,
+		$args           = array(
+			'post_type'      => $post_type,
 			'posts_per_page' => -1,
 		);
 
 		// Build the args array.
 		if ( isset( $attrs['id'] ) ) {
 
-			$args['orderby'] = 'post__in';
+			$args['orderby']             = 'post__in';
 			$args['ignore_sticky_posts'] = true;
 
 			if ( is_numeric( $attrs['id'] ) ) {
@@ -47,7 +47,7 @@ final class FLBuilderShortcodes {
 			}
 		} elseif ( isset( $attrs['slug'] ) ) {
 			$args['orderby'] = 'name';
-			$args['name'] 	 = $attrs['slug'];
+			$args['name']    = $attrs['slug'];
 		} else {
 			return;
 		}

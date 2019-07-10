@@ -197,3 +197,79 @@
 	-o-transform: scale(1);
 	transform: scale(1);
 }
+
+.uabb-photo-gallery-title-filters .uabb-photo__gallery-filters {
+	text-align: right;
+}
+.uabb-photo-gallery-title-filters {
+	-js-display:  flex;
+	display:  -webkit-box;
+	display:  -webkit-flex;
+	display:  -moz-box;
+	display:  -ms-flexbox;
+	display:  flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	-moz-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+}
+
+.uabb-photo-gallery-title-filters .uabb-photo-gallery-title {
+	margin-right: 60px;
+	display: inline-block;
+	text-align: left;
+}
+
+.uabb-photo-gallery-title-filters ul.uabb-photo__gallery-filters {
+	-webkit-align-self: center; 
+	-ms-flex-item-align: center; 
+	align-self: center;
+	display: block;
+}
+.uabb-photo__gallery-filters {
+	display: block;
+    margin: 0;
+    margin-bottom: 30px;
+}
+.uabb-photo__gallery-filter {
+	display: inline-block;
+    padding: 5px 20px;
+    margin: 0 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.uabb-photo__gallery-filter:first-child {
+	margin-left: 0;
+}
+.uabb-photo__gallery-filter:last-child {
+	margin-right: 0;
+}
+.uabb-photo-gallery-filters-wrap .uabb-photo__gallery-filters .uabb-photo__gallery-filter.uabb-filter__current, .uabb-photo-gallery-filters-wrap .uabb-photo__gallery-filters .uabb-photo__gallery-filter:hover{
+    background-clip: border-box;
+}
+
+@media (max-width: 992px) {
+	.uabb-photo-gallery-stack-tablet .uabb-photo-gallery-title-filters,
+	.uabb-photo-gallery-stack-tablet .uabb-photo__gallery-filters {
+	    text-align: center;
+	}
+	.uabb-photo-gallery-stack-tablet .uabb-photo-gallery-title {
+		margin-right: 0;
+	}
+	.uabb-photo-gallery-stack-tablet .uabb-photo-gallery-title-filters  {
+        display: block;
+    }
+}
+@media (max-width: 767px) {
+	.uabb-photo-gallery-stack-mobile .uabb-photo-gallery-title-filters,
+	.uabb-photo-gallery-stack-mobile .uabb-photo__gallery-filters {
+	    text-align: center;
+	}
+	.uabb-photo-gallery-stack-mobile .uabb-photo-gallery-title {
+		margin-right: 0;
+	}
+	.uabb-photo-gallery-stack-mobile .uabb-photo-gallery-title-filters  {
+        display: block;
+    }
+}

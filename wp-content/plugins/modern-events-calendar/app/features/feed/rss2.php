@@ -40,22 +40,15 @@ do_action('rss_tag_pre', 'rss2');
 		<dc:creator><![CDATA[<?php $this->feed->author($event->data->post->post_author); ?>]]></dc:creator>
 
 		<guid isPermaLink="false"><?php the_guid($event->ID); ?></guid>
-        
-        <?php if(get_option('rss_use_excerpt')): ?>
-		<description><![CDATA[<?php echo $this->feed->excerpt($event->ID); ?>]]></description>
-        <?php else: ?>
-        
-		<description><![CDATA[<?php echo $this->feed->excerpt($event->ID); ?>]]></description>
-        
-        <?php $content = $this->feed->content($event->ID, 'rss2'); ?>
-        <?php if(strlen($content) > 0): ?>
-        <content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
-        <?php else: ?>
-        <content:encoded><![CDATA[<?php echo $this->feed->excerpt($event->ID); ?>]]></content:encoded>
+
+        <description><![CDATA[<?php echo $this->feed->excerpt($event->ID); ?>]]></description>
+
+        <?php if(!get_option('rss_use_excerpt')): $content = $this->feed->content($event->ID, 'rss2'); ?>
+            <content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
         <?php endif; ?>
-        
-        <?php endif; ?>
-        
+		<?php if ( !empty($this->feed->attachment($event->ID)) ) : ?>
+        <wp:attachment_url><![CDATA[<?php echo $this->feed->attachment($event->ID); ?>]]></wp:attachment_url>
+		<?php endif; ?>
         <?php if(get_comments_number($event->ID) or comments_open($event->ID)): ?>
 		<wfw:commentRss><?php echo esc_url(get_post_comments_feed_link($event->ID, 'rss2')); ?></wfw:commentRss>
 		<slash:comments><?php echo get_comments_number($event->ID); ?></slash:comments>

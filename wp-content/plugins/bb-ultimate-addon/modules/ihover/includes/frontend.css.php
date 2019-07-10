@@ -113,7 +113,9 @@ if ( count( $settings->ihover_item ) > 0 ) {
 ?>
 
 .fl-node-<?php echo $id; ?> .uabb-ih-container ul.uabb-ih-list li.uabb-ih-list-item {
-	margin: <?php echo ( $settings->spacing / 2 ); ?>px;
+	<?php if ( is_numeric( $settings->spacing ) ) { ?>
+		margin: <?php echo ( $settings->spacing / 2 ); ?>px;
+	<?php } ?>
 }
 <?php if ( ! $version_bb_check ) { ?>
 	.fl-node-<?php echo $id; ?> .uabb-align-<?php echo $settings->align; ?> {

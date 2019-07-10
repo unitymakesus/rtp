@@ -36,15 +36,22 @@ foreach($bookings as $booking)
     <p><?php _e('No attendee found! Be the first one to book!', 'mec'); ?></p>
     <?php else: ?>
     <ul>
-        <?php foreach($attendees as $attendee_id=>$tickets): ?>
+        <?php do_action('mec_attendeed_hook', $attendees); foreach($attendees as $attendee_id=>$tickets): ?>
         <li>
             <div class="mec-attendee-avatar">
                 <a href="<?php echo bp_core_get_user_domain($attendee_id); ?>" title="<?php echo bp_core_get_user_displayname($attendee_id); ?>">
                     <?php echo bp_core_fetch_avatar(array('item_id'=>$attendee_id, 'type'=>'thumb')); ?>
                 </a>
             </div>
+            <?php
+                $link = bp_core_get_userlink($attendee_id, false, true);
+                $user = get_userdata($attendee_id);
+
+                $name = trim($user->first_name.' '.$user->last_name);
+                if(!$name) $name = $user->display_name;
+            ?>
             <div class="mec-attendee-profile-link">
-                <?php echo bp_core_get_userlink($attendee_id).($tickets > 0 ? ' <span>'.sprintf(__('%s tickets', 'mec'), $tickets).'</span>' : ''); ?>
+                <?php echo '<a href="'.$link.'">'.$name.'</a>'.($tickets > 0 ? ' <span>'.sprintf(__('%s tickets', 'mec'), $tickets).'</span>' : ''); ?>
             </div>
         </li>
         <?php endforeach; ?>

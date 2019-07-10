@@ -1,8 +1,7 @@
 <?php if ( 'columns' == $settings->layout ) : ?>
 <div class="fl-post-column">
 <?php endif; ?>
-
-<div <?php $module->render_post_class(); ?> itemscope itemtype="<?php FLPostGridModule::schema_itemtype(); ?>">
+<<?php echo $module->get_posts_container(); ?> <?php $module->render_post_class(); ?><?php FLPostGridModule::print_schema( ' itemscope itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?>>
 
 	<?php FLPostGridModule::schema_meta(); ?>
 	<?php $module->render_featured_image( 'above-title' ); ?>
@@ -22,6 +21,7 @@
 				<?php
 
 				printf(
+					/* translators: %s: author name */
 					_x( 'By %s', '%s stands for author name.', 'fl-builder' ),
 					'<a href="' . get_author_posts_url( get_the_author_meta( 'ID' ) ) . '"><span>' . get_the_author_meta( 'display_name', get_the_author_meta( 'ID' ) ) . '</span></a>'
 				);
@@ -74,7 +74,7 @@
 		<?php if ( $settings->show_content || $settings->show_more_link ) : ?>
 		<div class="fl-post-grid-content">
 			<?php if ( $settings->show_content ) : ?>
-			<?php $module->render_excerpt(); ?>
+				<?php $module->render_excerpt(); ?>
 			<?php endif; ?>
 			<?php if ( $settings->show_more_link ) : ?>
 			<a class="fl-post-grid-more" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"><?php echo $settings->more_link_text; ?></a>
@@ -85,7 +85,7 @@
 		<?php do_action( 'fl_builder_post_grid_after_content', $settings, $module ); ?>
 
 	</div>
-</div>
+</<?php echo $module->get_posts_container(); ?>>
 
 <?php if ( 'columns' == $settings->layout ) : ?>
 </div>

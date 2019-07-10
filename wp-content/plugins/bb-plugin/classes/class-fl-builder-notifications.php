@@ -5,22 +5,36 @@
  */
 final class FLBuilderNotifications {
 
-	static $url = 'https://www.wpbeaverbuilder.com/wp-json/wp/v2/fl_notification';
+	protected static $url = 'https://www.wpbeaverbuilder.com/wp-json/wp/v2/fl_notification';
 
-	static $option = 'fl_notifications';
+	protected static $option = 'fl_notifications';
+
+	protected static $seconds = 172800; // 48 hours
 
 	public static function init() {
 
 		if ( FLBuilderModel::is_white_labeled() || true == apply_filters( 'fl_disable_notifications', false ) ) {
 			return false;
 		}
-		add_action( 'pre_set_site_transient_update_plugins',   array( 'FLBuilderNotifications', 'fetch_notifications_trigger' ) );
-		add_action( 'fl_fetch_notifications',                  array( 'FLBuilderNotifications', 'fetch_notifications' ) );
+		add_action( 'init', array( 'FLBuilderNotifications', 'set_schedule' ) );
+		add_action( 'fl_builder_notifications_event', array( 'FLBuilderNotifications', 'fetch_notifications' ) );
 		FLBuilderAJAX::add_action( 'fl_builder_notifications', array( 'FLBuilderNotifications', 'notications_ajax' ), array( 'read' ) );
 	}
 
 	/**
+	 * Add scheduled event
+	 * @since 2.2.1
+	 */
+	public static function set_schedule() {
+
+		if ( ! wp_next_scheduled( 'fl_builder_notifications_event' ) ) {
+			wp_schedule_single_event( time() + self::$seconds, 'fl_builder_notifications_event' );
+		}
+	}
+
+	/**
 	 * Transient is passed by reference here, lets not mess with it and just trigger our fetch.
+	 * @deprecated 2.2.1
 	 */
 	public static function fetch_notifications_trigger( $transient ) {
 		if ( ! did_action( 'fl_fetch_notifications' ) ) {
@@ -52,14 +66,14 @@ final class FLBuilderNotifications {
 	public static function fetch_notifications() {
 
 		$defaults = array(
-			'read' => false,
+			'read'     => false,
 			'checksum' => '',
-			'data' => '{}',
+			'data'     => '{}',
 		);
 
-		$url          = ( isset( $_GET['force-check'] ) ) ? self::$url . '/?a=' . rand() : self::$url;
-		$stored_data  = get_option( self::$option, $defaults );
-		$response     = wp_remote_get( $url );
+		$url         = self::$url;
+		$stored_data = get_option( self::$option, $defaults );
+		$response    = wp_remote_get( $url );
 
 		$response_code = wp_remote_retrieve_response_code( $response );
 		$body          = wp_remote_retrieve_body( $response );
@@ -81,9 +95,9 @@ final class FLBuilderNotifications {
 			$unread = self::compare_checksums( $stored_checksum, $latest_checksum );
 
 			$stored_data = array(
-				'read' => true,
+				'read'     => true,
 				'checksum' => $latest_checksum,
-				'data' => wp_json_encode( $body ),
+				'data'     => wp_json_encode( $body ),
 			);
 
 			if ( $unread ) {
@@ -142,10 +156,10 @@ final class FLBuilderNotifications {
 	 */
 	public static function get_notifications() {
 
-		$defaults = array(
-			'read' => false,
+		$defaults      = array(
+			'read'     => false,
 			'checksum' => '',
-			'data' => '{}',
+			'data'     => '{}',
 		);
 		$notifications = get_option( self::$option, $defaults );
 
@@ -161,12 +175,12 @@ final class FLBuilderNotifications {
 	 * @since 2.1
 	 */
 	public static function update_state( $state ) {
-		$defaults = array(
-			'read' => false,
+		$defaults              = array(
+			'read'     => false,
 			'checksum' => '',
-			'data' => '{}',
+			'data'     => '{}',
 		);
-		$notifications = get_option( self::$option, $defaults );
+		$notifications         = get_option( self::$option, $defaults );
 		$notifications['read'] = $state;
 		update_option( self::$option, $notifications );
 	}

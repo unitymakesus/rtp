@@ -17,16 +17,16 @@
 	$(function() {
 
 		new FLBuilderNumber({
-			id: '<?php echo $id ?>',
-			layout: '<?php echo $layout ?>',
-			type: '<?php echo $type ?>',
-			number: <?php echo $number ?>,
-			max: <?php echo $max ?>,
-			speed: <?php echo $speed ?>,
-			delay: <?php echo $delay ?>,
+			id: '<?php echo $id; ?>',
+			layout: '<?php echo $layout; ?>',
+			type: '<?php echo $type; ?>',
+			number: <?php echo $number; ?>,
+			max: <?php echo $max; ?>,
+			speed: <?php echo $speed; ?>,
+			delay: <?php echo $delay; ?>,
 			format: {
-				decimal: '<?php echo $format['decimal'] ?>',
-				thousands_sep: '<?php echo $format['thousands'] ?>'
+				decimal: '<?php echo $format['decimal']; ?>',
+				thousands_sep: '<?php echo $format['thousands']; ?>'
 			}
 		});
 

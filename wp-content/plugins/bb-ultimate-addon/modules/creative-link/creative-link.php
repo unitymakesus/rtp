@@ -114,10 +114,6 @@ class CreativeLink extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->alignment ) ) {
-				$settings->alignment = $settings->alignment;
-			}
 			if ( ! isset( $settings->font_typo ) || ! is_array( $settings->font_typo ) ) {
 
 				$settings->font_typo            = array();
@@ -125,31 +121,39 @@ class CreativeLink extends FLBuilderModule {
 				$settings->font_typo_responsive = array();
 			}
 			if ( isset( $settings->link_typography_font_family ) ) {
-				if ( 'regular' == $settings->link_typography_font_family['weight'] ) {
-					$settings->font_typo['font_weight'] = 'normal';
-				} else {
-					$settings->font_typo['font_weight'] = $settings->link_typography_font_family['weight'];
+				if ( isset( $settings->link_typography_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->link_typography_font_family['weight'] ) {
+						$settings->font_typo['font_weight'] = 'normal';
+					} else {
+						$settings->font_typo['font_weight'] = $settings->link_typography_font_family['weight'];
+					}
+					unset( $settings->link_typography_font_family['weight'] );
 				}
-				$settings->font_typo['font_family'] = $settings->link_typography_font_family['family'];
-
+				if ( isset( $settings->link_typography_font_family['family'] ) ) {
+					$settings->font_typo['font_family'] = $settings->link_typography_font_family['family'];
+					unset( $settings->link_typography_font_family['family'] );
+				}
 			}
 			if ( isset( $settings->link_typography_font_size_unit ) ) {
 				$settings->font_typo['font_size'] = array(
 					'length' => $settings->link_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_typography_font_size_unit );
 			}
 			if ( isset( $settings->link_typography_font_size_unit_medium ) ) {
 				$settings->font_typo_medium['font_size'] = array(
 					'length' => $settings->link_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->link_typography_font_size_unit_responsive ) ) {
 				$settings->font_typo_responsive['font_size'] = array(
 					'length' => $settings->link_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->link_typography_line_height_unit ) ) {
 
@@ -157,69 +161,64 @@ class CreativeLink extends FLBuilderModule {
 					'length' => $settings->link_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->link_typography_line_height_unit );
 			}
 			if ( isset( $settings->link_typography_line_height_unit_medium ) ) {
 				$settings->font_typo_medium['line_height'] = array(
 					'length' => $settings->link_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->link_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->link_typography_line_height_unit_responsive ) ) {
 				$settings->font_typo_responsive['line_height'] = array(
 					'length' => $settings->link_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->link_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->link_typography_transform ) ) {
 				$settings->font_typo['text_transform'] = $settings->link_typography_transform;
+				unset( $settings->link_typography_transform );
 			}
 			if ( isset( $settings->link_typography_letter_spacing ) ) {
 				$settings->font_typo['letter_spacing'] = array(
 					'length' => $settings->link_typography_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_typography_letter_spacing );
 			}
 			foreach ( $settings->screens as $screen ) {
-				if ( isset( $screen->link ) ) {
-					if ( isset( $screen->target ) ) {
-						$screen->link_target = $screen->target;
-					}
-					if ( isset( $screen->nofollow ) ) {
-						$screen->link_nofollow = ( '1' == $screen->nofollow ) ? 'yes' : '';
-					}
+				if ( isset( $screen->target ) ) {
+					$screen->link_target = $screen->target;
+					unset( $screen->target );
 				}
-			}
-			if ( isset( $settings->link_typography_font_family ) ) {
-				unset( $settings->link_typography_font_family );
-				unset( $settings->link_typography_font_size_unit );
-				unset( $settings->link_typography_font_size_unit_medium );
-				unset( $settings->link_typography_font_size_unit_responsive );
-				unset( $settings->link_typography_line_height_unit );
-				unset( $settings->link_typography_line_height_unit_medium );
-				unset( $settings->link_typography_line_height_unit_responsive );
-				unset( $settings->link_typography_transform );
-				unset( $settings->link_typography_letter_spacing );
+				if ( isset( $screen->nofollow ) ) {
+					$screen->link_nofollow = ( '1' == $screen->nofollow ) ? 'yes' : '';
+					unset( $screen->nofollow );
+				}
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->alignment ) ) {
-				$settings->alignment = $settings->alignment;
-			}
 			if ( ! isset( $settings->font_typo ) || ! is_array( $settings->font_typo ) ) {
 
 				$settings->font_typo            = array();
 				$settings->font_typo_medium     = array();
 				$settings->font_typo_responsive = array();
 			}
-			if ( isset( $settings->link_typography_font_family ) && '' !== $settings->link_typography_font_family ) {
-
-				if ( 'regular' == $settings->link_typography_font_family['weight'] ) {
-					$settings->font_typo['font_weight'] = 'normal';
-				} else {
-					$settings->font_typo['font_weight'] = $settings->link_typography_font_family['weight'];
+			if ( isset( $settings->link_typography_font_family ) ) {
+				if ( isset( $settings->link_typography_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->link_typography_font_family['weight'] ) {
+						$settings->font_typo['font_weight'] = 'normal';
+					} else {
+						$settings->font_typo['font_weight'] = $settings->link_typography_font_family['weight'];
+					}
+					unset( $settings->link_typography_font_family['weight'] );
 				}
-				$settings->font_typo['font_family'] = $settings->link_typography_font_family['family'];
+				if ( isset( $settings->link_typography_font_family['family'] ) ) {
+					$settings->font_typo['font_family'] = $settings->link_typography_font_family['family'];
+					unset( $settings->link_typography_font_family['family'] );
+				}
 			}
 			if ( isset( $settings->link_typography_font_size['small'] ) && ! isset( $settings->font_typo_responsive['font_size'] ) ) {
 
@@ -267,21 +266,28 @@ class CreativeLink extends FLBuilderModule {
 				}
 			}
 			foreach ( $settings->screens as $screen ) {
-
-				if ( isset( $screen->link ) ) {
-					if ( isset( $screen->target ) ) {
-						$screen->link_target = $screen->target;
-					}
-					if ( isset( $screen->nofollow ) ) {
-						$screen->link_nofollow = ( '1' == $screen->nofollow ) ? 'yes' : '';
-					}
+				if ( isset( $screen->target ) ) {
+					$screen->link_target = $screen->target;
+					unset( $screen->target );
 				}
 			}
-
-			if ( isset( $settings->link_typography_font_family ) ) {
-				unset( $settings->link_typography_font_family );
-				unset( $settings->link_typography_font_size );
-				unset( $settings->link_typography_line_height );
+			if ( isset( $settings->link_typography_font_size['desktop'] ) ) {
+				unset( $settings->link_typography_font_size['desktop'] );
+			}
+			if ( isset( $settings->link_typography_font_size['medium'] ) ) {
+				unset( $settings->link_typography_font_size['medium'] );
+			}
+			if ( isset( $settings->link_typography_font_size['small'] ) ) {
+				unset( $settings->link_typography_font_size['small'] );
+			}
+			if ( isset( $settings->link_typography_line_height['desktop'] ) ) {
+				unset( $settings->link_typography_line_height['desktop'] );
+			}
+			if ( isset( $settings->link_typography_line_height['medium'] ) ) {
+				unset( $settings->link_typography_line_height['medium'] );
+			}
+			if ( isset( $settings->link_typography_line_height['small'] ) ) {
+				unset( $settings->link_typography_line_height['small'] );
 			}
 		}
 		return $settings;

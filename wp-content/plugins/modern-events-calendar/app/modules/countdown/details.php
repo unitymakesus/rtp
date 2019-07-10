@@ -50,7 +50,6 @@ if(isset($_SERVER['HTTP_USER_AGENT']) and strpos($_SERVER['HTTP_USER_AGENT'], 'S
 if(isset($_SERVER['HTTP_USER_AGENT']) and strpos($_SERVER['HTTP_USER_AGENT'], 'Edge') == true)$gmt_offset = substr(trim($gmt_offset), 0 , 3);
 if(isset($_SERVER['HTTP_USER_AGENT']) and strpos($_SERVER['HTTP_USER_AGENT'], 'Trident') == true) $gmt_offset = substr(trim($gmt_offset), 2 , 3);
 
-
 // Generating javascript code of countdown default module
 $defaultjs = '<script type="text/javascript">
 jQuery(document).ready(function()
@@ -106,10 +105,12 @@ jQuery(document).ready(function()
     });
 });
 </script>';
+if ( !function_exists('is_plugin_active')) include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); 
 ?>
 <?php if(!isset($settings['countdown_list']) or (isset($settings['countdown_list']) and $settings['countdown_list'] === 'default')): ?>
 <?php
     if($this->is_ajax()) echo $defaultjs;
+    elseif (is_plugin_active( 'mec-single-builder/mec-single-builder.php')) echo $defaultjs;
     else $factory->params('footer', $defaultjs);
 ?>
 <div class="mec-countdown-details" id="mec_countdown_details">
@@ -149,6 +150,10 @@ jQuery(document).ready(function()
 <?php elseif(isset($settings['countdown_list']) and $settings['countdown_list'] === 'flip'): ?>
 <?php
     if($this->is_ajax()) echo $flipjs;
+    elseif (is_plugin_active( 'mec-single-builder/mec-single-builder.php')) {   
+        wp_enqueue_script('mec-flipcount-script', $this->asset('js/flipcount.js'));      
+        echo $flipjs;
+    }  
     else
     {
         // Include FlipCount library

@@ -1,29 +1,37 @@
 <?php
 /**
- *  UABB Hotspot Module front-end file
+ *  UABB Hotspot Module front-end file.
  *
- *  @package UABB Hotspot Module
+ *  @package UABB Hotspot Module.
  */
 
-$photo_src = ( 'url' != $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' != $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' != $settings->photo_url ) ? $settings->photo_url : '' );
-$alt       = $module->get_image_details();
+$photo_src      = ( 'url' != $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' != $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' != $settings->photo_url ) ? $settings->photo_url : '' );
+$alt            = $module->get_image_details();
+$hide_nonactive = '';
+if ( 'yes' === $settings->hotspot_tour ) {
+	if ( 'yes' === $settings->hotspot_nonactive_markers ) {
+		$hide_nonactive = 'uabb-hotspot-marker-nonactive';
+	}
+}
 
 if ( isset( $photo_src ) ) {
 	if ( '' != $photo_src ) {
 		?>
-	<div class="uabb-module-content uabb-hotspot">
-		<div class="uabb-hotspot-container">
+		<div class="uabb-module-content uabb-hotspot">
+			<div class="uabb-hotspot-container">
 			<img class="uabb-hotspot-image" src="<?php echo $photo_src; ?>" alt="<?php echo $alt; ?>">
 			<div class="uabb-hotspot-items">
 				<?php
 				if ( count( $settings->hotspot_marker ) > 0 ) {
+					$counter = 1;
 					for ( $i = 0; $i < count( $settings->hotspot_marker ); $i++ ) {
 						$settings->hotspot_marker[ $i ]->tooltip_bg_color = UABB_Helper::uabb_colorpicker( $settings->hotspot_marker[ $i ], 'tooltip_bg_color' );
 						?>
-				<div class="uabb-hotspot-item-<?php echo $i; ?> uabb-hotspot-item">
+				<div class="uabb-hotspot-item-<?php echo $i; ?> uabb-hotspot-item <?php echo $hide_nonactive; ?>" data-name="<?php echo $i; ?>" data-uabb-tour="<?php echo $counter; ?>">
 						<?php
-						$link   = '';
-						$target = '';
+						$link         = '';
+						$target       = '';
+						$hotspot_glow = '';
 						if ( 'link' == $settings->hotspot_marker[ $i ]->on_click_action ) {
 							$link   = ' href="' . $settings->hotspot_marker[ $i ]->link . '"';
 							$target = ' target="' . $settings->hotspot_marker[ $i ]->target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $settings->hotspot_marker[ $i ]->target, 0, 0 );
@@ -34,13 +42,35 @@ if ( isset( $photo_src ) ) {
 							$tag    = 'span';
 						}
 						?>
-					<<?php echo $tag; ?> class="uabb-hotspot-tooltip uabb-tooltip-style-<?php echo $settings->hotspot_marker[ $i ]->tooltip_style; ?> uabb-tooltip-<?php echo $settings->hotspot_marker[ $i ]->tooltip_content_position; ?>" <?php echo $link; ?> <?php echo $target; ?>>
+					<<?php echo $tag; ?> class="uabb-hotspot-tooltip uabb-tooltip-style-<?php echo $settings->hotspot_marker[ $i ]->tooltip_style; ?> uabb-tooltip-<?php echo $settings->hotspot_marker[ $i ]->tooltip_content_position; ?> " <?php echo $link; ?> <?php echo $target; ?>>
 						<?php $module->render_image_icon( $i ); ?>
 						<?php
 						if ( 'tooltip' == $settings->hotspot_marker[ $i ]->on_click_action ) {
 							?>
 						<span class="uabb-hotspot-tooltip-content uabb-text-editor">
-							<?php echo $settings->hotspot_marker[ $i ]->tooltip_content; ?>
+							<?php
+							echo $settings->hotspot_marker[ $i ]->tooltip_content;
+
+							if ( 'yes' === $settings->hotspot_tour ) {
+								?>
+								<span class="uabb-tour"><span class="uabb-actual-step"><?php echo $counter; ?> <?php echo __( 'of', 'uabb' ); ?> <?php echo sizeof( $settings->hotspot_marker ); ?>	</span>
+									<ul class="uabb-hotspot-tour-tooltip-list-group" >
+										<li class="uabb-hotspot-tour-tooltip-list-group-item">
+											<a class="uabb-prev uabb-prev-<?php echo $i; ?>" id='<?php echo $i; ?>' data-tooltips-id="<?php echo $counter; ?>"> &#171; <?php echo __( 'Previous', 'uabb' ); ?></a>
+										</li>
+										<li class="uabb-hotspot-tour-tooltip-list-group-item">
+											<a class="uabb-next uabb-next-<?php echo $i; ?>" id='<?php echo $i; ?>' data-tooltips-id="<?php echo $counter; ?>"><?php echo __( 'Next', 'uabb' ); ?> &#187; </a>
+										</li>
+									</ul>
+								</span>
+								<?php
+								if ( 'yes' === $settings->hotspot_tour_autoplay && 'yes' == $settings->hotspot_tour_repeat ) {
+									?>
+										<span class="uabb-hotspot-end"><a class="uabb-tour-end" data-itemid="<?php echo $i; ?>"><?php echo __( 'End Tour', 'uabb' ); ?></a></span>
+									<?php
+								}
+							}
+							?>
 							<?php
 							if ( 'curved' == $settings->hotspot_marker[ $i ]->tooltip_style ) {
 								?>
@@ -78,15 +108,27 @@ if ( isset( $photo_src ) ) {
 						}
 						?>
 					</<?php echo $tag; ?>>
-				</div>
+					</div>
 						<?php
+						$counter++;
 					}
 				}
 				?>
 			</div>
-		</div>
-	</div>
 		<?php
+
+
+		if ( 'yes' === $settings->hotspot_tour && 'yes' === $settings->hotspot_tour_autoplay && 'click' === $settings->autoplay_options ) {
+			?>
+			<div class="uabb-hotspot-overlay">
+				<div class="uabb-overlay-button">
+					<?php echo $module->render_button(); ?>
+				</div>
+			</div>
+		<?php } ?>
+	</div>
+</div>
+	<?php
 	}
 }
 ?>

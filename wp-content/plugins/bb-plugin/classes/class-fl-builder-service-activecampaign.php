@@ -58,8 +58,8 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API url.
@@ -67,8 +67,7 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide an API URL.', 'fl-builder' );
 		} elseif ( ! isset( $fields['api_key'] ) || empty( $fields['api_key'] ) ) {
 			$response['error'] = __( 'Error: You must provide an API key.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$api = $this->get_api( $fields['api_url'], $fields['api_key'] );
 
@@ -95,24 +94,24 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_url', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API URL', 'fl-builder' ),
-			'help'          => __( 'Your API url can be found in your ActiveCampaign account under My Settings > Developer > API.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API URL', 'fl-builder' ),
+			'help'      => __( 'Your API url can be found in your ActiveCampaign account under My Settings > Developer > API.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your ActiveCampaign account under My Settings > Developer > API.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your ActiveCampaign account under My Settings > Developer > API.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -131,26 +130,26 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$post_data      = FLBuilderModel::get_post_data();
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( $account_data['api_url'], $account_data['api_key'] );
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$post_data    = FLBuilderModel::get_post_data();
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( $account_data['api_url'], $account_data['api_key'] );
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( ! isset( $post_data['list_type'] ) ) {
 			$response['html'] = $this->render_list_type_field( $settings );
 		}
 
-		$lists = $api->api( 'list/list?ids=all' );
-		$render_type_html 	= $this->render_list_field( $lists, $settings );
+		$lists            = $api->api( 'list/list?ids=all' );
+		$render_type_html = $this->render_list_field( $lists, $settings );
 
 		if ( isset( $post_data['list_type'] ) || isset( $settings->list_type ) ) {
 			$list_type = isset( $post_data['list_type'] ) ? $post_data['list_type'] : $settings->list_type;
 
 			if ( ! empty( $list_type ) && 'form' == $list_type ) {
-				$forms = $api->api( 'form/getforms' );
+				$forms            = $api->api( 'form/getforms' );
 				$render_type_html = $this->render_form_field( $forms, $settings );
 			}
 		}
@@ -175,17 +174,17 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 	private function render_list_type_field( $settings ) {
 		ob_start();
 		FLBuilder::render_settings_field( 'list_type', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-activecampaign-list_type-select',
-			'type'          => 'select',
-			'label'         => _x( 'Type', 'Select the list type.', 'fl-builder' ),
-			'default'       => 'list',
-			'options'       => array(
-				'list' 		 	=> __( 'List', 'fl-builder' ),
-				'form' 		 	=> __( 'Form', 'fl-builder' ),
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-activecampaign-list_type-select',
+			'type'      => 'select',
+			'label'     => _x( 'Type', 'Select the list type.', 'fl-builder' ),
+			'default'   => 'list',
+			'options'   => array(
+				'list' => __( 'List', 'fl-builder' ),
+				'form' => __( 'Form', 'fl-builder' ),
 			),
-			'preview'       => array(
-				'type'          => 'none',
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 		return ob_get_clean();
@@ -212,13 +211,13 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 			}
 		}
 		FLBuilder::render_settings_field( 'form_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'Form', 'Select a form a ActiveCampaign.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'Form', 'Select a form a ActiveCampaign.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 		return ob_get_clean();
@@ -247,13 +246,13 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from ActiveCampaign.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from ActiveCampaign.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -272,16 +271,16 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'tags', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'default' 		=> '',
-			'label'         => _x( 'Tags', 'A comma separated list of tags.', 'fl-builder' ),
-			'help'          => __( 'A comma separated list of tags.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'default'   => '',
+			'label'     => _x( 'Tags', 'A comma separated list of tags.', 'fl-builder' ),
+			'help'      => __( 'A comma separated list of tags.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
-		),$settings);
+		), $settings);
 
 		return ob_get_clean();
 	}
@@ -308,7 +307,7 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to ActiveCampaign. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$api     = $this->get_api( $account_data['api_url'], $account_data['api_key'] );
+			$api = $this->get_api( $account_data['api_url'], $account_data['api_key'] );
 
 			$data['email'] = $email;
 			if ( isset( $settings->list_type ) && 'form' == $settings->list_type ) {
@@ -334,11 +333,11 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 				}
 			} else {
 				$data['p'] = array( $settings->list_id );
-				$list_id = $settings->list_id;
+				$list_id   = $settings->list_id;
 			}
 
 			if ( $list_id ) {
-				$data['status'] = array(
+				$data['status']            = array(
 					$list_id => 1,
 				);
 				$data['instantresponders'] = array(

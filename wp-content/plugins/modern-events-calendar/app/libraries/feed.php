@@ -37,6 +37,17 @@ class MEC_feed extends MEC_base
         $permalink = get_post_permalink($post_id);
         return esc_url(apply_filters('the_permalink_rss', $permalink));
     }
+
+    /**
+     * @author Webnus <info@webnus.biz>
+     * @param int $post_id
+     * @return string
+     */
+    public function attachment($post_id)
+    {
+        $featured_link = get_the_post_thumbnail_url($post_id,'full');
+        return esc_url(apply_filters('the_attachment_rss', $featured_link));
+    }
     
     /**
      * @author Webnus <info@webnus.biz>
@@ -67,11 +78,11 @@ class MEC_feed extends MEC_base
     public function excerpt($post_id)
     {
         $post = get_post($post_id);
-        if(empty($post)) return '';
 
-        if(post_password_required($post_id)) return __('There is no excerpt because this is a protected post.');
-        
-        return apply_filters('get_the_excerpt', $post->post_excerpt);
+        if(empty($post)) return '';
+        if(post_password_required($post)) return __('There is no excerpt because this is a protected post.');
+
+        return apply_filters('get_the_excerpt', $post->post_excerpt, $post);
     }
     
     /**

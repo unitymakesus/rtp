@@ -1,50 +1,97 @@
 <?php
 
+// Button Styles
 if ( 'button' == $settings->cta_type ) {
-	FLBuilder::render_module_css('button', $id, array(
-		'align'             => '',
-		'bg_color'          => $settings->btn_bg_color,
-		'bg_hover_color'    => $settings->btn_bg_hover_color,
-		'bg_opacity'        => $settings->btn_bg_opacity,
-		'bg_hover_opacity'  => $settings->btn_bg_hover_opacity,
-		'button_transition' => $settings->btn_button_transition,
-		'border_radius'     => $settings->btn_border_radius,
-		'border_size'       => $settings->btn_border_size,
-		'font_size'         => $settings->btn_font_size,
-		'icon'              => $settings->btn_icon,
-		'icon_position'     => $settings->btn_icon_position,
-		'link'              => $settings->link,
-		'link_target'       => $settings->link_target,
-		'padding'           => $settings->btn_padding,
-		'style'             => ( isset( $settings->btn_3d ) && $settings->btn_3d ) ? 'gradient' : $settings->btn_style,
-		'text'              => $settings->cta_text,
-		'text_color'        => $settings->btn_text_color,
-		'text_hover_color'  => $settings->btn_text_hover_color,
-		'width'             => $settings->btn_width,
-		'mobile_align'      => $settings->btn_mobile_align,
-	));
+	FLBuilder::render_module_css( 'button', $id, $module->get_button_settings() );
 }
 
+// Icon Styles
 if ( 'icon' == $settings->image_type ) {
-	FLBuilder::render_module_css('icon', $id, array(
-		'align'          => '',
-		'bg_color'       => $settings->icon_bg_color,
-		'bg_hover_color' => $settings->icon_bg_hover_color,
-		'color'          => $settings->icon_color,
-		'hover_color'    => $settings->icon_hover_color,
-		'icon'           => $settings->icon,
-		'link'           => $settings->link,
-		'link_target'    => $settings->link_target,
-		'size'           => $settings->icon_size,
-		'text'           => '',
-		'three_d'        => $settings->icon_3d,
-	));
+	FLBuilder::render_module_css( 'icon', $id, $module->get_icon_settings() );
 }
 
-?>
-<?php if ( 'custom' == $settings->title_size ) : ?>
-.fl-builder-content .fl-node-<?php echo $id; ?> .fl-callout-title {
-	font-size: <?php echo $settings->title_custom_size; ?>px;
-	line-height: <?php echo $settings->title_custom_size; ?>px;
+// Photo Styles
+if ( 'photo' == $settings->image_type && ! empty( $settings->photo ) ) {
+	FLBuilder::render_module_css( 'photo', $id, $module->get_photo_settings() );
 }
-<?php endif; ?>
+
+// Background Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id .fl-module-content",
+	'props'    => array(
+		'background-color' => $settings->bg_color,
+	),
+) );
+
+// Border
+FLBuilderCSS::border_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'border',
+	'selector'     => ".fl-node-$id .fl-module-content",
+) );
+
+// Wrapper Padding
+FLBuilderCSS::dimension_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'padding',
+	'selector'     => ".fl-node-$id .fl-module-content",
+	'props'        => array(
+		'padding-top'    => 'padding_top',
+		'padding-right'  => 'padding_right',
+		'padding-bottom' => 'padding_bottom',
+		'padding-left'   => 'padding_left',
+	),
+) );
+
+// Title Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id .fl-callout-title, .fl-node-$id .fl-callout-title-text, .fl-node-$id .fl-callout-title-text:hover",
+	'props'    => array(
+		'color' => $settings->title_color,
+	),
+) );
+
+// Title Typography
+FLBuilderCSS::typography_field_rule( array(
+	'selector'     => ".fl-node-$id .fl-callout-title",
+	'setting_name' => 'title_typography',
+	'settings'     => $settings,
+) );
+
+// Content Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id .fl-callout-text, .fl-node-$id .fl-callout-cta-link",
+	'props'    => array(
+		'color' => $settings->content_color,
+	),
+) );
+
+// Content Typography
+FLBuilderCSS::typography_field_rule( array(
+	'selector'     => ".fl-node-$id .fl-callout-text, .fl-node-$id .fl-callout-cta-link",
+	'setting_name' => 'content_typography',
+	'settings'     => $settings,
+) );
+
+// Link Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id a.fl-callout-cta-link",
+	'props'    => array(
+		'color' => $settings->link_color,
+	),
+) );
+
+// Link Hover Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id a.fl-callout-cta-link:hover, .fl-node-$id a.fl-callout-cta-link:focus",
+	'props'    => array(
+		'color' => $settings->link_hover_color,
+	),
+) );
+
+// Link Typography
+FLBuilderCSS::typography_field_rule( array(
+	'selector'     => ".fl-node-$id a.fl-callout-cta-link",
+	'setting_name' => 'link_typography',
+	'settings'     => $settings,
+) );

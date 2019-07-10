@@ -122,13 +122,17 @@ foreach($mec_events as $mec_event)
         elseif($repeat_type == 'custom_days')
         {
             $freq = '';
-            $mec_days = explode(',', trim($data->mec->days, ','));
+            $mec_periods = explode(',', trim($data->mec->days, ','));
 
             $days = '';
-            foreach($mec_days as $mec_day) $days .= date('Ymd', strtotime($mec_day)).',';
+            foreach($mec_periods as $mec_period)
+            {
+                $mec_days = explode(':', trim($mec_period, ': '));
+                $days .= date('Ymd\THis', strtotime($mec_days[0].' '.$data->time['start'])).$gmt_offset.'/'.date('Ymd\THis', strtotime($mec_days[1].' '.$data->time['end'])).$gmt_offset.',';
+            }
 
             // Add RDATE
-            $recurrence[] = trim('RDATE;VALUE=DATE:'.trim($days, ', '), '; ');
+            $recurrence[] = trim('RDATE;VALUE=PERIOD:'.trim($days, ', '), '; ');
         }
 
         $rrule = 'RRULE:FREQ='.$freq.';'

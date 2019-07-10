@@ -191,6 +191,18 @@ body .ms-options-wrap > .ms-options > ul input[type="checkbox"] {
 	display: inline-block;
 }
 
+.curl-alert {
+	padding: 16px 25px 16px 20px;
+	background-color: #fde8e8;
+	border-left: 5px solid #e7aaaa;
+	margin-bottom: 2em;
+}
+.curl-alert p {
+	font-size: 1rem;
+	color: #333;
+}
+
+
 /* Templates
 ----------------------------------------------------------- */
 
@@ -295,4 +307,80 @@ body .ms-options-wrap > .ms-options > ul input[type="checkbox"] {
 	.fl-settings-form td {
 		padding: 5px 17px;
 	}
+}
+
+.subscription-form {
+  background: #0a3c4b;
+  color: #fefefe;
+  padding: 25px;
+  border-radius: 0;
+}
+
+.subscription-form .input-group-field {
+  border-radius: 4px;
+	height: 35px;
+	display: flex;
+	margin: 10px 0;
+	width: 95%;
+	border: 1px solid #e6e6e6;
+}
+
+.subscription-form .subscribe-button {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 20px 0 0;
+  padding: 0 10px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+	background-color: #0F637D;
+	height: 45px;
+	font-size: 20px;
+	border-color: #0F637D;
+	box-shadow: none;
+	border-radius: 4px;
+}
+
+.subscription-form .input-group span.error {
+	display: none;
+}
+
+.subscription-form .dashicons {
+	vertical-align: middle;
+	margin: 10px;
+	position: relative;
+	top: 8px;
+}
+
+.subscription-form .dashicons {
+	color: #0a3c4b;
+}
+
+.subscription-form .subscribe-button:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.subscription-form .subscribe-button:hover {
+	background-color: #0F637D;
+}
+.subscription-form h4 {
+	margin: 0 0 5px;
+}
+.subscription-form h2 {
+	color: #fff;
+}
+
+.dashicons.spin {
+   animation: dashicons-spin 1s infinite;
+   animation-timing-function: linear;
+}
+
+@keyframes dashicons-spin {
+   0% {
+      transform: rotate( 0deg );
+   }
+   100% {
+      transform: rotate( 360deg );
+   }
 }

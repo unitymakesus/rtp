@@ -161,15 +161,17 @@ class MEC_db extends MEC_base
         
         $query = str_replace('#__blogs', $wpdb->base_prefix.'blogs', $query);
 		$query = str_replace('#__', $wpdb->prefix, $query);
-        
+		$query = str_replace('[:CHARSET:]', $wpdb->charset, $query);
+		$query = str_replace('[:COLLATE:]', $wpdb->collate, $query);
+
         return $query;
 	}
     
     /**
      * Returns WordPres DB Object
      * @author Webnus <info@webnus.biz>
-     * @global object $wpdb
-     * @return object
+     * @global wpdb $wpdb
+     * @return wpdb
      */
 	public function get_DBO()
 	{

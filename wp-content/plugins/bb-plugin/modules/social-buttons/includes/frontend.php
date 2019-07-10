@@ -16,11 +16,7 @@
 
 	<?php if ( $settings->show_twitter ) : ?>
 		<div class="fl-social-button fl-twitter">
-			<a href="https://twitter.com/share"
-				 class="twitter-share-button"
-				 data-url="<?php echo $settings->the_url; ?>"
-				 data-lang="en">Tweet
-			</a>
+			<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?php echo $settings->the_url; ?>" data-lang="en">Tweet</a>
 		</div>
 	<?php endif; ?>
 

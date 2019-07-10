@@ -5,7 +5,7 @@
 		<?php if ( 'lightbox' == $settings->click_action ) : ?>
 		if (typeof $.fn.magnificPopup !== 'undefined') {
 			$('.fl-node-<?php echo $id; ?> .fl-mosaicflow-content, .fl-node-<?php echo $id; ?> .fl-gallery').magnificPopup({
-				delegate: '.fl-photo-content a',
+				delegate: '.fl-photo-content > a',
 				closeBtnInside: false,
 				type: 'image',
 				gallery: {

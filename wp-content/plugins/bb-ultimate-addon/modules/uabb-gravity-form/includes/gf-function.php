@@ -15,14 +15,17 @@ if ( ! function_exists( 'uabb_gf_function' ) ) {
 	 */
 	function uabb_gf_function() {
 		$field_options = array();
-
+		global $wpdb;
 		if ( class_exists( 'GFForms' ) ) {
-			$forms = RGFormsModel::get_forms( null, 'title' );
 
-			if ( is_array( $forms ) ) {
-				foreach ( $forms as $form ) {
-					$field_options[ $form->id ] = $form->title;
-				}
+			$form_table_name = GFFormsModel::get_form_table_name();
+
+			$id = 0;
+
+			$forms = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // @codingStandardsIgnoreLine.
+
+			foreach ( $forms as $form ) {
+				$field_options[ $form->id ] = $form->title;
 			}
 		}
 
@@ -43,17 +46,16 @@ if ( ! function_exists( 'uabb_gf_get_form_id' ) ) {
 	 * @method uabb_gf_get_form_id
 	 */
 	function uabb_gf_get_form_id() {
-
+		global $wpdb;
 		if ( class_exists( 'GFForms' ) ) {
-			$forms = RGFormsModel::get_forms( null, 'title' );
+			$form_table_name = GFFormsModel::get_form_table_name();
+			$id              = 0;
+			$forms           = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // @codingStandardsIgnoreLine.
 
-			if ( is_array( $forms ) ) {
-				foreach ( $forms as $form ) {
-					return $form->id;
-				}
+			foreach ( $forms as $form ) {
+				return $form->id;
 			}
 		}
-
 		return -1;
 	}
 }

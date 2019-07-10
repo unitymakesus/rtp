@@ -10,10 +10,10 @@ $filetype = pathinfo( $src, PATHINFO_EXTENSION );
 $rel      = $module->get_rel();
 
 ?>
-<div class="fl-photo<?php if ( ! empty( $settings->crop ) ) { echo ' fl-photo-crop-' . $settings->crop ;} ?> fl-photo-align-<?php echo $settings->align; ?>" itemscope itemtype="https://schema.org/ImageObject">
+<div class="fl-photo<?php echo ( ! empty( $settings->crop ) ) ? ' fl-photo-crop-' . $settings->crop : ''; ?> fl-photo-align-<?php echo $settings->align; ?>"<?php FLBuilder::print_schema( ' itemscope itemtype="https://schema.org/ImageObject"' ); ?>>
 	<div class="fl-photo-content fl-photo-img-<?php echo $filetype; ?>">
 		<?php if ( ! empty( $link ) ) : ?>
-		<a href="<?php echo $link; ?>" target="<?php echo $settings->link_target; ?>"<?php echo $rel; ?> itemprop="url">
+		<a href="<?php echo $link; ?>" target="<?php echo $settings->link_url_target; ?>"<?php echo $rel; ?> itemprop="url">
 		<?php endif; ?>
 		<img class="<?php echo $classes; ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" itemprop="image" <?php echo $attrs; ?> />
 		<?php if ( ! empty( $link ) ) : ?>

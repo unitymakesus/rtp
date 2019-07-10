@@ -57,6 +57,13 @@ class MEC
     {
         // Import MEC Factory, This file will do the rest
         $factory = MEC::getInstance('app.libraries.factory');
+
+        // Deactivate MEC Lite when Pro is installed
+        if(!$factory->getPRO())
+        {
+            if(!function_exists('is_plugin_active')) include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+            if(is_plugin_active('modern-events-calendar/mec.php')) deactivate_plugins('modern-events-calendar-lite/modern-events-calendar-lite.php');
+        }
         
         // Initialize Auto Update Feaature
         if($factory->getPRO()) $factory->load_auto_update();

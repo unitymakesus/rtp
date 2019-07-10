@@ -12,6 +12,7 @@ class MEC_render extends MEC_base
     public $main;
     public $file;
     public $settings;
+    public $post_atts;
 
     /**
      * Constructor method
@@ -194,6 +195,18 @@ class MEC_render extends MEC_base
         
         return $this->skin($skin, $atts);
     }
+
+    /**
+     * Do the custom skin and returns its output
+     * @author Webnus <info@webnus.biz>
+     * @param array $atts
+     * @return string
+     */
+    public function vcustom($atts)
+    {
+        if (isset($this->settings['custom_archive']) && !empty($this->settings['custom_archive']))
+        echo do_shortcode( $this->settings['custom_archive'] );
+    }
     
     /**
      * Do the grid skin and returns its output
@@ -231,22 +244,29 @@ class MEC_render extends MEC_base
      */
     public function vdefault($atts = array())
     {
+        $monthly_skin = (isset($this->settings['monthly_view_archive_skin']) and trim($this->settings['monthly_view_archive_skin']) != '') ? $this->settings['monthly_view_archive_skin'] : 'classic';
+        $list_skin = (isset($this->settings['list_archive_skin']) and trim($this->settings['list_archive_skin']) != '') ? $this->settings['list_archive_skin'] : 'standard';
+        $grid_skin = (isset($this->settings['grid_archive_skin']) and trim($this->settings['grid_archive_skin']) != '') ? $this->settings['grid_archive_skin'] : 'classic';
+        $timetable_skin = (isset($this->settings['timetable_archive_skin']) and trim($this->settings['timetable_archive_skin']) != '') ? $this->settings['timetable_archive_skin'] : 'modern';
+
         if(!isset($this->settings['default_skin_archive']) or (isset($this->settings['default_skin_archive']) and trim($this->settings['default_skin_archive']) == ''))
         {
-            return $this->vmonth($atts);
+            return $this->vmonth(array_merge($atts, array('sk-options'=>array('monthly_view'=>array('style'=>$monthly_skin)))));
         }
-        
-        if($this->settings['default_skin_archive'] == 'monthly_view') $content = $this->vmonth($atts);
+
+
+        if($this->settings['default_skin_archive'] == 'monthly_view') $content = $this->vmonth(array_merge($atts, array('sk-options'=>array('monthly_view'=>array('style'=>$monthly_skin)))));
         elseif($this->settings['default_skin_archive'] == 'full_calendar') $content = $this->vfull($atts);
         elseif($this->settings['default_skin_archive'] == 'yearly_view') $content = $this->vyear($atts);
         elseif($this->settings['default_skin_archive'] == 'weekly_view') $content = $this->vweek($atts);
         elseif($this->settings['default_skin_archive'] == 'daily_view') $content = $this->vday($atts);
-        elseif($this->settings['default_skin_archive'] == 'timetable') $content = $this->vtimetable($atts);
+        elseif($this->settings['default_skin_archive'] == 'timetable') $content = $this->vtimetable(array_merge($atts, array('sk-options'=>array('timetable'=>array('style'=>$timetable_skin)))));
         elseif($this->settings['default_skin_archive'] == 'masonry') $content = $this->vmasonry($atts);
-        elseif($this->settings['default_skin_archive'] == 'list') $content = $this->vlist($atts);
-        elseif($this->settings['default_skin_archive'] == 'grid') $content = $this->vgrid($atts);
+        elseif($this->settings['default_skin_archive'] == 'list') $content = $this->vlist(array_merge($atts, array('sk-options'=>array('list'=>array('style'=>$list_skin)))));
+        elseif($this->settings['default_skin_archive'] == 'grid') $content = $this->vgrid(array_merge($atts, array('sk-options'=>array('grid'=>array('style'=>$grid_skin)))));
         elseif($this->settings['default_skin_archive'] == 'agenda') $content = $this->vagenda($atts);
         elseif($this->settings['default_skin_archive'] == 'map') $content = $this->vmap($atts);
+        elseif($this->settings['default_skin_archive'] == 'custom') $content = $this->vcustom($atts);
         else $content = apply_filters('mec_default_skin_content', '');
         
         return $content;
@@ -287,13 +307,20 @@ class MEC_render extends MEC_base
         // Show Only Expired Events
         if(isset($this->settings['category_events_method']) and $this->settings['category_events_method'] == 2) $atts['show_only_past_events'] = 1;
 
+        $monthly_skin = (isset($this->settings['monthly_view_category_skin']) and trim($this->settings['monthly_view_category_skin']) != '') ? $this->settings['monthly_view_category_skin'] : 'classic';
+        $list_skin = (isset($this->settings['list_category_skin']) and trim($this->settings['list_category_skin']) != '') ? $this->settings['list_category_skin'] : 'standard';
+        $grid_skin = (isset($this->settings['grid_category_skin']) and trim($this->settings['grid_category_skin']) != '') ? $this->settings['grid_category_skin'] : 'classic';
+        $timetable_skin = (isset($this->settings['timetable_category_skin']) and trim($this->settings['timetable_category_skin']) != '') ? $this->settings['timetable_category_skin'] : 'modern';
+
         if($skin == 'full_calendar') $content = $this->vfull($atts);
         elseif($skin == 'yearly_view') $content = $this->vyear($atts);
-        elseif($skin == 'monthly_view') $content = $this->vmonth($atts);
+        elseif($skin == 'masonry') $content = $this->vmasonry($atts);
+        elseif($skin == 'timetable') $content = $this->vtimetable(array_merge($atts, array('sk-options'=>array('timetable'=>array('style'=>$timetable_skin)))));
+        elseif($skin == 'monthly_view') $content = $this->vmonth(array_merge($atts, array('sk-options'=>array('monthly_view'=>array('style'=>$monthly_skin)))));
         elseif($skin == 'weekly_view') $content = $this->vweek($atts);
         elseif($skin == 'daily_view') $content = $this->vday($atts);
-        elseif($skin == 'list') $content = $this->vlist(array_merge($atts, array('sk-options'=>array('list'=>array('style'=>'standard')))));
-        elseif($skin == 'grid') $content = $this->vgrid($atts);
+        elseif($skin == 'list') $content = $this->vlist(array_merge($atts, array('sk-options'=>array('list'=>array('style'=>$list_skin)))));
+        elseif($skin == 'grid') $content = $this->vgrid(array_merge($atts, array('sk-options'=>array('grid'=>array('style'=>$grid_skin)))));
         elseif($skin == 'agenda') $content = $this->vagenda($atts);
         elseif($skin == 'map') $content = $this->vmap($atts);
         else $content = apply_filters('mec_default_skin_content', '');
@@ -310,6 +337,11 @@ class MEC_render extends MEC_base
      */
     public function parse($post_id, $atts = array())
     {
+        if ( $this->post_atts )
+        {
+            return wp_parse_args($atts, $this->post_atts);
+        }
+
         $post_atts = array();
         if($post_id) $post_atts = $this->main->get_post_meta($post_id);
         
@@ -514,10 +546,6 @@ class MEC_render extends MEC_base
         
         // Original Start Date
         $original_start_date = $today;
-        
-        $cached = wp_cache_get($event_id.'-'.$original_start_date, 'mec-events-dates');
-        if($cached) return $cached;
-        
         $dates = array();
         
         // Get event data if it is NULL
@@ -562,7 +590,7 @@ class MEC_render extends MEC_base
         {
             $dates[] = array(
                 'start'=>$start_date,
-                'end'=>$finish_date,
+                'end'=>$end_date,
                 'allday'=>$allday,
                 'hide_time'=>$hide_time,
                 'past'=>$past
@@ -572,11 +600,11 @@ class MEC_render extends MEC_base
         {
             $repeat_type = $event->meta['mec_repeat_type'];
             $repeat_interval = 1;
-            
+
             if(in_array($repeat_type, array('daily', 'weekly')))
             {
                 $repeat_interval = $event->meta['mec_repeat_interval'];
-                
+
                 $date_interval = $this->main->date_diff($start_date['date'], $today);
                 $passed_days = $date_interval ? $date_interval->days : 0;
 
@@ -585,7 +613,7 @@ class MEC_render extends MEC_base
                 else $remained_days_to_next_repeat = $repeat_interval - ($passed_days%$repeat_interval);
 
                 $start_date = date('Y-m-d', strtotime('+'.$remained_days_to_next_repeat.' Days', strtotime($today)));
-                if(!in_array($start_date, $exceptional_days)) $dates[] = array(
+                if(!$this->main->is_past($finish_date['date'], $start_date) and !in_array($start_date, $exceptional_days)) $dates[] = array(
                     'start'=>array('date'=>$start_date, 'hour'=>$event->meta['mec_date']['start']['hour'], 'minutes'=>$event->meta['mec_date']['start']['minutes'], 'ampm'=>$event->meta['mec_date']['start']['ampm']),
                     'end'=>array('date'=>date('Y-m-d', strtotime('+'.$event_period_days.' Days', strtotime($start_date))), 'hour'=>$event->meta['mec_date']['end']['hour'], 'minutes'=>$event->meta['mec_date']['end']['minutes'], 'ampm'=>$event->meta['mec_date']['end']['ampm']),
                     'allday'=>$allday,
@@ -665,8 +693,10 @@ class MEC_render extends MEC_base
                 
                 while($found < $maximum)
                 {
-                    $today = date('Y-m-d', strtotime('+'.$i.' Months', strtotime($original_start_date)));
-                    
+                    $t = strtotime('+'.$i.' Months', strtotime($original_start_date));
+                    if(!$t) break;
+
+                    $today = date('Y-m-d', $t);
                     if($this->main->is_past($finish_date['date'], $today)) break;
                     
                     $year = date('Y', strtotime($today));
@@ -707,14 +737,18 @@ class MEC_render extends MEC_base
                 $event_period_days = $event_end_day - $event_start_day;
                 $found = 0;
                 $i = 0;
-                
-                while($found < $maximum and !$this->main->is_past($finish_date['date'], $today))
+
+                while($found < $maximum)
                 {
-                    $today = date('Y-m-d', strtotime('+'.$i.' Months', strtotime($original_start_date)));
-                    
+                    $t = strtotime('+'.$i.' Months', strtotime($original_start_date));
+                    if(!$t) break;
+
+                    $today = date('Y-m-d', $t);
+                    if($this->main->is_past($finish_date['date'], $today)) break;
+
                     $year = date('Y', strtotime($today));
                     $month = date('m', strtotime($today));
-                    
+
                     if(!in_array($month, $event_months))
                     {
                         $i++;
@@ -727,8 +761,7 @@ class MEC_render extends MEC_base
                     while(!checkdate($month, $day, $year)) $day--;
                     
                     $event_date = $year.'-'.$month.'-'.$day;
-                    
-                    if(strtotime($event_date) < time())
+                    if(strtotime($event_date) < strtotime($original_start_date))
                     {
                         $i++;
                         continue;
@@ -749,8 +782,7 @@ class MEC_render extends MEC_base
             }
             elseif($repeat_type == 'custom_days')
             {
-                $custom_days = explode(',', trim($event->mec->days, ', '));
-                sort($custom_days);
+                $custom_days = explode(',', $event->mec->days);
                 
                 $found = 0;
                 if(strtotime($event->mec->start) >= strtotime($today) and !in_array($event->mec->start, $exceptional_days))
@@ -770,13 +802,15 @@ class MEC_render extends MEC_base
                 {
                     // Found maximum dates
                     if($found >= $maximum) break;
-                    
+
+                    $cday = explode(':', $custom_day);
+
                     // Date is past
-                    if(strtotime($custom_day) < strtotime($today)) continue;
+                    if(strtotime($cday[0]) < strtotime($today)) continue;
                     
-                    if(!in_array($custom_day, $exceptional_days)) $dates[] = array(
-                        'start'=>array('date'=>$custom_day, 'hour'=>$event->meta['mec_date']['start']['hour'], 'minutes'=>$event->meta['mec_date']['start']['minutes'], 'ampm'=>$event->meta['mec_date']['start']['ampm']),
-                        'end'=>array('date'=>$custom_day, 'hour'=>$event->meta['mec_date']['end']['hour'], 'minutes'=>$event->meta['mec_date']['end']['minutes'], 'ampm'=>$event->meta['mec_date']['end']['ampm']),
+                    if(!in_array($cday[0], $exceptional_days)) $dates[] = array(
+                        'start'=>array('date'=>$cday[0], 'hour'=>$event->meta['mec_date']['start']['hour'], 'minutes'=>$event->meta['mec_date']['start']['minutes'], 'ampm'=>$event->meta['mec_date']['start']['ampm']),
+                        'end'=>array('date'=>$cday[1], 'hour'=>$event->meta['mec_date']['end']['hour'], 'minutes'=>$event->meta['mec_date']['end']['minutes'], 'ampm'=>$event->meta['mec_date']['end']['ampm']),
                         'allday'=>$allday,
                         'hide_time'=>$hide_time,
                         'past'=>0

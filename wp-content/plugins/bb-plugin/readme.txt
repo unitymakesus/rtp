@@ -2,7 +2,7 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, hinampaksh, diegoliv, webmandesign, eugenealegiojo, helgatheviking, ozancanakli, brentjettgmailcom, jproffitt71, brainstormforce, ideaboxcreations, laubsterboy, nikolayyordanov, codente, pross, pedromendonca
 Tags: page builder, beaver builder, landing page, front-end builder, drag and drop editor
 Requires at least: 4.6
-Tested up to: 4.9
+Tested up to: 5.2
 Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

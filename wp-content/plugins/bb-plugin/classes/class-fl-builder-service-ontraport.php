@@ -59,20 +59,18 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API token.
 		if ( ! isset( $fields['app_id'] ) || empty( $fields['app_id'] ) ) {
 			$response['error'] = __( 'Error: You must provide an APP ID.', 'fl-builder' );
-		} // Make sure we have an Account ID.
-		elseif ( ! isset( $fields['api_key'] ) || empty( $fields['api_key'] ) ) {
+		} elseif ( ! isset( $fields['api_key'] ) || empty( $fields['api_key'] ) ) { // Make sure we have an Account ID.
 			$response['error'] = __( 'Error: You must provide an API key.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
-			$api  = $this->get_api( $fields['app_id'], $fields['api_key'] );
+			$api = $this->get_api( $fields['app_id'], $fields['api_key'] );
 
 			// Try to request something to authenticate the validity of APP ID and API Key
 			$search = json_decode( $api->contact()->retrieveMultiple( array(
@@ -84,10 +82,11 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 			if ( 200 === $status_code ) {
 				$response['data'] = array(
 					'api_key' => $fields['api_key'],
-					'app_id' => $fields['app_id'],
+					'app_id'  => $fields['app_id'],
 				);
 			} else {
 				$response['error'] = sprintf(
+					/* translators: %s: error code */
 					__( 'Error: Please check your API token. Code: %s', 'fl-builder' ),
 					$status_code
 				);
@@ -107,24 +106,24 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'app_id', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'APP ID', 'fl-builder' ),
-			'help'          => __( 'Your APP ID can be found in your Ontraport account.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'APP ID', 'fl-builder' ),
+			'help'      => __( 'Your APP ID can be found in your Ontraport account.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your Ontraport account.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Ontraport account.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -144,8 +143,8 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 	 */
 	public function render_fields( $account, $settings ) {
 		$account_data   = $this->get_account_data( $account );
-		$api 			= $this->get_api( $account_data['app_id'], $account_data['api_key'] );
-		$campaigns = json_decode( $api->campaignbuilder()->retrieveMultiplePaginated( array(
+		$api            = $this->get_api( $account_data['app_id'], $account_data['api_key'] );
+		$campaigns      = json_decode( $api->campaignbuilder()->retrieveMultiplePaginated( array(
 			'listFields' => 'id, name',
 			'start'      => 0,
 			'range'      => 50,
@@ -160,9 +159,9 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 			}
 		}
 
-		$response       = array(
-			'error'         => false,
-			'html'          => $this->render_campaigns_field( $campaigns_list, $settings ),
+		$response = array(
+			'error' => false,
+			'html'  => $this->render_campaigns_field( $campaigns_list, $settings ),
 		);
 
 		return $response;
@@ -191,14 +190,14 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'campaign_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'Campaign', 'An email campaign from your Ontraport account.', 'fl-builder' ),
-			'options'       => $options,
-			'default'       => 0,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'Campaign', 'An email campaign from your Ontraport account.', 'fl-builder' ),
+			'options'   => $options,
+			'default'   => 0,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -226,9 +225,9 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to Ontraport. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$api = $this->get_api( $account_data['app_id'], $account_data['api_key'] );
+			$api  = $this->get_api( $account_data['app_id'], $account_data['api_key'] );
 			$args = array(
-				'email'		 => $email,
+				'email'          => $email,
 				'updateCampaign' => $settings->campaign_id,
 			);
 
@@ -249,6 +248,7 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 
 			if ( 200 !== $api->getLastStatusCode() ) {
 				$response['error'] = sprintf(
+					/* translators: %s: error code */
 					__( 'There was an error subscribing to Ontraport. Code: %s', 'fl-builder' ),
 					$api->getLastStatusCode()
 				);

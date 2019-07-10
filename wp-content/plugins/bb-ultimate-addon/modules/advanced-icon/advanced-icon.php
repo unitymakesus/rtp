@@ -49,55 +49,36 @@ class UABBAdvancedIconModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->align ) ) {
-				$settings->align = $settings->align;
-			}
-			if ( isset( $settings->responsive_align ) ) {
-				$settings->responsive_align = $settings->responsive_align;
-			}
-
 			// Handling each icon's list.
 			foreach ( $settings->icons as $icon ) {
 
-				if ( isset( $icon->link ) ) {
-					if ( isset( $icon->link_target ) ) {
-						$icon->link_target = $icon->link_target;
-					}
-					if ( isset( $icon->link_nofollow ) ) {
-						( '1' == $icon->link_nofollow ) ? $icon->link_nofollow = 'yes' : '';
+				if ( isset( $icon->link_nofollow ) ) {
+					if ( '1' == $icon->link_nofollow || 'yes' == $icon->link_nofollow ) {
+						$icon->link_nofollow = 'yes';
 					}
 				}
 				$helper->handle_opacity_inputs( $icon, 'bg_hover_color_opc', 'bg_hover_color' );
 				$helper->handle_opacity_inputs( $icon, 'bg_color_opc', 'bg_color' );
 			}
+			$helper->handle_opacity_inputs( $settings, 'bg_hover_color_opc', 'bg_hover_color' );
+			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
 
 			// Handle opacity fields.
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->align ) ) {
-				$settings->align = $settings->align;
-			}
-			if ( isset( $settings->responsive_align ) ) {
-				$settings->responsive_align = $settings->responsive_align;
-			}
-
 			// Handling each icon's list.
 			foreach ( $settings->icons as $icon ) {
 
-				if ( isset( $icon->link ) ) {
-					if ( isset( $icon->link_target ) ) {
-						$icon->link_target = $icon->link_target;
-					}
-					if ( isset( $icon->link_nofollow ) ) {
-						( '1' == $icon->link_nofollow ) ? $icon->link_nofollow = 'yes' : '';
+				if ( isset( $icon->link_nofollow ) ) {
+					if ( '1' == $icon->link_nofollow || 'yes' == $icon->link_nofollow ) {
+						$icon->link_nofollow = 'yes';
 					}
 				}
 				$helper->handle_opacity_inputs( $icon, 'bg_hover_color_opc', 'bg_hover_color' );
 				$helper->handle_opacity_inputs( $icon, 'bg_color_opc', 'bg_color' );
 			}
-
+			$helper->handle_opacity_inputs( $settings, 'bg_hover_color_opc', 'bg_hover_color' );
+			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
 			// Handle opacity fields.
 		}
 

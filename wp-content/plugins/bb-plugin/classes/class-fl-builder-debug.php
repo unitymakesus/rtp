@@ -5,14 +5,16 @@ final class FL_Debug {
 	static private $tests = array();
 
 	public static function init() {
-		if ( isset( $_GET['fldebug'] ) && get_option( 'fl_debug_mode', false ) === $_GET['fldebug'] ) {
+		if ( isset( $_GET['fldebug'] ) && get_transient( 'fl_debug_mode', false ) === $_GET['fldebug'] ) {
 			add_action( 'init', array( 'FL_Debug', 'display_tests' ) );
 		}
 
-		if ( get_option( 'fl_debug_mode', false ) ) {
+		if ( get_transient( 'fl_debug_mode' ) ) {
 			self::enable_logging();
+			add_filter( 'fl_is_debug', '__return_true' );
 		}
 	}
+
 
 	public static function enable_logging() {
 		@ini_set( 'display_errors', 1 ); // @codingStandardsIgnoreLine
@@ -45,7 +47,7 @@ final class FL_Debug {
 	}
 
 	private static function formatbytes( $size, $precision = 2 ) {
-		$base = log( $size, 1024 );
+		$base     = log( $size, 1024 );
 		$suffixes = array( '', 'K', 'M', 'G', 'T' );
 
 		return round( pow( 1024, $base - floor( $base ) ), $precision ) . $suffixes[ floor( $base ) ];
@@ -71,7 +73,7 @@ final class FL_Debug {
 
 	private static function get_mu_plugins() {
 		$plugins_data = get_mu_plugins();
-		$plugins = array();
+		$plugins      = array();
 
 		foreach ( $plugins_data as $plugin_path => $plugin ) {
 			$plugins[] = sprintf( '%s version %s by %s', $plugin['Name'], $plugin['Version'], $plugin['Author'] );
@@ -79,7 +81,7 @@ final class FL_Debug {
 		return $plugins;
 	}
 
-	private static function safe_ini_get( $ini ) {
+	public static function safe_ini_get( $ini ) {
 		return @ini_get( $ini ); // @codingStandardsIgnoreLine
 	}
 
@@ -87,9 +89,10 @@ final class FL_Debug {
 		return '----------------------------------------------';
 	}
 
+
 	private static function prepare_tests() {
 
-		global $wpdb, $wp_version;
+		global $wpdb, $wp_version, $wp_json;
 
 		$args = array(
 			'name' => 'WordPress',
@@ -128,6 +131,12 @@ final class FL_Debug {
 		self::register( 'fl_debug', $args );
 
 		$args = array(
+			'name' => 'FL Modsec Fix',
+			'data' => defined( 'FL_BUILDER_MODSEC_FIX' ) && FL_BUILDER_MODSEC_FIX ? 'Yes' : 'No',
+		);
+		self::register( 'fl_modsec', $args );
+
+		$args = array(
 			'name' => 'SSL Enabled',
 			'data' => is_ssl() ? 'Yes' : 'No',
 		);
@@ -152,13 +161,38 @@ final class FL_Debug {
 		self::register( 'wp_max_mem', $args );
 
 		$args = array(
+			'name' => 'Post Counts',
+			'data' => self::divider(),
+		);
+		self::register( 'post_counts', $args );
+
+		$templates = wp_count_posts( 'fl-builder-template' );
+
+		$post_types = get_post_types( null, 'object' );
+
+		foreach ( $post_types as $type => $type_object ) {
+
+			if ( in_array( $type, array( 'wp_block', 'user_request', 'oembed_cache', 'customize_changeset', 'custom_css', 'nav_menu_item' ) ) ) {
+				continue;
+			}
+
+			$count = wp_count_posts( $type );
+
+			$args = array(
+				'name' => ( 'fl-builder-template' == $type ) ? 'Builder Templates' : 'WordPress ' . $type_object->label,
+				'data' => ( $count->inherit > 0 ) ? $count->inherit : $count->publish,
+			);
+			self::register( 'wp_type_count_' . $type, $args );
+		}
+
+		$args = array(
 			'name' => 'Themes',
 			'data' => self::divider(),
 		);
 		self::register( 'themes', $args );
 
 		$theme = wp_get_theme();
-		$args = array(
+		$args  = array(
 			'name' => 'Active Theme',
 			'data' => array(
 				sprintf( '%s - v%s', $theme->get( 'Name' ), $theme->get( 'Version' ) ),
@@ -180,12 +214,12 @@ final class FL_Debug {
 		self::register( 'wp_plugins', $args );
 
 		$defaults = array(
-			'active' => array(),
+			'active'   => array(),
 			'deactive' => array(),
 		);
 
 		$plugins = wp_parse_args( self::get_plugins(), $defaults );
-		$args = array(
+		$args    = array(
 			'name' => 'Active Plugins',
 			'data' => $plugins['active'],
 		);
@@ -214,6 +248,12 @@ final class FL_Debug {
 			'data' => php_sapi_name(),
 		);
 		self::register( 'php_sapi', $args );
+
+		$args = array(
+			'name' => 'PHP JSON Support',
+			'data' => ( $wp_json instanceof Services_JSON ) ? '*** NO JSON MODULE ***' : 'yes',
+		);
+		self::register( 'php_json', $args );
 
 		$args = array(
 			'name' => 'PHP Memory Limit',
@@ -303,7 +343,7 @@ final class FL_Debug {
 		$cache = FLBuilderModel::get_cache_dir();
 
 		$args = array(
-			'name' => 'Beaver Builder Path',
+			'name' => 'Beaver Builder Cache Path',
 			'data' => $cache['path'],
 		);
 		self::register( 'bb_cache_path', $args );
@@ -318,7 +358,7 @@ final class FL_Debug {
 			$cache = FLCustomizer::get_cache_dir();
 
 			$args = array(
-				'name' => 'Beaver Theme Path',
+				'name' => 'Beaver Theme Cache Path',
 				'data' => $cache['path'],
 			);
 			self::register( 'bb_theme_cache_path', $args );
@@ -329,6 +369,12 @@ final class FL_Debug {
 			);
 			self::register( 'bb_theme_cache_path_writable', $args );
 		}
+
+		$args = array(
+			'name' => 'WordPress Content Path',
+			'data' => WP_CONTENT_DIR,
+		);
+		self::register( 'bb_content_path', $args );
 
 		$args = array(
 			'name' => 'License',
@@ -345,9 +391,9 @@ final class FL_Debug {
 
 		} elseif ( class_exists( 'FLUpdater' ) ) {
 			$subscription = FLUpdater::get_subscription_info();
-			$args = array(
+			$args         = array(
 				'name' => 'Beaver Builder License',
-				'data' => ( $subscription->active ) ? 'Active' : 'Not Active',
+				'data' => ( isset( $subscription->active ) ) ? 'Active' : 'Not Active',
 			);
 			self::register( 'bb_sub', $args );
 
@@ -393,7 +439,7 @@ final class FL_Debug {
 		self::register( 'up_htaccess', $args );
 
 		// detect uploads folder .htaccess file and display it if found.
-		$uploads = wp_upload_dir( null, false );
+		$uploads          = wp_upload_dir( null, false );
 		$uploads_htaccess = trailingslashit( $uploads['basedir'] ) . '.htaccess';
 		$root_htaccess    = trailingslashit( ABSPATH ) . '.htaccess';
 
@@ -401,7 +447,7 @@ final class FL_Debug {
 			ob_start();
 			readfile( $root_htaccess );
 			$htaccess = ob_get_clean();
-			$args = array(
+			$args     = array(
 				'name' => $root_htaccess . "\n",
 				'data' => $htaccess,
 			);
@@ -411,7 +457,7 @@ final class FL_Debug {
 			ob_start();
 			readfile( $uploads_htaccess );
 			$htaccess = ob_get_clean();
-			$args = array(
+			$args     = array(
 				'name' => $uploads_htaccess . "\n",
 				'data' => $htaccess,
 			);

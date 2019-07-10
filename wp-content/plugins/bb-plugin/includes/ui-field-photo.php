@@ -1,11 +1,16 @@
 <#
 
 var url = '';
+var selectName = '';
 
 if ( data.isMultiple ) {
-	url = data.settings[ data.rootName + '_src' ][ data.index ];
+	if ( data.settings[ data.rootName + '_src' ] ) {
+		url = data.settings[ data.rootName + '_src' ][ data.index ];
+	}
+	selectName = data.rootName + '_src[]';
 } else {
-	url = data.settings[ data.rootName + '_src' ];
+	url = data.settings[ data.name + '_src' ];
+	selectName = data.name + '_src';
 }
 
 var photo = null;
@@ -31,7 +36,8 @@ if ( FLBuilderSettingsConfig.attachments[ data.value ] ) {
 	}
 }
 
-var className = data.field.className ? ' ' + data.field.className : '';
+var field = data.field;
+var className = 'fl-photo-field fl-builder-custom-field';
 
 if ( ! data.value || ! photo ) {
 	className += ' fl-photo-empty';
@@ -39,15 +45,25 @@ if ( ! data.value || ! photo ) {
 	className += photo.isAttachment ? ' fl-photo-has-attachment' : ' fl-photo-no-attachment';
 }
 
+if ( field.className ) {
+	className += ' ' + field.className;
+}
+
+var show = '';
+
+if ( field.show ) {
+	show = "data-show='" + JSON.stringify( field.show ) + "'";
+}
+
 #>
-<div class="fl-photo-field fl-builder-custom-field{{className}}">
+<div class="{{className}}">
 	<a class="fl-photo-select" href="javascript:void(0);" onclick="return false;"><?php _e( 'Select Photo', 'fl-builder' ); ?></a>
 	<div class="fl-photo-preview">
 		<div class="fl-photo-preview-img">
 			<img src="<# if ( photo ) { var src = FLBuilder._getPhotoSrc( photo ); #>{{{src}}}<# } #>" />
 		</div>
 		<div class="fl-photo-preview-controls">
-			<select name="{{data.rootName}}_src">
+			<select name="{{selectName}}" {{{show}}}>
 				<# if ( photo && url ) {
 					var sizes = FLBuilder._getPhotoSizeOptions( photo, url );
 				#>

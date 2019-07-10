@@ -81,9 +81,10 @@ function mec_init_gmap'.$uniqueid.'()
     p'.$uniqueid.'.init();
 }
 </script>';
-
+if ( !function_exists('is_plugin_active')) include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 // Include javascript code into the footer
 if($this->is_ajax()) echo $javascript;
+elseif (is_plugin_active( 'mec-single-builder/mec-single-builder.php')) echo $javascript;
 else $factory->params('footer', $javascript);
 ?>
 <div class="mec-googlemap-details" id="mec_googlemap_canvas<?php echo $uniqueid; ?>" style="height: 500px;">

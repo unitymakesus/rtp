@@ -1,6 +1,6 @@
 // MEC Single Event Displayer
 var mecSingleEventDisplayer = {
-    getSinglePage: function(id, occurrence, ajaxurl, layout)
+    getSinglePage: function(id, occurrence, ajaxurl, layout,image_popup)
     {
         if(jQuery('.mec-modal-result').length === 0) jQuery('.mec-wrap').append('<div class="mec-modal-result"></div>');
         jQuery('.mec-modal-result').addClass('mec-modal-preloader');
@@ -14,6 +14,17 @@ var mecSingleEventDisplayer = {
             {
                 jQuery('.mec-modal-result').removeClass("mec-modal-preloader");
                 lity(response);
+
+                if(image_popup != 0)
+                {
+                    if(jQuery('.lity-content .mec-events-content a img').length > 0)
+                    {
+                        jQuery('.lity-content .mec-events-content a img').each(function()
+                        {
+                            jQuery(this).closest('a').attr('data-lity', '');
+                        });
+                    }
+                }
             },
             error: function()
             {
@@ -53,6 +64,15 @@ var mecSingleEventDisplayer = {
         {
             search();
         });
+
+        $("#mec_sf_speaker_" + settings.id).on('change', function (e) {
+            search();
+        });
+
+        $("#mec_sf_tag_" + settings.id).on('change', function (e) {
+            search();
+        });
+
         
         $("#mec_sf_label_"+settings.id).on('change', function(e)
         {
@@ -83,6 +103,8 @@ var mecSingleEventDisplayer = {
             var category = $("#mec_sf_category_"+settings.id).length ? $("#mec_sf_category_"+settings.id).val() : '';
             var location = $("#mec_sf_location_"+settings.id).length ? $("#mec_sf_location_"+settings.id).val() : '';
             var organizer = $("#mec_sf_organizer_"+settings.id).length ? $("#mec_sf_organizer_"+settings.id).val() : '';
+            var speaker = $("#mec_sf_speaker_"+settings.id).length ? $("#mec_sf_speaker_"+settings.id).val() : '';
+            var tag = $("#mec_sf_tag_"+settings.id).length ? $("#mec_sf_tag_"+settings.id).val() : '';
             var label = $("#mec_sf_label_"+settings.id).length ? $("#mec_sf_label_"+settings.id).val() : '';
             var month = $("#mec_sf_month_"+settings.id).length ? $("#mec_sf_month_"+settings.id).val() : '';
             var year = $("#mec_sf_year_"+settings.id).length ? $("#mec_sf_year_"+settings.id).val() : '';
@@ -96,8 +118,7 @@ var mecSingleEventDisplayer = {
                 month = '';
                 year = '';
             }
-            
-            var atts = settings.atts+'&sf[s]='+s+'&sf[month]='+month+'&sf[year]='+year+'&sf[category]='+category+'&sf[location]='+location+'&sf[organizer]='+organizer+'&sf[label]='+label;
+            var atts = settings.atts+'&sf[s]='+s+'&sf[month]='+month+'&sf[year]='+year+'&sf[category]='+category+'&sf[location]='+location+'&sf[organizer]='+organizer+'&sf[speaker]='+speaker+'&sf[tag]='+tag+'&sf[label]='+label;
             settings.callback(atts);
         }
     };
@@ -500,6 +521,31 @@ var mecSingleEventDisplayer = {
     
 }(jQuery));
 
+// MEC Woocommerce Add to Cart BTN
+(function($)
+{
+    // console.log($('#mec_woo_add_to_cart_btn'));
+    $(document).on('DOMNodeInserted', function (e) {
+        if ($(e.target).find('#mec_woo_add_to_cart_btn').length) {
+            $(e.target).find('#mec_woo_add_to_cart_btn').on('click', function () {
+                var href = $(this).attr('href');
+                var cart_url = $(this).data('cart-url');
+                $(this).addClass('loading');
+                $.ajax({
+                    type: "get",
+                    url: href,
+                    success: function (response) {
+                        setTimeout(function () {
+                            window.location.href = cart_url;
+                        }, 500);
+                    }
+                });
+                return false;
+            });
+        }
+    })
+}(jQuery));
+
 // MEC YEARLY VIEW PLUGIN
 (function($)
 {
@@ -704,7 +750,7 @@ var mecSingleEventDisplayer = {
 
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
 
@@ -976,6 +1022,8 @@ var mecSingleEventDisplayer = {
                 $('#mec_monthly_view_month_'+settings.id+'_'+month_id+' .mec-calendar-events-sec:not([data-mec-cell=' + data_mec_cell + '])').slideUp();
                 $('#mec_monthly_view_month_'+settings.id+'_'+month_id+' .mec-calendar-events-sec[data-mec-cell=' + data_mec_cell + ']').slideDown();
             });
+
+            mec_tooltip();
             
             // Single Event Method
             if(settings.sed_method != '0')
@@ -1005,8 +1053,22 @@ var mecSingleEventDisplayer = {
 
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
+           
+        }
+
+        function mec_tooltip()
+        {
+            if ($('.mec-monthly-tooltip').length > 1) {
+                $('.mec-monthly-tooltip').tooltipster({
+                    theme: 'tooltipster-shadow',
+                    interactive: true,
+                    delay: 100,
+                    minWidth: 350,
+                    maxWidth: 350,
+                });
+            }
         }
     };
 
@@ -1029,13 +1091,19 @@ var mecSingleEventDisplayer = {
             today: null,
             week: 1,
             id: 0,
+            current_year: null,
+            current_month: null,
             changeWeekElement: '.mec-load-week',
             month_navigator: 0,
             atts: '',
             ajax_url: '',
             sf: {}
         }, options);
-        
+
+        // Set Active Time
+        active_year = settings.current_year;
+        active_month = settings.current_month;
+
         // Search Widget
         if(settings.sf.container !== '')
         {
@@ -1062,8 +1130,12 @@ var mecSingleEventDisplayer = {
         
         function setListeners()
         {
-            $(settings.changeWeekElement).off('click').on('click', function()
+            $(settings.changeWeekElement).off('click').on('click', function(e)
             {
+                // Disable Auto Focus If Human Click On Change Week Element
+                var auto_focus = false;
+                if(e.isTrigger) auto_focus = true;
+
                 var week = $('#mec_skin_'+settings.id+' .mec-weekly-view-week-active').data('week-id');
                 var max_weeks = $('#mec_skin_'+settings.id+' .mec-weekly-view-week-active').data('max-weeks');
                 var new_week_number = active_week_number;
@@ -1097,7 +1169,7 @@ var mecSingleEventDisplayer = {
                 }
                 else
                 {
-                    setThisWeek(week);
+                    setThisWeek(week, auto_focus);
                 }
             });
             
@@ -1108,8 +1180,10 @@ var mecSingleEventDisplayer = {
             }
         }
         
-        function setThisWeek(week)
+        function setThisWeek(week, auto_focus)
         {
+            if(typeof auto_focus === 'undefined') auto_focus = false;
+
             // Week is not exists
             if(!$('#mec_weekly_view_week_'+settings.id+'_'+week).length)
             {
@@ -1136,6 +1210,37 @@ var mecSingleEventDisplayer = {
                 $('#mec_skin_'+settings.id+' .mec-previous-month.mec-load-week').css({'opacity': .6, 'cursor': 'default'});
                 $('#mec_skin_'+settings.id+' .mec-previous-month.mec-load-week').find('i').css({'opacity': .6, 'cursor': 'default'});
             }
+            
+            // Go To Event Week
+            if(auto_focus)
+            {
+                var week_items = $('#mec_weekly_view_week_'+settings.id+'_'+week).find('dt');
+                var week_items_length = parseInt(week_items.length);
+                var changeNextWeek = $('#mec_skin_'+settings.id+' .mec-next-month.mec-load-week');
+                
+                week_items.each(function(index)
+                {
+                    var index_plus = index+1;
+                    if($(this).data('events-count') > 0)
+                    {
+                        return false;
+                    }
+                    else if(index_plus==week_items_length && changeNextWeek.css("cursor") != "default")
+                    {
+                        setTimeout(function()
+                        {
+                            changeNextWeek.trigger('click');
+                        }, 33);
+                    }
+                    else if(changeNextWeek.css("cursor") == "default")
+                    {
+                        // If Not Event In All Week Reset Week
+                        setThisWeek(settings.month_id+settings.week, false);
+                        $('#mec_skin_'+settings.id+' .mec-load-week, #mec_skin_'+settings.id+' .mec-load-week i').css({'opacity': 1, 'cursor': 'pointer'});
+                        return false;
+                    }
+                }); 
+            }
         }
 
         function initMonthNavigator(month_id)
@@ -1154,7 +1259,7 @@ var mecSingleEventDisplayer = {
         {
             var week_number = (String(week).slice(-1));
 
-                // Add Loading Class
+            // Add Loading Class
             if(jQuery('.mec-modal-result').length === 0) jQuery('.mec-wrap').append('<div class="mec-modal-result"></div>');
             jQuery('.mec-modal-result').addClass('mec-month-navigator-loading');
 
@@ -1274,7 +1379,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
     };
@@ -1320,7 +1425,7 @@ var mecSingleEventDisplayer = {
         
         // Initialize Days Slider
         initDaysSlider(settings.month_id);
-        
+
         // Search Widget
         if(settings.sf.container !== '')
         {
@@ -1393,8 +1498,12 @@ var mecSingleEventDisplayer = {
             });
         }
 
+        var owl_go_month_id;
         function initDaysSlider(month_id, day_id)
         {
+            // Set Global Month Id
+            owl_go_month_id = month_id;
+
             // Check RTL website
             var owl_rtl = $('body').hasClass('rtl') ? true : false;
 
@@ -1483,6 +1592,9 @@ var mecSingleEventDisplayer = {
 
                     // Set Today
                     setToday(''+active_year+active_month+active_day);
+
+                    // Focus First Active Day
+                    FocusDay();
                 },
                 error: function()
                 {
@@ -1550,6 +1662,26 @@ var mecSingleEventDisplayer = {
             }
         }
 
+        // Focus First Active day
+        function FocusDay()
+        { 
+            // Focus event
+            setTimeout(function()
+            {
+                var owlGo =  jQuery("#mec-owl-calendar-d-table-"+settings.id+"-"+owl_go_month_id);
+                owlGo.find('.owl-stage > div').each(function(index)
+                {
+                    if(parseInt(jQuery(this).children('div').data("events-count")) > 0)
+                    {
+                        var index_plus = index+1;
+                        $('#mec_daily_view_day'+settings.id+'_'+owl_go_month_id+(index < 10 ? '0'+index_plus:index_plus)).trigger('click');
+                        owlGo.trigger('to.owl.carousel', index_plus);
+                        return false;
+                    }
+                });
+            },1000);
+        }
+
         function toggleMonth(month_id, day_id)
         {
             // Show related events
@@ -1564,6 +1696,9 @@ var mecSingleEventDisplayer = {
 
             // Initialize Days Slider
             initDaysSlider(month_id, day_id);
+
+            // Focus First Active Day
+            FocusDay();
         }
         
         function sed()
@@ -1577,7 +1712,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
     };
@@ -1870,7 +2005,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
     };
@@ -1887,10 +2022,24 @@ var mecSingleEventDisplayer = {
         {
             // These are the defaults.
             id: 0,
+            atts: '',
             sf: {}
         }, options);
 
-        console.log(settings);
+        // Search Widget
+        if(settings.sf.container !== '')
+        {
+            $(settings.sf.container).mecSearchForm(
+            {
+                id: settings.id,
+                atts: settings.atts,
+                callback: function(atts)
+                {
+                    settings.atts = atts;
+                    search();
+                }
+            });
+        }
 
         // Set Listeners
         setListeners();
@@ -1904,6 +2053,37 @@ var mecSingleEventDisplayer = {
             }
         }
 
+        function search()
+        {
+            var $modal = $('.mec-modal-result');
+
+            // Add Loading Class
+            if($modal.length === 0) $('.mec-wrap').append('<div class="mec-modal-result"></div>');
+            $modal.addClass('mec-month-navigator-loading');
+
+            $.ajax(
+            {
+                url: settings.ajax_url,
+                data: "action=mec_weeklyprogram_load&"+settings.atts+"&apply_sf_date=1",
+                dataType: "json",
+                type: "post",
+                success: function(response)
+                {
+                    // Remove Loading Class
+                    $modal.removeClass("mec-month-navigator-loading");
+
+                    // Append Month
+                    $("#mec_skin_events_"+settings.id).html(response.date_events);
+
+                    // Set Listeners
+                    setListeners();
+                },
+                error: function()
+                {
+                }
+            });
+        }
+
         function sed()
         {
             // Single Event Display
@@ -1915,7 +2095,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
     };
@@ -1944,74 +2124,96 @@ var mecSingleEventDisplayer = {
         setListeners();
 
         // Init Masonry
-        jQuery(window).load(function(){
-            initMasonry();
-        });
-        function initMasonry()
-        {
-            var $container = $("#mec_skin_"+settings.id+" .mec-event-masonry");
-            var $grid = $container.isotope({
-                filter: '*',
-                itemSelector: '.mec-masonry-item-wrap',
-                layoutMode: 'fitRows',
-                getSortData: {
-                    date: '[data-sort-masonry]',
-                },
-                animationOptions: {
-                    duration: 750,
-                    easing: 'linear',
-                    queue: false
+        if (mecdata.elementor_edit_mode == 'no') {
+            jQuery(window).load(function () {
+                initMasonry();
+                if (typeof custom_dev != undefined && custom_dev == 'yes') {
+                    $(".mec-wrap").css("height", "1550");
+                    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 768) {
+                        $(".mec-wrap").css("height", "5500");
+                    }
+                    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 480) {
+                        $(".mec-wrap").css("height", "5000");
+                    }
+                    $(".mec-event-masonry.shuffle .mec-masonry-item-wrap:nth-child(n+20)").css("display", "none");
+                    $(".mec-load-more-button").on("click", function () {
+                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap:nth-child(n+20)").css("display", "block");
+                        $(".mec-wrap").css("height", "auto");
+                        initMasonry();
+                        $(".mec-load-more-button").hide();
+                    })
+                    $(".mec-events-masonry-cats a:first-child").on("click", function () {
+                        $(".mec-wrap").css("height", "auto");
+                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap:nth-child(n+20)").css("display", "block");
+                        $(".mec-load-more-button").hide();
+                        initMasonry();
+                    })
+                    $(".mec-events-masonry-cats a:not(:first-child)").on("click", function () {
+                        $(".mec-load-more-button").hide();
+                        $(".mec-wrap").css("height", "auto");
+                        $(".mec-wrap").css("min-height", "400");
+                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap").css("display", "block");
+                        var element = document.querySelector("#mec_skin_" + settings.id + " .mec-event-masonry");
+                        var selector = $(this).attr('data-group');
+                        var CustomShuffle = new Shuffle(element, {
+                            itemSelector: '.mec-masonry-item-wrap',
+                        });
+                        CustomShuffle.sort({
+                            by: element.getAttribute('data-created'),
+                        });
+                        CustomShuffle.filter(selector != '*' ? selector : Shuffle.ALL_ITEMS);
+                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap").css("visibility", "visible");
+                    })
                 }
             });
-            if (settings.masonry_like_grid == 1) $grid.isotope({ sortBy: 'date' });
+        } else {
+            initMasonry();
+        }
 
-            // Fix Elementor tab
-            $('.elementor-tabs').find('.elementor-tab-title').click(function(){
-                $grid.isotope({ sortBy: 'date' });
+        function initMasonry()
+        {
+            var Shuffle = window.Shuffle;
+            var element = document.querySelector("#mec_skin_"+settings.id+" .mec-event-masonry");
+
+            if (element === null) {
+                return;
+            }
+            
+            var shuffleInstance = new Shuffle(element, {
+                itemSelector: '.mec-masonry-item-wrap',
+            });
+            
+            shuffleInstance.sort({
+                by: element.getAttribute('data-created'),
             });
 
-            $("#mec_skin_"+settings.id+" .mec-events-masonry-cats a").click(function()
-            {
-                var selector = $(this).attr('data-filter');
-                var $grid_cat = $container.isotope(
-                {
-                    filter: selector,
-                    getSortData: {
-                        date: '[data-sort-masonry]',
-                    },
-                    animationOptions: {
-                        duration: 750,
-                        easing: 'linear',
-                        queue: false
-                    }
+            if (settings.masonry_like_grid == 1) {
+                shuffleInstance.sort({
+                    by: element.getAttribute('sort-masonry'),
                 });
-                if (settings.masonry_like_grid == 1) $grid_cat.isotope({ sortBy: 'date' });
+            }
+
+            $("#mec_skin_"+settings.id+" .mec-events-masonry-cats a").click(function() {
+                $("#mec_skin_"+settings.id+" .mec-events-masonry-cats a").removeClass('mec-masonry-cat-selected');
+                $(this).addClass('mec-masonry-cat-selected');
+                var selector = $(this).attr('data-group');
+                shuffleInstance.filter(selector != '*' ? selector : Shuffle.ALL_ITEMS);
+                if (settings.masonry_like_grid == 1) {
+                    shuffleInstance.sort({
+                        by: element.getAttribute('sort-masonry'),
+                    });
+                }
                 return false;
-            });
-
-            var $optionSets = $("#mec_skin_"+settings.id+" .mec-events-masonry-cats"),
-                $optionLinks = $optionSets.find('a');
-
-            $optionLinks.click(function()
-            {
-                var $this = $(this);
-
-                // don't proceed if already selected
-                if($this.hasClass('selected')) return false;
-
-                var $optionSet = $this.parents('.mec-events-masonry-cats');
-                $optionSet.find('.mec-masonry-cat-selected').removeClass('mec-masonry-cat-selected');
-                $this.addClass('mec-masonry-cat-selected');
             });
         }
 
         function setListeners()
         {
-            // Single Event Method
             if(settings.sed_method != '0')
             {
                 sed();
             }
+
         }
 
         function sed()
@@ -2025,11 +2227,10 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
     };
-
 }(jQuery));
 
 
@@ -2172,7 +2373,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
             $("#mec_skin_"+settings.id+" .mec-event-image a img").off('click').on('click', function(e)
             {
@@ -2182,7 +2383,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).parent().data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
         
@@ -2379,7 +2580,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
             $("#mec_skin_"+settings.id+" .mec-event-image a img").off('click').on('click', function(e)
             {
@@ -2389,7 +2590,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).parent().data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
         
@@ -2568,7 +2769,7 @@ var mecSingleEventDisplayer = {
                 var id = $(this).data('event-id');
                 var occurrence = get_parameter_by_name('occurrence', href);
 
-                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method);
+                mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
         }
 
@@ -2747,6 +2948,40 @@ var mecSingleEventDisplayer = {
                     rtl: owl_rtl,
                 });
                 owl.bind(
+                    "mouseleave",
+                    function (event) {
+                        $("#mec_skin_" + settings.id + " .mec-owl-carousel").trigger('play.owl.autoplay');
+                    }
+                );
+            }
+            else if (settings.style === 'type4')
+            {
+                $("#mec_skin_" + settings.id + " .mec-owl-carousel").owlCarousel(
+                    {
+                        autoplay: true,
+                        loop: true,
+                        autoplayTimeout: settings.autoplay,
+                        items: settings.items,
+                        dots: false,
+                        nav: true,
+                        responsiveClass: true,
+                        responsive: {
+                            0: {
+                                items: 1,
+                                stagePadding: 50,
+                            },
+                            979: {
+                                items: 2,
+                            },
+                            1199: {
+                                items: settings.count,
+                            }
+                        },
+                        autoplayHoverPause: true,
+                        navText: ["<i class='mec-sl-arrow-left'></i>", " <i class='mec-sl-arrow-right'></i>"],
+                        rtl: owl_rtl,
+                    });
+                $("#mec_skin_" + settings.id + " .mec-owl-carousel").bind(
                     "mouseleave",
                     function (event) {
                         $("#mec_skin_" + settings.id + " .mec-owl-carousel").trigger('play.owl.autoplay');
@@ -3012,7 +3247,7 @@ function get_parameter_by_name(name, url)
         });
 
         // Register Booking Smooth Scroll
-        $('a[href^="#mec-events-meta-group-booking"]').click(function()
+        $('a.simple-booking[href^="#mec-events-meta-group-booking"]').click(function()
         {
             if(location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname)
             {
@@ -3035,12 +3270,14 @@ function get_parameter_by_name(name, url)
 
         // Load Information widget under title in mobile/tablet
         if ($('.single-mec-events .mec-single-event:not(".mec-single-modern")').length > 0) {
-            var html = $('.single-mec-events .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox')[0].outerHTML;
-            if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 960) {
-                $('.single-mec-events .col-md-4 .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox').remove();
-                $('.single-mec-events .mec-event-info-mobile').html(html)
+            if ($('.single-mec-events .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox').length > 0) {
+                var html = $('.single-mec-events .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox')[0].outerHTML;
+                if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 960) {
+                    $('.single-mec-events .col-md-4 .mec-event-info-desktop.mec-event-meta.mec-color-before.mec-frontbox').remove();
+                    $('.single-mec-events .mec-event-info-mobile').html(html)
+                }
             }
         }
-        
+
     });
 })(jQuery);

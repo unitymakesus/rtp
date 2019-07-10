@@ -1,3 +1,4 @@
+<?php // @codingStandardsIgnoreFile ?>
 <?php if ( 'wordpress' == $row->settings->bg_video_source ) { ?>
 <div class="fl-bg-video"
 data-width="<?php if ( isset( $vid_data['mp4'] ) ) { echo $vid_data['mp4']->width;

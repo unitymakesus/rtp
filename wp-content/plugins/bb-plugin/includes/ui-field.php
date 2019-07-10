@@ -31,25 +31,26 @@
 	<td class="fl-field-control">
 	<# } #>
 	<div class="fl-field-control-wrapper">
-
 		<# if ( data.responsive ) { #>
 		<i class="fl-field-responsive-toggle dashicons dashicons-desktop" data-mode="default"></i>
 		<# } #>
+		<# var devices = [ 'default', 'medium', 'responsive' ];
 
-		<# var devices = [ 'default', 'medium', 'responsive' ]; #>
-		<# for ( var i = 0; i < devices.length; i++ ) { #>
+		for ( var i = 0; i < devices.length; i++ ) {
 
-			<# if ( 'default' !== devices[ i ] && ! data.responsive ) {
+			data.device = devices[ i ];
+
+			if ( 'default' !== devices[ i ] && ! data.responsive ) {
 				continue;
-			} #>
+			}
 
-			<# if ( data.responsive ) {
+			if ( data.responsive ) {
 				data.name  = 'default' === devices[ i ] ? data.rootName : data.rootName + '_' + devices[ i ];
 				data.value = data.settings[ data.name ] ? data.settings[ data.name ] : '';
 
 				if ( 'object' === typeof data.responsive ) {
 					for ( var key in data.responsive ) {
-						if ( 'object' === typeof data.responsive[ key ] && data.responsive[ key ][ devices[ i ] ] ) {
+						if ( 'object' === typeof data.responsive[ key ] && undefined !== data.responsive[ key ][ devices[ i ] ] ) {
 							data.field[ key ] = data.responsive[ key ][ devices[ i ] ];
 						}
 					}
@@ -69,11 +70,9 @@
 			#>
 			<div class="fl-legacy-field" data-field="{{name}}" />
 			<# } #>
-
 			<# if ( data.responsive ) { #>
 			</div>
 			<# } #>
-
 		<# } #>
 		<# if ( data.field.description ) { #>
 		<span class="fl-field-description">{{{data.field.description}}}</span>

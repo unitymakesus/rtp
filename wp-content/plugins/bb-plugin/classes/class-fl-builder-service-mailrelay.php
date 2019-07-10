@@ -38,10 +38,10 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 		$base_url = preg_replace( '#^https?://#', '', $base_url );
 		$response = wp_remote_post( 'https://' . $base_url . $this->api_url, array(
 			'timeout' => 60,
-			'body' => $params,
+			'body'    => $params,
 		) );
 
-		if ( is_wp_error( $response ) || (isset( $response->status ) && 0 == $response->status ) ) {
+		if ( is_wp_error( $response ) || ( isset( $response->status ) && 0 == $response->status ) ) {
 			if ( isset( $response->status ) ) {
 				$data = json_decode( $response, true );
 			} else {
@@ -68,8 +68,8 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have the Host.
@@ -77,22 +77,22 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide a Host.', 'fl-builder' );
 		} elseif ( ! isset( $fields['api_key'] ) || empty( $fields['api_key'] ) ) {
 			$response['error'] = __( 'Error: You must provide an API key.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$result = $this->get_api_response( $fields['api_host'], array(
-				'function'  => 'getGroups',
-				'apiKey'	=> $fields['api_key'],
-				'offset' 	=> 0,
-				'count' => 1,
+				'function' => 'getGroups',
+				'apiKey'   => $fields['api_key'],
+				'offset'   => 0,
+				'count'    => 1,
 			) );
 
 			if ( ! isset( $result['error'] ) ) {
 				$response['data'] = array(
 					'api_host' => $fields['api_host'],
-					'api_key' => $fields['api_key'],
+					'api_key'  => $fields['api_key'],
 				);
 			} else {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'Error: Could not connect to Mailrelay. %s', 'fl-builder' ), $result['error'] );
 			}
 		}
@@ -110,24 +110,24 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_host', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Host', 'fl-builder' ),
-			'help'          => __( 'The host you chose when you signed up for your account. Check your welcome email if you forgot it. Please enter it without the initial http:// (e.g. demo.ip-zone.com).', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Host', 'fl-builder' ),
+			'help'      => __( 'The host you chose when you signed up for your account. Check your welcome email if you forgot it. Please enter it without the initial http:// (e.g. demo.ip-zone.com).', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your Mailrelay account under Menu > Settings > API access.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Mailrelay account under Menu > Settings > API access.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -146,18 +146,19 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$result = $this->get_api_response( $account_data['api_host'], array(
-							'function'  => 'getGroups',
-							'apiKey'	=> $account_data['api_key'],
+		$account_data = $this->get_account_data( $account );
+		$result       = $this->get_api_response( $account_data['api_host'], array(
+			'function' => 'getGroups',
+			'apiKey'   => $account_data['api_key'],
 		) );
 
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$response = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( isset( $result['error'] ) ) {
+			/* translators: %s: error */
 			$response['error'] = sprintf( __( 'Error: Please check your API key. %s', 'fl-builder' ), $result['error'] );
 		} else {
 			$response['html'] = $this->render_list_field( $result['data'], $settings );
@@ -187,14 +188,14 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'multi-select'  => true,
-			'label'         => _x( 'Group', 'A list of subscribers group from a Mailrelay account.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class'    => 'fl-builder-service-field-row',
+			'class'        => 'fl-builder-service-list-select',
+			'type'         => 'select',
+			'multi-select' => true,
+			'label'        => _x( 'Group', 'A list of subscribers group from a Mailrelay account.', 'fl-builder' ),
+			'options'      => $options,
+			'preview'      => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -223,14 +224,15 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 		} else {
 
 			$result = $this->get_api_response( $account_data['api_host'], array(
-						'function'  => 'addSubscriber',
-						'apiKey'	=> $account_data['api_key'],
-						'email'     => $email,
-						'name'		=> $name,
-						'groups'	=> $settings->list_id,
+				'function' => 'addSubscriber',
+				'apiKey'   => $account_data['api_key'],
+				'email'    => $email,
+				'name'     => $name,
+				'groups'   => $settings->list_id,
 			) );
 
 			if ( isset( $result['error'] ) ) {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'There was an error subscribing to Mailrelay. %s', 'fl-builder' ), $result['error'] );
 			}
 		}

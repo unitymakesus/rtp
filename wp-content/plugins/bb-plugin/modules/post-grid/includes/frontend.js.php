@@ -3,7 +3,7 @@
 	$(function() {
 
 		new FLBuilderPostGrid({
-			id: '<?php echo $id ?>',
+			id: '<?php echo $id; ?>',
 			layout: '<?php echo $settings->layout; ?>',
 			pagination: '<?php echo $settings->pagination; ?>',
 			postSpacing: '<?php echo $settings->post_spacing; ?>',

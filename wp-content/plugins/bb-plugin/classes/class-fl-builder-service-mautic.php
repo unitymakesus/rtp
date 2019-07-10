@@ -39,9 +39,9 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 		}
 
 		$settings = array(
-			'userName'         => $args['api_username'], // The username - set up a new user for each external site
-			'password'         => $args['api_password'], // Make this a Long passPhrase e.g. (Try:  !wE4.And.*@ws4.Guess!  )
-			'apiUrl'           => $args['api_host'],     // NOTE: Required for Unit tests; *must* contain a valid url
+			'userName' => $args['api_username'], // The username - set up a new user for each external site
+			'password' => $args['api_password'], // Make this a Long passPhrase e.g. (Try:  !wE4.And.*@ws4.Guess!  )
+			'apiUrl'   => $args['api_host'],     // NOTE: Required for Unit tests; *must* contain a valid url
 		);
 
 		$this->api_instance = new MauticApi( $settings );
@@ -64,8 +64,8 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have the Host.
@@ -79,34 +79,33 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 		// Make sure we have password
 		if ( ! isset( $fields['api_password'] ) || empty( $fields['api_password'] ) ) {
 			$response['error'] = __( 'Error: You must provide your Mautic app user password.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$api = $this->get_api( array(
-				'api_host' => $fields['api_host'],
+				'api_host'     => $fields['api_host'],
 				'api_username' => $fields['api_username'],
 				'api_password' => $fields['api_password'],
 			) );
 
 			// Try sending request to verify credentials
-			$get_response = $api->getSegments( array(
+			$get_response  = $api->getSegments( array(
 				'limit' => 1,
 			) );
 			$response_info = $api->getResponseInfo();
 
 			if ( in_array( $response_info['http_code'], array( 200, 201 ) ) ) {
-				 $response['data'] = array(
-					'api_host' 		=> $fields['api_host'],
-					'api_username' 	=> $fields['api_username'],
-					'api_password' 	=> $fields['api_password'],
+				$response['data'] = array(
+					'api_host'     => $fields['api_host'],
+					'api_username' => $fields['api_username'],
+					'api_password' => $fields['api_password'],
 				);
 			} else {
 				$error_message = $response_info['http_code'];
 				if ( isset( $get_response['errors'] ) && count( $get_response['errors'] ) > 0 ) {
 					$error_message = '[' . $get_response['errors'][0]['code'] . '] ' . $get_response['errors'][0]['message'];
 				}
-
-				 $response['error'] = sprintf( __( 'Error: Could not connect to Mautic. %s', 'fl-builder' ), $error_message );
+				/* translators: %s: error */
+				$response['error'] = sprintf( __( 'Error: Could not connect to Mautic. %s', 'fl-builder' ), $error_message );
 			}
 		}
 
@@ -123,37 +122,37 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_host', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Installation URL', 'fl-builder' ),
-			'help'          => __( 'The URL where your Mautic application is installed (e.g. http://mautic.mywebsite.com).', 'fl-builder' ),
-			'description'   => __( 'API should be enabled in your Mautic application.
+			'row_class'   => 'fl-builder-service-connect-row',
+			'class'       => 'fl-builder-service-connect-input',
+			'type'        => 'text',
+			'label'       => __( 'Installation URL', 'fl-builder' ),
+			'help'        => __( 'The URL where your Mautic application is installed (e.g. http://mautic.mywebsite.com).', 'fl-builder' ),
+			'description' => __( 'API should be enabled in your Mautic application.
 					Go to Mautic Configuration / API Settings and set `API enabled` to `Yes`, set `Enable HTTP basic auth` to `Yes` . Save changes.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'preview'     => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_username', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Mautic Username', 'fl-builder' ),
-			'help'          => __( 'Username from your Mautic application. Make sure it has `Full system access`. Best practice would be to set up a new user for each external site.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Mautic Username', 'fl-builder' ),
+			'help'      => __( 'Username from your Mautic application. Make sure it has `Full system access`. Best practice would be to set up a new user for each external site.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_password', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Mautic Password', 'fl-builder' ),
-			'help'          => __( 'Password associated with the username. Make this a Long passPhrase.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Mautic Password', 'fl-builder' ),
+			'help'      => __( 'Password associated with the username. Make this a Long passPhrase.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -172,17 +171,17 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( array(
-			'api_host' 		=> $account_data['api_host'],
-			'api_username' 	=> $account_data['api_username'],
-			'api_password' 	=> $account_data['api_password'],
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( array(
+			'api_host'     => $account_data['api_host'],
+			'api_username' => $account_data['api_username'],
+			'api_password' => $account_data['api_password'],
 		) );
-		$lists          = $api->getSegments();
+		$lists        = $api->getSegments();
 
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$response = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( ! isset( $lists['lists'] ) ) {
@@ -215,13 +214,13 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -250,13 +249,13 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 		} else {
 
 			$api = $this->get_api( array(
-				'api_host' 		=> $account_data['api_host'],
-				'api_username' 	=> $account_data['api_username'],
-				'api_password' 	=> $account_data['api_password'],
+				'api_host'     => $account_data['api_host'],
+				'api_username' => $account_data['api_username'],
+				'api_password' => $account_data['api_password'],
 			) );
 
 			$data = array(
-				'email' 	=> $email,
+				'email'     => $email,
 				'ipAddress' => $_SERVER['REMOTE_ADDR'],
 				'segmentId' => $settings->list_id,
 			);
@@ -274,10 +273,11 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 
 			// Add new contact
 			$get_api_response = $api->subscribe( $data );
-			$response_info = $api->getResponseInfo();
+			$response_info    = $api->getResponseInfo();
 
 			if ( isset( $get_api_response['errors'] ) && count( $get_api_response['errors'] ) > 0 ) {
 				$response['error'] = sprintf(
+					/* translators: %s: error */
 					__( 'There was an error subscribing to Mautic. %s', 'fl-builder' ),
 					'[' . $get_api_response['errors'][0]['code'] . '] ' . $get_api_response['errors'][0]['message']
 				);

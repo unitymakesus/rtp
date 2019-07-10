@@ -77,14 +77,20 @@ class ProgressBarModule extends FLBuilderModule {
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
 			// Handle old border settings.
-			if ( ! empty( $settings->border_color ) && ( ! isset( $settings->progress_border ) || empty( $settings->progress_border ) ) ) {
+			if ( isset( $settings->border_color ) ) {
 
 				$settings->progress_border = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->border_size ) && isset( $settings->border_style ) && 'none' !== $settings->border_style ) {
+				if ( isset( $settings->border_style ) ) {
 					$settings->progress_border['style'] = $settings->border_style;
+					unset( $settings->border_style );
+				}
+				if ( isset( $settings->border_color ) ) {
 					$settings->progress_border['color'] = $settings->border_color;
+					unset( $settings->border_color );
+				}
+				if ( isset( $settings->border_size ) ) {
 					$settings->progress_border['width'] = array(
 						'top'    => $settings->border_size,
 						'right'  => $settings->border_size,
@@ -94,7 +100,6 @@ class ProgressBarModule extends FLBuilderModule {
 
 					unset( $settings->border_size );
 				}
-
 				// Border radius.
 				if ( isset( $settings->border_radius ) ) {
 					$settings->progress_border['radius'] = array(
@@ -106,14 +111,6 @@ class ProgressBarModule extends FLBuilderModule {
 					unset( $settings->border_radius );
 				}
 			}
-
-			if ( isset( $settings->title_alignment ) ) {
-				$settings->title_alignment = $settings->title_alignment;
-			}
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
-			}
-
 			$helper->handle_opacity_inputs( $settings, 'background_color_opc', 'background_color' );
 
 			$helper->handle_opacity_inputs( $settings, 'gradient_color_opc', 'gradient_color' );
@@ -128,6 +125,7 @@ class ProgressBarModule extends FLBuilderModule {
 			if ( isset( $settings->text_font_family ) ) {
 				if ( isset( $settings->text_font_family['family'] ) ) {
 					$settings->text_typo['font_family'] = $settings->text_font_family['family'];
+					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->text_font_family['weight'] ) {
@@ -135,6 +133,7 @@ class ProgressBarModule extends FLBuilderModule {
 					} else {
 						$settings->text_typo['font_weight'] = $settings->text_font_family['weight'];
 					}
+					unset( $settings->text_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->text_font_size_unit ) ) {
@@ -142,6 +141,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit );
 			}
 			if ( isset( $settings->text_font_size_unit_medium ) ) {
 
@@ -149,6 +149,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit_medium );
 			}
 			if ( isset( $settings->text_font_size_unit_responsive ) ) {
 
@@ -156,6 +157,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit_responsive );
 			}
 			if ( isset( $settings->text_line_height_unit ) ) {
 
@@ -163,6 +165,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit );
 			}
 			if ( isset( $settings->text_line_height_unit_medium ) ) {
 
@@ -170,6 +173,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit_medium );
 			}
 			if ( isset( $settings->text_line_height_unit_responsive ) ) {
 
@@ -177,15 +181,18 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit_responsive );
 			}
 			if ( isset( $settings->text_transform ) ) {
 				$settings->text_typo['text_transform'] = $settings->text_transform;
+				unset( $settings->text_transform );
 			}
 			if ( isset( $settings->text_letter_spacing ) ) {
 				$settings->text_typo['letter_spacing'] = array(
 					'length' => $settings->text_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_letter_spacing );
 			}
 			// For Before/After Text Typo.
 			if ( ! isset( $settings->before_after_typo ) || ! is_array( $settings->before_after_typo ) ) {
@@ -197,6 +204,7 @@ class ProgressBarModule extends FLBuilderModule {
 			if ( isset( $settings->before_after_font_family ) ) {
 				if ( isset( $settings->before_after_font_family['family'] ) ) {
 					$settings->before_after_typo['font_family'] = $settings->before_after_font_family['family'];
+					unset( $settings->before_after_font_family['family'] );
 				}
 				if ( isset( $settings->before_after_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->before_after_font_family['weight'] ) {
@@ -204,6 +212,7 @@ class ProgressBarModule extends FLBuilderModule {
 					} else {
 						$settings->before_after_typo['font_weight'] = $settings->before_after_font_family['weight'];
 					}
+					unset( $settings->before_after_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->before_after_font_size_unit ) ) {
@@ -212,6 +221,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->before_after_font_size_unit );
 			}
 			if ( isset( $settings->before_after_font_size_unit_medium ) ) {
 
@@ -219,6 +229,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->before_after_font_size_unit_medium );
 			}
 			if ( isset( $settings->before_after_font_size_unit_responsive ) ) {
 
@@ -226,6 +237,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->before_after_font_size_unit_responsive );
 			}
 			if ( isset( $settings->before_after_line_height_unit ) ) {
 
@@ -233,6 +245,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->before_after_line_height_unit );
 			}
 			if ( isset( $settings->before_after_line_height_unit_medium ) ) {
 
@@ -240,6 +253,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->before_after_line_height_unit_medium );
 			}
 			if ( isset( $settings->before_after_line_height_unit_responsive ) ) {
 
@@ -247,11 +261,12 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->before_after_line_height_unit_responsive );
 			}
 			if ( isset( $settings->before_after_transform ) ) {
 
 				$settings->before_after_typo['text_transform'] = $settings->before_after_transform;
-
+				unset( $settings->before_after_transform );
 			}
 			if ( isset( $settings->before_after_letter_spacing ) ) {
 
@@ -259,6 +274,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->before_after_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->before_after_letter_spacing );
 			}
 
 			// For Progress Value Typo.
@@ -273,6 +289,7 @@ class ProgressBarModule extends FLBuilderModule {
 				if ( isset( $settings->number_font_family['family'] ) ) {
 
 					$settings->number_typo['font_family'] = $settings->number_font_family['family'];
+					unset( $settings->number_font_family['family'] );
 				}
 				if ( isset( $settings->number_font_family['weight'] ) ) {
 
@@ -281,6 +298,7 @@ class ProgressBarModule extends FLBuilderModule {
 					} else {
 						$settings->number_typo['font_weight'] = $settings->number_font_family['weight'];
 					}
+					unset( $settings->number_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->number_font_size_unit ) ) {
@@ -289,6 +307,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->number_font_size_unit );
 			}
 			if ( isset( $settings->number_font_size_unit_medium ) ) {
 
@@ -296,6 +315,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->number_font_size_unit_medium );
 			}
 			if ( isset( $settings->number_font_size_unit_responsive ) ) {
 
@@ -303,6 +323,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->number_font_size_unit_responsive );
 			}
 			if ( isset( $settings->number_line_height_unit ) ) {
 
@@ -310,6 +331,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->number_line_height_unit );
 			}
 			if ( isset( $settings->number_line_height_unit_medium ) ) {
 
@@ -317,6 +339,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->number_line_height_unit_medium );
 			}
 			if ( isset( $settings->number_line_height_unit_responsive ) ) {
 
@@ -324,6 +347,7 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->number_line_height_unit_responsive );
 			}
 			if ( isset( $settings->number_letter_spacing ) ) {
 
@@ -331,57 +355,30 @@ class ProgressBarModule extends FLBuilderModule {
 					'length' => $settings->number_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->text_font_family ) ) {
-				unset( $settings->text_font_family );
-				unset( $settings->text_font_size_unit );
-				unset( $settings->text_font_size_unit_medium );
-				unset( $settings->text_font_size_unit_responsive );
-				unset( $settings->text_line_height_unit );
-				unset( $settings->text_line_height_unit_medium );
-				unset( $settings->text_line_height_unit_responsive );
-				unset( $settings->text_transform );
-				unset( $settings->text_letter_spacing );
-			}
-			if ( isset( $settings->before_after_font_family ) ) {
-				unset( $settings->before_after_font_family );
-				unset( $settings->before_after_font_size_unit );
-				unset( $settings->before_after_font_size_unit_medium );
-				unset( $settings->before_after_font_size_unit_responsive );
-				unset( $settings->before_after_line_height_unit );
-				unset( $settings->before_after_line_height_unit_medium );
-				unset( $settings->before_after_line_height_unit_responsive );
-				unset( $settings->before_after_transform );
-				unset( $settings->before_after_letter_spacing );
-			}
-			if ( isset( $settings->number_font_family ) ) {
-				unset( $settings->number_font_family );
-				unset( $settings->number_font_size_unit );
-				unset( $settings->number_font_size_unit_medium );
-				unset( $settings->number_font_size_unit_responsive );
-				unset( $settings->number_line_height_unit );
-				unset( $settings->number_line_height_unit_medium );
-				unset( $settings->number_line_height_unit_responsive );
 				unset( $settings->number_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
 			// Handle old border settings.
-			if ( ! empty( $settings->border_color ) && ( ! isset( $settings->progress_border ) || empty( $settings->progress_border ) ) ) {
+			if ( isset( $settings->border_color ) ) {
 
 				$settings->progress_border = array();
 
-				// Border style, color, and width.
-				if ( isset( $settings->border_size ) && isset( $settings->border_style ) && 'none' !== $settings->border_style ) {
+				if ( isset( $settings->border_style ) ) {
 					$settings->progress_border['style'] = $settings->border_style;
+					unset( $settings->border_style );
+				}
+				if ( isset( $settings->border_color ) ) {
 					$settings->progress_border['color'] = $settings->border_color;
+					unset( $settings->border_color );
+				}
+				if ( isset( $settings->border_size ) ) {
 					$settings->progress_border['width'] = array(
 						'top'    => $settings->border_size,
 						'right'  => $settings->border_size,
 						'bottom' => $settings->border_size,
 						'left'   => $settings->border_size,
 					);
-
 					unset( $settings->border_size );
 				}
 
@@ -395,13 +392,6 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 					unset( $settings->border_radius );
 				}
-			}
-
-			if ( isset( $settings->title_alignment ) ) {
-				$settings->title_alignment = $settings->title_alignment;
-			}
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
 			}
 
 			$helper->handle_opacity_inputs( $settings, 'background_color_opc', 'background_color' );
@@ -419,6 +409,7 @@ class ProgressBarModule extends FLBuilderModule {
 
 				if ( isset( $settings->text_font_family['family'] ) ) {
 					$settings->text_typo['font_family'] = $settings->text_font_family['family'];
+					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->text_font_family['weight'] ) {
@@ -426,6 +417,7 @@ class ProgressBarModule extends FLBuilderModule {
 					} else {
 						$settings->text_typo['font_weight'] = $settings->text_font_family['weight'];
 					}
+					unset( $settings->text_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->text_font_size['small'] ) ) {
@@ -483,6 +475,7 @@ class ProgressBarModule extends FLBuilderModule {
 
 				if ( isset( $settings->before_after_font_family['family'] ) ) {
 					$settings->before_after_typo['font_family'] = $settings->before_after_font_family['family'];
+					unset( $settings->before_after_font_family['family'] );
 				}
 				if ( isset( $settings->before_after_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->before_after_font_family['weight'] ) {
@@ -490,6 +483,7 @@ class ProgressBarModule extends FLBuilderModule {
 					} else {
 						$settings->before_after_typo['font_weight'] = $settings->before_after_font_family['weight'];
 					}
+					unset( $settings->before_after_font_family['weight'] );
 				}
 			}
 
@@ -548,6 +542,7 @@ class ProgressBarModule extends FLBuilderModule {
 				if ( isset( $settings->number_font_family['family'] ) ) {
 
 					$settings->number_typo['font_family'] = $settings->number_font_family['family'];
+					unset( $settings->number_font_family['family'] );
 				}
 				if ( isset( $settings->number_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->number_font_family['weight'] ) {
@@ -555,6 +550,7 @@ class ProgressBarModule extends FLBuilderModule {
 					} else {
 						$settings->number_typo['font_weight'] = $settings->number_font_family['weight'];
 					}
+					unset( $settings->number_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->number_font_size['small'] ) ) {
@@ -600,21 +596,62 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-
-			if ( isset( $settings->text_font_family ) ) {
-				unset( $settings->text_font_family );
-				unset( $settings->text_font_size );
-				unset( $settings->text_line_height );
+			// Unset the old values.
+			if ( isset( $settings->text_font_size['desktop'] ) ) {
+				unset( $settings->text_font_size['desktop'] );
 			}
-			if ( isset( $settings->before_after_font_family ) ) {
-				unset( $settings->before_after_font_family );
-				unset( $settings->before_after_font_size );
-				unset( $settings->before_after_line_height );
+			if ( isset( $settings->text_font_size['medium'] ) ) {
+				unset( $settings->text_font_size['medium'] );
 			}
-			if ( isset( $settings->number_font_family ) ) {
-				unset( $settings->number_font_family );
-				unset( $settings->number_font_size );
-				unset( $settings->number_line_height );
+			if ( isset( $settings->text_font_size['small'] ) ) {
+				unset( $settings->text_font_size['small'] );
+			}
+			if ( isset( $settings->text_line_height['desktop'] ) ) {
+				unset( $settings->text_line_height['desktop'] );
+			}
+			if ( isset( $settings->text_line_height['medium'] ) ) {
+				unset( $settings->text_line_height['medium'] );
+			}
+			if ( isset( $settings->text_line_height['small'] ) ) {
+				unset( $settings->text_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->before_after_font_size['desktop'] ) ) {
+				unset( $settings->before_after_font_size['desktop'] );
+			}
+			if ( isset( $settings->before_after_font_size['medium'] ) ) {
+				unset( $settings->before_after_font_size['medium'] );
+			}
+			if ( isset( $settings->before_after_font_size['small'] ) ) {
+				unset( $settings->before_after_font_size['small'] );
+			}
+			if ( isset( $settings->before_after_line_height['desktop'] ) ) {
+				unset( $settings->before_after_line_height['desktop'] );
+			}
+			if ( isset( $settings->before_after_line_height['medium'] ) ) {
+				unset( $settings->before_after_line_height['medium'] );
+			}
+			if ( isset( $settings->before_after_line_height['small'] ) ) {
+				unset( $settings->before_after_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->number_font_size['desktop'] ) ) {
+				unset( $settings->number_font_size['desktop'] );
+			}
+			if ( isset( $settings->number_font_size['medium'] ) ) {
+				unset( $settings->number_font_size['medium'] );
+			}
+			if ( isset( $settings->number_font_size['small'] ) ) {
+				unset( $settings->number_font_size['small'] );
+			}
+			if ( isset( $settings->number_line_height['desktop'] ) ) {
+				unset( $settings->number_line_height['desktop'] );
+			}
+			if ( isset( $settings->number_line_height['medium'] ) ) {
+				unset( $settings->number_line_height['medium'] );
+			}
+			if ( isset( $settings->number_line_height['small'] ) ) {
+				unset( $settings->number_line_height['small'] );
 			}
 		}
 

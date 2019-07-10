@@ -1,4 +1,101 @@
-Version 1.14.3 - Monday, 14th January 2019
+Version 1.18.0 - Wednesday, 26th Jun 2019
+- New: Introduced Business Reviews
+- Improvement: Price Box - Add field connection support to the module
+- Fixed: Advanced Menu - Resolved menu's Link padding issue on mobile devices for OffCanavs layout
+- Fixed: Contact Form - Submit Button Text overriding Beaver Builder Theme Button Text color
+- Fixed: Fixed Font Awesome-5 icon not visible in some cases
+- Fixed: Gravity Form Styler - Resolved CheckBox Background color issue when the Background color set to RGB
+- Fixed: Row Separator - Resolved overlapping issue with all module content
+- Fixed: Resolved Font awesome icon conflict with Shortcode for Font Awesome plugin
+- Fixed: Video Gallery - Hover Animation settings not working correctly
+
+Version 1.17.1 - Tuesday, 28th May 2019
+- Fixed: Gravity Form Styler - Resolved Checkbox Background color issue when the Background color is set to RGB
+- Fixed: Particle Backgrounds - Resolved JavaScript error on IE browser
+
+Version 1.17.0 - Monday, 20th May 2019
+- New: Introduced Column Particle Backgrounds
+- New: Introduced Row Particle Backgrounds
+- Improvement: Added Font Awesome-5 support to Carousel Layout of all modules
+- Improvement: Video - Added ALT tag for thumbnail
+- Improvement: Video - Added aspect ratio of 1:1
+- Fixed: Advanced Menu - Resolved Toggle menu label Typography issue
+- Fixed: Heading - Fixed Heading Font weight issue when <strong> tag used in heading content
+- Fixed: Modal Popup - Resolved Thumbnail issue for Vimeo video type
+- Fixed: Photo Gallery - Fixed Filterable Tab not clickable when category name is multiple words
+- Fixed: Subscribe Form - Resolved the Terms and Conditions Checkbox not clicking issue when using same Saved Module multiple times on the same page
+- Fixed: Video - Fixed Enable Double Click on Mobile setting not working correctly
+- Fixed: Video Gallery - Resolved Light Box Navigation issue with multiple Video Gallery on the same page
+
+Version 1.16.5 - Monday, 22nd April 2019
+- Improvement: Photo Gallery - Added Filterable Photo Gallery feature
+- Improvement: Image Carousel - Added nofollow settings option
+- Fixed: Advanced Tabs - Resolved Content Alignment issue
+- Fixed: iHover - Non Numeric value notice for Spacing in rare cases
+
+Version 1.16.4 - Thursday, 11th April 2019
+- Fixed: Hotspot - Resolved curved tooltip pointer style issue with the icon
+- Fixed: Hotspot - Resolved link not clickable issue with tour tooltip
+
+Version 1.16.3 - Friday, 5th April 2019
+- Improvement: Added Font Awesome-5 support to all modules
+
+Version 1.16.2 - Tuesday, 2nd April 2019
+- Fixed: Hotspot - Resolved Action Link extending issue with the same row content
+- Fixed: Text translation issue on Dashboard and Frontend while your site is not in default English language
+
+Version 1.16.1 - Monday, 1st April 2019
+- Improvement: Hotspot - Added Hotspot Tour feature
+- Improvement: Video - Added settings to enable Double Click over Custom Thumbnail on mobile view
+- Improvement: Video - Added a filter for Video URL to modify YouTube or Vimeo Query Strings
+- Improvement: Defined constant to disable the Branding settings permanently
+- Improvement: Optimized database calls while fetching Saved Modules, Saved Rows and Saved Templates
+- Fixed: Advanced Posts - Taxonomy Filter settings not working for Custom Post Type
+- Fixed: Contact Form - Resolved preview issue of Terms and Condition Typography settings
+- Fixed: Heading - Fixed Heading Line Height issue with lower values
+- Fixed: Hotspot - Resolved Marker Padding issue on adding new markers
+- Fixed: Video - Fixed AutoPlay settings not working correctly
+
+Version 1.16.0 - Tuesday, 12th March 2019
+- New: Introduced Marketing Button
+- Improvement: Fancy Text - Added p Tag support for Title
+- Improvement: Hotspot - Individual Marker name added to the module editor's initial form
+- Fixed: Advanced Posts - Fixed extra space around the comma separator for the tag
+- Fixed: Info Circle - Resolved Background Image overlay issue on mobile devices
+
+Version 1.15.1 - Tuesday, February 26, 2019
+- Improvement: Video - Added sticky video feature
+- Fixed: Countdown - Resolved Border Width issue
+
+Version 1.15.0 - Thursday, February 14, 2019
+- New: Introduced Price List
+- Improvement: Dual Button - Added nofollow settings option
+- Improvement: Info Circle - Added nofollow settings option
+- Improvement: Slide Box - Added nofollow settings option
+- Improvement: Gravity Form Styler - Optimized database calls while fetching forms
+- Fixed: Advanced Posts - Fixed Taxonomy Filter settings not working correctly
+- Fixed: Advanced Posts - PHP 7.1 compatibility errors
+- Fixed: Advanced Tabs - Fixed Tab is not closing on the mobile devices
+- Fixed: Modal Popup - Resolved warning related to HTTP with Vimeo video type for private videos.
+- Fixed: Photo Gallery - Resolved Column Width issue on mobile devices
+- Fixed: Woo Products -  Resolved Carousel layout overlapping issue on IE browser
+
+Version 1.14.4 - Thursday, 31st January 2019
+- Fixed: Advanced Menu - Fixed Show Border settings not working correctly
+- Fixed: Advanced Menu - Resolved default Sub Menu Border Width issue
+- Fixed: Advanced Icon - Resolved Background Color Opacity issue 
+- Fixed: Button - Fixed Link nofollow option not working correctly
+- Fixed: CF7 Styler - Resolved default Border Width issue 
+- Fixed: Gravity Form Styler - Resolved default Border Width issue 
+- Fixed: Heading - Fixed Mobile alignment not working correctly 
+- Fixed: Info Box - Fixed Background Color Opacity settings
+- Fixed: Info Box - Resolved Text  nofollow option not working
+- Fixed: Modal Popup - Fixed Mobile alignment not working correctly
+- Fixed: Table - Typography settings not reflecting for preview mode
+- Fixed: Video Gallery - Resolved default Border Width issue
+- Fixed: Woo Products - Resolved console error of Invalid or Unexpected Token 
+
+Version 1.14.3 - Tuesday, 15th January 2019
 - Fixed: Advanced Menu - Sub menu Typography settings not working in case of Beaver Builder 2.2
 - Fixed: Advanced Posts - Fixed Date Box background color issue
 - Fixed: Contact Form - Resolved undefined error when Terms and Conditions Checkbox is enabled

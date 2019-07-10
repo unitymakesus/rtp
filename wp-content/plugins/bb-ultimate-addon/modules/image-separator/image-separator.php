@@ -74,16 +74,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'img_bg_hover_color_opc', 'img_bg_hover_color' );
 
-			// For image alignment.
-			if ( isset( $settings->image_position_lr ) ) {
-				$settings->image_position_lr = $settings->image_position_lr;
-			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For image alignment.
-			if ( isset( $settings->image_position_lr ) ) {
-				$settings->image_position_lr = $settings->image_position_lr;
-			}
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );

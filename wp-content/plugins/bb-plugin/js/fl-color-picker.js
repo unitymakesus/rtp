@@ -452,6 +452,13 @@ var FLBuilderColorPicker;
 			var self  = this,
 				el    = $( self.options.elements );
 
+			// Just prep the color inputs and bail early if the color picker
+			// markup has already been initialized in the DOM.
+			if( $('html').hasClass( 'fl-color-picker-init' ) ){
+				this._prepareColorFields();
+				return;
+			}
+
 			this._color = new FLBuilderColor( '#ff0000' ).setHSpace( self.options.mode );
 
 			// Set picker color presets
@@ -463,11 +470,7 @@ var FLBuilderColorPicker;
 
 			// appends color picker markup to the body
 			// check if there's already a color picker instance
-			if( $('html').hasClass( 'fl-color-picker-init' ) ){
-				self.picker = $( '.fl-color-picker-ui' );
-			} else {
-				self.picker = $( this._html ).appendTo( 'body' );
-			}
+			self.picker = $( this._html ).appendTo( 'body' );
 
 			// Browsers / Versions
 			// Feature detection doesn't work for these, and $.browser is deprecated
@@ -510,11 +513,9 @@ var FLBuilderColorPicker;
 			this._iris 	  = $( '.iris-picker' );
 			this._wrapper = $( 'body' );
 
-			if( !$('html').hasClass( 'fl-color-picker-init' ) ){
-				this._ui
-					.prepend( this._hexHtml )
-					.append( this._presetsHtml );
-			}
+			this._ui
+				.prepend( this._hexHtml )
+				.append( this._presetsHtml );
 
 			self.element = this._ui.find( '.fl-color-picker-input' );
 			self._initControls();
@@ -606,7 +607,7 @@ var FLBuilderColorPicker;
 					'<ul class="fl-color-picker-presets-list"></ul>' +
 				'</div>';
 
-			this._hexHtml = '<input type="text" class="fl-color-picker-input" maxlength="7" placeholder="' + this.options.labels.placeholder + '">' +
+			this._hexHtml = '<input type="text" class="fl-color-picker-input" placeholder="' + this.options.labels.placeholder + '">' +
 					   '<div class="fl-color-picker-preset-add"></div>';
 
 			this._presetsTpl = '<li class="fl-color-picker-preset"><span class="fl-color-picker-preset-color"></span> <span class="fl-color-picker-preset-label"></span> <span class="fl-color-picker-preset-remove fl-color-picker-icon-remove"></span></li>';
@@ -1519,6 +1520,7 @@ var FLBuilderColorPicker;
 					self._pickerAlphaControls();
 				}
 				else {
+					self.picker.removeClass('fl-color-alpha-enabled');
 					self._ui.find('.fl-alpha-wrap').remove();
 				}
 			});
@@ -1579,7 +1581,7 @@ var FLBuilderColorPicker;
               	// slider: options
               	value: picker.alpha,
               	step: 1,
-             	min: 1,
+             	min: 0,
               	max: 100
             });
 		},

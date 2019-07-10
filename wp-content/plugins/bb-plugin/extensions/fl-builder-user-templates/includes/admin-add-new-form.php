@@ -39,7 +39,11 @@
 					<select class="fl-template-module" name="fl-template[module]" required>
 						<option value=""><?php _e( 'Choose...', 'fl-builder' ); ?></option>
 						<?php foreach ( $modules as $title => $group ) : ?>
-						<?php if ( __( 'WordPress Widgets', 'fl-builder' ) == $title ) { continue;} ?>
+							<?php
+							if ( __( 'WordPress Widgets', 'fl-builder' ) == $title ) {
+								continue;
+							}
+							?>
 						<optgroup label="<?php echo $title; ?>">
 							<?php foreach ( $group as $module ) : ?>
 							<option value="<?php echo $module->slug; ?>"><?php echo $module->name; ?></option>

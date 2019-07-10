@@ -14,7 +14,134 @@ function uabb_row_register_settings() {
 
 	add_filter( 'fl_builder_register_settings_form', 'uabb_row_gradient', 10, 2 );
 }
+/**
+ * Function that registers particle row's settings file
+ *
+ * @since 1.17.0
+ */
+function uabb_row_particle_register_settings() {
 
+	add_filter( 'fl_builder_register_settings_form', 'uabb_row_particle', 10, 2 );
+}
+/**
+ * Function that inserts UABB's particle Tab in the Row's settings
+ *
+ * @since 1.17.0
+ * @param array $form an array to get the form.
+ * @param int   $id an integer to get the form's id.
+ */
+function uabb_row_particle( $form, $id ) {
+
+	if ( 'row' != $id ) {
+		return $form;
+	}
+
+	$row_setting_particles = array(
+		'title'    => __( 'Particle Backgrounds', 'uabb' ),
+		'sections' => array(
+			'particles_background' => array(
+				'title'  => __( 'General', 'uabb' ),
+				'fields' => array(
+					'enable_particles'                 => array(
+						'type'    => 'select',
+						'label'   => __( 'Enable Particle Backgrounds', 'uabb' ),
+						'default' => 'no',
+						'options' => array(
+							'yes' => __( 'Yes', 'uabb' ),
+							'no'  => __( 'No', 'uabb' ),
+						),
+					),
+					'uabb_row_particles_style'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Style', 'uabb' ),
+						'default' => 'none',
+						'options' => array(
+							'default' => __( 'Polygon', 'uabb' ),
+							'nasa'    => __( 'NASA', 'uabb' ),
+							'snow'    => __( 'Snow', 'uabb' ),
+							'custom'  => __( 'Custom', 'uabb' ),
+						),
+					),
+					'uabb_particles_custom_code'       => array(
+						'type'        => 'editor',
+						'label'       => __( 'Add Particles Json', 'uabb' ),
+						'connections' => array( 'html', 'string', 'url' ),
+					),
+					'uabb_particles_direction'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Flow direction', 'uabb' ),
+						'default' => 'bottom',
+						'options' => array(
+							'top'          => __( 'Top', 'uabb' ),
+							'bottom'       => __( 'Bottom', 'uabb' ),
+							'left'         => __( 'Left', 'uabb' ),
+							'right'        => __( 'Right', 'uabb' ),
+							'top-left'     => __( 'Top Left', 'uabb' ),
+							'top-right'    => __( 'Top Right', 'uabb' ),
+							'bottom-left'  => __( 'Bottom Left', 'uabb' ),
+							'bottom-right' => __( 'Bottom Right', 'uabb' ),
+						),
+					),
+					'uabb_row_particles_color'         => array(
+						'type'       => 'color',
+						'label'      => __( 'Particle Color', 'uabb' ),
+						'show_reset' => true,
+						'connection' => ( 'color' ),
+					),
+					'uabb_row_particles_color_opacity' => array(
+						'type'   => 'unit',
+						'label'  => __( 'Particle Color opacity ( 0.1 to 1 ) ', 'uabb' ),
+						'slider' => array(
+							'step' => .1,
+							'max'  => 1,
+						),
+					),
+					'uabb_row_particles_settings'      => array(
+						'type'    => 'select',
+						'label'   => __( 'Advanced Settings', 'uabb' ),
+						'default' => 'no',
+						'options' => array(
+							'yes' => __( 'Yes', 'uabb' ),
+							'no'  => __( 'No', 'uabb' ),
+						),
+					),
+					'uabb_row_number_particles'        => array(
+						'type'   => 'unit',
+						'label'  => __( 'Number of Particles', 'uabb' ),
+						'slider' => true,
+					),
+					'uabb_row_particles_size'          => array(
+						'type'   => 'unit',
+						'label'  => __( 'Particle Size', 'uabb' ),
+						'slider' => true,
+					),
+					'uabb_row_particles_speed'         => array(
+						'type'   => 'unit',
+						'label'  => __( 'Move Speed', 'uabb' ),
+						'slider' => true,
+					),
+					'uabb_row_particles_interactive_settings' => array(
+						'type'    => 'select',
+						'label'   => __( 'Enable Hover Effect', 'uabb' ),
+						'default' => 'no',
+						'help'    => __( 'Note: Enable Hover Effect settings will work on the frontend only', 'uabb' ),
+						'options' => array(
+							'yes' => __( 'Yes', 'uabb' ),
+							'no'  => __( 'No', 'uabb' ),
+						),
+					),
+				),
+			),
+		),
+	);
+
+	$form['tabs'] = array_merge(
+		array_slice( $form['tabs'], 0, 2 ),
+		array( 'Particles' => $row_setting_particles ),
+		array_slice( $form['tabs'], 2 )
+	);
+	return $form;
+}
 /**
  * Function that inserts UABB's Tab in the Row's settings
  *
@@ -187,6 +314,5 @@ function uabb_row_gradient( $form, $id ) {
 			),
 		),
 	);
-
 	return $form;
 }

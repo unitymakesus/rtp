@@ -80,6 +80,8 @@ class MEC_feature_books extends MEC_base
 
         // Book Event form
         $this->factory->action('wp_ajax_mec_book_form', array($this, 'book'));
+        $this->factory->action('wp_ajax_mec_book_form_upload_file', array($this, 'book'));
+
         $this->factory->action('wp_ajax_nopriv_mec_book_form', array($this, 'book'));
 
         // Tickets Availability
@@ -338,8 +340,36 @@ class MEC_feature_books extends MEC_base
                 <strong><?php _e('Total Attendees', 'mec'); ?>: </strong>
                 <span><?php echo $this->book->get_total_attendees($post->ID); ?></span>
             </div>
+
+            <?php if(isset($attendees['attachments']) && !empty($attendees['attachments'])): ?>
+            <h3><?php _e('Attachments', 'mec'); ?></h3>
+            <hr>
+            <?php foreach($attendees['attachments'] as $attachment): ?>
+            <div class="mec-attendee">            
+                <?php if(!isset($attachment['error']) && $attachment['response'] === 'SUCCESS'): ?>
+                    <?php
+                        $a = getimagesize($attachment['url']);
+                        $image_type = $a[2];
+                        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP))):
+                    ?>
+                        <a href="<?php echo $attachment['url'] ?>" target="_blank">
+                            <img src="<?php echo $attachment['url'] ?>" alt="<?php echo $attachment['filename'] ?>" title="<?php echo $attachment['filename'] ?>" style="max-width:250px;float: left;margin: 5px;">
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo $attachment['url'] ?>" target="_blank"><?php echo $attachment['filename'] ?></a>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
+            <div class="clear"></div>
+            <?php endif; ?>
+
             <h3><?php _e('Attendees', 'mec'); ?></h3>
-            <?php foreach($attendees as $attendee): $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array(); ?>
+            <?php foreach($attendees as $key => $attendee): $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array(); ?>
+            <?php 
+                if($key === 'attachments') continue;
+                if(isset($attendee[0]['MEC_TYPE_OF_DATA'])) continue;
+            ?>
             <hr>
             <div class="mec-attendee">
                 <h4><strong><?php echo ((isset($attendee['name']) and trim($attendee['name'])) ? $attendee['name'] : '---'); ?></strong></h4>
@@ -351,6 +381,25 @@ class MEC_feature_books extends MEC_base
                     <strong><?php echo $this->main->m('ticket', __('Ticket', 'mec')); ?>: </strong>
                     <span><?php echo ((isset($attendee['id']) and isset($tickets[$attendee['id']]['name'])) ? $tickets[$attendee['id']]['name'] : __('Unknown', 'mec')); ?></span>
                 </div>
+                <?php
+                // Ticket Variations
+                if(isset($attendee['variations']) and is_array($attendee['variations']) and count($attendee['variations']))
+                {
+                    $ticket_variations = $this->main->ticket_variations($event_id);
+                    foreach($attendee['variations'] as $variation_id=>$variation_count)
+                    {
+                        if(!$variation_count or ($variation_count and $variation_count < 0)) continue;
+
+                        $variation_title = (isset($ticket_variations[$variation_id]) and isset($ticket_variations[$variation_id]['title'])) ? $ticket_variations[$variation_id]['title'] : '';
+                        if(!trim($variation_title)) continue;
+
+                        echo '<div class="mec-row">
+                            <span>+ '.$variation_title.'</span>
+                            <span>('.$variation_count.')</span>
+                        </div>';
+                    }
+                }
+                ?>
                 <?php foreach($reg_form as $field_id=>$value): $label = isset($reg_fields[$field_id]) ? $reg_fields[$field_id]['label'] : ''; $type = isset($reg_fields[$field_id]) ? $reg_fields[$field_id]['type'] : ''; ?>
                     <?php if($type == 'agreement'): ?>
                         <div class="mec-row">
@@ -425,10 +474,14 @@ class MEC_feature_books extends MEC_base
             $title = get_the_title($event_id);
             $tickets = get_post_meta($event_id, 'mec_tickets', true);
 
-            $ticket_id = get_post_meta($post_id, 'mec_ticket_id', true);
+            $ticket_ids_str = get_post_meta($post_id, 'mec_ticket_id', true);
+            $ticket_ids = explode(',', trim($ticket_ids_str, ', '));
             
             echo ($event_id ? '<a href="'.$this->main->add_qs_var('mec_event_id', $event_id).'">'.$title.'</a>' : '');
-            echo (isset($tickets[$ticket_id]['name']) ? ' - <a title="'.$this->main->m('ticket', __('Ticket', 'mec')).'" href="'.$this->main->add_qs_vars(array('mec_ticket_id'=>$ticket_id, 'mec_event_id'=>$event_id)).'">'.$tickets[$ticket_id]['name'].'</a>' : '');
+            foreach($ticket_ids as $ticket_id)
+            {
+                echo (isset($tickets[$ticket_id]['name']) ? ' - <a title="'.$this->main->m('ticket', __('Ticket', 'mec')).'" href="'.$this->main->add_qs_vars(array('mec_ticket_id'=>$ticket_id, 'mec_event_id'=>$event_id)).'">'.$tickets[$ticket_id]['name'].'</a>' : '');
+            }
         }
         elseif($column_name == 'attendees')
         {
@@ -502,54 +555,53 @@ class MEC_feature_books extends MEC_base
         $meta_query = array();
         
         // Filter by Event ID
-        if(isset($_GET['mec_event_id']) and trim($_GET['mec_event_id']))
+        if(isset($_REQUEST['mec_event_id']) and trim($_REQUEST['mec_event_id']))
         {
             $meta_query[] = array(
                 'key'=>'mec_event_id',
-                'value'=>sanitize_text_field($_GET['mec_event_id']),
+                'value'=>sanitize_text_field($_REQUEST['mec_event_id']),
                 'compare'=>'=',
                 'type'=>'numeric'
             );
         }
         
         // Filter by Ticket ID
-        if(isset($_GET['mec_ticket_id']) and trim($_GET['mec_ticket_id']))
+        if(isset($_REQUEST['mec_ticket_id']) and trim($_REQUEST['mec_ticket_id']))
         {
             $meta_query[] = array(
                 'key'=>'mec_ticket_id',
-                'value'=>sanitize_text_field($_GET['mec_ticket_id']),
-                'compare'=>'=',
-                'type'=>'numeric'
+                'value'=>','.sanitize_text_field($_REQUEST['mec_ticket_id']).',',
+                'compare'=>'LIKE'
             );
         }
         
         // Filter by Transaction ID
-        if(isset($_GET['mec_transaction_id']) and trim($_GET['mec_transaction_id']))
+        if(isset($_REQUEST['mec_transaction_id']) and trim($_REQUEST['mec_transaction_id']))
         {
             $meta_query[] = array(
                 'key'=>'mec_transaction_id',
-                'value'=>sanitize_text_field($_GET['mec_transaction_id']),
+                'value'=>sanitize_text_field($_REQUEST['mec_transaction_id']),
                 'compare'=>'='
             );
         }
         
         // Filter by Confirmation
-        if(isset($_GET['mec_confirmed']) and trim($_GET['mec_confirmed']) != '')
+        if(isset($_REQUEST['mec_confirmed']) and trim($_REQUEST['mec_confirmed']) != '')
         {
             $meta_query[] = array(
                 'key'=>'mec_confirmed',
-                'value'=>sanitize_text_field($_GET['mec_confirmed']),
+                'value'=>sanitize_text_field($_REQUEST['mec_confirmed']),
                 'compare'=>'=',
                 'type'=>'numeric'
             );
         }
         
         // Filter by Verification
-        if(isset($_GET['mec_verified']) and trim($_GET['mec_verified']) != '')
+        if(isset($_REQUEST['mec_verified']) and trim($_REQUEST['mec_verified']) != '')
         {
             $meta_query[] = array(
                 'key'=>'mec_verified',
-                'value'=>sanitize_text_field($_GET['mec_verified']),
+                'value'=>sanitize_text_field($_REQUEST['mec_verified']),
                 'compare'=>'=',
                 'type'=>'numeric'
             );
@@ -563,14 +615,14 @@ class MEC_feature_books extends MEC_base
         if($post_type != $this->PT) return;
         
         $events = get_posts(array('post_type'=>$this->main->get_main_post_type(), 'post_status'=>'publish', 'posts_per_page'=>-1));
-        $mec_event_id = isset($_GET['mec_event_id']) ? sanitize_text_field($_GET['mec_event_id']) : '';
+        $mec_event_id = isset($_REQUEST['mec_event_id']) ? sanitize_text_field($_REQUEST['mec_event_id']) : '';
         
         echo '<select name="mec_event_id">';
         echo '<option value="">'.__('Event', 'mec').'</option>';
         foreach($events as $event) echo '<option value="'.$event->ID.'" '.($mec_event_id == $event->ID ? 'selected="selected"' : '').'>'.$event->post_title.'</option>';
         echo '</select>';
         
-        $mec_confirmed = isset($_GET['mec_confirmed']) ? sanitize_text_field($_GET['mec_confirmed']) : '';
+        $mec_confirmed = isset($_REQUEST['mec_confirmed']) ? sanitize_text_field($_REQUEST['mec_confirmed']) : '';
         
         echo '<select name="mec_confirmed">';
         echo '<option value="">'.__('Confirmation', 'mec').'</option>';
@@ -579,7 +631,7 @@ class MEC_feature_books extends MEC_base
         echo '<option value="-1" '.($mec_confirmed == '-1' ? 'selected="selected"' : '').'>'.__('Rejected', 'mec').'</option>';
         echo '</select>';
         
-        $mec_verified = isset($_GET['mec_verified']) ? sanitize_text_field($_GET['mec_verified']) : '';
+        $mec_verified = isset($_REQUEST['mec_verified']) ? sanitize_text_field($_REQUEST['mec_verified']) : '';
         
         echo '<select name="mec_verified">';
         echo '<option value="">'.__('Verification', 'mec').'</option>';
@@ -616,7 +668,7 @@ class MEC_feature_books extends MEC_base
         $action = $wp_list_table->current_action();
         if(!$action) return false;
         
-        $post_type = isset($_GET['post_type']) ? sanitize_text_field($_GET['post_type']) : 'post';
+        $post_type = isset($_REQUEST['post_type']) ? sanitize_text_field($_REQUEST['post_type']) : 'post';
         if($post_type != $this->PT) return false;
         
         check_admin_referer('bulk-posts');
@@ -625,19 +677,19 @@ class MEC_feature_books extends MEC_base
         {
             case 'confirm':
                 
-                $post_ids = (isset($_GET['post']) and is_array($_GET['post'])) ? $_GET['post'] : array();
+                $post_ids = (isset($_REQUEST['post']) and is_array($_REQUEST['post'])) ? $_REQUEST['post'] : array();
                 foreach($post_ids as $post_id) $this->book->confirm((int) $post_id);
                 
                 break;
             case 'pending':
                 
-                $post_ids = (isset($_GET['post']) and is_array($_GET['post'])) ? $_GET['post'] : array();
+                $post_ids = (isset($_REQUEST['post']) and is_array($_REQUEST['post'])) ? $_REQUEST['post'] : array();
                 foreach($post_ids as $post_id) $this->book->pending((int) $post_id);
                 
                 break;
             case 'reject':
                 
-                $post_ids = (isset($_GET['post']) and is_array($_GET['post'])) ? $_GET['post'] : array();
+                $post_ids = (isset($_REQUEST['post']) and is_array($_REQUEST['post'])) ? $_REQUEST['post'] : array();
                 foreach($post_ids as $post_id) $this->book->reject((int) $post_id);
                 
                 break;
@@ -646,21 +698,32 @@ class MEC_feature_books extends MEC_base
                 header('Content-Type: text/csv; charset=utf-8');
                 header('Content-Disposition: attachment; filename=bookings-'.md5(time().mt_rand(100, 999)).'.csv');
 
-                $post_ids = (isset($_GET['post']) and is_array($_GET['post'])) ? $_GET['post'] : array();
+                $post_ids = (isset($_REQUEST['post']) and is_array($_REQUEST['post'])) ? $_REQUEST['post'] : array();
+
+                $event_ids = array();
+                foreach($post_ids as $post_id) $event_ids[] = get_post_meta($post_id, 'mec_event_id', true);
+                $event_ids = array_unique($event_ids);
+
+                $main_event_id = NULL;
+                if(count($event_ids) == 1) $main_event_id = $event_ids[0];
 
                 $columns = array(__('ID', 'mec'), __('Event', 'mec'), __('Date', 'mec'), $this->main->m('ticket', __('Ticket', 'mec')), __('Transaction ID', 'mec'), __('Total Price', 'mec'), __('Name', 'mec'), __('Email', 'mec'), __('Confirmation', 'mec'), __('Verification', 'mec'));
 
-                $reg_fields = $this->main->get_reg_fields();
-                foreach($reg_fields as $reg_field)
+                $reg_fields = $this->main->get_reg_fields($main_event_id);
+                foreach($reg_fields as $reg_field_key=>$reg_field)
                 {
+                    // Placeholder Keys
+                    if(!is_numeric($reg_field_key)) continue;
+
                     $type = isset($reg_field['type']) ? $reg_field['type'] : '';
                     $label = isset($reg_field['label']) ? __($reg_field['label'], 'mec') : '';
 
+                    if(trim($label) == '') continue;
                     if($type == 'agreement') $label = sprintf($label, get_the_title($reg_field['page']));
 
                     $columns[] = $label;
                 }
-                
+                $columns[] = 'Attachments';
                 $output = fopen('php://output', 'w');
                 fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
                 fputcsv($output, $columns);
@@ -683,15 +746,42 @@ class MEC_feature_books extends MEC_base
                     
                     $confirmed = $this->main->get_confirmation_label(get_post_meta($post_id, 'mec_confirmed', true));
                     $verified = $this->main->get_verification_label(get_post_meta($post_id, 'mec_verified', true));
-
-                    foreach($attendees as $attendee)
+                    
+                    $attachments = '';
+                    if( isset( $attendees['attachments'] ) ) 
                     {
+                        foreach ($attendees['attachments'] as $attachment) {
+                            $attachments .= @$attachment['url'] . "\n";
+                        }
+                    }
+
+                    foreach($attendees as $key => $attendee)
+                    {
+                        if ($key === 'attachments') {
+                            continue;
+                        }
+                        if (isset($attendee[0]['MEC_TYPE_OF_DATA'])) {
+                            continue;
+                        }
+                        
                         $ticket_id = isset($attendee['id']) ? $attendee['id'] : get_post_meta($post_id, 'mec_ticket_id', true);
-                        $booking = array($post_id, get_the_title($event_id), get_the_date('', $post_id), (isset($tickets[$ticket_id]['name']) ? $tickets[$ticket_id]['name'] : __('Unknown', 'mec')), $transaction_id, $this->main->render_price(($price ? $price : 0)), (isset($attendee['name']) ? $attendee['name'] : (isset($booker->first_name) ? trim($booker->first_name.' '.$booker->last_name) : '')), (isset($attendee['email']) ? $attendee['email'] : $booker->user_email), $confirmed, $verified);
+                        $booking = array($post_id, get_the_title($event_id), get_the_date('', $post_id), (isset($tickets[$ticket_id]['name']) ? $tickets[$ticket_id]['name'] : __('Unknown', 'mec')), $transaction_id, $this->main->render_price(($price ? $price : 0)), (isset($attendee['name']) ? $attendee['name'] : (isset($booker->first_name) ? trim($booker->first_name.' '.$booker->last_name) : '')), (isset($attendee['email']) ? $attendee['email'] : @$booker->user_email), $confirmed, $verified);
 
                         $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array();
-                        foreach($reg_fields as $field_id=>$reg_field) $booking[] = isset($reg_form[$field_id]) ? ((is_string($reg_form[$field_id]) and trim($reg_form[$field_id])) ? $reg_form[$field_id] : (is_array($reg_form[$field_id]) ? implode(' | ', $reg_form[$field_id]) : '---')) : '';
+                        foreach($reg_fields as $field_id=>$reg_field)
+                        {
+                            // Placeholder Keys
+                            if(!is_numeric($field_id)) continue;
 
+                            $label = isset($reg_field['label']) ? __($reg_field['label'], 'mec') : '';
+                            if(trim($label) == '') continue;
+
+                            $booking[] = isset($reg_form[$field_id]) ? ((is_string($reg_form[$field_id]) and trim($reg_form[$field_id])) ? $reg_form[$field_id] : (is_array($reg_form[$field_id]) ? implode(' | ', $reg_form[$field_id]) : '---')) : '';
+                        }
+                         if ($attachments) {
+                            $booking[]  = $attachments;
+                            $attachments = '';
+                        }
                         fputcsv($output, $booking);
                     }
                 }
@@ -704,21 +794,33 @@ class MEC_feature_books extends MEC_base
                 header('Content-Type: application/vnd.ms-excel; charset=utf-8');
                 header('Content-Disposition: attachment; filename=bookings-'.md5(time().mt_rand(100, 999)).'.csv');
                 
-                $post_ids = (isset($_GET['post']) and is_array($_GET['post'])) ? $_GET['post'] : array();
+                $post_ids = (isset($_REQUEST['post']) and is_array($_REQUEST['post'])) ? $_REQUEST['post'] : array();
+
+                $event_ids = array();
+                foreach($post_ids as $post_id) $event_ids[] = get_post_meta($post_id, 'mec_event_id', true);
+                $event_ids = array_unique($event_ids);
+
+                $main_event_id = NULL;
+                if(count($event_ids) == 1) $main_event_id = $event_ids[0];
 
                 $columns = array(__('ID', 'mec'), __('Event', 'mec'), __('Date', 'mec'), $this->main->m('ticket', __('Ticket', 'mec')), __('Transaction ID', 'mec'), __('Total Price', 'mec'), __('Name', 'mec'), __('Email', 'mec'), __('Confirmation', 'mec'), __('Verification', 'mec'));
 
-                $reg_fields = $this->main->get_reg_fields();
-                foreach($reg_fields as $reg_field)
+                $reg_fields = $this->main->get_reg_fields($main_event_id);
+                foreach($reg_fields as $reg_field_key=>$reg_field)
                 {
+                    // Placeholder Keys
+                    if(!is_numeric($reg_field_key)) continue;
+
                     $type = isset($reg_field['type']) ? $reg_field['type'] : '';
+
                     $label = isset($reg_field['label']) ? __($reg_field['label'], 'mec') : '';
+                    if(trim($label) == '') continue;
 
                     if($type == 'agreement') $label = sprintf($label, get_the_title($reg_field['page']));
 
                     $columns[] = $label;
                 }
-                
+                $columns[] = 'Attachments';
                 $output = fopen('php://output', 'w');
                 fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
                 fputcsv($output, $columns, "\t");
@@ -742,14 +844,40 @@ class MEC_feature_books extends MEC_base
                     $confirmed = $this->main->get_confirmation_label(get_post_meta($post_id, 'mec_confirmed', true));
                     $verified = $this->main->get_verification_label(get_post_meta($post_id, 'mec_verified', true));
 
-                    foreach($attendees as $attendee)
+                     $attachments = '';
+                    if( isset( $attendees['attachments'] ) ) 
                     {
+                        foreach ($attendees['attachments'] as $attachment) {
+                            $attachments .= @$attachment['url'] . " - ";
+                        }
+                    }
+
+                    foreach($attendees as $key => $attendee)
+                    {
+                        if ($key === 'attachments') {
+                            continue;
+                        }
+                        if (isset($attendee[0]['MEC_TYPE_OF_DATA'])) {
+                            continue;
+                        }
                         $ticket_id = isset($attendee['id']) ? $attendee['id'] : get_post_meta($post_id, 'mec_ticket_id', true);
-                        $booking = array($post_id, get_the_title($event_id), get_the_date('', $post_id), (isset($tickets[$ticket_id]['name']) ? $tickets[$ticket_id]['name'] : __('Unknown', 'mec')), $transaction_id, $this->main->render_price(($price ? $price : 0)), (isset($attendee['name']) ? $attendee['name'] : (isset($booker->first_name) ? trim($booker->first_name.' '.$booker->last_name) : '')), (isset($attendee['email']) ? $attendee['email'] : $booker->user_email), $confirmed, $verified);
+                        $booking = array($post_id, get_the_title($event_id), get_the_date('', $post_id), (isset($tickets[$ticket_id]['name']) ? $tickets[$ticket_id]['name'] : __('Unknown', 'mec')), $transaction_id, $this->main->render_price(($price ? $price : 0)), (isset($attendee['name']) ? $attendee['name'] : (isset($booker->first_name) ? trim($booker->first_name.' '.$booker->last_name) : '')), (isset($attendee['email']) ? $attendee['email'] : $booker->user_email), $confirmed, $verified,$attachments);
 
                         $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array();
-                        foreach($reg_fields as $field_id=>$reg_field) $booking[] = isset($reg_form[$field_id]) ? ((is_string($reg_form[$field_id]) and trim($reg_form[$field_id])) ? $reg_form[$field_id] : (is_array($reg_form[$field_id]) ? implode(' | ', $reg_form[$field_id]) : '---')) : '';
+                        foreach($reg_fields as $field_id=>$reg_field)
+                        {
+                            // Placeholder Keys
+                            if(!is_numeric($field_id)) continue;
 
+                            $label = isset($reg_field['label']) ? __($reg_field['label'], 'mec') : '';
+                            if(trim($label) == '') continue;
+
+                            $booking[] = isset($reg_form[$field_id]) ? ((is_string($reg_form[$field_id]) and trim($reg_form[$field_id])) ? $reg_form[$field_id] : (is_array($reg_form[$field_id]) ? implode(' | ', $reg_form[$field_id]) : '---')) : '';
+                        }
+                        if ($attachments) {
+                            $booking[]  = $attachments;
+                            $attachments = '';
+                        }
                         fputcsv($output, $booking, "\t");
                     }
                 }
@@ -799,7 +927,7 @@ class MEC_feature_books extends MEC_base
             $ticket_id = isset($_POST['mec_ticket_id']) ? sanitize_text_field($_POST['mec_ticket_id']) : '';
             $event_id = isset($_POST['mec_event_id']) ? sanitize_text_field($_POST['mec_event_id']) : '';
 
-            $tickets = array(array_merge($attendee, array('id'=>$ticket_id, 'count'=>1)));
+            $tickets = array(array_merge($attendee, array('id'=>$ticket_id, 'count'=>1, 'variations'=>array(), 'reg'=>array())));
             $raw_tickets = array($ticket_id=>1);
             $event_tickets = get_post_meta($event_id, 'mec_tickets', true);
 
@@ -809,7 +937,7 @@ class MEC_feature_books extends MEC_base
             $transaction['event_id'] = $event_id;
 
             // Calculate price of bookings
-            $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, array(), $date);
+            $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, array());
 
             $transaction['price_details'] = $price_details;
             $transaction['total'] = $price_details['total'];
@@ -823,7 +951,7 @@ class MEC_feature_books extends MEC_base
             remove_action('save_post', array($this, 'save_book'), 10); // In order to don't create infinitive loop!
             $post_id = $this->book->add(array('ID'=>$post_id, 'post_author'=>$user_id, 'post_type'=>$this->PT, 'post_title'=>$name, 'post_date'=>$date), $transaction_id, ','.$ticket_id.',');
 
-            update_post_meta($post_id, 'mec_attendees', array($attendee));
+            update_post_meta($post_id, 'mec_attendees', $tickets);
             update_post_meta($post_id, 'mec_reg', (isset($attendee['reg']) ? $attendee['reg'] : array()));
             update_post_meta($post_id, 'mec_gateway', 'MEC_gateway_pay_locally');
             update_post_meta($post_id, 'mec_gateway_label', $gateway->label());
@@ -887,20 +1015,75 @@ class MEC_feature_books extends MEC_base
      */
     public function book()
     {
-        $event_id = sanitize_text_field($_GET['event_id']);
+        $event_id = sanitize_text_field($_REQUEST['event_id']);
         
         // Check if our nonce is set.
-        if(!isset($_GET['_wpnonce'])) $this->main->response(array('success'=>0, 'message'=>__('Security nonce is missing.', 'mec'), 'code'=>'NONCE_MISSING'));
+        if(!isset($_REQUEST['_wpnonce'])) $this->main->response(array('success'=>0, 'message'=>__('Security nonce is missing.', 'mec'), 'code'=>'NONCE_MISSING'));
 
         // Verify that the nonce is valid.
-        if(!wp_verify_nonce(sanitize_text_field($_GET['_wpnonce']), 'mec_book_form_'.$event_id)) $this->main->response(array('success'=>0, 'message'=>__('Security nonce is invalid.', 'mec'), 'code'=>'NONCE_IS_INVALID'));
+        if(!wp_verify_nonce(sanitize_text_field($_REQUEST['_wpnonce']), 'mec_book_form_'.$event_id)) $this->main->response(array('success'=>0, 'message'=>__('Security nonce is invalid.', 'mec'), 'code'=>'NONCE_IS_INVALID'));
+
+        if(!function_exists('wp_handle_upload')){
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+        }
+        if ( isset(  $_FILES['book'] ) ) {
+            $counter = 0;
+            $attachments = [];
+            $files = $_FILES['book'];
+            foreach ($files['name'] as $key => $value) {
+                if ($files['name'][$key]) {
+                    foreach ($files['name'][$key][1]['reg'] as $id => $reg) {
+                        if ( ! empty ( $files['name'][$key][1]['reg'][$id] ) ) {
+                            $file = array(
+                                'name'     => $files['name'][$key][1]['reg'][$id],
+                                'type'     => $files['type'][$key][1]['reg'][$id],
+                                'tmp_name' => $files['tmp_name'][$key][1]['reg'][$id],
+                                'error'    => $files['error'][$key][1]['reg'][$id],
+                                'size'     => $files['size'][$key][1]['reg'][$id]
+                            );
+                            
+                            $maxFileSize = isset($this->settings['upload_field_max_upload_size']) && $this->settings['upload_field_max_upload_size'] ? $this->settings['upload_field_max_upload_size'] * 1048576 : wp_max_upload_size();
+                            if ( $file['error'] || $file['size'] > $maxFileSize) {
+                                $this->main->response(array('success'=>0, 'message'=> '"'.$files['name'][$key][1]['reg'][$id] .'"<br />'.__('Uploaded file size exceeds the maximum allowed size.', 'mec')));
+                                die();
+                            }
+                            
+                            $extensions     = isset($this->settings['upload_field_mime_types']) && $this->settings['upload_field_mime_types'] ? explode(',', $this->settings['upload_field_mime_types']): ['jpeg','jpg','png','pdf'];
+                            $file_extension = count(explode(".", $file['name'])) >= 2 ? end(explode(".", $file['name'])) : '';
+                            $has_valid_type = false;
+
+                            foreach ($extensions as $extension) {
+                                if ($extension == $file_extension) {
+                                    $has_valid_type = true;
+                                    break;
+                                }
+                            }
+                            if ( ! $has_valid_type ) {
+                                $this->main->response(array('success'=>0, 'message'=> '"'.$files['name'][$key][1]['reg'][$id] .'"<br />'.__('Uploaded file type is not valid.', 'mec')));
+                                die();
+                            }
+                            
+                            $uploaded_file = wp_handle_upload($file, array('test_form' => false));
+                            if( $uploaded_file && ! isset( $uploaded_file['error'] ) ) {
+                                $attachments[$counter]['MEC_TYPE_OF_DATA'] = "attachment";
+                                $attachments[$counter]['response'] = "SUCCESS";
+                                $attachments[$counter]['filename'] = basename( $uploaded_file['url'] );
+                                $attachments[$counter]['url'] = $uploaded_file['url'];
+                                $attachments[$counter]['type'] = $uploaded_file['type'];
+                            }
+                            $counter++;
+                        }
+                    }
+                }
+            }
+        }
         
-        $step = sanitize_text_field($_GET['step']);
+        $step = sanitize_text_field($_REQUEST['step']);
         
-        $book = $_GET['book'];
+        $book = $_REQUEST['book'];
         $date = isset($book['date']) ? $book['date'] : NULL;
         $tickets = isset($book['tickets']) ? $book['tickets'] : NULL;
-        $uniqueid = isset($_GET['uniqueid']) ? sanitize_text_field($_GET['uniqueid']) : $event_id;
+        $uniqueid = isset($_REQUEST['uniqueid']) ? sanitize_text_field($_REQUEST['uniqueid']) : $event_id;
         
         if(is_null($date) or is_null($tickets)) $this->main->response(array('success'=>0, 'message'=>__('Invalid request.', 'mec'), 'code'=>'INVALID_REQUEST'));
         
@@ -935,7 +1118,7 @@ class MEC_feature_books extends MEC_base
                 // Google recaptcha
                 if($this->main->get_recaptcha_status('booking'))
                 {
-                    $g_recaptcha_response = isset($_GET['g-recaptcha-response']) ? $_GET['g-recaptcha-response'] : NULL;
+                    $g_recaptcha_response = isset($_REQUEST['g-recaptcha-response']) ? $_REQUEST['g-recaptcha-response'] : NULL;
                     if(!$this->main->get_recaptcha_response($g_recaptcha_response)) $this->main->response(array('success'=>0, 'message'=>__('Captcha is invalid. Please try again.', 'mec'), 'code'=>'CAPTCHA_IS_INVALID'));
                 }
                 
@@ -996,6 +1179,10 @@ class MEC_feature_books extends MEC_base
                 
                 // Attendee form is not filled correctly
                 if(!count($validated_tickets)) $this->main->response(array('success'=>0, 'message'=>__('Please fill the form correctly. Email and Name fields are required!', 'mec'), 'code'=>'ATTENDEE_FORM_INVALID'));
+                // Attachments
+                if (isset($attachments)) {
+                    $validated_tickets['attachments'] = $attachments;
+                }
 
                 // Tickets
                 $event_tickets = isset($event->data->tickets) ? $event->data->tickets : array();
@@ -1055,8 +1242,8 @@ class MEC_feature_books extends MEC_base
     
     public function tickets_availability()
     {
-        $event_id = isset($_GET['event_id']) ? sanitize_text_field($_GET['event_id']) : '';
-        $date = isset($_GET['date']) ? sanitize_text_field($_GET['date']) : '';
+        $event_id = isset($_REQUEST['event_id']) ? sanitize_text_field($_REQUEST['event_id']) : '';
+        $date = isset($_REQUEST['date']) ? sanitize_text_field($_REQUEST['date']) : '';
         
         $ex = explode(':', $date);
         $date = $ex[0];
@@ -1069,7 +1256,7 @@ class MEC_feature_books extends MEC_base
 
     public function bbf_date_tickets_booking_form()
     {
-        $event_id = isset($_GET['event_id']) ? sanitize_text_field($_GET['event_id']) : '';
+        $event_id = isset($_REQUEST['event_id']) ? sanitize_text_field($_REQUEST['event_id']) : '';
 
         // Event is invalid!
         if(!trim($event_id)) $this->main->response(array('success'=>0, 'output'=>'<div class="warning-msg">'.__('Event is invalid. Please select an event.', 'mec').'</div>'));
@@ -1080,7 +1267,7 @@ class MEC_feature_books extends MEC_base
         $dates = $render->dates($event_id, NULL, 10);
 
         // Invalid Event, Tickets or Dates
-        if(!is_array($tickets) or (is_array($tickets) and !count($tickets))) $this->main->response(array('success'=>0, 'output'=>'<div class="warning-msg">'.__('No ticket ro future dates found for this event! Please try another event.', 'mec').'</div>'));
+        if(!is_array($tickets) or (is_array($tickets) and !count($tickets))) $this->main->response(array('success'=>0, 'output'=>'<div class="warning-msg">'.__('No ticket or future dates found for this event! Please try another event.', 'mec').'</div>'));
 
         // Date Option
         $date_options = '';
@@ -1117,13 +1304,17 @@ class MEC_feature_books extends MEC_base
                 $booking_form_options .= '<div class="mec-col-6">';
                 $mandatory = (isset($reg_field['mandatory']) and $reg_field['mandatory']) ? true : false;
 
-                if($reg_field['type'] == 'text') $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="text" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
-                elseif($reg_field['type'] == 'email') $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="email" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
-                elseif($reg_field['type'] == 'tel') $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="tel" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
-                elseif($reg_field['type'] == 'textarea') $booking_form_options .= '<textarea class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" name="mec_attendee[reg]['.$reg_field_id.']" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').'></textarea>';
-                elseif($reg_field['type'] == 'p') $booking_form_options .= '<p>'.__($reg_field['content'], 'mec').'</p>';
-                elseif($reg_field['type'] == 'select')
-                {
+                if ($reg_field['type'] == 'text') {
+                    $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="text" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
+                } elseif ($reg_field['type'] == 'email') {
+                    $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="email" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
+                } elseif ($reg_field['type'] == 'tel') {
+                    $booking_form_options .= '<input class="widefat" oninput="this.value=this.value.replace(/(?![0-9])./gmi,"")" id="mec_book_reg_field_reg'.$reg_field_id.'" type="tel" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
+                } elseif ($reg_field['type'] == 'textarea') {
+                    $booking_form_options .= '<textarea class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" name="mec_attendee[reg]['.$reg_field_id.']" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').'></textarea>';
+                } elseif ($reg_field['type'] == 'p') {
+                    $booking_form_options .= '<p>'.__($reg_field['content'], 'mec').'</p>';
+                } elseif ($reg_field['type'] == 'select') {
                     $booking_form_options .= '<select class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" name="mec_attendee[reg]['.$reg_field_id.']" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').'>';
                     foreach($reg_field['options'] as $reg_field_option) $booking_form_options .= '<option value="'.esc_attr__($reg_field_option['label'], 'mec').'">'.__($reg_field_option['label'], 'mec').'</option>';
                     $booking_form_options .= '</select>';

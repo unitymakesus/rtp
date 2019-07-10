@@ -32,10 +32,15 @@ if ( ! class_exists( 'UABB_Attachment' ) ) {
 		 * @return $form_fields, modified form fields
 		 */
 		function uabb_attachment_field_cta( $form_fields, $post ) {
-			$form_fields['uabb-cta-link'] = array(
+			$form_fields['uabb-cta-link']   = array(
 				'label' => __( 'Image Link', 'uabb' ),
 				'input' => 'text',
 				'value' => get_post_meta( $post->ID, 'uabb-cta-link', true ),
+			);
+			$form_fields['uabb-categories'] = array(
+				'label' => __( ' UABB - Categories  (Ex: Cat1, Cat2) ', 'uabb' ),
+				'input' => 'text',
+				'value' => get_post_meta( $post->ID, 'uabb-categories', true ),
 			);
 
 			return $form_fields;
@@ -52,6 +57,9 @@ if ( ! class_exists( 'UABB_Attachment' ) ) {
 		function uabb_attachment_field_cta_save( $post, $attachment ) {
 			if ( isset( $attachment['uabb-cta-link'] ) ) {
 				update_post_meta( $post['ID'], 'uabb-cta-link', $attachment['uabb-cta-link'] );
+			}
+			if ( isset( $attachment['uabb-categories'] ) ) {
+				update_post_meta( $post['ID'], 'uabb-categories', $attachment['uabb-categories'] );
 			}
 
 			return $post;

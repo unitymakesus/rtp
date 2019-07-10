@@ -4,6 +4,7 @@ defined('MECEXEC') or die();
 
 $styling = $this->main->get_styling();
 $event = $this->events[0];
+$settings = $this->main->get_settings();
 
 // Event is not valid!
 if(!isset($event->data)) return;
@@ -32,8 +33,47 @@ foreach( $event->data->labels as $label)
     }
 }
 endif;
+$speakers = '""';
+if ( !empty($event->data->speakers)) 
+{
+    $speakers= [];
+    foreach ($event->data->speakers as $key => $value) {
+        $speakers[] = array(
+            "@type" 	=> "Person",
+            "name"		=> $value['name'],
+            "image"		=> $value['thumbnail'],
+            "sameAs"	=> $value['facebook'],
+        );
+    } 
+    $speakers = json_encode($speakers);
+}
 ?>
 <div class="mec-wrap <?php echo $event_colorskin . ' ' . $this->html_class; ?>">
+    <script type="application/ld+json">
+    {
+        "@context" 		: "http://schema.org",
+        "@type" 		: "Event",
+        "startDate" 	: "<?php echo !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '' ; ?>",
+        "endDate" 		: "<?php echo !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ; ?>",
+        "location" 		:
+        {
+            "@type" 		: "Place",
+            "name" 			: "<?php echo (isset($location['name']) ? $location['name'] : ''); ?>",
+            "image"			: "<?php echo (isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '');; ?>",
+            "address"		: "<?php echo (isset($location['address']) ? $location['address'] : ''); ?>"
+        },
+        "offers": {
+            "url": "<?php echo $event->data->permalink; ?>",
+            "price": "<?php echo isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; ?>",
+            "priceCurrency" : "<?php echo isset($settings['currency']) ? $settings['currency'] : ''; ?>"
+        },
+        "performer": <?php echo $speakers; ?>,
+        "description" 	: "<?php  echo esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)); ?>",
+        "image" 		: "<?php echo !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ; ?>",
+        "name" 			: "<?php esc_html_e($event->data->title); ?>",
+        "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
+    }
+    </script>
     <?php if($this->style == 'modern' and $event_thumb_url): ?>
     <article class="mec-event-cover-modern <?php echo $this->get_event_classes($event); ?>" style="background: url('<?php echo $event_thumb_url; ?>'); height: 678px;background-size: cover;">
         <a href="<?php echo $event_link; ?>" class="mec-event-cover-a">

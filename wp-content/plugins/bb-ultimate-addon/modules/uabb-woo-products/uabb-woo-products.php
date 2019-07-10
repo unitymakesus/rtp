@@ -38,7 +38,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 			)
 		);
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		$this->add_js( 'imagesloaded-uabb', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/imagesloaded.min.js', array( 'jquery' ), '', true );
 		$this->add_js( 'carousel', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-carousel.js', array( 'jquery' ), '', true );
 
@@ -707,17 +707,6 @@ class UABBWooProductsModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For alignment settings.
-			if ( isset( $settings->content_alignment ) ) {
-				$settings->content_alignment = $settings->content_alignment;
-			}
-			if ( isset( $settings->mobile_align ) ) {
-				$settings->mobile_align = $settings->mobile_align;
-			}
-			if ( isset( $settings->pg_alignment ) ) {
-				$settings->pg_alignment = $settings->pg_alignment;
-			}
-
 			// compatibility for Category.
 			if ( ! isset( $settings->woo_cat_font_typo ) || ! is_array( $settings->woo_cat_font_typo ) ) {
 
@@ -730,6 +719,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->cat_font['family'] ) ) {
 
 					$settings->woo_cat_font_typo['font_family'] = $settings->cat_font['family'];
+					unset( $settings->cat_font['family'] );
 				}
 				if ( isset( $settings->cat_font['weight'] ) ) {
 
@@ -737,6 +727,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 						$settings->woo_cat_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_cat_font_typo['font_weight'] = $settings->cat_font['weight'];
+						unset( $settings->cat_font['weight'] );
 					}
 				}
 			}
@@ -746,12 +737,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->cat_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->cat_font_size );
 			}
 			if ( isset( $settings->cat_font_size_medium ) ) {
 				$settings->woo_cat_font_typo_medium['font_size'] = array(
 					'length' => $settings->cat_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->cat_font_size_medium );
 			}
 			if ( isset( $settings->cat_font_size_responsive ) ) {
 
@@ -759,6 +752,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->cat_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->cat_font_size_responsive );
 			}
 			if ( isset( $settings->cat_line_height ) ) {
 
@@ -766,22 +760,26 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->cat_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->cat_line_height );
 			}
 			if ( isset( $settings->cat_line_height_medium ) ) {
 				$settings->woo_cat_font_typo_medium['line_height'] = array(
 					'length' => $settings->cat_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->cat_line_height_medium );
 			}
 			if ( isset( $settings->cat_line_height_responsive ) ) {
 				$settings->woo_cat_font_typo_responsive['line_height'] = array(
 					'length' => $settings->cat_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->cat_line_height_responsive );
 			}
 			if ( isset( $settings->cat_transform ) ) {
 
 				$settings->woo_cat_font_typo['text_transform'] = $settings->cat_transform;
+				unset( $settings->cat_transform );
 			}
 			if ( isset( $settings->cat_letter_spacing ) ) {
 
@@ -789,6 +787,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->cat_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->cat_letter_spacing );
 			}
 
 			// compatibility for Title.
@@ -803,6 +802,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->title_font['family'] ) ) {
 
 					$settings->woo_title_font_typo['font_family'] = $settings->title_font['family'];
+					unset( $settings->title_font['family'] );
 				}
 				if ( isset( $settings->title_font['weight'] ) ) {
 
@@ -811,6 +811,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					} else {
 						$settings->woo_title_font_typo['font_weight'] = $settings->title_font['weight'];
 					}
+					unset( $settings->title_font['weight'] );
 				}
 			}
 			if ( isset( $settings->title_font_size ) ) {
@@ -819,12 +820,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->title_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size );
 			}
 			if ( isset( $settings->title_font_size_medium ) ) {
 				$settings->woo_title_font_typo_medium['font_size'] = array(
 					'length' => $settings->title_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_medium );
 			}
 			if ( isset( $settings->title_font_size_responsive ) ) {
 
@@ -832,6 +835,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_responsive );
 			}
 			if ( isset( $settings->title_line_height ) ) {
 
@@ -839,22 +843,26 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->title_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height );
 			}
 			if ( isset( $settings->title_line_height_medium ) ) {
 				$settings->woo_title_font_typo_medium['line_height'] = array(
 					'length' => $settings->title_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_medium );
 			}
 			if ( isset( $settings->title_line_height_responsive ) ) {
 				$settings->woo_title_font_typo_responsive['line_height'] = array(
 					'length' => $settings->title_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_responsive );
 			}
 			if ( isset( $settings->title_transform ) ) {
 
 				$settings->woo_title_font_typo['text_transform'] = $settings->title_transform;
+				unset( $settings->title_transform );
 			}
 			if ( isset( $settings->title_letter_spacing ) ) {
 
@@ -862,6 +870,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->title_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_letter_spacing );
 			}
 
 			// compatibility for Price.
@@ -876,6 +885,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->price_font['family'] ) ) {
 
 					$settings->woo_price_font_typo['font_family'] = $settings->price_font['family'];
+					unset( $settings->price_font['family'] );
 				}
 				if ( isset( $settings->price_font['weight'] ) ) {
 
@@ -884,6 +894,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					} else {
 						$settings->woo_price_font_typo['font_weight'] = $settings->price_font['weight'];
 					}
+					unset( $settings->price_font['weight'] );
 				}
 			}
 			if ( isset( $settings->price_font_size ) ) {
@@ -892,12 +903,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->price_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_font_size );
 			}
 			if ( isset( $settings->price_font_size_medium ) ) {
 				$settings->woo_price_font_typo_medium['font_size'] = array(
 					'length' => $settings->price_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_font_size_medium );
 			}
 			if ( isset( $settings->price_font_size_responsive ) ) {
 
@@ -905,6 +918,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->price_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_font_size_responsive );
 			}
 			if ( isset( $settings->price_line_height ) ) {
 
@@ -912,22 +926,26 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->price_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->price_line_height );
 			}
 			if ( isset( $settings->price_line_height_medium ) ) {
 				$settings->woo_price_font_typo_medium['line_height'] = array(
 					'length' => $settings->price_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->price_line_height_medium );
 			}
 			if ( isset( $settings->price_line_height_responsive ) ) {
 				$settings->woo_price_font_typo_responsive['line_height'] = array(
 					'length' => $settings->price_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->price_line_height_responsive );
 			}
 			if ( isset( $settings->price_transform ) ) {
 
 				$settings->woo_price_font_typo['text_transform'] = $settings->price_transform;
+				unset( $settings->price_transform );
 			}
 			if ( isset( $settings->price_letter_spacing ) ) {
 
@@ -935,6 +953,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->price_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->price_letter_spacing );
 			}
 
 			// compatibility for Description.
@@ -949,6 +968,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->desc_font['family'] ) ) {
 
 					$settings->woo_desc_font_typo['font_family'] = $settings->desc_font['family'];
+					unset( $settings->desc_font['family'] );
 				}
 				if ( isset( $settings->desc_font['weight'] ) ) {
 
@@ -957,6 +977,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					} else {
 						$settings->woo_desc_font_typo['font_weight'] = $settings->desc_font['weight'];
 					}
+					unset( $settings->desc_font['weight'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size ) ) {
@@ -965,12 +986,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->desc_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size );
 			}
 			if ( isset( $settings->desc_font_size_medium ) ) {
 				$settings->woo_desc_font_typo_medium['font_size'] = array(
 					'length' => $settings->desc_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_medium );
 			}
 			if ( isset( $settings->desc_font_size_responsive ) ) {
 
@@ -978,6 +1001,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->desc_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_responsive );
 			}
 			if ( isset( $settings->desc_line_height ) ) {
 
@@ -985,22 +1009,26 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height );
 			}
 			if ( isset( $settings->desc_line_height_medium ) ) {
 				$settings->woo_desc_font_typo_medium['line_height'] = array(
 					'length' => $settings->desc_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_medium );
 			}
 			if ( isset( $settings->desc_line_height_responsive ) ) {
 				$settings->woo_desc_font_typo_responsive['line_height'] = array(
 					'length' => $settings->desc_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_responsive );
 			}
 			if ( isset( $settings->desc_transform ) ) {
 
 				$settings->woo_desc_font_typo['text_transform'] = $settings->desc_transform;
+				unset( $settings->desc_transform );
 			}
 			if ( isset( $settings->desc_letter_spacing ) ) {
 
@@ -1008,6 +1036,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->desc_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_letter_spacing );
 			}
 
 			// compatibility for Add Cart.
@@ -1022,6 +1051,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->add_cart_font['family'] ) ) {
 
 					$settings->woo_cart_font_typo['font_family'] = $settings->add_cart_font['family'];
+					unset( $settings->add_cart_font['family'] );
 				}
 				if ( isset( $settings->add_cart_font['weight'] ) ) {
 
@@ -1030,6 +1060,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					} else {
 						$settings->woo_cart_font_typo['font_weight'] = $settings->add_cart_font['weight'];
 					}
+					unset( $settings->add_cart_font['weight'] );
 				}
 			}
 			if ( isset( $settings->add_cart_font_size ) ) {
@@ -1038,12 +1069,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->add_cart_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->add_cart_font_size );
 			}
 			if ( isset( $settings->add_cart_font_size_medium ) ) {
 				$settings->woo_cart_font_typo_medium['font_size'] = array(
 					'length' => $settings->add_cart_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->add_cart_font_size_medium );
 			}
 			if ( isset( $settings->add_cart_font_size_responsive ) ) {
 
@@ -1051,6 +1084,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->add_cart_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->add_cart_font_size_responsive );
 			}
 			if ( isset( $settings->add_cart_line_height ) ) {
 
@@ -1058,22 +1092,26 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->add_cart_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->add_cart_line_height );
 			}
 			if ( isset( $settings->add_cart_line_height_medium ) ) {
 				$settings->woo_cart_font_typo_medium['line_height'] = array(
 					'length' => $settings->add_cart_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->add_cart_line_height_medium );
 			}
 			if ( isset( $settings->add_cart_line_height_responsive ) ) {
 				$settings->woo_cart_font_typo_responsive['line_height'] = array(
 					'length' => $settings->add_cart_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->add_cart_line_height_responsive );
 			}
 			if ( isset( $settings->add_cart_transform ) ) {
 
 				$settings->woo_cart_font_typo['text_transform'] = $settings->add_cart_transform;
+				unset( $settings->add_cart_transform );
 			}
 			if ( isset( $settings->add_cart_letter_spacing ) ) {
 
@@ -1081,6 +1119,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->add_cart_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->add_cart_letter_spacing );
 			}
 
 			// compatibility for Sale.
@@ -1095,6 +1134,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->sale_flash_font['family'] ) ) {
 
 					$settings->woo_sale_font_typo['font_family'] = $settings->sale_flash_font['family'];
+					unset( $settings->sale_flash_font['family'] );
 				}
 				if ( isset( $settings->sale_flash_font['weight'] ) ) {
 
@@ -1103,6 +1143,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					} else {
 						$settings->woo_sale_font_typo['font_weight'] = $settings->sale_flash_font['weight'];
 					}
+					unset( $settings->sale_flash_font['weight'] );
 				}
 			}
 			if ( isset( $settings->sale_flash_font_size ) ) {
@@ -1111,12 +1152,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->sale_flash_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->sale_flash_font_size );
 			}
 			if ( isset( $settings->sale_flash_font_size_medium ) ) {
 				$settings->woo_sale_font_typo_medium['font_size'] = array(
 					'length' => $settings->sale_flash_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->sale_flash_font_size_medium );
 			}
 			if ( isset( $settings->sale_flash_font_size_responsive ) ) {
 
@@ -1124,10 +1167,12 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->sale_flash_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->sale_flash_font_size_responsive );
 			}
 			if ( isset( $settings->sale_flash_transform ) ) {
 
 				$settings->woo_sale_font_typo['text_transform'] = $settings->sale_flash_transform;
+				unset( $settings->sale_flash_transform );
 			}
 			if ( isset( $settings->sale_flash_letter_spacing ) ) {
 
@@ -1135,6 +1180,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->sale_flash_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->sale_flash_letter_spacing );
 			}
 
 			// compatibility for Flash.
@@ -1149,6 +1195,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				if ( isset( $settings->featured_flash_font['family'] ) ) {
 
 					$settings->woo_flash_font_typo['font_family'] = $settings->featured_flash_font['family'];
+					unset( $settings->featured_flash_font['family'] );
 				}
 				if ( isset( $settings->featured_flash_font['weight'] ) ) {
 
@@ -1157,6 +1204,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 					} else {
 						$settings->woo_flash_font_typo['font_weight'] = $settings->featured_flash_font['weight'];
 					}
+					unset( $settings->featured_flash_font['weight'] );
 				}
 			}
 			if ( isset( $settings->featured_flash_font_size ) ) {
@@ -1165,12 +1213,14 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->featured_flash_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->featured_flash_font_size );
 			}
 			if ( isset( $settings->featured_flash_font_size_medium ) ) {
 				$settings->woo_flash_font_typo_medium['font_size'] = array(
 					'length' => $settings->featured_flash_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->featured_flash_font_size_medium );
 			}
 			if ( isset( $settings->featured_flash_font_size_responsive ) ) {
 
@@ -1178,10 +1228,12 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->featured_flash_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->featured_flash_font_size_responsive );
 			}
 			if ( isset( $settings->featured_flash_transform ) ) {
 
 				$settings->woo_flash_font_typo['text_transform'] = $settings->featured_flash_transform;
+				unset( $settings->featured_flash_transform );
 			}
 			if ( isset( $settings->featured_flash_letter_spacing ) ) {
 
@@ -1189,78 +1241,6 @@ class UABBWooProductsModule extends FLBuilderModule {
 					'length' => $settings->featured_flash_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			// Unset previously set values.
-			if ( isset( $settings->cat_font ) ) {
-				unset( $settings->cat_font );
-				unset( $settings->cat_font_size );
-				unset( $settings->cat_font_size_medium );
-				unset( $settings->cat_font_size_responsive );
-				unset( $settings->cat_line_height );
-				unset( $settings->cat_line_height_medium );
-				unset( $settings->cat_line_height_responsive );
-				unset( $settings->cat_transform );
-				unset( $settings->cat_letter_spacing );
-			}
-			if ( isset( $settings->title_font ) ) {
-				unset( $settings->title_font );
-				unset( $settings->title_font_size );
-				unset( $settings->title_font_size_medium );
-				unset( $settings->title_font_size_responsive );
-				unset( $settings->title_line_height );
-				unset( $settings->title_line_height_medium );
-				unset( $settings->title_line_height_responsive );
-				unset( $settings->title_transform );
-				unset( $settings->title_letter_spacing );
-			}
-			if ( isset( $settings->price_font ) ) {
-				unset( $settings->price_font );
-				unset( $settings->price_font_size );
-				unset( $settings->price_font_size_medium );
-				unset( $settings->price_font_size_responsive );
-				unset( $settings->price_line_height );
-				unset( $settings->price_line_height_medium );
-				unset( $settings->price_line_height_responsive );
-				unset( $settings->price_transform );
-				unset( $settings->price_letter_spacing );
-			}
-			if ( isset( $settings->desc_font ) ) {
-				unset( $settings->desc_font );
-				unset( $settings->desc_font_size );
-				unset( $settings->desc_font_size_medium );
-				unset( $settings->desc_font_size_responsive );
-				unset( $settings->desc_line_height );
-				unset( $settings->desc_line_height_medium );
-				unset( $settings->desc_line_height_responsive );
-				unset( $settings->desc_transform );
-				unset( $settings->desc_letter_spacing );
-			}
-			if ( isset( $settings->add_cart_font ) ) {
-				unset( $settings->add_cart_font );
-				unset( $settings->add_cart_font_size );
-				unset( $settings->add_cart_font_size_medium );
-				unset( $settings->add_cart_font_size_responsive );
-				unset( $settings->add_cart_line_height );
-				unset( $settings->add_cart_line_height_medium );
-				unset( $settings->add_cart_line_height_responsive );
-				unset( $settings->add_cart_transform );
-				unset( $settings->add_cart_letter_spacing );
-			}
-			if ( isset( $settings->sale_flash_font ) ) {
-				unset( $settings->sale_flash_font );
-				unset( $settings->sale_flash_font_size );
-				unset( $settings->sale_flash_font_size_medium );
-				unset( $settings->sale_flash_font_size_responsive );
-				unset( $settings->sale_flash_transform );
-				unset( $settings->sale_flash_letter_spacing );
-			}
-			if ( isset( $settings->featured_flash_font ) ) {
-				unset( $settings->featured_flash_font );
-				unset( $settings->featured_flash_font_size );
-				unset( $settings->featured_flash_font_size_medium );
-				unset( $settings->featured_flash_font_size_responsive );
-				unset( $settings->featured_flash_transform );
 				unset( $settings->featured_flash_letter_spacing );
 			}
 		}

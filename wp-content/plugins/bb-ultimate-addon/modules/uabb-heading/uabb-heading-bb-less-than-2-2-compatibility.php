@@ -343,7 +343,7 @@ FLBuilder::register_module(
 							'label'   => __( 'Font', 'uabb' ),
 							'preview' => array(
 								'type'     => 'font',
-								'selector' => '.uabb-heading .uabb-heading-text',
+								'selector' => '.fl-module-content.fl-node-content .uabb-heading',
 							),
 						),
 						'font_size_unit'        => array(
@@ -352,7 +352,7 @@ FLBuilder::register_module(
 							'description' => 'px',
 							'preview'     => array(
 								'type'     => 'css',
-								'selector' => '.uabb-heading .uabb-heading-text',
+								'selector' => '.fl-module-content.fl-node-content .uabb-heading .uabb-heading-text, .uabb-heading, .uabb-heading *',
 								'property' => 'font-size',
 								'unit'     => 'px',
 							),
@@ -370,7 +370,7 @@ FLBuilder::register_module(
 							'description' => 'em',
 							'preview'     => array(
 								'type'     => 'css',
-								'selector' => '.uabb-heading .uabb-heading-text',
+								'selector' => '.fl-module-content.fl-node-content .uabb-heading .uabb-heading-text, .uabb-heading, .uabb-heading *',
 								'property' => 'line-height',
 								'unit'     => 'em',
 							),

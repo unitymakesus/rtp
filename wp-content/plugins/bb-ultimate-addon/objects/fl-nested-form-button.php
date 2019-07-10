@@ -34,19 +34,29 @@ if ( ! $version_bb_check ) {
 						'link'    => array(
 							'title'  => __( 'Link', 'uabb' ),
 							'fields' => array(
-								'link'        => array(
+								'link'          => array(
 									'type'        => 'link',
 									'label'       => __( 'Link', 'uabb' ),
 									'placeholder' => 'http://www.example.com',
 									'connections' => array( 'url' ),
 								),
-								'link_target' => array(
+								'link_target'   => array(
 									'type'    => 'select',
 									'label'   => __( 'Link Target', 'uabb' ),
 									'default' => '_self',
 									'options' => array(
 										'_self'  => __( 'Same Window', 'uabb' ),
 										'_blank' => __( 'New Window', 'uabb' ),
+									),
+								),
+								'link_nofollow' => array(
+									'type'        => 'select',
+									'label'       => __( 'Link nofollow', 'uabb' ),
+									'description' => '',
+									'default'     => '0',
+									'options'     => array(
+										'1' => __( 'Yes', 'uabb' ),
+										'0' => __( 'No', 'uabb' ),
 									),
 								),
 							),
@@ -406,20 +416,13 @@ if ( ! $version_bb_check ) {
 						'link'    => array(
 							'title'  => __( 'Link', 'uabb' ),
 							'fields' => array(
-								'link'        => array(
-									'type'        => 'link',
-									'label'       => __( 'Link', 'uabb' ),
-									'placeholder' => 'http://www.example.com',
-									'connections' => array( 'url' ),
-								),
-								'link_target' => array(
-									'type'    => 'select',
-									'label'   => __( 'Link Target', 'uabb' ),
-									'default' => '_self',
-									'options' => array(
-										'_self'  => __( 'Same Window', 'uabb' ),
-										'_blank' => __( 'New Window', 'uabb' ),
-									),
+								'link' => array(
+									'type'          => 'link',
+									'label'         => __( 'Link', 'uabb' ),
+									'placeholder'   => 'http://www.example.com',
+									'connections'   => array( 'url' ),
+									'show_target'   => true,
+									'show_nofollow' => true,
 								),
 							),
 						),

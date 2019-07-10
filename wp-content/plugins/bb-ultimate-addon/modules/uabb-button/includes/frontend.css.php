@@ -296,15 +296,9 @@ if ( 'custom' == $settings->width && '' != $settings->custom_height ) :
 if ( $global_settings->responsive_enabled ) :
 	?>
 @media ( max-width: <?php echo $global_settings->responsive_breakpoint; ?>px ) {
-	<?php if ( ! $version_bb_check ) { ?>
-		.fl-node-<?php echo $id; ?> .uabb-creative-button-wrap.uabb-creative-button-reponsive-<?php echo $settings->mob_align; ?> {
-			text-align: <?php echo $settings->mob_align; ?>;
-		}
-	<?php } else { ?>
-		.fl-node-<?php echo $id; ?> .uabb-creative-button-wrap.uabb-creative-button-reponsive-<?php echo $settings->new_align_responsive; ?> {
-			text-align: <?php echo $settings->new_align_responsive; ?>;
-		}
-	<?php } ?>
+	.fl-node-<?php echo $id; ?> .uabb-creative-button-wrap.uabb-creative-button-reponsive-<?php echo $settings->mob_align; ?> {
+		text-align: <?php echo $settings->mob_align; ?>;
+	}
 }
 <?php endif; ?>
 

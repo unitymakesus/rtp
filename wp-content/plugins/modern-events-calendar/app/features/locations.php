@@ -276,6 +276,11 @@ class MEC_feature_locations extends MEC_base
         $locations = get_terms('mec_location', array('orderby'=>'name', 'hide_empty'=>'0'));
         $location_id = get_post_meta($post->ID, 'mec_location_id', true);
         $dont_show_map = get_post_meta($post->ID, 'mec_dont_show_map', true);
+
+        $location_ids = get_post_meta($post->ID, 'mec_additional_location_ids', true);
+        if(!is_array($location_ids)) $location_ids = array();
+
+        $additional_locations_status = (!isset($this->settings['additional_locations']) or (isset($this->settings['additional_locations']) and $this->settings['additional_locations'])) ? true : false;
     ?>
         <div class="mec-meta-box-fields" id="mec-location">
             <h4><?php echo sprintf(__('Event %s', 'mec'), $this->main->m('taxonomy_location', __('Location', 'mec'))); ?></h4>
@@ -287,7 +292,13 @@ class MEC_feature_locations extends MEC_base
 					<option <?php if($location_id == $location->term_id) echo 'selected="selected"'; ?> value="<?php echo $location->term_id; ?>"><?php echo $location->name; ?></option>
 					<?php endforeach; ?>
 				</select>
-				<a class="mec-tooltip" title="<?php esc_attr_e('Choose one of saved locations or insert new one below.', 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                <span class="mec-tooltip">
+                    <div class="box top">
+                        <h5 class="title"><?php _e('Location', 'mec'); ?></h5>
+                        <div class="content"><p><?php esc_attr_e('Choose one of saved locations or insert new one below.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/location/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                    </div>
+                    <i title="" class="dashicons-before dashicons-editor-help"></i>
+                </span>	                
 			</div>
 			<div id="mec_location_new_container">
 				<div class="mec-form-row">
@@ -312,7 +323,13 @@ class MEC_feature_locations extends MEC_base
 				<div class="mec-form-row mec-lat-lng-row">
 					<input class="mec-has-tip" type="text" name="mec[location][latitude]" id="mec_location_latitude" value="" placeholder="<?php _e('Latitude', 'mec'); ?>" />
 					<input class="mec-has-tip" type="text" name="mec[location][longitude]" id="mec_location_longitude" value="" placeholder="<?php _e('Longitude', 'mec'); ?>" />
-					<a class="mec-tooltip" title="<?php esc_attr_e('If you leave the latitude and longitude empty, Modern Events Calendar tries to convert the location address to geopoint.', 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                    <span class="mec-tooltip">
+                        <div class="box top">
+                            <h5 class="title"><?php _e('Latitude/Longitude', 'mec'); ?></h5>
+                            <div class="content"><p><?php esc_attr_e('If you leave the latitude and longitude empty, Modern Events Calendar tries to convert the location address to geopoint, Latitude and Longitude are the units that represent the coordinates at geographic coordinate system. To make a search, use the name of a place, city, state, or address, or click the location on the map to find lat long coordinates.', 'mec'); ?><a href="https://latlong.net" target="_blank"><?php _e('Get Latitude and Longitude', 'mec'); ?></a></p></div>    
+                        </div>
+                        <i title="" class="dashicons-before dashicons-editor-help"></i>
+                    </span>	                     
 				</div>
                 <?php /* Don't show this section in FES */ if(is_admin()): ?>
 				<div class="mec-form-row mec-thumbnail-row">
@@ -334,6 +351,22 @@ class MEC_feature_locations extends MEC_base
                 <input type="hidden" name="mec[dont_show_map]" value="0" />
                 <input type="checkbox" id="mec_location_dont_show_map" name="mec[dont_show_map]" value="1" <?php echo ($dont_show_map ? 'checked="checked"' : ''); ?> /><label for="mec_location_dont_show_map"><?php echo __("Don't show map in single event page", 'mec'); ?></label>
             </div>
+            <?php if($additional_locations_status and count($locations)): ?>
+            <h4><?php echo $this->main->m('other_locations', __('Other Locations', 'mec')); ?></h4>
+            <div class="mec-form-row">
+                <p><?php _e('You can select extra locations in addition to main location if you like.', 'mec'); ?></p>
+                <div class="mec-additional-locations">
+                    <?php foreach($locations as $location): ?>
+                    <div>
+                        <label for="additional_location_ids<?php echo $location->term_id; ?>">
+                            <input type="checkbox" name="mec[additional_location_ids][]" id="additional_location_ids<?php echo $location->term_id; ?>" value="<?php echo $location->term_id; ?>" <?php if(in_array($location->term_id, $location_ids)) echo 'checked="checked"'; ?>>
+                            <?php echo $location->name; ?>
+                        </label>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
 		</div>
     <?php
     }

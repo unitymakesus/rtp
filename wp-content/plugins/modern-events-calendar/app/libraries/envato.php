@@ -69,11 +69,11 @@ class MEC_envato extends MEC_base
         $this->factory = $this->getFactory();
 
         // MEC Settings
-        $this->settings = $this->main->get_settings();
+        $options = get_option('mec_options');
         
         // Set user purchase code
-        $this->set_purchase_code(isset($this->settings['purchase_code']) ? $this->settings['purchase_code'] : '');
-        $this->set_product_name(isset($this->settings['product_name']) ? $this->settings['product_name'] : '');
+        $this->set_purchase_code(isset($options['purchase_code']) ? $options['purchase_code'] : '');
+        $this->set_product_name(isset($options['product_name']) ? $options['product_name'] : '');
 
         // Plugin Slug
         list($slice1, $slice2) = explode('/', $this->plugin_slug);
@@ -234,7 +234,7 @@ class MEC_envato extends MEC_base
         $product_name = $this->get_product_name();
         $url  = get_home_url();
         
-        if($type == 'remove') $verify_url = 'http://webnus.net/api/remove?id='.$code;
+        if($type == 'remove') $verify_url = 'https://webnus.net/api/remove?id='.$code;
         elseif($type == 'dl') $verify_url = 'http://webnus.biz/webnus.net/plugin-api/verify?item_name=' . urlencode($product_name) . '&id=' . $code . '&url=' . $url;
         elseif($type == 'version') $verify_url = 'http://webnus.biz/webnus.net/plugin-api/version';
         else return NULL;

@@ -6,7 +6,7 @@ $events = $this->main->get_events('-1');
 $ix_options = $this->main->get_ix_options();
 
 // Start the export process if token is exists
-if($ix_options['google_export_token']) $this->action = 'google-calendar-export-start';
+if(isset( $ix_options['google_export_token'] ) && $ix_options['google_export_token']) $this->action = 'google-calendar-export-start';
 ?>
 <div class="wrap" id="mec-wrap">
     <h1><?php _e('MEC Import / Export', 'mec'); ?></h1>

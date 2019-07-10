@@ -44,7 +44,7 @@
 							$add_class_to_icon = 'uabb-button-icon-before uabb-creative-button-icon-before';
 					}
 					?>
-					<i class="uabb-button-icon uabb-creative-button-icon <?php echo $add_class_to_icon; ?> fa <?php echo $settings->icon; ?>"></i>
+					<i class="uabb-button-icon uabb-creative-button-icon <?php echo $add_class_to_icon; ?> <?php echo $settings->icon; ?>"></i>
 							<?php endif; ?>
 				<span class="uabb-button-text uabb-creative-button-text"><?php echo $settings->text; ?></span>
 							<?php
@@ -56,7 +56,7 @@
 									$add_class_to_icon = 'uabb-button-icon-after uabb-creative-button-icon-after';
 								}
 								?>
-					<i class="uabb-button-icon uabb-creative-button-icon <?php echo $add_class_to_icon; ?> fa <?php echo $settings->icon; ?>"></i>
+					<i class="uabb-button-icon uabb-creative-button-icon <?php echo $add_class_to_icon; ?> <?php echo $settings->icon; ?>"></i>
 							<?php endif; ?>
 
 						<?php } ?>

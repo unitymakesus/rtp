@@ -26,10 +26,7 @@ class Mailin_Rest
         $ch = curl_init($called_url);
         $auth_header = 'api-key:'.$this->api_key;
         $content_header = "Content-Type:application/json";
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            // Windows only over-ride
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        }
+        $ch = fl_set_curl_safe_opts( $ch );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array($auth_header,$content_header));
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
@@ -252,6 +249,18 @@ class Mailin_Rest
         {
                 return $this->get("attribute","");
         }
+		public function get_contact_attributes()
+		{
+			$attrs = $this->get("attribute","");
+			$attr_names = array();
+
+			if ( isset( $attrs['data']['normal_attributes'] ) ) {
+				foreach( $attrs['data']['normal_attributes'] as $data ) {
+					$attr_names[] = $data['name'];
+				}
+			}
+			return $attr_names;
+		}
         public function get_attribute($type)
         {
                 return $this->get("attribute/".$type,"");

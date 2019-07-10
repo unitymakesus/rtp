@@ -92,6 +92,11 @@ class Advanced_Excerpt {
 		$page_type_matches = array_intersect( $page_types, $skip_page_types );
 		if ( !empty( $page_types ) && !empty( $page_type_matches ) ) return;
 
+		// skip woocommerce products
+		if ( in_array( 'woocommerce', $skip_page_types ) && get_post_type( get_the_ID() ) == 'product' ) {
+			return;
+		}
+
 		if ( 1 == $this->options['the_excerpt'] ) {
 			remove_all_filters( 'get_the_excerpt' );
 			remove_all_filters( 'the_excerpt' );
@@ -219,6 +224,7 @@ class Advanced_Excerpt {
 	}
 
 	function filter( $content ) {
+
 		extract( wp_parse_args( $this->options, $this->default_options ), EXTR_SKIP );
 
 		if ( true === apply_filters( 'advanced_excerpt_skip_excerpt_filtering', false ) ) {
@@ -297,6 +303,7 @@ class Advanced_Excerpt {
 		}
 
 		return apply_filters( 'advanced_excerpt_content', $text );
+
 	}
 
 	function text_excerpt( $text, $length, $length_type, $finish ) {
@@ -372,7 +379,7 @@ class Advanced_Excerpt {
 			 * There was previously a problem where our 'read-more' links were being appending incorrectly into unsuitable HTML tags.
 			 * As such we're now maintaining a whitelist of HTML tags that are suitable for being appended into.
 			 */
-			$allow_tags_to_append_into = apply_filters( 'advanced_excerpt_allow_tags_to_append_into', array( 'p', 'div', 'article', 'section' ) );
+			$allow_tags_to_append_into = apply_filters( 'advanced_excerpt_allow_tags_to_append_into', array( 'p', 'article', 'section' ) );
 
 			if( !in_array( $last_tag, $allow_tags_to_append_into ) ) {
 				// After the content
@@ -431,6 +438,7 @@ class Advanced_Excerpt {
 			'author'		=> __( 'Author Archive', 'advanced-excerpt' ),
 			'category'		=> __( 'Category Archive', 'advanced-excerpt' ),
 			'tag'			=> __( 'Tag Archive', 'advanced-excerpt' ),
+			'woocommerce'   => __( 'WooCommerce Products', 'advanced-excerpt' ),
 		);
 		$exclude_pages_list = apply_filters( 'advanced_excerpt_exclude_pages_list', $exclude_pages_list );
 

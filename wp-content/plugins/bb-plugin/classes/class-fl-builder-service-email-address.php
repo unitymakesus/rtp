@@ -29,8 +29,8 @@ final class FLBuilderServiceEmailAddress extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an email address.
@@ -55,12 +55,12 @@ final class FLBuilderServiceEmailAddress extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'email', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Email Address', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Email Address', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -80,8 +80,8 @@ final class FLBuilderServiceEmailAddress extends FLBuilderService {
 	 */
 	public function render_fields( $account, $settings ) {
 		$response = array(
-			'error'  => false,
-			'html'   => '',
+			'error' => false,
+			'html'  => '',
 		);
 
 		return $response;

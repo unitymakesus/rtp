@@ -75,8 +75,24 @@ if ( field.trigger ) {
 	atts += " data-trigger='" + JSON.stringify( field.trigger ) + "'";
 }
 
+// Referenced Option Sets - See FLBuilderConfig.optionSets
+if ( ( Array.isArray( field.options ) && field.options.length === 1 ) || 'string' === typeof field.options ) {
+
+	var optionSetName = Array.isArray( field.options ) ? field.options[0] : field.options ;
+
+	if ( 'undefined' !== typeof optionSetName ) {
+		var optionSet = FLBuilderConfig.optionSets[optionSetName];
+		if ( 'undefined' !== typeof optionSet ) {
+			field.options = optionSet;
+		}
+	}
+}
+
 #>
 <select name="{{name}}"{{{atts}}}>
+	<# if ( data.device && 'default' !== data.device ) { #>
+	<option value=""></option>
+	<# } #>
 	<#
 
 	// Loop through the options
@@ -109,7 +125,7 @@ if ( field.trigger ) {
 				if ( 'object' === typeof value && jQuery.inArray( groupKey, value ) != -1 ) {
 					// Multi select
 					selected = ' selected="selected"';
-				} else if ( 'string' === typeof value && groupKey == value ) {
+				} else if ( groupKey == value ) {
 					// Single select
 					selected = ' selected="selected"';
 				}
@@ -134,7 +150,7 @@ if ( field.trigger ) {
 			if ( 'object' === typeof value && jQuery.inArray( optionKey, value ) != -1 ) {
 				// Multi select
 				selected = ' selected="selected"';
-			} else if ( 'string' === typeof value && optionKey == value ) {
+			} else if ( optionKey == value ) {
 				// Single select
 				selected = ' selected="selected"';
 			}

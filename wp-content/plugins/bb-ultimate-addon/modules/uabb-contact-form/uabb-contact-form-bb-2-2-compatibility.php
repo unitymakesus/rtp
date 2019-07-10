@@ -647,6 +647,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-contact-form',
@@ -685,6 +686,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Input Message Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'help'        => __( 'This color would be applied to validation message and error icon in input field', 'uabb' ),
 							'preview'     => 'none',
 						),
@@ -694,6 +696,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Input border color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'help'        => __( 'If the validation is not right then this color would be applied to input border', 'uabb' ),
 							'preview'     => 'none',
 						),
@@ -703,6 +706,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Success Message Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => 'none',
 						),
 						'error_msg_color'      => array(
@@ -711,6 +715,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Error Message color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => 'none',
 						),
 						'error_msg_alignment'  => array(
@@ -789,6 +794,7 @@ FLBuilder::register_module(
 							'connections' => array( 'color' ),
 							'label'       => __( 'Border Color', 'uabb' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-contact-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
@@ -890,9 +896,10 @@ FLBuilder::register_module(
 							'label'       => __( 'Text Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
-								'selector'  => '.uabb-contact-form .uabb-contact-form-submit',
+								'selector'  => '.uabb-contact-form .uabb-contact-form-submit .uabb-contact-form-button-text',
 								'property'  => 'color',
 								'important' => true,
 							),
@@ -903,6 +910,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Text Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -913,6 +921,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-contact-form .uabb-contact-form-submit',
@@ -926,6 +935,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -1216,6 +1226,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-contact-form label',
@@ -1291,7 +1302,7 @@ FLBuilder::register_module(
 							'responsive' => true,
 							'preview'    => array(
 								'type'      => 'css',
-								'selector'  => '.uabb-contact-form .uabb-terms-label',
+								'selector'  => '.uabb-contact-form .uabb-terms-text',
 								'important' => true,
 							),
 						),
@@ -1366,6 +1377,24 @@ FLBuilder::register_module(
 				),
 			),
 			'description' => sprintf( /* translators: a%s: search term */ __( 'Please register keys for your website at <a%s>Google Admin Console</a>.', 'uabb' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
+		),
+		'uabb_docs'  => array(
+			'title'    => __( 'Docs', 'uabb' ),
+			'sections' => array(
+				'knowledge_base' => array(
+					'title'  => __( 'Helpful Information', 'uabb' ),
+					'fields' => array(
+						'uabb_helpful_information' => array(
+							'type'    => 'raw',
+							'content' => '<ul class="uabb-docs-list" data-branding=' . $branding . '>
+
+								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/design-email-template-to-receive-user-information-within-mail/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=contact-form-module" target="_blank" rel="noopener"> How to Design the Email Template to Receive User Information within the email? </a> </li>
+
+							 </ul>',
+						),
+					),
+				),
+			),
 		),
 	)
 );

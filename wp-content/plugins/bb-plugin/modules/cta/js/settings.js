@@ -2,26 +2,55 @@
 
 	FLBuilder.registerModuleHelper('cta', {
 
-		init: function()
-		{
-			$( 'input[name=btn_bg_color]' ).on( 'change', this._bgColorChange );
+		init: function() {
+			var form = $( '.fl-builder-settings' ),
+				layout = form.find( 'select[name=layout]' ),
+				buttonBgColor = form.find( 'input[name=btn_bg_color]' );
 
-			this._bgColorChange();
+			layout.on( 'change', this._layoutChange );
+			buttonBgColor.on( 'change', this._previewButtonBackground );
 		},
 
-		_bgColorChange: function()
-		{
-			var bgColor = $( 'input[name=btn_bg_color]' ),
-				style   = $( '#fl-builder-settings-section-btn_style' );
+		_layoutChange: function() {
+			var node = FLBuilder.preview.elements.node,
+				wrap = node.find( '.fl-cta-wrap' ),
+				button = node.find( '.fl-button-wrap' ),
+				form = $( '.fl-builder-settings' ),
+				layout = form.find( 'select[name=layout]' ).val(),
+				alignment = form.find( 'input[name=alignment]' );
 
+			if ( 'inline' === layout ) {
+				wrap.removeClass( 'fl-cta-stacked fl-cta-left fl-cta-center fl-cta-right' );
+				wrap.addClass( 'fl-cta-inline' );
+				button.removeClass( 'fl-button-width-auto' );
+				button.addClass( 'fl-button-width-full' );
+				FLBuilder.preview.updateCSSRule( FLBuilder.preview.classes.node + ' .fl-cta-wrap', 'text-align', '' );
+			} else {
+				wrap.removeClass( 'fl-cta-inline' );
+				wrap.addClass( 'fl-cta-stacked' );
+				button.removeClass( 'fl-button-width-full' );
+				button.addClass( 'fl-button-width-auto' );
+				alignment.trigger( 'change' );
+			}
+		},
 
-			if ( '' == bgColor.val() ) {
-				style.hide();
+		_previewButtonBackground: function( e ) {
+			var preview	= FLBuilder.preview,
+				selector = preview.classes.node + ' a.fl-button, ' + preview.classes.node + ' a.fl-button:visited',
+				form = $( '.fl-builder-settings:visible' ),
+				style = form.find( 'select[name=btn_style]' ).val(),
+				bgColor = form.find( 'input[name=btn_bg_color]' ).val();
+
+			if ( 'flat' === style ) {
+				if ( '' !== bgColor && bgColor.indexOf( 'rgb' ) < 0 ) {
+					bgColor = '#' + bgColor;
+				}
+				preview.updateCSSRule( selector, 'background-color', bgColor );
+				preview.updateCSSRule( selector, 'border-color', bgColor );
+			} else {
+				preview.delayPreview( e );
 			}
-			else {
-				style.show();
-			}
-		}
+		},
 	});
 
 })(jQuery);

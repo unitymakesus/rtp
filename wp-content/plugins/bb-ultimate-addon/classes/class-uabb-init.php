@@ -83,7 +83,6 @@ class UABB_Init {
 		// Store it in the options table.
 		update_option( 'dismiss-admin-notice', $dismissed );
 	}
-
 	/**
 	 * Function that includes necessary files
 	 *
@@ -98,9 +97,8 @@ class UABB_Init {
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-cloud-templates.php';
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-admin-settings.php';
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-admin-settings-multisite.php';
-
+		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-template-ajax.php';
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/uabb-global-functions.php';
-
 		// Attachment Fields.
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-attachment.php';
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-blog-posts.php';

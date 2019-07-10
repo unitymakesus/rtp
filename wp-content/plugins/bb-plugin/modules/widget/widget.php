@@ -10,12 +10,12 @@ class FLWidgetModule extends FLBuilderModule {
 	 */
 	public function __construct() {
 		parent::__construct(array(
-			'name'          	=> __( 'Widget', 'fl-builder' ),
-			'description'   	=> __( 'Display a WordPress widget.', 'fl-builder' ),
-			'group'   			=> __( 'WordPress Widgets', 'fl-builder' ),
-			'category'   		=> __( 'WordPress Widgets', 'fl-builder' ),
-			'editor_export' 	=> false,
-			'partial_refresh'	=> true,
+			'name'            => __( 'Widget', 'fl-builder' ),
+			'description'     => __( 'Display a WordPress widget.', 'fl-builder' ),
+			'group'           => __( 'WordPress Widgets', 'fl-builder' ),
+			'category'        => __( 'WordPress Widgets', 'fl-builder' ),
+			'editor_export'   => false,
+			'partial_refresh' => true,
 		));
 	}
 
@@ -33,7 +33,7 @@ class FLWidgetModule extends FLBuilderModule {
 		$instance = new $class();
 
 		// Get the widget settings.
-		$settings_key = 'widget-' . $instance->id_base;
+		$settings_key    = 'widget-' . $instance->id_base;
 		$widget_settings = array();
 
 		if ( isset( $settings->$settings_key ) ) {
@@ -76,8 +76,8 @@ class FLWidgetModule extends FLBuilderModule {
  * Register the module and its form settings.
  */
 FLBuilder::register_module('FLWidgetModule', array(
-	'general'       => array( // Tab
-		'title'         => __( 'General', 'fl-builder' ), // Tab title
-		'file'          => FL_BUILDER_DIR . 'modules/widget/includes/settings-general.php',
+	'general' => array( // Tab
+		'title' => __( 'General', 'fl-builder' ), // Tab title
+		'file'  => FL_BUILDER_DIR . 'modules/widget/includes/settings-general.php',
 	),
 ));

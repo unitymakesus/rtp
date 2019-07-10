@@ -29,7 +29,7 @@ class ModalPopupModule extends FLBuilderModule {
 			)
 		);
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		$this->add_js( 'jquery-fitvids' );
 		$this->add_js( 'uabbpopup-cookies', $this->url . 'js/js_cookie.js', array(), '', true );
 	}
@@ -78,7 +78,6 @@ class ModalPopupModule extends FLBuilderModule {
 			'a_data'                     => 'data-modal=' . $module_id . ' ',
 			'a_class'                    => 'uabb-trigger',
 		);
-
 		FLBuilder::render_module_html( 'uabb-button', $btn_settings );
 	}
 
@@ -162,13 +161,11 @@ class ModalPopupModule extends FLBuilderModule {
 			$html .= '<div class="uabb-modal-iframe uabb-video-player" data-src="youtube" data-id="' . $vid_id . '" data-append="?version=3&enablejsapi=1' . $related_videos . $player_controls . '" data-thumb="' . $thumb . '"></div>';
 		} elseif ( 'vimeo' === $this->settings->content_type ) {
 			$vid_id = preg_replace( '/[^\/]+[^0-9]|(\/)/', '', rtrim( $url, '/' ) );
-
+			$thumb  = '';
 			if ( '' !== $vid_id && 0 !== $vid_id ) {
-
-				$vimeo = unserialize( file_get_contents( "https://vimeo.com/api/v2/video/$vid_id.php" ) );
-				$thumb = $vimeo[0]['thumbnail_large'];
-
-				$html .= '<div class="uabb-modal-iframe uabb-video-player" data-src="vimeo" data-id="' . $vid_id . '" data-append="?title=0&byline=0&portrait=0&badge=0" data-thumb="' . $thumb . '"></div>';
+					$vimeo = unserialize( @file_get_contents( "https://vimeo.com/api/v2/video/$vid_id.php" ) );// @codingStandardsIgnoreStart
+					$thumb = $vimeo[0]['thumbnail_large'];
+				$html     .= '<div class="uabb-modal-iframe uabb-video-player" data-src="vimeo" data-id="' . $vid_id . '" data-append="?title=0&byline=0&portrait=0&badge=0" data-thumb="' . $thumb . '"></div>';
 			}
 		}
 		$html .= '</div>';
@@ -221,23 +218,6 @@ class ModalPopupModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
 
 			$helper->handle_opacity_inputs( $settings, 'title_bg_color_opc', 'title_bg_color' );
-
-			if ( isset( $settings->title_alignment ) ) {
-				$settings->title_alignment = $settings->title_alignment;
-			}
-
-			if ( isset( $settings->all_align ) ) {
-				$settings->all_align = $settings->all_align;
-			}
-
-			if ( isset( $settings->btn_align ) ) {
-				$settings->btn_align = $settings->btn_align;
-			}
-
-			if ( isset( $settings->btn_mob_align ) ) {
-				$settings->btn_mob_align = $settings->btn_mob_align;
-			}
-
 			// For Title Typography.
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
@@ -248,6 +228,7 @@ class ModalPopupModule extends FLBuilderModule {
 			if ( isset( $settings->title_font_family ) ) {
 				if ( isset( $settings->title_font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->title_font_family['weight'] ) {
@@ -255,6 +236,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->title_font_size_unit ) ) {
@@ -262,6 +244,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit );
 			}
 			if ( isset( $settings->title_font_size_unit_medium ) ) {
 
@@ -269,6 +252,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_medium );
 			}
 			if ( isset( $settings->title_font_size_unit_responsive ) ) {
 
@@ -276,6 +260,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_responsive );
 			}
 			if ( isset( $settings->title_line_height_unit ) ) {
 
@@ -283,6 +268,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->title_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit );
 			}
 			if ( isset( $settings->title_line_height_unit_medium ) ) {
 
@@ -290,6 +276,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->title_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_medium );
 			}
 			if ( isset( $settings->title_line_height_unit_responsive ) ) {
 
@@ -297,15 +284,18 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->title_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_responsive );
 			}
 			if ( isset( $settings->title_transform ) ) {
 				$settings->title_font_typo['text_transform'] = $settings->title_transform;
+				unset( $settings->title_transform );
 			}
 			if ( isset( $settings->title_letter_spacing ) ) {
 				$settings->title_font_typo['letter_spacing'] = array(
 					'length' => $settings->title_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_letter_spacing );
 			}
 
 			// For Content Font Typo.
@@ -319,6 +309,7 @@ class ModalPopupModule extends FLBuilderModule {
 
 				if ( isset( $settings->ct_content_font_family['family'] ) ) {
 					$settings->ct_content_font_typo['font_family'] = $settings->ct_content_font_family['family'];
+					unset( $settings->ct_content_font_family['family'] );
 				}
 				if ( isset( $settings->ct_content_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->ct_content_font_family['weight'] ) {
@@ -326,6 +317,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->ct_content_font_typo['font_weight'] = $settings->ct_content_font_family['weight'];
 					}
+					unset( $settings->ct_content_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->ct_content_font_size_unit ) ) {
@@ -334,6 +326,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_content_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->ct_content_font_size_unit );
 			}
 			if ( isset( $settings->ct_content_font_size_unit_medium ) ) {
 
@@ -341,6 +334,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_content_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->ct_content_font_size_unit_medium );
 			}
 			if ( isset( $settings->ct_content_font_size_unit_responsive ) ) {
 
@@ -348,6 +342,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_content_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->ct_content_font_size_unit_responsive );
 			}
 			if ( isset( $settings->ct_content_line_height_unit ) ) {
 
@@ -355,6 +350,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_content_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->ct_content_line_height_unit );
 			}
 			if ( isset( $settings->ct_content_line_height_unit_medium ) ) {
 
@@ -362,6 +358,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_content_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->ct_content_line_height_unit_medium );
 			}
 			if ( isset( $settings->ct_content_line_height_unit_responsive ) ) {
 
@@ -369,11 +366,12 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_content_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->ct_content_line_height_unit_responsive );
 			}
 			if ( isset( $settings->ct_transform ) ) {
 
 				$settings->ct_content_font_typo['text_transform'] = $settings->ct_transform;
-
+				unset( $settings->ct_transform );
 			}
 			if ( isset( $settings->ct_letter_spacing ) ) {
 
@@ -381,6 +379,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->ct_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->ct_letter_spacing );
 			}
 
 			// For Text Font Typo.
@@ -393,6 +392,7 @@ class ModalPopupModule extends FLBuilderModule {
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->text_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 					if ( 'regular' == $settings->font_family['weight'] ) {
@@ -400,6 +400,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->text_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -408,12 +409,14 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->text_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 
@@ -421,6 +424,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -428,6 +432,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 
@@ -435,6 +440,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 
@@ -442,9 +448,11 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->text_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 
@@ -452,6 +460,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->letter_spacing );
 			}
 
 			// For Button Font Typo.
@@ -464,6 +473,7 @@ class ModalPopupModule extends FLBuilderModule {
 			if ( isset( $settings->btn_font_family ) ) {
 				if ( isset( $settings->btn_font_family['family'] ) ) {
 					$settings->btn_typo['font_family'] = $settings->btn_font_family['family'];
+					unset( $settings->btn_font_family['family'] );
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->btn_font_family['weight'] ) {
@@ -471,6 +481,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->btn_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
+					unset( $settings->btn_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->btn_font_size_unit ) ) {
@@ -479,6 +490,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit );
 			}
 			if ( isset( $settings->btn_font_size_unit_medium ) ) {
 
@@ -486,6 +498,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_medium );
 			}
 			if ( isset( $settings->btn_font_size_unit_responsive ) ) {
 
@@ -493,6 +506,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_responsive );
 			}
 			if ( isset( $settings->btn_line_height_unit ) ) {
 
@@ -500,6 +514,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit );
 			}
 			if ( isset( $settings->btn_line_height_unit_medium ) ) {
 
@@ -507,6 +522,7 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_medium );
 			}
 			if ( isset( $settings->btn_line_height_unit_responsive ) ) {
 
@@ -514,9 +530,11 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_responsive );
 			}
 			if ( isset( $settings->btn_transform ) ) {
 				$settings->btn_typo['text_btn_transform'] = $settings->btn_transform;
+				unset( $settings->btn_transform );
 			}
 			if ( isset( $settings->btn_letter_spacing ) ) {
 
@@ -524,33 +542,6 @@ class ModalPopupModule extends FLBuilderModule {
 					'length' => $settings->btn_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size_unit );
-				unset( $settings->title_line_height_unit );
-				unset( $settings->title_transform );
-				unset( $settings->title_letter_spacing );
-			}
-			if ( isset( $settings->ct_content_font_family ) ) {
-				unset( $settings->ct_content_font_family );
-				unset( $settings->ct_content_font_size_unit );
-				unset( $settings->ct_content_line_height_unit );
-				unset( $settings->ct_transform );
-				unset( $settings->ct_letter_spacing );
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->line_height_unit );
-				unset( $settings->transform );
-				unset( $settings->letter_spacing );
-			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size_unit );
-				unset( $settings->btn_line_height_unit );
-				unset( $settings->btn_transform );
 				unset( $settings->btn_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -562,19 +553,6 @@ class ModalPopupModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
 
 			$helper->handle_opacity_inputs( $settings, 'title_bg_color_opc', 'title_bg_color' );
-
-			if ( isset( $settings->title_alignment ) ) {
-				$settings->title_alignment = $settings->title_alignment;
-			}
-			if ( isset( $settings->all_align ) ) {
-				$settings->all_align = $settings->all_align;
-			}
-			if ( isset( $settings->btn_align ) ) {
-				$settings->btn_align = $settings->btn_align;
-			}
-			if ( isset( $settings->btn_mob_align ) ) {
-				$settings->btn_mob_align = $settings->btn_mob_align;
-			}
 			// For Title Typography.
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
@@ -586,6 +564,7 @@ class ModalPopupModule extends FLBuilderModule {
 
 				if ( isset( $settings->title_font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->title_font_family['weight'] ) {
@@ -593,6 +572,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 			}
 
@@ -651,6 +631,7 @@ class ModalPopupModule extends FLBuilderModule {
 
 				if ( isset( $settings->ct_content_font_family['family'] ) ) {
 					$settings->ct_content_font_typo['font_family'] = $settings->ct_content_font_family['family'];
+					unset( $settings->ct_content_font_family['family'] );
 				}
 				if ( isset( $settings->ct_content_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->ct_content_font_family['weight'] ) {
@@ -658,6 +639,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->ct_content_font_typo['font_weight'] = $settings->ct_content_font_family['weight'];
 					}
+					unset( $settings->ct_content_font_family['weight'] );
 				}
 			}
 
@@ -717,6 +699,7 @@ class ModalPopupModule extends FLBuilderModule {
 
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->text_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 					if ( 'regular' == $settings->font_family['weight'] ) {
@@ -724,6 +707,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->text_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 
@@ -780,6 +764,7 @@ class ModalPopupModule extends FLBuilderModule {
 			if ( isset( $settings->btn_font_family ) ) {
 				if ( isset( $settings->btn_font_family['family'] ) ) {
 					$settings->btn_typo['font_family'] = $settings->btn_font_family['family'];
+					unset( $settings->btn_font_family['family'] );
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->btn_font_family['weight'] ) {
@@ -787,6 +772,7 @@ class ModalPopupModule extends FLBuilderModule {
 					} else {
 						$settings->btn_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
+					unset( $settings->btn_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->btn_font_size['small'] ) ) {
@@ -871,6 +857,7 @@ class ModalPopupModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->title_spacing );
 			}
 			if ( isset( $settings->modal_spacing ) ) {
 
@@ -911,26 +898,80 @@ class ModalPopupModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->modal_spacing );
 			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size );
-				unset( $settings->title_line_height );
+			// Unset the old values.
+			if ( isset( $settings->title_font_size['desktop'] ) ) {
+				unset( $settings->title_font_size['desktop'] );
 			}
-			if ( isset( $settings->ct_content_font_family ) ) {
-				unset( $settings->ct_content_font_family );
-				unset( $settings->ct_content_font_size );
-				unset( $settings->ct_content_line_height );
+			if ( isset( $settings->title_font_size['medium'] ) ) {
+				unset( $settings->title_font_size['medium'] );
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->line_height );
+			if ( isset( $settings->title_font_size['small'] ) ) {
+				unset( $settings->title_font_size['small'] );
 			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size );
-				unset( $settings->btn_line_height );
+			if ( isset( $settings->title_line_height['desktop'] ) ) {
+				unset( $settings->title_line_height['desktop'] );
+			}
+			if ( isset( $settings->title_line_height['medium'] ) ) {
+				unset( $settings->title_line_height['medium'] );
+			}
+			if ( isset( $settings->title_line_height['small'] ) ) {
+				unset( $settings->title_line_height['small'] );
+			}
+			if ( isset( $settings->ct_content_font_size['desktop'] ) ) {
+				unset( $settings->ct_content_font_size['desktop'] );
+			}
+			if ( isset( $settings->ct_content_font_size['medium'] ) ) {
+				unset( $settings->ct_content_font_size['medium'] );
+			}
+			if ( isset( $settings->ct_content_font_size['small'] ) ) {
+				unset( $settings->ct_content_font_size['small'] );
+			}
+			if ( isset( $settings->ct_content_line_height['desktop'] ) ) {
+				unset( $settings->ct_content_line_height['desktop'] );
+			}
+			if ( isset( $settings->ct_content_line_height['medium'] ) ) {
+				unset( $settings->ct_content_line_height['medium'] );
+			}
+			if ( isset( $settings->ct_content_line_height['small'] ) ) {
+				unset( $settings->ct_content_line_height['small'] );
+			}
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
+			}
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
+			}
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
+			}
+			if ( isset( $settings->btn_font_size['desktop'] ) ) {
+				unset( $settings->btn_font_size['desktop'] );
+			}
+			if ( isset( $settings->btn_font_size['medium'] ) ) {
+				unset( $settings->btn_font_size['medium'] );
+			}
+			if ( isset( $settings->btn_font_size['small'] ) ) {
+				unset( $settings->btn_font_size['small'] );
+			}
+			if ( isset( $settings->btn_line_height['desktop'] ) ) {
+				unset( $settings->btn_line_height['desktop'] );
+			}
+			if ( isset( $settings->btn_line_height['medium'] ) ) {
+				unset( $settings->btn_line_height['medium'] );
+			}
+			if ( isset( $settings->btn_line_height['small'] ) ) {
+				unset( $settings->btn_line_height['small'] );
 			}
 		}
 

@@ -34,7 +34,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 
 		$this->add_js( 'carousel', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-carousel.js', array( 'jquery' ), '', true );
 		$this->add_js( 'jquery-magnificpopup' );
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		$this->add_css( 'jquery-magnificpopup' );
 	}
 	/**
@@ -62,6 +62,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->img_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -70,6 +71,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					} else {
 						$settings->img_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -78,18 +80,21 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->img_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 				$settings->img_typo_responsive['font_size'] = array(
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -97,37 +102,31 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 				$settings->img_typo_medium['line_height'] = array(
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 				$settings->img_typo_responsive['line_height'] = array(
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->img_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 				$settings->img_typo['letter_spacing'] = array(
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
 				unset( $settings->letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -142,6 +141,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->img_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -150,6 +150,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					} else {
 						$settings->img_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) ) {
@@ -194,13 +195,23 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
+			// Unset the old values.
+			if ( isset( $settings->font_size['desktop'] ) ) {
 				unset( $settings->font_size['desktop'] );
+			}
+			if ( isset( $settings->font_size['medium'] ) ) {
 				unset( $settings->font_size['medium'] );
+			}
+			if ( isset( $settings->font_size['small'] ) ) {
 				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
 				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
 				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
 				unset( $settings->line_height['small'] );
 			}
 		}

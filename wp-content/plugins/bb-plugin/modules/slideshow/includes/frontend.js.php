@@ -4,7 +4,7 @@ $source = $module->get_source();
 
 if ( ! empty( $source ) ) :
 
-?>
+	?>
 YUI({'logExclude': { 'yui': true } }).use('fl-slideshow', function(Y){
 
 	if( null === Y.one('.fl-node-<?php echo $id; ?> .fl-slideshow-container') ) {

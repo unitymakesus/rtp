@@ -64,8 +64,8 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have a username.
@@ -73,11 +73,9 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide a username.', 'fl-builder' );
 		} elseif ( ! isset( $fields['app_id'] ) || empty( $fields['app_id'] ) ) {
 			$response['error'] = __( 'Error: You must provide a app ID.', 'fl-builder' );
-		} // Make sure we have an app password.
-		elseif ( ! isset( $fields['app_password'] ) || empty( $fields['app_password'] ) ) {
+		} elseif ( ! isset( $fields['app_password'] ) || empty( $fields['app_password'] ) ) { // Make sure we have an app password.
 			$response['error'] = __( 'Error: You must provide a app password.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$api = $this->get_api( array(
 				'apiUsername' => $fields['username'],
@@ -88,12 +86,13 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 			try {
 				$api->getLists();
 				$response['data'] = array(
-					'username'      => $fields['username'],
-					'app_id'        => $fields['app_id'],
-					'app_password'  => $fields['app_password'],
+					'username'     => $fields['username'],
+					'app_id'       => $fields['app_id'],
+					'app_password' => $fields['app_password'],
 				);
 			} catch ( Exception $e ) {
 				$errors = $api->getErrors();
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'Error: Could not connect to iContact. %s', 'fl-builder' ), $errors[0] );
 			}
 		}
@@ -111,36 +110,37 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'username', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Username', 'fl-builder' ),
-			'help'          => __( 'Your iContact username.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Username', 'fl-builder' ),
+			'help'      => __( 'Your iContact username.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'app_id', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'App ID', 'fl-builder' ),
-			'help'          => __( 'Your iContact app ID.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'App ID', 'fl-builder' ),
+			'help'      => __( 'Your iContact app ID.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'app_password', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'App Password', 'fl-builder' ),
-			'help'          => __( 'Your iContact app password.', 'fl-builder' ),
-			'description'   => sprintf( __( 'You must <a%1$s>create an app</a> in iContact to obtain an app ID and password. Please see <a%2$s>the iContact docs</a> for complete instructions.', 'fl-builder' ), ' href="https://app.icontact.com/icp/core/registerapp/" target="_blank"', ' href="http://www.icontact.com/developerportal/api-documentation/vocus-register-your-app/" target="_blank"' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class'   => 'fl-builder-service-connect-row',
+			'class'       => 'fl-builder-service-connect-input',
+			'type'        => 'text',
+			'label'       => __( 'App Password', 'fl-builder' ),
+			'help'        => __( 'Your iContact app password.', 'fl-builder' ),
+			/* translators: 1: create app url: 2: docs url */
+			'description' => sprintf( __( 'You must <a%1$s>create an app</a> in iContact to obtain an app ID and password. Please see <a%2$s>the iContact docs</a> for complete instructions.', 'fl-builder' ), ' href="https://app.icontact.com/icp/core/registerapp/" target="_blank"', ' href="http://www.icontact.com/developerportal/api-documentation/vocus-register-your-app/" target="_blank"' ),
+			'preview'     => array(
+				'type' => 'none',
 			),
 		));
 
@@ -159,22 +159,23 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( array(
-			'apiUsername'   => $account_data['username'],
-			'appId'         => $account_data['app_id'],
-			'apiPassword'   => $account_data['app_password'],
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( array(
+			'apiUsername' => $account_data['username'],
+			'appId'       => $account_data['app_id'],
+			'apiPassword' => $account_data['app_password'],
 		));
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		try {
-			$lists = $api->getLists();
+			$lists            = $api->getLists();
 			$response['html'] = $this->render_list_field( $lists, $settings );
 		} catch ( Exception $e ) {
 			$errors = $api->getErrors();
+			/* translators: %s: error */
 			$response['error'] = sprintf( __( 'Error: Could not connect to iContact. %s', 'fl-builder' ), $errors[0] );
 		}
 
@@ -203,13 +204,13 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -237,20 +238,20 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to iContact. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$data   = array(
+			$data = array(
 				'email' => $email,
 			);
-			$api    = $this->get_api( array(
-				'apiUsername'   => $account_data['username'],
-				'appId'         => $account_data['app_id'],
-				'apiPassword'   => $account_data['app_password'],
+			$api  = $this->get_api( array(
+				'apiUsername' => $account_data['username'],
+				'appId'       => $account_data['app_id'],
+				'apiPassword' => $account_data['app_password'],
 			));
 
 			try {
 
 				if ( $name ) {
 
-					$names = explode( ' ', $name );
+					$names              = explode( ' ', $name );
 					$data['first_name'] = null;
 					$data['last_name']  = null;
 
@@ -270,6 +271,7 @@ final class FLBuilderServiceIContact extends FLBuilderService {
 				$api->subscribeContactToList( $result->contactId, $settings->list_id );
 			} catch ( Exception $e ) {
 				$errors = $api->getErrors();
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'There was an error subscribing to iContact. %s', 'fl-builder' ), $errors[0] );
 			}
 		}

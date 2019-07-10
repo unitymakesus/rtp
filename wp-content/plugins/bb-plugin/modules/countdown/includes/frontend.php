@@ -1,19 +1,19 @@
 <?php
 
 	$counters = array(
-		'days'		=> array(
+		'days'    => array(
 			'singular' => __( 'Day', 'fl-builder' ),
 			'plural'   => __( 'Days', 'fl-builder' ),
 		),
-		'hours'		=> array(
+		'hours'   => array(
 			'singular' => __( 'Hour', 'fl-builder' ),
 			'plural'   => __( 'Hours', 'fl-builder' ),
 		),
-		'minutes'	=> array(
+		'minutes' => array(
 			'singular' => __( 'Minute', 'fl-builder' ),
 			'plural'   => __( 'Minutes', 'fl-builder' ),
 		),
-		'seconds'	=> array(
+		'seconds' => array(
 			'singular' => __( 'Second', 'fl-builder' ),
 			'plural'   => __( 'Seconds', 'fl-builder' ),
 		),
@@ -21,7 +21,7 @@
 
 	?>
 
-<div class="fl-countdown<?php if ( 'default' == $settings->layout && 'yes' == $settings->show_separator && isset( $settings->separator_type ) ) { echo ' fl-countdown-separator-' . $settings->separator_type; } ?>">
+<div class="fl-countdown<?php echo ( 'default' == $settings->layout && 'yes' == $settings->show_separator && isset( $settings->separator_type ) ) ? ' fl-countdown-separator-' . $settings->separator_type : ''; ?>">
 
 	<?php foreach ( $counters as $class => $label ) : ?>
 		<div class="fl-countdown-number fl-countdown-<?php echo $class; ?>">

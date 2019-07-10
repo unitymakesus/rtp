@@ -209,6 +209,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Arrow Color', 'uabb' ),
 							'default'     => 'ffffff',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -221,6 +222,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Arrow Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 						),
 						'arrow_color_back_opc' => array(
@@ -243,6 +245,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Arrow Border Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -281,6 +284,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Dot Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -393,6 +397,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Icon Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 						),
 					),
@@ -499,6 +504,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 						),
 						'testimonial_icon_bg_color_noslider_opc' => array(
@@ -727,6 +733,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 						),
 						'testimonial_icon_bg_color_opc' => array(
@@ -816,6 +823,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -892,6 +900,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-rating .uabb-rating__ico',
@@ -918,6 +927,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -986,6 +996,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -1141,6 +1152,7 @@ FLBuilder::register_settings_form(
 								'type'        => 'color',
 								'label'       => __( 'Icon Color', 'uabb' ),
 								'default'     => '',
+								'show_alpha'  => true,
 								'show_reset'  => true,
 								'connections' => array( 'color' ),
 							),

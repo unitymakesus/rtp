@@ -31,7 +31,10 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 
 		if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 			$result = json_decode( $request['body'] );
-			bsf_update_license_checked( $result->updated_licenses );
+
+			if( isset( $result->updated_licenses ) ) {
+				bsf_update_license_checked( $result->updated_licenses );
+			}
 
 			if ( ! $result->error ) {
 				return $result->updated_versions;
@@ -147,6 +150,7 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 						$changelog_url     = ( isset( $remote_data->changelog_url ) ) ? $remote_data->changelog_url : '';
 						$purchase_url      = ( isset( $remote_data->purchase_url ) ) ? $remote_data->purchase_url : '';
 						$version_beta      = ( isset( $remote_data->version_beta ) ) ? $remote_data->version_beta : '';
+						$download_url 	   = ( isset( $remote_data->download_url ) ) ? $remote_data->download_url : '';
 						$download_url_beta = ( isset( $remote_data->download_url_beta ) ) ? $remote_data->download_url_beta : '';
 						if ( ! empty( $bsf_product_plugins ) ) {
 							foreach ( $bsf_product_plugins as $key => $plugin ) {
@@ -164,6 +168,7 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 									$brainstrom_products['plugins'][ $key ]['purchase_url']      = $purchase_url;
 									$brainstrom_products['plugins'][ $key ]['version_beta']      = $version_beta;
 									$brainstrom_products['plugins'][ $key ]['download_url_beta'] = $download_url_beta;
+									$brainstrom_products['plugins'][ $key ]['download_url'] = $download_url;
 									$is_update = true;
 								}
 							}
@@ -183,6 +188,7 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 									$brainstrom_products['themes'][ $key ]['changelog_url']     = $changelog_url;
 									$brainstrom_products['themes'][ $key ]['purchase_url']      = $purchase_url;
 									$brainstrom_products['themes'][ $key ]['version_beta']      = $version_beta;
+									$brainstrom_products['themes'][ $key ]['download_url']  	= $download_url;
 									$brainstrom_products['themes'][ $key ]['download_url_beta'] = $download_url_beta;
 									$is_update = true;
 								}
@@ -202,10 +208,12 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 											}
 											if ( $rbp->id === $bp->id ) {
 												$bprd = $brainstrom_bundled_products[ $bkeys ];
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->remote        = $rbp->remote_version;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->parent        = $rbp->parent;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->short_name    = $rbp->short_name;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->changelog_url = $rbp->changelog_url;
+												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->remote        		= $rbp->remote_version;
+												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->parent        		= $rbp->parent;
+												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->short_name    		= $rbp->short_name;
+												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->changelog_url 		= $rbp->changelog_url;
+												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->download_url 		= isset( $rbp->download_url ) ? $rbp->download_url : false;
+												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->download_url_beta 	= isset( $rbp->download_url_beta ) ? $rbp->download_url_beta : false;
 												$is_bundled_update = true;
 											}
 										}

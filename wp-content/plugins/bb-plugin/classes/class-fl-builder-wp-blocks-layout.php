@@ -13,13 +13,13 @@ final class FLBuilderWPBlocksLayout {
 	 */
 	static public function init() {
 		// Actions
-		add_action( 'current_screen', 						__CLASS__ . '::init_template' );
-		add_action( 'admin_enqueue_scripts', 				__CLASS__ . '::update_legacy_post', 1 );
-		add_action( 'pre_post_update', 						__CLASS__ . '::disable_builder_on_post_update', 10, 2 );
+		add_action( 'current_screen', __CLASS__ . '::init_template' );
+		add_action( 'pre_post_update', __CLASS__ . '::disable_builder_on_post_update', 10, 2 );
 
 		// Filters
-		add_filter( 'fl_builder_editor_content', 			__CLASS__ . '::filter_editor_content' );
-		add_filter( 'fl_builder_migrated_post_content', 	__CLASS__ . '::filter_migrated_post_content' );
+		add_action( 'block_editor_preload_paths', __CLASS__ . '::update_legacy_post', 10, 2 );
+		add_filter( 'fl_builder_editor_content', __CLASS__ . '::filter_editor_content' );
+		add_filter( 'fl_builder_migrated_post_content', __CLASS__ . '::filter_migrated_post_content' );
 	}
 
 	/**
@@ -33,11 +33,11 @@ final class FLBuilderWPBlocksLayout {
 		global $pagenow;
 
 		if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
-			$post_id	  = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : null;
+			$post_id      = isset( $_GET['post'] ) ? absint( $_GET['post'] ) : null;
 			$render_ui    = apply_filters( 'fl_builder_render_admin_edit_ui', true );
 			$post_types   = FLBuilderModel::get_post_types();
-			$screen		  = get_current_screen();
-			$enabled	  = ! $post_id ? false : FLBuilderModel::is_builder_enabled( $post_id );
+			$screen       = get_current_screen();
+			$enabled      = ! $post_id ? false : FLBuilderModel::is_builder_enabled( $post_id );
 			$user_access  = FLBuilderUserAccess::current_user_can( 'builder_access' );
 			$unrestricted = FLBuilderUserAccess::current_user_can( 'unrestricted_editing' );
 
@@ -61,31 +61,35 @@ final class FLBuilderWPBlocksLayout {
 	 * Updates posts being edited in the admin that we're built
 	 * using Beaver Builder before WordPress blocks existed.
 	 *
+	 * We do this on the `block_editor_preload_paths` filter because
+	 * that is the earliest we can hook into updating the post before
+	 * it is preloaded by the REST API.
+	 *
 	 * @since 2.1
-	 * @return void
+	 * @param array $paths
+	 * @param object $post
+	 * @return array
 	 */
-	static public function update_legacy_post() {
-		global $pagenow, $post;
-
-		if ( 'post.php' !== $pagenow || ! is_object( $post ) ) {
-			return;
-		} else {
+	static public function update_legacy_post( $paths, $post ) {
+		if ( is_object( $post ) ) {
 			$enabled = FLBuilderModel::is_builder_enabled( $post->ID );
 			$blocks  = preg_match( '/<!-- wp:(.*) \/?-->/', $post->post_content );
 
 			if ( $enabled && ! $blocks ) {
-				$block   = '<!-- wp:fl-builder/layout -->';
-				$block  .= self::remove_broken_p_tags( $post->post_content );
-				$block  .= '<!-- /wp:fl-builder/layout -->';
+				$block  = '<!-- wp:fl-builder/layout -->';
+				$block .= self::remove_broken_p_tags( $post->post_content );
+				$block .= '<!-- /wp:fl-builder/layout -->';
 
 				$post->post_content = $block;
 
 				wp_update_post( array(
-					'ID' => $post->ID,
+					'ID'           => $post->ID,
 					'post_content' => $block,
 				) );
 			}
 		}
+
+		return $paths;
 	}
 
 	/**
@@ -96,9 +100,9 @@ final class FLBuilderWPBlocksLayout {
 	 * @return void
 	 */
 	static public function disable_builder_on_post_update( $post_id, $new_post ) {
-		$new_post = (object) $new_post;
-		$old_post = get_post( $post_id );
-		$post_types  = FLBuilderModel::get_post_types();
+		$new_post   = (object) $new_post;
+		$old_post   = get_post( $post_id );
+		$post_types = FLBuilderModel::get_post_types();
 
 		if ( ! $old_post || ! in_array( $old_post->post_type, $post_types ) ) {
 			return;
@@ -124,11 +128,11 @@ final class FLBuilderWPBlocksLayout {
 	 */
 	static public function filter_editor_content( $content ) {
 		$post_id = FLBuilderModel::get_post_id();
-		$post = get_post( $post_id );
+		$post    = get_post( $post_id );
 
-		$block   = '<!-- wp:fl-builder/layout -->';
-		$block  .= self::remove_broken_p_tags( $content );
-		$block  .= '<!-- /wp:fl-builder/layout -->';
+		$block  = '<!-- wp:fl-builder/layout -->';
+		$block .= self::remove_broken_p_tags( $content );
+		$block .= '<!-- /wp:fl-builder/layout -->';
 
 		return $block;
 	}
@@ -141,7 +145,7 @@ final class FLBuilderWPBlocksLayout {
 	 * @return string
 	 */
 	static public function filter_migrated_post_content( $content ) {
-		$content = preg_replace( '/<!-- \/?wp:fl-builder\/layout \/?-->/', '', $content );
+		$content = preg_replace( '/<!--\s\/?wp(.|\s)*?-->/', '', $content );
 		return $content;
 	}
 

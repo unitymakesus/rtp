@@ -647,3 +647,11 @@ div#fl-uabb-cloud-templates-form .fl-settings-form-header a {
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+.uabb-key-success {
+    color:#2dbe15;
+    margin-top: 7px;
+}
+.uabb-key-warning {
+    color:#d02222;
+    margin-top: 7px;
+}

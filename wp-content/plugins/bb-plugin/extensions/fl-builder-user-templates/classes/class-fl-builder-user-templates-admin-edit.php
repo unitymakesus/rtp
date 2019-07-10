@@ -15,13 +15,13 @@ final class FLBuilderUserTemplatesAdminEdit {
 	 */
 	static public function init() {
 		/* Actions */
-		add_action( 'plugins_loaded',                   __CLASS__ . '::redirect' );
-		add_action( 'admin_enqueue_scripts',          	__CLASS__ . '::admin_enqueue_scripts' );
-		add_action( 'edit_form_after_title',            __CLASS__ . '::render_global_node_message' );
-		add_action( 'add_meta_boxes',                   __CLASS__ . '::add_meta_boxes', 1 );
+		add_action( 'plugins_loaded', __CLASS__ . '::redirect' );
+		add_action( 'admin_enqueue_scripts', __CLASS__ . '::admin_enqueue_scripts' );
+		add_action( 'edit_form_after_title', __CLASS__ . '::render_global_node_message' );
+		add_action( 'add_meta_boxes', __CLASS__ . '::add_meta_boxes', 1 );
 
 		/* Filters */
-		add_filter( 'fl_builder_render_admin_edit_ui',  __CLASS__ . '::remove_builder_edit_ui' );
+		add_filter( 'fl_builder_render_admin_edit_ui', __CLASS__ . '::remove_builder_edit_ui' );
 	}
 
 	/**
@@ -34,7 +34,7 @@ final class FLBuilderUserTemplatesAdminEdit {
 		global $pagenow;
 
 		$post_type = isset( $_GET['post_type'] ) ? $_GET['post_type'] : null;
-		$args = $_GET;
+		$args      = $_GET;
 
 		if ( 'post-new.php' == $pagenow && 'fl-builder-template' == $post_type ) {
 
@@ -54,7 +54,7 @@ final class FLBuilderUserTemplatesAdminEdit {
 		global $pagenow;
 		global $post;
 
-		$screen = get_current_screen();
+		$screen  = get_current_screen();
 		$slug    = 'fl-builder-user-templates-admin-';
 		$url     = FL_BUILDER_USER_TEMPLATES_URL;
 		$version = FL_BUILDER_VERSION;
@@ -85,10 +85,13 @@ final class FLBuilderUserTemplatesAdminEdit {
 		$action = __( 'Edit', 'fl-builder' );
 
 		if ( 'row' == $type ) {
+			/* translators: %s: add/edit or view */
 			$label = sprintf( _x( '%s Saved Row', '%s is an action like Add, Edit or View.', 'fl-builder' ), $action );
 		} elseif ( 'module' == $type ) {
+			/* translators: %s: add/edit or view */
 			$label = sprintf( _x( '%s Saved Module', '%s is an action like Add, Edit or View.', 'fl-builder' ), $action );
 		} else {
+			/* translators: %s: add/edit or view */
 			$label = sprintf( _x( '%s Template', '%s is an action like Add, Edit or View.', 'fl-builder' ), $action );
 		}
 
@@ -147,21 +150,26 @@ final class FLBuilderUserTemplatesAdminEdit {
 		global $post;
 
 		$type = FLBuilderModel::get_user_template_type( $post->ID );
+		/* translators: %s: branded builder name */
 		$edit = sprintf( _x( 'Launch %s', '%s stands for custom branded "Page Builder" name.', 'fl-builder' ), FLBuilderModel::get_branding() );
 		$view = __( 'View', 'fl-builder' );
 
 		if ( 'fl-builder-template' == $post->post_type ) {
 
 			if ( 'row' == $type ) {
+				/* translators: %s: add/edit or view */
 				$view = sprintf( _x( '%s Saved Row', '%s is an action like Add, Edit or View.', 'fl-builder' ), $view );
 			} elseif ( 'module' == $type ) {
+				/* translators: %s: add/edit or view */
 				$view = sprintf( _x( '%s Saved Module', '%s is an action like Add, Edit or View.', 'fl-builder' ), $view );
 			} else {
+				/* translators: %s: add/edit or view */
 				$view = sprintf( _x( '%s Template', '%s is an action like Add, Edit or View.', 'fl-builder' ), $view );
 			}
 		} else {
 			$object = get_post_type_object( $post->post_type );
-			$view   = sprintf( _x( '%1$s %2$s', '%1$s is an action like Add, Edit or View. %2$s is post type label.', 'fl-builder' ), $view, $object->labels->singular_name );
+			/* translators: 1: add/edit or view: 2: post type label */
+			$view = sprintf( _x( '%1$s %2$s', '%1$s is an action like Add, Edit or View. %2$s is post type label.', 'fl-builder' ), $view, $object->labels->singular_name );
 
 		}
 

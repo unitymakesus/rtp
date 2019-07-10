@@ -10,12 +10,12 @@ class FLGalleryModule extends FLBuilderModule {
 	 */
 	public function __construct() {
 		parent::__construct(array(
-			'name'          	=> __( 'Gallery', 'fl-builder' ),
-			'description'   	=> __( 'Display multiple photos in a gallery view.', 'fl-builder' ),
-			'category'      	=> __( 'Media', 'fl-builder' ),
-			'editor_export'  	=> false,
-			'partial_refresh'	=> true,
-			'icon'				=> 'format-gallery.svg',
+			'name'            => __( 'Gallery', 'fl-builder' ),
+			'description'     => __( 'Display multiple photos in a gallery view.', 'fl-builder' ),
+			'category'        => __( 'Media', 'fl-builder' ),
+			'editor_export'   => false,
+			'partial_refresh' => true,
+			'icon'            => 'format-gallery.svg',
 		));
 
 		$this->add_styles_scripts();
@@ -71,10 +71,10 @@ class FLGalleryModule extends FLBuilderModule {
 	 * @method get_wordpress_photos
 	 */
 	public function get_wordpress_photos() {
-		$photos     = array();
-		$ids        = $this->settings->photos;
-		$medium_w   = get_option( 'medium_size_w' );
-		$large_w    = get_option( 'large_size_w' );
+		$photos   = array();
+		$ids      = $this->settings->photos;
+		$medium_w = get_option( 'medium_size_w' );
+		$large_w  = get_option( 'large_size_w' );
 
 		if ( empty( $this->settings->photos ) ) {
 			return $photos;
@@ -102,12 +102,12 @@ class FLGalleryModule extends FLBuilderModule {
 			if ( isset( $photo->sizes ) ) {
 
 				// Photo data object
-				$data = new stdClass();
-				$data->id = $id;
-				$data->alt = $photo->alt;
-				$data->caption = $photo->caption;
+				$data              = new stdClass();
+				$data->id          = $id;
+				$data->alt         = $photo->alt;
+				$data->caption     = $photo->caption;
 				$data->description = $photo->description;
-				$data->title = $photo->title;
+				$data->title       = $photo->title;
 
 				// Collage photo src
 				if ( 'collage' == $this->settings->layout ) {
@@ -163,9 +163,9 @@ class FLGalleryModule extends FLBuilderModule {
 				foreach ( $item->xpath( 'media:group/media:content' ) as $media_content ) {
 					if ( 'image' == $media_content['medium'] ) {
 						$media[] = array(
-							'height'    => $media_content['height'],
-							'width'     => $media_content['width'],
-							'url'       => $media_content['url'],
+							'height' => $media_content['height'],
+							'width'  => $media_content['width'],
+							'url'    => $media_content['url'],
 						);
 					}
 				}
@@ -192,16 +192,16 @@ class FLGalleryModule extends FLBuilderModule {
 					}
 
 					// Photo data object.
-					$data = new stdClass();
-					$data->id = $item->guid;
-					$data->alt = $item->title;
-					$data->caption = $item->title;
+					$data              = new stdClass();
+					$data->id          = $item->guid;
+					$data->alt         = $item->title;
+					$data->caption     = $item->title;
 					$data->description = $item->title;
-					$data->title = $item->title;
-					$data->height = $media[ count( $media ) - 1 ]['height'];
-					$data->width = $media[ count( $media ) - 1 ]['width'];
-					$data->link = $link;
-					$data->src = $src;
+					$data->title       = $item->title;
+					$data->height      = $media[ count( $media ) - 1 ]['height'];
+					$data->width       = $media[ count( $media ) - 1 ]['width'];
+					$data->link        = $link;
+					$data->src         = $src;
 
 					// Push the photo data.
 					array_push( $photos, $data );
@@ -217,106 +217,127 @@ class FLGalleryModule extends FLBuilderModule {
  * Register the module and its form settings.
  */
 FLBuilder::register_module('FLGalleryModule', array(
-	'general'       => array(
-		'title'         => __( 'General', 'fl-builder' ),
-		'sections'      => array(
-			'general'       => array(
-				'title'         => '',
-				'fields'        => array(
-					'layout'        => array(
-						'type'          => 'select',
-						'label'         => __( 'Layout', 'fl-builder' ),
-						'default'       => 'collage',
-						'options'       => array(
-							'collage'       => __( 'Collage', 'fl-builder' ),
-							'grid'          => _x( 'Thumbs', 'Gallery layout: thumbnails.', 'fl-builder' ),
+	'general' => array(
+		'title'    => __( 'General', 'fl-builder' ),
+		'sections' => array(
+			'general' => array(
+				'title'  => '',
+				'fields' => array(
+					'layout'              => array(
+						'type'    => 'select',
+						'label'   => __( 'Layout', 'fl-builder' ),
+						'default' => 'collage',
+						'options' => array(
+							'collage' => __( 'Collage', 'fl-builder' ),
+							'grid'    => _x( 'Thumbs', 'Gallery layout: thumbnails.', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'collage'       => array(
-								'fields'       => array( 'photo_size' ),
+						'toggle'  => array(
+							'collage' => array(
+								'fields' => array( 'photo_size' ),
 							),
 						),
 					),
-					'source'        => array(
-						'type'          => 'select',
-						'label'         => __( 'Source', 'fl-builder' ),
-						'default'       => 'wordpress',
-						'options'       => array(
-							'wordpress'     => __( 'Media Library', 'fl-builder' ),
-							'smugmug'       => 'SmugMug',
+					'source'              => array(
+						'type'    => 'select',
+						'label'   => __( 'Source', 'fl-builder' ),
+						'default' => 'wordpress',
+						'options' => array(
+							'wordpress' => __( 'Media Library', 'fl-builder' ),
+							'smugmug'   => 'SmugMug',
 						),
-						'help'          => __( 'Pull images from the WordPress media library or a gallery on your SmugMug site by inserting the RSS feed URL from SmugMug. The RSS feed URL can be accessed by using the get a link function in your SmugMug gallery.', 'fl-builder' ),
-						'toggle'        => array(
-							'wordpress'      => array(
-								'fields'        => array( 'photos' ),
+						'help'    => __( 'Pull images from the WordPress media library or a gallery on your SmugMug site by inserting the RSS feed URL from SmugMug. The RSS feed URL can be accessed by using the get a link function in your SmugMug gallery.', 'fl-builder' ),
+						'toggle'  => array(
+							'wordpress' => array(
+								'fields' => array( 'photos' ),
 							),
-							'smugmug'        => array(
-								'fields'        => array( 'feed_url' ),
+							'smugmug'   => array(
+								'fields' => array( 'feed_url' ),
 							),
 						),
 					),
-					'photos'        => array(
-						'type'          => 'multiple-photos',
-						'label'         => __( 'Photos', 'fl-builder' ),
-						'connections'   => array( 'multiple-photos' ),
+					'photos'              => array(
+						'type'        => 'multiple-photos',
+						'label'       => __( 'Photos', 'fl-builder' ),
+						'connections' => array( 'multiple-photos' ),
 					),
-					'feed_url'   => array(
-						'type'          => 'text',
-						'label'         => __( 'Feed URL', 'fl-builder' ),
-						'connections'	=> array( 'custom_field' ),
+					'feed_url'            => array(
+						'type'        => 'text',
+						'label'       => __( 'Feed URL', 'fl-builder' ),
+						'connections' => array( 'custom_field' ),
 					),
-					'photo_size'    => array(
-						'type'          => 'select',
-						'label'         => __( 'Photo Size', 'fl-builder' ),
-						'default'       => '300',
-						'options'       => array(
-							'200'           => _x( 'Small', 'Photo size.', 'fl-builder' ),
-							'300'           => _x( 'Medium', 'Photo size.', 'fl-builder' ),
-							'400'           => _x( 'Large', 'Photo size.', 'fl-builder' ),
+					'photo_size'          => array(
+						'type'    => 'select',
+						'label'   => __( 'Photo Size', 'fl-builder' ),
+						'default' => '300',
+						'options' => array(
+							'200' => _x( 'Small', 'Photo size.', 'fl-builder' ),
+							'300' => _x( 'Medium', 'Photo size.', 'fl-builder' ),
+							'400' => _x( 'Large', 'Photo size.', 'fl-builder' ),
 						),
 					),
-					'photo_spacing' => array(
-						'type'          => 'text',
-						'label'         => __( 'Photo Spacing', 'fl-builder' ),
-						'default'       => '20',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'sanitize'		=> 'absint',
-					),
-					'show_captions' => array(
-						'type'          => 'select',
-						'label'         => __( 'Show Captions', 'fl-builder' ),
-						'default'       => '0',
-						'options'       => array(
-							'0'             => __( 'Never', 'fl-builder' ),
-							'hover'         => __( 'On Hover', 'fl-builder' ),
-							'below'         => __( 'Below Photo', 'fl-builder' ),
+					'show_captions'       => array(
+						'type'    => 'select',
+						'label'   => __( 'Show Captions', 'fl-builder' ),
+						'default' => '0',
+						'options' => array(
+							'0'     => __( 'Never', 'fl-builder' ),
+							'hover' => __( 'On Hover', 'fl-builder' ),
+							'below' => __( 'Below Photo', 'fl-builder' ),
 						),
-						'help'          => __( 'The caption pulls from whatever text you put in the caption area in the media manager for each image. The caption is also pulled directly from SmugMug if you have captions set in your gallery.', 'fl-builder' ),
+						'help'    => __( 'The caption pulls from whatever text you put in the caption area in the media manager for each image. The caption is also pulled directly from SmugMug if you have captions set in your gallery.', 'fl-builder' ),
 					),
-					'click_action'  => array(
-						'type'          => 'select',
-						'label'         => __( 'Click Action', 'fl-builder' ),
-						'default'       => 'lightbox',
-						'options'       => array(
-							'none'          => _x( 'None', 'Click action.', 'fl-builder' ),
-							'lightbox'      => __( 'Lightbox', 'fl-builder' ),
-							'link'          => __( 'Photo Link', 'fl-builder' ),
+					'click_action'        => array(
+						'type'    => 'select',
+						'label'   => __( 'Click Action', 'fl-builder' ),
+						'default' => 'lightbox',
+						'options' => array(
+							'none'     => _x( 'None', 'Click action.', 'fl-builder' ),
+							'lightbox' => __( 'Lightbox', 'fl-builder' ),
+							'link'     => __( 'Photo Link', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'lightbox'		=> array(
+						'toggle'  => array(
+							'lightbox' => array(
 								'fields' => array( 'lightbox_image_size' ),
 							),
 						),
-						'preview'       => array(
-							'type'          => 'none',
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
 					'lightbox_image_size' => array(
-						'type' 			=> 'photo-sizes',
-						'label'			=> __( 'Lightbox Photo Size', 'fl-builder' ),
-						'default'		=> 'large',
+						'type'    => 'photo-sizes',
+						'label'   => __( 'Lightbox Photo Size', 'fl-builder' ),
+						'default' => 'large',
+					),
+				),
+			),
+		),
+	),
+	'style'   => array( // Tab
+		'title'    => __( 'Style', 'fl-builder' ), // Tab title
+		'sections' => array( // Tab Sections
+			'general' => array( // Section
+				'title'  => '', // Section Title
+				'fields' => array( // Section Fields
+					'photo_spacing' => array(
+						'type'     => 'unit',
+						'label'    => __( 'Photo Spacing', 'fl-builder' ),
+						'default'  => '20',
+						'sanitize' => 'absint',
+						'units'    => array( 'px' ),
+						'slider'   => true,
+						'preview'  => array(
+							'type' => 'none',
+						),
+					),
+					'photo_border'  => array(
+						'type'       => 'border',
+						'label'      => __( 'Photo Border', 'fl-builder' ),
+						'responsive' => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => '.fl-photo-img',
+						),
 					),
 				),
 			),

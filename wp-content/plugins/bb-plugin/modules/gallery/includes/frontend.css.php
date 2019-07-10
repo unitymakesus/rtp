@@ -11,3 +11,13 @@
 	padding: 40px 0;
 }
 <?php endif; ?>
+<?php
+
+// Border
+FLBuilderCSS::border_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'photo_border',
+	'selector'     => ".fl-node-$id .fl-photo-img",
+) );
+
+?>

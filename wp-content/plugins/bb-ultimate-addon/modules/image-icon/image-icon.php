@@ -48,7 +48,7 @@ class ImageIconModule extends FLBuilderModule {
 			)
 		);
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 	}
 
 	/**
@@ -73,16 +73,7 @@ class ImageIconModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'img_bg_hover_color_opc', 'img_bg_hover_color' );
 
-			// For image alignment.
-			if ( isset( $settings->img_align ) ) {
-				$settings->img_align = $settings->img_align;
-			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For image alignment.
-			if ( isset( $settings->img_align ) ) {
-				$settings->img_align = $settings->img_align;
-			}
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'icon_bg_color_opc', 'icon_bg_color' );

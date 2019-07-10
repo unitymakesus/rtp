@@ -21,19 +21,34 @@
 				$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
 				$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 
-				$is_load_templates   = '';
-				$is_load_panels      = '';
-				$uabb_live_preview   = '';
-				$uabb_google_map_api = '';
-				$uabb_colorpicker    = '';
-				$uabb_beta_updates   = '';
+				$is_load_templates     = '';
+				$is_load_panels        = '';
+				$uabb_live_preview     = '';
+				$uabb_google_map_api   = '';
+				$uabb_colorpicker      = '';
+				$uabb_beta_updates     = '';
+				$uabb_yelp_api_key     = '';
+				$google_status         = '';
+				$yelp_status           = '';
+				$uabb_google_place_api = '';
+
 
 			if ( is_array( $uabb ) ) {
 				$is_load_panels      = ( array_key_exists( 'load_panels', $uabb ) && 1 == $uabb['load_panels'] ) ? ' checked' : '';
 				$uabb_live_preview   = ( array_key_exists( 'uabb-live-preview', $uabb ) && 1 == $uabb['uabb-live-preview'] ) ? ' checked' : '';
 				$uabb_google_map_api = ( array_key_exists( 'uabb-google-map-api', $uabb ) ) ? $uabb['uabb-google-map-api'] : '';
 
-				$uabb_beta_updates = ( array_key_exists( 'uabb-enable-beta-updates', $uabb ) && 1 == $uabb['uabb-enable-beta-updates'] ) ? ' checked' : '';
+				$uabb_beta_updates     = ( array_key_exists( 'uabb-enable-beta-updates', $uabb ) && 1 == $uabb['uabb-enable-beta-updates'] ) ? ' checked' : '';
+				$uabb_yelp_api_key     = ( array_key_exists( 'uabb-yelp-api-key', $uabb ) ) ? $uabb['uabb-yelp-api-key'] : '';
+				$uabb_google_place_api = ( array_key_exists( 'uabb-google-place-api', $uabb ) ) ? $uabb['uabb-google-place-api'] : '';
+
+			}
+				$status = BB_Ultimate_Addon_Helper::api_key_status();
+
+			if ( is_array( $status ) ) {
+
+				$google_status = ( array_key_exists( 'google_status_code', $status ) ) ? $status['google_status_code'] : '';
+				$yelp_status   = ( array_key_exists( 'yelp_status_code', $status ) ) ? $status['yelp_status_code'] : '';
 			}
 			?>
 
@@ -99,6 +114,51 @@
 				<input type="text" class="uabb-google-map-api" name="uabb-google-map-api" value="<?php echo $uabb_google_map_api; ?>" class="uabb-wp-text uabb-google-map-api" />
 			</div>				
 			<p></p>
+
+			<p></p>
+			<div class="uabb-form-setting">
+				<h4><?php _e( 'Business Reviews - Google Places API Key', 'uabb' ); ?></h4>
+				<p class="uabb-admin-help">
+					<?php _e( 'This setting is required if you wish to use Business Reviews module in your website.', 'uabb' ); ?>
+					<?php
+					if ( empty( $branding_name ) && empty( $branding_short_name ) ) :
+						_e( 'Need help to get Google Places API Key? Read ', 'uabb' );
+						?>
+						<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/how-to-get-google-places-api-key/?utm_source=uabb-pro-dashboard&utm_medium=general-settings-screen&utm_campaign=business-reviews"><?php _e( 'this article', 'uabb' ); ?></a>.</p>
+						<?php
+					endif;
+					?>
+				</p>
+				<input type="text" class="uabb-google-place-api uabb-wp-text" name="uabb-google-place-api" value="<?php echo $uabb_google_place_api; ?>" />
+				<?php if ( 'yes' === $google_status ) { ?>
+					<div class="uabb-key-success"><?php _e( 'Google Places API Key is authenticated correctly.', 'uabb' ); ?></div>
+				<?php } elseif ( 'no' === $google_status ) { ?>
+						<div class="uabb-key-warning"><?php _e( 'Google Places API Key you have entered is incorrect.', 'uabb' ); ?></div>
+				<?php } ?>
+			</div>				
+			<p></p>
+
+			<div class="uabb-form-setting">
+				<h4><?php _e( 'Business Reviews - Yelp API Key', 'uabb' ); ?></h4>
+				<p class="uabb-admin-help">
+					<?php _e( 'This setting is required if you wish to use Yelp reviews in our site.', 'uabb' ); ?>
+					<?php
+					if ( empty( $branding_name ) && empty( $branding_short_name ) ) :
+						_e( 'Need help to get Yelp API key? Read ', 'uabb' );
+						?>
+						<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/find-yelp-api-key/?utm_source=uabb-pro-dashboard&utm_medium=general-settings-screen&utm_campaign=business-reviews"><?php _e( 'this article', 'uabb' ); ?></a>.</p>
+						<?php
+					endif;
+					?>
+				</p>
+				<input type="text" name="uabb-yelp-api-key" value="<?php echo $uabb_yelp_api_key; ?>" class="uabb-wp-text uabb-yelp-api-key"/>
+				<?php if ( 'yes' === $yelp_status ) { ?>
+					<div class="uabb-key-success"><?php _e( 'Entered Yelp API key is authenticated correctly.', 'uabb' ); ?></div>
+				<?php } elseif ( 'no' === $yelp_status ) { ?>
+						<div class="uabb-key-warning"><?php _e( 'Yelp API key you have entered is incorrect.', 'uabb' ); ?></div>
+				<?php } ?>
+			</div>
+
 		</div>
 
 		<p class="submit">

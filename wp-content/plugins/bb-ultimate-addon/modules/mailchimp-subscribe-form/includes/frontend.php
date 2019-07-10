@@ -9,6 +9,10 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 	$p    = '#(\.0+)+($|-)#';
 	$ver1 = preg_replace( $p, '', FL_BUILDER_VERSION );
 	$ver2 = preg_replace( $p, '', '1.8.4' );
+
+	// This is created to generate random numbers in the saved module.
+	$random_id = $id . '_' . rand();
+
 	if ( version_compare( $ver1, $ver2 ) < 0 ) {
 		?>
 	<div class='uabb-mailchimp-version-error'>
@@ -83,8 +87,8 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 								<div class="uabb-terms-text"><?php echo $settings->terms_text; ?></div>
 							<?php endif; ?>
 							<div class="uabb-terms-wrap">
-								<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo $id; ?>">
-									<input type="checkbox" id="uabb-terms-checkbox-<?php echo $id; ?>" name="uabb-terms-checkbox" value="1" />
+								<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo $random_id; ?>">
+									<input type="checkbox" id="uabb-terms-checkbox-<?php echo $random_id; ?>" name="uabb-terms-checkbox" value="1" />
 									<span class="terms-checkbox">
 										<?php echo $settings->terms_checkbox_text; ?>
 									</span>
@@ -124,8 +128,8 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 							<div class="uabb-terms-text"><?php echo $settings->terms_text; ?></div>
 						<?php endif; ?>
 						<div class="uabb-terms-wrap">
-							<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo $id; ?>">
-								<input type="checkbox" id="uabb-terms-checkbox-<?php echo $id; ?>" name="uabb-terms-checkbox" value="1" />
+							<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo $random_id; ?>">
+								<input type="checkbox" id="uabb-terms-checkbox-<?php echo $random_id; ?>" name="uabb-terms-checkbox" value="1" />
 								<span class="terms-checkbox">
 									<?php echo $settings->terms_checkbox_text; ?>
 								</span>

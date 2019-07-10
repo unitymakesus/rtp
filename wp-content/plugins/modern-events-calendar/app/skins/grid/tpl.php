@@ -27,8 +27,9 @@ jQuery(document).ready(function()
 		offset: "'.$this->next_offset.'",
 		limit: "'.$this->limit.'",
         atts: "'.http_build_query(array('atts'=>$this->atts), '', '&').'",
-        ajax_url: "'.admin_url('admin-ajax.php?lang=ru', NULL).'",
+        ajax_url: "'.admin_url('admin-ajax.php', NULL).'",
         sed_method: "'.$this->sed_method.'",
+        image_popup: "'.$this->image_popup.'",
         sf:
         {
             container: "'.($this->sf_status ? '#mec_search_form_'.$this->id : '').'",
@@ -37,8 +38,9 @@ jQuery(document).ready(function()
 });
 </script>';
 
-// Include javascript code into the footer
-$this->factory->params('footer', $javascript);
+// Include javascript code into the page
+if($this->main->is_ajax()) echo $javascript;
+else $this->factory->params('footer', $javascript);
 ?>
 <div class="mec-wrap mec-skin-grid-container <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     
@@ -62,4 +64,3 @@ $this->factory->params('footer', $javascript);
     <?php endif; ?>
     
 </div>
-<?php /** Append JS codes for full-calendar skin **/ if(isset($this->atts['append_js_codes']) and $this->atts['append_js_codes']) echo $javascript;

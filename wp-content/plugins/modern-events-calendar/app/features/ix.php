@@ -19,7 +19,7 @@ class MEC_feature_ix extends MEC_base
      * Facebook App Access Token
      * @var string
      */
-    private $fb_access_token = '1819770188280256|GyNKicqC8aT4Z7GVz_PptY-7kQQ';
+    private $fb_access_token = '';
     
     /**
      * Constructor method
@@ -749,16 +749,35 @@ class MEC_feature_ix extends MEC_base
     {
         $third_party = isset($this->ix['third-party']) ? $this->ix['third-party'] : NULL;
 
-        if($third_party == 'eventon' and class_exists('EventON')) $post_type = 'ajde_events';
-        elseif($third_party == 'the-events-calendar' and class_exists('Tribe__Events__Main')) $post_type = 'tribe_events';
-        elseif($third_party == 'weekly-class' and class_exists('WeeklyClass')) $post_type = 'class';
-        elseif($third_party == 'calendarize-it' and class_exists('plugin_righthere_calendar')) $post_type = 'events';
+        if($third_party == 'eventon' and class_exists('EventON'))
+        {
+            $events = get_posts(array(
+                'posts_per_page' => -1,
+                'post_type' => 'ajde_events',
+            ));
+        }
+        elseif($third_party == 'the-events-calendar' and class_exists('Tribe__Events__Main'))
+        {
+            $events = tribe_get_events(array(
+                'posts_per_page' => -1,
+                'post_type' => 'tribe_events',
+            ));
+        }
+        elseif($third_party == 'weekly-class' and class_exists('WeeklyClass'))
+        {
+            $events = get_posts(array(
+                'posts_per_page' => -1,
+                'post_type' => 'class',
+            ));
+        }
+        elseif($third_party == 'calendarize-it' and class_exists('plugin_righthere_calendar'))
+        {
+            $events = get_posts(array(
+                'posts_per_page' => -1,
+                'post_type' => 'events',
+            ));
+        }
         else return array('success'=>0, 'message'=>__("Third Party plugin is not installed and activated!", 'mec'));
-
-        $events = get_posts(array(
-            'posts_per_page' => -1,
-            'post_type' => $post_type,
-        ));
 
         return array(
             'success' => 1,
@@ -1271,6 +1290,8 @@ class MEC_feature_ix extends MEC_base
                     'mec_repeat_end_at_occurrences'=>9,
                     'mec_repeat_end_at_date'=>$finish,
                     'mec_in_days'=>$days,
+                    'mec_more_info'=>$metas['_EventURL'],
+                    'mec_cost'=>trim($metas['_EventCurrencySymbol'].$metas['_EventCost']),
                 )
             );
 
@@ -3001,10 +3022,14 @@ class MEC_feature_ix extends MEC_base
                 elseif($repeat_type == 'custom_days')
                 {
                     $freq = '';
-                    $mec_days = explode(',', trim($data->mec->days, ','));
+                    $mec_periods = explode(',', trim($data->mec->days, ','));
 
                     $days = '';
-                    foreach($mec_days as $mec_day) $days .= date('Ymd\THis\Z', strtotime($mec_day.' '.$data->time['start'])).'/'.date('Ymd\THis\Z', strtotime($mec_day.' '.$data->time['end'])).',';
+                    foreach($mec_periods as $mec_period)
+                    {
+                        $mec_days = explode(':', trim($mec_period, ': '));
+                        $days .= date('Ymd\THis', strtotime($mec_days[0].' '.$data->time['start'])).$gmt_offset.'/'.date('Ymd\THis', strtotime($mec_days[1].' '.$data->time['end'])).$gmt_offset.',';
+                    }
 
                     // Add RDATE
                     $recurrence[] = trim('RDATE;VALUE=PERIOD:'.trim($days, ', '), '; ');
@@ -3142,18 +3167,20 @@ class MEC_feature_ix extends MEC_base
     public function f_calendar_import_start()
     {
         $fb_page_link = isset($this->ix['facebook_import_page_link']) ? $this->ix['facebook_import_page_link'] : NULL;
+        $this->fb_access_token = isset($this->ix['facebook_app_token']) ? $this->ix['facebook_app_token'] : NULL;
+
         if(!trim($fb_page_link)) return array('success'=>0, 'message'=>__("Please insert your Facebook page's link.", 'mec'));
         
         // Save options
         $this->main->save_ix_options(array('facebook_import_page_link'=>$fb_page_link));
+        $this->main->save_ix_options(array('facebook_app_token'=>$this->fb_access_token));
         
         $fb_page = $this->f_calendar_import_get_page($fb_page_link);
         
         $fb_page_id = isset($fb_page['id']) ? $fb_page['id'] : 0;
         if(!$fb_page_id) return array('success'=>0, 'message'=>__("We couldn't recognize your Facebook page. Please check it and provide us a valid Facebook page link.", 'mec'));
-        
         $events = array();
-        $next_page = 'https://graph.facebook.com/v2.8/'.$fb_page_id.'/events/?access_token='.$this->fb_access_token;
+        $next_page = 'https://graph.facebook.com/v3.2/'.$fb_page_id.'/events/?access_token='.$this->fb_access_token;
         
         do
         {
@@ -3182,6 +3209,7 @@ class MEC_feature_ix extends MEC_base
         if(!count($f_events)) return array('success'=>0, 'message'=>__('Please select some events to import!', 'mec'));
         
         $fb_page_link = isset($this->ix['facebook_import_page_link']) ? $this->ix['facebook_import_page_link'] : NULL;
+        $this->fb_access_token = isset($this->ix['facebook_app_token']) ? $this->ix['facebook_app_token'] : NULL;
         if(!trim($fb_page_link)) return array('success'=>0, 'message'=>__("Please insert your facebook page's link.", 'mec'));
         
         $fb_page = $this->f_calendar_import_get_page($fb_page_link);
@@ -3199,7 +3227,7 @@ class MEC_feature_ix extends MEC_base
         $post_ids = array();
         foreach($f_events as $f_event_id)
         {
-            $events_result = $this->main->get_web_page('https://graph.facebook.com/v2.8/'.$f_event_id.'?access_token='.$this->fb_access_token);
+            $events_result = $this->main->get_web_page('https://graph.facebook.com/v3.2/'.$f_event_id.'?access_token='.$this->fb_access_token);
             $event = json_decode($events_result, true);
 
             // An error Occurred
@@ -3221,8 +3249,8 @@ class MEC_feature_ix extends MEC_base
                 (
                     'name'=>trim($location_name),
                     'address'=>$location_address,
-                    'latitude'=>$location['location']['latitude'],
-                    'longitude'=>$location['location']['longitude'],
+                    'latitude'=>!empty($location['location']['latitude']) ? $location['location']['latitude'] : '' ,
+                    'longitude'=>!empty($location['location']['longitude']) ? $location['location']['longitude'] : '',
                 ));
             }
             
@@ -3316,12 +3344,12 @@ class MEC_feature_ix extends MEC_base
             if($location_id) wp_set_object_terms($post_id, (int) $location_id, 'mec_location');
 
             // Set the Featured Image
-            $photos_results = $this->main->get_web_page('https://graph.facebook.com/v2.8/'.$f_event_id.'/photos?access_token='.$this->fb_access_token);
+            $photos_results = $this->main->get_web_page('https://graph.facebook.com/v3.2/'.$f_event_id.'?fields=cover&access_token='.$this->fb_access_token);
             $photos = json_decode($photos_results, true);
             
-            if(!has_post_thumbnail($post_id) and isset($photos['data']) and is_array($photos['data']) and count($photos['data']))
+            if(!has_post_thumbnail($post_id) and isset($photos['cover']) and is_array($photos['cover']) and count($photos['cover']))
             {
-                $photo = $this->main->get_web_page('https://graph.facebook.com/'.$photos['data'][0]['id'].'/picture?type=normal');
+                $photo = $this->main->get_web_page('https://graph.facebook.com/'.$photos['cover']['id'].'/picture?type=normal');
                 $file_name = md5($post_id).'.'.$this->main->get_image_type_by_buffer($photo);
                 
                 $path = rtrim($wp_upload_dir['path'], DS.' ').DS.$file_name;
@@ -3337,7 +3365,8 @@ class MEC_feature_ix extends MEC_base
     
     public function f_calendar_import_get_page($link)
     {
-        $fb_page_result = $this->main->get_web_page('https://graph.facebook.com/v2.8/?access_token='.$this->fb_access_token.'&id='.$link);
+        $this->fb_access_token = isset($this->ix['facebook_app_token']) ? $this->ix['facebook_app_token'] : NULL;
+        $fb_page_result = $this->main->get_web_page('https://graph.facebook.com/v3.2/?access_token='.$this->fb_access_token.'&id='.$link);
         return json_decode($fb_page_result, true);
     }
 }

@@ -24,7 +24,13 @@ $ix_options = $this->main->get_ix_options();
             <div class="mec-facebook-import">
                 <form id="mec_facebook_import_form" action="<?php echo $this->main->get_full_url(); ?>" method="POST">
                     <h3><?php _e('Import from Facebook Calendar', 'mec'); ?></h3>
-                    <p class="description"><?php _e('Import all of your Facebook events into MEC.', 'mec'); ?></p>
+                    <p class="description"><?php _e('Import all of your Facebook events into MEC.', 'mec'); ?> <a href="https://webnus.net/dox/modern-events-calendar/import-facebook-events/" target="_blank"><?php _e('Documentation', 'mec'); ?></a></p> 
+                    <div class="mec-form-row">
+                        <label class="mec-col-3" for="mec_ix_facebook_app_token"><?php _e('Facebook Page Access Token', 'mec'); ?></label>
+                        <div class="mec-col-4">
+                            <input type="text" id="mec_ix_facebook_app_token" name="ix[facebook_app_token]" value="<?php echo (isset($ix_options['facebook_app_token']) ? $ix_options['facebook_app_token'] : ''); ?>" />
+                        </div>
+                    </div>
                     <div class="mec-form-row">
                         <label class="mec-col-3" for="mec_ix_facebook_import_page_link"><?php _e('Facebook Page Link', 'mec'); ?></label>
                         <div class="mec-col-4">
@@ -72,6 +78,7 @@ $ix_options = $this->main->get_ix_options();
                         </div>
                         <input type="hidden" name="mec-ix-action" value="facebook-calendar-import-do" />
                         <input type="hidden" name="ix[facebook_import_page_link]" value="<?php echo (isset($this->ix['facebook_import_page_link']) ? $this->ix['facebook_import_page_link'] : ''); ?>" />
+                        <input type="hidden" name="ix[facebook_app_token]" value="<?php echo (isset($this->ix['facebook_app_token']) ? $this->ix['facebook_app_token'] : ''); ?>" />
                         <button id="mec_ix_facebook_import_do_form_button" class="button button-primary mec-button-primary" type="submit"><?php _e('Import', 'mec'); ?></button>
                     </div>
                 </form>

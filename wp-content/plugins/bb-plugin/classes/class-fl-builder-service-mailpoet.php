@@ -27,8 +27,8 @@ final class FLBuilderServiceMailPoet extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		return $response;
@@ -57,36 +57,36 @@ final class FLBuilderServiceMailPoet extends FLBuilderService {
 	 */
 	public function render_fields( $account, $settings ) {
 		$response = array(
-			'error'  => false,
-			'html'   => '',
+			'error' => false,
+			'html'  => '',
 		);
-		$lists = array();
+		$lists    = array();
 
 		try {
 			// MailPoet 2+
 			if ( class_exists( 'WYSIJA' ) ) {
-				$list_model         = WYSIJA::get( 'list', 'model' );
-				$lists              = $list_model->get( array( 'name', 'list_id' ), array(
+				$list_model = WYSIJA::get( 'list', 'model' );
+				$lists      = $list_model->get( array( 'name', 'list_id' ), array(
 					'is_enabled' => 1,
 				) );
 
 				// MailPoet 3.0
 			} elseif ( defined( 'MAILPOET_INITIALIZED' ) && true === MAILPOET_INITIALIZED ) {
 
-				$listing = new MailPoet\Listing\Handler( '\MailPoet\Models\Segment' );
-				$listing_data = $listing->get();
+				$listing      = new MailPoet\Listing\Handler();
+				$listing_data = $listing->get( '\MailPoet\Models\Segment', array() );
 
 				if ( isset( $listing_data['items'] ) ) {
 					foreach ( $listing_data['items'] as $segment ) {
 						$lists[] = array(
-							'list_id' 	=> $segment->id,
-							'name' 		=> $segment->name,
+							'list_id' => $segment->id,
+							'name'    => $segment->name,
 						);
 					}
 				}
 			}
 
-			$response['html']   = self::render_list_field( $lists, $settings );
+			$response['html'] = self::render_list_field( $lists, $settings );
 		} catch ( Exception $e ) {
 			$response['error'] = __( 'There was an error retrieveing your lists.', 'fl-builder' );
 		}
@@ -115,13 +115,13 @@ final class FLBuilderServiceMailPoet extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -149,7 +149,7 @@ final class FLBuilderServiceMailPoet extends FLBuilderService {
 
 		if ( ! class_exists( 'WYSIJA' )
 			&& ( ! defined( 'MAILPOET_INITIALIZED' ) || ( defined( 'MAILPOET_INITIALIZED' ) && false === MAILPOET_INITIALIZED ) )
-			 ) {
+			) {
 			$response['error'] = __( 'There was an error subscribing. MailPoet is not installed.', 'fl-builder' );
 		} else {
 
@@ -188,9 +188,10 @@ final class FLBuilderServiceMailPoet extends FLBuilderService {
 				}
 
 				$subscribed = $subscriber::subscribe( $user, array( $settings->list_id ) );
-				$errors = $subscribed->getErrors();
+				$errors     = $subscribed->getErrors();
 
 				if ( false !== $errors ) {
+					/* translators: %s: error */
 					$response['error'] = sprintf( __( 'There was an error subscribing to MailPoet. %s', 'fl-builder' ), $errors[0] );
 				}
 			}

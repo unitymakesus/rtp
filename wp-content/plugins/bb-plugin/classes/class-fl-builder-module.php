@@ -151,23 +151,23 @@ class FLBuilderModule {
 	 * @since 1.0
 	 */
 	public function __construct( $params ) {
-		$class_info             = new ReflectionClass( $this );
-		$class_path             = $class_info->getFileName();
-		$dir_path               = dirname( $class_path );
-		$this->slug             = basename( $class_path, '.php' );
-		$this->enabled          = isset( $params['enabled'] ) ? $params['enabled'] : true;
-		$this->editor_export    = isset( $params['editor_export'] ) ? $params['editor_export'] : true;
-		$this->partial_refresh  = isset( $params['partial_refresh'] ) ? $params['partial_refresh'] : false;
+		$class_info            = new ReflectionClass( $this );
+		$class_path            = $class_info->getFileName();
+		$dir_path              = dirname( $class_path );
+		$this->slug            = basename( $class_path, '.php' );
+		$this->enabled         = isset( $params['enabled'] ) ? $params['enabled'] : true;
+		$this->editor_export   = isset( $params['editor_export'] ) ? $params['editor_export'] : true;
+		$this->partial_refresh = isset( $params['partial_refresh'] ) ? $params['partial_refresh'] : false;
 
 		// We need to normalize the paths here since path comparisons
 		// break on Windows because they use backslashes.
-		$abspath                    = str_replace( '\\', '/', ABSPATH );
-		$fl_builder_dir             = str_replace( '\\', '/', FL_BUILDER_DIR );
-		$dir_path                   = str_replace( '\\', '/', $dir_path );
-		$stylesheet_directory       = str_replace( '\\', '/', get_stylesheet_directory() );
-		$stylesheet_directory_uri   = str_replace( '\\', '/', get_stylesheet_directory_uri() );
-		$template_directory         = str_replace( '\\', '/', get_template_directory() );
-		$template_directory_uri     = str_replace( '\\', '/', get_template_directory_uri() );
+		$abspath                  = str_replace( '\\', '/', ABSPATH );
+		$fl_builder_dir           = str_replace( '\\', '/', FL_BUILDER_DIR );
+		$dir_path                 = str_replace( '\\', '/', $dir_path );
+		$stylesheet_directory     = str_replace( '\\', '/', get_stylesheet_directory() );
+		$stylesheet_directory_uri = str_replace( '\\', '/', get_stylesheet_directory_uri() );
+		$template_directory       = str_replace( '\\', '/', get_template_directory() );
+		$template_directory_uri   = str_replace( '\\', '/', get_template_directory_uri() );
 
 		// Find the right paths.
 		if ( is_child_theme() && stristr( $dir_path, $stylesheet_directory ) ) {
@@ -193,15 +193,15 @@ class FLBuilderModule {
 			'name'        => $params['name'],
 			'description' => $params['description'],
 			'category'    => $this->normalize_category_name( $params['category'] ),
-			'group'    	  => isset( $params['group'] ) ? $params['group'] : false,
-			'icon'		  => $this->icon,
+			'group'       => isset( $params['group'] ) ? $params['group'] : false,
+			'icon'        => $this->icon,
 		), $this->slug );
 
-		$this->name             = $details['name'];
-		$this->description      = $details['description'];
-		$this->category         = $details['category'];
-		$this->group            = $details['group'];
-		$this->icon             = $details['icon'];
+		$this->name        = $details['name'];
+		$this->description = $details['description'];
+		$this->category    = $details['category'];
+		$this->group       = $details['group'];
+		$this->icon        = $details['icon'];
 	}
 
 	/**
@@ -274,13 +274,26 @@ class FLBuilderModule {
 
 	/**
 	 * Should be overridden by subclasses to
-	 * work with settings data before it is saved.
+	 * work with settings data _before it is saved_.
 	 *
 	 * @since 1.0
-	 * @param object A settings object that is going to be saved.
+	 * @param object $settings A settings object that is going to be saved.
 	 * @return object
 	 */
 	public function update( $settings ) {
+		return $settings;
+	}
+
+	/**
+	 * Should be overridden by subclasses to
+	 * work with settings data _before it is used to display a module_.
+	 *
+	 * @since 2.0.3
+	 * @param object $settings A settings object.
+	 * @param object $helper A settings compatibility helper.
+	 * @return object
+	 */
+	public function filter_settings( $settings, $helper ) {
 		return $settings;
 	}
 

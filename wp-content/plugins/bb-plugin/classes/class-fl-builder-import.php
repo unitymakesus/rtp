@@ -23,7 +23,7 @@ final class FLBuilderImport {
 			return;
 		}
 
-		require_once FL_BUILDER_DIR . '/classes/class-fl-builder-importer.php';
+		require_once FL_BUILDER_DIR . 'classes/class-fl-builder-importer.php';
 
 		// Remove the WordPress importer.
 		remove_action( 'admin_init', 'wordpress_importer_init' );

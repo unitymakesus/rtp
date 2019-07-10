@@ -311,8 +311,6 @@ class MauticApi
         //Set default CURL options
         $options = array(
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-			//CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_HEADER         => true
         );
 

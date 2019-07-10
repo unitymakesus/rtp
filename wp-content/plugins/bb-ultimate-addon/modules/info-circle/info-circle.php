@@ -49,9 +49,6 @@ class UABBInfoCircleModule extends FLBuilderModule {
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
 			// Handle opacity fields.
-			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
-			$helper->handle_opacity_inputs( $settings, 'btn_bg_color_opc', 'btn_bg_color' );
-			$helper->handle_opacity_inputs( $settings, 'inner_circle_bg_color_opc', 'inner_circle_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'outer_bg_color_opc', 'outer_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'info_bg_color_opc', 'info_bg_color' );
 
@@ -65,6 +62,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 					if ( 'regular' == $settings->font_family['weight'] ) {
@@ -72,6 +70,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -79,18 +78,21 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->title_font_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 				$settings->title_font_typo_responsive['font_size'] = array(
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -98,6 +100,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 
@@ -105,6 +108,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 
@@ -112,15 +116,18 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->title_font_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 				$settings->title_font_typo['letter_spacing'] = array(
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->letter_spacing );
 			}
 			if ( ! isset( $settings->desc_font_typo ) || ! is_array( $settings->desc_font_typo ) ) {
 
@@ -132,6 +139,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 
 				if ( isset( $settings->desc_font_family['family'] ) ) {
 					$settings->desc_font_typo['font_family'] = $settings->desc_font_family['family'];
+					unset( $settings->desc_font_family['family'] );
 				}
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->desc_font_family['weight'] ) {
@@ -139,6 +147,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_font_family['weight'];
 					}
+					unset( $settings->desc_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size_unit ) ) {
@@ -147,18 +156,21 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->desc_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit );
 			}
 			if ( isset( $settings->desc_font_size_unit_medium ) ) {
 				$settings->desc_font_typo_medium['font_size'] = array(
 					'length' => $settings->desc_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit_medium );
 			}
 			if ( isset( $settings->desc_font_size_unit_responsive ) ) {
 				$settings->desc_font_typo_responsive['font_size'] = array(
 					'length' => $settings->desc_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit_responsive );
 			}
 			if ( isset( $settings->desc_line_height_unit ) ) {
 
@@ -166,6 +178,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit );
 			}
 			if ( isset( $settings->desc_line_height_unit_medium ) ) {
 
@@ -173,6 +186,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit_medium );
 			}
 			if ( isset( $settings->desc_line_height_unit_responsive ) ) {
 
@@ -180,11 +194,12 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit_responsive );
 			}
 			if ( isset( $settings->desc_transform ) ) {
 
 				$settings->desc_font_typo['text_transform'] = $settings->desc_transform;
-
+				unset( $settings->desc_transform );
 			}
 			if ( isset( $settings->desc_letter_spacing ) ) {
 
@@ -192,6 +207,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					'length' => $settings->desc_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_letter_spacing );
 			}
 			for ( $i = 0; $i < count( $settings->add_circle_item ); $i++ ) {
 
@@ -215,6 +231,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 							$settings->add_circle_item[ $i ]->btn_font_typo->font_weight = $settings->add_circle_item[ $i ]->btn_font_family->weight;
 						}
 					}
+					unset( $settings->add_circle_item[ $i ]->btn_font_family );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_font_size_unit ) ) {
 
@@ -222,6 +239,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 						'length' => $settings->add_circle_item[ $i ]->btn_font_size_unit,
 						'unit'   => 'px',
 					);
+					unset( $settings->add_circle_item[ $i ]->btn_font_size_unit );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_font_size_unit_medium ) ) {
 
@@ -229,6 +247,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 						'length' => $settings->add_circle_item[ $i ]->btn_font_size_unit_medium,
 						'unit'   => 'px',
 					);
+					unset( $settings->add_circle_item[ $i ]->btn_font_size_unit_medium );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_font_size_unit_responsive ) ) {
 
@@ -236,6 +255,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 						'length' => $settings->add_circle_item[ $i ]->btn_font_size_unit_responsive,
 						'unit'   => 'px',
 					);
+					unset( $settings->add_circle_item[ $i ]->btn_font_size_unit_responsive );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_line_height_unit ) ) {
 
@@ -243,6 +263,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 						'length' => $settings->add_circle_item[ $i ]->btn_line_height_unit,
 						'unit'   => 'em',
 					);
+					unset( $settings->add_circle_item[ $i ]->btn_line_height_unit );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_line_height_unit_medium ) ) {
 
@@ -250,15 +271,18 @@ class UABBInfoCircleModule extends FLBuilderModule {
 						'length' => $settings->add_circle_item[ $i ]->btn_line_height_unit_medium,
 						'unit'   => 'em',
 					);
+					unset( $settings->add_circle_item[ $i ]->btn_line_height_unit_medium );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_line_height_unit_responsive ) ) {
 					$settings->add_circle_item[ $i ]->btn_font_typo_responsive->line_height = (object) array(
 						'length' => $settings->add_circle_item[ $i ]->btn_line_height_unit_responsive,
 						'unit'   => 'em',
 					);
+					unset( $settings->add_circle_item[ $i ]->btn_line_height_unit_responsive );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_transform ) ) {
 					$settings->add_circle_item[ $i ]->btn_font_typo->text_transform = $settings->add_circle_item[ $i ]->btn_transform;
+					unset( $settings->add_circle_item[ $i ]->btn_transform );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_letter_spacing ) ) {
 
@@ -266,51 +290,22 @@ class UABBInfoCircleModule extends FLBuilderModule {
 						'length' => $settings->add_circle_item[ $i ]->btn_letter_spacing,
 						'unit'   => 'px',
 					);
-
-				}
-				if ( isset( $settings->add_circle_item[ $i ]->btn_font_family ) ) {
-					unset( $settings->add_circle_item[ $i ]->btn_font_family );
-					unset( $settings->add_circle_item[ $i ]->btn_font_size_unit );
-					unset( $settings->add_circle_item[ $i ]->btn_font_size_unit_medium );
-					unset( $settings->add_circle_item[ $i ]->btn_font_size_unit_responsive );
-					unset( $settings->add_circle_item[ $i ]->btn_line_height_unit );
-					unset( $settings->add_circle_item[ $i ]->btn_line_height_unit_medium );
-					unset( $settings->add_circle_item[ $i ]->btn_line_height_unit_responsive );
-					unset( $settings->add_circle_item[ $i ]->btn_transform );
 					unset( $settings->add_circle_item[ $i ]->btn_letter_spacing );
 				}
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
-				unset( $settings->letter_spacing );
-			}
-			if ( isset( $settings->desc_font_family ) ) {
-				unset( $settings->desc_font_family );
-				unset( $settings->desc_font_size_unit );
-				unset( $settings->desc_font_size_unit_medium );
-				unset( $settings->desc_font_size_unit_responsive );
-				unset( $settings->desc_line_height_unit );
-				unset( $settings->desc_line_height_unit_medium );
-				unset( $settings->desc_line_height_unit_responsive );
-				unset( $settings->desc_transform );
-				unset( $settings->desc_letter_spacing );
+				$helper->handle_opacity_inputs( $settings->add_circle_item[ $i ], 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
+				$helper->handle_opacity_inputs( $settings->add_circle_item[ $i ], 'btn_bg_color_opc', 'btn_bg_color' );
+				$helper->handle_opacity_inputs( $settings->add_circle_item[ $i ], 'inner_circle_bg_color_opc', 'inner_circle_bg_color' );
+				if ( isset( $settings->add_circle_item[ $i ]->cta_link_nofollow ) ) {
+					if ( '1' == $settings->add_circle_item[ $i ]->cta_link_nofollow || 'yes' == $settings->add_circle_item[ $i ]->cta_link_nofollow ) {
+						$settings->add_circle_item[ $i ]->cta_link_nofollow = 'yes';
+					}
+				}
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
 			// Handle opacity fields.
-			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
-			$helper->handle_opacity_inputs( $settings, 'btn_bg_color_opc', 'btn_bg_color' );
-			$helper->handle_opacity_inputs( $settings, 'inner_circle_bg_color_opc', 'inner_circle_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'outer_bg_color_opc', 'outer_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'info_bg_color_opc', 'info_bg_color' );
-
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
 				$settings->title_font_typo            = array();
@@ -321,6 +316,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 
 				if ( isset( $settings->font_family['family'] ) ) {
 						$settings->title_font_typo['font_family'] = $settings->font_family['family'];
+						unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 					if ( 'regular' == $settings->font_family['weight'] ) {
@@ -328,6 +324,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) ) {
@@ -383,6 +380,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 
 				if ( isset( $settings->desc_font_family['family'] ) ) {
 					$settings->desc_font_typo['font_family'] = $settings->desc_font_family['family'];
+					unset( $settings->desc_font_family['family'] );
 				}
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->desc_font_family['weight'] ) {
@@ -390,6 +388,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_font_family['weight'];
 					}
+					unset( $settings->desc_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size['desktop'] ) ) {
@@ -454,6 +453,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 							$settings->add_circle_item[ $i ]->btn_font_typo->font_weight = $settings->add_circle_item[ $i ]->btn_font_family->weight;
 						}
 					}
+					unset( $settings->add_circle_item[ $i ]->btn_font_family );
 				}
 				if ( isset( $settings->add_circle_item[ $i ]->btn_font_size->desktop ) ) {
 
@@ -498,22 +498,53 @@ class UABBInfoCircleModule extends FLBuilderModule {
 							'unit'   => 'em',
 						);
 					}
+					$helper->handle_opacity_inputs( $settings->add_circle_item[ $i ], 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
+					$helper->handle_opacity_inputs( $settings->add_circle_item[ $i ], 'btn_bg_color_opc', 'btn_bg_color' );
+					$helper->handle_opacity_inputs( $settings->add_circle_item[ $i ], 'inner_circle_bg_color_opc', 'inner_circle_bg_color' );
 				}
-				if ( isset( $settings->add_circle_item[ $i ]->btn_font_family ) ) {
-					unset( $settings->add_circle_item[ $i ]->btn_font_family );
+				if ( isset( $settings->add_circle_item[ $i ]->btn_font_size ) ) {
 					unset( $settings->add_circle_item[ $i ]->btn_font_size );
+				}
+				if ( isset( $settings->add_circle_item[ $i ]->btn_line_height ) ) {
 					unset( $settings->add_circle_item[ $i ]->btn_line_height );
 				}
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->line_height );
+			// unset value.
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
 			}
-			if ( isset( $settings->desc_font_family ) ) {
-				unset( $settings->desc_font_family );
-				unset( $settings->desc_font_size );
-				unset( $settings->desc_line_height );
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
+			}
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
+			}
+			if ( isset( $settings->desc_font_size['desktop'] ) ) {
+				unset( $settings->desc_font_size['desktop'] );
+			}
+			if ( isset( $settings->desc_font_size['medium'] ) ) {
+				unset( $settings->desc_font_size['medium'] );
+			}
+			if ( isset( $settings->desc_font_size['small'] ) ) {
+				unset( $settings->desc_font_size['small'] );
+			}
+			if ( isset( $settings->desc_line_height['desktop'] ) ) {
+				unset( $settings->desc_line_height['desktop'] );
+			}
+			if ( isset( $settings->desc_line_height['medium'] ) ) {
+				unset( $settings->desc_line_height['medium'] );
+			}
+			if ( isset( $settings->desc_line_height['small'] ) ) {
+				unset( $settings->desc_line_height['small'] );
 			}
 		}
 		return $settings;
@@ -601,7 +632,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					/* Link Section */
 					'link'                        => $item->cta_link,
 					'link_target'                 => $item->cta_link_target,
-
+					'link_nofollow'               => ( isset( $item->cta_link_nofollow ) ) ? $item->cta_link_nofollow : '',
 					/* Style Section */
 					'style'                       => $item->btn_style,
 					'border_size'                 => $item->btn_border_size,
@@ -652,7 +683,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 					/* Link Section */
 					'link'                       => $item->cta_link,
 					'link_target'                => $item->cta_link_target,
-
+					'link_nofollow'              => ( isset( $item->cta_link_nofollow ) ) ? $item->cta_link_nofollow : '',
 					/* Style Section */
 					'style'                      => $item->btn_style,
 					'border_size'                => $item->btn_border_size,
@@ -691,7 +722,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 			}
 			FLBuilder::render_module_html( 'uabb-button', $btn_settings );
 		} else {
-			echo '<a href="' . $item->cta_link . '" target="' . $item->cta_link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $item->cta_link_target, 0, 0 ) . ' class="uabb-infoc-link" >' . $item->cta_text . '</a>';
+			echo '<a href="' . $item->cta_link . '" target="' . $item->cta_link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $item->cta_link_target, $item->cta_link_nofollow, 0 ) . ' class="uabb-infoc-link" >' . $item->cta_text . '</a>';
 		}
 	}
 }

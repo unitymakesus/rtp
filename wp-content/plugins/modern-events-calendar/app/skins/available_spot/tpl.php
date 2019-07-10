@@ -4,7 +4,7 @@ defined('MECEXEC') or die();
 
 $styling = $this->main->get_styling();
 $event = $this->events[0];
-
+$settings = $this->main->get_settings();
 // Event is not valid!
 if(!isset($event->data)) return;
 
@@ -64,8 +64,9 @@ jQuery(document).ready(function()
 });
 </script>';
 
-// Include javascript code into the footer
-$this->factory->params('footer', $javascript);
+// Include javascript code into the page
+if($this->main->is_ajax()) echo $javascript;
+else $this->factory->params('footer', $javascript);
 
 $book = $this->getBook();
 $availability = $book->get_tickets_availability($event->data->ID, $start_date);
@@ -83,10 +84,49 @@ foreach($availability as $ticket_id=>$count)
         break;
     }
 }
+
+$speakers = '""';
+if ( !empty($event->data->speakers)) 
+{
+    $speakers= [];
+    foreach ($event->data->speakers as $key => $value) {
+        $speakers[] = array(
+            "@type" 	=> "Person",
+            "name"		=> $value['name'],
+            "image"		=> $value['thumbnail'],
+            "sameAs"	=> $value['facebook'],
+        );
+    } 
+    $speakers = json_encode($speakers);
+}
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?> <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     <div class="mec-av-spot-wrap">
-
+        <script type="application/ld+json">
+        {
+            "@context" 		: "http://schema.org",
+            "@type" 		: "Event",
+            "startDate" 	: "<?php echo !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '' ; ?>",
+            "endDate" 		: "<?php echo !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ; ?>",
+            "location" 		:
+            {
+                "@type" 		: "Place",
+                "name" 			: "<?php echo (isset($location['name']) ? $location['name'] : ''); ?>",
+                "image"			: "<?php echo (isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '');; ?>",
+                "address"		: "<?php echo (isset($location['address']) ? $location['address'] : ''); ?>"
+            },
+            "offers": {
+                            "url": "<?php echo $event->data->permalink; ?>",
+                            "price": "<?php echo isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; ?>",
+                            "priceCurrency" : "<?php echo isset($settings['currency']) ? $settings['currency'] : ''; ?>"
+                        },
+            "performer": <?php echo $speakers; ?>,
+            "description" 	: "<?php  echo esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)); ?>",
+            "image" 		: "<?php echo !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ; ?>",
+            "name" 			: "<?php esc_html_e($event->data->title); ?>",
+            "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
+        }
+        </script>
         <div class="mec-av-spot">
             <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
 
@@ -150,7 +190,7 @@ foreach($availability as $ticket_id=>$count)
                             // Safe Excerpt for UTF-8 Strings
                             if(!trim($excerpt))
                             {
-                                $ex = explode(' ', strip_tags($event->data->post->post_content));
+                                $ex = explode(' ', strip_tags(strip_shortcodes($event->data->post->post_content)));
                                 $words = array_slice($ex, 0, 30);
 
                                 $excerpt = implode(' ', $words);

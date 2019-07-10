@@ -50,9 +50,153 @@ final class UABBBuilderAdminSettings {
 		if ( isset( $_REQUEST['page'] ) && 'uabb-builder-settings' == $_REQUEST['page'] ) {
 			add_action( 'admin_enqueue_scripts', __CLASS__ . '::styles_scripts' );
 			self::save();
+			self::api_key_authenticate();
 		}
 	}
+	/**
+	 * API Key Authenticate
+	 * the builder admin settings page.
+	 *
+	 * @since 1.18.0
+	 * @return void
+	 */
+	public static function api_key_authenticate() {
+		if ( ! current_user_can( 'delete_users' ) ) {
+			return;
+		}
 
+		$status = array();
+
+		if ( isset( $_POST['fl-uabb-nonce'] ) && wp_verify_nonce( $_POST['fl-uabb-nonce'], 'uabb' ) ) {
+
+			if ( isset( $_POST['uabb-google-place-api'] ) && ! empty( $_POST['uabb-google-place-api'] ) ) {
+
+				$api_key = $_POST['uabb-google-place-api'];
+
+				$place_id = 'ChIJq6qqat2_wjsR4Rri4i22ap4';
+
+				$url = add_query_arg(
+					array(
+						'key'     => $api_key,
+						'placeid' => $place_id,
+					), 'https://maps.googleapis.com/maps/api/place/details/json'
+				);
+
+				$result = wp_remote_post( $url,
+					array(
+						'method'      => 'POST',
+						'timeout'     => 60,
+						'httpversion' => '1.0',
+						'sslverify'   => false,
+					)
+				);
+				if ( ! is_wp_error( $result ) || wp_remote_retrieve_response_code( $result ) === 200 ) {
+
+					$final_result = json_decode( wp_remote_retrieve_body( $result ) );
+
+					$result_status = $final_result->status;
+
+					switch ( $result_status ) {
+						case 'REQUEST_DENIED':
+							update_option( 'google_status_code', 'no' );
+							break;
+						case 'OK':
+							update_option( 'google_status_code', 'yes' );
+							break;
+						default:
+							break;
+					}
+				}
+			} else {
+
+				delete_option( 'google_status_code' );
+
+			}
+			if ( isset( $_POST['uabb-yelp-api-key'] ) && ! empty( $_POST['uabb-yelp-api-key'] ) ) {
+
+				$yelp_api_key = $_POST['uabb-yelp-api-key'];
+
+				$business_id = 'ling-ho-chinese-cuisine-los-angeles';
+
+				$url = 'https://api.yelp.com/v3/businesses/' . $business_id . '/reviews';
+
+				$result = wp_remote_get(
+					$url,
+					array(
+						'method'      => 'GET',
+						'timeout'     => 60,
+						'httpversion' => '1.0',
+						'sslverify'   => false,
+						'user-agent'  => '',
+						'headers'     => array(
+							'Authorization' => 'Bearer ' . $yelp_api_key,
+						),
+					)
+				);
+				if ( is_wp_error( $result ) ) {
+
+					$error_message = $result->get_error_message();
+
+					update_option( 'yelp_status_code', 'no' );
+				} else {
+
+					$reviews = json_decode( $result['body'] );
+
+					$response_code = wp_remote_retrieve_response_code( $result );
+
+					if ( 200 !== $response_code ) {
+
+						$error_message = $reviews->error->code;
+
+						if ( 'VALIDATION_ERROR' === $error_message ) {
+
+							update_option( 'yelp_status_code', 'no' );
+						}
+					} else {
+						update_option( 'yelp_status_code', 'yes' );
+					}
+				}
+			} else {
+
+				delete_option( 'yelp_status_code' );
+
+			}
+			global $wpdb;
+
+			$param1 = '%\_transient\_%';
+			$param2 = '%_uabb_reviews_%';
+			$param3 = '%\_transient\_timeout%';
+
+			$transients = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->options} WHERE option_name LIKE %s AND option_name LIKE %s AND option_name NOT LIKE %s", $param1, $param2, $param3 ) );
+
+			foreach ( $transients as $transient ) {
+
+				$transient_name = $transient->option_name;
+
+				$transient_name = str_replace( '_transient_', '', $transient_name );
+
+				delete_transient( $transient_name );
+			}
+		}
+	}
+	/**
+	 * Show Branding tab.
+	 *
+	 * @since 1.16.1
+	 * @return bool true | false
+	 */
+	public static function show_branding() {
+		$show_branding = true;
+
+		if ( true == get_option( 'uabb_hide_branding' ) ) {
+			$show_branding = false;
+		}
+
+		if ( defined( 'WP_UABB_WHITE_LABEL' ) && WP_UABB_WHITE_LABEL ) {
+			$show_branding = false;
+		}
+		return apply_filters( 'uabb_show_branding', $show_branding );
+	}
 	/**
 	 * Renders the admin settings menu.
 	 *
@@ -219,8 +363,7 @@ final class UABBBuilderAdminSettings {
 			'show'     => ! is_network_admin() || ! FLBuilderAdminSettings::multisite_support(),
 			'priority' => 509,
 		);
-
-		if ( get_option( 'uabb_hide_branding' ) != true ) {
+		if ( self::show_branding() ) {
 			$items['uabb-branding'] = array(
 				'title'    => __( 'Branding', 'uabb' ),
 				'show'     => is_network_admin() || ! FLBuilderAdminSettings::multisite_support(),
@@ -368,6 +511,12 @@ final class UABBBuilderAdminSettings {
 				$uabb['uabb-google-map-api'] = $_POST['uabb-google-map-api'];
 			}
 			isset( $_POST['uabb-enable-beta-updates'] ) ? $uabb['uabb-enable-beta-updates'] = true : $uabb['uabb-enable-beta-updates'] = false;
+			if ( isset( $_POST['uabb-yelp-api-key'] ) ) {
+				$uabb['uabb-yelp-api-key'] = $_POST['uabb-yelp-api-key'];
+			}
+			if ( isset( $_POST['uabb-google-place-api'] ) ) {
+				$uabb['uabb-google-place-api'] = $_POST['uabb-google-place-api'];
+			}
 
 			FLBuilderModel::update_admin_settings_option( '_fl_builder_uabb', $uabb, false );
 		}
@@ -388,6 +537,8 @@ final class UABBBuilderAdminSettings {
 				$uabb['uabb-knowledge-base-url'] = sanitize_text_field( $_POST['uabb-knowledge-base-url'] );   }
 			if ( isset( $_POST['uabb-contact-support-url'] ) ) {
 				$uabb['uabb-contact-support-url'] = sanitize_text_field( $_POST['uabb-contact-support-url'] );  }
+			if ( isset( $_POST['uabb-plugin-icon-url'] ) ) {
+				$uabb['uabb-plugin-icon-url'] = sanitize_text_field( $_POST['uabb-plugin-icon-url'] );   }
 
 			/* Enable / Disable Template Cloud */
 			$uabb['uabb-enable-template-cloud'] = false;

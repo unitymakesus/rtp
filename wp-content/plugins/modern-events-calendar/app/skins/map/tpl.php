@@ -39,8 +39,9 @@ if(count($this->events))
     });
     </script>';
 
-    // Include javascript code into the footer
-    $this->factory->params('footer', $javascript);
+    // Include javascript code into the page
+    if($this->main->is_ajax()) echo $javascript;
+    else $this->factory->params('footer', $javascript);
 }
 ?>
 <div class="mec-wrap mec-skin-map-container <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">

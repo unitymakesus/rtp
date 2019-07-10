@@ -135,6 +135,18 @@ function mec_toggle_first_for_all'.$uniqueid.'()
     }
 }
 
+function mec_label_first_for_all'.$uniqueid.'()
+{
+    var input = jQuery("#mec_book_first_for_all'.$uniqueid.'");
+    if (!input.is(":checked")) {
+        input.prop("checked", true);
+        mec_toggle_first_for_all'.$uniqueid.'();
+    } else {
+        input.prop("checked", false);
+        mec_toggle_first_for_all'.$uniqueid.'();
+    }
+}
+
 function mec_book_form_submit'.$uniqueid.'()
 {
     var step = jQuery("#mec_book_form'.$uniqueid.' input[name=step]").val();
@@ -248,18 +260,22 @@ function mec_book_form_submit'.$uniqueid.'()
         
         if(!valid) return false;
     }
-    
+
     // Add loading Class to the button
     jQuery("#mec_book_form'.$uniqueid.' button[type=submit]").addClass("loading");
     jQuery("#mec_booking_message'.$uniqueid.'").removeClass("mec-success mec-error").hide();
+       
+    var fileToUpload = false;
     
     var data = jQuery("#mec_book_form'.$uniqueid.'").serialize();
-    jQuery.ajax(
-    {
-        type: "GET",
+    jQuery.ajax({
+        type: "POST",
         url: "'.admin_url('admin-ajax.php', NULL).'",
-        data: data,
+        data: new FormData(jQuery("#mec_book_form'.$uniqueid.'")[0]),
         dataType: "JSON",
+        processData: false,
+        contentType: false,
+        cache: false,
         success: function(data)
         {
             // Remove the loading Class to the button

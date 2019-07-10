@@ -452,7 +452,8 @@
 }
 
 .uabb-woo-categories-carousel ul.slick-dots li button:before {
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
+    font-weight:900;
     font-size: 6px;
     line-height: 20px;
     position: absolute;

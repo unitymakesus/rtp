@@ -329,10 +329,20 @@
     position: fixed;
     top: 0;
     left: 0;
+    transform: translate3d(-320px, 0px, 0px);
+}
+
+.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translate3d(320px, 0px, 0px);
+}
+
+.uabb-creative-menu .uabb-off-canvas-menu {
     z-index: 99999;
     width: 300px;
     height: 100%;
-    transform: translate3d(-320px, 0px, 0px);
     background: rgb(55, 58, 71);
     padding: 60px 20px;
     -webkit-transition: all 0.8s;
@@ -353,26 +363,6 @@
 .uabb-creative-menu .menu > li > a,
 .uabb-creative-menu .menu > li > .uabb-has-submenu-container a {
     outline: 0;
-}
-
-.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-right {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 99999;
-    width: 300px;
-    height: 100%;
-    transform: translate3d(320px, 0px, 0px);
-    background: rgb(55, 58, 71);
-    padding: 60px 20px; 
-    -webkit-transition: all 0.8s;
-    transition: transform 0.8s ease;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    perspective: 1000;
-    backface-visibility: hidden;
 }
 
 .menu-open.uabb-creative-menu .uabb-off-canvas-menu.uabb-menu-right {

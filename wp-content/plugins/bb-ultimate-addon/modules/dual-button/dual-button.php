@@ -54,10 +54,6 @@ class UABBDualButtonModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, '_btn_two_back_color_opc', '_btn_two_back_color' );
 			$helper->handle_opacity_inputs( $settings, 'divider_background_color_opc', 'divider_background_color' );
 
-			// For Dual Button one typo.
-			if ( isset( $settings->dual_button_align ) ) {
-				$settings->dual_button_align = $settings->dual_button_align;
-			}
 			if ( ! isset( $settings->_btn_one_typo ) || ! is_array( $settings->_btn_one_typo ) ) {
 
 				$settings->_btn_one_typo            = array();
@@ -65,31 +61,39 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$settings->_btn_one_typo_responsive = array();
 			}
 			if ( isset( $settings->_btn_one_font_family ) ) {
-				if ( 'regular' == $settings->_btn_one_font_family['weight'] ) {
-					$settings->_btn_one_typo['font_weight'] = 'normal';
-				} else {
-					$settings->_btn_one_typo['font_weight'] = $settings->_btn_one_font_family['weight'];
+				if ( isset( $settings->_btn_one_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->_btn_one_font_family['weight'] ) {
+						$settings->_btn_one_typo['font_weight'] = 'normal';
+					} else {
+						$settings->_btn_one_typo['font_weight'] = $settings->_btn_one_font_family['weight'];
+					}
+					unset( $settings->_btn_one_font_family['weight'] );
 				}
-				$settings->_btn_one_typo['font_family'] = $settings->_btn_one_font_family['family'];
-
+				if ( isset( $settings->_btn_one_font_family['family'] ) ) {
+					$settings->_btn_one_typo['font_family'] = $settings->_btn_one_font_family['family'];
+					unset( $settings->_btn_one_font_family['family'] );
+				}
 			}
 			if ( isset( $settings->_btn_one_font_size_unit ) ) {
 				$settings->_btn_one_typo['font_size'] = array(
 					'length' => $settings->_btn_one_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_one_font_size_unit );
 			}
 			if ( isset( $settings->_btn_one_font_size_unit_medium ) ) {
 				$settings->_btn_one_typo_medium['font_size'] = array(
 					'length' => $settings->_btn_one_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_one_font_size_unit_medium );
 			}
 			if ( isset( $settings->_btn_one_font_size_unit_responsive ) ) {
 				$settings->_btn_one_typo_responsive['font_size'] = array(
 					'length' => $settings->_btn_one_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_one_font_size_unit_responsive );
 			}
 			if ( isset( $settings->_btn_one_line_height_unit ) ) {
 
@@ -97,27 +101,32 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'length' => $settings->_btn_one_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->_btn_one_line_height_unit );
 			}
 			if ( isset( $settings->_btn_one_line_height_unit_medium ) ) {
 				$settings->_btn_one_typo_medium['line_height'] = array(
 					'length' => $settings->_btn_one_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->_btn_one_line_height_unit_medium );
 			}
 			if ( isset( $settings->_btn_one_line_height_unit_responsive ) ) {
 				$settings->_btn_one_typo_responsive['line_height'] = array(
 					'length' => $settings->_btn_one_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->_btn_one_line_height_unit_responsive );
 			}
 			if ( isset( $settings->_btn_one_text_transform ) ) {
 				$settings->_btn_one_typo['text_transform'] = $settings->_btn_one_text_transform;
+				unset( $settings->_btn_one_text_transform );
 			}
 			if ( isset( $settings->_btn_one_text_letter_spacing ) ) {
 				$settings->_btn_one_typo['letter_spacing'] = array(
 					'length' => $settings->_btn_one_text_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_one_text_letter_spacing );
 			}
 			// For Dual Button Two Typo.
 			if ( ! isset( $settings->_btn_two_typo ) || ! is_array( $settings->_btn_two_typo ) ) {
@@ -127,12 +136,18 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$settings->_btn_two_typo_responsive = array();
 			}
 			if ( isset( $settings->_btn_two_font_family ) ) {
-				if ( 'regular' == $settings->_btn_two_font_family['weight'] ) {
-					$settings->_btn_two_typo['font_weight'] = 'normal';
-				} else {
-					$settings->_btn_two_typo['font_weight'] = $settings->_btn_two_font_family['weight'];
+				if ( isset( $settings->_btn_two_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->_btn_two_font_family['weight'] ) {
+						$settings->_btn_two_typo['font_weight'] = 'normal';
+					} else {
+						$settings->_btn_two_typo['font_weight'] = $settings->_btn_two_font_family['weight'];
+					}
+					unset( $settings->_btn_two_font_family['weight'] );
 				}
-				$settings->_btn_two_typo['font_family'] = $settings->_btn_two_font_family['family'];
+				if ( isset( $settings->_btn_two_font_family['family'] ) ) {
+					$settings->_btn_two_typo['font_family'] = $settings->_btn_two_font_family['family'];
+					unset( $settings->_btn_two_font_family['family'] );
+				}
 			}
 			if ( isset( $settings->_btn_two_font_size_unit ) ) {
 
@@ -140,18 +155,21 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'length' => $settings->_btn_two_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_two_font_size_unit );
 			}
 			if ( isset( $settings->_btn_two_font_size_unit_medium ) ) {
 				$settings->_btn_two_typo_medium['font_size'] = array(
 					'length' => $settings->_btn_two_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_two_font_size_unit_medium );
 			}
 			if ( isset( $settings->_btn_two_font_size_unit_responsive ) ) {
 				$settings->_btn_two_typo_responsive['font_size'] = array(
 					'length' => $settings->_btn_two_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_two_font_size_unit_responsive );
 			}
 			if ( isset( $settings->_btn_two_line_height_unit ) ) {
 
@@ -159,22 +177,26 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'length' => $settings->_btn_two_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->_btn_two_line_height_unit );
 			}
 			if ( isset( $settings->_btn_two_line_height_unit_medium ) ) {
 				$settings->_btn_two_typo_medium['line_height'] = array(
 					'length' => $settings->_btn_two_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->_btn_two_line_height_unit_medium );
 			}
 			if ( isset( $settings->_btn_two_line_height_unit_responsive ) ) {
 				$settings->_btn_two_typo_responsive['line_height'] = array(
 					'length' => $settings->_btn_two_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->_btn_two_line_height_unit_responsive );
 			}
 			if ( isset( $settings->_btn_two_text_transform ) ) {
 
 				$settings->_btn_two_typo['text_transform'] = $settings->_btn_two_text_transform;
+				unset( $settings->_btn_two_text_transform );
 
 			}
 			if ( isset( $settings->_btn_two_text_letter_spacing ) ) {
@@ -183,6 +205,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'length' => $settings->_btn_two_text_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->_btn_two_text_letter_spacing );
 			}
 
 			// For Dual Button Separator.
@@ -193,12 +216,18 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$settings->_divider_typo_responsive = array();
 			}
 			if ( isset( $settings->_divider_font_family ) ) {
-				if ( 'regular' == $settings->_divider_font_family['weight'] ) {
-					$settings->_divider_typo['font_weight'] = 'normal';
-				} else {
-					$settings->_divider_typo['font_weight'] = $settings->_divider_font_family['weight'];
+				if ( isset( $settings->_divider_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->_divider_font_family['weight'] ) {
+						$settings->_divider_typo['font_weight'] = 'normal';
+					} else {
+						$settings->_divider_typo['font_weight'] = $settings->_divider_font_family['weight'];
+					}
+					unset( $settings->_divider_font_family['weight'] );
 				}
-				$settings->_divider_typo['font_family'] = $settings->_divider_font_family['family'];
+				if ( isset( $settings->_divider_font_family['family'] ) ) {
+					$settings->_divider_typo['font_family'] = $settings->_divider_font_family['family'];
+					unset( $settings->_divider_font_family['family'] );
+				}
 			}
 			if ( isset( $settings->_divider_font_size_unit ) ) {
 
@@ -206,21 +235,25 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'length' => $settings->_divider_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->_divider_font_size_unit );
 			}
 			if ( isset( $settings->_divider_font_size_unit_medium ) ) {
 				$settings->_divider_typo_medium['font_size'] = array(
 					'length' => $settings->_divider_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->_divider_font_size_unit_medium );
 			}
 			if ( isset( $settings->_divider_font_size_unit_responsive ) ) {
 				$settings->_divider_typo_responsive['font_size'] = array(
 					'length' => $settings->_divider_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->_divider_font_size_unit_responsive );
 			}
 			if ( isset( $settings->_divider_transform ) ) {
 				$settings->_divider_typo['text_transform'] = $settings->_divider_transform;
+				unset( $settings->_divider_transform );
 			}
 			if ( isset( $settings->_divider_letter_spacing ) ) {
 
@@ -228,37 +261,17 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'length' => $settings->_divider_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			if ( isset( $settings->_btn_one_font_family ) ) {
-				unset( $settings->_btn_one_font_family );
-				unset( $settings->_btn_one_font_size_unit );
-				unset( $settings->_btn_one_font_size_unit_medium );
-				unset( $settings->_btn_one_font_size_unit_responsive );
-				unset( $settings->_btn_one_line_height_unit );
-				unset( $settings->_btn_one_line_height_unit_medium );
-				unset( $settings->_btn_one_line_height_unit_responsive );
-				unset( $settings->_btn_one_text_transform );
-				unset( $settings->_btn_one_text_letter_spacing );
-			}
-			if ( isset( $settings->_btn_two_font_family ) ) {
-				unset( $settings->_btn_two_font_family );
-				unset( $settings->_btn_two_font_size_unit );
-				unset( $settings->_btn_two_font_size_unit_medium );
-				unset( $settings->_btn_two_font_size_unit_responsive );
-				unset( $settings->_btn_two_line_height_unit );
-				unset( $settings->_btn_two_line_height_unit_medium );
-				unset( $settings->_btn_two_line_height_unit_responsive );
-				unset( $settings->_btn_two_text_transform );
-				unset( $settings->_btn_two_text_letter_spacing );
-			}
-			if ( isset( $settings->_divider_font_family ) ) {
-				unset( $settings->_divider_font_family );
-				unset( $settings->_divider_font_size_unit );
-				unset( $settings->_divider_font_size_unit_medium );
-				unset( $settings->_divider_font_size_unit_responsive );
-				unset( $settings->_divider_transform );
 				unset( $settings->_divider_letter_spacing );
+			}
+			if ( isset( $settings->button_two_link_nofollow ) ) {
+				if ( '1' == $settings->button_two_link_nofollow || 'yes' == $settings->button_two_link_nofollow ) {
+					$settings->button_two_link_nofollow = 'yes';
+				}
+			}
+			if ( isset( $settings->button_one_link_nofollow ) ) {
+				if ( '1' == $settings->button_one_link_nofollow || 'yes' == $settings->button_one_link_nofollow ) {
+					$settings->button_one_link_nofollow = 'yes';
+				}
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
@@ -269,10 +282,6 @@ class UABBDualButtonModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, '_btn_two_back_color_opc', '_btn_two_back_color' );
 			$helper->handle_opacity_inputs( $settings, 'divider_background_color_opc', 'divider_background_color' );
 
-			// For Dual Button one typo.
-			if ( isset( $settings->dual_button_align ) ) {
-				$settings->dual_button_align = $settings->dual_button_align;
-			}
 			if ( ! isset( $settings->_btn_one_typo ) || ! is_array( $settings->_btn_one_typo ) ) {
 
 				$settings->_btn_one_typo            = array();
@@ -280,15 +289,19 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$settings->_btn_one_typo_responsive = array();
 			}
 			if ( isset( $settings->_btn_one_font_family ) ) {
-
-				if ( 'regular' == $settings->_btn_one_font_family['weight'] ) {
-					$settings->_btn_one_typo['font_weight'] = 'normal';
-				} else {
-					$settings->_btn_one_typo['font_weight'] = $settings->_btn_one_font_family['weight'];
+				if ( isset( $settings->_btn_one_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->_btn_one_font_family['weight'] ) {
+						$settings->_btn_one_typo['font_weight'] = 'normal';
+					} else {
+						$settings->_btn_one_typo['font_weight'] = $settings->_btn_one_font_family['weight'];
+					}
+					unset( $settings->_btn_one_font_family['weight'] );
 				}
-				$settings->_btn_one_typo['font_family'] = $settings->_btn_one_font_family['family'];
+				if ( isset( $settings->_btn_one_font_family['family'] ) ) {
+					$settings->_btn_one_typo['font_family'] = $settings->_btn_one_font_family['family'];
+					unset( $settings->_btn_one_font_family['family'] );
+				}
 			}
-
 			if ( isset( $settings->_btn_one_font_size['small'] ) ) {
 				$settings->_btn_one_typo['font_size'] = array(
 					'length' => $settings->_btn_one_font_size['small'],
@@ -341,13 +354,18 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$settings->_btn_two_typo_responsive = array();
 			}
 			if ( isset( $settings->_btn_two_font_family ) ) {
-
-				if ( 'regular' == $settings->_btn_two_font_family['weight'] ) {
-					$settings->_btn_two_typo['font_weight'] = 'normal';
-				} else {
-					$settings->_btn_two_typo['font_weight'] = $settings->_btn_two_font_family['weight'];
+				if ( isset( $settings->_btn_two_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->_btn_two_font_family['weight'] ) {
+						$settings->_btn_two_typo['font_weight'] = 'normal';
+					} else {
+						$settings->_btn_two_typo['font_weight'] = $settings->_btn_two_font_family['weight'];
+					}
+					unset( $settings->_btn_two_font_family['weight'] );
 				}
-				$settings->_btn_two_typo['font_family'] = $settings->_btn_two_font_family['family'];
+				if ( isset( $settings->_btn_two_font_family['family'] ) ) {
+					$settings->_btn_two_typo['font_family'] = $settings->_btn_two_font_family['family'];
+					unset( $settings->_btn_two_font_family['family'] );
+				}
 			}
 
 			if ( isset( $settings->_btn_two_font_size['small'] ) ) {
@@ -402,13 +420,18 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$settings->_divider_typo_responsive = array();
 			}
 			if ( isset( $settings->_divider_font_family ) ) {
-				if ( 'regular' == $settings->_divider_font_family['weight'] ) {
-					$settings->_divider_typo['font_weight'] = 'normal';
-				} else {
-					$settings->_divider_typo['font_weight'] = $settings->_divider_font_family['weight'];
+				if ( isset( $settings->_divider_font_family['weight'] ) ) {
+					if ( 'regular' == $settings->_divider_font_family['weight'] ) {
+						$settings->_divider_typo['font_weight'] = 'normal';
+					} else {
+						$settings->_divider_typo['font_weight'] = $settings->_divider_font_family['weight'];
+					}
+					unset( $settings->_divider_font_family['weight'] );
 				}
-				$settings->_divider_typo['font_family'] = $settings->_divider_font_family['family'];
-
+				if ( isset( $settings->_divider_font_family['family'] ) ) {
+					$settings->_divider_typo['font_family'] = $settings->_divider_font_family['family'];
+					unset( $settings->_divider_font_family['family'] );
+				}
 			}
 			if ( isset( $settings->_divider_font_size['small'] ) ) {
 				$settings->_divider_typo_responsive['font_size'] = array(
@@ -429,20 +452,50 @@ class UABBDualButtonModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-
-			if ( isset( $settings->_btn_one_font_family ) ) {
-				unset( $settings->_btn_one_font_family );
-				unset( $settings->_btn_one_font_size );
-				unset( $settings->_btn_one_line_height );
+			if ( isset( $settings->_btn_one_font_size ['desktop'] ) ) {
+				unset( $settings->_btn_one_font_size ['desktop'] );
 			}
-			if ( isset( $settings->_btn_two_font_family ) ) {
-				unset( $settings->_btn_two_font_family );
-				unset( $settings->_btn_two_font_size );
-				unset( $settings->_btn_two_line_height );
+			if ( isset( $settings->_btn_one_font_size ['medium'] ) ) {
+				unset( $settings->_btn_one_font_size ['medium'] );
 			}
-			if ( isset( $settings->_divider_font_family ) ) {
-				unset( $settings->_divider_font_family );
-				unset( $settings->_divider_font_size );
+			if ( isset( $settings->_btn_one_font_size ['small'] ) ) {
+				unset( $settings->_btn_one_font_size ['small'] );
+			}
+			if ( isset( $settings->_btn_one_line_height['desktop'] ) ) {
+				unset( $settings->_btn_one_line_height['desktop'] );
+			}
+			if ( isset( $settings->_btn_one_line_height['medium'] ) ) {
+				unset( $settings->_btn_one_line_height['medium'] );
+			}
+			if ( isset( $settings->_btn_one_line_height['small'] ) ) {
+				unset( $settings->_btn_one_line_height['small'] );
+			}
+			if ( isset( $settings->_btn_two_font_size ['desktop'] ) ) {
+				unset( $settings->_btn_two_font_size ['desktop'] );
+			}
+			if ( isset( $settings->_btn_two_font_size ['medium'] ) ) {
+				unset( $settings->_btn_two_font_size ['medium'] );
+			}
+			if ( isset( $settings->_btn_two_font_size ['small'] ) ) {
+				unset( $settings->_btn_two_font_size ['small'] );
+			}
+			if ( isset( $settings->_btn_two_line_height['desktop'] ) ) {
+				unset( $settings->_btn_two_line_height['desktop'] );
+			}
+			if ( isset( $settings->_btn_two_line_height['medium'] ) ) {
+				unset( $settings->_btn_two_line_height['medium'] );
+			}
+			if ( isset( $settings->_btn_two_line_height['small'] ) ) {
+				unset( $settings->_btn_two_line_height['small'] );
+			}
+			if ( isset( $settings->_divider_font_size ['desktop'] ) ) {
+				unset( $settings->_divider_font_size ['desktop'] );
+			}
+			if ( isset( $settings->_divider_font_size ['medium'] ) ) {
+				unset( $settings->_divider_font_size ['medium'] );
+			}
+			if ( isset( $settings->_divider_font_size ['small'] ) ) {
+				unset( $settings->_divider_font_size ['small'] );
 			}
 		}
 		return $settings;

@@ -1,6 +1,13 @@
 /**
+ * We don't want this stuff for our block, ever.
+ */
+.wp-block[data-type="fl-builder/layout"] .editor-block-contextual-toolbar {
+  display: none !important; }
+
+/**
  * Lock down the block editor when the layout block is active.
  */
+.fl-builder-layout-enabled .editor-block-toolbar,
 .fl-builder-layout-enabled .editor-inserter,
 .fl-builder-layout-enabled .editor-visual-editor__inserter,
 .fl-builder-layout-enabled .editor-default-block-appender,
@@ -28,3 +35,14 @@
  */
 .fl-builder-layout-loading-view .spinner {
   float: left; }
+/**
+ * This should be removed when the API supports proper click
+ * events on more menu items.
+ */
+.fl-builder-plugin-sidebar-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1; }

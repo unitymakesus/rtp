@@ -12,7 +12,9 @@ class MEC_skin_timetable extends MEC_skins
      * @var string
      */
     public $skin = 'timetable';
-    
+    public $number_of_days;
+    public $week_start;
+
     /**
      * Constructor method
      * @author Webnus <info@webnus.biz>
@@ -30,6 +32,9 @@ class MEC_skin_timetable extends MEC_skins
     {
         $this->factory->action('wp_ajax_mec_timetable_load_month', array($this, 'load_month'));
         $this->factory->action('wp_ajax_nopriv_mec_timetable_load_month', array($this, 'load_month'));
+
+        $this->factory->action('wp_ajax_mec_weeklyprogram_load', array($this, 'load_weeklyprogram'));
+        $this->factory->action('wp_ajax_nopriv_mec_weeklyprogram_load', array($this, 'load_weeklyprogram'));
     }
     
     /**
@@ -68,6 +73,15 @@ class MEC_skin_timetable extends MEC_skins
         
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+
+        // Image popup
+        $this->image_popup = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
+
+        // Number of Days
+        $this->number_of_days = isset($this->skin_options['number_of_days']) ? $this->skin_options['number_of_days'] : 5;
+
+        // First Day of the Week
+        $this->week_start = (isset($this->skin_options['week_start']) and trim($this->skin_options['week_start']) != '' and $this->skin_options['week_start'] != '-1') ? $this->skin_options['week_start'] : NULL;
         
         // From Widget
         $this->widget = (isset($this->atts['widget']) and trim($this->atts['widget'])) ? true : false;
@@ -145,62 +159,77 @@ class MEC_skin_timetable extends MEC_skins
      */
     public function search()
     {
-        $i = 0;
-        $today = $this->start_date;
-        $events = array();
+        $start = $this->start_date;
+        $end = $this->maximum_date ? $this->maximum_date : date('Y-m-t', strtotime($this->start_date));
 
-        while((date('m', strtotime($today)) == $this->month) or ($this->style == 'clean' and strtotime($today) <= strtotime($this->maximum_date)))
+        // Date Events
+        $dates = $this->period($start, $end);
+
+        if($this->style == 'clean')
         {
-            $this->setToday($today);
-            
+            $s = $start;
+            $sorted = array();
+            while(strtotime($s) <= strtotime($end))
+            {
+                if(isset($dates[$s])) $sorted[$s] = $dates[$s];
+                else $sorted[$s] = array();
+
+                $s = date('Y-m-d', strtotime('+1 Day', strtotime($s)));
+            }
+
+            $dates = $sorted;
+        }
+
+        // Limit
+        $this->args['posts_per_page'] = $this->limit;
+
+        $events = array();
+        foreach($dates as $date=>$IDs)
+        {
             // Check Finish Date
-            if(isset($this->maximum_date) and strtotime($today) > strtotime($this->maximum_date)) break;
-            
+            if(isset($this->maximum_date) and strtotime($date) > strtotime($this->maximum_date)) break;
+
             // Extending the end date
-            $this->end_date = $today;
-            
-            // Limit
-            $this->args['posts_per_page'] = $this->limit;
-            
+            $this->end_date = $date;
+
+            // Include Available Events
+            $this->args['post__in'] = $IDs;
+
             // The Query
             $query = new WP_Query($this->args);
-            
-            if($query->have_posts())
+            if(is_array($IDs) and count($IDs) and $query->have_posts())
             {
                 // The Loop
                 while($query->have_posts())
                 {
                     $query->the_post();
-                    
-                    if(!isset($events[$today])) $events[$today] = array();
-                    
+
+                    if(!isset($events[$date])) $events[$date] = array();
+
                     $rendered = $this->render->data(get_the_ID());
-                    
+
                     $data = new stdClass();
                     $data->ID = get_the_ID();
                     $data->data = $rendered;
-                    
+
                     $data->date = array
                     (
-                        'start'=>array('date'=>$today),
-                        'end'=>array('date'=>$this->main->get_end_date($today, $rendered))
+                        'start'=>array('date'=>$date),
+                        'end'=>array('date'=>$this->main->get_end_date($date, $rendered))
                     );
-                    
-                    $events[$today][] = $data;
+
+                    $events[$date][] = $data;
                 }
             }
             else
             {
-                $events[$today] = array();
+                $events[$date] = array();
             }
-            
+
             // Restore original Post Data
             wp_reset_postdata();
-            
-            $i++;
-            $today = date('Y-m-d', strtotime('+'.$i.' Days', strtotime($this->start_date)));
         }
-        
+
         return $events;
     }
     
@@ -213,9 +242,12 @@ class MEC_skin_timetable extends MEC_skins
     {
         // Default date
         $date = current_time('Y-m-d');
-        
+
+        // Start of Week
+        $week_start = !is_null($this->week_start) ? $this->week_start : $this->main->get_first_day_of_week();
+
         // Weekdays
-        $weekdays = $this->main->get_weekday_labels();
+        $weekdays = $this->main->get_weekday_labels($week_start);
         
         if(isset($this->skin_options['start_date_type']) and $this->skin_options['start_date_type'] == 'start_current_week')
         {
@@ -244,10 +276,10 @@ class MEC_skin_timetable extends MEC_skins
         // Show from start week
         if($this->style == 'clean')
         {
-            if(date('w', strtotime($date)) == $this->main->get_first_day_of_week()) $date = date('Y-m-d', strtotime('This '.$weekdays[0], strtotime($date)));
+            if(date('w', strtotime($date)) == $week_start) $date = date('Y-m-d', strtotime('This '.$weekdays[0], strtotime($date)));
             else $date = date('Y-m-d', strtotime('Last '.$weekdays[0], strtotime($date)));
 
-            $this->maximum_date = date('Y-m-d', strtotime('+4 days', strtotime($date)));
+            $this->maximum_date = date('Y-m-d', strtotime('+'.($this->number_of_days - 1).' days', strtotime($date)));
         }
         
         $time = strtotime($date);
@@ -255,7 +287,7 @@ class MEC_skin_timetable extends MEC_skins
     }
     
     /**
-     * Load month for AJAX requert
+     * Load month for AJAX requert (Modern Style)
      * @author Webnus <info@webnus.biz>
      * @return void
      */
@@ -300,6 +332,37 @@ class MEC_skin_timetable extends MEC_skins
         // Return the output
         $output = $this->output();
         
+        echo json_encode($output);
+        exit;
+    }
+
+    /**
+     * Load month for AJAX requert (Clean Style)
+     * @author Webnus <info@webnus.biz>
+     * @return void
+     */
+    public function load_weeklyprogram()
+    {
+        $this->sf = $this->request->getVar('sf', array());
+        $apply_sf_date = $this->request->getVar('apply_sf_date', 1);
+        $atts = $this->sf_apply($this->request->getVar('atts', array()), $this->sf, $apply_sf_date);
+
+        // Initialize the skin
+        $this->initialize($atts);
+
+        // Start Date
+        $this->year = $this->request->getVar('mec_year', date('Y'));
+        $this->month = $this->request->getVar('mec_month', date('m'));
+
+        // Return the events
+        $this->atts['return_items'] = true;
+
+        // Fetch the events
+        $this->fetch();
+
+        // Return the output
+        $output = $this->output();
+
         echo json_encode($output);
         exit;
     }

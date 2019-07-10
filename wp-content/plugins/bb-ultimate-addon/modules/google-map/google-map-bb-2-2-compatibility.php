@@ -268,6 +268,11 @@ FLBuilder::register_module(
 							'content' => '<ul class="uabb-docs-list" data-branding=' . $branding . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/how-to-create-google-api-key-in-uabb-google-map-element/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=google-map-module" target="_blank" rel="noopener"> How to create Google API key in Google Maps module? </a> </li>
+
+								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/how-to-hide-the-google-maps-info-window-on-page-load/?utm_source=Uabb-Pro-Backend&utm_medium=Module-Editor-Screen&utm_campaign=Google-Map-module" target="_blank" rel="noopener"> How to hide the Google Map’s Info Window on Page Load? </a> </li>
+
+								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/unable-to-see-the-address-on-entering/?utm_source=Uabb-Pro-Backend&utm_medium=Module-Editor-Screen&utm_campaign=Google-Map-module" target="_blank" rel="noopener"> Unable to see the address on entering? </a> </li>
+								
 							 </ul>',
 						),
 					),

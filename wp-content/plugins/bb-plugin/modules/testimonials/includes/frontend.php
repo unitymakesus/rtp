@@ -24,7 +24,7 @@ if ( '' == $settings->heading && 'compact' == $settings->layout ) {
 
 			$testimonials = $settings->testimonials[ $i ];
 
-		?>
+			?>
 		<div class="fl-testimonial">
 			<?php echo $testimonials->testimonial; ?>
 		</div>

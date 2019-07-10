@@ -75,6 +75,9 @@ class MEC_skin_masonry extends MEC_skins
 
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+
+        // Image popup
+        $this->image_popup = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
         
         // From Widget
         $this->widget = (isset($this->atts['widget']) and trim($this->atts['widget'])) ? true : false;
@@ -200,7 +203,7 @@ class MEC_skin_masonry extends MEC_skins
             'include' => ((isset($this->atts[$this->filter_by]) and trim($this->atts[$this->filter_by])) ? $this->atts[$this->filter_by] : ''),
         ));
 
-        foreach($terms as $term) $output .= '<a href="#" data-filter=".mec-t'.$term->term_id.'">'.$term->name.'</a>';
+        foreach($terms as $term) $output .= '<a href="#" data-group="'.$term->term_id.'">'.$term->name.'</a>';
 
         $output .= '</div>';
         return $output;

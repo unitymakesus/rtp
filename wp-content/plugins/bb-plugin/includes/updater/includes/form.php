@@ -1,3 +1,4 @@
+<?php // @codingStandardsIgnoreFile ?>
 <div class="wrap">
 
 	<?php if ( isset( $subscription->error ) && 'connection' == $subscription->error ) : ?>
@@ -49,13 +50,13 @@
 			'utm_campaign' => 'license-key-link',
 		) ) . '" target="_blank"' ) ?>
 	</p>
-	
+
 	<?php if ( is_multisite() ) : ?>
 	<p>
 		<strong><?php _e( 'NOTE:', 'fl-builder' ); ?></strong> <?php _e( 'This applies to all sites on the network.', 'fl-builder' ); ?>
 	</p>
 	<?php endif; ?>
-	
+
 	<form class="fl-license-form" action="" method="post" <?php if ( ! empty( $license ) ) { echo 'style="display:none;"';} ?>>
 
 		<input type="password" name="license" value="" class="regular-text" />
@@ -65,13 +66,13 @@
 			<?php wp_nonce_field( 'updater-nonce', 'fl-updater-nonce' ); ?>
 		</p>
 	</form>
-	
+
 	<div class="fl-new-license-form" <?php if ( empty( $license ) ) { echo 'style="display:none;"';} ?>>
 		<p class="submit">
 			<input type="button" class="button button-primary" value="<?php esc_attr_e( 'Enter License Key', 'fl-builder' ); ?>">
 		</p>
 	</div>
-	
+	<?php do_action( 'fl_after_license_form'); ?>
 	<?php FLUpdater::render_subscriptions( $subscription ); ?>
 
 </div>

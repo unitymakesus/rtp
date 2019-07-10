@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Pretty Links package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pretty Links 2.1.9\n"
+"Project-Id-Version: Pretty Links 2.1.10\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pretty-link\n"
-"POT-Creation-Date: 2019-05-01 03:50:25+00:00\n"
+"POT-Creation-Date: 2019-06-18 23:07:00+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,7 +17,7 @@ msgstr ""
 msgid "Pretty Links | Manage Pretty Links"
 msgstr ""
 
-#. #-#-#-#-#  pretty-link.pot (Pretty Links 2.1.9)  #-#-#-#-#
+#. #-#-#-#-#  pretty-link.pot (Pretty Links 2.1.10)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: app/controllers/PrliAppController.php:37
 #: app/controllers/PrliAppController.php:46 app/views/links/list.php:12
@@ -495,7 +495,7 @@ msgstr ""
 msgid "Reset %s"
 msgstr ""
 
-#: app/helpers/PrliLinksHelper.php:120 app/views/clicks/list.php:161
+#: app/helpers/PrliLinksHelper.php:120 app/views/clicks/list.php:163
 msgid "View clicks for %s"
 msgstr ""
 
@@ -949,39 +949,39 @@ msgstr ""
 msgid "Reset"
 msgstr ""
 
-#: app/views/clicks/list.php:73 app/views/clicks/list.php:171
+#: app/views/clicks/list.php:73 app/views/clicks/list.php:173
 msgid "Browser"
 msgstr ""
 
-#: app/views/clicks/list.php:75 app/views/clicks/list.php:172
+#: app/views/clicks/list.php:75 app/views/clicks/list.php:174
 msgid "OS"
 msgstr ""
 
-#: app/views/clicks/list.php:79 app/views/clicks/list.php:174
+#: app/views/clicks/list.php:79 app/views/clicks/list.php:176
 msgid "IP"
 msgstr ""
 
-#: app/views/clicks/list.php:83 app/views/clicks/list.php:176
+#: app/views/clicks/list.php:83 app/views/clicks/list.php:178
 msgid "Visitor"
 msgstr ""
 
-#: app/views/clicks/list.php:87 app/views/clicks/list.php:178
+#: app/views/clicks/list.php:87 app/views/clicks/list.php:180
 msgid "Timestamp"
 msgstr ""
 
-#: app/views/clicks/list.php:91 app/views/clicks/list.php:180
+#: app/views/clicks/list.php:91 app/views/clicks/list.php:182
 msgid "Host"
 msgstr ""
 
-#: app/views/clicks/list.php:95 app/views/clicks/list.php:182
+#: app/views/clicks/list.php:95 app/views/clicks/list.php:184
 msgid "URI"
 msgstr ""
 
-#: app/views/clicks/list.php:98 app/views/clicks/list.php:183
+#: app/views/clicks/list.php:98 app/views/clicks/list.php:185
 msgid "Referrer"
 msgstr ""
 
-#: app/views/clicks/list.php:101 app/views/clicks/list.php:184
+#: app/views/clicks/list.php:101 app/views/clicks/list.php:186
 #: pro/app/models/PlpReport.php:251 pro/app/models/PlpReport.php:260
 msgid "Link"
 msgstr ""
@@ -990,15 +990,15 @@ msgstr ""
 msgid "No Clicks have been recorded yet"
 msgstr ""
 
-#: app/views/clicks/list.php:147
+#: app/views/clicks/list.php:149
 msgid "View All Activity for IP Address: %s"
 msgstr ""
 
-#: app/views/clicks/list.php:150
+#: app/views/clicks/list.php:152
 msgid "View All Activity for Visitor: %s"
 msgstr ""
 
-#: app/views/clicks/list.php:190
+#: app/views/clicks/list.php:192
 msgid "Download CSV"
 msgstr ""
 
@@ -1774,7 +1774,7 @@ msgstr ""
 msgid "Pretty Link Post Build Index"
 msgstr ""
 
-#: pro/app/controllers/PlpKeywordsController.php:484
+#: pro/app/controllers/PlpKeywordsController.php:485
 #: pro/app/views/links/form.php:128
 msgid "Keywords"
 msgstr ""

@@ -69,7 +69,13 @@ FLBuilder::register_module(
 							'help'       => __( 'Choose number of products to be displayed at a time.', 'uabb' ),
 							'units'      => array( 'Columns' ),
 							'slider'     => true,
-							'responsive' => true,
+							'responsive' => array(
+								'default' => array(
+									'default'    => '4',
+									'medium'     => '2',
+									'responsive' => '1',
+								),
+							),
 						),
 					),
 				),
@@ -89,7 +95,13 @@ FLBuilder::register_module(
 							'help'       => __( 'Choose number of products to be displayed at a time.', 'uabb' ),
 							'units'      => array( 'Columns' ),
 							'slider'     => true,
-							'responsive' => true,
+							'responsive' => array(
+								'default' => array(
+									'default'    => '4',
+									'medium'     => '2',
+									'responsive' => '1',
+								),
+							),
 						),
 						'slides_to_scroll'       => array(
 							'type'   => 'unit',
@@ -1037,7 +1049,7 @@ FLBuilder::register_module(
 							'responsive' => true,
 							'preview'    => array(
 								'type'      => 'css',
-								'selector'  => '.uabb-woocommerce .uabb-woocommerce .uabb-woo-products-summary-wrap .button',
+								'selector'  => '.uabb-woocommerce .uabb-woo-products-summary-wrap .button',
 								'important' => true,
 							),
 						),

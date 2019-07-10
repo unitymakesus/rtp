@@ -56,8 +56,8 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API key.
@@ -72,6 +72,7 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 					'api_key' => $fields['api_key'],
 				);
 			} else {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'Error: Please check your API key. %s', 'fl-builder' ), $api::$response['error_message'] );
 			}
 		}
@@ -89,13 +90,13 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your ConvertKit account under Account > Account Settings > API Key.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your ConvertKit account under Account > Account Settings > API Key.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -114,12 +115,12 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( $account_data['api_key'] );
-		$forms          = $api->get_resources( 'forms' );
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( $account_data['api_key'] );
+		$forms        = $api->get_resources( 'forms' );
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( ! $forms ) {
@@ -154,13 +155,13 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -188,7 +189,7 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to ConvertKit. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$api = $this->get_api( $account_data['api_key'] );
+			$api  = $this->get_api( $account_data['api_key'] );
 			$data = array(
 				'email' => $email,
 			);
@@ -200,8 +201,9 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 			$result = $api->form_subscribe( $settings->list_id, $data );
 
 			if ( isset( $result->error ) ) {
-				$message = isset( $result->message ) ? $result->message : '';
+				$message           = isset( $result->message ) ? $result->message : '';
 				$response['error'] = sprintf(
+					/* translators: %s: error */
 					__( 'There was an error subscribing to ConvertKit. Error: %s', 'fl-builder' ),
 					$message
 				);

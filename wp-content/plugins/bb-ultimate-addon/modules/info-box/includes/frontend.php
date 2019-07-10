@@ -7,24 +7,11 @@
 
 $nofollow = '';
 $target   = '';
-if ( ! UABB_Compatibility::check_bb_version() ) {
-	if ( isset( $settings->link_nofollow ) ) {
-		$nofollow = $settings->link_nofollow;
-	}
-	if ( isset( $settings->link_target ) ) {
-		$target = $settings->link_target;
-	}
-} else {
-	if ( isset( $settings->link_nofollow ) ) {
-		if ( 'yes' == $settings->link_nofollow ) {
-			$nofollow = '1';
-		} else {
-			$nofollow = '0';
-		}
-	}
-	if ( isset( $settings->link_target ) ) {
-		$target = $settings->link_target;
-	}
+if ( isset( $settings->link_nofollow ) ) {
+	$nofollow = $settings->link_nofollow;
+}
+if ( isset( $settings->link_target ) ) {
+	$target = $settings->link_target;
 }
 $stacked_class = '';
 if ( 'none' != $settings->image_type ) {

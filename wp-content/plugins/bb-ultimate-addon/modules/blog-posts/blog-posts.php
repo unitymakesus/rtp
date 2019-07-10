@@ -46,7 +46,7 @@ class BlogPostsModule extends FLBuilderModule {
 				'icon'            => 'schedule.svg',
 			)
 		);
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		add_filter( 'wp_footer', array( $this, 'enqueue_scripts' ) );
 		add_filter( 'fl_builder_loop_query_args', array( $this, 'uabb_loop_query_args' ), 1 );
 	}
@@ -65,27 +65,6 @@ class BlogPostsModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For overall alignment settings.
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
-			}
-
-			// Pagination alignment settings.
-			if ( isset( $settings->pagination_alignment ) ) {
-				$settings->pagination_alignment = $settings->pagination_alignment;
-			}
-
-			// Masonry filter alignment.
-			if ( isset( $settings->masonary_overall_alignment ) ) {
-				$settings->masonary_overall_alignment = $settings->masonary_overall_alignment;
-			}
-
-			// Filter alignment option.
-			if ( isset( $settings->selfilter_overall_alignment ) ) {
-				$settings->selfilter_overall_align = $settings->selfilter_overall_alignment;
-				unset( $settings->selfilter_overall_alignment );
-			}
-
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'arrow_background_color_opc', 'arrow_background_color' );
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_color_opc', 'btn_bg_color' );
@@ -113,28 +92,33 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 				if ( isset( $settings->title_font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->title_font_family['family'];
 				}
+				unset( $settings->title_font_family['family'] );
 			}
 			if ( isset( $settings->title_font_size_unit ) ) {
 				$settings->title_font_typo['font_size'] = array(
 					'length' => $settings->title_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit );
 			}
 			if ( isset( $settings->title_font_size_unit_medium ) ) {
 				$settings->title_font_typo_medium['font_size'] = array(
 					'length' => $settings->title_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_medium );
 			}
 			if ( isset( $settings->title_font_size_unit_responsive ) ) {
 				$settings->title_font_typo_responsive['font_size'] = array(
 					'length' => $settings->title_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_responsive );
 			}
 			if ( isset( $settings->title_line_height_unit ) ) {
 
@@ -142,27 +126,32 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->title_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit );
 			}
 			if ( isset( $settings->title_line_height_unit_medium ) ) {
 				$settings->title_font_typo_medium['line_height'] = array(
 					'length' => $settings->title_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_medium );
 			}
 			if ( isset( $settings->title_line_height_unit_responsive ) ) {
 				$settings->title_font_typo_responsive['line_height'] = array(
 					'length' => $settings->title_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->title_font_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 				$settings->title_font_typo['letter_spacing'] = array(
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->letter_spacing );
 			}
 			if ( ! isset( $settings->desc_font_typo ) || ! is_array( $settings->desc_font_typo ) ) {
 
@@ -177,9 +166,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_font_family['weight'];
 					}
+					unset( $settings->desc_font_family['weight'] );
 				}
 				if ( isset( $settings->desc_font_family['family'] ) ) {
 					$settings->desc_font_typo['font_family'] = $settings->desc_font_family['family'];
+					unset( $settings->desc_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size_unit ) ) {
@@ -187,18 +178,21 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->desc_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit );
 			}
 			if ( isset( $settings->desc_font_size_unit_medium ) ) {
 				$settings->desc_font_typo_medium['font_size'] = array(
 					'length' => $settings->desc_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit_medium );
 			}
 			if ( isset( $settings->desc_font_size_unit_responsive ) ) {
 				$settings->desc_font_typo_responsive['font_size'] = array(
 					'length' => $settings->desc_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_unit_responsive );
 			}
 			if ( isset( $settings->desc_line_height_unit ) ) {
 
@@ -206,27 +200,32 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit );
 			}
 			if ( isset( $settings->desc_line_height_unit_medium ) ) {
 				$settings->desc_font_typo_medium['line_height'] = array(
 					'length' => $settings->desc_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit_medium );
 			}
 			if ( isset( $settings->desc_line_height_unit_responsive ) ) {
 				$settings->desc_font_typo_responsive['line_height'] = array(
 					'length' => $settings->desc_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_unit_responsive );
 			}
 			if ( isset( $settings->desc_transform ) ) {
 				$settings->desc_font_typo['text_transform'] = $settings->desc_transform;
+				unset( $settings->desc_transform );
 			}
 			if ( isset( $settings->desc_letter_spacing ) ) {
 				$settings->desc_font_typo['letter_spacing'] = array(
 					'length' => $settings->desc_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_letter_spacing );
 			}
 			if ( ! isset( $settings->meta_font_typo ) || ! is_array( $settings->meta_font_typo ) ) {
 
@@ -241,9 +240,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->meta_font_typo['font_weight'] = $settings->meta_font_family['weight'];
 					}
+					unset( $settings->meta_font_family['weight'] );
 				}
 				if ( isset( $settings->meta_font_family['family'] ) ) {
 					$settings->meta_font_typo['font_family'] = $settings->meta_font_family['family'];
+					unset( $settings->meta_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->meta_font_size_unit ) ) {
@@ -251,18 +252,21 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->meta_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->meta_font_size_unit );
 			}
 			if ( isset( $settings->meta_font_size_unit_medium ) ) {
 				$settings->meta_font_typo_medium['font_size'] = array(
 					'length' => $settings->meta_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->meta_font_size_unit_medium );
 			}
 			if ( isset( $settings->meta_font_size_unit_responsive ) ) {
 				$settings->meta_font_typo_responsive['font_size'] = array(
 					'length' => $settings->meta_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->meta_font_size_unit_responsive );
 			}
 			if ( isset( $settings->meta_line_height_unit ) ) {
 
@@ -270,27 +274,32 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->meta_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->meta_line_height_unit );
 			}
 			if ( isset( $settings->meta_line_height_unit_medium ) ) {
 				$settings->meta_font_typo_medium['line_height'] = array(
 					'length' => $settings->meta_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->meta_line_height_unit_medium );
 			}
 			if ( isset( $settings->meta_line_height_unit_responsive ) ) {
 				$settings->meta_font_typo_responsive['line_height'] = array(
 					'length' => $settings->meta_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->meta_line_height_unit_responsive );
 			}
 			if ( isset( $settings->meta_transform ) ) {
 				$settings->meta_font_typo['text_transform'] = $settings->meta_transform;
+				unset( $settings->meta_transform );
 			}
 			if ( isset( $settings->meta_letter_spacing ) ) {
 				$settings->meta_font_typo['letter_spacing'] = array(
 					'length' => $settings->meta_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->meta_letter_spacing );
 			}
 			if ( ! isset( $settings->date_font_typo ) || ! is_array( $settings->date_font_typo ) ) {
 
@@ -305,10 +314,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->date_font_typo['font_weight'] = $settings->date_font_family['weight'];
 					}
+					unset( $settings->date_font_family['weight'] );
 				}
 				if ( isset( $settings->date_font_family['family'] ) ) {
 					$settings->date_font_typo['font_family'] = $settings->date_font_family['family'];
-
+					unset( $settings->date_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->date_font_size_unit ) ) {
@@ -316,27 +326,32 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->date_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->date_font_size_unit );
 			}
 			if ( isset( $settings->date_font_size_unit_medium ) ) {
 				$settings->date_font_typo_medium['font_size'] = array(
 					'length' => $settings->date_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->date_font_size_unit_medium );
 			}
 			if ( isset( $settings->date_font_size_unit_responsive ) ) {
 				$settings->date_font_typo_responsive['font_size'] = array(
 					'length' => $settings->date_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->date_font_size_unit_responsive );
 			}
 			if ( isset( $settings->date_transform ) ) {
 				$settings->date_font_typo['text_transform'] = $settings->date_transform;
+				unset( $settings->date_transform );
 			}
 			if ( isset( $settings->date_letter_spacing ) ) {
 				$settings->date_font_typo['letter_spacing'] = array(
 					'length' => $settings->date_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->date_letter_spacing );
 			}
 			if ( ! isset( $settings->link_font_typo ) || ! is_array( $settings->link_font_typo ) ) {
 
@@ -351,9 +366,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->link_font_typo['font_weight'] = $settings->link_font_family['weight'];
 					}
+					unset( $settings->link_font_family['weight'] );
 				}
 				if ( isset( $settings->link_font_family['family'] ) ) {
 					$settings->link_font_typo['font_family'] = $settings->link_font_family['family'];
+					unset( $settings->link_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->link_font_size_unit ) ) {
@@ -361,18 +378,21 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->link_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_font_size_unit );
 			}
 			if ( isset( $settings->link_font_size_unit_medium ) ) {
 				$settings->link_font_typo_medium['font_size'] = array(
 					'length' => $settings->link_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_font_size_unit_medium );
 			}
 			if ( isset( $settings->link_font_size_unit_responsive ) ) {
 				$settings->link_font_typo_responsive['font_size'] = array(
 					'length' => $settings->link_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_font_size_unit_responsive );
 			}
 			if ( isset( $settings->link_line_height_unit ) ) {
 
@@ -380,27 +400,32 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->link_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->link_line_height_unit );
 			}
 			if ( isset( $settings->link_line_height_unit_medium ) ) {
 				$settings->link_font_typo_medium['line_height'] = array(
 					'length' => $settings->link_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->link_line_height_unit_medium );
 			}
 			if ( isset( $settings->link_line_height_unit_responsive ) ) {
 				$settings->link_font_typo_responsive['line_height'] = array(
 					'length' => $settings->link_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->link_line_height_unit_responsive );
 			}
 			if ( isset( $settings->link_transform ) ) {
 				$settings->link_font_typo['text_transform'] = $settings->link_transform;
+				unset( $settings->link_transform );
 			}
 			if ( isset( $settings->link_letter_spacing ) ) {
 				$settings->link_font_typo['letter_spacing'] = array(
 					'length' => $settings->link_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->link_letter_spacing );
 			}
 			if ( ! isset( $settings->btn_font_typo ) || ! is_array( $settings->btn_font_typo ) ) {
 
@@ -419,24 +444,28 @@ class BlogPostsModule extends FLBuilderModule {
 				if ( isset( $settings->btn_font_family['family'] ) ) {
 					$settings->btn_font_typo['font_family'] = $settings->btn_font_family['family'];
 				}
+				unset( $settings->btn_font_family );
 			}
 			if ( isset( $settings->btn_font_size_unit ) ) {
 				$settings->btn_font_typo['font_size'] = array(
 					'length' => $settings->btn_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit );
 			}
 			if ( isset( $settings->btn_font_size_unit_medium ) ) {
 				$settings->btn_font_typo_medium['font_size'] = array(
 					'length' => $settings->btn_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_medium );
 			}
 			if ( isset( $settings->btn_font_size_unit_responsive ) ) {
 				$settings->btn_font_typo_responsive['font_size'] = array(
 					'length' => $settings->btn_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_responsive );
 			}
 			if ( isset( $settings->btn_line_height_unit ) ) {
 
@@ -444,22 +473,26 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit );
 			}
 			if ( isset( $settings->btn_line_height_unit_medium ) ) {
 				$settings->btn_font_typo_medium['line_height'] = array(
 					'length' => $settings->btn_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_medium );
 			}
 			if ( isset( $settings->btn_line_height_unit_responsive ) ) {
 				$settings->btn_font_typo_responsive['line_height'] = array(
 					'length' => $settings->btn_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_responsive );
 			}
 			if ( isset( $settings->btn_transform ) ) {
 
 				$settings->btn_font_typo['text_transform'] = $settings->btn_transform;
+				unset( $settings->btn_transform );
 			}
 			if ( isset( $settings->btn_letter_spacing ) ) {
 
@@ -467,6 +500,7 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->btn_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_letter_spacing );
 			}
 			if ( ! isset( $settings->taxonomy_filter_font_typo ) || ! is_array( $settings->taxonomy_filter_font_typo ) ) {
 
@@ -481,9 +515,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->taxonomy_filter_font_typo['font_weight'] = $settings->taxonomy_filter_select_font_family['weight'];
 					}
+					unset( $settings->taxonomy_filter_select_font_family['weight'] );
 				}
 				if ( isset( $settings->taxonomy_filter_select_font_family['family'] ) ) {
 					$settings->taxonomy_filter_font_typo['font_family'] = $settings->taxonomy_filter_select_font_family['family'];
+					unset( $settings->taxonomy_filter_select_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->taxonomy_filter_select_font_size_unit ) ) {
@@ -492,22 +528,26 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->taxonomy_filter_select_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->taxonomy_filter_select_font_size_unit );
 			}
 			if ( isset( $settings->taxonomy_filter_select_font_size_unit_medium ) ) {
 				$settings->taxonomy_filter_font_typo_medium['font_size'] = array(
 					'length' => $settings->taxonomy_filter_select_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->taxonomy_filter_select_font_size_unit_medium );
 			}
 			if ( isset( $settings->taxonomy_filter_select_font_size_unit_responsive ) ) {
 				$settings->taxonomy_filter_font_typo_responsive['font_size'] = array(
 					'length' => $settings->taxonomy_filter_select_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->taxonomy_filter_select_font_size_unit_responsive );
 			}
 			if ( isset( $settings->taxonomy_transform ) ) {
 
 				$settings->taxonomy_filter_font_typo['text_transform'] = $settings->taxonomy_transform;
+				unset( $settings->taxonomy_transform );
 
 			}
 			if ( isset( $settings->taxonomy_letter_spacing ) ) {
@@ -516,6 +556,7 @@ class BlogPostsModule extends FLBuilderModule {
 					'length' => $settings->taxonomy_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->taxonomy_letter_spacing );
 			}
 			if ( isset( $settings->pagination_color_border ) ) {
 				$settings->pagination_border_param = array();
@@ -534,104 +575,8 @@ class BlogPostsModule extends FLBuilderModule {
 					unset( $settings->pagination_border_size );
 				}
 				unset( $settings->pagination_color_border );
-			}
-
-			// Unset the previous values.
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size_unit );
-				unset( $settings->title_font_size_unit_medium );
-				unset( $settings->title_font_size_unit_responsive );
-				unset( $settings->title_line_height_unit );
-				unset( $settings->title_line_height_unit_medium );
-				unset( $settings->title_line_height_unit_responsive );
-				unset( $settings->transform );
-				unset( $settings->letter_spacing );
-			}
-			if ( isset( $settings->desc_font_family ) ) {
-				unset( $settings->desc_font_family );
-				unset( $settings->desc_font_size_unit );
-				unset( $settings->desc_font_size_unit_medium );
-				unset( $settings->desc_font_size_unit_responsive );
-				unset( $settings->desc_line_height_unit );
-				unset( $settings->desc_line_height_unit_medium );
-				unset( $settings->desc_line_height_unit_responsive );
-				unset( $settings->desc_transform );
-				unset( $settings->desc_letter_spacing );
-			}
-			if ( isset( $settings->meta_font_family ) ) {
-				unset( $settings->meta_font_family );
-				unset( $settings->meta_font_size_unit );
-				unset( $settings->meta_font_size_unit_medium );
-				unset( $settings->meta_font_size_unit_responsive );
-				unset( $settings->meta_line_height_unit );
-				unset( $settings->meta_line_height_unit_medium );
-				unset( $settings->meta_line_height_unit_responsive );
-				unset( $settings->meta_transform );
-				unset( $settings->meta_letter_spacing );
-			}
-			if ( isset( $settings->date_font_family ) ) {
-				unset( $settings->date_font_family );
-				unset( $settings->date_font_size_unit );
-				unset( $settings->date_font_size_unit_medium );
-				unset( $settings->date_font_size_unit_responsive );
-				unset( $settings->date_transform );
-				unset( $settings->date_letter_spacing );
-			}
-			if ( isset( $settings->link_font_family ) ) {
-				unset( $settings->link_font_family );
-				unset( $settings->link_font_size_unit );
-				unset( $settings->link_font_size_unit_medium );
-				unset( $settings->link_font_size_unit_responsive );
-				unset( $settings->link_line_height_unit );
-				unset( $settings->link_line_height_unit_medium );
-				unset( $settings->link_line_height_unit_responsive );
-				unset( $settings->link_transform );
-				unset( $settings->link_letter_spacing );
-			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size_unit );
-				unset( $settings->btn_font_size_unit_medium );
-				unset( $settings->btn_font_size_unit_responsive );
-				unset( $settings->btn_line_height_unit );
-				unset( $settings->btn_line_height_unit_medium );
-				unset( $settings->btn_line_height_unit_responsive );
-				unset( $settings->btn_transform );
-				unset( $settings->btn_letter_spacing );
-			}
-			if ( isset( $settings->taxonomy_filter_select_font_family ) ) {
-				unset( $settings->taxonomy_filter_select_font_family );
-				unset( $settings->taxonomy_filter_select_font_size_unit );
-				unset( $settings->taxonomy_filter_select_font_size_unit_medium );
-				unset( $settings->taxonomy_filter_select_font_size_unit_responsive );
-				unset( $settings->taxonomy_transform );
-				unset( $settings->taxonomy_letter_spacing );
-			}
+			}	
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For overall alignment settings.
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
-			}
-
-			// Pagination alignment settings.
-			if ( isset( $settings->pagination_alignment ) ) {
-				$settings->pagination_align = $settings->pagination_alignment;
-				unset( $settings->pagination_align );
-			}
-
-			// Masonry filter alignment.
-			if ( isset( $settings->masonary_overall_alignment ) ) {
-				$settings->masonary_overall_align = $settings->masonary_overall_alignment;
-				unset( $settings->masonary_overall_alignment );
-			}
-
-			// Filter alignment option.
-			if ( isset( $settings->selfilter_overall_alignment ) ) {
-				$settings->selfilter_overall_align = $settings->selfilter_overall_alignment;
-				unset( $settings->selfilter_overall_alignment );
-			}
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'arrow_background_color_opc', 'arrow_background_color' );
@@ -660,9 +605,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 				if ( isset( $settings->title_font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->title_font_size['desktop'] ) ) {
@@ -720,9 +667,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_font_family['weight'];
 					}
+					unset( $settings->desc_font_family['weight'] );
 				}
 				if ( isset( $settings->desc_font_family['family'] ) ) {
 					$settings->desc_font_typo['font_family'] = $settings->desc_font_family['family'];
+					unset( $settings->desc_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size['desktop'] ) ) {
@@ -780,9 +729,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->meta_font_typo['font_weight'] = $settings->meta_font_family['weight'];
 					}
+					unset( $settings->meta_font_family['weight'] );
 				}
 				if ( isset( $settings->meta_font_family['family'] ) ) {
 					$settings->meta_font_typo['font_family'] = $settings->meta_font_family['family'];
+					unset( $settings->meta_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->meta_font_size['desktop'] ) ) {
@@ -840,9 +791,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->date_font_typo['font_weight'] = $settings->date_font_family['weight'];
 					}
+					unset(  $settings->date_font_family['weight'] );
 				}
 				if ( isset( $settings->date_font_family['family'] ) ) {
 					$settings->date_font_typo['font_family'] = $settings->date_font_family['family'];
+					unset(  $settings->date_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->date_font_size['desktop'] ) ) {
@@ -876,9 +829,11 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->link_font_typo['font_weight'] = $settings->link_font_family['weight'];
 					}
+					unset( $settings->link_font_family['weight'] );
 				}
 				if ( isset( $settings->link_font_family['family'] ) ) {
 					$settings->link_font_typo['font_family'] = $settings->link_font_family['family'];
+					unset(  $settings->link_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->link_font_size['desktop'] ) ) {
@@ -931,7 +886,6 @@ class BlogPostsModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->btn_font_family ) ) {
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
-
 					if ( 'regular' == $settings->btn_font_family['weight'] ) {
 						$settings->btn_font_typo['font_weight'] = 'normal';
 					} else {
@@ -941,6 +895,7 @@ class BlogPostsModule extends FLBuilderModule {
 				if ( isset( $settings->btn_font_family['family'] ) ) {
 					$settings->btn_font_typo['font_family'] = $settings->btn_font_family['family'];
 				}
+				unset( $settings->btn_font_family );
 			}
 			if ( isset( $settings->btn_font_size['desktop'] ) ) {
 				$settings->btn_font_typo['font_size'] = array(
@@ -998,10 +953,12 @@ class BlogPostsModule extends FLBuilderModule {
 					} else {
 						$settings->taxonomy_filter_font_typo['font_weight'] = $settings->taxonomy_filter_select_font_family['weight'];
 					}
+					unset( $settings->taxonomy_filter_select_font_family['weight'] );
 				}
 				if ( isset( $settings->taxonomy_filter_select_font_family['family'] ) ) {
 
 					$settings->taxonomy_filter_font_typo['font_family'] = $settings->taxonomy_filter_select_font_family['family'];
+					unset( $settings->taxonomy_filter_select_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->taxonomy_filter_select_font_size['desktop'] ) ) {
@@ -1161,39 +1118,101 @@ class BlogPostsModule extends FLBuilderModule {
 					}
 				}
 			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size );
-				unset( $settings->title_line_height );
+			if ( isset( $settings->title_font_size['desktop'] ) ) {
+				unset( $settings->title_font_size['desktop'] );	
 			}
-			if ( isset( $settings->desc_font_family ) ) {
-				unset( $settings->desc_font_family );
-				unset( $settings->desc_font_size );
-				unset( $settings->desc_line_height );
+			if ( isset( $settings->title_font_size['medium']) ) {
+				unset( $settings->title_font_size['medium'] );	
 			}
-			if ( isset( $settings->meta_font_family ) ) {
-				unset( $settings->meta_font_family );
-				unset( $settings->meta_font_size );
-				unset( $settings->meta_line_height );
-
+			if ( isset( $settings->title_font_size['small']) ) {
+				unset( $settings->title_font_size['small'] );	
 			}
-			if ( isset( $settings->date_font_family ) ) {
-				unset( $settings->date_font_family );
-				unset( $settings->date_font_size );
+			if ( isset( $settings->title_line_height['desktop']) ) {
+				unset( $settings->title_line_height['desktop'] );
 			}
-			if ( isset( $settings->link_font_family ) ) {
-				unset( $settings->link_font_family );
-				unset( $settings->link_font_size );
-				unset( $settings->link_line_height );
+			if ( isset( $settings->title_line_height['medium'] ) ) {
+				unset( $settings->title_line_height['medium'] );	
 			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
+			if ( isset( $settings->title_line_height['small'] ) ) {
+				unset( $settings->title_line_height['small'] );	
+			}
+			if ( isset( $settings->desc_font_size['desktop'] ) ) {
+				unset( $settings->desc_font_size['desktop'] );	
+			}
+			if ( isset( $settings->desc_font_size['medium']) ) {
+				unset( $settings->desc_font_size['medium'] );	
+			}
+			if ( isset( $settings->desc_font_size['small']) ) {
+				unset( $settings->desc_font_size['small'] );	
+			}
+			if ( isset( $settings->desc_line_height['desktop']) ) {
+				unset( $settings->desc_line_height['desktop'] );
+			}
+			if ( isset( $settings->desc_line_height['medium'] ) ) {
+				unset( $settings->desc_line_height['medium'] );	
+			}
+			if ( isset( $settings->desc_line_height['small'] ) ) {
+				unset( $settings->desc_line_height['small'] );	
+			}
+			if ( isset( $settings->meta_font_size['desktop'] ) ) {
+				unset( $settings->meta_font_size['desktop'] );	
+			}
+			if ( isset( $settings->meta_font_size['medium']) ) {
+				unset( $settings->meta_font_size['medium'] );	
+			}
+			if ( isset( $settings->meta_font_size['small']) ) {
+				unset( $settings->meta_font_size['small'] );	
+			}
+			if ( isset( $settings->meta_line_height['desktop']) ) {
+				unset( $settings->meta_line_height['desktop'] );
+			}
+			if ( isset( $settings->meta_line_height['medium'] ) ) {
+				unset( $settings->meta_line_height['medium'] );	
+			}
+			if ( isset( $settings->meta_line_height['small'] ) ) {
+				unset( $settings->meta_line_height['small'] );	
+			}
+			if ( isset( $settings->date_font_size['desktop'] ) ) {
+				unset( $settings->date_font_size['desktop'] );	
+			}
+			if ( isset( $settings->date_font_size['medium']) ) {
+				unset( $settings->date_font_size['medium'] );	
+			}
+			if ( isset( $settings->date_font_size['small']) ) {
+				unset( $settings->date_font_size['small'] );	
+			}
+			if ( isset( $settings->link_font_size['desktop'] ) ) {
+				unset( $settings->link_font_size['desktop'] );	
+			}
+			if ( isset( $settings->link_font_size['medium']) ) {
+				unset( $settings->link_font_size['medium'] );	
+			}
+			if ( isset( $settings->link_font_size['small']) ) {
+				unset( $settings->link_font_size['small'] );	
+			}
+			if ( isset( $settings->link_line_height['desktop']) ) {
+				unset( $settings->link_line_height['desktop'] );
+			}
+			if ( isset( $settings->link_line_height['medium'] ) ) {
+				unset( $settings->link_line_height['medium'] );	
+			}
+			if ( isset( $settings->link_line_height['small'] ) ) {
+				unset( $settings->link_line_height['small'] );	
+			}
+			if ( isset( $settings->btn_font_size ) ) {
 				unset( $settings->btn_font_size );
+			}
+			if ( isset( $settings->btn_line_height ) ) {
 				unset( $settings->btn_line_height );
 			}
-			if ( isset( $settings->taxonomy_filter_select_font_family ) ) {
-				unset( $settings->taxonomy_filter_select_font_family );
-				unset( $settings->taxonomy_filter_select_font_size );
+			if ( isset( $settings->taxonomy_filter_select_font_size['desktop'] ) ) {
+				unset($settings->taxonomy_filter_select_font_size['desktop'] );	
+			}
+			if ( isset( $settings->taxonomy_filter_select_font_size['medium']) ) {
+				unset( $settings->taxonomy_filter_select_font_size['medium'] );	
+			}
+			if ( isset( $settings->taxonomy_filter_select_font_size['small']) ) {
+				unset( $settings->taxonomy_filter_select_font_size['small'] );	
 			}
 			if ( isset( $settings->overall_padding ) ) {
 				unset( $settings->overall_padding );
@@ -1761,14 +1780,23 @@ class BlogPostsModule extends FLBuilderModule {
 						$all_text = 'uabb_masonary_filter_all_edit_' . $post_type;
 
 						$filter_type = 'uabb_masonary_filter_type_' . $post_type;
+
 						if ( isset( $this->settings->$filter_type ) && 'drop-down' == $this->settings->$filter_type ) {
 							echo '<select class="uabb-masonary-filters">';
 							echo '<option class="uabb-masonary-filter-' . $this->node . ' uabb-masonary-current" data-filter="*" value="all">' . ( isset( $this->settings->$all_text ) ? $this->settings->$all_text : __( 'All', 'uabb' ) ) . '</option>';
 
 							foreach ( $category_detail as $cat_details ) {
 								if ( ! empty( $tax_value ) ) {
-									if ( in_array( $cat_details->term_id, $tax_value ) ) {
-										echo '<option class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</option>';
+									if (  $tax_slug === $this->settings->{ 'masonary_filter_' . $post_type }  ) {
+										if ( '0' === $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) {
+											if (  ! in_array( $cat_details->term_id, $tax_value ) ) {
+												echo '<option class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</option>';
+											}
+										} else {
+											if ( in_array( $cat_details->term_id, $tax_value ) ) {
+												echo '<option class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</option>';
+											}
+										}
 									}
 								} else {
 									echo '<option class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</option>';
@@ -1780,8 +1808,16 @@ class BlogPostsModule extends FLBuilderModule {
 								echo '<li class="uabb-masonary-filter-' . $this->node . ' uabb-masonary-current" data-filter="*">' . ( isset( $this->settings->$all_text ) ? $this->settings->$all_text : __( 'All', 'uabb' ) ) . '</li>';
 							foreach ( $category_detail as $cat_details ) {
 								if ( ! empty( $tax_value ) ) {
-									if ( in_array( $cat_details->term_id, $tax_value ) ) {
-										echo '<li class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</li>';
+									if ( $tax_slug === $this->settings->{ 'masonary_filter_' . $post_type } ) {
+										if ( '0' === $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) {
+											if (  ! in_array( $cat_details->term_id, $tax_value ) ) {
+												echo '<li class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</li>';
+											}
+										} else {
+											if ( in_array( $cat_details->term_id, $tax_value ) ) {
+												echo '<li class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</li>';
+											}
+										}
 									}
 								} else {
 									echo '<li class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</li>';
@@ -2084,9 +2120,7 @@ class BlogPostsModule extends FLBuilderModule {
 				echo ( count( $category_detail ) > 0 ) ? ', ' : '';
 				for ( $k = 0; $k < count( $tag_detail ); $k++ ) {
 					?>
-			<span class="uabb-tag-links"><a href="<?php echo get_tag_link( $tag_detail[ $k ]->term_id ); ?>" rel="category tag"><?php echo $tag_detail[ $k ]->name; ?></a></span>
-					<?php
-					echo ( count( $tag_detail ) != $k + 1 ) ? trim( ',&nbsp;' ) : '';
+			<span class="uabb-tag-links"><a href="<?php echo get_tag_link( $tag_detail[ $k ]->term_id ); ?>" rel="category tag"><?php echo $tag_detail[ $k ]->name; ?></a></span><?php echo ( count( $tag_detail ) != $k + 1 ) ? trim( ',&nbsp;' ) : '';
 				}
 			}
 		}

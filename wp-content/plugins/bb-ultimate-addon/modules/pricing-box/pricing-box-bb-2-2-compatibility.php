@@ -463,15 +463,17 @@ FLBuilder::register_settings_form(
 								'connections' => array( 'string', 'html' ),
 							),
 							'price'    => array(
-								'type'    => 'text',
-								'label'   => __( 'Price Value', 'uabb' ),
-								'default' => __( '$99', 'uabb' ),
+								'type'        => 'text',
+								'label'       => __( 'Price Value', 'uabb' ),
+								'default'     => __( '$99', 'uabb' ),
+								'connections' => array( 'string', 'html' ),
 							),
 							'duration' => array(
 								'type'        => 'text',
 								'label'       => __( 'Duration', 'uabb' ),
 								'default'     => __( '/ Hour', 'uabb' ),
 								'placeholder' => __( '/ Hour', 'uabb' ),
+								'connections' => array( 'string', 'html' ),
 							),
 						),
 					),
@@ -562,6 +564,7 @@ FLBuilder::register_settings_form(
 								'default'     => __( 'Feature 1', 'uabb' ),
 								'placeholder' => __( 'One feature per line.', 'uabb' ),
 								'multiple'    => true,
+								'connections' => array( 'string', 'html' ),
 							),
 							'features_color' => array(
 								'type'        => 'color',
@@ -629,45 +632,26 @@ FLBuilder::register_settings_form(
 						'title'  => __( 'General', 'uabb' ),
 						'fields' => array(
 							'btn_text' => array(
-								'type'    => 'text',
-								'label'   => __( 'Text', 'uabb' ),
-								'default' => __( 'Get Started', 'uabb' ),
+								'type'        => 'text',
+								'label'       => __( 'Text', 'uabb' ),
+								'default'     => __( 'Get Started', 'uabb' ),
+								'connections' => array( 'string', 'html' ),
 							),
 						),
 					),
 					'btn-link'          => array( // Section.
 						'title'  => __( 'Link', 'uabb' ),
 						'fields' => array(
-							'btn_link'          => array(
-								'type'        => 'link',
-								'label'       => __( 'Link', 'uabb' ),
-								'placeholder' => 'http://www.example.com',
-								'preview'     => array(
+							'btn_link' => array(
+								'type'          => 'link',
+								'label'         => __( 'Link', 'uabb' ),
+								'placeholder'   => 'http://www.example.com',
+								'connections'   => array( 'url' ),
+								'preview'       => array(
 									'type' => 'none',
 								),
-							),
-							'btn_link_target'   => array(
-								'type'    => 'select',
-								'label'   => __( 'Link Target', 'uabb' ),
-								'default' => '_self',
-								'options' => array(
-									'_self'  => __( 'Same Window', 'uabb' ),
-									'_blank' => __( 'New Window', 'uabb' ),
-								),
-								'preview' => array(
-									'type' => 'none',
-								),
-							),
-							'btn_link_nofollow' => array(
-								'type'        => 'select',
-								'label'       => __( 'Link nofollow', 'uabb' ),
-								'description' => '',
-								'default'     => '0',
-								'help'        => __( 'Enable this to make this link nofollow', 'uabb' ),
-								'options'     => array(
-									'1' => __( 'Yes', 'uabb' ),
-									'0' => __( 'No', 'uabb' ),
-								),
+								'show_target'   => true,
+								'show_nofollow' => true,
 							),
 						),
 					),
@@ -942,10 +926,11 @@ FLBuilder::register_settings_form(
 								),
 							),
 							'btn_custom_class'       => array(
-								'type'    => 'text',
-								'label'   => __( 'Custom Class', 'uabb' ),
-								'default' => '',
-								'preview' => array(
+								'type'        => 'text',
+								'label'       => __( 'Custom Class', 'uabb' ),
+								'default'     => '',
+								'connections' => array( 'string', 'html' ),
+								'preview'     => array(
 									'type' => 'none',
 								),
 							),
@@ -1081,6 +1066,7 @@ FLBuilder::register_settings_form(
 								'label'       => '',
 								'placeholder' => __( 'One legend per line.', 'uabb' ),
 								'multiple'    => true,
+								'connections' => array( 'string', 'html' ),
 							),
 						),
 					),

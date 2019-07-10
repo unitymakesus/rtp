@@ -61,12 +61,19 @@ class MEC_skin_carousel extends MEC_skins
         
         // The style
         $this->style = isset($this->skin_options['style']) ? $this->skin_options['style'] : 'type1';
+
+        // The archive link
+        $this->archive_link = isset($this->skin_options['archive_link']) ? $this->skin_options['archive_link'] : '';
+
+        // The Head text
+        $this->head_text = isset($this->skin_options['head_text']) ? $this->skin_options['head_text'] : '';
         
         // The auto play time
         $this->autoplay = (isset($this->skin_options['autoplay']) and trim($this->skin_options['autoplay'])) ? $this->skin_options['autoplay'] : 3000;
 
         // Override the style if the style forced by us in a widget etc
         if(isset($this->atts['style']) and trim($this->atts['style']) != '') $this->style = $this->atts['style'];
+
         
         // HTML class
         $this->html_class = '';

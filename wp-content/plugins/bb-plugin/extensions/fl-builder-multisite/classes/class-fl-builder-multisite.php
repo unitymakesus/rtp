@@ -14,10 +14,10 @@ final class FLBuilderMultisite {
 	 * @return void
 	 */
 	static public function init() {
-		add_action( 'wpmu_new_blog',             __CLASS__ . '::install_for_new_blog', 10, 6 );
-		add_filter( 'wpmu_drop_tables',          __CLASS__ . '::uninstall_on_delete_blog' );
-		add_filter( 'fl_builder_activate',       __CLASS__ . '::activate' );
-		add_filter( 'fl_builder_uninstall',      __CLASS__ . '::uninstall' );
+		add_action( 'wpmu_new_blog', __CLASS__ . '::install_for_new_blog', 10, 6 );
+		add_filter( 'wpmu_drop_tables', __CLASS__ . '::uninstall_on_delete_blog' );
+		add_filter( 'fl_builder_activate', __CLASS__ . '::activate' );
+		add_filter( 'fl_builder_uninstall', __CLASS__ . '::uninstall' );
 	}
 
 	/**
@@ -48,8 +48,8 @@ final class FLBuilderMultisite {
 		global $blog_id;
 		global $wpdb;
 
-		$original_blog_id   = $blog_id;
-		$blog_ids           = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+		$original_blog_id = $blog_id;
+		$blog_ids         = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 
 		foreach ( $blog_ids as $id ) {
 			switch_to_blog( $id );
@@ -92,8 +92,8 @@ final class FLBuilderMultisite {
 		global $blog_id;
 		global $wpdb;
 
-		$original_blog_id   = $blog_id;
-		$blog_ids           = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+		$original_blog_id = $blog_id;
+		$blog_ids         = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 
 		foreach ( $blog_ids as $id ) {
 			switch_to_blog( $id );
@@ -131,7 +131,7 @@ final class FLBuilderMultisite {
 			$like = like_escape( esc_sql( $blog_id ) );
 		}
 
-		return $wpdb->get_row( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs WHERE blog_id = '%s'", $like ) );
+		return $wpdb->get_row( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs WHERE blog_id = '%s'", $like ) ); // @codingStandardsIgnoreLine
 	}
 }
 

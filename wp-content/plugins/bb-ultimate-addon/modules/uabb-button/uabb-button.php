@@ -62,6 +62,7 @@ class UABBButtonModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->button_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -70,6 +71,7 @@ class UABBButtonModule extends FLBuilderModule {
 					} else {
 						$settings->button_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -78,18 +80,21 @@ class UABBButtonModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->button_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 				$settings->button_typo_responsive['font_size'] = array(
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -97,50 +102,41 @@ class UABBButtonModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 				$settings->button_typo_medium['line_height'] = array(
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 				$settings->button_typo_responsive['line_height'] = array(
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->button_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 				$settings->button_typo['letter_spacing'] = array(
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->align ) ) {
-				$settings->new_align = $settings->align;
-			}
-			if ( isset( $settings->mob_align ) ) {
-				$settings->new_align_responsive = $settings->mob_align;
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_family['font_family'] );
-				unset( $settings->font_family['font_weight'] );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
 				unset( $settings->letter_spacing );
 			}
 			if ( isset( $settings->align ) ) {
+				$settings->new_align = $settings->align;
 				unset( $settings->align );
-				unset( $settings->mob_align );
+			}
+			if ( isset( $settings->link_nofollow ) ) {
+				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+					$settings->link_nofollow = 'yes';
+				}
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
@@ -158,6 +154,7 @@ class UABBButtonModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->button_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -166,6 +163,7 @@ class UABBButtonModule extends FLBuilderModule {
 					} else {
 						$settings->button_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) ) {
@@ -213,24 +211,30 @@ class UABBButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->align ) ) {
 				$settings->new_align = $settings->align;
-			}
-			if ( isset( $settings->mob_align ) ) {
-				$settings->new_align_responsive = $settings->mob_align;
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_family['family'] );
-				unset( $settings->font_family['weight'] );
-				unset( $settings->font_size['desktop'] );
-				unset( $settings->font_size['medium'] );
-				unset( $settings->font_size['small'] );
-				unset( $settings->line_height['desktop'] );
-				unset( $settings->line_height['medium'] );
-				unset( $settings->line_height['small'] );
-			}
-			if ( isset( $settings->align ) ) {
 				unset( $settings->align );
-				unset( $settings->mob_align );
+			}
+			if ( isset( $settings->link_nofollow ) ) {
+				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+					$settings->link_nofollow = 'yes';
+				}
+			}
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
+			}
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
+			}
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
 			}
 		}
 		return $settings;
@@ -276,13 +280,9 @@ class UABBButtonModule extends FLBuilderModule {
 				$classname .= ' uabb-button-' . $this->settings->new_align;
 				$classname .= ' uabb-creative-button-' . $this->settings->new_align;
 			}
-			if ( ! empty( $this->settings->new_align_responsive ) ) {
-				$classname .= ' uabb-button-reponsive-' . $this->settings->new_align_responsive;
-				$classname .= ' uabb-creative-button-reponsive-' . $this->settings->new_align_responsive;
-			}
-			if ( ! empty( $this->settings->new_align_medium ) ) {
-				$classname .= ' uabb-button-medium-' . $this->settings->new_align_medium;
-				$classname .= ' uabb-creative-button-medium-' . $this->settings->new_align_medium;
+			if ( ! empty( $this->settings->mob_align ) ) {
+				$classname .= ' uabb-button-reponsive-' . $this->settings->mob_align;
+				$classname .= ' uabb-creative-button-reponsive-' . $this->settings->mob_align;
 			}
 		}
 		if ( ! empty( $this->settings->icon ) ) {

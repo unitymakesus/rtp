@@ -38,7 +38,7 @@ class UABBWooAddToCartModule extends FLBuilderModule {
 			)
 		);
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 	}
 
 	/**
@@ -88,6 +88,7 @@ class UABBWooAddToCartModule extends FLBuilderModule {
 				if ( isset( $settings->font_family['family'] ) ) {
 
 					$settings->button_font_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
@@ -96,6 +97,7 @@ class UABBWooAddToCartModule extends FLBuilderModule {
 					} else {
 						$settings->button_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size ) ) {
@@ -104,18 +106,21 @@ class UABBWooAddToCartModule extends FLBuilderModule {
 					'length' => $settings->font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size );
 			}
 			if ( isset( $settings->font_size_medium ) ) {
 				$settings->button_font_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_medium );
 			}
 			if ( isset( $settings->font_size_responsive ) ) {
 				$settings->button_font_typo_responsive['font_size'] = array(
 					'length' => $settings->font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_responsive );
 			}
 			if ( isset( $settings->line_height ) ) {
 
@@ -123,23 +128,26 @@ class UABBWooAddToCartModule extends FLBuilderModule {
 					'length' => $settings->line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height );
 			}
 			if ( isset( $settings->line_height_medium ) ) {
 				$settings->button_font_typo_medium['line_height'] = array(
 					'length' => $settings->line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_medium );
 			}
 			if ( isset( $settings->line_height_responsive ) ) {
 				$settings->button_font_typo_responsive['line_height'] = array(
 					'length' => $settings->line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 
 				$settings->button_font_typo['text_transform'] = $settings->transform;
-
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 
@@ -147,16 +155,6 @@ class UABBWooAddToCartModule extends FLBuilderModule {
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->font_size_medium );
-				unset( $settings->font_size_responsive );
-				unset( $settings->line_height );
-				unset( $settings->line_height_medium );
-				unset( $settings->line_height_responsive );
-				unset( $settings->transform );
 				unset( $settings->letter_spacing );
 			}
 		}

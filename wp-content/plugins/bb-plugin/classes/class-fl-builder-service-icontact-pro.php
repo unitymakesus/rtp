@@ -68,8 +68,8 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have a username.
@@ -77,17 +77,13 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide a username.', 'fl-builder' );
 		} elseif ( ! isset( $fields['app_id'] ) || empty( $fields['app_id'] ) ) {
 			$response['error'] = __( 'Error: You must provide an app ID.', 'fl-builder' );
-		} // Make sure we have an app password.
-		elseif ( ! isset( $fields['app_password'] ) || empty( $fields['app_password'] ) ) {
+		} elseif ( ! isset( $fields['app_password'] ) || empty( $fields['app_password'] ) ) { // Make sure we have an app password.
 			$response['error'] = __( 'Error: You must provide an app password.', 'fl-builder' );
-		} // Make sure we have a company ID
-		elseif ( ! isset( $fields['company_id'] ) || empty( $fields['company_id'] ) ) {
+		} elseif ( ! isset( $fields['company_id'] ) || empty( $fields['company_id'] ) ) { // Make sure we have a company ID
 			$response['error'] = __( 'Error: You must provide a company ID.', 'fl-builder' );
-		} // Make sure we have a profile ID
-		elseif ( ! isset( $fields['profile_id'] ) || empty( $fields['profile_id'] ) ) {
+		} elseif ( ! isset( $fields['profile_id'] ) || empty( $fields['profile_id'] ) ) { // Make sure we have a profile ID
 			$response['error'] = __( 'Error: You must provide a profile ID.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$api = $this->get_api( array(
 				'apiUsername' => $fields['username'],
@@ -100,14 +96,15 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 			try {
 				$api->getLists();
 				$response['data'] = array(
-					'username'      => $fields['username'],
-					'app_id'        => $fields['app_id'],
-					'app_password'  => $fields['app_password'],
-					'company_id'	=> $fields['company_id'],
-					'profile_id'   	=> $fields['profile_id'],
+					'username'     => $fields['username'],
+					'app_id'       => $fields['app_id'],
+					'app_password' => $fields['app_password'],
+					'company_id'   => $fields['company_id'],
+					'profile_id'   => $fields['profile_id'],
 				);
 			} catch ( Exception $e ) {
 				$errors = $api->getErrors();
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'Error: Could not connect to iContact Pro. %s', 'fl-builder' ), $errors[0] );
 			}
 		}
@@ -125,59 +122,61 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'username', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Username', 'fl-builder' ),
-			'help'          => __( 'Your iContact Pro username.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Username', 'fl-builder' ),
+			'help'      => __( 'Your iContact Pro username.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'app_id', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'App ID', 'fl-builder' ),
-			'help'          => __( 'Your iContact Pro app ID.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'App ID', 'fl-builder' ),
+			'help'      => __( 'Your iContact Pro app ID.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'app_password', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'App Password', 'fl-builder' ),
-			'help'          => __( 'Your iContact Pro app password.', 'fl-builder' ),
-			'description'   => sprintf( __( 'You must <a%1$s>create an app</a> in iContact Pro to obtain an app ID and password. Please see <a%2$s>the iContact docs</a> for complete instructions.', 'fl-builder' ), ' href="https://app.icontactpro.com/MKT/Settings/Api?returnUrl=/MKT/Settings" target="_blank"', ' href="http://www.icontact.com/developerportal/api-documentation/vocus-register-your-app/" target="_blank"' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class'   => 'fl-builder-service-connect-row',
+			'class'       => 'fl-builder-service-connect-input',
+			'type'        => 'text',
+			'label'       => __( 'App Password', 'fl-builder' ),
+			'help'        => __( 'Your iContact Pro app password.', 'fl-builder' ),
+			/* translators: 1: create app url: 2: register url */
+			'description' => sprintf( __( 'You must <a%1$s>create an app</a> in iContact Pro to obtain an app ID and password. Please see <a%2$s>the iContact docs</a> for complete instructions.', 'fl-builder' ), ' href="https://app.icontactpro.com/MKT/Settings/Api?returnUrl=/MKT/Settings" target="_blank"', ' href="http://www.icontact.com/developerportal/api-documentation/vocus-register-your-app/" target="_blank"' ),
+			'preview'     => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'company_id', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Company ID', 'fl-builder' ),
-			'help'          => __( 'Your iContact Pro Company ID.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Company ID', 'fl-builder' ),
+			'help'      => __( 'Your iContact Pro Company ID.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'profile_id', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Profile ID', 'fl-builder' ),
-			'help'          => __( 'Your iContact Pro Profile ID.', 'fl-builder' ),
-			'description'   => sprintf( __( 'Your Company and Profile ID can also be found in the <a%1$s>iContact Pro API settings</a> under Account Information.', 'fl-builder' ), ' href="https://app.icontactpro.com/MKT/Settings/Api?returnUrl=/MKT/Settings" target="_blank"' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class'   => 'fl-builder-service-connect-row',
+			'class'       => 'fl-builder-service-connect-input',
+			'type'        => 'text',
+			'label'       => __( 'Profile ID', 'fl-builder' ),
+			'help'        => __( 'Your iContact Pro Profile ID.', 'fl-builder' ),
+			/* translators: 1: api link */
+			'description' => sprintf( __( 'Your Company and Profile ID can also be found in the <a%1$s>iContact Pro API settings</a> under Account Information.', 'fl-builder' ), ' href="https://app.icontactpro.com/MKT/Settings/Api?returnUrl=/MKT/Settings" target="_blank"' ),
+			'preview'     => array(
+				'type' => 'none',
 			),
 		));
 
@@ -196,24 +195,25 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( array(
-			'apiUsername'   => $account_data['username'],
-			'appId'         => $account_data['app_id'],
-			'apiPassword'   => $account_data['app_password'],
-			'companyId'	  	=> $account_data['company_id'],
-			'profileId'   	=> $account_data['profile_id'],
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( array(
+			'apiUsername' => $account_data['username'],
+			'appId'       => $account_data['app_id'],
+			'apiPassword' => $account_data['app_password'],
+			'companyId'   => $account_data['company_id'],
+			'profileId'   => $account_data['profile_id'],
 		));
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		try {
-			$lists = $api->getLists();
+			$lists            = $api->getLists();
 			$response['html'] = $this->render_list_field( $lists, $settings );
 		} catch ( Exception $e ) {
 			$errors = $api->getErrors();
+			/* translators: %s: error */
 			$response['error'] = sprintf( __( 'Error: Could not connect to iContact Pro. %s', 'fl-builder' ), $errors[0] );
 		}
 
@@ -241,13 +241,13 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -275,22 +275,22 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to iContact. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$data   = array(
+			$data = array(
 				'email' => $email,
 			);
-			$api    = $this->get_api( array(
-				'apiUsername'   => $account_data['username'],
-				'appId'         => $account_data['app_id'],
-				'apiPassword'   => $account_data['app_password'],
-				'companyId'	  	=> $account_data['company_id'],
-				'profileId'   	=> $account_data['profile_id'],
+			$api  = $this->get_api( array(
+				'apiUsername' => $account_data['username'],
+				'appId'       => $account_data['app_id'],
+				'apiPassword' => $account_data['app_password'],
+				'companyId'   => $account_data['company_id'],
+				'profileId'   => $account_data['profile_id'],
 			));
 
 			try {
 
 				if ( $name ) {
 
-					$names = explode( ' ', $name );
+					$names              = explode( ' ', $name );
 					$data['first_name'] = null;
 					$data['last_name']  = null;
 
@@ -309,6 +309,7 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 				$api->subscribeContactToList( $result->contactId, $settings->list_id ); // @codingStandardsIgnoreLine
 			} catch ( Exception $e ) {
 				$errors = $api->getErrors();
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'There was an error subscribing to iContact Pro. %s', 'fl-builder' ), $errors[0] );
 			}
 		}

@@ -13,6 +13,10 @@ class MEC_skin_available_spot extends MEC_skins
      */
     public $skin = 'available_spot';
 
+    public $event_id;
+    public $date_format1;
+    public $date_format2;
+
     /**
      * Constructor method
      * @author Webnus <info@webnus.biz>

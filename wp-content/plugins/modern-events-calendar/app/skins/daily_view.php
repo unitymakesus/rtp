@@ -65,6 +65,9 @@ class MEC_skin_daily_view extends MEC_skins
        
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+
+        // Image popup
+        $this->image_popup = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
         
         // From Widget
         $this->widget = (isset($this->atts['widget']) and trim($this->atts['widget'])) ? true : false;
@@ -135,81 +138,86 @@ class MEC_skin_daily_view extends MEC_skins
      */
     public function search()
     {
-        $i = 0;
-        $today = $this->start_date;
-        $events = array();
-        
-        while(date('m', strtotime($today)) == $this->month)
+        if($this->show_only_expired_events)
         {
-            $this->setToday($today);
-            
-            // Hide past events
-            if(isset($this->atts['show_past_events']) and !trim($this->atts['show_past_events']) and strtotime($today) < strtotime(date('Y-m-d')))
-            {
-                $events[$today] = array();
-                
-                $i++;
-                $today = date('Y-m-d', strtotime('+'.$i.' Days', strtotime($this->start_date)));
-            
-                continue;
-            }
-            
+            $start = current_time('Y-m-d');
+            $end = $this->start_date;
+        }
+        else
+        {
+            $start = $this->start_date;
+            $end = date('Y-m-t', strtotime($this->start_date));
+        }
+
+        // Date Events
+        $dates = $this->period($start, $end, true);
+
+        $s = $this->start_date;
+        $sorted = array();
+        while(date('m', strtotime($s)) == $this->month)
+        {
+            if(isset($dates[$s])) $sorted[$s] = $dates[$s];
+            else $sorted[$s] = array();
+
+            $s = date('Y-m-d', strtotime('+1 Day', strtotime($s)));
+        }
+
+        $dates = $sorted;
+
+        // Limit
+        $this->args['posts_per_page'] = $this->limit;
+
+        $events = array();
+        foreach($dates as $date=>$IDs)
+        {
             // Check Finish Date
-            if(isset($this->maximum_date) and strtotime($today) > strtotime($this->maximum_date))
+            if(isset($this->maximum_date) and strtotime($date) > strtotime($this->maximum_date))
             {
-                $events[$today] = array();
-                
-                $i++;
-                $today = date('Y-m-d', strtotime('+'.$i.' Days', strtotime($this->start_date)));
-            
+                $events[$date] = array();
                 continue;
             }
-            
+
+            // Include Available Events
+            $this->args['post__in'] = $IDs;
+
             // Extending the end date
-            $this->end_date = $today;
-            
-            // Limit
-            $this->args['posts_per_page'] = $this->limit;
-            
+            $this->end_date = $date;
+
             // The Query
             $query = new WP_Query($this->args);
-            
-            if($query->have_posts())
+            if(is_array($IDs) and count($IDs) and $query->have_posts())
             {
                 // The Loop
                 while($query->have_posts())
                 {
                     $query->the_post();
-                    
-                    if(!isset($events[$today])) $events[$today] = array();
-                    
+
+                    if(!isset($events[$date])) $events[$date] = array();
+
                     $rendered = $this->render->data(get_the_ID());
-                    
+
                     $data = new stdClass();
                     $data->ID = get_the_ID();
                     $data->data = $rendered;
-                    
+
                     $data->date = array
                     (
-                        'start'=>array('date'=>$today),
-                        'end'=>array('date'=>$this->main->get_end_date($today, $rendered))
+                        'start'=>array('date'=>$date),
+                        'end'=>array('date'=>$this->main->get_end_date($date, $rendered))
                     );
-                    
-                    $events[$today][] = $data;
+
+                    $events[$date][] = $data;
                 }
             }
             else
             {
-                $events[$today] = array();
+                $events[$date] = array();
             }
-            
+
             // Restore original Post Data
             wp_reset_postdata();
-
-            $i++;
-            $today = date('Y-m-d', strtotime('+'.$i.' Days', strtotime($this->start_date)));
         }
-        
+
         return $events;
     }
     
@@ -279,21 +287,53 @@ class MEC_skin_daily_view extends MEC_skins
         // Initialize the skin
         $this->initialize($atts);
         
-        // Start Date
-        $this->year = $this->request->getVar('mec_year', date('Y'));
-        $this->month = $this->request->getVar('mec_month', date('m'));
-        $this->day = '1';
-        
-        $this->start_date = $this->year.'-'.$this->month.'-01';
-        
-        // We will extend the end date in the loop
-        $this->end_date = $this->start_date;
-        
-        // Return the events
-        $this->atts['return_items'] = true;
-        
-        // Fetch the events
-        $this->fetch();
+        //  Daily view search repeat if not found in current month
+        $c = 0;
+        $break = false;
+
+        do 
+        {
+            if($c > 6) $break=true;
+            if($c and !$break)
+            {
+                if(intval($this->month == 12))
+                {
+                    $this->year = intval($this->year)+1;
+                    $this->month = '01';
+                }
+                
+                $this->month = sprintf("%02d", intval($this->month)+1);
+            }
+            else
+            {
+                // Start Date
+                $this->year = $this->request->getVar('mec_year', date('Y'));
+                $this->month = $this->request->getVar('mec_month', date('m'));
+            }
+
+            $this->day = '1';
+            
+            $this->start_date = $this->year.'-'.$this->month.'-01';
+            
+            // We will extend the end date in the loop
+            $this->end_date = $this->start_date;
+            
+            // Return the events
+            $this->atts['return_items'] = true;
+            
+            // Fetch the events
+            $this->fetch();
+            
+             // Break the loop if not resault
+             if($break)
+             {
+                 break;
+             }
+
+            $c++;
+           
+        }
+         while(!array_filter($this->events) and count($this->sf));
         
         // Return the output
         $output = $this->output();

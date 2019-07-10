@@ -866,6 +866,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'     => 'css',
 								'selector' => '.uabb-infobox',
@@ -1333,6 +1334,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'  => 'css',
 								'rules' => array(

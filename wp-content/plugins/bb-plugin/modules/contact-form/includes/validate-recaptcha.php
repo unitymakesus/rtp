@@ -14,9 +14,9 @@ $resp = $recaptcha->verify( $recaptcha_response, $_SERVER['REMOTE_ADDR'] );
 if ( $resp->isSuccess() ) {
 	$response['error'] = false;
 } else {
-	$response['error'] = true;
+	$response['error']   = true;
 	$response['message'] = '<strong>reCAPTCHA Error: </strong>';
-	$error_codes = array();
+	$error_codes         = array();
 	foreach ( $resp->getErrorCodes() as $code ) {
 		$error_codes[] = $code;
 	}

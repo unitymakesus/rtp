@@ -144,7 +144,9 @@
         </td>
       <?php endif; ?>
 
-        <td><a href="<?php echo admin_url("admin.php?page=pretty-link-clicks&ip={$click->ip}"); ?>" title="<?php printf(__('View All Activity for IP Address: %s', 'pretty-link'), $click->ip); ?>"><?php echo $click->ip; ?> (<?php echo $click->ip_count; ?>)</a></td>
+        <?php $click_ip = esc_attr( $click->ip ); ?>
+
+        <td><a href="<?php echo admin_url("admin.php?page=pretty-link-clicks&ip={$click_ip}"); ?>" title="<?php printf(__('View All Activity for IP Address: %s', 'pretty-link'), $click_ip); ?>"><?php echo $click_ip; ?> (<?php echo $click->ip_count; ?>)</a></td>
 
       <?php if( isset($prli_options->extended_tracking) and $prli_options->extended_tracking == "extended" ): ?>
         <td><a href="<?php echo admin_url("admin.php?page=pretty-link-clicks&vuid={$click->vuid}") ?>" title="<?php printf(__('View All Activity for Visitor: %s', 'pretty-link'), $click->vuid); ?>"><?php echo $click->vuid; ?><?php echo (($click->vuid != null)?" ($click->vuid_count)":''); ?></a></td>
@@ -157,7 +159,7 @@
       <?php endif; ?>
 
         <td><?php echo $click->uri; ?></td>
-        <td><a href="<?php echo $click->referer; ?>"><?php echo $click->referer; ?></a></td>
+        <td><a href="<?php echo esc_attr( $click->referer ); ?>"><?php echo esc_attr( $click->referer ); ?></a></td>
         <td><a href="<?php echo admin_url("admin.php?page=pretty-link-clicks&l={$click->link_id}"); ?>" title="<?php printf(__('View clicks for %s', 'pretty-link'), stripslashes($click->link_name)); ?>"><?php echo stripslashes($click->link_name); ?></a></td>
       </tr>
       <?php

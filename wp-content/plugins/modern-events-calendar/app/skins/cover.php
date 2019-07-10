@@ -12,7 +12,15 @@ class MEC_skin_cover extends MEC_skins
      * @var string
      */
     public $skin = 'cover';
-    
+
+    public $event_id;
+    public $date_format_clean1;
+    public $date_format_clean2;
+    public $date_format_clean3;
+    public $date_format_classic1;
+    public $date_format_classic2;
+    public $date_format_modern1;
+
     /**
      * Constructor method
      * @author Webnus <info@webnus.biz>

@@ -565,7 +565,7 @@ FLBuilder::register_module(
 							'label'   => __( 'Animation Speed', 'uabb' ),
 							'default' => 500,
 							'slider'  => true,
-							'units'   => array( 'MS' ),
+							'units'   => array( 'ms' ),
 						),
 						'creative_menu_mobile_breakpoint' => array(
 							'type'    => 'select',

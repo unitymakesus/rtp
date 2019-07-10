@@ -182,7 +182,7 @@
 				tagName  = element.tagName.toLowerCase();
 				rel		 = element.rel;
 				media  	 = element.media;
-				key		 = !! href ? href : !! id ? id : 'style-' + i;
+				key		 = !! href ? href.split( '?' ).shift() : !! id ? id : 'style-' + i;
 				isCSS 	 = true;
 				ignore 	 = false;
 
@@ -244,7 +244,7 @@
 					$.get( item.href, $.proxy( function( response ) {
 						this.parse( response, item );
 						this.runQueue();
-					}, this ) );
+					}, this ) ).fail( this.runQueue.bind( this ) );
 				}
 			}
 			else {
@@ -338,7 +338,7 @@
 		applyStyles: function()
 		{
 			var head    = $( 'head' ),
-				styles  = null,
+				styles 	= { all: '', queries: [] },
 				style   = null,
 				sheet   = null,
 				key     = null,
@@ -346,21 +346,22 @@
 				i       = null,
 				min     = null,
 				max     = null,
-				added   = false;
+				added   = false,
+				value	= null;
 
+			// Clear previous styles.
 			this.clearStyles();
 
+			// Build the all, min, and max query styles object.
 			for ( key in this.sheets ) {
 
-				styles = '';
-				style  = $( '<style></style>' );
-				sheet  = this.sheets[ key ];
+				sheet = this.sheets[ key ];
 
 				if ( ! sheet.queries.length || ! this.width ) {
 					continue;
 				}
 
-				styles += sheet.all;
+				styles.all += sheet.all;
 
 				for ( i = 0; i < sheet.queries.length; i++ ) {
 
@@ -374,8 +375,12 @@
 						min = parseFloat( min ) * ( min.indexOf( 'em' ) > -1 ? this.getEmPxValue() : 1 );
 
 						if ( this.width >= min ) {
-							styles += query.styles;
-							added   = true;
+							styles.queries.push( {
+								media: 'min',
+								width: min,
+								styles: query.styles,
+							} );
+							added = true;
 						}
 					}
 
@@ -384,20 +389,38 @@
 						max = parseFloat( max ) * ( max.indexOf( 'em' ) > -1 ? this.getEmPxValue() : 1 );
 
 						if ( this.width <= max ) {
-							styles += query.styles;
+							styles.queries.push( {
+								media: 'max',
+								width: max,
+								styles: query.styles,
+							} );
 						}
 					}
 				}
 
+				sheet.element[0].disabled = true;
+			}
+
+			// Render the all, min, and max query styles.
+			if ( '' !== styles.all ) {
+				style = $( '<style class="fl-builder-media-query" data-query="all"></style>' );
 				this.styles.push( style );
 				head.append( style );
-				style.html( styles );
-				sheet.element.remove();
+				style.html( styles.all );
+			}
 
-				if ( this.callback ) {
-					this.callback();
-					this.callback = null;
-				}
+			for ( i = 0; i < styles.queries.length; i++ ) {
+				query = styles.queries[ i ];
+				style = $( '<style class="fl-builder-media-query" data-query="' + query.media + '" data-value="' + query.width + '"></style>' );
+				this.styles.push( style );
+				head.append( style );
+				style.html( query.styles );
+			}
+
+			// Fire the callback now that we're done.
+			if ( this.callback ) {
+				this.callback();
+				this.callback = null;
 			}
 		},
 
@@ -406,28 +429,57 @@
 		 * simulated queries.
 		 *
 		 * @since 1.10
-		 * @method applyStyles
 		 */
 		clearStyles: function()
 		{
-			var head   = $( 'head' ),
-				key    = null,
+			var key    = null,
 				styles = this.styles.slice( 0 );
 
 			this.styles = [];
 
 			for ( key in this.sheets ) {
-				if ( ! this.sheets[ key ].element.parent().length ) {
-					head.append( this.sheets[ key ].element );
-				}
+				this.sheets[ key ].element[0].disabled = false;
 			}
 
-			setTimeout( function() {
-				for ( var i = 0; i < styles.length; i++ ) {
-					styles[ i ].empty();
-					styles[ i ].remove();
+			for ( var i = 0; i < styles.length; i++ ) {
+				styles[ i ].empty();
+				styles[ i ].remove();
+			}
+		},
+
+		/**
+		 * Disables style tags used to render simulated queries
+		 * equal to or below the specified width.
+		 *
+		 * @since 2.2
+		 * @param {Number} width
+		 */
+		disableStyles: function( width )
+		{
+			var style, query, value;
+
+			for ( var i = 0; i < this.styles.length; i++ ) {
+
+				style = this.styles[ i ];
+				query = style.attr( 'data-query' );
+				value = parseInt( style.attr( 'data-value' ) );
+
+				if ( 'max' === query && ! isNaN( value ) && value <= width ) {
+					this.styles[ i ][0].sheet.disabled = true;
 				}
-			}, 50 );
+			}
+		},
+
+		/**
+		 * Enables all style tags used to render simulated queries.
+		 *
+		 * @since 2.2
+		 */
+		enableStyles: function()
+		{
+			for ( var i = 0; i < this.styles.length; i++ ) {
+				this.styles[ i ][0].sheet.disabled = false;
+			}
 		},
 
 		/**
@@ -435,7 +487,6 @@
 		 * queries from a CSS style string.
 		 *
 		 * @since 2.0.6
-		 * @method styles
 		 */
 		cleanStyles: function( styles )
 		{
@@ -626,6 +677,12 @@
 		},
 		update: function( width, callback ) {
 			SimulateMediaQuery.update( width, callback );
+		},
+		disableStyles: function( width ) {
+			SimulateMediaQuery.disableStyles( width );
+		},
+		enableStyles: function() {
+			SimulateMediaQuery.enableStyles();
 		}
 	};
 

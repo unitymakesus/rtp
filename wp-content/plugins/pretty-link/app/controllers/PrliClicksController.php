@@ -136,22 +136,26 @@ class PrliClicksController extends PrliBaseController {
     global $wpdb, $prli_click, $prli_group, $prli_link;
 
     if(isset($_GET['l'])) {
-      $where_clause = $wpdb->prepare(" link_id=%d",$_GET['l']);
-      $link_name = $wpdb->get_var($wpdb->prepare("SELECT name FROM {$wpdb->prefix}prli_links WHERE id=%d",$_GET['l']));
-      $link_slug = $wpdb->get_var($wpdb->prepare("SELECT slug FROM {$wpdb->prefix}prli_links WHERE id=%d",$_GET['l']));
+      $l = PrliClicksHelper::esc_spreadsheet_cell( $_GET['l'] );
+      $where_clause = $wpdb->prepare(" link_id=%d",$l );
+      $link_name = $wpdb->get_var($wpdb->prepare("SELECT name FROM {$wpdb->prefix}prli_links WHERE id=%d",$l));
+      $link_slug = $wpdb->get_var($wpdb->prepare("SELECT slug FROM {$wpdb->prefix}prli_links WHERE id=%d",$l));
     }
     else if(isset($_GET['ip'])) {
-      $link_name = "ip_addr_{$_GET['ip']}";
-      $where_clause = $wpdb->prepare(" cl.ip=%s",$_GET['ip']);
+      $ip = PrliClicksHelper::esc_spreadsheet_cell( $_GET['ip'] );
+      $link_name = "ip_addr_{$ip}";
+      $where_clause = $wpdb->prepare(" cl.ip=%s",$ip);
     }
     else if(isset($_GET['vuid'])) {
-      $link_name = "visitor_{$_GET['vuid']}";
-      $where_clause = $wpdb->prepare(" cl.vuid=%s",$_GET['vuid']);
+      $vuid = PrliClicksHelper::esc_spreadsheet_cell( $_GET['vuid'] );
+      $link_name = "visitor_{$vuid}";
+      $where_clause = $wpdb->prepare(" cl.vuid=%s",$vuid);
     }
     else if(isset($_GET['group'])) {
-      $group = $prli_group->getOne($_GET['group']);
+      $group_val = PrliClicksHelper::esc_spreadsheet_cell( $_GET['group'] );
+      $group = $prli_group->getOne($group_val);
       $link_name = "group_{$group->name}";
-      $where_clause .= $wpdb->prepare(" cl.link_id IN (SELECT id FROM {$prli_link->table_name} WHERE group_id=%d)", $_GET['group']);
+      $where_clause .= $wpdb->prepare(" cl.link_id IN (SELECT id FROM {$prli_link->table_name} WHERE group_id=%d)", $group_val);
     }
     else {
       $link_name = "all_links";
@@ -189,26 +193,30 @@ class PrliClicksController extends PrliBaseController {
     $param_string = $where_clause = '';
 
     if(isset($_GET['l'])) {
-      $where_clause = $wpdb->prepare(' link_id=%d', $_GET['l']);
-      $link_name = $wpdb->get_var($wpdb->prepare("SELECT name FROM {$wpdb->prefix}prli_links WHERE id=%d", $_GET['l']));
-      $link_slug = $wpdb->get_var($wpdb->prepare("SELECT slug FROM {$wpdb->prefix}prli_links WHERE id=%d", $_GET['l']));
-      $param_string .= "l={$_GET['l']}";
+      $l = PrliClicksHelper::esc_spreadsheet_cell( $_GET['l'] );
+      $where_clause = $wpdb->prepare(' link_id=%d', $l);
+      $link_name = $wpdb->get_var($wpdb->prepare("SELECT name FROM {$wpdb->prefix}prli_links WHERE id=%d", $l));
+      $link_slug = $wpdb->get_var($wpdb->prepare("SELECT slug FROM {$wpdb->prefix}prli_links WHERE id=%d", $l));
+      $param_string .= "l={$l}";
     }
     else if(isset($_GET['ip'])) {
-      $link_name = "ip_addr_{$_GET['ip']}";
-      $where_clause = $wpdb->prepare(' cl.ip=%s', $_GET['ip']);
-      $param_string .= "ip={$_GET['ip']}";
+      $ip = PrliClicksHelper::esc_spreadsheet_cell( $_GET['ip'] );
+      $link_name = "ip_addr_{$ip}";
+      $where_clause = $wpdb->prepare(' cl.ip=%s', $ip);
+      $param_string .= "ip={$ip}";
     }
     else if(isset($_GET['vuid'])) {
-      $link_name = "visitor_{$_GET['vuid']}";
-      $where_clause = $wpdb->prepare(' cl.vuid=%s', $_GET['vuid']);
-      $param_string .= "vuid={$_GET['vuid']}";
+      $vuid = PrliClicksHelper::esc_spreadsheet_cell( $_GET['vuid'] );
+      $link_name = "visitor_{$vuid}";
+      $where_clause = $wpdb->prepare(' cl.vuid=%s', $vuid);
+      $param_string .= "vuid={$vuid}";
     }
     else if(isset($_GET['group'])) {
-      $group = $prli_group->getOne($_GET['group']);
+      $group_val = PrliClicksHelper::esc_spreadsheet_cell( $_GET['group'] );
+      $group = $prli_group->getOne($group_val);
       $link_name = "group_{$group->name}";
-      $where_clause .= $wpdb->prepare(" cl.link_id IN (SELECT id FROM {$prli_link->table_name} WHERE group_id=%d)", $_GET['group']);
-      $param_string .= "group={$_GET['group']}";
+      $where_clause .= $wpdb->prepare(" cl.link_id IN (SELECT id FROM {$prli_link->table_name} WHERE group_id=%d)", $group_val);
+      $param_string .= "group={$group_val}";
     }
     else {
       $link_name = 'all_links';

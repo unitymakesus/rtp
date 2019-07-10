@@ -157,6 +157,10 @@ $this->factory->params('footer', $javascript);
     <?php if(is_user_logged_in()): ?>
     <div class="mec-fes-form-top-actions">
         <a href="<?php echo $this->link_list_events(); ?>"><?php echo __('Go back to events list.', 'mec'); ?></a>
+        <?php $status = $this->main->get_event_label_status(get_post_status($post_id)); ?>
+        <?php if(trim($status['label']) != "Empty"): ?>
+        <span class="post-status <?php echo $status['status_class'];  ?>"><?php echo $status['label'];  ?></span>
+        <?php endif; ?>
     </div>
     <?php endif; ?>
     
@@ -314,7 +318,7 @@ $this->factory->params('footer', $javascript);
                     <div class="mec-form-row">
                         <div class="mec-col-4">
                             <input type="text" class="" name="mec[date][comment]" id="mec_comment" placeholder="<?php _e('Time Comment', 'mec'); ?>" value="<?php echo esc_attr($comment); ?>" />
-                            <p class="description"><?php _e('It shows next to event time on calendar. You can insert Timezone etc. in this field.', 'mec'); ?></p>
+                            <p class="description"><?php _e('It shows next to event time on single event page. You can insert Timezone etc. in this field.', 'mec'); ?></p>
                         </div>
                     </div>
                 </div>
@@ -352,8 +356,9 @@ $this->factory->params('footer', $javascript);
                         </div>
                         <div class="mec-form-row" id="mec_exceptions_in_days_container">
                             <div class="mec-form-row">
-                                <div class="mec-col-4">
-                                    <input type="text" id="mec_exceptions_in_days_date" value="" placeholder="<?php _e('Date', 'mec'); ?>" class="mec_date_picker" />
+                                <div class="mec-col-6">
+                                    <input type="text" id="mec_exceptions_in_days_start_date" value="" placeholder="<?php _e('Start', 'mec'); ?>" class="mec_date_picker" />
+                                    <input type="text" id="mec_exceptions_in_days_end_date" value="" placeholder="<?php _e('End', 'mec'); ?>" class="mec_date_picker" />
                                     <button class="button" type="button" id="mec_add_in_days"><?php _e('Add', 'mec'); ?></button>
                                     <p class="description"><?php _e('Add certain days to event occurrence dates.', 'mec'); ?></p>
                                 </div>
@@ -362,7 +367,7 @@ $this->factory->params('footer', $javascript);
                                 <?php $i = 1; foreach($in_days as $in_day): ?>
                                 <div class="mec-form-row" id="mec_in_days_row<?php echo $i; ?>">
                                     <input type="hidden" name="mec[in_days][<?php echo $i; ?>]" value="<?php echo $in_day; ?>" />
-                                    <span class="mec-in-days-day"><?php echo $in_day; ?></span>
+                                    <span class="mec-in-days-day"><?php echo str_replace(':', ' - ', $in_day); ?></span>
                                     <span class="mec-in-days-remove" onclick="mec_in_days_remove(<?php echo $i; ?>);">x</span>
                                 </div>
                                 <?php $i++; endforeach; ?>
@@ -371,32 +376,40 @@ $this->factory->params('footer', $javascript);
                             <div class="mec-util-hidden" id="mec_new_in_days_raw">
                                 <div class="mec-form-row" id="mec_in_days_row:i:">
                                     <input type="hidden" name="mec[in_days][:i:]" value=":val:" />
-                                    <span class="mec-in-days-day">:val:</span>
+                                    <span class="mec-in-days-day">:label:</span>
                                     <span class="mec-in-days-remove" onclick="mec_in_days_remove(:i:);">x</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="mec-form-row">
-                            <label for="mec_repeat_ends_never"><h5 class="mec-title"><?php _e('Ends Repeat', 'mec'); ?></h5></label>
-                        </div>
-                        <div class="mec-form-row">
-                            <input <?php if($mec_repeat_end == 'never') echo 'checked="checked"'; ?> type="radio" value="never" name="mec[date][repeat][end]" id="mec_repeat_ends_never" />
-                            <label for="mec_repeat_ends_never"><?php _e('Never', 'mec'); ?></label>
-                        </div>
-                        <div class="mec-form-row">  
-                            <div class="mec-col-3">
-                                <input <?php if($mec_repeat_end == 'date') echo 'checked="checked"'; ?> type="radio" value="date" name="mec[date][repeat][end]" id="mec_repeat_ends_date" />
-                                <label for="mec_repeat_ends_date"><?php _e('On', 'mec'); ?></label>
+                        <div id="mec_end_wrapper">
+                            <div class="mec-form-row">
+                                <label for="mec_repeat_ends_never"><h5 class="mec-title"><?php _e('Ends Repeat', 'mec'); ?></h5></label>
                             </div>
-                            <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_date]" id="mec_date_repeat_end_at_date" value="<?php echo esc_attr($repeat_end_at_date); ?>" />
-                        </div>
-                        <div class="mec-form-row">
-                            <div class="mec-col-3">
-                                <input <?php if($mec_repeat_end == 'occurrences') echo 'checked="checked"'; ?> type="radio" value="occurrences" name="mec[date][repeat][end]" id="mec_repeat_ends_occurrences" />
-                                <label for="mec_repeat_ends_occurrences"><?php _e('After', 'mec'); ?></label>
+                            <div class="mec-form-row">
+                                <input <?php if($mec_repeat_end == 'never') echo 'checked="checked"'; ?> type="radio" value="never" name="mec[date][repeat][end]" id="mec_repeat_ends_never" />
+                                <label for="mec_repeat_ends_never"><?php _e('Never', 'mec'); ?></label>
                             </div>
-                            <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_occurrences]" id="mec_date_repeat_end_at_occurrences" placeholder="<?php _e('Occurrences times', 'mec'); ?>"  value="<?php echo esc_attr(($repeat_end_at_occurrences+1)); ?>" />
-                            <a class="mec-tooltip" title="<?php esc_attr_e('The event will finish after certain repeats. For example if you set it to 10, the event will finish after 10 repeats.', 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                            <div class="mec-form-row">
+                                <div class="mec-col-3">
+                                    <input <?php if($mec_repeat_end == 'date') echo 'checked="checked"'; ?> type="radio" value="date" name="mec[date][repeat][end]" id="mec_repeat_ends_date" />
+                                    <label for="mec_repeat_ends_date"><?php _e('On', 'mec'); ?></label>
+                                </div>
+                                <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_date]" id="mec_date_repeat_end_at_date" value="<?php echo esc_attr($repeat_end_at_date); ?>" />
+                            </div>
+                            <div class="mec-form-row">
+                                <div class="mec-col-3">
+                                    <input <?php if($mec_repeat_end == 'occurrences') echo 'checked="checked"'; ?> type="radio" value="occurrences" name="mec[date][repeat][end]" id="mec_repeat_ends_occurrences" />
+                                    <label for="mec_repeat_ends_occurrences"><?php _e('After', 'mec'); ?></label>
+                                </div>
+                                <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_occurrences]" id="mec_date_repeat_end_at_occurrences" placeholder="<?php _e('Occurrences times', 'mec'); ?>"  value="<?php echo esc_attr(($repeat_end_at_occurrences+1)); ?>" />
+                                <span class="mec-tooltip">
+                                    <div class="box">
+                                        <h5 class="title"><?php _e('Occurrences times', 'mec'); ?></h5>
+                                        <div class="content"><p><?php esc_attr_e('The event will finish after certain repeats. For example if you set it to 10, the event will finish after 10 repeats.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/event-detailssingle-event-page/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                                    </div>
+                                    <i title="" class="dashicons-before dashicons-editor-help"></i>
+                                </span>	                                
+                            </div>
                         </div>
                     </div>
                 </div>

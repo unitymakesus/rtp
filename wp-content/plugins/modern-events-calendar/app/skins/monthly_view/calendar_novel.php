@@ -46,7 +46,6 @@ elseif($week_start == 5) // Friday
             echo '<dt class="mec-table-nullday">'.($days_in_previous_month - ($running_day-1-$x)).'</dt>';
             $days_in_this_week++;
         }
-        $print_name = array();
 
         // keep going with days ....
         for($list_day = 1; $list_day <= $days_in_month; $list_day++)
@@ -64,34 +63,74 @@ elseif($week_start == 5) // Friday
                 echo '<dt class="mec-calendar-day'.$selected_day.'" data-mec-cell="'.$day_id.'" data-day="'.$list_day.'" data-month="'.date('Ym', $time).'"><div class="mec-calendar-novel-selected-day'.$selected_day_date.'">'.$list_day.'</div>';
                 foreach($events[$today] as $event)
                 {
-                    $event_color =  isset($event->data->meta['mec_color'])? '#'.$event->data->meta['mec_color']:'';
+                    $location = isset($event->data->locations[$event->data->meta['mec_location_id']])? $event->data->locations[$event->data->meta['mec_location_id']] : array();
+                    $event_color = isset($event->data->meta['mec_color'])? '#'.$event->data->meta['mec_color']:'';
                     $start_date = (isset($event->date['start']['date']) ? str_replace ( '-', '', $event->date['start']['date'] ) : '');
                     $end_date = (isset($event->date['end']['date']) ? str_replace ( '-', '', $event->date['end']['date'] ) : '');
+
                     $label_style = '';
-                    if ( !empty($event->data->labels) ):
-                    foreach( $event->data->labels as $label)
+                    if(!empty($event->data->labels))
                     {
-                        if(!isset($label['style']) or (isset($label['style']) and !trim($label['style']))) continue;
-                        if ( $label['style']  == 'mec-label-featured' )
+                        foreach($event->data->labels as $label)
                         {
-                            $label_style = esc_html__( 'Featured' , 'mec' );
-                        } 
-                        elseif ( $label['style']  == 'mec-label-canceled' )
-                        {
-                            $label_style = esc_html__( 'Canceled' , 'mec' );
+                            if(!isset($label['style']) or (isset($label['style']) and !trim($label['style']))) continue;
+                            if($label['style'] == 'mec-label-featured') $label_style = esc_html__('Featured', 'mec');
+                            elseif($label['style'] == 'mec-label-canceled') $label_style = esc_html__('Canceled', 'mec');
                         }
                     }
-                    endif;
+
+                    $speakers = '""';
+                    if ( !empty($event->data->speakers)) 
+                    {
+                        $speakers= [];
+                        foreach ($event->data->speakers as $key => $value) {
+                            $speakers[] = array(
+                                "@type" 	=> "Person",
+                                "name"		=> $value['name'],
+                                "image"		=> $value['thumbnail'],
+                                "sameAs"	=> $value['facebook'],
+                            );
+                        } 
+                        $speakers = json_encode($speakers);
+                    }
+                    $startDate = !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '';
+                    $endDate = !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ;
+                    $location_name = isset($location['name']) ? $location['name'] : '' ;
+                    $location_image = isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '' ;
+                    $location_address = isset($location['address']) ? $location['address'] : '' ;
+                    $image = !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ;
+                    $price_schema = isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; 
+                    $currency_schema = isset($settings['currency']) ? $settings['currency'] : '' ;
+                    echo '
+                    <script type="application/ld+json">
+                    {
+                        "@context" 		: "http://schema.org",
+                        "@type" 		: "Event",
+                        "startDate" 	: "' . $startDate . '",
+                        "endDate" 		: "' . $endDate  . '",
+                        "location" 		:
+                        {
+                            "@type" 	: "Place",
+                            "name" 		: "' . $location_name . '",
+                            "image"		: "' . $location_image  . '",
+                            "address"	: "' .  $location_address . '"
+                        },
+                        "offers": {
+                            "url": "'. $event->data->permalink .'",
+                            "price": "' . $price_schema.'",
+                            "priceCurrency" : "' . $currency_schema .'"
+                        },
+                        "performer":  '. $speakers . ',
+                        "description" 	: "' . esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)) . '",
+                        "image" 		: "'. $image . '",
+                        "name" 			: "' .esc_html($event->data->title) . '",
+                        "url"			: "'. $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']) . '"
+                    }
+                    </script>
+                    ';
+
                     echo '<a class="event-single-link-novel" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'"><div style="background:'.$event_color.'" class="mec-single-event-novel mec-event-article '.$this->get_event_classes($event).'">';
-                    if ( ( $end_date - $start_date == '0' && !in_array( $event->data->ID, $print_name) )  ) :
-                        echo '<h4 class="mec-event-title">'.$event->data->title.'</h4>';
-                    elseif( ( $end_date - $start_date == '0' && in_array( $event->data->ID, $print_name) ) ) :
-                            echo '<h4 class="mec-event-title"></h4>';
-                            $print_name[] = $event->data->ID;
-                    elseif ( !in_array( $event->data->ID, $print_name) ) :
-                        echo '<h4 class="mec-event-title">'.$event->data->title.'</h4>';
-                        $print_name[] = $event->data->ID;
-                    endif;
+                    echo '<h4 class="mec-event-title">'.$event->data->title.'</h4>';
                     echo '</div></a>';
                 }
                 echo '</dt>';
@@ -100,9 +139,7 @@ elseif($week_start == 5) // Friday
             {
                 echo '<dt class="mec-calendar-day'.$selected_day.'" data-mec-cell="'.$day_id.'" data-day="'.$list_day.'" data-month="'.date('Ym', $time).'">'.$list_day.'</dt>';
                 echo '</dt>';
-
             }
-
 
             if($running_day == 6)
             {

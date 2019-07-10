@@ -296,27 +296,17 @@ FLBuilder::register_module(
 							),
 						),
 						'button_one_link'           => array(
-							'type'        => 'link',
-							'label'       => __( 'Button Link', 'uabb' ),
-							'default'     => '#',
-							'connections' => array( 'url' ),
+							'type'          => 'link',
+							'label'         => __( 'Button Link', 'uabb' ),
+							'default'       => '#',
+							'connections'   => array( 'url' ),
+							'show_target'   => true,
+							'show_nofollow' => true,
 						),
 						'button_one_class'          => array(
 							'type'    => 'text',
 							'label'   => __( 'Class', 'uabb' ),
 							'default' => '',
-							'preview' => array(
-								'type' => 'none',
-							),
-						),
-						'button_one_link_target'    => array(
-							'type'    => 'select',
-							'label'   => __( 'Link Target', 'uabb' ),
-							'default' => '_self',
-							'options' => array(
-								'_self'  => __( 'Same Window', 'uabb' ),
-								'_blank' => __( 'New Window', 'uabb' ),
-							),
 							'preview' => array(
 								'type' => 'none',
 							),
@@ -422,27 +412,17 @@ FLBuilder::register_module(
 						),
 
 						'button_two_link'           => array(
-							'type'        => 'link',
-							'label'       => __( 'Button Link', 'uabb' ),
-							'default'     => '#',
-							'connections' => array( 'url' ),
+							'type'          => 'link',
+							'label'         => __( 'Button Link', 'uabb' ),
+							'default'       => '#',
+							'connections'   => array( 'url' ),
+							'show_target'   => true,
+							'show_nofollow' => true,
 						),
 						'button_two_class'          => array(
 							'type'    => 'text',
 							'label'   => __( 'Class', 'uabb' ),
 							'default' => '',
-							'preview' => array(
-								'type' => 'none',
-							),
-						),
-						'button_two_link_target'    => array(
-							'type'    => 'select',
-							'label'   => __( 'Link Target', 'uabb' ),
-							'default' => '_self',
-							'options' => array(
-								'_self'  => __( 'Same Window', 'uabb' ),
-								'_blank' => __( 'New Window', 'uabb' ),
-							),
 							'preview' => array(
 								'type' => 'none',
 							),
@@ -734,7 +714,7 @@ FLBuilder::register_module(
 						),
 						'_btn_one_text_color'       => array(
 							'type'        => 'color',
-							'label'       => __( 'Button Color', 'uabb' ),
+							'label'       => __( 'Text Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
 							'connections' => array( 'color' ),
@@ -747,7 +727,7 @@ FLBuilder::register_module(
 						),
 						'_btn_one_text_hover_color' => array(
 							'type'        => 'color',
-							'label'       => __( 'Button Hover Color', 'uabb' ),
+							'label'       => __( 'Text Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
 							'connections' => array( 'color' ),
@@ -772,7 +752,7 @@ FLBuilder::register_module(
 						),
 						'_btn_two_text_color'       => array(
 							'type'        => 'color',
-							'label'       => __( 'Button Color', 'uabb' ),
+							'label'       => __( 'Text Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
 							'connections' => array( 'color' ),
@@ -785,7 +765,7 @@ FLBuilder::register_module(
 						),
 						'_btn_two_text_hover_color' => array(
 							'type'        => 'color',
-							'label'       => __( 'Button Hover Color', 'uabb' ),
+							'label'       => __( 'Text Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
 							'connections' => array( 'color' ),

@@ -198,13 +198,100 @@ class MEC_notifications extends MEC_base
         return true;
     }
     
+      /**
+     * Send booking cancellation
+     * @author Webnus <info@webnus.biz>
+     * @param int $book_id
+     * @return void
+     */
+    public function booking_cancellation($book_id)
+    {
+        $booker_id = get_post_field('post_author', $book_id);
+        $booker = get_userdata($booker_id); 
+        
+        // Cancelling Notification is disabled
+        if(!isset($this->notif_settings['cancellation_notification']['status']) or isset($this->notif_settings['cancellation_notification']['status']) and !$this->notif_settings['cancellation_notification']['status']) return;
+
+        $tos = array();
+
+        // Send the notification to admin
+        if(isset($this->notif_settings['cancellation_notification']['send_to_admin']) and $this->notif_settings['cancellation_notification']['send_to_admin'] == 1)
+        {
+            $tos[] = get_bloginfo('admin_email');
+        }
+
+        // Send the notification to event organizer
+        if(isset($this->notif_settings['cancellation_notification']['send_to_organizer']) and $this->notif_settings['cancellation_notification']['send_to_organizer'] == 1)
+        {
+            $organizer_email = $this->get_booking_organizer_email($book_id);
+            if($organizer_email !== false) $tos[] = trim($organizer_email);
+        }
+
+        // Send the notification to event user
+        if(isset($this->notif_settings['cancellation_notification']['send_to_user']) and $this->notif_settings['cancellation_notification']['send_to_user'] == 1)
+        {
+            if(isset($booker->user_email) and $booker->user_email) $tos[] = trim($booker->user_email);
+        }
+
+        // No Recipient
+        if(!count($tos)) return;
+
+        $headers = array();
+        
+        $recipients_str = isset($this->notif_settings['cancellation_notification']['recipients']) ? $this->notif_settings['cancellation_notification']['recipients'] : '';
+        $recipients = trim($recipients_str) ? explode(',', $recipients_str) : array();
+        
+        foreach($recipients as $recipient)
+        {
+            // Skip if it's not a valid email
+            if(trim($recipient) == '' or !filter_var($recipient, FILTER_VALIDATE_EMAIL)) continue;
+            
+            $headers[] = 'BCC: '.$recipient;
+        }
+
+        $subject = isset($this->notif_settings['cancellation_notification']['subject']) ? $this->content(__($this->notif_settings['cancellation_notification']['subject'], 'mec'), $book_id) : __('booking canceled.', 'mec');
+        $message = isset($this->notif_settings['cancellation_notification']['content']) ? $this->content($this->notif_settings['cancellation_notification']['content'], $book_id) : '';
+        
+        // Book Data
+        $message = str_replace('%%admin_link%%', $this->link(array('post_type'=>$this->main->get_book_post_type()), $this->main->URL('admin').'edit.php'), $message);
+
+        // Attendee Full Information
+        if(strpos($message, '%%attendee_full_info%%') !== false or strpos($message, '%%attendees_full_info%%') !== false)
+        {
+            $attendees_full_info = $this->get_full_attendees_info($book_id);
+
+            $message = str_replace('%%attendee_full_info%%', $attendees_full_info, $message);
+            $message = str_replace('%%attendees_full_info%%', $attendees_full_info, $message);
+        }
+
+        // Set Email Type to HTML
+        add_filter('wp_mail_content_type', array($this->main, 'html_email_type'));
+        
+        // Send the mail
+        $i = 1;
+        foreach($tos as $to)
+        {
+            if($i > 1) $headers = array();
+
+            wp_mail($to, html_entity_decode(stripslashes($subject), ENT_HTML5), wpautop(stripslashes($message)), $headers);
+            $i++;
+        }
+        
+        // Remove the HTML Email filter
+        remove_filter('wp_mail_content_type', array($this->main, 'html_email_type'));
+    }
+
     /**
      * Send admin notification
      * @author Webnus <info@webnus.biz>
      * @param int $book_id
+     * @return void
      */
     public function admin_notification($book_id)
     {
+        // Admin Notification is disabled
+        if(isset($this->notif_settings['admin_notification']['status']) and !$this->notif_settings['admin_notification']['status']) return;
+
         $to = get_bloginfo('admin_email');
         $subject = isset($this->notif_settings['admin_notification']['subject']) ? $this->content(__($this->notif_settings['admin_notification']['subject'], 'mec'), $book_id) : __('A new booking is received.', 'mec');
         $headers = array();
@@ -288,6 +375,9 @@ class MEC_notifications extends MEC_base
         // Send the emails
         foreach($attendees as $attendee)
         {
+            if (isset($attendee[0]['MEC_TYPE_OF_DATA'])) {
+                continue;
+            }
             $to = $attendee['email'];
             $message = isset($this->notif_settings['booking_reminder']['content']) ? $this->content($this->notif_settings['booking_reminder']['content'], $book_id, $attendee) : '';
 
@@ -306,11 +396,10 @@ class MEC_notifications extends MEC_base
      * Send new event notification
      * @author Webnus <info@webnus.biz>
      * @param int $event_id
-     * @param object $post
      * @param boolean $update
      * @return boolean
      */
-    public function new_event($event_id, $post, $update)
+    public function new_event($event_id, $update = false)
     {
         // If this is an autosave, our form has not been submitted, so we don't want to do anything.
         if(defined('DOING_AUTOSAVE') and DOING_AUTOSAVE) return false;
@@ -354,9 +443,10 @@ class MEC_notifications extends MEC_base
         $message = str_replace('%%blog_url%%', get_bloginfo('url'), $message);
         $message = str_replace('%%blog_description%%', get_bloginfo('description'), $message);
         
-        // Book Data
+        // Event Data
         $message = str_replace('%%admin_link%%', $this->link(array('post_type'=>$event_PT), $this->main->URL('admin').'edit.php'), $message);
         $message = str_replace('%%event_title%%', get_the_title($event_id), $message);
+        $message = str_replace('%%event_link%%', get_post_permalink($event_id), $message);
         $message = str_replace('%%event_status%%', $status, $message);
         $message = str_replace('%%event_note%%', get_post_meta($event_id, 'mec_note', true), $message);
         
@@ -439,6 +529,15 @@ class MEC_notifications extends MEC_base
         $transaction_id = get_post_meta($book_id, 'mec_transaction_id', true);
 
         $message = str_replace('%%book_date%%', get_the_date('', $book_id), $message);
+
+        // Book Time
+        $start_seconds = get_post_meta($event_id, 'mec_start_day_seconds', true);
+        $event_start_time = get_post_meta($event_id, 'mec_allday', true) ? __('All of the day', 'mec') : $this->main->get_time($start_seconds);
+
+        // Condition for check some parameter simple hide event time
+        if(!get_post_meta( $event_id, 'mec_hide_time', true )) $message = str_replace('%%book_time%%', $event_start_time, $message);
+        else $message = str_replace('%%book_time%%', '', $message);
+
         $message = str_replace('%%invoice_link%%', $this->book->get_invoice_link($transaction_id), $message);
 
         $cancellation_key = get_post_meta($book_id, 'mec_cancellation_key', true);
@@ -459,6 +558,7 @@ class MEC_notifications extends MEC_base
         $location = get_term($location_id, 'mec_location');
         
         $message = str_replace('%%event_title%%', get_the_title($event_id), $message);
+        $message = str_replace('%%event_link%%', get_post_permalink($event_id), $message);
         
         $message = str_replace('%%event_organizer_name%%', (isset($organizer->name) ? $organizer->name : ''), $message);
         $message = str_replace('%%event_organizer_tel%%', get_term_meta($organizer_id, 'tel', true), $message);
@@ -499,7 +599,10 @@ class MEC_notifications extends MEC_base
         if($ticket_end_minute == '0') $ticket_end_minute_s = '00';
         if($ticket_end_minute == '5') $ticket_end_minute_s = '05';
 
-        $ticket_time = $ticket_start_hour . ':' .  $ticket_start_minute_s . '(' . $ticket_start_ampm .') ' . esc_html__('to' , 'mec') . ' ' . $ticket_end_hour . ':' . $ticket_end_minute_s . '(' . $ticket_end_ampm .')';
+        $ticket_start_seconds = $this->main->time_to_seconds($this->main->to_24hours($ticket_start_hour, $ticket_start_ampm), $ticket_start_minute_s);
+        $ticket_end_seconds = $this->main->time_to_seconds($this->main->to_24hours($ticket_end_hour, $ticket_end_ampm), $ticket_end_minute_s);
+
+        $ticket_time = $this->main->get_time($ticket_start_seconds).' ' . esc_html__('to' , 'mec') . ' ' .$this->main->get_time($ticket_end_seconds);
 
         $message = str_replace('%%ticket_name%%', $ticket_name, $message);
         $message = str_replace('%%ticket_time%%', $ticket_time, $message);
@@ -509,8 +612,10 @@ class MEC_notifications extends MEC_base
         
         $gmt_offset_seconds = $this->main->get_gmt_offset_seconds();
         $event_title = get_the_title($event_id);
+        $event_info = get_post($event_id);
+        $event_content = trim($event_info->post_content) ? strip_shortcodes(strip_tags($event_info->post_content)) : $event_title;
 
-        $google_caneldar_link = '<a class="mec-events-gcal mec-events-button mec-color mec-bg-color-hover mec-border-color" href="https://www.google.com/calendar/event?action=TEMPLATE&text= ' . $event_title . '&dates='. gmdate('Ymd\\THi00\\Z', ($start_time - $gmt_offset_seconds)) . '/' . gmdate('Ymd\\THi00\\Z', ($end_time - $gmt_offset_seconds)) . '&details=' . $event_title . '&location=' . get_term_meta($location_id, 'address', true) . '" target="_blank">' . __('+ Add to Google Calendar', 'mec') . '</a>';
+        $google_caneldar_link = '<a class="mec-events-gcal mec-events-button mec-color mec-bg-color-hover mec-border-color" href="https://www.google.com/calendar/event?action=TEMPLATE&text= ' . $event_title . '&dates='. gmdate('Ymd\\THi00\\Z', ($start_time - $gmt_offset_seconds)) . '/' . gmdate('Ymd\\THi00\\Z', ($end_time - $gmt_offset_seconds)) . '&details=' . urlencode($event_content) . '&location=' . get_term_meta($location_id, 'address', true) . '" target="_blank">' . __('+ Add to Google Calendar', 'mec') . '</a>';
         $ical_export_link  = '<a class="mec-events-gcal mec-events-button mec-color mec-bg-color-hover mec-border-color" href="' . $this->main->ical_URL_email($event_id, $book_id, get_the_date('Y-m-d', $book_id)) . '">'. __('+ iCal export', 'mec') . '</a>';
         
         $message = str_replace('%%google_calendar_link%%', $google_caneldar_link, $message);
@@ -546,9 +651,17 @@ class MEC_notifications extends MEC_base
         $attendees = get_post_meta($book_id, 'mec_attendees', true);
         if(!is_array($attendees) or (is_array($attendees) and !count($attendees))) $attendees = array(get_post_meta($book_id, 'mec_attendee', true));
 
-        $reg_fields = $this->main->get_reg_fields();
-        foreach($attendees as $attendee)
+        $event_id = get_post_meta($book_id, 'mec_event_id', true);
+
+        $reg_fields = $this->main->get_reg_fields($event_id);
+        foreach($attendees as $key => $attendee)
         {
+            if (isset($attendee[0]['MEC_TYPE_OF_DATA'])) {
+                continue;
+            }
+            if ( $key === 'attachments' ) {
+                continue;
+            }
             $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array();
 
             $attendees_full_info .= __('Name', 'mec').': '.((isset($attendee['name']) and trim($attendee['name'])) ? $attendee['name'] : '---')."\r\n";
@@ -556,8 +669,13 @@ class MEC_notifications extends MEC_base
 
             foreach($reg_form as $field_id=>$value)
             {
+                // Placeholder Keys
+                if(!is_numeric($field_id)) continue;
+
                 $type = $reg_fields[$field_id]['type'];
+
                 $label = isset($reg_fields[$field_id]) ? $reg_fields[$field_id]['label'] : '';
+                if(trim($label) == '') continue;
 
                 if($type == 'agreement')
                 {

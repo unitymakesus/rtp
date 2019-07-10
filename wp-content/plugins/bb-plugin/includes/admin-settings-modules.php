@@ -6,7 +6,7 @@
 
 		<?php if ( FLBuilderAdminSettings::multisite_support() && ! is_network_admin() ) : ?>
 		<label>
-			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php if ( get_option( '_fl_builder_enabled_modules' ) ) { echo 'checked="checked"';} ?> />
+			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php echo ( get_option( '_fl_builder_enabled_modules' ) ) ? 'checked="checked"' : ''; ?> />
 			<?php _e( 'Override network settings?', 'fl-builder' ); ?>
 		</label>
 		<?php endif; ?>
@@ -16,9 +16,9 @@
 			<p><?php _e( 'Check or uncheck modules below to enable or disable them.', 'fl-builder' ); ?></p>
 			<?php
 
-			$categories         = FLBuilderModel::get_categorized_modules( true );
-			$enabled_modules    = FLBuilderModel::get_enabled_modules();
-			$checked            = in_array( 'all', $enabled_modules ) ? 'checked' : '';
+			$categories      = FLBuilderModel::get_categorized_modules( true );
+			$enabled_modules = FLBuilderModel::get_enabled_modules();
+			$checked         = in_array( 'all', $enabled_modules ) ? 'checked' : '';
 
 			?>
 			<label>
@@ -33,14 +33,14 @@
 
 					$checked = in_array( 'widget', $enabled_modules ) ? 'checked' : '';
 
-				?>
+					?>
 				<p>
 					<label>
 						<input class="fl-module-cb" type="checkbox" name="fl-modules[]" value="widget" <?php echo $checked; ?> />
 						<?php echo $title; ?>
 					</label>
 				</p>
-				<?php
+					<?php
 
 					continue;
 
@@ -50,7 +50,7 @@
 
 					$checked = in_array( $module->slug, $enabled_modules ) ? 'checked' : '';
 
-				?>
+					?>
 				<p>
 					<label>
 						<input class="fl-module-cb" type="checkbox" name="fl-modules[]" value="<?php echo $module->slug; ?>" <?php echo $checked; ?> />

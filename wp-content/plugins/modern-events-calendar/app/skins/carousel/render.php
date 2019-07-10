@@ -8,7 +8,35 @@ $settings = $this->main->get_settings();
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?>">
     <div class="mec-event-carousel-<?php echo $this->style; ?>">
-        <div class='mec-owl-crousel-skin-<?php echo ($this->style == 'type1' ? 'type1' : 'type2'); ?> mec-owl-carousel mec-owl-theme'>
+        <?php if($this->style == 'type4'):  ?>
+        <div class="row mec-carousel-type4-head">
+            <div class="col-md-6 col-xs-6">
+                <div class="mec-carousel-type4-head-title">
+                    <?php if(!empty( $this->head_text )) : ?><?php esc_html_e($this->head_text); ?><?php endif; ?>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="mec-carousel-type4-head-link">
+                    <?php if(!empty( $this->archive_link )) : ?><a class="mec-bg-color-hover" href="<?php echo esc_html($this->archive_link); ?>"><?php esc_html_e('View All' , 'mec'); ?></a><?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php 
+            if( $this->style == 'type4' ) 
+            {
+                $carousel_type = 'type4' ;
+            } 
+            elseif ( $this->style == 'type1' )
+            {
+                $carousel_type = 'type1' ;
+            } 
+            else
+            {
+                $carousel_type = 'type2' ;
+            }
+        ?>
+        <div class='mec-owl-crousel-skin-<?php echo $carousel_type; ?> mec-owl-carousel mec-owl-theme'>
             <?php
                 foreach($this->events as $date):
                 foreach($date as $event):
@@ -19,23 +47,62 @@ $settings = $this->main->get_settings();
                 $location = isset($event->data->locations[$event->data->meta['mec_location_id']])? $event->data->locations[$event->data->meta['mec_location_id']] : array();
                 $organizer = isset($event->data->organizers[$event->data->meta['mec_organizer_id']])? $event->data->organizers[$event->data->meta['mec_organizer_id']] : array();
                 $event_color = isset($event->data->meta['mec_color']) ? '<span class="event-color" style="background: #'.$event->data->meta['mec_color'].'"></span>' : '';
+                $event_date = (isset($event->date['start']) ? $event->date['start']['date'] : $event->data->meta['mec_start_date']);
+
                 $label_style = '';
-                if ( !empty($event->data->labels) ):
-                foreach( $event->data->labels as $label)
+                if(!empty($event->data->labels))
                 {
-                    if(!isset($label['style']) or (isset($label['style']) and !trim($label['style']))) continue;
-                    if ( $label['style']  == 'mec-label-featured' )
+                    foreach($event->data->labels as $label)
                     {
-                        $label_style = esc_html__( 'Featured' , 'mec' );
-                    } 
-                    elseif ( $label['style']  == 'mec-label-canceled' )
-                    {
-                        $label_style = esc_html__( 'Canceled' , 'mec' );
+                        if(!isset($label['style']) or (isset($label['style']) and !trim($label['style']))) continue;
+                        if($label['style']  == 'mec-label-featured') $label_style = esc_html__('Featured', 'mec');
+                        elseif($label['style'] == 'mec-label-canceled') $label_style = esc_html__('Canceled', 'mec');
                     }
                 }
-                endif;
+
+                $speakers = '""';
+                if(!empty($event->data->speakers))
+                {
+                    $speakers = [];
+                    foreach($event->data->speakers as $key=>$value)
+                    {
+                        $speakers[] = array(
+                            "@type" 	=> "Person",
+                            "name"		=> $value['name'],
+                            "image"		=> $value['thumbnail'],
+                            "sameAs"	=> $value['facebook'],
+                        );
+                    }
+
+                    $speakers = json_encode($speakers);
+                }
             ?>
             <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+                <script type="application/ld+json">
+                {
+                    "@context" 		: "http://schema.org",
+                    "@type" 		: "Event",
+                    "startDate" 	: "<?php echo !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '' ; ?>",
+                    "endDate" 		: "<?php echo !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ; ?>",
+                    "location" 		:
+                    {
+                        "@type" 		: "Place",
+                        "name" 			: "<?php echo (isset($location['name']) ? $location['name'] : ''); ?>",
+                        "image"			: "<?php echo (isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '');; ?>",
+                        "address"		: "<?php echo (isset($location['address']) ? $location['address'] : ''); ?>"
+                    },
+                    "offers": {
+                        "url": "<?php echo $event->data->permalink; ?>",
+                        "price": "<?php echo isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; ?>",
+                        "priceCurrency" : "<?php echo isset($settings['currency']) ? $settings['currency'] : ''; ?>"
+                    },
+                    "performer": <?php echo $speakers; ?>,
+                    "description" 	: "<?php  echo esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)); ?>",
+                    "image" 		: "<?php echo !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ; ?>",
+                    "name" 			: "<?php esc_html_e($event->data->title); ?>",
+                    "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
+                }
+                </script>
                 <?php if($this->style == 'type1'):  ?>
                 <div class="event-carousel-type1-head clearfix">
                     <div class="mec-event-date mec-color">
@@ -68,6 +135,7 @@ $settings = $this->main->get_settings();
                         <p><?php echo (isset($location['name']) ? $location['name'] : ''); echo (isset($location['address']) ? '<br>'.$location['address'] : ''); ?></p>
                     </div>
                     <div class="mec-event-footer-carousel-type2">
+                    <?php if($settings['social_network_status'] != '0') : ?>
                         <ul class="mec-event-sharing-wrap">
                             <li class="mec-event-share">
                                 <a href="#" class="mec-event-share-icon">
@@ -76,6 +144,7 @@ $settings = $this->main->get_settings();
                             </li>
                             <ul class="mec-event-sharing"><?php echo $this->main->module('links.list', array('event'=>$event)); ?></ul>
                         </ul>
+                    <?php endif; ?>
                         <a class="mec-booking-button mec-bg-color-hover mec-border-color-hover" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>" target="_self"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')) ; ?></a>
                     </div>
                 </div>
@@ -92,16 +161,33 @@ $settings = $this->main->get_settings();
                         <?php endif; ?>
                         <h4 class="mec-event-carousel-title"><a class="mec-color-hover" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->title; ?></a></h4>
                         <p><?php echo (isset($location['name']) ? $location['name'] : ''); echo (isset($location['address']) ? '<br>'.$location['address'] : ''); ?></p>
-                        <ul class="mec-event-sharing-wrap">
-                            <li class="mec-event-share">
-                                <a href="#" class="mec-event-share-icon">
-                                    <i class="mec-sl-share mec-bg-color-hover mec-border-color-hover"></i>
-                                </a>
-                            </li>
-                            <ul class="mec-event-sharing"><?php echo $this->main->module('links.list', array('event'=>$event)); ?>
+                        <?php if($settings['social_network_status'] != '0') : ?>
+                            <ul class="mec-event-sharing-wrap">
+                                <li class="mec-event-share">
+                                    <a href="#" class="mec-event-share-icon">
+                                        <i class="mec-sl-share mec-bg-color-hover mec-border-color-hover"></i>
+                                    </a>
+                                </li>
+                                <ul class="mec-event-sharing"><?php echo $this->main->module('links.list', array('event'=>$event)); ?>
+                                </ul>
                             </ul>
-                        </ul>
+                        <?php endif; ?>
                         <a class="mec-booking-button mec-bg-color-hover mec-border-color-hover" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>" target="_self"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')) ; ?></a>
+                    </div>
+                </div>
+                <?php elseif($this->style == 'type4'): ?>
+                <div class="event-carousel-type4-head clearfix">
+                    <div class="mec-event-image">
+                        <?php echo $event->data->thumbnails['full']; ?>
+                    </div>
+                    <div class="mec-event-overlay"></div>
+                    <div class="mec-event-hover-carousel-type4">
+                        <i class="mec-event-icon mec-bg-color mec-fa-calendar"></i>
+                        <div class="mec-event-date">
+                            <span class="mec-color"><?php echo date_i18n('F d', strtotime($event_date)); ?></span> <?php echo date_i18n('l', strtotime($event_date)); ?>
+                        </div>
+                        <h4 class="mec-event-title"><?php echo $event->data->title . $event_color; ?><?php if ( !empty($label_style) ) echo '<span class="mec-fc-style">'.$label_style.'</span>'; ?></h4>
+                        <div class="mec-btn-wrapper"><a class="mec-event-button" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $this->main->m('event_detail', __('EVENT DETAIL', 'mec')); ?></a></div>
                     </div>
                 </div>
                 <?php endif; ?>

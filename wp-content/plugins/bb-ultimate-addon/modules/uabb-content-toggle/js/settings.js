@@ -3,7 +3,11 @@
     var styleToggleClass = '';
     
     FLBuilder.registerModuleHelper('uabb-content-toggle', {
-        
+        _templates: {
+            saved_modules: '',
+            saved_rows: '',
+            page_templates: '',
+        },
         init: function()
         {
             var form        = $('.fl-builder-settings'),
@@ -25,9 +29,15 @@
             advanced_sec.on('change', $.proxy( this._advanceOptionsStyleClick, this ) );
             cont1_section.on('change', $.proxy( this._contentTypoSections, this ) );
             cont2_section.on('change', $.proxy( this._contentTypoSections, this ) );
-
+            cont1_section.on('change', $.proxy( this._contentTypeChange, this ) );
+            cont2_section.on('change', $.proxy( this._contentTypeTwoChange, this ) );
+    
             $( this._advanceOptionsStyleClick, this );
             $( this._contentTypoSections, this );
+            this._contentTypeChange();
+            this._contentTypeTwoChange();
+
+            this._hideDocs();
 
             var toggle_settings = $('.fl-builder-uabb-content-toggle-settings').find('.fl-builder-settings-tabs a');
             toggle_settings.on('click', this._contentTabsClick);
@@ -190,7 +200,181 @@
             } else {
                 form.find('#fl-builder-settings-section-content2_typo').hide();
             }
-        }
+        },
+        /**
+         * When Branding is enabled, hide the Docs Tab in the Modules editor.
+         *
+         * @since 1.16.0
+         */
+        _hideDocs: function() {
+            var form            = $('.fl-builder-settings'),
+            branding_selector   = form.find('#fl-field-uabb_helpful_information .uabb-docs-list');
+            settings_tab        = form.find('.fl-builder-settings-tabs');
+            get_anchor          =  settings_tab.find('a');
+
+            $( get_anchor ).each(function() {
+
+                if ( '#fl-builder-settings-tab-uabb_docs' === $(this) .attr('href') ) {
+
+                    if ( 'yes' === branding_selector.data('branding') ) {
+                        $( this ).hide();
+                    } else {
+                        $( this ).show();
+                    }
+                }
+            });
+        },
+        _contentTypeChange: function()
+        {
+
+            var form            = $('.fl-builder-settings');
+
+            var type = form.find('select[name=cont1_section]').val();
+
+            if ( 'saved_modules' === type ) {
+                this._setTemplates('saved_modules');
+            }
+            if ( 'saved_rows' === type ) {
+                this._setTemplates('saved_rows');
+            }
+            if ( 'saved_page_templates' === type ) {
+                this._setTemplates('page_templates');
+            }
+        },
+        _getTemplates: function(type, callback)
+        {
+            if ( 'undefined' === typeof type ) {
+                return;
+            }
+
+            if ( 'undefined' === typeof callback ) {
+                return;
+            }
+            if ( 'saved_modules' === type ) {
+                type = 'module';
+            } else if ( 'saved_rows' === type ) {
+                type = 'row';
+            } else if ( 'page_templates' === type ) {
+                type = 'layout';
+            }
+            var self = this;
+
+            $.post(
+                ajaxurl,
+                {
+                    action: 'uabb_get_saved_templates',
+                    type: type
+                },
+                function( response ) {
+                    callback(response);
+                }
+            );
+        },
+        _setTemplates: function(type)
+        {
+            var form = $('.fl-builder-settings'),       
+                select = form.find( 'select[name="cont1_' + type + '"]' ),
+                value = '', self = this;
+                
+            if ( 'undefined' !== typeof FLBuilderSettingsForms && 'undefined' !== typeof FLBuilderSettingsForms.config ) {
+                if ( "uabb-content-toggle" === FLBuilderSettingsForms.config.id ) {
+                    value = FLBuilderSettingsForms.config.settings['cont1_' + type];
+                }
+            }
+            if ( this._templates[type] !== '' ) {
+                select.html( this._templates[type] );
+                select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+
+                return;
+            }
+
+            this._getTemplates(type, function(data) {
+                var response = JSON.parse( data );
+
+                if ( response.success ) {
+                    self._templates[type] = response.data;
+                    select.html( response.data );
+                    if ( '' !== value ) {
+                        select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+                    }
+                }
+            });
+        },
+       _contentTypeTwoChange: function()
+        {
+            var form            = $('.fl-builder-settings');
+
+            var type = form.find('select[name=cont2_section]').val();
+
+            if ( 'saved_modules_head2' === type ) {
+                this._setTwoTemplates('saved_modules');
+            }
+            if ( 'saved_rows_head2' === type ) {
+                this._setTwoTemplates('saved_rows');
+            }
+            if ( 'saved_page_templates_head2' === type ) {
+                this._setTwoTemplates('page_templates');
+            }
+        },
+        _getTwoTemplates: function(type, callback)
+        {
+            if ( 'undefined' === typeof type ) {
+                return;
+            }
+
+            if ( 'undefined' === typeof callback ) {
+                return;
+            }
+            if ( 'saved_modules' === type ) {
+                type = 'module';
+            } else if ( 'saved_rows' === type ) {
+                type = 'row';
+            } else if ( 'page_templates' === type ) {
+                type = 'layout';
+            }
+            var self = this;
+
+            $.post(
+                ajaxurl,
+                {
+                    action: 'uabb_get_saved_templates',
+                    type: type
+                },
+                function( response ) {
+                    callback(response);
+                }
+            );
+        },
+        _setTwoTemplates: function(type)
+        {
+            var form = $('.fl-builder-settings'),       
+                select = form.find( 'select[name="cont2_' + type + '"]' ),
+                value = '', self = this;
+                
+            if ( 'undefined' !== typeof FLBuilderSettingsForms && 'undefined' !== typeof FLBuilderSettingsForms.config ) {
+                if ( "uabb-content-toggle" === FLBuilderSettingsForms.config.id ) {
+                    value = FLBuilderSettingsForms.config.settings['cont2_' + type];
+                }
+            }
+            if ( this._templates[type] !== '' ) {
+                select.html( this._templates[type] );
+                select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+
+                return;
+            }
+
+            this._getTwoTemplates(type, function(data) {
+                var response = JSON.parse( data );
+
+                if ( response.success ) {
+                    self._templates[type] = response.data;
+                    select.html( response.data );
+                    if ( '' !== value ) {
+                        select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+                    }
+                }
+            });
+        },
     });
 
 })(jQuery);

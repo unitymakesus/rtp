@@ -51,34 +51,31 @@ class UABBBusinessHours extends FLBuilderModule {
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
 			// Handle old border settings.
-			if ( ! isset( $settings->border ) || empty( $settings->border ) ) {
+			if ( isset( $settings->border_color ) ) {
 
 				$settings->border = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->border_color ) && ! empty( $settings->border_color ) ) {
-					if ( isset( $settings->border_style_all ) ) {
-						$settings->border['style'] = $settings->border_style_all;
-					}
-					$settings->border['color'] = $settings->border_color;
-					if ( isset( $settings->border_width_top ) && isset( $settings->border_width_right ) && isset( $settings->border_width_bottom ) && isset( $settings->border_width_left ) ) {
-						$settings->border['width'] = array(
-							'top'    => $settings->border_width_top,
-							'right'  => $settings->border_width_right,
-							'bottom' => $settings->border_width_bottom,
-							'left'   => $settings->border_width_left,
-						);
-
-						unset( $settings->border_width_top );
-						unset( $settings->border_width_right );
-						unset( $settings->border_width_bottom );
-						unset( $settings->border_width_left );
-					}
+				if ( isset( $settings->border_style_all ) ) {
+					$settings->border['style'] = $settings->border_style_all;
 					unset( $settings->border_style_all );
-					unset( $settings->border_color );
-					unset( $settings->border_width );
 				}
-
+				if ( isset( $settings->border_color ) ) {
+					$settings->border['color'] = $settings->border_color;
+					unset( $settings->border_color );
+				}
+				if ( isset( $settings->border_width_top ) && isset( $settings->border_width_right ) && isset( $settings->border_width_bottom ) && isset( $settings->border_width_left ) ) {
+					$settings->border['width'] = array(
+						'top'    => $settings->border_width_top,
+						'right'  => $settings->border_width_right,
+						'bottom' => $settings->border_width_bottom,
+						'left'   => $settings->border_width_left,
+					);
+					unset( $settings->border_width_top );
+					unset( $settings->border_width_right );
+					unset( $settings->border_width_bottom );
+					unset( $settings->border_width_left );
+				}
 				// Border radius.
 				if ( isset( $settings->border_radius ) ) {
 					$settings->border['radius'] = array(
@@ -103,6 +100,7 @@ class UABBBusinessHours extends FLBuilderModule {
 				if ( isset( $settings->days_font['family'] ) ) {
 
 					$settings->day_font_typo['font_family'] = $settings->days_font['family'];
+					unset( $settings->days_font['family'] );
 				}
 				if ( isset( $settings->days_font['weight'] ) ) {
 
@@ -111,6 +109,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					} else {
 						$settings->day_font_typo['font_weight'] = $settings->days_font['weight'];
 					}
+					unset( $settings->days_font['weight'] );
 				}
 			}
 			if ( isset( $settings->days_new_font_size ) ) {
@@ -118,18 +117,21 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->days_new_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->days_new_font_size );
 			}
 			if ( isset( $settings->days_new_font_size_medium ) ) {
 				$settings->day_font_typo_medium['font_size'] = array(
 					'length' => $settings->days_new_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->days_new_font_size_medium );
 			}
 			if ( isset( $settings->days_new_font_size_responsive ) ) {
 				$settings->day_font_typo_responsive['font_size'] = array(
 					'length' => $settings->days_new_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->days_new_font_size_responsive );
 			}
 			if ( isset( $settings->days_new_line_height ) ) {
 
@@ -137,6 +139,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->days_new_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->days_new_line_height );
 			}
 			if ( isset( $settings->days_new_line_height_medium ) ) {
 
@@ -144,6 +147,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->days_new_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->days_new_line_height_medium );
 			}
 
 			if ( isset( $settings->days_new_line_height_responsive ) ) {
@@ -152,18 +156,22 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->days_new_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->days_new_line_height_responsive );
 			}
 			if ( isset( $settings->days_transform ) ) {
 				$settings->day_font_typo['text_transform'] = $settings->days_transform;
+				unset( $settings->days_transform );
 			}
 			if ( isset( $settings->days_decoration ) ) {
 				$settings->day_font_typo['text_decoration'] = $settings->days_decoration;
+				unset( $settings->days_decoration );
 			}
 			if ( isset( $settings->days_letter_spacing ) ) {
 				$settings->day_font_typo['letter_spacing'] = array(
 					'length' => $settings->days_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->days_letter_spacing );
 			}
 			if ( isset( $settings->days_alignment ) ) {
 				$settings->day_font_typo['text_align'] = $settings->days_alignment;
@@ -182,6 +190,7 @@ class UABBBusinessHours extends FLBuilderModule {
 				if ( isset( $settings->hours_font['family'] ) ) {
 
 					$settings->hour_font_typo['font_family'] = $settings->hours_font['family'];
+					unset( $settings->hours_font['family'] );
 				}
 				if ( isset( $settings->hours_font['weight'] ) ) {
 
@@ -190,6 +199,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					} else {
 						$settings->hour_font_typo['font_weight'] = $settings->hours_font['weight'];
 					}
+					unset( $settings->hours_font['weight'] );
 				}
 			}
 			if ( isset( $settings->hours_new_font_size ) ) {
@@ -198,6 +208,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->hours_new_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->hours_new_font_size );
 			}
 			if ( isset( $settings->hours_new_font_size_medium ) ) {
 
@@ -205,6 +216,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->hours_new_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->hours_new_font_size_medium );
 			}
 			if ( isset( $settings->hours_new_font_size_responsive ) ) {
 
@@ -212,6 +224,7 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->hours_new_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->hours_new_font_size_responsive );
 			}
 			if ( isset( $settings->hours_new_line_height ) ) {
 
@@ -219,24 +232,29 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->hours_new_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->hours_new_line_height );
 			}
 			if ( isset( $settings->hours_new_line_height_medium ) ) {
 				$settings->hour_font_typo_medium['line_height'] = array(
 					'length' => $settings->hours_new_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->hours_new_line_height_medium );
 			}
 			if ( isset( $settings->hours_new_line_height_responsive ) ) {
 				$settings->hour_font_typo_responsive['line_height'] = array(
 					'length' => $settings->hours_new_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->hours_new_line_height_responsive );
 			}
 			if ( isset( $settings->hours_transform ) ) {
 				$settings->hour_font_typo['text_transform'] = $settings->hours_transform;
+				unset( $settings->hours_transform );
 			}
 			if ( isset( $settings->hours_decoration ) ) {
 				$settings->hour_font_typo['text_decoration'] = $settings->hours_decoration;
+				unset( $settings->hours_decoration );
 			}
 			if ( isset( $settings->hours_letter_spacing ) ) {
 
@@ -244,34 +262,11 @@ class UABBBusinessHours extends FLBuilderModule {
 					'length' => $settings->hours_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->hours_letter_spacing );
 			}
 			if ( isset( $settings->hours_alignment ) ) {
 				$settings->hour_font_typo['text_align'] = $settings->hours_alignment;
 				unset( $settings->hours_alignment );
-			}
-			if ( isset( $settings->days_font ) ) {
-				unset( $settings->days_font );
-				unset( $settings->days_new_font_size );
-				unset( $settings->days_new_font_size_medium );
-				unset( $settings->days_new_font_size_responsive );
-				unset( $settings->days_new_line_height );
-				unset( $settings->days_new_line_height_medium );
-				unset( $settings->days_new_line_height_responsive );
-				unset( $settings->days_transform );
-				unset( $settings->days_decoration );
-				unset( $settings->days_letter_spacing );
-			}
-			if ( isset( $settings->hours_font ) ) {
-				unset( $settings->hours_font );
-				unset( $settings->hours_new_font_size );
-				unset( $settings->hours_new_font_size_medium );
-				unset( $settings->hours_new_font_size_responsive );
-				unset( $settings->hours_new_line_height );
-				unset( $settings->hours_new_line_height_medium );
-				unset( $settings->hours_new_line_height_responsive );
-				unset( $settings->hours_transform );
-				unset( $settings->hours_decoration );
-				unset( $settings->hours_letter_spacing );
 			}
 		}
 

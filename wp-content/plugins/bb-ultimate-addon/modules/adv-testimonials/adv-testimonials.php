@@ -32,7 +32,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 		);
 
 		$this->add_css( 'jquery-bxslider' );
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		$this->add_js( 'jquery-bxslider' );
 	}
 	/**
@@ -64,9 +64,11 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					} else {
 						$settings->testimonial_heading_font_typo['font_weight'] = $settings->testimonial_heading_font_family['weight'];
 					}
+					unset( $settings->testimonial_heading_font_family['weight'] );
 				}
 				if ( isset( $settings->testimonial_heading_font_family['family'] ) ) {
 					$settings->testimonial_heading_font_typo['font_family'] = $settings->testimonial_heading_font_family['family'];
+					unset( $settings->testimonial_heading_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->testimonial_heading_font_size_unit ) ) {
@@ -75,6 +77,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_heading_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_heading_font_size_unit );
 			}
 			if ( isset( $settings->testimonial_heading_font_size_unit_medium ) ) {
 
@@ -82,12 +85,14 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_heading_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_heading_font_size_unit_medium );
 			}
 			if ( isset( $settings->testimonial_heading_font_size_unit_responsive ) ) {
 				$settings->testimonial_heading_font_typo_responsive['font_size'] = array(
 					'length' => $settings->testimonial_heading_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_heading_font_size_unit_responsive );
 			}
 			if ( isset( $settings->testimonial_heading_line_height_unit ) ) {
 
@@ -95,6 +100,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_heading_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_heading_line_height_unit );
 			}
 			if ( isset( $settings->testimonial_heading_line_height_unit_medium ) ) {
 
@@ -102,21 +108,25 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_heading_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_heading_line_height_unit_medium );
 			}
 			if ( isset( $settings->testimonial_heading_line_height_unit_responsive ) ) {
 				$settings->testimonial_heading_font_typo_responsive['line_height'] = array(
 					'length' => $settings->testimonial_heading_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_heading_line_height_unit_responsive );
 			}
 			if ( isset( $settings->testimonial_transform ) ) {
 				$settings->testimonial_heading_font_typo['text_transform'] = $settings->testimonial_transform;
+				unset( $settings->testimonial_transform );
 			}
 			if ( isset( $settings->testimonial_letter_spacing ) ) {
 				$settings->testimonial_heading_font_typo['letter_spacing'] = array(
 					'length' => $settings->testimonial_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_letter_spacing );
 			}
 			if ( ! isset( $settings->testimonial_designation_font_typo ) || ! is_array( $settings->testimonial_designation_font_typo ) ) {
 
@@ -131,9 +141,11 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					} else {
 						$settings->testimonial_designation_font_typo['font_weight'] = $settings->testimonial_designation_font_family['weight'];
 					}
+					unset( $settings->testimonial_designation_font_family['weight'] );
 				}
 				if ( isset( $settings->testimonial_designation_font_family['family'] ) ) {
 					$settings->testimonial_designation_font_typo['font_family'] = $settings->testimonial_designation_font_family['family'];
+					unset( $settings->testimonial_designation_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->testimonial_designation_font_size_unit ) ) {
@@ -142,6 +154,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_designation_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_designation_font_size_unit );
 
 			}
 			if ( isset( $settings->testimonial_designation_font_size_unit_medium ) ) {
@@ -149,12 +162,14 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_designation_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_designation_font_size_unit_medium );
 			}
 			if ( isset( $settings->testimonial_designation_font_size_unit_responsive ) ) {
 				$settings->testimonial_designation_font_typo_responsive['font_size'] = array(
 					'length' => $settings->testimonial_designation_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_designation_font_size_unit_responsive );
 			}
 			if ( isset( $settings->testimonial_designation_line_height_unit ) ) {
 
@@ -162,6 +177,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_designation_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_designation_line_height_unit );
 			}
 			if ( isset( $settings->testimonial_designation_line_height_unit_medium ) ) {
 
@@ -169,15 +185,18 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_designation_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_designation_line_height_unit_medium );
 			}
 			if ( isset( $settings->testimonial_designation_line_height_unit_responsive ) ) {
 				$settings->testimonial_designation_font_typo_responsive['line_height'] = array(
 					'length' => $settings->testimonial_designation_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_designation_line_height_unit_responsive );
 			}
 			if ( isset( $settings->testimonial_designation_transform ) ) {
 				$settings->testimonial_designation_font_typo['text_transform'] = $settings->testimonial_designation_transform;
+				unset( $settings->testimonial_designation_transform );
 			}
 			if ( isset( $settings->testimonial_designation_letter_spacing ) ) {
 
@@ -185,6 +204,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_designation_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_designation_letter_spacing );
 			}
 			if ( ! isset( $settings->testimonial_description_font_typo ) || ! is_array( $settings->testimonial_description_font_typo ) ) {
 
@@ -199,9 +219,11 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					} else {
 						$settings->testimonial_description_font_typo['font_weight'] = $settings->testimonial_description_opt_font_family['weight'];
 					}
+					unset( $settings->testimonial_description_opt_font_family['weight'] );
 				}
 				if ( isset( $settings->testimonial_description_opt_font_family['family'] ) ) {
 					$settings->testimonial_description_font_typo['font_family'] = $settings->testimonial_description_opt_font_family['family'];
+					unset( $settings->testimonial_description_opt_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->testimonial_description_opt_font_size_unit ) ) {
@@ -210,6 +232,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_description_opt_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_description_opt_font_size_unit );
 			}
 			if ( isset( $settings->testimonial_description_opt_font_size_unit_medium ) ) {
 
@@ -217,6 +240,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_description_opt_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_description_opt_font_size_unit_medium );
 			}
 			if ( isset( $settings->testimonial_description_opt_font_size_unit_responsive ) ) {
 
@@ -224,6 +248,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_description_opt_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->testimonial_description_opt_font_size_unit_responsive );
 			}
 			if ( isset( $settings->testimonial_description_opt_line_height_unit ) ) {
 
@@ -231,63 +256,31 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					'length' => $settings->testimonial_description_opt_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_description_opt_line_height_unit );
 			}
 			if ( isset( $settings->testimonial_description_opt_line_height_unit_medium ) ) {
 				$settings->testimonial_description_font_typo_medium['line_height'] = array(
 					'length' => $settings->testimonial_description_opt_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_description_opt_line_height_unit_medium );
 			}
 			if ( isset( $settings->testimonial_description_opt_line_height_unit_responsive ) ) {
 				$settings->testimonial_description_font_typo_responsive['line_height'] = array(
 					'length' => $settings->testimonial_description_opt_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->testimonial_description_opt_line_height_unit_responsive );
 			}
 			if ( isset( $settings->testimonial_description_transform ) ) {
 				$settings->testimonial_description_font_typo['text_transform'] = $settings->testimonial_description_transform;
+				unset( $settings->testimonial_description_transform );
 			}
 			if ( isset( $settings->testimonial_description_letter_spacing ) ) {
 				$settings->testimonial_description_font_typo['letter_spacing'] = array(
 					'length' => $settings->testimonial_description_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			if ( isset( $settings->testimonial_heading_font_family ) ) {
-				unset( $settings->testimonial_heading_font_family['family'] );
-				unset( $settings->testimonial_heading_font_family['weight'] );
-				unset( $settings->testimonial_heading_font_size_unit );
-				unset( $settings->testimonial_heading_font_size_unit_medium );
-				unset( $settings->testimonial_heading_font_size_unit_responsive );
-				unset( $settings->testimonial_heading_line_height_unit );
-				unset( $settings->testimonial_heading_line_height_unit_medium );
-				unset( $settings->testimonial_heading_line_height_unit_responsive );
-				unset( $settings->testimonial_transform );
-				unset( $settings->testimonial_letter_spacing );
-			}
-			if ( isset( $settings->testimonial_designation_font_family ) ) {
-				unset( $settings->testimonial_designation_font_family['family'] );
-				unset( $settings->testimonial_designation_font_family['weight'] );
-				unset( $settings->testimonial_designation_font_size_unit );
-				unset( $settings->testimonial_designation_font_size_unit_medium );
-				unset( $settings->testimonial_designation_font_size_unit_responsive );
-				unset( $settings->testimonial_designation_line_height_unit );
-				unset( $settings->testimonial_designation_line_height_unit_medium );
-				unset( $settings->testimonial_designation_line_height_unit_responsive );
-				unset( $settings->testimonial_designation_transform );
-				unset( $settings->testimonial_designation_letter_spacing );
-			}
-			if ( isset( $settings->testimonial_description_opt_font_family ) ) {
-				unset( $settings->testimonial_description_opt_font_family['family'] );
-				unset( $settings->testimonial_description_opt_font_family['weight'] );
-				unset( $settings->testimonial_description_opt_font_size_unit );
-				unset( $settings->testimonial_description_opt_font_size_unit_medium );
-				unset( $settings->testimonial_description_opt_font_size_unit_responsive );
-				unset( $settings->testimonial_description_opt_line_height_unit );
-				unset( $settings->testimonial_description_opt_line_height_unit_medium );
-				unset( $settings->testimonial_description_opt_line_height_unit_responsive );
-				unset( $settings->testimonial_description_transform );
 				unset( $settings->testimonial_description_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -304,9 +297,11 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					} else {
 						$settings->testimonial_heading_font_typo['font_weight'] = $settings->testimonial_heading_font_family['weight'];
 					}
+					unset( $settings->testimonial_heading_font_family['weight'] );
 				}
 				if ( isset( $settings->testimonial_heading_font_family['family'] ) ) {
 					$settings->testimonial_heading_font_typo['font_family'] = $settings->testimonial_heading_font_family['family'];
+					unset( $settings->testimonial_heading_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->testimonial_heading_font_size['desktop'] ) ) {
@@ -365,9 +360,11 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					} else {
 						$settings->testimonial_designation_font_typo['font_weight'] = $settings->testimonial_designation_font_family['weight'];
 					}
+					unset( $settings->testimonial_designation_font_family['weight'] );
 				}
 				if ( isset( $settings->testimonial_designation_font_family['family'] ) ) {
 					$settings->testimonial_designation_font_typo['font_family'] = $settings->testimonial_designation_font_family['family'];
+					unset( $settings->testimonial_designation_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->testimonial_designation_font_size['desktop'] ) ) {
@@ -426,10 +423,12 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 					} else {
 						$settings->testimonial_description_font_typo['font_weight'] = $settings->testimonial_description_opt_font_family['weight'];
 					}
+					unset( $settings->testimonial_description_opt_font_family['weight'] );
 				}
 				if ( isset( $settings->testimonial_description_opt_font_family['family'] ) ) {
 
 					$settings->testimonial_description_font_typo['font_family'] = $settings->testimonial_description_opt_font_family['family'];
+					unset( $settings->testimonial_description_opt_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->testimonial_description_opt_font_size['desktop'] ) ) {
@@ -486,36 +485,68 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 			if ( isset( $settings->rating_font_size['desktop'] ) ) {
 				$settings->rating_font_size_unit = $settings->rating_font_size['desktop'];
 			}
-			if ( isset( $settings->testimonial_heading_font_family ) ) {
-				unset( $settings->testimonial_heading_font_family );
+			// unset condition.
+			if ( isset( $settings->testimonial_heading_font_size['desktop'] ) ) {
 				unset( $settings->testimonial_heading_font_size['desktop'] );
+			}
+			if ( isset( $settings->testimonial_heading_font_size['medium'] ) ) {
 				unset( $settings->testimonial_heading_font_size['medium'] );
+			}
+			if ( isset( $settings->testimonial_heading_font_size['small'] ) ) {
 				unset( $settings->testimonial_heading_font_size['small'] );
+			}
+			if ( isset( $settings->testimonial_heading_line_height['desktop'] ) ) {
 				unset( $settings->testimonial_heading_line_height['desktop'] );
+			}
+			if ( isset( $settings->testimonial_heading_line_height['medium'] ) ) {
 				unset( $settings->testimonial_heading_line_height['medium'] );
+			}
+			if ( isset( $settings->testimonial_heading_line_height['small'] ) ) {
 				unset( $settings->testimonial_heading_line_height['small'] );
 			}
-			if ( isset( $settings->testimonial_designation_font_family ) ) {
-				unset( $settings->testimonial_designation_font_family );
+			if ( isset( $settings->testimonial_designation_font_size['desktop'] ) ) {
 				unset( $settings->testimonial_designation_font_size['desktop'] );
+			}
+			if ( isset( $settings->testimonial_designation_font_size['medium'] ) ) {
 				unset( $settings->testimonial_designation_font_size['medium'] );
+			}
+			if ( isset( $settings->testimonial_designation_font_size['small'] ) ) {
 				unset( $settings->testimonial_designation_font_size['small'] );
+			}
+			if ( isset( $settings->testimonial_designation_line_height['desktop'] ) ) {
 				unset( $settings->testimonial_designation_line_height['desktop'] );
+			}
+			if ( isset( $settings->testimonial_designation_line_height['medium'] ) ) {
 				unset( $settings->testimonial_designation_line_height['medium'] );
+			}
+			if ( isset( $settings->testimonial_designation_line_height['small'] ) ) {
 				unset( $settings->testimonial_designation_line_height['small'] );
 			}
-			if ( isset( $settings->testimonial_description_opt_font_family ) ) {
-				unset( $settings->testimonial_description_opt_font_family );
+			if ( isset( $settings->testimonial_description_opt_font_size['desktop'] ) ) {
 				unset( $settings->testimonial_description_opt_font_size['desktop'] );
+			}
+			if ( isset( $settings->testimonial_description_opt_font_size['medium'] ) ) {
 				unset( $settings->testimonial_description_opt_font_size['medium'] );
+			}
+			if ( isset( $settings->testimonial_description_opt_font_size['small'] ) ) {
 				unset( $settings->testimonial_description_opt_font_size['small'] );
+			}
+			if ( isset( $settings->testimonial_description_opt_line_height['desktop'] ) ) {
 				unset( $settings->testimonial_description_opt_line_height['desktop'] );
+			}
+			if ( isset( $settings->testimonial_description_opt_line_height['medium'] ) ) {
 				unset( $settings->testimonial_description_opt_line_height['medium'] );
+			}
+			if ( isset( $settings->testimonial_description_opt_line_height['small'] ) ) {
 				unset( $settings->testimonial_description_opt_line_height['small'] );
 			}
 			if ( isset( $settings->rating_font_size['desktop'] ) ) {
 				unset( $settings->rating_font_size['desktop'] );
+			}
+			if ( isset( $settings->rating_font_size['medium'] ) ) {
 				unset( $settings->rating_font_size['medium'] );
+			}
+			if ( isset( $settings->rating_font_size['small'] ) ) {
 				unset( $settings->rating_font_size['small'] );
 			}
 		}
@@ -529,7 +560,7 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
 	 */
 	public function render_ratings( $rating ) {
 
-		$rating_icon = apply_filters( 'uabb_testimonial_rating_icon', 'fa-star-o' );
+		$rating_icon = apply_filters( 'uabb_testimonial_rating_icon', 'fa-star' );
 
 		if ( 'none' != $rating ) {
 			$output  = '<div class="uabb-rating">
@@ -537,23 +568,23 @@ class UABBAdvancedTestimonialsModule extends FLBuilderModule {
                               <input class="uabb-rating__input';
 			$output .= ( 5 == $rating ) ? ' uabb-checked ' : '';
 			$output .= '" type="radio" value="5">
-                  <label class="uabb-rating__ico fa fa-lg ' . $rating_icon . '" title="5 out of 5 stars"></label>
+                  <label class="uabb-rating__ico far ' . $rating_icon . '" title="5 out of 5 stars"></label>
                   <input class="uabb-rating__input';
 			$output .= ( 4 == $rating ) ? ' uabb-checked ' : '';
 			$output .= '" type="radio" value="4">
-                  <label class="uabb-rating__ico fa fa-lg ' . $rating_icon . '" title="4 out of 5 stars"></label>
+                  <label class="uabb-rating__ico far ' . $rating_icon . '" title="4 out of 5 stars"></label>
                   <input class="uabb-rating__input';
 			$output .= ( 3 == $rating ) ? ' uabb-checked ' : '';
 			$output .= '" type="radio" value="3">
-                  <label class="uabb-rating__ico fa fa-lg ' . $rating_icon . '" title="3 out of 5 stars"></label>
+                  <label class="uabb-rating__ico far ' . $rating_icon . '" title="3 out of 5 stars"></label>
                   <input class="uabb-rating__input';
 			$output .= ( 2 == $rating ) ? ' uabb-checked ' : '';
 			$output .= '" type="radio" value="2">
-                  <label class="uabb-rating__ico fa fa-lg ' . $rating_icon . '" title="2 out of 5 stars"></label>
+                  <label class="uabb-rating__ico far ' . $rating_icon . '" title="2 out of 5 stars"></label>
                   <input class="uabb-rating__input';
 			$output .= ( 1 == $rating ) ? ' uabb-checked ' : '';
 			$output .= '" type="radio" value="1">
-                  <label class="uabb-rating__ico fa fa-lg ' . $rating_icon . '" title="1 out of 5 stars"></label>
+                  <label class="uabb-rating__ico far ' . $rating_icon . '" title="1 out of 5 stars"></label>
                 </div>
               </div>';
 

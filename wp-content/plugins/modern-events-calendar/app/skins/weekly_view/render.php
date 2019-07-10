@@ -3,6 +3,7 @@
 defined('MECEXEC') or die();
 
 $has_events = array();
+$settings = $this->main->get_settings();
 ?>
 <ul class="mec-weekly-view-dates-events">
     <?php foreach($this->events as $date=>$events): $week = $this->week_of_days[$date]; ?>
@@ -35,7 +36,46 @@ $has_events = array();
                     }
                 }
                 endif;
+                $speakers = '""';
+                if ( !empty($event->data->speakers)) 
+                {
+                    $speakers= [];
+                    foreach ($event->data->speakers as $key => $value) {
+                        $speakers[] = array(
+                            "@type" 	=> "Person",
+                            "name"		=> $value['name'],
+                            "image"		=> $value['thumbnail'],
+                            "sameAs"	=> $value['facebook'],
+                        );
+                    } 
+                    $speakers = json_encode($speakers);
+                }
             ?>
+            <script type="application/ld+json">
+            {
+                "@context" 		: "http://schema.org",
+                "@type" 		: "Event",
+                "startDate" 	: "<?php echo !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '' ; ?>",
+                "endDate" 		: "<?php echo !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ; ?>",
+                "location" 		:
+                {
+                    "@type" 		: "Place",
+                    "name" 			: "<?php echo (isset($location['name']) ? $location['name'] : ''); ?>",
+                    "image"			: "<?php echo (isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '');; ?>",
+                    "address"		: "<?php echo (isset($location['address']) ? $location['address'] : ''); ?>"
+                },
+                "offers": {
+                    "url": "<?php echo $event->data->permalink; ?>",
+                    "price": "<?php echo isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; ?>",
+                    "priceCurrency" : "<?php echo isset($settings['currency']) ? $settings['currency'] : ''; ?>"
+                },
+                "performer": <?php echo $speakers; ?>,
+                "description" 	: "<?php  echo esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)); ?>",
+                "image" 		: "<?php echo !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ; ?>",
+                "name" 			: "<?php esc_html_e($event->data->title); ?>",
+                "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
+            }
+            </script>
             <article data-style="<?php echo $label_style; ?>" class="mec-event-article <?php echo $this->get_event_classes($event); ?>">
                 <div class="mec-event-list-weekly-date mec-color"><span class="mec-date-day"><?php echo date_i18n('d', strtotime($event->date['start']['date'])); ?></span><?php echo date_i18n('F', strtotime($event->date['start']['date'])); ?></div>
                 <div class="mec-event-image"><?php echo $event->data->thumbnails['thumbnail']; ?></div>

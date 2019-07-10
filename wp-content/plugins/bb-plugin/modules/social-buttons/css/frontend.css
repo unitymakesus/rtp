@@ -1,9 +1,6 @@
 .fl-social-button {
 	display: inline-block;
-	width: 120px; 
-}
-.twitter-share-button { 
-	width: 120px !important; 
+	width: 110px;
 }
 .fl-social-button.fl-fb {
 	position: relative;

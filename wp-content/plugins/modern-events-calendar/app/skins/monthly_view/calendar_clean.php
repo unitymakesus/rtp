@@ -86,7 +86,55 @@ elseif($week_start == 5) // Friday
                         }
                     }
                     endif;
-
+                    $speakers = '""';
+                    if ( !empty($event->data->speakers)) 
+                    {
+                        $speakers= [];
+                        foreach ($event->data->speakers as $key => $value) {
+                            $speakers[] = array(
+                                "@type" 	=> "Person",
+                                "name"		=> $value['name'],
+                                "image"		=> $value['thumbnail'],
+                                "sameAs"	=> $value['facebook'],
+                            );
+                        } 
+                        $speakers = json_encode($speakers);
+                    }
+                    $startDate = !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '';
+                    $endDate = !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ;
+                    $location_name = isset($location['name']) ? $location['name'] : '' ;
+                    $location_image = isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '' ;
+                    $location_address = isset($location['address']) ? $location['address'] : '' ;
+                    $image = !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ;
+                    $price_schema = isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; 
+                    $currency_schema = isset($settings['currency']) ? $settings['currency'] : '' ;
+                    $events_str .= '
+                    <script type="application/ld+json">
+                    {
+                        "@context" 		: "http://schema.org",
+                        "@type" 		: "Event",
+                        "startDate" 	: "' . $startDate . '",
+                        "endDate" 		: "' . $endDate  . '",
+                        "location" 		:
+                        {
+                            "@type" 	: "Place",
+                            "name" 		: "' . $location_name . '",
+                            "image"		: "' . $location_image  . '",
+                            "address"	: "' .  $location_address . '"
+                        },
+                        "offers": {
+                            "url": "'. $event->data->permalink .'",
+                            "price": "' . $price_schema.'",
+                            "priceCurrency" : "' . $currency_schema .'"
+                        },
+                        "performer":  '. $speakers . ',
+                        "description" 	: "' . esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)) . '",
+                        "image" 		: "'. $image . '",
+                        "name" 			: "' .esc_html($event->data->title) . '",
+                        "url"			: "'. $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']) . '"
+                    }
+                    </script>
+                    ';
                     $events_str .= '<article data-style="'.$label_style.'" class="mec-event-article '.$this->get_event_classes($event).'">';
                     $events_str .= '<div class="mec-event-image">'.$event->data->thumbnails['thumblist'].'</div>';
                     if(trim($start_time)) $events_str .= '<div class="mec-event-time mec-color"><i class="mec-sl-clock-o"></i> '.$start_time.(trim($end_time) ? ' - '.$end_time : '').'</div>';

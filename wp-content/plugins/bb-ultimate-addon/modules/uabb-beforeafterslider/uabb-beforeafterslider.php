@@ -55,11 +55,6 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 			// Handle opacity color field.
 			$helper->handle_opacity_inputs( $settings, 'handle_back_overlay_opc', 'handle_back_overlay' );
 
-			// For Before After Text and Styling fields.
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
-			}
-
 			if ( ! isset( $settings->slider_typo ) || ! is_array( $settings->slider_typo ) ) {
 
 				$settings->slider_typo            = array();
@@ -71,6 +66,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 				if ( isset( $settings->slider_font_family['family'] ) ) {
 
 					$settings->slider_typo['font_family'] = $settings->slider_font_family['family'];
+					unset( $settings->slider_font_family['family'] );
 				}
 				if ( isset( $settings->slider_font_family['weight'] ) ) {
 
@@ -79,6 +75,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 					} else {
 						$settings->slider_typo['font_weight'] = $settings->slider_font_family['weight'];
 					}
+					unset( $settings->slider_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->slider_font_size_unit ) ) {
@@ -86,18 +83,21 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 					'length' => $settings->slider_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->slider_font_size_unit );
 			}
 			if ( isset( $settings->slider_font_size_unit_medium ) ) {
 				$settings->slider_typo_medium['font_size'] = array(
 					'length' => $settings->slider_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->slider_font_size_unit_medium );
 			}
 			if ( isset( $settings->slider_font_size_unit_responsive ) ) {
 				$settings->slider_typo_responsive['font_size'] = array(
 					'length' => $settings->slider_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->slider_font_size_unit_responsive );
 			}
 			if ( isset( $settings->slider_line_height_unit ) ) {
 
@@ -105,38 +105,31 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 					'length' => $settings->slider_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->slider_line_height_unit );
 			}
 			if ( isset( $settings->slider_line_height_unit_medium ) ) {
 				$settings->slider_typo_medium['line_height'] = array(
 					'length' => $settings->slider_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->slider_line_height_unit_medium );
 			}
 			if ( isset( $settings->slider_line_height_unit_responsive ) ) {
 				$settings->slider_typo_responsive['line_height'] = array(
 					'length' => $settings->slider_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->slider_line_height_unit_responsive );
 			}
 			if ( isset( $settings->slider_transform ) ) {
 				$settings->slider_typo['text_transform'] = $settings->slider_transform;
+				unset( $settings->slider_transform );
 			}
 			if ( isset( $settings->slider_label_letter_spacing ) ) {
 				$settings->slider_typo['letter_spacing'] = array(
 					'length' => $settings->slider_label_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			if ( isset( $settings->slider_font_family ) ) {
-				unset( $settings->slider_font_family );
-				unset( $settings->slider_font_size_unit );
-				unset( $settings->slider_font_size_unit_medium );
-				unset( $settings->slider_font_size_unit_responsive );
-				unset( $settings->slider_line_height_unit );
-				unset( $settings->slider_line_height_unit_medium );
-				unset( $settings->slider_line_height_unit_responsive );
-				unset( $settings->slider_transform );
 				unset( $settings->slider_label_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -156,6 +149,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 				if ( isset( $settings->slider_font_family['family'] ) ) {
 
 					$settings->slider_typo['font_family'] = $settings->slider_font_family['family'];
+					unset( $settings->slider_font_family['family'] );
 				}
 				if ( isset( $settings->slider_font_family['weight'] ) ) {
 
@@ -164,6 +158,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 					} else {
 						$settings->slider_typo['font_weight'] = $settings->slider_font_family['weight'];
 					}
+					unset( $settings->slider_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->slider_font_size_unit ) ) {
@@ -212,11 +207,24 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 					}
 				}
 			}
-
-			if ( isset( $settings->slider_font_family ) ) {
-				unset( $settings->slider_font_family );
-				unset( $settings->slider_font_size );
-				unset( $settings->slider_line_height );
+			// Unset the old values.
+			if ( isset( $settings->slider_font_size['desktop'] ) ) {
+				unset( $settings->slider_font_size['desktop'] );
+			}
+			if ( isset( $settings->slider_font_size['medium'] ) ) {
+				unset( $settings->slider_font_size['medium'] );
+			}
+			if ( isset( $settings->slider_font_size['small'] ) ) {
+				unset( $settings->slider_font_size['small'] );
+			}
+			if ( isset( $settings->slider_line_height['desktop'] ) ) {
+				unset( $settings->slider_line_height['desktop'] );
+			}
+			if ( isset( $settings->slider_line_height['medium'] ) ) {
+				unset( $settings->slider_line_height['medium'] );
+			}
+			if ( isset( $settings->slider_line_height['small'] ) ) {
+				unset( $settings->slider_line_height['small'] );
 			}
 		}
 		return $settings;

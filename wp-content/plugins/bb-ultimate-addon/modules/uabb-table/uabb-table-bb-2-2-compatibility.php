@@ -752,12 +752,13 @@ FLBuilder::register_module(
 					'title'  => __( 'Headings', 'uabb' ),
 					'fields' => array(
 						'heading_typo' => array(
-							'type'    => 'typography',
-							'label'   => __( 'Typography', 'uabb' ),
-							'preview' => array(
-								'type'      => 'font',
-								'selector'  => '.uabb-table-wrapper .table-header-th',
-								'important' => true,
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-table-wrapper .table-header-th',
+								'imortant' => true,
 							),
 						),
 					),
@@ -766,10 +767,11 @@ FLBuilder::register_module(
 					'title'  => __( 'Content', 'uabb' ),
 					'fields' => array(
 						'content_typo' => array(
-							'type'    => 'typography',
-							'label'   => __( 'Typography', 'uabb' ),
-							'preview' => array(
-								'type'      => 'font',
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
 								'selector'  => '.uabb-table-wrapper .table-body-td',
 								'important' => true,
 							),
@@ -780,10 +782,11 @@ FLBuilder::register_module(
 					'title'  => __( 'Entries Dropdown & Search Field', 'uabb' ),
 					'fields' => array(
 						'filter_typo' => array(
-							'type'    => 'typography',
-							'label'   => __( 'Typography', 'uabb' ),
-							'preview' => array(
-								'type'      => 'font',
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
 								'selector'  => '.entries-wrapper .lbl-entries, .entries-wrapper .select-filter, .search-input',
 								'important' => true,
 							),

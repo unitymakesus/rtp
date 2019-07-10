@@ -356,6 +356,14 @@ FLBuilder::register_settings_form(
 								'default'    => '',
 								'show_reset' => true,
 							),
+							'bg_color_opc'       => array(
+								'type'        => 'text',
+								'label'       => __( 'Opacity', 'uabb' ),
+								'default'     => '',
+								'description' => '%',
+								'maxlength'   => '3',
+								'size'        => '5',
+							),
 							'bg_hover_color'     => array(
 								'type'       => 'color',
 								'label'      => __( 'Background Hover Color', 'uabb' ),
@@ -364,6 +372,14 @@ FLBuilder::register_settings_form(
 								'preview'    => array(
 									'type' => 'none',
 								),
+							),
+							'bg_hover_color_opc' => array(
+								'type'        => 'text',
+								'label'       => __( 'Opacity', 'uabb' ),
+								'default'     => '',
+								'description' => '%',
+								'maxlength'   => '3',
+								'size'        => '5',
 							),
 							/* Border Color Dependent on Border Style for ICon */
 							'border_color'       => array(

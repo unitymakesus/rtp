@@ -26,11 +26,11 @@ final class FLBuilderLoop {
 	/**
 	 * Cache the custom pagination data.
 	 * Format:
-	 * 		array(
-	 * 			'current_page' => '',
-	 *  	 	'current_loop' => '',
-	 *   		'paged' => ''
-	 *     	)
+	 *      array(
+	 *          'current_page' => '',
+	 *          'current_loop' => '',
+	 *          'paged' => ''
+	 *      )
 	 *
 	 * @since 1.10.7
 	 * @var array
@@ -54,6 +54,14 @@ final class FLBuilderLoop {
 	static private $_rewrote_taxonomy = false;
 
 	/**
+	 * Set random seed to avoid duplicate posts in pagination.
+	 *
+	 * @since 2.2.3
+	 * @var int
+	 */
+	static private $rand_seed = 0;
+
+	/**
 	 * Initializes hooks.
 	 *
 	 * @since 1.8
@@ -62,17 +70,17 @@ final class FLBuilderLoop {
 	static public function init() {
 		// Actions
 		add_action( 'fl_builder_before_control_suggest', __CLASS__ . '::render_match_select', 10, 4 );
-		add_action( 'init', 							 __CLASS__ . '::init_rewrite_rules', 20 );
-		add_action( 'fl_builder_activated',              __CLASS__ . '::init_rewrite_rules', 10 );
-		add_action( 'registered_post_type',  			 __CLASS__ . '::post_type_rewrite_rules', 10, 2 );
-		add_action( 'registered_taxonomy',  			 __CLASS__ . '::taxonomy_rewrite_rules', 10, 3 );
-		add_action( 'wp_loaded',  			 			 __CLASS__ . '::flush_rewrite_rules', 1 );
+		add_action( 'init', __CLASS__ . '::init_rewrite_rules', 20 );
+		add_action( 'fl_builder_activated', __CLASS__ . '::init_rewrite_rules', 10 );
+		add_action( 'registered_post_type', __CLASS__ . '::post_type_rewrite_rules', 10, 2 );
+		add_action( 'registered_taxonomy', __CLASS__ . '::taxonomy_rewrite_rules', 10, 3 );
+		add_action( 'wp_loaded', __CLASS__ . '::flush_rewrite_rules', 1 );
 
 		// Filters
-		add_filter( 'found_posts',                       __CLASS__ . '::found_posts', 1, 2 );
-		add_filter( 'redirect_canonical', 				 __CLASS__ . '::override_canonical', 1, 2 );
-		add_filter( 'pre_handle_404', 				 	 __CLASS__ . '::pre_404_pagination', 1, 2 );
-		add_filter( 'paginate_links', 				 	 __CLASS__ . '::filter_paginate_links', 1 );
+		add_filter( 'found_posts', __CLASS__ . '::found_posts', 1, 2 );
+		add_filter( 'redirect_canonical', __CLASS__ . '::override_canonical', 1, 2 );
+		add_filter( 'pre_handle_404', __CLASS__ . '::pre_404_pagination', 1, 2 );
+		add_filter( 'paginate_links', __CLASS__ . '::filter_paginate_links', 1 );
 	}
 
 	/**
@@ -84,12 +92,31 @@ final class FLBuilderLoop {
 	 * @return object A WP_Query instance.
 	 */
 	static public function query( $settings ) {
+		/**
+		 * Filter the settings variable before query is performed.
+		 * @see fl_builder_loop_before_query_settings
+		 */
 		$settings = apply_filters( 'fl_builder_loop_before_query_settings', $settings );
 
+		/**
+		 * Before query is performed.
+		 * @see fl_builder_loop_before_query
+		 */
 		do_action( 'fl_builder_loop_before_query', $settings );
 
 		// Count how many times this method has been called
 		self::$loop_counter++;
+
+		// Set random order seed for load_more and scroll paginations.
+		if ( isset( $settings->order_by ) && 'rand' == $settings->order_by ) {
+			if ( in_array( $settings->pagination, array( 'scroll', 'load_more' ) ) ) {
+				if ( ! isset( $_GET['fl_rand_seed'] ) ) {
+					self::$rand_seed = rand();
+				} else {
+					self::$rand_seed = $_GET['fl_rand_seed'];
+				}
+			}
+		}
 
 		if ( isset( $settings->data_source ) && 'main_query' == $settings->data_source ) {
 			$query = self::main_query();
@@ -97,8 +124,16 @@ final class FLBuilderLoop {
 			$query = self::custom_query( $settings );
 		}
 
+		/**
+		 * Aftert the query is performed.
+		 * @see fl_builder_loop_after_query
+		 */
 		do_action( 'fl_builder_loop_after_query', $settings );
 
+		/**
+		 * Filter the query results.
+		 * @see fl_builder_loop_query
+		 */
 		return apply_filters( 'fl_builder_loop_query', $query, $settings );
 	}
 
@@ -117,9 +152,9 @@ final class FLBuilderLoop {
 
 			$query_args = $wp_query->query_vars;
 
-			$query_args['paged'] = self::get_paged();
+			$query_args['paged']              = self::get_paged();
 			$query_args['fl_original_offset'] = 0;
-			$query_args['fl_builder_loop'] = true;
+			$query_args['fl_builder_loop']    = true;
 
 			$query = new WP_Query( $query_args );
 		} else {
@@ -141,13 +176,13 @@ final class FLBuilderLoop {
 	 */
 	static public function custom_query( $settings ) {
 		global $post;
-		$posts_per_page	 = empty( $settings->posts_per_page ) ? 10 : $settings->posts_per_page;
-		$post_type		   = empty( $settings->post_type ) ? 'post' : $settings->post_type;
-		$order_by		     = empty( $settings->order_by ) ? 'date' : $settings->order_by;
-		$order			     = empty( $settings->order ) ? 'DESC' : $settings->order;
-		$users			     = empty( $settings->users ) ? '' : $settings->users;
-		$fields			     = empty( $settings->fields ) ? '' : $settings->fields;
-		$exclude_self    = '';
+		$posts_per_page = empty( $settings->posts_per_page ) ? 10 : $settings->posts_per_page;
+		$post_type      = empty( $settings->post_type ) ? 'post' : $settings->post_type;
+		$order_by       = empty( $settings->order_by ) ? 'date' : $settings->order_by;
+		$order          = empty( $settings->order ) ? 'DESC' : $settings->order;
+		$users          = empty( $settings->users ) ? '' : $settings->users;
+		$fields         = empty( $settings->fields ) ? '' : $settings->fields;
+		$exclude_self   = '';
 		if ( isset( $settings->exclude_self ) && 'yes' == $settings->exclude_self ) {
 			$exclude_self = $post->ID;
 		}
@@ -170,12 +205,12 @@ final class FLBuilderLoop {
 
 		// Build the query args.
 		$args = array(
-			'paged'          => $paged,
-			'posts_per_page' => $posts_per_page,
-			'post_type'      => $post_type,
-			'orderby'        => $order_by,
-			'order'          => $order,
-			'tax_query'      => array(
+			'paged'               => $paged,
+			'posts_per_page'      => $posts_per_page,
+			'post_type'           => $post_type,
+			'orderby'             => $order_by,
+			'order'               => $order,
+			'tax_query'           => array(
 				'relation' => 'AND',
 			),
 			'ignore_sticky_posts' => true,
@@ -191,11 +226,16 @@ final class FLBuilderLoop {
 			$args['meta_key'] = $settings->order_by_meta_key;
 		}
 
+		// Random order seed.
+		if ( 'rand' == $order_by && self::$rand_seed > 0 ) {
+			$args['orderby'] = 'RAND(' . self::$rand_seed . ')';
+		}
+
 		// Order by author
 		if ( 'author' == $order_by ) {
 			$args['orderby'] = array(
 				'author' => $order,
-				'date' => $order,
+				'date'   => $order,
 			);
 		}
 
@@ -250,7 +290,7 @@ final class FLBuilderLoop {
 				} elseif ( 'related' === $tax_matching ) {
 					// Match posts by related terms from the global post.
 					global $post;
-					$terms 	 = wp_get_post_terms( $post->ID, $tax_slug );
+					$terms   = wp_get_post_terms( $post->ID, $tax_slug );
 					$related = array();
 
 					foreach ( $terms as $term ) {
@@ -266,10 +306,10 @@ final class FLBuilderLoop {
 
 						// Don't include posts with terms selected in the suggest field.
 						$args['tax_query'][] = array(
-							'taxonomy'	=> $tax_slug,
-							'field'		=> 'id',
-							'terms'		=> $term_ids,
-							'operator'  => 'NOT IN',
+							'taxonomy' => $tax_slug,
+							'field'    => 'id',
+							'terms'    => $term_ids,
+							'operator' => 'NOT IN',
 						);
 
 						// Set the term IDs to the related terms.
@@ -281,10 +321,10 @@ final class FLBuilderLoop {
 			if ( ! empty( $term_ids ) ) {
 
 				$args['tax_query'][] = array(
-					'taxonomy'	=> $tax_slug,
-					'field'		=> 'id',
-					'terms'		=> $term_ids,
-					'operator'  => $operator,
+					'taxonomy' => $tax_slug,
+					'field'    => 'id',
+					'terms'    => $term_ids,
+					'operator' => $operator,
 				);
 			}
 		}
@@ -353,7 +393,7 @@ final class FLBuilderLoop {
 	 */
 	static public function init_rewrite_rules() {
 
-		$fronts = self::get_rewrite_fronts();
+		$fronts      = self::get_rewrite_fronts();
 		$paged_regex = self::$paged_regex_base;
 
 		$flpaged_rules = array(
@@ -383,7 +423,7 @@ final class FLBuilderLoop {
 			'(.?.+?)/' . $paged_regex . '/?([0-9]{1,})/?$' => 'index.php?pagename=$matches[1]&flpaged=$matches[2]',
 
 			// Post single
-			'(.+?)/' . $paged_regex . '/?([0-9]{1,})/?$' => 'index.php?name=$matches[1]&flpaged=$matches[2]',
+			'(.+?)/' . $paged_regex . '/?([0-9]{1,})/?$'   => 'index.php?name=$matches[1]&flpaged=$matches[2]',
 		);
 
 		// Frontpage static
@@ -429,11 +469,11 @@ final class FLBuilderLoop {
 		$author_base = $front . $wp_rewrite->author_base . '/';
 
 		return array(
-			'category' 	=> $category_base,
-			'tag' 		=> $tag_base,
-			'date' 		=> $date_base,
-			'author' 	=> $author_base,
-			'default' 	=> $front,
+			'category' => $category_base,
+			'tag'      => $tag_base,
+			'date'     => $date_base,
+			'author'   => $author_base,
+			'default'  => $front,
 		);
 	}
 
@@ -490,10 +530,10 @@ final class FLBuilderLoop {
 
 		// Append $custom_paged[ 'current_page' ] to slug if it's single.
 		if ( $is_single ) {
-			$regex = $slug . '/' . $custom_paged['current_page'] . '/' . self::$paged_regex_base . '/?([0-9]{1,})/?$';
+			$regex    = $slug . '/' . $custom_paged['current_page'] . '/' . self::$paged_regex_base . '/?([0-9]{1,})/?$';
 			$redirect = 'index.php?post_type=' . $post_type . '&name=' . $custom_paged['current_page'] . '&flpaged=$matches[1]';
 		} else {
-			$regex = $slug . '/' . self::$paged_regex_base . '/?([0-9]{1,})/?$';
+			$regex    = $slug . '/' . self::$paged_regex_base . '/?([0-9]{1,})/?$';
 			$redirect = 'index.php?post_type=' . $post_type . '&flpaged=$matches[1]';
 		}
 
@@ -608,7 +648,7 @@ final class FLBuilderLoop {
 		}
 
 		self::$_rewrote_post_type = false;
-		self::$_rewrote_taxonomy = false;
+		self::$_rewrote_taxonomy  = false;
 	}
 
 	/**
@@ -634,8 +674,8 @@ final class FLBuilderLoop {
 
 			// Disable canonical on single post pagination for all post types.
 			if ( true === $wp_the_query->is_singular
-				 && - 1 == $wp_the_query->current_post
-				 && true === $wp_the_query->is_paged
+				&& - 1 == $wp_the_query->current_post
+				&& true === $wp_the_query->is_paged
 			) {
 				$redirect_url = false;
 			}
@@ -648,7 +688,7 @@ final class FLBuilderLoop {
 	 * Theme Builder support - Check to see if current page has Themer layout.
 	 * Short-circuit default header status handling when paginating on themer layout content.
 	 *
-	 * @param bool 	$prevent_404 Whether to short-circuit default header status handling. Default false.
+	 * @param bool  $prevent_404 Whether to short-circuit default header status handling. Default false.
 	 * @param object $query WP Query object.
 	 * @since 1.10.7
 	 * @return bool
@@ -668,12 +708,14 @@ final class FLBuilderLoop {
 			return false;
 		}
 
-		if ( $query->is_archive && $query->is_category && $query->post_count < 1 ) {
-			return false;
+		if ( $query->is_archive && $query->is_category ) {
+			if ( $query->post_count < 1 && ! isset( $_GET['flpaging'] ) ) {
+				return false;
+			}
 		}
 
 		$is_global_hack = false;
-		$layout_type = '';
+		$layout_type    = '';
 
 		// Manually set globals since filter `pre_handle_404`
 		// doesn't reach `$wp_query->register_globals()`.
@@ -684,7 +726,7 @@ final class FLBuilderLoop {
 			$wp_actions['wp'] = 1;
 
 			if ( $query->is_post_type_archive ) {
-				$post = new stdClass();
+				$post            = new stdClass();
 				$post->post_type = $query->get( 'post_type' );
 				$GLOBALS['post'] = $post;
 			}
@@ -714,10 +756,11 @@ final class FLBuilderLoop {
 	 * @return void
 	 */
 	static public function pagination( $query ) {
-		$total_pages = $query->max_num_pages;
+		$total_pages         = $query->max_num_pages;
 		$permalink_structure = get_option( 'permalink_structure' );
-		$paged = self::get_paged();
-		$base = html_entity_decode( get_pagenum_link() );
+		$paged               = self::get_paged();
+		$base                = html_entity_decode( get_pagenum_link() );
+		$add_args            = false;
 
 		if ( $total_pages > 1 ) {
 
@@ -725,15 +768,31 @@ final class FLBuilderLoop {
 				$current_page = 1;
 			}
 
-			$base = self::build_base_url( $permalink_structure, $base );
+			$base   = self::build_base_url( $permalink_structure, $base );
 			$format = self::paged_format( $permalink_structure, $base );
 
+			// Flag if it's a first posts module in an archive page.
+			// Fix pagination issues in archive page since it's using the main WP query for pagination.
+			if ( $query->is_archive && 1 === self::$loop_counter ) {
+				if ( isset( $query->query['settings']->data_source ) && 'custom_query' == $query->query['settings']->data_source ) {
+					$add_args = array(
+						'flpaging' => 1,
+					);
+				}
+			}
+
+			// Add random order seed for scroll and load more.
+			if ( self::$rand_seed > 0 ) {
+				$add_args['fl_rand_seed'] = self::$rand_seed;
+			}
+
 			echo paginate_links(array(
-				'base'	   => $base . '%_%',
+				'base'     => $base . '%_%',
 				'format'   => $format,
 				'current'  => $current_page,
-				'total'	   => $total_pages,
-				'type'	   => 'list',
+				'total'    => $total_pages,
+				'type'     => 'list',
+				'add_args' => $add_args,
 			));
 		}
 	}
@@ -748,7 +807,8 @@ final class FLBuilderLoop {
 	 */
 	static public function filter_paginate_links( $link ) {
 		$permalink_structure = get_option( 'permalink_structure' );
-		$base 				 = html_entity_decode( get_pagenum_link() );
+		$base                = html_entity_decode( get_pagenum_link() );
+		$link_params         = wp_parse_url( $link, PHP_URL_QUERY );
 
 		if ( empty( $permalink_structure ) && strrpos( $base, 'paged-' ) ) {
 
@@ -758,16 +818,21 @@ final class FLBuilderLoop {
 			$current_paged_args = array_values( preg_grep( '/^paged-(\d+)/', array_keys( $base_args ) ) );
 
 			if ( ! empty( $current_paged_args ) ) {
-				$current_flpaged = $current_paged_args[0];
+				$current_flpaged     = $current_paged_args[0];
 				$current_paged_param = $current_flpaged . '=' . $base_args[ $current_flpaged ];
 
-				$link_params = wp_parse_url( $link, PHP_URL_QUERY );
-				$link_params = str_replace( $current_paged_param, '' , $link_params );
+				$link_params = str_replace( $current_paged_param, '', $link_params );
 				wp_parse_str( $link_params, $link_args );
 
 				$link = strtok( $link, '?' );
 				$link = add_query_arg( $link_args, $link );
 			}
+		} elseif ( false !== strpos( $link, 'flpaging' ) && self::$loop_counter > 1 ) {
+			$link_params = str_replace( 'flpaging=1', '', $link_params );
+			wp_parse_str( $link_params, $link_args );
+
+			$link = strtok( $link, '?' );
+			$link = add_query_arg( $link_args, $link );
 		}
 
 		return $link;
@@ -828,14 +893,14 @@ final class FLBuilderLoop {
 		}
 
 		if ( ! empty( $permalink_structure ) ) {
-			$format = substr( $base, -1 ) != '/' ? '/' : '';
+			$format  = substr( $base, -1 ) != '/' ? '/' : '';
 			$format .= $page_prefix . '/';
 			$format .= '%#%';
 			$format .= substr( $permalink_structure, -1 ) == '/' ? '/' : '';
 		} elseif ( empty( $permalink_structure ) || is_search() ) {
 			$parse_url = wp_parse_url( $base, PHP_URL_QUERY );
-			$format = empty( $parse_url ) ? '?' : '&';
-			$format .= $page_prefix . '=%#%';
+			$format    = empty( $parse_url ) ? '?' : '&';
+			$format   .= $page_prefix . '=%#%';
 		}
 
 		return $format;
@@ -869,10 +934,10 @@ final class FLBuilderLoop {
 
 		if ( $paged_matches ) {
 			self::$custom_paged_data = array(
-				'parent_page'	=> $matches[1],
-				'current_page' 	=> $matches[2],
-				'current_loop' 	=> $matches[3],
-				'paged' 		=> $matches[4],
+				'parent_page'  => $matches[1],
+				'current_page' => $matches[2],
+				'current_loop' => $matches[3],
+				'paged'        => $matches[4],
 			);
 		}
 
@@ -913,13 +978,13 @@ final class FLBuilderLoop {
 
 		// In case the site is using default permalink structure and it has multiple paginations.
 		$permalink_structure = get_option( 'permalink_structure' );
-		$base = html_entity_decode( get_pagenum_link() );
+		$base                = html_entity_decode( get_pagenum_link() );
 
 		if ( is_numeric( $flpaged ) && self::is_paginated_loop() ) {
 			return $flpaged;
 		} elseif ( empty( $permalink_structure ) && strrpos( $base, 'paged-' ) && self::$loop_counter > 1 ) {
 
-			$flpaged = 0;
+			$flpaged   = 0;
 			$url_parts = wp_parse_url( $base, PHP_URL_QUERY );
 			wp_parse_str( $url_parts, $url_params );
 
@@ -973,8 +1038,8 @@ final class FLBuilderLoop {
 	 */
 	static public function post_types() {
 		$post_types = get_post_types(array(
-			'public'	=> true,
-			'show_ui'	=> true,
+			'public'  => true,
+			'show_ui' => true,
 		), 'objects');
 
 		unset( $post_types['attachment'] );
@@ -993,7 +1058,7 @@ final class FLBuilderLoop {
 	 */
 	static public function taxonomies( $post_type ) {
 		$taxonomies = get_object_taxonomies( $post_type, 'objects' );
-		$data		= array();
+		$data       = array();
 
 		foreach ( $taxonomies as $tax_slug => $tax ) {
 

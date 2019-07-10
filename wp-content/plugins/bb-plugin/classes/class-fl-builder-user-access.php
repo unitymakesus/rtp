@@ -52,7 +52,7 @@ final class FLBuilderUserAccess {
 			$data['order'] = '10';
 		}
 		self::$registered_settings[ $key ] = $data;
-		self::$settings = null; // must bust the settings cache.
+		self::$settings                    = null; // must bust the settings cache.
 	}
 
 	/**
@@ -219,8 +219,8 @@ final class FLBuilderUserAccess {
 		}
 
 		$editable_roles = get_editable_roles();
-		$roles = array();
-		$caps  = apply_filters( 'fl_builder_user_access_capabilities', array( 'edit_posts' ) );
+		$roles          = array();
+		$caps           = apply_filters( 'fl_builder_user_access_capabilities', array( 'edit_posts' ) );
 
 		foreach ( $editable_roles as $role => $data ) {
 			foreach ( $caps as $cap ) {
@@ -243,7 +243,7 @@ final class FLBuilderUserAccess {
 	 * @return bool
 	 */
 	static public function current_user_can( $key ) {
-		$user	  = wp_get_current_user();
+		$user     = wp_get_current_user();
 		$settings = self::get_saved_settings();
 
 		// Return false if no settings saved.

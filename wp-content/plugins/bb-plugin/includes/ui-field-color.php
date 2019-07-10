@@ -7,7 +7,13 @@
 		</svg>
 	</button>
 	<# if ( data.field.show_reset ) { #>
-		<button class="fl-color-picker-clear"><div class="fl-color-picker-icon-remove"></div></button>
+		<button class="fl-color-picker-clear">
+			<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<g transform="translate(-321.000000, -188.000000)">
+					<path d="M326.313708,193.313708 L326.313708,186.313708 L328.313708,186.313708 L328.313708,193.313708 L335.313708,193.313708 L335.313708,195.313708 L328.313708,195.313708 L328.313708,202.313708 L326.313708,202.313708 L326.313708,195.313708 L319.313708,195.313708 L319.313708,193.313708 L326.313708,193.313708 Z" transform="translate(327.313708, 194.313708) rotate(-45.000000) translate(-327.313708, -194.313708) "></path>
+				</g>
+			</svg>
+		</button>
 	<# } #>
 	<input name="{{data.name}}" type="hidden" value="{{{data.value}}}" class="fl-color-picker-value" />
 	<div class="fl-clear"></div>

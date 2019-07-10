@@ -150,6 +150,7 @@ FLBuilder::register_module(
 							'type'        => 'text',
 							'label'       => __( '"All" Tab Label', 'uabb' ),
 							'default'     => __( 'All', 'uabb' ),
+							'placeholder' => __( 'All', 'uabb' ),
 							'connections' => array( 'string', 'html' ),
 						),
 						'default_filter_switch' => array(

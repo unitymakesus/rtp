@@ -68,7 +68,14 @@
 
 								<# for ( var sectionId in tab.sections ) { #>
 								<# var section = tab.sections[ sectionId ]; #>
-								<div id="fl-builder-settings-section-{{sectionId}}" class="fl-builder-settings-section">
+								<#
+									var isCollapsed = false;
+									if ( typeof section.collapsed !== 'undefined' ) {
+										isCollapsed = section.collapsed
+									}
+									var collapsedClass = isCollapsed ? 'fl-builder-settings-section-collapsed' : '';
+								#>
+								<div id="fl-builder-settings-section-{{sectionId}}" class="fl-builder-settings-section {{collapsedClass}}">
 
 									<# if ( section.file ) { #>
 										<div class="fl-legacy-settings-section" data-section="{{sectionId}}" data-tab="{{tabId}}" />
@@ -78,17 +85,26 @@
 									<# } else { #>
 
 										<# if ( section.title ) { #>
-										<h3 class="fl-builder-settings-title">{{{section.title}}}</h3>
+										<div class="fl-builder-settings-section-header">
+											<button class="fl-builder-settings-title">
+												<svg class="fl-symbol">
+													<use xlink:href="#fl-down-caret" />
+												</svg>
+												{{{section.title}}}
+											</button>
+										</div>
 										<# } #>
 
-										<# if ( section.description ) { #>
-										<p class="fl-builder-settings-description">{{{section.description}}}</p>
-										<# } #>
+										<div class="fl-builder-settings-section-content">
+											<# if ( section.description ) { #>
+											<p class="fl-builder-settings-description">{{{section.description}}}</p>
+											<# } #>
 
-										<table class="fl-form-table">
-										<# var fields = FLBuilderSettingsForms.renderFields( section.fields, data.settings ); #>
-										{{{fields}}}
-										</table>
+											<table class="fl-form-table">
+											<# var fields = FLBuilderSettingsForms.renderFields( section.fields, data.settings ); #>
+											{{{fields}}}
+											</table>
+										</div>
 
 									<# } #>
 

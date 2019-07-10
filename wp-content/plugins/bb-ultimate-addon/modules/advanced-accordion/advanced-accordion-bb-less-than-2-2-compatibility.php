@@ -302,13 +302,13 @@ FLBuilder::register_module(
 						'close_icon'       => array(
 							'type'        => 'icon',
 							'label'       => __( 'Close Icon', 'uabb' ),
-							'default'     => 'fa fa-plus',
+							'default'     => 'fas fa-plus',
 							'show_remove' => true,
 						),
 						'open_icon'        => array(
 							'type'        => 'icon',
 							'label'       => __( 'Open Icon', 'uabb' ),
-							'default'     => 'fa fa-minus',
+							'default'     => 'fas fa-minus',
 							'show_remove' => true,
 						),
 						'icon_size'        => array(
@@ -839,17 +839,17 @@ FLBuilder::register_settings_form(
 							'ct_saved_rows'     => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Row', 'uabb' ),
-								'options' => UABB_Model_Helper::get_saved_row_template(),
+								'options' => array(),
 							),
 							'ct_saved_modules'  => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Module', 'uabb' ),
-								'options' => UABB_Model_Helper::get_saved_module_template(),
+								'options' => array(),
 							),
 							'ct_page_templates' => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Page Template', 'uabb' ),
-								'options' => UABB_Model_Helper::get_saved_page_template(),
+								'options' => array(),
 							),
 						),
 					),

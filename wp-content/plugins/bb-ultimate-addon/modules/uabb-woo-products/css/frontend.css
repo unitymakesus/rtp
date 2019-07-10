@@ -316,6 +316,10 @@
 }
 
 /* Franko Skin */
+.internet-explorer .uabb-woo-products-modern .uabb-product-actions {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0)
+}
 .uabb-woo-products-modern .uabb-product-actions {
     position: absolute;
     top: 15px;
@@ -917,7 +921,8 @@
 }
 
 .uabb-woo-products-carousel ul.slick-dots li button:before {
-    font-family: 'FontAwesome';
+    font-family: 'Font Awesome 5 Free';
+    font-weight:900;
     font-size: 6px;
     line-height: 20px;
     position: absolute;

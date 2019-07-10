@@ -308,8 +308,11 @@ class MEC_main extends MEC_base
     public function get_post_meta($post_id)
     {
         $raw_data = get_post_meta($post_id, '', true);
-        
         $data = array();
+
+        // Invalid Raw Data
+        if(!is_array($raw_data)) return $data;
+
         foreach($raw_data as $key=>$val) $data[$key] = isset($val[0]) ? (!is_serialized($val[0]) ? $val[0] : unserialize($val[0])) : NULL;
         
         return $data;
@@ -347,11 +350,12 @@ class MEC_main extends MEC_base
     /**
      * Returns weekday labels
      * @author Webnus <info@webnus.biz>
+     * @param integer $week_start
      * @return array
      */
-    public function get_weekday_labels()
+    public function get_weekday_labels($week_start = NULL)
     {
-        $week_start = $this->get_first_day_of_week();
+        if(is_null($week_start)) $week_start = $this->get_first_day_of_week();
         
         /**
          * Please don't change it to translate-able strings
@@ -522,6 +526,17 @@ class MEC_main extends MEC_base
         $options = $this->get_options();
         return (isset($options['settings']) ? $options['settings'] : array());
     }
+
+    /**
+     * Returns MEC settings
+     * @author Webnus <info@webnus.biz>
+     * @return array
+     */
+     public function get_default_form()
+     {
+         $options = $this->get_options();
+         return (isset($options['default_form']) ? $options['default_form'] : array());
+     }
     
     /**
      * Returns registration form fields
@@ -547,7 +562,7 @@ class MEC_main extends MEC_base
             }
         }
 
-        return $reg_fields;
+        return apply_filters( 'mec_get_reg_fields', $reg_fields, $event_id );
     }
 
     /**
@@ -558,8 +573,8 @@ class MEC_main extends MEC_base
      */
     public function ticket_variations($event_id = NULL)
     {
-        $options = $this->get_options();
-        $ticket_variations = (isset($options['ticket_variations']) and is_array($options['ticket_variations'])) ? $options['ticket_variations'] : array();
+        $settings = $this->get_settings();
+        $ticket_variations = (isset($settings['ticket_variations']) and is_array($settings['ticket_variations'])) ? $settings['ticket_variations'] : array();
 
         // Event Ticket Variations
         if($event_id)
@@ -687,13 +702,17 @@ class MEC_main extends MEC_base
         $current = get_option('mec_options', array());
         if(is_string($current) and trim($current) == '') $current = array();
         
-        // Validation for Slugs
+        // Validations
         if(isset($filtered['settings']) and isset($filtered['settings']['slug'])) $filtered['settings']['slug'] = strtolower(str_replace(' ', '-', $filtered['settings']['slug']));
-        if(isset($filtered['category_slug']) and isset($filtered['settings']['category_slug'])) $filtered['settings']['category_slug'] = strtolower(str_replace(' ', '-', $filtered['settings']['category_slug']));
-        
+        if(isset($filtered['settings']) and isset($filtered['settings']['category_slug'])) $filtered['settings']['category_slug'] = strtolower(str_replace(' ', '-', $filtered['settings']['category_slug']));
+        if(isset($filtered['settings']) and isset($filtered['settings']['custom_archive'])) $filtered['settings']['custom_archive'] = isset($filtered['settings']['custom_archive']) ? str_replace('\"','"',$filtered['settings']['custom_archive']) : '';
+
         // Merge new options with previous options
         $final = array_merge($current, $filtered);
 
+        // MEC Save Options
+        do_action('mec_save_options', $final);
+        
         // Save final options
         update_option('mec_options', $final);
         
@@ -1062,7 +1081,6 @@ class MEC_main extends MEC_base
     {
         $social_networks = array(
             'facebook'=>array('id'=>'facebook', 'name'=>__('Facebook', 'mec'), 'function'=>array($this, 'sn_facebook')),
-            'gplus'=>array('id'=>'gplus', 'name'=>__('Google+', 'mec'), 'function'=>array($this, 'sn_gplus')),
             'twitter'=>array('id'=>'twitter', 'name'=>__('Twitter', 'mec'), 'function'=>array($this, 'sn_twitter')),
             'linkedin'=>array('id'=>'linkedin', 'name'=>__('Linkedin', 'mec'), 'function'=>array($this, 'sn_linkedin')),
             'vk'=>array('id'=>'vk', 'name'=>__('VK', 'mec'), 'function'=>array($this, 'sn_vk')),
@@ -1081,19 +1099,10 @@ class MEC_main extends MEC_base
      */
     public function sn_facebook($url, $event)
     {
-        return '<li class="mec-event-social-icon"><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u='.esc_attr($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=600\'); return false;" title="'.__('Share on Facebook', 'mec').'"><i class="mec-fa-facebook"></i></a></li>';
-    }
-    
-    /**
-     * Do Google+ link for social networks
-     * @author Webnus <info@webnus.biz>
-     * @param string $url
-     * @param object $event
-     * @return string
-     */
-    public function sn_gplus($url, $event)
-    {
-        return '<li class="mec-event-social-icon"><a class="google" href="https://plus.google.com/share?url='.esc_attr($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=500\'); return false;" title="'.__('Google Plus', 'mec').'"><i class="mec-fa-google-plus"></i></a></li>';
+        $occurrence = (isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '');
+        if(trim($occurrence) != '') $url = $this->add_qs_var('occurrence', $occurrence, $url);
+
+        return '<li class="mec-event-social-icon"><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u='.rawurlencode($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=600\'); return false;" title="'.__('Share on Facebook', 'mec').'"><i class="mec-fa-facebook"></i></a></li>';
     }
     
     /**
@@ -1105,7 +1114,10 @@ class MEC_main extends MEC_base
      */
     public function sn_twitter($url, $event)
     {
-        return '<li class="mec-event-social-icon"><a class="twitter" href="https://twitter.com/share?url='.esc_attr($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=500\'); return false;" target="_blank" title="'.__('Tweet', 'mec').'"><i class="mec-fa-twitter"></i></a></li>';
+        $occurrence = (isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '');
+        if(trim($occurrence) != '') $url = $this->add_qs_var('occurrence', $occurrence, $url);
+
+        return '<li class="mec-event-social-icon"><a class="twitter" href="https://twitter.com/share?url='.rawurlencode($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=500\'); return false;" target="_blank" title="'.__('Tweet', 'mec').'"><i class="mec-fa-twitter"></i></a></li>';
     }
     
     /**
@@ -1117,7 +1129,10 @@ class MEC_main extends MEC_base
      */
     public function sn_linkedin($url, $event)
     {
-        return '<li class="mec-event-social-icon"><a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url='.esc_attr($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=500\'); return false;" target="_blank" title="'.__('Linkedin', 'mec').'"><i class="mec-fa-linkedin"></i></a></li>';
+        $occurrence = (isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '');
+        if(trim($occurrence) != '') $url = $this->add_qs_var('occurrence', $occurrence, $url);
+
+        return '<li class="mec-event-social-icon"><a class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url='.rawurlencode($url).'" onclick="javascript:window.open(this.href, \'\', \'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=500\'); return false;" target="_blank" title="'.__('Linkedin', 'mec').'"><i class="mec-fa-linkedin"></i></a></li>';
     }
     
     /**
@@ -1129,8 +1144,12 @@ class MEC_main extends MEC_base
      */
     public function sn_email($url, $event)
     {
-        $event->data->title = str_replace( '&' , '%26' , $event->data->title );
-        $event->data->title = str_replace( '#038;' , '' , $event->data->title );
+        $occurrence = (isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '');
+        if(trim($occurrence) != '') $url = $this->add_qs_var('occurrence', $occurrence, $url);
+
+        $event->data->title = str_replace('&', '%26', $event->data->title);
+        $event->data->title = str_replace('#038;', '', $event->data->title);
+
         return '<li class="mec-event-social-icon"><a class="email" href="mailto:?subject='.$event->data->title.'&body='.rawurlencode($url).'" title="'.__('Email', 'mec').'"><i class="mec-fa-envelope"></i></a></li>';
     }
 
@@ -1143,6 +1162,9 @@ class MEC_main extends MEC_base
      */
     public function sn_vk($url, $event)
     {
+        $occurrence = (isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '');
+        if(trim($occurrence) != '') $url = $this->add_qs_var('occurrence', $occurrence, $url);
+
         return '<li class="mec-event-social-icon"><a class="vk" href=" http://vk.com/share.php?url='.rawurlencode($url).'" title="'.__('VK', 'mec').'" target="_blank"><i class="mec-fa-vk"></i></a></li>';
     }
     
@@ -1165,9 +1187,34 @@ class MEC_main extends MEC_base
             array('skin'=>'grid', 'name'=>__('Grid View', 'mec')),
             array('skin'=>'agenda', 'name'=>__('Agenda View', 'mec')),
             array('skin'=>'map', 'name'=>__('Map View', 'mec')),
+            array('skin'=>'custom', 'name'=>__('Custom Shortcode', 'mec')),
         );
         
         return apply_filters('mec_archive_skins', $archive_skins);
+    }
+
+    /**
+     * Get available skins for archive page
+     * @author Webnus <info@webnus.biz>
+     * @return array
+     */
+    public function get_category_skins()
+    {
+        $category_skins = array(
+            array('skin'=>'full_calendar', 'name'=>__('Full Calendar', 'mec')),
+            array('skin'=>'yearly_view', 'name'=>__('Yearly View', 'mec')),
+            array('skin'=>'monthly_view', 'name'=>__('Calendar/Monthly View', 'mec')),
+            array('skin'=>'weekly_view', 'name'=>__('Weekly View', 'mec')),
+            array('skin'=>'daily_view', 'name'=>__('Daily View', 'mec')),
+            array('skin'=>'timetable', 'name'=>__('Timetable View', 'mec')),
+            array('skin'=>'masonry', 'name'=>__('Masonry View', 'mec')),
+            array('skin'=>'list', 'name'=>__('List View', 'mec')),
+            array('skin'=>'grid', 'name'=>__('Grid View', 'mec')),
+            array('skin'=>'agenda', 'name'=>__('Agenda View', 'mec')),
+            array('skin'=>'map', 'name'=>__('Map View', 'mec')),
+        );
+        
+        return apply_filters('mec_category_skins', $category_skins);
     }
     
     /**
@@ -2062,6 +2109,66 @@ class MEC_main extends MEC_base
         
         return $field;
     }
+
+
+    /**
+     * Show text field options in booking form
+     * @author Webnus <info@webnus.biz>
+     * @param string $key
+     * @param array $values
+     * @return string
+     */
+     public function field_name($key, $values = array())
+     {
+         $field = '<li id="mec_reg_fields_'.$key.'">
+             <span class="mec_reg_field_sort">'.__('Sort', 'mec').'</span>
+             <span class="mec_reg_field_type">'.__('MEC Name', 'mec').'</span>
+             <p class="mec_reg_field_options" style="display:none">
+                 <label for="mec_reg_fields_'.$key.'_mandatory">
+                     <input type="hidden" name="mec[reg_fields]['.$key.'][mandatory]" value="1" />
+                     <input type="checkbox" name="mec[reg_fields]['.$key.'][mandatory]" value="1" id="mec_reg_fields_'.$key.'_mandatory" checked="checked" disabled />
+                     '.__('Required Field', 'mec').'
+                 </label>
+             </p>
+             <span onclick="mec_reg_fields_remove('.$key.');" class="mec_reg_field_remove">'.__('Remove', 'mec').'</span>
+             <div>
+                 <input type="hidden" name="mec[reg_fields]['.$key.'][type]" value="name" />
+                 <input type="text" name="mec[reg_fields]['.$key.'][label]" placeholder="'.esc_attr__('Insert a label for this field', 'mec').'" value="'.(isset($values['label']) ? $values['label'] : '').'" />
+             </div>
+         </li>';
+         
+         return $field;
+     }
+
+     /**
+     * Show text field options in booking form
+     * @author Webnus <info@webnus.biz>
+     * @param string $key
+     * @param array $values
+     * @return string
+     */
+     public function field_mec_email($key, $values = array())
+     {
+         $field = '<li id="mec_reg_fields_'.$key.'">
+             <span class="mec_reg_field_sort">'.__('Sort', 'mec').'</span>
+             <span class="mec_reg_field_type">'.__('MEC Email', 'mec').'</span>
+             <p class="mec_reg_field_options" style="display:none">
+                 <label for="mec_reg_fields_'.$key.'_mandatory">
+                     <input type="hidden" name="mec[reg_fields]['.$key.'][mandatory]" value="1" />
+                     <input type="checkbox" name="mec[reg_fields]['.$key.'][mandatory]" value="1" id="mec_reg_fields_'.$key.'_mandatory" checked="checked" disabled />
+                     '.__('Required Field', 'mec').'
+                 </label>
+             </p>
+             <span onclick="mec_reg_fields_remove('.$key.');" class="mec_reg_field_remove">'.__('Remove', 'mec').'</span>
+             <div>
+                 <input type="hidden" name="mec[reg_fields]['.$key.'][type]" value="mec_email" />
+                 <input type="text" name="mec[reg_fields]['.$key.'][label]" placeholder="'.esc_attr__('Insert a label for this field', 'mec').'" value="'.(isset($values['label']) ? $values['label'] : '').'" />
+             </div>
+         </li>';
+         
+         return $field;
+     }
+
     
     /**
      * Show email field options in booking form
@@ -2085,6 +2192,64 @@ class MEC_main extends MEC_base
             <span onclick="mec_reg_fields_remove('.$key.');" class="mec_reg_field_remove">'.__('Remove', 'mec').'</span>
             <div>
                 <input type="hidden" name="mec[reg_fields]['.$key.'][type]" value="email" />
+                <input type="text" name="mec[reg_fields]['.$key.'][label]" placeholder="'.esc_attr__('Insert a label for this field', 'mec').'" value="'.(isset($values['label']) ? $values['label'] : '').'" />
+            </div>
+        </li>';
+        
+        return $field;
+    }
+
+    /**
+    * Show file field options in booking form
+    * @author Webnus <info@webnus.biz>
+    * @param string $key
+    * @param array $values
+    * @return string
+    */
+    public function field_file($key, $values = array())
+    {
+        $field = '<li id="mec_reg_fields_'.$key.'">
+            <span class="mec_reg_field_sort">'.__('Sort', 'mec').'</span>
+            <span class="mec_reg_field_type">'.__('File', 'mec').'</span>
+            <p class="mec_reg_field_options">
+                <label for="mec_reg_fields_'.$key.'_mandatory">
+                    <input type="hidden" name="mec[reg_fields]['.$key.'][mandatory]" value="0" />
+                    <input type="checkbox" name="mec[reg_fields]['.$key.'][mandatory]" value="1" id="mec_reg_fields_'.$key.'_mandatory" '.((isset($values['mandatory']) and $values['mandatory']) ? 'checked="checked"' : '').' />
+                    '.__('Required Field', 'mec').'
+                </label>
+            </p>
+            <span onclick="mec_reg_fields_remove('.$key.');" class="mec_reg_field_remove">'.__('Remove', 'mec').'</span>
+            <div>
+                <input type="hidden" name="mec[reg_fields]['.$key.'][type]" value="file" />
+                <input type="text" name="mec[reg_fields]['.$key.'][label]" placeholder="'.esc_attr__('Insert a label for this field', 'mec').'" value="'.(isset($values['label']) ? $values['label'] : '').'" />
+            </div>
+        </li>';
+        
+        return $field;
+    }
+
+    /**
+    * Show date field options in booking form
+    * @author Webnus <info@webnus.biz>
+    * @param string $key
+    * @param array $values
+    * @return string
+    */
+    public function field_date($key, $values = array())
+    {
+        $field = '<li id="mec_reg_fields_'.$key.'">
+            <span class="mec_reg_field_sort">'.__('Sort', 'mec').'</span>
+            <span class="mec_reg_field_type">'.__('Date', 'mec').'</span>
+            <p class="mec_reg_field_options">
+                <label for="mec_reg_fields_'.$key.'_mandatory">
+                    <input type="hidden" name="mec[reg_fields]['.$key.'][mandatory]" value="0" />
+                    <input type="checkbox" name="mec[reg_fields]['.$key.'][mandatory]" value="1" id="mec_reg_fields_'.$key.'_mandatory" '.((isset($values['mandatory']) and $values['mandatory']) ? 'checked="checked"' : '').' />
+                    '.__('Required Field', 'mec').'
+                </label>
+            </p>
+            <span onclick="mec_reg_fields_remove('.$key.');" class="mec_reg_field_remove">'.__('Remove', 'mec').'</span>
+            <div>
+                <input type="hidden" name="mec[reg_fields]['.$key.'][type]" value="date" />
                 <input type="text" name="mec[reg_fields]['.$key.'][label]" placeholder="'.esc_attr__('Insert a label for this field', 'mec').'" value="'.(isset($values['label']) ? $values['label'] : '').'" />
             </div>
         </li>';
@@ -2886,6 +3051,61 @@ class MEC_main extends MEC_base
         return $atts;
     }
     
+     /**
+     * Filter TinyMce Buttons
+     * @author Webnus <info@webnus.biz>
+     * @param array $buttons
+     * @return array
+     */
+    public function add_mce_buttons($buttons)
+    {
+        array_push($buttons, 'mec_mce_buttons');
+        return $buttons;
+    }
+
+     /**
+     * Filter TinyMce plugins
+     * @author Webnus <info@webnus.biz>
+     * @param array $plugins
+     * @return array
+     */
+    public function add_mce_external_plugins($plugins)
+    {
+        $plugins['mec_mce_buttons'] = $this->asset('js/backend.js');
+        return $plugins;
+    }
+
+    /**
+     * Return JSON output id and the name of a post type
+     * @author Webnus <info@webnus.biz>
+     * @param string $post_type
+     * @return string JSON
+     */
+    public function mce_get_shortcode_list($post_type = 'mec_calendars')
+    {
+        if(post_type_exists($post_type))
+        {
+            $args = array('post_type' => $post_type, 'post_status' => 'publish', 'posts_per_page'   => -1, 'order' => 'DESC');
+            $shortcodes_list = get_posts($args);
+            if(count($shortcodes_list))
+            {
+                $shortcodes = array();
+                $shortcodes['shortcodes'] = array();
+                foreach($shortcodes_list as $shortcode)
+                {
+                    $shortcode_item = array();
+                    $shortcode_item['ID'] = $shortcode->ID;
+                    // PostName
+                    $shortcode_item['PN'] = $shortcode->post_name;
+                    array_push($shortcodes['shortcodes'], $shortcode_item);
+                }
+                $shortcodes['mce_title'] =  __('M.E. Calender', 'mec');
+                return json_encode($shortcodes);
+            }
+        }
+        return false;
+    }
+
     /**
      * Return date_diff
      * @author Webnus <info@webnus.biz>
@@ -3083,6 +3303,10 @@ class MEC_main extends MEC_base
         }
         
         $db->q("INSERT INTO `#__mec_events` (`post_id`,".trim($q1, ', ').") VALUES ('$new_post_id',".trim($q2, ', ').")");
+
+        // Update Schedule
+        $schedule = $this->getSchedule();
+        $schedule->reschedule($new_post_id);
         
         return $new_post_id;
     }
@@ -3101,14 +3325,14 @@ class MEC_main extends MEC_base
         $start_timestamp = strtotime($start['date']);
         $end_timestamp = strtotime($end['date']);
         
-        if($start_timestamp >= $end_timestamp) return date_i18n($format, $start_timestamp);
+        if($start_timestamp >= $end_timestamp) return '<span class="mec-start-date-label" itemprop="startDate">' . date_i18n($format, $start_timestamp) . '</span>';
         elseif($start_timestamp < $end_timestamp)
         {
             $start_date = date_i18n($format, $start_timestamp);
             $end_date = date_i18n($format, $end_timestamp);
 
-            if($start_date == $end_date) return $start_date;
-            else return date_i18n($format, $start_timestamp).'<span class="mec-end-date-label">'.$separator.date_i18n($format, $end_timestamp).'</span>';
+            if($start_date == $end_date) return '<span class="mec-start-date-label" itemprop="startDate">' . $start_date . '</span>';
+            else return '<span class="mec-start-date-label" itemprop="startDate">' . date_i18n($format, $start_timestamp).'</span><span class="mec-end-date-label" itemprop="endDate">'.$separator.date_i18n($format, $end_timestamp).'</span>';
         }
     }
     
@@ -3128,7 +3352,11 @@ class MEC_main extends MEC_base
         $event_period_days = $event_period ? $event_period->days : 0;
         
         $finish_date = array('date'=>$event->mec->end, 'hour'=>$event->meta['mec_date']['end']['hour'], 'minutes'=>$event->meta['mec_date']['end']['minutes'], 'ampm'=>$event->meta['mec_date']['end']['ampm']);
-        
+
+        // Custom Dates
+        $db = $this->getDB();
+        $custom_date = $db->select("SELECT `dend` FROM `#__mec_dates` WHERE `post_id`='".$event->ID."' AND `dstart`<='".$date."' AND `dend`>='".$date."' ORDER BY `id` DESC LIMIT 1", 'loadResult');
+
         // Event Passed
         $past = $this->is_past($finish_date['date'], $date);
         
@@ -3136,6 +3364,11 @@ class MEC_main extends MEC_base
         if(isset($event->mec->repeat) and $event->mec->repeat == '0')
         {
             return isset($end_date['date']) ? $end_date['date'] : $date;
+        }
+        // Custom Days
+        elseif($custom_date)
+        {
+            return $custom_date;
         }
         // Past Event
         elseif($past)
@@ -3200,7 +3433,7 @@ class MEC_main extends MEC_base
     public function create_mec_tables()
     {
         // MEC Events table already exists
-        if($this->table_exists()) return true;
+        if($this->table_exists('mec_events') and $this->table_exists('mec_dates')) return true;
         
         // MEC File library
         $file = $this->getFile();
@@ -3229,6 +3462,8 @@ class MEC_main extends MEC_base
                 catch (Exception $e){}
             }
 		}
+
+		return true;
     }
     
     /**
@@ -3417,6 +3652,10 @@ class MEC_main extends MEC_base
             
             $db->q("UPDATE `#__mec_events` SET ".trim($q, ', ')." WHERE `id`='$mec_event_id'");
         }
+
+        // Update Schedule
+        $schedule = $this->getSchedule();
+        $schedule->reschedule($post_id, $schedule->get_reschedule_maximum($event['repeat_type']));
 
         if(isset($event['meta']) and is_array($event['meta'])) foreach($event['meta'] as $key=>$value) update_post_meta($post_id, $key, $value);
         
@@ -3988,10 +4227,11 @@ class MEC_main extends MEC_base
         
         // Include Google Maps Javascript API
         $gm_include = apply_filters('mec_gm_include', true);
-        if($gm_include) wp_enqueue_script('googlemap', '//maps.googleapis.com/maps/api/js?libraries=places'.((isset($settings['google_maps_api_key']) and trim($settings['google_maps_api_key']) != '') ? '&key='.$settings['google_maps_api_key'] : ''));
-        
-        // Google Maps Rich Marker
-        wp_enqueue_script('mec-richmarker-script', $this->asset('packages/richmarker/richmarker.min.js'));
+        if ( $this->getPRO() ) {
+            if($gm_include) wp_enqueue_script('googlemap', '//maps.googleapis.com/maps/api/js?libraries=places'.((isset($settings['google_maps_api_key']) and trim($settings['google_maps_api_key']) != '') ? '&key='.$settings['google_maps_api_key'] : ''));
+            // Google Maps Rich Marker
+            wp_enqueue_script('mec-richmarker-script', $this->asset('packages/richmarker/richmarker.min.js'));
+        }
     }
     
     /**
@@ -4011,6 +4251,15 @@ class MEC_main extends MEC_base
     {
         // Isotope JS file
         wp_enqueue_script('mec-isotope-script', $this->asset('js/isotope.pkgd.min.js'));
+    }
+
+    /**
+     * Load Shuffle assets
+     */
+    public function load_shuffle_assets()
+    {
+        // Shuffle JS file
+        wp_enqueue_script('mec-shuffle-script', $this->asset('js/shuffle.min.js'));
     }
     
     function get_client_ip()
@@ -4201,6 +4450,7 @@ class MEC_main extends MEC_base
                     'ticket'=>array('label'=>__('Ticket (Singular)', 'mec'), 'default'=>__('Ticket', 'mec')),
                     'tickets'=>array('label'=>__('Tickets (Plural)', 'mec'), 'default'=>__('Tickets', 'mec')),
                     'other_organizers'=>array('label'=>__('Other Organizers', 'mec'), 'default'=>__('Other Organizers', 'mec')),
+                    'other_locations'=>array('label'=>__('Other Locations', 'mec'), 'default'=>__('Other Locations', 'mec')),
                 )
             ),
         );
@@ -4350,6 +4600,39 @@ class MEC_main extends MEC_base
     }
 
     /**
+     * Get Label for events status
+     * @author Webnus <info@webnus.biz>
+     * @param string $label
+     * @param boolean $return_class
+     * @return string|array
+     */
+    public function get_event_label_status($label = 'empty', $return_class = true)
+    {
+        if(!trim($label)) $label = 'empty';
+        switch($label)
+        {
+            case 'publish':
+                $label = __('Confirmed', 'mec');
+                $status_class = 'mec-book-confirmed';
+                break;
+            case 'pending':
+                $label = __('Pending', 'mec');
+                $status_class = 'mec-book-pending';
+                break;
+            case 'trash':
+                $label = __('Rejected', 'mec');
+                $status_class = 'mec-book-pending';
+                break;
+            default:
+                $label = __(ucwords($label), 'mec');
+                $status_class = 'mec-book-other';
+                break;
+        }
+
+        return !$return_class ? $label : array('label' => $label, 'status_class' => $status_class);
+    }
+
+    /**
      * Get Label for booking verification
      * @author Webnus <info@webnus.biz>
      * @param int $verified
@@ -4362,5 +4645,17 @@ class MEC_main extends MEC_base
         else $label = __('Waiting', 'mec');
 
         return $label;
+    }
+
+    /**
+     * Added Block Editor Custome Category
+     * @author Webnus <info@webnus.biz>
+     * @param array $categories
+     * @return array
+     */
+    public function add_custome_block_cateogry($categories)
+    {
+        $categories = array_merge(array(array('slug' => 'mec.block.category', 'title' => __('M.E. Calender', 'mec'), 'icon' => 'calendar-alt')), $categories);
+        return $categories;
     }
 }

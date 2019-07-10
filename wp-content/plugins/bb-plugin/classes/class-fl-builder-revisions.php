@@ -14,8 +14,8 @@ final class FLBuilderRevisions {
 	 * @return void
 	 */
 	static public function init() {
-		add_filter( 'fl_builder_ui_js_config',		 __CLASS__ . '::ui_js_config' );
-		add_filter( 'fl_builder_main_menu', 		 __CLASS__ . '::main_menu_config' );
+		add_filter( 'fl_builder_ui_js_config', __CLASS__ . '::ui_js_config' );
+		add_filter( 'fl_builder_main_menu', __CLASS__ . '::main_menu_config' );
 	}
 
 	/**
@@ -26,8 +26,8 @@ final class FLBuilderRevisions {
 	 * @return array
 	 */
 	static public function ui_js_config( $config ) {
-		$config['revisions'] = self::get_config( $config['postId'] );
-
+		$config['revisions']       = self::get_config( $config['postId'] );
+		$config['revisions_count'] = isset( $config['revisions']['posts'] ) && is_array( $config['revisions']['posts'] ) ? count( $config['revisions']['posts'] ) : 0;
 		return $config;
 	}
 
@@ -44,8 +44,8 @@ final class FLBuilderRevisions {
 		) );
 		$current_time = current_time( 'timestamp' );
 		$config       = array(
-			'posts'   	 => array(),
-			'authors' 	 => array(),
+			'posts'   => array(),
+			'authors' => array(),
 		);
 
 		$current_data = serialize( get_post_meta( $post_id, '_fl_builder_data', true ) );
@@ -70,11 +70,11 @@ final class FLBuilderRevisions {
 				$timestamp = strtotime( $revision->post_date );
 
 				$config['posts'][] = array(
-					'id'   	 => $revision->ID,
+					'id'     => $revision->ID,
 					'author' => $revision->post_author,
 					'date'   => array(
-						'published'	=> date( 'F j', $timestamp ),
-						'diff' 		=> human_time_diff( $timestamp, $current_time ),
+						'published' => date( 'F j', $timestamp ),
+						'diff'      => human_time_diff( $timestamp, $current_time ),
 					),
 				);
 
@@ -100,15 +100,15 @@ final class FLBuilderRevisions {
 	static public function main_menu_config( $config ) {
 		$config['main']['items'][35] = array(
 			'label' => __( 'Revisions', 'fl-builder' ),
-			'type' => 'view',
-			'view' => 'revisions',
+			'type'  => 'view',
+			'view'  => 'revisions',
 		);
 
 		$config['revisions'] = array(
-			'name' 		 => __( 'Revisions', 'fl-builder' ),
+			'name'       => __( 'Revisions', 'fl-builder' ),
 			'isShowing'  => false,
 			'isRootView' => false,
-			'items' 	 => array(),
+			'items'      => array(),
 		);
 
 		return $config;
@@ -138,10 +138,12 @@ final class FLBuilderRevisions {
 		$data = FLBuilderModel::get_layout_data( 'published', $revision_id );
 
 		FLBuilderModel::update_layout_data( $data );
-
+		$settings = get_post_meta( $revision_id, '_fl_builder_data_settings', true );
+		update_post_meta( FLBuilderModel::get_post_id(), '_fl_builder_draft_settings', $settings );
 		return array(
-			'layout' => FLBuilderAJAXLayout::render(),
-			'config' => FLBuilderUISettingsForms::get_node_js_config(),
+			'layout'   => FLBuilderAJAXLayout::render(),
+			'config'   => FLBuilderUISettingsForms::get_node_js_config(),
+			'settings' => $settings,
 		);
 	}
 }

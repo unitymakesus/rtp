@@ -27,10 +27,10 @@ class FLBuilderUIContentPanel {
 
 		$modules_data = self::get_modules_tab_data();
 		if ( $modules_data['should_display'] ) {
-			$modules_tab = array(
-				'handle' => 'modules',
-				'name' => __( 'Modules', 'fl-builder' ),
-				'views' => $modules_data['views'],
+			$modules_tab             = array(
+				'handle'          => 'modules',
+				'name'            => __( 'Modules', 'fl-builder' ),
+				'views'           => $modules_data['views'],
 				'isSearchEnabled' => true,
 			);
 			$data['tabs']['modules'] = $modules_tab;
@@ -38,20 +38,20 @@ class FLBuilderUIContentPanel {
 
 		$rows_data = self::get_rows_tab_data();
 		if ( $rows_data['should_display'] ) {
-			$rows_tab = array(
+			$rows_tab             = array(
 				'handle' => 'rows',
-				'name' => __( 'Rows', 'fl-builder' ),
-				'views' => $rows_data['views'],
+				'name'   => __( 'Rows', 'fl-builder' ),
+				'views'  => $rows_data['views'],
 			);
 			$data['tabs']['rows'] = $rows_tab;
 		}
 
 		$templates_data = self::get_templates_tab_data();
 		if ( $templates_data['should_display'] ) {
-			$templates_tab = array(
+			$templates_tab             = array(
 				'handle' => 'templates',
-				'name' => __( 'Templates', 'fl-builder' ),
-				'views' => $templates_data['views'],
+				'name'   => __( 'Templates', 'fl-builder' ),
+				'views'  => $templates_data['views'],
 			);
 			$data['tabs']['templates'] = $templates_tab;
 		}
@@ -61,6 +61,7 @@ class FLBuilderUIContentPanel {
 		*
 		* @since 2.0
 		* @param Array $data the initial tab data
+		* @see fl_builder_content_panel_data
 		*/
 		return apply_filters( 'fl_builder_content_panel_data', $data );
 	}
@@ -76,17 +77,17 @@ class FLBuilderUIContentPanel {
 
 		$data = array(
 			'should_display' => ! FLBuilderModel::is_post_user_template( 'module' ),
-			'views' => array(),
+			'views'          => array(),
 		);
 
 		// Standard Modules View
 		$data['views'][] = array(
-			'handle' => 'standard',
-			'name' => __( 'Standard Modules', 'fl-builder' ),
-			'query' => array(
-				'kind' => 'module',
+			'handle'              => 'standard',
+			'name'                => __( 'Standard Modules', 'fl-builder' ),
+			'query'               => array(
+				'kind'        => 'module',
 				'categorized' => true,
-				'group' => 'standard',
+				'group'       => 'standard',
 			),
 			'orderedSectionNames' => array_keys( FLBuilderModel::get_module_categories() ),
 		);
@@ -101,14 +102,14 @@ class FLBuilderUIContentPanel {
 
 			foreach ( $groups as $slug => $name ) {
 				$data['views'][] = array(
-					'handle' => $slug,
-					'name' => $name,
-					'query' => array(
-						'kind' => array( 'module', 'template' ),
-						'content' => 'module',
-						'type' => 'core',
+					'handle'       => $slug,
+					'name'         => $name,
+					'query'        => array(
+						'kind'        => array( 'module', 'template' ),
+						'content'     => 'module',
+						'type'        => 'core',
 						'categorized' => true,
-						'group' => $slug,
+						'group'       => $slug,
 					),
 					'templateName' => 'fl-content-panel-modules-view',
 				);
@@ -129,22 +130,22 @@ class FLBuilderUIContentPanel {
 
 		$data = array(
 			'should_display' => true, /* rows tab shows even if row template */
-			'views' => array(),
+			'views'          => array(),
 		);
 
 		// Columns View
 		$data['views'][] = array(
-			'handle' => 'columns',
-			'name' => __( 'Columns', 'fl-builder' ),
-			'query' => array(
+			'handle'       => 'columns',
+			'name'         => __( 'Columns', 'fl-builder' ),
+			'query'        => array(
 				'kind' => 'colGroup',
 			),
 			'templateName' => 'fl-content-panel-col-groups-view',
 		);
 
 		// Row Templates View
-		$templates = FLBuilderModel::get_row_templates_data();
-		$is_row_template = FLBuilderModel::is_post_user_template( 'row' );
+		$templates          = FLBuilderModel::get_row_templates_data();
+		$is_row_template    = FLBuilderModel::is_post_user_template( 'row' );
 		$is_column_template = FLBuilderModel::is_post_user_template( 'column' );
 
 		if ( ! $is_row_template && ! $is_column_template && isset( $templates['groups'] ) && ! empty( $templates['groups'] ) ) {
@@ -156,13 +157,14 @@ class FLBuilderUIContentPanel {
 			foreach ( $templates['groups'] as $slug => $group ) {
 
 				$data['views'][] = array(
-					'handle' => $slug,
-					'name' => $group['name'],
-					'query' => array(
-						'kind' => 'template',
-						'type' => 'core',
-						'group' => $slug,
-						'content' => 'row',
+					'handle'      => $slug,
+					'name'        => $group['name'],
+					'hasChildren' => count( $group['categories'] ) > 1,
+					'query'       => array(
+						'kind'        => 'template',
+						'type'        => 'core',
+						'group'       => $slug,
+						'content'     => 'row',
 						'categorized' => true,
 					),
 				);
@@ -173,15 +175,16 @@ class FLBuilderUIContentPanel {
 
 				foreach ( $group['categories'] as $cat_slug => $category ) {
 					$data['views'][] = array(
-						'handle' => $cat_slug,
-						'name' => $category['name'],
+						'handle'    => $cat_slug,
+						'name'      => $category['name'],
 						'isSubItem' => true,
-						'query' => array(
-							'kind' => 'template',
-							'type' => 'core',
-							'content' => 'row',
-							'group' => $slug,
-							'category' => $cat_slug,
+						'parent'    => $slug,
+						'query'     => array(
+							'kind'        => 'template',
+							'type'        => 'core',
+							'content'     => 'row',
+							'group'       => $slug,
+							'category'    => $cat_slug,
 							'categorized' => true,
 						),
 					);
@@ -200,13 +203,13 @@ class FLBuilderUIContentPanel {
 	 * @return array
 	 */
 	private static function get_templates_tab_data() {
-		$enabled = FLBuilderModel::get_enabled_templates();
+		$enabled            = FLBuilderModel::get_enabled_templates();
 		$is_module_template = FLBuilderModel::is_post_user_template( 'module' );
 		$is_column_template = FLBuilderModel::is_post_user_template( 'column' );
-		$is_row_template = FLBuilderModel::is_post_user_template( 'row' );
-		$data = array(
+		$is_row_template    = FLBuilderModel::is_post_user_template( 'row' );
+		$data               = array(
 			'should_display' => ( ! $is_module_template && ! $is_column_template && ! $is_row_template && 'disabled' !== $enabled ),
-			'views' => array(),
+			'views'          => array(),
 		);
 
 		$templates = FLBuilderModel::get_template_selector_data();
@@ -215,8 +218,8 @@ class FLBuilderUIContentPanel {
 
 			if ( true === FL_BUILDER_LITE ) {
 				$data['views'][] = array(
-					'handle' => 'standard',
-					'name' => __( 'Upgrade', 'fl-builder' ),
+					'handle'       => 'standard',
+					'name'         => __( 'Upgrade', 'fl-builder' ),
 					'templateName' => 'fl-content-lite-templates-upgrade-view',
 				);
 			}
@@ -227,13 +230,14 @@ class FLBuilderUIContentPanel {
 		foreach ( $templates['groups'] as $slug => $group ) {
 
 			$data['views'][] = array(
-				'handle' => $slug,
-				'name' => $group['name'],
-				'query' => array(
-					'kind' => 'template',
-					'type' => 'core',
-					'content' => 'layout',
-					'group' => $slug,
+				'handle'      => $slug,
+				'name'        => $group['name'],
+				'hasChildren' => count( $group['categories'] ) > 1,
+				'query'       => array(
+					'kind'        => 'template',
+					'type'        => 'core',
+					'content'     => 'layout',
+					'group'       => $slug,
 					'categorized' => true,
 				),
 			);
@@ -244,15 +248,16 @@ class FLBuilderUIContentPanel {
 
 			foreach ( $group['categories'] as $cat_slug => $category ) {
 				$data['views'][] = array(
-					'handle' => $cat_slug,
-					'name' => $category['name'],
+					'handle'    => $cat_slug,
+					'name'      => $category['name'],
 					'isSubItem' => true,
-					'query' => array(
-						'kind' => 'template',
-						'type' => 'core',
-						'content' => 'layout',
-						'group' => $slug,
-						'category' => $cat_slug,
+					'parent'    => $slug,
+					'query'     => array(
+						'kind'        => 'template',
+						'type'        => 'core',
+						'content'     => 'layout',
+						'group'       => $slug,
+						'category'    => $cat_slug,
 						'categorized' => true,
 					),
 				);
@@ -274,7 +279,7 @@ class FLBuilderUIContentPanel {
 		$data = array(
 
 			/* Get all modules */
-			'module' => FLBuilderModel::get_uncategorized_modules(),
+			'module'   => FLBuilderModel::get_uncategorized_modules(),
 
 			/* Get all column groups */
 			'colGroup' => FLBuilderModel::get_column_groups(),
@@ -282,21 +287,21 @@ class FLBuilderUIContentPanel {
 			'template' => array(),
 		);
 
-		$static_modules = FLBuilderModel::get_module_templates_data();
+		$static_modules   = FLBuilderModel::get_module_templates_data();
 		$module_templates = $static_modules['templates'];
 
 		foreach ( $module_templates as $template ) {
 			$data['template'][] = $template;
 		}
 
-		$static_columns = FLBuilderModel::get_column_templates_data();
+		$static_columns   = FLBuilderModel::get_column_templates_data();
 		$column_templates = $static_columns['templates'];
 
 		foreach ( $column_templates as $template ) {
 			$data['template'][] = $template;
 		}
 
-		$static_rows = FLBuilderModel::get_row_templates_data();
+		$static_rows   = FLBuilderModel::get_row_templates_data();
 		$row_templates = $static_rows['templates'];
 
 		foreach ( $row_templates as $template ) {
@@ -315,6 +320,7 @@ class FLBuilderUIContentPanel {
 		*
 		* @since 2.0
 		* @param Array $data the initial content elements
+		* @see fl_builder_content_elements_data
 		*/
 		return apply_filters( 'fl_builder_content_elements_data', $data );
 	}

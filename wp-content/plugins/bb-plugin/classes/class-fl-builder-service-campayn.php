@@ -37,27 +37,27 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 	 * Request data from the thir party API.
 	 *
 	 * @since 1.5.4
-	 * @param string $base_url 	Base URL where API is available
-	 * @param string $api_key 	API Key provided by this service
-	 * @param string $endpoint 	Method to request available from this service.
-	 * @param array $params 	Data to be passed to API
-	 * @return array|object 	The API response.
+	 * @param string $base_url  Base URL where API is available
+	 * @param string $api_key   API Key provided by this service
+	 * @param string $endpoint  Method to request available from this service.
+	 * @param array $params     Data to be passed to API
+	 * @return array|object     The API response.
 	 */
 	private function get_api_response( $base_url, $api_key, $endpoint, $params = array() ) {
 		// Exclude http:// from the user's input
-		$request_uri       	= $this->api_protocol . '://' . preg_replace( '#^https?://#', '', $base_url ) . '/api/v' . $this->api_version . $endpoint;
+		$request_uri = $this->api_protocol . '://' . preg_replace( '#^https?://#', '', $base_url ) . '/api/v' . $this->api_version . $endpoint;
 
-		$params['timeout']	= 60;
-		$params['body']  	= isset( $params['data'] ) && $params['data'] ? json_encode( $params['data'] ) : '';
-		$params['headers'] 	= array(
+		$params['timeout'] = 60;
+		$params['body']    = isset( $params['data'] ) && $params['data'] ? json_encode( $params['data'] ) : '';
+		$params['headers'] = array(
 			'Authorization' => 'TRUEREST apikey=' . $api_key,
 		);
-		$response 			= wp_remote_get( $request_uri, $params );
-		$response_code		= wp_remote_retrieve_response_code( $response );
-		$response_message	= wp_remote_retrieve_response_message( $response );
-		$get_response       = json_decode( wp_remote_retrieve_body( $response ), true );
+		$response          = wp_remote_get( $request_uri, $params );
+		$response_code     = wp_remote_retrieve_response_code( $response );
+		$response_message  = wp_remote_retrieve_response_message( $response );
+		$get_response      = json_decode( wp_remote_retrieve_body( $response ), true );
 
-		if ( is_wp_error( $response ) || (200 != $response_code) ) {
+		if ( is_wp_error( $response ) || ( 200 != $response_code ) ) {
 
 			if ( is_wp_error( $response ) ) {
 				$data['error'] = $response->get_error_message();
@@ -89,8 +89,8 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have the Host.
@@ -98,17 +98,17 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide a Host.', 'fl-builder' );
 		} elseif ( ! isset( $fields['api_key'] ) || empty( $fields['api_key'] ) ) {
 			$response['error'] = __( 'Error: You must provide an API key.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$result = $this->get_api_response( $fields['api_host'], $fields['api_key'], '/lists.json' );
 
 			if ( ! isset( $result['error'] ) ) {
 				$response['data'] = array(
 					'api_host' => $fields['api_host'],
-					'api_key' => $fields['api_key'],
+					'api_key'  => $fields['api_key'],
 				);
 			} else {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'Error: Could not connect to Campayn. %s', 'fl-builder' ), $result['error'] );
 			}
 		}
@@ -126,24 +126,24 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_host', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Host', 'fl-builder' ),
-			'help'          => __( 'The host you chose when you signed up for your account. Check your welcome email if you forgot it. Please enter it without the initial http:// (for example: demo.campayn.com).', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Host', 'fl-builder' ),
+			'help'      => __( 'The host you chose when you signed up for your account. Check your welcome email if you forgot it. Please enter it without the initial http:// (for example: demo.campayn.com).', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your Campayn account under Settings > API Key.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Campayn account under Settings > API Key.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -162,15 +162,16 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$results 		= $this->get_api_response( $account_data['api_host'], $account_data['api_key'], '/lists.json' );
+		$account_data = $this->get_account_data( $account );
+		$results      = $this->get_api_response( $account_data['api_host'], $account_data['api_key'], '/lists.json' );
 
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$response = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( isset( $results['error'] ) ) {
+			/* translators: %s: error */
 			$response['error'] = sprintf( __( 'Error: Please check your API key. %s', 'fl-builder' ), $results['error'] );
 		} else {
 			$response['html'] = $this->render_list_field( $results, $settings );
@@ -200,13 +201,13 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -229,7 +230,7 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 		$response     = array(
 			'error' => false,
 		);
-		$contact_id	  = null;
+		$contact_id   = null;
 
 		if ( ! $account_data ) {
 			$response['error'] = __( 'There was an error subscribing to Campayn. The account is no longer connected.', 'fl-builder' );
@@ -259,26 +260,27 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 			);
 
 			// Already exists
-			if ( ! isset( $result['error'] ) && (is_array( $result ) && isset( $result[0]['id'] )) ) {
+			if ( ! isset( $result['error'] ) && ( is_array( $result ) && isset( $result[0]['id'] ) ) ) {
 				$contact_id = $result[0]['id'];
 			}
 
 			// Add the contact if it doesn't exist.
 			if ( ! $contact_id ) {
 				$endpoint = "/lists/{$settings->list_id}/contacts.json";
-				$method = 'POST';
+				$method   = 'POST';
 			} else {
-				$endpoint = "/contacts/{$contact_id}.json";
-				$method = 'PUT';
+				$endpoint   = "/contacts/{$contact_id}.json";
+				$method     = 'PUT';
 				$data['id'] = $contact_id;
 			}
 
 			$result = $this->get_api_response( $account_data['api_host'], $account_data['api_key'], $endpoint, array(
-						'data' => $data,
-						'method' => $method,
+				'data'   => $data,
+				'method' => $method,
 			) );
 
 			if ( isset( $result['error'] ) ) {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'There was an error subscribing to Campayn. %s', 'fl-builder' ), $result['error'] );
 			}
 		}

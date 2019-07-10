@@ -13,17 +13,18 @@
 		this.type				 = settings.type;
 		this.mobileToggle		 = settings.mobile;
 		this.mobileBelowRow		 = settings.mobileBelowRow;
+		this.mobileFlyout		 = settings.mobileFlyout;
 		this.breakPoints         = settings.breakPoints;
 		this.mobileBreakpoint	 = settings.mobileBreakpoint;
-		this.currentBrowserWidth = window.innerWidth;
+		this.currentBrowserWidth = $( window ).width();
 
 		// initialize the menu
 		this._initMenu();
 
 		// check if viewport is resizing
-		$( window ).on( 'resize', $.proxy( function( e ){
+		$( window ).on( 'resize', $.proxy( function( e ) {
 
-			var width = window.innerWidth;
+			var width = $( window ).width();
 
 			// if screen width is resized, reload the menu
 		    if( width != this.currentBrowserWidth ){
@@ -154,7 +155,7 @@
 					$subMenu 		= $link.children( '.sub-menu' ).first(),
 					$href	 		= $link.children('.fl-has-submenu-container').first().find('> a').attr('href'),
 					$subMenuParents = $( e.target ).parents( '.sub-menu' ),
-					$activeParent 	= $( e.target ).closest( '.fl-has-submenu.fl-active' );
+					$activeParents 	= $( e.target ).parents( '.fl-has-submenu.fl-active' );
 
 				if( !$subMenu.is(':visible') || $(e.target).hasClass('fl-menu-toggle')
 					|| ($subMenu.is(':visible') && (typeof $href === 'undefined' || $href == '#')) ){
@@ -171,7 +172,7 @@
 						$('.menu .fl-active', this.wrapperClass).not($link).removeClass('fl-active');
 					}
 					else if ($link.parents('.menu-item').hasClass('fl-active') && $link.parent('.sub-menu').length) {
-						$('.menu .fl-active', this.wrapperClass).not($link).not($activeParent).removeClass('fl-active');
+						$('.menu .fl-active', this.wrapperClass).not($link).not($activeParents).removeClass('fl-active');
 					}
 
 					$('.sub-menu', this.wrapperClass).not($subMenu).not($subMenuParents).slideUp('normal');
@@ -238,7 +239,7 @@
 		_submenuOnRight: function(){
 
 			$( this.wrapperClass )
-				.on( 'mouseenter', '.fl-has-submenu', $.proxy( function( e ){
+				.on( 'mouseenter focus', '.fl-has-submenu', $.proxy( function( e ){
 
 					if( $ ( e.currentTarget ).find('.sub-menu').length === 0 ) {
 						return;
@@ -249,7 +250,7 @@
 						$subMenu        = $link.find( '.sub-menu' ),
 						subMenuWidth    = $subMenu.width(),
 						subMenuPos      = 0,
-						winWidth        = $( window ).width();
+						bodyWidth       = $( 'body' ).width();
 
 					if( $link.closest( '.fl-menu-submenu-right' ).length !== 0) {
 
@@ -271,7 +272,7 @@
 									 $parent.offset().left + $parent.width() + subMenuWidth :
 									 $link.offset().left + $link.width() + subMenuWidth;
 
-						if( subMenuPos > winWidth ) {
+						if( subMenuPos > bodyWidth ) {
 							$link.addClass('fl-menu-submenu-right');
 						}
 					}
@@ -322,7 +323,8 @@
 		_toggleForMobile: function(){
 
 			var $wrapper = null,
-				$menu    = null;
+				$menu    = null,
+				self     = this;
 
 			if( this._isMenuToggle() ){
 
@@ -334,16 +336,27 @@
 				}
 				else {
 					$wrapper = $( this.wrapperClass );
-					$menu    = $wrapper.children( '.menu' );
+					$menu    = $wrapper.find( '.menu' );
 				}
 
-				if( !$wrapper.find( '.fl-menu-mobile-toggle' ).hasClass( 'fl-active' ) ){
+				if( !$wrapper.find( '.fl-menu-mobile-toggle' ).hasClass( 'fl-active' ) && ! self.mobileFlyout ){
 					$menu.css({ display: 'none' });
+				}
+
+				// Flayout Menu
+				if ( self.mobileFlyout ) {
+					this._initFlyoutMenu();
 				}
 
 				$wrapper.on( 'click', '.fl-menu-mobile-toggle', function( e ){
 					$( this ).toggleClass( 'fl-active' );
-					$menu.slideToggle();
+
+					if ( self.mobileFlyout ) {
+						self._toggleFlyoutMenu();
+					}
+					else {
+						$menu.slideToggle();
+					}
 				} );
 
 				// Hide active menu when click on anchor link ID that exists on a page.
@@ -364,9 +377,17 @@
 				}
 
 				$wrapper = $( this.wrapperClass ),
-				$menu    = $wrapper.children( '.menu' );
+				$menu    = $wrapper.find( 'ul.menu' );
 				$wrapper.find( '.fl-menu-mobile-toggle' ).removeClass( 'fl-active' );
 				$menu.css({ display: '' });
+
+				if ( this.mobileFlyout && $wrapper.find( '.fl-menu-mobile-flyout' ).length > 0 ) {
+					$( 'body' ).css( 'margin', '' );
+					$( '.fl-builder-ui-pinned-content-transform' ).css( 'transform', '' );
+					$menu.unwrap();
+					$wrapper.find( '.fl-menu-mobile-close' ).remove();
+					$wrapper.find( '.fl-menu-mobile-opacity' ).remove();
+				}
 			}
 		},
 
@@ -426,8 +447,14 @@
 
 			module.find( 'ul.menu' ).remove();
 			clone.addClass( ( this.nodeClass + '-clone' ).replace( '.', '' ) );
+			clone.addClass( 'fl-menu-mobile-clone' );
 			clone.find( '.fl-menu-mobile-toggle' ).remove();
 			col.after( clone );
+
+			// Removes animation when enabled.
+			if ( module.hasClass( 'fl-animation' ) ) {
+				clone.removeClass( 'fl-animation' );
+			}
 
 			this._menuOnClick();
 		},
@@ -451,7 +478,105 @@
 
 			module.find( '.fl-menu-mobile-toggle' ).after( menu );
 			clone.remove();
-		}
+		},
+
+		/**
+		 * Logic for Flyout responsive menu.
+		 *
+		 * @since 2.2
+		 * @return void
+		 */
+		_initFlyoutMenu: function(){
+			var win     = $( window ),
+				wrapper = $( this.wrapperClass ),
+				menu  	= wrapper.find( 'ul.menu' ),
+				button	= wrapper.find( '.fl-menu-mobile-toggle' );
+
+			if ( 0 === wrapper.find( '.fl-menu-mobile-flyout' ).length ) {
+				menu.wrap( '<div class="fl-menu-mobile-flyout"></div>' );
+			}
+
+			if ( 0 === wrapper.find( '.fl-menu-mobile-close' ).length ) {
+				wrapper.find( '.fl-menu-mobile-flyout' )
+					   .prepend( '<button class="fl-menu-mobile-close"><i class="fas fa-times"></i></button>' );
+			}
+
+			// Push with opacity
+			if ( wrapper.hasClass( 'fl-menu-responsive-flyout-push-opacity' ) && 0 === wrapper.find( '.fl-menu-mobile-opacity' ).length ) {
+				wrapper.append( '<div class="fl-menu-mobile-opacity"></div>' );
+			}
+
+			wrapper.find( '.fl-menu-mobile-flyout' ).height( win.height() );
+
+			wrapper.on( 'click', '.fl-menu-mobile-opacity, .fl-menu-mobile-close', function(){
+				button.trigger( 'click' );
+			});
+
+			if ( 'undefined' !== typeof FLBuilder ) {
+				FLBuilder.addHook('restartEditingSession', function(){
+					$( '.fl-builder-ui-pinned-content-transform' ).css( 'transform', '' );
+
+					// Toggle active menu.
+					if ( button.hasClass( 'fl-active' ) ) {
+						button.trigger( 'click' );
+					}
+				});
+			}
+		},
+
+		/**
+		 * Logic to enable/disable the Flyout menu on button click.
+		 *
+		 * @since 2.2
+		 * @return void
+		 */
+		_toggleFlyoutMenu: function(){
+			var wrapper		= $( this.wrapperClass ),
+				button		= wrapper.find( '.fl-menu-mobile-toggle' ),
+				wrapFlyout	= wrapper.find( '.fl-menu-mobile-flyout' ),
+				position 	= wrapper.hasClass( 'fl-flyout-right' ) ? 'right' : 'left',
+				pushMenu 	= wrapper.hasClass( 'fl-menu-responsive-flyout-push' ) || wrapper.hasClass( 'fl-menu-responsive-flyout-push-opacity' ),
+				opacity		= wrapper.find( '.fl-menu-mobile-opacity' ),
+				marginPos	= {},
+				posAttr		= {},
+				fixedPos    = {},
+				fixedHeader = $('header, header > div');
+
+			posAttr[ position ] = button.hasClass( 'fl-active' ) ? '0px' : '';
+			wrapFlyout.css( posAttr );
+
+			// Fix the push menu when builder ui panel is pinned.
+			if ( $( '.fl-builder-ui-pinned-content-transform' ).length > 0 && ! $( 'body' ).hasClass( 'fl-builder-edit' ) ) {
+				$( '.fl-builder-ui-pinned-content-transform' ).css( 'transform', 'none' );
+			}
+
+			if ( pushMenu ) {
+				marginPos[ 'margin-' + position ] = button.hasClass( 'fl-active' ) ? '250px' : '0px';
+				$( 'body' ).animate( marginPos, 200);
+
+				// Fixed header
+				if ( fixedHeader.length > 0 ) {
+					fixedPos[ position] = button.hasClass( 'fl-active' ) ? '250px' : '0px';
+					fixedHeader.each(function(){
+						if ( 'fixed' == $( this ).css( 'position' ) ) {
+							$( this ).css({
+								'-webkit-transition': 'none',
+								'-o-transition'		: 'none',
+								'transition'		: 'none'
+							});
+							$( this ).animate( fixedPos, 200 );
+						}
+					});
+				}
+			}
+
+			if ( opacity.length > 0 && button.hasClass( 'fl-active' ) ) {
+				opacity.show();
+			}
+			else {
+				opacity.hide();
+			}
+		},
 	};
 
 })(jQuery);

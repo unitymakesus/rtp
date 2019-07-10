@@ -38,8 +38,8 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API key.
@@ -48,12 +48,12 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 		} else {
 
 			$result = wp_remote_post( $this->api_url . 'search?api_key=' . $fields['api_key'], array(
-				'method'	=> 'POST',
-				'timeout'	=> 60,
-				'headers' 	=> array(
+				'method'  => 'POST',
+				'timeout' => 60,
+				'headers' => array(
 					'Content-Type' => 'application/json',
 				),
-				'body' 		=> array(),
+				'body'    => array(),
 			) );
 
 			if ( 401 == $result['response']['code'] ) {
@@ -78,13 +78,13 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your Hatchbuck account under Account Settings > Web API.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Hatchbuck account under Account Settings > Web API.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -104,8 +104,8 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 	 */
 	public function render_fields( $account, $settings ) {
 		$response = array(
-			'error'  => false,
-			'html'   => $this->render_tag_field( $settings ),
+			'error' => false,
+			'html'  => $this->render_tag_field( $settings ),
 		);
 
 		return $response;
@@ -123,12 +123,12 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'text',
-			'label'         => _x( 'Tag', 'A tag to add to contacts in Hatchbuck when they subscribe.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'text',
+			'label'     => _x( 'Tag', 'A tag to add to contacts in Hatchbuck when they subscribe.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -147,7 +147,7 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 	 * }
 	 */
 	public function subscribe( $settings, $email, $name = false ) {
-		$contact_id	  = null;
+		$contact_id   = null;
 		$account_data = $this->get_account_data( $settings->service_account );
 		$response     = array(
 			'error' => false,
@@ -162,7 +162,7 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 				'emails' => array(
 					array(
 						'address' => $email,
-						'type'	  => 'Work',
+						'type'    => 'Work',
 					),
 				),
 				'status' => array(
@@ -172,12 +172,12 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 
 			// Check if the contact exists.
 			$result = wp_remote_post( $this->api_url . 'search?api_key=' . $account_data['api_key'], array(
-				'method'	=> 'POST',
-				'timeout'	=> 60,
-				'headers' 	=> array(
+				'method'  => 'POST',
+				'timeout' => 60,
+				'headers' => array(
 					'Content-Type' => 'application/json',
 				),
-				'body' 		=> json_encode( $data ),
+				'body'    => json_encode( $data ),
 			) );
 
 			// Return if we have an API key error.
@@ -187,8 +187,7 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 			} elseif ( 200 == $result['response']['code'] ) {
 				$result_data = json_decode( $result['body'] );
 				$contact_id  = $result_data[0]->contactId;
-			} // Generic error. Contact not found should be 400.
-			elseif ( 400 != $result['response']['code'] ) {
+			} elseif ( 400 != $result['response']['code'] ) { // Generic error. Contact not found should be 400.
 				$response['error'] = __( 'There was an error subscribing to Hatchbuck.', 'fl-builder' );
 				return $response;
 			}
@@ -211,12 +210,12 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 
 				// Add the contact to Hatchbuck.
 				$result = wp_remote_post( $this->api_url . '?api_key=' . $account_data['api_key'], array(
-					'method'	=> 'POST',
-					'timeout'	=> 60,
-					'headers' 	=> array(
+					'method'  => 'POST',
+					'timeout' => 60,
+					'headers' => array(
 						'Content-Type' => 'application/json',
 					),
-					'body' 		=> json_encode( $data ),
+					'body'    => json_encode( $data ),
 				) );
 
 				// Return if we have an error.
@@ -233,12 +232,12 @@ final class FLBuilderServiceHatchbuck extends FLBuilderService {
 
 			// Add the tag to the contact.
 			$result = wp_remote_post( $this->api_url . $contact_id . '/Tags?api_key=' . $account_data['api_key'], array(
-				'method'	=> 'POST',
-				'timeout'	=> 60,
-				'headers' 	=> array(
+				'method'  => 'POST',
+				'timeout' => 60,
+				'headers' => array(
 					'Content-Type' => 'application/json',
 				),
-				'body' 		=> json_encode( array(
+				'body'    => json_encode( array(
 					array(
 						'name' => $settings->list_id,
 					),

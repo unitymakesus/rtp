@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Ultimate Addons for Beaver Builder
  * Plugin URI: http://www.ultimatebeaver.com/
- * Description: Ultimate Addons is a premium extension for Beaver Builder that adds 45+ modules, 250+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro & Agency) You can use it with any WordPress theme.
- * Version: 1.14.3
+ * Description: Ultimate Addons is a premium extension for Beaver Builder that adds 55+ modules, 250+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro & Agency) You can use it with any WordPress theme.
+ * Version: 1.18.0
  * Author: Brainstorm Force
  * Author URI: http://www.brainstormforce.com
  * Text Domain: uabb
@@ -39,7 +39,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 		 */
 		function define_constant() {
 
-			define( 'BB_ULTIMATE_ADDON_VER', '1.14.3' );
+			define( 'BB_ULTIMATE_ADDON_VER', '1.18.0' );
 			define( 'BB_ULTIMATE_ADDON_DIR', plugin_dir_path( __FILE__ ) );
 			define( 'BB_ULTIMATE_ADDON_URL', plugins_url( '/', __FILE__ ) );
 			define( 'BSF_REMOVE_UABB_FROM_REGISTRATION_LISTING', true );
@@ -82,28 +82,30 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 			$peak_memory   = memory_get_peak_usage( true );  // Available Memory.
 			$uabb_required = 14999999;                       // Required Memory for UABB.
 
-			if ( preg_match( '/^(\d+)(.)$/', $memory_limit, $matches ) ) {
+			if ( '-1' !== $memory_limit ) {
+				if ( preg_match( '/^(\d+)(.)$/', $memory_limit, $matches ) ) {
 
-				switch ( $matches[2] ) {
-					case 'K':
-					case 'k':
-						$memory_limit = $matches[1] * 1024;
-						break;
-					case 'M':
-					case 'm':
-						$memory_limit = $matches[1] * 1024 * 1024;
-						break;
-					case 'G':
-					case 'g':
-						$memory_limit = $matches[1] * 1024 * 1024 * 1024;
-						break;
+					switch ( $matches[2] ) {
+						case 'K':
+						case 'k':
+							$memory_limit = $matches[1] * 1024;
+							break;
+						case 'M':
+						case 'm':
+							$memory_limit = $matches[1] * 1024 * 1024;
+							break;
+						case 'G':
+						case 'g':
+							$memory_limit = $matches[1] * 1024 * 1024 * 1024;
+							break;
+					}
 				}
-			}
 
-			if ( $memory_limit - $peak_memory <= $uabb_required ) {
-				return true;
-			} else {
-				return false;
+				if ( $memory_limit - $peak_memory <= $uabb_required ) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 	}

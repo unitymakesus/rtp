@@ -16,9 +16,9 @@ final class FLBuilderWPML {
 			return;
 		}
 
-		add_filter( 'fl_get_wp_widgets_exclude', 			__CLASS__ . '::filter_wp_widgets_exclude' );
-		add_filter( 'fl_builder_node_template_post_id', 	__CLASS__ . '::filter_node_template_post_id' );
-		add_filter( 'fl_builder_parent_template_node_id', 	__CLASS__ . '::filter_parent_template_node_id', 10, 3 );
+		add_filter( 'fl_get_wp_widgets_exclude', __CLASS__ . '::filter_wp_widgets_exclude' );
+		add_filter( 'fl_builder_node_template_post_id', __CLASS__ . '::filter_node_template_post_id' );
+		add_filter( 'fl_builder_parent_template_node_id', __CLASS__ . '::filter_parent_template_node_id', 10, 3 );
 	}
 
 	/**
@@ -45,11 +45,11 @@ final class FLBuilderWPML {
 	static public function filter_node_template_post_id( $post_id ) {
 		global $sitepress;
 
-		$post_type		= get_post_type( $post_id );
-		$lang 			= $sitepress->get_current_language();
-		$wpml_post 		= new WPML_Post_Element( $post_id, $sitepress );
-		$trid 			= $sitepress->get_element_trid( $post_id, "post_$post_type" );
-		$translations	= $sitepress->get_element_translations( $trid, "post_$post_type" );
+		$post_type    = get_post_type( $post_id );
+		$lang         = $sitepress->get_current_language();
+		$wpml_post    = new WPML_Post_Element( $post_id, $sitepress );
+		$trid         = $sitepress->get_element_trid( $post_id, "post_$post_type" );
+		$translations = $sitepress->get_element_translations( $trid, "post_$post_type" );
 
 		if ( is_array( $translations ) && isset( $translations[ $lang ] ) ) {
 			$post_id = $translations[ $lang ]->element_id;
@@ -69,6 +69,10 @@ final class FLBuilderWPML {
 	 * @return string
 	 */
 	static public function filter_parent_template_node_id( $template_node_id, $parent, $layout_data ) {
+		if ( ! isset( $parent->template_root_node ) ) {
+			return $template_node_id;
+		}
+
 		$root = FLBuilderModel::get_node_template_root( $parent->type, $layout_data );
 
 		if ( $root && isset( $root->template_root_node ) && isset( $root->template_node_id ) && ! empty( $root->template_node_id ) ) {

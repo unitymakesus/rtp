@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file, per [the Keep a Changelog standard](http://keepachangelog.com/).
 
+## [ 1.4.1 ] - 2019-03-15
+### Fixed
+* Improve block editor detection, correcting an issue with post saving.
+
+## [ 1.4.0 ] - 2019-03-07
+### Added
+* Clearer instructions and help text when adding an external connection.
+* Log image sideloading failures when using `DISTRIBUTOR_DEBUG`.
+
+### Fixed
+* Allow attachments to be distributed from local environments.
+* Ensure pagination is reset when switching views on the pull content screen.
+* Remove extraneous checkboxes from pulled content screen.
+* Suppress a PHP warning when no meta is being distributed for attachments.
+
+## [ 1.3.9 ] - 2019-02-21
+### Fixed
+* Ensure posts distributed as draft can be published.
+
+## [ 1.3.8 ] - 2019-01-30
+### Added
+* Add `dt_after_set_meta` action.
+* Add `dt_process_subscription_attributes` action.
+
+### Fixed
+* Ensure post types without excerpt support can be distributed.
+
 ## [ 1.3.7 ] - 2019-01-16
 ### Added
 * Distribute plaintext URLs instead of full markup for automatic embeds (oEmbeds). This was causing issues for non-privileged users where the markup was subject to sanitization/kses.

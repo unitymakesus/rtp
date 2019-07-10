@@ -204,12 +204,14 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'icon_hover_color'  => array(
 							'type'        => 'color',
 							'label'       => __( 'Icon Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type' => 'none',
@@ -221,6 +223,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 					),
 				),
@@ -269,6 +272,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Text Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -283,12 +287,14 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'title_active_color'               => array(
 							'type'        => 'color',
 							'label'       => __( 'Text Active Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -302,6 +308,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => 'f6f6f6',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -331,6 +338,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'title_background_hover_color_opc' => array(
 							'type'      => 'unit',
@@ -353,6 +361,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Active Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -412,6 +421,7 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 
 					),
@@ -493,6 +503,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -506,6 +517,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'      => 'css',
@@ -704,17 +716,17 @@ FLBuilder::register_settings_form(
 							'ct_saved_rows'     => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Row', 'uabb' ),
-								'options' => UABB_Model_Helper::get_saved_row_template(),
+								'options' => array(),
 							),
 							'ct_saved_modules'  => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Module', 'uabb' ),
-								'options' => UABB_Model_Helper::get_saved_module_template(),
+								'options' => array(),
 							),
 							'ct_page_templates' => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Page Template', 'uabb' ),
-								'options' => UABB_Model_Helper::get_saved_page_template(),
+								'options' => array(),
 							),
 						),
 					),

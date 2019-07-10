@@ -2,18 +2,18 @@
 
 	// set defaults
 	$time = $module->get_time();
-	$type =	$settings->layout;
+	$type = $settings->layout;
 
-	?>
+?>
 
 (function($) {
 
 	$(function() {
 
 		new FLBuilderCountdown({
-			id: '<?php echo $id ?>',
-			time: '<?php echo $time ?>',
-			type: '<?php echo $type ?>',
+			id: '<?php echo $id; ?>',
+			time: '<?php echo $time; ?>',
+			type: '<?php echo $type; ?>',
 		});
 
 	});

@@ -61,12 +61,24 @@
 .fl-tabs-horizontal .fl-tabs-label {
 	float: left;
 }
+.fl-tabs-horizontal .fl-tabs-labels .fl-tabs-label {
+	border: 1px solid transparent;
+	border-bottom: none;
+}
 .fl-tabs-horizontal .fl-tabs-label.fl-tab-active {
 	border-width: 1px;
 	border-style: solid;
 	border-bottom: none !important;
-	padding: 11px 18px 12px;
-	top: 1px;
+}
+.fl-tabs-horizontal .fl-tabs-label.fl-tab-active:after {
+	content: '';
+	background: inherit;
+	display: block;
+	width: 100%;
+	height: 1px;
+	position: absolute;
+	bottom: -1px;
+	left: 0;
 }
 
 /*  Vertical
@@ -76,12 +88,24 @@
 	float: left;
 	width: 30%;
 }
+.fl-tabs-vertical .fl-tabs-labels .fl-tabs-label {
+	border: 1px solid transparent;
+	border-right: none;
+}
 .fl-tabs-vertical .fl-tabs-label.fl-tab-active {
 	border-width: 1px;
 	border-style: solid;
 	border-right: none !important;
-	left: 1px;
-	padding: 11px 18px 11px 16px;
+}
+.fl-tabs-vertical .fl-tabs-label.fl-tab-active:after {
+	content: '';
+	background: inherit;
+	display: block;
+	width: 1px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: -1px;
 }
 .fl-tabs-vertical .fl-tabs-panels {
 	float: left;

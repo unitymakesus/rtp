@@ -15,10 +15,10 @@ final class FLBuilderUserTemplatesAdminMenu {
 	 */
 	static public function init() {
 		/* Actions */
-		add_action( 'admin_menu',    __CLASS__ . '::register' );
+		add_action( 'admin_menu', __CLASS__ . '::register' );
 
 		/* Filters */
-		add_filter( 'submenu_file',  __CLASS__ . '::submenu_file', 999, 2 );
+		add_filter( 'submenu_file', __CLASS__ . '::submenu_file', 999, 2 );
 	}
 
 	/**
@@ -37,7 +37,7 @@ final class FLBuilderUserTemplatesAdminMenu {
 		$cats_url     = 'edit-tags.php?taxonomy=fl-builder-template-category&post_type=fl-builder-template';
 		$add_new_hook = 'fl-builder-template_page_fl-builder-add-new';
 
-		$submenu[ $parent ] = array();
+		$submenu[ $parent ]      = array();
 		$submenu[ $parent ][100] = array( __( 'Templates', 'fl-builder' ), $cap, $list_url . 'layout' );
 		$submenu[ $parent ][200] = array( __( 'Saved Rows', 'fl-builder' ), $cap, $list_url . 'row' );
 		$submenu[ $parent ][300] = array( __( 'Saved Columns', 'fl-builder' ), $cap, $list_url . 'column' );
@@ -72,10 +72,10 @@ final class FLBuilderUserTemplatesAdminMenu {
 		if ( isset( $_GET['page'] ) && 'fl-builder-add-new' == $_GET['page'] ) {
 			$submenu_file = 'fl-builder-add-new';
 		} elseif ( isset( $_GET['fl-builder-template-type'] ) && $list_url == $parent_file ) {
-			$type = sanitize_text_field( $_GET['fl-builder-template-type'] );
+			$type         = sanitize_text_field( $_GET['fl-builder-template-type'] );
 			$submenu_file = $parent_file . '&fl-builder-template-type=' . $type;
 		} elseif ( 'post.php' == $pagenow && 'fl-builder-template' == $screen->post_type ) {
-			$type = FLBuilderModel::get_user_template_type( $post->ID );
+			$type         = FLBuilderModel::get_user_template_type( $post->ID );
 			$submenu_file = 'edit.php?post_type=fl-builder-template&fl-builder-template-type=' . $type;
 		} elseif ( 'edit-tags.php' == $pagenow && 'fl-builder-template-category' == $screen->taxonomy ) {
 			$submenu_file = 'edit-tags.php?taxonomy=fl-builder-template-category&post_type=fl-builder-template';

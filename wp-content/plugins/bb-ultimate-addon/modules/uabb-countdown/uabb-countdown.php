@@ -184,18 +184,6 @@ class UABBCountdownModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For link settings.
-			if ( isset( $settings->redirect_link ) ) {
-				if ( isset( $settings->redirect_link_target ) ) {
-					$settings->redirect_link_target = $settings->redirect_link_target;
-				}
-			}
-
-			// For overall alignment.
-			if ( isset( $settings->counter_alignment ) ) {
-				$settings->counter_alignment = $settings->counter_alignment;
-			}
-
 			// Handling color opacity.
 			$helper->handle_opacity_inputs( $settings, 'timer_background_color_opc', 'timer_background_color' );
 
@@ -211,6 +199,7 @@ class UABBCountdownModule extends FLBuilderModule {
 				if ( isset( $settings->message_font_family['family'] ) ) {
 
 					$settings->message_typo['font_family'] = $settings->message_font_family['family'];
+					unset( $settings->message_font_family['family'] );
 				}
 				if ( isset( $settings->message_font_family['weight'] ) ) {
 
@@ -219,6 +208,7 @@ class UABBCountdownModule extends FLBuilderModule {
 					} else {
 						$settings->message_typo['font_weight'] = $settings->message_font_family['weight'];
 					}
+					unset( $settings->message_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->message_font_size_unit ) ) {
@@ -226,18 +216,21 @@ class UABBCountdownModule extends FLBuilderModule {
 					'length' => $settings->message_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->message_font_size_unit );
 			}
 			if ( isset( $settings->message_font_size_unit_medium ) ) {
 				$settings->message_typo_medium['font_size'] = array(
 					'length' => $settings->message_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->message_font_size_unit_medium );
 			}
 			if ( isset( $settings->message_font_size_unit_responsive ) ) {
 				$settings->message_typo_responsive['font_size'] = array(
 					'length' => $settings->message_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->message_font_size_unit_responsive );
 			}
 			if ( isset( $settings->message_line_height_unit ) ) {
 
@@ -245,27 +238,32 @@ class UABBCountdownModule extends FLBuilderModule {
 					'length' => $settings->message_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->message_line_height_unit );
 			}
 			if ( isset( $settings->message_line_height_unit_medium ) ) {
 				$settings->message_typo_medium['line_height'] = array(
 					'length' => $settings->message_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->message_line_height_unit_medium );
 			}
 			if ( isset( $settings->message_line_height_unit_responsive ) ) {
 				$settings->message_typo_responsive['line_height'] = array(
 					'length' => $settings->message_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->message_line_height_unit_responsive );
 			}
 			if ( isset( $settings->message_transform ) ) {
 				$settings->message_typo['text_transform'] = $settings->message_transform;
+				unset( $settings->message_transform );
 			}
 			if ( isset( $settings->message_letter_spacing ) ) {
 				$settings->message_typo['letter_spacing'] = array(
 					'length' => $settings->message_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->message_letter_spacing );
 			}
 
 			// For digit typography settings.
@@ -280,6 +278,7 @@ class UABBCountdownModule extends FLBuilderModule {
 				if ( isset( $settings->digit_font_family['family'] ) ) {
 
 					$settings->digit_typo['font_family'] = $settings->digit_font_family['family'];
+					unset( $settings->digit_font_family['family'] );
 				}
 				if ( isset( $settings->digit_font_family['weight'] ) ) {
 
@@ -288,6 +287,7 @@ class UABBCountdownModule extends FLBuilderModule {
 					} else {
 						$settings->digit_typo['font_weight'] = $settings->digit_font_family['weight'];
 					}
+					unset( $settings->digit_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->digit_font_size_unit ) ) {
@@ -295,18 +295,21 @@ class UABBCountdownModule extends FLBuilderModule {
 					'length' => $settings->digit_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->digit_font_size_unit );
 			}
 			if ( isset( $settings->digit_font_size_unit_medium ) ) {
 				$settings->digit_typo_medium['font_size'] = array(
 					'length' => $settings->digit_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->digit_font_size_unit_medium );
 			}
 			if ( isset( $settings->digit_font_size_unit_responsive ) ) {
 				$settings->digit_typo_responsive['font_size'] = array(
 					'length' => $settings->digit_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->digit_font_size_unit_responsive );
 			}
 			if ( isset( $settings->digit_line_height_unit ) ) {
 
@@ -314,24 +317,28 @@ class UABBCountdownModule extends FLBuilderModule {
 					'length' => $settings->digit_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->digit_line_height_unit );
 			}
 			if ( isset( $settings->digit_line_height_unit_medium ) ) {
 				$settings->digit_typo_medium['line_height'] = array(
 					'length' => $settings->digit_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->digit_line_height_unit_medium );
 			}
 			if ( isset( $settings->digit_line_height_unit_responsive ) ) {
 				$settings->digit_typo_responsive['line_height'] = array(
 					'length' => $settings->digit_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->digit_line_height_unit_responsive );
 			}
 			if ( isset( $settings->digit_letter_spacing ) ) {
 				$settings->digit_typo['letter_spacing'] = array(
 					'length' => $settings->digit_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->digit_letter_spacing );
 			}
 
 			// For unit typography settings.
@@ -346,6 +353,7 @@ class UABBCountdownModule extends FLBuilderModule {
 				if ( isset( $settings->unit_font_family['family'] ) ) {
 
 					$settings->unit_typo['font_family'] = $settings->unit_font_family['family'];
+					unset( $settings->unit_font_family['family'] );
 				}
 				if ( isset( $settings->unit_font_family['weight'] ) ) {
 
@@ -354,6 +362,7 @@ class UABBCountdownModule extends FLBuilderModule {
 					} else {
 						$settings->unit_typo['font_weight'] = $settings->unit_font_family['weight'];
 					}
+					unset( $settings->unit_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->unit_font_size_new ) ) {
@@ -361,18 +370,21 @@ class UABBCountdownModule extends FLBuilderModule {
 					'length' => $settings->unit_font_size_new,
 					'unit'   => 'px',
 				);
+				unset( $settings->unit_font_size_new );
 			}
 			if ( isset( $settings->unit_font_size_new_medium ) ) {
 				$settings->unit_typo_medium['font_size'] = array(
 					'length' => $settings->unit_font_size_new_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->unit_font_size_new_medium );
 			}
 			if ( isset( $settings->unit_font_size_new_responsive ) ) {
 				$settings->unit_typo_responsive['font_size'] = array(
 					'length' => $settings->unit_font_size_new_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->unit_font_size_new_responsive );
 			}
 			if ( isset( $settings->unit_line_height_new ) ) {
 
@@ -380,75 +392,34 @@ class UABBCountdownModule extends FLBuilderModule {
 					'length' => $settings->unit_line_height_new,
 					'unit'   => 'em',
 				);
+				unset( $settings->unit_line_height_new );
 			}
 			if ( isset( $settings->unit_line_height_new_medium ) ) {
 				$settings->unit_typo_medium['line_height'] = array(
 					'length' => $settings->unit_line_height_new_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->unit_line_height_new_medium );
 			}
 			if ( isset( $settings->unit_line_height_new_responsive ) ) {
 				$settings->unit_typo_responsive['line_height'] = array(
 					'length' => $settings->unit_line_height_new_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->unit_line_height_new_responsive );
 			}
 			if ( isset( $settings->unit_transform ) ) {
 				$settings->unit_typo['text_transform'] = $settings->unit_transform;
+				unset( $settings->unit_transform );
 			}
 			if ( isset( $settings->unit_letter_spacing ) ) {
 				$settings->unit_typo['letter_spacing'] = array(
 					'length' => $settings->unit_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			// Unset the values.
-			if ( isset( $settings->message_font_family ) ) {
-				unset( $settings->message_font_family );
-				unset( $settings->message_font_size_unit );
-				unset( $settings->message_font_size_unit_medium );
-				unset( $settings->message_font_size_unit_responsive );
-				unset( $settings->message_line_height_unit );
-				unset( $settings->message_line_height_unit_medium );
-				unset( $settings->message_line_height_unit_responsive );
-				unset( $settings->message_transform );
-				unset( $settings->message_letter_spacing );
-			}
-			if ( isset( $settings->digit_font_family ) ) {
-				unset( $settings->digit_font_family );
-				unset( $settings->digit_font_size_unit );
-				unset( $settings->digit_font_size_unit_medium );
-				unset( $settings->digit_font_size_unit_responsive );
-				unset( $settings->digit_line_height_unit );
-				unset( $settings->digit_line_height_unit_medium );
-				unset( $settings->digit_line_height_unit_responsive );
-				unset( $settings->digit_letter_spacing );
-			}
-			if ( isset( $settings->unit_font_family ) ) {
-				unset( $settings->unit_font_family );
-				unset( $settings->unit_font_size_new );
-				unset( $settings->unit_font_size_new_medium );
-				unset( $settings->unit_font_size_new_responsive );
-				unset( $settings->unit_line_height_new );
-				unset( $settings->unit_line_height_new_medium );
-				unset( $settings->unit_line_height_new_responsive );
-				unset( $settings->unit_transform );
 				unset( $settings->unit_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For link settings.
-			if ( isset( $settings->redirect_link ) ) {
-				if ( isset( $settings->redirect_link_target ) ) {
-					$settings->redirect_link_target = $settings->redirect_link_target;
-				}
-			}
-
-			// For overall alignment settings.
-			if ( isset( $settings->counter_alignment ) ) {
-				$settings->counter_alignment = $settings->counter_alignment;
-			}
 
 			// Handling color opacity.
 			$helper->handle_opacity_inputs( $settings, 'timer_background_color_opc', 'timer_background_color' );
@@ -465,6 +436,7 @@ class UABBCountdownModule extends FLBuilderModule {
 				if ( isset( $settings->message_font_family['family'] ) ) {
 
 					$settings->message_typo['font_family'] = $settings->message_font_family['family'];
+					unset( $settings->message_font_family['family'] );
 				}
 				if ( isset( $settings->message_font_family['weight'] ) ) {
 
@@ -473,6 +445,7 @@ class UABBCountdownModule extends FLBuilderModule {
 					} else {
 						$settings->message_typo['font_weight'] = $settings->message_font_family['weight'];
 					}
+					unset( $settings->message_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->message_font_size['small'] ) && ! isset( $settings->message_typo_responsive['font_size'] ) ) {
@@ -533,6 +506,7 @@ class UABBCountdownModule extends FLBuilderModule {
 				if ( isset( $settings->digit_font_family['family'] ) ) {
 
 					$settings->digit_typo['font_family'] = $settings->digit_font_family['family'];
+					unset( $settings->digit_font_family['family'] );
 				}
 				if ( isset( $settings->digit_font_family['weight'] ) ) {
 
@@ -541,6 +515,7 @@ class UABBCountdownModule extends FLBuilderModule {
 					} else {
 						$settings->digit_typo['font_weight'] = $settings->digit_font_family['weight'];
 					}
+					unset( $settings->digit_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->digit_font_size['small'] ) && ! isset( $settings->digit_typo_responsive['font_size'] ) ) {
@@ -598,6 +573,7 @@ class UABBCountdownModule extends FLBuilderModule {
 				if ( isset( $settings->unit_font_family['family'] ) ) {
 
 					$settings->unit_typo['font_family'] = $settings->unit_font_family['family'];
+					unset( $settings->unit_font_family['family'] );
 				}
 				if ( isset( $settings->unit_font_family['weight'] ) ) {
 
@@ -606,6 +582,7 @@ class UABBCountdownModule extends FLBuilderModule {
 					} else {
 						$settings->unit_typo['font_weight'] = $settings->unit_font_family['weight'];
 					}
+					unset( $settings->unit_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->unit_font_size['small'] ) && ! isset( $settings->unit_typo_responsive['font_size'] ) ) {
@@ -653,22 +630,62 @@ class UABBCountdownModule extends FLBuilderModule {
 					);
 				}
 			}
-
 			// Unset the old values.
-			if ( isset( $settings->message_font_family ) ) {
-				unset( $settings->message_font_family );
-				unset( $settings->message_font_size );
-				unset( $settings->message_line_height );
+			if ( isset( $settings->message_font_size['desktop'] ) ) {
+				unset( $settings->message_font_size['desktop'] );
 			}
-			if ( isset( $settings->digit_font_family ) ) {
-				unset( $settings->digit_font_family );
-				unset( $settings->digit_font_size );
-				unset( $settings->digit_line_height );
+			if ( isset( $settings->message_font_size['medium'] ) ) {
+				unset( $settings->message_font_size['medium'] );
 			}
-			if ( isset( $settings->unit_font_family ) ) {
-				unset( $settings->unit_font_family );
-				unset( $settings->unit_font_size );
-				unset( $settings->unit_line_height );
+			if ( isset( $settings->message_font_size['small'] ) ) {
+				unset( $settings->message_font_size['small'] );
+			}
+			if ( isset( $settings->message_line_height['desktop'] ) ) {
+				unset( $settings->message_line_height['desktop'] );
+			}
+			if ( isset( $settings->message_line_height['medium'] ) ) {
+				unset( $settings->message_line_height['medium'] );
+			}
+			if ( isset( $settings->message_line_height['small'] ) ) {
+				unset( $settings->message_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->digit_font_size['desktop'] ) ) {
+				unset( $settings->digit_font_size['desktop'] );
+			}
+			if ( isset( $settings->digit_font_size['medium'] ) ) {
+				unset( $settings->digit_font_size['medium'] );
+			}
+			if ( isset( $settings->digit_font_size['small'] ) ) {
+				unset( $settings->digit_font_size['small'] );
+			}
+			if ( isset( $settings->digit_line_height['desktop'] ) ) {
+				unset( $settings->digit_line_height['desktop'] );
+			}
+			if ( isset( $settings->digit_line_height['medium'] ) ) {
+				unset( $settings->digit_line_height['medium'] );
+			}
+			if ( isset( $settings->digit_line_height['small'] ) ) {
+				unset( $settings->digit_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->unit_font_size['desktop'] ) ) {
+				unset( $settings->unit_font_size['desktop'] );
+			}
+			if ( isset( $settings->unit_font_size['medium'] ) ) {
+				unset( $settings->unit_font_size['medium'] );
+			}
+			if ( isset( $settings->unit_font_size['small'] ) ) {
+				unset( $settings->unit_font_size['small'] );
+			}
+			if ( isset( $settings->unit_line_height['desktop'] ) ) {
+				unset( $settings->unit_line_height['desktop'] );
+			}
+			if ( isset( $settings->unit_line_height['medium'] ) ) {
+				unset( $settings->unit_line_height['medium'] );
+			}
+			if ( isset( $settings->unit_line_height['small'] ) ) {
+				unset( $settings->unit_line_height['small'] );
 			}
 		}
 

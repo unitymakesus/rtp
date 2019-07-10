@@ -27,12 +27,12 @@ if(is_array($fonts))
     }
 }
 ?>
-
-
-
-
 <div class="wns-be-container">
 
+    <div id="wns-be-infobar">
+        <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
+    </div>
+    
     <div class="wns-be-sidebar">
 
         <ul class="wns-be-group-menu">
@@ -94,20 +94,23 @@ if(is_array($fonts))
             </li>
 
             <li class="wns-be-group-menu-li">
+                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-ie'); ?>" id="" class="wns-be-group-tab-link-a">
+                    <i class="mec-sl-refresh"></i> 
+                    <span class="wns-be-group-menu-title"><?php _e('Import / Export', 'mec'); ?></span>
+                </a>
+            </li>
+
+            <!-- <li class="wns-be-group-menu-li">
                 <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-support'); ?>" id="" class="wns-be-group-tab-link-a">
                     <i class="mec-sl-support"></i> 
                     <span class="wns-be-group-menu-title"><?php _e('Support', 'mec'); ?></span>
                 </a>
-            </li>
+            </li> -->
 
         </ul>
     </div>
 
     <div class="wns-be-main">
-
-        <div id="wns-be-infobar">
-            <a href="" id="" class="dpr-btn dpr-save-btn">Save Changes</a>
-        </div>
 
         <div id="wns-be-notification"></div>
 
@@ -182,6 +185,38 @@ if(is_array($fonts))
                             <div class="mec-col-6">
                                 <input type="text" class="wp-color-picker-field" id="mec_settings_color" name="mec[styling][color]" value="<?php echo (isset($styling['color']) ? $styling['color'] : ''); ?>" data-default-color="" />
                             </div>
+                            <div class="mec-col-12">
+                                <p><?php esc_attr_e("If you want to select a predefined color skin, you must clear the color of this item", 'mec'); ?></p>
+                            </div>
+                        </div>
+
+                        <!-- Advanced Options -->
+                        <h4 class="mec-form-subtitle"><?php esc_html_e('Advanced Color Options (shortcodes)', 'mec' ); ?></h4>
+                        <div class="mec-form-row">
+                            <div class="mec-col-3">
+                                <p><?php esc_html_e('Title', 'mec' ); ?></p>
+                            </div>
+                            <div class="mec-col-6">
+                                <input type="text" class="wp-color-picker-field" id="mec_settings_title_color" name="mec[styling][title_color]" value="<?php echo (isset($styling['title_color']) ? $styling['title_color'] : ''); ?>" data-default-color="" />
+                            </div>
+                        </div>
+                        
+                        <div class="mec-form-row">
+                            <div class="mec-col-3">
+                                <p><?php esc_html_e('Title Hover', 'mec' ); ?></p>
+                            </div>
+                            <div class="mec-col-6">
+                                <input type="text" class="wp-color-picker-field" id="mec_settings_title_color_hover" name="mec[styling][title_color_hover]" value="<?php echo (isset($styling['title_color_hover']) ? $styling['title_color_hover'] : ''); ?>" data-default-color="" />
+                            </div>
+                        </div>
+
+                        <div class="mec-form-row">
+                            <div class="mec-col-3">
+                                <p><?php esc_html_e('Content', 'mec' ); ?></p>
+                            </div>
+                            <div class="mec-col-6">
+                                <input type="text" class="wp-color-picker-field" id="mec_settings_content_color" name="mec[styling][content_color]" value="<?php echo (isset($styling['content_color']) ? $styling['content_color'] : ''); ?>" data-default-color="" />
+                            </div>
                         </div>
 
                         <!-- Typography -->
@@ -238,6 +273,22 @@ if(is_array($fonts))
 
                             </div>
                         </div>
+                        <div class="mec-form-row">
+
+                            <label class="mec-col-3" for="mec_styling_disable_gfonts"><?php _e('Disable Google Fonts', 'mec'); ?></label>
+                            <div class="mec-col-8">
+                                <input type="hidden" name="mec[styling][disable_gfonts]" value="0" />
+                                <input value="1" type="checkbox" id="mec_styling_disable_gfonts" name="mec[styling][disable_gfonts]" <?php if(isset($styling['disable_gfonts']) and $styling['disable_gfonts']) echo 'checked="checked"'; ?> />
+                                <span class="mec-tooltip">
+                                    <div class="box top">
+                                        <h5 class="title"><?php _e('Disable Google Fonts', 'mec'); ?></h5>
+                                        <div class="content"><p><?php esc_attr_e('To be GDPR compliant you may need to disable Google fonts!', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/style-options/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                                    </div>
+                                    <i title="" class="dashicons-before dashicons-editor-help"></i>
+                                </span>
+                            </div>
+
+                        </div>
 
                         <!-- Container Width -->
                         <h4 class="mec-form-subtitle"><?php esc_html_e('Container Width', 'mec' ); ?></h4>                    
@@ -245,17 +296,28 @@ if(is_array($fonts))
                             <label class="mec-col-3" for="mec_styling_container_normal_width"><?php _e('Desktop Normal Screens', 'mec'); ?></label>
                             <div class="mec-col-4">
                                 <input type="text" id="mec_styling_container_normal_width" name="mec[styling][container_normal_width]" value="<?php echo ((isset($styling['container_normal_width']) and trim($styling['container_normal_width']) != '') ? $styling['container_normal_width'] : ''); ?>" />
-                                <a class="mec-tooltip" title="<?php esc_attr_e("You can enter your theme container size in this field", 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                                <span class="mec-tooltip">
+                                    <div class="box top">
+                                        <h5 class="title"><?php _e('Desktop Normal Screens', 'mec'); ?></h5>
+                                        <div class="content"><p><?php esc_attr_e('You can enter your theme container size in this field', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/style-options/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                                    </div>
+                                    <i title="" class="dashicons-before dashicons-editor-help"></i>
+                                </span>                                  
                             </div>
                         </div>
                         <div class="mec-form-row">
                             <label class="mec-col-3" for="mec_styling_container_large_width"><?php _e('Desktop Large Screens', 'mec'); ?></label>
                             <div class="mec-col-4">
                                 <input type="text" id="mec_styling_container_large_width" name="mec[styling][container_large_width]" value="<?php echo ((isset($styling['container_large_width']) and trim($styling['container_large_width']) != '') ? $styling['container_large_width'] : ''); ?>" />
-                                <a class="mec-tooltip" title="<?php esc_attr_e("You can enter your theme container size in this field", 'mec'); ?>"><i title="" class="dashicons-before dashicons-editor-help"></i></a>
+                                <span class="mec-tooltip">
+                                    <div class="box top">
+                                        <h5 class="title"><?php _e('Desktop Large Screens', 'mec'); ?></h5>
+                                        <div class="content"><p><?php esc_attr_e('You can enter your theme container size in this field', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/style-options/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
+                                    </div>
+                                    <i title="" class="dashicons-before dashicons-editor-help"></i>
+                                </span>                                  
                             </div>
                         </div>
-
 
                         <div class="mec-form-row">
                             <?php wp_nonce_field('mec_options_form'); ?>
@@ -265,20 +327,24 @@ if(is_array($fonts))
                 </div>
             </div>
         </div>
-        <div id="wns-be-footer">
-            <a href="" id="" class="dpr-btn dpr-save-btn">Save Changes</a>
-        </div>
     </div>
+
+    <div id="wns-be-footer">
+        <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
+    </div>
+    
 </div>
 
 <script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery(".dpr-save-btn").on('click', function(event) {
+    jQuery(".dpr-save-btn").on('click', function(event)
+    {
         event.preventDefault();
         jQuery("#mec_styling_form_button").trigger('click');
     });
 });
+
 (function($)
 {
 	'use strict';
@@ -302,7 +368,6 @@ jQuery(document).ready(function()
 			$('#mec_settings_upload').val(image_url);
 		});
 	});
-    
 })(jQuery);
 
 jQuery("#mec_styling_form").on('submit', function(event)
@@ -319,13 +384,18 @@ jQuery("#mec_styling_form").on('submit', function(event)
     {
     	type: "POST",
     	url: ajaxurl,
-    	data: "action=mec_save_styling&"+styling,
+        data: "action=mec_save_styling&"+styling,
+        beforeSend: function () {
+            jQuery('.wns-be-main').append('<div class="mec-loarder-wrap mec-settings-loader"><div class="mec-loarder"><div></div><div></div><div></div></div></div>');
+        },
     	success: function(data)
     	{
             // Remove the loading Class to the button
-            setTimeout(function(){
+            setTimeout(function()
+            {
             	jQuery(".dpr-save-btn").removeClass('loading').text("<?php echo esc_js(esc_attr__('Save Changes', 'mec')); ?>");
                 jQuery('.wns-saved-settings').remove();
+                jQuery('.mec-loarder-wrap').remove();
             }, 1000);
         },
         error: function(jqXHR, textStatus, errorThrown)
@@ -334,6 +404,7 @@ jQuery("#mec_styling_form").on('submit', function(event)
             setTimeout(function(){
             	jQuery(".dpr-save-btn").removeClass('loading').text("<?php echo esc_js(esc_attr__('Save Changes', 'mec')); ?>");
                 jQuery('.wns-saved-settings').remove();
+                jQuery('.mec-loarder-wrap').remove();
             }, 1000);
         }
     });

@@ -57,8 +57,8 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have the Host.
@@ -76,8 +76,8 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 
 			$api = $this->get_api( array(
 				'installation_url' => $fields['api_host'],
-				'api_key' => $fields['api_key'],
-				'list_id' => $fields['list_id'],
+				'api_key'          => $fields['api_key'],
+				'list_id'          => $fields['list_id'],
 			) );
 
 			// Send request for list ID validation
@@ -86,10 +86,11 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 			if ( true === $get_api_response['status'] ) {
 				$response['data'] = array(
 					'api_host' => $fields['api_host'],
-					'api_key' => $fields['api_key'],
-					'list_id' => $fields['list_id'],
+					'api_key'  => $fields['api_key'],
+					'list_id'  => $fields['list_id'],
 				);
 			} else {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'Error: Could not connect to Sendy. %s', 'fl-builder' ), $get_api_response['message'] );
 			}
 		}
@@ -107,35 +108,35 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_host', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Installation URL', 'fl-builder' ),
-			'help'          => __( 'The URL where your Sendy application is installed (e.g. http://mywebsite.com/sendy).', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Installation URL', 'fl-builder' ),
+			'help'      => __( 'The URL where your Sendy application is installed (e.g. http://mywebsite.com/sendy).', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Found in your Sendy application under Settings.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Found in your Sendy application under Settings.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'List ID', 'fl-builder' ),
-			'help'          => __( 'The ID of the list you would like users to subscribe to. The ID of a list can be found under "View all lists" in the section named ID.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'List ID', 'fl-builder' ),
+			'help'      => __( 'The ID of the list you would like users to subscribe to. The ID of a list can be found under "View all lists" in the section named ID.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -155,9 +156,9 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 	 */
 	public function render_fields( $account, $settings ) {
 
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$response = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		return $response;
@@ -186,17 +187,18 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 
 			$api = $this->get_api( array(
 				'installation_url' => $account_data['api_host'],
-				'api_key' => $account_data['api_key'],
-				'list_id' => $account_data['list_id'],
+				'api_key'          => $account_data['api_key'],
+				'list_id'          => $account_data['list_id'],
 			) );
 
 			// Send request for list ID validation
 			$get_api_response = $api->subscribe( array(
-				'name' => $name,
+				'name'  => $name,
 				'email' => $email,
 			) );
 
 			if ( false === $get_api_response['status'] ) {
+				/* translators: %s: error */
 				$response['error'] = sprintf( __( 'There was an error subscribing to Sendy. %s', 'fl-builder' ), $get_api_response['message'] );
 			}
 		}

@@ -70,15 +70,18 @@ jQuery(document).ready(function() {
 
 		if ( e.originalEvent !== undefined ) {
 			current_tab_acc.parent().siblings().find(' > .uabb-tab-acc-content:lt(1)').slideUp(300);
-			current_tab_acc.siblings('.uabb-tab-acc-content').slideDown(300, function() {
+			if ( current_tab_acc.siblings( '.uabb-tab-acc-content' ).css( 'display' ).toLowerCase() === 'none' ){
+				current_tab_acc.siblings('.uabb-tab-acc-content').slideDown(300, function() {
 
-				if ( current_tab_acc.offset().top < win.scrollTop() + 100 ) {
-					jQuery( 'html, body' ).animate({ 
-						scrollTop: current_tab_acc.offset().top - 100 
-					}, 500, 'swing');
-				}
-			});
-
+					if ( current_tab_acc.offset().top < win.scrollTop() + 100 ) {
+						jQuery( 'html, body' ).animate({ 
+							scrollTop: current_tab_acc.offset().top - 100 
+						}, 500, 'swing');
+					}
+				});
+			} else {
+				current_tab_acc.siblings('.uabb-tab-acc-content').slideUp(300);
+			}
 		} else {
 			current_tab_acc.parent().siblings().find(' > .uabb-tab-acc-content:lt(1)').css('display','none');
 			current_tab_acc.siblings('.uabb-tab-acc-content').css('display','block');

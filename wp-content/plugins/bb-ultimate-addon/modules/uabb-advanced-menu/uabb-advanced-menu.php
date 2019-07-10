@@ -32,7 +32,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 			)
 		);
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 	}
 	/**
 	 * Ensure backwards compatibility with old settings.
@@ -50,122 +50,114 @@ class UABBCreativeMenu extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 			// Handle old submenu border settings.
-			if ( ! isset( $settings->submenu_border ) || empty( $settings->submenu_border ) ) {
+			if ( isset( $settings->creative_submenu_border_color ) ) {
 
 				$settings->submenu_border            = array();
 				$settings->submenu_border_medium     = array();
 				$settings->submenu_border_responsive = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->creative_submenu_border_style ) && isset( $settings->creative_submenu_border_color ) ) {
+				if ( isset( $settings->creative_submenu_border_style ) ) {
 					$settings->submenu_border['style'] = $settings->creative_submenu_border_style;
-					$settings->submenu_border['color'] = $settings->creative_submenu_border_color;
+					unset( $settings->creative_submenu_border_style );
+				}
+				$settings->submenu_border['color'] = $settings->creative_submenu_border_color;
+				unset( $settings->creative_submenu_border_color );
 
-					if ( isset( $settings->creative_submenu_border_width_dimension_top ) && isset( $settings->creative_submenu_border_width_dimension_right ) && isset( $settings->creative_submenu_border_width_dimension_bottom ) && isset( $settings->creative_submenu_border_width_dimension_left ) ) {
-							$settings->submenu_border['width'] = array(
-								'top'    => $settings->creative_submenu_border_width_dimension_top,
-								'right'  => $settings->creative_submenu_border_width_dimension_right,
-								'bottom' => $settings->creative_submenu_border_width_dimension_bottom,
-								'left'   => $settings->creative_submenu_border_width_dimension_left,
-							);
-						unset( $settings->creative_submenu_border_width_dimension_top );
-						unset( $settings->creative_submenu_border_width_dimension_right );
-						unset( $settings->creative_submenu_border_width_dimension_bottom );
-						unset( $settings->creative_submenu_border_width_dimension_left );
-					}
+				if ( isset( $settings->creative_submenu_border_width_dimension_top ) && isset( $settings->creative_submenu_border_width_dimension_right ) && isset( $settings->creative_submenu_border_width_dimension_bottom ) && isset( $settings->creative_submenu_border_width_dimension_left ) ) {
+						$settings->submenu_border['width'] = array(
+							'top'    => $settings->creative_submenu_border_width_dimension_top,
+							'right'  => $settings->creative_submenu_border_width_dimension_right,
+							'bottom' => $settings->creative_submenu_border_width_dimension_bottom,
+							'left'   => $settings->creative_submenu_border_width_dimension_left,
+						);
+					unset( $settings->creative_submenu_border_width_dimension_top );
+					unset( $settings->creative_submenu_border_width_dimension_right );
+					unset( $settings->creative_submenu_border_width_dimension_bottom );
+					unset( $settings->creative_submenu_border_width_dimension_left );
+				}
 
-					if ( isset( $settings->creative_submenu_border_width_dimension_top_medium ) && isset( $settings->creative_submenu_border_width_dimension_right_medium ) && isset( $settings->creative_submenu_border_width_dimension_bottom_medium ) && isset( $settings->creative_submenu_border_width_dimension_left_medium ) ) {
-							$settings->submenu_border_medium['width'] = array(
-								'top'    => $settings->creative_submenu_border_width_dimension_top_medium,
-								'right'  => $settings->creative_submenu_border_width_dimension_right_medium,
-								'bottom' => $settings->creative_submenu_border_width_dimension_bottom_medium,
-								'left'   => $settings->creative_submenu_border_width_dimension_left_medium,
-							);
-						unset( $settings->creative_submenu_border_width_dimension_top_medium );
-						unset( $settings->creative_submenu_border_width_dimension_right_medium );
-						unset( $settings->creative_submenu_border_width_dimension_bottom_medium );
-						unset( $settings->creative_submenu_border_width_dimension_left_medium );
-					}
+				if ( isset( $settings->creative_submenu_border_width_dimension_top_medium ) && isset( $settings->creative_submenu_border_width_dimension_right_medium ) && isset( $settings->creative_submenu_border_width_dimension_bottom_medium ) && isset( $settings->creative_submenu_border_width_dimension_left_medium ) ) {
+						$settings->submenu_border_medium['width'] = array(
+							'top'    => $settings->creative_submenu_border_width_dimension_top_medium,
+							'right'  => $settings->creative_submenu_border_width_dimension_right_medium,
+							'bottom' => $settings->creative_submenu_border_width_dimension_bottom_medium,
+							'left'   => $settings->creative_submenu_border_width_dimension_left_medium,
+						);
+					unset( $settings->creative_submenu_border_width_dimension_top_medium );
+					unset( $settings->creative_submenu_border_width_dimension_right_medium );
+					unset( $settings->creative_submenu_border_width_dimension_bottom_medium );
+					unset( $settings->creative_submenu_border_width_dimension_left_medium );
+				}
 
-					if ( isset( $settings->creative_submenu_border_width_dimension_top_responsive ) && isset( $settings->creative_submenu_border_width_dimension_right_responsive ) && isset( $settings->creative_submenu_border_width_dimension_bottom_responsive ) && isset( $settings->creative_submenu_border_width_dimension_left_responsive ) ) {
-							$settings->submenu_border_responsive['width'] = array(
-								'top'    => $settings->creative_submenu_border_width_dimension_top_responsive,
-								'right'  => $settings->creative_submenu_border_width_dimension_right_responsive,
-								'bottom' => $settings->creative_submenu_border_width_dimension_bottom_responsive,
-								'left'   => $settings->creative_submenu_border_width_dimension_left_responsive,
-							);
-						unset( $settings->creative_submenu_border_width_dimension_top_responsive );
-						unset( $settings->creative_submenu_border_width_dimension_right_responsive );
-						unset( $settings->creative_submenu_border_width_dimension_bottom_responsive );
-						unset( $settings->creative_submenu_border_width_dimension_left_responsive );
-					}
+				if ( isset( $settings->creative_submenu_border_width_dimension_top_responsive ) && isset( $settings->creative_submenu_border_width_dimension_right_responsive ) && isset( $settings->creative_submenu_border_width_dimension_bottom_responsive ) && isset( $settings->creative_submenu_border_width_dimension_left_responsive ) ) {
+						$settings->submenu_border_responsive['width'] = array(
+							'top'    => $settings->creative_submenu_border_width_dimension_top_responsive,
+							'right'  => $settings->creative_submenu_border_width_dimension_right_responsive,
+							'bottom' => $settings->creative_submenu_border_width_dimension_bottom_responsive,
+							'left'   => $settings->creative_submenu_border_width_dimension_left_responsive,
+						);
+					unset( $settings->creative_submenu_border_width_dimension_top_responsive );
+					unset( $settings->creative_submenu_border_width_dimension_right_responsive );
+					unset( $settings->creative_submenu_border_width_dimension_bottom_responsive );
+					unset( $settings->creative_submenu_border_width_dimension_left_responsive );
 				}
 			}
 
 			// Handle old menu border settings.
-			if ( ! isset( $settings->menu_border ) || empty( $settings->menu_border ) ) {
+			if ( isset( $settings->creative_menu_border_color ) ) {
 
 				$settings->menu_border            = array();
 				$settings->menu_border_medium     = array();
 				$settings->menu_border_responsive = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->creative_menu_border_style ) && isset( $settings->creative_menu_border_color ) ) {
+				if ( isset( $settings->creative_menu_border_style ) ) {
 					$settings->menu_border['style'] = $settings->creative_menu_border_style;
-					$settings->menu_border['color'] = $settings->creative_menu_border_color;
+					unset( $settings->creative_menu_border_style );
+				}
+				$settings->menu_border['color'] = $settings->creative_menu_border_color;
+				unset( $settings->creative_menu_border_color );
 
-					if ( isset( $settings->creative_menu_border_width_dimension_top ) && isset( $settings->creative_menu_border_width_dimension_right ) && isset( $settings->creative_menu_border_width_dimension_bottom ) && isset( $settings->creative_menu_border_width_dimension_left ) ) {
-							$settings->menu_border['width'] = array(
-								'top'    => $settings->creative_menu_border_width_dimension_top,
-								'right'  => $settings->creative_menu_border_width_dimension_right,
-								'bottom' => $settings->creative_menu_border_width_dimension_bottom,
-								'left'   => $settings->creative_menu_border_width_dimension_left,
-							);
-						unset( $settings->creative_menu_border_width_dimension_top );
-						unset( $settings->creative_menu_border_width_dimension_right );
-						unset( $settings->creative_menu_border_width_dimension_bottom );
-						unset( $settings->creative_menu_border_width_dimension_left );
-					}
+				if ( isset( $settings->creative_menu_border_width_dimension_top ) && isset( $settings->creative_menu_border_width_dimension_right ) && isset( $settings->creative_menu_border_width_dimension_bottom ) && isset( $settings->creative_menu_border_width_dimension_left ) ) {
+						$settings->menu_border['width'] = array(
+							'top'    => $settings->creative_menu_border_width_dimension_top,
+							'right'  => $settings->creative_menu_border_width_dimension_right,
+							'bottom' => $settings->creative_menu_border_width_dimension_bottom,
+							'left'   => $settings->creative_menu_border_width_dimension_left,
+						);
+					unset( $settings->creative_menu_border_width_dimension_top );
+					unset( $settings->creative_menu_border_width_dimension_right );
+					unset( $settings->creative_menu_border_width_dimension_bottom );
+					unset( $settings->creative_menu_border_width_dimension_left );
+				}
 
-					if ( isset( $settings->creative_menu_border_width_dimension_top_medium ) && isset( $settings->creative_menu_border_width_dimension_right_medium ) && isset( $settings->creative_menu_border_width_dimension_bottom_medium ) && isset( $settings->creative_menu_border_width_dimension_left_medium ) ) {
-							$settings->menu_border_medium['width'] = array(
-								'top'    => $settings->creative_menu_border_width_dimension_top_medium,
-								'right'  => $settings->creative_menu_border_width_dimension_right_medium,
-								'bottom' => $settings->creative_menu_border_width_dimension_bottom_medium,
-								'left'   => $settings->creative_menu_border_width_dimension_left_medium,
-							);
-						unset( $settings->creative_menu_border_width_dimension_top_medium );
-						unset( $settings->creative_menu_border_width_dimension_right_medium );
-						unset( $settings->creative_menu_border_width_dimension_bottom_medium );
-						unset( $settings->creative_menu_border_width_dimension_left_medium );
-					}
+				if ( isset( $settings->creative_menu_border_width_dimension_top_medium ) && isset( $settings->creative_menu_border_width_dimension_right_medium ) && isset( $settings->creative_menu_border_width_dimension_bottom_medium ) && isset( $settings->creative_menu_border_width_dimension_left_medium ) ) {
+						$settings->menu_border_medium['width'] = array(
+							'top'    => $settings->creative_menu_border_width_dimension_top_medium,
+							'right'  => $settings->creative_menu_border_width_dimension_right_medium,
+							'bottom' => $settings->creative_menu_border_width_dimension_bottom_medium,
+							'left'   => $settings->creative_menu_border_width_dimension_left_medium,
+						);
+					unset( $settings->creative_menu_border_width_dimension_top_medium );
+					unset( $settings->creative_menu_border_width_dimension_right_medium );
+					unset( $settings->creative_menu_border_width_dimension_bottom_medium );
+					unset( $settings->creative_menu_border_width_dimension_left_medium );
+				}
 
-					if ( isset( $settings->creative_menu_border_width_dimension_top_responsive ) && isset( $settings->creative_menu_border_width_dimension_right_responsive ) && isset( $settings->creative_menu_border_width_dimension_bottom_responsive ) && isset( $settings->creative_menu_border_width_dimension_left_responsive ) ) {
-							$settings->menu_border_responsive['width'] = array(
-								'top'    => $settings->creative_menu_border_width_dimension_top_responsive,
-								'right'  => $settings->creative_menu_border_width_dimension_right_responsive,
-								'bottom' => $settings->creative_menu_border_width_dimension_bottom_responsive,
-								'left'   => $settings->creative_menu_border_width_dimension_left_responsive,
-							);
-						unset( $settings->creative_menu_border_width_dimension_top_responsive );
-						unset( $settings->creative_menu_border_width_dimension_right_responsive );
-						unset( $settings->creative_menu_border_width_dimension_bottom_responsive );
-						unset( $settings->creative_menu_border_width_dimension_left_responsive );
-					}
+				if ( isset( $settings->creative_menu_border_width_dimension_top_responsive ) && isset( $settings->creative_menu_border_width_dimension_right_responsive ) && isset( $settings->creative_menu_border_width_dimension_bottom_responsive ) && isset( $settings->creative_menu_border_width_dimension_left_responsive ) ) {
+						$settings->menu_border_responsive['width'] = array(
+							'top'    => $settings->creative_menu_border_width_dimension_top_responsive,
+							'right'  => $settings->creative_menu_border_width_dimension_right_responsive,
+							'bottom' => $settings->creative_menu_border_width_dimension_bottom_responsive,
+							'left'   => $settings->creative_menu_border_width_dimension_left_responsive,
+						);
+					unset( $settings->creative_menu_border_width_dimension_top_responsive );
+					unset( $settings->creative_menu_border_width_dimension_right_responsive );
+					unset( $settings->creative_menu_border_width_dimension_bottom_responsive );
+					unset( $settings->creative_menu_border_width_dimension_left_responsive );
 				}
 			}
-
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->creative_menu_alignment ) ) {
-				$settings->creative_menu_alignment = $settings->creative_menu_alignment;
-			}
-			if ( isset( $settings->creative_menu_navigation_alignment ) ) {
-				$settings->creative_menu_navigation_alignment = $settings->creative_menu_navigation_alignment;
-			}
-			if ( isset( $settings->creative_menu_responsive_alignment ) ) {
-				$settings->creative_menu_responsive_alignment = $settings->creative_menu_responsive_alignment;
-			}
-
 			// For menu typography.
 			if ( ! isset( $settings->creative_menu_link_font_typo ) || ! is_array( $settings->creative_menu_link_font_typo ) ) {
 
@@ -185,6 +177,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 				if ( isset( $settings->creative_menu_link_font_family['family'] ) ) {
 
 					$settings->creative_menu_link_font_typo['font_family'] = $settings->creative_menu_link_font_family['family'];
+					unset( $settings->creative_menu_link_font_family['family'] );
 				}
 				if ( isset( $settings->creative_menu_link_font_family['weight'] ) ) {
 
@@ -193,6 +186,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 					} else {
 						$settings->creative_menu_link_font_typo['font_weight'] = $settings->creative_menu_link_font_family['weight'];
 					}
+					unset( $settings->creative_menu_link_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->creative_menu_link_font_size_custom ) ) {
@@ -237,7 +231,13 @@ class UABBCreativeMenu extends FLBuilderModule {
 
 				$settings->creative_menu_link_font_typo['text_transform'] = $settings->creative_menu_link_text_transform;
 			}
-
+			if ( isset( $settings->creative_menu_link_letter_spacing ) ) {
+				$settings->creative_menu_link_font_typo['letter_spacing'] = array(
+					'length' => $settings->creative_menu_link_letter_spacing,
+					'unit'   => 'px',
+				);
+				unset( $settings->creative_menu_link_letter_spacing );
+			}
 			// For submenu typography settings.
 			if ( ! isset( $settings->creative_submenu_link_font_typo ) || ! is_array( $settings->creative_submenu_link_font_typo ) ) {
 
@@ -257,6 +257,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 				if ( isset( $settings->creative_submenu_link_font_family['family'] ) ) {
 
 					$settings->creative_submenu_link_font_typo['font_family'] = $settings->creative_submenu_link_font_family['family'];
+					unset( $settings->creative_submenu_link_font_family['family'] );
 				}
 				if ( isset( $settings->creative_submenu_link_font_family['weight'] ) ) {
 
@@ -265,6 +266,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 					} else {
 						$settings->creative_submenu_link_font_typo['font_weight'] = $settings->creative_submenu_link_font_family['weight'];
 					}
+					unset( $settings->creative_submenu_link_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->creative_submenu_link_font_size_custom ) ) {
@@ -317,26 +319,54 @@ class UABBCreativeMenu extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->creative_menu_link_font_family ) ) {
-				unset( $settings->creative_menu_link_font_family );
+			// Unset the old values.
+			if ( isset( $settings->creative_menu_link_font_size_custom ) ) {
 				unset( $settings->creative_menu_link_font_size_custom );
+			}
+			if ( isset( $settings->creative_menu_link_font_size_custom_medium ) ) {
 				unset( $settings->creative_menu_link_font_size_custom_medium );
+			}
+			if ( isset( $settings->creative_menu_link_font_size_custom_responsive ) ) {
 				unset( $settings->creative_menu_link_font_size_custom_responsive );
+			}
+			if ( isset( $settings->creative_menu_link_line_height_custom ) ) {
 				unset( $settings->creative_menu_link_line_height_custom );
+			}
+			if ( isset( $settings->creative_menu_link_line_height_custom_medium ) ) {
 				unset( $settings->creative_menu_link_line_height_custom_medium );
+			}
+			if ( isset( $settings->creative_menu_link_line_height_custom_responsive ) ) {
 				unset( $settings->creative_menu_link_line_height_custom_responsive );
+			}
+			if ( isset( $settings->creative_menu_link_text_transform ) ) {
 				unset( $settings->creative_menu_link_text_transform );
+			}
+			if ( isset( $settings->creative_menu_link_letter_spacing ) ) {
 				unset( $settings->creative_menu_link_letter_spacing );
 			}
-			if ( isset( $settings->creative_submenu_link_font_family ) ) {
-				unset( $settings->creative_submenu_link_font_family );
+			// Unset the old values.
+			if ( isset( $settings->creative_submenu_link_font_size_custom ) ) {
 				unset( $settings->creative_submenu_link_font_size_custom );
+			}
+			if ( isset( $settings->creative_submenu_link_font_size_custom_medium ) ) {
 				unset( $settings->creative_submenu_link_font_size_custom_medium );
+			}
+			if ( isset( $settings->creative_submenu_link_font_size_custom_responsive ) ) {
 				unset( $settings->creative_submenu_link_font_size_custom_responsive );
+			}
+			if ( isset( $settings->creative_submenu_link_line_height_custom ) ) {
 				unset( $settings->creative_submenu_link_line_height_custom );
+			}
+			if ( isset( $settings->creative_submenu_link_line_height_custom_medium ) ) {
 				unset( $settings->creative_submenu_link_line_height_custom_medium );
+			}
+			if ( isset( $settings->creative_submenu_link_line_height_custom_responsive ) ) {
 				unset( $settings->creative_submenu_link_line_height_custom_responsive );
+			}
+			if ( isset( $settings->creative_submenu_link_text_transform ) ) {
 				unset( $settings->creative_submenu_link_text_transform );
+			}
+			if ( isset( $settings->creative_submenu_link_letter_spacing ) ) {
 				unset( $settings->creative_submenu_link_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -381,6 +411,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_menu_link_margin );
 			}
 
 			// Menu link spacing.
@@ -422,6 +453,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_menu_link_spacing );
 			}
 
 			// Sub menu padding setting.
@@ -463,6 +495,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_submenu_link_padding );
 			}
 
 			// Menu responsive overlay padding setting.
@@ -504,55 +537,57 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_menu_responsive_overlay_padding );
 			}
 
 			// Handle old submenu border settings.
-			if ( ! isset( $settings->submenu_border ) || empty( $settings->submenu_border ) ) {
+			if ( isset( $settings->creative_submenu_border_color ) ) {
 
 				$settings->submenu_border = array();
 
 				// Border style, color, and width.
 				if ( isset( $settings->creative_submenu_border_style ) ) {
 					$settings->submenu_border['style'] = $settings->creative_submenu_border_style;
-					$settings->submenu_border['color'] = $settings->creative_submenu_border_color;
+					unset( $settings->creative_submenu_border_style );
+				}
+				$settings->submenu_border['color'] = $settings->creative_submenu_border_color;
+				unset( $settings->creative_submenu_border_color );
+				if ( isset( $settings->creative_submenu_border_width ) && ! isset( $settings->creative_submenu_border_width_dimension_top ) && ! isset( $settings->creative_submenu_border_width_dimension_bottom ) && ! isset( $settings->creative_submenu_border_width_dimension_left ) && ! isset( $settings->creative_submenu_border_width_dimension_right ) ) {
 
-					if ( isset( $settings->creative_submenu_border_width ) && ! isset( $settings->creative_submenu_border_width_dimension_top ) && ! isset( $settings->creative_submenu_border_width_dimension_bottom ) && ! isset( $settings->creative_submenu_border_width_dimension_left ) && ! isset( $settings->creative_submenu_border_width_dimension_right ) ) {
+					$value = '';
+					$value = str_replace( 'px', '', $settings->creative_submenu_border_width );
 
-						$value = '';
-						$value = str_replace( 'px', '', $settings->creative_submenu_border_width );
+					$output       = array();
+					$uabb_default = array_filter( preg_split( '/\s*;\s*/', $value ) );
+					$settings->creative_submenu_border_width_dimension_top    = '';
+					$settings->creative_submenu_border_width_dimension_bottom = '';
+					$settings->creative_submenu_border_width_dimension_right  = '';
+					$settings->creative_submenu_border_width_dimension_left   = '';
+					foreach ( $uabb_default as $val ) {
+						$new      = explode( ':', $val );
+						$output[] = $new;
+					}
+					for ( $i = 0; $i < count( $output ); $i++ ) {
+						switch ( $output[ $i ][0] ) {
 
-						$output       = array();
-						$uabb_default = array_filter( preg_split( '/\s*;\s*/', $value ) );
-						$settings->creative_submenu_border_width_dimension_top    = '';
-						$settings->creative_submenu_border_width_dimension_bottom = '';
-						$settings->creative_submenu_border_width_dimension_right  = '';
-						$settings->creative_submenu_border_width_dimension_left   = '';
-						foreach ( $uabb_default as $val ) {
-							$new      = explode( ':', $val );
-							$output[] = $new;
-						}
-						for ( $i = 0; $i < count( $output ); $i++ ) {
-							switch ( $output[ $i ][0] ) {
-
-								case 'padding-top':
-									$submenu_border_top = (int) $output[ $i ][1];
-									break;
-								case 'padding-bottom':
-									$submenu_border_bottom = (int) $output[ $i ][1];
-									break;
-								case 'padding-right':
-									$submenu_border_right = (int) $output[ $i ][1];
-									break;
-								case 'padding-left':
-									$submenu_border_left = (int) $output[ $i ][1];
-									break;
-								case 'padding':
-									$settings->creative_submenu_border_width_dimension_top    = (int) $output[ $i ][1];
-									$settings->creative_submenu_border_width_dimension_bottom = (int) $output[ $i ][1];
-									$settings->creative_submenu_border_width_dimension_left   = (int) $output[ $i ][1];
-									$settings->creative_submenu_border_width_dimension_right  = (int) $output[ $i ][1];
-									break;
-							}
+							case 'padding-top':
+								$submenu_border_top = (int) $output[ $i ][1];
+								break;
+							case 'padding-bottom':
+								$submenu_border_bottom = (int) $output[ $i ][1];
+								break;
+							case 'padding-right':
+								$submenu_border_right = (int) $output[ $i ][1];
+								break;
+							case 'padding-left':
+								$submenu_border_left = (int) $output[ $i ][1];
+								break;
+							case 'padding':
+								$submenu_border_top    = (int) $output[ $i ][1];
+								$submenu_border_bottom = (int) $output[ $i ][1];
+								$submenu_border_right  = (int) $output[ $i ][1];
+								$submenu_border_left   = (int) $output[ $i ][1];
+								break;
 						}
 					}
 					if ( isset( $submenu_border_top ) && isset( $submenu_border_right ) && isset( $submenu_border_bottom ) && isset( $submenu_border_left ) ) {
@@ -562,20 +597,29 @@ class UABBCreativeMenu extends FLBuilderModule {
 							'bottom' => $submenu_border_bottom,
 							'left'   => $submenu_border_left,
 						);
+						unset( $submenu_border_top );
+						unset( $submenu_border_right );
+						unset( $submenu_border_bottom );
+						unset( $submenu_border_left );
 					}
-					unset( $settings->creative_submenu_border_width );
 				}
 			}
 
 			// Handle old menu border settings.
-			if ( ! isset( $settings->menu_border ) || empty( $settings->menu_border ) ) {
+			if ( isset( $settings->creative_menu_border_color ) ) {
 
 				$settings->menu_border = array();
 
 				// Border style, color, and width.
 				if ( isset( $settings->creative_menu_border_style ) ) {
-					$settings->menu_border['style'] = $settings->creative_menu_border_style;
-					$settings->menu_border['color'] = $settings->creative_menu_border_color;
+					if ( isset( $settings->creative_menu_border_style ) ) {
+						$settings->menu_border['style'] = $settings->creative_menu_border_style;
+						unset( $settings->creative_menu_border_style );
+					}
+					if ( isset( $settings->creative_menu_border_color ) ) {
+						$settings->menu_border['color'] = $settings->creative_menu_border_color;
+						unset( $settings->creative_menu_border_color );
+					}
 
 					if ( isset( $settings->creative_menu_border_width ) && ! isset( $settings->creative_menu_border_width_dimension_top ) && ! isset( $settings->creative_menu_border_width_dimension_bottom ) && ! isset( $settings->creative_menu_border_width_dimension_left ) && ! isset( $settings->creative_menu_border_width_dimension_right ) ) {
 
@@ -608,10 +652,10 @@ class UABBCreativeMenu extends FLBuilderModule {
 									$menu_border_left = (int) $output[ $i ][1];
 									break;
 								case 'padding':
-									$settings->creative_menu_border_width_dimension_top    = (int) $output[ $i ][1];
-									$settings->creative_menu_border_width_dimension_bottom = (int) $output[ $i ][1];
-									$settings->creative_menu_border_width_dimension_left   = (int) $output[ $i ][1];
-									$settings->creative_menu_border_width_dimension_right  = (int) $output[ $i ][1];
+									$menu_border_top    = (int) $output[ $i ][1];
+									$menu_border_bottom = (int) $output[ $i ][1];
+									$menu_border_left   = (int) $output[ $i ][1];
+									$menu_border_right  = (int) $output[ $i ][1];
 									break;
 							}
 						}
@@ -623,22 +667,13 @@ class UABBCreativeMenu extends FLBuilderModule {
 							'bottom' => $menu_border_bottom,
 							'left'   => $menu_border_left,
 						);
+						unset( $menu_border_top );
+						unset( $menu_border_right );
+						unset( $menu_border_bottom );
+						unset( $menu_border_left );
 					}
-					unset( $settings->creative_menu_border_width );
 				}
 			}
-
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->creative_menu_alignment ) ) {
-				$settings->creative_menu_alignment = $settings->creative_menu_alignment;
-			}
-			if ( isset( $settings->creative_menu_navigation_alignment ) ) {
-				$settings->creative_menu_navigation_alignment = $settings->creative_menu_navigation_alignment;
-			}
-			if ( isset( $settings->creative_menu_responsive_alignment ) ) {
-				$settings->creative_menu_responsive_alignment = $settings->creative_menu_responsive_alignment;
-			}
-
 			// For menu typography settings.
 			if ( ! isset( $settings->creative_menu_link_font_typo ) || ! is_array( $settings->creative_menu_link_font_typo ) ) {
 
@@ -657,6 +692,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 				if ( isset( $settings->creative_menu_link_font_family['family'] ) ) {
 
 					$settings->creative_menu_link_font_typo['font_family'] = $settings->creative_menu_link_font_family['family'];
+					unset( $settings->creative_menu_link_font_family['family'] );
 				}
 				if ( isset( $settings->creative_menu_link_font_family['weight'] ) ) {
 
@@ -665,6 +701,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 					} else {
 						$settings->creative_menu_link_font_typo['font_weight'] = $settings->creative_menu_link_font_family['weight'];
 					}
+					unset( $settings->creative_menu_link_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->creative_menu_link_font_size_custom ) ) {
@@ -736,6 +773,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 				if ( isset( $settings->creative_submenu_link_font_family['family'] ) ) {
 
 					$settings->creative_submenu_link_font_typo['font_family'] = $settings->creative_submenu_link_font_family['family'];
+					unset( $settings->creative_submenu_link_font_family['family'] );
 				}
 				if ( isset( $settings->creative_submenu_link_font_family['weight'] ) ) {
 
@@ -744,6 +782,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 					} else {
 						$settings->creative_submenu_link_font_typo['font_weight'] = $settings->creative_submenu_link_font_family['weight'];
 					}
+					unset( $settings->creative_submenu_link_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->creative_submenu_link_font_size_custom ) ) {
@@ -796,7 +835,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->creative_submenu_link_padding ) && isset( $settings->creative_submenu_link_padding_dimension_top ) && isset( $settings->creative_submenu_link_padding_dimension_bottom ) && isset( $settings->creative_submenu_link_padding_dimension_right ) && isset( $settings->creative_submenu_link_padding_dimension_left ) ) {
+			if ( isset( $settings->creative_submenu_link_padding ) && ! isset( $settings->creative_submenu_link_padding_dimension_top ) && ! isset( $settings->creative_submenu_link_padding_dimension_bottom ) && ! isset( $settings->creative_submenu_link_padding_dimension_right ) && ! isset( $settings->creative_submenu_link_padding_dimension_left ) ) {
 
 				$value = '';
 				$value = str_replace( 'px', '', $settings->creative_submenu_link_padding );
@@ -834,8 +873,9 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_submenu_link_padding );
 			}
-			if ( isset( $settings->creative_submenu_border_width ) && isset( $settings->creative_submenu_border_width_dimension_top ) && isset( $settings->creative_submenu_border_width_dimension_bottom ) && isset( $settings->creative_submenu_border_width_dimension_right ) && isset( $settings->creative_submenu_border_width_dimension_left ) ) {
+			if ( isset( $settings->creative_submenu_border_width ) && ! isset( $settings->creative_submenu_border_width_dimension_top ) && ! isset( $settings->creative_submenu_border_width_dimension_bottom ) && ! isset( $settings->creative_submenu_border_width_dimension_right ) && ! isset( $settings->creative_submenu_border_width_dimension_left ) ) {
 
 				$value = '';
 				$value = str_replace( 'px', '', $settings->creative_submenu_border_width );
@@ -873,8 +913,9 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_submenu_border_width );
 			}
-			if ( isset( $settings->creative_menu_responsive_overlay_padding ) && isset( $settings->creative_menu_responsive_overlay_padding_dimension_top ) && isset( $settings->creative_menu_responsive_overlay_padding_dimension_bottom ) && isset( $settings->creative_menu_responsive_overlay_padding_dimension_right ) && isset( $settings->creative_menu_responsive_overlay_padding_dimension_left ) ) {
+			if ( isset( $settings->creative_menu_responsive_overlay_padding ) && ! isset( $settings->creative_menu_responsive_overlay_padding_dimension_top ) && ! isset( $settings->creative_menu_responsive_overlay_padding_dimension_bottom ) && ! isset( $settings->creative_menu_responsive_overlay_padding_dimension_right ) && ! isset( $settings->creative_menu_responsive_overlay_padding_dimension_left ) ) {
 
 				$value = '';
 				$value = str_replace( 'px', '', $settings->creative_menu_responsive_overlay_padding );
@@ -912,27 +953,56 @@ class UABBCreativeMenu extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->creative_menu_responsive_overlay_padding );
 			}
-			if ( isset( $settings->creative_menu_link_font_family ) ) {
-				unset( $settings->creative_menu_link_font_family );
+			// Unset the old values.
+			if ( isset( $settings->creative_menu_link_font_size_custom ) ) {
 				unset( $settings->creative_menu_link_font_size_custom );
+			}
+			if ( isset( $settings->creative_menu_link_font_size_custom_medium ) ) {
 				unset( $settings->creative_menu_link_font_size_custom_medium );
+			}
+			if ( isset( $settings->creative_menu_link_font_size_custom_responsive ) ) {
 				unset( $settings->creative_menu_link_font_size_custom_responsive );
+			}
+			if ( isset( $settings->creative_menu_link_line_height_custom ) ) {
 				unset( $settings->creative_menu_link_line_height_custom );
+			}
+			if ( isset( $settings->creative_menu_link_line_height_custom_medium ) ) {
 				unset( $settings->creative_menu_link_line_height_custom_medium );
+			}
+			if ( isset( $settings->creative_menu_link_line_height_custom_responsive ) ) {
 				unset( $settings->creative_menu_link_line_height_custom_responsive );
+			}
+			if ( isset( $settings->creative_menu_link_text_transform ) ) {
 				unset( $settings->creative_menu_link_text_transform );
+			}
+			if ( isset( $settings->creative_menu_link_letter_spacing ) ) {
 				unset( $settings->creative_menu_link_letter_spacing );
 			}
-			if ( isset( $settings->creative_submenu_link_font_family ) ) {
-				unset( $settings->creative_submenu_link_font_family );
+			// Unset the old values.
+			if ( isset( $settings->creative_submenu_link_font_size_custom ) ) {
 				unset( $settings->creative_submenu_link_font_size_custom );
+			}
+			if ( isset( $settings->creative_submenu_link_font_size_custom_medium ) ) {
 				unset( $settings->creative_submenu_link_font_size_custom_medium );
+			}
+			if ( isset( $settings->creative_submenu_link_font_size_custom_responsive ) ) {
 				unset( $settings->creative_submenu_link_font_size_custom_responsive );
+			}
+			if ( isset( $settings->creative_submenu_link_line_height_custom ) ) {
 				unset( $settings->creative_submenu_link_line_height_custom );
+			}
+			if ( isset( $settings->creative_submenu_link_line_height_custom_medium ) ) {
 				unset( $settings->creative_submenu_link_line_height_custom_medium );
+			}
+			if ( isset( $settings->creative_submenu_link_line_height_custom_responsive ) ) {
 				unset( $settings->creative_submenu_link_line_height_custom_responsive );
+			}
+			if ( isset( $settings->creative_submenu_link_text_transform ) ) {
 				unset( $settings->creative_submenu_link_text_transform );
+			}
+			if ( isset( $settings->creative_submenu_link_letter_spacing ) ) {
 				unset( $settings->creative_submenu_link_letter_spacing );
 			}
 		}

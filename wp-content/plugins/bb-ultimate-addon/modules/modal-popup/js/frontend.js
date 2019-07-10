@@ -540,7 +540,7 @@ jQuery(document).ready(function( $ ) {
 			},
 			_initModalPopupVideo : function(){
 
-				var play_icon = 'fa fa-play-circle';
+				var play_icon = 'far fa-play-circle';
 
 				if ( this.modal_content === 'youtube' || this.modal_content === 'vimeo' ) {
 

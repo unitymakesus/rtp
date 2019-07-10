@@ -1,33 +1,29 @@
-.fl-node-<?php echo $col->node; ?> {
-	width: <?php echo $col->settings->size; ?>%;
-}
-
 <?php if ( ! empty( $col->settings->text_color ) ) : // Text Color ?>
 .fl-node-<?php echo $col->node; ?> {
-	color: #<?php echo $col->settings->text_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->text_color ); ?>;
 }
 .fl-builder-content .fl-node-<?php echo $col->node; ?> *:not(input):not(textarea):not(select):not(a):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(.fl-menu-mobile-toggle) {
-	color: #<?php echo $col->settings->text_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->text_color ); ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $col->settings->link_color ) ) : // Link Color ?>
 .fl-builder-content .fl-node-<?php echo $col->node; ?> a {
-	color: #<?php echo $col->settings->link_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->link_color ); ?>;
 }
 <?php elseif ( ! empty( $col->settings->text_color ) ) : ?>
 .fl-builder-content .fl-node-<?php echo $col->node; ?> a {
-	color: #<?php echo $col->settings->text_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->text_color ); ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $col->settings->hover_color ) ) : // Link Hover Color ?>
 .fl-builder-content .fl-node-<?php echo $col->node; ?> a:hover {
-	color: #<?php echo $col->settings->hover_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->hover_color ); ?>;
 }
 <?php elseif ( ! empty( $col->settings->text_color ) ) : ?>
 .fl-builder-content .fl-node-<?php echo $col->node; ?> a:hover {
-	color: #<?php echo $col->settings->text_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->text_color ); ?>;
 }
 <?php endif; ?>
 
@@ -44,7 +40,7 @@
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h4 a,
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h5 a,
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h6 a {
-	color: #<?php echo $col->settings->heading_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->heading_color ); ?>;
 }
 <?php elseif ( ! empty( $col->settings->text_color ) ) : ?>
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h1,
@@ -59,76 +55,141 @@
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h4 a,
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h5 a,
 .fl-builder-content .fl-node-<?php echo $col->node; ?> h6 a {
-	color: #<?php echo $col->settings->text_color; ?>;
+	color: <?php echo FLBuilderColor::hex_or_rgb( $col->settings->text_color ); ?>;
 }
 <?php endif; ?>
 
-<?php if ( 'color' == $col->settings->bg_type && ! empty( $col->settings->bg_color ) ) : // Background Color ?>
-.fl-node-<?php echo $col->node; ?> > .fl-col-content {
-	background-color: #<?php echo $col->settings->bg_color; ?>;
-	background-color: rgba(<?php echo implode( ',', FLBuilderColor::hex_to_rgb( $col->settings->bg_color ) ) ?>, <?php echo $col->settings->bg_opacity / 100; ?>);
-}
-<?php endif; ?>
+<?php
 
-<?php if ( 'photo' == $col->settings->bg_type && ! empty( $col->settings->bg_image ) ) : // Background Image ?>
-.fl-node-<?php echo $col->node; ?> > .fl-col-content {
-	background-image: url(<?php echo $col->settings->bg_image_src; ?>);
-	background-repeat: <?php echo $col->settings->bg_repeat; ?>;
-	background-position: <?php echo $col->settings->bg_position; ?>;
-	background-attachment: <?php echo $col->settings->bg_attachment; ?>;
-	background-size: <?php echo $col->settings->bg_size; ?>;
-}
-<?php endif; ?>
+$responsive_enabled = $global_settings->responsive_enabled;
 
-<?php if ( in_array( $col->settings->bg_type, array( 'photo' ) ) && ! empty( $col->settings->bg_overlay_color ) ) : // Background Overlay Color ?>
-.fl-node-<?php echo $col->node; ?> > .fl-col-content:after {
-	background-color: #<?php echo $col->settings->bg_overlay_color; ?>;
-	background-color: rgba(<?php echo implode( ',', FLBuilderColor::hex_to_rgb( $col->settings->bg_overlay_color ) ) ?>, <?php echo $col->settings->bg_overlay_opacity / 100; ?>);
-}
-<?php endif; ?>
+// Width - Desktop
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id",
+	'props'    => array(
+		'width' => "{$settings->size}%",
+	),
+) );
 
-<?php if ( ! empty( $col->settings->border_type ) ) : // Border ?>
-.fl-builder-content .fl-node-<?php echo $col->node; ?> > .fl-col-content {
-	border-style: <?php echo $col->settings->border_type; ?>;
-	border-width: 0;
-	<?php if ( ! empty( $col->settings->border_color ) ) : ?>
-	border-color: #<?php echo $col->settings->border_color; ?>;
-	border-color: rgba(<?php echo implode( ',', FLBuilderColor::hex_to_rgb( $col->settings->border_color ) ) ?>, <?php echo $col->settings->border_opacity / 100; ?>);
-	<?php endif; ?>
-}
-<?php endif; ?>
+// Width - Medium
+FLBuilderCSS::rule( array(
+	'media'    => 'medium',
+	'selector' => ".fl-builder-content .fl-node-$id",
+	'enabled'  => '' !== $settings->size_medium && $responsive_enabled,
+	'props'    => array(
+		'width'            => "{$settings->size_medium}% !important",
+		'max-width'        => 'none',
+		'-webkit-box-flex' => '0 1 auto',
+		'-moz-box-flex'    => '0 1 auto',
+		'-webkit-flex'     => '0 1 auto',
+		'-ms-flex'         => '0 1 auto',
+		'flex'             => '0 1 auto',
+	),
+) );
 
-<?php if ( $global_settings->responsive_enabled ) : // Responsive Sizes ?>
+// Width - Responsive
+FLBuilderCSS::rule( array(
+	'media'    => 'responsive',
+	'selector' => ".fl-builder-content .fl-node-$id",
+	'enabled'  => '' !== $settings->size_responsive && $responsive_enabled,
+	'props'    => array(
+		'width'     => "{$settings->size_responsive}% !important",
+		'max-width' => 'none',
+		'clear'     => 'none',
+		'float'     => 'left',
+	),
+) );
 
-	<?php if ( 'custom' == $col->settings->medium_size ) : ?>
-	@media(max-width: <?php echo $global_settings->medium_breakpoint; ?>px) {
-		.fl-builder-content .fl-node-<?php echo $col->node; ?> {
-			max-width: none;
-			width: <?php echo $col->settings->custom_medium_size; ?>% !important;
-			-webkit-box-flex: 0 1 auto;
-			-moz-box-flex: 0 1 auto;
-			-webkit-flex: 0 1 auto;
-			-ms-flex: 0 1 auto;
-			flex: 0 1 auto;
-		}
-	}
-	<?php endif; ?>
+// Stacking Order - Responsive
+FLBuilderCSS::rule( array(
+	'media'    => 'responsive',
+	'selector' => ".fl-col-group-custom-width.fl-col-group-responsive-reversed .fl-node-$id",
+	'enabled'  => 'reversed' == $settings->responsive_order && '' !== $settings->size_responsive && $responsive_enabled,
+	'props'    => array(
+		'flex-basis' => "{$settings->size_responsive}%",
+	),
+) );
 
-	<?php if ( 'custom' == $col->settings->responsive_size ) : ?>
-	@media(max-width: <?php echo $global_settings->responsive_breakpoint; ?>px) {
-		.fl-builder-content .fl-node-<?php echo $col->node; ?> {
-			clear: none;
-			float: left;
-			max-width: none;
-			width: <?php echo $col->settings->custom_responsive_size; ?>% !important;
-		}
+// Background Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id > .fl-col-content",
+	'enabled'  => 'color' == $settings->bg_type,
+	'props'    => array(
+		'background-color' => $settings->bg_color,
+	),
+) );
 
-		<?php if ( 'reversed' == $col->settings->responsive_order ) : ?>
-		.fl-col-group-custom-width.fl-col-group-responsive-reversed .fl-node-<?php echo $col->node; ?>  {
-			flex-basis: <?php echo $col->settings->custom_responsive_size; ?>%;
-		}
-		<?php endif; ?>
-	}
-	<?php endif; ?>
+// Background Gradient
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id > .fl-col-content",
+	'enabled'  => 'gradient' === $settings->bg_type,
+	'props'    => array(
+		'background-image' => FLBuilderColor::gradient( $settings->bg_gradient ),
+	),
+) );
 
-<?php endif; ?>
+// Background Color Overlay
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id > .fl-col-content:after",
+	'enabled'  => 'none' !== $settings->bg_overlay_type && in_array( $settings->bg_type, array( 'photo' ) ),
+	'props'    => array(
+		'background-color' => 'color' === $settings->bg_overlay_type ? $settings->bg_overlay_color : '',
+		'background-image' => 'gradient' === $settings->bg_overlay_type ? FLBuilderColor::gradient( $settings->bg_overlay_gradient ) : '',
+	),
+) );
+
+// Background Photo - Desktop
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id > .fl-col-content",
+	'enabled'  => 'photo' === $settings->bg_type,
+	'props'    => array(
+		'background-image'      => $settings->bg_image_src,
+		'background-repeat'     => $settings->bg_repeat,
+		'background-position'   => $settings->bg_position,
+		'background-attachment' => $settings->bg_attachment,
+		'background-size'       => $settings->bg_size,
+	),
+) );
+
+// Background Photo - Medium
+FLBuilderCSS::rule( array(
+	'media'    => 'medium',
+	'selector' => ".fl-node-$id > .fl-col-content",
+	'enabled'  => 'photo' === $settings->bg_type,
+	'props'    => array(
+		'background-image'      => $settings->bg_image_medium_src,
+		'background-repeat'     => $settings->bg_repeat_medium,
+		'background-position'   => $settings->bg_position_medium,
+		'background-attachment' => $settings->bg_attachment_medium,
+		'background-size'       => $settings->bg_size_medium,
+	),
+) );
+
+// Background Photo - Responsive
+FLBuilderCSS::rule( array(
+	'media'    => 'responsive',
+	'selector' => ".fl-node-$id > .fl-col-content",
+	'enabled'  => 'photo' === $settings->bg_type,
+	'props'    => array(
+		'background-image'      => $settings->bg_image_responsive_src,
+		'background-repeat'     => $settings->bg_repeat_responsive,
+		'background-position'   => $settings->bg_position_responsive,
+		'background-attachment' => $settings->bg_attachment_responsive,
+		'background-size'       => $settings->bg_size_responsive,
+	),
+) );
+
+// Border
+FLBuilderCSS::border_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'border',
+	'selector'     => ".fl-node-$id > .fl-col-content",
+) );
+
+// Minimum Height
+FLBuilderCSS::responsive_rule( array(
+	'settings'     => $col->settings,
+	'setting_name' => 'min_height',
+	'selector'     => ".fl-builder-content .fl-node-$id > .fl-col-content",
+	'prop'         => 'min-height',
+) );

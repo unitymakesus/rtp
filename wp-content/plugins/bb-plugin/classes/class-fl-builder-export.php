@@ -61,15 +61,15 @@ final class FLBuilderExport {
 		$type  = isset( $_POST['type'] ) ? sanitize_text_field( $_POST['type'] ) : 'fl-builder-template';
 		$data  = array();
 		$query = new WP_Query( array(
-			'post_type' 		=> $type,
-			'orderby' 			=> 'title',
-			'order' 			=> 'ASC',
-			'posts_per_page' 	=> '-1',
+			'post_type'      => $type,
+			'orderby'        => 'title',
+			'order'          => 'ASC',
+			'posts_per_page' => '-1',
 		) );
 
 		foreach ( $query->posts as $post ) {
 			$data[] = array(
-				'id'	=> $post->ID,
+				'id'    => $post->ID,
 				'title' => $post->post_title,
 			);
 		}

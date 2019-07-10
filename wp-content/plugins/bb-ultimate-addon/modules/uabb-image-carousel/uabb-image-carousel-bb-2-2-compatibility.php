@@ -112,7 +112,7 @@ FLBuilder::register_module(
 				'image_setting' => array(
 					'title'  => __( 'Photo Settings', 'uabb' ),
 					'fields' => array(
-						'show_captions'       => array(
+						'show_captions'         => array(
 							'type'    => 'select',
 							'label'   => __( 'Show Captions', 'uabb' ),
 							'default' => 'hover',
@@ -132,7 +132,7 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'click_action'        => array(
+						'click_action'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Click Action', 'uabb' ),
 							'default' => 'lightbox',
@@ -143,7 +143,7 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'cta-link' => array(
-									'fields' => array( 'click_action_target' ),
+									'fields' => array( 'click_action_target', 'click_action_nofollow' ),
 								),
 							),
 							'preview' => array(
@@ -151,7 +151,7 @@ FLBuilder::register_module(
 							),
 						),
 
-						'click_action_target' => array(
+						'click_action_target'   => array(
 							'type'    => 'select',
 							'label'   => __( 'Link Target', 'uabb' ),
 							'help'    => __( 'Controls where CTA link will open after click.', 'uabb' ),
@@ -162,6 +162,16 @@ FLBuilder::register_module(
 							),
 							'preview' => array(
 								'type' => 'none',
+							),
+						),
+						'click_action_nofollow' => array(
+							'type'    => 'select',
+							'label'   => __( 'Link nofollow', 'uabb' ),
+							'default' => '0',
+							'help'    => __( 'Enable this to make this link nofollow.', 'uabb' ),
+							'options' => array(
+								'1' => __( 'Yes', 'uabb' ),
+								'0' => __( 'No', 'uabb' ),
 							),
 						),
 					),
@@ -531,6 +541,24 @@ FLBuilder::register_module(
 									'step' => 10,
 								),
 							),
+						),
+					),
+				),
+			),
+		),
+		'uabb_docs'       => array(
+			'title'    => __( 'Docs', 'uabb' ),
+			'sections' => array(
+				'knowledge_base' => array(
+					'title'  => __( 'Helpful Information', 'uabb' ),
+					'fields' => array(
+						'uabb_helpful_information' => array(
+							'type'    => 'raw',
+							'content' => '<ul class="uabb-docs-list" data-branding=' . $branding . '>
+
+								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/uabb-filter-reference/?utm_source=Uabb-Pro-Backend&utm_medium=Module-Editor-Screen&utm_campaign=Image-Carousel-module#module:-image-carousel" target="_blank" rel="noopener"> Filters Reference for Image Carousel module </a> </li>
+
+							 </ul>',
 						),
 					),
 				),

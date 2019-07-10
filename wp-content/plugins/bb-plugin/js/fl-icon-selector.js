@@ -110,7 +110,7 @@
 		 */
 		_getContentComplete: function(response)
 		{
-			var data = JSON.parse(response);
+			var data = FLBuilder._jsonParse(response);
 
 			FLIconSelector._content = data.html;
 			FLIconSelector._lightbox.setContent(data.html);

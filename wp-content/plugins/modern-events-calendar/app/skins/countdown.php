@@ -12,7 +12,15 @@ class MEC_skin_countdown extends MEC_skins
      * @var string
      */
     public $skin = 'countdown';
-    
+
+    public $event_id;
+    public $date_format_style11;
+    public $date_format_style21;
+    public $date_format_style31;
+    public $date_format_style32;
+    public $date_format_style33;
+    public $bg_color;
+
     /**
      * Constructor method
      * @author Webnus <info@webnus.biz>

@@ -1,0 +1,234 @@
+.uabb-price-list {
+    margin: 0;
+}
+.uabb-price-list-top .uabb-pl-price-outer,
+.uabb-pl-price-position-below .uabb-pl-price-outer {
+    display: block;
+}
+.uabb-pl-price-outer {
+    display: none;
+}
+.uabb-price-list .uabb-price-list-item,
+.uabb-price-list .uabb-price-list-item .uabb-price-list-text {
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    -moz-box-align: start;
+    align-items: flex-start;
+}
+
+.uabb-price-list-top.uabb-price-list .uabb-price-list-item {
+    display: block;
+}
+
+.uabb-price-list .uabb-price-list-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: flex;
+}
+
+.uabb-price-list .uabb-price-list-item .uabb-price-list-text {
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    -moz-box-flex: 1;
+    flex-grow: 1;
+}
+
+.uabb-price-list .uabb-price-list-item .uabb-price-list-header {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    -moz-box-align: center;
+    align-items: center;
+    -webkit-flex-basis: 100%;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    font-weight: 600;
+}
+
+.uabb-price-list .uabb-price-list-header,
+.uabb-price-list .uabb-price-list-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: flex;
+    display: -moz-box;
+    -js-display: flex;
+    display: flex;
+}
+
+.uabb-price-list .uabb-price-list-item .uabb-price-list-separator {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    -moz-box-flex: 1;
+    flex-grow: 1;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom-style: dotted;
+    border-bottom-width: 2px;
+    height: 0;
+}
+
+.uabb-price-list .uabb-price-list-item p.uabb-price-list-description {
+    -webkit-flex-basis: 100%;
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    margin: 0;
+}
+
+.uabb-price-list-right .uabb-price-list-image {
+    -webkit-box-ordinal-group: 2;
+    -webkit-order: 1;
+    -moz-box-ordinal-group: 2;
+    -ms-flex-order: 1;
+    order: 1;
+}
+
+.uabb-price-list-image {
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    -moz-box-flex: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+}
+
+.uabb-price-list-image img {
+    width: 100%;
+    min-width: 100%;
+}
+
+.uabb-price-list-top .uabb-price-list-separator {
+    display: block;
+}
+
+.uabb-price-list-top .uabb-price-list-item .uabb-price-list-title {
+    width: 100%;
+}
+
+.uabb-price-list-text .uabb-price-wrapper .uabb-price-list-price.has-discount {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.uabb-price-list-discount-price{
+    margin-left: 5px;
+}
+
+.uabb-align-price-list-left .uabb-price-list-text {
+    text-align: left;
+}
+
+.uabb-align-price-list-left .uabb-price-list-image {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.uabb-align-price-list-right .uabb-price-list-text {
+    text-align: right;
+}
+
+.uabb-align-price-list-right .uabb-price-list-image {
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.uabb-align-price-list-center .uabb-price-list-text {
+    text-align: center;
+}
+
+.uabb-align-price-list-center .uabb-price-list-image {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.uabb-pl-price-position-below .uabb-price-list-header {
+    display: block;
+}
+.uabb-price-list-description p:last-child {
+    margin: 0px;
+}
+@media( max-width: 992px ) {
+
+    .uabb-pricelist-stack-tablet .uabb-price-list .uabb-price-list-item {
+        display: block;
+    }
+    .uabb-pricelist-stack-tablet .uabb-price-list-separator,
+    .uabb-pricelist-stack-tablet .uabb-pl-price-inner {
+        display: none;
+    }
+    .uabb-pricelist-stack-tablet .uabb-pl-price-outer {
+        display: block;
+    }
+}
+
+@media( max-width: 767px ) {
+    .uabb-pricelist-stack-mobile .uabb-pl-price-outer {
+        display: block;
+    }
+    .uabb-pricelist-stack-mobile .uabb-price-list-separator,
+    .uabb-pricelist-stack-mobile .uabb-pl-price-inner {
+        display: none;
+    }
+    .uabb-pricelist-stack-mobile .uabb-price-list .uabb-price-list-item {
+        display: block;
+    }
+}
+/* Float Animation CSS */
+.uabb-price-list-animation-float:active, .uabb-price-list-animation-float:focus, .uabb-price-list-animation-float:hover {
+    transform: translateY(-8px);
+}
+.uabb-price-list-animation-float {
+    transition-duration: .3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+/* Sink Animation CSS */
+.uabb-price-list-animation-sink:active, .uabb-price-list-animation-sink:focus, .uabb-price-list-animation-sink:hover {
+    transform: translateY(8px);
+}
+.uabb-price-list-animation-sink {
+    transition-duration: .3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+/* wobble-vertical Animation CSS */
+.uabb-price-list-animation-wobble-vertical:active, .uabb-price-list-animation-wobble-vertical:focus, .uabb-price-list-animation-wobble-vertical:hover {
+    animation-name: uabb-price-list-animation-wobble-vertical;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+@keyframes uabb-price-list-animation-wobble-vertical {
+    16.65% {
+        transform: translateY(8px)
+    }
+
+    33.3% {
+        transform: translateY(-6px)
+    }
+
+    49.95% {
+        transform: translateY(4px)
+    }
+
+    66.6% {
+        transform: translateY(-2px)
+    }
+
+    83.25% {
+        transform: translateY(1px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}

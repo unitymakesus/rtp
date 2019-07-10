@@ -15,17 +15,17 @@ final class FLBuilderUserTemplatesAdminList {
 	 */
 	static public function init() {
 		/* Actions */
-		add_action( 'plugins_loaded',                                  __CLASS__ . '::redirect' );
-		add_action( 'wp',                  				               __CLASS__ . '::page_heading' );
-		add_action( 'pre_get_posts',                                   __CLASS__ . '::pre_get_posts' );
-		add_action( 'admin_enqueue_scripts',          	               __CLASS__ . '::admin_enqueue_scripts' );
-		add_action( 'manage_fl-builder-template_posts_custom_column',  __CLASS__ . '::add_column_content', 10, 2 );
+		add_action( 'plugins_loaded', __CLASS__ . '::redirect' );
+		add_action( 'wp', __CLASS__ . '::page_heading' );
+		add_action( 'pre_get_posts', __CLASS__ . '::pre_get_posts' );
+		add_action( 'admin_enqueue_scripts', __CLASS__ . '::admin_enqueue_scripts' );
+		add_action( 'manage_fl-builder-template_posts_custom_column', __CLASS__ . '::add_column_content', 10, 2 );
 
 		/* Filters */
-		add_filter( 'views_edit-fl-builder-template',                  __CLASS__ . '::modify_views' );
-		add_filter( 'manage_fl-builder-template_posts_columns',        __CLASS__ . '::add_column_headings' );
-		add_filter( 'post_row_actions',                                __CLASS__ . '::row_actions' );
-		add_action( 'restrict_manage_posts',                           __CLASS__ . '::restrict_listings' );
+		add_filter( 'views_edit-fl-builder-template', __CLASS__ . '::modify_views' );
+		add_filter( 'manage_fl-builder-template_posts_columns', __CLASS__ . '::add_column_headings' );
+		add_filter( 'post_row_actions', __CLASS__ . '::row_actions' );
+		add_action( 'restrict_manage_posts', __CLASS__ . '::restrict_listings' );
 	}
 
 	/**
@@ -37,7 +37,7 @@ final class FLBuilderUserTemplatesAdminList {
 	static public function admin_enqueue_scripts() {
 		global $pagenow;
 
-		$screen = get_current_screen();
+		$screen  = get_current_screen();
 		$slug    = 'fl-builder-user-templates-admin-';
 		$url     = FL_BUILDER_USER_TEMPLATES_URL;
 		$version = FL_BUILDER_VERSION;
@@ -138,8 +138,8 @@ final class FLBuilderUserTemplatesAdminList {
 		foreach ( $views as $key => $view ) {
 
 			if ( strstr( $view, $slug ) ) {
-				$view = str_replace( $slug, $slug . '&#038;fl-builder-template-type=' . $type, $view );
-				$view = preg_replace( '/<span(.*)span>/', '', $view );
+				$view          = str_replace( $slug, $slug . '&#038;fl-builder-template-type=' . $type, $view );
+				$view          = preg_replace( '/<span(.*)span>/', '', $view );
 				$views[ $key ] = $view;
 			}
 		}
@@ -161,6 +161,8 @@ final class FLBuilderUserTemplatesAdminList {
 		if ( in_array( $_GET['fl-builder-template-type'], array( 'row', 'column', 'module' ) ) ) {
 			$columns['fl_global'] = __( 'Global', 'fl-builder' );
 		}
+
+		$columns['taxonomy-fl-builder-template-category'] = __( 'Categories', 'fl-builder' );
 
 		unset( $columns['date'] );
 
@@ -210,18 +212,19 @@ final class FLBuilderUserTemplatesAdminList {
 		global $typenow;
 		if ( 'fl-builder-template' == $typenow ) {
 			$taxonomy = 'fl-builder-template-category';
-			$tax = get_taxonomy( $taxonomy );
-			$term = $_GET['fl-builder-template-type'];
-			wp_dropdown_categories( array(
-				'show_option_all' => __( 'Show All Categories', 'fl-builder' ),
-				'taxonomy'        => $taxonomy,
-				'value_field'     => 'slug',
-				'orderby'         => 'name',
-				'selected'        => $term,
-				'name'            => $taxonomy,
-				'depth'           => 1,
-				'show_count'      => false,
-				'hide_empty'      => false,
+			$tax      = get_taxonomy( $taxonomy );
+			$term     = $_GET['fl-builder-template-type'];
+			wp_dropdown_categories(
+				array(
+					'show_option_all' => __( 'Show All Categories', 'fl-builder' ),
+					'taxonomy'        => $taxonomy,
+					'value_field'     => 'slug',
+					'orderby'         => 'name',
+					'selected'        => $term,
+					'name'            => $taxonomy,
+					'depth'           => 1,
+					'show_count'      => false,
+					'hide_empty'      => false,
 				)
 			);
 		}

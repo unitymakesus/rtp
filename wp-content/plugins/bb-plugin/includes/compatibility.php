@@ -355,7 +355,9 @@ function fl_imember_shortcode_fix( $content ) {
 add_action( 'plugins_loaded', 'fl_fix_nextgen_gallery' );
 function fl_fix_nextgen_gallery() {
 	if ( isset( $_GET['fl_builder'] ) || isset( $_POST['fl_builder_data'] ) || FLBuilderAJAX::doing_ajax() ) {
-		define( 'NGG_DISABLE_RESOURCE_MANAGER', true );
+		if ( ! defined( 'NGG_DISABLE_RESOURCE_MANAGER' ) ) {
+			define( 'NGG_DISABLE_RESOURCE_MANAGER', true );
+		}
 	}
 }
 
@@ -367,7 +369,7 @@ add_action( 'template_redirect', 'fl_fix_tasty_recipes' );
 function fl_fix_tasty_recipes() {
 	if ( FLBuilderModel::is_builder_active() ) {
 		remove_action( 'wp_enqueue_editor', array( 'Tasty_Recipes\Assets', 'action_wp_enqueue_editor' ) );
-		remove_action( 'media_buttons',     array( 'Tasty_Recipes\Editor', 'action_media_buttons' ) );
+		remove_action( 'media_buttons', array( 'Tasty_Recipes\Editor', 'action_media_buttons' ) );
 	}
 }
 
@@ -397,37 +399,6 @@ function fl_render_ninja_forms_js( $response ) {
 	}
 	return $response;
 }
-
-/**
- * Reorder font awesome css.
- * @since 2.1
- */
-function fl_builder_fa_fix() {
-
-	global $wp_styles;
-
-	$queue = $wp_styles->queue;
-
-	$fa4 = array_search( 'font-awesome',   $queue );
-	$fa5 = array_search( 'font-awesome-5', $queue );
-
-	// if fa4 is disabled and both are detected, load fa4 FIRST.
-	if ( false !== $fa4 && false !== $fa5 && $fa4 > $fa5 && ! in_array( 'font-awesome', FLBuilderModel::get_enabled_icons() ) ) {
-		unset( $wp_styles->queue[ $fa4 ] );
-		array_unshift( $wp_styles->queue, 'font-awesome' );
-	}
-	// If fa4 is detected, add a compatibility layer in the footer.
-	// This fixes various theme/themer issues.
-	if ( false !== $fa4 ) {
-			add_action( 'wp_footer', 'fl_builder_fa_fix_callback' );
-	}
-}
-add_action( 'wp_enqueue_scripts', 'fl_builder_fa_fix', 99999 );
-
-function fl_builder_fa_fix_callback() {
-	echo '<style>[class*="fa fa-"]{font-family: FontAwesome !important;}</style>';
-}
-
 
 /**
  * Turn off Hummingbird minification
@@ -480,4 +451,234 @@ function fl_builder_not_load_mediaelement( $condition, $options ) {
 		$condition = true;
 	}
 	return $condition;
+}
+
+/**
+ * Fix issue with Templator plugin.
+ * @since 2.1.6
+ */
+add_action( 'template_redirect', 'fl_builder_fix_templator' );
+function fl_builder_fix_templator() {
+	if ( FLBuilderModel::is_builder_active() && class_exists( 'Templator_Import' ) ) {
+		remove_action( 'media_buttons', array( Templator_Import::get_instance(), 'import_template_button' ) );
+	}
+}
+
+/**
+ * Fix issue with Prevent Direct Access Gold.
+ * @since 2.1.6
+ */
+add_action( 'template_redirect', 'fl_builder_fix_protector_gold' );
+function fl_builder_fix_protector_gold() {
+	if ( FLBuilderModel::is_builder_active() && class_exists( 'Prevent_Direct_Access_Gold' ) && ! function_exists( 'get_current_screen' ) ) {
+		function get_current_screen() {
+			$args         = new StdClass;
+			$args->id     = 'Beaver';
+			$args->action = 'Builder';
+			return $args;
+		}
+	}
+}
+
+/**
+ * Fix issue with WPMUDEV Smush It.
+ * @since 2.1.6
+ */
+add_action( 'template_redirect', 'fl_builder_fix_smush_it' );
+function fl_builder_fix_smush_it() {
+	if ( FLBuilderModel::is_builder_active() ) {
+		add_filter( 'wp_smush_enqueue', '__return_false' );
+	}
+}
+
+/**
+ * Whitelist files in bb-theme and bb-theme-builder in PHPCompatibility Checker plugin.
+ * @since 2.1.6
+ */
+add_filter( 'phpcompat_whitelist', 'fl_builder_bbtheme_compat_fix' );
+function fl_builder_bbtheme_compat_fix( $folders ) {
+
+	// Theme
+	$folders[] = '*/bb-theme/includes/vendor/Less/*';
+	// Themer
+	$folders[] = '*/bb-theme-builder/includes/post-grid-default-html.php';
+	$folders[] = '*/bb-theme-builder/includes/post-grid-default-css.php';
+	// bb-plugin
+	$folders[] = '*/bb-plugin/includes/ui-field*.php';
+	$folders[] = '*/bb-plugin/includes/ui-settings-form*.php';
+	// lite
+	$folders[] = '*/beaver-builder-lite-version/includes/ui-field*.php';
+	$folders[] = '*/beaver-builder-lite-version/includes/ui-settings-form*.php';
+	return $folders;
+};
+
+/**
+ * Remove wpbb post:content from post_content as it causes inception.
+ * @since 2.1.7
+ */
+add_filter( 'fl_builder_editor_content', 'fl_theme_post_content_fix' );
+function fl_theme_post_content_fix( $content ) {
+	return preg_replace( '#\[wpbb\s?post:content.*\]#', '', $content );
+}
+
+/**
+ * Remove Popup-Maker post-type from admin settings post-types.
+ * @since 2.1.7
+ */
+add_filter( 'fl_builder_admin_settings_post_types', 'fl_builder_admin_settings_post_types_popup' );
+function fl_builder_admin_settings_post_types_popup( $types ) {
+	if ( class_exists( 'Popup_Maker' ) && isset( $types['popup'] ) ) {
+		unset( $types['popup'] );
+	}
+	return $types;
+}
+
+/**
+ * If short description is blank and there is a layout in the product content
+ * css will not be enqueued because woocommerce adds the css to the json+ld
+ * @since 2.1.7
+ */
+add_filter( 'woocommerce_product_get_short_description', 'fl_fix_woo_short_description' );
+function fl_fix_woo_short_description( $content ) {
+
+	global $post, $fl_woo_description_fix;
+
+	// if there is a short description no need to carry on.
+	if ( '' !== $content ) {
+		return $content;
+	}
+
+	// if the product content contains a layout shortcode then extract any css to add to footer later.
+	if ( isset( $post->post_content ) && false !== strpos( $post->post_content, '[fl_builder_insert_layout' ) ) {
+		$dummy   = do_shortcode( $post->post_content );
+		$scripts = preg_match_all( "#<link rel='stylesheet'.*#", $dummy, $out );
+		if ( is_array( $out ) ) {
+			if ( ! is_array( $fl_woo_description_fix ) ) {
+				$fl_woo_description_fix = array();
+			}
+			foreach ( $out[0] as $script ) {
+				$fl_woo_description_fix[] = $script;
+			}
+		}
+		// now we will use the content as the short description.
+		$content = strip_shortcodes( wp_strip_all_tags( $post->post_content ) );
+	}
+	return $content;
+}
+
+/**
+ * Footer action for fl_fix_woo_short_description to print foundf css.
+ * @since 2.1.7
+ */
+add_action( 'wp_footer', 'fl_fix_woo_short_description_footer' );
+function fl_fix_woo_short_description_footer() {
+	global $fl_woo_description_fix;
+	if ( is_array( $fl_woo_description_fix ) && ! empty( $fl_woo_description_fix ) ) {
+		echo implode( "\n", $fl_woo_description_fix );
+	}
+}
+
+/**
+ * Fix fatal error on adding Themer layouts and Templates with seopress.
+ * @since 2.1.8
+ */
+add_action( 'save_post', 'fl_fix_seopress', 9 );
+function fl_fix_seopress() {
+	if ( isset( $_POST['fl-template'] ) ) {
+		remove_action( 'save_post', 'seopress_bulk_quick_edit_save_post' );
+	}
+}
+
+/**
+ * SiteGround Optimizer is known to break the builder.
+ * @since 2.1.7
+ */
+if ( isset( $_GET['fl_builder'] ) ) {
+	$options = array(
+		'optimize_html',
+		'optimize_javascript',
+		'optimize_javascript_async',
+		'remove_query_strings',
+		'fix_insecure_content',
+		'optimize_css',
+		'combine_css',
+		'optimize_javascript',
+	);
+	foreach ( $options as $option ) {
+		add_filter( "option_siteground_optimizer_$option", '__return_false' );
+	}
+}
+
+/**
+ * Enlighter stops builder from loading.
+ * @since 2.2
+ */
+add_filter( 'enlighter_startup', 'fl_enlighter_frontend_editing' );
+function fl_enlighter_frontend_editing( $enabled ) {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		return false;
+	}
+	return $enabled;
+}
+
+/**
+ * Set sane settings for SSL
+ * @since 2.2.1
+ */
+function fl_set_curl_safe_opts( $handle ) {
+	curl_setopt( $handle, CURLOPT_SSL_VERIFYPEER, 1 );
+	curl_setopt( $handle, CURLOPT_SSL_VERIFYHOST, 2 );
+	curl_setopt( $handle, CURLOPT_CAINFO, ABSPATH . WPINC . '/certificates/ca-bundle.crt' );
+	return $handle;
+}
+
+/**
+ * Remove Sumo JS when builder is open.
+ * @since 2.2.1
+ */
+add_filter( 'option_sumome_site_id', 'fl_fix_sumo' );
+function fl_fix_sumo( $option ) {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		return false;
+	}
+	return $option;
+}
+
+/**
+ * Fix icon issues with Frontend Dashboard version 1.3.4+
+ * @since 2.2.3
+ */
+add_action( 'template_redirect', 'fix_frontend_dashboard_plugin', 1000 );
+function fix_frontend_dashboard_plugin() {
+	if ( FLBuilderModel::is_builder_active() ) {
+		remove_action( 'wp_enqueue_scripts', 'fed_script_front_end', 99 );
+	}
+}
+
+/**
+ * Add data-no-lazy to photo modules in themer header area.
+ * Fixes wp-rocket lazy load issue with shrink header.
+ * @since 2.2.3
+ */
+add_action( 'fl_theme_builder_before_render_header', 'fix_lazyload_header_start' );
+function fix_lazyload_header_start() {
+	add_filter( 'fl_builder_photo_attributes', 'fix_lazyload_header_attributes' );
+}
+function fix_lazyload_header_attributes( $attrs ) {
+	return $attrs . ' data-no-lazy="1"';
+}
+add_action( 'fl_theme_builder_after_render_header', 'fix_lazyload_header_end' );
+function fix_lazyload_header_end() {
+	remove_filter( 'fl_builder_photo_attributes', 'fix_lazyload_header_attributes' );
+}
+
+/**
+ * Fix JS error caused by UM-Switcher plugin
+ * @since 2.2.3
+ */
+add_action( 'template_redirect', 'fl_fix_um_switcher' );
+function fl_fix_um_switcher() {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		remove_action( 'wp_footer', 'umswitcher_profile_subscription_expiration_footer' );
+	}
 }

@@ -42,8 +42,9 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 			$this->api_instance = new iSDK();
 			$this->api_instance->cfgCon( $app_id, $api_key, 'throw' );
 		} catch ( iSDKException $e ) {
-			$this->api_instance = new stdClass();
+			$this->api_instance        = new stdClass();
 			$this->api_instance->error = sprintf(
+				/* translators: %s: error */
 				__( 'There was an error connecting to Infusionsoft. %s', 'fl-builder' ),
 				$e->getMessage()
 			);
@@ -57,18 +58,18 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 	 *
 	 * @since 1.5.7
 	 * @param array $fields {
-	 *		@type string $app_id A valid app ID.
-	 *		@type string $api_key A valid API key.
+	 *      @type string $app_id A valid app ID.
+	 *      @type string $api_key A valid API key.
 	 * }
 	 * @return array{
-	 *		@type bool|string $error The error message or false if no error.
-	 *		@type array $data An array of data used to make the connection.
+	 *      @type bool|string $error The error message or false if no error.
+	 *      @type array $data An array of data used to make the connection.
 	 * }
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'	 => false,
-			'data'	 => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an API key.
@@ -76,8 +77,7 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide an API key.', 'fl-builder' );
 		} elseif ( ! isset( $fields['app_id'] ) || empty( $fields['app_id'] ) ) {
 			$response['error'] = __( 'Error: You must provide an app ID.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$api = $this->get_api( $fields['app_id'], $fields['api_key'] );
 
@@ -104,24 +104,24 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'app_id', array(
-			'row_class'		=> 'fl-builder-service-connect-row',
-			'class'			=> 'fl-builder-service-connect-input',
-			'type'			=> 'text',
-			'label'			=> __( 'App ID', 'fl-builder' ),
-			'help'			=> __( 'Your App ID can be found in the URL for your account. For example, if the URL for your account is myaccount.infusionsoft.com, your App ID would be <strong>myaccount</strong>.', 'fl-builder' ),
-			'preview'		=> array(
-				'type'			=> 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'App ID', 'fl-builder' ),
+			'help'      => __( 'Your App ID can be found in the URL for your account. For example, if the URL for your account is myaccount.infusionsoft.com, your App ID would be <strong>myaccount</strong>.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'		=> 'fl-builder-service-connect-row',
-			'class'			=> 'fl-builder-service-connect-input',
-			'type'			=> 'text',
-			'label'			=> __( 'API Key', 'fl-builder' ),
-			'help'			=> __( 'Your API key can be found in your Infusionsoft account under Admin > Settings > Application > API > Encrypted Key.', 'fl-builder' ),
-			'preview'		=> array(
-				'type'			=> 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Infusionsoft account under Admin > Settings > Application > API > Encrypted Key.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -135,18 +135,18 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 	 * @param string $account The name of the saved account.
 	 * @param object $settings Saved module settings.
 	 * @return array {
-	 *		@type bool|string $error The error message or false if no error.
-	 *		@type string $html The field markup.
+	 *      @type bool|string $error The error message or false if no error.
+	 *      @type string $html The field markup.
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data	= $this->get_account_data( $account );
-		$api			= $this->get_api( $account_data['app_id'], $account_data['api_key'] );
-		$page			= 0;
-		$lists			= array();
-		$response		= array(
-			'error'			=> false,
-			'html'			=> '',
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( $account_data['app_id'], $account_data['api_key'] );
+		$page         = 0;
+		$lists        = array();
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		if ( isset( $api->error ) ) {
@@ -197,17 +197,21 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 		);
 
 		foreach ( $lists as $list ) {
+			if ( ! isset( $list['GroupName'] ) ) {
+				continue;
+			}
+
 			$options[ $list['Id'] ] = $list['GroupName'];
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'		=> 'fl-builder-service-field-row',
-			'class'			=> 'fl-builder-service-list-select',
-			'type'			=> 'select',
-			'label'			=> _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'		=> $options,
-			'preview'		=> array(
-				'type'			=> 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -222,15 +226,15 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 	 * @param string $email The email to subscribe.
 	 * @param string $name Optional. The full name of the person subscribing.
 	 * @return array {
-	 *		@type bool|string $error The error message or false if no error.
+	 *      @type bool|string $error The error message or false if no error.
 	 * }
 	 */
 	public function subscribe( $settings, $email, $name = false ) {
 		$account_data = $this->get_account_data( $settings->service_account );
-		$response	  = array(
+		$response     = array(
 			'error' => false,
 		);
-		$data		  = array();
+		$data         = array();
 
 		if ( ! $account_data ) {
 			$response['error'] = __( 'There was an error subscribing to Infusionsoft. The account is no longer connected.', 'fl-builder' );
@@ -249,13 +253,13 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 					if ( isset( $names[0] ) && isset( $names[1] ) ) {
 						$data = array(
 							'FirstName' => $names[0],
-							'LastName'	=> $names[1],
-							'Email'		=> $email,
+							'LastName'  => $names[1],
+							'Email'     => $email,
 						);
 					} else {
 						$data = array(
 							'FirstName' => $name,
-							'Email'		=> $email,
+							'Email'     => $email,
 						);
 					}
 				} else {
@@ -274,10 +278,11 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 						$group = $api->grpAssign( $contact[0]['Id'], $settings->list_id );
 					} else {
 						$contact_id = $api->addCon( $data );
-						$group_add	= $api->grpAssign( $contact_id, $settings->list_id );
+						$group_add  = $api->grpAssign( $contact_id, $settings->list_id );
 					}
 				} catch ( iSDKException $e ) {
 					$response['error'] = sprintf(
+						/* translators: %s: error */
 						__( 'There was an error subscribing to Infusionsoft. %s', 'fl-builder' ),
 						$e->getMessage()
 					);

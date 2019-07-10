@@ -18,15 +18,67 @@ function is_vip_com() {
 }
 
 /**
- * Determine if Gutenberg is being used
+ * Determine if Gutenberg is being used.
+ *
+ * There are several possible variations that need to be accounted for:
+ *
+ *  - WordPress 4.9, Gutenberg plugin is not active.
+ *  - WordPress 4.9, Gutenberg plugin is active.
+ *  - WordPress 5.0, block editor by default.
+ *  - WordPress 5.0, Classic editor plugin active, using classic editor.
+ *  - WordPress 5.0, Classic editor plugin active, using the block editor.
  *
  * @since  1.2
+ *
+ * @param object $post The post object.
  * @return boolean
  */
-function is_using_gutenberg() {
+function is_using_gutenberg( $post ) {
 	global $wp_version;
-	return ( function_exists( 'the_gutenberg_project' ) || version_compare( $wp_version, '5', '>=' ) );
+	$gutenberg_available = function_exists( 'the_gutenberg_project' );
+	$version_5_plus      = version_compare( $wp_version, '5', '>=' );
+
+	if ( ! $gutenberg_available && ! $version_5_plus ) {
+		return false;
+	}
+
+	// We have to use the function here instead of the filter due to differences in the way certain plugins implement this.
+	if ( ! function_exists( 'use_block_editor_for_post' ) ) {
+		include_once ABSPATH . 'wp-admin/includes/post.php';
+	}
+
+	// Previous to Gutenberg 5.0, `use_block_editor_for_post` was named `gutenberg_can_edit_post`.
+	if ( ! function_exists( 'use_block_editor_for_post' ) ) {
+		if ( function_exists( 'gutenberg_can_edit_post' ) ) {
+			return gutenberg_can_edit_post( $post );
+		}
+		return false;
+	}
+
+	/**
+	 * WordPress 5.0 will do a check_admin_referrer() inside the use_block_editor_for_posts(),
+	 * and this call would fail, returns a 404 if there's custom meta box, and kills the request.
+	 *
+	 * Unsetting the 'meta-box-loader' in the global request would bypass that check.
+	 */
+	if ( isset( $_GET['meta-box-loader'] ) ) {
+		$meta_box_loader = $_GET['meta-box-loader'];
+		unset( $_GET['meta-box-loader'] );
+	}
+
+	$use_block_editor = use_block_editor_for_post( $post );
+
+	/**
+	 * Set the $meta_box_loader back to the request, if it exists
+	 * so other areas that rely on it would still work.
+	 */
+	if ( isset( $meta_box_loader ) ) {
+		$_GET['meta-box-loader'] = $meta_box_loader;
+	}
+
+	return $use_block_editor;
 }
+
 
 /**
  * Get Distributor settings with defaults
@@ -147,6 +199,20 @@ function set_meta( $post_id, $meta ) {
 			}
 		}
 	}
+
+	/**
+	 * Fires after Distributor sets post meta.
+	 *
+	 * Note: All sent meta is included in the `$meta` array, including blacklisted keys.
+	 * Take care to continue to filter out blacklisted keys in any further meta setting.
+	 *
+	 * @param array $meta          All received meta for the post
+	 * @param array $existing_meta Existing meta for the post
+	 * @param int   $post_id       Post ID
+	 *
+	 * @since 1.3.8
+	 */
+	do_action( 'dt_after_set_meta', $meta, $existing_meta, $post_id );
 }
 
 /**
@@ -479,7 +545,7 @@ function set_media( $post_id, $media ) {
 		$featured_keys = wp_list_pluck( $media, 'featured' );
 
 		// Note: this is not a strict search because of issues with typecasting in some setups
-		$featured_key = array_search( true, $featured_keys );
+		$featured_key = array_search( true, $featured_keys ); // @codingStandardsIgnoreLine Ignore strict search requirement.
 
 		$media = ( false !== $featured_key ) ? array( $media[ $featured_key ] ) : array();
 	}
@@ -523,7 +589,9 @@ function set_media( $post_id, $media ) {
 		}
 
 		// Transfer all meta
-		set_meta( $image_id, $media_item['meta'] );
+		if ( isset( $media_item['meta'] ) ) {
+			set_meta( $image_id, $media_item['meta'] );
+		}
 
 		// Transfer post properties
 		wp_update_post(
@@ -544,7 +612,7 @@ function set_media( $post_id, $media ) {
 /**
  * This is a helper function for transporting/formatting data about a media post
  *
- * @param  WP_Post $media_post Media post.
+ * @param  \WP_Post $media_post Media post.
  * @since  1.0
  * @return array
  */
@@ -629,17 +697,35 @@ function process_media( $url, $post_id ) {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 
+	// Allows to pull media from local IP addresses
+	// Uses a "magic number" for priority so we only unhook our call, just in case
+	add_filter( 'http_request_host_is_external', '__return_true', 88 );
+
 	// Download file to temp location.
 	$file_array['tmp_name'] = download_url( $url );
 
+	remove_filter( 'http_request_host_is_external', '__return_true', 88 );
+
 	// If error storing temporarily, return the error.
 	if ( is_wp_error( $file_array['tmp_name'] ) ) {
+
+		// Distributor is in debug mode, display the issue, could be storage related.
+		if ( is_dt_debug() ) {
+			error_log( sprintf( 'Distributor: %s', $file_array['tmp_name']->get_error_message() ) ); // @codingStandardsIgnoreLine
+		}
+
 		return false;
 	}
 
 	// Do the validation and storage stuff.
 	$result = media_handle_sideload( $file_array, $post_id );
 	if ( is_wp_error( $result ) ) {
+
+		// Distributor is in debug mode, display the issue, could be storage related.
+		if ( is_dt_debug() ) {
+			error_log( sprintf( 'Distributor: %s', $file_array['tmp_name']->get_error_message() ) ); // @codingStandardsIgnoreLine
+		}
+
 		return false;
 	}
 	return (int) $result;

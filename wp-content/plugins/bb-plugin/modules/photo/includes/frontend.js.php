@@ -18,7 +18,7 @@ jQuery(function($) {
 				open: function() {
 					$('.mfp-preloader').html('<i class="fas fa-spinner fa-spin fa-3x fa-fw"></i>');
 				}
-			  }
+			}
 		});
 	}
 	<?php endif; ?>

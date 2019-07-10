@@ -14,7 +14,7 @@ if ( $re_response->isSuccess() ) {
 	$result['error'] = false;
 } else {
 	$result['error'] = __( 'reCAPTCHA Error: ', 'fl-builder' );
-	$error_codes = array();
+	$error_codes     = array();
 	foreach ( $re_response->getErrorCodes() as $code ) {
 		$error_codes[] = $code;
 	}

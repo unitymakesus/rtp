@@ -15,11 +15,11 @@ class FLVideoModule extends FLBuilderModule {
 	 */
 	public function __construct() {
 		parent::__construct(array(
-			'name'          	=> __( 'Video', 'fl-builder' ),
-			'description'   	=> __( 'Render a WordPress or embedable video.', 'fl-builder' ),
-			'category'      	=> __( 'Basic', 'fl-builder' ),
-			'partial_refresh'	=> true,
-			'icon'				=> 'format-video.svg',
+			'name'            => __( 'Video', 'fl-builder' ),
+			'description'     => __( 'Render a WordPress or embedable video.', 'fl-builder' ),
+			'category'        => __( 'Basic', 'fl-builder' ),
+			'partial_refresh' => true,
+			'icon'            => 'format-video.svg',
 		));
 
 		$this->add_js( 'jquery-fitvids' );
@@ -39,14 +39,14 @@ class FLVideoModule extends FLBuilderModule {
 				$this->data = $this->settings->data;
 			}
 			if ( $this->data ) {
-				$parts                  = explode( '.', $this->data->filename );
-				$this->data->extension  = array_pop( $parts );
-				$this->data->poster     = isset( $this->settings->poster_src ) ? $this->settings->poster_src : '';
-				$this->data->loop       = isset( $this->settings->loop ) && $this->settings->loop ? ' loop="yes"' : '';
-				$this->data->autoplay   = isset( $this->settings->autoplay ) && $this->settings->autoplay ? ' autoplay="yes"' : '';
+				$parts                 = explode( '.', $this->data->filename );
+				$this->data->extension = array_pop( $parts );
+				$this->data->poster    = isset( $this->settings->poster_src ) ? $this->settings->poster_src : '';
+				$this->data->loop      = isset( $this->settings->loop ) && $this->settings->loop ? ' loop="yes"' : '';
+				$this->data->autoplay  = isset( $this->settings->autoplay ) && $this->settings->autoplay ? ' autoplay="yes"' : '';
 
 				// WebM format
-				$webm_data = FLBuilderPhoto::get_attachment_data( $this->settings->video_webm );
+				$webm_data              = FLBuilderPhoto::get_attachment_data( $this->settings->video_webm );
 				$this->data->video_webm = isset( $this->settings->video_webm ) && $webm_data ? ' webm="' . $webm_data->url . '"' : '';
 
 			}
@@ -92,85 +92,177 @@ class FLVideoModule extends FLBuilderModule {
 		}
 		return $output;
 	}
+
+	/**
+	 * Calculate video aspect ratio for style.
+	 *
+	 * @since 2.2
+	 * @return float
+	 */
+	public function video_aspect_ratio() {
+		$data = $this->get_data();
+		if ( $data && function_exists( 'bcdiv' ) ) {
+			$ratio = ( $data->height / $data->width ) * 100;
+			return bcdiv( $ratio, 1, 2 );
+		}
+	}
+
+	/**
+	 * Returns structured data markup.
+	 * @since 2.2
+	 */
+	public function get_structured_data( $module ) {
+		$settings = $module->settings;
+		$markup   = '';
+		if ( 'yes' != $settings->schema_enabled ) {
+			return false;
+		}
+		if ( '' == $settings->name || '' == $settings->description || '' == $settings->thumbnail || '' == $settings->up_date ) {
+			return false;
+		}
+		$markup .= sprintf( '<meta itemprop="name" content="%s" />', esc_attr( $settings->name ) );
+		$markup .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $settings->up_date ) );
+		$markup .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', $settings->thumbnail_src );
+		$markup .= sprintf( '<meta itemprop="description" content="%s" />', esc_attr( $settings->description ) );
+
+		return $markup;
+	}
 }
 
 /**
  * Register the module and its form settings.
  */
 FLBuilder::register_module('FLVideoModule', array(
-	'general'       => array(
-		'title'         => __( 'General', 'fl-builder' ),
-		'sections'      => array(
-			'general'       => array(
-				'title'         => '',
-				'fields'        => array(
-					'video_type'       => array(
-						'type'          => 'select',
-						'label'         => __( 'Video Type', 'fl-builder' ),
-						'default'       => 'wordpress',
-						'options'       => array(
-							'media_library'     => __( 'Media Library', 'fl-builder' ),
-							'embed'             => __( 'Embed', 'fl-builder' ),
+	'general' => array(
+		'title'    => __( 'General', 'fl-builder' ),
+		'sections' => array(
+			'general' => array(
+				'title'  => '',
+				'fields' => array(
+					'video_type' => array(
+						'type'    => 'select',
+						'label'   => __( 'Video Type', 'fl-builder' ),
+						'default' => 'wordpress',
+						'options' => array(
+							'media_library' => __( 'Media Library', 'fl-builder' ),
+							'embed'         => __( 'Embed', 'fl-builder' ),
 						),
-						'toggle'        => array(
-							'media_library'      => array(
-								'fields'      => array( 'video', 'video_webm', 'poster', 'autoplay', 'loop' ),
+						'toggle'  => array(
+							'media_library' => array(
+								'fields' => array( 'video', 'video_webm', 'poster', 'autoplay', 'loop' ),
 							),
-							'embed'     => array(
-								'fields'      => array( 'embed_code' ),
+							'embed'         => array(
+								'fields' => array( 'embed_code' ),
 							),
 						),
 					),
-					'video'          => array(
-						'type'          => 'video',
-						'label'         => __( 'Video (MP4)', 'fl-builder' ),
-						'help'          => __( 'A video in the MP4 format. Most modern browsers support this format.', 'fl-builder' ),
-						'show_remove'   => true,
+					'video'      => array(
+						'type'        => 'video',
+						'label'       => __( 'Video (MP4)', 'fl-builder' ),
+						'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'fl-builder' ),
+						'show_remove' => true,
 					),
 					'video_webm' => array(
-						'type'          => 'video',
-						'label'         => __( 'Video (WebM)', 'fl-builder' ),
-						'help'          => __( 'A video in the WebM format to use as fallback. This format is required to support browsers such as FireFox and Opera.', 'fl-builder' ),
-						'preview'         => array(
-							'type'            => 'none',
+						'type'        => 'video',
+						'show_remove' => true,
+						'label'       => __( 'Video (WebM)', 'fl-builder' ),
+						'help'        => __( 'A video in the WebM format to use as fallback. This format is required to support browsers such as FireFox and Opera.', 'fl-builder' ),
+						'preview'     => array(
+							'type' => 'none',
 						),
 					),
-					'poster'         => array(
-						'type'          => 'photo',
-						'show_remove'   => true,
-						'label'         => _x( 'Poster', 'Video preview/fallback image.', 'fl-builder' ),
+					'poster'     => array(
+						'type'        => 'photo',
+						'show_remove' => true,
+						'label'       => _x( 'Poster', 'Video preview/fallback image.', 'fl-builder' ),
 					),
-					'autoplay'       => array(
-						'type'          => 'select',
-						'label'         => __( 'Auto Play', 'fl-builder' ),
-						'default'       => '0',
-						'options'       => array(
-							'0'             => __( 'No', 'fl-builder' ),
-							'1'             => __( 'Yes', 'fl-builder' ),
+					'autoplay'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Auto Play', 'fl-builder' ),
+						'default' => '0',
+						'options' => array(
+							'0' => __( 'No', 'fl-builder' ),
+							'1' => __( 'Yes', 'fl-builder' ),
 						),
-						'preview'       => array(
-							'type'          => 'none',
-						),
-					),
-					'loop'           => array(
-						'type'          => 'select',
-						'label'         => __( 'Loop', 'fl-builder' ),
-						'default'       => '0',
-						'options'       => array(
-							'0'             => __( 'No', 'fl-builder' ),
-							'1'             => __( 'Yes', 'fl-builder' ),
-						),
-						'preview'       => array(
-							'type'          => 'none',
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
-					'embed_code'     => array(
-						'type'          => 'code',
-						'wrap'          => true,
-						'editor'        => 'html',
-						'label'         => '',
-						'rows'          => '9',
-						'connections'   => array( 'custom_field' ),
+					'loop'       => array(
+						'type'    => 'select',
+						'label'   => __( 'Loop', 'fl-builder' ),
+						'default' => '0',
+						'options' => array(
+							'0' => __( 'No', 'fl-builder' ),
+							'1' => __( 'Yes', 'fl-builder' ),
+						),
+						'preview' => array(
+							'type' => 'none',
+						),
+					),
+					'embed_code' => array(
+						'type'        => 'code',
+						'wrap'        => true,
+						'editor'      => 'html',
+						'label'       => '',
+						'rows'        => '9',
+						'connections' => array( 'custom_field' ),
+					),
+				),
+			),
+
+		),
+	),
+	'schema'  => array(
+		'title'    => 'Structured Data',
+		'sections' => array(
+			'schema' => array(
+				'fields' => array(
+					'schema_enabled' => array(
+						'type'    => 'select',
+						'label'   => __( 'Enable Structured Data?', 'fl-builder' ),
+						'default' => 'no',
+						'preview' => array(
+							'type' => 'none',
+						),
+						'toggle'  => array(
+							'yes' => array(
+								'fields' => array( 'name', 'description', 'thumbnail', 'up_date' ),
+							),
+						),
+						'options' => array(
+							'yes' => __( 'Yes', 'fl-builder' ),
+							'no'  => __( 'No', 'fl-builder' ),
+						),
+					),
+					'name'           => array(
+						'type'    => 'text',
+						'label'   => __( 'Video Name', 'fl-builder' ),
+						'preview' => array(
+							'type' => 'none',
+						),
+					),
+					'description'    => array(
+						'type'    => 'text',
+						'label'   => __( 'Video Description', 'fl-builder' ),
+						'preview' => array(
+							'type' => 'none',
+						),
+					),
+					'thumbnail'      => array(
+						'type'        => 'photo',
+						'label'       => __( 'Video Thumbnail', 'fl-builder' ),
+						'show_remove' => true,
+						'preview'     => array(
+							'type' => 'none',
+						),
+					),
+					'up_date'        => array(
+						'type'    => 'date',
+						'label'   => __( 'Upload Date', 'fl-builder' ),
+						'preview' => array(
+							'type' => 'none',
+						),
 					),
 				),
 			),

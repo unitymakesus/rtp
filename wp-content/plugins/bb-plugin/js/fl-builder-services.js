@@ -106,7 +106,7 @@
 		 */
 		_serviceChangeComplete: function( response )
 		{
-			var data        = JSON.parse( response ),
+			var data        = FLBuilder._jsonParse( response ),
 				wrap        = $( '.fl-builder-service-settings-loading' ),
 				selectRow   = wrap.find( '.fl-builder-service-select-row' );
 
@@ -158,7 +158,7 @@
 		 */
 		_connectComplete: function( response )
 		{
-			var data        = JSON.parse( response ),
+			var data        = FLBuilder._jsonParse( response ),
 				wrap        = $( '.fl-builder-service-settings-loading' ),
 				selectRow   = wrap.find( '.fl-builder-service-select-row' ),
 				select      = wrap.find( '.fl-builder-service-select' ),
@@ -243,7 +243,7 @@
 		 */
 		_accountChangeComplete: function( response )
 		{
-			var data        = JSON.parse( response ),
+			var data        = FLBuilder._jsonParse( response ),
 				wrap        = $( '.fl-builder-service-settings-loading' ),
 				accountRow  = wrap.find( '.fl-builder-service-account-row' );
 
@@ -358,7 +358,7 @@
 		 */
 		_campaignMonitorClientChangeComplete: function( response )
 		{
-			var data    = JSON.parse( response ),
+			var data    = FLBuilder._jsonParse( response ),
 				wrap    = $( '.fl-builder-service-settings-loading' ),
 				client  = wrap.find( '.fl-builder-campaign-monitor-client-select' );
 
@@ -409,7 +409,7 @@
 		 */
 		_mailChimpListChangeComplete: function( response )
 		{
-			var data    = JSON.parse( response ),
+			var data    = FLBuilder._jsonParse( response ),
 				wrap    = $( '.fl-builder-service-settings-loading' ),
 				list    = wrap.find( '.fl-builder-service-list-select' );
 
@@ -463,7 +463,7 @@
 		 */
 		_activeCampaignTypeChangeComplete: function( response )
 		{
-			var data    	= JSON.parse( response ),
+			var data    	= FLBuilder._jsonParse( response ),
 				wrap    	= $( '.fl-builder-service-settings-loading' ),
 				fieldRow  	= wrap.find( '.fl-builder-service-field-row' );
 

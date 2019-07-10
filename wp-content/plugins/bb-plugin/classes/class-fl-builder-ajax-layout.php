@@ -25,6 +25,10 @@ final class FLBuilderAJAXLayout {
 	 * @return array
 	 */
 	static public function render( $node_id = null, $old_node_id = null ) {
+		/**
+		 * Before ajax layout rendered.
+		 * @see fl_builder_before_render_ajax_layout
+		 */
 		do_action( 'fl_builder_before_render_ajax_layout' );
 
 		// Update the node ID in the post data?
@@ -50,18 +54,25 @@ final class FLBuilderAJAXLayout {
 		// Render the assets.
 		$assets = self::render_assets();
 
+		/**
+		 * After ajax layout rendered.
+		 * @see fl_builder_after_render_ajax_layout
+		 */
 		do_action( 'fl_builder_after_render_ajax_layout' );
 
-		// Return the response.
+		/**
+		 * Return filtered response.
+		 * @see fl_builder_ajax_layout_response
+		 */
 		return apply_filters( 'fl_builder_ajax_layout_response', array(
-			'partial'			=> $partial_refresh_data['is_partial_refresh'],
-			'nodeId'			=> $partial_refresh_data['node_id'],
-			'nodeType'			=> $partial_refresh_data['node_type'],
-			'oldNodeId'			=> $old_node_id,
-			'html' 				=> $html,
-			'scriptsStyles'		=> $scripts_styles,
-			'css'  				=> $assets['css'],
-			'js'   				=> $assets['js'],
+			'partial'       => $partial_refresh_data['is_partial_refresh'],
+			'nodeId'        => $partial_refresh_data['node_id'],
+			'nodeType'      => $partial_refresh_data['node_type'],
+			'oldNodeId'     => $old_node_id,
+			'html'          => $html,
+			'scriptsStyles' => $scripts_styles,
+			'css'           => $assets['css'],
+			'js'            => $assets['js'],
 		) );
 	}
 
@@ -71,48 +82,60 @@ final class FLBuilderAJAXLayout {
 	 * @since 1.7
 	 * @param string $cols The type of column layout to use.
 	 * @param int $position The position of the new row in the layout.
+	 * @param string $module Optional. The node ID of an existing module to move to this row.
+	 * @return array
+	 */
+	static public function render_new_row( $cols = '1-col', $position = false, $module = null ) {
+		// Add the row.
+		$row = FLBuilderModel::add_row( $cols, $position, $module );
+
+		/**
+		 * Render the row.
+		 * @see fl_builder_before_render_ajax_layout_html
+		 */
+		do_action( 'fl_builder_before_render_ajax_layout_html' );
+		ob_start();
+		FLBuilder::render_row( $row );
+		$html = ob_get_clean();
+
+		/**
+		 * After rendering row.
+		 * @see fl_builder_after_render_ajax_layout_html
+		 */
+		do_action( 'fl_builder_after_render_ajax_layout_html' );
+
+		// Return the response.
+		return array(
+			'partial'  => true,
+			'nodeType' => $row->type,
+			'html'     => $html,
+			'js'       => 'FLBuilder._renderLayoutComplete();',
+		);
+	}
+
+	/**
+	 * Renders the layout data for a new row template.
+	 *
+	 * @since 2.2
+	 * @param int $position The position of the new row in the layout.
 	 * @param string $template_id The ID of a row template to render.
 	 * @param string $template_type The type of template. Either "user" or "core".
 	 * @return array
 	 */
-	static public function render_new_row( $cols = '1-col', $position = false, $template_id = null, $template_type = 'user' ) {
-		// Add a row template?
-		if ( null !== $template_id ) {
-
-			if ( 'core' == $template_type ) {
-				$template = FLBuilderModel::get_template( $template_id, 'row' );
-				$row      = FLBuilderModel::apply_node_template( $template_id, null, $position, $template );
-			} else {
-				$row = FLBuilderModel::apply_node_template( $template_id, null, $position );
-			}
-
-			// Return the response.
-			return array(
-				'layout' => self::render( $row->node ),
-				'config' => FLBuilderUISettingsForms::get_node_js_config(),
-			);
+	static public function render_new_row_template( $position, $template_id, $template_type = 'user' ) {
+		if ( class_exists( 'FLBuilderTemplatesOverride' ) && FLBuilderTemplatesOverride::show_rows() && FLBuilderTemplatesOverride::get_source_site_id() ) {
+			$row = FLBuilderModel::apply_node_template( $template_id, null, $position );
+		} elseif ( 'core' == $template_type ) {
+			$template = FLBuilderModel::get_template( $template_id, 'row' );
+			$row      = FLBuilderModel::apply_node_template( $template_id, null, $position, $template );
 		} else {
-
-			// Add the row.
-			$row = FLBuilderModel::add_row( $cols, $position );
-
-			do_action( 'fl_builder_before_render_ajax_layout_html' );
-
-			// Render the row.
-			ob_start();
-			FLBuilder::render_row( $row );
-			$html = ob_get_clean();
-
-			do_action( 'fl_builder_after_render_ajax_layout_html' );
-
-			// Return the response.
-			return array(
-				'partial'	=> true,
-				'nodeType'	=> $row->type,
-				'html' 		=> $html,
-				'js'		=> 'FLBuilder._renderLayoutComplete();',
-			);
+			$row = FLBuilderModel::apply_node_template( $template_id, null, $position );
 		}
+
+		return array(
+			'layout' => self::render( $row->node ),
+			'config' => FLBuilderUISettingsForms::get_node_js_config(),
+		);
 	}
 
 	/**
@@ -137,27 +160,34 @@ final class FLBuilderAJAXLayout {
 	 * @param string $node_id The node ID of a row to add the new group to.
 	 * @param string $cols The type of column layout to use.
 	 * @param int $position The position of the new column group in the row.
+	 * @param string $module Optional. The node ID of an existing module to move to this group.
 	 * @return array
 	 */
-	static public function render_new_column_group( $node_id, $cols = '1-col', $position = false ) {
+	static public function render_new_column_group( $node_id, $cols = '1-col', $position = false, $module = null ) {
 		// Add the group.
-		$group = FLBuilderModel::add_col_group( $node_id, $cols, $position );
+		$group = FLBuilderModel::add_col_group( $node_id, $cols, $position, $module );
 
+		/**
+		 * Render the group.
+		 * @see fl_builder_before_render_ajax_layout_html
+		 */
 		do_action( 'fl_builder_before_render_ajax_layout_html' );
-
-		// Render the group.
 		ob_start();
 		FLBuilder::render_column_group( $group );
 		$html = ob_get_clean();
 
+		/**
+		 * After rendering group.
+		 * @see fl_builder_after_render_ajax_layout_html
+		 */
 		do_action( 'fl_builder_after_render_ajax_layout_html' );
 
 		// Return the response.
 		return array(
-			'partial'	=> true,
-			'nodeType'	=> $group->type,
-			'html' 		=> $html,
-			'js'		=> 'FLBuilder._renderLayoutComplete();',
+			'partial'  => true,
+			'nodeType' => $group->type,
+			'html'     => $html,
+			'js'       => 'FLBuilder._renderLayoutComplete();',
 		);
 	}
 
@@ -169,11 +199,12 @@ final class FLBuilderAJAXLayout {
 	 * @param string $insert Either before or after.
 	 * @param string $type The type of column(s) to insert.
 	 * @param boolean $nested Whether these columns are nested or not.
+	 * @param string $module Optional. The node ID of an existing module to move to this group.
 	 * @return array
 	 */
-	static public function render_new_columns( $node_id, $insert, $type, $nested ) {
+	static public function render_new_columns( $node_id, $insert, $type, $nested, $module = null ) {
 		// Add the column(s).
-		$group = FLBuilderModel::add_cols( $node_id, $insert, $type, $nested );
+		$group = FLBuilderModel::add_cols( $node_id, $insert, $type, $nested, $module );
 
 		// Return the response.
 		return self::render( $group->node );
@@ -202,13 +233,13 @@ final class FLBuilderAJAXLayout {
 
 		// Get the node to render.
 		if ( ! $parent ) {
-			$row 		= FLBuilderModel::get_col_parent( 'row', $column );
-			$render_id 	= $row->node;
+			$row       = FLBuilderModel::get_col_parent( 'row', $column );
+			$render_id = $row->node;
 		} elseif ( 'row' == $parent->type ) {
-			$group 		= FLBuilderModel::get_col_parent( 'column-group', $column );
-			$render_id 	= $group->node;
+			$group     = FLBuilderModel::get_col_parent( 'column-group', $column );
+			$render_id = $group->node;
 		} elseif ( 'column-group' == $parent->type ) {
-			$render_id 	= $parent->node;
+			$render_id = $parent->node;
 		} else {
 			$render_id = $column->node;
 		}
@@ -270,13 +301,13 @@ final class FLBuilderAJAXLayout {
 
 			// Get the node to render.
 			if ( ! $parent ) {
-				$row 		= FLBuilderModel::get_module_parent( 'row', $module );
-				$render_id 	= $row->node;
+				$row       = FLBuilderModel::get_module_parent( 'row', $module );
+				$render_id = $row->node;
 			} elseif ( 'row' == $parent->type ) {
-				$group 		= FLBuilderModel::get_module_parent( 'column-group', $module );
-				$render_id 	= $group->node;
+				$group     = FLBuilderModel::get_module_parent( 'column-group', $module );
+				$render_id = $group->node;
 			} elseif ( 'column-group' == $parent->type ) {
-				$render_id 	= $parent->node;
+				$render_id = $parent->node;
 			} else {
 				$render_id = $module->node;
 			}
@@ -286,13 +317,13 @@ final class FLBuilderAJAXLayout {
 
 		// Return the response.
 		return array(
-			'type' 		=> $module->settings->type,
-			'nodeId' 	=> $module->node,
-			'parentId' 	=> $module->parent,
-			'global'	=> FLBuilderModel::is_node_global( $module ),
-			'layout' 	=> self::render( $render_id ),
-			'settings'	=> null === $template_id ? null : $module->settings,
-			'legacy'	=> FLBuilderUISettingsForms::pre_render_legacy_module_settings( $module->settings->type, $module->settings ),
+			'type'     => $module->settings->type,
+			'nodeId'   => $module->node,
+			'parentId' => $module->parent,
+			'global'   => FLBuilderModel::is_node_global( $module ),
+			'layout'   => self::render( $render_id ),
+			'settings' => null === $template_id && ! $alias ? null : $module->settings,
+			'legacy'   => FLBuilderUISettingsForms::pre_render_legacy_module_settings( $module->settings->type, $module->settings ),
 		);
 	}
 
@@ -321,38 +352,39 @@ final class FLBuilderAJAXLayout {
 		// Get the data if it's not cached.
 		if ( ! self::$partial_refresh_data ) {
 
-			$post_data 		 = FLBuilderModel::get_post_data();
+			$post_data       = FLBuilderModel::get_post_data();
 			$partial_refresh = false;
-			$node_type = null;
+			$node_type       = null;
 
 			// Check for partial refresh if we have a node ID.
 			if ( isset( $post_data['node_id'] ) ) {
 
 				// Get the node.
-				$node_id = $post_data['node_id'];
-				$node 	 = FLBuilderModel::get_node( $post_data['node_id'] );
+				$node_id   = $post_data['node_id'];
+				$node      = FLBuilderModel::get_node( $post_data['node_id'] );
+				$node_type = null;
 
 				// Check a module for partial refresh.
 				if ( $node && 'module' == $node->type ) {
-					$node 				= FLBuilderModel::get_module( $node_id );
-					$node_type 			= 'module';
-					$partial_refresh 	= $node->partial_refresh;
+					$node            = FLBuilderModel::get_module( $node_id );
+					$node_type       = 'module';
+					$partial_refresh = $node->partial_refresh;
 				} elseif ( $node ) {
-					$node_type 			= $node->type;
-					$partial_refresh 	= self::node_modules_support_partial_refresh( $node );
+					$node_type       = $node->type;
+					$partial_refresh = self::node_modules_support_partial_refresh( $node );
 				}
 			} else {
-				$node_id 	= null;
-				$node 	 	= null;
-				$node_type 	= null;
+				$node_id   = null;
+				$node      = null;
+				$node_type = null;
 			}
 
 			// Cache the partial refresh data.
 			self::$partial_refresh_data = array(
 				'is_partial_refresh' => $partial_refresh,
-				'node_id'			 => $node_id,
-				'node'				 => $node,
-				'node_type'			 => $node_type,
+				'node_id'            => $node_id,
+				'node'               => $node,
+				'node_type'          => $node_type,
 			);
 		}
 
@@ -369,7 +401,7 @@ final class FLBuilderAJAXLayout {
 	 * @return bool
 	 */
 	static private function node_modules_support_partial_refresh( $node ) {
-		$nodes 	= FLBuilderModel::get_categorized_nodes();
+		$nodes = FLBuilderModel::get_categorized_nodes();
 
 		if ( 'row' == $node->type ) {
 
@@ -423,6 +455,10 @@ final class FLBuilderAJAXLayout {
 	 * @return string
 	 */
 	static private function render_html() {
+		/**
+		 * Before html for layout or node is rendered.
+		 * @see fl_builder_before_render_ajax_layout_html
+		 */
 		do_action( 'fl_builder_before_render_ajax_layout_html' );
 
 		// Get the partial refresh data.
@@ -438,19 +474,19 @@ final class FLBuilderAJAXLayout {
 
 				case 'row':
 					FLBuilder::render_row( $partial_refresh_data['node'] );
-				break;
+					break;
 
 				case 'column-group':
 					FLBuilder::render_column_group( $partial_refresh_data['node'] );
-				break;
+					break;
 
 				case 'column':
 					FLBuilder::render_column( $partial_refresh_data['node'] );
-				break;
+					break;
 
 				case 'module':
 					FLBuilder::render_module( $partial_refresh_data['node'] );
-				break;
+					break;
 			}
 		} else {
 			FLBuilder::render_nodes();
@@ -471,7 +507,10 @@ final class FLBuilderAJAXLayout {
 			echo do_shortcode( $html );
 			$html = ob_get_clean();
 		}
-
+		/**
+		 * After html for layout or node is rendered.
+		 * @see fl_builder_after_render_ajax_layout_html
+		 */
 		do_action( 'fl_builder_after_render_ajax_layout_html' );
 
 		// Return the rendered HTML.
@@ -486,12 +525,12 @@ final class FLBuilderAJAXLayout {
 	 * @return array
 	 */
 	static private function render_assets() {
-		$partial_refresh_data 	= self::get_partial_refresh_data();
-		$asset_info 		  	= FLBuilderModel::get_asset_info();
-		$asset_ver  			= FLBuilderModel::get_asset_version();
-		$enqueuemethod			= FLBuilderModel::get_asset_enqueue_method();
-		$assets					= array(
-			'js' => '',
+		$partial_refresh_data = self::get_partial_refresh_data();
+		$asset_info           = FLBuilderModel::get_asset_info();
+		$asset_ver            = FLBuilderModel::get_asset_version();
+		$enqueuemethod        = FLBuilderModel::get_asset_enqueue_method();
+		$assets               = array(
+			'js'  => '',
 			'css' => '',
 		);
 
@@ -508,24 +547,29 @@ final class FLBuilderAJAXLayout {
 			switch ( $partial_refresh_data['node']->type ) {
 
 				case 'row':
-					$assets['js'] = FLBuilder::render_row_js( $partial_refresh_data['node'] );
+					$assets['js']  = FLBuilder::render_row_js( $partial_refresh_data['node'] );
 					$assets['js'] .= FLBuilder::render_row_modules_js( $partial_refresh_data['node'] );
-				break;
+					break;
+
+				case 'column-group':
+					$assets['js'] = FLBuilder::render_column_group_modules_js( $partial_refresh_data['node'] );
+					break;
 
 				case 'column':
 					$assets['js'] = FLBuilder::render_column_modules_js( $partial_refresh_data['node'] );
-				break;
+					break;
 
 				case 'module':
 					$assets['js'] = FLBuilder::render_module_js( $partial_refresh_data['node'] );
-				break;
+					break;
 			}
 
 			$assets['js'] .= 'FLBuilder._renderLayoutComplete();';
 
 			try {
 				$min = FLJSMin::minify( $assets['js'] );
-			} catch ( Exception $e ) {}
+			} catch ( Exception $e ) {
+			}
 
 			if ( $min ) {
 				$assets['js'] = $min;
@@ -601,9 +645,9 @@ final class FLBuilderAJAXLayout {
 		global $wp_scripts;
 		global $wp_styles;
 
-		$partial_refresh_data 	= self::get_partial_refresh_data();
-		$modules				= array();
-		$scripts_styles			= '';
+		$partial_refresh_data = self::get_partial_refresh_data();
+		$modules              = array();
+		$scripts_styles       = '';
 
 		// Enqueue module font styles.
 		if ( ! $partial_refresh_data['is_partial_refresh'] ) {
@@ -613,7 +657,7 @@ final class FLBuilderAJAXLayout {
 			foreach ( $nodes as $node ) {
 				if ( 'module' === $node->type && isset( FLBuilderModel::$modules[ $node->settings->type ] ) ) {
 					$node->form = FLBuilderModel::$modules[ $node->settings->type ]->form;
-					$modules[] = $node;
+					$modules[]  = $node;
 				}
 			}
 		} else {

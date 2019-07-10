@@ -175,17 +175,17 @@ FLBuilder::register_module(
 						'ct_saved_rows'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Row', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_row_template(),
+							'options' => array(),
 						),
 						'ct_saved_modules'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Module', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_module_template(),
+							'options' => array(),
 						),
 						'ct_page_templates' => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Page Template', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_page_template(),
+							'options' => array(),
 						),
 					),
 				),
@@ -438,12 +438,14 @@ FLBuilder::register_module(
 							'label'      => __( 'Icon Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 						),
 						'icon_hover_color' => array(
 							'type'       => 'color',
 							'label'      => __( 'Icon Hover Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type' => 'none',
 							),
@@ -494,6 +496,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Text Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-modal-action',
@@ -505,6 +508,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Text Hover Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 						),
 					),
 				),
@@ -625,6 +629,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Text Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-creative-button-wrap a *',
@@ -636,6 +641,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Text Hover Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type' => 'none',
 							),
@@ -959,7 +965,7 @@ FLBuilder::register_module(
 						'close_icon'       => array(
 							'type'        => 'icon',
 							'label'       => __( 'Close Icon', 'uabb' ),
-							'default'     => 'fa fa-close',
+							'default'     => 'fas fa-times',
 							'show_remove' => true,
 						),
 						'close_photo'      => array(
@@ -989,6 +995,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-close-icon',
@@ -1071,6 +1078,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-modal-title',
@@ -1108,6 +1116,7 @@ FLBuilder::register_module(
 							'label'      => __( 'Color', 'uabb' ),
 							'default'    => '',
 							'show_reset' => true,
+							'show_alpha' => true,
 							'preview'    => array(
 								'type'     => 'css',
 								'selector' => '.uabb-modal-text',

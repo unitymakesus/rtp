@@ -51,6 +51,8 @@ final class FLBuilderUpdate {
 				self::run( $saved_version );
 			}
 
+			do_action( 'fl_builder_cache_cleared' );
+
 			update_site_option( '_fl_builder_version', FL_BUILDER_VERSION );
 
 			update_site_option( '_fl_builder_update_info', array(
@@ -86,6 +88,11 @@ final class FLBuilderUpdate {
 		// Update to 1.10 or greater.
 		if ( version_compare( $saved_version, '1.10', '<' ) ) {
 			self::v_1_10();
+		}
+
+		// Update to 1.10 or greater.
+		if ( version_compare( $saved_version, '2.2.2.6', '<' ) ) {
+			self::v_2226();
 		}
 
 		// Clear all asset cache.
@@ -185,10 +192,10 @@ final class FLBuilderUpdate {
 			$meta  = $wpdb->get_results( "SELECT * FROM {$wpdb->postmeta} WHERE meta_key = '_fl_builder_layout'" );
 
 			// Build the export object.
-			$data           = new StdClass();
-			$data->version  = FL_BUILDER_VERSION;
-			$data->nodes    = $nodes;
-			$data->meta     = $meta;
+			$data          = new StdClass();
+			$data->version = FL_BUILDER_VERSION;
+			$data->nodes   = $nodes;
+			$data->meta    = $meta;
 
 			// Save the backup.
 			fl_builder_filesystem()->file_put_contents( $cache_dir['path'] . 'backup.dat', serialize( $data ) );
@@ -269,12 +276,12 @@ final class FLBuilderUpdate {
 			foreach ( $metas as $meta ) {
 
 				// Get the old layout nodes from the database.
-				$published  = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %s WHERE layout = %s AND status = 'published'", $table, $meta->meta_value ) );
-				$draft      = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %s WHERE layout = %s AND status = 'draft'", $table, $meta->meta_value ) );
+				$published = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %s WHERE layout = %s AND status = 'published'", $table, $meta->meta_value ) );
+				$draft     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM %s WHERE layout = %s AND status = 'draft'", $table, $meta->meta_value ) );
 
 				// Convert the old nodes to new ones.
-				$published  = self::v_1_2_8_convert_nodes( $published );
-				$draft      = self::v_1_2_8_convert_nodes( $draft );
+				$published = self::v_1_2_8_convert_nodes( $published );
+				$draft     = self::v_1_2_8_convert_nodes( $draft );
 
 				// Add the new layout post meta.
 				update_post_meta( $meta->post_id, '_fl_builder_data', $published );
@@ -349,7 +356,7 @@ final class FLBuilderUpdate {
 				$node->parent = null;
 			}
 
-			$node->settings = self::v_1_2_8_json_decode_settings( $node->settings );
+			$node->settings           = self::v_1_2_8_json_decode_settings( $node->settings );
 			$new_nodes[ $node->node ] = $node;
 		}
 
@@ -410,8 +417,8 @@ final class FLBuilderUpdate {
 	 */
 	static private function v_1_4_6() {
 		// Remove the old fl-builder uploads folder.
-		$upload_dir  = wp_upload_dir( null, false );
-		$path        = trailingslashit( $upload_dir['basedir'] ) . 'fl-builder';
+		$upload_dir = wp_upload_dir( null, false );
+		$path       = trailingslashit( $upload_dir['basedir'] ) . 'fl-builder';
 
 		if ( file_exists( $path ) ) {
 			fl_builder_filesystem()->rmdir( $path, true );
@@ -427,7 +434,7 @@ final class FLBuilderUpdate {
 	 */
 	static private function v_1_6_3() {
 		$posts = get_posts( array(
-			'post_type' 	 => 'fl-builder-template',
+			'post_type'      => 'fl-builder-template',
 			'posts_per_page' => '-1',
 		) );
 
@@ -559,6 +566,15 @@ final class FLBuilderUpdate {
 		}
 
 		return $data;
+	}
+
+	static private function v_2226() {
+
+		if ( false !== get_option( 'fl_debug_mode', false ) ) {
+			$current = get_option( 'fl_debug_mode' );
+			set_transient( 'fl_debug_mode', $current, 172800 ); // 48 hours
+			delete_option( 'fl_debug_mode' );
+		}
 	}
 }
 

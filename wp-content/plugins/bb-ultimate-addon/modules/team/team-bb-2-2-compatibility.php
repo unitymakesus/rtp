@@ -727,6 +727,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-team-desgn-text',

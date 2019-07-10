@@ -6,13 +6,13 @@
 
 	// Create the slider.
 	$('.fl-node-<?php echo $id; ?> .fl-testimonials').bxSlider({
-		autoStart : <?php echo $settings->auto_play ?>,
+		autoStart : <?php echo $settings->auto_play; ?>,
 		auto : true,
 		adaptiveHeight: true,
 		pause : <?php echo $settings->pause * 1000; ?>,
 		mode : '<?php echo $settings->transition; ?>',
 		autoDirection: '<?php echo $settings->direction; ?>',
-		speed : <?php echo $settings->speed * 1000;  ?>,
+		speed : <?php echo $settings->speed * 1000; ?>,
 		pager : <?php echo ( 'wide' == $settings->layout ) ? $settings->dots : 0; ?>,
 		nextSelector : '.fl-node-<?php echo $id; ?> .fl-slider-next',
 		prevSelector : '.fl-node-<?php echo $id; ?> .fl-slider-prev',

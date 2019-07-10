@@ -34,6 +34,8 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 		$this->add_js( 'jquery-magnificpopup' );
 		$this->add_css( 'jquery-magnificpopup' );
 		$this->add_js( 'jquery-masonry' );
+		$this->add_js( 'isotope', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-masonary.js', array( 'jquery' ), '', true );
+		$this->add_js( 'imagesloaded-uabb', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/imagesloaded.min.js', array( 'jquery' ), '', true );
 	}
 	/**
 	 * Ensure backwards compatibility with old settings.
@@ -64,6 +66,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->caption_font_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 					if ( 'regular' == $settings->font_family['weight'] ) {
@@ -71,6 +74,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					} else {
 						$settings->caption_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -79,7 +83,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
-
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 
@@ -87,6 +91,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 
@@ -94,6 +99,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -101,6 +107,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 
@@ -108,6 +115,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 
@@ -115,10 +123,12 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 
 				$settings->caption_font_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 
 			}
 			if ( isset( $settings->letter_spacing ) ) {
@@ -127,16 +137,6 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
 				unset( $settings->letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -155,6 +155,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->caption_font_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 					if ( 'regular' == $settings->font_family['weight'] ) {
@@ -162,6 +163,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					} else {
 						$settings->caption_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) ) {
@@ -206,14 +208,29 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->line_height );
+			// Unset the old values.
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
+			}
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
+			}
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
+			}
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
 			}
 		}
 		return $settings;
 	}
+
 	/**
 	 * Function that updates the WordPress Photos
 	 *
@@ -331,13 +348,115 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				// Push the photo data.
 				/* Add Custom field attachment data to object */
 				$cta_link       = get_post_meta( $id, 'uabb-cta-link', true );
+				$category       = get_post_meta( $id, 'uabb-categories', true );
 				$data->cta_link = $cta_link;
-
-				$photos[ $id ] = $data;
+				$data->category = $category;
+				$photos[ $id ]  = $data;
 			}
 		}
 
 		return $photos;
+	}
+	/**
+	 * Get Filters.
+	 *
+	 * Returns the Filter HTML.
+	 *
+	 * @since 1.16.5
+	 * @access public
+	 */
+	public function render_gallery_filters() {
+
+		$default    = '';
+		$cat_filter = $this->get_filter_values();
+
+		if ( 'yes' === $this->settings->default_filter_switch && '' !== $this->settings->default_filter ) {
+
+			$default = '.' . trim( $this->settings->default_filter );
+			$default = strtolower( str_replace( ' ', '-', $default ) );
+
+		}
+		?>
+		<div class="uabb-photo-gallery-filters-wrap uabb-photo-gallery-stack-<?php echo $this->settings->filters_tab_heading_stack; ?>">
+			<?php if ( 'yes' === $this->settings->show_filter_title ) { ?>
+				<div class="uabb-photo-gallery-title-filters">
+					<div class="uabb-photo-gallery-title">
+						<<?php echo $this->settings->filter_title_tag; ?> class="uabb-photo-gallery-title-text"><?php echo $this->settings->filters_heading_text; ?></<?php echo $this->settings->filter_title_tag; ?>>
+					</div>
+			<?php } ?>
+				<ul class="uabb-photo__gallery-filters" data-default="
+				<?php
+					echo ( isset( $default ) ) ? $default : '';
+				?>
+				">
+					<li class="uabb-photo__gallery-filter uabb-filter__current" data-filter="*">
+					<?php
+					echo ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' );
+					?>
+					</li>
+					<?php
+					foreach ( $cat_filter as $key => $value ) {
+						?>
+						<li class="uabb-photo__gallery-filter" data-filter="<?php echo '.' . $key; ?>">
+							<?php echo $value; ?>
+						</li>
+					<?php } ?>
+				</ul>
+			<?php if ( 'yes' === $this->settings->show_filter_title ) { ?>
+				</div>
+			<?php } ?>
+		</div>
+		<?php
+	}
+	/**
+	 * Get Filter taxonomy array.
+	 *
+	 * Returns the Filter array of objects.
+	 *
+	 * @since 1.16.5
+	 * @access public
+	 */
+	public function get_filter_values() {
+
+		$cat_filter = array();
+
+		$data = $this->get_wordpress_photos();
+
+		foreach ( $data as $item ) {
+
+			$cat = trim( $item->category );
+
+			$cat_arr = explode( ',', $cat );
+
+			foreach ( $cat_arr as $value ) {
+				$cat         = trim( $value );
+				$cat_slug    = strtolower( str_replace( ' ', '-', $cat ) );
+				$image_cat[] = $cat_slug;
+				if ( ! empty( $cat ) ) {
+					$cat_filter[  $this->clean( $cat_slug ) ] = $cat;
+				}
+			}
+		}
+		return $cat_filter;
+	}
+
+	/**
+	 * Clean string - Removes spaces and special chars.
+	 *
+	 * @since 1.16.6
+	 * @param String $string String to be cleaned.
+	 * @return String.
+	 */
+	public function clean( $string ) {
+
+		// Replaces all spaces with hyphens.
+		$string = str_replace( ' ', '-', $string );
+
+		// Removes special chars.
+		$string = preg_replace( '/[^A-Za-z0-9\-]/', '', $string );
+
+		// Turn into lower case characters.
+		return strtolower( $string );
 	}
 }
 

@@ -84,6 +84,11 @@
 				this._gridLayoutMatchHeight();
 				wrap.masonry();
 			}, this ) );
+
+			$(window).scroll($.debounce( 25, function(){
+				wrap.masonry()
+			}));
+
 		},
 
 		_gridLayoutMatchHeight: function()
@@ -187,6 +192,7 @@
 				wrap.imagesLoaded( $.proxy( function() {
 					this._gridLayoutMatchHeight();
 					wrap.masonry('appended', elements);
+					wrap.masonry();
 					elements.css('visibility', 'visible');
 				}, this ) );
 			}

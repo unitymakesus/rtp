@@ -84,6 +84,7 @@ class RibbonModule extends FLBuilderModule {
 				if ( isset( $settings->text_font_family['family'] ) ) {
 
 					$settings->font_typo['font_family'] = $settings->text_font_family['family'];
+					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 
@@ -92,16 +93,15 @@ class RibbonModule extends FLBuilderModule {
 					} else {
 						$settings->font_typo['font_weight'] = $settings->text_font_family['weight'];
 					}
+					unset( $settings->text_font_family['weight'] );
 				}
-			}
-			if ( isset( $settings->ribbon_align ) ) {
-				$settings->ribbon_align = $settings->ribbon_align;
 			}
 			if ( isset( $settings->text_font_size_unit ) ) {
 				$settings->font_typo['font_size'] = array(
 					'length' => $settings->text_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit );
 			}
 			if ( isset( $settings->text_font_size_unit_medium ) ) {
 
@@ -109,6 +109,7 @@ class RibbonModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit_medium );
 			}
 			if ( isset( $settings->text_font_size_unit_responsive ) ) {
 
@@ -116,6 +117,7 @@ class RibbonModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit_responsive );
 			}
 			if ( isset( $settings->text_line_height_unit ) ) {
 
@@ -123,6 +125,7 @@ class RibbonModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit );
 			}
 			if ( isset( $settings->text_line_height_unit_medium ) ) {
 
@@ -130,6 +133,7 @@ class RibbonModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit_medium );
 			}
 			if ( isset( $settings->text_line_height_unit_responsive ) ) {
 
@@ -137,25 +141,17 @@ class RibbonModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit_responsive );
 			}
 			if ( isset( $settings->text_transform ) ) {
 				$settings->font_typo['text_transform'] = $settings->text_transform;
+				unset( $settings->text_transform );
 			}
 			if ( isset( $settings->text_letter_spacing ) ) {
 				$settings->font_typo['letter_spacing'] = array(
 					'length' => $settings->text_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->font ) ) {
-				unset( $settings->font );
-				unset( $settings->text_font_size_unit );
-				unset( $settings->text_font_size_unit_medium );
-				unset( $settings->text_font_size_unit_responsive );
-				unset( $settings->text_line_height_unit );
-				unset( $settings->text_line_height_unit_medium );
-				unset( $settings->text_line_height_unit_responsive );
-				unset( $settings->text_transform );
 				unset( $settings->text_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -171,6 +167,7 @@ class RibbonModule extends FLBuilderModule {
 				if ( isset( $settings->text_font_family['family'] ) ) {
 
 					$settings->font_typo['font_family'] = $settings->text_font_family['family'];
+					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 
@@ -179,10 +176,8 @@ class RibbonModule extends FLBuilderModule {
 					} else {
 						$settings->font_typo['font_weight'] = $settings->text_font_family['weight'];
 					}
+					unset( $settings->text_font_family['weight'] );
 				}
-			}
-			if ( isset( $settings->ribbon_align ) ) {
-				$settings->ribbon_align = $settings->ribbon_align;
 			}
 			if ( isset( $settings->text_font_size['small'] ) && ! isset( $settings->font_typo_responsive['font_size'] ) ) {
 
@@ -229,10 +224,24 @@ class RibbonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->font ) ) {
-				unset( $settings->font );
-				unset( $settings->text_font_size );
-				unset( $settings->text_line_height );
+			// Unset the old values.
+			if ( isset( $settings->text_font_size['desktop'] ) ) {
+				unset( $settings->text_font_size['desktop'] );
+			}
+			if ( isset( $settings->text_font_size['medium'] ) ) {
+				unset( $settings->text_font_size['medium'] );
+			}
+			if ( isset( $settings->text_font_size['small'] ) ) {
+				unset( $settings->text_font_size['small'] );
+			}
+			if ( isset( $settings->text_line_height['desktop'] ) ) {
+				unset( $settings->text_line_height['desktop'] );
+			}
+			if ( isset( $settings->text_line_height['medium'] ) ) {
+				unset( $settings->text_line_height['medium'] );
+			}
+			if ( isset( $settings->text_line_height['small'] ) ) {
+				unset( $settings->text_line_height['small'] );
 			}
 		}
 		return $settings;

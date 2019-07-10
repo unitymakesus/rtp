@@ -22,8 +22,133 @@ function uabb_column_register_settings() {
 	if ( $colshadow ) {
 		add_filter( 'fl_builder_register_settings_form', 'uabb_column_shadow', 10, 2 );
 	}
-}
 
+	if ( isset( $module['uabb-col-particle'] ) && ! empty( $module['uabb-col-particle'] ) ) {
+
+		add_filter( 'fl_builder_register_settings_form', 'uabb_column_particle', 10, 2 );
+		add_action( 'fl_builder_before_render_modules', 'uabb_output_before_module', 20, 2 );
+	}
+}
+/**
+ * Function that inserts UABB's particle Tab in the Row's settings
+ *
+ * @since 1.17.0
+ * @param array $form an array to get the form.
+ * @param int   $id an integer to get the form's id.
+ */
+function uabb_column_particle( $form, $id ) {
+
+	if ( 'col' != $id ) {
+		return $form;
+	}
+
+	$col_setting_particles = array(
+		'title'    => __( 'Particle Backgrounds', 'uabb' ),
+		'sections' => array(
+			'particles_background' => array(
+				'title'  => __( 'General', 'uabb' ),
+				'fields' => array(
+					'enable_particles_col'             => array(
+						'type'    => 'select',
+						'label'   => __( 'Enable Particle Backgrounds', 'uabb' ),
+						'default' => 'no',
+						'options' => array(
+							'yes' => __( 'Yes', 'uabb' ),
+							'no'  => __( 'No', 'uabb' ),
+						),
+					),
+					'uabb_col_particles_style'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Style', 'uabb' ),
+						'default' => 'none',
+						'options' => array(
+							'default' => __( 'Polygon', 'uabb' ),
+							'nasa'    => __( 'NASA', 'uabb' ),
+							'snow'    => __( 'Snow', 'uabb' ),
+							'custom'  => __( 'Custom', 'uabb' ),
+						),
+					),
+					'uabb_particles_custom_code_col'   => array(
+						'type'        => 'editor',
+						'label'       => __( 'Add Particles Json', 'uabb' ),
+						'connections' => array( 'html', 'string', 'url' ),
+					),
+					'uabb_particles_direction_col'     => array(
+						'type'    => 'select',
+						'label'   => __( 'Flow direction', 'uabb' ),
+						'default' => 'bottom',
+						'options' => array(
+							'top'          => __( 'Top', 'uabb' ),
+							'bottom'       => __( 'Bottom', 'uabb' ),
+							'left'         => __( 'Left', 'uabb' ),
+							'right'        => __( 'Right', 'uabb' ),
+							'top-left'     => __( 'Top Left', 'uabb' ),
+							'top-right'    => __( 'Top Right', 'uabb' ),
+							'bottom-left'  => __( 'Bottom Left', 'uabb' ),
+							'bottom-right' => __( 'Bottom Right', 'uabb' ),
+
+						),
+					),
+					'uabb_col_particles_color'         => array(
+						'type'       => 'color',
+						'label'      => __( 'Particle Color', 'uabb' ),
+						'show_reset' => true,
+						'connection' => ( 'color' ),
+					),
+					'uabb_col_particles_color_opacity' => array(
+						'type'   => 'unit',
+						'label'  => __( 'Particle Color opacity ( 0.1 to 1 ) ', 'uabb' ),
+						'slider' => array(
+							'step' => .1,
+							'max'  => 1,
+						),
+					),
+					'uabb_col_particles_settings'      => array(
+						'type'    => 'select',
+						'label'   => __( 'Advanced Settings', 'uabb' ),
+						'default' => 'no',
+						'options' => array(
+							'yes' => __( 'Yes', 'uabb' ),
+							'no'  => __( 'No', 'uabb' ),
+						),
+					),
+					'uabb_col_number_particles'        => array(
+						'type'   => 'unit',
+						'label'  => __( 'Number of Particles', 'uabb' ),
+						'slider' => true,
+					),
+					'uabb_col_particles_size'          => array(
+						'type'   => 'unit',
+						'label'  => __( 'Particle Size', 'uabb' ),
+						'slider' => true,
+					),
+					'uabb_col_particles_speed'         => array(
+						'type'   => 'unit',
+						'label'  => __( 'Move Speed', 'uabb' ),
+						'slider' => true,
+					),
+					'uabb_col_particles_interactive_settings' => array(
+						'type'    => 'select',
+						'label'   => __( 'Enable Hover Effect', 'uabb' ),
+						'default' => 'no',
+						'help'    => __( 'Note: Enable Hover Effect settings will work on the frontend only', 'uabb' ),
+						'options' => array(
+							'yes' => __( 'Yes', 'uabb' ),
+							'no'  => __( 'No', 'uabb' ),
+						),
+					),
+				),
+			),
+		),
+	);
+
+	$form['tabs'] = array_merge(
+		array_slice( $form['tabs'], 0, 2 ),
+		array( 'Particles' => $col_setting_particles ),
+		array_slice( $form['tabs'], 2 )
+	);
+	return $form;
+}
 /**
  * Function that inserts UABB's Tab in the Row's settings
  *
@@ -385,4 +510,285 @@ function uabb_column_shadow( $form, $id ) {
 	$form['tabs']['advanced']   = $advanced;
 
 	return $form;
+}
+/**
+ * Function that render necessary HTML for row's
+ *
+ * @param string $modules gets the column data.
+ * @param string $col_id gets the column data.
+ * @since 1.17.0
+ */
+function uabb_output_before_module( $modules, $col_id ) {
+
+	$column = is_object( $col_id ) ? $col_id : FLBuilderModel::get_node( $col_id );
+
+	$data = array(
+		'enable_particles'     => isset( $column->settings->enable_particles_col ) ? $column->settings->enable_particles_col : '',
+		'particles_style'      => isset( $column->settings->uabb_col_particles_style ) ? $column->settings->uabb_col_particles_style : '',
+		'particles_dot_color'  => isset( $column->settings->uabb_col_particles_color ) ? $column->settings->uabb_col_particles_color : '',
+		'number_particles'     => isset( $column->settings->uabb_col_number_particles ) ? $column->settings->uabb_col_number_particles : '',
+		'particles_size'       => isset( $column->settings->uabb_col_particles_size ) ? $column->settings->uabb_col_particles_size : '',
+		'particles_speed'      => isset( $column->settings->uabb_col_particles_speed ) ? $column->settings->uabb_col_particles_speed : '',
+		'interactive_settings' => isset( $column->settings->uabb_col_particles_interactive_settings ) ? $column->settings->uabb_col_particles_interactive_settings : '',
+		'advanced_settings'    => isset( $column->settings->uabb_col_particles_settings ) ? $column->settings->uabb_col_particles_settings : '',
+		'particles_opacity'    => isset( $column->settings->uabb_col_particles_color_opacity ) ? $column->settings->uabb_col_particles_color_opacity : '',
+		'particles_direction'  => isset( $column->settings->uabb_particles_direction_col ) ? $column->settings->uabb_particles_direction_col : '',
+		'id'                   => $column->node,
+	);
+	$data = json_encode( $data );
+
+	if ( isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) { ?>
+
+		<div class="uabb-col-particles-background" id="uabb-particle-<?php echo $column->node; ?>" data-particle=<?php echo $data; ?>></div>
+
+	<?php } ?>
+	<?php
+	if ( FLBuilderModel::is_builder_active() && isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) {
+		?>
+		<script>
+			var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
+
+			window.particle_js_loaded = 0;
+
+			$.cachedScript = function( url, options ) {
+				// Allow user to set any option except for dataType, cache, and url.
+				options = $.extend( options || {}, {
+					dataType: "script",
+					cache: true,
+					url: url
+				});
+
+				// Return the jqXHR object so we can chain callbacks.
+				return $.ajax( options );
+			};
+			if ( $( '.uabb-col-particles-background' ).length ) {
+
+				$.cachedScript( url ).done( function( script, textStatus ) {					
+					window.particle_js_loaded = 1;
+					particles_col_background_script();
+
+				});
+			}
+			function particles_col_background_script() {
+
+			var row_id ='<?php echo $column->node; ?>';
+			var nodeClass  	= jQuery( '.fl-node-' + row_id );
+			<?php $json_custom_particles = wp_strip_all_tags( $column->settings->uabb_particles_custom_code_col ); ?>
+
+			particle_selector = nodeClass.find( '.uabb-col-particles-background' );
+
+				if ( particle_selector.length > 0 ) {
+
+					data_particles = particle_selector.data( 'particle' );
+					enable_particles = data_particles.enable_particles;
+					particles_style =  data_particles.particles_style;
+					particles_dot_color = data_particles.particles_dot_color;
+					number_particles = data_particles.number_particles;
+					particles_size = data_particles.particles_size;
+					particles_speed = data_particles.particles_speed;
+					interactive_settings = data_particles.interactive_settings;
+					advanced_settings = data_particles.advanced_settings;
+					particles_opacity = data_particles.particles_opacity;
+					particles_direction = data_particles.particles_direction;
+
+					if ( 'yes' === enable_particles ) {
+
+						if ( 'custom' === particles_style ) {
+							<?php
+							if ( '' !== $json_particles_custom ) {
+								?>
+								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_custom_particles; ?> );
+								<?php
+							}
+							?>
+						} else {
+							var number_value = 150,
+								shape_type = 'circle',
+								shape_nb_sides = 5,
+								opacity_value = 0.6,
+								opacity_random = true,
+								opacity_anim_enable  = false,
+								line_linked = false,
+								move_speed = 4,
+								move_random = true,
+								size_value = 2,
+								size_random = true,
+								size_anim_enable  = false,
+								onhover = 'repulse',
+								move_direction = 'none',
+								interactive = false;
+
+							if ( 'default' === particles_style ) {
+								line_linked = true;
+								opacity_random = false;
+								move_random = false;
+								move_speed = 6;
+							} else if( 'nasa' == particles_style ) {
+								number_value = 160;
+								shape_type = 'circle';
+								opacity_value = 1;
+								opacity_anim_enable  = true;
+								move_speed = 1;
+								size_value = 3;
+								onhover = 'bubble';
+							} else if ( 'snow' == particles_style ) {
+								opacity_value = 0.5;
+								size_value = 4;
+								move_speed = 3;
+								move_direction = particles_direction;
+								number_value = 200;
+								opacity_random = false;
+							} else if ( 'flow' == particles_style ) {
+								number_value = 14;
+								shape_type = 'polygon';
+								shape_nb_sides = 6;
+								opacity_value = 0.3;
+								move_speed = 5;
+								size_value = 40;
+								size_random = false;
+								size_anim_enable  = true;
+							} else if( 'bubble' == particles_style ) {
+								move_speed = 5;
+								move_direction = 'top';
+								number_value = 500;
+								size_value = 1;
+								size_random = false;
+								opacity_value = 0.6;
+								opacity_random = false;
+							}
+
+							if( particles_dot_color == '' ) {
+								particles_dot_color = '#bdbdbd';
+							}
+							if( particles_opacity != '' || particles_opacity == '0' ) {
+								opacity_value = particles_opacity;
+							}
+							if ( 'yes' === advanced_settings ) {
+
+								if( number_particles != '' ) {
+									number_value = number_particles;
+								}
+
+								if( particles_size !== '' ) {
+									size_value = particles_size;
+								}
+
+								if( particles_speed !== '' ) {
+									move_speed = particles_speed;
+								}
+							}
+							if( interactive_settings == 'yes' ) {
+								interactive = true;
+							}
+							var config = {
+								"particles": {
+									"number": {
+										"value": number_value,
+										"density": {
+											"enable": true,
+											"value_area": 800
+										}
+									},
+									"color": {
+										"value": particles_dot_color
+									},
+									"shape": {
+										"type": shape_type,
+										"stroke": {
+											"width": 0,
+											"color": "#ffffff"
+										},
+										"polygon": {
+											"nb_sides": shape_nb_sides
+										},
+									},
+									"opacity": {
+										"value": opacity_value,
+										"random": opacity_random,
+										"anim": {
+											"enable": opacity_anim_enable,
+											"speed": 1,
+											"opacity_min": 0.1,
+											"sync": false
+										}
+									},
+									"size": {
+										"value": size_value,
+										"random": size_random,
+										"anim": {
+											"enable": size_anim_enable,
+											"speed": 5,
+											"size_min": 35,
+											"sync": false
+										}
+									},
+									"line_linked": {
+										"enable": line_linked,
+										"distance": 150,
+										"color": particles_dot_color,
+										"opacity": 0.4,
+										"width": 1
+									},
+									"move": {
+										"enable": true,
+										"speed": move_speed,
+										"direction": move_direction,
+										"random": move_random,
+										"straight": false,
+										"out_mode": "out",
+										"attract": {
+										"enable": false,
+										"rotateX": 600,
+										"rotateY": 1200
+										}
+									}
+								},
+								"interactivity": {
+									"detect_on": "canvas",
+									"events": {
+										"onhover": {
+											"enable": interactive,
+											"mode": onhover,
+										},
+										"onclick": {
+											"enable": false,
+											"mode": "push"
+										},
+										"resize": true
+									},
+									"modes": {
+										"grab": {
+											"distance": 400,
+											"line_linked": {
+												"opacity": 1
+											}
+										},
+										"bubble": {
+											"distance": 200,
+											"size": 0,
+											"duration": 2,
+											"opacity": 0,
+											"speed": 2
+										},
+										"repulse": {
+											"distance": 150
+										},
+										"push": {
+											"particles_nb": 4
+										},
+										"remove": {
+											"particles_nb": 2
+										}
+									}
+								},
+								"retina_detect": true
+							}
+							particlesJS( 'uabb-particle-' + row_id, config );
+						}
+					}
+				}
+			}
+		</script>
+	<?php } ?>
+	<?php
 }

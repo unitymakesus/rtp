@@ -629,9 +629,22 @@ class MEC_book extends MEC_base
     public function get_total_attendees($book_id)
     {
         $attendees = get_post_meta($book_id, 'mec_attendees', true);
-        if(is_array($attendees)) return count($attendees);
-
-        return 1;
+        $count = 0;
+     
+        if(is_array($attendees)) {
+            foreach ( $attendees as $key => $attendee) {
+                if ($key === 'attachments') {
+                    continue;
+                }
+                if (!isset($attendee[0]['MEC_TYPE_OF_DATA'])) {
+                    $count++;
+                } else if ($attendee[0]['MEC_TYPE_OF_DATA'] != 'attachment') {
+                    $count++;
+                }
+            }
+        }
+        return $count;
+        // return 1;
     }
 
     public function get_transaction_id_book_id($book_id)

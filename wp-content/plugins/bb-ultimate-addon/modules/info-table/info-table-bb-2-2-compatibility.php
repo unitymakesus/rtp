@@ -368,7 +368,7 @@ FLBuilder::register_module(
 							'type'        => 'icon',
 							'label'       => __( 'Icon', 'uabb' ),
 							'show_remove' => true,
-							'default'     => 'fa fa-child',
+							'default'     => 'fas fa-child',
 						),
 						'icon_size' => array(
 							'type'        => 'unit',

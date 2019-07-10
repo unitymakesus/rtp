@@ -98,11 +98,14 @@ jQuery(document).ready(function()
         today: "'.date('Ymd', strtotime($this->start_date)).'",
         week: "'.$this->week_of_days[$this->today].'",
         month_id: "'.date('Ym', $current_month_time).'",
+        current_year: "'.date('Y', $current_month_time).'",
+        current_month: "'.date('m', $current_month_time).'",
         month_navigator: '.($this->next_previous_button ? 1 : 0).',
         changeWeekElement: "#mec_skin_'.$this->id.' .mec-load-week",
         atts: "'.http_build_query(array('atts'=>$this->atts), '', '&').'",
         ajax_url: "'.admin_url('admin-ajax.php', NULL).'",
         sed_method: "'.$this->sed_method.'",
+        image_popup: "'.$this->image_popup.'",
         sf:
         {
             container: "'.($this->sf_status ? '#mec_search_form_'.$this->id : '').'",
@@ -111,8 +114,9 @@ jQuery(document).ready(function()
 });
 </script>';
 
-// Include javascript code into the footer
-$this->factory->params('footer', $javascript);
+// Include javascript code into the page
+if($this->main->is_ajax()) echo $javascript;
+else $this->factory->params('footer', $javascript);
 
 $styling = $this->main->get_styling();
 $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color'])) ? 'colorskin-custom' : '';
@@ -140,4 +144,3 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
     </div>
     
 </div>
-<?php /** Append JS codes for full-calendar skin **/ if(isset($this->atts['append_js_codes']) and $this->atts['append_js_codes']) echo $javascript;

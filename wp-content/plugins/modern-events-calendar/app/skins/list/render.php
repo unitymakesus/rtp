@@ -26,7 +26,8 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                     $event_color = isset($event->data->meta['mec_color']) ? '<span class="event-color" style="background: #'.$event->data->meta['mec_color'].'"></span>' : '';
                     $label_style = '';
 
-                    if(!empty($event->data->labels)):
+                    if(!empty($event->data->labels))
+                    {
                         foreach($event->data->labels as $label)
                         {
                             if(!isset($label['style']) or (isset($label['style']) and !trim($label['style']))) continue;
@@ -39,8 +40,50 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                                 $label_style = esc_html__('Canceled' , 'mec');
                             }
                         }
-                    endif;
+                    }
+
+                    $speakers = '""';
+                    if(!empty($event->data->speakers))
+                    {
+                        $speakers= [];
+                        foreach($event->data->speakers as $key => $value)
+                        {
+                            $speakers[] = array(
+                                "@type" 	=> "Person",
+                                "name"		=> $value['name'],
+                                "image"		=> $value['thumbnail'],
+                                "sameAs"	=> $value['facebook'],
+                            );
+                        }
+
+                        $speakers = json_encode($speakers);
+                    }
             ?>
+            <script type="application/ld+json">
+            {
+                "@context" 		: "http://schema.org",
+                "@type" 		: "Event",
+                "startDate" 	: "<?php echo !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '' ; ?>",
+                "endDate" 		: "<?php echo !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ; ?>",
+                "location" 		:
+                {
+                    "@type" 		: "Place",
+                    "name" 			: "<?php echo (isset($location['name']) ? $location['name'] : ''); ?>",
+                    "image"			: "<?php echo (isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '');; ?>",
+                    "address"		: "<?php echo (isset($location['address']) ? $location['address'] : ''); ?>"
+                },
+                "offers": {
+                    "url": "<?php echo $event->data->permalink; ?>",
+                    "price": "<?php echo isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; ?>",
+                    "priceCurrency" : "<?php echo isset($settings['currency']) ? $settings['currency'] : ''; ?>"
+                },
+                "performer": <?php echo $speakers; ?>,
+                "description" 	: "<?php  echo esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', $event->data->post->post_content)); ?>",
+                "image" 		: "<?php echo !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ; ?>",
+                "name" 			: "<?php esc_html_e($event->data->title); ?>",
+                "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
+            }
+            </script>
             <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?> mec-divider-toggle mec-toggle-<?php echo date_i18n('Ym', strtotime($date)); ?>-<?php echo $this->id; ?>">
                 <?php if($this->style == 'modern'): ?>
                     <div class="col-md-2 col-sm-2">
@@ -81,7 +124,7 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                         // Safe Excerpt for UTF-8 Strings
                         if(!trim($excerpt))
                         {
-                            $ex = explode(' ', strip_tags($event->data->post->post_content));
+                            $ex = explode(' ', strip_tags(strip_shortcodes($event->data->post->post_content)));
                             $words = array_slice($ex, 0, 10);
                             
                             $excerpt = implode(' ', $words);
@@ -129,6 +172,7 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                         </div>
                     </div>
                     <div class="mec-event-footer">
+                    <?php if($settings['social_network_status'] != '0') : ?>
                         <ul class="mec-event-sharing-wrap">
                             <li class="mec-event-share">
                                 <a href="#" class="mec-event-share-icon">
@@ -137,6 +181,7 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                             </li>
                             <ul class="mec-event-sharing"><?php echo $this->main->module('links.list', array('event'=>$event)); ?></ul> 
                         </ul>
+                    <?php endif; ?>
                         <a class="mec-booking-button" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')); ?></a>
                     </div>
                 <?php elseif($this->style == 'accordion'): ?>

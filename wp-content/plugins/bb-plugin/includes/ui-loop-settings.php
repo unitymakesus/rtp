@@ -12,9 +12,17 @@ $defaults = array(
 
 $tab_defaults = isset( $tab['defaults'] ) ? $tab['defaults'] : array();
 $settings     = (object) array_merge( $defaults, $tab_defaults, (array) $settings );
-$settings 	  = apply_filters( 'fl_builder_loop_settings', $settings );  //Allow extension of default Values
+/**
+ * Allow extension of default Values
+ * @see fl_builder_loop_settings
+ */
+$settings = apply_filters( 'fl_builder_loop_settings', $settings );
 
-do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custom FLBuilder::render_settings_field()
+/**
+ * e.g Add custom FLBuilder::render_settings_field()
+ * @see fl_builder_loop_settings_before_form
+ */
+do_action( 'fl_builder_loop_settings_before_form', $settings );
 
 ?>
 <div id="fl-builder-settings-section-source" class="fl-loop-data-source-select fl-builder-settings-section">
@@ -23,16 +31,16 @@ do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custo
 
 	// Data Source
 	FLBuilder::render_settings_field('data_source', array(
-		'type'          => 'select',
-		'label'         => __( 'Source', 'fl-builder' ),
-		'default'		=> 'custom_query',
-		'options'       => array(
-			'custom_query'  => __( 'Custom Query', 'fl-builder' ),
-			'main_query'    => __( 'Main Query', 'fl-builder' ),
+		'type'    => 'select',
+		'label'   => __( 'Source', 'fl-builder' ),
+		'default' => 'custom_query',
+		'options' => array(
+			'custom_query' => __( 'Custom Query', 'fl-builder' ),
+			'main_query'   => __( 'Main Query', 'fl-builder' ),
 		),
-		'toggle'        => array(
-			'custom_query'  => array(
-				'fields'        => array( 'posts_per_page' ),
+		'toggle'  => array(
+			'custom_query' => array(
+				'fields' => array( 'posts_per_page' ),
 			),
 		),
 	), $settings);
@@ -50,25 +58,25 @@ do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custo
 
 		// Post type
 		FLBuilder::render_settings_field('post_type', array(
-			'type'          => 'post-type',
-			'label'         => __( 'Post Type', 'fl-builder' ),
+			'type'  => 'post-type',
+			'label' => __( 'Post Type', 'fl-builder' ),
 		), $settings);
 
 		// Order
 		FLBuilder::render_settings_field('order', array(
-			'type'          => 'select',
-			'label'         => __( 'Order', 'fl-builder' ),
-			'options'       => array(
-				'DESC'          => __( 'Descending', 'fl-builder' ),
-				'ASC'           => __( 'Ascending', 'fl-builder' ),
+			'type'    => 'select',
+			'label'   => __( 'Order', 'fl-builder' ),
+			'options' => array(
+				'DESC' => __( 'Descending', 'fl-builder' ),
+				'ASC'  => __( 'Ascending', 'fl-builder' ),
 			),
 		), $settings);
 
 		// Order by
 		FLBuilder::render_settings_field('order_by', array(
-			'type'          => 'select',
-			'label'         => __( 'Order By', 'fl-builder' ),
-			'options'       => array(
+			'type'    => 'select',
+			'label'   => __( 'Order By', 'fl-builder' ),
+			'options' => array(
 				'author'         => __( 'Author', 'fl-builder' ),
 				'comment_count'  => __( 'Comment Count', 'fl-builder' ),
 				'date'           => __( 'Date', 'fl-builder' ),
@@ -77,43 +85,43 @@ do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custo
 				'menu_order'     => __( 'Menu Order', 'fl-builder' ),
 				'meta_value'     => __( 'Meta Value (Alphabetical)', 'fl-builder' ),
 				'meta_value_num' => __( 'Meta Value (Numeric)', 'fl-builder' ),
-				'rand'        	 => __( 'Random', 'fl-builder' ),
+				'rand'           => __( 'Random', 'fl-builder' ),
 				'title'          => __( 'Title', 'fl-builder' ),
 				'post__in'       => __( 'Selection Order', 'fl-builder' ),
 			),
-			'toggle'		=> array(
-				'meta_value' 	=> array(
-					'fields'		=> array( 'order_by_meta_key' ),
+			'toggle'  => array(
+				'meta_value'     => array(
+					'fields' => array( 'order_by_meta_key' ),
 				),
 				'meta_value_num' => array(
-					'fields'		=> array( 'order_by_meta_key' ),
+					'fields' => array( 'order_by_meta_key' ),
 				),
 			),
 		), $settings);
 
 		// Meta Key
 		FLBuilder::render_settings_field('order_by_meta_key', array(
-			'type'          => 'text',
-			'label'         => __( 'Meta Key', 'fl-builder' ),
+			'type'  => 'text',
+			'label' => __( 'Meta Key', 'fl-builder' ),
 		), $settings);
 
 		// Offset
 		FLBuilder::render_settings_field('offset', array(
-			'type'          => 'text',
-			'label'         => _x( 'Offset', 'How many posts to skip.', 'fl-builder' ),
-			'default'       => '0',
-			'size'          => '4',
-			'help'          => __( 'Skip this many posts that match the specified criteria.', 'fl-builder' ),
+			'type'    => 'text',
+			'label'   => _x( 'Offset', 'How many posts to skip.', 'fl-builder' ),
+			'default' => '0',
+			'size'    => '4',
+			'help'    => __( 'Skip this many posts that match the specified criteria.', 'fl-builder' ),
 		), $settings);
 
 		FLBuilder::render_settings_field('exclude_self', array(
-			'type'          => 'select',
-			'label'         => __( 'Exclude Current Post', 'fl-builder' ),
-			'default'       => 'no',
-			'help'          => __( 'Exclude the current post from the query.' ),
-			'options'       => array(
-				'yes'          => __( 'Yes', 'fl-builder' ),
-				'no'           => __( 'No', 'fl-builder' ),
+			'type'    => 'select',
+			'label'   => __( 'Exclude Current Post', 'fl-builder' ),
+			'default' => 'no',
+			'help'    => __( 'Exclude the current post from the query.' ),
+			'options' => array(
+				'yes' => __( 'Yes', 'fl-builder' ),
+				'no'  => __( 'No', 'fl-builder' ),
 			),
 		), $settings);
 
@@ -125,17 +133,18 @@ do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custo
 			<span class="fl-builder-settings-title-text-wrap"><?php _e( 'Filter', 'fl-builder' ); ?></span>
 		</h3>
 		<?php foreach ( FLBuilderLoop::post_types() as $slug => $type ) : ?>
-			<table class="fl-form-table fl-custom-query-filter fl-custom-query-<?php echo $slug; ?>-filter" <?php if ( $slug == $settings->post_type ) { echo 'style="display:table;"';} ?>>
+			<table class="fl-form-table fl-custom-query-filter fl-custom-query-<?php echo $slug; ?>-filter"<?php echo ( $slug == $settings->post_type ) ? ' style="display:table;"' : ''; ?>>
 			<?php
 
 			// Posts
 			FLBuilder::render_settings_field( 'posts_' . $slug, array(
-				'type'          => 'suggest',
-				'action'        => 'fl_as_posts',
-				'data'          => $slug,
-				'label'         => $type->label,
-				'help'          => sprintf( __( 'Enter a list of %1$s.', 'fl-builder' ), $type->label ),
-				'matching'      => true,
+				'type'     => 'suggest',
+				'action'   => 'fl_as_posts',
+				'data'     => $slug,
+				'label'    => $type->label,
+				/* translators: %s: type label */
+				'help'     => sprintf( __( 'Enter a list of %1$s.', 'fl-builder' ), $type->label ),
+				'matching' => true,
 			), $settings );
 
 			// Taxonomies
@@ -144,12 +153,13 @@ do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custo
 			foreach ( $taxonomies as $tax_slug => $tax ) {
 
 				FLBuilder::render_settings_field( 'tax_' . $slug . '_' . $tax_slug, array(
-					'type'          => 'suggest',
-					'action'        => 'fl_as_terms',
-					'data'          => $tax_slug,
-					'label'         => $tax->label,
-					'help'          => sprintf( __( 'Enter a list of %1$s.', 'fl-builder' ), $tax->label ),
-					'matching'      => true,
+					'type'     => 'suggest',
+					'action'   => 'fl_as_terms',
+					'data'     => $tax_slug,
+					'label'    => $tax->label,
+					/* translators: %s: tax label */
+					'help'     => sprintf( __( 'Enter a list of %1$s.', 'fl-builder' ), $tax->label ),
+					'matching' => true,
 				), $settings );
 			}
 
@@ -161,11 +171,11 @@ do_action( 'fl_builder_loop_settings_before_form', $settings ); // e.g Add custo
 
 		// Author
 		FLBuilder::render_settings_field('users', array(
-			'type'          => 'suggest',
-			'action'        => 'fl_as_users',
-			'label'         => __( 'Authors', 'fl-builder' ),
-			'help'          => __( 'Enter a list of authors usernames.', 'fl-builder' ),
-			'matching'      => true,
+			'type'     => 'suggest',
+			'action'   => 'fl_as_users',
+			'label'    => __( 'Authors', 'fl-builder' ),
+			'help'     => __( 'Enter a list of authors usernames.', 'fl-builder' ),
+			'matching' => true,
 		), $settings);
 
 		?>

@@ -267,9 +267,9 @@ class PrliUtils {
     if(isset($track_me) and !empty($track_me) and $track_me) {
       $first_click = 0;
       $click_ip =         $this->get_current_client_ip();
-      $click_referer =    isset($_SERVER['HTTP_REFERER'])?$_SERVER['HTTP_REFERER']:'';
-      $click_uri =        isset($_SERVER['REQUEST_URI'])?$_SERVER['REQUEST_URI']:'';
-      $click_user_agent = isset($_SERVER['HTTP_USER_AGENT'])?$_SERVER['HTTP_USER_AGENT']:'';
+      $click_referer =    isset($_SERVER['HTTP_REFERER'])?sanitize_text_field( $_SERVER['HTTP_REFERER'] ):'';
+      $click_uri =        isset($_SERVER['REQUEST_URI'])?sanitize_text_field( $_SERVER['REQUEST_URI'] ):'';
+      $click_user_agent = isset($_SERVER['HTTP_USER_AGENT'])?sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ):'';
 
       //Set Cookie if it doesn't exist
       $cookie_name = 'prli_click_' . $pretty_link->id;
@@ -405,22 +405,22 @@ class PrliUtils {
   }
 
   public function get_current_client_ip() {
-    $ipaddress = (isset($_SERVER['REMOTE_ADDR']))?$_SERVER['REMOTE_ADDR']:'';
+    $ipaddress = (isset($_SERVER['REMOTE_ADDR']))?sanitize_text_field( $_SERVER['REMOTE_ADDR'] ):'';
 
     if(isset($_SERVER['HTTP_CLIENT_IP']) && $_SERVER['HTTP_CLIENT_IP'] != '127.0.0.1') {
-      $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+      $ipaddress = sanitize_text_field( $_SERVER['HTTP_CLIENT_IP'] );
     }
     elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && $_SERVER['HTTP_X_FORWARDED_FOR'] != '127.0.0.1') {
-      $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      $ipaddress = sanitize_text_field( $_SERVER['HTTP_X_FORWARDED_FOR'] );
     }
     elseif(isset($_SERVER['HTTP_X_FORWARDED']) && $_SERVER['HTTP_X_FORWARDED'] != '127.0.0.1') {
-      $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+      $ipaddress = sanitize_text_field( $_SERVER['HTTP_X_FORWARDED'] );
     }
     elseif(isset($_SERVER['HTTP_FORWARDED_FOR']) && $_SERVER['HTTP_FORWARDED_FOR'] != '127.0.0.1') {
-      $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+      $ipaddress = sanitize_text_field( $_SERVER['HTTP_FORWARDED_FOR'] );
     }
     elseif(isset($_SERVER['HTTP_FORWARDED']) && $_SERVER['HTTP_FORWARDED'] != '127.0.0.1') {
-      $ipaddress = $_SERVER['HTTP_FORWARDED'];
+      $ipaddress = sanitize_text_field( $_SERVER['HTTP_FORWARDED'] );
     }
 
     $ips = explode(',', $ipaddress);

@@ -3,11 +3,21 @@
 defined('MECEXEC') or die();
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?> clearfix <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->uniqueid; ?>">
-    <article class="mec-single-event mec-single-modern">
-        <div class="mec-events-event-image"><?php echo $event->data->thumbnails['full']; ?></div>
+    <article class="row mec-single-event mec-single-modern">
+        <!-- start breadcrumbs -->
+        <?php
+        $breadcrumbs_settings = $settings['breadcrumbs'];
+        if($breadcrumbs_settings == '1'):
+            $breadcrumbs = new MEC_skin_single; ?>
+            <div class="mec-breadcrumbs mec-breadcrumbs-modern">
+                <?php $breadcrumbs->MEC_breadcrumbs(get_the_ID()); ?>
+            </div>
+        <?php endif ;?>
+        <!-- end breadcrumbs -->
+        <div class="mec-events-event-image"><?php echo $event->data->thumbnails['full']; ?><?php do_action('mec_custom_dev_image_section', $event); ?></div>
         <div class="col-md-4">
             
-            <div class="mec-event-meta mec-color-before mec-frontbox <?php echo ((!$this->main->can_show_booking_module($event) and in_array($event->data->meta['mec_organizer_id'], array('0', '1'))) ? 'mec-util-hidden' : '') ; ?>">
+            <div class="mec-event-meta mec-color-before mec-frontbox <?php echo ((!$this->main->can_show_booking_module($event) and in_array($event->data->meta['mec_organizer_id'], array('0', '1')) and !trim($event->data->meta['mec_more_info'])) ? 'mec-util-hidden' : '') ; ?>">
                 <?php
                 // Event Organizer
                 if(isset($event->data->organizers[$event->data->meta['mec_organizer_id']]) && !empty($event->data->organizers[$event->data->meta['mec_organizer_id']]))
@@ -55,9 +65,10 @@ defined('MECEXEC') or die();
                 <!-- Register Booking Button -->
                 <?php if($this->main->can_show_booking_module($event)): ?>
                     <?php $data_lity = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity = 'data-lity'; ?>
-                    <a class="mec-booking-button mec-bg-color" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                    <a class="mec-booking-button mec-bg-color <?php if( isset($settings['single_booking_style']) and $settings['single_booking_style'] != 'modal' ) echo 'simple-booking'; ?>" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
                 <?php elseif(isset($event->data->meta['mec_more_info']) and trim($event->data->meta['mec_more_info']) and $event->data->meta['mec_more_info'] != 'http://'): ?>
-                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php if(isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) echo esc_html(trim($event->data->meta['mec_more_info_title']), 'mec'); else echo esc_html($this->main->m('register_button', __('REGISTER', 'mec')));
+                     ?></a>
                 <?php endif; ?>
             </div>
 
@@ -85,6 +96,7 @@ defined('MECEXEC') or die();
                             <dd class="location"><address class="mec-events-address"><span class="mec-address"><?php echo (isset($location['address']) ? $location['address'] : ''); ?></span></address></dd>
                         </div>
                         <?php
+                        $this->show_other_locations($event); // Show Additional Locations
                     }
                 ?>
 
@@ -137,6 +149,9 @@ defined('MECEXEC') or die();
 
             <!-- QRCode Module -->
             <?php echo $this->main->module('qrcode.details', array('event'=>$event)); ?>
+
+            <!-- Widgets -->
+            <?php dynamic_sidebar('mec-single-sidebar'); ?>
           
         </div>
         <div class="col-md-8">
@@ -187,7 +202,7 @@ defined('MECEXEC') or die();
                         <?php
                     }
                 ?>
-                
+                <?php do_action('print_extra_costs', $event); ?>
                 <?php
                 // Event labels
                 if(isset($event->data->labels) && !empty($event->data->labels))
@@ -197,10 +212,13 @@ defined('MECEXEC') or die();
                     <div class="mec-single-event-label">
                         <i class="mec-fa-bookmark-o"></i>
                         <h3 class="mec-cost"><?php echo $this->main->m('taxonomy_labels', __('Labels', 'mec')); ?></h3>
-                        <?php foreach($event->data->labels as $labels=>$label) : 
-                            $seperator = (++$mec_i === $mec_items ) ? '' : ',';
-                            echo '<dd style="color:' . $label['color'] . '">' . $label["name"] . $seperator . '</dd>';
-                        endforeach; ?>
+                        <?php
+                            foreach($event->data->labels as $labels=>$label)
+                            {
+                                $seperator = (++$mec_i === $mec_items) ? '' : ',';
+                                echo '<dd style="color:' . $label['color'] . '">' . $label["name"] . $seperator . '</dd>';
+                            }
+                        ?>
                     </div>
                     <?php
                 }
@@ -209,7 +227,7 @@ defined('MECEXEC') or die();
 
             <div class="mec-event-content">
                 <h1 class="mec-single-title"><?php the_title(); ?></h1>
-                <div class="mec-single-event-description mec-events-content"><?php the_content(); ?></div>
+                <div class="mec-single-event-description mec-events-content"><?php the_content(); ?><?php do_action('mec_custom_dev_content_section' , $event); ?></div>
             </div>
 
             <!-- Links Module -->
@@ -251,3 +269,48 @@ defined('MECEXEC') or die();
         </div>
     </article>
 </div>
+<?php
+$speakers = '""';
+if(!empty($event->data->speakers))
+{
+    $speakers= [];
+    foreach($event->data->speakers as $key => $value)
+    {
+        $speakers[] = array(
+            "@type" 	=> "Person",
+            "name"		=> $value['name'],
+            "image"		=> $value['thumbnail'],
+            "sameAs"	=> $value['facebook'],
+        );
+    }
+
+    $speakers = json_encode($speakers);
+}
+?>
+<script type="application/ld+json">
+{
+	"@context" 		: "http://schema.org",
+	"@type" 		: "Event",
+	"startDate" 	: "<?php echo !empty($event->data->meta['mec_date']['start']['date']) ? $event->data->meta['mec_date']['start']['date'] : '' ; ?>",
+	"endDate" 		: "<?php echo !empty($event->data->meta['mec_date']['end']['date']) ? $event->data->meta['mec_date']['end']['date'] : '' ; ?>",
+	<?php if(isset($location) and is_array($location)): ?>
+	"location" 		:
+	{
+		"@type" 		: "Place",
+		"name" 			: "<?php echo (isset($location['name']) ? $location['name'] : ''); ?>",
+		"image"			: "<?php echo esc_url($location['thumbnail'] ); ?>",
+		"address"		: "<?php echo (isset($location['address']) ? $location['address'] : ''); ?>"
+	},
+	<?php endif; ?>
+    "offers": {
+        "url": "<?php echo get_the_permalink(); ?>",
+        "price": "<?php echo $event->data->meta['mec_cost'] ?>",
+        "priceCurrency" : "<?php echo isset($settings['currency']) ? $settings['currency'] : ''; ?>"
+    },
+	"performer": <?php echo $speakers; ?>,
+	"description" 	: "<?php  echo esc_html(preg_replace('/<p>\\s*?(<a .*?><img.*?><\\/a>|<img.*?>)?\\s*<\\/p>/s', '<div class="figure">$1</div>', get_the_content())); ?>",
+	"image" 		: "<?php echo esc_html($event->data->featured_image['full']); ?>",
+	"name" 			: "<?php esc_html_e(get_the_title()); ?>",
+	"url"			: "<?php the_permalink(); ?>"
+}
+</script>

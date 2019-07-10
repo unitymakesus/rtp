@@ -34,15 +34,15 @@ if(!isset($ix['sync_f_import']) or (isset($ix['sync_f_import']) and !$ix['sync_f
 $fb_page_link = isset($ix['facebook_import_page_link']) ? $ix['facebook_import_page_link'] : NULL;
 if(!trim($fb_page_link)) exit(__("Please insert your facebook page's link.", 'mec'));
 
-$fb_access_token = '1819770188280256|GyNKicqC8aT4Z7GVz_PptY-7kQQ';
+$fb_access_token = isset($ix['facebook_app_token']) ? $ix['facebook_app_token'] : NULL;
 
-$fb_page_result = $main->get_web_page('https://graph.facebook.com/v2.8/?access_token='.$fb_access_token.'&id='.$fb_page_link);
+$fb_page_result = $main->get_web_page('https://graph.facebook.com/v3.2/?access_token='.$fb_access_token.'&id='.$fb_page_link);
 $fb_page = json_decode($fb_page_result, true);
 
 $fb_page_id = isset($fb_page['id']) ? $fb_page['id'] : 0;
 if(!$fb_page_id) exit(__("We couldn't recognize your Facebook page. Please check it and provide us a valid facebook page link.", 'mec'));
 
-$next_page = 'https://graph.facebook.com/v2.8/'.$fb_page_id.'/events/?access_token='.$fb_access_token;
+$next_page = 'https://graph.facebook.com/v3.2/'.$fb_page_id.'/events/?access_token='.$fb_access_token;
 
 // Timezone
 $timezone = $main->get_timezone();
@@ -53,7 +53,6 @@ $wp_upload_dir = wp_upload_dir();
 
 // Imported Events
 $posts = array();
-
 do
 {
     $events_result = $main->get_web_page($next_page);
@@ -64,7 +63,7 @@ do
 
     foreach($fb_events['data'] as $fb_event)
     {
-        $events_result = $main->get_web_page('https://graph.facebook.com/v2.8/'.$fb_event['id'].'?access_token='.$fb_access_token);
+        $events_result = $main->get_web_page('https://graph.facebook.com/v3.2/'.$fb_event['id'].'?access_token='.$fb_access_token);
         $event = json_decode($events_result, true);
 
         // Event organizer
@@ -175,7 +174,7 @@ do
         if($location_id) wp_set_object_terms($post_id, (int) $location_id, 'mec_location');
 
         // Set the Featured Image
-        $photos_results = $main->get_web_page('https://graph.facebook.com/v2.8/'.$fb_event['id'].'/photos?access_token='.$fb_access_token);
+        $photos_results = $main->get_web_page('https://graph.facebook.com/v3.2/'.$fb_event['id'].'/photos?access_token='.$fb_access_token);
         $photos = json_decode($photos_results, true);
 
         if(!has_post_thumbnail($post_id) and isset($photos['data']) and is_array($photos['data']) and count($photos['data']))

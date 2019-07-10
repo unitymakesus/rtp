@@ -304,9 +304,16 @@ FLBuilder::register_module(
 
 						/* Image Gutter */
 						'gutter'            => array(
-							'type'        => 'text',
+							'type'        => 'unit',
 							'label'       => __( 'Gutter', 'uabb' ),
 							'placeholder' => '50',
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
 							'help'        => __( '50% is default. Increase to push the image outside or decrease to pull the image inside.', 'uabb' ),
 							'units'       => array( '%' ),
 						),
@@ -331,6 +338,13 @@ FLBuilder::register_module(
 							'type'        => 'unit',
 							'label'       => __( 'Image Position from Left / Right', 'uabb' ),
 							'placeholder' => '0',
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
 							'help'        => __( 'Provides more control to align image at specific position.', 'uabb' ),
 							'units'       => array( '%' ),
 						),

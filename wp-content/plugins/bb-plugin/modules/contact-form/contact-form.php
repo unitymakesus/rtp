@@ -10,17 +10,55 @@ class FLContactFormModule extends FLBuilderModule {
 	 */
 	public function __construct() {
 		parent::__construct(array(
-			'name'           	=> __( 'Contact Form', 'fl-builder' ),
-			'description'    	=> __( 'A very simple contact form.', 'fl-builder' ),
-			'category'       	=> __( 'Actions', 'fl-builder' ),
-			'editor_export'  	=> false,
-			'partial_refresh'	=> true,
-			'icon'				=> 'editor-table.svg',
+			'name'            => __( 'Contact Form', 'fl-builder' ),
+			'description'     => __( 'A very simple contact form.', 'fl-builder' ),
+			'category'        => __( 'Actions', 'fl-builder' ),
+			'editor_export'   => false,
+			'partial_refresh' => true,
+			'icon'            => 'editor-table.svg',
 		));
 
 		add_action( 'wp_ajax_fl_builder_email', array( $this, 'send_mail' ) );
 		add_action( 'wp_ajax_nopriv_fl_builder_email', array( $this, 'send_mail' ) );
 		add_filter( 'script_loader_tag', array( $this, 'add_async_attribute' ), 10, 2 );
+	}
+
+	/**
+	 * Ensure backwards compatibility with old settings.
+	 *
+	 * @since 2.2
+	 * @param object $settings A module settings object.
+	 * @param object $helper A settings compatibility helper.
+	 * @return object
+	 */
+	public function filter_settings( $settings, $helper ) {
+
+		// Handle old button module settings.
+		$helper->filter_child_module_settings( 'button', $settings, array(
+			'btn_3d'                 => 'three_d',
+			'btn_style'              => 'style',
+			'btn_padding'            => 'padding',
+			'btn_padding_top'        => 'padding_top',
+			'btn_padding_bottom'     => 'padding_bottom',
+			'btn_padding_left'       => 'padding_left',
+			'btn_padding_right'      => 'padding_right',
+			'btn_mobile_align'       => 'mobile_align',
+			'btn_align_responsive'   => 'align_responsive',
+			'btn_font_size'          => 'font_size',
+			'btn_font_size_unit'     => 'font_size_unit',
+			'btn_typography'         => 'typography',
+			'btn_bg_color'           => 'bg_color',
+			'btn_bg_hover_color'     => 'bg_hover_color',
+			'btn_bg_opacity'         => 'bg_opacity',
+			'btn_bg_hover_opacity'   => 'bg_hover_opacity',
+			'btn_border'             => 'border',
+			'btn_border_hover_color' => 'border_hover_color',
+			'btn_border_radius'      => 'border_radius',
+			'btn_border_size'        => 'border_size',
+		) );
+
+		// Return the filtered settings.
+		return $settings;
 	}
 
 	/**
@@ -49,7 +87,7 @@ class FLContactFormModule extends FLBuilderModule {
 	 * @param string $handle Registered script handle
 	 */
 	public function add_async_attribute( $tag, $handle ) {
-		if ( ('g-recaptcha' !== $handle) || ('g-recaptcha' === $handle && strpos( $tag, 'g-recaptcha-api' ) !== false ) ) {
+		if ( ( 'g-recaptcha' !== $handle ) || ( 'g-recaptcha' === $handle && strpos( $tag, 'g-recaptcha-api' ) !== false ) ) {
 			return $tag;
 		}
 
@@ -66,7 +104,7 @@ class FLContactFormModule extends FLBuilderModule {
 		if ( class_exists( 'FLPageData' ) && isset( $_REQUEST['layout_id'] ) ) {
 
 			$posts = query_posts( array(
-				'p' => absint( $_REQUEST['layout_id'] ),
+				'p'         => absint( $_REQUEST['layout_id'] ),
 				'post_type' => 'any',
 			) );
 
@@ -88,17 +126,17 @@ class FLContactFormModule extends FLBuilderModule {
 		self::connect_field_connections_before_send();
 
 		// Get the contact form post data
-		$node_id			= isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : false;
-		$template_id	 	= isset( $_POST['template_id'] ) ? sanitize_text_field( $_POST['template_id'] ) : false;
-		$template_node_id	  = isset( $_POST['template_node_id'] ) ? sanitize_text_field( $_POST['template_node_id'] ) : false;
-		$recaptcha_response	= isset( $_POST['recaptcha_response'] ) ? $_POST['recaptcha_response'] : false;
-		$terms_checked	    = isset( $_POST['terms_checked'] ) && 1 == $_POST['terms_checked'] ? true : false;
+		$node_id            = isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : false;
+		$template_id        = isset( $_POST['template_id'] ) ? sanitize_text_field( $_POST['template_id'] ) : false;
+		$template_node_id   = isset( $_POST['template_node_id'] ) ? sanitize_text_field( $_POST['template_node_id'] ) : false;
+		$recaptcha_response = isset( $_POST['recaptcha_response'] ) ? $_POST['recaptcha_response'] : false;
+		$terms_checked      = isset( $_POST['terms_checked'] ) && 1 == $_POST['terms_checked'] ? true : false;
 
-		$subject 			= (isset( $_POST['subject'] ) ? $_POST['subject'] : __( 'Contact Form Submission', 'fl-builder' ));
-		$admin_email 		= get_option( 'admin_email' );
-		$site_name 			= get_option( 'blogname' );
-		$response 			= array(
-			'error' => true,
+		$subject     = ( isset( $_POST['subject'] ) ? $_POST['subject'] : __( 'Contact Form Submission', 'fl-builder' ) );
+		$admin_email = get_option( 'admin_email' );
+		$site_name   = get_option( 'blogname' );
+		$response    = array(
+			'error'   => true,
 			'message' => __( 'Message failed. Please try again.', 'fl-builder' ),
 		);
 
@@ -107,21 +145,24 @@ class FLContactFormModule extends FLBuilderModule {
 			// Get the module settings.
 			if ( $template_id ) {
 				$post_id  = FLBuilderModel::get_node_template_post_id( $template_id );
-				$data		= FLBuilderModel::get_layout_data( 'published', $post_id );
+				$data     = FLBuilderModel::get_layout_data( 'published', $post_id );
 				$settings = $data[ $template_node_id ]->settings;
 			} else {
-				$module	  = FLBuilderModel::get_module( $node_id );
+				$module   = FLBuilderModel::get_module( $node_id );
 				$settings = $module->settings;
 			}
 
-			if ( isset( $settings->mailto_email ) && ! empty( $settings->mailto_email ) ) {
-				$mailto	  = $settings->mailto_email;
-			} else {
-				$mailto   = $admin_email;
+			if ( class_exists( 'FLThemeBuilderFieldConnections' ) ) {
+				$settings = FLThemeBuilderFieldConnections::connect_settings( $settings );
 			}
 
+			if ( isset( $settings->mailto_email ) && ! empty( $settings->mailto_email ) ) {
+				$mailto = $settings->mailto_email;
+			} else {
+				$mailto = $admin_email;
+			}
 			if ( isset( $settings->subject_toggle ) && ( 'hide' == $settings->subject_toggle ) && isset( $settings->subject_hidden ) && ! empty( $settings->subject_hidden ) ) {
-				$subject   = $settings->subject_hidden;
+				$subject = $settings->subject_hidden;
 			}
 
 			// Validate terms and conditions if enabled
@@ -143,7 +184,7 @@ class FLContactFormModule extends FLBuilderModule {
 					}
 				} else {
 					$response = array(
-						'error' => true,
+						'error'   => true,
 						'message' => __( 'Your reCAPTCHA Site or Secret Key is missing!', 'fl-builder' ),
 					);
 				}
@@ -151,8 +192,8 @@ class FLContactFormModule extends FLBuilderModule {
 				$response['error'] = false;
 			}
 
-			$fl_contact_from_email = (isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : null);
-			$fl_contact_from_name = (isset( $_POST['name'] ) ? $_POST['name'] : '');
+			$fl_contact_from_email = ( isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : null );
+			$fl_contact_from_name  = ( isset( $_POST['name'] ) ? $_POST['name'] : '' );
 
 			if ( isset( $_POST['name'] ) ) {
 				$site_name = apply_filters( 'fl_contact_form_from', $site_name, $_POST['name'] );
@@ -160,29 +201,68 @@ class FLContactFormModule extends FLBuilderModule {
 
 			$headers = array(
 				'From: ' . $site_name . ' <' . $admin_email . '>',
-				  'Reply-To: ' . $fl_contact_from_name . ' <' . $fl_contact_from_email . '>',
+				'Reply-To: ' . $fl_contact_from_name . ' <' . $fl_contact_from_email . '>',
 			);
 
 			// Build the email
 			$template = '';
 
-			if ( isset( $_POST['name'] ) ) {  $template .= "Name: $_POST[name] \r\n";
+			if ( isset( $_POST['name'] ) ) {
+				$template .= "Name: $_POST[name] \r\n";
 			}
-			if ( isset( $_POST['email'] ) ) { $template .= "Email: $_POST[email] \r\n";
+			if ( isset( $_POST['email'] ) ) {
+				$template .= "Email: $_POST[email] \r\n";
 			}
-			if ( isset( $_POST['phone'] ) ) { $template .= "Phone: $_POST[phone] \r\n";
+			if ( isset( $_POST['phone'] ) ) {
+				$template .= "Phone: $_POST[phone] \r\n";
 			}
 
 			$template .= __( 'Message', 'fl-builder' ) . ": \r\n" . $_POST['message'];
 
 			// Double check the mailto email is proper and no validation error found, then send.
 			if ( $mailto && false === $response['error'] ) {
-				wp_mail( $mailto, $subject, $template, $headers );
+
+				$subject = esc_html( do_shortcode( $subject ) );
+				$mailto  = esc_html( do_shortcode( $mailto ) );
+				/**
+				 * Before sending with wp_mail()
+				 * @see fl_module_contact_form_before_send
+				 */
+				do_action( 'fl_module_contact_form_before_send', $mailto, $subject, $template, $headers, $settings );
+				$result = wp_mail( $mailto, $subject, $template, $headers );
+
+				/**
+				 * After sending with wp_mail()
+				 * @see fl_module_contact_form_after_send
+				 */
+				do_action( 'fl_module_contact_form_after_send', $mailto, $subject, $template, $headers, $settings, $result );
 				$response['message'] = __( 'Sent!', 'fl-builder' );
 			}
 
 			wp_send_json( $response );
 		}
+	}
+
+	/**
+	 * Returns an array of settings used to render a button module.
+	 *
+	 * @since 2.2
+	 * @return array
+	 */
+	public function get_button_settings() {
+		$settings = array(
+			'link'        => '#',
+			'link_target' => '_self',
+		);
+
+		foreach ( $this->settings as $key => $value ) {
+			if ( strstr( $key, 'btn_' ) ) {
+				$key              = str_replace( 'btn_', '', $key );
+				$settings[ $key ] = $value;
+			}
+		}
+
+		return $settings;
 	}
 }
 
@@ -190,456 +270,471 @@ class FLContactFormModule extends FLBuilderModule {
  * Register the module and its form settings.
  */
 FLBuilder::register_module('FLContactFormModule', array(
-	'general'		 => array(
-		'title'		  => __( 'General', 'fl-builder' ),
-		'sections'	  => array(
-			'general'	   => array(
-				'title'			=> '',
-				'fields'		=> array(
-					'mailto_email'		=> array(
-						'type'		  => 'text',
-						'label'		  => __( 'Send To Email', 'fl-builder' ),
-						'default'		  => '',
-						'placeholder'	  => __( 'example@mail.com', 'fl-builder' ),
-						'help'		  => __( 'The contact form will send to this e-mail. Defaults to the admin email.', 'fl-builder' ),
-						'preview'		  => array(
-							'type'		   => 'none',
+	'general'   => array(
+		'title'    => __( 'General', 'fl-builder' ),
+		'sections' => array(
+			'general' => array(
+				'title'  => '',
+				'fields' => array(
+					'mailto_email' => array(
+						'type'        => 'text',
+						'label'       => __( 'Send To Email', 'fl-builder' ),
+						'default'     => '',
+						'placeholder' => __( 'example@mail.com', 'fl-builder' ),
+						'help'        => __( 'The contact form will send to this e-mail. Defaults to the admin email.', 'fl-builder' ),
+						'preview'     => array(
+							'type' => 'none',
 						),
-						'connections'   => array( 'custom_field' ),
+						'connections' => array( 'custom_field' ),
 					),
-					'name_toggle'	 => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Name Field', 'fl-builder' ),
-						'default'		  => 'show',
-						'options'		  => array(
-							'show'	   => __( 'Show', 'fl-builder' ),
-							'hide'	   => __( 'Hide', 'fl-builder' ),
+				),
+			),
+			'fields'  => array(
+				'title'  => __( 'Fields', 'fl-builder' ),
+				'fields' => array(
+					'name_toggle'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Name Field', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'show'			=> array(
-								'fields'		=> array( 'name_placeholder' ),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'name_placeholder' ),
 							),
 						),
 					),
-					'name_placeholder'	=> array(
-						'type'		=> 'text',
-						'label'		=> __( 'Name Field Placeholder', 'fl-builder' ),
-						'default'	=> __( 'Your name', 'fl-builder' ),
+					'name_placeholder'    => array(
+						'type'    => 'text',
+						'label'   => __( 'Name Field Placeholder', 'fl-builder' ),
+						'default' => __( 'Your name', 'fl-builder' ),
 					),
-					'subject_toggle'	=> array(
-						'type'		  => 'select',
-						'label'		  => __( 'Subject Field', 'fl-builder' ),
-						'default'		  => 'hide',
-						'options'		  => array(
-							'show'	   => __( 'Show', 'fl-builder' ),
-							'hide'	   => __( 'Hide', 'fl-builder' ),
+					'subject_toggle'      => array(
+						'type'    => 'select',
+						'label'   => __( 'Subject Field', 'fl-builder' ),
+						'default' => 'hide',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'show'			=> array(
-								'fields'		=> array( 'subject_placeholder' ),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'subject_placeholder' ),
 							),
-							'hide'			=> array(
-								'fields'		=> array( 'subject_hidden' ),
-							),
-						),
-					),
-					'subject_placeholder'	=> array(
-						'type'		=> 'text',
-						'label'		=> __( 'Subject Field Placeholder', 'fl-builder' ),
-						'default'	=> __( 'Subject', 'fl-builder' ),
-					),
-					'subject_hidden'   => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Email Subject', 'fl-builder' ),
-						'default'		=> 'Contact Form Submission',
-						'help'			=> __( 'You can choose the subject of the email. Defaults to Contact Form Submission.', 'fl-builder' ),
-						'connections'   => array( 'custom_field', 'string', 'html' ),
-					),
-					'email_toggle'	  => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Email Field', 'fl-builder' ),
-						'default'		  => 'show',
-						'options'		  => array(
-							'show'	   => __( 'Show', 'fl-builder' ),
-							'hide'	   => __( 'Hide', 'fl-builder' ),
-						),
-						'toggle'		=> array(
-							'show'			=> array(
-								'fields'		=> array( 'email_placeholder' ),
+							'hide' => array(
+								'fields' => array( 'subject_hidden' ),
 							),
 						),
 					),
-					'email_placeholder'	=> array(
-						'type'		=> 'text',
-						'label'		=> __( 'Email Field Placeholder', 'fl-builder' ),
-						'default'	=> __( 'Your email', 'fl-builder' ),
+					'subject_placeholder' => array(
+						'type'    => 'text',
+						'label'   => __( 'Subject Field Placeholder', 'fl-builder' ),
+						'default' => __( 'Subject', 'fl-builder' ),
 					),
-					'phone_toggle'	  => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Phone Field', 'fl-builder' ),
-						'default'		  => 'hide',
-						'options'		  => array(
-							'show'	   => __( 'Show', 'fl-builder' ),
-							'hide'	   => __( 'Hide', 'fl-builder' ),
+					'subject_hidden'      => array(
+						'type'        => 'text',
+						'label'       => __( 'Email Subject', 'fl-builder' ),
+						'default'     => 'Contact Form Submission',
+						'help'        => __( 'You can choose the subject of the email. Defaults to Contact Form Submission.', 'fl-builder' ),
+						'connections' => array( 'custom_field', 'string', 'html' ),
+					),
+					'email_toggle'        => array(
+						'type'    => 'select',
+						'label'   => __( 'Email Field', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'show'			=> array(
-								'fields'		=> array( 'phone_placeholder' ),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'email_placeholder' ),
 							),
 						),
 					),
-					'phone_placeholder'	=> array(
-						'type'		=> 'text',
-						'label'		=> __( 'Phone Field Placeholder', 'fl-builder' ),
-						'default'	=> __( 'Your phone', 'fl-builder' ),
-						),
-					'message_placeholder'	=> array(
-						'type'		=> 'text',
-						'label'		=> __( 'Your Message Placeholder', 'fl-builder' ),
-						'default'	=> __( 'Your message', 'fl-builder' ),
+					'email_placeholder'   => array(
+						'type'    => 'text',
+						'label'   => __( 'Email Field Placeholder', 'fl-builder' ),
+						'default' => __( 'Your email', 'fl-builder' ),
 					),
-					'terms_checkbox' => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Terms and Conditions Checkbox', 'fl-builder' ),
-						'default'		  => 'hide',
-						'options'		  => array(
-							'show'	   => __( 'Show', 'fl-builder' ),
-							'hide'	   => __( 'Hide', 'fl-builder' ),
+					'phone_toggle'        => array(
+						'type'    => 'select',
+						'label'   => __( 'Phone Field', 'fl-builder' ),
+						'default' => 'hide',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'show'			=> array(
-								'fields'		=> array( 'terms_checkbox_text', 'terms_text' ),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'phone_placeholder' ),
 							),
 						),
 					),
-					'terms_checkbox_text'	=> array(
-						'type'		=> 'text',
-						'label'		=> __( 'Checkbox Text', 'fl-builder' ),
-						'default'	=> __( 'I Accept the Terms and Conditions', 'fl-builder' ),
+					'phone_placeholder'   => array(
+						'type'    => 'text',
+						'label'   => __( 'Phone Field Placeholder', 'fl-builder' ),
+						'default' => __( 'Your phone', 'fl-builder' ),
 					),
-					'terms_text' => array(
-						'type'		  => 'editor',
-						'label'		  => 'Terms and Conditions',
+					'message_placeholder' => array(
+						'type'    => 'text',
+						'label'   => __( 'Your Message Placeholder', 'fl-builder' ),
+						'default' => __( 'Your message', 'fl-builder' ),
+					),
+					'terms_checkbox'      => array(
+						'type'    => 'select',
+						'label'   => __( 'Terms and Conditions Checkbox', 'fl-builder' ),
+						'default' => 'hide',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'terms_checkbox_text', 'terms_text' ),
+							),
+						),
+					),
+					'terms_checkbox_text' => array(
+						'type'    => 'text',
+						'label'   => __( 'Checkbox Text', 'fl-builder' ),
+						'default' => __( 'I Accept the Terms and Conditions', 'fl-builder' ),
+					),
+					'terms_text'          => array(
+						'type'          => 'editor',
+						'label'         => 'Terms and Conditions',
 						'media_buttons' => false,
 						'rows'          => 8,
 						'preview'       => array(
-							'type'          => 'text',
-							'selector'      => '.fl-terms-checkbox-text',
+							'type'     => 'text',
+							'selector' => '.fl-terms-checkbox-text',
 						),
 						'connections'   => array( 'string' ),
 					),
 				),
 			),
-			'success'	   => array(
-				'title'			=> __( 'Success', 'fl-builder' ),
-				'fields'		=> array(
-					'success_action' => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Success Action', 'fl-builder' ),
-						'options'		  => array(
-							'none'		   => __( 'None', 'fl-builder' ),
-							'show_message'  => __( 'Show Message', 'fl-builder' ),
-							'redirect'	   => __( 'Redirect', 'fl-builder' ),
+			'success' => array(
+				'title'  => __( 'Success', 'fl-builder' ),
+				'fields' => array(
+					'success_action'  => array(
+						'type'    => 'select',
+						'label'   => __( 'Success Action', 'fl-builder' ),
+						'options' => array(
+							'none'         => __( 'None', 'fl-builder' ),
+							'show_message' => __( 'Show Message', 'fl-builder' ),
+							'redirect'     => __( 'Redirect', 'fl-builder' ),
 						),
-						'toggle'		  => array(
-							'show_message'		=> array(
-								'fields'		=> array( 'success_message' ),
+						'toggle'  => array(
+							'show_message' => array(
+								'fields' => array( 'success_message' ),
 							),
-							'redirect'	   => array(
-								'fields'		=> array( 'success_url' ),
+							'redirect'     => array(
+								'fields' => array( 'success_url' ),
 							),
 						),
-						'preview'		  => array(
-							'type'			  => 'none',
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
 					'success_message' => array(
-						'type'		  => 'editor',
-						'label'		  => '',
+						'type'          => 'editor',
+						'label'         => '',
 						'media_buttons' => false,
 						'rows'          => 8,
 						'default'       => __( 'Thanks for your message! We’ll be in touch soon.', 'fl-builder' ),
 						'preview'       => array(
-							'type'             => 'none',
+							'type' => 'none',
 						),
 						'connections'   => array( 'string' ),
 					),
-					'success_url'  => array(
-						'type'          => 'link',
-						'label'         => __( 'Success URL', 'fl-builder' ),
-						'preview'       => array(
-							'type'             => 'none',
+					'success_url'     => array(
+						'type'        => 'link',
+						'label'       => __( 'Success URL', 'fl-builder' ),
+						'preview'     => array(
+							'type' => 'none',
 						),
-						'connections'   => array( 'url' ),
+						'connections' => array( 'url' ),
 					),
 				),
 			),
 		),
 	),
-	'button'		 => array(
-		'title'		  => __( 'Button', 'fl-builder' ),
-		'sections'	  => array(
-			'btn_general'   => array(
-				'title'			=> '',
-				'fields'		=> array(
-					'btn_text'		 => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Button Text', 'fl-builder' ),
-						'default'		  	=> __( 'Send', 'fl-builder' ),
-						'preview'			=> array(
-							'type'				=> 'text',
-							'selector'			=> '.fl-button-text',
+	'button'    => array(
+		'title'    => __( 'Button', 'fl-builder' ),
+		'sections' => array(
+			'btn_general' => array(
+				'title'  => '',
+				'fields' => array(
+					'btn_text' => array(
+						'type'    => 'text',
+						'label'   => __( 'Button Text', 'fl-builder' ),
+						'default' => __( 'Send', 'fl-builder' ),
+						'preview' => array(
+							'type'     => 'text',
+							'selector' => '.fl-button-text',
 						),
 					),
-					'btn_icon'		 => array(
-						'type'		  => 'icon',
-						'label'		  => __( 'Button Icon', 'fl-builder' ),
-						'show_remove'	  => true,
+				),
+			),
+			'btn_icon'    => array(
+				'title'  => __( 'Button Icon', 'fl-builder' ),
+				'fields' => array(
+					'btn_icon'           => array(
+						'type'        => 'icon',
+						'label'       => __( 'Button Icon', 'fl-builder' ),
+						'show_remove' => true,
+						'show'        => array(
+							'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+						),
 					),
-					'btn_icon_position' => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Icon Position', 'fl-builder' ),
-						'default'		  => 'after',
-						'options'		  => array(
-							'before'		   => __( 'Before Text', 'fl-builder' ),
-							'after'		   => __( 'After Text', 'fl-builder' ),
+					'btn_icon_position'  => array(
+						'type'    => 'select',
+						'label'   => __( 'Button Icon Position', 'fl-builder' ),
+						'default' => 'before',
+						'options' => array(
+							'before' => __( 'Before Text', 'fl-builder' ),
+							'after'  => __( 'After Text', 'fl-builder' ),
 						),
 					),
 					'btn_icon_animation' => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Icon Visibility', 'fl-builder' ),
-						'default'		  => 'disable',
-						'options'		  => array(
-							'disable'		=> __( 'Always Visible', 'fl-builder' ),
-							'enable'			=> __( 'Fade In On Hover', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Button Icon Visibility', 'fl-builder' ),
+						'default' => 'disable',
+						'options' => array(
+							'disable' => __( 'Always Visible', 'fl-builder' ),
+							'enable'  => __( 'Fade In On Hover', 'fl-builder' ),
 						),
 					),
 				),
 			),
-			'btn_colors'		=> array(
-				'title'			=> __( 'Button Colors', 'fl-builder' ),
-				'fields'		=> array(
-					'btn_bg_color'	 => array(
-						'type'		  => 'color',
-						'label'		  => __( 'Background Color', 'fl-builder' ),
-						'default'		  => '',
-						'show_reset'	  => true,
-					),
-					'btn_bg_hover_color' => array(
-						'type'		  => 'color',
-						'label'		  => __( 'Background Hover Color', 'fl-builder' ),
-						'default'		  => '',
-						'show_reset'	  => true,
-						'preview'		  => array(
-							'type'		   => 'none',
+			'btn_style'   => array(
+				'title'  => __( 'Button Style', 'fl-builder' ),
+				'fields' => array(
+					'btn_width'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Button Width', 'fl-builder' ),
+						'default' => 'auto',
+						'options' => array(
+							'auto' => _x( 'Auto', 'Width.', 'fl-builder' ),
+							'full' => __( 'Full Width', 'fl-builder' ),
 						),
-					),
-					'btn_text_color' => array(
-						'type'		  => 'color',
-						'label'		  => __( 'Text Color', 'fl-builder' ),
-						'default'		  => '',
-						'show_reset'	  => true,
-					),
-					'btn_text_hover_color' => array(
-						'type'		  => 'color',
-						'label'		  => __( 'Text Hover Color', 'fl-builder' ),
-						'default'		  => '',
-						'show_reset'	  => true,
-						'preview'		  => array(
-							'type'		   => 'none',
-						),
-					),
-				),
-			),
-			'btn_style'	   => array(
-				'title'			=> __( 'Button Style', 'fl-builder' ),
-				'fields'		=> array(
-					'btn_style'	 => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Style', 'fl-builder' ),
-						'default'		  => 'flat',
-						'options'		  => array(
-							'flat'		   => __( 'Flat', 'fl-builder' ),
-							'gradient'	   => __( 'Gradient', 'fl-builder' ),
-							'transparent'   => __( 'Transparent', 'fl-builder' ),
-						),
-						'toggle'		  => array(
-							'transparent'   => array(
-								'fields'		=> array( 'btn_bg_opacity', 'btn_bg_hover_opacity', 'btn_border_size' ),
+						'toggle'  => array(
+							'auto' => array(
+								'fields' => array( 'btn_align' ),
 							),
 						),
 					),
-					'btn_border_size' => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Border Size', 'fl-builder' ),
-						'default'		  => '2',
-						'description'	  => 'px',
-						'maxlength'	  => '3',
-						'size'		  => '5',
-						'placeholder'	  => '0',
+					'btn_align'   => array(
+						'type'       => 'align',
+						'label'      => __( 'Button Align', 'fl-builder' ),
+						'default'    => 'left',
+						'responsive' => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => '.fl-button-wrap',
+							'property' => 'text-align',
+						),
 					),
-					'btn_bg_opacity' => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Background Opacity', 'fl-builder' ),
-						'default'		  => '0',
-						'description'	  => '%',
-						'maxlength'	  => '3',
-						'size'		  => '5',
-						'placeholder'	  => '0',
+					'btn_padding' => array(
+						'type'       => 'dimension',
+						'label'      => __( 'Button Padding', 'fl-builder' ),
+						'responsive' => true,
+						'slider'     => true,
+						'units'      => array( 'px' ),
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => 'a.fl-button',
+							'property' => 'padding',
+						),
 					),
-					'btn_bg_hover_opacity' => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Background Hover Opacity', 'fl-builder' ),
-						'default'		  => '0',
-						'description'	  => '%',
-						'maxlength'	  => '3',
-						'size'		  => '5',
-						'placeholder'	  => '0',
+				),
+			),
+			'btn_text'    => array(
+				'title'  => __( 'Button Text', 'fl-builder' ),
+				'fields' => array(
+					'btn_text_color'       => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Button Text Color', 'fl-builder' ),
+						'default'     => '',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'      => 'css',
+							'selector'  => 'a.fl-button, a.fl-button *',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'btn_text_hover_color' => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Button Text Hover Color', 'fl-builder' ),
+						'default'     => '',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'      => 'css',
+							'selector'  => 'a.fl-button:hover, a.fl-button:hover *, a.fl-button:focus, a.fl-button:focus *',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'btn_typography'       => array(
+						'type'       => 'typography',
+						'label'      => __( 'Button Typography', 'fl-builder' ),
+						'responsive' => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => 'a.fl-button',
+						),
+					),
+				),
+			),
+			'btn_colors'  => array(
+				'title'  => __( 'Button Background', 'fl-builder' ),
+				'fields' => array(
+					'btn_bg_color'          => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Button Background Color', 'fl-builder' ),
+						'default'     => '',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type' => 'none',
+						),
+					),
+					'btn_bg_hover_color'    => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Button Background Hover Color', 'fl-builder' ),
+						'default'     => '',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type' => 'none',
+						),
+					),
+					'btn_style'             => array(
+						'type'    => 'select',
+						'label'   => __( 'Button Background Style', 'fl-builder' ),
+						'default' => 'flat',
+						'options' => array(
+							'flat'     => __( 'Flat', 'fl-builder' ),
+							'gradient' => __( 'Gradient', 'fl-builder' ),
+						),
 					),
 					'btn_button_transition' => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Transition', 'fl-builder' ),
-						'default'		  => 'disable',
-						'options'		  => array(
-							'disable'		=> __( 'Disabled', 'fl-builder' ),
-							'enable'			=> __( 'Enabled', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Button Background Animation', 'fl-builder' ),
+						'default' => 'disable',
+						'options' => array(
+							'disable' => __( 'Disabled', 'fl-builder' ),
+							'enable'  => __( 'Enabled', 'fl-builder' ),
+						),
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
 				),
 			),
-			'btn_structure' => array(
-				'title'			=> __( 'Button Structure', 'fl-builder' ),
-				'fields'		=> array(
-					'btn_width'	 => array(
-						'type'		  => 'select',
-						'label'		  => __( 'Width', 'fl-builder' ),
-						'default'		  => 'auto',
-						'options'		  => array(
-							'auto'		   => _x( 'Auto', 'Width.', 'fl-builder' ),
-							'full'		   => __( 'Full Width', 'fl-builder' ),
+			'btn_border'  => array(
+				'title'  => __( 'Button Border', 'fl-builder' ),
+				'fields' => array(
+					'btn_border'             => array(
+						'type'       => 'border',
+						'label'      => __( 'Button Border', 'fl-builder' ),
+						'responsive' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => 'a.fl-button',
+							'important' => true,
 						),
 					),
-					'btn_align'		=> array(
-						'type'		  => 'select',
-						'label'		  => __( 'Alignment', 'fl-builder' ),
-						'default'		  => 'left',
-						'options'		  => array(
-							'left'		   => __( 'Left', 'fl-builder' ),
-							'center'		=> __( 'Center', 'fl-builder' ),
-							'right'		   => __( 'Right', 'fl-builder' ),
-						),
-					),
-					'btn_font_size' => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Font Size', 'fl-builder' ),
-						'default'		  => '14',
-						'maxlength'	  => '3',
-						'size'		  => '4',
-						'description'	  => 'px',
-					),
-					'btn_padding'	 => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Padding', 'fl-builder' ),
-						'default'		  => '10',
-						'maxlength'	  => '3',
-						'size'		  => '4',
-						'description'	  => 'px',
-					),
-					'btn_border_radius' => array(
-						'type'		  => 'text',
-						'label'		  => __( 'Round Corners', 'fl-builder' ),
-						'default'		  => '4',
-						'maxlength'	  => '3',
-						'size'		  => '4',
-						'description'	  => 'px',
-					),
-				),
-			),
-			'btn_responsive_style' 	=> array(
-				'title'         		=> __( 'Responsive Button Style', 'fl-builder' ),
-				'fields'        		=> array(
-					'btn_mobile_align' => array(
-						'type'          => 'select',
-						'label'         => __( 'Alignment', 'fl-builder' ),
-						'default'       => 'center',
-						'options'       => array(
-							'center'        => __( 'Center', 'fl-builder' ),
-							'left'          => __( 'Left', 'fl-builder' ),
-							'right'         => __( 'Right', 'fl-builder' ),
-						),
-						'preview'       => array(
-							'type'          => 'none',
+					'btn_border_hover_color' => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Button Border Hover Color', 'fl-builder' ),
+						'default'     => '',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type' => 'none',
 						),
 					),
 				),
 			),
 		),
 	),
-	'reCAPTCHA'	=> array(
-		'title'		  => __( 'reCAPTCHA', 'fl-builder' ),
-		'sections'	  => array(
+	'reCAPTCHA' => array(
+		'title'       => __( 'Captcha', 'fl-builder' ),
+		'sections'    => array(
 			'recaptcha_general' => array(
-				'title'			=> '',
-				'fields'		=> array(
-					'recaptcha_toggle' => array(
-						'type' 			=> 'select',
-						'label' 		=> 'reCAPTCHA Field',
-						'default'		  => 'hide',
-						'options'		  => array(
-							'show'	   => __( 'Show', 'fl-builder' ),
-							'hide'	   => __( 'Hide', 'fl-builder' ),
+				'title'  => '',
+				'fields' => array(
+					'recaptcha_toggle'        => array(
+						'type'    => 'select',
+						'label'   => 'reCAPTCHA Field',
+						'default' => 'hide',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
 						),
-						'toggle' 		=> array(
-							'show'        => array(
-								'fields' 	=> array( 'recaptcha_site_key', 'recaptcha_secret_key', 'recaptcha_validate_type', 'recaptcha_theme' ),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'recaptcha_site_key', 'recaptcha_secret_key', 'recaptcha_validate_type', 'recaptcha_theme' ),
 							),
 						),
-						'help' 			=> __( 'If you want to show this field, please provide valid Site and Secret Keys.', 'fl-builder' ),
+						'help'    => __( 'If you want to show this field, please provide valid Site and Secret Keys.', 'fl-builder' ),
 					),
-					'recaptcha_site_key'		=> array(
-						'type'			=> 'text',
-						'label' 		=> __( 'Site Key', 'fl-builder' ),
-						'default'		  => '',
-						'preview'		  => array(
-							'type'		   => 'none',
+					'recaptcha_site_key'      => array(
+						'type'    => 'text',
+						'label'   => __( 'Site Key', 'fl-builder' ),
+						'default' => '',
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
-					'recaptcha_secret_key'	=> array(
-						'type'			=> 'text',
-						'label' 		=> __( 'Secret Key', 'fl-builder' ),
-						'default'		  => '',
-						'preview'		  => array(
-							'type'		   => 'none',
+					'recaptcha_secret_key'    => array(
+						'type'    => 'text',
+						'label'   => __( 'Secret Key', 'fl-builder' ),
+						'default' => '',
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
 					'recaptcha_validate_type' => array(
-						'type'          		=> 'select',
-						'label'         		=> __( 'Validate Type', 'fl-builder' ),
-						'default'       		=> 'normal',
-						'options'       		=> array(
-							'normal'  				=> __( '"I\'m not a robot" checkbox', 'fl-builder' ),
-							'invisible'     		=> __( 'Invisible', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Validate Type', 'fl-builder' ),
+						'default' => 'normal',
+						'options' => array(
+							'normal'    => __( '"I\'m not a robot" checkbox', 'fl-builder' ),
+							'invisible' => __( 'Invisible', 'fl-builder' ),
 						),
-						'help' 					=> __( 'Validate users with checkbox or in the background.<br />Note: Checkbox and Invisible types use seperate API keys.', 'fl-builder' ),
-						'preview'      		 	=> array(
-							'type'          		=> 'none',
+						'help'    => __( 'Validate users with checkbox or in the background.<br />Note: Checkbox and Invisible types use separate API keys.', 'fl-builder' ),
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
-					'recaptcha_theme'   => array(
-						'type'          	=> 'select',
-						'label'         	=> __( 'Theme', 'fl-builder' ),
-						'default'       	=> 'light',
-						'options'       	=> array(
-							'light'  			=> __( 'Light', 'fl-builder' ),
-							'dark'     			=> __( 'Dark', 'fl-builder' ),
+					'recaptcha_theme'         => array(
+						'type'    => 'select',
+						'label'   => __( 'Theme', 'fl-builder' ),
+						'default' => 'light',
+						'options' => array(
+							'light' => __( 'Light', 'fl-builder' ),
+							'dark'  => __( 'Dark', 'fl-builder' ),
 						),
-						'preview'      		 	=> array(
-							'type'          		=> 'none',
+						'preview' => array(
+							'type' => 'none',
 						),
 					),
 				),
 			),
 		),
-		'description'	  => sprintf( __( 'Please register keys for your website at the <a%s>Google Admin Console</a>.', 'fl-builder' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
+		/* translators: %s: url to google admin */
+		'description' => sprintf( __( 'Please register keys for your website at the <a%s>Google Admin Console</a>.', 'fl-builder' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
 	),
 ));

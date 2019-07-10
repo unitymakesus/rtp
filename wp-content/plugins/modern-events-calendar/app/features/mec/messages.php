@@ -7,6 +7,10 @@ $values = $this->main->get_messages_options();
 ?>
 <div class="wns-be-container">
 
+    <div id="wns-be-infobar">
+        <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
+    </div>
+
     <div class="wns-be-sidebar">
 
         <ul class="wns-be-group-menu">
@@ -68,20 +72,23 @@ $values = $this->main->get_messages_options();
             </li>
 
             <li class="wns-be-group-menu-li">
+                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-ie'); ?>" id="" class="wns-be-group-tab-link-a">
+                    <i class="mec-sl-refresh"></i> 
+                    <span class="wns-be-group-menu-title"><?php _e('Import / Export', 'mec'); ?></span>
+                </a>
+            </li>
+
+            <!-- <li class="wns-be-group-menu-li">
                 <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-support'); ?>" id="" class="wns-be-group-tab-link-a">
                     <i class="mec-sl-support"></i> 
                     <span class="wns-be-group-menu-title"><?php _e('Support', 'mec'); ?></span>
                 </a>
-            </li>
+            </li> -->
 
         </ul>
     </div>
 
     <div class="wns-be-main">
-
-        <div id="wns-be-infobar">
-            <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
-        </div>
 
         <div id="wns-be-notification"></div>
 
@@ -114,9 +121,10 @@ $values = $this->main->get_messages_options();
                 </div>
             </div>
         </div>
-        <div id="wns-be-footer">
-            <a href="" id="" class="dpr-btn dpr-save-btn">Save Changes</a>
-        </div>
+    </div>
+
+    <div id="wns-be-footer">
+        <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
     </div>
 
 </div>
@@ -143,12 +151,16 @@ jQuery("#mec_messages_form").on('submit', function(event)
         type: "POST",
         url: ajaxurl,
         data: "action=mec_save_messages&"+messages,
+        beforeSend: function () {
+            jQuery('.wns-be-main').append('<div class="mec-loarder-wrap mec-settings-loader"><div class="mec-loarder"><div></div><div></div><div></div></div></div>');
+        },
         success: function(data)
         {
             // Remove the loading Class to the button
             setTimeout(function(){
                 jQuery(".dpr-save-btn").removeClass('loading').text("<?php echo esc_js(esc_attr__('Save Changes', 'mec')); ?>");
                 jQuery('.wns-saved-settings').remove();
+                jQuery('.mec-loarder-wrap').remove();
             }, 1000);
         },
         error: function(jqXHR, textStatus, errorThrown)
@@ -157,6 +169,7 @@ jQuery("#mec_messages_form").on('submit', function(event)
             setTimeout(function(){
                 jQuery(".dpr-save-btn").removeClass('loading').text("<?php echo esc_js(esc_attr__('Save Changes', 'mec')); ?>");
                 jQuery('.wns-saved-settings').remove();
+                jQuery('.mec-loarder-wrap').remove();
             }, 1000);
         }
     });

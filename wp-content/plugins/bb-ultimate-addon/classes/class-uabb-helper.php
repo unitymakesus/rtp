@@ -57,6 +57,12 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		function __construct() {
 
 			$this->set_constants();
+			add_filter( 'bsf_product_name_uabb', array( $this,'uabb_branding_name' ) );
+			add_filter( 'bsf_product_author_uabb', array( $this, 'uabb_branding_author_name' ) );
+			add_filter( 'bsf_product_description_uabb', array( $this, 'uabb_branding_desc' ) );
+			add_filter( 'bsf_product_homepage_uabb', array($this, 'uabb_branding_url' ) );
+			add_filter( 'bsf_product_icons_uabb', array($this, 'uabb_plugin_icon_url' ));
+			add_filter( 'gettext', array( $this,'get_plugin_branding_name' ), 20, 3 );
 		}
 
 		/**
@@ -109,7 +115,27 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		static public function module_cat( $cat ) {
 			return class_exists( 'FLBuilderUIContentPanel' ) ? $cat : UABB_CAT;
 		}
+		/**
+		 * Function that renders builder UABB Google and Yelp API key status
+		 *
+		 * @since 1.18.0
+		 */
+		static public function api_key_status() {
 
+			$status = array();
+
+			$google_status = get_option( 'google_status_code' );
+
+			$yelp_status = get_option( 'yelp_status_code' );
+
+			if ( isset( $google_status ) && ! empty( $google_status ) ) {
+				$status ['google_status_code'] = $google_status;
+			}
+			if ( isset( $yelp_status ) && ! empty( $yelp_status ) ) {
+				$status ['yelp_status_code'] = $yelp_status;
+			}
+			return $status;
+		}
 		/**
 		 * Function that renders builder UABB
 		 *
@@ -243,7 +269,11 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				'uabb-business-hours'	   => 'Business Hours',
                 'uabb-video'               => 'Video',
 				'uabb-table'			   => 'Table',
-                'uabb-video-gallery'        => 'Video Gallery',
+                'uabb-video-gallery'       => 'Video Gallery',
+                'uabb-price-list'	       => 'Price List',
+                'uabb-marketing-button'	   => 'Marketing Button',
+                'uabb-business-reviews'	   => 'Business Reviews',
+
 			);
 
 			/* Include Contact form styler */
@@ -275,6 +305,8 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				'uabb-row-gradient'  => 'Row Gradient Background',
 				'uabb-col-gradient'  => 'Column Gradient Background',
 				'uabb-col-shadow'    => 'Column Shadow',
+				'uabb-col-particle' =>  'Column Particle Backgrounds',
+				'uabb-row-particle' => 	'Row Particle Backgrounds',
 			);
 			return $extenstions_array;
 		}
@@ -410,11 +442,124 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			
 			$uabb_brand_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 
-			if ( '' === $uabb_brand_short_name ) {
+			if ( empty( $uabb_brand_short_name ) ) {
 				$uabb_brand_short_name = __( 'UABB', 'uabb' );
 			}
 
 			return $uabb_brand_short_name;
+		}
+		/**
+		 * Function that renders UABB's branding Plugin name
+		 *
+		 * @since 1.16.1
+		 */
+		function uabb_branding_name() {
+
+			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+
+			if ( empty( $branding_name ) ) {
+
+				$branding_name = __( 'Ultimate Addons for Beaver Builder', 'uabb' );
+
+			}
+			return sanitize_title( $branding_name );
+
+		}
+		/**
+		 * Function that renders UABB's branding Plugin Author name
+		 *
+		 * @since 1.16.1
+		 */
+		function uabb_branding_author_name() {
+
+			$branding_author_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-author-name' );
+
+			if ( empty( $branding_author_name ) ) {
+				$branding_author_name = __( 'Brainstorm Force', 'uabb' );
+			}
+
+			return sanitize_title( $branding_author_name );
+		}
+		/**
+		 * Function that renders UABB's branding Plugin description
+		 *
+		 * @since 1.16.1
+		 */
+		function uabb_branding_desc() {
+
+			$branding_desc       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-desc' );
+
+			if ( empty( $branding_desc ) ) {
+
+				$branding_desc = __( 'Ultimate Addons is a premium extension for Beaver Builder that adds 55+ modules, 100+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro and Agency) You can use it with on any WordPress theme.', 'uabb' );
+
+			}
+
+			return sanitize_text_field( $branding_desc );
+		}
+		/**
+		 * Function that renders UABB's branding Plugin URL
+		 *
+		 * @since 1.16.1
+		 */
+		function uabb_branding_url() {
+
+			$branding_url       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-author-url' );
+
+			if ( empty( $branding_url ) ) {
+
+				$branding_url = 'http://www.brainstormforce.com';
+			}
+
+			return $branding_url;
+		}
+		/**
+		 *  Function that renders UABB's branding Plugin Name
+		 *
+		 *  @since 1.16.1
+		 *  @param string $translated_text an string for the translatable.
+		 *  @param string $text gets an string for is plugin name.
+		 *  @param string $domain gets an plugin domain.
+		 *  @return string
+		 */
+		public function get_plugin_branding_name( $text, $original, $domain ) {
+
+			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+
+			if ( is_admin() && 'Ultimate Addons for Beaver Builder' == $text ) {
+
+				if ( ! empty( $branding_name ) ) {
+					$text = $branding_name;
+				}
+			}
+			return $text;
+		}
+		/**
+		 * Function that renders UABB's branding Plugin Icon URL
+		 *
+		 * @since 1.16.1
+		 */
+		function uabb_plugin_icon_url() {
+
+			$branding_url       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-icon-url' );
+
+			if ( ! empty( $branding_url ) ) {
+				$icons = array(
+					'1x'      => ( isset( $branding_url ) ) ? $branding_url : '',
+					'2x'      => ( isset( $branding_url ) ) ? $branding_url : '',
+					'default' => ( isset( $branding_url ) ) ? $branding_url : '',
+				);
+				return $icons;
+			} else {
+
+				$icon_path = BB_ULTIMATE_ADDON_URL . 'assets/images/uabb.svg';
+				$icons = array(
+					'1x'      => ( isset( $icon_path ) ) ? $icon_path : '',
+					'2x'      => ( isset( $icon_path ) ) ? $icon_path : '',
+					'default' => ( isset( $icon_path ) ) ? $icon_path : '',
+				);
+				return $icons;
+			}
 		}
 	}	
 

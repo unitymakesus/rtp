@@ -473,7 +473,19 @@ foreach ( $settings->add_circle_item as $item ) {
 					background-position: <?php echo $item->inner_circle_bg_img_pos; ?>;
 					background-size: <?php echo $item->inner_circle_bg_img_size; ?>;
 					background-repeat: <?php echo $item->inner_circle_bg_img_repeat; ?>;
+					position:relative;
 				}
+				<?php if ( isset( $item->inner_circle_bg_overlay ) && '' != $item->inner_circle_bg_overlay ) : ?>
+					.fl-node-<?php echo $id; ?> .uabb-ic-<?php echo $circle_item_count; ?>:before{
+						content: '';
+						position: absolute;
+						top: 0;
+						right: 0;
+						bottom: 0;
+						left: 0;
+						background:<?php echo $item->inner_circle_bg_overlay; ?>;
+					}
+				<?php endif; ?>
 			}
 		<?php endif; ?>
 			<?php

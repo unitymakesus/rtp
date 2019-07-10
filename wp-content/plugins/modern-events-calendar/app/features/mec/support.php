@@ -5,6 +5,8 @@ defined('MECEXEC') or die();
 
 <div class="wns-be-container">
 
+    <div id="wns-be-infobar"></div>
+
     <div class="wns-be-sidebar">
 
         <ul class="wns-be-group-menu">
@@ -65,12 +67,19 @@ defined('MECEXEC') or die();
                 </a>
             </li>
 
-            <li class="wns-be-group-menu-li active">
+            <li class="wns-be-group-menu-li">
+                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-ie'); ?>" id="" class="wns-be-group-tab-link-a">
+                    <i class="mec-sl-refresh"></i> 
+                    <span class="wns-be-group-menu-title"><?php _e('Import / Export', 'mec'); ?></span>
+                </a>
+            </li>
+
+            <!-- <li class="wns-be-group-menu-li active">
                 <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-support'); ?>" id="" class="wns-be-group-tab-link-a">
                     <i class="mec-sl-support"></i> 
                     <span class="wns-be-group-menu-title"><?php _e('Support', 'mec'); ?></span>
                 </a>
-            </li>
+            </li> -->
 
         </ul>
     </div>

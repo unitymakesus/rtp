@@ -76,6 +76,7 @@ class MEC_feature_speakers extends MEC_base
                 'rewrite'=>array('slug'=>'events-speaker'),
                 'public'=>false,
                 'show_ui'=>true,
+                'show_in_rest'=>true,
                 'hierarchical'=>false,
             )
         );
@@ -94,7 +95,7 @@ class MEC_feature_speakers extends MEC_base
         $tel = get_metadata('term', $term->term_id, 'tel', true);
         $email = get_metadata('term', $term->term_id, 'email', true);
         $facebook = get_metadata('term', $term->term_id, 'facebook', true);
-        $gplus = get_metadata('term', $term->term_id, 'gplus', true);
+        $instagram = get_metadata('term', $term->term_id, 'instagram', true);
         $twitter = get_metadata('term', $term->term_id, 'twitter', true);
         $thumbnail = get_metadata('term', $term->term_id, 'thumbnail', true);
     ?>
@@ -132,10 +133,10 @@ class MEC_feature_speakers extends MEC_base
         </tr>
         <tr class="form-field">
             <th scope="row" valign="top">
-                <label for="mec_gplus"><?php _e('Google+', 'mec'); ?></label>
+                <label for="mec_instagram"><?php _e('Instagram', 'mec'); ?></label>
             </th>
             <td>
-                <input type="text" placeholder="<?php esc_attr_e('Insert URL of Google+', 'mec'); ?>" name="gplus" id="mec_gplus" value="<?php echo $gplus; ?>" />
+                <input type="text" placeholder="<?php esc_attr_e('Insert URL of Instagram', 'mec'); ?>" name="instagram" id="mec_instagram" value="<?php echo $instagram; ?>" />
             </td>
         </tr>
         <tr class="form-field">
@@ -184,8 +185,8 @@ class MEC_feature_speakers extends MEC_base
             <input type="text" name="facebook" placeholder="<?php esc_attr_e('Insert URL of Facebook Page', 'mec'); ?>" id="mec_facebook" value="" />
         </div>
         <div class="form-field">
-            <label for="mec_gplus"><?php _e('Google+', 'mec'); ?></label>
-            <input type="text" name="gplus" placeholder="<?php esc_attr_e('Insert URL of Google+', 'mec'); ?>" id="mec_gplus" value="" />
+            <label for="mec_instagram"><?php _e('Instagram', 'mec'); ?></label>
+            <input type="text" name="instagram" placeholder="<?php esc_attr_e('Insert URL of Instagram', 'mec'); ?>" id="mec_instagram" value="" />
         </div>
         <div class="form-field">
             <label for="mec_twitter"><?php _e('Twitter Page', 'mec'); ?></label>
@@ -213,7 +214,7 @@ class MEC_feature_speakers extends MEC_base
         $email = isset($_POST['email']) ? sanitize_text_field($_POST['email']) : '';
         $facebook = (isset($_POST['facebook']) and trim($_POST['facebook'])) ? (strpos($_POST['facebook'], 'http') === false ? 'http://'.sanitize_text_field($_POST['facebook']) : sanitize_text_field($_POST['facebook'])) : '';
         $twitter = (isset($_POST['twitter']) and trim($_POST['twitter'])) ? (strpos($_POST['twitter'], 'http') === false ? 'http://'.sanitize_text_field($_POST['twitter']) : sanitize_text_field($_POST['twitter'])) : '';
-        $gplus = (isset($_POST['gplus']) and trim($_POST['gplus'])) ? (strpos($_POST['gplus'], 'http') === false ? 'http://'.sanitize_text_field($_POST['gplus']) : sanitize_text_field($_POST['gplus'])) : '';
+        $instagram = (isset($_POST['instagram']) and trim($_POST['instagram'])) ? (strpos($_POST['instagram'], 'http') === false ? 'http://'.sanitize_text_field($_POST['instagram']) : sanitize_text_field($_POST['instagram'])) : '';
         $thumbnail = isset($_POST['thumbnail']) ? sanitize_text_field($_POST['thumbnail']) : '';
         
         update_term_meta($term_id, 'job_title', $job_title);
@@ -221,7 +222,7 @@ class MEC_feature_speakers extends MEC_base
         update_term_meta($term_id, 'email', $email);
         update_term_meta($term_id, 'facebook', $facebook);
         update_term_meta($term_id, 'twitter', $twitter);
-        update_term_meta($term_id, 'gplus', $gplus);
+        update_term_meta($term_id, 'instagram', $instagram);
         update_term_meta($term_id, 'thumbnail', $thumbnail);
     }
     

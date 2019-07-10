@@ -273,6 +273,7 @@ FLBuilder::register_module(
 								'h4' => __( 'H4', 'uabb' ),
 								'h5' => __( 'H5', 'uabb' ),
 								'h6' => __( 'H6', 'uabb' ),
+								'p'  => __( 'P', 'uabb' ),
 							),
 						),
 					),

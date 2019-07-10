@@ -17,6 +17,7 @@ $settings->btn_text_color             = UABB_Helper::uabb_colorpicker( $settings
 $settings->btn_text_hover_color       = UABB_Helper::uabb_colorpicker( $settings, 'btn_text_hover_color' );
 $settings->btn_background_color       = UABB_Helper::uabb_colorpicker( $settings, 'btn_background_color', true );
 $settings->btn_background_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'btn_background_hover_color', true );
+$settings->radio_check_bgcolor = UABB_Helper::uabb_colorpicker( $settings, 'radio_check_bgcolor', true );
 
 /* Typography Colors */
 
@@ -325,8 +326,8 @@ if ( ! $version_bb_check ) {
 	.fl-node-<?php echo $id; ?> .gform_wrapper .gfield .ginput_container span label {
 
 		<?php if ( isset( $settings->form_label_font_typo['font_family'] ) && isset( $settings->form_label_font_typo['font_weight'] ) ) { ?>
-			font-family: <?php echo $settings->form_label_font_typo['font_family']; ?>
-			font-weight: <?php echo $settings->form_label_font_typo['font_weight']; ?>
+			font-family: <?php echo $settings->form_label_font_typo['font_family']; ?>;
+			font-weight: <?php echo $settings->form_label_font_typo['font_weight']; ?>;
 		<?php } ?>
 	}
 <?php } ?>
@@ -411,7 +412,7 @@ if ( 'true' == $settings->radio_check_custom_option ) {
 	.fl-node-<?php echo $id; ?> .uabb-gf-style .gform_body .ginput_container_checkbox .gfield_checkbox input[type='checkbox'] + label:before,
 	.fl-node-<?php echo $id; ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio'] + label:before {
 		content: '';
-		background: #<?php echo $settings->radio_check_bgcolor; ?>;
+		background: <?php echo $settings->radio_check_bgcolor; ?>;
 		border: <?php echo $settings->radio_check_border_width; ?>px solid #<?php echo $settings->radio_check_border_color; ?>;
 		display: inline-block;
 		vertical-align: middle;
@@ -436,7 +437,7 @@ if ( 'true' == $settings->radio_check_custom_option ) {
 
 	.fl-node-<?php echo $id; ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio']:checked + label:before {
 		background: #<?php echo $settings->radio_check_selected_color; ?>;
-		box-shadow: inset 0px 0px 0px 4px #<?php echo $settings->radio_check_bgcolor; ?>;
+		box-shadow: inset 0px 0px 0px 4px <?php echo $settings->radio_check_bgcolor; ?>;
 	}
 
 	.fl-node-<?php echo $id; ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio'] + label:before {

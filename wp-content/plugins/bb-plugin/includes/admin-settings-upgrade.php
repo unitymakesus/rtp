@@ -16,10 +16,13 @@
 
 	<p><?php _e( 'Come by the Beaver Builder Homepage to learn more about what our premium features can do for you!', 'fl-builder' ); ?></p>
 
-	<input type="button" class="button button-primary" value="<?php _e( 'Learn More', 'fl-builder' ); ?>" onclick="window.open('<?php echo FLBuilderModel::get_upgrade_url( array(
-		'utm_medium' => 'bb-lite',
-		'utm_source' => 'upgrade-settings-page',
+	<?php
+	$upgrade_url = FLBuilderModel::get_upgrade_url( array(
+		'utm_medium'   => 'bb-lite',
+		'utm_source'   => 'upgrade-settings-page',
 		'utm_campaign' => 'settings-upgrade-button',
-	) ); ?>');" style="margin-right: 10px;">
+	) );
+	?>
+	<input type="button" class="button button-primary" value="<?php _e( 'Learn More', 'fl-builder' ); ?>" onclick="window.open('<?php echo $upgrade_url; ?>');" style="margin-right: 10px;">
 
 </div>

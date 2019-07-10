@@ -58,8 +58,8 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 	 */
 	public function connect( $fields = array() ) {
 		$response = array(
-			'error'  => false,
-			'data'   => array(),
+			'error' => false,
+			'data'  => array(),
 		);
 
 		// Make sure we have an email address.
@@ -67,8 +67,7 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 			$response['error'] = __( 'Error: You must provide an email address.', 'fl-builder' );
 		} elseif ( ! isset( $fields['api_key'] ) || empty( $fields['api_key'] ) ) {
 			$response['error'] = __( 'Error: You must provide an API key.', 'fl-builder' );
-		} // Try to connect and store the connection data.
-		else {
+		} else { // Try to connect and store the connection data.
 
 			$api = $this->get_api( $fields['api_email'], $fields['api_key'] );
 
@@ -79,7 +78,7 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 			} else {
 				$response['data'] = array(
 					'api_email' => $fields['api_email'],
-					'api_key' => $fields['api_key'],
+					'api_key'   => $fields['api_key'],
 				);
 			}
 		}
@@ -97,24 +96,24 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'api_email', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'Email Address', 'fl-builder' ),
-			'help'          => __( 'The email address associated with your Mad Mimi account.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'Email Address', 'fl-builder' ),
+			'help'      => __( 'The email address associated with your Mad Mimi account.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
 		FLBuilder::render_settings_field( 'api_key', array(
-			'row_class'     => 'fl-builder-service-connect-row',
-			'class'         => 'fl-builder-service-connect-input',
-			'type'          => 'text',
-			'label'         => __( 'API Key', 'fl-builder' ),
-			'help'          => __( 'Your API key can be found in your Mad Mimi account under Account > Settings &amp; Billing > API.', 'fl-builder' ),
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-connect-row',
+			'class'     => 'fl-builder-service-connect-input',
+			'type'      => 'text',
+			'label'     => __( 'API Key', 'fl-builder' ),
+			'help'      => __( 'Your API key can be found in your Mad Mimi account under Account > Settings &amp; Billing > API.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
 			),
 		));
 
@@ -133,11 +132,11 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 	 * }
 	 */
 	public function render_fields( $account, $settings ) {
-		$account_data   = $this->get_account_data( $account );
-		$api            = $this->get_api( $account_data['api_email'], $account_data['api_key'] );
-		$response       = array(
-			'error'         => false,
-			'html'          => '',
+		$account_data = $this->get_account_data( $account );
+		$api          = $this->get_api( $account_data['api_email'], $account_data['api_key'] );
+		$response     = array(
+			'error' => false,
+			'html'  => '',
 		);
 
 		libxml_use_internal_errors( true );
@@ -174,13 +173,13 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(
-			'row_class'     => 'fl-builder-service-field-row',
-			'class'         => 'fl-builder-service-list-select',
-			'type'          => 'select',
-			'label'         => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
-			'options'       => $options,
-			'preview'       => array(
-				'type'          => 'none',
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-list-select',
+			'type'      => 'select',
+			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'options'   => $options,
+			'preview'   => array(
+				'type' => 'none',
 			),
 		), $settings);
 
@@ -208,10 +207,10 @@ final class FLBuilderServiceMadMimi extends FLBuilderService {
 			$response['error'] = __( 'There was an error subscribing to Mad Mimi. The account is no longer connected.', 'fl-builder' );
 		} else {
 
-			$api    = $this->get_api( $account_data['api_email'], $account_data['api_key'] );
-			$data   = array(
-				'email'     => $email,
-				'add_list'  => $settings->list_id,
+			$api  = $this->get_api( $account_data['api_email'], $account_data['api_key'] );
+			$data = array(
+				'email'    => $email,
+				'add_list' => $settings->list_id,
 			);
 
 			if ( $name ) {

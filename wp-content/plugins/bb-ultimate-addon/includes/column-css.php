@@ -22,8 +22,46 @@ function uabb_column_render_css() {
 	if ( $col_shadow ) {
 		add_filter( 'fl_builder_render_css', 'uabb_column_shadow_css', 10, 3 );
 	}
-}
+	if ( isset( $module['uabb-col-particle'] ) && ! empty( $module['uabb-col-particle'] ) ) {
 
+		add_filter( 'fl_builder_render_css', 'uabb_column_particle_css', 10, 3 );
+	}
+}
+/**
+ * Function that renders column's CSS
+ *
+ * @since 1.17.0
+ * @param CSS    $css gets the CSS for the column gradient.
+ * @param array  $nodes an array to get the nodes of the column.
+ * @param object $global_settings an object to get various settings.
+ */
+function uabb_column_particle_css( $css, $nodes, $global_settings ) {
+	foreach ( $nodes['columns'] as $column ) {
+		ob_start();
+		if ( isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) { ?>
+			.fl-node-<?php echo $column->node; ?> .fl-col-content {
+				position: relative;
+			}
+			.fl-node-<?php echo $column->node; ?> .fl-module {
+				position: inherit;
+			}
+			<?php if ( ! FLBuilderModel::is_builder_active() ) { ?>
+				.fl-node-<?php echo $column->node; ?> .fl-module,
+				.fl-node-<?php echo $column->node; ?> .fl-module * {
+					z-index: 2;
+				}
+				.fl-col .uabb-col-particles-background {
+					z-index: 1;
+				}
+
+			<?php } ?>
+		<?php
+		}
+		$css .= ob_get_clean();
+	}
+
+	return $css;
+}
 /**
  * Function that renders column's CSS
  *

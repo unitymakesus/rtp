@@ -15,25 +15,25 @@ final class FLBuilderUserTemplates {
 	 */
 	static public function init() {
 		/* Actions */
-		add_action( 'plugins_loaded',                                  __CLASS__ . '::init_ajax' );
-		add_action( 'after_setup_theme',                               __CLASS__ . '::register_user_access_settings' );
-		add_action( 'init',                                            __CLASS__ . '::load_settings', 1 );
-		add_action( 'wp_footer',                                       __CLASS__ . '::render_ui_js_templates' );
+		add_action( 'plugins_loaded', __CLASS__ . '::init_ajax' );
+		add_action( 'after_setup_theme', __CLASS__ . '::register_user_access_settings' );
+		add_action( 'init', __CLASS__ . '::load_settings', 1 );
+		add_action( 'wp_footer', __CLASS__ . '::render_ui_js_templates' );
 
 		/* Filters */
-		add_filter( 'template_include',                                __CLASS__ . '::template_include', 999 );
-		add_filter( 'fl_builder_has_templates',                        __CLASS__ . '::has_templates', 10, 2 );
-		add_filter( 'fl_builder_template_selector_data',               __CLASS__ . '::selector_data', 999 );
-		add_filter( 'fl_builder_ui_bar_buttons',                       __CLASS__ . '::ui_bar_buttons' );
-		add_filter( 'fl_builder_ui_js_config',                         __CLASS__ . '::ui_js_config' );
-		add_filter( 'fl_builder_settings_form_config',                 __CLASS__ . '::settings_form_config' );
-		add_filter( 'fl_builder_content_classes',                      __CLASS__ . '::content_classes' );
-		add_filter( 'fl_builder_render_nodes',                         __CLASS__ . '::render_nodes' );
-		add_filter( 'fl_builder_row_attributes',                       __CLASS__ . '::row_attributes', 10, 2 );
-		add_filter( 'fl_builder_column_attributes',                    __CLASS__ . '::column_attributes', 10, 2 );
-		add_filter( 'fl_builder_module_attributes',                    __CLASS__ . '::module_attributes', 10, 2 );
-		add_filter( 'fl_builder_content_panel_data',				   __CLASS__ . '::filter_content_panel_data' );
-		add_filter( 'fl_builder_content_elements_data',				   __CLASS__ . '::filter_content_items_data' );
+		add_filter( 'template_include', __CLASS__ . '::template_include', 999 );
+		add_filter( 'fl_builder_has_templates', __CLASS__ . '::has_templates', 10, 2 );
+		add_filter( 'fl_builder_template_selector_data', __CLASS__ . '::selector_data', 999 );
+		add_filter( 'fl_builder_ui_bar_buttons', __CLASS__ . '::ui_bar_buttons' );
+		add_filter( 'fl_builder_ui_js_config', __CLASS__ . '::ui_js_config' );
+		add_filter( 'fl_builder_settings_form_config', __CLASS__ . '::settings_form_config' );
+		add_filter( 'fl_builder_content_classes', __CLASS__ . '::content_classes' );
+		add_filter( 'fl_builder_render_nodes', __CLASS__ . '::render_nodes' );
+		add_filter( 'fl_builder_row_attributes', __CLASS__ . '::row_attributes', 10, 2 );
+		add_filter( 'fl_builder_column_attributes', __CLASS__ . '::column_attributes', 10, 2 );
+		add_filter( 'fl_builder_module_attributes', __CLASS__ . '::module_attributes', 10, 2 );
+		add_filter( 'fl_builder_content_panel_data', __CLASS__ . '::filter_content_panel_data' );
+		add_filter( 'fl_builder_content_elements_data', __CLASS__ . '::filter_content_items_data' );
 	}
 
 	/**
@@ -43,10 +43,10 @@ final class FLBuilderUserTemplates {
 	 * @return void
 	 */
 	static public function init_ajax() {
-		FLBuilderAJAX::add_action( 'save_user_template',               'FLBuilderModel::save_user_template', array( 'settings' ) );
-		FLBuilderAJAX::add_action( 'delete_user_template',             'FLBuilderModel::delete_user_template', array( 'template_id' ) );
-		FLBuilderAJAX::add_action( 'save_node_template',               'FLBuilderModel::save_node_template', array( 'node_id', 'settings' ) );
-		FLBuilderAJAX::add_action( 'delete_node_template',             'FLBuilderModel::delete_node_template', array( 'template_id' ) );
+		FLBuilderAJAX::add_action( 'save_user_template', 'FLBuilderModel::save_user_template', array( 'settings' ) );
+		FLBuilderAJAX::add_action( 'delete_user_template', 'FLBuilderModel::delete_user_template', array( 'template_id' ) );
+		FLBuilderAJAX::add_action( 'save_node_template', 'FLBuilderModel::save_node_template', array( 'node_id', 'settings' ) );
+		FLBuilderAJAX::add_action( 'delete_node_template', 'FLBuilderModel::delete_node_template', array( 'template_id' ) );
 	}
 
 	/**
@@ -67,8 +67,8 @@ final class FLBuilderUserTemplates {
 		FLBuilderUserAccess::register_setting( 'global_node_editing', array(
 			'default'     => 'all',
 			'group'       => __( 'Frontend', 'fl-builder' ),
-			'label'       => __( 'Global Rows and Modules Editing', 'fl-builder' ),
-			'description' => __( 'The selected roles will be able to edit global rows and modules.', 'fl-builder' ),
+			'label'       => __( 'Global Rows, Columns and Modules Editing', 'fl-builder' ),
+			'description' => __( 'The selected roles will be able to edit global rows, columns and modules.', 'fl-builder' ),
 			'order'       => '10',
 		) );
 	}
@@ -177,10 +177,10 @@ final class FLBuilderUserTemplates {
 	 */
 	static public function ui_js_config( $config ) {
 		return array_merge( $config, array(
-			'enabledTemplates'              => FLBuilderModel::get_enabled_templates(),
-			'isUserTemplate'                => FLBuilderModel::is_post_user_template() ? true : false,
-			'userCanEditGlobalTemplates'    => FLBuilderUserAccess::current_user_can( 'global_node_editing' ) ? true : false,
-			'userTemplateType'              => FLBuilderModel::get_user_template_type(),
+			'enabledTemplates'           => FLBuilderModel::get_enabled_templates(),
+			'isUserTemplate'             => FLBuilderModel::is_post_user_template() ? true : false,
+			'userCanEditGlobalTemplates' => FLBuilderUserAccess::current_user_can( 'global_node_editing' ) ? true : false,
+			'userTemplateType'           => FLBuilderModel::get_user_template_type(),
 		) );
 	}
 
@@ -206,13 +206,14 @@ final class FLBuilderUserTemplates {
 			);
 
 			$data['tabs']['modules']['views'][] = array(
-				'handle' => 'savedModules',
-				'name' => __( 'Saved Modules', 'fl-builder' ),
+				'handle'       => 'savedModules',
+				'name'         => __( 'Saved Modules', 'fl-builder' ),
 				'templateName' => 'fl-content-panel-saved-modules',
-				'query' => array(
-					'kind' => 'template',
-					'type' => 'user',
-					'content' => 'module',
+				'hasChildren'  => count( $saved_modules['categorized'] ) > 1,
+				'query'        => array(
+					'kind'        => 'template',
+					'type'        => 'user',
+					'content'     => 'module',
 					'categorized' => true,
 				),
 			);
@@ -220,14 +221,15 @@ final class FLBuilderUserTemplates {
 			if ( count( $saved_modules['categorized'] ) > 1 ) {
 				foreach ( $saved_modules['categorized'] as $handle => $category ) {
 					$data['tabs']['modules']['views'][] = array(
-						'handle' => 'user-' . $handle,
-						'name' => $category['name'],
+						'handle'       => 'user-' . $handle,
+						'name'         => $category['name'],
 						'templateName' => 'fl-content-panel-saved-modules',
-						'isSubItem' => true,
-						'query' => array(
-							'kind' => 'template',
-							'type' => 'user',
-							'content' => 'module',
+						'isSubItem'    => true,
+						'parent'       => 'savedModules',
+						'query'        => array(
+							'kind'     => 'template',
+							'type'     => 'user',
+							'content'  => 'module',
 							'category' => $handle,
 						),
 					);
@@ -244,36 +246,38 @@ final class FLBuilderUserTemplates {
 				);
 
 				$data['tabs']['rows']['views'][] = array(
-					'handle' => 'savedColumns',
-					'name' => __( 'Saved Columns', 'fl-builder' ),
+					'handle'       => 'savedColumns',
+					'name'         => __( 'Saved Columns', 'fl-builder' ),
 					'templateName' => 'fl-content-panel-saved-columns',
-					'query' => array(
-						'kind' => 'template',
-						'type' => 'user',
-						'content' => 'column',
+					'hasChildren'  => count( $saved_cols['categorized'] ) > 1,
+					'query'        => array(
+						'kind'        => 'template',
+						'type'        => 'user',
+						'content'     => 'column',
 						'categorized' => true,
 					),
 				);
-			}
 
-			if ( count( $saved_cols['categorized'] ) > 1 ) {
-				foreach ( $saved_cols['categorized'] as $handle => $category ) {
-					$data['tabs']['columns']['views'][] = array(
-						'handle' => 'user-' . $handle,
-						'name' => $category['name'],
-						'templateName' => 'fl-content-panel-saved-columns',
-						'isSubItem' => true,
-						'query' => array(
-							'kind' => 'template',
-							'type' => 'user',
-							'content' => 'column',
-							'category' => $handle,
-						),
-					);
+				if ( count( $saved_cols['categorized'] ) > 1 ) {
+					foreach ( $saved_cols['categorized'] as $handle => $category ) {
+						$data['tabs']['rows']['views'][] = array(
+							'handle'       => 'user-' . $handle . '-savedColumns',
+							'name'         => $category['name'],
+							'templateName' => 'fl-content-panel-saved-columns',
+							'isSubItem'    => true,
+							'parent'       => 'savedColumns',
+							'query'        => array(
+								'kind'     => 'template',
+								'type'     => 'user',
+								'content'  => 'column',
+								'category' => $handle,
+							),
+						);
+					}
 				}
 			}
 
-			$is_row_template = FLBuilderModel::is_post_user_template( 'row' );
+			$is_row_template    = FLBuilderModel::is_post_user_template( 'row' );
 			$is_module_template = FLBuilderModel::is_post_user_template( 'module' );
 
 			if ( ! $is_row_template && ! $is_col_template && ! $is_module_template ) {
@@ -284,13 +288,14 @@ final class FLBuilderUserTemplates {
 				);
 
 				$data['tabs']['rows']['views'][] = array(
-					'handle' => 'savedRows',
-					'name' => __( 'Saved Rows', 'fl-builder' ),
+					'handle'       => 'savedRows',
+					'name'         => __( 'Saved Rows', 'fl-builder' ),
 					'templateName' => 'fl-content-panel-saved-rows',
-					'query' => array(
-						'kind' => 'template',
-						'type' => 'user',
-						'content' => 'row',
+					'hasChildren'  => count( $saved_rows['categorized'] ) > 1,
+					'query'        => array(
+						'kind'        => 'template',
+						'type'        => 'user',
+						'content'     => 'row',
 						'categorized' => false,
 					),
 				);
@@ -298,14 +303,15 @@ final class FLBuilderUserTemplates {
 				if ( count( $saved_rows['categorized'] ) > 1 ) {
 					foreach ( $saved_rows['categorized'] as $handle => $category ) {
 						$data['tabs']['rows']['views'][] = array(
-							'handle' => 'user-' . $handle,
-							'name' => $category['name'],
+							'handle'       => 'user-' . $handle,
+							'name'         => $category['name'],
 							'templateName' => 'fl-content-panel-saved-rows',
-							'isSubItem' => true,
-							'query' => array(
-								'kind' => 'template',
-								'type' => 'user',
-								'content' => 'row',
+							'isSubItem'    => true,
+							'parent'       => 'savedRows',
+							'query'        => array(
+								'kind'     => 'template',
+								'type'     => 'user',
+								'content'  => 'row',
 								'category' => $handle,
 							),
 						);
@@ -318,12 +324,13 @@ final class FLBuilderUserTemplates {
 				);
 
 				$data['tabs']['templates']['views'][50] = array(
-					'handle' => 'user-templates',
-					'name' => __( 'Saved Templates', 'fl-builder' ),
-					'query' => array(
-						'kind' => 'template',
-						'type' => 'user',
-						'content' => 'layout',
+					'handle'       => 'user-templates',
+					'name'         => __( 'Saved Templates', 'fl-builder' ),
+					'hasChildren'  => count( $saved_layouts['categorized'] ) > 1,
+					'query'        => array(
+						'kind'        => 'template',
+						'type'        => 'user',
+						'content'     => 'layout',
 						'categorized' => true,
 					),
 					'templateName' => 'fl-content-panel-saved-templates',
@@ -332,14 +339,15 @@ final class FLBuilderUserTemplates {
 				if ( count( $saved_layouts['categorized'] ) > 1 ) {
 					foreach ( $saved_layouts['categorized'] as $handle => $category ) {
 						$data['tabs']['templates']['views'][] = array(
-							'handle' => 'user-' . $handle,
-							'name' => $category['name'],
-							'isSubItem' => true,
-							'query' => array(
-								'kind' => 'template',
-								'type' => 'user',
-								'content' => 'layout',
-								'category' => $handle,
+							'handle'       => 'user-' . $handle,
+							'name'         => $category['name'],
+							'isSubItem'    => true,
+							'parent'       => 'user-templates',
+							'query'        => array(
+								'kind'        => 'template',
+								'type'        => 'user',
+								'content'     => 'layout',
+								'category'    => $handle,
 								'categorized' => false,
 							),
 							'templateName' => 'fl-content-panel-saved-templates',
@@ -351,14 +359,14 @@ final class FLBuilderUserTemplates {
 			// Saved tab view
 			$data['tabs']['saved'] = array(
 				'handle' => 'saved',
-				'name' => __( 'Saved', 'fl-builder' ),
-				'views' => array(
+				'name'   => __( 'Saved', 'fl-builder' ),
+				'views'  => array(
 					'main' => array(
 						'handle' => 'saved',
-						'name' => __( 'Saved', 'fl-builder' ),
-						'query' => array(
-							'kind' => 'template',
-							'type' => 'user',
+						'name'   => __( 'Saved', 'fl-builder' ),
+						'query'  => array(
+							'kind'     => 'template',
+							'type'     => 'user',
 							'category' => 'uncategorized',
 						),
 					),
@@ -376,28 +384,28 @@ final class FLBuilderUserTemplates {
 	 * @return array The filtered data.
 	 */
 	static public function filter_content_items_data( $data ) {
-		$layouts = FLBuilderModel::get_user_templates( 'layout' );
+		$layouts          = FLBuilderModel::get_user_templates( 'layout' );
 		$layout_templates = $layouts['templates'];
 
 		foreach ( $layout_templates as $template ) {
 			$data['template'][] = $template;
 		}
 
-		$rows = FLBuilderModel::get_user_templates( 'row' );
+		$rows          = FLBuilderModel::get_user_templates( 'row' );
 		$row_templates = $rows['templates'];
 
 		foreach ( $row_templates as $template ) {
 			$data['template'][] = $template;
 		}
 
-		$cols = FLBuilderModel::get_user_templates( 'column' );
+		$cols          = FLBuilderModel::get_user_templates( 'column' );
 		$col_templates = $cols['templates'];
 
 		foreach ( $col_templates as $template ) {
 			$data['template'][] = $template;
 		}
 
-		$modules = FLBuilderModel::get_user_templates( 'module' );
+		$modules          = FLBuilderModel::get_user_templates( 'module' );
 		$module_templates = $modules['templates'];
 
 		foreach ( $module_templates as $template ) {
@@ -440,7 +448,7 @@ final class FLBuilderUserTemplates {
 				$global = FLBuilderModel::is_node_global( FLBuilderModel::get_node( $post_data['node_id'] ) );
 			} elseif ( isset( $post_data['template_id'] ) ) {
 				$template_post_id = FLBuilderModel::get_node_template_post_id( $post_data['template_id'] );
-				$global = ! $template_post_id ? false : FLBuilderModel::is_post_global_node_template( $template_post_id );
+				$global           = ! $template_post_id ? false : FLBuilderModel::is_post_global_node_template( $template_post_id );
 			}
 
 			if ( $global ) {
@@ -518,9 +526,9 @@ final class FLBuilderUserTemplates {
 			$attrs['class'][] = 'fl-node-global';
 		}
 		if ( $global && $active ) {
-			$attrs['data-template'] = $row->template_id;
+			$attrs['data-template']      = $row->template_id;
 			$attrs['data-template-node'] = $row->template_node_id;
-			$attrs['data-template-url'] = FLBuilderModel::get_node_template_edit_url( $row->template_id );
+			$attrs['data-template-url']  = FLBuilderModel::get_node_template_edit_url( $row->template_id );
 		}
 
 		return $attrs;
@@ -542,7 +550,7 @@ final class FLBuilderUserTemplates {
 			$attrs['class'][] = 'fl-node-global';
 		}
 		if ( $global && $active ) {
-			$attrs['data-template'] = $col->template_id;
+			$attrs['data-template']      = $col->template_id;
 			$attrs['data-template-node'] = $col->template_node_id;
 
 			if ( isset( $col->template_root_node ) ) {
@@ -569,7 +577,7 @@ final class FLBuilderUserTemplates {
 			$attrs['class'][] = 'fl-node-global';
 		}
 		if ( $global && $active ) {
-			$attrs['data-template'] = $module->template_id;
+			$attrs['data-template']      = $module->template_id;
 			$attrs['data-template-node'] = $module->template_node_id;
 		}
 

@@ -22,7 +22,9 @@
 						var field = fields[ data.field.preview_text ];
 
 						if ( 'icon' === field.type ) {
-							text = '<i class="' + data.value[ data.field.preview_text ] + '"></i>';
+							if ( '' !== data.value[ data.field.preview_text ] ) {
+								text = '<i class="' + data.value[ data.field.preview_text ] + '"></i>';
+							}
 						} else if ( 'select' === field.type ) {
 							text = field.options[ data.value[ data.field.preview_text ] ];
 						} else if ( '' !== data.value[ data.field.preview_text ] ) {

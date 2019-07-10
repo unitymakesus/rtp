@@ -6,7 +6,7 @@ if ( 'slideshow' == $settings->bg_type ) :
 
 	if ( ! empty( $source ) ) :
 
-?>
+		?>
 YUI({'logExclude': { 'yui': true } }).use('fl-slideshow', function(Y) {
 
 	if( null === Y.one('.fl-node-<?php echo $id; ?> .fl-bg-slideshow') ) {
@@ -16,6 +16,7 @@ YUI({'logExclude': { 'yui': true } }).use('fl-slideshow', function(Y) {
 	var oldSlideshow = Y.one('.fl-node-<?php echo $id; ?> .fl-bg-slideshow .fl-slideshow'),
 		newSlideshow = new Y.FL.Slideshow({
 			autoPlay            : true,
+			bgslideshow         : true,
 			crop                : true,
 			loadingImageEnabled : false,
 			randomize           : <?php echo $settings->ss_randomize; ?>,
@@ -37,7 +38,7 @@ YUI({'logExclude': { 'yui': true } }).use('fl-slideshow', function(Y) {
 		newSlideshow.render('.fl-node-<?php echo $id; ?> .fl-bg-slideshow');
 	} );
 });
-<?php
+		<?php
 
 	endif;
 

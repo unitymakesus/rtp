@@ -167,6 +167,7 @@ FLBuilder::register_module(
 							'type'        => 'text',
 							'label'       => __( '"All" Tab Label', 'uabb' ),
 							'default'     => __( 'All', 'uabb' ),
+							'placeholder' => __( 'All', 'uabb' ),
 							'connections' => array( 'string', 'html' ),
 						),
 						'default_filter_switch' => array(
@@ -552,7 +553,7 @@ FLBuilder::register_module(
 						),
 						'cat_filter_border_active_param' => array(
 							'type'       => 'border',
-							'label'      => __( 'Bottom Border', 'uabb' ),
+							'label'      => __( 'Bottom Border Active', 'uabb' ),
 							'responsive' => true,
 							'default'    => array(
 								'style' => 'none',

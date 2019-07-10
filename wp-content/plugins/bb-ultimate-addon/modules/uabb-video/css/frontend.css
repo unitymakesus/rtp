@@ -9,6 +9,9 @@
 .uabb-aspect-ratio-3_2 .uabb-video__outer-wrap {
 	padding-bottom: 66.6666%;
 }
+.uabb-aspect-ratio-1_1 .uabb-video__outer-wrap {
+	padding-bottom: 100%;
+}
 
 .uabb-video__outer-wrap {
 	position: relative;
@@ -176,7 +179,7 @@
 .uabb-video__outer-wrap:active .uabb-animation-wobble-vertical,
 .uabb-video__outer-wrap:focus .uabb-animation-wobble-vertical,
 .uabb-video__outer-wrap:hover .uabb-animation-wobble-vertical {
-	-webkit-animation-name: uael-wobble-vertical;
+	-webkit-animation-name: uabb-wobble-vertical;
 	animation-name: uabb-wobble-vertical;
 	-webkit-animation-duration: 1s;
 	animation-duration: 1s;
@@ -285,6 +288,158 @@
 	display: block;
 }
 
+/* Video sticky css */
+.uabb-video__play.uabb-sticky-apply {
+	position: fixed;
+	transform: translateY(100%);
+	width: 260px;
+	height: 145px;
+	animation: fade-in-up .25s ease forwards;
+	z-index: 9999;
+}
+.uabb-video__outer-wrap.uabb-sticky-apply {
+	background: none;
+	z-index: 9;
+}
+.uabb-video__outer-wrap.uabb-sticky-apply {
+	overflow: unset;
+}
+.uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	position: fixed !important;
+	z-index: 99999;
+	height: 225px;
+	width: 400px;
+	background: #fff;
+	-webkit-box-shadow: 0 0px 10px rgba(0,0,0,0.5);
+	box-shadow: 0 0px 10px rgba(0,0,0,0.5);
+}
+.uabb-video__outer-wrap .uabb-sticky-apply .uabb-vimeo-wrap {
+	visibility: hidden;
+}
+
+.uabb-video__outer-wrap.uabb-sticky-apply .uabb-vimeo-wrap,
+.uabb-sticky-apply.uabb-video__outer-wrap:before {
+	visibility: hidden;
+}
+.uabb-video__outer-wrap.uabb-sticky-apply + .uabb-subscribe-bar {
+	display: none;
+}
+.uabb-sticky-infobar-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	-webkit-box-shadow: unset;
+	box-shadow: unset;
+}
+.uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-sticky-infobar {
+	-webkit-box-shadow: 0 5px 10px -5px #333;
+	box-shadow: 0 5px 10px -5px #333;
+}
+.uabb-sticky-apply .uabb-video-inner-wrap.ui-draggable {
+	cursor: move;
+}
+.uabb-sticky-apply iframe,
+.uabb-sticky-apply .uabb-video__thumb {
+	padding: 4px;
+}
+.uabb-video-sticky-close,
+.uabb-video-sticky-infobar {
+	display: none;
+}
+.uabb-sticky-apply .uabb-video-sticky-close {
+	display: block;
+	position: absolute;
+	padding: 1px 9px;
+	color: #000;
+	background: #fff;
+	-webkit-border-radius: 100%;
+	border-radius: 100%;
+	cursor: pointer;
+	z-index: 99999;
+}
+.uabb-sticky-apply .uabb-video-sticky-infobar {
+	display: block;
+	position: relative;
+	top: 100%;
+	width: 100%;
+	padding: 5px;
+	color: #000;
+	background: #fff;
+	text-align: center;
+	z-index: 9999;
+	margin-top: -1px;
+}
+
+
+/* Top Left aligned sticky video */
+.uabb-video-sticky-top_left .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	right: auto;
+	left: 20px;
+	top: 20px;
+}
+
+/* Bottom Left aligned sticky video */
+.uabb-video-sticky-bottom_left .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	right: auto;
+	left: 20px;
+	bottom: 20px;
+}
+
+/* Top Right aligned sticky video */
+.uabb-video-sticky-top_right .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	left: auto;
+	right: 20px;
+	top: 20px;
+}
+
+/* Bottom Right aligned sticky video */
+.uabb-video-sticky-bottom_right .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	left: auto;
+	right: 20px;
+	bottom: 20px;
+}
+/* Top Right aligned sticky video */
+.uabb-video-sticky-center_left .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	right: auto;
+	left: 20px;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+/* Bottom Right aligned sticky video */
+.uabb-video-sticky-center_right .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	left: auto;
+	right: 20px;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+/* Video aligned to bottom and Info bar is enabled */
+.uabb-video-sticky-bottom_right .uabb-sticky-infobar-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
+.uabb-video-sticky-bottom_left .uabb-sticky-infobar-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	bottom: 55px;
+}
+
+.admin-bar .uabb-video-sticky-top_left .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
+.admin-bar .uabb-video-sticky-top_right .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
+	top: -webkit-calc( 32px + 20px );
+	top: calc( 32px + 20px );
+}
+
+/* Close button alignment */
+.uabb-video-sticky-top_left .uabb-sticky-apply .uabb-video-sticky-close,
+.uabb-video-sticky-bottom_left .uabb-sticky-apply .uabb-video-sticky-close,
+.uabb-video-sticky-center_left .uabb-sticky-apply .uabb-video-sticky-close {
+	top: -10px;
+	right: -10px;
+}
+.uabb-video-sticky-top_right .uabb-sticky-apply .uabb-video-sticky-close,
+.uabb-video-sticky-bottom_right .uabb-sticky-apply .uabb-video-sticky-close,
+.uabb-video-sticky-center_right .uabb-sticky-apply .uabb-video-sticky-close {
+	top: -10px;
+	left: -10px;
+}
+
 @media only screen and (max-width: 992px) {
 	.uabb-subscribe-responsive-tablet .uabb-subscribe-bar {
 		display: block;
@@ -312,3 +467,4 @@
 		display: block;
 	}
 }
+

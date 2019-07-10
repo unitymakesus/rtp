@@ -2,6 +2,7 @@
 
 #tiptip_holder {
 	display: none;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
 	position: absolute;
 	top: 0;
 	left: 0;

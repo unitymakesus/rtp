@@ -28,7 +28,7 @@ final class FLBuilderPrivacy {
 	static public function exporter( $email, $page = 1 ) {
 
 		$export_items = array();
-		$data = array();
+		$data         = array();
 
 		$user = get_user_by( 'email', $email );
 		$meta = (array) get_user_meta( $user->ID, 'fl_builder_user_settings', true );
@@ -47,8 +47,8 @@ final class FLBuilderPrivacy {
 					$setting = 'false';
 				}
 				$data[] = array(
-				'name' => $key,
-				'value' => $setting,
+					'name'  => $key,
+					'value' => $setting,
 				);
 			}
 		}
@@ -61,15 +61,15 @@ final class FLBuilderPrivacy {
 		}
 
 		$export_items[] = array(
-		'group_id' => 'bb-settings',
-		'group_label' => 'Beaver Builder Settings',
-		'item_id'     => 'bb-settings',
-		'data'        => $data,
+			'group_id'    => 'bb-settings',
+			'group_label' => 'Beaver Builder Settings',
+			'item_id'     => 'bb-settings',
+			'data'        => $data,
 		);
 
 		return array(
-		'data' => $export_items,
-		'done' => true,
+			'data' => $export_items,
+			'done' => true,
 		);
 	}
 

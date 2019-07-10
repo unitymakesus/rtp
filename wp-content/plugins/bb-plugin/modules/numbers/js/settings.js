@@ -38,7 +38,23 @@
 			var form		= $('.fl-builder-settings'),
 				numberInput = form.find('input[name=number]');
 
-				numberInput.val( numberInput.val().replace(/[^0-9\.]/g,'') );
+				number = numberInput.val()
+
+				// Match -00 or 00.4 which are invalid
+				if( number.match( /^-?(0)\1+\.?/ ) ) {
+					numberInput.val( '100' )
+					return false;
+				}
+
+				// if field is blank dont check if its a number
+				if( '' === number ) {
+					return false;
+				}
+
+				// Finaly if number is invalid set to 100, the default
+				if( ! $.isNumeric( number ) ) {
+					numberInput.val( '100' )
+				}
 		}
 	});
 

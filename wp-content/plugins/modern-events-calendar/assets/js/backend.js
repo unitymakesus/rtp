@@ -71,6 +71,19 @@ jQuery(document).ready(function($)
             });
         }
     });
+
+    // MEC image popup switcher
+    if($('.mec-sed-method-wrap').length > 0)
+    {
+        $('.mec-sed-method-wrap').each(function()
+        {
+            var sed_value = $(this).find('[id*="_sed_method_field"]').val();
+            if(sed_value == 'm1')
+            {
+                $(this).siblings('.mec-image-popup-wrap').show();
+            }
+        });
+    }
     
     // MEC Single Event Display Method Switcher
     $(".mec-sed-methods li").on('click', function()
@@ -84,6 +97,13 @@ jQuery(document).ready(function($)
         // Set the active method
         $(this).parent().find('li').removeClass('active');
         $(this).addClass('active');
+
+        // Display Image popup section
+        if ( method == 'm1' ) {
+            $('.mec-image-popup-wrap').show();
+        } else {
+            $('.mec-image-popup-wrap').hide();
+        }
     });
     
     // Initialize WP Color Picker
@@ -122,6 +142,168 @@ jQuery(document).ready(function($)
         $(".mec-checkbox-toggle:not(#"+id+")").attr('checked', false);
     });
 
+    // MEC Setting Sticky
+    if($('.wns-be-container').length > 0)
+    {
+        var stickyNav = function () {
+            var stickyNavTop = $('.wns-be-container').offset().top;
+            var scrollTop = $(window).scrollTop();
+            var width = $('.wns-be-container').width();
+            if (scrollTop > stickyNavTop) {
+                $('#wns-be-infobar').addClass('sticky');
+                $('#wns-be-infobar').css({
+                    'width' : width,
+                });
+            } else {
+                $('#wns-be-infobar').removeClass('sticky');
+            }
+        };
+        stickyNav();
+        $(window).scroll(function () {
+            stickyNav();
+        });
+
+        $("#mec-search-settings").typeWatch(
+        {
+            wait: 400, // 750ms
+            callback: function (value)
+            {
+                var elements = [];
+                if (!value || value == "")
+                {
+                    $('.mec-options-fields').hide();
+                    $('.mec-options-fields').removeClass('active');
+                    $('#general_option.mec-options-fields').show();
+                    $('#general_option.mec-options-fields').addClass('active');
+                    $('.pr-be-group-menu-li').removeClass('active');
+                    $('.wns-be-group-menu-li .subsection .pr-be-group-menu-li:first').addClass('active');
+                }
+                else
+                {
+                    $("#mec_settings_form .mec-options-fields").filter(function ()
+                    {
+                        var search_label = $(this).find('label.mec-col-3').text().toLowerCase();
+                        var search_title = $(this).find('h4.mec-form-subtitle').text().toLowerCase();
+                        if ((!search_label || search_label == "") && (!search_title || search_title == "")) {
+                            return false;
+                        }
+                        if ($(this).find('label.mec-col-3').text().toLowerCase().indexOf(value) > -1 || $(this).find('h4.mec-form-subtitle').text().toLowerCase().indexOf(value) > -1) {
+                            $('.mec-options-fields').hide();
+                            $('.mec-options-fields').removeClass('active');
+                            elements.push($(this));
+                        }
+                    });
+
+                    $.each(elements, function (i, searchStr)
+                    {
+                        searchStr.show();
+                        searchStr.addClass('active')
+                    });
+                }
+            }
+        });
+    }
+
+    // Import Settings
+    function CheckJSON(text)
+    {
+        if (typeof text != 'string')
+            text = JSON.stringify(text);
+        try {
+            JSON.parse(text);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    $('.mec-import-settings').on('click', function (e) {
+        e.preventDefault();
+        var value = $(this).parent().find('.mec-import-settings-content').val();
+        if ( CheckJSON(value) || value == '' ) {
+            value = jQuery.parseJSON($(this).parent().find('.mec-import-settings-content').val());
+        } else {
+            value = 'No-JSON';
+        }
+        $.ajax({
+            url: mec_admin_localize.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'import_settings',
+                nonce: mec_admin_localize.ajax_nonce,
+                content: value,
+            },
+            beforeSend: function () {
+                $('.mec-import-settings-wrap').append('<div class="mec-loarder-wrap"><div class="mec-loarder"><div></div><div></div><div></div></div></div>');
+                $('.mec-import-options-notification').find('.mec-message-import-error').remove()
+                $('.mec-import-options-notification').find('.mec-message-import-success').remove()
+            },
+            success: function (response) {
+                $('.mec-import-options-notification').append(response);
+                $('.mec-loarder-wrap').remove();
+                $('.mec-import-settings-content').val('');
+            },
+        });
+    });
+
+    /* MEC activation */
+    if ($('#MECActivation').length > 0)
+    {
+        var LicenseType = $('#MECActivation input.checked[type=radio][name=MECLicense]').val();
+        $('#MECActivation input[type=radio][name=MECLicense]').change(function () {
+            $('#MECActivation').find('input').removeClass('checked');
+            $(this).addClass('checked');
+            LicenseType = $(this).val();
+        });
+        
+        $('#MECActivation input[type=submit]').on('click', function(e){
+            e.preventDefault();
+            $('.wna-spinner-wrap').remove();
+            $('#MECActivation').find('.MECLicenseMessage').text(' ');
+            $('#MECActivation').find('.MECPurchaseStatus').removeClass('PurchaseError');
+            $('#MECActivation').find('.MECPurchaseStatus').removeClass('PurchaseSuccess');
+            var PurchaseCode = $('#MECActivation input[type=password][name=MECPurchaseCode]').val();
+            var information = { LicenseTypeJson: LicenseType, PurchaseCodeJson: PurchaseCode };
+            $.ajax({
+                url: mec_admin_localize.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'activate_license',
+                    nonce: mec_admin_localize.ajax_nonce,
+                    content: information,
+                },
+                beforeSend: function () {
+                    $('#MECActivation .LicenseField').append('<div class="wna-spinner-wrap"><div class="wna-spinner"><div class="double-bounce1"></div><div class="double-bounce2"></div></div></div>');
+                },
+                success: function (response) {
+                    if (response == 'success')
+                    {
+                        $('.wna-spinner-wrap').remove();
+                        $('#MECActivation').find('.MECPurchaseStatus').addClass('PurchaseSuccess');
+                    }
+                    else
+                    {
+                        $('.wna-spinner-wrap').remove();
+                        $('#MECActivation').find('.MECPurchaseStatus').addClass('PurchaseError');
+                        $('#MECActivation').find('.MECLicenseMessage').append(response);
+                    }
+                },
+            });
+        });
+    }
+
+    /* Addons Activation */
+    if ($('.box-addon-activation-toggle-head').length > 0)
+    {
+        $('.box-addon-activation-toggle-head').on('click', function() {
+            $('.box-addon-activation-toggle-content').slideToggle('slow'); 
+            if ($(this).find('i').hasClass('mec-sl-plus')){
+                $(this).find('i').removeClass('mec-sl-plus').addClass('mec-sl-minus');
+            } else if ($(this).find('i').hasClass('mec-sl-minus') ) {
+                $(this).find('i').removeClass('mec-sl-minus').addClass('mec-sl-plus');
+            }
+        });
+    }
 });
 
 function mec_skin_toggle()
@@ -182,3 +364,61 @@ function mec_skin_style_changed(skin, style)
     jQuery('#mec_skin_'+skin+'_date_format_'+style+'_container').show();
 }
 
+// TinyMce Plugins
+var items = JSON.parse(mec_admin_localize.mce_items);
+var menu = new Array();
+if(items && typeof tinymce !== 'undefined')
+{
+    tinymce.PluginManager.add('mec_mce_buttons', function (editor, url) 
+    {
+        items.shortcodes.forEach(function(e, i)
+        {
+            menu.push(
+                {
+                    text: items.shortcodes[i]['PN'].replace(/-/g, ' '),
+                    id: items.shortcodes[i]['ID'],
+                    classes: 'mec-mce-items',
+                    onselect: function(e)
+                    {
+                        editor.insertContent(`[MEC id="${e.control.settings.id}"]`);
+                    }
+                });
+        });
+        // Add menu button
+        editor.addButton('mec_mce_buttons', 
+        {
+            text: items.mce_title,
+            icon: false,
+            type: 'menubutton',
+            menu: menu
+        });
+    });
+}
+
+// Block Editor
+(function(wp, $)
+{
+    if(items && wp && wp.blocks)
+    {
+        items.shortcodes.forEach(function(e, i)
+        {
+            wp.blocks.registerBlockType(`mec/blockeditor-${i}`, 
+            {
+                title: items.shortcodes[i]['PN'].toLowerCase().replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function(s)
+                {
+                    return s.toUpperCase().replace(/-/g,' ');
+                }),
+                icon: 'calendar-alt',
+                category: 'mec.block.category',
+                edit: function()
+                {
+                    return `[MEC id="${(items.shortcodes[i]['ID'])}"]`;
+                },
+                save: function()
+                {
+                    return `[MEC id="${(items.shortcodes[i]['ID'])}"]`;
+                }
+            });
+        });
+    }
+})(window.wp, jQuery);

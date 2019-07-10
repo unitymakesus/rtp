@@ -1,5 +1,4 @@
 <?php
-
 class AC_Connector {
 
 	public $url;
@@ -163,12 +162,10 @@ class AC_Connector {
 			curl_setopt($request, CURLOPT_POSTFIELDS, $data);
 			$debug_str1 .= "curl_setopt(\$ch, CURLOPT_POSTFIELDS, \"" . $data . "\");\n";
 		}
-		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
+
+		$request = fl_set_curl_safe_opts( $request );
+
 		curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYPEER, false);\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_SSL_VERIFYHOST, 0);\n";
-		$debug_str1 .= "curl_setopt(\$ch, CURLOPT_FOLLOWLOCATION, true);\n";
 		$response = curl_exec($request);
 		$debug_str1 .= "curl_exec(\$ch);\n";
 		if ($this->debug) {

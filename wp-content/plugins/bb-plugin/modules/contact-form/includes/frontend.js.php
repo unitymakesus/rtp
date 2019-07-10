@@ -1,10 +1,10 @@
 (function($) {
 
 	$(function() {
-	
+
 		new FLBuilderContactForm({
-			id: '<?php echo $id ?>'
+			id: '<?php echo $id; ?>'
 		});
 	});
-	
+
 })(jQuery);

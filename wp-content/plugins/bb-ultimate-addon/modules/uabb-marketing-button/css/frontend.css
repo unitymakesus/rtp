@@ -1,0 +1,148 @@
+/* Float Animation CSS */
+.uabb-marketing-button-animation-float:active, .uabb-marketing-button-animation-float:focus, .uabb-marketing-button-animation-float:hover {
+    transform: translateY(-8px);
+}
+.uabb-marketing-button-animation-float {
+    transition-duration: .3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+/* Sink Animation CSS */
+.uabb-marketing-button-animation-sink:active, .uabb-marketing-button-animation-sink:focus, .uabb-marketing-button-animation-sink:hover {
+    transform: translateY(8px);
+}
+.uabb-marketing-button-animation-sink {
+    transition-duration: .3s;
+    transition-property: transform;
+    transition-timing-function: ease-out;
+}
+/* wobble-vertical Animation CSS */
+.uabb-marketing-button-animation-wobble-vertical:active, .uabb-marketing-button-animation-wobble-vertical:focus, .uabb-marketing-button-animation-wobble-vertical:hover {
+    animation-name: uabb-marketing-button-animation-wobble-vertical;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+}
+@keyframes uabb-marketing-button-animation-wobble-vertical {
+    16.65% {
+        transform: translateY(8px)
+    }
+
+    33.3% {
+        transform: translateY(-6px)
+    }
+
+    49.95% {
+        transform: translateY(4px)
+    }
+
+    66.6% {
+        transform: translateY(-2px)
+    }
+
+    83.25% {
+        transform: translateY(1px)
+    }
+
+    100% {
+        transform: translateY(0)
+    }
+}
+.uabb-marketing-button-animation-bounce-in {
+    transition-duration: .5s
+}
+.uabb-marketing-button-animation-bounce-in:active,.uabb-marketing-button-animation-bounce-in:focus,.uabb-marketing-button-animation-bounce-in:hover {
+    transform: scale(1.2);
+    transition-timing-function: cubic-bezier(0.47,2.02,.31,-.36)
+}
+.uabb-marketing-button .uabb-button-content-wrapper {
+    margin-bottom: 7px;
+}
+.uabb-marketing-button-icon .uabb-align-icon-all_after {
+    display: flex;
+    align-items: center;
+    align-content: center;  
+}
+.uabb-marketing-buttons-wrap {
+    display: inline-block;
+}
+.uabb-marketing-button-icon .uabb-align-icon-all_after {
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+.uabb-button .uabb-marketing-button-wrap-all_after {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+.uabb-button .uabb-marketing-button-wrap-all_before {
+    display: inline-flex;
+}
+.uabb-marketing-button .uabb-marketing-button-icon.uabb-align-icon-all_after {
+    align-self: safe;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+.uabb-button-width-custom .uabb-button {
+    display: inline-flex;
+    text-align: center;
+    max-width: 100%;
+}
+.uabb-marketing-button .uabb-marketing-buttons-contentwrap {
+    -js-display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.uabb-marketing-button .uabb-marketing-buttons-contentwrap.uabb-marketing-button-icon-after {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -webkit-flex-direction: row-reverse;
+    -moz-box-orient: horizontal;
+    -moz-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
+.uabb-marketing-button-wrap .uabb-marketing-btn__link:hover {
+    text-decoration: none;
+}
+.uabb-marketing-button-wrap.uabb-marketing-button-left {
+    text-align: left;
+}
+.uabb-marketing-button-wrap.uabb-marketing-button-center {
+    text-align: center;
+}
+.uabb-marketing-button-wrap.uabb-marketing-button-right {
+    text-align: right;
+}
+.uabb-marketing-button-wrap .uabb-marketing-button-text {
+    vertical-align: middle;
+}
+.uabb-marketing-button-wrap .uabb-marketing-btn__link:hover {
+    text-decoration: none;
+}
+.uabb-marketing-button-wrap .uabb-marketing-btn__link,
+.uabb-marketing-button-wrap .uabb-marketing-btn__link:visited {
+    color: #333;
+    text-align: center;
+    overflow: hidden;
+    text-decoration: none;
+    text-shadow: none;
+    box-shadow: none;
+    position: relative;
+    -webkit-transition: all 200ms linear;
+       -moz-transition: all 200ms linear;
+        -ms-transition: all 200ms linear;
+         -o-transition: all 200ms linear;
+            transition: all 200ms linear;
+
+}
+

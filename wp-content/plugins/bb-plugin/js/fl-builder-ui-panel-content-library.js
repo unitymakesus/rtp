@@ -657,9 +657,27 @@
         * {Event} e
         * @return void
         */
-        onCategoryClick: function(e) {
-            var viewName = $(e.target).data('view');
-            $(this).trigger('categorySelected', viewName);
+        onCategoryClick: function( e ) {
+			var item = $( e.target );
+            var viewName = item.data( 'view' );
+
+			if ( item.hasClass( 'fl-has-children' ) ) {
+				var children = $( '[data-parent="' + viewName + '"]' );
+
+				if ( ! children.is( ':visible' ) ) {
+					this.items[ viewName ].hasChildrenOpen = true;
+					item.addClass( 'fl-has-children-showing' );
+					children.show();
+				} else {
+					this.items[ viewName ].hasChildrenOpen = false;
+					item.removeClass( 'fl-has-children-showing' );
+					children.hide();
+				}
+
+				item.blur();
+			} else {
+				$( this ).trigger( 'categorySelected', viewName );
+			}
         },
     });
 
@@ -809,7 +827,7 @@
             this.hide();
             this.$el.css('animation-duration', animationDuration );
 
-            buttonOffset = $button[0].getBoundingClientRect();
+            var buttonOffset = $button[0].getBoundingClientRect();
             var buttonCenterX = buttonOffset.x + ( buttonOffset.width / 2 );
 
 

@@ -101,7 +101,7 @@
 		 */
 		refreshItemsComplete: function( response )
 		{
-			FLBuilderConfig.revisions = JSON.parse( response );
+			FLBuilderConfig.revisions = FLBuilder._jsonParse( response );
 
 			this.setupMainMenuData();
 		},
@@ -231,11 +231,19 @@
 		 * @param {String} response
 		 */
 		restoreComplete: function( response ) {
-			var data = JSON.parse( response );
-
+			var data = FLBuilder._jsonParse( response );
 			FLBuilder._renderLayout( data.layout );
 			FLBuilder.triggerHook( 'didRestoreRevisionComplete', data.config );
+
+			settings = data.settings
+			if( typeof( settings.css ) != "undefined" && settings.css !== null) {
+    		FLBuilderSettingsConfig.settings.layout.css = settings.css
+			}
+			if( typeof( settings.js ) != "undefined" && settings.js !== null) {
+				FLBuilderSettingsConfig.settings.layout.js = settings.js
+			}
 		}
+
 	};
 
 	$( function() { Revisions.init(); } );

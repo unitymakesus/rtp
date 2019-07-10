@@ -7,8 +7,26 @@
 
 $version_bb_check = UABB_Compatibility::check_bb_version();
 $converted        = UABB_Compatibility::check_old_page_migration();
-
+FLBuilder::render_module_css( 'uabb-button', $id, $settings->button );
 $photo_src = ( 'url' != $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' != $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' != $settings->photo_url ) ? $settings->photo_url : '' );
+
+if ( isset( $settings->content_color ) ) {
+	$settings->content_color = UABB_Helper::uabb_colorpicker( $settings, 'content_color' );
+}
+if ( isset( $settings->hotspot_hover_bgcolor ) ) {
+	$settings->hotspot_hover_bgcolor = UABB_Helper::uabb_colorpicker( $settings, 'hotspot_hover_bgcolor' );
+}
+if ( isset( $settings->hotspot_color ) ) {
+	$settings->hotspot_color = UABB_Helper::uabb_colorpicker( $settings, 'hotspot_color' );
+
+}
+if ( isset( $settings->hotspot_background_color ) ) {
+	$settings->hotspot_background_color = UABB_Helper::uabb_colorpicker( $settings, 'hotspot_background_color' );
+}
+
+if ( 'click' == $settings->autoplay_options ) {
+	( '' != $settings->button ) ? FLBuilder::render_module_css( 'uabb-button', $id, $settings->button ) : '';
+}
 
 if ( '' != $photo_src ) {
 	if ( count( $settings->hotspot_marker ) > 0 ) {
@@ -91,6 +109,7 @@ if ( '' != $photo_src ) {
 				);
 
 				/* CSS Render Function */
+
 				FLBuilder::render_module_css( 'image-icon', $id . ' .uabb-hotspot-item-' . $i, $imageicon_array );
 
 				if ( 'yes' == $settings->hotspot_marker[ $i ]->show_animation ) {
@@ -181,7 +200,7 @@ if ( '' != $photo_src ) {
 		);
 	}
 }
-?>
+				?>
 				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-text {
 					background: <?php echo uabb_theme_base_color( $settings->hotspot_marker[ $i ]->text_typography_bg_color ); ?>;
 
@@ -242,7 +261,42 @@ if ( '' != $photo_src ) {
 			} else {
 				$element_width = 0;
 			}
+			if ( 'always' == $settings->hotspot_marker[ $i ]->show_animation ) {
+				?>
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hspot-sonar g {
+					-webkit-transform: scale(0);
+					transform: scale(0);
+				}
 
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hspot-sonar g {
+					opacity: 0;
+					-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+					-webkit-animation-name: hotspot-sonar;
+					animation-name: hotspot-sonar;
+					-webkit-animation-duration: 1.8s;
+					animation-duration: 1.8s;
+					-webkit-animation-timing-function: linear;
+					animation-timing-function: linear;
+					-webkit-animation-iteration-count: infinite;
+					animation-iteration-count: infinite;
+				}
+
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hspot-sonar g:nth-child(2) {
+					-webkit-animation-delay: .6s;
+					animation-delay: .6s;
+				}
+
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hspot-sonar g:nth-child(3) {
+					-webkit-animation-delay: 1.2s;
+					animation-delay: 1.2s;
+				}
+
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hspot-sonar g:nth-child(4) {
+					-webkit-animation-delay: 1.8s;
+					animation-delay: 1.8s;
+				}
+			<?php
+			}
 			?>
 			.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> {
 				top:calc( <?php echo $x_coordinate; ?>% - <?php echo ( $element_width / 2 ); ?>px);
@@ -299,9 +353,14 @@ if ( '' != $photo_src ) {
 		);
 	}
 }
-?>
-				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-tooltip-content {
+				?>
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-tooltip-content,
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-tour .uabb-hotspot-tour-tooltip-list-group .uabb-hotspot-tour-tooltip-list-group-item .uabb-next,
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-tour .uabb-hotspot-tour-tooltip-list-group .uabb-hotspot-tour-tooltip-list-group-item .uabb-prev,
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-end .uabb-tour-end {
 					color: <?php echo uabb_theme_text_color( $settings->hotspot_marker[ $i ]->tooltip_color ); ?>;
+				}
+				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-tooltip-content {
 					background: <?php echo uabb_theme_base_color( $settings->hotspot_marker[ $i ]->tooltip_bg_color ); ?>;
 
 					<?php
@@ -425,6 +484,7 @@ if ( '' != $photo_src ) {
 					margin-top: -10px;
 				}
 
+
 				.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-tooltip-style-classic.uabb-tooltip-right .uabb-hotspot-tooltip-content::after {
 					top: 50%;
 					right: 100%;
@@ -436,28 +496,40 @@ if ( '' != $photo_src ) {
 				<?php
 			}
 			?>
-
+.fl-node-<?php echo $id; ?> .uabb-overlay-button {
 			<?php
-			if ( $global_settings->responsive_enabled ) { // Global Setting If started.
+			if ( isset( $settings->overlay_pos_horizontal ) ) {
+				echo( '' !== $settings->overlay_pos_horizontal ) ? 'left:' . $settings->overlay_pos_horizontal . '%;' : '';
+				echo( '' !== $settings->overlay_pos_horizontal ) ? 'transform:' . 'translate( -' . $settings->overlay_pos_horizontal . '%, 0);' : '';
+			}
+			if ( isset( $settings->overlay_pos_vertical ) ) {
+				echo( '' !== $settings->overlay_pos_vertical ) ? 'top:' . $settings->overlay_pos_vertical . '%;' : '';
+				echo( '' !== $settings->overlay_pos_vertical ) ? 'transform:' . 'translate( 0, -' . $settings->overlay_pos_vertical . '%);' : '';
+			}
+			?>
+}
+			<?php
+			if ( $global_settings->responsive_enabled ) {
+				// Global Setting If started.
 				?>
 				@media ( max-width: <?php echo $global_settings->medium_breakpoint . 'px'; ?> ) {
 					<?php if ( ! $version_bb_check ) { ?>
 						.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-text {
-						<?php if ( 'yes' === $converted || isset( $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium ) && '' != $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium ) { ?>
-							font-size: <?php echo $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium; ?>px;
-						<?php } elseif ( isset( $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium ) && '' == $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] ) && '' != $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] ) { ?>
-							font-size: <?php echo $settings->hotspot_marker[ $i ]->text_typography_font_size['medium']; ?>px;
-						<?php } ?> 
+							<?php if ( 'yes' === $converted || isset( $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium ) && '' != $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium ) { ?>
+								font-size: <?php echo $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium; ?>px;
+							<?php } elseif ( isset( $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium ) && '' == $settings->hotspot_marker[ $i ]->text_typography_font_size_unit_medium && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] ) && '' != $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] ) { ?>
+								font-size: <?php echo $settings->hotspot_marker[ $i ]->text_typography_font_size['medium']; ?>px;
+							<?php } ?>
 
-						<?php if ( isset( $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] ) && '' == $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] && isset( $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] ) && '' != $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] && '' == $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium && '' == $settings->hotspot_marker[ $i ]->text_typography_line_height_unit ) { ?>
-							line-height: <?php echo $settings->hotspot_marker[ $i ]->text_typography_line_height['medium']; ?>px;
-						<?php } ?>
+							<?php if ( isset( $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] ) && '' == $settings->hotspot_marker[ $i ]->text_typography_font_size['medium'] && isset( $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] ) && '' != $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] && '' == $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium && '' == $settings->hotspot_marker[ $i ]->text_typography_line_height_unit ) { ?>
+								line-height: <?php echo $settings->hotspot_marker[ $i ]->text_typography_line_height['medium']; ?>px;
+							<?php } ?>
 
-						<?php if ( 'yes' === $converted || isset( $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium ) && '' != $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium ) { ?>
-							line-height: <?php echo $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium; ?>em;	
-						<?php } elseif ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium ) && '' == $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium && isset( $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] ) && '' != $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] ) { ?>
-							line-height: <?php echo $settings->hotspot_marker[ $i ]->text_typography_line_height['medium']; ?>px;
-						<?php } ?>
+							<?php if ( 'yes' === $converted || isset( $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium ) && '' != $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium ) { ?>
+								line-height: <?php echo $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium; ?>em;
+							<?php } elseif ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium ) && '' == $settings->hotspot_marker[ $i ]->text_typography_line_height_unit_medium && isset( $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] ) && '' != $settings->hotspot_marker[ $i ]->text_typography_line_height['medium'] ) { ?>
+								line-height: <?php echo $settings->hotspot_marker[ $i ]->text_typography_line_height['medium']; ?>px;
+							<?php } ?>
 						}
 					<?php } ?>
 					.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-text {
@@ -601,11 +673,19 @@ if ( '' != $photo_src ) {
 		}
 	}
 	if ( '' != $settings->photo_size ) {
-		?>
-	.fl-node-<?php echo $id; ?> .uabb-hotspot-container {
-		width: <?php echo $settings->photo_size; ?>px;
-	}
-		<?php
+		if ( ! $version_bb_check ) {
+			?>
+			.fl-node-<?php echo $id; ?> .uabb-hotspot-container {
+				width: <?php echo $settings->photo_size; ?>px;
+			} <?php
+		} else {
+			FLBuilderCSS::responsive_rule( array(
+				'settings'     => $settings,
+				'setting_name' => 'photo_size',
+				'selector'     => ".fl-node-$id .uabb-hotspot-container",
+				'prop'         => 'width',
+			) );
+		}
 	}
 }
 ?>

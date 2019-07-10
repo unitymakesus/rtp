@@ -415,14 +415,21 @@ FLBuilder::register_module(
 							),
 						),
 						'new_align'          => array(
-							'type'       => 'align',
-							'label'      => __( 'Alignment', 'uabb' ),
-							'default'    => 'center',
-							'responsive' => true,
-							'preview'    => array(
+							'type'    => 'align',
+							'label'   => __( 'Alignment', 'uabb' ),
+							'default' => 'center',
+							'preview' => array(
 								'type'     => 'css',
 								'selector' => '.uabb-creative-button-wrap',
 								'property' => 'text-align',
+							),
+						),
+						'mob_align'          => array(
+							'type'    => 'align',
+							'label'   => __( 'Mobile Alignment', 'uabb' ),
+							'default' => 'center',
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 					),

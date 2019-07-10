@@ -310,7 +310,9 @@ if ( 'full' != $settings->btn_align ) {
 	text-align: <?php echo $settings->btn_align; ?>;
 }
 <?php } ?>
-
+.fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit .uabb-contact-form-button-text {
+	color: <?php echo uabb_theme_text_color( $settings->btn_text_color ); ?>;
+}
 .fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit {
 	border-radius: <?php echo  ( '' != $settings->btn_radius ) ? $settings->btn_radius : '4'; ?>px;
 
@@ -338,9 +340,6 @@ if ( 'full' != $settings->btn_align ) {
 		<?php $shadow_color = '#' . FLBuilderColor::adjust_brightness( uabb_parse_color_to_hex( $settings->btn_background_color ), 30, 'darken' ); ?>
 		box-shadow: 0 6px <?php echo $shadow_color; ?>;
 	<?php } ?>
-
-	color: <?php echo uabb_theme_text_color( $settings->btn_text_color ); ?>;
-
 	<?php if ( 'full' == $settings->btn_align ) { ?>
 		width:100%;
 	<?php } ?>
@@ -350,21 +349,17 @@ if ( 'full' != $settings->btn_align ) {
 	echo ( '' != $settings->btn_horizontal_padding ) ? 'padding-left: ' . $settings->btn_horizontal_padding . 'px;padding-right: ' . $settings->btn_horizontal_padding . 'px;' : '';
 	?>
 }
-
-
+.fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit:hover .uabb-contact-form-button-text {
+	<?php if ( '' != $settings->btn_text_hover_color ) { ?>
+		color: <?php echo $settings->btn_text_hover_color; ?>;
+	<?php } ?>
+}
 .fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit:hover {
 	<?php if ( 'flat' == $settings->btn_style ) { ?>
-		<?php if ( '' != $settings->btn_text_hover_color ) { ?>
-		color: <?php echo $settings->btn_text_hover_color; ?>;
-		<?php } ?>
-
 		<?php if ( '' != $settings->btn_background_hover_color ) { ?>
 		background: <?php echo $settings->btn_background_hover_color; ?>;
 		<?php } ?>
 	<?php } elseif ( 'transparent' == $settings->btn_style ) { ?>
-		<?php if ( '' != $settings->btn_text_hover_color ) { ?>
-		color: <?php echo $settings->btn_text_hover_color; ?>;
-		<?php } ?>
 
 		border-style: solid;
 		border-color: <?php echo $border_hover_color; ?>;
@@ -379,9 +374,6 @@ if ( 'full' != $settings->btn_align ) {
 
 		border-width: <?php echo $settings->btn_border_width; ?>px;
 	<?php } elseif ( 'gradient' == $settings->btn_style ) { ?>
-		<?php if ( '' != $settings->btn_text_hover_color ) { ?>
-		color: <?php echo $settings->btn_text_hover_color; ?>;
-		<?php } ?>
 
 		background: -moz-linear-gradient(top,  <?php echo $bg_hover_grad_start; ?> 0%, <?php echo $settings->btn_background_hover_color; ?> 100%); /* FF3.6+ */
 		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,<?php echo $bg_hover_grad_start; ?>), color-stop(100%,<?php echo $settings->btn_background_hover_color; ?>)); /* Chrome,Safari4+ */

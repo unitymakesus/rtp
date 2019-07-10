@@ -977,7 +977,7 @@ FLBuilder::register_settings_form(
 					'cta'                     => array(
 						'title'  => __( 'Call To Action - CTA', 'uabb' ),
 						'fields' => array(
-							'cta'             => array(
+							'cta'               => array(
 								'type'    => 'select',
 								'label'   => __( 'CTA Link', 'uabb' ),
 								'default' => 'none',
@@ -990,19 +990,19 @@ FLBuilder::register_settings_form(
 								'help'    => __( 'Select the area where you wish to apply call to action link.', 'uabb' ),
 								'toggle'  => array(
 									'icon' => array(
-										'fields' => array( 'cta_link', 'cta_link_target' ),
+										'fields' => array( 'cta_link', 'cta_link_target', 'cta_link_nofollow' ),
 									),
 									'desc' => array(
-										'fields' => array( 'desc_cta_type', 'cta_link', 'cta_link_target', 'cta_text' ),
+										'fields' => array( 'desc_cta_type', 'cta_link', 'cta_link_target', 'cta_text', 'cta_link_nofollow' ),
 										'tabs'   => array( 'cta_typography' ),
 									),
 									'both' => array(
-										'fields' => array( 'desc_cta_type', 'cta_link', 'cta_link_target', 'cta_text' ),
+										'fields' => array( 'desc_cta_type', 'cta_link', 'cta_link_target', 'cta_text', 'cta_link_nofollow' ),
 										'tabs'   => array( 'cta_typography' ),
 									),
 								),
 							),
-							'desc_cta_type'   => array(
+							'desc_cta_type'     => array(
 								'type'    => 'select',
 								'label'   => __( 'Description CTA', 'uabb' ),
 								'default' => 'none',
@@ -1020,13 +1020,13 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'cta_text'        => array(
+							'cta_text'          => array(
 								'type'        => 'text',
 								'label'       => __( 'Text', 'uabb' ),
 								'default'     => __( 'Read More', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
-							'cta_link'        => array(
+							'cta_link'          => array(
 								'type'        => 'link',
 								'label'       => __( 'Link', 'uabb' ),
 								'help'        => __( 'The link applies to the entire module. If choosing a call to action type below, this link will also be used for the text or button.', 'uabb' ),
@@ -1035,7 +1035,7 @@ FLBuilder::register_settings_form(
 								),
 								'connections' => array( 'url' ),
 							),
-							'cta_link_target' => array(
+							'cta_link_target'   => array(
 								'type'    => 'select',
 								'label'   => __( 'Link Target', 'uabb' ),
 								'default' => '_self',
@@ -1045,6 +1045,16 @@ FLBuilder::register_settings_form(
 								),
 								'preview' => array(
 									'type' => 'none',
+								),
+							),
+							'cta_link_nofollow' => array(
+								'type'        => 'select',
+								'label'       => __( 'Link nofollow', 'uabb' ),
+								'description' => '',
+								'default'     => '0',
+								'options'     => array(
+									'1' => __( 'Yes', 'uabb' ),
+									'0' => __( 'No', 'uabb' ),
 								),
 							),
 						),

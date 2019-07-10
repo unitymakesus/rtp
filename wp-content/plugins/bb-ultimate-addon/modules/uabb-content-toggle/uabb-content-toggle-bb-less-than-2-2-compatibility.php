@@ -71,17 +71,17 @@ FLBuilder::register_module(
 						'cont1_saved_rows'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Row', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_row_template(),
+							'options' => array(),
 						),
 						'cont1_saved_modules'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Module', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_module_template(),
+							'options' => array(),
 						),
 						'cont1_page_templates' => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Page Template', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_page_template(),
+							'options' => array(),
 						),
 					),
 				),
@@ -149,17 +149,17 @@ FLBuilder::register_module(
 						'cont2_saved_rows'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Row', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_row_template(),
+							'options' => array(),
 						),
 						'cont2_saved_modules'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Module', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_module_template(),
+							'options' => array(),
 						),
 						'cont2_page_templates' => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Page Template', 'uabb' ),
-							'options' => UABB_Model_Helper::get_saved_page_template(),
+							'options' => array(),
 						),
 					),
 				),

@@ -89,11 +89,11 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 
 				$plugin->tested = isset( $product['tested'] ) ? $product['tested'] : '';
 
-				$plugin->icons = array(
+				$plugin->icons = apply_filters( "bsf_product_icons_{$product['id']}", array(
 					'1x'      => ( isset( $product['product_image'] ) ) ? $product['product_image'] : '',
 					'2x'      => ( isset( $product['product_image'] ) ) ? $product['product_image'] : '',
 					'default' => ( isset( $product['product_image'] ) ) ? $product['product_image'] : '',
-				);
+				) );
 
 				$_transient_data->last_checked          = time();
 				$_transient_data->response[ $template ] = $plugin;
@@ -272,98 +272,28 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 
 		public function bsf_get_package_uri( $product_id ) {
 
-			// use the cached url for 2 hours.
-			if ( ! $this->time_since_last_versioncheck( 2 ) ) {
-				$product = get_brainstorm_product( $product_id );
-				$status  = BSF_License_Manager::bsf_is_active_license( $product_id );
+			$product = get_brainstorm_product( $product_id );
+			$status  = BSF_License_Manager::bsf_is_active_license( $product_id );
 
-				if ( $this->use_beta_version( $product_id ) ) {
-					$download_file = isset( $product['download_url_beta'] ) ? $product['download_url_beta'] : '';
-				} else {
-					$download_file = isset( $product['download_url'] ) ? $product['download_url'] : '';
-				}
-
-				if ( $download_file !== '' ) {
-
-					if ( $status == false ) {
-						return '';
-					}
-
-					$timezone = date_default_timezone_get();
-					$hash     = 'file=' . $download_file . '&hashtime=' . strtotime( date( 'd-m-Y h:i:s a' ) ) . '&timezone=' . $timezone;
-
-					$get_path      = 'http://downloads.brainstormforce.com/';
-					$download_path = rtrim( $get_path, '/' ) . '/download.php?' . $hash . '&base=ignore';
-
-					return $download_path;
-				}
+			if ( $this->use_beta_version( $product_id ) ) {
+				$download_file = isset( $product['download_url_beta'] ) ? $product['download_url_beta'] : '';
+			} else {
+				$download_file = isset( $product['download_url'] ) ? $product['download_url'] : '';
 			}
 
-			$product                     = get_brainstorm_product( $product_id );
-			$status                      = BSF_License_Manager::bsf_is_active_license( $product_id );
-			$brainstrom_products         = get_option( 'brainstrom_products', array() );
-			$brainstrom_bundled_products = get_option( 'brainstrom_bundled_products', array() );
-			$plugins                     = isset( $brainstrom_products['plugins'] ) ? $brainstrom_products['plugins'] : array();
-			$themes                      = isset( $brainstrom_products['themes'] ) ? $brainstrom_products['themes'] : array();
-			$all_products                = $plugins + $themes;
-			$path                        = get_api_url() . '?referer=package-' . $product_id;
-			$is_bundled                  = self::bsf_is_product_bundled( $product_id );
-			$purchase_key                = isset( $all_products[ $product_id ]['purchase_key'] ) ? $all_products[ $product_id ]['purchase_key'] : null;
-			$bundled                     = false;
+			if ( $download_file !== '' ) {
 
-			if ( ! empty( $is_bundled ) ) {
-				$bundled = true;
-			}
-
-			$data = array(
-				'action'       => 'bsf_product_update_request',
-				'id'           => $product_id,
-				'username'     => '', // username is being depracated in new Graupi
-				'purchase_key' => $purchase_key,
-				'site_url'     => get_site_url(),
-				'bundled'      => $bundled,
-			);
-
-			$request = wp_remote_post(
-				$path,
-				array(
-					'body'    => $data,
-					'timeout' => '30',
-				)
-			);
-
-			// Request http URL if the https version fails.
-			if ( is_wp_error( $request ) && wp_remote_retrieve_response_code( $request ) !== 200 ) {
-				$path    = get_api_url( true ) . '?referer=package-' . $product_id;
-				$request = wp_remote_post(
-					$path,
-					array(
-						'body'    => $data,
-						'timeout' => '30',
-					)
-				);
-			}
-
-			if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
-
-				$result = json_decode( wp_remote_retrieve_body( $request ) );
-
-				if ( isset( $result->error ) && ! $result->error ) {
-
-					if ( $this->use_beta_version( $product_id ) ) {
-						$download_path = $result->update_data->download_url_beta;
-					} else {
-						$download_path = $result->update_data->download_url;
-					}
-
-					$timezone = date_default_timezone_get();
-					$hash     = 'file=' . $download_path . '&hashtime=' . strtotime( date( 'd-m-Y h:i:s a' ) ) . '&timezone=' . $timezone;
-
-					$get_path      = 'http://downloads.brainstormforce.com/';
-					$download_path = rtrim( $get_path, '/' ) . '/download.php?' . $hash . '&base=ignore';
-
-					return $download_path;
+				if ( $status == false ) {
+					return '';
 				}
+
+				$timezone = date_default_timezone_get();
+				$hash     = 'file=' . $download_file . '&hashtime=' . strtotime( date( 'd-m-Y h:i:s a' ) ) . '&timezone=' . $timezone;
+
+				$get_path      = 'http://downloads.brainstormforce.com/';
+				$download_path = rtrim( $get_path, '/' ) . '/download.php?' . $hash . '&base=ignore';
+
+				return $download_path;
 			}
 		}
 
@@ -375,7 +305,7 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 			$update_required = array();
 
 			if ( $product_type == 'plugins' ) {
-				$all_products = brainstorm_get_all_products( false, true, false );
+				$all_products = $this->prepare_plugins_for_update( brainstorm_get_all_products( false, true, false ) );
 			}
 
 			if ( $product_type == 'themes' ) {
@@ -407,6 +337,22 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 			}
 
 			return $update_required;
+		}
+
+		/**
+		 * Remove plugins from the updates array which are not installed.
+		 *
+		 * @param Array $plugins
+		 * @return Array of plugins.
+		 */
+		public static function prepare_plugins_for_update( $plugins ) {
+			foreach ( $plugins as $key => $plugin ) {
+				if ( ! isset( $plugin[ 'template' ] ) || ! file_exists( dirname( realpath( WP_PLUGIN_DIR . '/' . $plugin[ 'template' ] ) ) ) ) {
+					unset( $plugins[ $key ] );
+				}
+			}
+
+			return $plugins;
 		}
 
 		public function _maybe_force_check_bsf_product_updates() {
@@ -572,7 +518,7 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 				$parent_name       = apply_filters( "bsf_product_name_{$parent_id}", brainstrom_product_name( $parent_id ) );
 				$message           = sprintf( __( ' <br>This plugin is came bundled with the <i>%1$s</i>. For receiving updates, you need to register license of <i>%2$s</i> <a href="%3$s">here</a>.' ), $parent_name, $parent_name, $registration_page );
 			} else {
-				$message = sprintf( __( ' <i>Click <a href="%1$s">here</a> to activate your license.</i>' ), $registration_page );
+				$message = sprintf( __( ' <i>Please <a href="%1$s">activate your license</a> to update the plugin.</i>' ), $registration_page );
 			}
 
 			if ( true == self::bsf_allow_beta_updates( $product_id ) && $this->is_beta_version( $plugin_data['new_version'] ) ) {

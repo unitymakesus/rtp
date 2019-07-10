@@ -34,6 +34,8 @@ $user_start_time = $gmt_start_time + $offset;
 $user_end_time = $gmt_end_time + $offset;
 
 $allday = isset($event->data->meta['mec_allday']) ? $event->data->meta['mec_allday'] : 0;
+$hide_time = isset($event->data->meta['mec_hide_time']) ? $event->data->meta['mec_hide_time'] : 0;
+$hide_end_time = isset($event->data->meta['mec_hide_end_time']) ? $event->data->meta['mec_hide_end_time'] : 0;
 ?>
 <div class="mec-local-time-details mec-frontbox" id="mec_local_time_details">
     <i class="mec-sl-speedometer"></i>
@@ -41,6 +43,8 @@ $allday = isset($event->data->meta['mec_allday']) ? $event->data->meta['mec_alld
     <ul>
         <li><?php echo sprintf(__('Timezone: %s', 'mec'), '<span>'.$timezone.'</span>'); ?></li>
         <li><?php echo sprintf(__('Date: %s', 'mec'), $this->date_label(array('date'=>date('Y-m-d', $user_start_time)), array('date'=>date('Y-m-d', $user_end_time)), $date_format1)); ?></li>
-        <li><?php echo sprintf(__('Time: %s', 'mec'), '<span>'.($allday ? __('All of the day', 'mec') : date('H:i', $user_start_time).' - '.date('H:i', $user_end_time)).'</span>'); ?></li>
+        <?php if(!$hide_time): ?>
+        <li><?php echo sprintf(__('Time: %s', 'mec'), '<span>'.($allday ? __('All of the day', 'mec') : ($hide_end_time ? date('H:i', $user_start_time) : date('H:i', $user_start_time).' - '.date('H:i', $user_end_time))).'</span>'); ?></li>
+        <?php endif; ?>
     </ul>
 </div>

@@ -39,7 +39,9 @@
 		<?php if ( ! FLBuilderModel::is_post_user_template( 'row' ) && ! FLBuilderModel::is_post_user_template( 'column' ) ) : ?>
 		<div id="fl-builder-blocks-saved-rows" class="fl-builder-blocks-section fl-builder-blocks-node-template">
 
-			<span class="fl-builder-blocks-section-title"><?php _e( 'Saved Rows', 'fl-builder' ) ?></span>
+			<div class="fl-builder-blocks-section-header">
+				<span class="fl-builder-blocks-section-title"><?php _e( 'Saved Rows', 'fl-builder' ); ?></span>
+			</div>
 			<div class="fl-builder-blocks-section-content fl-builder-saved-rows">
 			<# if (rows.length === 0) { #>
 				<span class="fl-builder-block-no-node-templates"><?php _e( 'No saved rows found.', 'fl-builder' ); ?></span>
@@ -47,7 +49,7 @@
 				<# for( var i in rows) {
 					var row = rows[i];
 					image = row.image,
-					hasImage = !_.isUndefined(image) && null !== image && !image.endsWith('blank.jpg'),
+					hasImage = image && !image.endsWith('blank.jpg'),
 					hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 					var globalClass = row.isGlobal ? ' fl-builder-block-global' : '';
 				#>
@@ -82,7 +84,9 @@
 		<?php if ( ! FLBuilderModel::is_post_user_template( 'column' ) ) : ?>
 		<div id="fl-builder-blocks-saved-columns" class="fl-builder-blocks-section fl-builder-blocks-node-template">
 
-			<span class="fl-builder-blocks-section-title"><?php _e( 'Saved Columns', 'fl-builder' ) ?></span>
+			<div class="fl-builder-blocks-section-header">
+				<span class="fl-builder-blocks-section-title"><?php _e( 'Saved Columns', 'fl-builder' ); ?></span>
+			</div>
 			<div class="fl-builder-blocks-section-content fl-builder-saved-columns">
 				<# if (columns.length === 0) { #>
 					<span class="fl-builder-block-no-node-templates"><?php _e( 'No saved columns found.', 'fl-builder' ); ?></span>
@@ -90,7 +94,7 @@
 					<# for( var i in columns) {
 						var column = columns[i];
 						image = column.image,
-						hasImage = !_.isUndefined(image) && !image.endsWith('blank.jpg'),
+						hasImage = image && !image.endsWith('blank.jpg'),
 						hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 						var globalClass = column.isGlobal ? ' fl-builder-block-global' : '';
 					#>
@@ -124,7 +128,9 @@
 		<?php endif; ?>
 		<div id="fl-builder-blocks-saved-modules" class="fl-builder-blocks-section fl-builder-blocks-node-template">
 
-			<span class="fl-builder-blocks-section-title"><?php _e( 'Saved Modules', 'fl-builder' ) ?></span>
+			<div class="fl-builder-blocks-section-header">
+				<span class="fl-builder-blocks-section-title"><?php _e( 'Saved Modules', 'fl-builder' ); ?></span>
+			</div>
 			<div class="fl-builder-blocks-section-content fl-builder-saved-modules">
 			<# if (modules.length === 0) { #>
 			<span class="fl-builder-block-no-node-templates"><?php _e( 'No saved modules found.', 'fl-builder' ); ?></span>
@@ -132,7 +138,7 @@
 				<# for( var i in modules) {
 					var module = modules[i];
 					image = module.image,
-					hasImage = !_.isUndefined(image) && !image.endsWith('blank.jpg'),
+					hasImage = image && !image.endsWith('blank.jpg'),
 					hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 					var globalClass = module.isGlobal ? ' fl-builder-block-global' : '';
 				#>
@@ -181,7 +187,7 @@
 					image = module.image,
 					globalClass = module.isGlobal ? ' fl-builder-block-global' : '',
 					image = module.image,
-					hasImage = !_.isUndefined( image ) && !image.endsWith( 'blank.jpg' ),
+					hasImage = image && !image.endsWith( 'blank.jpg' ),
 					hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 			#>
 			<span class="fl-builder-block fl-builder-block-saved-module {{globalClass}} {{hasImageClass}}" data-id="{{module.id}}">
@@ -227,7 +233,7 @@
 					image = column.image,
 					globalClass = column.isGlobal ? ' fl-builder-block-global' : '',
 					image = column.image,
-					hasImage = !_.isUndefined( image ) && !image.endsWith( 'blank.jpg' ),
+					hasImage = image && !image.endsWith( 'blank.jpg' ),
 					hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 			#>
 			<span class="fl-builder-block fl-builder-block-saved-column {{globalClass}} {{hasImageClass}}" data-id="{{column.id}}">
@@ -272,12 +278,12 @@
 				var row = rows[i],
 					globalClass = row.isGlobal ? 'fl-builder-block-global' : '',
 					image = row.image,
-					hasImage = !_.isUndefined( image ) && null !== image && !image.endsWith( 'blank.jpg' ),
+					hasImage = image && !image.endsWith( 'blank.jpg' ),
 					hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 			#>
 			<span class="fl-builder-block fl-builder-block-saved-row {{globalClass}} {{hasImageClass}}" data-id="{{row.id}}">
 				<span class="fl-builder-block-content">
-					<# if (!_.isUndefined(image) && !image.endsWith('blank.jpg')) { #>
+					<# if (image && !image.endsWith('blank.jpg')) { #>
 					<div class="fl-builder-block-thumbnail" style="background-image:url({{image}})"></div>
 					<# } #>
 					<div class="fl-builder-block-details">
@@ -363,8 +369,8 @@
 						<div class="fl-builder--template-thumbnail"></div>
 					</div>
 					<div class="fl-save-control">
-						<input name="template-name" placeholder="<?php _e( 'Save New Template', 'fl-builder' ) ?>" type="text">
-						<button class="fl-button"><?php _e( 'Save', 'fl-builder' ) ?></button>
+						<input name="template-name" placeholder="<?php _e( 'Save New Template', 'fl-builder' ); ?>" type="text">
+						<button class="fl-button"><?php _e( 'Save', 'fl-builder' ); ?></button>
 						<input type="hidden" name="template-category" value="{{categoryHandle}}" >
 					</div>
 				</div>

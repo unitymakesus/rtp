@@ -516,7 +516,7 @@
         endEditingSession: function() {
             FLBuilder._destroyOverlayEvents();
             FLBuilder._removeAllOverlays();
-            FLBuilder._removeEmptyColHighlights();
+            FLBuilder._removeEmptyRowAndColHighlights();
             FLBuilder._removeColHighlightGuides();
             FLBuilder._unbindEvents();
 
@@ -617,7 +617,7 @@
             this.hide();
             $('html').addClass('fl-builder-preview');
             $('html, body').removeClass('fl-builder-edit');
-            FLBuilder._removeEmptyColHighlights();
+            FLBuilder._removeEmptyRowAndColHighlights();
             FLBuilder._removeColHighlightGuides();
             FLBuilder.triggerHook('didBeginPreview');
 			FLBuilderResponsivePreview.enter();
@@ -907,15 +907,23 @@
             };
 
             var originalWidth,
-            	$handle = $(e.target);
+            	$handle = $(e.target),
+				row = $handle.closest('.fl-row'),
+				node = row.data('node'),
+				settings = FLBuilderSettingsConfig.nodes[ node ],
+				form = $( '.fl-builder-row-settings[data-node=' + node + ']' ),
+				unitField = form.find( '[name=max_content_width_unit]' ),
+				unit = unitField.length ? unitField.val() : settings.max_content_width_unit;
 
-            this.$row = $handle.closest('.fl-row');
-            this.$rowContent = this.$row.find('.fl-row-content');
+			this.$row = row;
+			this.$rowContent = this.$row.find('.fl-row-content');
 
             this.row = {
-                node: this.$row.data('node'),
+                node: node,
+                form: form,
+				unit: unit,
                 isFixedWidth: this.$row.hasClass('fl-row-fixed-width'),
-                settings: $( '.fl-builder-row-settings[data-node=' + this.$row.data( 'node' ) + ']' )
+				parentWidth: 'vw' === unit ? $( window ).width() : this.$row.parent().width(),
             };
 
             this.drag = {
@@ -1038,10 +1046,10 @@
                 if ( false !== minAllowedWidth && this.drag.calculatedWidth < minAllowedWidth ) {
 	                this.drag.calculatedWidth = minAllowedWidth;
                 }
+
                 if ( false !== maxAllowedWidth && this.drag.calculatedWidth > maxAllowedWidth ) {
 	                this.drag.calculatedWidth = maxAllowedWidth;
                 }
-
 
                 if (this.row.isFixedWidth) {
                     this.$row.css('max-width', this.drag.calculatedWidth + 'px');
@@ -1049,12 +1057,16 @@
 
                 this.$rowContent.css('max-width', this.drag.calculatedWidth + 'px');
 
+				if ( 'px' !== this.row.unit ) {
+					this.drag.calculatedWidth = Math.round( this.drag.calculatedWidth / this.row.parentWidth * 100 );
+				}
+
                 if (!_.isUndefined(this.$feedback)) {
-                    this.$feedback.html(this.drag.calculatedWidth + 'px').show();
+                    this.$feedback.html(this.drag.calculatedWidth + this.row.unit).show();
                 }
 
-                if ( this.row.settings.length ) {
-	                this.row.settings.find( '[name=max_content_width]' ).val( this.drag.calculatedWidth );
+                if ( this.row.form.length ) {
+	                this.row.form.find( '[name=max_content_width]' ).val( this.drag.calculatedWidth );
                 }
             }
         },

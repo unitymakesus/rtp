@@ -174,4 +174,15 @@ abstract class MEC_base extends MEC
     {
         return MEC::getInstance(base64_decode('YXBwLmxpYnJhcmllcy5wcm8='));
     }
+
+    /**
+     * Returns PRO instance
+     * @final
+     * @author Webnus <info@webnus.biz>
+     * @return \MEC_schedule instance
+     */
+    final public function getSchedule()
+    {
+        return MEC::getInstance('app.libraries.schedule');
+    }
 }

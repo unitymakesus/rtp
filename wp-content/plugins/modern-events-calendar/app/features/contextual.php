@@ -190,7 +190,7 @@ class MEC_feature_contextual extends MEC_base
                             A. <a href="https://developers.google.com/maps/web/"><b>Click On This</b></a> to start get key from google when page is fully loaded scroll down and click on "GET A KEY" like this :
                             <div class="row">
                                 <div class="col-md-10">
-                                    <img src="images/settings/get_key.png" width="100%" alt="Get Google Key">
+                                    <!-- <img src="images/settings/get_key.png" width="100%" alt="Get Google Key"> -->
                                 </div>
                                 <div class="col-md-2"></div>
                             </div>
@@ -202,7 +202,7 @@ class MEC_feature_contextual extends MEC_base
                         <li>C. After login user will be directed to blew page set drop down to create new project then click on continue .
                             <div class="row">
                                 <div class="col-md-8">
-                                    <img src="images/settings/continu.png" width="100%" alt="Get Google Key">
+                                    <!-- <img src="images/settings/continu.png" width="100%" alt="Get Google Key"> -->
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>
@@ -219,7 +219,7 @@ class MEC_feature_contextual extends MEC_base
                         <li>D. Congratulation you got key!
                             <div class="row">
                                 <div class="col-md-8">
-                                    <img src="images/settings/Congratulation.png" width="100%" alt="Congratulation">
+                                    <!-- <img src="images/settings/Congratulation.png" width="100%" alt="Congratulation"> -->
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>
@@ -227,7 +227,7 @@ class MEC_feature_contextual extends MEC_base
                         <li>E. Paste your key here now Modern Event calendar can contract with google map!
                             <div class="row">
                                 <div class="col-md-8">
-                                    <img src="images/settings/paste_key.png" width="100%" alt="Congratulation">
+                                    <!-- <img src="images/settings/paste_key.png" width="100%" alt="Congratulation"> -->
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>

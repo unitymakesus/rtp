@@ -57,7 +57,8 @@ defined('MECEXEC') or die();
                 <?php if($this->main->can_show_booking_module($event)): ?>
                     <a class="mec-booking-button mec-bg-color" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>"><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
                 <?php elseif(isset($event->data->meta['mec_more_info']) and trim($event->data->meta['mec_more_info']) and $event->data->meta['mec_more_info'] != 'http://'): ?>
-                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php if(isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) echo esc_html(trim($event->data->meta['mec_more_info_title']), 'mec'); else echo esc_html($this->main->m('register_button', __('REGISTER', 'mec')));
+                     ?></a>
                 <?php endif; ?>
             </div>
 
@@ -128,10 +129,19 @@ defined('MECEXEC') or die();
                 ?>
                 
             </div>
-            <div class="mec-color-before mec-frontbox">
-                <!-- Speaker List Module -->
-                <?php echo $this->main->module('speakers.details', array('event'=>$event)); ?>
-            </div>
+
+            <!-- Speaker List Module -->
+            <?php
+            
+            if(!empty($this->main->module('speakers.details', array('event'=>$event)))) {
+                ?>
+                <div class="mec-color-before mec-frontbox">
+                    <?php echo $this->main->module('speakers.details', array('event'=>$event)); ?>
+                </div>
+                <?php
+            }
+            ?>
+            
             <!-- Attendees List Module -->
             <?php echo $this->main->module('attendees-list.details', array('event'=>$event)); ?>
             

@@ -1,4 +1,4 @@
-<div class="fl-number fl-number-<?php echo $settings->layout ?>">
+<div class="fl-number fl-number-<?php echo $settings->layout; ?>">
 <?php if ( 'circle' == $settings->layout ) : ?>
 	<div class="fl-number-circle-container">
 		<div class="fl-number-text">
@@ -15,7 +15,7 @@
 		<?php $module->render_circle_bar(); ?>
 	</div>
 <?php elseif ( 'bars' == $settings->layout ) : ?>
-	<div class="fl-number-text fl-number-position-<?php echo esc_attr( $settings->number_position );?>">
+	<div class="fl-number-text fl-number-position-<?php echo esc_attr( $settings->number_position ); ?>">
 		<?php if ( ! empty( $settings->before_number_text ) ) : ?>
 			<span class="fl-number-before-text"><?php echo $settings->before_number_text; ?></span>
 		<?php endif; ?>
@@ -30,9 +30,10 @@
 			<div class="fl-number-bars-container">
 				<div class="fl-number-bar"></div>
 			</div>
-		<?php
+			<?php
 
-		elseif ( 'below' == $position ) : ?>
+		elseif ( 'below' == $position ) :
+			?>
 
 			<div class="fl-number-bars-container">
 				<div class="fl-number-bar"></div>
@@ -40,7 +41,8 @@
 			<?php
 			$module->render_number();
 
-		else : ?>
+		else :
+			?>
 
 			<div class="fl-number-bars-container">
 				<div class="fl-number-bar">

@@ -21,19 +21,19 @@ final class FLBuilderAutoSuggest {
 
 				case 'fl_as_posts':
 					$data = self::posts();
-				break;
+					break;
 
 				case 'fl_as_terms':
 					$data = self::terms();
-				break;
+					break;
 
 				case 'fl_as_users':
 					$data = self::users();
-				break;
+					break;
 
 				case 'fl_as_links':
 					$data = self::links();
-				break;
+					break;
 			}
 
 			if ( isset( $data ) ) {
@@ -56,23 +56,22 @@ final class FLBuilderAutoSuggest {
 
 			case 'fl_as_posts':
 				$data = self::posts_value( $value );
-			break;
+				break;
 
 			case 'fl_as_terms':
 				$data = self::terms_value( $value, $data );
-			break;
+				break;
 
 			case 'fl_as_users':
 				$data = self::users_value( $value );
-			break;
+				break;
 
-			default :
-
+			default:
 				if ( function_exists( $action . '_value' ) ) {
 					$data = call_user_func_array( $action . '_value', array( $value, $data ) );
 				}
 
-			break;
+				break;
 		}
 
 		return isset( $data ) ? str_replace( "'", '&#39;', json_encode( $data ) ) : '';
@@ -124,9 +123,9 @@ final class FLBuilderAutoSuggest {
 	static public function posts() {
 		global $wpdb;
 
-		$data	= array();
-		$like	= self::get_like();
-		$types	= explode( ',', esc_sql( $_REQUEST['fl_as_action_data'] ) );
+		$data     = array();
+		$like     = self::get_like();
+		$types    = explode( ',', esc_sql( $_REQUEST['fl_as_action_data'] ) );
 		$types_in = join( "', '", array_map( 'esc_sql', $types ) );
 
 		// @codingStandardsIgnoreStart
@@ -140,7 +139,7 @@ final class FLBuilderAutoSuggest {
 
 		foreach ( $posts as $post ) {
 			$data[] = array(
-				'name' => $post->post_title,
+				'name'  => $post->post_title,
 				'value' => $post->ID,
 			);
 		}
@@ -162,11 +161,11 @@ final class FLBuilderAutoSuggest {
 
 		if ( ! empty( $ids ) ) {
 
-			$order = implode( ',', array_filter( explode( ',', $ids ), 'intval' ) );
-			$list = explode( ',', $ids );
-			$how_many = count( $list );
+			$order        = implode( ',', array_filter( explode( ',', $ids ), 'intval' ) );
+			$list         = explode( ',', $ids );
+			$how_many     = count( $list );
 			$placeholders = array_fill( 0, $how_many, '%d' );
-			$format = implode( ', ', $placeholders );
+			$format       = implode( ', ', $placeholders );
 
 			$query = "SELECT ID, post_title FROM {$wpdb->posts} WHERE ID IN ($format) ORDER BY FIELD(ID, $order)";
 
@@ -176,7 +175,7 @@ final class FLBuilderAutoSuggest {
 
 			foreach ( $posts as $post ) {
 				$data[] = array(
-					'name' => $post->post_title,
+					'name'  => $post->post_title,
 					'value' => $post->ID,
 				);
 			}
@@ -195,12 +194,12 @@ final class FLBuilderAutoSuggest {
 		$data = array();
 		$cats = get_categories(array(
 			'hide_empty' => 0,
-			'taxonomy'	 => $_REQUEST['fl_as_action_data'],
+			'taxonomy'   => $_REQUEST['fl_as_action_data'],
 		));
 
 		foreach ( $cats as $cat ) {
 			$data[] = array(
-				'name' => $cat->name,
+				'name'  => $cat->name,
 				'value' => $cat->term_id,
 			);
 		}
@@ -223,13 +222,13 @@ final class FLBuilderAutoSuggest {
 
 			$cats = get_categories(array(
 				'hide_empty' => 0,
-				'taxonomy'	 => $taxonomy,
-				'include'	 => $ids,
+				'taxonomy'   => $taxonomy,
+				'include'    => $ids,
 			));
 
 			foreach ( $cats as $cat ) {
 				$data[] = array(
-					'name' => $cat->name,
+					'name'  => $cat->name,
 					'value' => $cat->term_id,
 				);
 			}
@@ -253,7 +252,7 @@ final class FLBuilderAutoSuggest {
 
 		foreach ( $users as $user ) {
 			$data[] = array(
-				'name' => $user->user_login,
+				'name'  => $user->user_login,
 				'value' => $user->ID,
 			);
 		}
@@ -275,10 +274,10 @@ final class FLBuilderAutoSuggest {
 
 		if ( ! empty( $ids ) ) {
 
-			$list = explode( ',', $ids );
-			$how_many = count( $list );
+			$list         = explode( ',', $ids );
+			$how_many     = count( $list );
 			$placeholders = array_fill( 0, $how_many, '%d' );
-			$format = implode( ', ', $placeholders );
+			$format       = implode( ', ', $placeholders );
 
 			$query = "SELECT * FROM {$wpdb->users} WHERE ID IN ($format)";
 
@@ -288,7 +287,7 @@ final class FLBuilderAutoSuggest {
 
 			foreach ( $users as $user ) {
 				$data[] = array(
-					'name' => $user->user_login,
+					'name'  => $user->user_login,
 					'value' => $user->ID,
 				);
 			}
@@ -305,10 +304,10 @@ final class FLBuilderAutoSuggest {
 	static public function links() {
 		global $wpdb;
 
-		$data	= array();
-		$like	= self::get_like();
-		$types	= FLBuilderLoop::post_types();
-		$slugs	= array();
+		$data  = array();
+		$like  = self::get_like();
+		$types = FLBuilderLoop::post_types();
+		$slugs = array();
 
 		foreach ( $types as $slug => $type ) {
 			$slugs[] = esc_sql( $slug );
@@ -328,7 +327,7 @@ final class FLBuilderAutoSuggest {
 
 		foreach ( $posts as $post ) {
 			$data[] = array(
-				'name' => $post->post_title,
+				'name'  => $post->post_title,
 				'value' => get_permalink( $post->ID ),
 			);
 		}

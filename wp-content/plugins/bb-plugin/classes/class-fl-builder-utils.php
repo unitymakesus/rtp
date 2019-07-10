@@ -49,26 +49,26 @@ final class FLBuilderUtils {
 
 		if ( $txtl > $length ) {
 
-			for ( $i = 1;' ' != $text[ $length -$i ];$i++ ) {
+			for ( $i = 1;' ' != $text[ $length -$i ];$i++ ) { // @codingStandardsIgnoreLine
 
 				if ( $i == $length ) {
 
 					if ( function_exists( 'mb_substr' ) ) {
-						return mb_substr( $text,0,$length ) . $tail;
+						return mb_substr( $text, 0, $length ) . $tail;
 					}
 
-					return substr( $text,0,$length ) . $tail;
+					return substr( $text, 0, $length ) . $tail;
 				}
 			}
 
-			for ( ;',' == $text[ $length -$i ] || '.' == $text[ $length -$i ] || ' ' == $text[ $length -$i ];
-			$i++ ) {;}
+			for ( ;',' == $text[ $length -$i ] || '.' == $text[ $length -$i ] || ' ' == $text[ $length -$i ]; // @codingStandardsIgnoreLine
+			$i++ ) {;} // @codingStandardsIgnoreLine
 
 			if ( function_exists( 'mb_substr' ) ) {
-				return mb_substr( $text,0,$length -$i + 1 ) . $tail;
+				return mb_substr( $text,0,$length -$i + 1 ) . $tail; // @codingStandardsIgnoreLine
 			}
 
-			return substr( $text,0,$length -$i + 1 ) . $tail;
+			return substr( $text,0,$length -$i + 1 ) . $tail; // @codingStandardsIgnoreLine
 		}
 
 		return $text;
@@ -150,8 +150,8 @@ final class FLBuilderUtils {
 	 * Get video type and ID from a given URL
 	 *
 	 * @since 1.9
-	 * @param string $url 	The URL to check for video type
-	 * @param string $type 	The type of video to check
+	 * @param string $url   The URL to check for video type
+	 * @param string $type  The type of video to check
 	 * @return array
 	 */
 	static public function get_video_data( $url, $type = '' ) {
@@ -159,12 +159,12 @@ final class FLBuilderUtils {
 			return false;
 		}
 
-		$y_matches 	= array();
+		$y_matches  = array();
 		$vm_matches = array();
 		$yt_pattern = '/^(?:(?:(?:https?:)?\/\/)?(?:www.)?(?:youtu(?:be.com|.be))\/(?:watch\?v\=|v\/|embed\/)?([\w\-]+))/is';
 		$vm_pattern = '#(?:https?://)?(?:www.)?(?:player.)?vimeo.com/(?:[a-z]*/)*([0-9]{6,11})[?]?.*#';
 		$video_data = array(
-			'type' => 'mp4',
+			'type'     => 'mp4',
 			'video_id' => '',
 		);
 
@@ -172,7 +172,7 @@ final class FLBuilderUtils {
 		preg_match( $vm_pattern, $url, $vm_matches );
 
 		if ( isset( $yt_matches[1] ) ) {
-			$video_data['type'] 	= 'youtube';
+			$video_data['type']     = 'youtube';
 			$video_data['video_id'] = $yt_matches[1];
 
 			parse_str( parse_url( $url, PHP_URL_QUERY ), $yt_params );
@@ -180,8 +180,8 @@ final class FLBuilderUtils {
 
 				// If start time is specified, make sure to convert it into seconds.
 				if ( isset( $yt_params['t'] ) ) {
-					$minutes = 0;
-					$seconds = 0;
+					$minutes         = 0;
+					$seconds         = 0;
 					$time_in_seconds = 0;
 
 					// Check for minutes.
@@ -214,7 +214,7 @@ final class FLBuilderUtils {
 				$video_data['params'] = $yt_params;
 			}
 		} elseif ( isset( $vm_matches[1] ) ) {
-			$video_data['type'] 	= 'vimeo';
+			$video_data['type']     = 'vimeo';
 			$video_data['video_id'] = $vm_matches[1];
 		}
 
@@ -264,7 +264,7 @@ final class FLBuilderUtils {
 			return $value;
 		}
 
-		 return 0;
+		return 0;
 	}
 
 }

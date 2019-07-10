@@ -77,6 +77,9 @@ class MEC_skin_yearly_view extends MEC_skins
         
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+
+        // Image popup
+        $this->image_popup = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
         
         // From Widget
         $this->widget = (isset($this->atts['widget']) and trim($this->atts['widget'])) ? true : false;
@@ -144,56 +147,60 @@ class MEC_skin_yearly_view extends MEC_skins
      */
     public function search()
     {
-        $i = 0;
-        $today = $this->start_date;
-        $events = array();
-        
-        while(date('Y', strtotime($today)) == $this->year)
+        if($this->show_only_expired_events)
         {
-            $this->setToday($today);
-            
-            // Extending the end date
-            $this->end_date = $today;
-            
-            // Limit
-            $this->args['posts_per_page'] = $this->limit;
-            
+            $start = current_time('Y-m-d');
+            $end = $this->start_date;
+        }
+        else
+        {
+            $start = $this->start_date;
+            $end = date('Y-12-31', strtotime($this->start_date));
+        }
+
+        // Date Events
+        $dates = $this->period($start, $end, true);
+
+        // Limit
+        $this->args['posts_per_page'] = $this->limit;
+
+        $events = array();
+        foreach($dates as $date=>$IDs)
+        {
+            // Include Available Events
+            $this->args['post__in'] = $IDs;
+
             // The Query
             $query = new WP_Query($this->args);
-            
             if($query->have_posts())
             {
                 // The Loop
                 while($query->have_posts())
                 {
                     $query->the_post();
-                    
-                    if(!isset($events[$today])) $events[$today] = array();
-                    
+
+                    if(!isset($events[$date])) $events[$date] = array();
+
                     $rendered = $this->render->data(get_the_ID());
-                    
+
                     $data = new stdClass();
                     $data->ID = get_the_ID();
                     $data->data = $rendered;
-                    
+
                     $data->date = array
                     (
-                        'start'=>array('date'=>$today),
-                        'end'=>array('date'=>$this->main->get_end_date($today, $rendered))
+                        'start'=>array('date'=>$date),
+                        'end'=>array('date'=>$this->main->get_end_date($date, $rendered))
                     );
-                    
-                    $events[$today][] = $data;
+
+                    $events[$date][] = $data;
                 }
             }
-            
+
             // Restore original Post Data
             wp_reset_postdata();
-            $i++;
-            
-            if($this->show_only_expired_events) $today = date('Y-m-d', strtotime('-'.$i.' Days', strtotime($this->start_date)));
-            else $today = date('Y-m-d', strtotime('+'.$i.' Days', strtotime($this->start_date)));
         }
-        
+
         return $events;
     }
     

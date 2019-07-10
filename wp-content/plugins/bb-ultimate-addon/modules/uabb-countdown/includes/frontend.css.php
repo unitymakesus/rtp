@@ -161,54 +161,36 @@ if ( isset( $settings->timer_style ) && 'circle' == $settings->timer_style ) {
 	?>
 
 .fl-node-<?php echo $id; ?> .uabb-countdown-digit-wrapper.circle {
-	width: 
 	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo  $settings->digit_area_width;
-	} else {
-		echo 100; }
+	if ( isset( $settings->digit_area_width ) ) {
+		echo ( '' !== $settings->digit_area_width ) ? 'width:' . $settings->digit_area_width . 'px;' : 'width:100px;';
+		echo ( '' !== $settings->digit_area_width ) ? 'height:' . $settings->digit_area_width . 'px;' : 'height:100px;';
+	}
 	?>
-	px;
-	height: 
 	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo  $settings->digit_area_width;
-	} else {
-		echo 100; }
+	if ( isset( $settings->digit_border_width ) ) {
+		echo ( '' !== $settings->digit_border_width ) ? 'border:' . $settings->digit_border_width . 'px;' : 'border:5px;';
+	}
 	?>
-	px;
-	border: 
-	<?php
-	if ( isset( $settings->digit_border_width ) && '' != $settings->digit_border_width ) {
-		echo  $settings->digit_border_width;
-	} else {
-		echo 5; }
-	?>
-	px 
 	<?php
 	if ( isset( $settings->digit_border_style ) ) {
-		echo $settings->digit_border_style; }
+		echo ( '' !== $settings->digit_border_style ) ? 'border-style:' . $settings->digit_border_style . ';' : '';
+	}
 	?>
 	<?php
 	if ( isset( $settings->digit_border_color ) ) {
-		echo $settings->digit_border_color; }
+		echo ( '' !== $settings->digit_border_color ) ? 'border-color:' . $settings->digit_border_color . ';' : '';
+	}
 	?>
-;
 	border-radius: 50%;
-	background: 
 	<?php
 	if ( isset( $settings->timer_background_color ) ) {
-		echo $settings->timer_background_color; }
+		echo ( '' !== $settings->timer_background_color ) ? 'background:' . $settings->timer_background_color . ';' : ''; }
 	?>
-	;
-	padding:
 	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo $settings->digit_area_width / 4;
-	} else {
-		echo 100 / 4; }
+	if ( isset( $settings->digit_area_width ) ) {
+		echo ( '' !== $settings->digit_area_width ) ? 'padding:' . $settings->digit_area_width / 4 . ';' : 'padding:' . 100 / 4 . 'px;'; }
 	?>
-	px;
 	<?php if ( isset( $settings->unit_position ) && 'default' == $settings->unit_position || 'outside' == $settings->unit_position ) { ?>
 	display: flex;
 	justify-content: center;
@@ -226,106 +208,73 @@ if ( isset( $settings->timer_style ) && 'circle' == $settings->timer_style ) {
 if ( isset( $settings->timer_style ) && 'square' == $settings->timer_style ) {
 	?>
 .fl-node-<?php echo $id; ?> .uabb-countdown-digit-wrapper.square {
-	width: 
 	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo  $settings->digit_area_width;
-	} else {
-		echo 100; }
+	if ( isset( $settings->digit_area_width ) ) {
+		echo ( '' !== $settings->digit_area_width ) ? 'width:' . $settings->digit_area_width . 'px;' : 'width:100px;';
+		echo ( '' !== $settings->digit_area_width ) ? 'height:' . $settings->digit_area_width . 'px;' : 'height:100px;';
+	}
 	?>
-	px;
-	height: 
 	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo  $settings->digit_area_width;
-	} else {
-		echo 100; }
+	if ( isset( $settings->digit_border_width ) ) {
+		echo ( '' !== $settings->digit_border_width ) ? 'border:' . $settings->digit_border_width . 'px;' : 'border:5px;';
+	}
 	?>
-	px;
-	border: 
-	<?php
-	if ( isset( $settings->digit_border_width ) && '' != $settings->digit_border_width ) {
-		echo $settings->digit_border_width;
-	} else {
-		echo 5; }
-	?>
-	px 
 	<?php
 	if ( isset( $settings->digit_border_style ) ) {
-		echo $settings->digit_border_style; }
+		echo ( '' !== $settings->digit_border_style ) ? 'border-style:' . $settings->digit_border_style . ';' : '';
+	}
 	?>
 	<?php
 	if ( isset( $settings->digit_border_color ) ) {
-		echo $settings->digit_border_color; }
+		echo ( '' !== $settings->digit_border_color ) ? 'border-color:' . $settings->digit_border_color . ';' : '';
+	}
 	?>
-;
-	background: 
 	<?php
 	if ( isset( $settings->timer_background_color ) ) {
-		echo $settings->timer_background_color; }
+		echo ( '' !== $settings->timer_background_color ) ? 'background:' . $settings->timer_background_color . ';' : '';
+	}
 	?>
-	;
-	padding:
 	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo $settings->digit_area_width / 4;
-	} else {
-		echo 100 / 4; }
+	if ( isset( $settings->digit_area_width ) ) {
+		echo ( '' !== $settings->digit_area_width ) ? 'padding:' . $settings->digit_area_width / 4 . ';' : 'padding: ' . 100 / 4 . 'px;'; }
 	?>
-	px;
 }
 	<?php
 }
 if ( isset( $settings->timer_style ) && 'custom' == $settings->timer_style ) {
 	?>
 .fl-node-<?php echo $id; ?> .uabb-countdown-digit-wrapper.custom {
-	border: 
 	<?php
-	if ( isset( $settings->digit_border_width ) && '' != $settings->digit_border_width ) {
-		echo $settings->digit_border_width;
-	} else {
-		echo 5; }
+	if ( isset( $settings->digit_area_width ) ) {
+		echo ( '' !== $settings->digit_area_width ) ? 'width:' . $settings->digit_area_width . 'px;' : 'width:100px;';
+		echo ( '' !== $settings->digit_area_width ) ? 'height:' . $settings->digit_area_width . 'px;' : 'height:100px;';
+	}
 	?>
-	px 
+	<?php
+	if ( isset( $settings->digit_border_width ) ) {
+		echo ( '' !== $settings->digit_border_width ) ? 'border:' . $settings->digit_border_width . 'px;' : 'border:5px;';
+	}
+	?>
 	<?php
 	if ( isset( $settings->digit_border_style ) ) {
-		echo $settings->digit_border_style; }
+		echo ( '' !== $settings->digit_border_style ) ? 'border-style:' . $settings->digit_border_style . ';' : '';
+	}
 	?>
 	<?php
 	if ( isset( $settings->digit_border_color ) ) {
-		echo $settings->digit_border_color; }
+		echo ( '' !== $settings->digit_border_color ) ? 'border-color:' . $settings->digit_border_color . ';' : '';
+	}
 	?>
-;
-	border-radius: 
 	<?php
-	if ( isset( $settings->digit_border_radius ) && '' != $settings->digit_border_radius ) {
-		echo $settings->digit_border_radius;
-	} else {
-		echo 5; }
+	if ( isset( $settings->digit_border_radius ) ) {
+		echo ( '' !== $settings->digit_border_radius ) ? 'border-radius:' . $settings->digit_border_radius . 'px;' : 'border-radius:5px;';
+	}
 	?>
-	px;
-	background: 
 	<?php
 	if ( isset( $settings->timer_background_color ) ) {
-		echo $settings->timer_background_color; }
+		echo ( '' !== $settings->timer_background_color ) ? 'background:' . $settings->timer_background_color . ';' : '';
+	}
 	?>
-	;
-	width:
-	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo $settings->digit_area_width;
-	} else {
-		echo 100; }
-	?>
-	px;
-	height:
-	<?php
-	if ( isset( $settings->digit_area_width ) && '' != $settings->digit_area_width ) {
-		echo $settings->digit_area_width;
-	} else {
-		echo 100; }
-	?>
-	px;
 	display:flex;
 	justify-content:center;
 	align-items:center;	
@@ -337,98 +286,74 @@ if ( isset( $settings->timer_style ) && 'normal' != $settings->timer_style && is
 	?>
 .fl-node-<?php echo $id; ?> .uabb-countdown-digit-content {
 	<?php if ( isset( $settings->inside_options ) && 'in_below' == $settings->inside_options ) { ?>
-	margin-bottom: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-bottom:' . $settings->space_between_unit . 'px;' : 'margin-bottom:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 }
 .fl-node-<?php echo $id; ?> .uabb-count-down-digit{
 	<?php if ( isset( $settings->inside_options ) && 'in_above' == $settings->inside_options ) { ?>
-	margin-top: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-top:' . $settings->space_between_unit . 'px;' : 'margin-top:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 }
-	<?php
+<?php
 }
 if ( isset( $settings->timer_style ) && 'normal' != $settings->timer_style && isset( $settings->unit_position ) && 'outside' == $settings->unit_position && isset( $settings->outside_options ) && ( 'out_below' == $settings->outside_options || 'out_above' == $settings->outside_options || 'out_right' == $settings->outside_options || 'out_left' == $settings->outside_options ) ) {
 	?>
 .fl-node-<?php echo $id; ?> .uabb-countdown-digit-wrapper {
 	<?php if ( isset( $settings->outside_options ) && 'out_below' == $settings->outside_options ) { ?>
-	margin-bottom: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-bottom:' . $settings->space_between_unit . 'px;' : 'margin-bottom:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 	<?php if ( isset( $settings->outside_options ) && 'out_above' == $settings->outside_options ) { ?>
-	margin-top: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-top:' . $settings->space_between_unit . 'px;' : 'margin-top:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 	<?php if ( isset( $settings->outside_options ) && 'out_right' == $settings->outside_options ) { ?>
-	margin-right: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-right:' . $settings->space_between_unit . 'px;' : 'margin-right:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 	<?php if ( isset( $settings->outside_options ) && 'out_left' == $settings->outside_options ) { ?>
-	margin-left: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-left:' . $settings->space_between_unit . 'px;' : 'margin-left:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 }
-	<?php
+<?php
 }
 if ( isset( $settings->timer_style ) && 'normal' == $settings->timer_style && isset( $settings->normal_options ) && ( 'normal_below' == $settings->normal_options || 'normal_above' == $settings->normal_options ) ) {
 	?>
 .fl-node-<?php echo $id; ?> .uabb-count-down-digit {
 	<?php if ( isset( $settings->normal_options ) && 'normal_below' == $settings->normal_options ) { ?>
-	margin-bottom: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-bottom:' . $settings->space_between_unit . 'px;' : 'margin-bottom:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 	<?php if ( isset( $settings->normal_options ) && 'normal_above' == $settings->normal_options ) { ?>
-	margin-top: 
 		<?php
-		if ( isset( $settings->space_between_unit ) && '' != $settings->space_between_unit ) {
-			echo $settings->space_between_unit;
-		} else {
-			echo 10; }
+		if ( isset( $settings->space_between_unit ) ) {
+			echo ( '' !== $settings->space_between_unit ) ? 'margin-top:' . $settings->space_between_unit . 'px;' : 'margin-top:10px;';
+		}
 		?>
-	px;
 	<?php } ?>
 }
 	<?php

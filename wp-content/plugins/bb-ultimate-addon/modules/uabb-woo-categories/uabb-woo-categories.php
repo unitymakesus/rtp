@@ -38,7 +38,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 			)
 		);
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 		$this->add_js( 'imagesloaded-uabb', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/imagesloaded.min.js', array( 'jquery' ), '', true );
 		$this->add_js( 'carousel', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-carousel.js', array( 'jquery' ), '', true );
 	}
@@ -78,18 +78,6 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->content_alignment ) ) {
-				$settings->content_alignment = $settings->content_alignment;
-			}
-			if ( isset( $settings->mobile_align ) ) {
-				$settings->mobile_align = $settings->mobile_align;
-			}
-			// For description alignment.
-			if ( isset( $settings->desc_alignment ) ) {
-				$settings->desc_alignment = $settings->desc_alignment;
-			}
-
 			// Categories typography settings.
 			if ( ! isset( $settings->category_typo ) || ! is_array( $settings->category_typo ) ) {
 
@@ -102,6 +90,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 				if ( isset( $settings->content_font['family'] ) ) {
 
 					$settings->category_typo['font_family'] = $settings->content_font['family'];
+					unset( $settings->content_font['family'] );
 				}
 				if ( isset( $settings->content_font['weight'] ) ) {
 
@@ -110,6 +99,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					} else {
 						$settings->category_typo['font_weight'] = $settings->content_font['weight'];
 					}
+					unset( $settings->content_font['weight'] );
 				}
 			}
 			if ( isset( $settings->content_font_size ) ) {
@@ -118,12 +108,14 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->content_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size );
 			}
 			if ( isset( $settings->content_font_size_medium ) ) {
 				$settings->category_typo_medium['font_size'] = array(
 					'length' => $settings->content_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_medium );
 			}
 			if ( isset( $settings->content_font_size_responsive ) ) {
 
@@ -131,6 +123,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->content_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_responsive );
 			}
 			if ( isset( $settings->content_line_height ) ) {
 
@@ -138,23 +131,26 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->content_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height );
 			}
 			if ( isset( $settings->content_line_height_medium ) ) {
 				$settings->category_typo_medium['line_height'] = array(
 					'length' => $settings->content_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_medium );
 			}
 			if ( isset( $settings->content_line_height_responsive ) ) {
 				$settings->category_typo_responsive['line_height'] = array(
 					'length' => $settings->content_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_responsive );
 			}
 			if ( isset( $settings->content_transform ) ) {
 
 				$settings->category_typo['text_transform'] = $settings->content_transform;
-
+				unset( $settings->content_transform );
 			}
 			if ( isset( $settings->content_letter_spacing ) ) {
 
@@ -162,6 +158,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->content_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_letter_spacing );
 			}
 
 			// Description typography settings.
@@ -176,6 +173,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 				if ( isset( $settings->desc_font['family'] ) ) {
 
 					$settings->description_typo['font_family'] = $settings->desc_font['family'];
+					unset( $settings->desc_font['family'] );
 				}
 				if ( isset( $settings->desc_font['weight'] ) ) {
 
@@ -184,6 +182,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					} else {
 						$settings->description_typo['font_weight'] = $settings->desc_font['weight'];
 					}
+					unset( $settings->desc_font['weight'] );
 				}
 			}
 			if ( isset( $settings->desc_font_size ) ) {
@@ -192,18 +191,21 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->desc_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size );
 			}
 			if ( isset( $settings->desc_font_size_medium ) ) {
 				$settings->description_typo_medium['font_size'] = array(
 					'length' => $settings->desc_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_medium );
 			}
 			if ( isset( $settings->desc_font_size_responsive ) ) {
 				$settings->description_typo_responsive['font_size'] = array(
 					'length' => $settings->desc_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->desc_font_size_responsive );
 			}
 			if ( isset( $settings->desc_line_height ) ) {
 
@@ -211,21 +213,25 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->desc_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height );
 			}
 			if ( isset( $settings->desc_line_height_medium ) ) {
 				$settings->description_typo_medium['line_height'] = array(
 					'length' => $settings->desc_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_medium );
 			}
 			if ( isset( $settings->desc_line_height_responsive ) ) {
 				$settings->description_typo_responsive['line_height'] = array(
 					'length' => $settings->desc_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->desc_line_height_responsive );
 			}
 			if ( isset( $settings->desc_transform ) ) {
 				$settings->description_typo['text_transform'] = $settings->desc_transform;
+				unset( $settings->desc_transform );
 			}
 			if ( isset( $settings->desc_letter_spacing ) ) {
 
@@ -233,29 +239,6 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 					'length' => $settings->desc_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			// Unset old values.
-			if ( isset( $settings->content_font ) ) {
-				unset( $settings->content_font );
-				unset( $settings->content_font_size );
-				unset( $settings->content_font_size_medium );
-				unset( $settings->content_font_size_responsive );
-				unset( $settings->content_line_height );
-				unset( $settings->content_line_height_medium );
-				unset( $settings->content_line_height_responsive );
-				unset( $settings->content_transform );
-				unset( $settings->content_letter_spacing );
-			}
-			if ( isset( $settings->desc_font ) ) {
-				unset( $settings->desc_font );
-				unset( $settings->desc_font_size );
-				unset( $settings->desc_font_size_medium );
-				unset( $settings->desc_font_size_responsive );
-				unset( $settings->desc_line_height );
-				unset( $settings->desc_line_height_medium );
-				unset( $settings->desc_line_height_responsive );
-				unset( $settings->desc_transform );
 				unset( $settings->desc_letter_spacing );
 			}
 		}

@@ -138,6 +138,8 @@ var key_array = new Array();
 			                slidesToScroll: self.slidesToScroll,
 			                autoplay: self.autoplay,
 			                autoplaySpeed: self.autoplaySpeed,
+							prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class="fas fa-angle-left"></i></button>',
+							nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="fas fa-angle-right"></i></button>',
 			                responsive: [
 			                    {
 			                        breakpoint: self.medium_breakpoint,

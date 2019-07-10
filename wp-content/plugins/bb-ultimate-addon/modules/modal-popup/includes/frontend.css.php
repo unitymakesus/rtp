@@ -118,8 +118,6 @@ if ( 'button' == $settings->modal_on ) {
 				'mob_align'                  => $settings->btn_mob_align,
 			);
 	}
-
-
 	/* CSS Render Function */
 	FLBuilder::render_module_css( 'uabb-button', $id, $btn_settings );
 	?>

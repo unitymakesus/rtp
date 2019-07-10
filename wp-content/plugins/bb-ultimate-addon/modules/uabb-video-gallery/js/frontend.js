@@ -93,9 +93,10 @@
 				}
 				
 				
-				nodeClass.find( '.uabb-vg__play_full' ).on( 'click', function( e ) {
+				if ( 'inline' === action ) {
 
-					if ( 'inline' === action ) {
+					nodeClass.find( '.uabb-vg__play_full' ).on( 'click', function( e ) {
+
 
 						e.preventDefault();
 						var iframe 		= $( "<iframe/>" );
@@ -111,11 +112,12 @@
 							wrap_outer.html( iframe );
 							wrap_outer.attr( 'style', 'background:#000;' );
 							overlay.hide();
-					}
-				});
+					});
 
-				if('lightbox' === action ){
-					$('.uabb-video-gallery-fancybox').magnificPopup({
+				}
+
+				if('lightbox' === action ) {
+					nodeClass.find('.uabb-video-gallery-fancybox').magnificPopup({
 						type: 'iframe',
 						mainClass: 'mfp-fade',
 						removalDelay: 160,
@@ -145,6 +147,8 @@
 			                	autoplaySpeed: self.autoplaySpeed,
 			                	pauseOnHover:self.pauseOnHover,
 			                	speed:self.speed,
+								prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class="fas fa-angle-left"></i></button>',
+								nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="fas fa-angle-right"></i></button>',
 			                	responsive: [
 			                    {
 			                        breakpoint:self.medium_breakpoint,

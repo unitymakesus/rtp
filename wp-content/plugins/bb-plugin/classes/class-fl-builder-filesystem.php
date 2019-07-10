@@ -9,7 +9,7 @@ class FL_Filesystem {
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
-			$filtered = apply_filters( 'fl_filesystem_instance', null );
+			$filtered        = apply_filters( 'fl_filesystem_instance', null );
 			self::$_instance = $filtered instanceof FL_Filesystem ? $filtered : new self();
 		}
 		return self::$_instance;
@@ -135,14 +135,14 @@ class FL_Filesystem {
 
 			$context = apply_filters( 'request_filesystem_credentials_context', false );
 
-			add_filter( 'filesystem_method',              array( $this, 'filesystem_method' ) );
+			add_filter( 'filesystem_method', array( $this, 'filesystem_method' ) );
 			add_filter( 'request_filesystem_credentials', array( $this, 'request_filesystem_credentials' ) );
 
 			$creds = request_filesystem_credentials( site_url(), '', true, $context, null );
 
 			WP_Filesystem( $creds, $context );
 
-			remove_filter( 'filesystem_method',              array( $this, 'filesystem_method' ) );
+			remove_filter( 'filesystem_method', array( $this, 'filesystem_method' ) );
 			remove_filter( 'request_filesystem_credentials', array( $this, 'FLBuilderUtils::request_filesystem_credentials' ) );
 		}
 

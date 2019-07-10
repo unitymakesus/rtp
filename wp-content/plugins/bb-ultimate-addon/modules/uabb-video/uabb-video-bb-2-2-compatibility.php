@@ -83,6 +83,7 @@ FLBuilder::register_module(
 								'16_9' => __( '16:9', 'uabb' ),
 								'4_3'  => __( '4:3', 'uabb' ),
 								'3_2'  => __( '3:2', 'uabb' ),
+								'1_1'  => __( '1:1', 'uabb' ),
 							),
 						),
 					),
@@ -110,8 +111,8 @@ FLBuilder::register_module(
 							'label'   => __( 'Suggested Videos', 'uabb' ),
 							'default' => 'hide',
 							'options' => array(
-								'no'  => __( 'Hide', 'uabb' ),
-								'yes' => __( 'Show', 'uabb' ),
+								'no'  => __( 'Current Video Channel', 'uabb' ),
+								'yes' => __( 'Any Random Video', 'uabb' ),
 							),
 						),
 						'yt_controls'       => array(
@@ -282,6 +283,16 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
+						'video_double_click'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Double Click on Mobile', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Enable this option if you are not able to see custom thumbnail or overlay color on Mobile.', 'uabb' ),
+						),
 					),
 				),
 				'section_play_icon'     => array(
@@ -398,6 +409,253 @@ FLBuilder::register_module(
 				),
 			),
 		),
+
+		'sticky_video'     => array(
+			'title'    => __( 'Sticky Video', 'uabb' ),
+			'sections' => array(
+				'section_sticky_enable'       => array(
+					'title'  => __( 'Sticky Video Settings ', 'uabb' ),
+					'fields' => array(
+						'enable_sticky'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Sticky Video', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'sticky_alignment', 'sticky_video_width', 'sticky_hide_on' ),
+									'sections' => array( 'section_background_sticky', 'section_sticky_close_button', 'heading_sticky_info_bar' ),
+								),
+							),
+						),
+						'sticky_alignment'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Sticky Alignment', 'uabb' ),
+							'options' => array(
+								'top_left'     => __( 'Top Left', 'uabb' ),
+								'top_right'    => __( 'Top Right ', 'uabb' ),
+								'center_left'  => __( 'Center Left', 'uabb' ),
+								'center_right' => __( 'Center Right', 'uabb' ),
+								'bottom_left'  => __( 'Bottom Left', 'uabb' ),
+								'bottom_right' => __( 'Bottom Right', 'uabb' ),
+							),
+						),
+						'sticky_video_width' => array(
+							'type'        => 'unit',
+							'label'       => __( 'Video Width', 'uabb' ),
+							'default'     => '360',
+							'placeholder' => 'auto',
+							'maxlength'   => '6',
+							'size'        => '8',
+							'units'       => array( 'px' ),
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'responsive'  => array(
+								'placeholder' => array(
+									'default'    => '360',
+									'medium'     => '',
+									'responsive' => '250',
+								),
+							),
+						),
+						'sticky_hide_on'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Hide Sticky Video on', 'uabb' ),
+							'default' => 'none',
+							'options' => array(
+								'none'    => __( 'None', 'uabb' ),
+								'desktop' => __( 'Desktop', 'uabb' ),
+								'tablet'  => __( 'Tablet', 'uabb' ),
+								'mobile'  => __( 'Mobile', 'uabb' ),
+								'both'    => __( 'Tablet + Mobile', 'uabb' ),
+							),
+						),
+					),
+				),
+				'section_background_sticky'   => array(
+					'title'  => __( 'Background', 'uabb' ),
+					'fields' => array(
+						'sticky_video_margin'  => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Spacing from Edges', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'help'       => __( 'Note: This is spacing around the sticky video with respect to the Alignment chosen.', 'uabb' ),
+						),
+
+
+						'sticky_video_padding' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Background Size', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-sticky-apply iframe,.uabb-sticky-apply .uabb-video__thumb',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+
+						'sticky_video_color'   => array(
+							'type'       => 'color',
+							'label'      => __( 'Background Color', 'uabb' ),
+							'default'    => 'ffffff',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap',
+								'property' => 'background',
+							),
+						),
+					),
+				),
+				'section_sticky_close_button' => array( // Section.
+					'title'  => __( 'Close Button', 'uabb' ), // Section Title.
+					'fields' => array( // Section Fields.
+						'enable_sticky_close_button' => array(
+							'type'    => 'select',
+							'label'   => __( 'Icon', 'uabb' ),
+							'default' => 'icon',
+							'options' => array(
+								'icon' => __( 'Icon', 'uabb' ),
+								'none' => __( 'None', 'uabb' ),
+							),
+							'toggle'  => array(
+								'icon' => array(
+									'fields' => array( 'sticky_close_icon', 'sticky_close_icon_color', 'sticky_close_icon_bgcolor' ),
+								),
+							),
+						),
+
+						'sticky_close_icon'          => array(
+							'type'        => 'icon',
+							'label'       => __( 'Select Icon', 'uabb' ),
+							'default'     => 'fas fa-times',
+							'show_remove' => true,
+						),
+
+						'sticky_close_icon_color'    => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Icon Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-video-sticky-close',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+						'sticky_close_icon_bgcolor'  => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-sticky-apply .uabb-video-sticky-close',
+								'property'  => 'background',
+								'important' => true,
+							),
+						),
+					),
+				),
+				'heading_sticky_info_bar'     => array(
+					'title'  => __( 'Info Bar', 'uabb' ),
+					'fields' => array(
+						'sticky_info_bar_enable'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Enable this option to display the informative text under Sticky video.', 'uabb' ),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'sticky_info_bar_text', 'sticky_info_bar_color', 'sticky_info_bar_bgcolor', 'sticky_info_bar_padding', 'sticky_field_options' ),
+								),
+							),
+						),
+
+						'sticky_info_bar_text'    => array(
+							'type'        => 'text',
+							'label'       => __( 'Text', 'uabb' ),
+							'placeholder' => __( 'This is info bar', 'uabb' ),
+							'connections' => array( 'string', 'html' ),
+						),
+						'sticky_field_options'    => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-video-sticky-infobar',
+								'important' => true,
+							),
+						),
+						'sticky_info_bar_color'   => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-video-sticky-infobar',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+						'sticky_info_bar_bgcolor' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-video-sticky-infobar',
+								'property'  => 'background',
+								'important' => true,
+							),
+						),
+						'sticky_info_bar_padding' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-sticky-apply .uabb-video-sticky-infobar',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+					),
+				),
+			),
+		),
+
 		'yt_subscribe_bar' => array(
 			'title'    => __( 'YouTube Subscribe Bar', 'uabb' ),
 			'sections' => array(
@@ -581,6 +839,7 @@ FLBuilder::register_module(
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/how-to-find-youtube-channel-name-and-channel-id/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=video-module" target="_blank" rel="noopener"> How to Find YouTube Channel Name and Channel ID? </a> </li>
 								
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/default-thumbnail-broken-in-video-module//?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=video-module" target="_blank" rel="noopener"> Default Thumbnail Broken in Video Module </a> </li>
+								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/sticky-video/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=video-module" target="_blank" rel="noopener"> Sticky Video </a> </li>
 							 </ul>',
 						),
 					),

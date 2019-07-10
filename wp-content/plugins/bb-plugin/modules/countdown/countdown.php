@@ -10,12 +10,28 @@ class FLCountdownModule extends FLBuilderModule {
 	 */
 	public function __construct() {
 		parent::__construct(array(
-			'name'          	=> __( 'Countdown', 'fl-builder' ),
-			'description'   	=> __( 'Render a Countdown module.', 'fl-builder' ),
-			'category'      	=> __( 'Info', 'fl-builder' ),
-			'partial_refresh'	=> true,
-			'icon'				=> 'clock.svg',
+			'name'            => __( 'Countdown', 'fl-builder' ),
+			'description'     => __( 'Render a Countdown module.', 'fl-builder' ),
+			'category'        => __( 'Info', 'fl-builder' ),
+			'partial_refresh' => true,
+			'icon'            => 'clock.svg',
 		));
+	}
+
+	/**
+	 * Ensure backwards compatibility with old settings.
+	 *
+	 * @since 2.2
+	 * @param object $settings A module settings object.
+	 * @param object $helper A settings compatibility helper.
+	 * @return object
+	 */
+	public function filter_settings( $settings, $helper ) {
+
+		// Old opacity setting.
+		$helper->handle_opacity_inputs( $settings, 'number_bg_opacity', 'number_bg_color' );
+
+		return $settings;
 	}
 
 	/**
@@ -39,8 +55,8 @@ class FLCountdownModule extends FLBuilderModule {
 		$time       = date( 'H:i:s', strtotime( $hours . ':' . $minutes . ':00 ' . strtoupper( $day_period ) ) );
 
 		$timestamp = $date . ' ' . $time;
-		$timezone = new DateTimeZone( $zone );
-		$date = new DateTime( $timestamp, $timezone );
+		$timezone  = new DateTimeZone( $zone );
+		$date      = new DateTime( $timestamp, $timezone );
 
 		return $date->format( 'c' );
 
@@ -54,12 +70,12 @@ class FLCountdownModule extends FLBuilderModule {
 	 */
 	public function render_circle() {
 
-		$width = ! empty( $this->settings->circle_width ) ? $this->settings->circle_width : 100;
-		$pos = ( $width / 2 );
+		$width  = ! empty( $this->settings->circle_width ) ? $this->settings->circle_width : 100;
+		$pos    = ( $width / 2 );
 		$radius = $pos - 10;
-		$dash = number_format( ( ( M_PI * 2 ) * $radius ), 2, '.', '' );
+		$dash   = number_format( ( ( M_PI * 2 ) * $radius ), 2, '.', '' );
 
-		$html = '<div class="svg-container">';
+		$html  = '<div class="svg-container">';
 		$html .= '<svg class="svg" viewBox="0 0 ' . $width . ' ' . $width . '" version="1.1" preserveAspectRatio="xMinYMin meet">
 			<circle class="fl-number-bg" r="' . $radius . '" cx="' . $pos . '" cy="' . $pos . '" fill="transparent" stroke-dasharray="' . $dash . '" stroke-dashoffset="0"></circle>
 			<circle class="fl-number" r="' . $radius . '" cx="' . $pos . '" cy="' . $pos . '" fill="transparent" stroke-dasharray="' . $dash . '" stroke-dashoffset="' . $dash . '" transform="rotate(-90 ' . $pos . ' ' . $pos . ')"></circle>
@@ -76,209 +92,210 @@ class FLCountdownModule extends FLBuilderModule {
  * Register the module and its form settings.
  */
 FLBuilder::register_module('FLCountdownModule', array(
-	'general'       => array(
-		'title'         => __( 'General', 'fl-builder' ),
-		'sections'      => array(
-			'date'       => array(
-				'title'         => __( 'Date', 'fl-builder' ),
-				'fields'        => array(
-					'day'          => array(
-						'type'          => 'text',
-						'label'         => __( 'Day', 'fl-builder' ),
-						'default'       => date( 'j' ),
-						'maxlength'     => '2',
-						'size'          => '5',
-						'preview'      => array(
-							'type'         => 'none',
+	'general' => array(
+		'title'    => __( 'General', 'fl-builder' ),
+		'sections' => array(
+			'date' => array(
+				'title'  => __( 'Date', 'fl-builder' ),
+				'fields' => array(
+					'day'   => array(
+						'type'      => 'text',
+						'label'     => __( 'Day', 'fl-builder' ),
+						'default'   => date( 'j' ),
+						'maxlength' => '2',
+						'size'      => '5',
+						'preview'   => array(
+							'type' => 'none',
 						),
 					),
-					'month'         => array(
-						'type'          => 'text',
-						'label'         => __( 'Month', 'fl-builder' ),
-						'default'       => date( 'n' ),
-						'maxlength'     => '2',
-						'size'          => '5',
-						'preview'      => array(
-							'type'         => 'none',
+					'month' => array(
+						'type'      => 'text',
+						'label'     => __( 'Month', 'fl-builder' ),
+						'default'   => date( 'n' ),
+						'maxlength' => '2',
+						'size'      => '5',
+						'preview'   => array(
+							'type' => 'none',
 						),
 					),
-					'year'          => array(
-						'type'          => 'text',
-						'label'         => __( 'Year', 'fl-builder' ),
-						'default'       => date( 'Y' ),
-						'maxlength'     => '4',
-						'size'          => '5',
-						'preview'      => array(
-							'type'         => 'none',
+					'year'  => array(
+						'type'      => 'text',
+						'label'     => __( 'Year', 'fl-builder' ),
+						'default'   => date( 'Y' ),
+						'maxlength' => '4',
+						'size'      => '5',
+						'preview'   => array(
+							'type' => 'none',
 						),
 					),
 				),
 			),
-			'time'       => array(
-				'title'         => __( 'Time', 'fl-builder' ),
-				'fields'        => array(
-					'time'          => array(
-						'type'          => 'time',
-						'label'         => __( 'Time', 'fl-builder' ),
-						'default'		=> array(
-							'hours'			=> '01',
-							'minutes'		=> '00',
-							'day_period'	=> 'am',
+			'time' => array(
+				'title'  => __( 'Time', 'fl-builder' ),
+				'fields' => array(
+					'time'      => array(
+						'type'    => 'time',
+						'label'   => __( 'Time', 'fl-builder' ),
+						'default' => array(
+							'hours'      => '01',
+							'minutes'    => '00',
+							'day_period' => 'am',
 						),
 					),
-					'time_zone'          => array(
-						'type'          => 'timezone',
-						'label'         => __( 'Time Zone', 'fl-builder' ),
-						'default'		=> 'UTC',
+					'time_zone' => array(
+						'type'    => 'timezone',
+						'label'   => __( 'Time Zone', 'fl-builder' ),
+						'default' => 'UTC',
 					),
 				),
 			),
 
 		),
 	),
-	'style'         => array( // Tab
-		'title'         => __( 'Style', 'fl-builder' ), // Tab title
-		'sections'      => array( // Tab Sections
-			'general'       => array(
-				'title'         => '',
-				'fields'        => array(
+	'style'   => array( // Tab
+		'title'    => __( 'Style', 'fl-builder' ), // Tab title
+		'sections' => array( // Tab Sections
+			'general'          => array(
+				'title'  => '',
+				'fields' => array(
 					'layout' => array(
-						'type'          => 'select',
-						'label'         => __( 'Layout', 'fl-builder' ),
-						'default'       => 'default',
-						'options'       => array(
-							'default'		=> __( 'Numbers', 'fl-builder' ),
-							'circle'		=> __( 'Numbers + Circles', 'fl-builder' ),
+						'type'    => 'select',
+						'label'   => __( 'Layout', 'fl-builder' ),
+						'default' => 'default',
+						'options' => array(
+							'default' => __( 'Numbers', 'fl-builder' ),
+							'circle'  => __( 'Numbers + Circles', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'circle'		=> array(
-								'sections'		=> array( 'circle_bar_style' ),
-								'fields'		=> array( 'after_number_text' ),
+						'toggle'  => array(
+							'circle'  => array(
+								'sections' => array( 'circle_bar_style' ),
+								'fields'   => array( 'after_number_text' ),
 							),
-							'default'		=> array(
-								'sections'		=> array( 'numbers_style', 'separator_style' ),
-								'fields'		=> array( 'horizontal_padding', 'vertical_padding' ),
+							'default' => array(
+								'sections' => array( 'numbers_style', 'separator_style' ),
+								'fields'   => array( 'horizontal_padding', 'vertical_padding' ),
 							),
 						),
 					),
 				),
 			),
-			'text_style'    => array(
-				'title'         => __( 'Numbers and Text', 'fl-builder' ),
-				'fields'        => array(
-					'number_color'    => array(
-						'type'          => 'color',
-						'label'         => __( 'Number Color', 'fl-builder' ),
-						'show_reset'    => true,
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .fl-countdown-unit-number',
-							'property'     => 'color',
+			'text_style'       => array(
+				'title'  => __( 'Numbers and Text', 'fl-builder' ),
+				'fields' => array(
+					'number_color'       => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Number Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .fl-countdown-unit-number',
+							'property' => 'color',
 						),
 					),
-					'label_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Text Color', 'fl-builder' ),
-						'show_reset'    => true,
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .fl-countdown-unit-label',
-							'property'     => 'color',
+					'label_color'        => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Text Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .fl-countdown-unit-label',
+							'property' => 'color',
 						),
 					),
-					'number_size' => array(
-						'type'          => 'text',
-						'label'         => __( 'Number Size', 'fl-builder' ),
-						'default'       => '24',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .fl-countdown-unit-number',
-							'property'     => 'font-size',
-							'unit'		   => 'px',
+					'number_size'        => array(
+						'type'       => 'unit',
+						'label'      => __( 'Number Size', 'fl-builder' ),
+						'default'    => '24',
+						'responsive' => true,
+						'units'      => array( 'px', 'em', 'rem' ),
+						'slider'     => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .fl-countdown-unit-number',
+							'property' => 'font-size',
+							'unit'     => 'px',
 						),
 					),
-					'label_size' => array(
-						'type'          => 'text',
-						'label'         => __( 'Text Size', 'fl-builder' ),
-						'default'       => '13',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .fl-countdown-unit-label',
-							'property'     => 'font-size',
-							'unit'		   => 'px',
+					'label_size'         => array(
+						'type'       => 'unit',
+						'label'      => __( 'Text Size', 'fl-builder' ),
+						'default'    => '13',
+						'responsive' => true,
+						'units'      => array( 'px', 'em', 'rem' ),
+						'slider'     => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .fl-countdown-unit-label',
+							'property' => 'font-size',
+							'unit'     => 'px',
 						),
 					),
 					'horizontal_padding' => array(
-						'type'          => 'text',
-						'label'         => __( 'Horizontal Padding', 'fl-builder' ),
-						'default'       => '10',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'rules'		   => array(
+						'type'    => 'unit',
+						'label'   => __( 'Horizontal Padding', 'fl-builder' ),
+						'default' => '10',
+						'units'   => array( 'px' ),
+						'slider'  => true,
+						'preview' => array(
+							'type'  => 'css',
+							'rules' => array(
 								array(
-									'selector'     => '.fl-countdown .fl-countdown-unit',
-									'property'     => 'padding-left',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown .fl-countdown-unit',
+									'property' => 'padding-left',
+									'unit'     => 'px',
 								),
 								array(
-									'selector'     => '.fl-countdown .fl-countdown-unit',
-									'property'     => 'padding-right',
-									'unit'		   => 'px',
-								),
-							),
-						),
-					),
-					'vertical_padding' => array(
-						'type'          => 'text',
-						'label'         => __( 'Vertical Padding', 'fl-builder' ),
-						'default'       => '10',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'rules'		   => array(
-								array(
-									'selector'     => '.fl-countdown .fl-countdown-unit',
-									'property'     => 'padding-top',
-									'unit'		   => 'px',
-								),
-								array(
-									'selector'     => '.fl-countdown .fl-countdown-unit',
-									'property'     => 'padding-bottom',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown .fl-countdown-unit',
+									'property' => 'padding-right',
+									'unit'     => 'px',
 								),
 							),
 						),
 					),
-					'number_spacing' => array(
-						'type'          => 'text',
-						'label'         => __( 'Number Spacing', 'fl-builder' ),
-						'default'       => '10',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'rules'		   => array(
+					'vertical_padding'   => array(
+						'type'    => 'unit',
+						'label'   => __( 'Vertical Padding', 'fl-builder' ),
+						'default' => '10',
+						'units'   => array( 'px' ),
+						'slider'  => true,
+						'preview' => array(
+							'type'  => 'css',
+							'rules' => array(
 								array(
-									'selector'     => '.fl-countdown .fl-countdown-number',
-									'property'     => 'margin-left',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown .fl-countdown-unit',
+									'property' => 'padding-top',
+									'unit'     => 'px',
 								),
 								array(
-									'selector'     => '.fl-countdown .fl-countdown-number',
-									'property'     => 'margin-right',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown .fl-countdown-unit',
+									'property' => 'padding-bottom',
+									'unit'     => 'px',
+								),
+							),
+						),
+					),
+					'number_spacing'     => array(
+						'type'    => 'unit',
+						'label'   => __( 'Number Spacing', 'fl-builder' ),
+						'default' => '10',
+						'units'   => array( 'px' ),
+						'slider'  => true,
+						'preview' => array(
+							'type'  => 'css',
+							'rules' => array(
+								array(
+									'selector' => '.fl-countdown .fl-countdown-number',
+									'property' => 'margin-left',
+									'unit'     => 'px',
+								),
+								array(
+									'selector' => '.fl-countdown .fl-countdown-number',
+									'property' => 'margin-right',
+									'unit'     => 'px',
 								),
 							),
 						),
@@ -286,159 +303,157 @@ FLBuilder::register_module('FLCountdownModule', array(
 				),
 			),
 			'numbers_style'    => array(
-				'title'         => __( 'Backgrounds', 'fl-builder' ),
-				'fields'        => array(
-					'number_bg_color'   => array(
-						'type'          => 'color',
-						'label'         => __( 'Number Background Color', 'fl-builder' ),
-						'show_reset'    => true,
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .fl-countdown-unit',
-							'property'     => 'background-color',
+				'title'  => __( 'Backgrounds', 'fl-builder' ),
+				'fields' => array(
+					'number_bg_color' => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Number Background Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .fl-countdown-unit',
+							'property' => 'background-color',
 						),
 					),
-					'number_bg_opacity' => array(
-						'type'          => 'text',
-						'label'         => __( 'Number Background Opacity', 'fl-builder' ),
-						'default'       => '100',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => '%',
-					),
-					'border_radius' => array(
-						'type'          => 'text',
-						'label'         => __( 'Number Border Radius', 'fl-builder' ),
-						'default'       => '0',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .fl-countdown-unit',
-							'property'     => 'border-radius',
-							'unit'		   => 'px',
+					'border_radius'   => array(
+						'type'    => 'unit',
+						'label'   => __( 'Number Border Radius', 'fl-builder' ),
+						'default' => '0',
+						'units'   => array( 'px' ),
+						'slider'  => true,
+						'preview' => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .fl-countdown-unit',
+							'property' => 'border-radius',
+							'unit'     => 'px',
 						),
 					),
 				),
 			),
-			'separator_style'    => array(
-				'title'         => __( 'Separator', 'fl-builder' ),
-				'fields'        => array(
-					'show_separator' => array(
-						'type'          => 'select',
-						'label'         => __( 'Show Time Separators', 'fl-builder' ),
-						'default'       => 'no',
-						'options'       => array(
-							'no'			=> __( 'No', 'fl-builder' ),
-							'yes'			=> __( 'Yes', 'fl-builder' ),
+			'separator_style'  => array(
+				'title'  => __( 'Separator', 'fl-builder' ),
+				'fields' => array(
+					'show_separator'  => array(
+						'type'    => 'select',
+						'label'   => __( 'Show Time Separators', 'fl-builder' ),
+						'default' => 'no',
+						'options' => array(
+							'no'  => __( 'No', 'fl-builder' ),
+							'yes' => __( 'Yes', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'yes'			=> array(
-								'fields'		=> array( 'separator_type', 'separator_color' ),
+						'toggle'  => array(
+							'yes' => array(
+								'fields' => array( 'separator_type', 'separator_color' ),
 							),
 						),
 					),
-					'separator_type' => array(
-						'type'          => 'select',
-						'label'         => __( 'Separator Type', 'fl-builder' ),
-						'default'       => 'line',
-						'options'       => array(
-							'colon'			=> __( 'Colon', 'fl-builder' ),
-							'line'			=> __( 'Line', 'fl-builder' ),
+					'separator_type'  => array(
+						'type'    => 'select',
+						'label'   => __( 'Separator Type', 'fl-builder' ),
+						'default' => 'line',
+						'options' => array(
+							'colon' => __( 'Colon', 'fl-builder' ),
+							'line'  => __( 'Line', 'fl-builder' ),
 						),
-						'toggle'		=> array(
-							'colon'			=> array(
-								'fields'		=> array( 'separator_size' ),
+						'toggle'  => array(
+							'colon' => array(
+								'fields' => array( 'separator_size' ),
 							),
 						),
 					),
-					'separator_color'   => array(
-						'type'          => 'color',
-						'label'         => __( 'Separator Color', 'fl-builder' ),
-						'show_reset'    => true,
+					'separator_color' => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Separator Color', 'fl-builder' ),
+						'show_reset'  => true,
+						'show_alpha'  => true,
 					),
-					'separator_size' => array(
-						'type'          => 'text',
-						'label'         => __( 'Separator Size', 'fl-builder' ),
-						'default'       => '15',
-						'maxlength'     => '3',
-						'size'          => '4',
-						'description'   => 'px',
+					'separator_size'  => array(
+						'type'    => 'unit',
+						'label'   => __( 'Separator Size', 'fl-builder' ),
+						'default' => '15',
+						'units'   => array( 'px' ),
+						'slider'  => true,
 					),
 				),
 			),
-			'circle_bar_style'    => array(
-				'title'         => __( 'Circle Styles', 'fl-builder' ),
-				'fields'        => array(
-					'circle_width' => array(
-						'type'          => 'text',
-						'label'         => __( 'Circle Size', 'fl-builder' ),
-						'default'       => '200',
-						'maxlength'     => '4',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'rules'		   => array(
+			'circle_bar_style' => array(
+				'title'  => __( 'Circle Styles', 'fl-builder' ),
+				'fields' => array(
+					'circle_color'      => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Circle Foreground Color', 'fl-builder' ),
+						'default'     => 'f7951e',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .svg .fl-number',
+							'property' => 'stroke',
+						),
+					),
+					'circle_bg_color'   => array(
+						'type'        => 'color',
+						'connections' => array( 'color' ),
+						'label'       => __( 'Circle Background Color', 'fl-builder' ),
+						'default'     => 'eaeaea',
+						'show_reset'  => true,
+						'show_alpha'  => true,
+						'preview'     => array(
+							'type'     => 'css',
+							'selector' => '.fl-countdown .svg .fl-number-bg',
+							'property' => 'stroke',
+						),
+					),
+					'circle_width'      => array(
+						'type'    => 'unit',
+						'label'   => __( 'Circle Size', 'fl-builder' ),
+						'default' => '200',
+						'units'   => array( 'px' ),
+						'slider'  => array(
+							'max' => 300,
+						),
+						'preview' => array(
+							'type'  => 'css',
+							'rules' => array(
 								array(
-									'selector'     => '.fl-countdown-number',
-									'property'     => 'max-width',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown-number',
+									'property' => 'width',
+									'unit'     => 'px',
 								),
 								array(
-									'selector'     => '.fl-countdown-number',
-									'property'     => 'max-height',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown-number',
+									'property' => 'height',
+									'unit'     => 'px',
 								),
 								array(
-									'selector'     => '.fl-countdown-circle-container',
-									'property'     => 'max-width',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown-circle-container',
+									'property' => 'max-width',
+									'unit'     => 'px',
 								),
 								array(
-									'selector'     => '.fl-countdown-circle-container',
-									'property'     => 'max-height',
-									'unit'		   => 'px',
+									'selector' => '.fl-countdown-circle-container',
+									'property' => 'max-height',
+									'unit'     => 'px',
 								),
 							),
 						),
 
 					),
 					'circle_dash_width' => array(
-						'type'          => 'text',
-						'label'         => __( 'Circle Stroke Size', 'fl-builder' ),
-						'default'       => '10',
-						'maxlength'     => '2',
-						'size'          => '4',
-						'description'   => 'px',
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.svg circle',
-							'property'     => 'stroke-width',
-							'unit'		   => 'px',
-						),
-					),
-					'circle_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Circle Foreground Color', 'fl-builder' ),
-						'default'		=> 'f7951e',
-						'show_reset'    => true,
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .svg .fl-number',
-							'property'     => 'stroke',
-						),
-					),
-					'circle_bg_color' => array(
-						'type'          => 'color',
-						'label'         => __( 'Circle Background Color', 'fl-builder' ),
-						'default'		=> 'eaeaea',
-						'show_reset'    => true,
-						'preview'      => array(
-							'type'         => 'css',
-							'selector'     => '.fl-countdown .svg .fl-number-bg',
-							'property'     => 'stroke',
+						'type'    => 'unit',
+						'label'   => __( 'Circle Stroke Size', 'fl-builder' ),
+						'default' => '10',
+						'units'   => array( 'px' ),
+						'slider'  => true,
+						'preview' => array(
+							'type'     => 'css',
+							'selector' => '.svg circle',
+							'property' => 'stroke-width',
+							'unit'     => 'px',
 						),
 					),
 				),

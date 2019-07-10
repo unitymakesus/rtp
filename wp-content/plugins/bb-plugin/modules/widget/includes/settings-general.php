@@ -13,11 +13,11 @@ if ( isset( $settings->widget ) ) {
 if ( isset( $widget_class ) && class_exists( $widget_class ) ) {
 
 	// Widget instance
-	$widget_instance    = new $widget_class();
+	$widget_instance = new $widget_class();
 
 	// Widget settings
-	$settings_key       = 'widget-' . $widget_instance->id_base;
-	$widget_settings    = array();
+	$settings_key    = 'widget-' . $widget_instance->id_base;
+	$widget_settings = array();
 
 	if ( isset( $settings->$settings_key ) ) {
 		$widget_settings = (array) $settings->$settings_key;
@@ -40,6 +40,7 @@ if ( isset( $widget_class ) && class_exists( $widget_class ) ) {
 	// Widget form
 	ob_start();
 	echo '<div class="fl-builder-widget-missing">';
+	/* translators: %s: widget slug */
 	printf( _x( '%s no longer exists.', '%s stands for widget slug.', 'fl-builder' ), $widget_class );
 	echo '</div>';
 	$widget_form = ob_get_clean();

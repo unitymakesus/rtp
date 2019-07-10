@@ -1,41 +1,65 @@
-.fl-node-<?php echo $id; ?> .fl-subscribe-form .fl-form-field input,
-.fl-node-<?php echo $id; ?> .fl-subscribe-form .fl-form-field input[type=text] {
-	font-size: <?php echo $settings->btn_font_size; ?>px;
-	line-height: <?php echo $settings->btn_font_size + 2; ?>px;
-	padding: <?php echo $settings->btn_padding . 'px ' . ( $settings->btn_padding * 2 ) . 'px'; ?>;
-	border-radius: <?php echo $settings->btn_border_radius; ?>px;
-	-moz-border-radius: <?php echo $settings->btn_border_radius; ?>px;
-	-webkit-border-radius: <?php echo $settings->btn_border_radius; ?>px;
-}
-.fl-node-<?php echo $id; ?> .fl-subscribe-form-inline .fl-form-field input,
-.fl-node-<?php echo $id; ?> .fl-subscribe-form-inline .fl-form-field input[type=text] {
-	height: <?php echo ( $settings->btn_padding * 2 ) + ( $settings->btn_font_size + 4 ); ?>px;
-}
-.fl-node-<?php echo $id; ?> .fl-subscribe-form-inline a.fl-button {
-	height: <?php echo ( $settings->btn_padding * 2 ) + ( $settings->btn_font_size + 4 ); ?>px;
-	line-height: <?php echo $settings->btn_font_size; ?>px !important;
-}
-
 <?php
 
-FLBuilder::render_module_css('button', $id, array(
-	'align'             => '',
-	'bg_color'          => $settings->btn_bg_color,
-	'bg_hover_color'    => $settings->btn_bg_hover_color,
-	'bg_opacity'        => $settings->btn_bg_opacity,
-	'bg_hover_opacity'  => $settings->btn_bg_hover_opacity,
-	'button_transition' => $settings->btn_button_transition,
-	'border_radius'     => $settings->btn_border_radius,
-	'border_size'       => $settings->btn_border_size,
-	'font_size'         => $settings->btn_font_size,
-	'icon'              => $settings->btn_icon,
-	'icon_position'     => $settings->btn_icon_position,
-	'link'              => '#',
-	'link_target'       => '_self',
-	'padding'           => $settings->btn_padding,
-	'style'             => $settings->btn_style,
-	'text'              => $settings->btn_text,
-	'text_color'        => $settings->btn_text_color,
-	'text_hover_color'  => $settings->btn_text_hover_color,
-	'width'             => 'full',
-));
+$input_selector = ".fl-node-$id .fl-subscribe-form .fl-form-field input, .fl-node-$id .fl-subscribe-form .fl-form-field input[type=text]";
+
+// Default input styles
+FLBuilderCSS::rule( array(
+	'selector' => $input_selector,
+	'props'    => array(
+		'border-radius' => '4px',
+		'font-size'     => '16px',
+		'line-height'   => '16px',
+		'padding'       => '12px 24px',
+	),
+) );
+
+// Input typography
+FLBuilderCSS::typography_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'btn_typography',
+	'selector'     => $input_selector,
+) );
+
+// Input padding
+FLBuilderCSS::dimension_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'btn_padding',
+	'selector'     => $input_selector,
+	'unit'         => 'px',
+	'props'        => array(
+		'padding-top'    => 'btn_padding_top',
+		'padding-right'  => 'btn_padding_right',
+		'padding-bottom' => 'btn_padding_bottom',
+		'padding-left'   => 'btn_padding_left',
+	),
+) );
+
+// We only need border radius for inputs.
+if ( is_array( $settings->btn_border ) ) {
+	$settings->input_border           = $settings->btn_border;
+	$settings->input_border['style']  = '';
+	$settings->input_border['color']  = '';
+	$settings->input_border['shadow'] = '';
+}
+if ( is_array( $settings->btn_border_medium ) ) {
+	$settings->input_border_medium           = $settings->btn_border_medium;
+	$settings->input_border_medium['style']  = '';
+	$settings->input_border_medium['color']  = '';
+	$settings->input_border_medium['shadow'] = '';
+}
+if ( is_array( $settings->btn_border_responsive ) ) {
+	$settings->input_border_responsive           = $settings->btn_border_responsive;
+	$settings->input_border_responsive['style']  = '';
+	$settings->input_border_responsive['color']  = '';
+	$settings->input_border_responsive['shadow'] = '';
+}
+
+// Input border radius
+FLBuilderCSS::border_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'input_border',
+	'selector'     => $input_selector,
+) );
+
+// Button CSS
+FLBuilder::render_module_css( 'button', $id, $module->get_button_settings() );

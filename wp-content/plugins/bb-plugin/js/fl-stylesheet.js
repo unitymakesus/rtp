@@ -68,7 +68,7 @@
 			// Find the rule to update.
 			for( ; i < rules.length; i++) {
 
-				if(rules[i].selectorText.toLowerCase() == selector.toLowerCase()) {
+				if(rules[i].selectorText.toLowerCase().replace( /\s/g, '' ) == selector.toLowerCase().replace( /\s/g, '' )) {
 					rule = rules[i];
 				}
 			}
@@ -79,17 +79,43 @@
 				if(typeof property == 'object') {
 
 					for(i in property) {
-						rule.style[this._toCamelCase(i)] = property[i];
+						this.setProperty( rule, i, property[ i ] );
 					}
 				}
 				else {
-					rule.style[this._toCamelCase(property)] = value;
+					this.setProperty( rule, property, value );
 				}
 			}
 
 			// No rule found. Add a new one.
 			else {
 				this.addRule(selector, property, value);
+			}
+		},
+
+		/**
+		 * Sets a property for a rule.
+		 *
+		 * @since 2.2
+		 * @method setProperty
+		 * @param {Object} rule
+		 * @param {String} selector
+		 * @param {String} value
+		 */
+		setProperty: function( rule, property, value )
+		{
+			var important = '';
+
+			if ( rule.style.setProperty ) {
+
+				if ( value.indexOf( '!important' ) > -1 ) {
+					important = 'important';
+					value = value.replace( '!important', '' ).trim();
+				}
+
+				rule.style.setProperty( property, value, important );
+			} else {
+				rule.style[ this._toCamelCase( property ) ] = value;
 			}
 		},
 

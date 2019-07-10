@@ -408,27 +408,33 @@ FLBuilder::register_module(
 							'help'    => __( 'Preset 1 => Icon : White, Background : Theme </br>Preset 2 => Icon : Theme, Background : #f3f3f3', 'uabb' ),
 						),
 						'icon_color'              => array(
-							'type'       => 'color',
-							'label'      => __( 'Icon Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
+							'type'        => 'color',
+							'label'       => __( 'Icon Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'icon_hover_color'        => array(
-							'type'       => 'color',
-							'label'      => __( 'Icon Hover Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Icon Hover Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
 								'type' => 'none',
 							),
 						),
 
 						/* Background Color Dependent on Icon Style **/
 						'icon_bg_color'           => array(
-							'type'       => 'color',
-							'label'      => __( 'Background Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
+							'type'        => 'color',
+							'label'       => __( 'Background Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'icon_bg_color_opc'       => array(
 							'type'        => 'text',
@@ -439,11 +445,13 @@ FLBuilder::register_module(
 							'size'        => '5',
 						),
 						'icon_bg_hover_color'     => array(
-							'type'       => 'color',
-							'label'      => __( 'Background Hover Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Background Hover Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
 								'type' => 'none',
 							),
 						),
@@ -458,16 +466,20 @@ FLBuilder::register_module(
 
 						/* Border Color Dependent on Border Style for ICon */
 						'icon_border_color'       => array(
-							'type'       => 'color',
-							'label'      => __( 'Border Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
+							'type'        => 'color',
+							'label'       => __( 'Border Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'icon_border_hover_color' => array(
-							'type'       => 'color',
-							'label'      => __( 'Border Hover Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 
 						/* Gradient Color Option */
@@ -486,11 +498,13 @@ FLBuilder::register_module(
 					'title'  => __( 'Colors', 'uabb' ), // Section Title.
 					'fields' => array( // Section Fields.
 						'img_bg_color'           => array(
-							'type'       => 'color',
-							'label'      => __( 'Background Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Background Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
 								'type'     => 'css',
 								'selector' => '.uabb-image .uabb-image-content',
 								'property' => 'background',
@@ -505,11 +519,13 @@ FLBuilder::register_module(
 							'size'        => '5',
 						),
 						'img_bg_hover_color'     => array(
-							'type'       => 'color',
-							'label'      => __( 'Background Hover Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Background Hover Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
 								'type' => 'none',
 							),
 						),
@@ -524,21 +540,25 @@ FLBuilder::register_module(
 
 						/* Border Color Dependent on Border Style for Image */
 						'img_border_color'       => array(
-							'type'       => 'color',
-							'label'      => __( 'Border Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
 								'type'     => 'css',
 								'selector' => '.uabb-image .uabb-image-content',
 								'property' => 'border-color',
 							),
 						),
 						'img_border_hover_color' => array(
-							'type'       => 'color',
-							'label'      => __( 'Border Hover Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'show_reset'  => true,
 						),
 					),
 				),
@@ -587,11 +607,13 @@ FLBuilder::register_module(
 							),
 						),
 						'text_color'         => array(
-							'type'       => 'color',
-							'label'      => __( 'Text Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Text Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
 								'type'     => 'css',
 								'selector' => '.uabb-divider-text',
 								'property' => 'color',
@@ -673,11 +695,13 @@ FLBuilder::register_module(
 							),
 						),
 						'color'     => array(
-							'type'       => 'color',
-							'label'      => __( 'Color', 'uabb' ),
-							'default'    => '',
-							'show_reset' => true,
-							'preview'    => array(
+							'type'        => 'color',
+							'label'       => __( 'Color', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
 								'type'     => 'css',
 								'selector' => '.uabb-separator, .uabb-separator-line > span',
 								'property' => 'border-top-color',

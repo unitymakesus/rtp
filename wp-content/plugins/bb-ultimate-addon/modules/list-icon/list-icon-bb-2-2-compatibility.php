@@ -376,6 +376,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Icon Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-icon-wrap .uabb-icon i:before',
@@ -389,6 +390,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Icon Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -401,6 +403,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'icon_bg_hover_color'     => array(
 							'type'        => 'color',
@@ -408,6 +411,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -419,6 +423,7 @@ FLBuilder::register_module(
 							'connections' => array( 'color' ),
 							'label'       => __( 'Border Color', 'uabb' ),
 							'default'     => '',
+							'show_alpha'  => true,
 							'show_reset'  => true,
 						),
 						'icon_border_hover_color' => array(
@@ -427,6 +432,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Border Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 
 						/* Gradient Color Option */
@@ -453,6 +459,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'img_bg_hover_color'     => array(
 							'type'        => 'color',
@@ -460,6 +467,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type' => 'none',
 							),
@@ -471,6 +479,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Border Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 						'img_border_hover_color' => array(
 							'type'        => 'color',
@@ -478,6 +487,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Border Hover Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 						),
 					),
 				),
@@ -521,6 +531,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-list-icon .uabb-list-icon-text .uabb-list-icon-text-heading',

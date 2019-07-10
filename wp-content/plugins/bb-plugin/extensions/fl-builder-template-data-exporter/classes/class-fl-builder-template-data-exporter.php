@@ -14,7 +14,7 @@ final class FLBuilderTemplateDataExporter {
 	 * @return void
 	 */
 	static public function init() {
-		add_action( 'plugins_loaded',    __CLASS__ . '::init_hooks' );
+		add_action( 'plugins_loaded', __CLASS__ . '::init_hooks' );
 		add_action( 'after_setup_theme', __CLASS__ . '::register_user_access_setting' );
 	}
 
@@ -33,7 +33,7 @@ final class FLBuilderTemplateDataExporter {
 
 		if ( isset( $_REQUEST['page'] ) && 'fl-builder-template-data-exporter' == $_REQUEST['page'] ) {
 			add_action( 'admin_enqueue_scripts', __CLASS__ . '::styles_scripts' );
-			add_action( 'init',                  __CLASS__ . '::export' );
+			add_action( 'init', __CLASS__ . '::export' );
 		}
 	}
 
@@ -49,7 +49,7 @@ final class FLBuilderTemplateDataExporter {
 			'group'       => __( 'Admin', 'fl-builder' ),
 			'label'       => __( 'Template Data Exporter', 'fl-builder' ),
 			'description' => __( 'The selected roles will be able to access the template data exporter under Tools > Template Exporter.', 'fl-builder' ),
-			'order'		  => '120',
+			'order'       => '120',
 		) );
 	}
 
@@ -170,22 +170,22 @@ final class FLBuilderTemplateDataExporter {
 
 		if ( 'theme' == $type ) {
 			$args = array(
-				'post_type'       => 'fl-theme-layout',
-				'orderby'         => 'title',
-				'order'           => 'ASC',
-				'posts_per_page'  => '-1',
+				'post_type'      => 'fl-theme-layout',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'posts_per_page' => '-1',
 			);
 		} else {
 			$args = array(
-				'post_type'       => 'fl-builder-template',
-				'orderby'         => 'title',
-				'order'           => 'ASC',
-				'posts_per_page'  => '-1',
-				'tax_query'       => array(
+				'post_type'      => 'fl-builder-template',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'posts_per_page' => '-1',
+				'tax_query'      => array(
 					array(
-						'taxonomy'  => 'fl-builder-template-type',
-						'field'     => 'slug',
-						'terms'     => $type,
+						'taxonomy' => 'fl-builder-template-type',
+						'field'    => 'slug',
+						'terms'    => $type,
 					),
 				),
 			);
@@ -211,11 +211,11 @@ final class FLBuilderTemplateDataExporter {
 	 */
 	static private function get_theme_layout_export_data( $templates ) {
 		$posts = get_posts( array(
-			'post_type'       => 'fl-theme-layout',
-			'orderby'         => 'menu_order title',
-			'order'           => 'ASC',
-			'posts_per_page'  => '-1',
-			'post__in'        => array_map( 'sanitize_text_field', $_POST['fl-builder-export-theme'] ),
+			'post_type'      => 'fl-theme-layout',
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
+			'posts_per_page' => '-1',
+			'post__in'       => array_map( 'sanitize_text_field', $_POST['fl-builder-export-theme'] ),
 		) );
 
 		// Get all theme layouts.
@@ -255,11 +255,11 @@ final class FLBuilderTemplateDataExporter {
 		}
 
 		$posts = get_posts( array(
-			'post_type'       => 'fl-builder-template',
-			'orderby'         => 'menu_order title',
-			'order'           => 'ASC',
-			'posts_per_page'  => '-1',
-			'post__in'        => $post_ids,
+			'post_type'      => 'fl-builder-template',
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
+			'posts_per_page' => '-1',
+			'post__in'       => $post_ids,
 		) );
 
 		return self::get_export_data( $posts );
@@ -318,7 +318,10 @@ final class FLBuilderTemplateDataExporter {
 				$template->image      = apply_filters( 'fl_builder_exporter_template_thumb_src', $attachment_image_src[0], $post, $template );
 			}
 
-			// Add the template to the templates array.
+			/**
+			 * Add the template to the templates array.
+			 * @see fl_builder_exporter_template
+			 */
 			$templates[] = apply_filters( 'fl_builder_exporter_template', $template, $post );
 		}
 

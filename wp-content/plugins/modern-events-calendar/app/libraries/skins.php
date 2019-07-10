@@ -53,6 +53,11 @@ class MEC_skins extends MEC_base
      */
     public $sed_method = '0';
 
+    /**
+     * @var MEC_schedule
+     */
+    public $schedule;
+
     public $factory;
     public $main;
     public $db;
@@ -95,6 +100,7 @@ class MEC_skins extends MEC_base
     public $load_more_button;
     public $month_divider;
     public $toggle_month_divider;
+    public $image_popup;
 
     /**
      * Constructor method
@@ -119,6 +125,12 @@ class MEC_skins extends MEC_base
         
         // MEC request library
         $this->request = $this->getRequest();
+
+        // MEC schedule library
+        $this->schedule = $this->getSchedule();
+
+        // MEC Settings
+        $this->settings = $this->main->get_settings();
         
         // Found Events
         $this->found = 0;
@@ -146,7 +158,6 @@ class MEC_skins extends MEC_base
     {
         // MEC add filters
         $this->factory->filter('posts_join', array($this, 'join'), 10, 2);
-        $this->factory->filter('posts_where', array($this, 'where'), 10, 2);
         
         $skins = $this->main->get_skins();
         foreach($skins as $skin=>$skin_name)
@@ -245,7 +256,7 @@ class MEC_skins extends MEC_base
     {
         if(!$this->main->getPRO() and in_array($this->skin, array('agenda', 'yearly_view', 'timetable', 'masonry', 'map', 'available_spot')))
         {
-            return '<div class="info-msg">'.sprintf(__("%s is required to use this skin.", 'mec'), '<a href="'.$this->main->get_pro_link().'" target="_blank">'.__('Pro version of Modern Events Calendar', 'mec').'</a>').'</div>';
+            return '';
         }
 
         // Include needed assets for loading single event details page
@@ -316,6 +327,16 @@ class MEC_skins extends MEC_base
                 'terms'=>explode(',', trim($this->atts['organizer'], ', '))
             );
         }
+
+        // Add event speaker to filter
+        if(isset($this->atts['speaker']) and trim($this->atts['speaker'], ', ') != '')
+        {
+            $tax_query[] = array(
+                'taxonomy'=>'mec_speaker',
+                'field'=>'term_id',
+                'terms'=>explode(',', trim($this->atts['speaker'], ', '))
+            );
+        }
         
         return $tax_query;
     }
@@ -345,7 +366,12 @@ class MEC_skins extends MEC_base
         // Add event tags to filter
         if(isset($this->atts['tag']) and trim($this->atts['tag'], ', ') != '')
         {
-            $tag = $this->atts['tag'];
+            if(is_numeric($this->atts['tag']))
+            {
+                $term = get_term_by('id', $this->atts['tag'], 'post_tag');
+                if($term) $tag = $term->name;
+            }
+            else $tag = $this->atts['tag'];
         }
         
         return $tag;
@@ -401,100 +427,131 @@ class MEC_skins extends MEC_base
     {
         if(is_string($wp_query->query_vars['post_type']) and $wp_query->query_vars['post_type'] == $this->main->get_main_post_type() and $wp_query->get('mec-init', false))
         {
-            $join .= $this->db->_prefix(" LEFT JOIN `#__mec_events` AS mece ON #__posts.ID = mece.post_id ");
+            $join .= $this->db->_prefix(" LEFT JOIN `#__mec_events` AS mece ON #__posts.ID = mece.post_id LEFT JOIN `#__mec_dates` AS mecd ON #__posts.ID = mecd.post_id");
         }
 
         return $join;
     }
-    
+
     /**
-     * Adding MEC filter query to WP_Query
-     * @author Webnus <info@webnus.biz>
-     * @param string $where
-     * @param object $wp_query
-     * @return string
+     * @param string $start
+     * @param string $end
+     * @param boolean $exclude
+     * @return array
      */
-    public function where($where, $wp_query)
+    public function period($start, $end, $exclude = false)
     {
-        // Upcoming and Expired Events
-        if(is_string($wp_query->query_vars['post_type']) and $wp_query->query_vars['post_type'] == $this->main->get_main_post_type() and $wp_query->get('mec-init', false))
+        // Search till the end of End Date!
+        if(date('H:i:s', strtotime($end)) == '00:00:00') $end .= ' 23:59:59';
+
+        $seconds_start = strtotime($start);
+        $seconds_end = strtotime($end);
+
+        $order = "`tstart` ASC";
+        $where_OR = "(`tstart`>='".$seconds_start."' AND `tend`<='".$seconds_end."') OR (`tstart`<='".$seconds_end."' AND `tend`>='".$seconds_end."') OR (`tstart`<='".$seconds_start."' AND `tend`>='".$seconds_start."')";
+        // (Start: In, Finish: In) OR (Start: Before or In, Finish: After) OR (Start: Before, Finish: In or After)
+
+        if($this->show_only_expired_events)
         {
-            // Start and End date
-            $date_query = "`start`<='".$wp_query->get('mec-today')."' AND (`end`='0000-00-00' OR `end`>='".$wp_query->get('mec-today')."')";
-            
-            // No recuring events
-            if($this->multiple_days_method == 'first_day' or ($this->multiple_days_method == 'first_day_listgrid' and in_array($wp_query->get('mec-skin', ''), array('list', 'grid', 'slider', 'carousel')))) $rec_no = "`repeat`='0' AND `start`='".$wp_query->get('mec-today')."' AND (`end`='0000-00-00' OR `end`>='".$wp_query->get('mec-today')."')";
-            else $rec_no = "`repeat`='0' AND ".$date_query;
-            
-            // Normal Recuring events
-            $rec_normal = "`repeat`='1' AND DATEDIFF('".$wp_query->get('mec-today')."', start) % rinterval=0 AND ".$date_query;
-            
-            // Complex Recuring events
-            $rec_complex = "`repeat`='1' AND (`year`='".$wp_query->get('mec-year')."' OR `year`='*') AND
-                    (`month` LIKE '%,".$wp_query->get('mec-month').",%' OR `month`='*') AND
-                    (`day` LIKE '".(($this->multiple_days_method == 'all_days' or ($this->multiple_days_method == 'first_day_listgrid' and !in_array($wp_query->get('mec-skin', ''), array('list', 'grid', 'slider', 'carousel')))) ? '%' : '').",".$wp_query->get('mec-day').",%' OR `day`='*') AND
-                    (`week` LIKE '%,".$wp_query->get('mec-week').",%' OR `week`='*') AND
-                    (`weekday` LIKE '%,".$wp_query->get('mec-weekday').",%' OR `weekday`='*') AND ".$date_query;
-            
-            // Weekday Recuring events
-            $rec_weekdays = "`repeat`='1' AND `weekdays` LIKE '%,".$wp_query->get('mec-weekday').",%' AND ".$date_query;
-            
-            // Main Date of Days (In)
-            $rec_days_in_main_date = "`repeat`='1' AND `days`!='' AND ".$date_query;
-            
-            // Days (In)
-            $rec_days_in = "`days` LIKE '%".$wp_query->get('mec-today')."%'";
-            
-            // Days (Not In)
-            $rec_days_not_in = "`not_in_days` NOT LIKE '%".$wp_query->get('mec-today')."%'";
-            
-            // Hide past events
-            $time_query = '';
-            
-            // Show only ongoing events
-            if($wp_query->get('mec-show-ongoing-events', false))
-            {
-                $hour = current_time('G');
-                $minute = current_time('i');
+            $column = 'tstart';
 
-                $seconds = $this->main->time_to_seconds($hour, $minute);
-                
-                // Add time to the query
-                $time_query = "(`time_start`!='0' AND `time_start`<='".($seconds)."') AND (`time_end`!='0' AND `time_end`>='".($seconds)."')";
+            if($this->hide_time_method == 'plus1') $seconds_start -= 3600;
+            elseif($this->hide_time_method == 'plus2') $seconds_start -= 7200;
+            elseif($this->hide_time_method == 'end') $column = 'tend';
 
-                // Change date query to show ongoing multiple day events as well
-                $rec_no = "`repeat`='0' AND ".$date_query;
-            }
-            // To include a minimum date time for filtering events
-            elseif($wp_query->get('mec-seconds') and $wp_query->get('mec-today') == $wp_query->get('mec-seconds-date'))
-            {
-                $seconds = $wp_query->get('mec-seconds');
-                
-                // Add time to the query
-                if($this->hide_time_method == 'start') $time_query = "`time_start`!='0' AND `time_start`>='$seconds'";
-                elseif($this->hide_time_method == 'plus1') $time_query = "`time_start`!='0' AND `time_start`>='".($seconds-3600)."' AND `time_end`!='0' AND `time_end`>='".($seconds)."'";
-                elseif($this->hide_time_method == 'plus2') $time_query = "`time_start`!='0' AND `time_start`>='".($seconds-7200)."' AND `time_end`!='0' AND `time_end`>='".($seconds)."'";
-                else $time_query = "`time_end`!='0' AND `time_end`>='".($seconds)."'";
-            }
-            // To don't include past today events
-            elseif(!$wp_query->get('mec-past-events') and $wp_query->get('mec-today') == date('Y-m-d'))
-            {
-                $hour = current_time('G');
-                $minute = current_time('i');
-                
-                $seconds = $this->main->time_to_seconds($hour, $minute);
-                
-                // Add time to the query
-                if($this->hide_time_method == 'start') $time_query = "`time_start`!='0' AND `time_start`>='$seconds'";
-                elseif($this->hide_time_method == 'plus1') $time_query = "`time_start`!='0' AND `time_start`>='".($seconds-3600)."' AND `time_end`!='0' AND `time_end`>='".($seconds)."'";
-                elseif($this->hide_time_method == 'plus2') $time_query = "`time_start`!='0' AND `time_start`>='".($seconds-7200)."' AND `time_end`!='0' AND `time_end`>='".($seconds)."'";
-                else $time_query = "`time_end`!='0' AND `time_end`>='".($seconds)."'";
-            }
-            
-            $where .= $this->db->_prefix(" AND (($rec_no) OR ($rec_normal) OR ($rec_complex) OR ($rec_weekdays) OR ($rec_days_in) OR ($rec_days_in_main_date)) AND $rec_days_not_in".(trim($time_query) ? ' AND '.$time_query : ''));
+            $order = "`tstart` DESC";
+            $where_OR = "`".$column."`<'".$seconds_start."'";
+        }
+        elseif($this->show_ongoing_events)
+        {
+            $now = time();
+            $where_OR = "(`tstart`<='".$now."' AND `tend`>='".$now."')";
         }
 
-        return $where;
+        $where_AND = '1';
+
+        // Exclude Events
+        if(isset($this->atts['exclude']) and is_array($this->atts['exclude']) and count($this->atts['exclude'])) $where_AND .= " AND `post_id` NOT IN (".implode(',', $this->atts['exclude']).")";
+
+        // Include Events
+        if(isset($this->atts['include']) and is_array($this->atts['include']) and count($this->atts['include'])) $where_AND .= " AND `post_id` IN (".implode(',', $this->atts['include']).")";
+
+        $query = "SELECT * FROM `#__mec_dates` WHERE (".$where_OR.") AND (".$where_AND.") ORDER BY ".$order;
+        $mec_dates = $this->db->select($query, 'loadObjectList');
+
+        // Today and Now
+        $today = current_time('Y-m-d');
+        $now = time();
+
+        $dates = array();
+        foreach($mec_dates as $mec_date)
+        {
+            $s = strtotime($mec_date->dstart);
+            $e = strtotime($mec_date->dend);
+
+            // Hide Events Based on Start Time
+            if(!$this->show_only_expired_events and !$this->args['mec-past-events'] and $s <= strtotime($today))
+            {
+                if($this->hide_time_method == 'start' and $now >= $mec_date->tstart) continue;
+                elseif($this->hide_time_method == 'plus1' and $now >= $mec_date->tstart+3600) continue;
+                elseif($this->hide_time_method == 'plus2' and $now >= $mec_date->tstart+7200) continue;
+            }
+
+            // Hide Events Based on End Time
+            if(!$this->show_only_expired_events and !$this->args['mec-past-events'] and $e <= strtotime($today))
+            {
+                if($this->hide_time_method == 'end' and $now >= $mec_date->tend) continue;
+            }
+
+            if($this->multiple_days_method == 'first_day' or ($this->multiple_days_method == 'first_day_listgrid' and in_array($this->skin, array('list', 'grid', 'slider', 'carousel'))))
+            {
+                $d = date('Y-m-d', $s);
+
+                if(!isset($dates[$d])) $dates[$d] = array();
+                $dates[$d][] = $mec_date->post_id;
+            }
+            else
+            {
+                while($s <= $e)
+                {
+                    if((!$this->show_only_expired_events and $seconds_start <= $s and $s <= $seconds_end) or ($this->show_only_expired_events and $seconds_start >= $s and $s >= $seconds_end))
+                    {
+                        $d = date('Y-m-d', $s);
+                        if(!isset($dates[$d])) $dates[$d] = array();
+
+                        // Check for exclude events
+                        if($exclude)
+                        {
+                            $current_id = !isset($current_id) ? 0 : $current_id;
+                            $days = !isset($days) ? '' : $days;
+
+                            if(!isset($not_in_day))
+                            {
+                                $query = "SELECT `post_id`,`not_in_days` FROM `#__mec_events`";
+                                $not_in_day =  $this->db->select($query);
+                            }
+
+                            if(array_key_exists($mec_date->post_id, $not_in_day) and trim($not_in_day[$mec_date->post_id]->not_in_days) and $current_id != $mec_date->post_id)
+                            {
+                                $days =  $not_in_day[$mec_date->post_id]->not_in_days;
+                                $current_id = $mec_date->post_id;
+                            }
+
+                            if(strpos($days, $d) === false) $dates[$d][] = $mec_date->post_id; 
+                            else $dates[$d][] = NULL;
+                        }
+                        else
+                        {
+                            $dates[$d][] = $mec_date->post_id;
+                        }
+                    }
+
+                    $s += 86400;
+                }
+            }
+        }
+
+        return $dates;
     }
     
     /**
@@ -504,84 +561,95 @@ class MEC_skins extends MEC_base
      */
     public function search()
     {
+        if($this->show_only_expired_events)
+        {
+            $start = $this->start_date;
+            $end = date('Y-m-01', strtotime('-2 Year', strtotime($start)));
+        }
+        else
+        {
+            $start = $this->start_date;
+            $end = date('Y-m-t', strtotime('+2 Year', strtotime($start)));
+        }
+
+        // Date Events
+        $dates = $this->period($start, $end, true);
+
+        // Limit
+        $this->args['posts_per_page'] = 1000;
+
         $i = 0;
         $found = 0;
         $events = array();
 
-        while($i < $this->max_days_loop and $found < $this->limit)
+        foreach($dates as $date=>$IDs)
         {
-            if(isset($this->show_only_expired_events) and $this->show_only_expired_events) $today = date('Y-m-d', strtotime('-'.$i.' Days', strtotime($this->start_date)));
-            else $today = date('Y-m-d', strtotime('+'.$i.' Days', strtotime($this->start_date)));
+            // Include Available Events
+            $this->args['post__in'] = $IDs;
 
-            $this->setToday($today);
-            
             // Check Finish Date
-            if(isset($this->maximum_date) and strtotime($today) > strtotime($this->maximum_date)) break;
-            
+            if(isset($this->maximum_date) and strtotime($date) > strtotime($this->maximum_date)) break;
+
             // Extending the end date
-            $this->end_date = $today;
-            
-            // Limit
-            $this->args['posts_per_page'] = 1000;
-			
-			// Continue to load rest of events in the first date
+            $this->end_date = $date;
+
+            // Continue to load rest of events in the first date
             if($i === 0) $this->args['offset'] = $this->offset;
-			// Load all events in the rest of dates
-			else $this->args['offset'] = 0;
-			
+            // Load all events in the rest of dates
+            else 
+            {
+                $this->offset = 0;
+                $this->args['offset'] = 0;
+            }
+
             // The Query
             $query = new WP_Query($this->args);
-            
             if($query->have_posts())
             {
                 // The Loop
                 while($query->have_posts())
                 {
                     $query->the_post();
-                    
-                    if(!isset($events[$today])) $events[$today] = array();
-                    
+
+                    if(!isset($events[$date])) $events[$date] = array();
+
                     $rendered = $this->render->data(get_the_ID());
-                    
+
                     $data = new stdClass();
                     $data->ID = get_the_ID();
                     $data->data = $rendered;
-                    
+
                     $data->date = array
                     (
-                        'start'=>array('date'=>$today),
-                        'end'=>array('date'=>$this->main->get_end_date($today, $rendered))
+                        'start'=>array('date'=>$date),
+                        'end'=>array('date'=>$this->main->get_end_date($date, $rendered))
                     );
-                    
-                    $events[$today][] = $data;
+
+                    $events[$date][] = $data;
                     $found++;
-					
-					if($found >= $this->limit)
-					{
-						// Next Offset
-                        $this->next_offset = ($query->post_count-($query->current_post+1)) > 0 ? ($query->current_post+1)+$this->offset : 0;
-						
-						// Move to next day
-						if($this->next_offset === 0)
-                        {
-                            if(isset($this->show_only_expired_events) and $this->show_only_expired_events) $this->end_date = date('Y-m-d', strtotime('-1 Days', strtotime($today)));
-                            else $this->end_date = date('Y-m-d', strtotime('+1 Days', strtotime($today)));
-                        }
-						
-						break;
-					}
+
+                    if($found >= $this->limit)
+                    {
+                        // Next Offset
+                        $this->next_offset = ($query->post_count-($query->current_post+1)) >= 0 ? ($query->current_post+1)+$this->offset : 0;
+
+                        // Restore original Post Data
+                        wp_reset_postdata();
+
+                        break 2;
+                    }
                 }
             }
-            
+
             // Restore original Post Data
             wp_reset_postdata();
 
             $i++;
         }
-        
+
         // Set found events
         $this->found = $found;
-        
+
         return $events;
     }
     
@@ -649,19 +717,19 @@ class MEC_skins extends MEC_base
         
         $fields = $end_div = '';
         $first_row = 'not-started';
-
+        $display_form = array();
         foreach($this->sf_options as $field=>$options)
         {
             $type = isset($options['type']) ? $options['type'] : '';
-            
-            if(in_array($field, array('category', 'location', 'organizer', 'label')) and $first_row == 'not-started')
+            $display_form[] = $options['type'];
+            if(in_array($field, array('category', 'location', 'organizer', 'speaker', 'tag', 'label')) and $first_row == 'not-started')
             {
                 $first_row = 'started';
                 $fields .= '<div class="mec-dropdown-wrap">';
                 $end_div = '</div>';
             }
             
-            if(!in_array($field, array('category', 'location', 'organizer', 'label')) and $first_row == 'started')
+            if(!in_array($field, array('category', 'location', 'organizer', 'speaker', 'tag', 'label')) and $first_row == 'started')
             {
                 $first_row = 'finished';
                 $fields .= '</div>';
@@ -671,7 +739,7 @@ class MEC_skins extends MEC_base
         }
         
         $form = '';
-        if(trim($fields)) $form .= '<div id="mec_search_form_'.$this->id.'" class="mec-search-form mec-totalcal-box">'.$fields.'</div>';
+        if(trim($fields) && ( in_array('dropdown', $display_form ) || in_array('text_input', $display_form ) ) ) $form .= '<div id="mec_search_form_'.$this->id.'" class="mec-search-form mec-totalcal-box">'.$fields.'</div>';
         
         return $form;
     }
@@ -689,6 +757,9 @@ class MEC_skins extends MEC_base
         
         // Field is disabled
         if(!trim($type)) return '';
+
+        // Status of Speakers Feature
+        $speakers_status = (!isset($this->settings['speakers_status']) or (isset($this->settings['speakers_status']) and !$this->settings['speakers_status'])) ? false : true;
         
         $output = '';
         
@@ -770,12 +841,64 @@ class MEC_skins extends MEC_base
                 $output .= '</div>';
             }
         }
-        elseif($field == 'label')
+        elseif($field == 'speaker' and $speakers_status)
+        {
+            if($type == 'dropdown')
+            {
+                $output .= '<div class="mec-dropdown-search">
+                    <i class="mec-sl-microphone"></i>';
+                
+                $output .= wp_dropdown_categories(array
+                (
+                    'echo'=>false,
+                    'taxonomy'=>'mec_speaker',
+                    'name'=>'',
+                    'include'=>((isset($this->atts['speaker']) and trim($this->atts['speaker'])) ? $this->atts['speaker'] : ''),
+                    'id'=>'mec_sf_speaker_'.$this->id,
+                    'hierarchical'=>true,
+                    'show_option_none'=>$this->main->m('taxonomy_speaker', __('Speaker', 'mec')),
+                    'option_none_value'=>'',
+                    'selected'=>(isset($this->atts['speaker']) ? $this->atts['speaker'] : ''),
+                    'orderby'=>'name',
+                    'order'=>'ASC',
+                    'show_count'=>0,
+                ));
+                
+                $output .= '</div>';
+            }
+        }
+        elseif($field == 'tag')
         {
             if($type == 'dropdown')
             {
                 $output .= '<div class="mec-dropdown-search">
                     <i class="mec-sl-tag"></i>';
+                
+                $output .= wp_dropdown_categories(array
+                (
+                    'echo'=>false,
+                    'taxonomy'=>'post_tag',
+                    'name'=>'',
+                    'include'=>((isset($this->atts['tag']) and trim($this->atts['tag'])) ? $this->atts['tag'] : ''),
+                    'id'=>'mec_sf_tag_'.$this->id,
+                    'hierarchical'=>true,
+                    'show_option_none'=>$this->main->m('taxonomy_tag', __('Tag', 'mec')),
+                    'option_none_value'=>'',
+                    'selected'=>(isset($this->atts['tag']) ? $this->atts['tag'] : ''),
+                    'orderby'=>'name',
+                    'order'=>'ASC',
+                    'show_count'=>0,
+                ));
+                
+                $output .= '</div>';
+            }
+        }
+        elseif($field == 'label')
+        {
+            if($type == 'dropdown')
+            {
+                $output .= '<div class="mec-dropdown-search">
+                    <i class="mec-sl-pin"></i>';
                 
                 $output .= wp_dropdown_categories(array
                 (
@@ -870,6 +993,12 @@ class MEC_skins extends MEC_base
         
         // Apply Organizer Query
         if(isset($sf['organizer']) and trim($sf['organizer'])) $atts['organizer'] = $sf['organizer'];
+
+        // Apply speaker Query
+        if(isset($sf['speaker']) and trim($sf['speaker'])) $atts['speaker'] = $sf['speaker'];
+
+        // Apply tag Query
+        if(isset($sf['tag']) and trim($sf['tag'])) $atts['tag'] = $sf['tag'];
         
         // Apply Label Query
         if(isset($sf['label']) and trim($sf['label'])) $atts['label'] = $sf['label'];

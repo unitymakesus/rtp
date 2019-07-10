@@ -70,10 +70,6 @@ class UABBCtaModule extends FLBuilderModule {
 
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
 
-			// For Title Typography.
-			if ( isset( $settings->alignment ) ) {
-				$settings->alignment = $settings->alignment;
-			}
 			if ( ! isset( $settings->title_typo ) || ! is_array( $settings->title_typo ) ) {
 
 				$settings->title_typo            = array();
@@ -85,6 +81,7 @@ class UABBCtaModule extends FLBuilderModule {
 				if ( isset( $settings->title_font_family['family'] ) ) {
 
 					$settings->title_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
@@ -93,6 +90,7 @@ class UABBCtaModule extends FLBuilderModule {
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->title_font_size_unit ) ) {
@@ -100,18 +98,21 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit );
 			}
 			if ( isset( $settings->title_font_size_unit_medium ) ) {
 				$settings->title_typo_medium['font_size'] = array(
 					'length' => $settings->title_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_medium );
 			}
 			if ( isset( $settings->title_font_size_unit_responsive ) ) {
 				$settings->title_typo_responsive['font_size'] = array(
 					'length' => $settings->title_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_responsive );
 			}
 			if ( isset( $settings->title_line_height_unit ) ) {
 
@@ -119,27 +120,32 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->title_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit );
 			}
 			if ( isset( $settings->title_line_height_unit_medium ) ) {
 				$settings->title_typo_medium['line_height'] = array(
 					'length' => $settings->title_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_medium );
 			}
 			if ( isset( $settings->title_line_height_unit_responsive ) ) {
 				$settings->title_typo_responsive['line_height'] = array(
 					'length' => $settings->title_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_responsive );
 			}
 			if ( isset( $settings->title_transform ) ) {
 				$settings->title_typo['text_transform'] = $settings->title_transform;
+				unset( $settings->title_transform );
 			}
 			if ( isset( $settings->title_letter_spacing ) ) {
 				$settings->title_typo['letter_spacing'] = array(
 					'length' => $settings->title_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_letter_spacing );
 			}
 			// For Subheading Font Typography.
 			if ( ! isset( $settings->subhead_typo ) || ! is_array( $settings->subhead_typo ) ) {
@@ -153,6 +159,7 @@ class UABBCtaModule extends FLBuilderModule {
 				if ( isset( $settings->subhead_font_family['family'] ) ) {
 
 					$settings->subhead_typo['font_family'] = $settings->subhead_font_family['family'];
+					unset( $settings->subhead_font_family['family'] );
 				}
 				if ( isset( $settings->subhead_font_family['weight'] ) ) {
 
@@ -161,6 +168,7 @@ class UABBCtaModule extends FLBuilderModule {
 					} else {
 						$settings->subhead_typo['font_weight'] = $settings->subhead_font_family['weight'];
 					}
+					unset( $settings->subhead_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->subhead_font_size_unit ) ) {
@@ -169,12 +177,14 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->subhead_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->subhead_font_size_unit );
 			}
 			if ( isset( $settings->subhead_font_size_unit_medium ) ) {
 				$settings->subhead_typo_medium['font_size'] = array(
 					'length' => $settings->subhead_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->subhead_font_size_unit_medium );
 			}
 			if ( isset( $settings->subhead_font_size_unit_responsive ) ) {
 
@@ -182,6 +192,7 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->subhead_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->subhead_font_size_unit_responsive );
 			}
 			if ( isset( $settings->subhead_line_height_unit ) ) {
 
@@ -189,23 +200,26 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->subhead_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->subhead_line_height_unit );
 			}
 			if ( isset( $settings->subhead_line_height_unit_medium ) ) {
 				$settings->subhead_typo_medium['line_height'] = array(
 					'length' => $settings->subhead_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->subhead_line_height_unit_medium );
 			}
 			if ( isset( $settings->subhead_line_height_unit_responsive ) ) {
 				$settings->subhead_typo_responsive['line_height'] = array(
 					'length' => $settings->subhead_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->subhead_line_height_unit_responsive );
 			}
 			if ( isset( $settings->subhead_transform ) ) {
 
 				$settings->subhead_typo['text_transform'] = $settings->subhead_transform;
-
+				unset( $settings->subhead_transform );
 			}
 			if ( isset( $settings->subhead_letter_spacing ) ) {
 
@@ -213,6 +227,7 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->subhead_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->subhead_letter_spacing );
 			}
 
 			// For Button Font Typography.
@@ -236,6 +251,7 @@ class UABBCtaModule extends FLBuilderModule {
 						$settings->btn_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
 				}
+				unset( $settings->btn_font_family );
 			}
 			if ( isset( $settings->btn_font_size_unit ) ) {
 
@@ -243,18 +259,21 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit );
 			}
 			if ( isset( $settings->btn_font_size_unit_medium ) ) {
 				$settings->btn_typo_medium['font_size'] = array(
 					'length' => $settings->btn_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_medium );
 			}
 			if ( isset( $settings->btn_font_size_unit_responsive ) ) {
 				$settings->btn_typo_responsive['font_size'] = array(
 					'length' => $settings->btn_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_responsive );
 			}
 			if ( isset( $settings->btn_line_height_unit ) ) {
 
@@ -262,64 +281,42 @@ class UABBCtaModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit );
 			}
 			if ( isset( $settings->btn_line_height_unit_medium ) ) {
 				$settings->btn_typo_medium['line_height'] = array(
 					'length' => $settings->btn_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_medium );
 			}
 			if ( isset( $settings->btn_line_height_unit_responsive ) ) {
 				$settings->btn_typo_responsive['line_height'] = array(
 					'length' => $settings->btn_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_responsive );
 			}
 			if ( isset( $settings->btn_transform ) ) {
 				$settings->btn_typo['text_transform'] = $settings->btn_transform;
+				unset( $settings->btn_transform );
 			}
 			if ( isset( $settings->btn_letter_spacing ) ) {
 				$settings->btn_typo['letter_spacing'] = array(
 					'length' => $settings->btn_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-			if ( isset( $settings->btn_link ) ) {
-				$settings->btn_link_target = $settings->btn_link_target;
-				( '1' == $settings->btn_link_nofollow ) ? $settings->btn_link_nofollow = 'yes' : '';
-			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size_unit );
-				unset( $settings->title_font_size_unit_medium );
-				unset( $settings->title_font_size_unit_responsive );
-				unset( $settings->title_line_height_unit );
-				unset( $settings->title_line_height_unit_medium );
-				unset( $settings->title_line_height_unit_responsive );
-				unset( $settings->title_transform );
-				unset( $settings->title_letter_spacing );
-			}
-			if ( isset( $settings->subhead_font_family ) ) {
-				unset( $settings->subhead_font_family );
-				unset( $settings->subhead_font_size_unit );
-				unset( $settings->subhead_font_size_unit_medium );
-				unset( $settings->subhead_font_size_unit_responsive );
-				unset( $settings->subhead_line_height_unit );
-				unset( $settings->subhead_line_height_unit_medium );
-				unset( $settings->subhead_line_height_unit_responsive );
-				unset( $settings->subhead_transform );
-				unset( $settings->subhead_letter_spacing );
-			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size_unit );
-				unset( $settings->btn_font_size_unit_medium );
-				unset( $settings->btn_font_size_unit_responsive );
-				unset( $settings->btn_line_height_unit );
-				unset( $settings->btn_line_height_unit_medium );
-				unset( $settings->btn_line_height_unit_responsive );
-				unset( $settings->btn_transform );
 				unset( $settings->btn_letter_spacing );
+			}
+			if ( isset( $settings->btn_link_nofollow ) ) {
+				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+					$settings->btn_link_nofollow = 'yes';
+				}
+			}
+			if ( isset( $settings->btn_link_nofollow ) ) {
+				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+					$settings->btn_link_nofollow = 'yes';
+				}
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 
@@ -329,10 +326,6 @@ class UABBCtaModule extends FLBuilderModule {
 
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
 
-			// For Title Typography.
-			if ( isset( $settings->alignment ) ) {
-				$settings->alignment = $settings->alignment;
-			}
 			if ( ! isset( $settings->title_typo ) || ! is_array( $settings->title_typo ) ) {
 
 				$settings->title_typo            = array();
@@ -344,6 +337,7 @@ class UABBCtaModule extends FLBuilderModule {
 				if ( isset( $settings->title_font_family['family'] ) ) {
 
 					$settings->title_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
@@ -352,6 +346,7 @@ class UABBCtaModule extends FLBuilderModule {
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->title_font_size['small'] ) ) {
@@ -410,6 +405,7 @@ class UABBCtaModule extends FLBuilderModule {
 				if ( isset( $settings->subhead_font_family['family'] ) ) {
 
 					$settings->subhead_typo['font_family'] = $settings->subhead_font_family['family'];
+					unset( $settings->subhead_font_family['family'] );
 				}
 				if ( isset( $settings->subhead_font_family['weight'] ) ) {
 
@@ -418,6 +414,7 @@ class UABBCtaModule extends FLBuilderModule {
 					} else {
 						$settings->subhead_typo['font_weight'] = $settings->subhead_font_family['weight'];
 					}
+					unset( $settings->subhead_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->subhead_font_size['small'] ) ) {
@@ -485,6 +482,7 @@ class UABBCtaModule extends FLBuilderModule {
 						$settings->btn_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
 				}
+				unset( $settings->btn_font_family );
 			}
 			if ( isset( $settings->btn_font_size['small'] ) ) {
 				$settings->btn_typo_responsive['font_size'] = array(
@@ -528,24 +526,55 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_link ) ) {
-				$settings->btn_link_target = $settings->btn_link_target;
-				( '1' == $settings->btn_link_nofollow ) ? $settings->btn_link_nofollow = 'yes' : '';
+			if ( isset( $settings->btn_link_nofollow ) ) {
+				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+					$settings->btn_link_nofollow = 'yes';
+				}
 			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size );
-				unset( $settings->title_line_height );
+			// Unset the old values.
+			if ( isset( $settings->subhead_font_size['desktop'] ) ) {
+				unset( $settings->subhead_font_size['desktop'] );
 			}
-			if ( isset( $settings->subhead_font_family ) ) {
-				unset( $settings->subhead_font_family );
-				unset( $settings->subhead_font_size );
-				unset( $settings->subhead_line_height );
+			if ( isset( $settings->subhead_font_size['medium'] ) ) {
+				unset( $settings->subhead_font_size['medium'] );
 			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
+			if ( isset( $settings->subhead_font_size['small'] ) ) {
+				unset( $settings->subhead_font_size['small'] );
+			}
+			if ( isset( $settings->subhead_line_height['desktop'] ) ) {
+				unset( $settings->subhead_line_height['desktop'] );
+			}
+			if ( isset( $settings->subhead_line_height['medium'] ) ) {
+				unset( $settings->subhead_line_height['medium'] );
+			}
+			if ( isset( $settings->subhead_line_height['small'] ) ) {
+				unset( $settings->subhead_line_height['small'] );
+			}
+			// Unset the old values.
+			if ( isset( $settings->btn_font_size ) ) {
 				unset( $settings->btn_font_size );
+			}
+			if ( isset( $settings->btn_line_height ) ) {
 				unset( $settings->btn_line_height );
+			}
+			// Unset the old values.
+			if ( isset( $settings->title_font_size['desktop'] ) ) {
+				unset( $settings->title_font_size['desktop'] );
+			}
+			if ( isset( $settings->title_font_size['medium'] ) ) {
+				unset( $settings->title_font_size['medium'] );
+			}
+			if ( isset( $settings->title_font_size['small'] ) ) {
+				unset( $settings->title_font_size['small'] );
+			}
+			if ( isset( $settings->title_line_height['desktop'] ) ) {
+				unset( $settings->title_line_height['desktop'] );
+			}
+			if ( isset( $settings->title_line_height['medium'] ) ) {
+				unset( $settings->title_line_height['medium'] );
+			}
+			if ( isset( $settings->title_line_height['small'] ) ) {
+				unset( $settings->title_line_height['small'] );
 			}
 		}
 

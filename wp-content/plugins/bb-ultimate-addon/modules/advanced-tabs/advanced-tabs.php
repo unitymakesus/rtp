@@ -61,6 +61,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				if ( isset( $settings->title_font_family['family'] ) ) {
 
 					$settings->title_font_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
@@ -69,6 +70,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->title_font_size_unit ) ) {
@@ -77,12 +79,14 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit );
 			}
 			if ( isset( $settings->title_font_size_unit_medium ) ) {
 				$settings->title_font_typo_medium['font_size'] = array(
 					'length' => $settings->title_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_medium );
 			}
 			if ( isset( $settings->title_font_size_unit_responsive ) ) {
 
@@ -90,6 +94,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->title_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_font_size_unit_responsive );
 			}
 			if ( isset( $settings->title_line_height_unit ) ) {
 
@@ -97,22 +102,26 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->title_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit );
 			}
 			if ( isset( $settings->title_line_height_unit_medium ) ) {
 				$settings->title_font_typo_medium['line_height'] = array(
 					'length' => $settings->title_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_medium );
 			}
 			if ( isset( $settings->title_line_height_unit_responsive ) ) {
 				$settings->title_font_typo_responsive['line_height'] = array(
 					'length' => $settings->title_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->title_line_height_unit_responsive );
 			}
 			if ( isset( $settings->title_transform ) ) {
 
 				$settings->title_font_typo['text_transform'] = $settings->title_transform;
+				unset( $settings->title_transform );
 
 			}
 			if ( isset( $settings->title_letter_spacing ) ) {
@@ -121,6 +130,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->title_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->title_letter_spacing );
 			}
 			if ( ! isset( $settings->content_font_typo ) || ! is_array( $settings->content_font_typo ) ) {
 
@@ -133,6 +143,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				if ( isset( $settings->content_font_family['family'] ) ) {
 
 					$settings->content_font_typo['font_family'] = $settings->content_font_family['family'];
+					unset( $settings->content_font_family['family'] );
 				}
 				if ( isset( $settings->content_font_family['weight'] ) ) {
 
@@ -141,6 +152,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
 					}
+					unset( $settings->content_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->content_font_size_unit ) ) {
@@ -149,12 +161,14 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->content_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_unit );
 			}
 			if ( isset( $settings->content_font_size_unit_medium ) ) {
 				$settings->content_font_typo_medium['font_size'] = array(
 					'length' => $settings->content_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_unit_medium );
 			}
 			if ( isset( $settings->content_font_size_unit_responsive ) ) {
 
@@ -162,6 +176,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->content_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_unit_responsive );
 			}
 			if ( isset( $settings->content_line_height_unit ) ) {
 
@@ -169,22 +184,26 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->content_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_unit );
 			}
 			if ( isset( $settings->content_line_height_unit_medium ) ) {
 				$settings->content_font_typo_medium['line_height'] = array(
 					'length' => $settings->content_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_unit_medium );
 			}
 			if ( isset( $settings->content_line_height_unit_responsive ) ) {
 				$settings->content_font_typo_responsive['line_height'] = array(
 					'length' => $settings->content_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_unit_responsive );
 			}
 			if ( isset( $settings->content_transform ) ) {
 
 				$settings->content_font_typo['text_transform'] = $settings->content_transform;
+				unset( $settings->content_transform );
 
 			}
 			if ( isset( $settings->content_letter_spacing ) ) {
@@ -193,52 +212,38 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'length' => $settings->content_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_letter_spacing );
 			}
 			if ( isset( $settings->content_border_color ) ) {
-				$settings->content_border_param           = array();
-				$settings->content_border_param['style']  = $settings->content_border_style;
-				$settings->content_border_param['color']  = $settings->content_border_color;
-				$settings->content_border_param['width']  = array(
-					'top'    => $settings->content_border_size,
-					'right'  => $settings->content_border_size,
-					'bottom' => $settings->content_border_size,
-					'left'   => $settings->content_border_size,
-				);
-				$settings->content_border_param['radius'] = array(
-					'top_left'     => $settings->content_border_radius,
-					'top_right'    => $settings->content_border_radius,
-					'bottom_left'  => $settings->content_border_radius,
-					'bottom_right' => $settings->content_border_radius,
-				);
+				$settings->content_border_param = array();
+				if ( isset( $settings->content_border_style ) ) {
+					$settings->content_border_param['style'] = $settings->content_border_style;
+					unset( $settings->content_border_style );
+				}
+				$settings->content_border_param['color'] = $settings->content_border_color;
+				if ( isset( $settings->content_border_size ) ) {
+					$settings->content_border_param['width'] = array(
+						'top'    => $settings->content_border_size,
+						'right'  => $settings->content_border_size,
+						'bottom' => $settings->content_border_size,
+						'left'   => $settings->content_border_size,
+					);
+					unset( $settings->content_border_size );
+				}
+				if ( isset( $settings->content_border_radius ) ) {
+					$settings->content_border_param['radius'] = array(
+						'top_left'     => $settings->content_border_radius,
+						'top_right'    => $settings->content_border_radius,
+						'bottom_left'  => $settings->content_border_radius,
+						'bottom_right' => $settings->content_border_radius,
+					);
+					unset( $settings->content_border_radius );
+				}
 				unset( $settings->content_border_color );
 			}
 			if ( isset( $settings->tab_style_alignment ) ) {
 				$settings->tab_style_align = $settings->tab_style_alignment;
-			}
-			if ( isset( $settings->content_alignment ) ) {
-				$settings->content_alignment = $settings->content_alignment;
-			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size_unit );
-				unset( $settings->title_font_size_unit_medium );
-				unset( $settings->title_font_size_unit_responsive );
-				unset( $settings->title_line_height_unit );
-				unset( $settings->title_line_height_unit_medium );
-				unset( $settings->title_line_height_unit_responsive );
-				unset( $settings->title_transform );
-				unset( $settings->title_letter_spacing );
-			}
-			if ( isset( $settings->content_font_family ) ) {
-				unset( $settings->content_font_family );
-				unset( $settings->content_font_size_unit );
-				unset( $settings->content_font_size_unit_medium );
-				unset( $settings->content_font_size_unit_responsive );
-				unset( $settings->content_line_height_unit );
-				unset( $settings->content_line_height_unit_medium );
-				unset( $settings->content_line_height_unit_responsive );
-				unset( $settings->content_transform );
-				unset( $settings->content_letter_spacing );
+				unset( $settings->tab_style_alignment );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
@@ -252,6 +257,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				if ( isset( $settings->title_font_family['family'] ) ) {
 
 					$settings->title_font_typo['font_family'] = $settings->title_font_family['family'];
+					unset( $settings->title_font_family['family'] );
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
@@ -260,6 +266,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
 					}
+					unset( $settings->title_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->title_font_size['desktop'] ) ) {
@@ -315,6 +322,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				if ( isset( $settings->content_font_family['family'] ) ) {
 
 					$settings->content_font_typo['font_family'] = $settings->content_font_family['family'];
+					unset( $settings->content_font_family['family'] );
 				}
 				if ( isset( $settings->content_font_family['weight'] ) ) {
 
@@ -323,6 +331,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
 					}
+					unset( $settings->content_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->content_font_size['desktop'] ) ) {
@@ -369,28 +378,35 @@ class AdvancedTabsModule extends FLBuilderModule {
 				}
 			}
 			if ( isset( $settings->content_border_color ) ) {
-				$settings->content_border_param           = array();
-				$settings->content_border_param['style']  = $settings->content_border_style;
-				$settings->content_border_param['color']  = $settings->content_border_color;
-				$settings->content_border_param['width']  = array(
-					'top'    => $settings->content_border_size,
-					'right'  => $settings->content_border_size,
-					'bottom' => $settings->content_border_size,
-					'left'   => $settings->content_border_size,
-				);
-				$settings->content_border_param['radius'] = array(
-					'top_left'     => $settings->content_border_radius,
-					'top_right'    => $settings->content_border_radius,
-					'bottom_left'  => $settings->content_border_radius,
-					'bottom_right' => $settings->content_border_radius,
-				);
+				$settings->content_border_param = array();
+				if ( isset( $settings->content_border_style ) ) {
+					$settings->content_border_param['style'] = $settings->content_border_style;
+					unset( $settings->content_border_style );
+				}
+				$settings->content_border_param['color'] = $settings->content_border_color;
+				if ( isset( $settings->content_border_size ) ) {
+					$settings->content_border_param['width'] = array(
+						'top'    => $settings->content_border_size,
+						'right'  => $settings->content_border_size,
+						'bottom' => $settings->content_border_size,
+						'left'   => $settings->content_border_size,
+					);
+					unset( $settings->content_border_size );
+				}
+				if ( isset( $settings->content_border_radius ) ) {
+					$settings->content_border_param['radius'] = array(
+						'top_left'     => $settings->content_border_radius,
+						'top_right'    => $settings->content_border_radius,
+						'bottom_left'  => $settings->content_border_radius,
+						'bottom_right' => $settings->content_border_radius,
+					);
+					unset( $settings->content_border_radius );
+				}
 				unset( $settings->content_border_color );
 			}
 			if ( isset( $settings->tab_style_alignment ) ) {
 				$settings->tab_style_align = $settings->tab_style_alignment;
-			}
-			if ( isset( $settings->content_alignment ) ) {
-				$settings->content_alignment = $settings->content_alignment;
+				unset( $settings->tab_style_alignment );
 			}
 			if ( isset( $settings->tab_padding ) ) {
 
@@ -431,6 +447,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->tab_padding );
 			}
 			if ( isset( $settings->content_padding ) ) {
 
@@ -471,16 +488,43 @@ class AdvancedTabsModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->content_padding );
 			}
-			if ( isset( $settings->title_font_family ) ) {
-				unset( $settings->title_font_family );
-				unset( $settings->title_font_size );
-				unset( $settings->title_line_height );
+			if ( isset( $settings->title_font_family['desktop'] ) ) {
+				unset( $settings->title_font_family['desktop'] );
 			}
-			if ( isset( $settings->content_font_family ) ) {
-				unset( $settings->content_font_family );
-				unset( $settings->content_font_size );
-				unset( $settings->content_line_height );
+			if ( isset( $settings->title_font_family['medium'] ) ) {
+				unset( $settings->title_font_family['medium'] );
+			}
+			if ( isset( $settings->title_font_family['small'] ) ) {
+				unset( $settings->title_font_family['small'] );
+			}
+			if ( isset( $settings->title_line_height['desktop'] ) ) {
+				unset( $settings->title_line_height['desktop'] );
+			}
+			if ( isset( $settings->title_line_height['medium'] ) ) {
+				unset( $settings->title_line_height['medium'] );
+			}
+			if ( isset( $settings->title_line_height['small'] ) ) {
+				unset( $settings->title_line_height['small'] );
+			}
+			if ( isset( $settings->content_font_size['desktop'] ) ) {
+				unset( $settings->content_font_size['desktop'] );
+			}
+			if ( isset( $settings->content_font_size['medium'] ) ) {
+				unset( $settings->content_font_size['medium'] );
+			}
+			if ( isset( $settings->content_font_size['small'] ) ) {
+				unset( $settings->content_font_size['small'] );
+			}
+			if ( isset( $settings->content_line_height['desktop'] ) ) {
+				unset( $settings->content_line_height['desktop'] );
+			}
+			if ( isset( $settings->content_line_height['medium'] ) ) {
+				unset( $settings->content_line_height['medium'] );
+			}
+			if ( isset( $settings->content_line_height['small'] ) ) {
+				unset( $settings->content_line_height['small'] );
 			}
 		}
 		return $settings;

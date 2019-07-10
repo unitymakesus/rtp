@@ -3,175 +3,222 @@
 FLBuilder::register_settings_form('col', array(
 	'title' => __( 'Column Settings', 'fl-builder' ),
 	'tabs'  => array(
-		'style'         => array(
-			'title'         => __( 'Style', 'fl-builder' ),
-			'sections'      => array(
-				'general'       => array(
-					'title'         => '',
-					'fields'        => array(
-						'size'          => array(
-							'type'          => 'text',
-							'label'         => __( 'Column Width', 'fl-builder' ),
-							'default'       => '',
-							'description'   => '%',
-							'maxlength'     => '5',
-							'size'          => '6',
-							'preview'         => array(
-								'type'            => 'none',
+		'style'    => array(
+			'title'    => __( 'Style', 'fl-builder' ),
+			'sections' => array(
+				'general'     => array(
+					'title'  => '',
+					'fields' => array(
+						'size'              => array(
+							'type'       => 'unit',
+							'label'      => __( 'Width', 'fl-builder' ),
+							'default'    => '',
+							'responsive' => true,
+							'slider'     => true,
+							'units'      => array(
+								'%',
+							),
+							'preview'    => array(
+								'type' => 'none',
 							),
 						),
-						'equal_height'  => array(
-							'type'          => 'select',
-							'label'         => __( 'Equalize Column Heights', 'fl-builder' ),
-							'help'        => __( 'Setting this to yes will make all of the columns in this group the same height regardless of how much content is in each of them.', 'fl-builder' ),
-							'default'       => 'no',
-							'options'       => array(
-								'no'          => __( 'No', 'fl-builder' ),
-								'yes'         => __( 'Yes', 'fl-builder' ),
+						'min_height'        => array(
+							'type'       => 'unit',
+							'label'      => __( 'Minimum Height', 'fl-builder' ),
+							'responsive' => true,
+							'units'      => array(
+								'px',
+								'vh',
+								'vw',
 							),
-							'toggle'        => array(
-								'yes'             => array(
-									'fields'          => array( 'content_alignment' ),
+							'slider'     => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
 								),
 							),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.fl-col-content',
+								'property' => 'min-height',
+							),
+						),
+						'equal_height'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Equalize Heights', 'fl-builder' ),
+							'help'    => __( 'Setting this to yes will make all of the columns in this group the same height regardless of how much content is in each of them.', 'fl-builder' ),
+							'default' => 'no',
+							'options' => array(
+								'no'  => __( 'No', 'fl-builder' ),
+								'yes' => __( 'Yes', 'fl-builder' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'content_alignment' ),
+								),
+							),
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 						'content_alignment' => array(
-							'type'              => 'select',
-							'label'             => __( 'Content Alignment', 'fl-builder' ),
-							'default'           => 'top',
-							'options'           => array(
+							'type'    => 'select',
+							'label'   => __( 'Vertical Alignment', 'fl-builder' ),
+							'default' => 'top',
+							'options' => array(
 								'top'    => __( 'Top', 'fl-builder' ),
 								'center' => __( 'Center', 'fl-builder' ),
 								'bottom' => __( 'Bottom', 'fl-builder' ),
 							),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 					),
 				),
-				'text'          => array(
-					'title'         => __( 'Text', 'fl-builder' ),
-					'fields'        => array(
+				'text'        => array(
+					'title'  => __( 'Text', 'fl-builder' ),
+					'fields' => array(
 						'text_color'    => array(
-							'type'          => 'color',
-							'label'         => __( 'Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'fl-builder' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'link_color'    => array(
-							'type'          => 'color',
-							'label'         => __( 'Link Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Link Color', 'fl-builder' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
-						'hover_color'    => array(
-							'type'          => 'color',
-							'label'         => __( 'Link Hover Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
+						'hover_color'   => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Link Hover Color', 'fl-builder' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
-						'heading_color'  => array(
-							'type'          => 'color',
-							'label'         => __( 'Heading Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
+						'heading_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Heading Color', 'fl-builder' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 					),
 				),
-				'background'    => array(
-					'title'         => __( 'Background', 'fl-builder' ),
-					'fields'        => array(
-						'bg_type'      => array(
-							'type'          => 'select',
-							'label'         => __( 'Type', 'fl-builder' ),
-							'default'       => 'color',
-							'options'       => array(
-								'none'          => _x( 'None', 'Background type.', 'fl-builder' ),
-								'color'         => _x( 'Color', 'Background type.', 'fl-builder' ),
-								'photo'         => _x( 'Photo', 'Background type.', 'fl-builder' ),
+				'background'  => array(
+					'title'  => __( 'Background', 'fl-builder' ),
+					'fields' => array(
+						'bg_type' => array(
+							'type'    => 'select',
+							'label'   => __( 'Type', 'fl-builder' ),
+							'default' => 'color',
+							'options' => array(
+								'none'     => _x( 'None', 'Background type.', 'fl-builder' ),
+								'color'    => _x( 'Color', 'Background type.', 'fl-builder' ),
+								'gradient' => _x( 'Gradient', 'Background type.', 'fl-builder' ),
+								'photo'    => _x( 'Photo', 'Background type.', 'fl-builder' ),
 							),
-							'toggle'        => array(
-								'color'         => array(
-									'sections'      => array( 'bg_color' ),
+							'toggle'  => array(
+								'color'    => array(
+									'sections' => array( 'bg_color' ),
 								),
-								'photo'         => array(
-									'sections'      => array( 'bg_photo', 'bg_overlay' ),
+								'gradient' => array(
+									'sections' => array( 'bg_gradient' ),
+								),
+								'photo'    => array(
+									'sections' => array( 'bg_photo', 'bg_overlay' ),
 								),
 							),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 					),
 				),
-				'bg_color'     => array(
-					'title'         => __( 'Background Color', 'fl-builder' ),
-					'fields'        => array(
-						'bg_color'      => array(
-							'type'          => 'color',
-							'label'         => __( 'Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'bg_opacity'    => array(
-							'type'          => 'text',
-							'label'         => __( 'Opacity', 'fl-builder' ),
-							'default'       => '100',
-							'description'   => '%',
-							'maxlength'     => '3',
-							'size'          => '5',
-							'preview'         => array(
-								'type'            => 'none',
+				'bg_color'    => array(
+					'title'  => __( 'Background Color', 'fl-builder' ),
+					'fields' => array(
+						'bg_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'fl-builder' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 					),
 				),
-				'bg_photo'     => array(
-					'title'         => __( 'Background Photo', 'fl-builder' ),
-					'fields'        => array(
+				'bg_gradient' => array(
+					'title'  => __( 'Background Gradient', 'fl-builder' ),
+					'fields' => array(
+						'bg_gradient' => array(
+							'type'    => 'gradient',
+							'label'   => __( 'Gradient', 'fl-builder' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content',
+								'property' => 'background-image',
+							),
+						),
+					),
+				),
+				'bg_photo'    => array(
+					'title'  => __( 'Background Photo', 'fl-builder' ),
+					'fields' => array(
 						'bg_image'      => array(
-							'type'          => 'photo',
-							'show_remove'   => true,
-							'label'         => __( 'Photo', 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
+							'type'        => 'photo',
+							'show_remove' => true,
+							'label'       => __( 'Photo', 'fl-builder' ),
+							'responsive'  => true,
+							'connections' => array( 'photo' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content',
+								'property' => 'background-image',
 							),
-							'connections'	=> array( 'photo' ),
 						),
 						'bg_repeat'     => array(
-							'type'          => 'select',
-							'label'         => __( 'Repeat', 'fl-builder' ),
-							'default'       => 'none',
-							'options'       => array(
-								'no-repeat'     => _x( 'None', 'Background repeat.', 'fl-builder' ),
-								'repeat'        => _x( 'Tile', 'Background repeat.', 'fl-builder' ),
-								'repeat-x'      => _x( 'Horizontal', 'Background repeat.', 'fl-builder' ),
-								'repeat-y'      => _x( 'Vertical', 'Background repeat.', 'fl-builder' ),
+							'type'       => 'select',
+							'label'      => __( 'Repeat', 'fl-builder' ),
+							'default'    => 'none',
+							'responsive' => true,
+							'options'    => array(
+								'no-repeat' => _x( 'None', 'Background repeat.', 'fl-builder' ),
+								'repeat'    => _x( 'Tile', 'Background repeat.', 'fl-builder' ),
+								'repeat-x'  => _x( 'Horizontal', 'Background repeat.', 'fl-builder' ),
+								'repeat-y'  => _x( 'Vertical', 'Background repeat.', 'fl-builder' ),
 							),
-							'help'          => __( 'Repeat applies to how the image should display in the background. Choosing none will display the image as uploaded. Tile will repeat the image as many times as needed to fill the background horizontally and vertically. You can also specify the image to only repeat horizontally or vertically.', 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content',
+								'property' => 'background-repeat',
 							),
 						),
 						'bg_position'   => array(
-							'type'          => 'select',
-							'label'         => __( 'Position', 'fl-builder' ),
-							'default'       => 'center center',
-							'options'       => array(
+							'type'       => 'select',
+							'label'      => __( 'Position', 'fl-builder' ),
+							'default'    => 'center center',
+							'responsive' => true,
+							'options'    => array(
 								'left top'      => __( 'Left Top', 'fl-builder' ),
 								'left center'   => __( 'Left Center', 'fl-builder' ),
 								'left bottom'   => __( 'Left Bottom', 'fl-builder' ),
@@ -182,304 +229,277 @@ FLBuilder::register_settings_form('col', array(
 								'center center' => __( 'Center', 'fl-builder' ),
 								'center bottom' => __( 'Center Bottom', 'fl-builder' ),
 							),
-							'help'          => __( 'Position will tell the image where it should sit in the background.', 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content',
+								'property' => 'background-position',
 							),
 						),
 						'bg_attachment' => array(
-							'type'          => 'select',
-							'label'         => __( 'Attachment', 'fl-builder' ),
-							'default'       => 'scroll',
-							'options'       => array(
-								'scroll'        => __( 'Scroll', 'fl-builder' ),
-								'fixed'         => __( 'Fixed', 'fl-builder' ),
+							'type'       => 'select',
+							'label'      => __( 'Attachment', 'fl-builder' ),
+							'default'    => 'scroll',
+							'responsive' => true,
+							'options'    => array(
+								'scroll' => __( 'Scroll', 'fl-builder' ),
+								'fixed'  => __( 'Fixed', 'fl-builder' ),
 							),
-							'help'          => __( 'Attachment will specify how the image reacts when scrolling a page. When scrolling is selected, the image will scroll with page scrolling. This is the default setting. Fixed will allow the image to scroll within the background if fill is selected in the scale setting.', 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content',
+								'property' => 'background-attachment',
 							),
 						),
 						'bg_size'       => array(
-							'type'          => 'select',
-							'label'         => __( 'Scale', 'fl-builder' ),
-							'default'       => 'cover',
-							'options'       => array(
-								'auto'          => _x( 'None', 'Background scale.', 'fl-builder' ),
-								'contain'       => __( 'Fit', 'fl-builder' ),
-								'cover'         => __( 'Fill', 'fl-builder' ),
+							'type'       => 'select',
+							'label'      => __( 'Scale', 'fl-builder' ),
+							'default'    => 'cover',
+							'responsive' => true,
+							'options'    => array(
+								'auto'    => _x( 'None', 'Background scale.', 'fl-builder' ),
+								'contain' => __( 'Fit', 'fl-builder' ),
+								'cover'   => __( 'Fill', 'fl-builder' ),
 							),
-							'help'          => __( 'Scale applies to how the image should display in the background. You can select either fill or fit to the background.', 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-					),
-				),
-				'bg_overlay'     => array(
-					'title'         => __( 'Background Overlay', 'fl-builder' ),
-					'fields'        => array(
-						'bg_overlay_color'      => array(
-							'type'          => 'color',
-							'label'         => __( 'Overlay Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'bg_overlay_opacity'    => array(
-							'type'          => 'text',
-							'label'         => __( 'Overlay Opacity', 'fl-builder' ),
-							'default'       => '50',
-							'description'   => '%',
-							'maxlength'     => '3',
-							'size'          => '5',
-							'preview'         => array(
-								'type'            => 'none',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content',
+								'property' => 'background-size',
 							),
 						),
 					),
 				),
-				'border'       => array(
-					'title'         => __( 'Border', 'fl-builder' ),
-					'fields'        => array(
-						'border_type'   => array(
-							'type'          => 'select',
-							'label'         => __( 'Type', 'fl-builder' ),
-							'default'       => '',
-							'help'          => __( 'The type of border to use. Double borders must have a width of at least 3px to render properly.', 'fl-builder' ),
-							'options'       => array(
-								''       => _x( 'None', 'Border type.', 'fl-builder' ),
-								'solid'  => _x( 'Solid', 'Border type.', 'fl-builder' ),
-								'dashed' => _x( 'Dashed', 'Border type.', 'fl-builder' ),
-								'dotted' => _x( 'Dotted', 'Border type.', 'fl-builder' ),
-								'double' => _x( 'Double', 'Border type.', 'fl-builder' ),
+				'bg_overlay'  => array(
+					'title'  => __( 'Background Overlay', 'fl-builder' ),
+					'fields' => array(
+						'bg_overlay_type'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Overlay Type', 'fl-builder' ),
+							'default' => 'color',
+							'options' => array(
+								'none'     => __( 'None', 'fl-builder' ),
+								'color'    => __( 'Color', 'fl-builder' ),
+								'gradient' => __( 'Gradient', 'fl-builder' ),
 							),
-							'toggle'        => array(
-								''              => array(
-									'fields'        => array(),
+							'toggle'  => array(
+								'color'    => array(
+									'fields' => array( 'bg_overlay_color' ),
 								),
-								'solid'         => array(
-									'fields'        => array( 'border_color', 'border_opacity', 'border' ),
-								),
-								'dashed'        => array(
-									'fields'        => array( 'border_color', 'border_opacity', 'border' ),
-								),
-								'dotted'        => array(
-									'fields'        => array( 'border_color', 'border_opacity', 'border' ),
-								),
-								'double'        => array(
-									'fields'        => array( 'border_color', 'border_opacity', 'border' ),
+								'gradient' => array(
+									'fields' => array( 'bg_overlay_gradient' ),
 								),
 							),
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'border_color'  => array(
-							'type'          => 'color',
-							'label'         => __( 'Color', 'fl-builder' ),
-							'show_reset'    => true,
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'border_opacity' => array(
-							'type'          => 'text',
-							'label'         => __( 'Opacity', 'fl-builder' ),
-							'default'       => '100',
-							'description'   => '%',
-							'maxlength'     => '3',
-							'size'          => '5',
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'border' 	 => array(
-							'type'        => 'dimension',
-							'label'       => __( 'Width', 'fl-builder' ),
-							'description' => 'px',
-							'preview'     => array(
+							'preview' => array(
 								'type' => 'none',
 							),
-							'responsive'  => array(
-								'placeholder' => array(
-									'default'    => '0',
-									'medium'     => '',
-									'responsive' => '',
-								),
+						),
+						'bg_overlay_color'    => array(
+							'type'       => 'color',
+							'label'      => __( 'Overlay Color', 'fl-builder' ),
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'bg_overlay_gradient' => array(
+							'type'    => 'gradient',
+							'label'   => __( 'Overlay Gradient', 'fl-builder' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '> .fl-col-content:after',
+								'property' => 'background-image',
+							),
+						),
+					),
+				),
+				'border'      => array(
+					'title'  => __( 'Border', 'fl-builder' ),
+					'fields' => array(
+						'border' => array(
+							'type'       => 'border',
+							'label'      => __( 'Border', 'fl-builder' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.fl-col-content',
 							),
 						),
 					),
 				),
 			),
 		),
-		'advanced'      => array(
-			'title'         => __( 'Advanced', 'fl-builder' ),
-			'sections'      => array(
+		'advanced' => array(
+			'title'    => __( 'Advanced', 'fl-builder' ),
+			'sections' => array(
 				'margins'       => array(
-					'title'         => __( 'Spacing', 'fl-builder' ),
-					'fields'        => array(
-						'margin' 		=> array(
-							'type'        => 'dimension',
-							'label'       => __( 'Margins', 'fl-builder' ),
-							'description' => 'px',
-							'preview'     => array(
-								'type' => 'none',
+					'title'  => __( 'Spacing', 'fl-builder' ),
+					'fields' => array(
+						'margin'  => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Margins', 'fl-builder' ),
+							'slider'     => true,
+							'units'      => array(
+								'px',
+								'%',
 							),
-							'placeholder' => '0',
-							'responsive'  => true,
-						),
-						'padding' 	 => array(
-							'type'        => 'dimension',
-							'label'       => __( 'Padding', 'fl-builder' ),
-							'description' => 'px',
-							'preview'     => array(
-								'type' => 'none',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.fl-col-content',
+								'property' => 'margin',
 							),
-							'placeholder' => '0',
-							'responsive'  => true,
-						),
-					),
-				),
-				'responsive'    => array(
-					'title'         => __( 'Responsive Layout', 'fl-builder' ),
-					'fields'        => array(
-						'responsive_display' => array(
-							'type'          => 'select',
-							'label'         => __( 'Display', 'fl-builder' ),
-							'options'       => array(
-								''                  => __( 'Always', 'fl-builder' ),
-								'desktop'           => __( 'Large Devices Only', 'fl-builder' ),
-								'desktop-medium'    => __( 'Large &amp; Medium Devices Only', 'fl-builder' ),
-								'medium'            => __( 'Medium Devices Only', 'fl-builder' ),
-								'medium-mobile'     => __( 'Medium &amp; Small Devices Only', 'fl-builder' ),
-								'mobile'            => __( 'Small Devices Only', 'fl-builder' ),
-							),
-							'help'          => __( 'Choose whether to show or hide this column at different device sizes.', 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'medium_size'   => array(
-							'type'          => 'select',
-							'label'         => __( 'Medium Device Width', 'fl-builder' ),
-							'help'          => __( 'The width of this column on medium devices such as tablets.', 'fl-builder' ),
-							'options'       => array(
-								'default'       => __( 'Default', 'fl-builder' ),
-								'custom'        => __( 'Custom', 'fl-builder' ),
-							),
-							'toggle'               => array(
-								'custom'               => array(
-									'fields'               => array( 'custom_medium_size' ),
+							'responsive' => array(
+								'default_unit' => array(
+									'default'    => $global_settings->column_margins_unit,
+									'medium'     => $global_settings->column_margins_medium_unit,
+									'responsive' => $global_settings->column_margins_responsive_unit,
+								),
+								'placeholder'  => array(
+									'default'    => empty( $global_settings->column_margins ) ? '0' : $global_settings->column_margins,
+									'medium'     => empty( $global_settings->column_margins_medium ) ? '0' : $global_settings->column_margins_medium,
+									'responsive' => empty( $global_settings->column_margins_responsive ) ? '0' : $global_settings->column_margins_responsive,
 								),
 							),
-							'preview'         => array(
-								'type'            => 'none',
-							),
 						),
-						'custom_medium_size' => array(
-							'type'          => 'text',
-							'label'         => __( 'Custom Medium Device Width', 'fl-builder' ),
-							'default'       => '100',
-							'description'   => '%',
-							'maxlength'     => '5',
-							'size'          => '6',
-							'preview'         => array(
-								'type'            => 'none',
+						'padding' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'fl-builder' ),
+							'slider'     => true,
+							'units'      => array(
+								'px',
+								'em',
+								'%',
 							),
-						),
-						'responsive_size' => array(
-							'type'          => 'select',
-							'label'         => __( 'Small Device Width', 'fl-builder' ),
-							'help'          => __( 'The width of this column on small devices such as phones.', 'fl-builder' ),
-							'options'       => array(
-								'default'       => __( 'Default', 'fl-builder' ),
-								'custom'        => __( 'Custom', 'fl-builder' ),
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.fl-col-content',
+								'property' => 'padding',
 							),
-							'toggle'               => array(
-								'custom'               => array(
-									'fields'               => array( 'custom_responsive_size' ),
+							'responsive' => array(
+								'default_unit' => array(
+									'default'    => $global_settings->column_padding_unit,
+									'medium'     => $global_settings->column_padding_medium_unit,
+									'responsive' => $global_settings->column_padding_responsive_unit,
 								),
-							),
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'custom_responsive_size' => array(
-							'type'          => 'text',
-							'label'         => __( 'Custom Small Device Width', 'fl-builder' ),
-							'default'       => '100',
-							'description'   => '%',
-							'maxlength'     => '5',
-							'size'          => '6',
-							'preview'         => array(
-								'type'            => 'none',
-							),
-						),
-						'responsive_order' => array(
-							'type'          => 'select',
-							'label'         => __( 'Stacking Order', 'fl-builder' ),
-							'help'          => __( 'The order of the columns in this group when they are stacked for small devices.', 'fl-builder' ),
-							'default'        => 'default',
-							'options'       => array(
-								'default'       => __( 'Default', 'fl-builder' ),
-								'reversed'        => __( 'Reversed', 'fl-builder' ),
-							),
-							'preview'         => array(
-								'type'            => 'none',
+								'placeholder'  => array(
+									'default'    => empty( $global_settings->column_padding ) ? '0' : $global_settings->column_padding,
+									'medium'     => empty( $global_settings->column_padding_medium ) ? '0' : $global_settings->column_padding_medium,
+									'responsive' => empty( $global_settings->column_padding_responsive ) ? '0' : $global_settings->column_padding_responsive,
+								),
 							),
 						),
 					),
 				),
-				'visibility'   => array(
-					'title'         => __( 'Visibility', 'fl-builder' ),
-					'fields'        => array(
-						'visibility_display' => array(
-							'type'          => 'select',
-							'label'         => __( 'Display', 'fl-builder' ),
-							'options'       => array(
-								''                => __( 'Always', 'fl-builder' ),
-								'logged_out'    => __( 'Logged Out User', 'fl-builder' ),
-								'logged_in'     => __( 'Logged In User', 'fl-builder' ),
-								'0'             => __( 'Never', 'fl-builder' ),
+				'visibility'    => array(
+					'title'  => __( 'Visibility', 'fl-builder' ),
+					'fields' => array(
+						'responsive_display'         => array(
+							'type'    => 'select',
+							'label'   => __( 'Breakpoint', 'fl-builder' ),
+							'options' => array(
+								''               => __( 'All', 'fl-builder' ),
+								'desktop'        => __( 'Large Devices Only', 'fl-builder' ),
+								'desktop-medium' => __( 'Large &amp; Medium Devices Only', 'fl-builder' ),
+								'medium'         => __( 'Medium Devices Only', 'fl-builder' ),
+								'medium-mobile'  => __( 'Medium &amp; Small Devices Only', 'fl-builder' ),
+								'mobile'         => __( 'Small Devices Only', 'fl-builder' ),
 							),
-							'toggle'        => array(
-								'logged_in'        => array(
-									'fields'        => array( 'visibility_user_capability' ),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
+						'responsive_order'           => array(
+							'type'    => 'select',
+							'label'   => __( 'Stacking Order', 'fl-builder' ),
+							'help'    => __( 'The order of the columns in this group when they are stacked for small devices.', 'fl-builder' ),
+							'default' => 'default',
+							'options' => array(
+								'default'  => __( 'Default', 'fl-builder' ),
+								'reversed' => __( 'Reversed', 'fl-builder' ),
+							),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
+						'visibility_display'         => array(
+							'type'    => 'select',
+							'label'   => __( 'Display', 'fl-builder' ),
+							'options' => array(
+								''           => __( 'Always', 'fl-builder' ),
+								'logged_out' => __( 'Logged Out User', 'fl-builder' ),
+								'logged_in'  => __( 'Logged In User', 'fl-builder' ),
+								'0'          => __( 'Never', 'fl-builder' ),
+							),
+							'toggle'  => array(
+								'logged_in' => array(
+									'fields' => array( 'visibility_user_capability' ),
 								),
 							),
-							'preview'         => array(
-								'type'            => 'none',
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 						'visibility_user_capability' => array(
-							'type'                        => 'text',
-							'label'                        => __( 'User Capability', 'fl-builder' ),
-							'description'                => sprintf( __( 'Optional. Set the <a%s>capability</a> required for users to view this column.', 'fl-builder' ), ' href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank"' ),
-							'preview'                     => array(
-								'type'                        => 'none',
+							'type'        => 'text',
+							'label'       => __( 'User Capability', 'fl-builder' ),
+							/* translators: %s: wporg docs link */
+							'description' => sprintf( __( 'Optional. Set the <a%s>capability</a> required for users to view this column.', 'fl-builder' ), ' href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank"' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+					),
+				),
+				'animation'     => array(
+					'title'  => __( 'Animation', 'fl-builder' ),
+					'fields' => array(
+						'animation' => array(
+							'type'    => 'animation',
+							'label'   => __( 'Animation', 'fl-builder' ),
+							'preview' => array(
+								'type'     => 'animation',
+								'selector' => '{node}',
 							),
 						),
 					),
 				),
 				'css_selectors' => array(
-					'title'         => __( 'HTML Element', 'fl-builder' ),
-					'fields'        => array(
-						'id'            => array(
-							'type'          => 'text',
-							'label'         => __( 'ID', 'fl-builder' ),
-							'help'          => __( "A unique ID that will be applied to this column's HTML. Must start with a letter and only contain dashes, underscores, letters or numbers. No spaces.", 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
+					'title'  => __( 'HTML Element', 'fl-builder' ),
+					'fields' => array(
+						'container_element' => array(
+							'type'    => 'select',
+							'label'   => __( 'Container Element', 'fl-builder' ),
+							'default' => 'div',
+							/**
+							 * Filter to add/remove container types.
+							 * @see fl_builder_node_container_element_options
+							 */
+							'options' => apply_filters( 'fl_builder_node_container_element_options', array(
+								'div'     => '&lt;div&gt;',
+								'section' => '&lt;section&gt;',
+								'article' => '&lt;article&gt;',
+								'aside'   => '&lt;aside&gt;',
+								'header'  => '&lt;header&gt;',
+								'footer'  => '&lt;footer&gt;',
+							) ),
+							'help'    => __( 'Optional. Choose an appropriate HTML5 content sectioning element to use for this column to improve accessibility and machine-readability.', 'fl-builder' ),
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
-						'class'         => array(
-							'type'          => 'text',
-							'label'         => __( 'CSS Class', 'fl-builder' ),
-							'help'          => __( "A class that will be applied to this column's HTML. Must start with a letter and only contain dashes, underscores, letters or numbers. Separate multiple classes with spaces.", 'fl-builder' ),
-							'preview'         => array(
-								'type'            => 'none',
+						'id'                => array(
+							'type'    => 'text',
+							'label'   => __( 'ID', 'fl-builder' ),
+							'help'    => __( "A unique ID that will be applied to this column's HTML. Must start with a letter and only contain dashes, underscores, letters or numbers. No spaces.", 'fl-builder' ),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
+						'class'             => array(
+							'type'    => 'text',
+							'label'   => __( 'CSS Class', 'fl-builder' ),
+							'help'    => __( "A class that will be applied to this column's HTML. Must start with a letter and only contain dashes, underscores, letters or numbers. Separate multiple classes with spaces.", 'fl-builder' ),
+							'preview' => array(
+								'type' => 'none',
 							),
 						),
 					),

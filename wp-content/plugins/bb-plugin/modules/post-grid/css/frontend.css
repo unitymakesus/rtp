@@ -33,6 +33,11 @@ body.rtl .fl-post-column {
 	border: 1px solid #e6e6e6;
 	visibility: hidden;
 }
+.fl-post-grid-post,
+.fl-post-feed-post {
+	overflow: hidden;
+}
+
 .fl-post-grid-image {
 	position: relative;
 }
@@ -187,7 +192,6 @@ body .fl-post-grid-meta {
 .fl-post-feed-post {
 	border-bottom: 1px solid #e6e6e6;
 	margin-bottom: 40px;
-	padding-bottom: 40px;
 }
 .fl-post-feed-post:last-child {
 	border-bottom: none;
@@ -203,6 +207,7 @@ body .fl-post-grid-meta {
 body h2.fl-post-feed-title {
 	margin: 0 0 10px;
 	padding: 0;
+	clear: none;
 }
 body .fl-post-feed-meta {
 	font-size: 14px;
@@ -258,4 +263,8 @@ body .fl-post-feed-meta {
 
 /* No posts message */
 .fl-post-grid-empty {
+}
+
+li.fl-post-feed-post,li.fl-post-gallery-post, li.fl-post-grid-post {
+	list-style: none;
 }

@@ -11,7 +11,7 @@ $enabled_templates = FLBuilderModel::get_enabled_templates();
 
 		<?php if ( FLBuilderAdminSettings::multisite_support() && ! is_network_admin() ) : ?>
 		<label>
-			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php if ( get_option( '_fl_builder_enabled_templates' ) ) { echo 'checked="checked"';} ?> />
+			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php echo ( get_option( '_fl_builder_enabled_templates' ) ) ? 'checked="checked"' : ''; ?> />
 			<?php _e( 'Override network settings?', 'fl-builder' ); ?>
 		</label>
 		<?php endif; ?>
@@ -26,9 +26,7 @@ $enabled_templates = FLBuilderModel::get_enabled_templates();
 				<option value="user" <?php selected( $enabled_templates, 'user' ); ?>><?php _e( 'Enable User Templates Only', 'fl-builder' ); ?></option>
 				<option value="disabled" <?php selected( $enabled_templates, 'disabled' ); ?>><?php _e( 'Disable All Templates', 'fl-builder' ); ?></option>
 			</select>
-			
 			<?php do_action( 'fl_builder_admin_settings_templates_form' ); ?>
-			
 		</div>
 		<p class="submit">
 			<input type="submit" name="update" class="button-primary" value="<?php esc_attr_e( 'Save Template Settings', 'fl-builder' ); ?>" />

@@ -107,12 +107,10 @@ class UABBTable extends FLBuilderModule {
 			// Headings link settings.
 			foreach ( $settings->thead_row as $heading ) {
 
-				if ( isset( $heading->head_link ) ) {
-					if ( isset( $heading->head_link_target ) ) {
-						$heading->head_link_target = $heading->head_link_target;
-					}
-					if ( isset( $heading->head_link_nofollow ) ) {
-						$heading->head_link_nofollow = ( '1' == $heading->head_link_nofollow ) ? 'yes' : '';
+				if ( isset( $heading->head_link_nofollow ) ) {
+
+					if ( '1' == $heading->head_link_nofollow || 'yes' == $heading->head_link_nofollow ) {
+						$heading->head_link_nofollow = 'yes';
 					}
 				}
 			}
@@ -120,12 +118,9 @@ class UABBTable extends FLBuilderModule {
 			// Content link settings.
 			foreach ( $settings->tbody_row as $content ) {
 
-				if ( isset( $content->body_link ) ) {
-					if ( isset( $content->body_link_target ) ) {
-						$content->body_link_target = $content->body_link_target;
-					}
-					if ( isset( $content->body_link_nofollow ) ) {
-						$content->body_link_nofollow = ( '1' == $content->body_link_nofollow ) ? 'yes' : '';
+				if ( isset( $content->body_link_nofollow ) ) {
+					if ( '1' == $content->body_link_nofollow || 'yes' == $content->body_link_nofollow ) {
+						$content->body_link_nofollow = 'yes';
 					}
 				}
 			}
@@ -142,6 +137,7 @@ class UABBTable extends FLBuilderModule {
 				if ( isset( $settings->heading_typography_font_family['family'] ) ) {
 
 					$settings->heading_typo['font_family'] = $settings->heading_typography_font_family['family'];
+					unset( $settings->heading_typography_font_family['family'] );
 				}
 				if ( isset( $settings->heading_typography_font_family['weight'] ) ) {
 
@@ -150,6 +146,7 @@ class UABBTable extends FLBuilderModule {
 					} else {
 						$settings->heading_typo['font_weight'] = $settings->heading_typography_font_family['weight'];
 					}
+					unset( $settings->heading_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->heading_typography_font_size_unit ) ) {
@@ -158,18 +155,21 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->heading_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->heading_typography_font_size_unit );
 			}
 			if ( isset( $settings->heading_typography_font_size_unit_medium ) ) {
 				$settings->heading_typo_medium['font_size'] = array(
 					'length' => $settings->heading_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->heading_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->heading_typography_font_size_unit_responsive ) ) {
 				$settings->heading_typo_responsive['font_size'] = array(
 					'length' => $settings->heading_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->heading_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->heading_typography_line_height_unit ) ) {
 
@@ -177,22 +177,26 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->heading_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->heading_typography_line_height_unit );
 			}
 			if ( isset( $settings->heading_typography_line_height_unit_medium ) ) {
 				$settings->heading_typo_medium['line_height'] = array(
 					'length' => $settings->heading_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->heading_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->heading_typography_line_height_unit_responsive ) ) {
 				$settings->heading_typo_responsive['line_height'] = array(
 					'length' => $settings->heading_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->heading_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->table_headings_typography_transform ) ) {
 
 				$settings->heading_typo['text_transform'] = $settings->table_headings_typography_transform;
+				unset( $settings->table_headings_typography_transform );
 			}
 			if ( isset( $settings->headings_align ) ) {
 
@@ -205,6 +209,7 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->table_headings_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->table_headings_letter_spacing );
 			}
 
 			// For Content Typo.
@@ -219,6 +224,7 @@ class UABBTable extends FLBuilderModule {
 				if ( isset( $settings->content_typography_font_family['family'] ) ) {
 
 					$settings->content_typo['font_family'] = $settings->content_typography_font_family['family'];
+					unset( $settings->content_typography_font_family['family'] );
 				}
 				if ( isset( $settings->content_typography_font_family['weight'] ) ) {
 
@@ -227,6 +233,7 @@ class UABBTable extends FLBuilderModule {
 					} else {
 						$settings->content_typo['font_weight'] = $settings->content_typography_font_family['weight'];
 					}
+					unset( $settings->content_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->content_typography_font_size_unit ) ) {
@@ -235,18 +242,21 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->content_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_typography_font_size_unit );
 			}
 			if ( isset( $settings->content_typography_font_size_unit_medium ) ) {
 				$settings->content_typo_medium['font_size'] = array(
 					'length' => $settings->content_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->content_typography_font_size_unit_responsive ) ) {
 				$settings->content_typo_responsive['font_size'] = array(
 					'length' => $settings->content_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->content_typography_line_height_unit ) ) {
 
@@ -254,22 +264,26 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->content_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_typography_line_height_unit );
 			}
 			if ( isset( $settings->content_typography_line_height_unit_medium ) ) {
 				$settings->content_typo_medium['line_height'] = array(
 					'length' => $settings->content_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->content_typography_line_height_unit_responsive ) ) {
 				$settings->content_typo_responsive['line_height'] = array(
 					'length' => $settings->content_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->table_rows_typography_transform ) ) {
 
 				$settings->content_typo['text_transform'] = $settings->table_rows_typography_transform;
+				unset( $settings->table_rows_typography_transform );
 			}
 			if ( isset( $settings->features_align ) ) {
 
@@ -282,6 +296,7 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->table_rows_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->table_rows_letter_spacing );
 			}
 
 			// For Filter Typography.
@@ -296,6 +311,7 @@ class UABBTable extends FLBuilderModule {
 				if ( isset( $settings->filter_typography_font_family['family'] ) ) {
 
 					$settings->filter_typo['font_family'] = $settings->filter_typography_font_family['family'];
+					unset( $settings->filter_typography_font_family['family'] );
 				}
 				if ( isset( $settings->filter_typography_font_family['weight'] ) ) {
 
@@ -304,6 +320,7 @@ class UABBTable extends FLBuilderModule {
 					} else {
 						$settings->filter_typo['font_weight'] = $settings->filter_typography_font_family['weight'];
 					}
+					unset( $settings->filter_typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->filter_typography_font_size_unit ) ) {
@@ -312,18 +329,21 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->filter_typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->filter_typography_font_size_unit );
 			}
 			if ( isset( $settings->filter_typography_font_size_unit_medium ) ) {
 				$settings->filter_typo_medium['font_size'] = array(
 					'length' => $settings->filter_typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->filter_typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->filter_typography_font_size_unit_responsive ) ) {
 				$settings->filter_typo_responsive['font_size'] = array(
 					'length' => $settings->filter_typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->filter_typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->filter_typography_line_height_unit ) ) {
 
@@ -331,22 +351,26 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->filter_typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->filter_typography_line_height_unit );
 			}
 			if ( isset( $settings->filter_typography_line_height_unit_medium ) ) {
 				$settings->filter_typo_medium['line_height'] = array(
 					'length' => $settings->filter_typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->filter_typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->filter_typography_line_height_unit_responsive ) ) {
 				$settings->filter_typo_responsive['line_height'] = array(
 					'length' => $settings->filter_typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->filter_typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->table_filters_typography_transform ) ) {
 
 				$settings->filter_typo['text_transform'] = $settings->table_filters_typography_transform;
+				unset( $settings->table_filters_typography_transform );
 			}
 			if ( isset( $settings->table_filters_letter_spacing ) ) {
 
@@ -354,40 +378,6 @@ class UABBTable extends FLBuilderModule {
 					'length' => $settings->table_filters_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			// Unset previously set values.
-			if ( isset( $settings->heading_typography_font_family ) ) {
-				unset( $settings->heading_typography_font_family );
-				unset( $settings->heading_typography_font_size_unit );
-				unset( $settings->heading_typography_font_size_unit_medium );
-				unset( $settings->heading_typography_font_size_unit_responsive );
-				unset( $settings->heading_typography_line_height_unit );
-				unset( $settings->heading_typography_line_height_unit_medium );
-				unset( $settings->heading_typography_line_height_unit_responsive );
-				unset( $settings->table_headings_typography_transform );
-				unset( $settings->table_headings_letter_spacing );
-			}
-			if ( isset( $settings->content_typography_font_family ) ) {
-				unset( $settings->content_typography_font_family );
-				unset( $settings->content_typography_font_size_unit );
-				unset( $settings->content_typography_font_size_unit_medium );
-				unset( $settings->content_typography_font_size_unit_responsive );
-				unset( $settings->content_typography_line_height_unit );
-				unset( $settings->content_typography_line_height_unit_medium );
-				unset( $settings->content_typography_line_height_unit_responsive );
-				unset( $settings->table_rows_typography_transform );
-				unset( $settings->table_rows_letter_spacing );
-			}
-			if ( isset( $settings->filter_typography_font_family ) ) {
-				unset( $settings->filter_typography_font_family );
-				unset( $settings->filter_typography_font_size_unit );
-				unset( $settings->filter_typography_font_size_unit_medium );
-				unset( $settings->filter_typography_font_size_unit_responsive );
-				unset( $settings->filter_typography_line_height_unit );
-				unset( $settings->filter_typography_line_height_unit_medium );
-				unset( $settings->filter_typography_line_height_unit_responsive );
-				unset( $settings->table_filters_typography_transform );
 				unset( $settings->table_filters_letter_spacing );
 			}
 		}

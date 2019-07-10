@@ -51,8 +51,10 @@
 					<i class="fl-block-copy fl-block-col-copy far fa-clone fl-tip" title="<?php _e( 'Duplicate', 'fl-builder' ); ?>"></i>
 					<# } #>
 				<# } #>
+				<?php endif; ?>
 				<span class="fl-builder-has-submenu">
 					<i class="fl-block-settings fas fa-columns fl-tip" title="<?php _e( 'Edit Column', 'fl-builder' ); ?>"></i>
+					<?php if ( ! $simple_ui ) : ?>
 					<# if ( ! data.global || ( data.global && FLBuilderConfig.userTemplateType ) ) { #>
 					<ul class="fl-builder-submenu fl-block-col-submenu">
 						<li><a class="fl-block-col-edit" href="javascript:void(0);"><?php _e( 'Column Settings', 'fl-builder' ); ?></a></li>
@@ -71,7 +73,9 @@
 						<# } #>
 					</ul>
 					<# } #>
+					<?php endif; ?>
 				</span>
+				<?php if ( ! $simple_ui ) : ?>
 				<# if ( ! data.isRootCol ) { #>
 				<i class="fl-block-remove fas fa-times fl-tip" title="<?php _e( 'Remove', 'fl-builder' ); ?>"></i>
 				<# } #>
@@ -85,7 +89,7 @@
 		<# } #>
 		<?php if ( ! $simple_ui ) : ?>
 		<# if ( ! data.groupLoading ) { #>
-			<# if ( ( ! data.first && data.contentWidth > 40 ) || ( data.hasParentCol && data.first && ! data.parentFirst ) ) { #>
+			<# if ( ! data.first || ( data.hasParentCol && data.first && ! data.parentFirst ) ) { #>
 			<div class="fl-block-col-resize fl-block-col-resize-w<# if ( data.hasParentCol && data.first && ! data.parentFirst ) { #> fl-block-col-resize-parent<# } #>">
 				<div class="fl-block-col-resize-handle-wrap">
 					<div class="fl-block-col-resize-feedback fl-block-col-resize-feedback-left"></div>
@@ -94,7 +98,7 @@
 				</div>
 			</div>
 			<# } #>
-			<# if ( ( ! data.last && data.contentWidth > 40 ) || ( data.hasParentCol && data.last && ! data.parentLast ) ) { #>
+			<# if ( ! data.last || ( data.hasParentCol && data.last && ! data.parentLast ) ) { #>
 			<div class="fl-block-col-resize fl-block-col-resize-e<# if ( data.hasParentCol && data.last && ! data.parentLast ) { #> fl-block-col-resize-parent<# } #>">
 				<div class="fl-block-col-resize-handle-wrap">
 					<div class="fl-block-col-resize-feedback fl-block-col-resize-feedback-left"></div>
@@ -139,6 +143,7 @@
 				<?php if ( ! FLBuilderModel::is_post_user_template( 'module' ) && ! $simple_ui ) : ?>
 				<i class="fl-block-move fas fa-arrows-alt fl-tip" title="<?php _e( 'Move', 'fl-builder' ); ?>"></i>
 				<?php endif; ?>
+				<?php /* translators: %s: module name */ ?>
 				<i class="fl-block-settings fas fa-wrench fl-tip" title="<?php printf( __( '%s Settings', 'fl-builder' ), '{{data.moduleName}}' ); ?>"></i>
 				<?php if ( ! FLBuilderModel::is_post_user_template( 'module' ) && ! $simple_ui ) : ?>
 				<i class="fl-block-copy far fa-clone fl-tip" title="<?php _e( 'Duplicate', 'fl-builder' ); ?>"></i>
@@ -146,8 +151,8 @@
 					<i class="fl-block-col-settings fas fa-columns fl-tip" title="<?php _e( 'Edit Column', 'fl-builder' ); ?>"></i>
 					<# if ( ! data.isRootCol ) { #>
 					<ul class="fl-builder-submenu fl-block-col-submenu">
-						<li><a class="fl-block-col-move" href="javascript:void(0);"><?php _e( 'Move Column', 'fl-builder' ); ?><i class="fas fa-arrows-alt"></i></a></li>
 						<li><a class="fl-block-col-edit" href="javascript:void(0);"><?php _e( 'Column Settings', 'fl-builder' ); ?></a></li>
+						<li><a class="fl-block-col-move" href="javascript:void(0);"><?php _e( 'Move Column', 'fl-builder' ); ?><i class="fas fa-arrows-alt"></i></a></li>
 						<# if ( ( ! data.hasParentCol && data.numCols < 12 ) || ( data.hasParentCol && data.numCols < 4 ) ) { #>
 						<li><a class="fl-block-col-copy" href="javascript:void(0);"><?php _e( 'Duplicate Column', 'fl-builder' ); ?></a></li>
 						<# } #>
@@ -181,7 +186,7 @@
 		<# } #>
 		<?php if ( ! FLBuilderModel::is_post_user_template( 'module' ) && ! $simple_ui ) : ?>
 		<# if ( ! data.groupLoading && ! data.isRootCol ) { #>
-			<# if ( ( ! data.colFirst && data.contentWidth > 40 ) || ( data.hasParentCol && data.colFirst && ! data.parentFirst ) ) { #>
+			<# if ( ! data.colFirst || ( data.hasParentCol && data.colFirst && ! data.parentFirst ) ) { #>
 			<div class="fl-block-col-resize fl-block-col-resize-w<# if ( data.hasParentCol && data.colFirst && ! data.parentFirst ) { #> fl-block-col-resize-parent<# } #>">
 				<div class="fl-block-col-resize-handle-wrap">
 					<div class="fl-block-col-resize-feedback fl-block-col-resize-feedback-left"></div>
@@ -190,7 +195,7 @@
 				</div>
 			</div>
 			<# } #>
-			<# if ( ( ! data.colLast && data.contentWidth > 40 ) || ( data.hasParentCol && data.colLast && ! data.parentLast ) ) { #>
+			<# if ( ! data.colLast || ( data.hasParentCol && data.colLast && ! data.parentLast ) ) { #>
 			<div class="fl-block-col-resize fl-block-col-resize-e<# if ( data.hasParentCol && data.colLast && ! data.parentLast ) { #> fl-block-col-resize-parent<# } #>">
 				<div class="fl-block-col-resize-handle-wrap">
 					<div class="fl-block-col-resize-feedback fl-block-col-resize-feedback-left"></div>
@@ -262,6 +267,18 @@
 </script>
 <!-- #tmpl-fl-alert-lightbox -->
 
+<script type="text/html" id="tmpl-fl-crash-lightbox">
+	<div class="fl-lightbox-message">{{{data.message}}}</div>
+	<# if ( data.debug ) { #>
+		<div class="fl-lightbox-message-info">Here is the message reported in your browser’s JavaScript console.<pre>{{{data.debug}}}</pre></div>
+	<# } #>
+	<div class="fl-lightbox-message-info">{{{data.info}}}</div>
+	<div class="fl-lightbox-footer">
+		<span class="fl-builder-alert-close fl-builder-button fl-builder-button-large fl-builder-button-primary" href="javascript:void(0);"><?php _e( 'OK', 'fl-builder' ); ?></span>
+	</div>
+</script>
+<!-- #tmpl-fl-crash-lightbox -->
+
 <script type="text/html" id="tmpl-fl-confirm-lightbox">
 	<div class="fl-lightbox-message">{{{data.message}}}</div>
 	<div class="fl-lightbox-footer">
@@ -294,11 +311,21 @@
 <script type="text/html" id="tmpl-fl-responsive-preview">
 	<div class="fl-responsive-preview-mask"></div>
 	<div class="fl-responsive-preview">
-		<div class="fl-responsive-preview-content">
-			<div class="fl-responsive-preview-message">
-				<?php _e( 'Layout Preview', 'fl-builder' ); ?>
-			</div>
+		<div class="fl-responsive-preview-message">
+			<span>
+				<?php _e( 'Responsive Editing', 'fl-builder' ); ?>
+			</span>
+			<button class="fl-builder-button fl-builder-button-large" data-mode="responsive">
+				<i class="dashicons dashicons-smartphone"></i>
+			</button>
+			<button class="fl-builder-button fl-builder-button-large" data-mode="medium">
+				<i class="dashicons dashicons-tablet"></i>
+			</button>
+			<button class="fl-builder-button fl-builder-button-large" data-mode="default">
+				<?php _e( 'Exit', 'fl-builder' ); ?>
+			</button>
 		</div>
+		<div class="fl-responsive-preview-content"></div>
 	</div>
 </script>
 <!-- #tmpl-fl-responsive-preview -->
@@ -356,7 +383,7 @@
 <!-- #tmpl-fl-search-results-panel -->
 
 <script type="text/html" id="tmpl-fl-search-no-results">
-	<div class="fl-builder--no-results"><?php _ex( 'No Results Found', 'No content panel search results found', 'fl-builder' ) ?></div>
+	<div class="fl-builder--no-results"><?php _ex( 'No Results Found', 'No content panel search results found', 'fl-builder' ); ?></div>
 </script>
 <!-- #tmpl-fl-search-no-results -->
 
@@ -391,15 +418,28 @@
 
 		<div class="fl-builder--menu">
 			<# for (var key in data.items) {
-				var item = data.items[key];
-
+				var item  = data.items[key];
+				var extra = '';
+				if ( 'revisions' === item.view && FLBuilderConfig.revisions_count > 0 ) {
+					extra = '[' + FLBuilderConfig.revisions_count + ']';
+				}
+				if ( 'event' === item.type && 'showLayoutSettings' === item.eventName ) {
+					if( FLBuilderConfig.layout_css_js ) {
+						extra = '&bull;';
+					}
+				}
+				if ( 'event' === item.type && 'showGlobalSettings' === item.eventName ) {
+					if( '' !== FLBuilderConfig.global.css || '' !== FLBuilderConfig.global.js ) {
+						extra = '&bull;';
+					}
+				}
 				switch(item.type) {
 					case "separator":
 						#><hr><#
 						break;
 					case "event":
 						#>
-						<button class="fl-builder--menu-item" data-type="event" data-event="{{item.eventName}}">{{{item.label}}} <span class="fl-builder--menu-item-accessory">{{{item.accessory}}}</span></button>
+						<button class="fl-builder--menu-item" data-type="event" data-event="{{item.eventName}}">{{{item.label}}}<span class="menu-event event-{{item.eventName}}">{{{extra}}}</span><span class="fl-builder--menu-item-accessory">{{{item.accessory}}}</span></button>
 						<#
 						break;
 					case "link":
@@ -409,7 +449,7 @@
 						break;
 					case "view":
 						#>
-						<button class="fl-builder--menu-item" data-type="view" data-view="{{item.view}}">{{item.label}} <span class="fl-builder--menu-item-accessory">&rarr;</span></button>
+						<button class="fl-builder--menu-item" data-type="view" data-view="{{item.view}}">{{item.label}}<span class="menu-view view-{{item.view}}">{{extra}}</span><span class="fl-builder--menu-item-accessory">&rarr;</span></button>
 						<#
 						break;
 					case "video":
@@ -429,7 +469,7 @@
 <!-- #tmpl-fl-main-menu-panel-view -->
 
 <script type="text/html" id="tmpl-fl-toolbar">
-<?php include FL_BUILDER_DIR . 'includes/ui-bar.php' ?>
+<?php include FL_BUILDER_DIR . 'includes/ui-bar.php'; ?>
 </script>
 <!-- #tmpl-fl-toolbar -->
 
@@ -466,7 +506,7 @@
 					}
 					var isShowingClass = (tab.isShowing) ? 'is-showing' : '' ;
 					#>
-					<button data-tab="{{tab.handle}}" class="{{isShowingClass}}">{{tab.name}}</button>
+					<button data-tab="{{tab.handle}}" class="fl-builder--tab-button {{isShowingClass}}">{{tab.name}}</button>
 					<#
 				}
 				#>
@@ -485,7 +525,7 @@
 						</svg>
 					</button>
 					<div class="fl-builder-panel-search-input">
-						<input name="search-term" placeholder="<?php _e( 'Search Modules', 'fl-builder' ) ?>" />
+						<input name="search-term" placeholder="<?php _e( 'Search Modules', 'fl-builder' ); ?>" />
 						<button class="fl-builder-dismiss-panel-search">
 							<svg viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 								<g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -566,7 +606,7 @@
 	<div class="fl-builder--category-select">
 		<div class="fl-builder--selector-display">
 			<button class="fl-builder--selector-display-label">
-				<span class="fl-builder--group-label"><?php _e( 'Group', 'fl-builder' ) ?></span>
+				<span class="fl-builder--group-label"><?php _e( 'Group', 'fl-builder' ); ?></span>
 				<span class="fl-builder--current-view-name">{{{activeViewName}}}</span>
 			</button>
 		</div>
@@ -577,9 +617,24 @@
 					if (view.type === 'separator') {
 						#><hr><#
 					} else {
-					var insetClass = view.isSubItem ? 'fl-inset' : '';
+					var parent = view.parent ? 'data-parent="' + view.parent + '"' : '';
+					var hasChildrenClass = view.hasChildren ? ' fl-has-children' : '';
+					var hasChildrenOpenClass = view.hasChildrenOpen ? ' fl-has-children-showing' : '';
+					var insetClass = view.isSubItem ? ' fl-inset' : '';
+					var display = '';
+
+					if ( view.parent && views[ view.parent ] && views[ view.parent ].hasChildrenOpen ) {
+						display = ' style="display:block;"';
+					}
 					#>
-					<button data-view="{{view.handle}}" class="fl-builder--menu-item {{insetClass}}">{{{view.name}}}</button>
+					<button data-view="{{view.handle}}" {{{parent}}} {{{display}}} class="fl-builder--menu-item{{insetClass}}{{hasChildrenClass}}{{hasChildrenOpenClass}}">
+						{{{view.name}}}
+						<# if ( view.hasChildren ) { #>
+						<svg class="fl-symbol">
+							<use xlink:href="#fl-down-caret" />
+						</svg>
+						<# } #>
+					</button>
 				<# } } #>
 			</div>
 		</div>
@@ -607,7 +662,9 @@
 					if ( _.isUndefined(modules) ) { continue; }
 				#>
 				<div id="fl-builder-blocks-{{slug}}" class="fl-builder-blocks-section">
-					<span class="fl-builder-blocks-section-title">{{title}}</span>
+					<div class="fl-builder-blocks-section-header">
+						<span class="fl-builder-blocks-section-title">{{title}}</span>
+					</div>
 					<div class="fl-builder-blocks-section-content fl-builder-modules">
 						<# for( var k in modules) {
 							var module 	= modules[ k ],
@@ -629,13 +686,30 @@
 			}
 		}
 
+		// Sort categorized modules in alphabetical order before render.
+		Object.keys(groupedModules.categorized).sort().forEach(function(key) {
+			var value = groupedModules.categorized[key];
+			delete groupedModules.categorized[key];
+			groupedModules.categorized[key] = value;
+		});
+
 		// Render any sections that were not already rendered in the ordered set
 		for( var title in groupedModules.categorized) {
 			var modules = groupedModules.categorized[title],
 				slug = title.replace(/\s+/g, '-').toLowerCase();
+
+				modules.sort(function(a, b) {
+					if (a.name < b.name)
+						return -1;
+					if (a.name > b.name)
+						return 1;
+					return 0;
+				});
 			#>
 			<div id="fl-builder-blocks-{{slug}}" class="fl-builder-blocks-section">
-				<span class="fl-builder-blocks-section-title">{{title}}</span>
+				<div class="fl-builder-blocks-section-header">
+					<span class="fl-builder-blocks-section-title">{{title}}</span>
+				</div>
 				<div class="fl-builder-blocks-section-content fl-builder-modules">
 					<# for( var i in modules) {
 						var module 	= modules[i],
@@ -667,7 +741,9 @@
 			#>
 			<div class="fl-builder-blocks-section">
 				<# if (title !== '') { #>
-				<span class="fl-builder-blocks-section-title">{{title}}</span>
+				<div class="fl-builder-blocks-section-header">
+					<span class="fl-builder-blocks-section-title">{{title}}</span>
+				</div>
 				<# } #>
 				<div class="fl-builder-blocks-section-content fl-builder-module-templates">
 					<#
@@ -675,7 +751,7 @@
 						var template = templates[i],
 							image = template.image,
 							id = _.isNumber( template.postId ) ? template.postId : template.id,
-							hasImage = !_.isUndefined(image) && !image.endsWith('blank.jpg'),
+							hasImage = image && !image.endsWith('blank.jpg'),
 							hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '' ;
 					#>
 					<span class="fl-builder-block fl-builder-block-template fl-builder-block-module-template {{hasImageClass}}" data-id="{{id}}" data-type="{{template.type}}">
@@ -693,7 +769,7 @@
 		}
 	}
 	if (FLBuilderConfig.lite) { #>
-	<div class="fl-builder--panel-cta"><a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank"><i class="fas fa-external-link-alt"></i> <?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ) ?></a></div>
+	<div class="fl-builder--panel-cta"><a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank"><i class="fas fa-external-link-alt"></i> <?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ); ?></a></div>
 	<# } #>
 </script>
 <!-- #tmpl-fl-content-panel-modules-view -->
@@ -726,7 +802,7 @@
 		<# } #>
 
 		<# if (FLBuilderConfig.lite) { #>
-		<div class="fl-builder--panel-cta"><a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank"><i class="fas fa-external-link-alt"></i> <?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ) ?></a></div>
+		<div class="fl-builder--panel-cta"><a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank"><i class="fas fa-external-link-alt"></i> <?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ); ?></a></div>
 		<# } #>
 	</div>
 </script>
@@ -735,8 +811,8 @@
 <script type="text/html" id="tmpl-fl-content-panel-templates-view">
 	<# if (FLBuilderConfig.lite) { #>
 	<div class="fl-builder--panel-message">
-		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ) ?></p>
-		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium page builder', 'fl-builder' )?> <i class="fas fa-external-link-alt"></i></a>
+		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ); ?></p>
+		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium page builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
 	</div>
 	<# } #>
 	<#
@@ -760,7 +836,9 @@
 				#>
 				<div class="fl-builder--template-collection-section">
 					<# if (catHandle !== 'uncategorized' && catHandle !== FLBuilderStrings.undefined && Object.keys(categories).length > 1) { #>
-					<div class="fl-builder--template-collection-section-name">{{categoryName}}</div>
+					<div class="fl-builder--template-collection-section-header">
+						<div class="fl-builder--template-collection-section-name">{{categoryName}}</div>
+					</div>
 					<# } #>
 					<div class="fl-builder--template-collection-section-content">
 						<#
@@ -817,7 +895,9 @@
 				#>
 				<div class="fl-builder-blocks-section">
 					<# if (catHandle !== 'uncategorized' && catHandle !== FLBuilderStrings.undefined && Object.keys(categories).length > 1) { #>
-					<span class="fl-builder-blocks-section-title">{{categoryName}}</span>
+					<div class="fl-builder-blocks-section-header">
+						<span class="fl-builder-blocks-section-title">{{categoryName}}</span>
+					</div>
 					<# } #>
 					<div class="fl-builder-blocks-section-content fl-builder-row-templates">
 						<#
@@ -825,7 +905,7 @@
 							var template = templates[i],
 								image = template.image,
 								id = _.isNumber( template.postId ) ? template.postId : template.id,
-								hasImage = !_.isUndefined(image) && !image.endsWith('blank.jpg'),
+								hasImage = image && !image.endsWith('blank.jpg'),
 								hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '';
 						#>
 						<span class="fl-builder-block fl-builder-block-template fl-builder-block-row-template {{hasImageClass}}" data-id="{{id}}" data-type="{{template.type}}">
@@ -868,7 +948,9 @@
 				#>
 				<div class="fl-builder-blocks-section">
 					<# if (catHandle !== 'uncategorized' && catHandle !== FLBuilderStrings.undefined && Object.keys(categories).length > 1) { #>
-					<span class="fl-builder-blocks-section-title">{{categoryName}}</span>
+					<div class="fl-builder-blocks-section-header">
+						<span class="fl-builder-blocks-section-title">{{categoryName}}</span>
+					</div>
 					<# } #>
 					<div class="fl-builder-blocks-section-content fl-builder-module-templates">
 						<#
@@ -876,7 +958,7 @@
 							var template = templates[i],
 								image = template.image,
 								id = _.isNumber( template.postId ) ? template.postId : template.id,
-								hasImage = !_.Undefined(image) && !image.endsWith('blank.jpg'),
+								hasImage = image && !image.endsWith('blank.jpg'),
 								hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '';
 						#>
 						<span class="fl-builder-block fl-builder-block-template fl-builder-block-module-template {{hasImageClass}}" data-id="{{id}}" data-type="{{template.type}}">
@@ -899,22 +981,22 @@
 
 <script type="text/html" id="tmpl-fl-content-panel-no-view">
 	<div class="fl-builder--panel-message">
-		<?php _ex( 'Sorry, no content was found!', 'Message that displays when a panel tab has no view to display', 'fl-builder' ) ?>
+		<?php _ex( 'Sorry, no content was found!', 'Message that displays when a panel tab has no view to display', 'fl-builder' ); ?>
 	</div>
 </script>
 <!-- #tmpl-fl-content-panel-no-view -->
 
 <script type="text/html" id="tmpl-fl-content-panel-no-templates-view">
 	<div class="fl-builder--panel-message">
-		<?php _ex( 'Sorry, no templates were found!', 'Message that displays when there are no templates to display', 'fl-builder' ) ?>
+		<?php _ex( 'Sorry, no templates were found!', 'Message that displays when there are no templates to display', 'fl-builder' ); ?>
 	</div>
 </script>
 <!-- #tmpl-fl-content-panel-no-templates-view -->
 
 <script type="text/html" id="tmpl-fl-content-lite-templates-upgrade-view">
 	<div class="fl-builder--panel-message">
-		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ) ?></p>
-		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium page builder', 'fl-builder' )?> <i class="fas fa-external-link-alt"></i></a>
+		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ); ?></p>
+		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium page builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
 	</div>
 </script>
 <!-- #tmpl-fl-content-lite-templates-upgrade-view -->
@@ -964,7 +1046,7 @@
 			<# } #>
 
 			<div class="fl-builder-ui-keyboard-shortcust-footer">
-				<button class="dismiss-shortcut-ui"><?php _e( 'Close', 'fl-builder' ) ?></button>
+				<button class="dismiss-shortcut-ui"><?php _e( 'Close', 'fl-builder' ); ?></button>
 			</div>
 		</div>
 	</div>

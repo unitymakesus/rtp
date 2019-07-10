@@ -24,7 +24,7 @@ Class Drip_Api {
 
     /**
      * Accepts the token and saves it internally.
-     * 
+     *
      * @param string $api_token e.g. qsor48ughrjufyu2dadraasfa1212424
      * @throws Exception
      */
@@ -166,7 +166,7 @@ Class Drip_Api {
 
     /**
      * Sends a request to add a subscriber and returns its record or false
-     * 
+     *
      * @param array $params
      * @param array/bool $account
      */
@@ -174,10 +174,10 @@ Class Drip_Api {
         if (empty($params['account_id'])) {
             throw new Exception("Account ID not specified");
         }
-        
+
         $account_id = $params['account_id'];
         unset($params['account_id']); // clear it from the params
-        
+
         $api_action = "/$account_id/subscribers";
         $url = $this->api_end_point . $api_action;
 
@@ -200,7 +200,7 @@ Class Drip_Api {
     }
 
     /**
-     * 
+     *
      * @param array $params
      * @param array $params
      */
@@ -244,7 +244,7 @@ Class Drip_Api {
 
     /**
      * Subscribes a user to a given campaign for a given account.
-     * 
+     *
      * @param array $params
      * @param array $accounts
      */
@@ -293,9 +293,9 @@ Class Drip_Api {
     }
 
     /**
-     * 
+     *
      * Some keys are removed from the params so they don't get send with the other data to Drip.
-     * 
+     *
      * @param array $params
      * @param array $params
      */
@@ -321,7 +321,7 @@ Class Drip_Api {
 
         $api_action = "$account_id/subscribers/$subscriber_id/unsubscribe";
         $url = $this->api_end_point . $api_action;
-        
+
         $req_params = $params;
         $res = $this->make_request($url, $req_params, self::POST);
 
@@ -347,7 +347,7 @@ Class Drip_Api {
      */
     public function tag_subscriber($params) {
         $status = false;
-        
+
         if (empty($params['account_id'])) {
             throw new Exception("Account ID not specified");
         }
@@ -381,7 +381,7 @@ Class Drip_Api {
     /**
      *
      * This calls DELETE /:account_id/tags to remove the tags. It just returns some status code no content
-     * 
+     *
      * @param array $params
      * @param bool $status success or failure
      */
@@ -453,7 +453,7 @@ Class Drip_Api {
 
         return $status;
     }
-    
+
     /**
      *
      * @param string $url
@@ -480,8 +480,7 @@ Class Drip_Api {
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        $ch = fl_set_curl_safe_opts( $ch );
         curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->connect_timeout);
         curl_setopt($ch, CURLOPT_USERPWD, $this->api_token . ":" . ''); // no pwd
@@ -514,7 +513,7 @@ Class Drip_Api {
 
         $buffer = curl_exec($ch);
         $status = !empty($buffer);
-        
+
         $data = array(
             'url'       => $url,
             'params'    => $params,
@@ -553,7 +552,7 @@ Class Drip_Api {
     public function get_error_message() {
         return $this->error_message;
     }
-    
+
     /**
      * Retruns whatever was accumultaed in error_code
      * @return string
@@ -590,7 +589,7 @@ Class Drip_Api {
              */
             if (!empty($json_arr['errors'])) { // JSON
                 $messages = $error_codes = array();
-                
+
                 foreach ($json_arr['errors'] as $rec) {
                     $messages[] = $rec['message'];
                     $error_codes[] = $rec['code'];
@@ -600,7 +599,7 @@ Class Drip_Api {
                 $this->error_message = join("\n", $messages);
             } else { // There's no JSON in the reply so we'll extract the message from the HTML page by removing the HTML.
                 $msg = $res['buffer'];
-                
+
                 $msg = preg_replace('#.*?<body[^>]*>#si', '', $msg);
                 $msg = preg_replace('#</body[^>]*>.*#si', '', $msg);
                 $msg = strip_tags($msg);

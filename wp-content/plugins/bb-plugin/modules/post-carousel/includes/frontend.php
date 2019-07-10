@@ -13,9 +13,9 @@ remove_filter( 'fl_builder_loop_query_args', array( $module, 'remove_pagination_
 // Render the posts.
 if ( $query->have_posts() ) :
 
-?>
+	?>
 
-	<div class="fl-post-carousel fl-post-carousel-<?php echo $layout ?>" itemscope="itemscope" itemtype="https://schema.org/Blog">
+	<div class="fl-post-carousel fl-post-carousel-<?php echo $layout; ?>"<?php FLBuilder::print_schema( ' itemscope="itemscope" itemtype="https://schema.org/Blog"' ); ?>>
 		<div class="fl-post-carousel-wrapper">
 			<?php
 
@@ -32,7 +32,8 @@ if ( $query->have_posts() ) :
 		<?php
 
 		// Render the navigation.
-		if ( 'yes' == $settings->navigation && $query->have_posts() ) : ?>
+		if ( 'yes' == $settings->navigation && $query->have_posts() ) :
+			?>
 			<div class="fl-post-carousel-navigation" aria-label="carousel buttons">
 				<a class="carousel-prev" href="#" aria-label="previous" role="button"><div class="fl-post-carousel-svg-container"><?php include FL_BUILDER_DIR . 'img/svg/arrow-left.svg'; ?></div></a>
 				<a class="carousel-next" href="#" aria-label="next" role="button"><div class="fl-post-carousel-svg-container"><?php include FL_BUILDER_DIR . 'img/svg/arrow-right.svg'; ?></div></a>

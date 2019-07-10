@@ -1,7 +1,11 @@
 (function($){
 
 	FLBuilder.registerModuleHelper('advanced-tabs', {
-
+		_templates: {
+			saved_modules: '',
+			saved_rows: '',
+			page_templates: ''
+		},
 		init: function()
 		{
 			var form    	= $('.fl-builder-settings'),
@@ -18,6 +22,8 @@
 
 			this._iconStyleChanged();
 			icon_style.on('change', $.proxy( this._iconStyleChanged, this ) ) ;
+
+			$('body').delegate( '.fl-builder-settings select[name="content_type"]', 'change', $.proxy(this._contentTypeChange, this) );
 		},
 		
 		_styleChanged: function() {
@@ -146,7 +152,81 @@
 					form.find('#fl-field-tab_style_width').hide();
 				}
 		},
+		_contentTypeChange: function(e)
+		{
+			var type = $(e.target).val();
 
+			if ( 'saved_modules' === type ) {
+				this._setTemplates('saved_modules');
+			}
+			if ( 'saved_rows' === type ) {
+				this._setTemplates('saved_rows');
+			}
+			if ( 'saved_page_templates' === type ) {
+				this._setTemplates('page_templates');
+			}
+		},
+		_getTemplates: function(type, callback)
+		{
+			if ( 'undefined' === typeof type ) {
+				return;
+			}
+
+			if ( 'undefined' === typeof callback ) {
+				return;
+			}
+			if ( 'saved_modules' === type ) {
+				type = 'module';
+			} else if ( 'saved_rows' === type ) {
+				type = 'row';
+			} else if ( 'page_templates' === type ) {
+				type = 'layout';
+			}
+			var self = this;
+
+			$.post(
+				ajaxurl,
+				{
+					action: 'uabb_get_saved_templates',
+					type: type
+				},
+				function( response ) {
+					callback(response);
+				}
+			);
+		},
+		_setTemplates: function(type)
+		{
+			var form = $('.fl-builder-settings'),
+					
+				select = form.find( 'select[name="ct_' + type + '"]' ),
+				value = '', self = this;
+
+			if ( 'undefined' !== typeof FLBuilderSettingsForms && 'undefined' !== typeof FLBuilderSettingsForms.config ) {
+
+				if ( "uabb_tab_items_form" === FLBuilderSettingsForms.config.id ) {
+					value = FLBuilderSettingsForms.config.settings['ct_' + type];
+				}
+			}
+			if ( this._templates[type] !== '' ) {
+				select.html( this._templates[type] );
+				select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+
+				return;
+			}
+
+			this._getTemplates(type, function(data) {
+				var response = JSON.parse( data );
+
+				if ( response.success ) {
+					self._templates[type] = response.data;
+					select.html( response.data );
+					if ( '' !== value ) {
+						select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+					}
+				}
+			});
+		}
 	});
 
 })(jQuery);

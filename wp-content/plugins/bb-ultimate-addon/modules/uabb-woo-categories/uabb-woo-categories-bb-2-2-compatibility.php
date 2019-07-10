@@ -58,9 +58,15 @@ FLBuilder::register_module(
 							'type'       => 'unit',
 							'label'      => __( 'Columns', 'uabb' ),
 							'help'       => __( 'Choose number of categories to be displayed at a time.', 'uabb' ),
-							'responsive' => true,
 							'units'      => array( 'Columns' ),
 							'slider'     => true,
+							'responsive' => array(
+								'default' => array(
+									'default'    => '4',
+									'medium'     => '2',
+									'responsive' => '1',
+								),
+							),
 						),
 					),
 				),
@@ -78,9 +84,15 @@ FLBuilder::register_module(
 							'type'       => 'unit',
 							'label'      => __( 'Columns', 'uabb' ),
 							'help'       => __( 'Choose number of categories to be displayed at a time.', 'uabb' ),
-							'responsive' => true,
 							'units'      => array( 'Columns' ),
 							'slider'     => true,
+							'responsive' => array(
+								'default' => array(
+									'default'    => '4',
+									'medium'     => '2',
+									'responsive' => '1',
+								),
+							),
 						),
 						'slides_to_scroll'       => array(
 							'type'        => 'unit',

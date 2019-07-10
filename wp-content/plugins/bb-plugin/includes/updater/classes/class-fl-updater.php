@@ -14,7 +14,7 @@ final class FLUpdater {
 	 * @access private
 	 * @var string $_updates_api_url
 	 */
-	static private $_updates_api_url = 'http://updates.wpbeaverbuilder.com/';
+	static private $_updates_api_url = 'https://updates.wpbeaverbuilder.com/';
 
 	/**
 	 * An internal array of data for each product.
@@ -113,7 +113,7 @@ final class FLUpdater {
 
 		if ( ! isset( $response->error ) ) {
 
-			$transient->last_checked = time();
+			$transient->last_checked                       = time();
 			$transient->checked[ $this->settings['slug'] ] = $this->settings['version'];
 
 			if ( 'plugin' == $this->settings['type'] ) {
@@ -122,15 +122,16 @@ final class FLUpdater {
 
 				if ( version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
 
-					$transient->response[ $plugin ] 				= new stdClass();
-					$transient->response[ $plugin ]->slug 			= $response->slug;
-					$transient->response[ $plugin ]->new_version 	= $response->new_version;
-					$transient->response[ $plugin ]->url 			= $response->homepage;
-					$transient->response[ $plugin ]->package 		= $response->package;
-					$transient->response[ $plugin ]->tested 		= $response->tested;
-					$transient->response[ $plugin ]->icons = apply_filters( 'fl_updater_icon', array(
-						'1x' => FL_BUILDER_URL . 'img/beaver-128.png',
-						'2x' => FL_BUILDER_URL . 'img/beaver-256.png',
+					$transient->response[ $plugin ]              = new stdClass();
+					$transient->response[ $plugin ]->slug        = $response->slug;
+					$transient->response[ $plugin ]->plugin      = $plugin;
+					$transient->response[ $plugin ]->new_version = $response->new_version;
+					$transient->response[ $plugin ]->url         = $response->homepage;
+					$transient->response[ $plugin ]->package     = $response->package;
+					$transient->response[ $plugin ]->tested      = $response->tested;
+					$transient->response[ $plugin ]->icons       = apply_filters( 'fl_updater_icon', array(
+						'1x'      => FL_BUILDER_URL . 'img/beaver-128.png',
+						'2x'      => FL_BUILDER_URL . 'img/beaver-256.png',
 						'default' => FL_BUILDER_URL . 'img/beaver-256.png',
 					), $response, $this->settings );
 
@@ -143,10 +144,11 @@ final class FLUpdater {
 				if ( version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
 
 					$transient->response[ $this->settings['slug'] ] = array(
-						'new_version'   => $response->new_version,
-						'url'           => $response->homepage,
-						'package'       => $response->package,
-						'tested'        => $response->tested,
+						'new_version' => $response->new_version,
+						'theme'       => $this->settings['slug'],
+						'url'         => $response->homepage,
+						'package'     => $response->package,
+						'tested'      => $response->tested,
 					);
 				}
 			}
@@ -176,18 +178,18 @@ final class FLUpdater {
 
 		if ( ! isset( $response->error ) ) {
 
-			$info 					= new stdClass();
-			$info->name     		= $this->settings['name'];
-			$info->version			= $response->new_version;
-			$info->slug				= $response->slug;
-			$info->plugin_name		= $response->plugin_name;
-			$info->author			= $response->author;
-			$info->homepage			= $response->homepage;
-			$info->requires			= $response->requires;
-			$info->tested			= $response->tested;
-			$info->last_updated		= $response->last_updated;
-			$info->download_link	= $response->package;
-			$info->sections 		= (array) $response->sections;
+			$info                = new stdClass();
+			$info->name          = $this->settings['name'];
+			$info->version       = $response->new_version;
+			$info->slug          = $response->slug;
+			$info->plugin_name   = $response->plugin_name;
+			$info->author        = $response->author;
+			$info->homepage      = $response->homepage;
+			$info->requires      = $response->requires;
+			$info->tested        = $response->tested;
+			$info->last_updated  = $response->last_updated;
+			$info->download_link = $response->package;
+			$info->sections      = (array) $response->sections;
 			return apply_filters( 'fl_plugin_info_data', $info, $response );
 		}
 
@@ -238,7 +240,7 @@ final class FLUpdater {
 		if ( is_array( $args ) && isset( $args['slug'] ) ) {
 
 			if ( 'plugin' == $args['type'] ) {
-				if ( file_exists( WP_CONTENT_DIR . '/plugins/' . $args['slug'] ) ) {
+				if ( file_exists( trailingslashit( WP_PLUGIN_DIR ) . $args['slug'] ) ) {
 					self::$_products[ $args['name'] ] = $args;
 					new FLUpdater( self::$_products[ $args['name'] ] );
 				}
@@ -263,6 +265,9 @@ final class FLUpdater {
 		if ( isset( $_POST['fl-updater-nonce'] ) ) {
 			if ( wp_verify_nonce( $_POST['fl-updater-nonce'], 'updater-nonce' ) ) {
 				$response = self::save_subscription_license( $_POST['license'] );
+				if ( '' == $_POST['license'] ) {
+					$response->error = __( 'License Removed', 'fl-builder' );
+				}
 				if ( isset( $response->error ) ) {
 					unset( $_POST['fl-updater-nonce'] );
 					FLBuilderAdminSettings::add_error( $response->error );
@@ -271,7 +276,7 @@ final class FLUpdater {
 			}
 		}
 
-		$license 	  = self::get_subscription_license();
+		$license      = self::get_subscription_license();
 		$subscription = self::get_subscription_info();
 
 		// Include the form ui.
@@ -316,7 +321,7 @@ final class FLUpdater {
 	static public function save_subscription_license( $license ) {
 
 		if ( preg_match( '/[^a-zA-Z\d\s@\.\-_]/', $license ) ) {
-			$response = new StdClass;
+			$response        = new StdClass;
 			$response->error = __( 'You submitted an invalid license. Non alphanumeric characters found.', 'fl-builder' );
 			return $response;
 		}
@@ -324,7 +329,7 @@ final class FLUpdater {
 			'fl-api-method' => 'activate_domain',
 			'license'       => $license,
 			'domain'        => network_home_url(),
-			'products'		=> json_encode( self::$_products ),
+			'products'      => json_encode( self::$_products ),
 		));
 		update_site_option( 'fl_themes_subscription_email', $license );
 		return $response;
@@ -371,9 +376,11 @@ final class FLUpdater {
 
 			if ( ! $license ) {
 				$link = sprintf( '<a href="%s" target="_blank" style="color: #fff; text-decoration: underline;">%s &raquo;</a>', admin_url( '/options-general.php?page=fl-builder-settings#license' ), __( 'Enter License Key', 'fl-builder' ) );
+				/* translators: %s: link to license tab */
 				$text = sprintf( __( 'Please enter a valid license key to enable automatic updates. %s', 'fl-builder' ), $link );
 			} else {
 				$link = sprintf( '<a href="%s" target="_blank" style="color: #fff; text-decoration: underline;">%s &raquo;</a>', $plugin_data['PluginURI'], __( 'Subscribe Now', 'fl-builder' ) );
+				/* translators: %s: subscribe link */
 				$text = sprintf( __( 'Please subscribe to enable automatic updates for this plugin. %s', 'fl-builder' ), $link );
 			}
 

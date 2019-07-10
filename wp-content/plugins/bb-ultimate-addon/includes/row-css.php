@@ -14,7 +14,44 @@ function uabb_row_render_css() {
 
 	add_filter( 'fl_builder_render_css', 'uabb_row_gradient_css', 10, 3 );
 }
+/**
+ * Function that renders particle row's CSS
+ *
+ * @since 1.17.0
+ */
+function uabb_row_particle_render_css() {
 
+	add_filter( 'fl_builder_render_css', 'uabb_row_particle_css', 10, 3 );
+}
+/**
+ * Function that renders particle row's CSS
+ *
+ * @since 1.17.0
+ * @param CSS    $css gets the CSS for the row gradient.
+ * @param array  $nodes an array to get the nodes of the row.
+ * @param object $global_settings an object to get various settings.
+ */
+function uabb_row_particle_css( $css, $nodes, $global_settings ) {
+	foreach ( $nodes['rows'] as $row ) {
+		ob_start();
+		if ( 'yes' === $row->settings->enable_particles && ! FLBuilderModel::is_builder_active() ) {
+		?>
+			.fl-node-<?php echo $row->node; ?> .fl-row-content,
+			.fl-node-<?php echo $row->node; ?> .fl-row-content * {
+				z-index: 2;
+			}
+			.fl-row-content-wrap .uabb-row-particles-background {
+				z-index: 1;
+			}
+			.fl-node-<?php echo $row->node; ?> .fl-row-content {
+				position: inherit;
+			}
+		<?php
+		}
+		$css .= ob_get_clean();
+	}
+	return $css;
+}
 /**
  * Function that renders row's CSS
  *
@@ -103,7 +140,8 @@ function uabb_row_gradient_css( $css, $nodes, $global_settings ) {
 
 			<?php
 		}
-
+		?>
+		<?php
 		$css .= ob_get_clean();
 	}
 

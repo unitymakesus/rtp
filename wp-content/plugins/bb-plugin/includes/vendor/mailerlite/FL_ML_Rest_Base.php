@@ -150,8 +150,7 @@ class FL_ML_Rest_Base
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array('Accept: ' . $this->acceptType));
 
-        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, false);
+        $curlHandle = fl_set_curl_safe_opts( $curlHandle );
         curl_setopt($curlHandle, CURLOPT_FOLLOWLOCATION, true);
     }
 

@@ -8,7 +8,33 @@
 			}
 		},
 
-		init: function() {}
+		init: function() {
+
+            this._hideDocs();
+        },
+         /**
+         * Branding is on hide the Docs Tab.
+         *
+         * @since 1.16.1
+        */
+        _hideDocs: function() {
+            var form            = $('.fl-builder-settings'),
+            branding_selector   = form.find('#fl-field-uabb_helpful_information .uabb-docs-list');
+            settings_tab        = form.find('.fl-builder-settings-tabs');
+            get_anchor          =  settings_tab.find('a');
+
+            $( get_anchor ).each(function() {
+
+                if ( '#fl-builder-settings-tab-uabb_docs' === $(this) .attr('href') ) {
+
+                    if ( 'yes' === branding_selector.data('branding') ) {
+                        $( this ).hide();
+                    } else {
+                        $( this ).show();
+                    }
+                }
+            });
+        }
 
 	});
 
@@ -39,6 +65,8 @@
             photo_source.on('change',  $.proxy( this._imageTypeChange, this ) );
             img_border_style.on('change',  $.proxy( this._imageTypeChange, this ) );
             icon_border_style.on('change',  $.proxy( this._imageTypeChange, this ) );
+
+           
         },
 
         _imageTypeChange: function() {
@@ -189,7 +217,7 @@
                 }
             }
         }
-
+       
     });
 
 })(jQuery);

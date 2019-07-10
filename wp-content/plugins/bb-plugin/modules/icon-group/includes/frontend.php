@@ -8,17 +8,18 @@ foreach ( $settings->icons as $icon ) {
 	}
 
 	$icon_settings = array(
-		'bg_color'       => $settings->bg_color,
-		'bg_hover_color' => $settings->bg_hover_color,
-		'color'          => $settings->color,
+		'bg_color'        => $settings->bg_color,
+		'bg_hover_color'  => $settings->bg_hover_color,
+		'color'           => $settings->color,
 		'exclude_wrapper' => true,
-		'hover_color'    => $settings->hover_color,
-		'icon'           => $icon->icon,
-		'link'           => $icon->link,
-		'link_target'    => isset( $icon->link_target ) ? $icon->link_target : '_blank',
-		'size'           => $settings->size,
-		'text'           => '',
-		'three_d'        => $settings->three_d,
+		'hover_color'     => $settings->hover_color,
+		'icon'            => $icon->icon,
+		'link'            => $icon->link,
+		'link_target'     => isset( $icon->link_target ) ? $icon->link_target : '_blank',
+		'link_nofollow'   => isset( $icon->link_nofollow ) ? $icon->link_nofollow : 'nofollow',
+		'size'            => $settings->size,
+		'text'            => '',
+		'three_d'         => $settings->three_d,
 	);
 
 	FLBuilder::render_module_html( 'icon', $icon_settings );

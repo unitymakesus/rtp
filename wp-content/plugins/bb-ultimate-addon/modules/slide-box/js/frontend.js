@@ -22,7 +22,7 @@ function _hideAll_SlideBox( slidebox ) {
                         slidebox_wrap.removeClass('set-z-index');
                         
                     var style2 = jQuery(this).find('.uabb-style2'),
-                        dropdown_icon = style2.find('.uabb-slide-dropdown .fa'),
+                        dropdown_icon = style2.find('.uabb-slide-dropdown .fas'),
                         slidebox_wrap = style2.closest('.uabb-slide-box-wrap');
 
                     if( style2.hasClass('open-slidedown') ) {
@@ -33,9 +33,9 @@ function _hideAll_SlideBox( slidebox ) {
                     }
 
                     var style3 = jQuery(this).find('.uabb-style3'),
-                        dropdown_icon = style3.find('.uabb-slide-dropdown .fa'),
+                        dropdown_icon = style3.find('.uabb-slide-dropdown .fas'),
                         slidebox_wrap = style3.closest('.uabb-slide-box-wrap');
-
+                        
                     if( style3.hasClass('open-slidedown') ) {
                         style3.removeClass('open-slidedown');
                         slidebox_wrap.removeClass('set-z-index');

@@ -119,6 +119,7 @@ FLBuilder::register_module(
 							'label'       => __( 'First Heading Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -132,6 +133,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Second Heading Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',

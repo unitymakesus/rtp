@@ -15,10 +15,6 @@
 	<!-- Show sniff codes in all reports -->
 	<arg value="s"/>
 
-	<rule ref="PHPCompatibility.PHP.NewIniDirectives.max_input_varsFound">
-		<exclude-pattern>index.php</exclude-pattern>		
-	</rule>
-
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
 </ruleset>

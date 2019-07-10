@@ -6,7 +6,7 @@
 
 		<?php if ( FLBuilderAdminSettings::multisite_support() && ! is_network_admin() ) : ?>
 		<label>
-			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php if ( get_option( '_fl_builder_post_types' ) ) { echo 'checked="checked"';} ?> />
+			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php checked( get_option( '_fl_builder_post_types' ), 1 ); ?> />
 			<?php _e( 'Override network settings?', 'fl-builder' ); ?>
 		</label>
 		<?php endif; ?>
@@ -40,8 +40,8 @@
 
 				<?php
 
-				$saved_post_types   = FLBuilderModel::get_post_types();
-				$post_types			= get_post_types( array(
+				$saved_post_types = FLBuilderModel::get_post_types();
+				$post_types       = get_post_types( array(
 					'public' => true,
 				), 'objects' );
 				/**
@@ -49,7 +49,7 @@
 				 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
 				 * @see fl_builder_admin_settings_post_types
 				 */
-				$post_types         = apply_filters( 'fl_builder_admin_settings_post_types', $post_types );
+				$post_types = apply_filters( 'fl_builder_admin_settings_post_types', $post_types );
 
 				foreach ( $post_types as $post_type ) :
 
@@ -62,7 +62,7 @@
 						continue;
 					}
 
-				?>
+					?>
 					<p>
 						<label>
 							<input type="checkbox" name="fl-post-types[]" value="<?php echo $post_type->name; ?>" <?php echo $checked; ?> />

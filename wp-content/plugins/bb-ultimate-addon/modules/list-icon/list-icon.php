@@ -113,6 +113,7 @@ class UABBIconListModule extends FLBuilderModule {
 			if ( isset( $settings->typography_font_family ) ) {
 				if ( isset( $settings->typography_font_family['family'] ) ) {
 					$settings->font_typo['font_family'] = $settings->typography_font_family['family'];
+					unset( $settings->typography_font_family['family'] );
 				}
 				if ( isset( $settings->typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->typography_font_family['weight'] ) {
@@ -120,6 +121,7 @@ class UABBIconListModule extends FLBuilderModule {
 					} else {
 						$settings->font_typo['font_weight'] = $settings->typography_font_family['weight'];
 					}
+					unset( $settings->typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->typography_font_size_unit ) ) {
@@ -127,6 +129,7 @@ class UABBIconListModule extends FLBuilderModule {
 					'length' => $settings->typography_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->typography_font_size_unit );
 			}
 			if ( isset( $settings->typography_font_size_unit_medium ) ) {
 
@@ -134,6 +137,7 @@ class UABBIconListModule extends FLBuilderModule {
 					'length' => $settings->typography_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->typography_font_size_unit_medium );
 			}
 			if ( isset( $settings->typography_font_size_unit_responsive ) ) {
 
@@ -141,6 +145,7 @@ class UABBIconListModule extends FLBuilderModule {
 					'length' => $settings->typography_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->typography_font_size_unit_responsive );
 			}
 			if ( isset( $settings->typography_line_height_unit ) ) {
 
@@ -148,6 +153,7 @@ class UABBIconListModule extends FLBuilderModule {
 					'length' => $settings->typography_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->typography_line_height_unit );
 			}
 			if ( isset( $settings->typography_line_height_unit_medium ) ) {
 
@@ -155,6 +161,7 @@ class UABBIconListModule extends FLBuilderModule {
 					'length' => $settings->typography_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->typography_line_height_unit_medium );
 			}
 			if ( isset( $settings->typography_line_height_unit_responsive ) ) {
 
@@ -162,26 +169,17 @@ class UABBIconListModule extends FLBuilderModule {
 					'length' => $settings->typography_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->typography_line_height_unit_responsive );
 			}
 			if ( isset( $settings->typography_transform ) ) {
 				$settings->font_typo['text_transform'] = $settings->typography_transform;
+				unset( $settings->typography_transform );
 			}
 			if ( isset( $settings->typography_letter_spacing ) ) {
 				$settings->font_typo['letter_spacing'] = array(
 					'length' => $settings->typography_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			if ( isset( $settings->typography_font_family ) ) {
-				unset( $settings->typography_font_family );
-				unset( $settings->typography_font_size_unit );
-				unset( $settings->typography_font_size_unit_medium );
-				unset( $settings->typography_font_size_unit_responsive );
-				unset( $settings->typography_line_height_unit );
-				unset( $settings->typography_line_height_unit_medium );
-				unset( $settings->typography_line_height_unit_responsive );
-				unset( $settings->typography_transform );
 				unset( $settings->typography_letter_spacing );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
@@ -202,6 +200,7 @@ class UABBIconListModule extends FLBuilderModule {
 			if ( isset( $settings->typography_font_family ) && '' !== $settings->typography_font_family ) {
 				if ( isset( $settings->typography_font_family['family'] ) ) {
 					$settings->font_typo['font_family'] = $settings->typography_font_family['family'];
+					unset( $settings->typography_font_family['family'] );
 				}
 				if ( isset( $settings->typography_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->typography_font_family['weight'] ) {
@@ -209,6 +208,7 @@ class UABBIconListModule extends FLBuilderModule {
 					} else {
 						$settings->font_typo['font_weight'] = $settings->typography_font_family['weight'];
 					}
+					unset( $settings->typography_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->typography_font_size['small'] ) && ! isset( $settings->font_typo_responsive['font_size'] ) ) {
@@ -256,10 +256,23 @@ class UABBIconListModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->typography_font_family ) ) {
-				unset( $settings->typography_font_family );
-				unset( $settings->typography_font_size );
-				unset( $settings->typography_line_height );
+			if ( isset( $settings->typography_font_size['desktop'] ) ) {
+				unset( $settings->typography_font_size['desktop'] );
+			}
+			if ( isset( $settings->typography_font_size['medium'] ) ) {
+				unset( $settings->typography_font_size['medium'] );
+			}
+			if ( isset( $settings->typography_font_size['small'] ) ) {
+				unset( $settings->typography_font_size['small'] );
+			}
+			if ( isset( $settings->typography_line_height['desktop'] ) ) {
+				unset( $settings->typography_line_height['desktop'] );
+			}
+			if ( isset( $settings->typography_line_height['medium'] ) ) {
+				unset( $settings->typography_line_height['medium'] );
+			}
+			if ( isset( $settings->typography_line_height['small'] ) ) {
+				unset( $settings->typography_line_height['small'] );
 			}
 		}
 

@@ -10,16 +10,13 @@
 
 		init: function()
 		{
-			// Button background color change
-			$( 'input[name=btn_bg_color]' ).on( 'change', this._bgColorChange );
-			this._bgColorChange();
-
 			// Toggle reCAPTCHA display
 			this._toggleReCaptcha();
 			$( 'select[name=show_recaptcha]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
 			$( 'input[name=recaptcha_site_key]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
 			$( 'select[name=recaptcha_validate_type]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
 			$( 'select[name=recaptcha_theme]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
+			$( 'input[name=btn_bg_color]' ).on( 'change', this._previewButtonBackground );
 
 			// Render reCAPTCHA after layout rendered via AJAX
 			if ( window.onLoadFLReCaptcha ) {
@@ -56,20 +53,6 @@
 			}
 
 			return true;
-		},
-
-		_bgColorChange: function()
-		{
-			var bgColor = $( 'input[name=btn_bg_color]' ),
-				style   = $( '#fl-builder-settings-section-btn_style' );
-
-
-			if ( '' == bgColor.val() ) {
-				style.hide();
-			}
-			else {
-				style.show();
-			}
 		},
 
 		/**
@@ -172,7 +155,25 @@
 				theme	: theme
 			});
 			captchaElement.attr('data-widgetid', widgetID);
-		}
+		},
+
+		_previewButtonBackground: function( e ) {
+			var preview	= FLBuilder.preview,
+				selector = preview.classes.node + ' a.fl-button, ' + preview.classes.node + ' a.fl-button:visited',
+				form = $( '.fl-builder-settings:visible' ),
+				style = form.find( 'select[name=btn_style]' ).val(),
+				bgColor = form.find( 'input[name=btn_bg_color]' ).val();
+
+			if ( 'flat' === style ) {
+				if ( '' !== bgColor && bgColor.indexOf( 'rgb' ) < 0 ) {
+					bgColor = '#' + bgColor;
+				}
+				preview.updateCSSRule( selector, 'background-color', bgColor );
+				preview.updateCSSRule( selector, 'border-color', bgColor );
+			} else {
+				preview.delayPreview( e );
+			}
+		},
 	});
 
 })(jQuery);

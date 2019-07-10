@@ -23,6 +23,8 @@
 
 			/* WPML Support */
 			$('#icl_cfo').on('click', this._wpmlCopyClicked);
+
+			this._hideFLBuilderAdminButtons();
 		},
 
 		/**
@@ -161,6 +163,20 @@
 
 			if(response.has_layout && response.enabled) {
 				$('body').addClass('fl-builder-enabled');
+			}
+		},
+
+		/**
+		 * Hide the Page Builder Admin Buttons if Content Editor is hidden in the ACF Field Settings.
+		 *
+		 * @since 2.1.7
+		 * @access private
+		 * @method _hideFLBuilderAdminButtons
+		 */
+		_hideFLBuilderAdminButtons: function()
+		{
+			if ( $( '.acf-postbox' ).is( ':visible' ) && $( '#postdivrich' ).is( ':hidden' ) && ! $( '.fl-enable-builder' ).hasClass('fl-active') ){
+				$( '.fl-builder-admin' ).hide();
 			}
 		},
 

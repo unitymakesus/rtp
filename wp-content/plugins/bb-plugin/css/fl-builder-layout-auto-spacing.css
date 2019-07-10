@@ -2,8 +2,6 @@
 ------------------------------------------------------ */
 
 .fl-row[data-node] .fl-row-content-wrap {
-	border-left: none;
-	border-right: none;
 	margin: 0;
 	padding-left: 0;
 	padding-right: 0;
@@ -18,8 +16,6 @@
 ------------------------------------------------------ */
 
 .fl-col[data-node] .fl-col-content {
-	border-left: none;
-	border-right: none;
 	margin: 0;
 	padding-left: 0;
 	padding-right: 0;

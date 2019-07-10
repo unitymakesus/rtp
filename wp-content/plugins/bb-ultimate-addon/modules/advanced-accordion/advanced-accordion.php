@@ -33,7 +33,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 
 		add_filter( 'fl_builder_render_settings_field', array( $this, 'uabb_accordion_render_settings_field' ), 10, 3 );
 
-		$this->add_css( 'font-awesome' );
+		$this->add_css( 'font-awesome-5' );
 	}
 	/**
 	 * Ensure backwards compatibility with old settings.
@@ -61,9 +61,11 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 			}
 			if ( isset( $settings->font_size_unit ) ) {
@@ -71,18 +73,21 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'length' => $settings->font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit );
 			}
 			if ( isset( $settings->font_size_unit_medium ) ) {
 				$settings->title_font_typo_medium['font_size'] = array(
 					'length' => $settings->font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_medium );
 			}
 			if ( isset( $settings->font_size_unit_responsive ) ) {
 				$settings->title_font_typo_responsive['font_size'] = array(
 					'length' => $settings->font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->font_size_unit_responsive );
 			}
 			if ( isset( $settings->line_height_unit ) ) {
 
@@ -90,27 +95,32 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'length' => $settings->line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit );
 			}
 			if ( isset( $settings->line_height_unit_medium ) ) {
 				$settings->title_font_typo_medium['line_height'] = array(
 					'length' => $settings->line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_medium );
 			}
 			if ( isset( $settings->line_height_unit_responsive ) ) {
 				$settings->title_font_typo_responsive['line_height'] = array(
 					'length' => $settings->line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->line_height_unit_responsive );
 			}
 			if ( isset( $settings->transform ) ) {
 				$settings->title_font_typo['text_transform'] = $settings->transform;
+				unset( $settings->transform );
 			}
 			if ( isset( $settings->letter_spacing ) ) {
 				$settings->title_font_typo['letter_spacing'] = array(
 					'length' => $settings->letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->letter_spacing );
 			}
 			if ( isset( $settings->title_align ) ) {
 				$settings->title_font_typo['text_align'] = $settings->title_align;
@@ -133,10 +143,12 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
 					}
+					unset( $settings->content_font_family['weight'] );
 				}
 				if ( isset( $settings->content_font_family['family'] ) ) {
 
 					$settings->content_font_typo['font_family'] = $settings->content_font_family['family'];
+					unset( $settings->content_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->content_font_size_unit ) ) {
@@ -145,18 +157,21 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'length' => $settings->content_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_unit );
 			}
 			if ( isset( $settings->content_font_size_unit_medium ) ) {
 				$settings->content_font_typo_medium['font_size'] = array(
 					'length' => $settings->content_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_unit_medium );
 			}
 			if ( isset( $settings->content_font_size_unit_responsive ) ) {
 				$settings->content_font_typo_responsive['font_size'] = array(
 					'length' => $settings->content_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_font_size_unit_responsive );
 			}
 			if ( isset( $settings->content_line_height_unit ) ) {
 
@@ -164,22 +179,26 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'length' => $settings->content_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_unit );
 			}
 			if ( isset( $settings->content_line_height_unit_medium ) ) {
 				$settings->content_font_typo_medium['line_height'] = array(
 					'length' => $settings->content_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_unit_medium );
 			}
 			if ( isset( $settings->content_line_height_unit_responsive ) ) {
 				$settings->content_font_typo_responsive['line_height'] = array(
 					'length' => $settings->content_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->content_line_height_unit_responsive );
 			}
 			if ( isset( $settings->content_transform ) ) {
 
 				$settings->content_font_typo['text_transform'] = $settings->content_transform;
+				unset( $settings->content_transform );
 
 			}
 			if ( isset( $settings->content_letter_spacing ) ) {
@@ -188,14 +207,15 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'length' => $settings->content_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->content_letter_spacing );
 			}
 			if ( isset( $settings->title_border_color ) ) {
 				$settings->title_border_param          = array();
 				$settings->title_border_param['color'] = $settings->title_border_color;
 				if ( isset( $settings->title_border_type ) ) {
 					$settings->title_border_param['style'] = $settings->title_border_type;
+					unset( $settings->title_border_type );
 				}
-
 				if ( isset( $settings->title_border_top ) || isset( $settings->title_border_bottom ) || isset( $settings->title_border_left ) || isset( $settings->title_border_right ) ) {
 					$settings->title_border_param['width'] = array(
 						'top'    => $settings->title_border_top,
@@ -211,6 +231,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 						'bottom_left'  => $settings->title_border_radius,
 						'bottom_right' => $settings->title_border_radius,
 					);
+					unset( $settings->title_border_radius );
 				}
 			}
 			if ( isset( $settings->content_border_color ) ) {
@@ -220,6 +241,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 				$settings->content_border_param['color'] = $settings->content_border_color;
 				if ( isset( $settings->title_border_type ) ) {
 					$settings->content_border_param['style'] = $settings->content_border_type;
+					unset( $settings->title_border_type );
 				}
 				if ( isset( $settings->content_border_top ) || isset( $settings->content_border_bottom ) || isset( $settings->content_border_left ) || isset( $settings->content_border_right ) ) {
 					$settings->content_border_param['width'] = array(
@@ -237,47 +259,38 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 						'bottom_left'  => $settings->content_border_radius,
 						'bottom_right' => $settings->content_border_radius,
 					);
+					unset( $settings->content_border_radius );
 				}
 			}
 			if ( isset( $settings->title_border_color ) ) {
 				unset( $settings->title_border_color );
-				unset( $settings->title_border_type );
+			}
+			if ( isset( $settings->title_border_top ) ) {
 				unset( $settings->title_border_top );
+			}
+			if ( isset( $settings->title_border_bottom ) ) {
 				unset( $settings->title_border_bottom );
+			}
+			if ( isset( $settings->title_border_left ) ) {
 				unset( $settings->title_border_left );
+			}
+			if ( isset( $settings->title_border_right ) ) {
 				unset( $settings->title_border_right );
-				unset( $settings->title_border_radius );
-			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size_unit );
-				unset( $settings->font_size_unit_medium );
-				unset( $settings->font_size_unit_responsive );
-				unset( $settings->line_height_unit );
-				unset( $settings->line_height_unit_medium );
-				unset( $settings->line_height_unit_responsive );
-				unset( $settings->transform );
-				unset( $settings->letter_spacing );
-			}
-			if ( isset( $settings->content_font_family ) ) {
-				unset( $settings->content_font_family );
-				unset( $settings->content_font_size_unit );
-				unset( $settings->content_font_size_unit_medium );
-				unset( $settings->content_font_size_unit_responsive );
-				unset( $settings->content_line_height_unit );
-				unset( $settings->content_line_height_unit_medium );
-				unset( $settings->content_line_height_unit_responsive );
-				unset( $settings->content_transform );
-				unset( $settings->content_letter_spacing );
 			}
 			if ( isset( $settings->content_border_color ) ) {
 				unset( $settings->content_border_color );
-				unset( $settings->content_border_type );
+			}
+			if ( isset( $settings->content_border_top ) ) {
 				unset( $settings->content_border_top );
+			}
+			if ( isset( $settings->content_border_bottom ) ) {
 				unset( $settings->content_border_bottom );
+			}
+			if ( isset( $settings->content_border_left ) ) {
 				unset( $settings->content_border_left );
+			}
+			if ( isset( $settings->content_border_right ) ) {
 				unset( $settings->content_border_right );
-				unset( $settings->content_border_radius );
 			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
@@ -293,9 +306,11 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
 					}
+					unset( $settings->font_family['weight'] );
 				}
 				if ( isset( $settings->font_family['family'] ) ) {
 					$settings->title_font_typo['font_family'] = $settings->font_family['family'];
+					unset( $settings->font_family['family'] );
 				}
 			}
 			if ( isset( $settings->font_size['desktop'] ) ) {
@@ -357,9 +372,11 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
 					}
+					unset( $settings->content_font_family['weight'] );
 				}
 				if ( isset( $settings->content_font_family['family'] ) ) {
 					$settings->content_font_typo['font_family'] = $settings->content_font_family['family'];
+					unset( $settings->content_font_family['family'] );
 				}
 			}
 			if ( isset( $settings->content_font_size['desktop'] ) ) {
@@ -447,6 +464,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->title_spacing );
 			}
 			if ( isset( $settings->content_spacing ) ) {
 
@@ -487,12 +505,14 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->content_spacing );
 			}
 			if ( isset( $settings->title_border_color ) ) {
 				$settings->title_border_param          = array();
 				$settings->title_border_param['color'] = $settings->title_border_color;
 				if ( $settings->title_border_type ) {
 					$settings->title_border_param['style'] = $settings->title_border_type;
+					unset( $settings->title_border_type );
 				}
 
 				if ( isset( $settings->title_border_top ) || isset( $settings->title_border_bottom ) || isset( $settings->title_border_left ) || isset( $settings->title_border_right ) ) {
@@ -510,6 +530,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 						'bottom_left'  => $settings->title_border_radius,
 						'bottom_right' => $settings->title_border_radius,
 					);
+					unset( $settings->title_border_radius );
 				}
 			}
 			if ( isset( $settings->content_border_color ) ) {
@@ -519,6 +540,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 				$settings->content_border_param['color'] = $settings->content_border_color;
 				if ( isset( $settings->title_border_type ) ) {
 					$settings->content_border_param['style'] = $settings->content_border_type;
+					unset( $settings->title_border_type );
 				}
 				if ( isset( $settings->content_border_top ) || isset( $settings->content_border_bottom ) || isset( $settings->content_border_left ) || isset( $settings->content_border_right ) ) {
 					$settings->content_border_param['width'] = array(
@@ -536,41 +558,74 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 						'bottom_left'  => $settings->content_border_radius,
 						'bottom_right' => $settings->content_border_radius,
 					);
+					unset( $settings->content_border_radius );
 				}
 			}
 			if ( isset( $settings->content_border_color ) ) {
 				unset( $settings->content_border_color );
-				unset( $settings->content_border_type );
+			}
+			if ( isset( $settings->content_border_top ) ) {
 				unset( $settings->content_border_top );
+			}
+			if ( isset( $settings->content_border_bottom ) ) {
 				unset( $settings->content_border_bottom );
+			}
+			if ( isset( $settings->content_border_left ) ) {
 				unset( $settings->content_border_left );
+			}
+			if ( isset( $settings->content_border_right ) ) {
 				unset( $settings->content_border_right );
-				unset( $settings->content_border_radius );
 			}
 			if ( isset( $settings->title_border_color ) ) {
 				unset( $settings->title_border_color );
-				unset( $settings->title_border_type );
+			}
+			if ( isset( $settings->title_border_top ) ) {
 				unset( $settings->title_border_top );
+			}
+			if ( isset( $settings->title_border_bottom ) ) {
 				unset( $settings->title_border_bottom );
+			}
+			if ( isset( $settings->title_border_left ) ) {
 				unset( $settings->title_border_left );
+			}
+			if ( isset( $settings->title_border_right ) ) {
 				unset( $settings->title_border_right );
-				unset( $settings->title_border_radius );
 			}
-			if ( isset( $settings->font_family ) ) {
-				unset( $settings->font_family );
-				unset( $settings->font_size );
-				unset( $settings->line_height );
+			if ( isset( $settings->font_size['desktop'] ) ) {
+				unset( $settings->font_size['desktop'] );
 			}
-			if ( isset( $settings->content_font_family ) ) {
-				unset( $settings->content_font_family );
-				unset( $settings->content_font_size );
-				unset( $settings->content_line_height );
+			if ( isset( $settings->font_size['medium'] ) ) {
+				unset( $settings->font_size['medium'] );
 			}
-			if ( isset( $settings->title_spacing ) ) {
-				unset( $settings->title_spacing );
+			if ( isset( $settings->font_size['small'] ) ) {
+				unset( $settings->font_size['small'] );
 			}
-			if ( isset( $settings->content_spacing ) ) {
-				unset( $settings->content_spacing );
+			if ( isset( $settings->line_height['desktop'] ) ) {
+				unset( $settings->line_height['desktop'] );
+			}
+			if ( isset( $settings->line_height['medium'] ) ) {
+				unset( $settings->line_height['medium'] );
+			}
+			if ( isset( $settings->line_height['small'] ) ) {
+				unset( $settings->line_height['small'] );
+			}
+			if ( isset( $settings->content_font_size['desktop'] ) ) {
+				unset( $settings->content_font_size['desktop'] );
+			}
+			if ( isset( $settings->content_font_size['medium'] ) ) {
+				unset( $settings->content_font_size['medium'] );
+			}
+			if ( isset( $settings->content_font_size['small'] ) ) {
+				unset( $settings->content_font_size['small'] );
+			}
+			if ( isset( $settings->content_line_height['desktop'] ) ) {
+				unset( $settings->content_line_height['desktop'] );
+			}
+			if ( isset( $settings->content_line_height['medium'] ) ) {
+				unset( $settings->content_line_height['medium'] );
+			}
+			if ( isset( $settings->content_line_height['small'] ) ) {
+				unset( $settings->content_line_height['small'] );
 			}
 		}
 		return $settings;

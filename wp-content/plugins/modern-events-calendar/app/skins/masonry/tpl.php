@@ -10,7 +10,7 @@ include $render_path;
 $items_html = ob_get_clean();
 
 // Inclue Isotope Assets
-$this->main->load_isotope_assets();
+$this->main->load_shuffle_assets();
 
 // Generating javascript code tpl
 $javascript = '<script type="text/javascript">
@@ -23,8 +23,9 @@ jQuery(document).ready(function()
         end_date: "'.$this->end_date.'",
 		offset: "'.$this->next_offset.'",
         atts: "'.http_build_query(array('atts'=>$this->atts), '', '&').'",
-        ajax_url: "'.admin_url('admin-ajax.php?lang=ru', NULL).'",
+        ajax_url: "'.admin_url('admin-ajax.php', NULL).'",
         sed_method: "'.$this->sed_method.'",
+        image_popup: "'.$this->image_popup.'",
         masonry_like_grid: "'.$this->masonry_like_grid.'",
         sf:
         {
@@ -34,10 +35,12 @@ jQuery(document).ready(function()
 });
 </script>';
 
-// Include javascript code into the footer
-$this->factory->params('footer', $javascript);
+// Include javascript code into the page
+if($this->main->is_ajax()) echo $javascript;
+else $this->factory->params('footer', $javascript);
+
 $styling = $this->main->get_styling();
-$event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color'])) ? ' colorskin-custom ' : '';
+$event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])) ? ' colorskin-custom ' : '';
 ?>
 <div class="mec-wrap mec-skin-masonry-container<?php echo $event_colorskin; ?><?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     <?php if(trim($this->filter_by)) echo $this->filter_by(); ?>
@@ -56,4 +59,4 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
     <?php endif; ?>
     
 </div>
-<?php /** Append JS codes for full-calendar skin **/ if(isset($this->atts['append_js_codes']) and $this->atts['append_js_codes']) echo $javascript;
+<?php do_action('mec_masonry_customization'); ?>

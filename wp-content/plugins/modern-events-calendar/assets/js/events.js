@@ -226,11 +226,17 @@ jQuery(document).ready(function($)
     
     $('#mec_add_in_days').on('click', function()
     {
-        var date = $('#mec_exceptions_in_days_date').val();
-        if(date === '') return false;
+        var start = $('#mec_exceptions_in_days_start_date').val();
+        if(start === '') return false;
+
+        var end = $('#mec_exceptions_in_days_end_date').val();
+        if(end === '') return false;
+
+        var value = start + ':' + end;
+        var label = start + ' - ' + end;
         
         var key = $('#mec_new_in_days_key').val();
-        var html = $('#mec_new_in_days_raw').html().replace(/:i:/g, key).replace(/:val:/g, date);
+        var html = $('#mec_new_in_days_raw').html().replace(/:i:/g, key).replace(/:val:/g, value).replace(/:label:/g, label);
         
         $('#mec_in_days').append(html);
         $('#mec_new_in_days_key').val(parseInt(key)+1);
@@ -307,7 +313,20 @@ jQuery(document).ready(function($)
     $('#mec_reg_form_field_types button').on('click', function()
     {
         var type = $(this).data('type');
-        var key = $('#mec_new_reg_field_key').val();
+
+        if (type == 'mec_email') {
+            if ($('#mec_reg_form_fields').find('input[value="mec_email"][type="hidden"]').length) {
+                return false;
+            }
+        }
+
+        if (type == 'name') {
+            if ($('#mec_reg_form_fields').find('input[value="name"][type="hidden"]').length) {
+                return false;
+            }
+        }
+        
+        var key  = $('#mec_new_reg_field_key').val();
         var html = $('#mec_reg_field_'+type).html().replace(/:i:/g, key);
 
         $('#mec_reg_form_fields').append(html);
@@ -348,24 +367,28 @@ function mec_repeat_type_toggle()
         jQuery('#mec_repeat_interval_container').hide();
         jQuery('#mec_repeat_certain_weekdays_container').show();
         jQuery('#mec_exceptions_in_days_container').hide();
+        jQuery('#mec_end_wrapper').show();
     }
     else if(repeat_type == 'custom_days')
     {
         jQuery('#mec_repeat_interval_container').hide();
         jQuery('#mec_repeat_certain_weekdays_container').hide();
         jQuery('#mec_exceptions_in_days_container').show();
+        jQuery('#mec_end_wrapper').hide();
     }
     else if(repeat_type != 'daily' && repeat_type != 'weekly')
     {
         jQuery('#mec_repeat_interval_container').hide();
         jQuery('#mec_repeat_certain_weekdays_container').hide();
         jQuery('#mec_exceptions_in_days_container').hide();
+        jQuery('#mec_end_wrapper').show();
     }
     else
     {
         jQuery('#mec_repeat_interval_container').show();
         jQuery('#mec_repeat_certain_weekdays_container').hide();
         jQuery('#mec_exceptions_in_days_container').hide();
+        jQuery('#mec_end_wrapper').show();
     }
 }
 
@@ -404,7 +427,6 @@ function mec_hourly_schedule_remove(day, i)
 
 function mec_hourly_schedule_day_remove(day)
 {
-    console.log('here', day);
     jQuery("#mec_meta_box_hourly_schedule_day_"+day).remove();
 }
 

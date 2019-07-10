@@ -57,22 +57,24 @@
 
 		_submitForm: function( e )
 		{
-			var postId      	= this.form.closest( '.fl-builder-content' ).data( 'post-id' ),
-				templateId		= this.form.data( 'template-id' ),
-				templateNodeId	= this.form.data( 'template-node-id' ),
-				nodeId      	= this.form.closest( '.fl-module' ).data( 'node' ),
-				buttonText  	= this.button.find( '.uabb-button-text' ).text(),
-				waitText    	= this.button.closest( '.uabb-form-button' ).data( 'wait-text' ),
-				fname        	= this.form.find( 'input[name=uabb-subscribe-form-fname]' ),
-				lname        	= this.form.find( 'input[name=uabb-subscribe-form-lname]' ),
-				email       	= this.form.find( 'input[name=uabb-subscribe-form-email]' ),
-				termsCheckbox   = this.form.find( 'input[name=uabb-terms-checkbox]'),
-				re          	= /\S+@\S+\.\S+/,
-				valid       	= true;
-				
+			var submitButton		= $( e.currentTarget ),
+				currentForm     	= submitButton.closest( '.uabb-subscribe-form' ),
+				postId      		= currentForm.closest( '.fl-builder-content' ).data( 'post-id' ),
+				templateId 	        = currentForm.data( 'template-id' ),
+				templateNodeId		= currentForm.data( 'template-node-id' ),
+				nodeId      		= currentForm.closest( '.fl-module' ).data( 'node' ),
+				buttonText  		= submitButton.find( '.uabb-button-text' ).text(),
+				waitText    		= submitButton.closest( '.uabb-form-button' ).data( 'wait-text' ),
+				fname        		= currentForm.find( 'input[name=uabb-subscribe-form-fname]' ),
+				lname        		= currentForm.find( 'input[name=uabb-subscribe-form-lname]' ),
+				email       		= currentForm.find( 'input[name=uabb-subscribe-form-email]' ),
+				termsCheckbox   	= currentForm.find( 'input[name=uabb-terms-checkbox]'),
+				re          		= /\S+@\S+\.\S+/,
+				valid       		= true;
+
 			e.preventDefault();
 
-			if ( this.button.hasClass( 'uabb-form-button-disabled' ) ) {
+			if ( submitButton.hasClass( 'uabb-form-button-disabled' ) ) {
 				return; // Already submitting
 			}
 			/*if ( name.length > 0 && name.val() == '' ) {
@@ -100,12 +102,12 @@
 			
 			if ( valid ) {
 				
-				this.form.find( '> .uabb-form-error-message' ).hide();
-				this.button.find( '.uabb-button-text' ).text( waitText );
-				this.button.data( 'original-text', buttonText );
-				this.button.addClass( 'uabb-form-button-disabled' );
+				currentForm.find( '> .uabb-form-error-message' ).hide();
+				submitButton.find( '.uabb-button-text' ).text( waitText );
+				submitButton.data( 'original-text', buttonText );
+				submitButton.addClass( 'uabb-form-button-disabled' );
 				
-				$.post( FLBuilderLayoutConfig.paths.wpAjaxUrl, {
+					ajaxData = {
 					action  			: 'uabb_subscribe_form_submit',
 					lname    			: lname.val(),
 					fname    			: fname.val(),
@@ -114,29 +116,34 @@
 					template_id 		: templateId,
 					template_node_id 	: templateNodeId,
 					node_id 			: nodeId
-				}, $.proxy( this._submitFormComplete, this ) );
+				};
+
+				$.post( FLBuilderLayoutConfig.paths.wpAjaxUrl, ajaxData, $.proxy( function( response ){
+					this._submitFormComplete( response, submitButton );
+				}, this ));
+
 			}
 		},
 		
-		_submitFormComplete: function( response )
+		_submitFormComplete: function( response , button )
 		{
+
 			var data        = JSON.parse( response ),
-				buttonText  = this.button.data( 'original-text' );
-				
+				buttonText  = button.data( 'original-text' ),
+				form        = button.closest( '.uabb-subscribe-form' );
 			if ( data.error ) {
 				
-				this.form.find( '> .uabb-form-error-message' ).text( data.error );
-				this.form.find( '> .uabb-form-error-message' ).show();
-				this.button.removeClass( 'uabb-form-button-disabled' );
-				this.button.find( '.uabb-button-text' ).text( buttonText );
+				form.find( '> .uabb-form-error-message' ).text( data.error );
+				form.find( '> .uabb-form-error-message' ).show();
+				button.removeClass( 'uabb-form-button-disabled' );
+				button.find( '.uabb-button-text' ).text( buttonText );
 			} else {
 				
-				this.button.removeClass( 'uabb-form-button-disabled' );
-				this.button.find( '.uabb-button-text' ).text( buttonText );				
-				
+				button.removeClass( 'uabb-form-button-disabled' );
+				button.find( '.uabb-button-text' ).text( buttonText );
 				if ( 'message' == data.action ) {
-					this.form.find( '> *' ).hide();
-					this.form.append( '<div class="uabb-form-success-message">' + data.message + '</div>' );
+					form.find( '> *' ).hide();
+					form.append( '<div class="fl-form-success-message">' + data.message + '</div>' );
 				}
 				else if ( 'redirect' == data.action ) {
 					window.location.href = data.url;

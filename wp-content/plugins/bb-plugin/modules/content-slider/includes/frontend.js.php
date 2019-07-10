@@ -3,19 +3,15 @@
 	$(function() {
 		var slider = $('.fl-node-<?php echo $id; ?> .fl-content-slider-wrapper').bxSlider({
 			adaptiveHeight: true,
-			auto: <?php if ( $settings->auto_play ) { echo 'true';
-} else { echo 'false'; } ?>,
-			autoHover: <?php if ( $settings->auto_hover ) { echo 'true';
-} else { echo 'false'; } ?>,
-			autoControls: <?php if ( $settings->play_pause ) { echo 'true';
-} else { echo 'false'; } ?>,
+			auto: <?php echo ( $settings->auto_play ) ? 'true' : 'false'; ?>,
+			autoHover: <?php echo ( $settings->auto_hover ) ? 'true' : 'false'; ?>,
+			autoControls: <?php echo ( $settings->play_pause ) ? 'true' : 'false'; ?>,
 			pause: <?php echo $settings->delay * 1000; ?>,
 			mode: '<?php echo $settings->transition; ?>',
 			speed: <?php echo $settings->speed * 1000; ?>,
 			controls: false,
 			infiniteLoop: <?php echo $module->is_loop_enabled(); ?>,
-			pager: <?php if ( $settings->dots ) { echo 'true';
-} else { echo 'false'; } ?>,
+			pager: <?php echo ( $settings->dots ) ? 'true' : 'false'; ?>,
 			video: true,
 			onSliderLoad: function(currentIndex) {
 				$('.fl-node-<?php echo $id; ?> .fl-content-slider-wrapper').addClass('fl-content-slider-loaded');

@@ -15,11 +15,11 @@ if ( isset( $widget_class ) && class_exists( $widget_class ) ) {
 	global $wp_widget_factory;
 
 	// Widget instance
-	$widget_instance    = new $widget_class();
+	$widget_instance = new $widget_class();
 
 	// Widget settings
-	$settings_key       = 'widget-' . $widget_instance->id_base;
-	$widget_settings    = isset( $settings->$settings_key ) ? (array) $settings->$settings_key : array();
+	$settings_key    = 'widget-' . $widget_instance->id_base;
+	$widget_settings = isset( $settings->$settings_key ) ? (array) $settings->$settings_key : array();
 
 	// Check to see if $widget_class key does not exist and registered it as lowercase instead.
 	if ( ! isset( $wp_widget_factory->widgets[ $widget_class ] ) && isset( $wp_widget_factory->widgets[ strtolower( $widget_class ) ] ) ) {
@@ -35,12 +35,17 @@ if ( isset( $widget_class ) && class_exists( $widget_class ) ) {
 		'widget_id' => 'fl_builder_widget_' . $module->node,
 	), $module );
 
-	// Render the widget
-	the_widget( $widget_class, $widget_settings, $widget_args );
+	$disabled = apply_filters( 'fl_widget_module_output_disabled', false, $module, $widget_class );
 
+	if ( false !== $disabled ) {
+		echo $disabled;
+	} else {
+		the_widget( $widget_class, $widget_settings, $widget_args );
+	}
 } elseif ( isset( $widget_class ) && FLBuilderModel::is_builder_active() ) {
 
 	// Widget doesn't exist!
+	/* translators: %s: widget slug */
 	printf( _x( '%s no longer exists.', '%s stands for widget slug.', 'fl-builder' ), $widget_class );
 
 }

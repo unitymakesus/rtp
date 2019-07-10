@@ -15,6 +15,7 @@ jQuery(document).ready(function()
         atts: "'.http_build_query(array('atts'=>$this->atts), '', '&').'",
         ajax_url: "'.admin_url('admin-ajax.php', NULL).'",
         sed_method: "'.$this->sed_method.'",
+        image_popup: "'.$this->image_popup.'",
         sf:
         {
             container: "'.($this->sf_status ? '#mec_search_form_'.$this->id : '').'",
@@ -24,10 +25,14 @@ jQuery(document).ready(function()
 });
 </script>';
 
-// Include javascript code into the footer
-$this->factory->params('footer', $javascript);
+// Include javascript code into the page
+if($this->main->is_ajax()) echo $javascript;
+else $this->factory->params('footer', $javascript);
+
+$styling = $this->main->get_styling();
+$event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color'])) ? 'colorskin-custom' : '';
 ?>
-<div id="mec_skin_<?php echo $this->id; ?>" class="mec-wrap mec-full-calendar-wrap">
+<div id="mec_skin_<?php echo $this->id; ?>" class="mec-wrap <?php echo $event_colorskin; ?> mec-full-calendar-wrap">
     
     <div class="mec-totalcal-box">
         <?php if($this->sf_status): ?>
@@ -35,12 +40,25 @@ $this->factory->params('footer', $javascript);
             <?php
                 $sf_month_filter = (isset($this->sf_options['month_filter']) ? $this->sf_options['month_filter'] : array());
                 $sf_category = (isset($this->sf_options['category']) ? $this->sf_options['category'] : array());
+                $sf_location = (isset($this->sf_options['location']) ? $this->sf_options['location'] : array());
+                $sf_organizer = (isset($this->sf_options['organizer']) ? $this->sf_options['organizer'] : array());
+                $sf_speaker = (isset($this->sf_options['speaker']) ? $this->sf_options['speaker'] : array());
+                $sf_tag = (isset($this->sf_options['tag']) ? $this->sf_options['tag'] : array());
+                $sf_label = (isset($this->sf_options['label']) ? $this->sf_options['label'] : array());
                 $sf_text_search = (isset($this->sf_options['text_search']) ? $this->sf_options['text_search'] : array());
 
                 $sf_month_filter_status = (isset($sf_month_filter['type']) and trim($sf_month_filter['type'])) ? true : false;
                 $sf_category_status = (isset($sf_category['type']) and trim($sf_category['type'])) ? true : false;
+                $sf_location_status = (isset($sf_location['type']) and trim($sf_location['type'])) ? true : false;
+                $sf_organizer_status = (isset($sf_organizer['type']) and trim($sf_organizer['type'])) ? true : false;
+                $sf_speaker_status = (isset($sf_speaker['type']) and trim($sf_speaker['type'])) ? true : false;
+                $sf_tag_status = (isset($sf_tag['type']) and trim($sf_tag['type'])) ? true : false;
+                $sf_label_status = (isset($sf_label['type']) and trim($sf_label['type'])) ? true : false;
                 $sf_text_search_status = (isset($sf_text_search['type']) and trim($sf_text_search['type'])) ? true : false;
-
+                
+                // Status of Speakers Feature
+                $speakers_status = (!isset($this->settings['speakers_status']) or (isset($this->settings['speakers_status']) and !$this->settings['speakers_status'])) ? false : true;
+        
                 $sf_columns = 8;
             ?>
             <?php if($sf_month_filter_status): $sf_columns -= 3; ?>
@@ -51,7 +69,32 @@ $this->factory->params('footer', $javascript);
             <?php if($sf_category_status): $sf_columns -= 2; ?>
                 <div class="col-md-2">
                 <?php echo $this->sf_search_field('category', $sf_category); ?>
-            </div>
+                </div>
+            <?php endif; ?>
+            <?php if($sf_location_status): ?>
+                <div class="col-md-2">
+                <?php echo $this->sf_search_field('location', $sf_location); ?>
+                </div>
+            <?php endif; ?>
+            <?php if($sf_organizer_status): ?>
+                <div class="col-md-2">
+                <?php echo $this->sf_search_field('organizer', $sf_organizer); ?>
+                </div>
+            <?php endif; ?>
+            <?php if($sf_speaker_status and $speakers_status): ?>
+                <div class="col-md-2">
+                <?php echo $this->sf_search_field('speaker', $sf_speaker); ?>
+                </div>
+            <?php endif; ?>
+            <?php if($sf_tag_status): ?>
+                <div class="col-md-2">
+                <?php echo $this->sf_search_field('tag', $sf_tag); ?>
+                </div>
+            <?php endif; ?>
+            <?php if($sf_label_status): ?>
+                <div class="col-md-2">
+                <?php echo $this->sf_search_field('label', $sf_label); ?>
+                </div>
             <?php endif; ?>
             <div class="col-md-<?php echo $sf_columns; ?>">
                 <?php if($sf_text_search_status): ?>

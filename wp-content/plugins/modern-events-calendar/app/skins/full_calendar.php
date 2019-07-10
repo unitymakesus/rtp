@@ -69,6 +69,9 @@ class MEC_skin_full_calendar extends MEC_skins
         
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+
+        // Image popup
+        $this->image_popup = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
         
         // Default View of Full Calendar
         $this->default_view = isset($this->skin_options['default_view']) ? $this->skin_options['default_view'] : 'list';
@@ -146,6 +149,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts['sk-options']['yearly_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : current_time('Y-01-01');
                 $atts['sk-options']['yearly_view']['style'] = 'modern';
                 $atts['sk-options']['yearly_view']['sed_method'] = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+                $atts['sk-options']['yearly_view']['image_popup'] = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
                 $atts['sf_status'] = false;
 
                 $output = $this->render->vyear($atts);
@@ -159,6 +163,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts['sk-options']['monthly_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
                 $atts['sk-options']['monthly_view']['style'] = $this->monthly_style;
                 $atts['sk-options']['monthly_view']['sed_method'] = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+                $atts['sk-options']['monthly_view']['image_popup'] = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vmonth($atts);
@@ -171,6 +176,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts['sk-options']['weekly_view']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
                 $atts['sk-options']['weekly_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
                 $atts['sk-options']['weekly_view']['sed_method'] = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+                $atts['sk-options']['weekly_view']['image_popup'] = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vweek($atts);
@@ -183,6 +189,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts['sk-options']['daily_view']['start_date_type'] = isset($this->skin_options['start_date_type']) ? $this->skin_options['start_date_type'] : '';
                 $atts['sk-options']['daily_view']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
                 $atts['sk-options']['daily_view']['sed_method'] = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+                $atts['sk-options']['daily_view']['image_popup'] = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
                 $atts['sf_status'] = false;
                 
                 $output = $this->render->vday($atts);
@@ -197,6 +204,7 @@ class MEC_skin_full_calendar extends MEC_skins
                 $atts['sk-options']['list']['start_date'] = isset($this->skin_options['start_date']) ? $this->skin_options['start_date'] : '';
                 $atts['sk-options']['list']['style'] = 'standard';
                 $atts['sk-options']['list']['sed_method'] = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
+                $atts['sk-options']['list']['image_popup'] = isset($this->skin_options['image_popup']) ? $this->skin_options['image_popup'] : '0';
                 $atts['sk-options']['list']['display_price'] = isset($this->skin_options['display_price']) ? $this->skin_options['display_price'] : 0;
                 $atts['sf_status'] = false;
 
@@ -221,11 +229,9 @@ class MEC_skin_full_calendar extends MEC_skins
         
         $skin = $this->request->getVar('skin', 'list');
         
-        // Append JS codes
-        $atts['append_js_codes'] = true;
-        
         // Single Event Display
         $atts['sed_method'] = $this->request->getVar('sed', 0);
+        $atts['image_popup'] = $this->request->getVar('image', 0);
         
         // Initialize the skin
         $this->initialize($atts);

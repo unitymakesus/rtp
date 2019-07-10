@@ -57,13 +57,13 @@ function previewSlideDown( slidebox_wrap ) {
         style1.addClass('open-slidedown');
         
     } else if( style2.length > 0 ) {
-        var dropdown_icon = style2.find('.uabb-slide-dropdown .fa');
+        var dropdown_icon = style2.find('.uabb-slide-dropdown .fas');
         style2.addClass('open-slidedown');
         dropdown_icon.removeClass('fa-angle-down');
         dropdown_icon.addClass('fa-angle-up');
     
     } else if( style3.length > 0 ) {
-        var dropdown_icon = style3.find('.uabb-slide-dropdown .fa');
+        var dropdown_icon = style3.find('.uabb-slide-dropdown .fas');
         style3.addClass('open-slidedown');
         dropdown_icon.removeClass('fa-plus');
         dropdown_icon.addClass('fa-minus');
@@ -83,13 +83,13 @@ function previewSlideUp( slidebox_wrap ) {
             style1.removeClass('open-slidedown');
             
         } else if( style2.length > 0 ) {
-            var dropdown_icon = style2.find('.uabb-slide-dropdown .fa');
+            var dropdown_icon = style2.find('.uabb-slide-dropdown .fas');
             style2.removeClass('open-slidedown');
             dropdown_icon.addClass('fa-angle-down');
             dropdown_icon.removeClass('fa-angle-up');
         
         } else if( style3.length > 0 ) {
-            var dropdown_icon = style3.find('.uabb-slide-dropdown .fa');
+            var dropdown_icon = style3.find('.uabb-slide-dropdown .fas');
             style3.removeClass('open-slidedown');
             dropdown_icon.addClass('fa-plus');
             dropdown_icon.removeClass('fa-minus');

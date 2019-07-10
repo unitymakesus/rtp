@@ -110,15 +110,6 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
-
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
-			}
-			if ( isset( $settings->resp_overall_alignment ) ) {
-				$settings->resp_overall_alignment = $settings->resp_overall_alignment;
-			}
-
 			// Handle color opacity.
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_color_opc', 'btn_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
@@ -135,6 +126,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 			if ( isset( $settings->heading_font_family ) ) {
 				if ( isset( $settings->heading_font_family['family'] ) ) {
 					$settings->heading_font_typo['font_family'] = $settings->heading_font_family['family'];
+					unset( $settings->heading_font_family['family'] );
 				}
 				if ( isset( $settings->heading_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->heading_font_family['weight'] ) {
@@ -142,6 +134,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->heading_font_typo['font_weight'] = $settings->heading_font_family['weight'];
 					}
+					unset( $settings->heading_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->heading_font_size_unit ) ) {
@@ -150,7 +143,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_font_size_unit,
 					'unit'   => 'px',
 				);
-
+				unset( $settings->heading_font_size_unit );
 			}
 			if ( isset( $settings->heading_font_size_unit_medium ) ) {
 
@@ -158,6 +151,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->heading_font_size_unit_medium );
 			}
 			if ( isset( $settings->heading_font_size_unit_responsive ) ) {
 
@@ -165,6 +159,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->heading_font_size_unit_responsive );
 			}
 			if ( isset( $settings->heading_line_height_unit ) ) {
 
@@ -172,6 +167,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->heading_line_height_unit );
 			}
 			if ( isset( $settings->heading_line_height_unit_medium ) ) {
 
@@ -179,6 +175,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->heading_line_height_unit_medium );
 			}
 			if ( isset( $settings->heading_line_height_unit_responsive ) ) {
 
@@ -186,10 +183,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->heading_line_height_unit_responsive );
 			}
 			if ( isset( $settings->heading_transform ) ) {
 
 				$settings->heading_font_typo['text_transform'] = $settings->heading_transform;
+				unset( $settings->heading_transform );
 			}
 			if ( isset( $settings->heading_letter_spacing ) ) {
 
@@ -197,6 +196,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->heading_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->heading_letter_spacing );
 			}
 
 			// compatibility for Subheading.
@@ -209,6 +209,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 			if ( isset( $settings->subheading_font_family ) ) {
 				if ( isset( $settings->subheading_font_family['family'] ) ) {
 					$settings->subheading_font_typo['font_family'] = $settings->subheading_font_family['family'];
+					unset( $settings->subheading_font_family['family'] );
 				}
 				if ( isset( $settings->subheading_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->subheading_font_family['weight'] ) {
@@ -216,6 +217,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->subheading_font_typo['font_weight'] = $settings->subheading_font_family['weight'];
 					}
+					unset( $settings->subheading_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->subheading_font_size_unit ) ) {
@@ -224,6 +226,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_font_size_unit,
 					'unit'   => 'px',
 				);
+				unset( $settings->subheading_font_size_unit );
 			}
 			if ( isset( $settings->subheading_font_size_unit_medium ) ) {
 
@@ -231,6 +234,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->subheading_font_size_unit_medium );
 			}
 			if ( isset( $settings->subheading_font_size_unit_responsive ) ) {
 
@@ -238,6 +242,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->subheading_font_size_unit_responsive );
 			}
 			if ( isset( $settings->subheading_line_height_unit ) ) {
 
@@ -245,6 +250,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->subheading_line_height_unit );
 			}
 			if ( isset( $settings->subheading_line_height_unit_medium ) ) {
 
@@ -252,6 +258,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->subheading_line_height_unit_medium );
 			}
 			if ( isset( $settings->subheading_line_height_unit_responsive ) ) {
 
@@ -259,10 +266,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->subheading_line_height_unit_responsive );
 			}
 			if ( isset( $settings->subheading_transform ) ) {
 
 				$settings->subheading_font_typo['text_transform'] = $settings->subheading_transform;
+				unset( $settings->subheading_transform );
 			}
 			if ( isset( $settings->subheading_letter_spacing ) ) {
 
@@ -270,6 +279,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->subheading_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->subheading_letter_spacing );
 			}
 
 			// compatibility for text description.
@@ -282,6 +292,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 			if ( isset( $settings->text_font_family ) ) {
 				if ( isset( $settings->text_font_family['family'] ) ) {
 					$settings->text_font_typo['font_family'] = $settings->text_font_family['family'];
+					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->text_font_family['weight'] ) {
@@ -289,6 +300,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->text_font_typo['font_weight'] = $settings->text_font_family['weight'];
 					}
+					unset( $settings->text_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->text_font_size_unit ) ) {
@@ -297,7 +309,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit,
 					'unit'   => 'px',
 				);
-
+				unset( $settings->text_font_size_unit );
 			}
 			if ( isset( $settings->text_font_size_unit_medium ) ) {
 
@@ -305,6 +317,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit_medium );
 			}
 			if ( isset( $settings->text_font_size_unit_responsive ) ) {
 
@@ -312,6 +325,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_font_size_unit_responsive );
 			}
 			if ( isset( $settings->text_line_height_unit ) ) {
 
@@ -319,6 +333,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit );
 			}
 			if ( isset( $settings->text_line_height_unit_medium ) ) {
 
@@ -326,6 +341,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit_medium );
 			}
 			if ( isset( $settings->text_line_height_unit_responsive ) ) {
 
@@ -333,10 +349,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->text_line_height_unit_responsive );
 			}
 			if ( isset( $settings->text_transform ) ) {
 
 				$settings->text_font_typo['text_transform'] = $settings->text_transform;
+				unset( $settings->text_transform );
 			}
 			if ( isset( $settings->text_letter_spacing ) ) {
 
@@ -344,6 +362,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->text_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->text_letter_spacing );
 			}
 
 			// compatibility for inputs.
@@ -356,6 +375,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 			if ( isset( $settings->input_font_family ) ) {
 				if ( isset( $settings->input_font_family['family'] ) ) {
 					$settings->input_font_typo['font_family'] = $settings->input_font_family['family'];
+					unset( $settings->input_font_family['family'] );
 				}
 				if ( isset( $settings->input_font_family['weight'] ) ) {
 					if ( 'regular' == isset( $settings->input_font_family['weight'] ) ) {
@@ -363,6 +383,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->input_font_typo['font_weight'] = $settings->input_font_family['weight'];
 					}
+					unset( $settings->input_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->input_font_size_unit ) ) {
@@ -371,7 +392,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_font_size_unit,
 					'unit'   => 'px',
 				);
-
+				unset( $settings->input_font_size_unit );
 			}
 			if ( isset( $settings->input_font_size_unit_medium ) ) {
 
@@ -379,6 +400,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->input_font_size_unit_medium );
 			}
 			if ( isset( $settings->input_font_size_unit_responsive ) ) {
 
@@ -386,6 +408,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->input_font_size_unit_responsive );
 			}
 			if ( isset( $settings->input_line_height_unit ) ) {
 
@@ -393,6 +416,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->input_line_height_unit );
 			}
 			if ( isset( $settings->input_line_height_unit_medium ) ) {
 
@@ -400,6 +424,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->input_line_height_unit_medium );
 			}
 			if ( isset( $settings->input_line_height_unit_responsive ) ) {
 
@@ -407,10 +432,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->input_line_height_unit_responsive );
 			}
 			if ( isset( $settings->input_transform ) ) {
 
 				$settings->input_font_typo['text_transform'] = $settings->input_transform;
+				unset( $settings->input_transform );
 			}
 			if ( isset( $settings->input_letter_spacing ) ) {
 
@@ -418,6 +445,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->input_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->input_letter_spacing );
 			}
 
 			// compatibility for button.
@@ -438,6 +466,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 						$settings->button_font_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
 				}
+				unset( $settings->btn_font_family );
 			}
 			if ( isset( $settings->btn_font_size_unit ) ) {
 
@@ -445,7 +474,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit,
 					'unit'   => 'px',
 				);
-
+				unset( $settings->btn_font_size_unit );
 			}
 			if ( isset( $settings->btn_font_size_unit_medium ) ) {
 
@@ -453,6 +482,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_medium );
 			}
 			if ( isset( $settings->btn_font_size_unit_responsive ) ) {
 
@@ -460,6 +490,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_font_size_unit_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_font_size_unit_responsive );
 			}
 			if ( isset( $settings->btn_line_height_unit ) ) {
 
@@ -467,6 +498,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit );
 			}
 			if ( isset( $settings->btn_line_height_unit_medium ) ) {
 
@@ -474,6 +506,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_medium );
 			}
 			if ( isset( $settings->btn_line_height_unit_responsive ) ) {
 
@@ -481,10 +514,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_line_height_unit_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->btn_line_height_unit_responsive );
 			}
 			if ( isset( $settings->btn_transform ) ) {
 
 				$settings->button_font_typo['text_transform'] = $settings->btn_transform;
+				unset( $settings->btn_transform );
 			}
 			if ( isset( $settings->btn_letter_spacing ) ) {
 
@@ -492,6 +527,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->btn_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->btn_letter_spacing );
 			}
 
 			// compatibility for check-box.
@@ -505,6 +541,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 				if ( isset( $settings->checkbox_font_family['family'] ) ) {
 
 					$settings->checkbox_font_typo['font_family'] = $settings->checkbox_font_family['family'];
+					unset( $settings->checkbox_font_family['family'] );
 				}
 				if ( isset( $settings->checkbox_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->checkbox_font_family['weight'] ) {
@@ -512,6 +549,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->checkbox_font_typo['font_weight'] = $settings->checkbox_font_family['weight'];
 					}
+					unset( $settings->checkbox_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->checkbox_font_size ) ) {
@@ -520,6 +558,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->checkbox_font_size );
 			}
 			if ( isset( $settings->checkbox_font_size_medium ) ) {
 
@@ -527,6 +566,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->checkbox_font_size_medium );
 			}
 			if ( isset( $settings->checkbox_font_size_responsive ) ) {
 
@@ -534,6 +574,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->checkbox_font_size_responsive );
 			}
 			if ( isset( $settings->checkbox_line_height ) ) {
 
@@ -541,6 +582,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->checkbox_line_height );
 			}
 			if ( isset( $settings->checkbox_line_height_medium ) ) {
 
@@ -548,6 +590,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->checkbox_line_height_medium );
 			}
 			if ( isset( $settings->checkbox_line_height_responsive ) ) {
 
@@ -555,10 +598,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->checkbox_line_height_responsive );
 			}
 			if ( isset( $settings->checkbox_text_transform ) ) {
 
 				$settings->checkbox_font_typo['text_transform'] = $settings->checkbox_text_transform;
+				unset( $settings->checkbox_text_transform );
 			}
 			if ( isset( $settings->checkbox_text_letter_spacing ) ) {
 
@@ -566,6 +611,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->checkbox_text_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->checkbox_text_letter_spacing );
 			}
 
 			// compatibility for terms.
@@ -579,6 +625,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 				if ( isset( $settings->terms_font_family['family'] ) ) {
 
 					$settings->terms_font_typo['font_family'] = $settings->terms_font_family['family'];
+					unset( $settings->terms_font_family['family'] );
 				}
 				if ( isset( $settings->terms_font_family['weight'] ) ) {
 					if ( 'regular' == isset( $settings->terms_font_family['weight'] ) ) {
@@ -586,6 +633,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->terms_font_typo['font_weight'] = $settings->terms_font_family['weight'];
 					}
+					unset( $settings->terms_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->terms_font_size ) ) {
@@ -594,6 +642,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_font_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->terms_font_size );
 			}
 			if ( isset( $settings->terms_font_size_medium ) ) {
 
@@ -601,6 +650,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_font_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->terms_font_size_medium );
 			}
 			if ( isset( $settings->terms_font_size_responsive ) ) {
 
@@ -608,6 +658,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_font_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->terms_font_size_responsive );
 			}
 			if ( isset( $settings->terms_line_height ) ) {
 
@@ -615,6 +666,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->terms_line_height );
 			}
 			if ( isset( $settings->terms_line_height_medium ) ) {
 
@@ -622,6 +674,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->terms_line_height_medium );
 			}
 			if ( isset( $settings->terms_line_height_responsive ) ) {
 
@@ -629,10 +682,12 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->terms_line_height_responsive );
 			}
 			if ( isset( $settings->terms_text_transform ) ) {
 
 				$settings->terms_font_typo['text_transform'] = $settings->terms_text_transform;
+				unset( $settings->terms_text_transform );
 			}
 			if ( isset( $settings->terms_text_letter_spacing ) ) {
 
@@ -640,96 +695,9 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					'length' => $settings->terms_text_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			// Unset the old values.
-			if ( isset( $settings->terms_font_family ) ) {
-				unset( $settings->terms_font_family );
-				unset( $settings->terms_font_size );
-				unset( $settings->terms_font_size_medium );
-				unset( $settings->terms_font_size_responsive );
-				unset( $settings->terms_line_height );
-				unset( $settings->terms_line_height_medium );
-				unset( $settings->terms_line_height_responsive );
-				unset( $settings->terms_text_transform );
 				unset( $settings->terms_text_letter_spacing );
 			}
-			if ( isset( $settings->checkbox_font_family ) ) {
-				unset( $settings->checkbox_font_family );
-				unset( $settings->checkbox_font_size );
-				unset( $settings->checkbox_font_size_medium );
-				unset( $settings->checkbox_font_size_responsive );
-				unset( $settings->checkbox_line_height );
-				unset( $settings->checkbox_line_height_medium );
-				unset( $settings->checkbox_line_height_responsive );
-				unset( $settings->checkbox_text_transform );
-				unset( $settings->checkbox_text_letter_spacing );
-			}
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
-				unset( $settings->btn_font_size_unit );
-				unset( $settings->btn_font_size_unit_medium );
-				unset( $settings->btn_font_size_unit_responsive );
-				unset( $settings->btn_line_height_unit );
-				unset( $settings->btn_line_height_unit_medium );
-				unset( $settings->btn_line_height_unit_responsive );
-				unset( $settings->btn_transform );
-				unset( $settings->btn_letter_spacing );
-			}
-			if ( isset( $settings->input_font_family ) ) {
-				unset( $settings->input_font_family );
-				unset( $settings->input_font_size_unit );
-				unset( $settings->input_font_size_unit_medium );
-				unset( $settings->input_font_size_unit_responsive );
-				unset( $settings->input_line_height_unit );
-				unset( $settings->input_line_height_unit_medium );
-				unset( $settings->input_line_height_unit_responsive );
-				unset( $settings->input_transform );
-				unset( $settings->input_letter_spacing );
-			}
-			if ( isset( $settings->text_font_family ) ) {
-				unset( $settings->text_font_family );
-				unset( $settings->text_font_size_unit );
-				unset( $settings->text_font_size_unit_medium );
-				unset( $settings->text_font_size_unit_responsive );
-				unset( $settings->text_line_height_unit );
-				unset( $settings->text_line_height_unit_medium );
-				unset( $settings->text_line_height_unit_responsive );
-				unset( $settings->text_transform );
-				unset( $settings->text_letter_spacing );
-			}
-			if ( isset( $settings->subheading_font_family ) ) {
-				unset( $settings->subheading_font_family );
-				unset( $settings->subheading_font_size_unit );
-				unset( $settings->subheading_font_size_unit_medium );
-				unset( $settings->subheading_font_size_unit_responsive );
-				unset( $settings->subheading_line_height_unit );
-				unset( $settings->subheading_line_height_unit_medium );
-				unset( $settings->subheading_line_height_unit_responsive );
-				unset( $settings->subheading_transform );
-				unset( $settings->subheading_letter_spacing );
-			}
-			if ( isset( $settings->heading_font_family ) ) {
-				unset( $settings->heading_font_family );
-				unset( $settings->heading_font_size_unit );
-				unset( $settings->heading_font_size_unit_medium );
-				unset( $settings->heading_font_size_unit_responsive );
-				unset( $settings->heading_line_height_unit );
-				unset( $settings->heading_line_height_unit_medium );
-				unset( $settings->heading_line_height_unit_responsive );
-				unset( $settings->heading_transform );
-				unset( $settings->heading_letter_spacing );
-			}
 		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
-
-			// For overall alignment and responsive alignment settings.
-			if ( isset( $settings->overall_alignment ) ) {
-				$settings->overall_alignment = $settings->overall_alignment;
-			}
-			if ( isset( $settings->resp_overall_alignment ) ) {
-				$settings->resp_overall_alignment = $settings->resp_overall_alignment;
-			}
-
 			// Handle color opacity.
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_color_opc', 'btn_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
@@ -747,6 +715,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 
 				if ( isset( $settings->heading_font_family['family'] ) ) {
 					$settings->heading_font_typo['font_family'] = $settings->heading_font_family['family'];
+					unset( $settings->heading_font_family['family'] );
 				}
 				if ( isset( $settings->heading_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->heading_font_family['weight'] ) {
@@ -754,6 +723,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->heading_font_typo['font_weight'] = $settings->heading_font_family['weight'];
 					}
+					unset( $settings->heading_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->heading_font_size['desktop'] ) && ! isset( $settings->heading_font_typo['font_size'] ) ) {
@@ -811,6 +781,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 
 				if ( isset( $settings->subheading_font_family['family'] ) ) {
 					$settings->subheading_font_typo['font_family'] = $settings->subheading_font_family['family'];
+					unset( $settings->subheading_font_family['family'] );
 				}
 				if ( isset( $settings->subheading_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->subheading_font_family['weight'] ) {
@@ -818,6 +789,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->subheading_font_typo['font_weight'] = $settings->subheading_font_family['weight'];
 					}
+					unset( $settings->subheading_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->subheading_font_size['desktop'] ) && ! isset( $settings->subheading_font_typo['font_size'] ) ) {
@@ -875,6 +847,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 
 				if ( isset( $settings->text_font_family['family'] ) ) {
 					$settings->text_font_typo['font_family'] = $settings->text_font_family['family'];
+					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 					if ( 'regular' == $settings->text_font_family['weight'] ) {
@@ -882,6 +855,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->text_font_typo['font_weight'] = $settings->text_font_family['weight'];
 					}
+					unset( $settings->text_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->text_font_size['desktop'] ) && ! isset( $settings->text_font_typo['font_size'] ) ) {
@@ -939,6 +913,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 
 				if ( isset( $settings->input_font_family['family'] ) ) {
 					$settings->input_font_typo['font_family'] = $settings->input_font_family['family'];
+					unset( $settings->input_font_family['family'] );
 				}
 				if ( isset( $settings->input_font_family['weight'] ) ) {
 					if ( 'regular' == isset( $settings->input_font_family['weight'] ) ) {
@@ -946,6 +921,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 					} else {
 						$settings->input_font_typo['font_weight'] = $settings->input_font_family['weight'];
 					}
+					unset( $settings->input_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->input_font_size['desktop'] ) && ! isset( $settings->input_font_typo['font_size'] ) ) {
@@ -1011,6 +987,7 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 						$settings->button_font_typo['font_weight'] = $settings->btn_font_family['weight'];
 					}
 				}
+				unset( $settings->btn_font_family );
 			}
 			if ( isset( $settings->btn_font_size['desktop'] ) && ! isset( $settings->button_font_typo['font_size'] ) ) {
 				$settings->button_font_typo['font_size'] = array(
@@ -1094,33 +1071,87 @@ class UABBSubscribeFormModule extends FLBuilderModule {
 							break;
 					}
 				}
+				unset( $settings->padding );
 			}
 
 			// Unset the old values.
-			if ( isset( $settings->btn_font_family ) ) {
-				unset( $settings->btn_font_family );
+			if ( isset( $settings->btn_font_size ) ) {
 				unset( $settings->btn_font_size );
+			}
+			if ( isset( $settings->btn_line_height ) ) {
 				unset( $settings->btn_line_height );
 			}
-			if ( isset( $settings->input_font_family ) ) {
-				unset( $settings->input_font_family );
-				unset( $settings->input_font_size );
-				unset( $settings->input_line_height );
+			if ( isset( $settings->input_font_size['desktop'] ) ) {
+				unset( $settings->input_font_size['desktop'] );
 			}
-			if ( isset( $settings->text_font_family ) ) {
-				unset( $settings->text_font_family );
-				unset( $settings->text_font_size );
-				unset( $settings->text_line_height );
+			if ( isset( $settings->input_font_size['medium'] ) ) {
+				unset( $settings->input_font_size['medium'] );
 			}
-			if ( isset( $settings->subheading_font_family ) ) {
-				unset( $settings->subheading_font_family );
-				unset( $settings->subheading_font_size );
-				unset( $settings->subheading_line_height );
+			if ( isset( $settings->input_font_size['small'] ) ) {
+				unset( $settings->input_font_size['small'] );
 			}
-			if ( isset( $settings->heading_font_family ) ) {
-				unset( $settings->heading_font_family );
-				unset( $settings->heading_font_size );
-				unset( $settings->heading_line_height );
+			if ( isset( $settings->input_line_height['desktop'] ) ) {
+				unset( $settings->input_line_height['desktop'] );
+			}
+			if ( isset( $settings->input_line_height['medium'] ) ) {
+				unset( $settings->input_line_height['medium'] );
+			}
+			if ( isset( $settings->input_line_height['small'] ) ) {
+				unset( $settings->input_line_height['small'] );
+			}
+			if ( isset( $settings->text_font_size['desktop'] ) ) {
+				unset( $settings->text_font_size['desktop'] );
+			}
+			if ( isset( $settings->text_font_size['medium'] ) ) {
+				unset( $settings->text_font_size['medium'] );
+			}
+			if ( isset( $settings->text_font_size['small'] ) ) {
+				unset( $settings->text_font_size['small'] );
+			}
+			if ( isset( $settings->text_line_height['desktop'] ) ) {
+				unset( $settings->text_line_height['desktop'] );
+			}
+			if ( isset( $settings->text_line_height['medium'] ) ) {
+				unset( $settings->text_line_height['medium'] );
+			}
+			if ( isset( $settings->text_line_height['small'] ) ) {
+				unset( $settings->text_line_height['small'] );
+			}
+			if ( isset( $settings->subheading_font_size['desktop'] ) ) {
+				unset( $settings->subheading_font_size['desktop'] );
+			}
+			if ( isset( $settings->subheading_font_size['medium'] ) ) {
+				unset( $settings->subheading_font_size['medium'] );
+			}
+			if ( isset( $settings->subheading_font_size['small'] ) ) {
+				unset( $settings->subheading_font_size['small'] );
+			}
+			if ( isset( $settings->subheading_line_height['desktop'] ) ) {
+				unset( $settings->subheading_line_height['desktop'] );
+			}
+			if ( isset( $settings->subheading_line_height['medium'] ) ) {
+				unset( $settings->subheading_line_height['medium'] );
+			}
+			if ( isset( $settings->subheading_line_height['small'] ) ) {
+				unset( $settings->subheading_line_height['small'] );
+			}
+			if ( isset( $settings->heading_font_size['desktop'] ) ) {
+				unset( $settings->heading_font_size['desktop'] );
+			}
+			if ( isset( $settings->heading_font_size['medium'] ) ) {
+				unset( $settings->heading_font_size['medium'] );
+			}
+			if ( isset( $settings->heading_font_size['small'] ) ) {
+				unset( $settings->heading_font_size['small'] );
+			}
+			if ( isset( $settings->heading_line_height ['desktop'] ) ) {
+				unset( $settings->heading_line_height ['desktop'] );
+			}
+			if ( isset( $settings->heading_line_height ['medium'] ) ) {
+				unset( $settings->heading_line_height ['medium'] );
+			}
+			if ( isset( $settings->heading_line_height ['small'] ) ) {
+				unset( $settings->heading_line_height ['small'] );
 			}
 		}
 

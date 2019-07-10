@@ -18,7 +18,7 @@ $date_format = (isset($settings['booking_date_format1']) and trim($settings['boo
 ?>
 <form id="mec_book_form<?php echo $uniqueid; ?>">
     <h4><?php _e('Book Event', 'mec'); ?></h4>
-    <div>
+    <div class="mec-book-first">
         <label for="mec_book_form_date"><?php _e('Date', 'mec'); ?>: </label>
         <select name="book[date]" id="mec_book_form_date" onchange="mec_get_tickets_availability<?php echo $uniqueid; ?>(<?php echo $event_id; ?>, this.value);">
             <?php foreach($dates as $date): ?>
@@ -28,7 +28,7 @@ $date_format = (isset($settings['booking_date_format1']) and trim($settings['boo
     </div>
     
     <div class="mec-event-tickets-list" id="mec_book_form_tickets_container<?php echo $uniqueid; ?>" data-total-booking-limit="<?php echo isset($availability['total']) ? $availability['total'] : '-1'; ?>">
-        <?php foreach($tickets as $ticket_id=>$ticket): $ticket_limit = isset($availability[$ticket_id]) ? $availability[$ticket_id] : -1; if($ticket_limit == '0' and count($dates) <= 1) continue; ?>
+        <?php foreach($tickets as $ticket_id=>$ticket): $ticket_limit = isset($availability[$ticket_id]) ? $availability[$ticket_id] : -1; if($ticket_limit === '0' and count($dates) <= 1) continue; ?>
         <div class="mec-event-ticket mec-event-ticket<?php echo $ticket_limit; ?>" id="mec_event_ticket<?php echo $ticket_id; ?>">
             <div class="mec-ticket-available-spots <?php echo ($ticket_limit == '0' ? 'mec-util-hidden' : ''); ?>">
                 <span class="mec-event-ticket-name"><?php echo (isset($ticket['name']) ? $ticket['name'] : ''); ?></span>

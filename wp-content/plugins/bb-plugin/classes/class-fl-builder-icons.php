@@ -33,8 +33,8 @@ final class FLBuilderIcons {
 		// Check to see if we should pull sets from the main site.
 		if ( is_multisite() ) {
 
-			$id		= defined( 'BLOG_ID_CURRENT_SITE' ) ? BLOG_ID_CURRENT_SITE : 1;
-			$enabled_icons	= get_option( '_fl_builder_enabled_icons' );
+			$id            = defined( 'BLOG_ID_CURRENT_SITE' ) ? BLOG_ID_CURRENT_SITE : 1;
+			$enabled_icons = get_option( '_fl_builder_enabled_icons' );
 
 			if ( ( $id != $blog_id ) && empty( $enabled_icons ) ) {
 				switch_to_blog( $id );
@@ -51,7 +51,10 @@ final class FLBuilderIcons {
 			restore_current_blog();
 		}
 
-		// Filter the sets
+		/**
+		 * Filter the icon sets.
+		 * @see fl_builder_icon_sets
+		 */
 		self::$sets = apply_filters( 'fl_builder_icon_sets', self::$sets );
 
 		// Return the sets.
@@ -78,7 +81,7 @@ final class FLBuilderIcons {
 		self::register_core_sets();
 
 		// Get the new sets.
-		$sets = self::$sets;
+		$sets = apply_filters( 'fl_builder_current_site_icon_sets', self::$sets );
 
 		// Revert to the original sets.
 		self::$sets = $original_sets;
@@ -126,33 +129,29 @@ final class FLBuilderIcons {
 	 */
 	static private function register_core_sets() {
 		$enabled_icons = FLBuilderModel::get_enabled_icons();
-		$core_sets = apply_filters( 'fl_builder_core_icon_sets', array(
-			'font-awesome' => array(
-				'name'	 => 'Font Awesome 4',
-				'prefix' => 'fa',
-			),
-			'font-awesome-5-solid' => array(
-				'name'	 => 'Font Awesome 5 Solid',
+		$core_sets     = apply_filters( 'fl_builder_core_icon_sets', array(
+			'font-awesome-5-solid'   => array(
+				'name'   => 'Font Awesome 5 Solid',
 				'prefix' => 'fas',
 			),
 			'font-awesome-5-regular' => array(
-				'name'	 => 'Font Awesome 5 Regular',
+				'name'   => 'Font Awesome 5 Regular',
 				'prefix' => 'far',
 			),
-			'font-awesome-5-light' => array(
-				'name'	 => 'Font Awesome 5 Light (pro only)',
+			'font-awesome-5-light'   => array(
+				'name'   => 'Font Awesome 5 Light (pro only)',
 				'prefix' => 'fal',
 			),
-			'font-awesome-5-brands' => array(
-				'name'	 => 'Font Awesome 5 Brands',
+			'font-awesome-5-brands'  => array(
+				'name'   => 'Font Awesome 5 Brands',
 				'prefix' => 'fab',
 			),
-			'foundation-icons' => array(
-				'name'	 => 'Foundation Icons',
+			'foundation-icons'       => array(
+				'name'   => 'Foundation Icons',
 				'prefix' => '',
 			),
-			'dashicons' => array(
-				'name'	 => 'WordPress Dashicons',
+			'dashicons'              => array(
+				'name'   => 'WordPress Dashicons',
 				'prefix' => 'dashicons dashicons-before',
 			),
 		) );
@@ -165,9 +164,9 @@ final class FLBuilderIcons {
 		foreach ( $core_sets as $set_key => $set_data ) {
 			if ( is_admin() || in_array( $set_key, $enabled_icons ) ) {
 				self::$sets[ $set_key ] = array(
-					'name'	 => $set_data['name'],
+					'name'   => $set_data['name'],
 					'prefix' => $set_data['prefix'],
-					'type'	 => 'core',
+					'type'   => 'core',
 				);
 			}
 		}
@@ -185,15 +184,15 @@ final class FLBuilderIcons {
 
 				if ( apply_filters( 'fl_enable_fa5_pro', false ) ) {
 					switch ( $set_key ) {
-						case 'font-awesome-5-light' :
+						case 'font-awesome-5-light':
 							$key = 'font-awesome-5-light-pro';
 							break;
 
-						case 'font-awesome-5-regular' :
+						case 'font-awesome-5-regular':
 							$key = 'font-awesome-5-regular-pro';
 							break;
 
-						case 'font-awesome-5-solid' :
+						case 'font-awesome-5-solid':
 							$key = 'font-awesome-5-solid-pro';
 							break;
 					}
@@ -201,7 +200,7 @@ final class FLBuilderIcons {
 
 				$config_path = apply_filters( 'fl_builder_core_icon_set_config', FL_BUILDER_DIR . 'json/' . $key . '.json', $set_data );
 
-				$icons = json_decode( file_get_contents( $config_path ) );
+				$icons                           = json_decode( file_get_contents( $config_path ) );
 				self::$sets[ $set_key ]['icons'] = $icons;
 			}
 		}
@@ -218,7 +217,7 @@ final class FLBuilderIcons {
 		// Get uploaded sets.
 		$enabled_icons = FLBuilderModel::get_enabled_icons();
 		$upload_info   = FLBuilderModel::get_cache_dir( 'icons' );
-		$folders	   = glob( $upload_info['path'] . '*' );
+		$folders       = glob( $upload_info['path'] . '*' );
 
 		// Make sure we have an array.
 		if ( ! is_array( $folders ) ) {
@@ -247,18 +246,18 @@ final class FLBuilderIcons {
 					if ( is_admin() || in_array( $key, $enabled_icons ) ) {
 
 						self::$sets[ $key ] = array(
-							'name'		 => $data->metadata->name,
-							'prefix'	 => '',
-							'type'		 => 'icomoon',
-							'path'		 => $folder,
-							'url'		 => $url,
+							'name'       => $data->metadata->name,
+							'prefix'     => '',
+							'type'       => 'icomoon',
+							'path'       => $folder,
+							'url'        => $url,
 							'stylesheet' => $url . 'style.css',
-							'icons'		 => array(),
+							'icons'      => array(),
 						);
 
 						foreach ( $data->icons as $icon ) {
 
-							$prefs	 = $data->preferences->fontPref;
+							$prefs   = $data->preferences->fontPref;
 							$postfix = isset( $prefs->postfix ) ? $prefs->postfix : '';
 
 							if ( isset( $prefs->selector ) && 'class' == $prefs->selector ) {
@@ -282,11 +281,11 @@ final class FLBuilderIcons {
 
 				// Append the date to the name?
 				if ( empty( $data->name ) ) {
-					$time			= str_replace( 'icon-', '', $key );
-					$date_format	= get_option( 'date_format' );
-					$time_format	= get_option( 'time_format' );
-					$date			= date( $date_format . ' ' . $time_format );
-					$name		   .= ' (' . $date . ')';
+					$time        = str_replace( 'icon-', '', $key );
+					$date_format = get_option( 'date_format' );
+					$time_format = get_option( 'time_format' );
+					$date        = date( $date_format . ' ' . $time_format );
+					$name       .= ' (' . $date . ')';
 				}
 
 				if ( isset( $data->glyphs ) ) {
@@ -294,13 +293,13 @@ final class FLBuilderIcons {
 					if ( is_admin() || in_array( $key, $enabled_icons ) ) {
 
 						self::$sets[ $key ] = array(
-							'name'		 => $name,
-							'prefix'	 => '',
-							'type'		 => 'fontello',
-							'path'		 => $folder,
-							'url'		 => $url,
+							'name'       => $name,
+							'prefix'     => '',
+							'type'       => 'fontello',
+							'path'       => $folder,
+							'url'        => $url,
 							'stylesheet' => $url . 'css/' . $style . '.css',
-							'icons'		 => array(),
+							'icons'      => array(),
 						);
 
 						foreach ( $data->glyphs as $icon ) {
@@ -392,6 +391,10 @@ final class FLBuilderIcons {
 	 * @return void
 	 */
 	static private function enqueue_styles_for_icon( $icon ) {
+		/**
+		 * Enqueue the stylesheet for an icon.
+		 * @see fl_builder_enqueue_styles_for_icon
+		 */
 		do_action( 'fl_builder_enqueue_styles_for_icon', $icon );
 
 		// Is this a core icon?

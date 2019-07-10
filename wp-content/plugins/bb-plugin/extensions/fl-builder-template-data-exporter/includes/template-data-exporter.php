@@ -1,6 +1,7 @@
 <div class="wrap fl-builder-template-data-exporter">
 	<h1><?php _e( 'Template Data Exporter', 'fl-builder' ); ?></h1>
 	<p><?php _e( 'This tool exports a special data file that can be used by developers to include templates within their themes and plugins.', 'fl-builder' ); ?></p>
+	<?php /* translators: %s: admin export url */ ?>
 	<p><?php printf( __( 'If you need to export templates for import into another site, please use the exporter at <a href="%s">Tools > Export</a>.', 'fl-builder' ), admin_url( '/export.php' ) ); ?></p>
 	<form method="POST">
 
@@ -16,7 +17,7 @@
 			<?php endif; ?>
 
 			<?php foreach ( $theme as $layout ) : ?>
-			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-theme[]" value="<?php echo $layout['id'] ?>" /> <?php echo $layout['name'] ?></label></p>
+			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-theme[]" value="<?php echo $layout['id']; ?>" /> <?php echo $layout['name']; ?></label></p>
 			<?php endforeach; ?>
 
 		</div>
@@ -33,7 +34,7 @@
 			<?php endif; ?>
 
 			<?php foreach ( $layouts as $layout ) : ?>
-			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-layout[]" value="<?php echo $layout['id'] ?>" /> <?php echo $layout['name'] ?></label></p>
+			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-layout[]" value="<?php echo $layout['id']; ?>" /> <?php echo $layout['name']; ?></label></p>
 			<?php endforeach; ?>
 
 		</div>
@@ -49,7 +50,7 @@
 			<?php endif; ?>
 
 			<?php foreach ( $rows as $row ) : ?>
-			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-row[]" value="<?php echo $row['id'] ?>" /> <?php echo $row['name'] ?></label></p>
+			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-row[]" value="<?php echo $row['id']; ?>" /> <?php echo $row['name']; ?></label></p>
 			<?php endforeach; ?>
 
 		</div>
@@ -65,7 +66,7 @@
 			<?php endif; ?>
 
 			<?php foreach ( $columns as $column ) : ?>
-			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-column[]" value="<?php echo $column['id'] ?>" /> <?php echo $column['name'] ?></label></p>
+			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-column[]" value="<?php echo $column['id']; ?>" /> <?php echo $column['name']; ?></label></p>
 			<?php endforeach; ?>
 
 		</div>
@@ -81,7 +82,7 @@
 			<?php endif; ?>
 
 			<?php foreach ( $modules as $module ) : ?>
-			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-module[]" value="<?php echo $module['id'] ?>" /> <?php echo $module['name'] ?></label></p>
+			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-module[]" value="<?php echo $module['id']; ?>" /> <?php echo $module['name']; ?></label></p>
 			<?php endforeach; ?>
 
 		</div>

@@ -135,14 +135,18 @@ class UABBContentToggleModule extends FLBuilderModule {
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
 			// Handle old border settings for Content.
-			if ( ! isset( $settings->border ) || empty( $settings->border ) ) {
+			if ( isset( $settings->border_color_sec ) ) {
 
 				$settings->border = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->border_width_sec ) && isset( $settings->border_type_sec ) && 'none' !== $settings->border_type_sec ) {
+				if ( isset( $settings->border_type_sec ) ) {
 					$settings->border['style'] = $settings->border_type_sec;
-					$settings->border['color'] = $settings->border_color_sec;
+					unset( $settings->border_type_sec );
+				}
+				$settings->border['color'] = $settings->border_color_sec;
+				unset( $settings->border_color_sec );
+				if ( isset( $settings->border_width_sec ) ) {
 					$settings->border['width'] = array(
 						'top'    => $settings->border_width_sec,
 						'right'  => $settings->border_width_sec,
@@ -151,7 +155,6 @@ class UABBContentToggleModule extends FLBuilderModule {
 					);
 					unset( $settings->border_width_sec );
 				}
-
 				// Border radius.
 				if ( isset( $settings->border_radius_sec ) ) {
 					$settings->border['radius'] = array(
@@ -165,14 +168,18 @@ class UABBContentToggleModule extends FLBuilderModule {
 			}
 
 			// Handle old border settings for Heading.
-			if ( ! isset( $settings->head_border ) || empty( $settings->head_border ) ) {
+			if ( isset( $settings->border_color_head ) ) {
 
 				$settings->head_border = array();
 
 				// Border style, color, and width.
-				if ( isset( $settings->border_width_head ) && isset( $settings->border_type ) && 'none' !== $settings->border_type ) {
+				if ( isset( $settings->border_type ) ) {
 					$settings->head_border['style'] = $settings->border_type;
-					$settings->head_border['color'] = $settings->border_color_head;
+					unset( $settings->border_type );
+				}
+				$settings->head_border['color'] = $settings->border_color_head;
+				unset( $settings->border_color_head );
+				if ( isset( $settings->border_width_head ) ) {
 					$settings->head_border['width'] = array(
 						'top'    => $settings->border_width_head,
 						'right'  => $settings->border_width_head,
@@ -181,7 +188,6 @@ class UABBContentToggleModule extends FLBuilderModule {
 					);
 					unset( $settings->border_width_head );
 				}
-
 				// Border radius.
 				if ( isset( $settings->border_radius ) ) {
 					$settings->head_border['radius'] = array(
@@ -206,6 +212,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				if ( isset( $settings->head1_font_family['family'] ) ) {
 
 					$settings->head1_font_typo['font_family'] = $settings->head1_font_family['family'];
+					unset( $settings->head1_font_family['family'] );
 				}
 				if ( isset( $settings->head1_font_family['weight'] ) ) {
 
@@ -214,6 +221,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					} else {
 						$settings->head1_font_typo['font_weight'] = $settings->head1_font_family['weight'];
 					}
+					unset( $settings->head1_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->head1_size ) ) {
@@ -221,18 +229,21 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->head1_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->head1_size );
 			}
 			if ( isset( $settings->head1_size_medium ) ) {
 				$settings->head1_font_typo_medium['font_size'] = array(
 					'length' => $settings->head1_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->head1_size_medium );
 			}
 			if ( isset( $settings->head1_size_responsive ) ) {
 				$settings->head1_font_typo_responsive['font_size'] = array(
 					'length' => $settings->head1_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->head1_size_responsive );
 			}
 			if ( isset( $settings->head1_line_height ) ) {
 
@@ -240,27 +251,32 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->head1_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->head1_line_height );
 			}
 			if ( isset( $settings->head1_line_height_medium ) ) {
 				$settings->head1_font_typo_medium['line_height'] = array(
 					'length' => $settings->head1_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->head1_line_height_medium );
 			}
 			if ( isset( $settings->head1_line_height_responsive ) ) {
 				$settings->head1_font_typo_responsive['line_height'] = array(
 					'length' => $settings->head1_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->head1_line_height_responsive );
 			}
 			if ( isset( $settings->head1_transform ) ) {
 				$settings->head1_font_typo['text_transform'] = $settings->head1_transform;
+				unset( $settings->head1_transform );
 			}
 			if ( isset( $settings->head1_letter_spacing ) ) {
 				$settings->head1_font_typo['letter_spacing'] = array(
 					'length' => $settings->head1_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->head1_letter_spacing );
 			}
 
 			// compatibility for Heading-2.
@@ -275,6 +291,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				if ( isset( $settings->head2_font_family['family'] ) ) {
 
 					$settings->head2_font_typo['font_family'] = $settings->head2_font_family['family'];
+					unset( $settings->head2_font_family['family'] );
 				}
 				if ( isset( $settings->head2_font_family['weight'] ) ) {
 
@@ -283,6 +300,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					} else {
 						$settings->head2_font_typo['font_weight'] = $settings->head2_font_family['weight'];
 					}
+					unset( $settings->head2_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->head2_size ) ) {
@@ -291,12 +309,14 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->head2_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->head2_size );
 			}
 			if ( isset( $settings->head2_size_medium ) ) {
 				$settings->head2_font_typo_medium['font_size'] = array(
 					'length' => $settings->head2_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->head2_size_medium );
 			}
 			if ( isset( $settings->head2_size_responsive ) ) {
 
@@ -304,6 +324,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->head2_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->head2_size_responsive );
 			}
 			if ( isset( $settings->head2_line_height ) ) {
 
@@ -311,22 +332,26 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->head2_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->head2_line_height );
 			}
 			if ( isset( $settings->head2_line_height_medium ) ) {
 				$settings->head2_font_typo_medium['line_height'] = array(
 					'length' => $settings->head2_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->head2_line_height_medium );
 			}
 			if ( isset( $settings->head2_line_height_responsive ) ) {
 				$settings->head2_font_typo_responsive['line_height'] = array(
 					'length' => $settings->head2_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->head2_line_height_responsive );
 			}
 			if ( isset( $settings->head2_transform ) ) {
 
 				$settings->head2_font_typo['text_transform'] = $settings->head2_transform;
+				unset( $settings->head2_transform );
 			}
 			if ( isset( $settings->head2_letter_spacing ) ) {
 
@@ -334,6 +359,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->head2_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->head2_letter_spacing );
 			}
 
 			// compatibility for Description-1.
@@ -348,6 +374,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				if ( isset( $settings->section1_font_family['family'] ) ) {
 
 					$settings->desc1_font_typo['font_family'] = $settings->section1_font_family['family'];
+					unset( $settings->section1_font_family['family'] );
 				}
 				if ( isset( $settings->section1_font_family['weight'] ) ) {
 
@@ -356,6 +383,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					} else {
 						$settings->desc1_font_typo['font_weight'] = $settings->section1_font_family['weight'];
 					}
+					unset( $settings->section1_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->section1_size ) ) {
@@ -364,18 +392,21 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->section1_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->section1_size );
 			}
 			if ( isset( $settings->section1_size_medium ) ) {
 				$settings->desc1_font_typo_medium['font_size'] = array(
 					'length' => $settings->section1_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->section1_size_medium );
 			}
 			if ( isset( $settings->section1_size_responsive ) ) {
 				$settings->desc1_font_typo_responsive['font_size'] = array(
 					'length' => $settings->section1_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->section1_size_responsive );
 			}
 			if ( isset( $settings->section1_line_height ) ) {
 
@@ -383,21 +414,25 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->section1_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->section1_line_height );
 			}
 			if ( isset( $settings->section1_line_height_medium ) ) {
 				$settings->desc1_font_typo_medium['line_height'] = array(
 					'length' => $settings->section1_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->section1_line_height_medium );
 			}
 			if ( isset( $settings->section1_line_height_responsive ) ) {
 				$settings->desc1_font_typo_responsive['line_height'] = array(
 					'length' => $settings->section1_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->section1_line_height_responsive );
 			}
 			if ( isset( $settings->section1_transform ) ) {
 				$settings->desc1_font_typo['text_transform'] = $settings->section1_transform;
+				unset( $settings->section1_transform );
 			}
 			if ( isset( $settings->section1_letter_spacing ) ) {
 
@@ -405,6 +440,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->section1_letter_spacing,
 					'unit'   => 'px',
 				);
+				unset( $settings->section1_letter_spacing );
 			}
 
 			// compatibility for Description-2.
@@ -419,6 +455,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				if ( isset( $settings->section2_font_family['family'] ) ) {
 
 					$settings->desc2_font_typo['font_family'] = $settings->section2_font_family['family'];
+					unset( $settings->section2_font_family['family'] );
 				}
 				if ( isset( $settings->section2_font_family['weight'] ) ) {
 
@@ -427,6 +464,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 					} else {
 						$settings->desc2_font_typo['font_weight'] = $settings->section2_font_family['weight'];
 					}
+					unset( $settings->section2_font_family['weight'] );
 				}
 			}
 			if ( isset( $settings->section2_size ) ) {
@@ -435,18 +473,21 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->section2_size,
 					'unit'   => 'px',
 				);
+				unset( $settings->section2_size );
 			}
 			if ( isset( $settings->section2_size_medium ) ) {
 				$settings->desc2_font_typo_medium['font_size'] = array(
 					'length' => $settings->section2_size_medium,
 					'unit'   => 'px',
 				);
+				unset( $settings->section2_size_medium );
 			}
 			if ( isset( $settings->section2_size_responsive ) ) {
 				$settings->desc2_font_typo_responsive['font_size'] = array(
 					'length' => $settings->section2_size_responsive,
 					'unit'   => 'px',
 				);
+				unset( $settings->section2_size_responsive );
 			}
 			if ( isset( $settings->section2_line_height ) ) {
 
@@ -454,21 +495,25 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->section2_line_height,
 					'unit'   => 'em',
 				);
+				unset( $settings->section2_line_height );
 			}
 			if ( isset( $settings->section2_line_height_medium ) ) {
 				$settings->desc2_font_typo_medium['line_height'] = array(
 					'length' => $settings->section2_line_height_medium,
 					'unit'   => 'em',
 				);
+				unset( $settings->section2_line_height_medium );
 			}
 			if ( isset( $settings->section2_line_height_responsive ) ) {
 				$settings->desc2_font_typo_responsive['line_height'] = array(
 					'length' => $settings->section2_line_height_responsive,
 					'unit'   => 'em',
 				);
+				unset( $settings->section2_line_height_responsive );
 			}
 			if ( isset( $settings->section2_transform ) ) {
 				$settings->desc2_font_typo['text_transform'] = $settings->section2_transform;
+				unset( $settings->section2_transform );
 			}
 			if ( isset( $settings->section2_letter_spacing ) ) {
 
@@ -476,50 +521,6 @@ class UABBContentToggleModule extends FLBuilderModule {
 					'length' => $settings->section2_letter_spacing,
 					'unit'   => 'px',
 				);
-			}
-
-			if ( isset( $settings->head1_font_family ) ) {
-				unset( $settings->head1_font_family );
-				unset( $settings->head1_size );
-				unset( $settings->head1_size_medium );
-				unset( $settings->head1_size_responsive );
-				unset( $settings->head1_line_height );
-				unset( $settings->head1_line_height_medium );
-				unset( $settings->head1_line_height_responsive );
-				unset( $settings->head1_transform );
-				unset( $settings->head1_letter_spacing );
-			}
-			if ( isset( $settings->head2_font_family ) ) {
-				unset( $settings->head2_font_family );
-				unset( $settings->head2_size );
-				unset( $settings->head2_size_medium );
-				unset( $settings->head2_size_responsive );
-				unset( $settings->head2_line_height );
-				unset( $settings->head2_line_height_medium );
-				unset( $settings->head2_line_height_responsive );
-				unset( $settings->head2_transform );
-				unset( $settings->head2_letter_spacing );
-			}
-			if ( isset( $settings->section1_font_family ) ) {
-				unset( $settings->section1_font_family );
-				unset( $settings->section1_size );
-				unset( $settings->section1_size_medium );
-				unset( $settings->section1_size_responsive );
-				unset( $settings->section1_line_height );
-				unset( $settings->section1_line_height_medium );
-				unset( $settings->section1_line_height_responsive );
-				unset( $settings->section1_transform );
-				unset( $settings->section1_letter_spacing );
-			}
-			if ( isset( $settings->section2_font_family ) ) {
-				unset( $settings->section2_font_family );
-				unset( $settings->section2_size );
-				unset( $settings->section2_size_medium );
-				unset( $settings->section2_size_responsive );
-				unset( $settings->section2_line_height );
-				unset( $settings->section2_line_height_medium );
-				unset( $settings->section2_line_height_responsive );
-				unset( $settings->section2_transform );
 				unset( $settings->section2_letter_spacing );
 			}
 		}
