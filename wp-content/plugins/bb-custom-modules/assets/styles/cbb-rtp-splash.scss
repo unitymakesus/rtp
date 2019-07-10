@@ -1,0 +1,122 @@
+@import "../global/variables.scss";
+
+.landing-graphic-pin {
+  text-transform: uppercase;
+  font-weight: bold;
+  position: relative;
+  width: 100%;
+  height: calc(90vh - 200px);
+  // height: 0;
+  // padding-bottom: 40%;
+  z-index: 1;
+}
+
+#svg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -49%, 0);
+  z-index: 1;
+}
+
+#gradient-bar {
+  position: absolute;
+  top: 14vw;
+  height: 8.8vw;
+  left: 50%;
+  width: 0;
+  transform: translate3d(-50%, 0, 0);
+  // transition: 0.6s all;
+  z-index: 0;
+
+  @include rtp-gradient;
+
+  &.wide {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.landing-graphic-swipe {
+  position: relative;
+  z-index: 2;
+
+  img {
+    max-width: 100%;
+  }
+}
+
+.landing-banner-wrapper {
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  max-height: 0;
+  height: auto;
+  overflow: hidden;
+  color: $color-white;
+
+  &.open {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.landing-banner-gradient {
+  @include rtp-gradient-trans;
+
+  padding: 20px 20px 10px;
+
+  .badge {
+    border-color: $color-white;
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    font-weight: bold;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 26px;
+    height: 26px;
+
+    span {
+      position: absolute;
+      display: block;
+      font-size: 0.8em;
+      font-weight: 300;
+      left: 17px;
+      top: 10px;
+    }
+  }
+
+  h1 {
+    font-weight: 300;
+    margin-bottom: 0;
+  }
+}
+
+.cta-anchor-bar {
+  @include unc-duke-gradient;
+
+  padding: 10px 20px;
+  font-size: 0.9em;
+
+  a {
+    color: $color-white;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .arrow {
+    display: inline-block;
+    width: 20px;
+    margin-left: 20px;
+
+    svg {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
