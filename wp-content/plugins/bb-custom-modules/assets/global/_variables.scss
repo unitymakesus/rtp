@@ -51,7 +51,7 @@ $footer-copyright-font-color: $color-white;
 /** Box Model  */
 $spacer: 2rem;
 
-/** Modified Grid */
+/** Modified Breakpoints */
 $xsmall-screen: 600px;
 $xsmall-screen-up: 601px;
 $small-screen-up: 769px;
@@ -60,8 +60,15 @@ $large-screen-up: 1201px;
 $small-screen: 768px;
 $medium-screen: 992px;
 $large-screen: 1200px;
+
 $small-and-up: "only screen and (min-width : #{$xsmall-screen-up})";
 $xsmall-and-down: "only screen and (max-width : #{$xsmall-screen})";
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})";
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})";
+$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})";
+$small-and-down: "only screen and (max-width : #{$small-screen})";
+$medium-and-down: "only screen and (max-width : #{$medium-screen})";
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})";
 
 /** Flow Text  */
 $range : $large-screen - $medium-screen;

@@ -33,7 +33,7 @@
 				<div class="badge"><span><?php echo $settings->cbb_rtp_splash_hero_badge; ?></span></div>
 				<h1><?php echo $settings->cbb_rtp_splash_hero_title; ?></h1>
 			</div>
-			<div class="cta-anchor-bar"><a href="<?php echo $settings->cbb_rtp_splash_hero_cta_link; ?>"><?php echo $settings->cbb_rtp_splash_hero_cta_text; ?> <span class="arrow">@svg('images/arrow-right')</span></a></div>
+			<div class="cta-anchor-bar"><a href="<?php echo $settings->cbb_rtp_splash_hero_cta_link; ?>"><?php echo $settings->cbb_rtp_splash_hero_cta_text; ?> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-rtp-splash/images/arrow-right.svg'); ?></span></a></div>
 		</div>
 	</div>
 </div>

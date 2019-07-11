@@ -6,6 +6,10 @@ body {
   overflow-x: hidden;
 }
 
+.container {
+  max-width: 1100px;
+}
+
 .container-wide {
   @extend .container;
 
@@ -19,6 +23,7 @@ body {
 
 .content {
   position: relative;
+  // padding-top: 200px;
   z-index: 3;
 }
 

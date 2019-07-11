@@ -8,7 +8,7 @@
 
 /** Box Model  */
 
-/** Modified Grid */
+/** Modified Breakpoints */
 
 /** Flow Text  */
 
@@ -25,7 +25,7 @@
   z-index: 1;
 }
 
-/* line 14, stdin */
+/* line 12, stdin */
 
 #svg-text {
   position: absolute;
@@ -34,69 +34,50 @@
   -webkit-transform: translate3d(-50%, -49%, 0);
           transform: translate3d(-50%, -49%, 0);
   z-index: 1;
+  max-width: 90%;
+  width: 1100px;
 }
 
 /* line 22, stdin */
-
-#gradient-bar {
-  position: absolute;
-  top: 14vw;
-  height: 8.8vw;
-  left: 50%;
-  width: 0;
-  -webkit-transform: translate3d(-50%, 0, 0);
-          transform: translate3d(-50%, 0, 0);
-  z-index: 0;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
-  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), color-stop(33%, #012169), color-stop(66%, #82052A), color-stop(99%, #C00));
-  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-}
-
-/* line 34, stdin */
-
-#gradient-bar.wide {
-  width: 100%;
-  opacity: 1;
-}
-
-/* line 40, stdin */
 
 .landing-graphic-swipe {
   position: relative;
   z-index: 2;
 }
 
-/* line 44, stdin */
+/* line 26, stdin */
 
 .landing-graphic-swipe img {
   max-width: 100%;
 }
 
-/* line 49, stdin */
+/* line 31, stdin */
 
 .landing-banner-wrapper {
-  opacity: 0;
+  color: #FFF;
+  margin: 0 auto;
+  width: 1100px;
+  max-width: 90%;
   position: absolute;
-  z-index: 1;
   top: 0;
-  width: 100%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+          transform: translate3d(-50%, 0, 0);
+  opacity: 0;
   max-height: 0;
   height: auto;
   overflow: hidden;
-  color: #FFF;
+  z-index: 1;
 }
 
-/* line 60, stdin */
+/* line 46, stdin */
 
 .landing-banner-wrapper.open {
   opacity: 1;
   max-height: 500px;
 }
 
-/* line 66, stdin */
+/* line 52, stdin */
 
 .landing-banner-gradient {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -108,7 +89,7 @@
   padding: 20px 20px 10px;
 }
 
-/* line 71, stdin */
+/* line 57, stdin */
 
 .landing-banner-gradient .badge {
   border-color: #FFF;
@@ -124,7 +105,7 @@
   height: 26px;
 }
 
-/* line 84, stdin */
+/* line 70, stdin */
 
 .landing-banner-gradient .badge span {
   position: absolute;
@@ -135,14 +116,14 @@
   top: 10px;
 }
 
-/* line 94, stdin */
+/* line 80, stdin */
 
 .landing-banner-gradient h1 {
   font-weight: 300;
   margin-bottom: 0;
 }
 
-/* line 100, stdin */
+/* line 86, stdin */
 
 .cta-anchor-bar {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FF012169');
@@ -155,7 +136,7 @@
   font-size: 0.9em;
 }
 
-/* line 106, stdin */
+/* line 92, stdin */
 
 .cta-anchor-bar a {
   color: #FFF;
@@ -163,7 +144,7 @@
   text-decoration: none;
 }
 
-/* line 112, stdin */
+/* line 98, stdin */
 
 .cta-anchor-bar .arrow {
   display: inline-block;
@@ -171,7 +152,7 @@
   margin-left: 20px;
 }
 
-/* line 117, stdin */
+/* line 103, stdin */
 
 .cta-anchor-bar .arrow svg {
   width: 100%;

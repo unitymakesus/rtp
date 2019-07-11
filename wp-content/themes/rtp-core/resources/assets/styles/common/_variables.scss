@@ -51,7 +51,10 @@ $footer-copyright-font-color: $color-white;
 /** Box Model  */
 $spacer: 2rem;
 
-/** Modified Grid */
+/** Grid */
+$gutter-width: 20px;
+
+/** Modified Breakpoints */
 $xsmall-screen: 600px;
 $xsmall-screen-up: 601px;
 $small-screen-up: 769px;

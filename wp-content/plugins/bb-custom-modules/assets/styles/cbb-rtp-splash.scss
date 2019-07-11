@@ -6,8 +6,6 @@
   position: relative;
   width: 100%;
   height: calc(90vh - 200px);
-  // height: 0;
-  // padding-bottom: 40%;
   z-index: 1;
 }
 
@@ -17,24 +15,8 @@
   left: 50%;
   transform: translate3d(-50%, -49%, 0);
   z-index: 1;
-}
-
-#gradient-bar {
-  position: absolute;
-  top: 14vw;
-  height: 8.8vw;
-  left: 50%;
-  width: 0;
-  transform: translate3d(-50%, 0, 0);
-  // transition: 0.6s all;
-  z-index: 0;
-
-  @include rtp-gradient;
-
-  &.wide {
-    width: 100%;
-    opacity: 1;
-  }
+  max-width: 90%;
+  width: 1100px;
 }
 
 .landing-graphic-swipe {
@@ -47,15 +29,19 @@
 }
 
 .landing-banner-wrapper {
-  opacity: 0;
+  color: $color-white;
+  margin: 0 auto;
+  width: 1100px;
+  max-width: 90%;
   position: absolute;
-  z-index: 1;
   top: 0;
-  width: 100%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  opacity: 0;
   max-height: 0;
   height: auto;
   overflow: hidden;
-  color: $color-white;
+  z-index: 1;
 
   &.open {
     opacity: 1;

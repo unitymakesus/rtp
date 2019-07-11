@@ -9,11 +9,12 @@ class CbbRTPSplashModule extends FLBuilderModule {
 			'icon'            => 'tide.svg',
 			'category'        => __( 'Extra Additions', 'fl-builder' ),
 			'dir'             => CBB_MODULES_DIR . 'modules/cbb-rtp-splash/',
-			'url'             => CBB_MODULES_DIR . 'modules/cbb-rtp-splash/'
+			'url'             => CBB_MODULES_URL . 'modules/cbb-rtp-splash/'
 		));
 
-		// Include custom CSS
-		$this->add_css('cbb-rtp-splash', CBB_MODULES_DIR . '/dist/styles/cbb-rtp-splash/css');
+		// Include custom CSS and JS
+		$this->add_css('cbb-rtp-splash', CBB_MODULES_URL . 'dist/styles/cbb-rtp-splash.css');
+		$this->add_js('cbb-rtp-splash', CBB_MODULES_URL . 'dist/scripts/cbb-rtp-splash.js');
 	}
 
 	/**
@@ -25,8 +26,8 @@ class CbbRTPSplashModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'cbb-rtp-splash/icon/' . $icon ) ) {
-			$path = CBB_MODULES_DIR . 'cbb-rtp-splash/icon/' . $icon;
+		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'cbb-rtp-splash/images/' . $icon ) ) {
+			$path = CBB_MODULES_DIR . 'cbb-rtp-splash/images/' . $icon;
 		}
 
 		if ( file_exists( $path ) ) {

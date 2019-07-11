@@ -1,6 +1,6 @@
 .banner {
-  position: fixed;
-  width: 100%;
+  // position: fixed;
+  // width: 100%;
   background: $color-white;
   z-index: 100;
 
@@ -168,7 +168,7 @@ nav {
     &::before {
       display: none;
     }
-    
+
     &.menu-item-has-children {
       a {
         cursor: default;
