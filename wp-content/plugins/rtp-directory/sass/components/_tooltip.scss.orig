@@ -1,0 +1,48 @@
+.tooltip.tooltip {
+  display: block;
+  width: 213px;
+
+  p {
+    margin: 10px;
+
+    &.title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #02444D;
+    }
+
+    &.address {
+      font-size: 16px;
+      padding: 0;
+    }
+  }
+
+  a {
+    font-size: 18px;
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .secondary {
+    background: #048798;
+  }
+
+<<<<<<< .merge_file_XJCVk6
+  .tooltip-logo {
+    max-width: 100%;
+    margin: 10px;
+
+    img {
+      max-width: 100%;
+      display: block;
+      margin: 0;
+    }
+=======
+  img {
+    max-height: 50px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+>>>>>>> .merge_file_Bv2zXd
+  }
+}

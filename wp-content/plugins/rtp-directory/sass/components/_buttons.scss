@@ -1,0 +1,19 @@
+.button {
+  &.large {
+    font-size: 1.25em;
+    padding: 0.8rem 1.75rem;
+    text-transform: uppercase;
+  }
+
+  &.top-margin {
+    margin-top: 4rem;
+  }
+}
+
+.acf-button, .acf-input .button {
+  background: #2ebaa5;
+
+  &:hover, &:active, &:focus {
+    background: #038798;
+  }
+}

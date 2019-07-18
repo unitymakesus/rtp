@@ -1,0 +1,59 @@
+$color: #2EBAA5;
+$size: 12px;
+$time: 1;
+
+.rtp-loader-wrap {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background: rgba(#07444C, 0.7);
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 200;
+}
+
+.rtp-loader-icon {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   .r {
+      display: flex;
+   }
+}
+
+.arrow {
+   width: 0;
+   height: 0;
+   margin: 0 (-$size / 2);
+   border-left: $size solid transparent;
+   border-right: $size solid transparent;
+   border-bottom: ($size * 1.8) solid $color;
+   animation: blink $time + s infinite;
+   // filter: drop-shadow(0 0 ($size * 1.5) $color);
+
+   &.down {
+      transform: rotate(180deg);
+   }
+
+   @for $i from 1 through 18 {
+      &.outer-#{$i} {
+         animation-delay: -($time / 18) * $i + s;
+      }
+   }
+
+   @for $i from 1 through 6 {
+      &.inner-#{$i} {
+         animation-delay: -($time / 6) * $i + s;
+      }
+   }
+}
+
+@keyframes blink {
+  0% { opacity: 0.1; }
+  30% { opacity: 1; }
+  100% { opacity: 0.1; }
+}

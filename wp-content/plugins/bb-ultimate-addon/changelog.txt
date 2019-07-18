@@ -1,4 +1,10 @@
-Version 1.18.0 - Wednesday, 26th Jun 2019
+Version 1.18.2 - Monday, 1st July 2019
+- Improvement: Business Reviews - Improved Schema Rating.
+
+Version 1.18.1 - Thursday, 27th June 2019
+- Fixed: Business Reviews - Missing required field value for all schema types in case of Google reviews
+
+Version 1.18.0 - Wednesday, 26th June 2019
 - New: Introduced Business Reviews
 - Improvement: Price Box - Add field connection support to the module
 - Fixed: Advanced Menu - Resolved menu's Link padding issue on mobile devices for OffCanavs layout

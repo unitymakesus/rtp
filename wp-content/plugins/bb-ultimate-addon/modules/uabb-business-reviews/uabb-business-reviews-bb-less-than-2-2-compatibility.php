@@ -528,15 +528,6 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'schema_selection'     => array(
-							'type'    => 'select',
-							'label'   => __( 'Schema selection', 'uabb' ),
-							'default' => 'google',
-							'options' => array(
-								'google' => __( 'Google', 'uabb' ),
-								'yelp'   => __( 'yelp', 'uabb' ),
-							),
-						),
 						'schema_type'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Schema Type', 'uabb' ),

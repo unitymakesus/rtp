@@ -332,15 +332,6 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'schema_selection'     => array(
-							'type'    => 'select',
-							'label'   => __( ' Select Rating Source', 'uabb' ),
-							'default' => 'google',
-							'options' => array(
-								'google' => __( 'Google', 'uabb' ),
-								'yelp'   => __( 'Yelp', 'uabb' ),
-							),
-						),
 						'schema_type'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Schema Type', 'uabb' ),

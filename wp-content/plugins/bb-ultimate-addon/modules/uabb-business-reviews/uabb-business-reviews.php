@@ -378,62 +378,6 @@ class UabbBusinessReview extends FLBuilderModule {
 	 *
 	 * @since 1.18.0
 	 * @param array $settings The settings object.
-	 * @return the Yelp rating.
-	 * @access public
-	 */
-	public function get_yelp_api_rating( $settings ) {
-
-		$business_id = $this->settings->yelp_business_id;
-
-		if ( '' === $business_id || null === $business_id ) {
-			return;
-		}
-
-		$url = 'https://api.yelp.com/v3/businesses/' . $business_id;
-
-		$url = esc_url_raw( $url );
-
-		$yelp_api_key = $this->get_yelp_api_key( $this->settings );
-
-		if ( '' === $yelp_api_key || null === $yelp_api_key ) {
-			return;
-		}
-
-		$transient_name = 'uabb_reviews_y_' . $business_id;
-
-		$expire_time = $settings->set_transient_time;
-
-		$expire_time = apply_filters( 'uabb_reviews_expire_time', $expire_time, $this->settings );
-
-		$result = get_transient( $transient_name );
-
-		if ( false === $result ) {
-			$result = wp_remote_get(
-				$url,
-				array(
-					'method'      => 'GET',
-					'timeout'     => 60,
-					'httpversion' => '1.0',
-					'sslverify'   => false,
-					'user-agent'  => '',
-					'headers'     => array(
-						'Authorization' => 'Bearer ' . $yelp_api_key,
-					),
-				)
-			);
-			set_transient( $transient_name, $result, $expire_time );
-		}
-
-		$review = json_decode( $result['body'] );
-
-		return $review;
-
-	}
-	/**
-	 * Gets JSON Data from Yelp.
-	 *
-	 * @since 1.18.0
-	 * @param array $settings The settings object.
 	 * @return the layout of Yelp reviews.
 	 * @access public
 	 */
@@ -681,7 +625,7 @@ class UabbBusinessReview extends FLBuilderModule {
 		$overall_align      = '';
 		$image_align        = '';
 		$schema_type        = '';
-		$aggregate          = '';
+		$aggregate          = 0;
 		$aggregate_count    = '';
 
 		$reviews = $this->get_review_data( $this->settings );
@@ -737,27 +681,18 @@ class UabbBusinessReview extends FLBuilderModule {
 					$reviews        = array_slice( $reviews, 0, $display_number );
 				}
 
-				$min_rating = $this->settings->reviews_min_rating;
+				$min_rating      = $this->settings->reviews_min_rating;
+				$aggregate_count = sizeof( $reviews );
 
 				foreach ( $reviews as $key => $review ) {
 
+					$aggregate = ( is_numeric( $aggregate ) && is_numeric( $review['rating'] ) ) ? $aggregate + $review['rating'] : '';
+
 					$this->get_reviews( $review, $this->settings );
 				}
-				if ( 'google' === $this->settings->schema_selection && 'yes' === $this->settings->enable_rating_schema ) {
+				if ( ! is_null( $aggregate ) && 0 < $aggregate ) {
 
-					$final_result = $this->get_google_api_call( $this->settings );
-
-					$aggregate = ( isset( $final_result->result->rating ) ) ? $final_result->result->rating : '';
-
-					$aggregate_count = ( isset( $final_result->result->user_ratings_total ) ) ? $final_result->result->user_ratings_total : '';
-				}
-				if ( 'yelp' === $this->settings->schema_selection && 'yes' === $this->settings->enable_rating_schema ) {
-
-					$result = $this->get_yelp_api_rating( $this->settings );
-
-					$aggregate = ( isset( $result->rating ) ) ? $result->rating : '';
-
-					$aggregate_count = ( isset( $result->review_count ) ) ? $result->review_count : '';
+					$aggregate = ( is_numeric( $aggregate ) && is_numeric( $aggregate_count ) ) ? $aggregate / $aggregate_count : '';
 				}
 				?>
 			</div>

@@ -1,0 +1,119 @@
+#filter-toggle {
+  margin-bottom: 0;
+  background: #07444b;
+
+  span {
+    display: inline-block;
+    transition: transform 1s;
+  }
+
+  .arrow-toggle {
+    transform: rotate(180deg);
+  }
+}
+
+.filters {
+  border-top: 10px solid #07444C;
+  background: #f2f6f7;
+
+  .label {
+    font-size: 0.85em;
+  }
+
+  h3 {
+    margin-bottom: 5px;
+    font-size: 1.25rem;
+  }
+}
+
+// .facetwp-pager {
+//   .facetwp-pager-label {
+//     display: none;
+//   }
+//
+//   .facetwp-page {
+//     display: inline-block;
+//     min-width: 30px;
+//     padding: 0;
+//     height: 30px;
+//     line-height: 30px;
+//     font-size: 0.9em;
+//     background: #038798;
+//     color: #fff;
+//     text-decoration: none;
+//     text-align: center;
+//
+//     &.active {
+//       background: #07444C;
+//     }
+//
+//     &:hover, &:focus {
+//       background: lighten(#038798, 10%);
+//     }
+//   }
+// }
+
+.checkboxIcons {
+  width: 17px;
+  margin: 0 5px;
+}
+
+.facetwp-pager {
+  ul {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 0;
+    height: auto;
+    display: inline-block;
+
+    &::before {
+      display: none;
+    }
+
+    &.gap {
+      &.before::before {
+        display: inline-block;
+        position: relative;
+        content: '\2026';
+        color: #07444C;
+        margin-right: 6px;
+        left: 0;
+      }
+
+      &.after::after {
+        display: inline-block;
+        position: relative;
+        content: '\2026';
+        color: #07444C;
+        margin-right: 6px;
+        left: 0;
+      }
+    }
+  }
+
+  a, span {
+    background: #038798;
+    color: #FFF;
+    display: inline-block;
+    min-width: 30px;
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    font-size: 0.9em;
+    text-decoration: none;
+    text-align: center;
+
+    &:hover, &:focus {
+      background: lighten(#038798, 10%);
+      color: #FFF;
+    }
+
+    &.active, &.current {
+      background: #07444C;
+      color: #FFF;
+    }
+  }
+}

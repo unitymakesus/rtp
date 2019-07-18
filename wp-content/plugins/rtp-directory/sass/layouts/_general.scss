@@ -1,0 +1,30 @@
+.row.flex {
+  @extend .row;
+}
+
+.container-fluid {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.vertical-padding {
+  padding: 10px 0;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.text-right {
+  text-align: right;
+}

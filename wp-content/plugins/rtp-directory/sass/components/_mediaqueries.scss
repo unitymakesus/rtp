@@ -1,0 +1,57 @@
+@media(max-width: 960px) {
+  #map {
+    display: none;
+  }
+
+  .page-template-page-directory .content-container {
+    padding: 0;
+  }
+
+  #filter-toggle {
+    width: 100%;
+  }
+
+  .facetwp-facet {
+    margin-right: 20px;
+  }
+
+  .facetwp-template {
+    padding: 1rem 2em;
+
+    .float-left, .text-right {
+      float: none;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  }
+
+  .row-smallsize {
+    margin-left: 0;
+  }
+
+  .search {
+    margin-left: 10px;
+  }
+
+  .company-info {
+    .col-xs-12 {
+      padding-right: 0;
+    }
+
+    .container-fluid {
+      padding: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: 960px){
+  .st-content-inner {
+    max-width: 100% !important;
+  }
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+   .indent dl {
+     display: block !important;
+   }
+}
