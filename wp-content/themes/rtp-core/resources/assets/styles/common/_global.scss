@@ -61,47 +61,41 @@ body {
 
   .flex-item {
     padding: 10px;
+    display: flex;
+    position: relative;
   }
 
-  &.s1x {
-    .flex-item {
-      display: flex;
-      position: relative;
-
-      @media #{$xsmall-and-down} {
+  @media #{$xsmall-and-down} {
+    &.s1x {
+      .flex-item {
         width: 100%;
       }
     }
   }
 
-  &.m2x {
-    .flex-item {
-      display: flex;
-      position: relative;
-
-      @media #{$small-and-up} {
+  @media #{$small-and-up} {
+    &.m2x {
+      .flex-item {
         width: 50%;
       }
     }
-  }
 
-  &.m3x {
-    .flex-item {
-      display: flex;
-      position: relative;
-
-      @media #{$small-and-up} {
+    &.m3x {
+      .flex-item {
         width: 33.33%;
       }
     }
   }
 
-  &.l4x {
-    .flex-item {
-      display: flex;
-      position: relative;
+  @media #{$medium-and-up} {
+    &.l3x {
+      .flex-item {
+        width: 33.33%;
+      }
+    }
 
-      @media #{$medium-and-up} {
+    &.l4x {
+      .flex-item {
         width: 25%;
       }
     }
