@@ -121,6 +121,13 @@ final class FLBuilder {
 			$locale = apply_filters( 'plugin_locale', get_locale(), 'fl-builder' );
 		}
 
+		/**
+		 * Allow users to overide the locale.
+		 * @see fl_set_ui_locale
+		 * @since 2.2.4
+		 */
+		$locale = apply_filters( 'fl_set_ui_locale', $locale );
+
 		//Setup paths to current locale file
 		$mofile_global = trailingslashit( WP_LANG_DIR ) . 'plugins/bb-plugin/' . $locale . '.mo';
 		$mofile_local  = trailingslashit( FL_BUILDER_DIR ) . 'languages/' . $locale . '.mo';
@@ -1580,6 +1587,12 @@ final class FLBuilder {
 			$content = preg_replace_callback( "/$pattern/s", 'FLBuilder::double_escape_shortcodes', $content );
 			$content = $wp_embed->run_shortcode( $content );
 			$content = do_shortcode( $content );
+			/**
+			 * Allow content to be filtered after shortcodes are processed.
+			 * @see fl_builder_after_render_shortcodes
+			 * @since 2.2.4
+			 */
+			$content = apply_filters( 'fl_builder_after_render_shortcodes', $content );
 		}
 
 		// Add srcset attrs to images with the class wp-image-<ID>.
@@ -1945,6 +1958,12 @@ final class FLBuilder {
 			 * @see fl_builder_after_render_row
 			 */
 			do_action( 'fl_builder_after_render_row', $row, $groups );
+		} else {
+			/**
+			 * Fires in place of a hidden row.
+			 * @see fl_builder_hidden_node
+			 */
+			do_action( 'fl_builder_hidden_node', $row );
 		}
 	}
 
@@ -2182,6 +2201,12 @@ final class FLBuilder {
 
 		if ( $active || $visible ) {
 			include FL_BUILDER_DIR . 'includes/column.php';
+		} else {
+			/**
+			 * Fires in place of a hidden column.
+			 * @see fl_builder_hidden_node
+			 */
+			do_action( 'fl_builder_hidden_node', $col );
 		}
 	}
 
@@ -2330,6 +2355,12 @@ final class FLBuilder {
 			 * @see fl_builder_after_render_module
 			 */
 			do_action( 'fl_builder_after_render_module', $module );
+		} else {
+			/**
+			 * Fires in place of a hidden module.
+			 * @see fl_builder_hidden_node
+			 */
+			do_action( 'fl_builder_hidden_node', $module );
 		}
 	}
 

@@ -1,22 +1,25 @@
 <?php if(!defined('ABSPATH')) { die('You are not allowed to call this page directly.'); } ?>
 <?php
 
-  $curr_size = isset($_REQUEST['size']) ? $_REQUEST['size'] : 10;
-  $curr_url = esc_html($_REQUEST['page'].$page_params);
+  $curr_size = isset($_REQUEST['size']) ? (int) $_REQUEST['size'] : 10;
+  $curr_url = sanitize_text_field($_REQUEST['page']) . $page_params;
 
   // Only show the pager bar if there is more than 1 page
   if($page_count > 1)
   {
       ?>
-    <div class="tablenav"<?php echo (isset($navstyle)?" style=\"" . esc_html($navstyle) . "\"":''); ?>>
-      <div class='tablenav-pages'><span class="displaying-num"><?php _e('Displaying', 'pretty-link'); ?> <?php echo esc_html("$page_first_record&#8211;$page_last_record of $record_count"); ?></span>
+    <div class="tablenav"<?php echo (isset($navstyle)?' style="' . esc_html($navstyle) . '"':''); ?>>
+      <div class="tablenav-pages">
+        <span class="displaying-num">
+          <?php echo esc_html(sprintf(__('Displaying %1$s&#8211;%2$s of %3$s', 'pretty-link'), $page_first_record, $page_last_record, $record_count)); ?>
+        </span>
 
         <?php
         // Only show the prev page button if the current page is not the first page
         if($current_page > 1)
         {
           ?>
-          <a class='prev page-numbers' href='?page=<?php echo $curr_url; ?>&paged=<?php print($current_page-1); ?>'>&laquo;</a>
+          <a class="prev page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . ($current_page-1)); ?>">&laquo;</a>
           <?php
         }
 
@@ -24,13 +27,13 @@
         if($current_page==1)
         {
           ?>
-          <a class='page-numbers disabled' href="#">1</a>
+          <a class="page-numbers disabled" href="#">1</a>
           <?php
         }
         else
         {
           ?>
-          <a class='page-numbers' href='?page=<?php echo $curr_url; ?>&paged=1'>1</a>
+          <a class="page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=1'); ?>">1</a>
           <?php
         }
 
@@ -38,7 +41,7 @@
         if($current_page >= 5)
         {
           ?>
-          <span class='page-numbers dots'>...</span>
+          <span class="page-numbers dots">...</span>
           <?php
         }
 
@@ -50,13 +53,13 @@
           if($current_page==$i)
           {
             ?>
-            <a class='page-numbers disabled' href="#"><?php echo esc_html($i); ?></a>
+            <a class="page-numbers disabled" href="#"><?php echo esc_html($i); ?></a>
             <?php
           }
           else
           {
             ?>
-            <a class='page-numbers' href='?page=<?php echo $curr_url; ?>&paged=<?php echo esc_html($i); ?>'><?php echo esc_html($i); ?></a>
+            <a class="page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . $i); ?>"><?php echo esc_html($i); ?></a>
             <?php
           }
         }
@@ -65,7 +68,7 @@
         if($current_page < ($page_count - 3))
         {
           ?>
-          <span class='page-numbers dots'>...</span>
+          <span class="page-numbers dots">...</span>
           <?php
         }
 
@@ -73,13 +76,13 @@
         if($current_page == $page_count)
         {
           ?>
-          <a class='page-numbers disabled' href="#"><?php echo esc_html($page_count); ?></a>
+          <a class="page-numbers disabled" href="#"><?php echo esc_html($page_count); ?></a>
           <?php
         }
         else
         {
           ?>
-          <a class='page-numbers' href='?page=<?php echo $curr_url; ?>&paged=<?php echo esc_html($page_count); ?>'><?php echo esc_html($page_count); ?></a>
+          <a class="page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . $page_count); ?>"><?php echo esc_html($page_count); ?></a>
           <?php
         }
 
@@ -87,7 +90,7 @@
         if($current_page < $page_count)
         {
           ?>
-          <a class='next page-numbers' href='?page=<?php echo $curr_url; ?>&paged=<?php print($current_page + 1); ?>'>&raquo;</a>
+          <a class="next page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . ($current_page + 1)); ?>">&raquo;</a>
           <?php
         }
         ?>

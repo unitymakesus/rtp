@@ -1,5 +1,5 @@
 <?php global $wp_embed; ?>
-<div class="fl-accordion fl-accordion-<?php echo $settings->label_size; ?><?php echo ( $settings->collapse ) ? ' fl-accordion-collapse' : ''; ?> role="tablist"<?php echo ( ! $settings->collapse ) ? 'multiselectable="true"' : ''; ?>>
+<div class="fl-accordion fl-accordion-<?php echo $settings->label_size; ?><?php echo ( $settings->collapse ) ? ' fl-accordion-collapse' : ''; ?>" role="tablist"<?php echo ( ! $settings->collapse ) ? 'multiselectable="true"' : ''; ?>>
 	<?php
 	for ( $i = 0; $i < count( $settings->items ); $i++ ) :
 		if ( empty( $settings->items[ $i ] ) ) {

@@ -32,10 +32,10 @@ class Security extends Plugin
     /**
      * Security constructor.
      */
-    function __construct()
+    function __construct( $session )
     {
         // Run parent class constructor first
-        parent::__construct();
+        parent::__construct( $session );
         Janitor::log( 'running Security.php' );
         
         if ( isset( $this->settings['general']['on'] ) && $this->settings['general']['on'] == '1' ) {
@@ -61,7 +61,7 @@ class Security extends Plugin
         Janitor::log( 'running firewall().' );
         $firewall = new Firewall();
         
-        if ( !is_user_logged_in() ) {
+        if ( !$this->logged_in ) {
             // Determine Whitelist / Blacklist
             
             if ( $firewall->is_whitelisted() ) {
@@ -193,12 +193,21 @@ class Security extends Plugin
     {
         Janitor::log( 'running content().' );
         $settings = $this->settings['content'];
+        $skip = false;
         
         if ( $settings['on'] == "1" ) {
-            // Disable Text Highlighting
-            $this->add_policy( $settings, 'PolicyDisableTextHighlight', 'disable_text_highlight' );
-            // Disable Right Click
-            $this->add_policy( $settings, 'PolicyDisableRightClick', 'disable_right_click' );
+            if ( isset( $this->user['roles']['author'] ) || isset( $this->user['roles']['editor'] ) || isset( $this->user['roles']['administror'] ) || isset( $this->user['roles']['super_admin'] ) ) {
+                // Skip Conditional Policies
+                $skip = true;
+            }
+            
+            if ( !$skip ) {
+                // Disable Text Highlighting
+                $this->add_policy( $settings, 'PolicyDisableTextHighlight', 'disable_text_highlight' );
+                // Disable Right Click
+                $this->add_policy( $settings, 'PolicyDisableRightClick', 'disable_right_click' );
+            }
+            
             // Hide Password Protected Posts
             $this->add_policy( $settings, 'PolicyHidePasswordProtectedPosts', 'hide_password_protected_posts' );
         }

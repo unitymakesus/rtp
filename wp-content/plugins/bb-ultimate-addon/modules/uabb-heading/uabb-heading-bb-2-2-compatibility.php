@@ -377,6 +377,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Text Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'property'  => 'color',
@@ -445,6 +446,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'preview'     => array(
 								'type'      => 'css',
 								'property'  => 'color',
@@ -528,6 +530,7 @@ FLBuilder::register_module(
 							'connections' => array( 'color' ),
 							'label'       => __( 'Text Color', 'uabb' ),
 							'default'     => '',
+							'show_alpha'  => true,
 							'show_reset'  => true,
 							'preview'     => array(
 								'type'      => 'css',

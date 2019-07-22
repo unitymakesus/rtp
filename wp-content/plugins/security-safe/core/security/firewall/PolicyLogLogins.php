@@ -79,7 +79,7 @@ class PolicyLogLogins extends Firewall {
         }
 
         // Check usernames
-        $args['threats'] = ( $args['threats'] ) ? $args['threats'] : Threats::is_username( $username );
+        $args['threats'] = ( isset( $args['threats'] ) ) ? $args['threats'] : Threats::is_username( $username );
 
         // Check Login
         $args['threats'] = ( $args['threats'] ) ? $args['threats'] : Threats::is_login( $username );

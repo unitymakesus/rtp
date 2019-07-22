@@ -1,3 +1,42 @@
+<h4>2.2.4.1 - 07/20/2019</h4>
+<p><strong>Hot Fix</strong></p>
+<ul>
+	<li>Fixed AJAX response 0 error popup for 3rd party extensions.</li>
+</ul>
+
+<h4>2.2.4 - 07/19/2019</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added support for ACF to clear cache when ACF fields are updated.</li>
+	<li>Added detection for 403 errors in ajax with link to KB.</li>
+	<li>Removed deprecated functions like_escape and wp_get_sites.</li>
+	<li>Added Themer connection for max number in Number Module.</li>
+	<li>New filter <code>fl_builder_after_render_shortcodes</code>.</li>
+	<li>New action <code>fl_builder_hidden_node</code>.</li>
+	<li>Added responsive support for match height option in the posts module.</li>
+</ul>
+
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed relative url issues in text editor and inline editor for links and images.</li>
+	<li>Fixed issue with Pipedrive Chat plugin.</li>
+	<li>Fixed issue with Post Type Switcher plugin.</li>
+	<li>Fixed issue with Google Reviews Business Plugin.</li>
+	<li>Fixed PHP notice in posts grid module.</li>
+	<li>Fixed multisite issue with wp-super-cache, only active site cache is cleared not entire cache.</li>
+	<li>Fixed branding on Tools settings page.</li>
+	<li>Fixed icon-group CSS issues and removed empty element when there is no text.</li>
+	<li>Fixed Gallery collage impacting animations in other modules.</li>
+	<li>Fixed background/border CSS issue in Accordion module.</li>
+	<li>Fixed mobile menu icon missing at 993px in Menu module.</li>
+	<li>Fixed expanded mobile menu not closing when clicked outside of the module.</li>
+	<li>Fixed missing quotes in Accordian module markup.</li>
+	<li>Removed flpaging query string in pagination.</li>
+	<li>Keep initial $post object and reset globals after loop.</li>
+	<li>Various branding updates to error messages.</li>
+	<li>Updated Infusionsoft xmlrpc library for PHP7.2 support.</li>
+</ul>
+
 <h4>2.2.3.3 - 06/19/2019</h4>
 <p><strong>Hot Fix</strong></p>
 <ul>

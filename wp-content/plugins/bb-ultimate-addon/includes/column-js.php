@@ -235,6 +235,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 						advanced_settings = data_particles.advanced_settings;
 						particles_opacity = data_particles.particles_opacity;
 						particles_direction = data_particles.particles_direction;
+						row_id = data_particles.id;
 
 						if ( 'yes' === enable_particles ){
 							if ( 'custom' === particles_style ) {

@@ -190,10 +190,10 @@ class UabbBusinessReview extends FLBuilderModule {
 
 		} else {
 			?>
-			<div class="uabb-module-content" id="uabb-google-api-key">  
+			<div class="uabb-module-content" id="uabb-google-api-key">
 				<?php if ( current_user_can( 'delete_users' ) ) { ?>
 				<div>
-					<span > <?php _e( 'It seems that you have not yet configured Google Place API key. To display Google Reviews, please set up API key in', 'uabb' ); ?> 
+					<span > <?php _e( 'It seems that you have not yet configured Google Place API key. To display Google Reviews, please set up API key in', 'uabb' ); ?>
 						<a href="<?php echo admin_url( 'options-general.php?page=uabb-builder-settings#uabb' ); ?>" class="uabb-google-map-notice" target="_blank" rel="noopener">
 							<span class="uabb-google-key-ref-link"><?php _e( 'General Settings', 'uabb' ); ?></span>
 						</a>
@@ -519,10 +519,10 @@ class UabbBusinessReview extends FLBuilderModule {
 			return $uabb_setting_options['uabb-yelp-api-key'];
 		} else {
 			?>
-			<div class="uabb-module-content uabb-yelp-api-key-wrapper" id="uabb-yelp-api-key">  
+			<div class="uabb-module-content uabb-yelp-api-key-wrapper" id="uabb-yelp-api-key">
 				<?php if ( current_user_can( 'delete_users' ) ) { ?>
 				<div>
-					<span > <?php _e( 'It seems that you have not yet configured Yelp API key. To display Yelp Reviews, please set up API key in', 'uabb' ); ?> 
+					<span > <?php _e( 'It seems that you have not yet configured Yelp API key. To display Yelp Reviews, please set up API key in', 'uabb' ); ?>
 						<a href="<?php echo admin_url( 'options-general.php?page=uabb-builder-settings#uabb' ); ?>" class="uabb-yelp-notice" target="_blank" rel="noopener">
 							<span class="uabb-yelp-key-ref-link"><?php _e( 'General Settings', 'uabb' ); ?></span>
 						</a>
@@ -655,7 +655,7 @@ class UabbBusinessReview extends FLBuilderModule {
 		?>
 		<div class="uabb-reviews-grid__column-<?php echo $this->settings->gallery_columns; ?> uabb-reviews-grid-tablet__column-<?php echo $this->settings->gallery_columns_medium; ?> uabb-reviews-grid-mobile__column-<?php echo $this->settings->gallery_columns_responsive; ?> <?php echo $layout_class; ?> uabb-reviews-align-<?php echo $overall_align; ?> <?php echo $image_align; ?> uabb-reviews-skin-<?php echo $skin; ?>" itemscope itemtype="<?php echo $schema_type; ?>" >
 			<div class="uabb-reviews-module-wrap" >
-   
+
 				<?php
 				if ( 'rating' == $this->settings->reviews_filter_by ) {
 					usort( $reviews, array( $this, 'filter_by_rating' ) );
@@ -1121,4 +1121,3 @@ if ( uabb_Compatibility::check_bb_version() ) {
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php';
 }
-

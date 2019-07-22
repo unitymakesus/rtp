@@ -177,7 +177,7 @@ class Table extends WP_List_Table {
         global $wpdb;
 
         $query = '';
-        $search = isset( $_REQUEST['s'] ) ? $wpdb->esc_like( $_REQUEST['s'] ) : '' ; // Sanitized
+        $search = ( isset( $_REQUEST['s'] ) && $_REQUEST['s'] ) ? $wpdb->esc_like( $_REQUEST['s'] ) : '' ; // Sanitized
         $searchable_columns = $this->get_searchable_columns();
 
         // Add and Sanitize Search Query
@@ -231,13 +231,13 @@ class Table extends WP_List_Table {
         // Clean Values
         $table = Yoda::get_table_main(); // Sanitized
         $page = $this->get_pagenum(); // Sanitized
-        $per_page = ( isset( $_REQUEST['per_page'] ) ) ? filter_var( $_REQUEST['per_page'], FILTER_SANITIZE_NUMBER_INT ) : 25; // Sanitized
+        $per_page = ( isset( $_REQUEST['per_page'] ) && $_REQUEST['per_page'] ) ? filter_var( $_REQUEST['per_page'], FILTER_SANITIZE_NUMBER_INT ) : 25; // Sanitized
         $search = $this->get_search_query(); // Sanitized
-        $order = isset( $_REQUEST['order'] ) && strtolower( $_REQUEST['order'] ) == 'asc' ? 'ASC' : 'DESC'; // Sanitized
+        $order = isset( $_REQUEST['order'] ) && $_REQUEST['order'] && strtolower( $_REQUEST['order'] ) == 'asc' ? 'ASC' : 'DESC'; // Sanitized
         $limit = $wpdb->esc_like( ( ( $page - 1 ) * $per_page ) . ',' . $per_page ); // Sanitized
-        $status = ( isset( $_REQUEST['status'] ) ) ? " AND status like '" . $wpdb->esc_like( $_REQUEST['status'] ) . "' " : ''; // Sanitized
+        $status = ( isset( $_REQUEST['status'] ) && $_REQUEST['status'] ) ? " AND status like '" . $wpdb->esc_like( $_REQUEST['status'] ) . "' " : ''; // Sanitized
         $sortable_columns = $this->get_sortable_columns();
-        $orderby = ( isset( $_REQUEST['orderby'] ) && isset( $sortable_columns[ $_REQUEST['orderby'] ] ) ) ? $sortable_columns[ $_REQUEST['orderby'] ][0] : 'date'; // NOT Sanitized
+        $orderby = ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] && isset( $sortable_columns[ $_REQUEST['orderby'] ] ) ) ? $sortable_columns[ $_REQUEST['orderby'] ][0] : 'date'; // NOT Sanitized
         
         $blocked = ( $this->type == 'blocked' ) ? true : false;
         $threats = ( $this->type == 'threats' ) ? true : false;
@@ -281,8 +281,8 @@ class Table extends WP_List_Table {
             isset( $_REQUEST['s'] ) ||
             isset( $_REQUEST['order'] ) ||
             isset( $_REQUEST['orderby'] ) ||
-            isset( $_REQUEST['per_page'] )
-
+            isset( $_REQUEST['per_page'] ) ||
+            isset( $_REQUEST['status'] )
         ) {
 
             return true;
@@ -353,15 +353,11 @@ class Table extends WP_List_Table {
         $html .=
                 '</select>
 
-                <input type="hidden" name="s" value="' . esc_html( $search ) . '"> 
                 <input type="submit" class="button" value="' . __( 'Apply Filters', SECSAFE_SLUG ) . '">';
 
         // Display Reset Filters
 
-        if ( 
-            isset( $_REQUEST['per_page'] ) || 
-            isset( $_REQUEST['status'] )
-        ) {
+        if ( $this->hide_charts() ) {
 
             $page = '?page=' . $page;
             $tab = ( $tab ) ? '&tab=' . $tab : '';

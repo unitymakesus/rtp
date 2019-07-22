@@ -1,3 +1,12 @@
+Version 1.19.0 - Wednesday, 17th July 2019
+- New: Introduced Off Canvas
+- Improvement: Image / Icon - Added Responsive field support to the Alignment
+- Improvement: Heading - Added opacity support to the color field
+- Fixed: Advanced Menu - Link Padding settings not reflecting in preview mode
+- Fixed: Fancy Text - Fancy Text color overriding Row Text color
+- Fixed: Fancy Text - Text color overriding Column Text color
+- Fixed: Particle Backgrounds - Resolved JavaScript error when Column Group is used.
+
 Version 1.18.2 - Monday, 1st July 2019
 - Improvement: Business Reviews - Improved Schema Rating.
 

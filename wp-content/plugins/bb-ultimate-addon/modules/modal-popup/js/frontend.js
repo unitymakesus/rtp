@@ -311,10 +311,10 @@ jQuery(document).ready(function( $ ) {
 						current_this.modal_trigger.addClass('uabb-perspective' );
 					}, 25 );
 				}
-
 				if ( this.esc_keypress == 1 ) {
 					$(document).on('keyup.uabb-modal',function(e) {
-						if (e.keyCode == 27) { 
+
+						if ( e.keyCode == 27) { 
 							current_this._removeModalHandler();
 						}
 					});

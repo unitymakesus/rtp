@@ -46,11 +46,7 @@ class FLbuilder_WPCLI_Command extends WP_CLI_Command {
 
 			if ( true == $network ) {
 
-				if ( function_exists( 'get_sites' ) ) {
-					$blogs = get_sites();
-				} else {
-					$blogs = wp_get_sites();
-				}
+				$blogs = get_sites();
 
 				foreach ( $blogs as $keys => $blog ) {
 
@@ -63,7 +59,7 @@ class FLbuilder_WPCLI_Command extends WP_CLI_Command {
 					switch_to_blog( $blog_id );
 					FLBuilderModel::delete_asset_cache_for_all_posts();
 					/* translators: %s: current blog name */
-					WP_CLI::success( sprintf( _x( 'Cleared the page builder cache for blog %s', 'current blog name', 'fl-builder' ), get_option( 'home' ) ) );
+					WP_CLI::success( sprintf( _x( 'Cleared the Beaver Builder cache for blog %s', 'current blog name', 'fl-builder' ), get_option( 'home' ) ) );
 					if ( $all ) {
 						FLCustomizer::refresh_css();
 						/* translators: %s: current blog name */
@@ -73,7 +69,7 @@ class FLbuilder_WPCLI_Command extends WP_CLI_Command {
 				}
 			} else {
 				FLBuilderModel::delete_asset_cache_for_all_posts();
-				WP_CLI::success( __( 'Cleared the page builder cache', 'fl-builder' ) );
+				WP_CLI::success( __( 'Cleared the Beaver Builder cache', 'fl-builder' ) );
 				if ( $all ) {
 					FLCustomizer::refresh_css();
 					WP_CLI::success( __( 'Rebuilt the theme cache', 'fl-builder' ) );

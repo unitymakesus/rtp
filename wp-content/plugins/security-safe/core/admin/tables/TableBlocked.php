@@ -86,12 +86,12 @@ final class TableBlocked extends Table {
         <div class="table">
             <div class="tr">
 
-                <div class="chart-blocked-line td td-8 center">
+                <div class="chart chart-blocked-line td td-8 center">
 
                     <h3>' . __( 'Threats Over The Past', SECSAFE_SLUG ) . ' ' . $days . ' ' . __( 'Days', SECSAFE_SLUG ) . '</h3>
                     <div id="chart-line"></div>
 
-                </div><div class="chart-blocked-guage td td-4 center">
+                </div><div class="chart chart-blocked-guage td td-4 center">
 
                     <h3>Threats Blocked</h3>
                     <div id="chart-guage"></div>

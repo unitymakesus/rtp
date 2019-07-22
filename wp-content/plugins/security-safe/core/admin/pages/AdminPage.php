@@ -298,7 +298,8 @@ class AdminPage {
 
         $html = '<tr class="form-text '. esc_html( $classes ) .'">';
 
-        $html .= '<td colspan="2"><p class="' . esc_html( $class ) . '">' . esc_html( $message ) . '</p></td>';
+        // Need to make sure message is sanitized when form_text is called
+        $html .= '<td colspan="2"><p class="' . esc_html( $class ) . '">' . $message . '</p></td>';
 
         $html .= '</tr>';
 

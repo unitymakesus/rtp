@@ -184,7 +184,7 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 	 * @return array $addons
 	 */
 	function inject_addon_page_links( $addons ) {
-		if ( ! $this->is_valid_licence( true, false ) ) {
+		if ( ! $this->is_valid_licence( false, false ) ) {
 			return $addons;
 		}
 
@@ -564,6 +564,12 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 				'site_url'      => $this->home_url,
 				'library_total' => $media_counts['offloaded'],
 			);
+
+			$provider = $this->as3cf->get_provider();
+
+			if ( ! empty( $provider ) && ! empty( $provider->get_provider_key_name() ) ) {
+				$args['provider'] = $provider->get_provider_key_name();
+			}
 
 			$response = $this->api_request( 'check_licence_media_limit', $args );
 

@@ -23,7 +23,8 @@ class Yoda
      */
     static function set_constants()
     {
-        define( 'SECSAFE_NAME', 'Security Safe' );
+        define( 'SECSAFE_NAME', 'WP Security Safe' );
+        define( 'SECSAFE_NAME_PRO', SECSAFE_NAME . ' Pro' );
         define( 'SECSAFE_SLUG', 'security-safe' );
         define( 'SECSAFE_OPTIONS', 'securitysafe_options' );
         define( 'SECSAFE_DB_FIREWALL', 'sovstack_logs' );
@@ -35,7 +36,7 @@ class Yoda
         define( 'SECSAFE_DIR_ADMIN_INCLUDES', SECSAFE_DIR_ADMIN . '/includes' );
         define( 'SECSAFE_DIR_ADMIN_PAGES', SECSAFE_DIR_ADMIN . '/pages' );
         define( 'SECSAFE_DIR_ADMIN_TABLES', SECSAFE_DIR_ADMIN . '/tables' );
-        define( 'SECSAFE_DIR_LANG', SECSAFE_DIR . '/languages' );
+        define( 'SECSAFE_DIR_LANG', dirname( plugin_basename( SECSAFE_FILE ) ) . '/languages/' );
         define( 'SECSAFE_URL', plugin_dir_url( SECSAFE_FILE ) );
         define( 'SECSAFE_URL_ASSETS', SECSAFE_URL . 'core/assets/' );
         define( 'SECSAFE_URL_ADMIN_ASSETS', SECSAFE_URL . 'core/admin/assets/' );
@@ -99,6 +100,18 @@ class Yoda
     }
     
     // get_ip()
+    /**
+     * Gets the User Agent of the current session
+     * @since  2.1.0
+     */
+    static function get_user_agent()
+    {
+        $ua = ( isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '' );
+        $ua = ( defined( 'DOING_CRON' ) ? 'WP Cron' : $ua );
+        return $ua;
+    }
+    
+    // get_user_agent()
     static function is_whitelisted()
     {
         return defined( 'SECSAFE_WHITELISTED' );

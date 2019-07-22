@@ -273,7 +273,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
                 'uabb-price-list'	       => 'Price List',
                 'uabb-marketing-button'	   => 'Marketing Button',
                 'uabb-business-reviews'	   => 'Business Reviews',
-
+                'uabb-off-canvas'          => 'Off Canvas',
 			);
 
 			/* Include Contact form styler */

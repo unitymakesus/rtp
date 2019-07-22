@@ -153,7 +153,7 @@ class Threats {
      * This forces the user to actually be on the website when authenticating.
      * @since  0.2.0
      */ 
-    function is_login() {
+    public static function is_login() {
 
         if ( ! isset( $_SERVER['HTTP_HOST'] ) || ! $_SERVER['HTTP_HOST'] ) {
 

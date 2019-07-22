@@ -85,7 +85,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 			// Check if the key is from EDD
 			$is_edd = $this->is_edd( $license_key );
 
-			$path = get_api_url() . '?referer=deactivate-' . $product_id;
+			$path = bsf_get_api_url() . '?referer=deactivate-' . $product_id;
 
 			// Using Brainstorm API v2
 			$data = array(
@@ -107,7 +107,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 
 			// Try to make a second request to unsecure URL.
 			if ( is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) !== 200 ) {
-				$path     = get_api_url( true ) . '?referer=deactivate-' . $product_id;
+				$path     = bsf_get_api_url( true ) . '?referer=deactivate-' . $product_id;
 				$response = wp_remote_post(
 					$path, array(
 						'body'    => $data,
@@ -173,7 +173,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 			$is_edd = $this->is_edd( $license_key );
 
 			// Server side check if the license key is valid
-			$path = get_api_url() . '?referer=activate-' . $product_id;
+			$path = bsf_get_api_url() . '?referer=activate-' . $product_id;
 
 			// Using Brainstorm API v2
 			$data = array(
@@ -199,7 +199,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 
 			// Try to make a second request to unsecure URL.
 			if ( is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) !== 200 ) {
-				$path     = get_api_url( true ) . '?referer=activate-' . $product_id;
+				$path     = bsf_get_api_url( true ) . '?referer=activate-' . $product_id;
 				$response = wp_remote_post(
 					$path, array(
 						'body'    => $data,
@@ -334,10 +334,15 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				return (bool) $cached;
 			}
 
-			// Default License status is false.
-			$license_status = '0';
+			// Set default license to license status stored in the database.
+			$license_status = $this->bsf_get_product_info( $product_id, 'status' );
+			if ( 'registered' === $license_status ) {
+				$license_status = '1';
+			} else {
+				$license_status = '0';
+			}
 
-			$path = get_api_url() . '?referer=license-status-' . $product_id;
+			$path = bsf_get_api_url() . '?referer=license-status-' . $product_id;
 
 			// Using Brainstorm API v2
 			$data = array(
@@ -356,7 +361,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 
 			// Try to make a second request to unsecure URL.
 			if ( is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) !== 200 ) {
-				$path     = get_api_url( true ) . '?referer=license-status-' . $product_id;
+				$path     = bsf_get_api_url( true ) . '?referer=license-status-' . $product_id;
 				$response = wp_remote_post(
 					$path, array(
 						'body'    => $data,

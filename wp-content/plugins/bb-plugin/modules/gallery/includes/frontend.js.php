@@ -52,7 +52,7 @@
 		<?php endif; ?>
 
 		<?php if ( 'collage' == $settings->layout ) : ?>
-		$('.fl-node-<?php echo $id; ?> .fl-mosaicflow-content').one( 'filled', function(){
+		$('.fl-node-<?php echo $id; ?> .fl-mosaicflow-content').one( 'mosaicflow-filled', function(){
 			var hash = window.location.hash.replace( '#', '' );
 			if ( hash != '' ) {
 				FLBuilderLayout._scrollToElement( $( '#' + hash ) );

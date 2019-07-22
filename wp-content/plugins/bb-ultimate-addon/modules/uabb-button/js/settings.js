@@ -26,7 +26,7 @@
 			this._btn_styleChanged();
 			this._icon_typeChanged();
 			this.imgicon_postion();
-			
+
 			// Validation events.
 			icon_type.on('change',  $.proxy( this._icon_typeChanged, this ) );
 			btn_style.on('change',  $.proxy( this._icon_typeChanged, this ) );
@@ -69,7 +69,7 @@
 				icon       = form.find('input[name=icon]');
 				
 			icon.rules('remove');
-			
+
 			if(btn_style == 'flat' && btn_style_opt != 'none' ) {
 				icon.rules('add', { required: true });
 			}

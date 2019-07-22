@@ -1,4 +1,4 @@
-=== Security Safe ===
+=== WP Security Safe ===
 Contributors: sovstack, freemius
 Tags: firewall, disable XML-RPC, security, wp security, privacy, security audit, file permissions, brute force login
 Requires at least: 3.5
@@ -10,9 +10,9 @@ A plugin to quickly implement WordPress hardening and security techniques.
 
 == Description ==
 
-Security Safe is a free wp security plugin.
+Wp Security Safe is a freemium WordPress security plugin. For more advanced features, upgrade to the professional version.
 
-Features:
+Free Features:
 
 * Firewall With Logs and Charts
 * Disable XML-RPC.php
@@ -29,11 +29,22 @@ Features:
 * 404 Error Logging
 * Turn On/Off All Security Policies Easily
 
+Pro Features:
+
+* All Free Features 
+* Bulk Fix File Permissions
+* Make Theme Versions Private
+* Make Plugin Versions Private
+* Automatically Fix Theme/Plugin File Permissions
+* Import/Export Settings
+* Pro Plugin Updates
+* Priority Support
+
 == Installation ==
 
-1. Install Security Safe automatically or by uploading the ZIP file to your plugins folder. 
-2. Activate the Security Safe on the 'Plugins' admin page. The plugin initially sets minimum security policies active.
-3. Navigate to the General Settings by clicking on the Security Safe menu located on the left side admin panel.
+1. Install WP Security Safe automatically or by uploading the ZIP file to your plugins folder. 
+2. Activate the WP Security Safe on the 'Plugins' admin page. The plugin initially sets minimum security policies active.
+3. Navigate to the General Settings by clicking on the WP Security Safe menu located on the left side admin panel.
 4. On General Settings, You will notice the main icon menu at the top of the page. Navigate through all of them and change settings as they pertain to your site's needs.
 5. Test your site thoroughly. If you notice that your site is not functioning as expected, you can turn off each type of security policy (Privacy, Files, User Access, etc.) by navigating to each page and disabling the policy type. If necessary, you can disable all policy types at once using General Settings.
 
@@ -47,6 +58,25 @@ Features:
 6. Content Settings
 
 == Changelog ==
+
+= 2.1.1 (Medium Priority) = 
+*Release Date - 15 July 2019*
+* Bug Fix: Session handling conflicted with some admin features in oddball scenarios
+* Improvement: Fixed a PHP Warning
+
+= 2.1.0 (Medium Priority) = 
+*Release Date - 15 July 2019*
+* Bug Fix: WP Cron activities were not recording to activity log (Only visible in debug mode)
+* Bug Fix: Charts do not display properly until an entry has been initially added to stats.
+* Bug Fix: Styling issue with wp_table_list pagination
+* Bug Fix: Search field not working on log tables
+* Bug Fix: Admin notices would not display for policies that were disabled or if wp cron was disabled using DISABLE_WP_CRON.
+* Bug Fix: The admin notices were not displaying bold properly
+* Improvement: Fixed some PHP notices, thanks Charles Suggs
+* Improvement: Excluded user roles super admin, administrator, editor, and author from text highlighting and right-click content protection while logged in
+* Improvement: Updated SDK
+* Improvement: Implemented better session handling for increased load performance
+* Improvement: Added more i18n language support.
 
 = 2.0.2 (High Priority) = 
 *Release Date - 10 June 2019*
@@ -77,7 +107,7 @@ Features:
 = 1.2.3 (High Priority) = 
 *Release Date - 1 March 2019*
 
-* Security: Updated Freemius SDK
+* Security: Updated SDK
 * Improvement: Updated PHP version checks
 * Tested up to: 5.1
 

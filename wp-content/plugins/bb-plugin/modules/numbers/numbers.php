@@ -22,7 +22,8 @@ class FLNumbersModule extends FLBuilderModule {
 
 	public function render_number() {
 
-		$number = $this->settings->number ? $this->settings->number : 0;
+		$number = isset( $this->settings->number ) && is_numeric( $this->settings->number ) ? $this->settings->number : 100;
+		$max    = isset( $this->settings->max_number ) && is_numeric( $this->settings->max_number ) ? $this->settings->max_number : $number;
 		$layout = $this->settings->layout ? $this->settings->layout : 'default';
 		$type   = $this->settings->number_type ? $this->settings->number_type : 'percent';
 		$prefix = 'percent' == $type ? '' : $this->settings->number_prefix;
@@ -31,6 +32,10 @@ class FLNumbersModule extends FLBuilderModule {
 		$nojs   = '<noscript>' . number_format( $number ) . '</noscript>';
 
 		wp_add_inline_script( 'jquery-waypoints', $start, 'after' );
+		wp_localize_script( 'jquery-waypoints', 'number_module_' . $this->node, array(
+			'number' => $number,
+			'max'    => $max,
+		) );
 
 		echo '<div class="fl-number-string">' . $prefix . '<span class="fl-number-int">' . $nojs . '</span>' . $suffix . '</div>';
 	}
@@ -152,10 +157,11 @@ FLBuilder::register_module('FLNumbersModule', array(
 						),
 					),
 					'max_number'         => array(
-						'type'  => 'unit',
-						'label' => __( 'Total', 'fl-builder' ),
-						'size'  => '5',
-						'help'  => __( 'The total number of units for this counter. For example, if the Number is set to 250 and the Total is set to 500, the counter will animate to 50%.', 'fl-builder' ),
+						'type'        => 'unit',
+						'label'       => __( 'Total', 'fl-builder' ),
+						'size'        => '5',
+						'connections' => array( 'custom_field' ),
+						'help'        => __( 'The total number of units for this counter. For example, if the Number is set to 250 and the Total is set to 500, the counter will animate to 50%.', 'fl-builder' ),
 					),
 					'before_number_text' => array(
 						'type'        => 'text',

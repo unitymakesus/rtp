@@ -24,6 +24,9 @@
 .fl-accordion-content {
 	display: none;
 }
+.fl-accordion-item {
+	overflow: hidden;
+}
 
 /* Small */
 .fl-accordion-small .fl-accordion-button {

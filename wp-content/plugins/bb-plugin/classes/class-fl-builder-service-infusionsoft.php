@@ -208,7 +208,7 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 			'row_class' => 'fl-builder-service-field-row',
 			'class'     => 'fl-builder-service-list-select',
 			'type'      => 'select',
-			'label'     => _x( 'List', 'An email list from a third party provider.', 'fl-builder' ),
+			'label'     => _x( 'Select Tag', 'An email list from a third party provider.', 'fl-builder' ),
 			'options'   => $options,
 			'preview'   => array(
 				'type' => 'none',

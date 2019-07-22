@@ -5,6 +5,8 @@
  *  @package UABB Image Icon Module
  */
 
+$version_bb_check = UABB_Compatibility::check_bb_version();
+
 if ( 'none' != $settings->image_type ) : // Condition contain whole Style.
 
 	$settings->icon_color       = UABB_Helper::uabb_colorpicker( $settings, 'icon_color' );
@@ -256,3 +258,26 @@ if ( 'none' != $settings->image_type ) : // Condition contain whole Style.
 		<?php endif; ?>
 	<?php } // Condition for Photo. ?>
 <?php endif; ?>
+
+<?php if ( $global_settings->responsive_enabled ) { ?>
+	<?php if ( $version_bb_check ) { ?>
+		@media ( max-width: <?php echo $global_settings->medium_breakpoint . 'px'; ?> ) {
+			.fl-node-<?php echo $id; ?> .uabb-imgicon-wrap {
+				<?php if ( 'icon' == $settings->image_type ) { ?>
+					text-align: <?php echo $settings->icon_align_medium; ?>;
+				<?php } elseif ( 'photo' == $settings->image_type ) { ?>
+					text-align: <?php echo $settings->img_align_medium; ?>;
+				<?php } ?>
+			}
+		}
+		@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
+			.fl-node-<?php echo $id; ?> .uabb-imgicon-wrap {
+				<?php if ( 'icon' == $settings->image_type ) { ?>
+					text-align: <?php echo $settings->icon_align_responsive; ?>;
+				<?php } elseif ( 'photo' == $settings->image_type ) { ?>
+					text-align: <?php echo $settings->img_align_responsive; ?>;
+				<?php } ?>
+			}
+		}
+	<?php } ?>
+<?php } ?>

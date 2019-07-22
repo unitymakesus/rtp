@@ -16,7 +16,7 @@ class PrliClicksHelper {
 
     // Insert search string
     if(!empty($search_str)) {
-      $search_params = explode(' ', esc_html($search_str));
+      $search_params = explode(' ', $search_str);
 
       $first_pass = true;
       foreach($search_params as $search_param) {

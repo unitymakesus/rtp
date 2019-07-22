@@ -682,3 +682,166 @@ function fl_fix_um_switcher() {
 		remove_action( 'wp_footer', 'umswitcher_profile_subscription_expiration_footer' );
 	}
 }
+
+/**
+ * Fix pipedrive chat popup
+ * @since 2.2.4
+ */
+add_action( 'template_redirect', 'fl_fix_pipedrive' );
+function fl_fix_pipedrive() {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		remove_action( 'wp_head', 'pipedrive_add_embed_code' );
+	}
+}
+
+/**
+ * Fix post type switcher
+ * @since 2.2.4
+ */
+add_action( 'admin_init', 'fl_fix_posttypeswitcher' );
+function fl_fix_posttypeswitcher() {
+	global $pagenow;
+	$disable = false;
+	if ( 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'fl-theme-layout' === $_GET['post_type'] ) {
+		$disable = true;
+	}
+	if ( 'post.php' === $pagenow && isset( $_GET['post'] ) && ( 'fl-theme-layout' === get_post_type( $_GET['post'] ) || 'fl-builder-template' === get_post_type( $_GET['post'] ) ) ) {
+		$disable = true;
+	}
+	if ( $disable ) {
+		add_filter( 'pts_allowed_pages', '__return_empty_array' );
+	}
+}
+
+/**
+ * Fixes for Google Reviews Business Plugin widget
+ * @since 2.2.4
+ */
+add_action( 'widgets_init', 'fix_google_reviews_business_widget', 11 );
+function fix_google_reviews_business_widget() {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		unregister_widget( 'Goog_Reviews_Pro' );
+	}
+}
+/**
+ * Fixes for Google Reviews Business Plugin shortcode
+ * @since 2.2.4
+ */
+add_action( 'init', 'fix_google_reviews_business_shortcode' );
+function fix_google_reviews_business_shortcode() {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		remove_shortcode( 'google-reviews-pro' );
+	}
+}
+
+/**
+ * Fix pagination on category archive layout.
+ * @since 2.2.4
+ */
+function fl_theme_builder_cat_archive_post_grid( $query ) {
+	if ( ! $query ) {
+		return;
+	}
+
+	if ( ! class_exists( 'FLThemeBuilder' ) ) {
+		return;
+	}
+
+	if ( is_admin() || ! $query->is_main_query() ) {
+		return;
+	}
+
+	if ( ! $query->is_archive || ! $query->is_category ) {
+		return;
+	}
+
+	$args      = array(
+		'post_type'   => 'fl-theme-layout',
+		'post_status' => 'publish',
+		'fields'      => 'ids',
+		'meta_query'  => array(
+			'relation' => 'OR',
+			array(
+				'key'     => '_fl_theme_builder_locations',
+				'value'   => 'general:site',
+				'compare' => 'LIKE',
+			),
+			array(
+				'key'     => '_fl_theme_builder_locations',
+				'value'   => 'taxonomy:category',
+				'compare' => 'LIKE',
+			),
+			array(
+				'key'     => '_fl_theme_builder_locations',
+				'value'   => 'general:archive',
+				'compare' => 'LIKE',
+			),
+		),
+	);
+	$post_grid = null;
+	$object    = null;
+
+	if ( $query->get( 'cat' ) ) {
+		$term = get_term( $query->get( 'cat' ), 'category' );
+	} elseif ( $query->get( 'category_name' ) ) {
+		$term = get_term_by( 'slug', $query->get( 'category_name' ), 'category' );
+	}
+
+	if ( ! empty( $term ) && ! is_wp_error( $term ) ) {
+		$term_id              = (int) $term->term_id;
+		$object               = 'taxonomy:category:' . $term_id;
+		$args['meta_query'][] = array(
+			'key'     => '_fl_theme_builder_locations',
+			'value'   => $object,
+			'compare' => 'LIKE',
+		);
+	}
+
+	$layout_query = new WP_Query( $args );
+	if ( $layout_query->post_count > 0 ) {
+
+		foreach ( $layout_query->posts as $i => $post_id ) {
+			$exclusions = FLThemeBuilderRulesLocation::get_saved_exclusions( $post_id );
+			$exclude    = false;
+
+			if ( empty( $exclusions ) ) {
+				continue;
+			} elseif ( $object && in_array( $object, $exclusions ) ) {
+				$exclude = true;
+			} elseif ( in_array( 'taxonomy:category', $exclusions ) ) {
+				$exclude = true;
+			} elseif ( in_array( 'general:archive', $exclusions ) ) {
+				$exclude = true;
+			}
+
+			if ( ! $exclude ) {
+				$data = FLBuilderModel::get_layout_data( 'published', $post_id );
+				if ( ! empty( $data ) ) {
+
+					foreach ( $data as $node_id => $node ) {
+
+						if ( 'module' != $node->type ) {
+							continue;
+						}
+
+						if ( ! isset( $node->settings->type ) || 'post-grid' != $node->settings->type ) {
+							continue;
+						}
+
+						// Check for `post-grid` with custom query source.
+						if ( 'custom_query' == $node->settings->data_source ) {
+							$post_grid = FLBuilderLoop::custom_query( $node->settings );
+							break;
+						}
+					}
+				}
+			}
+
+			if ( $post_grid ) {
+				break;
+			}
+		}
+	}
+
+	return $post_grid;
+}

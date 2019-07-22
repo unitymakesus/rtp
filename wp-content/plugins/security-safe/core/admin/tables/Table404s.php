@@ -124,7 +124,7 @@ final class Table404s extends Table {
         <div class="table">
             <div class="tr">
 
-                <div class="chart-404s-line td td-12 center">
+                <div class="chart chart-404s-line td td-12 center">
 
                     <h3>' . __( '404 Errors Over The Past', SECSAFE_SLUG ) . ' ' . $days . ' ' . __( 'Days', SECSAFE_SLUG ) . '</h3>
                     <p>' . substr( $args['date_start'], 0, 10 ) . ' - ' . substr( $args['date_end'], 0, 10 ) . '

@@ -434,6 +434,11 @@
   "fallback": "sans-serif"
  }
 }, {
+ "Bahianita": {
+  "variants": ["regular"],
+  "fallback": "sans-serif"
+ }
+}, {
  "Bai Jamjuree": {
   "variants": ["200", "200italic", "300", "300italic", "regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic"],
   "fallback": "sans-serif"
@@ -511,6 +516,11 @@
 }, {
  "Barlow Semi Condensed": {
   "variants": ["100", "100italic", "200", "200italic", "300", "300italic", "regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic", "800", "800italic", "900", "900italic"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "Barriecito": {
+  "variants": ["regular"],
   "fallback": "sans-serif"
  }
 }, {
@@ -1119,6 +1129,21 @@
   "fallback": "monospace"
  }
 }, {
+ "DM Sans": {
+  "variants": ["regular", "italic", "500", "500italic", "700", "700italic"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "DM Serif Display": {
+  "variants": ["regular", "italic"],
+  "fallback": "serif"
+ }
+}, {
+ "DM Serif Text": {
+  "variants": ["regular", "italic"],
+  "fallback": "serif"
+ }
+}, {
  "Damion": {
   "variants": ["regular"],
   "fallback": "cursive"
@@ -1131,6 +1156,11 @@
 }, {
  "Dangrek": {
   "variants": ["regular"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "Darker Grotesque": {
+  "variants": ["300", "regular", "500", "600", "700", "800", "900"],
   "fallback": "sans-serif"
  }
 }, {
@@ -2360,7 +2390,7 @@
  }
 }, {
  "Life Savers": {
-  "variants": ["regular", "700"],
+  "variants": ["regular", "700", "800"],
   "fallback": "sans-serif"
  }
 }, {
@@ -2381,6 +2411,11 @@
 }, {
  "Linden Hill": {
   "variants": ["regular", "italic"],
+  "fallback": "serif"
+ }
+}, {
+ "Literata": {
+  "variants": ["regular", "500", "600", "700", "italic", "500italic", "600italic", "700italic"],
   "fallback": "serif"
  }
 }, {

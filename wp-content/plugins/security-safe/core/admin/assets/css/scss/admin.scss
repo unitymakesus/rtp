@@ -100,11 +100,6 @@ $white: #ffffff;
         margin: 20px 20px 0 0;
         position: relative;
         max-width: 1200px;
-        box-sizing: border-box;
-
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
     }
 
     .intro { 
@@ -472,6 +467,8 @@ $white: #ffffff;
                 .td-8 { width: calc( 100% * .66666 ); }
                 .td-9 { width: calc( 100% * .75 ); }
                 .td-12 { width: 100% ; }
+
+                .chart { box-sizing: border-box; }
 
                 .chart-logins-pie { 
                     border-left: 1px solid #ddd;

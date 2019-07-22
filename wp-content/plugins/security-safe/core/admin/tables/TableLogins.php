@@ -102,12 +102,12 @@ final class TableLogins extends Table {
         <div class="table">
             <div class="tr">
 
-                <div class="chart-logins-line td td-9 center">
+                <div class="chart chart-logins-line td td-9 center">
 
                     <h3>' . __( 'Login Attempts Over The Past', SECSAFE_SLUG ) . ' ' . $days . ' ' . __( 'Days', SECSAFE_SLUG ) . '</h3>
                     <div id="chart-line"></div>
 
-                </div><div class="chart-logins-pie td td-3 center">
+                </div><div class="chart chart-logins-pie td td-3 center">
 
                     <h3>' . __( 'Login Distribution', SECSAFE_SLUG ) . '</h3>
                     <div id="chart-pie"></div>

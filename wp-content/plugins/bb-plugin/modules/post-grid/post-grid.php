@@ -577,6 +577,7 @@ FLBuilder::register_module('FLPostGridModule', array(
 							'1' => __( 'Yes', 'fl-builder' ),
 							'0' => __( 'No', 'fl-builder' ),
 						),
+						'responsive' => true,
 					),
 					'post_width'               => array(
 						'type'    => 'unit',

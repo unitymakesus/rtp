@@ -1146,6 +1146,23 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 					),
 				),
 			);
+
+			// Off Canvas Module.
+			$form['uabb-off-canvas'] = array(
+				'conditions' => array( 'type' => 'uabb-off-canvas' ),
+				'fields'     => array(
+					array(
+						'field'       => 'ct_content',
+						'type'        => __( 'Off Canvas : Content', 'uabb' ),
+						'editor_type' => 'VISUAL',
+					),
+					array(
+						'field'       => 'btn_text',
+						'type'        => __( 'Off Canvas : Button Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
+			);
 			return $form;
 		}
 	}

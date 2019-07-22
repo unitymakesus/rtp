@@ -64,7 +64,11 @@
 				this._gridLayoutMatchHeight();
 			}, this ) );
 
-			$( window ).on( 'resize', $.proxy( this._gridLayoutMatchHeight, this ) );
+			$( window ).on( 'resize', $.proxy( function(){
+				$(this.wrapperClass).imagesLoaded( $.proxy( function() {
+					this._gridLayoutMatchHeight();
+				}, this ) );
+			}, this ) );
 		},
 
 		_gridLayout: function()
@@ -95,7 +99,8 @@
 		{
 			var highestBox = 0;
 
-			if ( 0 === this.matchHeight ) {
+			if ( ! this._isMatchHeight() ) {
+				$(this.nodeClass + ' .fl-post-grid-post').css('height', '');
 				return;
 			}
 
@@ -107,6 +112,17 @@
             });
 
             $(this.nodeClass + ' .fl-post-grid-post').height(highestBox);
+		},
+
+		_isMatchHeight: function(){
+			var width 		= $( window ).width(),
+				breakpoints = FLBuilderLayoutConfig.breakpoints,
+				matchMedium = '' != this.matchHeight.medium ? this.matchHeight.medium : this.matchHeight.default;
+				matchSmall  = '' != this.matchHeight.responsive ? this.matchHeight.responsive : this.matchHeight.default;
+
+			return (width > breakpoints.medium && 1 == this.matchHeight.default)
+				   || (width > breakpoints.small && width <= breakpoints.medium && 1 == matchMedium)
+				   || (width <= breakpoints.small && 1 == matchSmall);
 		},
 
 		_galleryLayout: function()

@@ -130,7 +130,7 @@ class BSF_Envato_Activate {
 		}
 
 		if ( $is_active != true ) {
-			$form_action = get_api_site() . 'envato-validation-callback/?wp-envato-validate';
+			$form_action = bsf_get_api_site() . 'envato-validation-callback/?wp-envato-validate';
 		} else {
 			$form_action = bsf_registration_page_url( '', $product_id );
 		}
@@ -220,7 +220,7 @@ class BSF_Envato_Activate {
 		$product_id = isset( $form_data['product_id'] ) ? esc_attr( $form_data['product_id'] ) : '';
 
 		$form_data['token'] = sha1( $this->create_token( $product_id ) );
-		$url                = get_api_site() . 'envato-validation-callback/?wp-envato-validate';
+		$url                = bsf_get_api_site() . 'envato-validation-callback/?wp-envato-validate';
 
 		$envato_activation_url = add_query_arg(
 			$form_data,

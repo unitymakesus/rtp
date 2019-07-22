@@ -125,11 +125,7 @@ final class FLBuilderMultisite {
 	static public function blog_exists( $blog_id ) {
 		global $wpdb;
 
-		if ( method_exists( $wpdb, 'esc_like' ) ) {
-			$like = esc_sql( $wpdb->esc_like( $blog_id ) );
-		} else {
-			$like = like_escape( esc_sql( $blog_id ) );
-		}
+		$like = esc_sql( $wpdb->esc_like( $blog_id ) );
 
 		return $wpdb->get_row( $wpdb->prepare( "SELECT blog_id FROM $wpdb->blogs WHERE blog_id = '%s'", $like ) ); // @codingStandardsIgnoreLine
 	}

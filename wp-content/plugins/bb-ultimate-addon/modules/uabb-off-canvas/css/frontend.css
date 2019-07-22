@@ -1,0 +1,182 @@
+/* Off-Canvas Module CSS */
+.uabb-offcanvas-menu .menu-item a {
+	display: block;
+}
+.uabb-offcanvas {
+	position: fixed;
+	width: 0;
+	margin: 0;
+	top: 0;
+	bottom: 0;
+	height: 100%;
+	overflow: auto;
+	background-color: #ffffff;
+	background: #ffffff;
+	visibility: visible;
+	z-index: 99999;
+}
+.uabb-offcanvas-animating,
+.uabb-offcanvas,
+.uabb-offcanvas-overlay {
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+}
+.uabb-offcanvas::-webkit-scrollbar {
+    display: none;
+}
+.admin-bar .uabb-offcanvas {
+	margin-top: 32px;
+}
+.uabb-offcanvas-icon-bg {
+ 	display: inline-block;
+}
+/* 	Normal Box shadow */
+.uabb-offcanvas-shadow-normal.position-at-right.uabb-off-canvas-show,
+.uabb-offcanvas-shadow-normal.position-at-left.uabb-off-canvas-show  {
+	-webkit-box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.2);
+}
+/* 	Inset Box shadow */
+.uabb-offcanvas-shadow-inset.position-at-right.uabb-off-canvas-show {
+	-webkit-box-shadow: inset 7px 0px 8px -9px rgba(0,0,0,.5);
+	box-shadow: inset 7px 0px 8px -9px rgba(0,0,0,.5);
+}
+.uabb-offcanvas-shadow-inset.position-at-left.uabb-off-canvas-show {
+	-webkit-box-shadow: inset -7px 0px 8px -9px rgba(0,0,0,.5);
+	box-shadow: inset -7px 0px 8px -9px rgba(0,0,0,.5);
+}
+.uabb-offcanvas-action-wrap .uabb-offcanvas-action .uabb-offcanvas-icon {
+	text-align: center;
+}
+/* Floating Position */
+.uabb-offcanvas-action-wrap .uabb-button-wrapper .uabb-offcanvas-action-alignment-left ,
+.uabb-offcanvas-action-wrap .uabb-offcanvas-icon-wrap .uabb-offcanvas-action-alignment-left {
+	top: 50%;
+	left: 0;
+	right: auto;
+	position: fixed;
+	z-index: 999;
+}
+.uabb-offcanvas-action-wrap .uabb-button-wrapper .uabb-offcanvas-action-alignment-right ,
+.uabb-offcanvas-action-wrap .uabb-offcanvas-icon-wrap .uabb-offcanvas-action-alignment-right {
+	top: 50%;
+	right: 0em;
+	left: auto;
+	position: fixed;
+	z-index: 999;
+}
+.uabb-offcanvas-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+	opacity: 0;
+}
+.uabb-offcanvas-parent-wrapper .uabb-offcanvas-overlay {
+	cursor:pointer;
+}
+.uabb-offcanvas-content {
+	width: 100%;
+	padding: 40px 25px 25px 25px;
+}
+.uabb-offcanvas img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+}
+.uabb-offcanvas-full {
+	pointer-events: none;
+	min-height: 100%;
+}
+.uabb-offcanvas-action {
+	cursor: pointer;
+}
+.uabb-offcanvas-full .uabb-offcanvas-close {
+	pointer-events: auto;
+}
+.uabb-off-canvas-show,
+.uabb-off-canvas-show .uabb-offcanvas-close,
+.uabb-off-canvas-show + .uabb-offcanvas-close {
+	visibility: visible;
+}
+.uabb-offcanvas-close-icon-wrapper  {
+	position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+/* Menu in Off-Canvas style */
+.uabb-offcanvas-content .uabb-offcanvas-menu,
+.uabb-offcanvas-content .uabb-offcanvas-menu .sub-menu {
+    list-style: none;
+}
+.uabb-offcanvas-content .uabb-offcanvas-menu {
+	margin-left: 0;
+}
+.uabb-offcanvas-content .uabb-offcanvas-menu .menu-item a:hover,
+.uabb-offcanvas-content .uabb-offcanvas-menu .menu-item a:focus {
+	-webkit-transition: background 150ms linear, color 150ms linear;
+	transition: background 150ms linear, color 150ms linear;
+}
+/* Inside Close Icon Position */
+.uabb-offcanvas-close-icon-wrapper .uabb-offcanvas-close-icon,
+.uabb-offcanvas-close-icon-wrapper .uabb-offcanvas-close-icon {
+	cursor: pointer;
+	fill: #000000;
+}
+.uabb-offcanvas-close-icon-wrapper .uabb-offcanvas-close {
+	display: block;
+    float: right;
+    padding: 8px;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.uabb-offcanvas-close-icon-wrapper.uabb-offcanvas-close-icon-position-left-top {
+	left: 0;
+	right: auto;
+}
+.uabb-offcanvas-close-icon-wrapper.uabb-offcanvas-close-icon-position-right-top {
+	right: 0;
+	left: auto;
+}
+.uabb-offcanvas-content .uabb-offcanvas-menu li {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+/* Overlay */
+.uabb-off-canvas-show ~ .uabb-offcanvas-overlay {
+	opacity: 1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)";
+	visibility: visible;
+
+}
+.uabb-offcanvas-close {
+	z-index: 99999;
+}
+.uabb-offcanvas-position-at-left {
+	left: 0;
+}
+.uabb-offcanvas-position-at-right {
+	right: 0;
+}
+.uabb-offcanvas .uabb-offcanvas-content .uabb-creative-menu .sub-menu {
+	margin-left:15px;
+}
+.uabb-offcanvas-action.uabb-offcanvas-photo-wrap {
+	display: inline-block;
+    border-radius: 0;
+    line-height: 0;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+

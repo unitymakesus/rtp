@@ -1,4 +1,7 @@
 <?php
+// Save the current post, so that it can be restored later (see the end of this file).
+global $post;
+$initial_current_post = $post;
 
 // Get the query data.
 $query = FLBuilderLoop::query( $settings );
@@ -87,3 +90,13 @@ if ( ! $query->have_posts() ) :
 endif;
 
 wp_reset_postdata();
+
+// Restore the original current post.
+//
+// Note that wp_reset_postdata() isn't enough because it resets the current post by using the main
+// query, but it doesn't take into account the possibility that it might have been overridden by a
+// third-party plugin in the meantime.
+//
+// Specifically, this used to cause problems with Toolset Views, when its Content Templates were used.
+$post = $initial_current_post;
+setup_postdata( $initial_current_post );

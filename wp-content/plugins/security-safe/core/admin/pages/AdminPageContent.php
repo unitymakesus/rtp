@@ -57,22 +57,61 @@ class AdminPageContent extends AdminPage {
 
         // Shutoff Switch - All Content Policies
         $classes = ( $this->settings['on'] ) ? '' : 'notice-warning';
-        $rows = $this->form_select( $this->settings, __( 'Content Policies', SECSAFE_SLUG ), 'on', [ '0' => __( 'Disabled', SECSAFE_SLUG ), '1' => __( 'Enabled', SECSAFE_SLUG ) ], __( 'If you experience a problem, you may want to temporarily turn off all content policies at once to troubleshoot the issue. Be sure to clear your cache as well.', SECSAFE_SLUG ), $classes );
+
+        $rows = $this->form_select( 
+            $this->settings, 
+            __( 'Content Policies', SECSAFE_SLUG ), 
+            'on', 
+            [ '0' => __( 'Disabled', SECSAFE_SLUG ), '1' => __( 'Enabled', SECSAFE_SLUG ) ], 
+            __( 'If you experience a problem, you may want to temporarily turn off all content policies at once to troubleshoot the issue. Be sure to clear your cache as well.', SECSAFE_SLUG ), 
+            $classes 
+        );
+
         $html .= $this->form_table( $rows );
+
         $classes = '';
         
         // Copyright Protection
-        $html .= $this->form_section( __( 'Copyright Protection', SECSAFE_SLUG ), __( 'Copyright protection is meant to deter the majority of users from copying your content. These settings do not affect the admin area.', SECSAFE_SLUG ) );
-        $rows = $this->form_checkbox( $this->settings, __( 'Highlight Text', SECSAFE_SLUG ), 'disable_text_highlight', __( 'Disable Text Highlighting', SECSAFE_SLUG ), __( 'Prevent users from highlighting your content text.', SECSAFE_SLUG ) );
-        $rows .= $this->form_checkbox( $this->settings, __( 'Right-Click', SECSAFE_SLUG ), 'disable_right_click', __( 'Disable Right-Click', SECSAFE_SLUG ), __( 'Prevent users from right-clicking on your site to save images or copy text.', SECSAFE_SLUG ) );
+        $html .= $this->form_section( 
+            __( 'Copyright Protection', SECSAFE_SLUG ), 
+            __( 'Copyright protection is meant to deter the majority of users from copying your content. These settings do not affect the admin area.', SECSAFE_SLUG ) 
+        );
+
+        $rows = $this->form_checkbox( 
+            $this->settings, 
+            __( 'Highlight Text', SECSAFE_SLUG ), 
+            'disable_text_highlight', 
+            __( 'Disable Text Highlighting', SECSAFE_SLUG ), 
+            __( 'Prevent users from highlighting your content text.', SECSAFE_SLUG ) 
+        );
+
+        $rows .= $this->form_checkbox( 
+            $this->settings, 
+            __( 'Right-Click', SECSAFE_SLUG ), 
+            'disable_right_click', 
+            __( 'Disable Right-Click', SECSAFE_SLUG ), 
+            __( 'Prevent users from right-clicking on your site to save images or copy text.', SECSAFE_SLUG ) 
+        );
+
         $html .= $this->form_table( $rows );
 
         // Password Protection
-        $html .= $this->form_section( __( 'Password Protected Content', SECSAFE_SLUG ), __( 'Sometimes, it is necessary to password protect content for special access without requiring a user to log in. The settings below enhance this WordPress feature.', SECSAFE_SLUG ) );
-        $rows = $this->form_checkbox( $this->settings, __( 'Hide Posts', SECSAFE_SLUG ), __( 'hide_password_protected_posts', SECSAFE_SLUG ), __( 'Hide All Protected Posts', SECSAFE_SLUG ), __( 'Prevent password protected content from being listed in the blog, search results, and any other public areas. (only affects the loop)', SECSAFE_SLUG ) );
+        $html .= $this->form_section( 
+            __( 'Password Protected Content', SECSAFE_SLUG ), 
+            __( 'Sometimes, it is necessary to password protect content for special access without requiring a user to log in. The settings below enhance this WordPress feature.', SECSAFE_SLUG ) 
+        );
+
+        $rows = $this->form_checkbox( 
+            $this->settings, 
+            __( 'Hide Posts', SECSAFE_SLUG ), 
+            __( 'hide_password_protected_posts', SECSAFE_SLUG ), 
+            __( 'Hide All Protected Posts', SECSAFE_SLUG ), 
+            __( 'Prevent password protected content from being listed in the blog, search results, and any other public areas. (only affects the loop)', SECSAFE_SLUG ) 
+        );
+
         $html .= $this->form_table( $rows );
 
-        $html .= '<p><b>' . __( 'NOTICE:', SECSAFE_SLUG ) . '</b> ' . __( 'Be sure to clear your cache after changing these settings.', SECSAFE_SLUG ) . '</p>';
+        $html .= '<p>' . __( '<b>NOTICE:</b> Be sure to clear your cache after changing these settings.', SECSAFE_SLUG ) . '</p>';
 
         // Save Button
         $html .= $this->button( __( 'Save Settings', SECSAFE_SLUG ) );

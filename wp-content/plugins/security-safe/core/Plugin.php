@@ -23,7 +23,14 @@ class Plugin {
      * Logged In Status
      * @var boolean
      */
-    protected $logged_in;
+    public $logged_in;
+
+
+    /**
+     * User
+     * @var object
+     */
+    public $user;
 
 
     /**
@@ -37,10 +44,10 @@ class Plugin {
      * Plugin constructor.
      * @since  0.1.0
      */
-	function __construct() {
+	function __construct( $session ) {
 
-        // Get value once
-        $this->logged_in = is_user_logged_in();
+        // Sets Session Variables
+        $this->set_session( $session );
 
         // Add Text Domain For Translations
         load_plugin_textdomain( SECSAFE_SLUG, false, SECSAFE_DIR_LANG );
@@ -52,6 +59,44 @@ class Plugin {
         $this->upgrade_settings();
 
 	} // __construct()
+
+    /**
+     * Sets variables related to this session.
+     * @since  2.1.0
+     */
+    private function set_session( $session ) {
+
+        $this->logged_in = ( isset( $session['logged_in'] ) ) ? $session['logged_in'] : false;
+        $this->user = ( isset( $session['user'] ) ) ? $session['user'] : false;
+
+    } // set_session()
+
+
+    /**
+     * Gets variables related to this session.
+     * @since  2.1.0
+     */
+    private static function get_session() {
+
+        $session = [];
+        $session['logged_in'] = is_user_logged_in();
+        $session['user'] = false;
+
+        if ( $session['logged_in'] ) {
+
+            // Get user once
+            $user = wp_get_current_user();
+
+            $new_roles = array_combine( $user->roles, $user->roles );
+
+            // Cache roles
+            $session['user']['roles'] = $new_roles;
+            
+        }
+
+        return $session;
+
+    } // get_session()
 
 
     /**
@@ -182,7 +227,7 @@ class Plugin {
 
         if ( $result && $initial ) {
 
-            $this->messages[] = [ __( 'Security Safe settings have been set to the minimum standards.', SECSAFE_SLUG ), 1, 1 ];
+            $this->messages[] = [ sprintf( __( '%s settings have been set to the minimum standards.', SECSAFE_SLUG ), SECSAFE_NAME ), 1, 1 ];
 
         } elseif ( $result && ! $initial ) {
 
@@ -297,7 +342,7 @@ class Plugin {
 
             if ( $result ) {
 
-                $this->messages[] = [ __( 'Security Safe: Your settings have been upgraded.', SECSAFE_SLUG ), 0, 1 ];
+                $this->messages[] = [ sprintf( __( '%s: Your settings have been upgraded.', SECSAFE_SLUG ), SECSAFE_NAME ), 0, 1 ];
                 Janitor::log( 'Added upgrade success message.' );
 
                 // Get Settings Again
@@ -305,7 +350,7 @@ class Plugin {
 
             } else {
 
-                $this->messages[] = [ __( 'Security Safe: There was an error upgrading your settings. We would recommend resetting your settings to fix the issue.', SECSAFE_SLUG ), 3 ];
+                $this->messages[] = [ sprintf( __( '%s: There was an error upgrading your settings. We would recommend resetting your settings to fix the issue.', SECSAFE_SLUG ), SECSAFE_NAME ), 3 ];
                 Janitor::log( 'Added upgrade error message.' );
 
             } // $success
@@ -514,6 +559,9 @@ class Plugin {
 
         global $SecuritySafe;
 
+        // Set Session
+        $session = Self::get_session();
+
         $admin_user = false;
 
         if ( is_admin() ) {
@@ -521,11 +569,12 @@ class Plugin {
             // Multisite Compatibility
             if ( is_multisite() ){
 
-                $admin_user = ( is_super_admin() ) ? true : false;
+                // Only Super Admin has the power
+                $admin_user = ( isset( $session['user']['roles']['super_admin'] ) ) ? true : false;
 
             } else {
 
-                $admin_user = ( current_user_can( 'manage_options' ) ) ? true : false;
+                $admin_user = ( isset( $session['user']['roles']['administror'] ) || current_user_can( 'manage_options' ) ) ? true : false;
 
             }
             
@@ -536,11 +585,11 @@ class Plugin {
             // Load Admin
             require_once( SECSAFE_DIR_ADMIN . '/Admin.php' );
 
-            $SecuritySafe = new Admin();
+            $SecuritySafe = new Admin( $session );
 
         } else {
 
-            $SecuritySafe = new Security();
+            $SecuritySafe = new Security( $session );
 
         }
 

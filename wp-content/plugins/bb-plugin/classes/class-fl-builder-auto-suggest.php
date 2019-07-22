@@ -105,11 +105,7 @@ final class FLBuilderAutoSuggest {
 
 		$like = stripslashes( urldecode( $_REQUEST['fl_as_query'] ) );
 
-		if ( method_exists( $wpdb, 'esc_like' ) ) {
-			$like = esc_sql( $wpdb->esc_like( $like ) );
-		} else {
-			$like = like_escape( esc_sql( $like ) );
-		}
+		$like = esc_sql( $wpdb->esc_like( $like ) );
 
 		return $like;
 	}

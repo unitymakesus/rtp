@@ -50,7 +50,7 @@ class FLSubscribeFormModule extends FLBuilderModule {
 			'btn_align_responsive'   => 'align_responsive',
 			'btn_font_size'          => 'font_size',
 			'btn_font_size_unit'     => 'font_size_unit',
-			'ography'                => 'typography',
+			'btn_typography'         => 'typography',
 			'btn_bg_color'           => 'bg_color',
 			'btn_bg_hover_color'     => 'bg_hover_color',
 			'btn_bg_opacity'         => 'bg_opacity',

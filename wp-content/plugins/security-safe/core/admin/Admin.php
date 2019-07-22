@@ -16,10 +16,10 @@ class Admin extends Security
     /**
      * Admin constructor.
      */
-    function __construct()
+    function __construct( $session )
     {
         // Run parent class constructor first
-        parent::__construct();
+        parent::__construct( $session );
         $this->check_settings();
         // Display Admin Notices
         add_action( 'admin_notices', [ $this, 'display_notices' ] );
@@ -30,13 +30,8 @@ class Admin extends Security
         // Create Admin Menus
         add_action( 'admin_menu', [ $this, 'admin_menus' ] );
         // Add Action Links
-        
-        if ( is_network_admin() ) {
-            add_filter( 'network_admin_plugin_action_links_security-safe/security-safe.php', [ $this, 'plugin_action_links' ] );
-        } else {
-            add_filter( 'plugin_action_links_security-safe/security-safe.php', [ $this, 'plugin_action_links' ] );
-        }
-    
+        add_filter( 'network_admin_plugin_action_links_security-safe/security-safe.php', [ $this, 'plugin_action_links' ] );
+        add_filter( 'plugin_action_links_security-safe/security-safe.php', [ $this, 'plugin_action_links' ] );
     }
     
     // __construct()
@@ -100,8 +95,8 @@ class Admin extends Security
     {
         $page = [];
         // Add the menu page
-        $page['menu_title'] = 'Security Safe';
-        $page['title'] = $page['menu_title'] . ' Dashboard';
+        $page['menu_title'] = SECSAFE_NAME;
+        $page['title'] = SECSAFE_NAME . ' Dashboard';
         $page['capability'] = 'activate_plugins';
         $page['slug'] = SECSAFE_SLUG;
         $page['function'] = [ $this, 'page_dashboard' ];
@@ -116,8 +111,7 @@ class Admin extends Security
             $page['icon_url'],
             $page['position']
         );
-        $subpages = $this->get_admin_pages();
-        $this->add_submenu_pages( $subpages, $page );
+        $this->add_submenu_pages( $page );
     }
     
     //admin_menus()
@@ -143,20 +137,17 @@ class Admin extends Security
     {
         // All Category Pages
         $pages = [
-            0 => 'Plugin',
-            1 => 'Privacy',
-            2 => 'Files',
-            3 => 'User Access',
-            4 => 'Content',
-            5 => 'Firewall',
+            'plugin'      => __( 'Plugin', SECSAFE_SLUG ),
+            'privacy'     => __( 'Privacy', SECSAFE_SLUG ),
+            'files'       => __( 'Files', SECSAFE_SLUG ),
+            'user-access' => __( 'User Access', SECSAFE_SLUG ),
+            'content'     => __( 'Content', SECSAFE_SLUG ),
+            'firewall'    => __( 'Firewall', SECSAFE_SLUG ),
         ];
         // Remove Specific Menus
-        
         if ( !$disabled ) {
-            unset( $pages[0] );
-            // Plugin
+            unset( $pages['plugin'] );
         }
-        
         return $pages;
     }
     
@@ -166,34 +157,25 @@ class Admin extends Security
      * @param array $subpages
      * @since  0.1.0
      */
-    private function add_submenu_pages( $subpages = false, $page = false )
+    private function add_submenu_pages( $page = false )
     {
-        
-        if ( is_array( $subpages ) && is_array( $page ) ) {
-            foreach ( $subpages as $title ) {
-                $title_lc = strtolower( $title );
-                $title_uscore = str_replace( ' ', '_', $title_lc );
-                $title_hyphen = str_replace( ' ', '-', $title_lc );
-                add_submenu_page(
-                    $page['slug'],
-                    // Parent Slug
-                    $page['menu_title'] . ' ' . $title,
-                    // Page Title
-                    $title,
-                    // Menu Title
-                    $page['capability'],
-                    // Capability
-                    $page['slug'] . '-' . $title_hyphen,
-                    // Menu Slug
-                    [ $this, 'page_' . $title_uscore ]
-                );
-            }
-            // endforeach
-        } else {
-            Janitor::log( 'ERROR: Variable $subpages is not an array.', __FILE__, __LINE__ );
+        $subpages = $this->get_admin_pages();
+        foreach ( $subpages as $slug => $title ) {
+            $slug_uscore = str_replace( '-', '_', $slug );
+            add_submenu_page(
+                $page['slug'],
+                // Parent Slug
+                $page['menu_title'] . ' ' . $title,
+                // Page Title
+                $title,
+                // Menu Title
+                $page['capability'],
+                // Capability
+                $page['slug'] . '-' . $slug,
+                // Menu Slug
+                [ $this, 'page_' . $slug_uscore ]
+            );
         }
-        
-        // endif
     }
     
     // add_submenu_pages()
@@ -314,11 +296,13 @@ class Admin extends Security
             <div class="intro">
                             
                 <h1><?php 
-        printf( __( '%s', 'security-safe' ), $page->title );
+        echo  $page->title ;
+        // Must be sanitized and translated when set
         ?></h1>
                 
                 <p class="desc"><?php 
-        printf( __( '%s', 'security-safe' ), $page->description );
+        echo  $page->description ;
+        // Must be sanitized and translated when set
         ?></p>
             
                 <a href="<?php 
@@ -328,8 +312,11 @@ class Admin extends Security
         ?>img/logo.svg" alt="<?php 
         echo  SECSAFE_NAME ;
         ?>"><br /><span class="version"><?php 
-        ?>Version <?php 
-        echo  SECSAFE_VERSION ;
+        $version = false;
+        $version_pro = sprintf( __( 'Pro Version %s', SECSAFE_SLUG ), SECSAFE_VERSION );
+        $version_pro_free = sprintf( __( '%1$s free features only %2$s', SECSAFE_SLUG ), '<br />(', ')' );
+        $version = ( $version ? $version : sprintf( __( 'Version %s', SECSAFE_SLUG ), SECSAFE_VERSION ) );
+        echo  $version ;
         ?></span></a>
 
             </div><!-- .intro -->
@@ -362,7 +349,9 @@ class Admin extends Security
                             <div class="follow-us widget">
                                 <p><a href="<?php 
             echo  SECSAFE_URL_TWITTER ;
-            ?>" class="icon-twitter" target="_blank">Follow Security Safe</a></p>
+            ?>" class="icon-twitter" target="_blank"><?php 
+            printf( __( 'Follow %s', SECSAFE_SLUG ), SECSAFE_NAME );
+            ?></a></p>
                             </div>
                             <?php 
             
@@ -370,19 +359,29 @@ class Admin extends Security
                 ?>
                             <div class="upgrade-pro widget">
                                 
-                                <h5>Get More Features</h5>
-                                <p>Pro features give you more control and save you time.</p>
+                                <h5><?php 
+                _e( 'Get More Features', SECSAFE_SLUG );
+                ?></h5>
+                                <p><?php 
+                _e( 'Pro features give you more control and save you time.', SECSAFE_SLUG );
+                ?></p>
                                 <p class="cta"><a href="<?php 
                 echo  SECSAFE_URL_MORE_INFO_PRO ;
-                ?>" target="_blank" class="icon-right-open">Upgrade to Pro!</a></p>
+                ?>" target="_blank" class="icon-right-open"><?php 
+                _e( 'Upgrade to Pro!', SECSAFE_SLUG );
+                ?></a></p>
                             </div>
                             <?php 
             }
             
             ?>
                             <div class="rate-us widget">
-                                <h5>Like Security Safe?</h5>
-                                <p>Share your positive experience!</p>
+                                <h5><?php 
+            printf( __( 'Like %s?', SECSAFE_SLUG ), SECSAFE_NAME );
+            ?></h5>
+                                <p><?php 
+            _e( 'Share your positive experience!', SECSAFE_SLUG );
+            ?></p>
                                 <p class="cta ratings"><a href="<?php 
             echo  SECSAFE_URL_WP_REVIEWS ;
             ?>" target="_blank" class="rate-stars"><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span><span class="icon-star"></span></a></p>
@@ -403,22 +402,19 @@ class Admin extends Security
 
                 <hr />
 
-                <p>If you like <?php 
-        echo  SECSAFE_NAME ;
-        ?>, please <a href="<?php 
-        echo  SECSAFE_URL_WP_REVIEWS_NEW ;
-        ?>" target="_blank">post a review</a>.</p>
+                <p><?php 
+        printf( __( 'If you like %1$s, please <a href="%2$s" target="_blank">post a review</a>.', SECSAFE_SLUG ), SECSAFE_NAME, SECSAFE_URL_WP_REVIEWS_NEW );
+        ?></p>
             
-                <p>Need help? Visit the <a href="<?php 
-        echo  SECSAFE_URL_WP ;
-        ?>" target="_blank">support forum</a>.</p>
+                <p><?php 
+        printf( __( 'Need help? Visit the <a href="%1$s" target="_blank">support forum</a>', SECSAFE_SLUG ), SECSAFE_URL_WP );
+        ?>.</p>
                 
                 <p><?php 
         // Display
-        $end = microtime( true );
         $start = SECSAFE_TIME_START;
-        $diff = round( ($end - $start) * 1000 );
-        echo  $diff ;
+        $end = microtime( true );
+        echo  round( ($end - $start) * 1000 ) ;
         ?>ms</p>
             </div>
         </div><!-- .wrap -->
@@ -434,43 +430,34 @@ class Admin extends Security
     {
         $menus = $this->get_category_pages( true );
         echo  '<ul class="featured-menu">' ;
-        foreach ( $menus as $m ) {
-            // Add Class For Disabled Menus
-            $disabled = '';
+        foreach ( $menus as $k => $l ) {
+            $class = $k;
             
-            if ( is_array( $m ) ) {
-                $disabled = ' disabled';
-                $m = $m[0];
-            }
-            
-            // is_array()
-            $class = strtolower( str_replace( ' ', '-', $m ) );
-            
-            if ( $m == 'Plugin' ) {
+            if ( $k == 'plugin' ) {
                 $href = 'href="admin.php?page=' . SECSAFE_SLUG . '"';
             } else {
                 
-                if ( $m == 'Firewall' ) {
+                if ( $k == 'firewall' ) {
                     // No settings, so we must define tab
-                    $href = 'href="admin.php?page=' . SECSAFE_SLUG . '-' . $class . '&tab=blocked"';
+                    $href = 'href="admin.php?page=' . SECSAFE_SLUG . '-' . $k . '&tab=blocked"';
                 } else {
-                    $href = ( $disabled ? '' : 'href="admin.php?page=' . SECSAFE_SLUG . '-' . $class . '"' );
+                    $href = 'href="admin.php?page=' . SECSAFE_SLUG . '-' . $k . '"';
                 }
             
             }
             
             // Highlight Active Menu
             
-            if ( $_GET['page'] == SECSAFE_SLUG && $m == 'Plugin' ) {
+            if ( $_GET['page'] == SECSAFE_SLUG && $k == 'plugin' ) {
                 $active = ' active';
             } else {
-                $active = ( strpos( $_GET['page'], $class ) !== false ? ' active' : '' );
+                $active = ( strpos( $_GET['page'], $k ) !== false ? ' active' : '' );
             }
             
-            $class .= $active . $disabled;
+            $class .= $active;
             // Convert All Menus to A Single Line
-            $m = ( $m == 'User Access' ? 'Access' : $m );
-            echo  '<li><a ' . $href . 'class="icon-' . $class . '"><span>' . $m . '</span></a></li>' ;
+            $l = ( $l == __( 'User Access', SECSAFE_SLUG ) ? __( 'Access', SECSAFE_SLUG ) : $l );
+            echo  '<li><a ' . $href . 'class="icon-' . $class . '"><span>' . $l . '</span></a></li>' ;
         }
         // foreach
         echo  '</ul>' ;
@@ -483,12 +470,12 @@ class Admin extends Security
      */
     public function display_notices( $skip = false )
     {
-        if ( $skip ) {
+        if ( !$skip ) {
             // Register / Display Admin Notices
             $this->all_notices();
         }
         if ( SECSAFE_DEBUG ) {
-            $this->messages[] = [ 'Security Safe: Plugin Debug Mode is on.', 1, 0 ];
+            $this->messages[] = [ sprintf( __( '%s: Plugin Debug Mode is on.', SECSAFE_SLUG ), SECSAFE_NAME ), 1, 0 ];
         }
         // SECSAFE_DEBUG
         
@@ -528,9 +515,9 @@ class Admin extends Security
         if ( $dismiss ) {
             $class .= ' is-dismissible';
         }
-        // Add Message
-        $message = __( $message, 'security-safe' );
-        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+        // Each message must be sanitized when set due to variability of message types
+        // $class is set above
+        echo  '<div class="' . $class . '"><p>' . $message . '</p></div>' ;
     }
     
     //admin_notice()
@@ -561,10 +548,10 @@ class Admin extends Security
                     if ( isset( $_GET['tab'] ) && $_GET['tab'] == 'export-import' ) {
                         
                         if ( isset( $_POST['export-settings'] ) ) {
-                            $this->export_settings();
+                            $this->export_settings__premium_only();
                         } else {
                             if ( isset( $_POST['import-settings'] ) ) {
-                                $this->import_settings();
+                                $this->import_settings__premium_only();
                             }
                         }
                     
@@ -594,12 +581,12 @@ class Admin extends Security
     {
         // Check if policies are turned off
         $this->policy_notices();
-        // Display Notices on Security Safe Pages Only
+        // Display Notices on Our Plugin Pages Only
         if ( isset( $_GET['page'] ) && isset( $_GET['tab'] ) && $_GET['page'] == SECSAFE_SLUG && $_GET['tab'] == 'debug' ) {
             // Check if WP Cron is disabled
             
             if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON == true ) {
-                $message = 'Security Safe: WP Cron is disabled. This will affect the routine database table cleanup. Please setup a manual cron to trigger WP Cron daily or enable WP Cron.';
+                $message = sprintf( __( '%s: WP Cron is disabled. This will affect the routine database table cleanup. Please setup a manual cron to trigger WP Cron daily or enable WP Cron.', SECSAFE_SLUG ), SECSAFE_NAME );
                 $this->messages['firewall'] = [ $message, 2, 0 ];
             }
         
@@ -616,15 +603,15 @@ class Admin extends Security
         // All Plugin Policies
         
         if ( !isset( $this->settings['general']['on'] ) || $this->settings['general']['on'] != "1" ) {
-            $message = 'Security Safe: All security policies are disabled.';
-            $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe' ? '' : ' You can enable them in <a href="admin.php?page=security-safe&tab=settings#settings">Plugin Settings</a>. If you are experiencing an issue, <a href="admin.php?page=security-safe&reset=1">reset your settings.</a>' );
+            $message = sprintf( __( '%s: All security policies are disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
+            $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe' ? '' : ' ' . sprintf( __( 'You can enable them in <a href="%1$s">Plugin Settings</a>. If you are experiencing an issue, <a href="%2$s">reset your settings.</a>', SECSAFE_SLUG ), admin_url( 'admin.php?page=security-safe&tab=settings#settings' ), admin_url( 'admin.php?page=security-safe&reset=1' ) ) );
             $this->messages['general'] = [ $message, 2, 0 ];
         } else {
             // Privacy Policies
             
             if ( !isset( $this->settings['privacy']['on'] ) || $this->settings['privacy']['on'] != "1" ) {
-                $message = 'Security Safe: All privacy policies are disabled.';
-                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-privacy' ? '' : ' You can enable them at the top of <a href="admin.php?page=security-safe-privacy&tab=settings#settings">Privacy Settings</a>.' );
+                $message = sprintf( __( '%s: All privacy policies are disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
+                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-privacy' ? '' : ' ' . sprintf( __( 'You can enable them at the top of <a href="%s">Privacy Settings</a>.', SECSAFE_SLUG ), admin_url( 'admin.php?page=security-safe-privacy&tab=settings#settings' ) ) );
                 $this->messages['privacy'] = [ $message, 2, 0 ];
             }
             
@@ -632,8 +619,8 @@ class Admin extends Security
             // Files Policies
             
             if ( !isset( $this->settings['files']['on'] ) || $this->settings['files']['on'] != "1" ) {
-                $message = 'Security Safe: All file policies are disabled.';
-                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-files' ? '' : ' You can enable them at the top of <a href="admin.php?page=security-safe-files&tab=settings#settings">File Settings</a>.' );
+                $message = sprintf( __( '%s: All file policies are disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
+                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-files' ? '' : ' ' . sprintf( __( 'You can enable them at the top of <a href="%s">File Settings</a>.', SECSAFE_SLUG ), admin_url( 'admin.php?page=security-safe-files&tab=settings#settings' ) ) );
                 $this->messages['files'] = [ $message, 2, 0 ];
             }
             
@@ -641,8 +628,8 @@ class Admin extends Security
             // Access Policies
             
             if ( !isset( $this->settings['access']['on'] ) || $this->settings['access']['on'] != "1" ) {
-                $message = 'Security Safe: All user access policies are disabled.';
-                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-user-access' ? '' : ' You can enable them at the top of <a href="admin.php?page=security-safe-user-access&tab=settings#settings">User Access Settings</a>.' );
+                $message = sprintf( __( '%s: All user access policies are disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
+                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-user-access' ? '' : ' ' . sprintf( __( 'You can enable them at the top of <a href="%s">User Access Settings</a>.', SECSAFE_SLUG ), admin_url( 'admin.php?page=security-safe-user-access&tab=settings#settings' ) ) );
                 $this->messages['access'] = [ $message, 2, 0 ];
             }
             
@@ -650,8 +637,8 @@ class Admin extends Security
             // Content Policies
             
             if ( !isset( $this->settings['content']['on'] ) || $this->settings['content']['on'] != "1" ) {
-                $message = 'Security Safe: All content policies are disabled.';
-                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-content' ? '' : ' You can enable them at the top of <a href="admin.php?page=security-safe-content&tab=settings#settings">Content Settings</a>.' );
+                $message = sprintf( __( '%s: All content policies are disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
+                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-content' ? '' : ' ' . sprintf( __( 'You can enable them at the top of <a href="%s">Content Settings</a>.', SECSAFE_SLUG ), admin_url( 'admin.php?page=security-safe-content&tab=settings#settings' ) ) );
                 $this->messages['content'] = [ $message, 2, 0 ];
             }
             
@@ -659,8 +646,8 @@ class Admin extends Security
             // Firewall Policies
             
             if ( !isset( $this->settings['firewall']['on'] ) || $this->settings['firewall']['on'] != "1" ) {
-                $message = 'Security Safe: The firewall is disabled.';
-                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-firewall' ? '' : ' You can enable it at the top of <a href="admin.php?page=security-safe-firewall&tab=settings#settings">Firewall Settings</a>.' );
+                $message = sprintf( __( '%s: The firewall is disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
+                $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-firewall' ? '' : ' ' . sprintf( __( 'You can enable it at the top of <a href="%s">Firewall Settings</a>.', SECSAFE_SLUG ), admin_url( 'admin.php?page=security-safe-firewall&tab=settings#settings' ) ) );
                 $this->messages['firewall'] = [ $message, 2, 0 ];
             }
             
@@ -669,7 +656,7 @@ class Admin extends Security
                             // Backups Policies
                             if ( ! isset( $this->settings['backups']['on'] ) || $this->settings['backups']['on'] != "1" ) {
             
-                                $message = 'Security Safe: Backups are disabled.';
+                                $message = sprintf( __( '%s: Backups are disabled.', SECSAFE_SLUG ), SECSAFE_NAME );
             
                                 $message .= ( isset( $_GET['page'] ) && $_GET['page'] == 'security-safe-backups' ) ? '' : ' You can enable them at the top of <a href="admin.php?page=security-safe-backups&tab=settings#settings">Backup Settings</a>.';
             
@@ -693,7 +680,7 @@ class Admin extends Security
     function plugin_action_links( $links )
     {
         // Add Link
-        array_unshift( $links, '<a style="color: #f56e28;" href="' . SECSAFE_URL_WP_REVIEWS_NEW . '">Rate Us</a>' );
+        array_unshift( $links, '<a style="color: #f56e28;" href="' . SECSAFE_URL_WP_REVIEWS_NEW . '">' . __( 'Rate Us', SECSAFE_SLUG ) . '</a>' );
         return $links;
     }
     

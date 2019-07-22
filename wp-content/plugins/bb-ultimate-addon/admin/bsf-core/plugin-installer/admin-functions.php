@@ -67,7 +67,7 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 			}
 		}
 
-		$path = get_api_url() . '?referer=' . $ultimate_referer;
+		$path = bsf_get_api_url() . '?referer=' . $ultimate_referer;
 
 		$data = array(
 			'action' => 'bsf_fetch_brainstorm_products',
@@ -83,7 +83,7 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 
 		// Request http URL if the https version fails.
 		if ( is_wp_error( $request ) && wp_remote_retrieve_response_code( $request ) !== 200 ) {
-			$path    = get_api_url( true ) . '?referer=' . $ultimate_referer;
+			$path    = bsf_get_api_url( true ) . '?referer=' . $ultimate_referer;
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
@@ -211,7 +211,7 @@ if ( ! function_exists( 'install_bsf_product' ) ) {
 		if ( $is_wp ) {
 			$download_path = $install_product_data->download_url;
 		} else {
-			$path     = get_api_url() . '?referer=download-bundled-extension';
+			$path     = bsf_get_api_url() . '?referer=download-bundled-extension';
 			$timezone = date_default_timezone_get();
 			$call     = 'file=' . $install_product_data->download_url . '&hashtime=' . strtotime( date( 'd-m-Y h:i:s a' ) ) . '&timezone=' . $timezone;
 			$hash     = $call;

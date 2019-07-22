@@ -86,7 +86,7 @@ class Firewall {
         // Add blocked Entry
         $result = $this->add_entry( $args );
 
-        $message = 'Security Safe: Access blocked.';
+        $message = sprintf( __( '%s: Access blocked.', SECSAFE_SLUG ), SECSAFE_NAME );
         $message .= ( SECSAFE_DEBUG ) ? ' - ' . $args['type'] . ': ' . $args['details'] : '';
 
         status_header( '406', $message );

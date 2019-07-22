@@ -109,7 +109,7 @@ final class FLBuilderLoop {
 
 		// Set random order seed for load_more and scroll paginations.
 		if ( isset( $settings->order_by ) && 'rand' == $settings->order_by ) {
-			if ( in_array( $settings->pagination, array( 'scroll', 'load_more' ) ) ) {
+			if ( isset( $settings->pagination ) && in_array( $settings->pagination, array( 'scroll', 'load_more' ) ) ) {
 				if ( ! isset( $_GET['fl_rand_seed'] ) ) {
 					self::$rand_seed = rand();
 				} else {
@@ -183,7 +183,7 @@ final class FLBuilderLoop {
 		$users          = empty( $settings->users ) ? '' : $settings->users;
 		$fields         = empty( $settings->fields ) ? '' : $settings->fields;
 		$exclude_self   = '';
-		if ( isset( $settings->exclude_self ) && 'yes' == $settings->exclude_self ) {
+		if ( $post && isset( $settings->exclude_self ) && 'yes' == $settings->exclude_self ) {
 			$exclude_self = $post->ID;
 		}
 
@@ -708,8 +708,10 @@ final class FLBuilderLoop {
 			return false;
 		}
 
-		if ( $query->is_archive && $query->is_category ) {
-			if ( $query->post_count < 1 && ! isset( $_GET['flpaging'] ) ) {
+		if ( $query->is_archive && $query->is_category && $query->post_count < 1 ) {
+
+			$post_grid_posts = fl_theme_builder_cat_archive_post_grid( $query );
+			if ( ! $post_grid_posts || $post_grid_posts->post_count < 1 ) {
 				return false;
 			}
 		}
@@ -771,16 +773,6 @@ final class FLBuilderLoop {
 			$base   = self::build_base_url( $permalink_structure, $base );
 			$format = self::paged_format( $permalink_structure, $base );
 
-			// Flag if it's a first posts module in an archive page.
-			// Fix pagination issues in archive page since it's using the main WP query for pagination.
-			if ( $query->is_archive && 1 === self::$loop_counter ) {
-				if ( isset( $query->query['settings']->data_source ) && 'custom_query' == $query->query['settings']->data_source ) {
-					$add_args = array(
-						'flpaging' => 1,
-					);
-				}
-			}
-
 			// Add random order seed for scroll and load more.
 			if ( self::$rand_seed > 0 ) {
 				$add_args['fl_rand_seed'] = self::$rand_seed;
@@ -827,12 +819,6 @@ final class FLBuilderLoop {
 				$link = strtok( $link, '?' );
 				$link = add_query_arg( $link_args, $link );
 			}
-		} elseif ( false !== strpos( $link, 'flpaging' ) && self::$loop_counter > 1 ) {
-			$link_params = str_replace( 'flpaging=1', '', $link_params );
-			wp_parse_str( $link_params, $link_args );
-
-			$link = strtok( $link, '?' );
-			$link = add_query_arg( $link_args, $link );
 		}
 
 		return $link;

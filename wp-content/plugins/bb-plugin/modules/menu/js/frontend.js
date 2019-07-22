@@ -35,7 +35,6 @@
 			}
 
 		}, this ) );
-
 	};
 
 	FLBuilderMenu.prototype = {
@@ -74,10 +73,10 @@
 		 * @return bool
 		 */
 		_isMenuToggle: function(){
-			if ( 'always' == this.mobileBreakpoint
+			if ( ( 'always' == this.mobileBreakpoint
 				|| ( this._isMobile() && 'mobile' == this.mobileBreakpoint )
 				|| ( this._isMedium() && 'medium-mobile' == this.mobileBreakpoint )
-				) {
+			) && $( '.fl-menu-mobile-toggle' ).is(':visible') ) {
 				return true;
 			}
 
@@ -118,7 +117,6 @@
 			if( this.mobileToggle != 'expanded' ){
 				this._toggleForMobile();
 			}
-
 		},
 
 		/**

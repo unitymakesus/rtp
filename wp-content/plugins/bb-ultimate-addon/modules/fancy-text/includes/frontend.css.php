@@ -83,8 +83,8 @@ $settings->fancy_color = UABB_Helper::uabb_colorpicker( $settings, 'fancy_color'
 		);
 	}
 	?>
-	.fl-node-<?php echo $id; ?> .uabb-fancy-text-prefix,
-	.fl-node-<?php echo $id; ?> .uabb-fancy-text-suffix {
+	.fl-node-<?php echo $id; ?> .uabb-module-content .uabb-fancy-text-wrap .uabb-fancy-text-prefix,
+	.fl-node-<?php echo $id; ?> .uabb-module-content .uabb-fancy-text-wrap .uabb-fancy-text-suffix {
 		color: <?php echo $settings->color; ?>;
 	}
 <?php } ?>
@@ -135,7 +135,9 @@ $settings->fancy_color = UABB_Helper::uabb_colorpicker( $settings, 'fancy_color'
 	}
 }
 ?>
-.fl-node-<?php echo $id; ?> .uabb-fancy-text-main {
+.fl-node-<?php echo $id; ?> .uabb-fancy-text-wrap .uabb-fancy-text-main .uabb-slide_text,
+.fl-node-<?php echo $id; ?> .uabb-fancy-text-wrap .uabb-fancy-text-main .uabb-typed-main,
+.fl-node-<?php echo $id; ?> .uabb-module-content .uabb-fancy-text-wrap .uabb-fancy-text-main {
 	<?php if ( '' != $settings->fancy_color ) : ?>
 		color: <?php echo $settings->fancy_color; ?>;
 	<?php endif; ?>

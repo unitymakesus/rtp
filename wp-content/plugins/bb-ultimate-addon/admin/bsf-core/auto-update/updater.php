@@ -1,18 +1,19 @@
 <?php
 // Alternative function for wp_remote_get
 if ( ! function_exists( 'bsf_get_remote_version' ) ) {
-	function bsf_get_remote_version( $products, $check_license ) {
+	function bsf_get_remote_version( $products ) {
 		global $ultimate_referer;
 
-		$path = get_api_url() . '?referer=' . $ultimate_referer;
+		$path = bsf_get_api_url() . '?referer=' . $ultimate_referer;
 
 		$data    = array(
 			'action'         => 'bsf_get_product_versions',
 			'ids'            => $products,
-			'linceses_check' => $check_license,
+			'linceses_check' => array(),
 		);
 		$request = wp_remote_post(
-			$path, array(
+			$path,
+			array(
 				'body'    => $data,
 				'timeout' => '30',
 			)
@@ -20,9 +21,10 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 
 		// Request http URL if the https version fails.
 		if ( is_wp_error( $request ) && wp_remote_retrieve_response_code( $request ) !== 200 ) {
-			$path    = get_api_url( true ) . '?referer=' . $ultimate_referer;
+			$path    = bsf_get_api_url( true ) . '?referer=' . $ultimate_referer;
 			$request = wp_remote_post(
-				$path, array(
+				$path,
+				array(
 					'body'    => $data,
 					'timeout' => '30',
 				)
@@ -30,11 +32,7 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 		}
 
 		if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
-			$result = json_decode( $request['body'] );
-
-			if( isset( $result->updated_licenses ) ) {
-				bsf_update_license_checked( $result->updated_licenses );
-			}
+			$result = json_decode( wp_remote_retrieve_body( $request ) );
 
 			if ( ! $result->error ) {
 				return $result->updated_versions;
@@ -44,188 +42,117 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 		}
 	}
 }
-if ( ! function_exists( 'bsf_update_license_checked' ) ) {
-	function bsf_update_license_checked( $updated_licenses ) {
-		$brainstrom_products = get_option( 'brainstrom_products', array() );
 
-		if ( empty( $brainstrom_products ) ) {
-			return false;
-		}
-
-		if ( empty( $updated_licenses ) ) {
-			return false;
-		}
-
-		$is_updated = false;
-
-		foreach ( $updated_licenses as $license ) :
-			$product_id   = $license->product_id;
-			$type         = $license->type . 's';
-			$new_status   = $license->status;
-			$purchase_key = $license->purchase_code;
-			if ( isset( $brainstrom_products[ $type ] ) && ! empty( $brainstrom_products[ $type ] ) ) {
-				if ( isset( $brainstrom_products[ $type ][ $product_id ] ) ) {
-					$old_status = $brainstrom_products[ $type ][ $product_id ]['status'];
-					if ( $old_status !== $new_status ) {
-						$brainstrom_products[ $type ][ $product_id ]['status'] = $new_status;
-						$is_updated = true;
-					}
-				}
-			}
-		endforeach;
-
-		if ( $is_updated ) {
-			update_option( 'brainstrom_products', $brainstrom_products );
-		}
-	}
-}
 if ( ! function_exists( 'bsf_check_product_update' ) ) {
 	function bsf_check_product_update() {
-		$brainstrom_products = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-		$bsf_users           = ( get_option( 'brainstrom_users' ) ) ? get_option( 'brainstrom_users' ) : array();
-		$bsf_user_email      = $bsf_user_name = '';
+		$is_update    = true;
+		$all_products = brainstorm_get_all_products( false, false, true );
 
-		$mix = $bsf_product_plugins = $bsf_product_themes = $registered = $check_license = array();
-
-		if ( ! empty( $bsf_users ) ) {
-			$bsf_user_email = isset( $bsf_users[0]['email'] ) ? $bsf_users[0]['email'] : '';
-			$bsf_user_name  = isset( $bsf_users[0]['name'] ) ? $bsf_users[0]['name'] : '';
+		foreach ( $all_products as $key => $product ) {
+			if ( ! isset( $product['id'] ) ) {
+				continue;
+			}
+			$constant = strtoupper( str_replace( '-', '_', $product['id'] ) );
+			$constant = 'BSF_' . $constant . '_CHECK_UPDATES';
+			if ( defined( $constant ) && ( constant( $constant ) === 'false' || constant( $constant ) === false ) ) {
+				continue;
+			}
+			$registered[] = $product['id'];
 		}
 
-		if ( ! empty( $brainstrom_products ) ) :
-			$bsf_product_plugins = ( isset( $brainstrom_products['plugins'] ) ) ? $brainstrom_products['plugins'] : array();
-			$bsf_product_themes  = ( isset( $brainstrom_products['themes'] ) ) ? $brainstrom_products['themes'] : array();
-		endif;
+		$remote_versions = bsf_get_remote_version( $registered );
 
-		$mix = array_merge( $bsf_product_plugins, $bsf_product_themes );
+		$brainstrom_products         = get_option( 'brainstrom_products', array() );
+		$brainstrom_bundled_products = get_option( 'brainstrom_bundled_products', array() );
 
-		$is_update = false;
-		$temp      = '';
-		if ( ! empty( $mix ) ) :
-			foreach ( $mix as $key => $product ) :
-				if ( ! isset( $product['id'] ) ) {
-					continue;
-				}
-				$constant = strtoupper( str_replace( '-', '_', $product['id'] ) );
-				$constant = 'BSF_' . $constant . '_CHECK_UPDATES';
-				if ( defined( $constant ) && ( constant( $constant ) === 'false' || constant( $constant ) === false ) ) {
-					continue;
-				}
-				array_push( $registered, $product['id'] );
-				// check license array build
-				$temp             = array();
-				$temp['site_url'] = site_url();
-				if ( ! isset( $product['purchase_key'] ) ) {
-					continue;
-				}
-				$is_wp = ( isset( $product['in_house'] ) && $product['in_house'] === 'wp' ) ? true : false;
-				if ( $is_wp ) {
-					continue;
-				}
-				$temp['purchase_code'] = $product['purchase_key'];
-				$temp['user_email']    = $bsf_user_email;
-				$temp['user_name']     = $bsf_user_name;
-				$temp['product_id']    = $product['id'];
-				$temp['type']          = $product['type'];
-				array_push( $check_license, $temp );
-
-			endforeach;
-		endif;
-		if ( ! empty( $registered ) ) {
-			$remote_versions = bsf_get_remote_version( $registered, $check_license );
-
-			$brainstrom_products         = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-			$brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? get_option( 'brainstrom_bundled_products' ) : array();
-
-			if ( $remote_versions !== false ) {
-				if ( ! empty( $remote_versions ) ) {
-					$is_bundled_update = false;
-					foreach ( $remote_versions as $rkey => $remote_data ) {
-						$rid               = (string) $remote_data->id;
-						$remote_version    = ( isset( $remote_data->remote_version ) ) ? $remote_data->remote_version : '';
-						$in_house          = ( isset( $remote_data->in_house ) ) ? $remote_data->in_house : '';
-						$on_market         = ( isset( $remote_data->on_market ) ) ? $remote_data->on_market : '';
-						$is_product_free   = ( isset( $remote_data->is_product_free ) ) ? $remote_data->is_product_free : '';
-						$short_name        = ( isset( $remote_data->short_name ) ) ? $remote_data->short_name : '';
-						$changelog_url     = ( isset( $remote_data->changelog_url ) ) ? $remote_data->changelog_url : '';
-						$purchase_url      = ( isset( $remote_data->purchase_url ) ) ? $remote_data->purchase_url : '';
-						$version_beta      = ( isset( $remote_data->version_beta ) ) ? $remote_data->version_beta : '';
-						$download_url 	   = ( isset( $remote_data->download_url ) ) ? $remote_data->download_url : '';
-						$download_url_beta = ( isset( $remote_data->download_url_beta ) ) ? $remote_data->download_url_beta : '';
-						if ( ! empty( $bsf_product_plugins ) ) {
-							foreach ( $bsf_product_plugins as $key => $plugin ) {
-								if ( ! isset( $plugin['id'] ) ) {
-									continue;
-								}
-								$pid = (string) $plugin['id'];
-								if ( $pid === $rid ) {
-									$brainstrom_products['plugins'][ $key ]['remote']            = $remote_version;
-									$brainstrom_products['plugins'][ $key ]['in_house']          = $in_house;
-									$brainstrom_products['plugins'][ $key ]['on_market']         = $on_market;
-									$brainstrom_products['plugins'][ $key ]['is_product_free']   = $is_product_free;
-									$brainstrom_products['plugins'][ $key ]['short_name']        = $short_name;
-									$brainstrom_products['plugins'][ $key ]['changelog_url']     = $changelog_url;
-									$brainstrom_products['plugins'][ $key ]['purchase_url']      = $purchase_url;
-									$brainstrom_products['plugins'][ $key ]['version_beta']      = $version_beta;
-									$brainstrom_products['plugins'][ $key ]['download_url_beta'] = $download_url_beta;
-									$brainstrom_products['plugins'][ $key ]['download_url'] = $download_url;
-									$is_update = true;
-								}
+		if ( $remote_versions !== false ) {
+			if ( ! empty( $remote_versions ) ) {
+				$is_bundled_update = false;
+				foreach ( $remote_versions as $rkey => $remote_data ) {
+					$rid               = (string) $remote_data->id;
+					$remote_version    = ( isset( $remote_data->remote_version ) ) ? $remote_data->remote_version : '';
+					$in_house          = ( isset( $remote_data->in_house ) ) ? $remote_data->in_house : '';
+					$on_market         = ( isset( $remote_data->on_market ) ) ? $remote_data->on_market : '';
+					$is_product_free   = ( isset( $remote_data->is_product_free ) ) ? $remote_data->is_product_free : '';
+					$short_name        = ( isset( $remote_data->short_name ) ) ? $remote_data->short_name : '';
+					$changelog_url     = ( isset( $remote_data->changelog_url ) ) ? $remote_data->changelog_url : '';
+					$purchase_url      = ( isset( $remote_data->purchase_url ) ) ? $remote_data->purchase_url : '';
+					$version_beta      = ( isset( $remote_data->version_beta ) ) ? $remote_data->version_beta : '';
+					$download_url      = ( isset( $remote_data->download_url ) ) ? $remote_data->download_url : '';
+					$download_url_beta = ( isset( $remote_data->download_url_beta ) ) ? $remote_data->download_url_beta : '';
+					if ( ! empty( $bsf_product_plugins ) ) {
+						foreach ( $bsf_product_plugins as $key => $plugin ) {
+							if ( ! isset( $plugin['id'] ) ) {
+								continue;
+							}
+							$pid = (string) $plugin['id'];
+							if ( $pid === $rid ) {
+								$brainstrom_products['plugins'][ $key ]['remote']            = $remote_version;
+								$brainstrom_products['plugins'][ $key ]['in_house']          = $in_house;
+								$brainstrom_products['plugins'][ $key ]['on_market']         = $on_market;
+								$brainstrom_products['plugins'][ $key ]['is_product_free']   = $is_product_free;
+								$brainstrom_products['plugins'][ $key ]['short_name']        = $short_name;
+								$brainstrom_products['plugins'][ $key ]['changelog_url']     = $changelog_url;
+								$brainstrom_products['plugins'][ $key ]['purchase_url']      = $purchase_url;
+								$brainstrom_products['plugins'][ $key ]['version_beta']      = $version_beta;
+								$brainstrom_products['plugins'][ $key ]['download_url_beta'] = $download_url_beta;
+								$brainstrom_products['plugins'][ $key ]['download_url']      = $download_url;
+								$is_update = true;
 							}
 						}
-						if ( ! empty( $bsf_product_themes ) ) {
-							foreach ( $bsf_product_themes as $key => $theme ) {
-								if ( ! isset( $theme['id'] ) ) {
-									continue;
-								}
-								$pid = $theme['id'];
-								if ( $pid === $rid ) {
-									$brainstrom_products['themes'][ $key ]['remote']            = $remote_version;
-									$brainstrom_products['themes'][ $key ]['in_house']          = $in_house;
-									$brainstrom_products['themes'][ $key ]['on_market']         = $on_market;
-									$brainstrom_products['themes'][ $key ]['is_product_free']   = $is_product_free;
-									$brainstrom_products['themes'][ $key ]['short_name']        = $short_name;
-									$brainstrom_products['themes'][ $key ]['changelog_url']     = $changelog_url;
-									$brainstrom_products['themes'][ $key ]['purchase_url']      = $purchase_url;
-									$brainstrom_products['themes'][ $key ]['version_beta']      = $version_beta;
-									$brainstrom_products['themes'][ $key ]['download_url']  	= $download_url;
-									$brainstrom_products['themes'][ $key ]['download_url_beta'] = $download_url_beta;
-									$is_update = true;
-								}
+					}
+					if ( ! empty( $bsf_product_themes ) ) {
+						foreach ( $bsf_product_themes as $key => $theme ) {
+							if ( ! isset( $theme['id'] ) ) {
+								continue;
+							}
+							$pid = $theme['id'];
+							if ( $pid === $rid ) {
+								$brainstrom_products['themes'][ $key ]['remote']            = $remote_version;
+								$brainstrom_products['themes'][ $key ]['in_house']          = $in_house;
+								$brainstrom_products['themes'][ $key ]['on_market']         = $on_market;
+								$brainstrom_products['themes'][ $key ]['is_product_free']   = $is_product_free;
+								$brainstrom_products['themes'][ $key ]['short_name']        = $short_name;
+								$brainstrom_products['themes'][ $key ]['changelog_url']     = $changelog_url;
+								$brainstrom_products['themes'][ $key ]['purchase_url']      = $purchase_url;
+								$brainstrom_products['themes'][ $key ]['version_beta']      = $version_beta;
+								$brainstrom_products['themes'][ $key ]['download_url']      = $download_url;
+								$brainstrom_products['themes'][ $key ]['download_url_beta'] = $download_url_beta;
+								$is_update = true;
 							}
 						}
+					}
 
-						if ( isset( $remote_data->bundled_products ) && ! empty( $remote_data->bundled_products ) ) {
-							if ( ! empty( $brainstrom_bundled_products ) && is_array( $brainstrom_bundled_products ) ) {
-								foreach ( $brainstrom_bundled_products as $bkeys => $bps ) {
-									foreach ( $bps as $bkey => $bp ) {
-										if ( ! isset( $bp->id ) ) {
+					if ( isset( $remote_data->bundled_products ) && ! empty( $remote_data->bundled_products ) ) {
+						if ( ! empty( $brainstrom_bundled_products ) && is_array( $brainstrom_bundled_products ) ) {
+							foreach ( $brainstrom_bundled_products as $bkeys => $bps ) {
+								foreach ( $bps as $bkey => $bp ) {
+									if ( ! isset( $bp->id ) ) {
+										continue;
+									}
+									foreach ( $remote_data->bundled_products as $rbp ) {
+										if ( ! isset( $rbp->id ) ) {
 											continue;
 										}
-										foreach ( $remote_data->bundled_products as $rbp ) {
-											if ( ! isset( $rbp->id ) ) {
-												continue;
-											}
-											if ( $rbp->id === $bp->id ) {
-												$bprd = $brainstrom_bundled_products[ $bkeys ];
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->remote        		= $rbp->remote_version;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->parent        		= $rbp->parent;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->short_name    		= $rbp->short_name;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->changelog_url 		= $rbp->changelog_url;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->download_url 		= isset( $rbp->download_url ) ? $rbp->download_url : false;
-												$brainstrom_bundled_products[ $bkeys ][ $bkey ]->download_url_beta 	= isset( $rbp->download_url_beta ) ? $rbp->download_url_beta : false;
-												$is_bundled_update = true;
-											}
+										if ( $rbp->id === $bp->id ) {
+											$bprd = $brainstrom_bundled_products[ $bkeys ];
+											$brainstrom_bundled_products[ $bkeys ][ $bkey ]->remote            = $rbp->remote_version;
+											$brainstrom_bundled_products[ $bkeys ][ $bkey ]->parent            = $rbp->parent;
+											$brainstrom_bundled_products[ $bkeys ][ $bkey ]->short_name        = $rbp->short_name;
+											$brainstrom_bundled_products[ $bkeys ][ $bkey ]->changelog_url     = $rbp->changelog_url;
+											$brainstrom_bundled_products[ $bkeys ][ $bkey ]->download_url      = isset( $rbp->download_url ) ? $rbp->download_url : false;
+											$brainstrom_bundled_products[ $bkeys ][ $bkey ]->download_url_beta = isset( $rbp->download_url_beta ) ? $rbp->download_url_beta : false;
+											$is_bundled_update = true;
 										}
 									}
 								}
 							}
 						}
 					}
+				}
 
-					if ( $is_bundled_update ) {
-						update_option( 'brainstrom_bundled_products', $brainstrom_bundled_products );
-					}
+				if ( $is_bundled_update ) {
+					update_option( 'brainstrom_bundled_products', $brainstrom_bundled_products );
 				}
 			}
 		}

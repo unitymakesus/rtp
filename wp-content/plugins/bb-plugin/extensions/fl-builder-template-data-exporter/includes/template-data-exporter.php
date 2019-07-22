@@ -8,10 +8,10 @@
 		<?php if ( defined( 'FL_THEME_BUILDER_VERSION' ) ) : ?>
 		<div class="fl-builder-template-data-section fl-builder-template-data-theme">
 
-			<h2><?php _e( 'Theme Layouts', 'fl-builder' ); ?></h2>
+			<h2><?php _e( 'Themer Layouts', 'fl-builder' ); ?></h2>
 
 			<?php if ( 0 === count( $theme ) ) : ?>
-			<p><?php _e( 'No Theme Layouts Found', 'fl-builder' ); ?></p>
+			<p><?php _e( 'No Themer Layouts Found', 'fl-builder' ); ?></p>
 			<?php else : ?>
 			<p><label><input type="checkbox" name="fl-builder-template-data-exporter-all" value="1" /><?php _e( 'Select All', 'fl-builder' ); ?></label></p>
 			<?php endif; ?>
@@ -25,10 +25,10 @@
 
 		<div class="fl-builder-template-data-section fl-builder-template-data-layouts">
 
-			<h2><?php _e( 'Layouts', 'fl-builder' ); ?></h2>
+			<h2><?php _e( 'Layout Templates', 'fl-builder' ); ?></h2>
 
 			<?php if ( 0 === count( $layouts ) ) : ?>
-			<p><?php _e( 'No Layouts Found', 'fl-builder' ); ?></p>
+			<p><?php _e( 'No Layout Templates Found', 'fl-builder' ); ?></p>
 			<?php else : ?>
 			<p><label><input type="checkbox" name="fl-builder-template-data-exporter-all" value="1" /><?php _e( 'Select All', 'fl-builder' ); ?></label></p>
 			<?php endif; ?>

@@ -812,7 +812,7 @@
 	<# if (FLBuilderConfig.lite) { #>
 	<div class="fl-builder--panel-message">
 		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ); ?></p>
-		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium page builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
+		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
 	</div>
 	<# } #>
 	<#
@@ -996,7 +996,7 @@
 <script type="text/html" id="tmpl-fl-content-lite-templates-upgrade-view">
 	<div class="fl-builder--panel-message">
 		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ); ?></p>
-		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium page builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
+		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
 	</div>
 </script>
 <!-- #tmpl-fl-content-lite-templates-upgrade-view -->

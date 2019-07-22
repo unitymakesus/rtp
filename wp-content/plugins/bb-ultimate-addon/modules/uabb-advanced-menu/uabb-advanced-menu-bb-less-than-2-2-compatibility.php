@@ -114,8 +114,8 @@ FLBuilder::register_module(
 							'description' => 'px',
 							'preview'     => array(
 								'type'     => 'css',
-								'selector' => '.uabb-creative-menu .menu > li',
-								'property' => 'margin',
+								'selector' => '.uabb-creative-menu.uabb-menu-default .menu > li > a,.uabb-creative-menu.uabb-menu-default .menu > li > .uabb-has-submenu-container > a,.uabb-creative-menu.off-canvas .menu > li > a,.uabb-creative-menu.off-canvas .menu > li > .uabb-has-submenu-container > a,.uabb-creative-menu.full-screen .menu > li > a,.uabb-creative-menu.full-screen .menu > li > .uabb-has-submenu-container > a',
+								'property' => 'padding',
 								'unit'     => 'px',
 							),
 							'responsive'  => array(

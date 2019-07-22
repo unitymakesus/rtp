@@ -19,9 +19,10 @@ class AdminPageGeneral extends AdminPage
      */
     protected function set_page()
     {
+        $plugin_name = SECSAFE_NAME;
         $this->slug = 'security-safe';
-        $this->title = __( 'Welcome to Security Safe', SECSAFE_SLUG );
-        $this->description = __( 'Thank you for choosing Security Safe to help protect your website.', SECSAFE_SLUG );
+        $this->title = sprintf( __( 'Welcome to %s', SECSAFE_SLUG ), $plugin_name );
+        $this->description = sprintf( __( 'Thank you for choosing %s to help protect your website.', SECSAFE_SLUG ), $plugin_name );
         $this->tabs[] = [
             'id'               => 'settings',
             'label'            => __( 'Settings', SECSAFE_SLUG ),
@@ -34,7 +35,7 @@ class AdminPageGeneral extends AdminPage
             'id'               => 'debug',
             'label'            => __( 'Debug', SECSAFE_SLUG ),
             'title'            => __( 'Plugin Information', SECSAFE_SLUG ),
-            'heading'          => __( 'This information may be useful when troubleshooting compatibility issues or bugs.', SECSAFE_SLUG ),
+            'heading'          => __( 'This information may be useful when troubleshooting compatibility issues.', SECSAFE_SLUG ),
             'intro'            => '',
             'content_callback' => 'tab_info',
         ];
@@ -69,7 +70,7 @@ class AdminPageGeneral extends AdminPage
             __( 'Reset Settings', SECSAFE_SLUG ),
             'link-delete',
             get_admin_url( '', 'admin.php?page=security-safe&reset=1' ),
-            __( 'Click this button to reset the Security Safe settings back to default. WARNING: You will lose all configuration changes you have made.', SECSAFE_SLUG ),
+            __( 'Click this button to reset the settings back to default. WARNING: You will lose all configuration changes you have made.', SECSAFE_SLUG ),
             $classes
         );
         // Cleanup Database

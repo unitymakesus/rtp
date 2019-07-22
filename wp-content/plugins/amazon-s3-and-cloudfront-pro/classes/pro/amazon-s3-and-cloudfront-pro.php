@@ -71,6 +71,9 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 	public function init( $plugin_file_path ) {
 		parent::init( $plugin_file_path );
 
+		$this->plugin_title      = __( 'Offload Media', 'amazon-s3-and-cloudfront' );
+		$this->plugin_menu_title = __( 'Offload Media', 'amazon-s3-and-cloudfront' );
+
 		// Licence and updates handler
 		if ( is_admin() ) {
 			$this->licence = new AS3CF_Pro_Licences_Updates( $this );

@@ -67,7 +67,7 @@ function uabb_output_before_row_bg( $row ) {
 		'advanced_settings'    => isset( $row->settings->uabb_row_particles_settings ) ? $row->settings->uabb_row_particles_settings : '',
 		'particles_opacity'    => isset( $row->settings->uabb_row_particles_color_opacity ) ? $row->settings->uabb_row_particles_color_opacity : '',
 		'particles_direction'  => isset( $row->settings->uabb_particles_direction ) ? $row->settings->uabb_particles_direction : '',
-		'id'                   => $row->node,
+		'id'                   => isset( $row->node ) ? $row->node : '',
 	);
 	$data = json_encode( $data );
 
@@ -130,7 +130,7 @@ function uabb_output_before_row_bg( $row ) {
 
 						if ( 'custom' === particles_style ) {
 							<?php
-							if ( '' !== $json_particles_custom ) {
+							if ( isset( $json_particles_custom ) && '' !== $json_particles_custom ) {
 								?>
 								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; ?> );
 								<?php

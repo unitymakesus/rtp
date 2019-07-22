@@ -70,7 +70,7 @@ foreach ( $settings->icons as $i => $icon ) :
 		-webkit-border-radius: 100%;
 		text-align: center;
 	}
-	<?php endif; ?> 
+	<?php endif; ?>
 	<?php if ( isset( $icon->hover_color ) && ! empty( $icon->hover_color ) ) : ?>
 	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i:hover,
 	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i:hover:before,
