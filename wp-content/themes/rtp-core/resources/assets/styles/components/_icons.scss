@@ -1,4 +1,4 @@
-.social-icons, #menu-social-links, #menu-social, #menu-footer-social-global {
+.social-icons, .footer-social-left .menu, .footer-col-right .menu {
   line-height: 1em;
   margin: 0;
   padding: 0;
@@ -73,9 +73,14 @@
   }
 }
 
-.social-icons, #menu-social {
-
+.footer-social-left .menu {  
   li {
+    background: $color-grey-dark;
+
+    &:hover {
+      background: $color-slate;
+    }
+
     &.icon-facebook a::before {
       background-image: image('socialicons/facebook-light.svg');
     }

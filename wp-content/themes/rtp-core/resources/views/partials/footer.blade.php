@@ -4,13 +4,16 @@
 @endphp
 <footer class="page-footer" role="contentinfo">
   <div class="footer-social row">
-    <div class="container-wide flex flex-wrap align-center space-between">
+    <div class="container-wide">
       <h2>Stay connected to what's going on in <?php echo get_bloginfo( 'name' ); ?></h2>
-      <div class="footer-social-left flex align-center col l6 m12">
-        @php dynamic_sidebar('footer-social-left') @endphp
-      </div>
-      <div class="footer-social-right flex flex-end align-center col l6 m12">
-        @php dynamic_sidebar('footer-social-right') @endphp
+
+      <div class="borders flex flex-wrap align-center space-between">
+        <div class="footer-social-left flex align-center col l6 m12">
+          @php dynamic_sidebar('footer-social-left') @endphp
+        </div>
+        <div class="footer-social-right flex flex-end align-center col l6 m12">
+          @php dynamic_sidebar('footer-social-right') @endphp
+        </div>
       </div>
     </div>
   </div>

@@ -1,6 +1,26 @@
 .page-footer {
   background: transparent;
-  
+
+  .footer-social {
+    margin: 2em 0;
+    padding: 0;
+    color: $color-grey-dark;
+
+    h2 {
+      padding: 14px 10px;
+    }
+
+    .borders {
+      padding: 1em 0;
+      border-top: 2px solid $color-grey-light;
+      border-bottom: 2px solid $color-grey-light;
+    }
+
+    .widget {
+      padding-right: 10px;
+    }
+  }
+
   .footer-main {
     margin: 0;
     padding: 2.5em 0;
