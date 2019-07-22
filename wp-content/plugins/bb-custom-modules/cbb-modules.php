@@ -17,71 +17,177 @@ function load_custom_modules() {
     require_once 'modules/cbb-rtp-splash/cbb-rtp-splash.php';
     FLBuilder::register_module( 'CbbRTPSplashModule', [
       'cbb-rtp-splash-general' => [
-        'title' => __( 'General', 'fl-builder' ),
-        'description' => __('Landing Text: "Where People + Ideas Converge"<br />To change the landing text, please contact Unity at support@unitymakes.us.', 'fl-builder'),
+        'title' => __( 'General', 'cbb' ),
+        'description' => __('Landing Text: "Where People + Ideas Converge"<br />To change the landing text, please contact Unity at support@unitymakes.us.', 'cbb'),
         'sections' => [
-          'cbb-rtp-splash-hero' => [
-            'title' => __( 'Hero', 'fl-builder' ),
+          'cbb-rtp-splash-banner' => [
+            'title' => __( 'Banner', 'cbb' ),
             'fields' => [
-              'cbb_rtp_splash_hero_badge' => [
+              'badge' => [
                 'type' => 'text',
-                'label' => __('Hero Badge', 'fl-builder'),
+                'label' => __('Badge', 'cbb'),
               ],
-              'cbb_rtp_splash_hero_title' => [
+              'title' => [
                 'type' => 'text',
-                'label' => __('Hero Banner Title', 'fl-builder'),
+                'label' => __('Banner Text', 'cbb'),
               ],
-              'cbb_rtp_splash_hero_cta_text' => [
-                'type' => 'text',
-                'label' => __('Hero CTA Text', 'fl-builder'),
-              ],
-              'cbb_rtp_splash_hero_cta_link' => [
-                'type' => 'link',
-                'label' => __('Hero CTA Link', 'fl-builder'),
-              ],
-              'cbb_rtp_splash_hero_image' => [
-                'type' => 'photo',
-                'label' => __('Hero Image', 'fl-builder'),
-              ],
-              'cbb_rtp_splash_hero_image_alt' => [
-                'type' => 'text',
-                'label' => __('Hero Image Alt Text', 'fl-builder'),
-              ]
             ]
           ],
+          'cbb-rtp-splash-cta' => [
+            'title' => __('Call To Action', 'cbb'),
+            'fields' => [
+              'cta_text' => [
+                'type' => 'text',
+                'label' => __('CTA Text', 'cbb'),
+              ],
+              'cta_link' => [
+                'type' => 'link',
+                'label' => __('CTA Link', 'cbb'),
+              ],
+            ]
+          ],
+          'cbb-rtp-splash-hero' => [
+            'title' => __('Image', 'cbb'),
+            'fields' => [
+              'image' => [
+                'type' => 'photo',
+                'label' => __('Hero Image', 'cbb'),
+              ],
+              'image_alt' => [
+                'type' => 'text',
+                'label' => __('Hero Image Alt Text', 'cbb'),
+              ]
+            ]
+          ]
         ]
       ]
     ] );
-    //
+
+    // Figure Card Module
+    require_once 'modules/cbb-figure-card/cbb-figure-card.php';
+    FLBuilder::register_module( 'CbbFigureCardModule', [
+      'cbb-figure-card-general' => [
+        'title' => __( 'General', 'cbb' ),
+        'sections' => [
+          'cbb-figure-card-structure' => [
+            'title' => __('Layout', 'cbb'),
+            'fields' => [
+              'structure' => [
+                'type' => 'select',
+                'label' => __('Layout', 'cbb'),
+                'default' => 'default',
+                'options' => [
+                  'default' => __('Background Image', 'cbb'),
+                  'vertical' => __('Vertical', 'cbb'),
+                  'horizontal' => __('Horizontal', 'cbb')
+                ]
+              ],
+              'image' => [
+                'type' => 'photo',
+                'label' => __('Image', 'cbb'),
+              ],
+              'image_alt' => [
+                'type' => 'text',
+                'label' => __('Image Alt Text', 'cbb'),
+              ],
+              'image_align' => [
+                'type' => 'select',
+                'label' => __('Image Alignment', 'cbb'),
+                'default' => 'left',
+                'options' => [
+                  'left' => __('Left', 'cbb'),
+                  'right' => __('Right', 'cbb')
+                ]
+              ]
+            ]
+          ],
+          'cbb-figure-card-title' => [
+            'title' => __( 'Title', 'cbb' ),
+            'fields' => [
+              'badge' => [
+                'type' => 'select',
+                'label' => __('Badge', 'cbb'),
+                'default' => 'RTP',
+                'options' => [
+                  'RTP' => 'RTP',
+                  'Hub' => 'Hub',
+                  'Boxyard' => 'Boxyard',
+                  'Frontier' => 'Frontier',
+                  'STEM' => 'STEM'
+                ]
+              ],
+              'title' => [
+                'type' => 'text',
+                'label' => __('Title', 'cbb'),
+              ]
+            ]
+          ],
+          'cbb-figure-card-content' => [
+            'title' => __( 'Content', 'cbb' ),
+            'fields' => [
+              'content' => [
+                'type' => 'editor',
+                'label' => '',
+                'media_buttons' => false,
+                'rows' => 4,
+              ]
+            ]
+          ],
+          'cbb-figure-card-cta' => [
+            'title' => __( 'Call To Action', 'cbb' ),
+            'fields' => [
+              'enable_cta' => [
+                'type' => 'select',
+                'label' => __('Call To Action', 'cbb'),
+                'default' => 'none',
+                'options' => [
+                  'none' => __('No', 'cbb'),
+                  'block' => __('Yes', 'cbb'),
+                ]
+              ],
+              'cta_text' => [
+                'type' => 'text',
+                'label' => __('CTA Text', 'cbb'),
+              ],
+              'cta_link' => [
+                'type' => 'link',
+                'label' => __('CTA Link', 'cbb'),
+              ]
+            ]
+          ]
+        ]
+      ]
+    ] );
+
     // FLBuilder::register_settings_form('card_content', array(
-    //   'title' => __('Editorial Card', 'fl-builder'),
+    //   'title' => __('Editorial Card', 'cbb'),
     //   'tabs'  => array(
     //     'general'      => array(
-    //       'title'         => __('General', 'fl-builder'),
+    //       'title'         => __('General', 'cbb'),
     //       'sections'      => array(
     //         'general'       => array(
     //           'title'         => '',
     //           'fields'        => array(
     //             'card_title'     => array(
     //               'type'          => 'text',
-    //               'label'         => __( 'Title', 'fl-builder' ),
+    //               'label'         => __( 'Title', 'cbb' ),
     //             ),
     //             'card_text'     => array(
     //               'type'          => 'text',
-    //               'label'         => __( 'Content', 'fl-builder' ),
+    //               'label'         => __( 'Content', 'cbb' ),
     //             ),
     //             'card_link'     => array(
     //               'type'          => 'link',
-    //               'label'         => __( 'Link', 'fl-builder' ),
+    //               'label'         => __( 'Link', 'cbb' ),
     //             ),
     //             'card_background' => array(
     //               'type'          => 'photo',
-    //               'label'         => __('Background Image', 'fl-builder'),
+    //               'label'         => __('Background Image', 'cbb'),
     //               'show_remove'   => false,
     //             ),
     //             'card_icon' => array(
     //               'type'          => 'icon',
-    //               'label'         => __( 'Icon', 'fl-builder' ),
+    //               'label'         => __( 'Icon', 'cbb' ),
     //               'show_remove'   => true
     //             ),
     //           )
@@ -95,14 +201,14 @@ function load_custom_modules() {
     // require_once 'cbb-editorial-cards/cbb-editorial-cards.php';
     // FLBuilder::register_module( 'CbbEditorialCardsModule', array(
     //   'general-tab'      => array(
-    //     'title'         => __( 'General', 'fl-builder' ),
+    //     'title'         => __( 'General', 'cbb' ),
     //     'sections'      => array(
     //       'source-section'  => array(
-    //         'title'         => __( 'Source', 'fl-builder' ),
+    //         'title'         => __( 'Source', 'cbb' ),
     //         'fields'        => array(
     //           'cards' => array(
     //             'type'          => 'form',
-    //             'label'         => __('Editorial Card', 'fl-builder'),
+    //             'label'         => __('Editorial Card', 'cbb'),
     //             'form'          => 'card_content',
     //             'preview_text'  => 'label',
     //             'multiple'     => true,

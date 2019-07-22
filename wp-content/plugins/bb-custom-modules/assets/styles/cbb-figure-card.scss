@@ -1,0 +1,222 @@
+@import "../global/variables.scss";
+
+.figure-card {
+  .card {
+    background: $color-white;
+    padding: 24px 24px 4px;
+    position: relative;
+    transition: box-shadow 0.3s;
+    box-shadow: 0;
+
+    &:hover, &:focus, &:active {
+      box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .card-badge {
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    font-weight: bold;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 30px;
+    height: 30px;
+
+    span {
+      position: absolute;
+      display: block;
+      font-size: 0.8em;
+      font-weight: 300;
+      left: 9px;
+      top: 7px;
+    }
+  }
+
+  .card-title {
+    margin: 40px 16px 20px;
+  }
+
+  .card-content {
+    margin: 0 16px 20px;
+  }
+
+  .card-cta {
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 4px;
+    padding: 5px;
+    margin: 0 16px;
+
+    a {
+      color: $color-black;
+      display: block;
+      text-align: right;
+      width: 100%;
+      height: 40px;
+      font-weight: bold;
+      font-size: 0.9em;
+      line-height: 40px;
+      text-transform: uppercase;
+      text-decoration: none !important;
+      transition: color 0.3s ease;
+      vertical-align: middle;
+
+      span {
+        vertical-align: middle;
+      }
+
+      .arrow {
+        display: inline-block;
+        padding: 4px 0 14px 14px;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease;
+
+        path {
+          fill: $color-black;
+          transition: fill 0.3s ease;
+        }
+      }
+
+      &:hover, &:focus, &:active {
+        text-decoration: underline !important;
+
+        .arrow {
+          transform: translate3d(10px, 0, 0);
+        }
+      }
+    }
+  }
+
+  &.badge-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-slate;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-slate;
+
+        .arrow path {
+          fill: $color-slate;
+        }
+      }
+    }
+  }
+
+  &.badge-hub {
+    .card-badge, .card-cta {
+      border-color: $color-unc;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-unc;
+
+        .arrow path {
+          fill: $color-unc;
+        }
+      }
+    }
+  }
+
+  &.badge-boxyard {
+    .card-badge, .card-cta {
+      border-color: $color-boxyard;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-boxyard;
+
+        .arrow path {
+          fill: $color-boxyard;
+        }
+      }
+    }
+  }
+
+  &.badge-frontier {
+    .card-badge, .card-cta {
+      border-color: $color-mint;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-mint-a11y;
+
+        .arrow path {
+          fill: $color-mint;
+        }
+      }
+    }
+  }
+
+  &.badge-stem {
+    .card-badge, .card-cta {
+      border-color: $color-purple;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-purple;
+
+        .arrow path {
+          fill: $color-purple;
+        }
+      }
+    }
+  }
+
+  &.figure-card-vertical {
+    position: relative;
+
+    img {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      margin: -65px 30px 60px;
+      box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+    }
+
+    .pattern-background {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      bottom: -30px;
+      left: 65px;
+      right: 0;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  &.figure-card-horizontal {
+    img {
+      width: 66vw;
+      left: 50%;
+      margin-left: -50vw;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translate3d(0, -50%, 0);
+      width: 50%;
+      z-index: 2;
+    }
+  }
+}

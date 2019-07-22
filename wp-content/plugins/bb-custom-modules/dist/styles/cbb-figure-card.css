@@ -1,0 +1,334 @@
+/** Colors */
+
+/** Buttons */
+
+/** Navigation */
+
+/** Footer */
+
+/** Box Model  */
+
+/** Modified Breakpoints */
+
+/** Flow Text  */
+
+/** Gradients */
+
+/* line 4, stdin */
+
+.figure-card .card {
+  background: #FFF;
+  padding: 24px 24px 4px;
+  position: relative;
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
+  -o-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  -webkit-box-shadow: 0;
+          box-shadow: 0;
+}
+
+/* line 11, stdin */
+
+.figure-card .card:hover,
+.figure-card .card:focus,
+.figure-card .card:active {
+  -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* line 16, stdin */
+
+.figure-card .card-badge {
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 8px;
+  border-left-width: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 30px;
+  height: 30px;
+}
+
+/* line 28, stdin */
+
+.figure-card .card-badge span {
+  position: absolute;
+  display: block;
+  font-size: 0.8em;
+  font-weight: 300;
+  left: 9px;
+  top: 7px;
+}
+
+/* line 38, stdin */
+
+.figure-card .card-title {
+  margin: 40px 16px 20px;
+}
+
+/* line 42, stdin */
+
+.figure-card .card-content {
+  margin: 0 16px 20px;
+}
+
+/* line 46, stdin */
+
+.figure-card .card-cta {
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 4px;
+  padding: 5px;
+  margin: 0 16px;
+}
+
+/* line 53, stdin */
+
+.figure-card .card-cta a {
+  color: #000;
+  display: block;
+  text-align: right;
+  width: 100%;
+  height: 40px;
+  font-weight: bold;
+  font-size: 0.9em;
+  line-height: 40px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  -webkit-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+  vertical-align: middle;
+}
+
+/* line 67, stdin */
+
+.figure-card .card-cta a span {
+  vertical-align: middle;
+}
+
+/* line 71, stdin */
+
+.figure-card .card-cta a .arrow {
+  display: inline-block;
+  padding: 4px 0 14px 14px;
+  width: 40px;
+  height: 40px;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+}
+
+/* line 78, stdin */
+
+.figure-card .card-cta a .arrow path {
+  fill: #000;
+  -webkit-transition: fill 0.3s ease;
+  -o-transition: fill 0.3s ease;
+  transition: fill 0.3s ease;
+}
+
+/* line 84, stdin */
+
+.figure-card .card-cta a:hover,
+.figure-card .card-cta a:focus,
+.figure-card .card-cta a:active {
+  text-decoration: underline !important;
+}
+
+/* line 87, stdin */
+
+.figure-card .card-cta a:hover .arrow,
+.figure-card .card-cta a:focus .arrow,
+.figure-card .card-cta a:active .arrow {
+  -webkit-transform: translate3d(10px, 0, 0);
+          transform: translate3d(10px, 0, 0);
+}
+
+/* line 95, stdin */
+
+.figure-card.badge-rtp .card-badge,
+.figure-card.badge-rtp .card-cta {
+  border-color: #333F48;
+}
+
+/* line 100, stdin */
+
+.figure-card.badge-rtp .card-cta a:hover,
+.figure-card.badge-rtp .card-cta a:focus,
+.figure-card.badge-rtp .card-cta a:active {
+  color: #333F48;
+}
+
+/* line 103, stdin */
+
+.figure-card.badge-rtp .card-cta a:hover .arrow path,
+.figure-card.badge-rtp .card-cta a:focus .arrow path,
+.figure-card.badge-rtp .card-cta a:active .arrow path {
+  fill: #333F48;
+}
+
+/* line 111, stdin */
+
+.figure-card.badge-hub .card-badge,
+.figure-card.badge-hub .card-cta {
+  border-color: #4B9CD3;
+}
+
+/* line 116, stdin */
+
+.figure-card.badge-hub .card-cta a:hover,
+.figure-card.badge-hub .card-cta a:focus,
+.figure-card.badge-hub .card-cta a:active {
+  color: #4B9CD3;
+}
+
+/* line 119, stdin */
+
+.figure-card.badge-hub .card-cta a:hover .arrow path,
+.figure-card.badge-hub .card-cta a:focus .arrow path,
+.figure-card.badge-hub .card-cta a:active .arrow path {
+  fill: #4B9CD3;
+}
+
+/* line 127, stdin */
+
+.figure-card.badge-boxyard .card-badge,
+.figure-card.badge-boxyard .card-cta {
+  border-color: #E63C2F;
+}
+
+/* line 132, stdin */
+
+.figure-card.badge-boxyard .card-cta a:hover,
+.figure-card.badge-boxyard .card-cta a:focus,
+.figure-card.badge-boxyard .card-cta a:active {
+  color: #E63C2F;
+}
+
+/* line 135, stdin */
+
+.figure-card.badge-boxyard .card-cta a:hover .arrow path,
+.figure-card.badge-boxyard .card-cta a:focus .arrow path,
+.figure-card.badge-boxyard .card-cta a:active .arrow path {
+  fill: #E63C2F;
+}
+
+/* line 143, stdin */
+
+.figure-card.badge-frontier .card-badge,
+.figure-card.badge-frontier .card-cta {
+  border-color: #47D7AC;
+}
+
+/* line 148, stdin */
+
+.figure-card.badge-frontier .card-cta a:hover,
+.figure-card.badge-frontier .card-cta a:focus,
+.figure-card.badge-frontier .card-cta a:active {
+  color: #2FA787;
+}
+
+/* line 151, stdin */
+
+.figure-card.badge-frontier .card-cta a:hover .arrow path,
+.figure-card.badge-frontier .card-cta a:focus .arrow path,
+.figure-card.badge-frontier .card-cta a:active .arrow path {
+  fill: #47D7AC;
+}
+
+/* line 159, stdin */
+
+.figure-card.badge-stem .card-badge,
+.figure-card.badge-stem .card-cta {
+  border-color: #654EA3;
+}
+
+/* line 164, stdin */
+
+.figure-card.badge-stem .card-cta a:hover,
+.figure-card.badge-stem .card-cta a:focus,
+.figure-card.badge-stem .card-cta a:active {
+  color: #654EA3;
+}
+
+/* line 167, stdin */
+
+.figure-card.badge-stem .card-cta a:hover .arrow path,
+.figure-card.badge-stem .card-cta a:focus .arrow path,
+.figure-card.badge-stem .card-cta a:active .arrow path {
+  fill: #654EA3;
+}
+
+/* line 174, stdin */
+
+.figure-card.figure-card-vertical {
+  position: relative;
+}
+
+/* line 177, stdin */
+
+.figure-card.figure-card-vertical img {
+  position: relative;
+  z-index: 1;
+}
+
+/* line 182, stdin */
+
+.figure-card.figure-card-vertical .card {
+  margin: -65px 30px 60px;
+  -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* line 188, stdin */
+
+.figure-card.figure-card-vertical .pattern-background {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: -30px;
+  left: 65px;
+  right: 0;
+}
+
+/* line 196, stdin */
+
+.figure-card.figure-card-vertical .pattern-background svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 204, stdin */
+
+.figure-card.figure-card-horizontal img {
+  width: 66vw;
+  left: 50%;
+  margin-left: -50vw;
+  position: relative;
+  z-index: 1;
+}
+
+/* line 212, stdin */
+
+.figure-card.figure-card-horizontal .card {
+  -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  -webkit-transform: translate3d(0, -50%, 0);
+          transform: translate3d(0, -50%, 0);
+  width: 50%;
+  z-index: 2;
+}
+
+
+/*# sourceMappingURL=cbb-figure-card.css.map*/

@@ -3,6 +3,9 @@
     "cbb-rtp-splash": [
       "./scripts/cbb-rtp-splash.js",
       "./styles/cbb-rtp-splash.scss"
+    ],
+    "cbb-figure-card": [
+      "./styles/cbb-figure-card.scss"
     ]
   },
   "publicPath": "/wp-content/plugins/bb-custom-modules",
