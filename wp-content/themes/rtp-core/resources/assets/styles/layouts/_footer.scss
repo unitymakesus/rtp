@@ -85,18 +85,18 @@
         margin: 0 7px;
       }
     }
+  }
 
-    @media #{$small-and-down} {
-      height: auto;
+  @media #{$small-and-down} {
+    height: auto;
 
-      a.unity-link {
-        display: block;
-        margin: 1em auto;
-      }
+    a.unity-link {
+      display: block;
+      margin: 1em auto;
+    }
 
-      .footer-utility-right {
-        justify-content: flex-start;
-      }
+    .footer-utility-right, .footer-social-right {
+      justify-content: flex-start;
     }
   }
 }
