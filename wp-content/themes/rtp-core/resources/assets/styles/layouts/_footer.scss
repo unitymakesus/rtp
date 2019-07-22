@@ -41,7 +41,7 @@
         color: $color-white;
         text-decoration: underline;
 
-        &:hover {
+        &:hover, &:focus, &:active {
           text-decoration-style: double;
         }
       }
@@ -56,7 +56,7 @@
       font-size: 20px;
       color: $color-white;
 
-      &:hover {
+      &:hover, &:focus, &:active {
         text-decoration: underline;
       }
     }
@@ -72,7 +72,7 @@
       color: $color-white;
       text-decoration: underline;
 
-      &:hover {
+      &:hover, &:focus, &:active {
         text-decoration-style: double;
       }
     }

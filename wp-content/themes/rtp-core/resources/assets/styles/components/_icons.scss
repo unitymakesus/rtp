@@ -10,7 +10,7 @@
     background: $color-grey-light;
     margin-right: 10px;
 
-    &:hover {
+    &:hover, &:focus, &:active {
       background: $color-white;
     }
 
@@ -73,11 +73,11 @@
   }
 }
 
-.footer-social-left .menu {  
+.footer-social-left .menu {
   li {
     background: $color-grey-dark;
 
-    &:hover {
+    &:hover, &:focus, &:active {
       background: $color-slate;
     }
 
