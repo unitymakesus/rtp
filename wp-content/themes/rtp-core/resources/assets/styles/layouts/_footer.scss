@@ -2,12 +2,13 @@
   background: transparent;
 
   .footer-social {
-    margin: 2em 0;
-    padding: 0;
+    padding: 3em 0;
+    margin: 0;
     color: $color-grey-dark;
 
     h2 {
       padding: 14px 10px;
+      margin-top: 0;
     }
 
     .borders {
