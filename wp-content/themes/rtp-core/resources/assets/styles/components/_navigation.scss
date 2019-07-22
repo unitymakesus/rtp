@@ -1,6 +1,6 @@
 // Top Nav
 .topbar-wrapper {
-  background: $color-slate;
+  background: $color-slate-dark;
 
   .rtp-logo {
     height: 25px;
@@ -35,6 +35,10 @@
         text-transform: uppercase;
         font-size: 0.7rem;
         font-weight: normal;
+      }
+
+      &:hover {
+        background: $color-slate;
       }
     }
   }

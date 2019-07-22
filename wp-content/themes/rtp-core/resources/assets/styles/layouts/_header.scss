@@ -1,6 +1,4 @@
 .banner {
-  // position: fixed;
-  // width: 100%;
   background: $color-white;
   z-index: 100;
 
@@ -8,6 +6,9 @@
     background: none;
     height: auto;
     box-shadow: none;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px 0;
 
     & > .container > .row {
       &::after {
@@ -22,9 +23,10 @@
   }
 
   .logo {
-    max-width: 300px;
-    padding: 10px 15px;
+    max-width: 150px;
+    padding: 5px;
     display: inline-block;
+    vertical-align: middle;
 
     img {
       width: 100%;
@@ -134,14 +136,15 @@ nav {
       text-decoration: none;
       font-weight: normal;
       padding: 1rem 15px;
-      color: $color-grey-dark;
+      color: $color-black;
+      font-size: 17px;
 
       [data-font="3"] & {
         font-size: 1.2rem;
       }
 
       .header-inline & {
-        padding: 1rem 25px;
+        padding: 1rem 15px;
       }
     }
 
