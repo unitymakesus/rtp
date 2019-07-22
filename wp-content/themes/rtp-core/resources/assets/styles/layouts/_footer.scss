@@ -1,39 +1,68 @@
 .page-footer {
-  .footer-center {
-    text-align: center;
+  background: transparent;
+  
+  .footer-main {
+    margin: 0;
+    padding: 2.5em 0;
+    background: $color-slate-dark;
 
-    @media #{$small-and-down} {
-      margin: 2em 0;
+    h3 {
+      font-size: 21px;
+      font-weight: 200;
     }
-  }
 
-  .footer-right {
-    text-align: right;
-  }
+    p {
+      font-size: 16px;
+    }
 
-  .footer-content {
-    padding: 1em;
-    color: $color-white;
+    .widget_text {
+      a {
+        color: $color-white;
+        text-decoration: underline;
 
-    h2, h3, h4, h5, h6 {
-      margin: 0 0 0.5em;
+        &:hover {
+          text-decoration-style: double;
+        }
+      }
+
+      img {
+        width: 20px;
+        margin-right: 5px;
+      }
+    }
+
+    .menu a {
+      font-size: 20px;
       color: $color-white;
-    }
 
-    a {
-      color: $color-white;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 
-  .footer-copyright {
-    padding: 0 1em;
-    background-color: rgba($color-black, 0.6);
-    height: 40px;
+  .footer-utility {
+    padding: 1em 0;
+    background-color: $color-black;
     margin-bottom: 0;
     font-size: 0.8em;
 
     a {
       color: $color-white;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration-style: double;
+      }
+    }
+
+    .menu {
+      display: flex;
+      margin-right: 2em;
+
+      li {
+        margin: 0 7px;
+      }
     }
 
     @media #{$small-and-down} {
@@ -43,22 +72,10 @@
         display: block;
         margin: 1em auto;
       }
-    }
-  }
 
-  .footer-links {
-    li {
-      padding: 0 15px;
-
-      &:first-child {
-        border-right: 1px solid $color-white;
+      .footer-utility-right {
+        justify-content: flex-start;
       }
-    }
-  }
-
-  @media #{$small-and-down} {
-    .footer-left, .footer-center, .footer-right {
-      text-align: center;
     }
   }
 }

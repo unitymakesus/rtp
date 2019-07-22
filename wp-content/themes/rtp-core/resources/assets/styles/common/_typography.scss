@@ -28,17 +28,17 @@ body {
 
 h1, .h1 {
   font-size: rem-calc(50px);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 h2, .h2 {
   font-size: rem-calc(36px);
-  font-weight: 600;
+  font-weight: 400;
 }
 
 h3, .h3 {
   font-size: rem-calc(24px);
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 1px;
 }
 
@@ -54,7 +54,7 @@ h5, .h5 {
 .entry-content, .fl-module-content.fl-module-content {
   a {
     text-decoration: underline;
-    font-weight: bold;
+    font-weight: 300;
     transition: all 0.3s;
 
     &:hover, &:active {
@@ -70,6 +70,7 @@ h5, .h5 {
 
 p, li, dt, dd {
   line-height: 1.6em;
+  font-weight: 300;
 }
 
 dt {
