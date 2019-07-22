@@ -26,8 +26,8 @@ class CbbRTPSplashModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'cbb-rtp-splash/images/' . $icon ) ) {
-			$path = CBB_MODULES_DIR . 'cbb-rtp-splash/images/' . $icon;
+		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'modules/cbb-rtp-splash/images/' . $icon ) ) {
+			$path = CBB_MODULES_DIR . 'modules/cbb-rtp-splash/images/' . $icon;
 		}
 
 		if ( file_exists( $path ) ) {

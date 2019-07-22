@@ -6,7 +6,7 @@ class CbbFigureCardModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'            => __( 'Card', 'fl-builder' ),
 			'description'     => __( 'A card module that includes a badge and optional CTA', 'fl-builder' ),
-			'icon'            => 'tide.svg',
+			'icon'            => 'format-aside.svg',
 			'category'        => __( 'Layout', 'fl-builder' ),
 			'dir'             => CBB_MODULES_DIR . 'modules/cbb-figure-card/',
 			'url'             => CBB_MODULES_URL . 'modules/cbb-figure-card/'
@@ -25,8 +25,8 @@ class CbbFigureCardModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'cbb-figure-card/images/' . $icon ) ) {
-			$path = CBB_MODULES_DIR . 'cbb-figure-card/images/' . $icon;
+		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'modules/cbb-figure-card/images/' . $icon ) ) {
+			$path = CBB_MODULES_DIR . 'modules/cbb-figure-card/images/' . $icon;
 		}
 
 		if ( file_exists( $path ) ) {
