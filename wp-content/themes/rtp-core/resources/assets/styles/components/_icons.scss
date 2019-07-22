@@ -1,4 +1,4 @@
-.social-icons, #menu-social-links, #menu-social {
+.social-icons, .footer-social-left .menu, .footer-col-right .menu {
   line-height: 1em;
   margin: 0;
   padding: 0;
@@ -7,6 +7,12 @@
     padding: 0;
     display: inline-block;
     float: none;
+    background: $color-grey-light;
+    margin-right: 10px;
+
+    &:hover, &:focus, &:active {
+      background: $color-white;
+    }
 
     a {
       display: block;
@@ -41,20 +47,8 @@
       }
     }
 
-    &.icon-behance a::before {
-      background-image: image('socialicons/behance.svg');
-    }
-
-    &.icon-dribbble a::before {
-      background-image: image('socialicons/dribbble.svg');
-    }
-
     &.icon-facebook a::before {
       background-image: image('socialicons/facebook.svg');
-    }
-
-    &.icon-google a::before {
-      background-image: image('socialicons/google.svg');
     }
 
     &.icon-instagram a::before {
@@ -65,8 +59,8 @@
       background-image: image('socialicons/linkedin.svg');
     }
 
-    &.icon-tumblr a::before {
-      background-image: image('socialicons/tumblr.svg');
+    &.icon-pinterest a::before {
+      background-image: image('socialicons/pinterest.svg');
     }
 
     &.icon-twitter a::before {
@@ -76,17 +70,39 @@
     &.icon-youtube a::before {
       background-image: image('socialicons/youtube.svg');
     }
+  }
+}
 
-    &.icon-yelp a::before {
-      background-image: image('socialicons/yelp.svg');
+.footer-social-left .menu {
+  li {
+    background: $color-grey-dark;
+
+    &:hover, &:focus, &:active {
+      background: $color-slate;
     }
 
-    &.icon-linkedin-team a::before {
-      background-image: image('socialicons/linkedin-team.svg');
+    &.icon-facebook a::before {
+      background-image: image('socialicons/facebook-light.svg');
     }
 
-    &.icon-twitter-team a::before {
-      background-image: image('socialicons/twitter-team.svg');
+    &.icon-instagram a::before {
+      background-image: image('socialicons/instagram-light.svg');
+    }
+
+    &.icon-linkedin a::before {
+      background-image: image('socialicons/linkedin-light.svg');
+    }
+
+    &.icon-pinterest a::before {
+      background-image: image('socialicons/pinterest-light.svg');
+    }
+
+    &.icon-twitter a::before {
+      background-image: image('socialicons/twitter-light.svg');
+    }
+
+    &.icon-youtube a::before {
+      background-image: image('socialicons/youtube-light.svg');
     }
   }
 }

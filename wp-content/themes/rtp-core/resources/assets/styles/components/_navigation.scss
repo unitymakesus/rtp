@@ -21,13 +21,27 @@
   .topbar-menu {
     height: 100%;
 
+    @media #{$medium-and-down} {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      margin: 0;
+      width: 100%;
+      transition: max-height 0.3s ease;
+      max-height: 0;
+      overflow: hidden;
+
+      .topbarnav-active & {
+        max-height: 100em;
+      }
+    }
+
     ul {
       height: 100%;
     }
 
     li {
       height: 100%;
-      padding: 5px 15px;
+      line-height: 38px;
 
       a {
         color: $color-white;
@@ -35,10 +49,12 @@
         text-transform: uppercase;
         font-size: 0.7rem;
         font-weight: normal;
-      }
+        height: 100%;
+        padding: 11px 15px;
 
-      &:hover {
-        background: $color-slate;
+        &:hover, &:focus, &:active {
+          background: $color-slate;
+        }
       }
     }
   }
@@ -48,6 +64,10 @@
 
     a {
       color: $color-slate !important;
+
+      &:hover, &:focus, &:active {
+        background: $color-white !important;
+      }
     }
   }
 }

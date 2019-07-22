@@ -3,10 +3,19 @@
     <div class="topbar container-wide">
       @if (has_nav_menu('top_bar'))
         <div class="topbar-menu-wrapper flex flex-center space-between">
-          <div class="topbar-menu flex flex-center space-around">
+          <div class="topnav-wrapper flex flex-center space-between">
             <img class="rtp-logo" src="@asset('images/Logo.svg')" alt="RTP Logo" />
-            {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
+
+            <div class="menu-trigger-wrapper hide-on-large-only">
+              <input type="checkbox" name="topbar-menu-trigger" id="topbar-menu-trigger" value="true" />
+              <label for="topbar-menu-trigger"><i class="material-icons topbar-icon" aria-label="Show navigation menu">add</i></label>
+            </div>
+            <div class="topbar-menu flex flex-center space-between">
+              {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
+            </div>
           </div>
+
+          @php get_search_form() @endphp
         </div>
       @endif
     </div>
