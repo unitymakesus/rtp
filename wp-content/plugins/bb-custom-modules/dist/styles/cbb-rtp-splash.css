@@ -35,7 +35,7 @@
           transform: translate3d(-50%, -49%, 0);
   z-index: 1;
   max-width: 90%;
-  width: 1100px;
+  width: 1300px;
 }
 
 /* line 22, stdin */
@@ -56,7 +56,7 @@
 .landing-banner-wrapper {
   color: #FFF;
   margin: 0 auto;
-  width: 1100px;
+  width: 1300px;
   max-width: 90%;
   position: absolute;
   top: 0;

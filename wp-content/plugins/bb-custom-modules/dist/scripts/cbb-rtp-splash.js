@@ -6306,7 +6306,7 @@ jQuery(document).ready(function($) {
      .to('#svg-bar', 4, {attr:{width:'100%', x:'0%'}, overwrite:'allOnStart'}, 2)
 
   // Scene
-  new __WEBPACK_IMPORTED_MODULE_1_ScrollMagic___default.a.Scene({triggerElement:'#landing-graphic-pin', triggerHook: '0', offset: '-200'})
+  new __WEBPACK_IMPORTED_MODULE_1_ScrollMagic___default.a.Scene({triggerElement:'#landing-graphic-pin', triggerHook: '0', offset: '-154'})
     .setTween(wordTween)
     .setPin('#landing-graphic-pin', {pushFollowers: false})
     // .addIndicators({name: '1 (duration: 50% of window height)'})

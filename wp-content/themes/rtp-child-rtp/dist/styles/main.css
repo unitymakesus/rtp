@@ -14170,12 +14170,10 @@ html[data-contrast="true"] .pagination span.current {
   height: auto;
   -webkit-box-shadow: none;
           box-shadow: none;
-  max-width: 1300px;
-  margin: 0 auto;
   padding: 20px 0;
 }
 
-/* line 14, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 12, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner nav > .container > .row::after,
 .banner nav > .container-wide > .row::after,
@@ -14199,7 +14197,7 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 13, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 11, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner nav > .container > .row,
   .banner nav > .container-wide > .row,
@@ -14225,7 +14223,7 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 23, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo {
   max-width: 150px;
@@ -14234,7 +14232,7 @@ html[data-contrast="true"] .pagination span.current {
   vertical-align: middle;
 }
 
-/* line 31, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 29, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo img {
   width: 100%;
@@ -14243,7 +14241,7 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 25, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 23, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo {
     padding-left: 0;
@@ -14253,7 +14251,7 @@ html[data-contrast="true"] .pagination span.current {
     display: flex;
   }
 
-  /* line 42, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 40, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo img {
     -ms-flex-item-align: center;
@@ -14264,14 +14262,14 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 49, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 47, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link {
   padding: 10px 20px;
   text-align: right;
 }
 
-/* line 53, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 51, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .btn,
 .banner .cta-link .btn-large,
@@ -14284,7 +14282,7 @@ html[data-contrast="true"] .pagination span.current {
   padding: 5px 2rem;
 }
 
-/* line 58, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 56, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .cta-headline {
   font-size: 0.9em;
@@ -14293,19 +14291,19 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 49, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 47, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link {
     padding: 10px 0;
   }
 
-  /* line 73, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 71, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .cta-headline {
     padding: 0 1rem;
   }
 
-  /* line 77, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 75, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .btn,
   .banner .cta-link .btn-large,
@@ -14318,26 +14316,26 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 83, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 81, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar {
   margin-bottom: 0;
 }
 
-/* line 87, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar[data-text-color="light"] .navbar-menu > ul > li > a,
 .banner .navbar[data-text-color="light"] .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 93, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 91, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper {
   position: relative;
 }
 
-/* line 96, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 94, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper [type="checkbox"] {
   position: absolute;
@@ -14345,13 +14343,13 @@ html[data-contrast="true"] .pagination span.current {
   pointer-events: none;
 }
 
-/* line 102, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 100, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper input:focus + label {
   outline: #7C878E auto 5px;
 }
 
-/* line 106, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 104, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label {
   display: block;
@@ -14365,27 +14363,27 @@ html[data-contrast="true"] .pagination span.current {
   float: right;
 }
 
-/* line 117, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 115, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label::before,
 .banner .menu-trigger-wrapper label::after {
   display: none;
 }
 
-/* line 121, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 119, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label i {
   font-size: 2em;
   line-height: 1.5em;
 }
 
-/* line 126, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 124, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 html[data-contrast="true"] .banner .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 135, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 133, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 nav ul a {
   text-decoration: none;
@@ -14395,25 +14393,25 @@ nav ul a {
   font-size: 17px;
 }
 
-/* line 142, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 140, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 [data-font="3"] nav ul a {
   font-size: 1.2rem;
 }
 
-/* line 146, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 144, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .header-inline nav ul a {
   padding: 1rem 15px;
 }
 
-/* line 152, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 150, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 nav ul li.current_page_item a {
   background: rgba(0, 0, 0, 0.1);
 }
 
-/* line 159, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 157, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu {
   border: none;
@@ -14423,7 +14421,7 @@ nav ul li.current_page_item a {
   padding: 0 15px;
 }
 
-/* line 166, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 164, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu > ul {
   -webkit-box-flex: 1;
@@ -14431,27 +14429,27 @@ nav ul li.current_page_item a {
           flex: 1 1 auto;
 }
 
-/* line 171, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 169, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li::before {
   display: none;
 }
 
-/* line 176, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 174, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 176, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 174, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children a {
     cursor: pointer;
   }
 }
 
-/* line 184, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 182, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
   max-height: 0;
@@ -14461,20 +14459,20 @@ nav ul li.current_page_item a {
   transition: max-height 0.3s ease;
 }
 
-/* line 190, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 188, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
 }
 
-/* line 194, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 192, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 184, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 182, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     max-height: 300em;
@@ -14493,7 +14491,7 @@ nav ul li.current_page_item a {
   }
 }
 
-/* line 211, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 209, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14501,7 +14499,7 @@ nav ul li.current_page_item a {
   height: auto;
 }
 
-/* line 224, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 222, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover > a,
 .navbar-menu li:focus > a,
@@ -14509,20 +14507,20 @@ nav ul li.current_page_item a {
   text-decoration: underline;
 }
 
-/* line 230, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 228, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
-  /* line 159, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 157, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     height: 4.66667em;
   }
 
-  /* line 238, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 236, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14534,7 +14532,7 @@ nav ul li.current_page_item a {
             align-items: center;
   }
 
-  /* line 243, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 241, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14542,7 +14540,7 @@ nav ul li.current_page_item a {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 159, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 157, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     -webkit-box-orient: vertical;
@@ -14560,26 +14558,26 @@ nav ul li.current_page_item a {
     overflow: hidden;
   }
 
-  /* line 257, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 255, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 261, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 259, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 267, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 265, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 272, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 270, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
