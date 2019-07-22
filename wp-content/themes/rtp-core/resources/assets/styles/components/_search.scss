@@ -14,3 +14,45 @@
     }
   }
 }
+
+// Search on Top Bar
+.topbar {
+  .search-form {
+    border-radius: 0;
+
+    &::after {
+      content: '';
+      top: 1px;
+      width: calc(1.5rem - 12px);
+      height: calc(2.7rem - 12px);
+      background-image: none;
+    }
+
+    @media #{$small-and-down} {
+      width: 100%;
+    }
+
+    input.search-field {
+      margin: auto;
+      padding: 10px 10px 13px;
+      height: 1.5rem;
+      border-radius: 0;
+      background: transparent !important;
+      border: 1px solid $color-grey-light !important;
+
+      &::placeholder {
+        color: $color-grey-light;
+        font-size: 13px;
+      }
+    }
+
+    label {
+      width: 100%;
+      height: 100%;
+    }
+
+    .search-submit {
+      display: none !important;
+    }
+  }
+}
