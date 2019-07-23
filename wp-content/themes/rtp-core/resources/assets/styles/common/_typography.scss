@@ -29,11 +29,15 @@ body {
 h1, .h1 {
   font-size: rem-calc(50px);
   font-weight: 400;
+  margin: 0;
+  padding: 10px 0;
 }
 
 h2, .h2 {
   font-size: rem-calc(36px);
   font-weight: 400;
+  margin: 0;
+  padding: 10px 0;
 }
 
 h3, .h3 {

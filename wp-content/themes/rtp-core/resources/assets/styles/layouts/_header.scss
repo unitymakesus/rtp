@@ -1,3 +1,17 @@
+// Page Header
+.page-header {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: flex-end;
+
+  .container-wide {
+    text-align: left;
+    padding: 1em 1em 4em;
+  }
+}
+
 .banner {
   background: $color-white;
   z-index: 100;

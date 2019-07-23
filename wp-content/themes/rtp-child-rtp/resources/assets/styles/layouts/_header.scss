@@ -1,0 +1,6 @@
+// Page Header
+.page-header {
+  .container-wide {
+    @include rtp-gradient;
+  }
+}
