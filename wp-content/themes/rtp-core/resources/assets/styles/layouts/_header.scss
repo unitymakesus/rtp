@@ -132,7 +132,7 @@ nav {
   ul {
     a {
       text-decoration: none;
-      font-weight: normal;
+      font-weight: 300;
       padding: 1rem 15px;
       color: $color-black;
       font-size: 17px;
@@ -155,7 +155,6 @@ nav {
 }
 
 .navbar-menu {
-  // width: 100%;
   border: none;
   margin: 0;
   box-shadow: none;
@@ -171,6 +170,14 @@ nav {
     }
 
     &.menu-item-has-children {
+      &:hover, &:focus, &:active {
+        background-color: #E5E5E5;
+
+        >a {
+          background-color: #E5E5E5;
+        }
+      }
+
       a {
         cursor: default;
 
@@ -187,10 +194,34 @@ nav {
 
         li {
           float: none;
+          line-height: 0.8em;
         }
 
         a {
           cursor: pointer;
+
+          &::after {
+            content: '';
+            background-image: image('arrow-right.svg');
+            position: absolute;
+            right: 30px;
+            z-index: 1000;
+            width: 20px;
+            opacity: 0;
+            height: 25px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: all .2s;
+          }
+
+          &:hover, &:focus, &:hover {
+            position: relative;
+
+            &::after {
+              right: 10px;
+              opacity: 100;
+            }
+          }
         }
 
         @media #{$large-and-up} {
@@ -202,10 +233,14 @@ nav {
           transition: max-height 0.3s ease;
           height: 0;
           overflow: hidden;
+          min-width: 200px;
+          box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
         }
       }
 
-      &:hover, &:focus, &.hover {
+      &:hover, &:focus, &.hover a {
+        // background: $color-grey-light;
+
         .sub-menu {
           height: auto;
         }
@@ -221,7 +256,7 @@ nav {
 
       & > a {
         // color: $color-white;
-        text-decoration: underline;
+        // text-decoration: underline;
       }
     }
 
