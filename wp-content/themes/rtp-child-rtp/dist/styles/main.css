@@ -14319,10 +14319,9 @@ html[data-contrast="true"] .pagination span.current {
   height: auto;
   -webkit-box-shadow: none;
           box-shadow: none;
-  padding: 20px 0;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 25, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner nav > .container > .row::after,
 .banner nav > .container-wide > .row::after,
@@ -14346,7 +14345,7 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 25, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 24, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner nav > .container > .row,
   .banner nav > .container-wide > .row,
@@ -14372,25 +14371,26 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 37, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 36, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo {
-  max-width: 150px;
+  max-width: 120px;
   padding: 5px;
   display: inline-block;
   vertical-align: middle;
 }
 
-/* line 43, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 42, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo img {
   width: 100%;
   height: auto;
   display: inline-block;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 37, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 36, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo {
     padding-left: 0;
@@ -14554,13 +14554,7 @@ nav ul a {
   padding: 1rem 15px;
 }
 
-/* line 164, ../rtp-core/resources/assets/styles/layouts/_header.scss */
-
-nav ul li.current_page_item a {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-/* line 171, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu {
   border: none;
@@ -14570,7 +14564,7 @@ nav ul li.current_page_item a {
   padding: 0 15px;
 }
 
-/* line 177, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 171, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu > ul {
   -webkit-box-flex: 1;
@@ -14578,45 +14572,53 @@ nav ul li.current_page_item a {
           flex: 1 1 auto;
 }
 
-/* line 182, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 175, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+
+.navbar-menu li {
+  padding: 10px 0;
+  height: 100%;
+}
+
+/* line 179, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li::before {
   display: none;
 }
 
-/* line 187, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 183, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
-.navbar-menu li.menu-item-has-children:hover,
-.navbar-menu li.menu-item-has-children:focus,
-.navbar-menu li.menu-item-has-children:active {
-  background-color: #E5E5E5;
+.navbar-menu li:hover,
+.navbar-menu li:focus,
+.navbar-menu li:active {
+  background-color: #F3F3F3;
 }
 
-/* line 190, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 186, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
-.navbar-menu li.menu-item-has-children:hover > a,
-.navbar-menu li.menu-item-has-children:focus > a,
-.navbar-menu li.menu-item-has-children:active > a {
-  background-color: #E5E5E5;
+.navbar-menu li:hover > a,
+.navbar-menu li:focus > a,
+.navbar-menu li:active > a {
+  background-color: #F3F3F3;
 }
 
-/* line 195, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 192, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 195, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 192, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children a {
     cursor: pointer;
   }
 }
 
-/* line 203, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 200, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
+  margin-top: 10px;
   max-height: 0;
   overflow: hidden;
   -webkit-transition: max-height 0.3s ease;
@@ -14624,20 +14626,28 @@ nav ul li.current_page_item a {
   transition: max-height 0.3s ease;
 }
 
-/* line 209, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 207, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
-  line-height: 0.8em;
+  line-height: 0;
 }
 
-/* line 214, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 211, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+
+.navbar-menu li.menu-item-has-children .sub-menu li:hover,
+.navbar-menu li.menu-item-has-children .sub-menu li:focus,
+.navbar-menu li.menu-item-has-children .sub-menu li:hover {
+  background: #F5F5F5;
+}
+
+/* line 216, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
 }
 
-/* line 217, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 219, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -14647,7 +14657,7 @@ nav ul li.current_page_item a {
   z-index: 1000;
   width: 20px;
   opacity: 0;
-  height: 25px;
+  height: 20px;
   background-size: contain;
   background-repeat: no-repeat;
   -webkit-transition: all .2s;
@@ -14655,15 +14665,16 @@ nav ul li.current_page_item a {
   transition: all .2s;
 }
 
-/* line 231, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 233, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
 .navbar-menu li.menu-item-has-children .sub-menu a:hover {
   position: relative;
+  background: transparent;
 }
 
-/* line 234, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 237, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -14673,7 +14684,7 @@ nav ul li.current_page_item a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 203, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 200, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     max-height: 300em;
@@ -14695,7 +14706,7 @@ nav ul li.current_page_item a {
   }
 }
 
-/* line 258, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 261, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14703,20 +14714,20 @@ nav ul li.current_page_item a {
   height: auto;
 }
 
-/* line 277, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 280, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
-  /* line 171, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     height: 4.66667em;
   }
 
-  /* line 285, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 288, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14728,7 +14739,7 @@ nav ul li.current_page_item a {
             align-items: center;
   }
 
-  /* line 290, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 293, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14736,7 +14747,7 @@ nav ul li.current_page_item a {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 171, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     -webkit-box-orient: vertical;
@@ -14754,26 +14765,26 @@ nav ul li.current_page_item a {
     overflow: hidden;
   }
 
-  /* line 304, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 307, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 308, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 311, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 314, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 317, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 319, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 322, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
@@ -15068,12 +15079,11 @@ body#tinymce {
 /* line 3, resources/assets/styles/layouts/_header.scss */
 
 .page-header .container-wide {
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
-  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), color-stop(33%, #012169), color-stop(66%, #82052A), color-stop(99%, #C00));
-  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
-  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(75, 156, 211, 0.7)), color-stop(33%, rgba(1, 33, 105, 0.7)), color-stop(66%, rgba(130, 5, 42, 0.7)), color-stop(99%, rgba(204, 0, 0, 0.7)));
+  background-image: -webkit-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+  background-image: -o-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+  background-image: linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+  color: #FFF;
 }
 
 /* line 2, resources/assets/styles/layouts/_footer.scss */

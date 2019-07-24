@@ -1,6 +1,7 @@
 // Page Header
 .page-header {
   .container-wide {
-    @include rtp-gradient;
+    background-image: linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+    color: $color-white;
   }
 }
