@@ -1,3 +1,17 @@
+// Page Header
+.page-header {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: flex-end;
+
+  .container-wide {
+    text-align: left;
+    padding: 1em 1em 4em;
+  }
+}
+
 .banner {
   background: $color-white;
   z-index: 100;
@@ -6,7 +20,6 @@
     background: none;
     height: auto;
     box-shadow: none;
-    padding: 20px 0;
 
     & > .container > .row {
       &::after {
@@ -21,7 +34,7 @@
   }
 
   .logo {
-    max-width: 150px;
+    max-width: 120px;
     padding: 5px;
     display: inline-block;
     vertical-align: middle;
@@ -30,6 +43,7 @@
       width: 100%;
       height: auto;
       display: inline-block;
+      vertical-align: middle;
     }
 
     @media #{$medium-and-down} {
@@ -132,7 +146,7 @@ nav {
   ul {
     a {
       text-decoration: none;
-      font-weight: normal;
+      font-weight: 300;
       padding: 1rem 15px;
       color: $color-black;
       font-size: 17px;
@@ -145,17 +159,10 @@ nav {
         padding: 1rem 15px;
       }
     }
-
-    li.current_page_item {
-      a {
-        background: rgba($color-black, 0.1);
-      }
-    }
   }
 }
 
 .navbar-menu {
-  // width: 100%;
   border: none;
   margin: 0;
   box-shadow: none;
@@ -166,8 +173,19 @@ nav {
   }
 
   li {
+    padding: 10px 0;
+    height: 100%;
+
     &::before {
       display: none;
+    }
+
+    &:hover, &:focus, &:active {
+      background-color: #F3F3F3;
+
+      >a {
+        background-color: #F3F3F3;
+      }
     }
 
     &.menu-item-has-children {
@@ -180,6 +198,7 @@ nav {
       }
 
       .sub-menu {
+        margin-top: 10px;
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
@@ -187,10 +206,39 @@ nav {
 
         li {
           float: none;
+          line-height: 0;
+
+          &:hover, &:focus, &:hover {
+            background: #F5F5F5;
+          }
         }
 
         a {
           cursor: pointer;
+
+          &::after {
+            content: '';
+            background-image: image('arrow-right.svg');
+            position: absolute;
+            right: 30px;
+            z-index: 1000;
+            width: 20px;
+            opacity: 0;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            transition: all .2s;
+          }
+
+          &:hover, &:focus, &:hover {
+            position: relative;
+            background: transparent;
+
+            &::after {
+              right: 10px;
+              opacity: 100;
+            }
+          }
         }
 
         @media #{$large-and-up} {
@@ -202,10 +250,14 @@ nav {
           transition: max-height 0.3s ease;
           height: 0;
           overflow: hidden;
+          min-width: 200px;
+          box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
         }
       }
 
-      &:hover, &:focus, &.hover {
+      &:hover, &:focus, &.hover a {
+        // background: $color-grey-light;
+
         .sub-menu {
           height: auto;
         }
@@ -221,7 +273,7 @@ nav {
 
       & > a {
         // color: $color-white;
-        text-decoration: underline;
+        // text-decoration: underline;
       }
     }
 
