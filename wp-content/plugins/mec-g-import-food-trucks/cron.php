@@ -19,6 +19,8 @@ function mec_find_wordpress_base_path()
     return NULL;
 }
 
+error_log('hi');
+
 define('BASE_PATH', mec_find_wordpress_base_path().'/');
 define('WP_USE_THEMES', false);
 
@@ -36,7 +38,7 @@ $ix = $main->get_ix_options();
 if(!isset($ix['sync_g_import']) or (isset($ix['sync_g_import']) and !$ix['sync_g_import'])) exit(__('Auto Google Calendar import is disabled!', 'mec'));
 
 $api_key = isset($ix['google_import_api_key']) ? $ix['google_import_api_key'] : NULL;
-$calendar_id = 'n1e52gncdada7epqvdq5phnr1c@group.calendar.google.com';  // This is the calendar ID for the RTP Food Truck Calendar
+$calendar_id = isset($ix['google_import_calendar_id']) ? $ix['google_import_calendar_id'] : NULL;
 
 if(!trim($api_key) or !trim($calendar_id)) exit(__('Both of API key and Calendar ID are required!', 'mec'));
 
@@ -123,8 +125,14 @@ try
         // Event Organizer
         $organizer_id = '1201'; // RTP
 
+        // Label/Host
+        $label_id = '1205'; // RTP
+
         // Category
         $category_id = '1202';  // Food Trucks
+
+        // Link to Food Truck Website
+        $more_info = $event->getLocation();
 
         $repeat_status = 0;
         $g_recurrence_rule = '';
@@ -189,7 +197,10 @@ try
                 'mec_gcal_id'=>$gcal_id,
                 'mec_gcal_calendar_id'=>$calendar_id,
                 'mec_g_recurrence_rule'=>$g_recurrence_rule,
-                'mec_allday'=>$allday
+                'mec_allday'=>$allday,
+                'mec_more_info'=>$more_info,
+                'mec_more_info_title'=>__('Food Truck Website', 'mec'),
+                'mec_more_info_target'=>'_blank',
             )
         );
 
@@ -206,6 +217,9 @@ try
 
         // Set organizer to the post
         if($organizer_id) wp_set_object_terms($post_id, (int) $organizer_id, 'mec_organizer');
+
+        // Set label to the post
+        if($label_id) wp_set_object_terms($post_id, (int) $label_id, 'mec_label');
 
         // Set categories to the post
         if($category_id) wp_set_object_terms($post_id, (int) $category_id, 'mec_category');

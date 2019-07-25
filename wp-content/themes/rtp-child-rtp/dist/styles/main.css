@@ -13409,6 +13409,34 @@ a.btn-small,
   color: inherit;
 }
 
+/* line 2, ../rtp-core/resources/assets/styles/components/_events.scss */
+
+.mec-wrap select {
+  display: block;
+}
+
+/* line 7, ../rtp-core/resources/assets/styles/components/_events.scss */
+
+.mec-wrap .mec-dropdown-search select {
+  width: calc(100% - 36px);
+}
+
+/* line 11, ../rtp-core/resources/assets/styles/components/_events.scss */
+
+.mec-wrap .mec-text-input-search input[type="search"] {
+  width: calc(100% - 50px);
+  min-height: 36px;
+  height: 36px;
+  line-height: 36px;
+  background: #fff;
+  font-size: 13px;
+  color: #777;
+  border: 1px solid #efefef;
+  margin: 0 0 0 -1px;
+  float: left;
+  padding: 0 5px;
+}
+
 /* line 2, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .banner .search-form,
