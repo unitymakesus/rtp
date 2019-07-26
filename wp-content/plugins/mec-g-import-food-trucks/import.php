@@ -1,7 +1,7 @@
 <?php
 /**
  * Calls the Google Sheets API to get the list of Food Trucks
- * @return [type] [description]
+ * These functions are converted to PHP from the Javascript https://github.com/Davepar/gcalendarsync
  */
 function mecft_import() {
   require MECFT_PLUGIN_DIR . 'vendor/autoload.php';
@@ -38,7 +38,7 @@ function mecft_import() {
   // Go through ranges one at a time
   foreach ($ranges as $range) {
     $data = $range->getValues();
-    $map = syncToCalendar($data);
+    $map = syncToCalendar($data, $beginDate, $endDate);
   }
 
 
@@ -57,27 +57,78 @@ function createIdxMap($row) {
   ];
 
   $idxMap = [];
-  for ($i = 0; $i < sizeof($row); $i++) {
-    $fieldFromHdr = $row[$i];
+  for ($idx = 0; $idx < sizeof($row); $idx++) {
     foreach ($titleRowMap as $titleKey => $titleVal) {
-      if ($titleRowMap[$titleKey] == $fieldFromHdr) {
-        array_push($idxMap, $titleKey);
+      if ($titleRowMap[$titleKey] == $row[$idx]) {
+        $idxMap[] = $titleKey;
         break;
       }
     }
-    if (sizeof($idxMap) <= $i) {
+    if (sizeof($idxMap) <= $idx) {
       // Header field not in map, so add null
-      array_push($idxMap, null);
+      $idxMap[] = null;
     }
   }
   return $idxMap;
 }
 
+// Converts a spreadsheet row into an object containing event-related fields
+function reformatEvent($row, $idxMap) {
+
+  // Make sure arrays are the same size
+  $idxMapSize = count($idxMap);
+  $rowSize = count($row);
+  if ($idxMapSize > $rowSize) {
+    $more = $idxMapSize - $rowSize;
+    for($i = 0; $i < $more; $i++) {
+      $row[] = "";
+    }
+  }
+
+  // Set values of $idxMap as the keys for $row
+  $reformatted = array_combine($idxMap, $row);
+  return $reformatted;
+}
+
+// Tests if value is a valid date
+function isDate($value) {
+  if (!$value) {
+    return false;
+  }
+
+  try {
+    new \DateTime($value);
+    return true;
+  } catch (\Exception $e) {
+    return false;
+  }
+}
+
 // Pulls from spreadsheet and inserts into calendar
 function syncToCalendar($data) {
 
+  $numAdded = 0;
+  $numUpdates = 0;
+  $eventsAdded = false;
+
   // Map headers to indices
   $idxMap = createIdxMap($data[0]);
+  array_shift($data);
 
-  return $idxMap;
+  // Loop through spreadsheet rows
+  for ($ridx = 0; $ridx < sizeof($data); $ridx++) {
+    $sheetEvent = reformatEvent($data[$ridx], $idxMap);
+
+    // Convert date to unixtime
+
+
+    // Skip blank rows with blank/invalid date
+    if (!isDate($sheetEvent['date'])) {
+      continue;
+    }
+
+    // if ()
+  }
+
+  return $sheetEvent;
 }
