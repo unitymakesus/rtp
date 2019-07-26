@@ -47,6 +47,14 @@
         if(data.valid) {
           $('#pretty_link_errors').hide();
           $(form).triggerHandler('submit.edit-post');
+
+          // Trigger the correct actions and messages depending on whether we are publishing or updating a link
+          if ($('#publish').attr('name') === 'save') {
+            $(form).append('<input type="hidden" name="save" value="Update">');
+          } else {
+            $(form).append('<input type="hidden" name="publish" value="Publish">');
+          }
+
           form.submit();
         }
         else {
@@ -60,6 +68,56 @@
 
     if (window.adminpage === 'post-new-php' && window.typenow === 'pretty-link') {
       $('#publish').val(PrliLinkValidation.args.update);
+    }
+
+    // Disable "enter" key on the Target URL field
+    $('#prli_url').on('keypress', function (e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+      }
+    });
+
+    if ($.fn.tooltipster && window.ClipboardJS) {
+      var $el = $('.prli-edit-link-clipboard'),
+        copy_text = PrliLinkValidation.copy_text,
+        copied_text = PrliLinkValidation.copied_text,
+        copy_error_text = PrliLinkValidation.copy_error_text,
+        clipboard = new ClipboardJS($el[0], {
+          text: function () {
+            return PrliLinkValidation.blogurl + PrliLinkValidation.permalink_pre_slug_uri + $('#prli_slug').val();
+          }
+        }),
+        instance = $el
+          .tooltipster({
+            theme: 'tooltipster-borderless',
+            content: copy_text,
+            trigger: 'custom',
+            triggerClose: {
+              mouseleave: true,
+              touchleave: true
+            },
+            triggerOpen: {
+              mouseenter: true,
+              touchstart: true
+            }
+          })
+          .tooltipster('instance');
+
+      clipboard
+        .on('success', function(e) {
+          instance
+            .content(copied_text)
+            .one('after', function(){
+              instance.content(copy_text);
+            });
+        })
+        .on('error', function(e) {
+          instance
+            .content(copy_error_text)
+            .one('after', function(){
+              instance.content(copy_text);
+            });
+        });
     }
   });
 })(jQuery);

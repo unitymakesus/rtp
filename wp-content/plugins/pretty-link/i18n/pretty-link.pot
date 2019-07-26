@@ -2,22 +2,22 @@
 # This file is distributed under the same license as the Pretty Links plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pretty Links 3.0.3\n"
+"Project-Id-Version: Pretty Links 3.0.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pretty-link\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-07-18T15:07:54-06:00\n"
+"POT-Creation-Date: 2019-07-23T14:42:09-06:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.2.0\n"
 "X-Domain: pretty-link\n"
 
 #. Plugin Name of the plugin
 #: pro/app/views/links/prettybar.php:68
-#: app/controllers/PrliLinksController.php:48
-#: app/controllers/PrliLinksController.php:434
+#: app/controllers/PrliLinksController.php:54
+#: app/controllers/PrliLinksController.php:476
 msgid "Pretty Links"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 #: app/models/PrliClick.php:256
 #: app/views/groups/list.php:81
 #: app/views/clicks/list.php:4
-#: app/controllers/PrliLinksController.php:432
+#: app/controllers/PrliLinksController.php:474
 #: app/controllers/PrliAppController.php:115
 msgid "Clicks"
 msgstr ""
@@ -160,7 +160,7 @@ msgid "Digg"
 msgstr ""
 
 #: pro/app/models/PlpOptions.php:155
-#: app/controllers/PrliLinksController.php:529
+#: app/controllers/PrliLinksController.php:592
 msgid "Email"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgstr ""
 #: pro/app/views/links/form.php:38
 #: pro/app/views/links/form.php:73
 #: app/models/PrliClick.php:256
-#: app/controllers/PrliLinksController.php:433
+#: app/controllers/PrliLinksController.php:475
 msgid "Date"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr ""
 
 #: pro/app/views/links/form.php:133
 #: app/views/links/form_pro.php:30
-#: app/controllers/PrliLinksController.php:395
+#: app/controllers/PrliLinksController.php:437
 msgid "Keywords"
 msgstr ""
 
@@ -828,7 +828,7 @@ msgstr ""
 #: pro/app/views/reports/edit.php:66
 #: app/views/options/form.php:999
 #: app/views/groups/edit.php:72
-#: app/controllers/PrliAppController.php:374
+#: app/controllers/PrliAppController.php:375
 msgid "Update"
 msgstr ""
 
@@ -859,7 +859,7 @@ msgstr ""
 #: pro/app/views/reports/list.php:20
 #: app/views/groups/list.php:24
 #: app/views/clicks/list.php:64
-#: app/controllers/PrliLinksController.php:525
+#: app/controllers/PrliLinksController.php:588
 msgid "Reset"
 msgstr ""
 
@@ -2122,7 +2122,7 @@ msgid "New Link Category Name"
 msgstr ""
 
 #: pro/app/controllers/PlpLinkCategoriesController.php:25
-#: app/controllers/PrliLinksController.php:393
+#: app/controllers/PrliLinksController.php:435
 msgid "Categories"
 msgstr ""
 
@@ -2218,7 +2218,7 @@ msgid "Unauthorized"
 msgstr ""
 
 #: pro/app/controllers/PlpPublicLinksController.php:37
-#: app/controllers/PrliLinksController.php:595
+#: app/controllers/PrliLinksController.php:658
 msgid "Security check failed"
 msgstr ""
 
@@ -2273,7 +2273,7 @@ msgid "No Link Tags found."
 msgstr ""
 
 #: pro/app/controllers/PlpLinkTagsController.php:29
-#: app/controllers/PrliLinksController.php:394
+#: app/controllers/PrliLinksController.php:436
 msgid "Tags"
 msgstr ""
 
@@ -3327,9 +3327,9 @@ msgstr ""
 
 #: app/helpers/PrliAppHelper.php:20
 #: app/views/links/form.php:30
-#: app/controllers/PrliLinksController.php:406
-#: app/controllers/PrliLinksController.php:412
-#: app/controllers/PrliLinksController.php:418
+#: app/controllers/PrliLinksController.php:448
+#: app/controllers/PrliLinksController.php:454
+#: app/controllers/PrliLinksController.php:460
 msgid "Pro"
 msgstr ""
 
@@ -3449,7 +3449,7 @@ msgstr ""
 #: app/views/links/form_basic.php:48
 #: app/views/shared/tinymce_form_popup.php:78
 #: app/views/widgets/widget.php:15
-#: app/controllers/PrliLinksController.php:49
+#: app/controllers/PrliLinksController.php:55
 msgid "Pretty Link"
 msgstr ""
 
@@ -3615,12 +3615,12 @@ msgstr ""
 msgid "This is how your pretty link will appear. You can edit the Pretty Link slug here."
 msgstr ""
 
-#: app/views/links/form_basic.php:58
 #: app/views/links/form_basic.php:61
+#: app/views/links/form_basic.php:64
 msgid "Notes"
 msgstr ""
 
-#: app/views/links/form_basic.php:62
+#: app/views/links/form_basic.php:65
 msgid "This is a field where you can enter notes about a particular link. This notes field is mainly for your own link management needs. It isn't currently used anywhere on the front end."
 msgstr ""
 
@@ -4884,8 +4884,8 @@ msgid "An unknown error occurred."
 msgstr ""
 
 #: app/controllers/PrliPopupController.php:93
-#: app/controllers/PrliLinksController.php:360
-#: app/controllers/PrliLinksController.php:573
+#: app/controllers/PrliLinksController.php:402
+#: app/controllers/PrliLinksController.php:636
 msgid "Forbidden"
 msgstr ""
 
@@ -4914,110 +4914,122 @@ msgstr ""
 msgid "Pretty Link ID must be set for successful update."
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:50
+#: app/controllers/PrliLinksController.php:56
 msgid "Add New Pretty Link"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:51
+#: app/controllers/PrliLinksController.php:57
 msgid "Edit Pretty Link"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:52
+#: app/controllers/PrliLinksController.php:58
 #: js/editor/components/link-editor/index.js:324
 #: js/editor.js:12
 msgid "New Pretty Link"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:53
+#: app/controllers/PrliLinksController.php:59
 msgid "View Pretty Link"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:54
+#: app/controllers/PrliLinksController.php:60
 msgid "Search Pretty Links"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:55
+#: app/controllers/PrliLinksController.php:61
 msgid "No Pretty Links found"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:56
+#: app/controllers/PrliLinksController.php:62
 msgid "No Pretty Links found in Trash"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:57
+#: app/controllers/PrliLinksController.php:63
 msgid "Parent Pretty Link:"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:118
+#: app/controllers/PrliLinksController.php:124
 msgid "Pretty Link Settings"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:348
+#: app/controllers/PrliLinksController.php:320
+msgid "Pretty Link updated."
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:322
+msgid "Pretty Link created."
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:390
 msgid "Pretty Link Cleanup Visitor Locks"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:369
+#: app/controllers/PrliLinksController.php:411
 msgid "Success!"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:371
+#: app/controllers/PrliLinksController.php:413
 msgid "Fix the following errors:"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:407
+#: app/controllers/PrliLinksController.php:449
 msgid "Upgrade to a Pretty Links premium plan to get Link Categories"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:413
+#: app/controllers/PrliLinksController.php:455
 msgid "Upgrade to a Pretty Links premium plan to get Link Tags"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:419
+#: app/controllers/PrliLinksController.php:461
 msgid "Upgrade to a Pretty Links premium plan to get Keyword Replacements"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:425
+#: app/controllers/PrliLinksController.php:467
 msgid "Settings"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:426
+#: app/controllers/PrliLinksController.php:468
 msgid "Link Title"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:528
-msgid "Tweet"
-msgstr ""
-
-#: app/controllers/PrliLinksController.php:530
-msgid "Target &raquo;"
-msgstr ""
-
-#: app/controllers/PrliLinksController.php:531
-msgid "Pretty Link &raquo;"
-msgstr ""
-
-#: app/controllers/PrliLinksController.php:553
-#: app/controllers/PrliLinksController.php:554
-msgid "View Split Test Report"
-msgstr ""
-
-#: app/controllers/PrliLinksController.php:579
-msgid "Your Pretty Link was Successfully Reset"
-msgstr ""
-
-#: app/controllers/PrliLinksController.php:587
-msgid "Bad request"
+#: app/controllers/PrliLinksController.php:470
+msgid "Target"
 msgstr ""
 
 #: app/controllers/PrliLinksController.php:591
+msgid "Tweet"
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:593
+msgid "Target &raquo;"
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:594
+msgid "Pretty Link &raquo;"
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:616
+#: app/controllers/PrliLinksController.php:617
+msgid "View Split Test Report"
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:642
+msgid "Your Pretty Link was Successfully Reset"
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:650
+msgid "Bad request"
+msgstr ""
+
+#: app/controllers/PrliLinksController.php:654
 msgid "Insufficient permissions"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:620
+#: app/controllers/PrliLinksController.php:683
 msgid "An error occurred creating the link"
 msgstr ""
 
-#: app/controllers/PrliLinksController.php:652
+#: app/controllers/PrliLinksController.php:720
 msgid "All Groups (Legacy)"
 msgstr ""
 
@@ -5098,40 +5110,52 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
-#: app/controllers/PrliAppController.php:394
+#: app/controllers/PrliAppController.php:377
+msgid "Copy to Clipboard"
+msgstr ""
+
+#: app/controllers/PrliAppController.php:378
+msgid "Copied!"
+msgstr ""
+
+#: app/controllers/PrliAppController.php:379
+msgid "Oops, Copy Failed!"
+msgstr ""
+
+#: app/controllers/PrliAppController.php:403
 msgid "Are you sure you want to reset your Pretty Link? This will delete all of the statistical data about this Pretty Link in your database."
 msgstr ""
 
 #. translators: %1$s: br tag, %2$s: open link tag, %3$s: close link tag
-#: app/controllers/PrliAppController.php:499
+#: app/controllers/PrliAppController.php:508
 msgid "You're almost done!%1$s%2$sFinish your Re-Install of Pretty Links Pro%3$s"
 msgstr ""
 
-#: app/controllers/PrliAppController.php:514
+#: app/controllers/PrliAppController.php:523
 msgid "Pretty Links Pro Successfully Uninstalled."
 msgstr ""
 
-#: app/controllers/PrliAppController.php:563
+#: app/controllers/PrliAppController.php:572
 msgid "Invalid server response"
 msgstr ""
 
-#: app/controllers/PrliAppController.php:564
+#: app/controllers/PrliAppController.php:573
 msgid "Ajax error"
 msgstr ""
 
-#: app/controllers/PrliAppController.php:581
+#: app/controllers/PrliAppController.php:590
 msgid "Pretty Link Quick Add"
 msgstr ""
 
-#: app/controllers/PrliAppController.php:620
+#: app/controllers/PrliAppController.php:629
 msgid "Your Pretty Links Pro installation isn't quite complete yet. %1$sAutomatically Upgrade to Enable Pretty Links Pro%2$s"
 msgstr ""
 
-#: app/controllers/PrliAppController.php:641
+#: app/controllers/PrliAppController.php:650
 msgid "Your Pretty Links Pro installation isn't quite complete yet.<br/>%1$sAutomatically Upgrade to Enable Pretty Links Pro%2$s"
 msgstr ""
 
 #. translators: $1$s - Pretty Links plugin name; $2$s - WP.org review link; $3$s - WP.org review link.
-#: app/controllers/PrliAppController.php:689
+#: app/controllers/PrliAppController.php:698
 msgid "Enjoying %1$s? Please rate <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> on <a href=\"%3$s\" target=\"_blank\" rel=\"noopener\">WordPress.org</a> to help us spread the word. Thanks from the Pretty Links team!"
 msgstr ""

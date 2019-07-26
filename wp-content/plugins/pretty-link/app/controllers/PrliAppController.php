@@ -363,19 +363,28 @@ class PrliAppController extends PrliBaseController {
       );
 
       if($is_link_edit_page || $is_link_new_page) {
-        global $prli_link, $post;
+        global $prli_link, $post, $prli_blogurl;
 
         $link_id = $prli_link->get_link_from_cpt($post->ID);
 
-        $args = array( 'args' => array(
-          'id' => $link_id,
-          'action' => 'validate_pretty_link',
-          'security' => wp_create_nonce( 'validate_pretty_link' ),
-          'update' => __('Update', 'pretty-link') // Use default text domain
-        ) );
+        $args = array(
+          'args' => array(
+            'id' => $link_id,
+            'action' => 'validate_pretty_link',
+            'security' => wp_create_nonce( 'validate_pretty_link' ),
+            'update' => __('Update', 'pretty-link')
+          ),
+          'copy_text' => __('Copy to Clipboard', 'pretty-link'),
+          'copied_text' => __('Copied!', 'pretty-link'),
+          'copy_error_text' => __('Oops, Copy Failed!', 'pretty-link'),
+          'blogurl' => $prli_blogurl,
+          'permalink_pre_slug_uri' => PrliUtils::get_permalink_pre_slug_uri()
+        );
 
         wp_enqueue_script( 'prli-link-form', PRLI_JS_URL . '/admin_link_form.js', array(), PRLI_VERSION);
         wp_localize_script( 'prli-link-form', 'PrliLinkValidation', $args );
+
+        wp_dequeue_script('autosave'); // Disable auto-saving
       }
     }
 

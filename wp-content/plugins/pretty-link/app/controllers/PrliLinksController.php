@@ -11,6 +11,8 @@ class PrliLinksController extends PrliBaseController {
     add_action( 'deleted_post', array($this, 'delete_cpt_link') );
     add_action( 'transition_post_status', array($this, 'transition_cpt_status'), 10, 3 );
     add_action( 'transition_post_status', array($this, 'transition_cpt_status'), 10, 3 );
+    add_filter( 'redirect_post_location', array($this, 'redirect_post_location'), 10, 2 );
+    add_action( 'admin_notices', array($this, 'link_saved_admin_notice') );
     add_action( 'wp_ajax_validate_pretty_link', array($this,'ajax_validate_pretty_link') );
     add_action( 'wp_ajax_reset_pretty_link', array($this,'ajax_reset_pretty_link') );
     add_action( 'wp_ajax_prli_quick_create', array($this, 'ajax_quick_create'));
@@ -18,9 +20,12 @@ class PrliLinksController extends PrliBaseController {
     // Add slug and URL to search
     add_filter( 'posts_search', array($this, 'search_links_table') );
 
+    // Links table join
+    add_filter( 'posts_fields', array($this, 'add_clicks_to_select') );
+    add_filter( 'posts_join', array($this,'join_links_to_posts') );
+
     // Legacy Groups Filter
     add_action( 'restrict_manage_posts', array($this,'filter_links_by_legacy_groups') );
-    add_filter( 'posts_join', array($this,'join_links_to_posts') );
     add_filter( 'posts_where', array($this,'where_links_belong_to_legacy_group') );
 
     // Alter Quick Links Menu (subsubsub)
@@ -32,6 +37,7 @@ class PrliLinksController extends PrliBaseController {
     add_action('manage_'.PrliLink::$cpt.'_posts_custom_column', array($this,'custom_columns'), 10, 2);
     add_filter('manage_edit-'.PrliLink::$cpt.'_columns', array($this,'columns'));
     add_filter('manage_edit-'.PrliLink::$cpt.'_sortable_columns', array($this,'sortable_columns'));
+    add_filter('default_hidden_columns', array($this, 'default_hidden_columns'), 10, 2);
 
     add_filter('post_row_actions', array($this, 'add_row_actions'), 10, 2);
 
@@ -57,7 +63,7 @@ class PrliLinksController extends PrliBaseController {
         'parent_item_colon'  => esc_html__('Parent Pretty Link:', 'pretty-link')
       ),
       'public' => false,
-      'menu_position' => 55,
+      'menu_position' => 55.5532265,
       'show_ui' => true,
       'show_in_admin_bar' => true,
       'exclude_from_search' => true,
@@ -251,6 +257,7 @@ class PrliLinksController extends PrliBaseController {
 
     $_POST['name'] = $_POST['post_title'];
     $_POST['url'] = isset($_POST['prli_url']) && is_string($_POST['prli_url']) ? $_POST['prli_url'] : '';
+    $_POST['description'] = isset($_POST['prli_description']) && is_string($_POST['prli_description']) ? $_POST['prli_description'] : '';
     $_POST['link_cpt_id'] = $post->ID;
 
     if($link_id) {
@@ -278,6 +285,41 @@ class PrliLinksController extends PrliBaseController {
       }
       else {
         $prli_link->disable_link($link_id);
+      }
+    }
+  }
+
+  /**
+   * Redirect to the links list after saving a link
+   *
+   * @param  string $location
+   * @param  int    $post_id
+   * @return string
+   */
+  public function redirect_post_location($location, $post_id) {
+    if (get_post_type($post_id) == PrliLink::$cpt) {
+      $location = add_query_arg(array(
+        'post_type' => PrliLink::$cpt,
+        'message' => stripos($location, 'message=6') === false ? 1 : 6
+      ), admin_url('edit.php'));
+    }
+
+    return $location;
+  }
+
+  /**
+   * Add a message that the link has been created or updated after redirecting to the links list
+   */
+  public function link_saved_admin_notice() {
+    $screen = get_current_screen();
+
+    if ($screen instanceof WP_Screen && $screen->id == 'edit-pretty-link' && isset($_GET['message'])) {
+      $message = (int) $_GET['message'];
+
+      if ($message == 1) {
+        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', esc_html__('Pretty Link updated.', 'pretty-link'));
+      } elseif ($message == 6) {
+        printf('<div class="notice notice-success is-dismissible"><p>%s</p></div>', esc_html__('Pretty Link created.', 'pretty-link'));
       }
     }
   }
@@ -425,7 +467,7 @@ class PrliLinksController extends PrliBaseController {
       'settings' => esc_html__('Settings', 'pretty-link'),
       'title' => esc_html__('Link Title', 'pretty-link'),
       //'slug' => esc_html__('Slug', 'pretty-link'),
-      //'target' => esc_html__('Target', 'pretty-link'),
+      'target' => esc_html__('Target', 'pretty-link'),
       $category_key => $categories_label,
       $tag_key => $tags_label,
       'keywords' => $keywords_label,
@@ -443,7 +485,9 @@ class PrliLinksController extends PrliBaseController {
     }
 
     $columns['title'] = 'title';
-    $columns['slug'] = 'slug';
+    //$columns['slug'] = 'slug';
+    $columns['target'] = 'target';
+    $columns['clicks'] = array('clicks', true); // desc first
     $columns['date'] = 'date';
 
     return $columns;
@@ -499,9 +543,28 @@ class PrliLinksController extends PrliBaseController {
         echo esc_html(stripslashes($link->slug));
       }
       elseif('target' == $column) {
-        echo esc_url($link->url);
+        printf(
+          '<a href="%s" target="_blank">%s</a>',
+          esc_url($link->url),
+          esc_url($link->url)
+        );
       }
     }
+  }
+
+  /**
+   * Get the columns that are hidden by default for the links table
+   *
+   * @param   array      $hidden
+   * @param   WP_Screen  $screen
+   * @return  array
+   */
+  public function default_hidden_columns($hidden, $screen) {
+    if ($screen && $screen->id == 'edit-pretty-link') {
+      $hidden[] = 'target';
+    }
+
+    return $hidden;
   }
 
   /**
@@ -620,8 +683,13 @@ class PrliLinksController extends PrliBaseController {
       wp_send_json_error(array('message' => __('An error occurred creating the link', 'pretty-link')));
     }
 
+    $location = add_query_arg(array(
+      'post_type' => PrliLink::$cpt,
+      'message' => 6
+    ), admin_url('edit.php'));
+
     wp_send_json_success([
-      'redirect' => esc_url_raw(sprintf(admin_url('post.php?post=%d&action=edit'), $link->link_cpt_id))
+      'redirect' => esc_url_raw($location)
     ]);
   }
 
@@ -661,6 +729,43 @@ class PrliLinksController extends PrliBaseController {
       </select>
       <?php
     }
+  }
+
+  /**
+   * Add the link click stats to the SELECT part of the post query
+   *
+   * @param  string $fields
+   * @return string
+   */
+  public function add_clicks_to_select($fields) {
+    global $typenow, $prli_click, $prli_options, $prli_link_meta;
+
+    if( $typenow == PrliLink::$cpt ) {
+      if($prli_options->extended_tracking != 'count') {
+        $op = $prli_click->get_exclude_where_clause( ' AND' );
+
+        $fields .= ",
+            (
+              SELECT COUNT(*)
+                FROM {$prli_click->table_name} AS cl
+               WHERE cl.link_id = li.id
+               {$op}
+            ) as clicks
+          ";
+      }
+      else {
+        $fields .= ",
+            (
+              SELECT lm.meta_value
+                FROM {$prli_link_meta->table_name} AS lm
+               WHERE lm.meta_key=\"static-clicks\"
+                 AND lm.link_id=li.id LIMIT 1
+            ) as clicks
+          ";
+      }
+    }
+
+    return $fields;
   }
 
   // Join for searching
@@ -736,6 +841,16 @@ class PrliLinksController extends PrliBaseController {
       elseif($_GET['orderby']=='title') {
         $orderby = "
           li.name {$order}
+        ";
+      }
+      elseif($_GET['orderby']=='target') {
+        $orderby = "
+          li.url {$order}
+        ";
+      }
+      elseif($_GET['orderby']=='clicks') {
+        $orderby = "
+          clicks {$order}
         ";
       }
     }

@@ -37,7 +37,7 @@
             ); ?>
     </th>
     <td>
-      <textarea class="large-text" name="prli_url"><?php echo esc_textarea($values['url']); ?></textarea>
+      <textarea id="prli_url" class="large-text" name="prli_url"><?php echo esc_textarea($values['url']); ?></textarea>
     </td>
   </tr>
   <tr>
@@ -50,7 +50,10 @@
             ); ?>
     </th>
     <td>
-      <strong><?php global $prli_blogurl; echo esc_html($prli_blogurl); ?></strong>/<input type="text" name="slug" class="regular-text" value="<?php echo esc_attr($values['slug']); ?>" />
+      <strong><?php global $prli_blogurl; echo esc_html($prli_blogurl); ?></strong>/<input type="text" id="prli_slug" name="slug" class="regular-text" value="<?php echo esc_attr($values['slug']); ?>" />
+      <span class="prli-clipboard prli-edit-link-clipboard">
+        <i class="pl-icon-clipboard"></i>
+      </span>
     </td>
   </tr>
   <tr>
@@ -63,7 +66,7 @@
             ); ?>
     </th>
     <td>
-      <textarea class="large-text" name="description"><?php echo esc_textarea($values['description']); ?></textarea>
+      <textarea class="large-text" name="prli_description"><?php echo esc_textarea($values['description']); ?></textarea>
     </td>
   </tr>
 </table>

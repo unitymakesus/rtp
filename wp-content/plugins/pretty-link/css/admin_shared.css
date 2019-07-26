@@ -323,3 +323,8 @@ p.prli-welcome-step img {
 .prli-position-relative {
   position: relative;
 }
+
+.prli-edit-link-clipboard {
+  font-size: 18px;
+  cursor: pointer;
+}

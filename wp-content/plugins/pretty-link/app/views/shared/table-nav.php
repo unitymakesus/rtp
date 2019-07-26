@@ -2,7 +2,7 @@
 <?php
 
   $curr_size = isset($_REQUEST['size']) ? (int) $_REQUEST['size'] : 10;
-  $curr_url = sanitize_text_field($_REQUEST['page']) . $page_params;
+  $curr_url = admin_url('edit.php?post_type=' . PrliLink::$cpt . '&page=' . sanitize_text_field($_REQUEST['page']) . $page_params);
 
   // Only show the pager bar if there is more than 1 page
   if($page_count > 1)
@@ -19,7 +19,7 @@
         if($current_page > 1)
         {
           ?>
-          <a class="prev page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . ($current_page-1)); ?>">&laquo;</a>
+          <a class="prev page-numbers" href="<?php echo esc_url(add_query_arg('paged', $current_page - 1, $curr_url)); ?>">&laquo;</a>
           <?php
         }
 
@@ -33,7 +33,7 @@
         else
         {
           ?>
-          <a class="page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=1'); ?>">1</a>
+          <a class="page-numbers" href="<?php echo esc_url(add_query_arg('paged', 1, $curr_url)); ?>">1</a>
           <?php
         }
 
@@ -59,7 +59,7 @@
           else
           {
             ?>
-            <a class="page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . $i); ?>"><?php echo esc_html($i); ?></a>
+            <a class="page-numbers" href="<?php echo esc_url(add_query_arg('paged', $i, $curr_url)); ?>"><?php echo esc_html($i); ?></a>
             <?php
           }
         }
@@ -82,7 +82,7 @@
         else
         {
           ?>
-          <a class="page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . $page_count); ?>"><?php echo esc_html($page_count); ?></a>
+          <a class="page-numbers" href="<?php echo esc_url(add_query_arg('paged', $page_count, $curr_url)); ?>"><?php echo esc_html($page_count); ?></a>
           <?php
         }
 
@@ -90,7 +90,7 @@
         if($current_page < $page_count)
         {
           ?>
-          <a class="next page-numbers" href="<?php echo esc_url('?page=' . $curr_url . '&paged=' . ($current_page + 1)); ?>">&raquo;</a>
+          <a class="next page-numbers" href="<?php echo esc_url(add_query_arg('paged', $current_page + 1, $curr_url)); ?>">&raquo;</a>
           <?php
         }
         ?>

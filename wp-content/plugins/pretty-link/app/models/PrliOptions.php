@@ -222,6 +222,9 @@ class PrliOptions
       else
         $this->prettybar_color = '';
     }
+    else if($this->prettybar_color == '#') {
+      $this->prettybar_color = '';
+    }
     else if($this->prettybar_color && !preg_match('/^#/',$this->prettybar_color)) {
       $this->prettybar_color = '#' . $this->prettybar_color;
     }
@@ -234,6 +237,9 @@ class PrliOptions
       }
       else
         $this->prettybar_text_color = '000000';
+    }
+    else if($this->prettybar_text_color == '#') {
+      $this->prettybar_text_color = '';
     }
     else if($this->prettybar_text_color && !preg_match('/^#/',$this->prettybar_text_color)) {
       $this->prettybar_text_color = '#' . $this->prettybar_text_color;
@@ -248,6 +254,9 @@ class PrliOptions
       else
         $this->prettybar_link_color = '0000ee';
     }
+    else if($this->prettybar_link_color == '#') {
+      $this->prettybar_link_color = '';
+    }
     else if($this->prettybar_link_color && !preg_match('/^#/',$this->prettybar_link_color)) {
       $this->prettybar_link_color = '#' . $this->prettybar_link_color;
     }
@@ -261,6 +270,9 @@ class PrliOptions
       else
         $this->prettybar_hover_color = 'ababab';
     }
+    else if($this->prettybar_hover_color == '#') {
+      $this->prettybar_hover_color = '';
+    }
     else if($this->prettybar_hover_color && !preg_match('/^#/',$this->prettybar_hover_color)) {
       $this->prettybar_hover_color = '#' . $this->prettybar_hover_color;
     }
@@ -273,6 +285,9 @@ class PrliOptions
       }
       else
         $this->prettybar_visited_color = '551a8b';
+    }
+    else if($this->prettybar_visited_color == '#') {
+      $this->prettybar_visited_color = '';
     }
     else if($this->prettybar_visited_color && !preg_match('/^#/',$this->prettybar_visited_color)) {
       $this->prettybar_visited_color = '#' . $this->prettybar_visited_color;

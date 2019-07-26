@@ -4,7 +4,7 @@ Donate link: https://prettylinks.com
 Tags: links, link, url, urls, affiliate, affiliates, pretty, marketing, redirect, redirection, forward, plugin, twitter, tweet, rewrite, shorturl, hoplink, hop, shortlink, short, shorten, shortening, click, clicks, track, tracking, tiny, tinyurl, budurl, shrinking, domain, shrink, mask, masking, cloak, cloaking, slug, slugs, admin, administration, stats, statistics, stat, statistic, email, ajax, javascript, ui, csv, download, page, post, pages, posts, shortcode, seo, automation, widget, widgets, dashboard
 Requires at least: 5.1
 Tested up to: 5.2.2
-Stable tag: 3.0.3
+Stable tag: 3.0.6
 
 Shrink, beautify, track, manage and share any URL on or off of your WordPress website. Create links that look how you want using your own domain name!
 
@@ -64,6 +64,25 @@ http://blairwilliams.com/w7a
 3. Make sure you have changed your permalink Common Settings in Settings -> Permalinks away from "Default" to something else. I prefer using custom and then "/%year%/%month%/%postname%/" for the simplest possible URL slugs with the best performance.
 
 == Changelog ==
+= 3.0.6 =
+* Disable "enter" key on the Target URL field
+* Add copy to clipboard to the add/edit link page
+* Fix the incorrect message being display when updating a link
+* Redirect to the links list page after creating or updating a link
+* Add the ability to sort by Clicks to the links list table
+
+= 3.0.5 =
+* Fix description conflict with the WP Product Review plugin
+* Avoid menu position conflicts
+* Add Target column to links list table
+* Disable auto-saving on links
+* Fix links having Draft status on creation
+* Fix not being able to Create/Edit links until saving options
+* Fix Prettybar color issue when saving plugin options
+
+= 3.0.4 =
+* Fix clicks pagination
+
 = 3.0.3 =
 * Fix Avada Fusion Builder conflict
 * Fix redirect caching on update/welcome page
