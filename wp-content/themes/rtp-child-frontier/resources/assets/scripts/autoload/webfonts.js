@@ -1,7 +1,7 @@
 // Web Font Loader
 var WebFont = require('webfontloader');
 
-var fontFamilies = ['Bitter:700', 'Source Sans Pro:400,400i,700,700i', 'Material Icons'];
+var fontFamilies = ['Oswald:400,500,600,700'];
 
 WebFont.load({
  google: {

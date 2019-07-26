@@ -1,0 +1,39 @@
+// Main Site Logo
+.banner .logo {
+  max-width: 160px;
+}
+
+// Homepage Hero
+.homepage-cta-row {
+  .card {
+    background: rgba($color-frontier-mint, 0.8);
+    color: $color-white;
+    padding: 0;
+
+    &:hover, &:focus, &:active {
+      box-shadow: none;
+    }
+
+    .card-title {
+      font-family: 'Poppins', san-serif;
+      font-size: 45px;
+      font-weight: 300;
+      line-height: 1.2em;
+      padding: 10px 20px 10px 30px;
+    }
+
+    .card-badge {
+      border-color: $color-white;
+      position: relative;
+      top: 40px;
+      left: 31px;
+    }
+
+    .card-cta {
+      background: rgba($color-duke, 0.8);
+      border-top: 0;
+      margin: 0;
+      padding: 10px 20px;
+    }
+  }
+}
