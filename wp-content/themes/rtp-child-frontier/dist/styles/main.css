@@ -15165,5 +15165,11 @@ body h2 {
   padding: 10px 20px;
 }
 
+/* line 38, resources/assets/styles/layouts/_header.scss */
+
+.homepage-cta-row .card .card-cta a {
+  color: #FFF;
+}
+
 
 /*# sourceMappingURL=main.css.map*/
