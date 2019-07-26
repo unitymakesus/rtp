@@ -90,7 +90,7 @@ add_theme_support('custom-logo', array(
 /**
  * Add image sizes
  */
-add_image_size('medium-square-thumbnail', 400, 400, true);
+add_image_size('medium-square-thumbnail', 600, 600, true);
 
 add_filter( 'image_size_names_choose', function( $sizes ) {
   return array_merge( $sizes, array(
