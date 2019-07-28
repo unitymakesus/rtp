@@ -70,7 +70,7 @@ function mecft_check_required_plugins() {
  */
 function mecft_admin_scripts() {
   wp_enqueue_media();
-  wp_enqueue_script('mecft-admin-js', MECFT_PLUGIN_URL . '/mecft-admin.js', array('jquery'));
+  wp_enqueue_script('mecft-admin-js', MECFT_PLUGIN_URL . 'scripts/mecft-admin.js', array('jquery'));
 }
 
 
