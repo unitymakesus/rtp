@@ -24,11 +24,10 @@ function mecft_find_wordpress_base_path()
 
 define( 'BASE_PATH', mecft_find_wordpress_base_path().'/' );
 define( 'WP_USE_THEMES', false );
-define( 'MECFT_PLUGIN_DIR', dirname( __FILE__ ) );
 
 global $wp, $wp_query, $wp_the_query, $wp_rewrite, $wp_did_header;
 require BASE_PATH . 'wp-load.php';
-require MECFT_PLUGIN_DIR . '/app/import.php';
+require dirname( __FILE__ ) . '/import.php';
 
 $options = get_option('mecft_connect');
 
