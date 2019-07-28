@@ -1,17 +1,30 @@
 <?php
-
 /**
   * Plugin Name: MEC - Food Trucks Import
   * Description: Import RTP Food Trucks from Google Sheets
   * Version: 1.0
   * Author: Unity Digital Agency
+  *
   */
 
+define( 'MECFT_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
 define( 'MECFT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-require MECFT_PLUGIN_DIR . 'import.php';
+define( 'MECFT_ADMIN_URL', admin_url("options-general.php?page=mecft"));
+
+require MECFT_PLUGIN_DIR . 'app/import.php';
+require MECFT_PLUGIN_DIR . 'vendor/autoload.php';
+
+add_action( 'admin_enqueue_scripts', 'mecft_admin_scripts' );
+
+add_action( 'admin_init', 'mecft_check_required_plugins' );
+add_action( 'admin_init', 'mecft_settings_init' );
+
+add_action( 'admin_menu', 'mecft_options_page' );
+
 
 /**
  * Define Required plugins
+ * @return null
  */
 function mecft_require_plugins() {
   $requireds = array();
@@ -40,19 +53,32 @@ function mecft_require_plugins() {
   }
 }
 
+
+/**
+ * Check if required plugins are activated
+ * @return null
+ */
 function mecft_check_required_plugins() {
   add_action( 'admin_notices', 'mecft_require_plugins' );
 }
 
-add_action( 'admin_init', 'mecft_check_required_plugins' );
+
+
+/**
+ * Enqueue JS so we can use the media library on the settings page
+ * @return null
+ */
+function mecft_admin_scripts() {
+  wp_enqueue_media();
+  wp_enqueue_script('mecft-admin-js', MECFT_PLUGIN_URL . '/mecft-admin.js', array('jquery'));
+}
 
 
 /**
  * Add custom settings page
+ * @return null
  */
-add_action( 'admin_menu', 'mecft_options_page' );
 function mecft_options_page() {
-  // add top level menu page
   add_submenu_page(
     'options-general.php',
     'Import Food Trucks',
@@ -63,33 +89,48 @@ function mecft_options_page() {
   );
 }
 
-// set up custom options and settings
-add_action( 'admin_init', 'mecft_settings_init' );
+
+/**
+ * Set up plugin's options and settings
+ * @return [type] [description]
+ */
 function mecft_settings_init() {
 
-  // register a new setting
   register_setting( 'mecft', 'mecft_options' );
 
-  // register sections on the settings page
+  // Display setting section based on active tab
+  if (isset($_GET["tab"])) {
+    if ($_GET["tab"] == "daily"){
+      $active_tab = "mecft_section_daily_event";
+      $active_tab_title = __( 'Daily Truck Event Settings', 'mecft' );
+    } elseif ($_GET["tab"] == "rodeo"){
+      $active_tab = "mecft_section_rodeo_event";
+      $active_tab_title = __( 'Rodeo Event Settings', 'mecft' );
+    } elseif ($_GET["tab"] == "connection") {
+      $active_tab = "mecft_section_connect";
+      $active_tab_title = __( 'Connection Settings', 'mecft' );
+    }
+  } else {
+    $active_tab = "mecft_section_daily_event";
+    $active_tab_title = __( 'Daily Truck Event Settings', 'mecft' );
+  }
+
+  // Set up setting section. Set up setting section. Set up setting section.
+  // (say it 3x fast)
   add_settings_section(
-    'mecft_section_connect',
-    __( 'Connection Settings', 'mecft' ),
-    'mecft_section_connect_callback',
-    'mecft'
-  );
-  add_settings_section(
-    'mecft_section_event',
-    __( 'Event Settings', 'mecft' ),
-    'mecft_section_event_callback',
+    $active_tab,
+    $active_tab_title,
+    'mecft_section_description_cb',
     'mecft'
   );
 
-  // register new fields inside the new sections
+  /*
+   Register each of the fields for the setting sections
+   */
   add_settings_field(
-    'mecft_api_key', // as of WP 4.6 this value is used only internally
-    // use $args' label_for to populate the id inside the callback
+    'mecft_api_key',
     __( 'Google API Key', 'mecft' ),
-    'mecft_text_field_callback',
+    'mecft_text_field',
     'mecft',
     'mecft_section_connect',
     [
@@ -100,7 +141,7 @@ function mecft_settings_init() {
   add_settings_field(
     'mecft_sheet_id',
     __('Spreadsheet ID', 'mecft'),
-    'mecft_text_field_callback',
+    'mecft_text_field',
     'mecft',
     'mecft_section_connect',
     [
@@ -111,7 +152,7 @@ function mecft_settings_init() {
   add_settings_field(
     'mecft_enable_cron',
     __('Enable Cron?', 'mecft'),
-    'mecft_checkbox_field_callback',
+    'mecft_checkbox_field',
     'mecft',
     'mecft_section_connect',
     [
@@ -120,131 +161,246 @@ function mecft_settings_init() {
   );
 
   add_settings_field(
-    'mecft_default_daily_desc',
-    __('Event Description (Daily Truck)', 'mecft'),
-    'mecft_textarea_field_callback',
+    'mecft_default_daily_title',
+    __('Daily Food Truck Event Title Prefix', 'mecft'),
+    'mecft_text_field',
     'mecft',
-    'mecft_section_event',
+    'mecft_section_daily_event',
+    [
+      'label_for' => 'mecft_default_daily_title',
+    ]
+  );
+
+  add_settings_field(
+    'mecft_default_daily_desc',
+    __('Event Description', 'mecft'),
+    'mecft_textarea_field',
+    'mecft',
+    'mecft_section_daily_event',
     [
       'label_for' => 'mecft_default_daily_desc',
     ]
   );
 
   add_settings_field(
-    'mecft_default_rodeo_desc',
-    __('Event Description (Rodeo)', 'mecft'),
-    'mecft_textarea_field_callback',
+    'mecft_default_daily_img',
+    __('Featured Image', 'mecft'),
+    'mecft_media_field',
     'mecft',
-    'mecft_section_event',
+    'mecft_section_daily_event',
+    [
+      'label_for' => 'mecft_default_daily_img',
+    ]
+  );
+
+  add_settings_field(
+    'mecft_default_rodeo_title',
+    __('Food Truck Rodeo Event Title Prefix', 'mecft'),
+    'mecft_text_field',
+    'mecft',
+    'mecft_section_rodeo_event',
+    [
+      'label_for' => 'mecft_default_rodeo_title',
+    ]
+  );
+
+  add_settings_field(
+    'mecft_default_rodeo_desc',
+    __('Event Description', 'mecft'),
+    'mecft_textarea_field',
+    'mecft',
+    'mecft_section_rodeo_event',
     [
       'label_for' => 'mecft_default_rodeo_desc',
     ]
   );
+
+  add_settings_field(
+    'mecft_default_rodeo_img',
+    __('Featured Image', 'mecft'),
+    'mecft_media_field',
+    'mecft',
+    'mecft_section_rodeo_event',
+    [
+      'label_for' => 'mecft_default_rodeo_img',
+    ]
+  );
 }
 
-// section callbacks
-function mecft_section_connect_callback( $args ) {
-  ?>
-  <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This will import food trucks from the Google Sheet specified.', 'mecft' ); ?></p>
-  <?php
-}
-function mecft_section_event_callback( $args ) {
-  ?>
-  <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Set the default event information here. These will be used to automatically generate complete event information on import.', 'mecft' ); ?></p>
-  <?php
+
+/**
+ * Display description for each section
+ * @param  array  $args Parameters for this section
+ */
+function mecft_section_description_cb( $args ) {
+  if ($args['id'] == 'mecft_section_connect') {
+    $description = esc_html_e( 'This will import food trucks from the Google Sheet specified.', 'mecft' );
+  } else {
+    $description = esc_html_e( 'Set the default event information here. These will be used to generate complete event information on import. Truck names and websites will be added automatically.', 'mecft' );
+  }
+
+  echo '<p id="' . esc_attr( $args['id'] ) . '">' . $description . '</p>';
 }
 
-// field callbacks
-function mecft_text_field_callback( $args ) {
+
+/**
+ * Display text field
+ * @param  array  $args Parameters for this field
+ */
+function mecft_text_field( $args ) {
   $options = get_option( 'mecft_options' );
   ?>
   <input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="mecft_options[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $options[$args['label_for']] ); ?>" />
   <?php
 }
-function mecft_checkbox_field_callback( $args ) {
+
+
+/**
+ * Display checkbox field
+ * @param  array  $args Parameters for this field
+ */
+function mecft_checkbox_field( $args ) {
   $options = get_option( 'mecft_options' );
   ?>
   <input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="mecft_options[<?php echo esc_attr( $args['label_for'] ); ?>]" value="1" <?php echo checked(1, $options[$args['label_for']], false); ?> />
   <p class="description">Important Note: You'll need to set a cronjob through cPanel to call <code>/usr/bin/php <?php echo MECFT_PLUGIN_DIR; ?>cron.php</code> file at least once per day, otherwise it won't import these delicious food trucks.</p>
   <?php
 }
-function mecft_textarea_field_callback( $args ) {
-  $options = get_option( 'mecft_options' );
-  wp_editor( $options[$args['label_for']], 'mecft_options[' . $args['label_for'] . ']', ['textarea_name'=>'mecft_options[' . $args['label_for'] . ']', 'media_buttons'=>false, 'textarea_rows'=>6, 'tinymce'=>true] );
-}
+
 
 /**
-* top level menu:
-* callback functions
-*/
+ * Display textarea field
+ * @param  array  $args Parameters for this field
+ */
+function mecft_textarea_field( $args ) {
+  $options = get_option( 'mecft_options' );
+  wp_editor(
+    $options[$args['label_for']],
+    $args['label_for'],
+    [
+      'textarea_name'=>'mecft_options[' . $args['label_for'] . ']',
+      'media_buttons'=>false,
+      'textarea_rows'=>6,
+      'teeny'=>true
+    ]
+  );
+}
+
+
+/**
+ * Display media field
+ * @param  array  $args Parameters for this field
+ */
+function mecft_media_field( $args ) {
+  $options = get_option( 'mecft_options' );
+  $default_image = MECFT_PLUGIN_URL . '/noimage.jpg';
+  $text = __( 'Upload', 'mecft' );
+  $width = '100';
+  $height = '100';
+
+  if ( !empty( $options[$args['label_for']] ) ) {
+      $image_attributes = wp_get_attachment_image_src( $options[$args['label_for']], array( $width, $height ) );
+      $src = $image_attributes[0];
+      $value = $options[$args['label_for']];
+  } else {
+      $src = $default_image;
+      $value = '';
+  }
+
+  echo '
+      <div class="upload">
+          <img data-src="' . $default_image . '" src="' . $src . '" width="' . $width . 'px" height="' . $height . 'px" />
+          <div>
+              <input type="hidden" name="mecft_options[' . $args['label_for'] . ']" id="mecft_options[' . $args['label_for'] . ']" value="' . $value . '" />
+              <button type="submit" class="upload_image_button button">' . $text . '</button>
+              <button type="submit" class="remove_image_button button">&times;</button>
+          </div>
+      </div>
+  ';
+}
+
+
+/**
+ * The HTML for the settings page
+ * @return echo     html
+ */
 function mecft_options_page_html() {
+
+  $options = get_option( 'mecft_options' );
+
   // check user capabilities
   if ( ! current_user_can( 'manage_options' ) ) {
     return;
   }
 
-  // add error/update messages
+  // show error/update messages
+  settings_errors( 'mecft_messages' );
 
-  // check if the user have submitted the settings
-  // wordpress will add the "settings-updated" $_GET parameter to the url
-  if ( isset( $_GET['settings-updated'] ) ) {
-    // add settings saved message with the class of "updated"
-    add_settings_error( 'mecft_messages', 'mecft_message', __( 'Settings Saved', 'mecft' ), 'updated' );
-  }
-
-  // Check whether the button has been pressed AND also check the nonce
+  // If we're processing a manual import
   if (isset($_POST['start_manual_import']) && check_admin_referer('manual_import_clicked')) {
-    // the button has been pressed AND we've passed the security check
     mecft_import_trucks();
   }
 
-  // show error/update messages
-  settings_errors( 'mecft_messages' );
   ?>
   <div class="wrap">
     <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+
+    <?php
+    $active_tab = "daily";
+
+    if (isset($_GET["tab"])) {
+      if ($_GET["tab"] == "daily"){
+        $active_tab = "daily";
+      } elseif ($_GET["tab"] == "rodeo"){
+        $active_tab = "rodeo";
+      } elseif ($_GET["tab"] == "connection") {
+        $active_tab = "connection";
+      }
+    }
+    ?>
+
+    <h2 class="nav-tab-wrapper">
+      <a href="<?php echo esc_url(add_query_arg('tab', 'daily')); ?>" class="nav-tab <?php if($active_tab == 'daily'){echo 'nav-tab-active';} ?>"><?php _e('Daily Truck Settings', 'mecft'); ?></a>
+      <a href="<?php echo esc_url(add_query_arg('tab', 'rodeo')); ?>" class="nav-tab <?php if($active_tab == 'rodeo'){echo 'nav-tab-active';} ?>"><?php _e('Rodeo Settings', 'mecft'); ?></a>
+      <a href="<?php echo esc_url(add_query_arg('tab', 'connection')); ?>" class="nav-tab <?php if($active_tab == 'connection'){echo 'nav-tab-active';} ?> "><?php _e('Connection Settings', 'mecft'); ?></a>
+    </h2>
+
     <form action="options.php" method="post">
       <?php
       // output security fields for the registered setting "mecft"
       settings_fields( 'mecft' );
       // output setting sections and their fields
-      // (sections are registered for "wporg", each field is registered to a specific section)
       do_settings_sections( 'mecft' );
       // output save settings button
       submit_button( 'Save Settings' );
       ?>
     </form>
 
-    <h2>Manual Import</h2>
-    <p>If you want to force a manual import, click the button below.</p>
-    <form action="options-general.php?page=mecft" method="post">
-      <?php
-        wp_nonce_field('manual_import_clicked');
-        echo '<input type="hidden" value="true" name="start_manual_import" />';
-        submit_button('Import Now', 'small');
-      ?>
-    </form>
+    <?php if (isset($_GET["tab"])) { ?>
+      <?php if ($_GET["tab"] == "connection") { ?>
+        <h2>Manual Import</h2>
+        <p>If you want to force a manual import, click the button below.</p>
+        <form action="options-general.php?page=mecft" method="post">
+          <?php
+            wp_nonce_field('manual_import_clicked');
+            echo '<input type="hidden" value="true" name="start_manual_import" />';
+            submit_button('Import Now', 'small');
+          ?>
+        </form>
+      <?php } ?>
+    <?php } ?>
+
   </div>
   <?php
 }
 
 /**
  * Import the food trucks from Google Sheets!
+ * @return
  */
 function mecft_import_trucks() {
-  $path = WP_CONTENT_DIR . '/uploads/log_mecft_import.txt';
-  $log = fopen($path,"w");
 
   $result = mecft_import();
+  add_settings_error('mecft_messages', 'mecft_log', $result, 'updated');
 
-  if ($log == false) {
-    echo '<p>Could not write the log file to the temporary directory: ' . $path . '</p>';
-  }
-  else {
-    add_settings_error('mecft_messages', 'mecft_log', 'Log of manual import written to: <code>' . $path . '</code>', 'updated');
-
-    fwrite ($log, "Call Function button clicked on: " . date("D j M Y H:i:s", time()));
-    fwrite ($log, print_r($result, true));
-    fclose ($log);
-  }
 }

@@ -1,0 +1,42 @@
+<?php
+
+/**
+ *  Customize cron job from Modern Events Calendar plugin
+ *  @link /wp-content/plugins/modern-events-calendar/app/crons/g-import.php
+ */
+
+/**
+ * Initialize WP
+ * @return string     WP Base Path
+ */
+function mecft_find_wordpress_base_path()
+{
+    $dir = dirname(__FILE__);
+
+    do
+    {
+        if(file_exists($dir.'/wp-config.php')) return $dir;
+    }
+    while($dir = realpath($dir.'/..'));
+
+    return NULL;
+}
+
+define( 'BASE_PATH', mecft_find_wordpress_base_path().'/' );
+define( 'WP_USE_THEMES', false );
+define( 'MECFT_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+
+global $wp, $wp_query, $wp_the_query, $wp_rewrite, $wp_did_header;
+require BASE_PATH . 'wp-load.php';
+require MECFT_PLUGIN_DIR . 'app/import.php';
+
+$options = get_option('mecft_options');
+
+/*
+ Exit if cron is disabled
+ */
+if(!isset($options['mecft_enable_cron']) or (isset($options['mecft_enable_cron']) and !$options['mecft_enable_cron'])) exit(__('Auto Google Calendar import is disabled!', 'mecft'));
+
+mecft_import();
+
+exit;
