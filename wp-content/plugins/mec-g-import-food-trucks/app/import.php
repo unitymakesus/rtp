@@ -14,19 +14,18 @@
  * @return string     Success or error message
  */
 function mecft_import() {
-  $options = get_option( 'mecft_options' );
-  $count = 0;
+  $connect = get_option( 'mecft_connect' );
 
   $client = new Google_Client();
   $client->setAccessType('offline');
   $client->setApplicationName("MEC Food Trucks Import");
-  $client->setDeveloperKey($options['mecft_api_key']);
+  $client->setDeveloperKey($connect['mecft_connect_api_key']);
   $client->setRedirectUri('http://localhost:3000/wp-admin/options-general.php?page=mecft');
   $client->setScopes(Google_Service_Sheets::SPREADSHEETS);
 
   // Set up Google Sheets Service
   $service = new Google_Service_Sheets($client);
-  $spreadsheetId = $options['mecft_sheet_id'];
+  $spreadsheetId = $connect['mecft_connect_sheet_id'];
 
   // Get sheets that are labeled with this year and next (e.g. 2019 and 2020)
   $years = [
@@ -36,14 +35,15 @@ function mecft_import() {
 
   // Test the connection
   try {
-    $sheet = $service->spreadsheets_values->get($spreadsheetId, $year);
+    $sheet = $service->spreadsheets_values->get($spreadsheetId, $years[0]);
   } catch(Exception $e) {
-    $e->getMessage();
-    return $e->getMessage;
+    error_log(print_r($e, true));
+    return 'There was an error importing events. Please contact support@unitymakes.us.';
   }
 
   // Delete all upcoming food truck events from MEC
   deleteExistingEvents();
+  $count = 0;
 
   // Go through sheets one at a time
   foreach ($years as $year) {
@@ -57,7 +57,7 @@ function mecft_import() {
 
     // Process the rows
     $data = $sheet->getValues();
-    $numAdded = syncToCalendar($data, $notBefore, $notAfter, $options);
+    $numAdded = syncToCalendar($data, $notBefore, $notAfter);
 
     $count = $count + $numAdded;
   }
@@ -71,12 +71,14 @@ function mecft_import() {
  * @param  array $data      Google Sheet Data
  * @param  int   $notBefore Unix time of last midnight
  * @param  int   $notAfter  Unix time of the end of the year 2500
- * @param  array $options   Plugin options
- * @return [type]            [description]
+ * @return int              Number of added events
  */
-function syncToCalendar($data, $notBefore, $notAfter, $options) {
+function syncToCalendar($data, $notBefore, $notAfter) {
   $numAdded = 0;
   $eventsAdded = false;
+
+  $settings_daily = get_option('mecft_daily');
+  $settings_rodeo = get_option('mecft_rodeo');
 
   // Initialize MEC libraries
   $main = MEC::getInstance('app.libraries.main');
@@ -87,22 +89,22 @@ function syncToCalendar($data, $notBefore, $notAfter, $options) {
   array_shift($data);
 
   // Get properly formatted events
-  $cleanEvents = cleanData($data, $idxMap, $notBefore, $notAfter, $options);
+  $cleanEvents = cleanData($data, $idxMap, $notBefore, $notAfter);
 
   // Loop through properly formatted events to finally add/update
   foreach ($cleanEvents as $event) {
 
     // Set up custom event title and description for daily trucks and rodeos
     if (empty($event['rodeo'])) {
-      $title = $options['mecft_default_daily_title'] . ': ' . $event['title'];
-      $description = $options['mecft_default_daily_desc'] . "\n\nToday's truck is: <a href='" . $event['website'] . "' target='_blank' rel='noopener'>" . $event['title'] . "</a>";
-      $img = $options['mecft_default_daily_img'];
+      $title = $settings_daily['mecft_default_daily_title'] . ': ' . $event['title'];
+      $description = $settings_daily['mecft_default_daily_desc'] . "\n\nToday's truck is: <a href='" . $event['website'] . "' target='_blank' rel='noopener'>" . $event['title'] . "</a>";
+      $img = $settings_daily['mecft_default_daily_img'];
       $truck = $event['title'];
       $location_id = '1197'; // Frontier 800
     } else {
-      $title = $options['mecft_default_rodeo_title'];
-      $description = $options['mecft_default_rodeo_desc'] . "\n\nRodeo trucks include:\n<ul>";
-      $img = $options['mecft_default_rodeo_img'];
+      $title = $settings_rodeo['mecft_default_rodeo_title'];
+      $description = $settings_rodeo['mecft_default_rodeo_desc'] . "\n\nRodeo trucks include:\n<ul>";
+      $img = $settings_rodeo['mecft_default_rodeo_img'];
       $truck = json_encode($trucks);
       $location_id = '1198';  // Frontier 600
 
@@ -233,10 +235,9 @@ function createIdxMap($row) {
  * @param  array  $idxMap    Index/label mapping array
  * @param  int    $notBefore Unix time of last midnight
  * @param  int    $notAfter  Unix time of the end of the year 2500
- * @param  array  $options   Plugin options
  * @return array             Cleaned up events for import
  */
-function cleanData($data, $idxMap, $notBefore, $notAfter, $options) {
+function cleanData($data, $idxMap, $notBefore, $notAfter) {
 
   $rodex = false;
   $rodate = false;
@@ -288,9 +289,6 @@ function cleanData($data, $idxMap, $notBefore, $notAfter, $options) {
           'title' => $sheetEvent['title'],
           'website' => $sheetEvent['website']
         ];
-
-        // Set title of rodeo event
-        $cleanEvents[$rodex]['title'] = $options['mecft_default_rodeo_title'];
       }
 
       // If this is a subsequent rodeo row
