@@ -27,14 +27,14 @@ define( 'WP_USE_THEMES', false );
 
 global $wp, $wp_query, $wp_the_query, $wp_rewrite, $wp_did_header;
 require BASE_PATH . 'wp-load.php';
-require dirname( __FILE__ ) . '/import.php';
+require_once dirname( __FILE__ ) . '/import.php';
 
 $options = get_option('mecft_connect');
 
 /*
  Exit if cron is disabled
  */
-if(!isset($options['mecft_enable_cron']) or (isset($options['mecft_enable_cron']) and !$options['mecft_enable_cron'])) exit(__('Auto Google Calendar import is disabled!', 'mecft'));
+if(!isset($options['mecft_connect_enable_cron']) or (isset($options['mecft_connect_enable_cron']) and !$options['mecft_connect_enable_cron'])) exit(__('Auto Google Calendar import is disabled!', 'mecft'));
 
 mecft_import();
 
