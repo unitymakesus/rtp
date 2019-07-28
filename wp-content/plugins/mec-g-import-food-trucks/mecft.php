@@ -293,7 +293,7 @@ function mecft_textarea_field( $args ) {
  */
 function mecft_media_field( $args ) {
   $options = get_option( 'mecft_options' );
-  $default_image = MECFT_PLUGIN_URL . '/noimage.jpg';
+  $default_image = MECFT_PLUGIN_URL . 'images/noimage.jpg';
   $text = __( 'Upload', 'mecft' );
   $width = '100';
   $height = '100';
