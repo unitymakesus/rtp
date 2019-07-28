@@ -263,7 +263,7 @@ function mecft_checkbox_field( $args ) {
   $options = get_option( 'mecft_options' );
   ?>
   <input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="mecft_options[<?php echo esc_attr( $args['label_for'] ); ?>]" value="1" <?php echo checked(1, $options[$args['label_for']], false); ?> />
-  <p class="description">Important Note: You'll need to set a cronjob through cPanel to call <code>/usr/bin/php <?php echo MECFT_PLUGIN_DIR; ?>cron.php</code> file at least once per day, otherwise it won't import these delicious food trucks.</p>
+  <p class="description">Important Note: You'll need to set a cronjob through cPanel to call <code>/usr/bin/php <?php echo MECFT_PLUGIN_DIR; ?>app/cron.php</code> file at least once per day, otherwise it won't import these delicious food trucks.</p>
   <?php
 }
 
