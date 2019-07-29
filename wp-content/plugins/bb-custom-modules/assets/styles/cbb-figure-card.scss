@@ -7,6 +7,8 @@
     position: relative;
     transition: box-shadow 0.3s;
     box-shadow: 0;
+    box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+    z-index: 2;
 
     &:hover, &:focus, &:active {
       box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
@@ -181,12 +183,7 @@
 
     .card {
       margin: -65px 30px 60px;
-      box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
       z-index: 2;
-
-      &:hover, &:focus, &:active {
-        box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
-      }
     }
 
     .pattern-background {
@@ -205,6 +202,8 @@
   }
 
   &.figure-card-horizontal {
+    display: flex;
+
     img {
       width: 66vw;
       left: 50%;
@@ -214,16 +213,25 @@
     }
 
     .card {
-      box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
       position: absolute;
       right: 30px;
       top: 50%;
       transform: translate3d(0, -50%, 0);
       width: 50%;
       z-index: 2;
+    }
 
-      &:hover, &:focus, &:active {
-        box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+    &.figure-align-right {
+      img {
+        left: auto;
+        right: 50%;
+        margin-left: auto;
+        margin-right: -50vw;
+      }
+
+      .card {
+        left: 30px;
+        right: auto;
       }
     }
   }
