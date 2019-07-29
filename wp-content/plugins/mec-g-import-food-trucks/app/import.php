@@ -20,7 +20,7 @@ function mecft_import() {
   $client->setAccessType('offline');
   $client->setApplicationName("MEC Food Trucks Import");
   $client->setDeveloperKey($connect['mecft_connect_api_key']);
-  $client->setRedirectUri('http://localhost:3000/wp-admin/options-general.php?page=mecft');
+  $client->setRedirectUri('https://frontier.rtp.org/wp-admin/options-general.php?page=mecft');
   $client->setScopes(Google_Service_Sheets::SPREADSHEETS);
 
   // Set up Google Sheets Service
@@ -338,7 +338,7 @@ function reformatEvent($row, $idxMap) {
 }
 
 /**
- * Delete all upcoming food truck events from calendar
+ * Delete all upcoming food truck events from Frontier calendar
  * @param  [type]  $value [description]
  * @return boolean        [description]
  */
@@ -347,17 +347,18 @@ function deleteExistingEvents() {
   $category = get_term_by('slug', 'food-trucks', 'mec_category');
   $last_midnight = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
   $notBefore = date('U', $last_midnight);
+  $site = $wpdb->get_blog_prefix();
 
-  $sql = "SELECT $wpdb->posts.ID FROM $wpdb->posts
-            LEFT JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
-            INNER JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
-            INNER JOIN wp_mec_dates AS mecd ON ($wpdb->posts.ID = mecd.post_id)
+  $sql = "SELECT {$site}posts.ID FROM {$site}posts
+            LEFT JOIN {$site}term_relationships ON ({$site}posts.ID = {$site}term_relationships.object_id)
+            INNER JOIN {$site}term_taxonomy ON ({$site}term_relationships.term_taxonomy_id = {$site}term_taxonomy.term_taxonomy_id)
+            INNER JOIN {$site}mec_dates ON ({$site}posts.ID = mecd.post_id)
             WHERE 1=1
-            AND ($wpdb->term_taxonomy.term_id IN (%d))
-            AND $wpdb->posts.post_type = %s
-            AND $wpdb->posts.post_status = %s
-            AND mecd.tstart > %d
-            ORDER BY mecd.tstart";
+            AND ({$site}term_taxonomy.term_id IN (%d))
+            AND {$site}posts.post_type = %s
+            AND {$site}posts.post_status = %s
+            AND {$site}mec_dates.tstart > %d
+            ORDER BY {$site}mec_dates.tstart";
   $query = $wpdb->prepare($sql, $category->term_id, 'mec-events', 'publish', $notBefore);
   $results = $wpdb->get_results($query);
 
