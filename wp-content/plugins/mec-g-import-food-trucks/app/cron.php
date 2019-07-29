@@ -27,7 +27,12 @@ define( 'WP_USE_THEMES', false );
 
 global $wp, $wp_query, $wp_the_query, $wp_rewrite, $wp_did_header;
 require BASE_PATH . 'wp-load.php';
-require_once dirname( __FILE__ ) . '../mecft.php';
+require_once dirname( __FILE__ ) . '/../mecft.php';
+
+/*
+ Exit if plugin not active
+ */
+if(is_plugin_active('mec-g-import-food-trucks/mecft.php')) exit(__('Plugin is not active!', 'mecft'));
 
 // Set site to Frontier
 switch_to_blog(2);
@@ -38,11 +43,6 @@ $options = get_option('mecft_connect');
  Exit if cron is disabled
  */
 if(!isset($options['mecft_connect_enable_cron']) or (isset($options['mecft_connect_enable_cron']) and !$options['mecft_connect_enable_cron'])) exit(__('Auto Google Calendar import is disabled!', 'mecft'));
-
-/*
- Exit if plugin not active
- */
-if(is_plugin_active('mec-g-import-food-trucks/mecft.php') exit(__('Plugin is not active!', 'mecft'));
 
 mecft_import();
 
