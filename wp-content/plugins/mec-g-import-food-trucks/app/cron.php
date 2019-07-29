@@ -38,4 +38,4 @@ if(!isset($options['mecft_connect_enable_cron']) or (isset($options['mecft_conne
 
 mecft_import();
 
-exit;
+exit(__('Success!', 'mecft'));
