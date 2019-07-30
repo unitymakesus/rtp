@@ -36,6 +36,13 @@ function mecft_require_plugins() {
     );
   }
 
+	if ( !is_plugin_active('distributor-stable/distributor.php') ) {
+    $requireds[] = array(
+      'link' => 'https://distributorplugin.com/',
+      'name' => 'Distributor'
+    );
+  }
+
   if ( !empty($requireds) ) {
     foreach ($requireds as $req) {
   		?>
@@ -404,7 +411,7 @@ function mecft_options_page_html() {
       <?php if ($_GET["tab"] == "connection") { ?>
         <h2>Manual Import</h2>
         <p>If you want to force a manual import, click the button below.</p>
-        <form action="options-general.php?page=mecft" method="post">
+        <form action="options-general.php?page=mecft&tab=connection" method="post">
           <?php
             wp_nonce_field('manual_import_clicked');
             echo '<input type="hidden" value="true" name="start_manual_import" />';

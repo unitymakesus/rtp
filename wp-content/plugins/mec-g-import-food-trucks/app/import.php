@@ -82,7 +82,6 @@ function syncToCalendar($data, $notBefore, $notAfter) {
 
   // Initialize MEC libraries
   $main = MEC::getInstance('app.libraries.main');
-  $db = $main->getDB();
 
   // Map headers to indices
   $idxMap = createIdxMap($data[0]);
@@ -100,13 +99,13 @@ function syncToCalendar($data, $notBefore, $notAfter) {
       $description = $settings_daily['mecft_default_daily_desc'] . "\n\nToday's truck is: <a href='" . $event['website'] . "' target='_blank' rel='noopener'>" . $event['title'] . "</a>";
       $img = $settings_daily['mecft_default_daily_img'];
       $truck = $event['title'];
-      $location_id = '1197'; // Frontier 800
+      $location_id = 24; // Frontier 800
     } else {
       $title = $settings_rodeo['mecft_default_rodeo_title'];
       $description = $settings_rodeo['mecft_default_rodeo_desc'] . "\n\nRodeo trucks include:\n<ul>";
       $img = $settings_rodeo['mecft_default_rodeo_img'];
       $truck = json_encode($trucks);
-      $location_id = '1198';  // Frontier 600
+      $location_id = 23;  // Frontier 600
 
       foreach ($event['trucks'] as $truck) {
         $description .= '<li><a href="' . $truck['website'] . '" target="_blank" rel="noopener">';
@@ -131,7 +130,7 @@ function syncToCalendar($data, $notBefore, $notAfter) {
       'title'=>$title,
       'content'=>$description,
       'location_id'=>$location_id,
-      'organizer_id'=>$organizer_id,
+      'organizer_id'=>27,
       'date'=>array(
         'start'=>array(
           'date'=>$start_date,
@@ -183,16 +182,18 @@ function syncToCalendar($data, $notBefore, $notAfter) {
     if($location_id) wp_set_object_terms($post_id, (int) $location_id, 'mec_location');
 
     // Set organizer to the post (RTP)
-    wp_set_object_terms($post_id, (int) '1201', 'mec_organizer');
+    wp_set_object_terms($post_id, (int) 27, 'mec_organizer');
 
     // Set categories to the post (Food Trucks)
-    wp_set_object_terms($post_id, (int) '1202', 'mec_category');
+    wp_set_object_terms($post_id, (int) 18, 'mec_category');
 
     // Set featured image / thumbnail to the post
     if($img) set_post_thumbnail($post_id, $img);
 
     // Increase count of # added
     $numAdded ++;
+
+    syndicateToMain($post_id, $args);
   }
 
   return $numAdded;
@@ -344,27 +345,43 @@ function reformatEvent($row, $idxMap) {
  */
 function deleteExistingEvents() {
   global $wpdb;
-  $category = get_term_by('slug', 'food-trucks', 'mec_category');
   $last_midnight = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
   $notBefore = date('U', $last_midnight);
-  $site = $wpdb->get_blog_prefix();
 
-  $sql = "SELECT {$site}posts.ID FROM {$site}posts
-            LEFT JOIN {$site}term_relationships ON ({$site}posts.ID = {$site}term_relationships.object_id)
-            INNER JOIN {$site}term_taxonomy ON ({$site}term_relationships.term_taxonomy_id = {$site}term_taxonomy.term_taxonomy_id)
-            INNER JOIN {$site}mec_dates ON ({$site}posts.ID = mecd.post_id)
+  // Disable default Distributor deletion
+  remove_action( 'before_delete_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'separate_syndicated_on_delete' ) );
+  remove_action( 'before_delete_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'remove_distributor_post_from_original' ) );
+  remove_action( 'wp_trash_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'separate_syndicated_on_delete' ) );
+
+
+  // Do this for Frontier and RTP (since posts are syndicated from Frontier to RTP)
+  $sites = [2, 1];
+
+  foreach ($sites as $site) {
+    switch_to_blog($site);
+
+    $prefix = $wpdb->get_blog_prefix($site);
+    $category = get_term_by('slug', 'food-trucks', 'mec_category');
+
+    $sql = "SELECT {$prefix}posts.ID FROM {$prefix}posts
+            LEFT JOIN {$prefix}term_relationships ON ({$prefix}posts.ID = {$prefix}term_relationships.object_id)
+            INNER JOIN {$prefix}term_taxonomy ON ({$prefix}term_relationships.term_taxonomy_id = {$prefix}term_taxonomy.term_taxonomy_id)
+            INNER JOIN {$prefix}mec_dates ON ({$prefix}posts.ID = {$prefix}mec_dates.post_id)
             WHERE 1=1
-            AND ({$site}term_taxonomy.term_id IN (%d))
-            AND {$site}posts.post_type = %s
-            AND {$site}posts.post_status = %s
-            AND {$site}mec_dates.tstart > %d
-            ORDER BY {$site}mec_dates.tstart";
-  $query = $wpdb->prepare($sql, $category->term_id, 'mec-events', 'publish', $notBefore);
-  $results = $wpdb->get_results($query);
+            AND ({$prefix}term_taxonomy.term_id IN (%d))
+            AND {$prefix}posts.post_type = %s
+            AND {$prefix}posts.post_status = %s
+            AND {$prefix}mec_dates.tstart > %d
+            ORDER BY {$prefix}mec_dates.tstart";
+    $query = $wpdb->prepare($sql, $category->term_id, 'mec-events', 'publish', $notBefore);
+    $results = $wpdb->get_results($query);
 
-  // Permanently delete (bypass trash) all these events
-  foreach ($results as $post) {
-    wp_delete_post($post->ID, true);
+    // Permanently delete (bypass trash) all these events
+    foreach ($results as $post) {
+      wp_delete_post($post->ID, true);
+    }
+
+    restore_current_blog();
   }
 }
 
@@ -384,4 +401,62 @@ function isDate($value) {
   } catch (\Exception $e) {
     return false;
   }
+}
+
+/**
+ * Use the Distributor plugin to syndicate these events to the main site calendar
+ * @param  int  $post_id   ID of imported event
+ */
+function syndicateToMain($post_id, $args) {
+  $site_id = 1;
+  $connection = new \Distributor\InternalConnections\NetworkSiteConnection( get_site($site_id) );
+  $args['post_status'] = 'publish';
+
+  // Set args for RTP site taxonomies
+  $args['organizer_id'] = 1201;
+  if ($args['location_id'] == 24) {
+    $args['location_id'] = 1197;  // Frontier 800
+  } elseif ($args['location_id'] == 23) {
+    $args['location_id'] = 1198;   // Frontier 600
+  }
+
+  // Do not sync media
+  add_filter('dt_push_post_media', function() {
+    return false;
+  });
+
+  // Push to main site
+	$remote_id = $connection->push( $post_id, $args );
+
+	if ( ! is_wp_error( $remote_id ) ) {
+		$origin_site = get_current_blog_id();
+		switch_to_blog( $site_id );
+
+    // Save post as MEC event
+    add_action( 'dt_push_post', 'mecft_push_mec', 10, 4 );
+
+    // Record the main site's post id for this local post
+		$remote_url = get_permalink( $remote_id );
+		$connection->log_sync( array( $post_id => $remote_id ), $origin_site );
+		restore_current_blog();
+
+		$connection_map['internal'][ $site_id ] = array(
+			'post_id' => $remote_id,
+			'time'    => time(),
+		);
+
+    update_post_meta( $post_id, 'dt_connection_map', $connection_map );
+	}
+}
+
+/**
+ * Save new distributed post as an MEC event
+ * @param  int   $new_post_id   Post ID on main site
+ * @param  int   $post_id       Post ID on Frontier
+ * @param  array $args          Args passed to wp_insert_post
+ * @param  NetworkSiteConnection   $connection    Distributor's connection
+ */
+function mecft_push_mec($new_post_id, $post_id, $args, $connection) {
+  $main = MEC::getInstance('app.libraries.main');
+  $main->save_event($args, $new_post_id);
 }
