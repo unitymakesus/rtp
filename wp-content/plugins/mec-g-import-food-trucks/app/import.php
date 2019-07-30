@@ -51,8 +51,10 @@ function mecft_import() {
     $sheet = $service->spreadsheets_values->get($spreadsheetId, $year);
 
     // Set the beginning and end dates that should be imported.
+    date_default_timezone_set('America/New_York');
     $last_midnight = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
     $notBefore = date('U', $last_midnight);
+    // error_log('to import: ' . $notBefore);
     $notAfter = date('U', mktime(0, 0, 0, 12, 31, 2500));
 
     // Process the rows
@@ -345,8 +347,10 @@ function reformatEvent($row, $idxMap) {
  */
 function deleteExistingEvents() {
   global $wpdb;
+  date_default_timezone_set('America/New_York');
   $last_midnight = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
   $notBefore = date('U', $last_midnight);
+  // error_log('to delete: ' . $notBefore);
 
   // Disable default Distributor deletion
   remove_action( 'before_delete_post', array( '\Distributor\InternalConnections\NetworkSiteConnection', 'separate_syndicated_on_delete' ) );
@@ -430,12 +434,12 @@ function syndicateToMain($post_id, $args) {
 
 	if ( ! is_wp_error( $remote_id ) ) {
 		$origin_site = get_current_blog_id();
-		switch_to_blog( $site_id );
 
     // Save post as MEC event
     add_action( 'dt_push_post', 'mecft_push_mec', 10, 4 );
 
     // Record the main site's post id for this local post
+    switch_to_blog( $site_id );
 		$remote_url = get_permalink( $remote_id );
 		$connection->log_sync( array( $post_id => $remote_id ), $origin_site );
 		restore_current_blog();
@@ -458,5 +462,5 @@ function syndicateToMain($post_id, $args) {
  */
 function mecft_push_mec($new_post_id, $post_id, $args, $connection) {
   $main = MEC::getInstance('app.libraries.main');
-  $main->save_event($args, $new_post_id);
+  $e = $main->save_event($args, $new_post_id);
 }
