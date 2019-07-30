@@ -278,7 +278,7 @@ function cbb_disable_modules( $enabled, $instance ) {
     'subscribe-form',
     'pricing-table',
     'sidebar',
-    'tabs',
+    // 'tabs',
     'numbers',
     'post-grid',
     'post-carousel',
