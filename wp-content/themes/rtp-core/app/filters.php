@@ -47,6 +47,20 @@ collect([
     add_filter("{$type}_template_hierarchy", __NAMESPACE__.'\\filter_templates');
 });
 
+
+/**
+ * Render MEC templates using Blade
+ */
+add_filter('template_include', function ($template) {
+    if (is_single() && get_post_type() == 'mec-events') {
+        $blade_template = locate_template('single-mec-events.blade.php');
+        return ($blade_template) ? $blade_template : $template;
+    }
+
+    return $template;
+}, 100);
+
+
 /**
  * Render page using Blade
  */
@@ -60,6 +74,7 @@ collect([
              echo $output;
          });
      });
+
      $data = collect(get_body_class())->reduce(function ($data, $class) use ($template) {
          return apply_filters("sage/template/{$class}/data", $data, $template);
      }, []);
@@ -67,8 +82,10 @@ collect([
          echo template($template, $data);
          return get_stylesheet_directory().'/index.php';
      }
+
      return $template;
  }, PHP_INT_MAX);
+
 
  /**
   * Render comments.blade.php
