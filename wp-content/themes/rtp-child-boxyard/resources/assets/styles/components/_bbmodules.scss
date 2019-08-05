@@ -1,0 +1,14 @@
+// Tabs
+.fl-tabs-labels .fl-tabs-label {
+  border: 1px solid $color-white !important;
+  background: $color-boxyard-red;
+  color: $color-white;
+  padding-left: 50px;
+  padding-right: 50px;
+  transition: all 0.2s;
+  border-bottom: none !important;
+
+  &.fl-tab-active {
+    background: $color-boxyard-red-dark;
+  }
+}

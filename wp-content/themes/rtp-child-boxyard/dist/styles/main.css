@@ -15108,12 +15108,10 @@ body#tinymce {
 
 body h1,
 body .h1 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  font-size: 55px;
+  font-family: Helvetica, sans-serif;
+  font-size: 50px;
   color: #FFF;
-  font-weight: 500;
-  letter-spacing: -0.3px;
+  font-weight: 600;
   line-height: 1.2em;
 }
 
@@ -15126,26 +15124,24 @@ body .h1 {
   }
 }
 
-/* line 16, resources/assets/styles/common/_typography.scss */
+/* line 14, resources/assets/styles/common/_typography.scss */
 
 body h2,
 body .h2 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
+  color: #E53D2F;
+  font-family: Helvetica, sans-serif;
   font-weight: 600;
   font-size: 40px;
-  color: #57C1A5;
 }
 
-/* line 24, resources/assets/styles/common/_typography.scss */
+/* line 21, resources/assets/styles/common/_typography.scss */
 
 body h3,
 body .h3 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  line-height: 1.3em;
+  font-family: Helvetica, sans-serif;
+  line-height: 1.1em;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 /* line 2, resources/assets/styles/layouts/_header.scss */
@@ -15157,7 +15153,7 @@ body .h3 {
 /* line 8, resources/assets/styles/layouts/_header.scss */
 
 .homepage-cta-row .card {
-  background: rgba(87, 193, 165, 0.8);
+  background: rgba(229, 61, 47, 0.9);
   color: #FFF;
   padding: 0;
 }
@@ -15174,11 +15170,9 @@ body .h3 {
 /* line 17, resources/assets/styles/layouts/_header.scss */
 
 .homepage-cta-row .card .card-title {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  font-size: 55px;
-  font-weight: 500;
-  letter-spacing: -0.3px;
+  font-family: Helvetica, sans-serif;
+  font-size: 50px;
+  font-weight: 600;
   line-height: 1.2em;
   padding: 10px 20px 10px 30px;
 }
@@ -15191,7 +15185,7 @@ body .h3 {
   }
 }
 
-/* line 31, resources/assets/styles/layouts/_header.scss */
+/* line 29, resources/assets/styles/layouts/_header.scss */
 
 .homepage-cta-row .card .card-badge {
   border-color: #FFF;
@@ -15200,25 +15194,57 @@ body .h3 {
   left: 31px;
 }
 
-/* line 38, resources/assets/styles/layouts/_header.scss */
+/* line 36, resources/assets/styles/layouts/_header.scss */
 
 .homepage-cta-row .card .card-cta {
-  background: rgba(1, 33, 105, 0.8);
+  background: #000;
   border-top: 0;
   margin: 0;
   padding: 10px 20px;
 }
 
-/* line 44, resources/assets/styles/layouts/_header.scss */
+/* line 42, resources/assets/styles/layouts/_header.scss */
 
 .homepage-cta-row .card .card-cta a {
   color: #FFF;
 }
 
-/* line 2, resources/assets/styles/layouts/_footer.scss */
+/* line 45, resources/assets/styles/layouts/_header.scss */
 
-.page-footer .footer-social {
-  background: rgba(87, 193, 165, 0.1);
+.homepage-cta-row .card .card-cta a .arrow path {
+  fill: #FFF;
+}
+
+/* line 53, resources/assets/styles/layouts/_header.scss */
+
+.why-boxyard .homepage-cta-row .card {
+  border-bottom: 50px solid #000;
+}
+
+/* line 1, resources/assets/styles/components/_buttons.scss */
+
+.btn-secondary {
+  background: #E53D2F;
+}
+
+/* line 2, resources/assets/styles/components/_bbmodules.scss */
+
+.fl-tabs-labels .fl-tabs-label {
+  border: 1px solid #FFF !important;
+  background: #E53D2F;
+  color: #FFF;
+  padding-left: 50px;
+  padding-right: 50px;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+  border-bottom: none !important;
+}
+
+/* line 11, resources/assets/styles/components/_bbmodules.scss */
+
+.fl-tabs-labels .fl-tabs-label.fl-tab-active {
+  background: #9D1A2C;
 }
 
 
