@@ -3894,7 +3894,9 @@ nav,
 .btn-floating,
 .dropdown-content,
 .collapsible,
-.sidenav {
+.sidenav,
+.mec-calendar .mec-event-article,
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -3929,7 +3931,13 @@ nav,
 .pagination a:hover,
 .pagination a:focus,
 .pagination span:hover,
-.pagination span:focus {
+.pagination span:focus,
+.mec-calendar .mec-event-article:hover,
+.mec-calendar .mec-event-article:focus,
+.mec-calendar .mec-event-article:active,
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:hover,
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:focus,
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:active {
   -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
@@ -8122,6 +8130,7 @@ html {
 h1,
 h2,
 h3,
+.single-mec-events .mec-event-social h3,
 h4,
 h5,
 h6 {
@@ -8134,6 +8143,7 @@ h6 {
 h1 a,
 h2 a,
 h3 a,
+.single-mec-events .mec-event-social h3 a,
 h4 a,
 h5 a,
 h6 a {
@@ -8158,7 +8168,8 @@ h2 {
 
 /* line 34, ../rtp-core/node_modules/materialize-css/sass/components/_typography.scss */
 
-h3 {
+h3,
+.single-mec-events .mec-event-social h3 {
   font-size: 2.92rem;
   line-height: 110%;
   margin: 1.94667rem 0 1.168rem 0;
@@ -9085,6 +9096,8 @@ body.keyboard-focused .dropdown-content li:focus {
 .modal h1,
 .modal h2,
 .modal h3,
+.modal .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social .modal h3,
 .modal h4 {
   margin-top: 0;
 }
@@ -12815,12 +12828,16 @@ html[data-contrast="true"] input[type="text"] {
 html[data-contrast="true"] h1,
 html[data-contrast="true"] h2,
 html[data-contrast="true"] h3,
+html[data-contrast="true"] .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social html[data-contrast="true"] h3,
 html[data-contrast="true"] h4,
 html[data-contrast="true"] h5,
 html[data-contrast="true"] h6,
 html[data-contrast="true"] .h1,
 html[data-contrast="true"] .h2,
 html[data-contrast="true"] .h3,
+html[data-contrast="true"] .single-mec-events .mec-events-content h2,
+.single-mec-events .mec-events-content html[data-contrast="true"] h2,
 html[data-contrast="true"] .h4,
 html[data-contrast="true"] .h5,
 html[data-contrast="true"] .h6,
@@ -12847,11 +12864,34 @@ body {
 .container-wide,
 .sidebar-primary .content,
 .archive .content {
-  max-width: 1300px;
+  max-width: 1260px;
+  width: 100%;
 }
 
 @media only screen and (min-width: 769px) {
-  /* line 13, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 15, ../rtp-core/resources/assets/styles/common/_global.scss */
+
+  .container,
+  .container-wide,
+  .sidebar-primary .content,
+  .archive .content {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  /* line 20, ../rtp-core/resources/assets/styles/common/_global.scss */
+
+  .container,
+  .container-wide,
+  .sidebar-primary .content,
+  .archive .content {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  /* line 25, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .container-wide {
     width: 95%;
@@ -12859,21 +12899,21 @@ body {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 13, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 25, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .container-wide {
     width: 90%;
   }
 }
 
-/* line 24, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 36, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .content {
   position: relative;
   z-index: 3;
 }
 
-/* line 30, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 42, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex {
   display: -webkit-box;
@@ -12882,7 +12922,7 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 30, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 42, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex {
     -ms-flex-wrap: wrap;
@@ -12890,7 +12930,7 @@ body {
   }
 }
 
-/* line 38, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 50, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-center {
   -webkit-box-align: center;
@@ -12898,7 +12938,7 @@ body {
           align-items: center;
 }
 
-/* line 42, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 54, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-end {
   -webkit-box-pack: end;
@@ -12906,7 +12946,7 @@ body {
           justify-content: flex-end;
 }
 
-/* line 46, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 58, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-grow {
   -webkit-box-flex: 1;
@@ -12914,7 +12954,7 @@ body {
           flex: 1;
 }
 
-/* line 50, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 62, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-bottom {
   -webkit-box-align: end;
@@ -12922,14 +12962,14 @@ body {
           align-items: flex-end;
 }
 
-/* line 54, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 66, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-wrap {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
 }
 
-/* line 58, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 70, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-grid {
   display: -webkit-box;
@@ -12939,7 +12979,7 @@ body {
       flex-wrap: wrap;
 }
 
-/* line 62, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 74, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .flex-grid .flex-item {
   padding: 10px;
@@ -12950,7 +12990,7 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 70, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 82, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.s1x .flex-item {
     width: 100%;
@@ -12958,13 +12998,13 @@ body {
 }
 
 @media only screen and (min-width: 601px) {
-  /* line 78, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 89, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.m2x .flex-item {
     width: 50%;
   }
 
-  /* line 84, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 95, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.m3x .flex-item {
     width: 33.33%;
@@ -12972,20 +13012,20 @@ body {
 }
 
 @media only screen and (min-width: 769px) {
-  /* line 92, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 102, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.l3x .flex-item {
     width: 33.33%;
   }
 
-  /* line 98, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 108, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.l4x .flex-item {
     width: 25%;
   }
 }
 
-/* line 105, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 115, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .space-between {
   -webkit-box-pack: justify;
@@ -12993,14 +13033,14 @@ body {
           justify-content: space-between;
 }
 
-/* line 109, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 119, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .space-around {
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }
 
-/* line 113, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 123, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .space-evenly {
   -webkit-box-pack: space-evenly;
@@ -13008,7 +13048,7 @@ body {
           justify-content: space-evenly;
 }
 
-/* line 117, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 127, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .justify-center {
   -webkit-box-pack: center;
@@ -13016,7 +13056,7 @@ body {
           justify-content: center;
 }
 
-/* line 121, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 131, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .align-center {
   -webkit-box-align: center;
@@ -13024,34 +13064,34 @@ body {
           align-items: center;
 }
 
-/* line 129, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 139, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .float-center {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 134, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 144, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .absolute-right {
   position: absolute;
   right: 0;
 }
 
-/* line 139, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 149, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .relative-right {
   position: relative;
   right: 0;
 }
 
-/* line 144, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 154, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .relative {
   position: relative;
 }
 
-/* line 148, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 158, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .mega-link.mega-link {
   display: block;
@@ -13064,7 +13104,7 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 159, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 169, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .row .col.xs12,
   .sidebar-primary .wrap .col.xs12,
@@ -13078,21 +13118,21 @@ body {
   }
 }
 
-/* line 164, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 174, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 img {
   max-width: 100%;
   height: auto;
 }
 
-/* line 177, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 187, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .border-top {
   border-top: 1px solid #C7C9C7;
   padding-top: 1em;
 }
 
-/* line 182, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 192, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .page-footer {
   padding-top: 0;
@@ -13137,7 +13177,11 @@ body .h1,
 body h2,
 body .h2,
 body h3,
+body .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social body h3,
 body .h3,
+body .single-mec-events .mec-events-content h2,
+.single-mec-events .mec-events-content body h2,
 body h4,
 body .h4,
 body h5,
@@ -13175,7 +13219,9 @@ h2,
 /* line 43, ../rtp-core/resources/assets/styles/common/_typography.scss */
 
 h3,
-.h3 {
+.single-mec-events .mec-event-social h3,
+.h3,
+.single-mec-events .mec-events-content h2 {
   font-size: 1.33333rem;
   font-weight: 400;
   letter-spacing: 1px;
@@ -13300,6 +13346,7 @@ blockquote.wp-block-pullquote {
 /* line 127, ../rtp-core/resources/assets/styles/common/_typography.scss */
 
 .label {
+  text-transform: uppercase;
   font-weight: 600;
 }
 
@@ -13407,34 +13454,6 @@ a.btn-small,
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button span {
   color: inherit;
-}
-
-/* line 2, ../rtp-core/resources/assets/styles/components/_events.scss */
-
-.mec-wrap select {
-  display: block;
-}
-
-/* line 7, ../rtp-core/resources/assets/styles/components/_events.scss */
-
-.mec-wrap .mec-dropdown-search select {
-  width: calc(100% - 36px);
-}
-
-/* line 11, ../rtp-core/resources/assets/styles/components/_events.scss */
-
-.mec-wrap .mec-text-input-search input[type="search"] {
-  width: calc(100% - 50px);
-  min-height: 36px;
-  height: 36px;
-  line-height: 36px;
-  background: #fff;
-  font-size: 13px;
-  color: #777;
-  border: 1px solid #efefef;
-  margin: 0 0 0 -1px;
-  float: left;
-  padding: 0 5px;
 }
 
 /* line 2, ../rtp-core/resources/assets/styles/components/_forms.scss */
@@ -13908,7 +13927,7 @@ figure.post-thumbnail {
 /* line 2, ../rtp-core/resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper {
-  background: #1f2a3a;
+  background: #1F2A3A;
 }
 
 /* line 5, ../rtp-core/resources/assets/styles/components/_navigation.scss */
@@ -14160,7 +14179,9 @@ html[data-contrast="true"] .pagination span.current {
 /* line 12, ../rtp-core/resources/assets/styles/components/_people.scss */
 
 .person h2,
-.person h3 {
+.person h3,
+.person .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social .person h3 {
   margin: 0;
 }
 
@@ -14324,23 +14345,30 @@ html[data-contrast="true"] .pagination span.current {
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+  padding: 0 20px;
 }
 
-/* line 9, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 10, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
-.page-header .container-wide {
+.page-header .container,
+.page-header .container-wide,
+.page-header .sidebar-primary .content,
+.sidebar-primary .page-header .content,
+.page-header .archive .content,
+.archive .page-header .content {
+  background: rgba(75, 156, 211, 0.8);
   text-align: left;
   padding: 1em 1em 4em;
 }
 
-/* line 15, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 17, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner {
   background: #FFF;
   z-index: 100;
 }
 
-/* line 19, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 21, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner nav {
   background: none;
@@ -14349,7 +14377,7 @@ html[data-contrast="true"] .pagination span.current {
           box-shadow: none;
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 27, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner nav > .container > .row::after,
 .banner nav > .container-wide > .row::after,
@@ -14373,7 +14401,7 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 24, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 26, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner nav > .container > .row,
   .banner nav > .container-wide > .row,
@@ -14399,7 +14427,7 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 36, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 38, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo {
   max-width: 120px;
@@ -14408,7 +14436,7 @@ html[data-contrast="true"] .pagination span.current {
   vertical-align: middle;
 }
 
-/* line 42, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 44, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo img {
   width: 100%;
@@ -14418,7 +14446,7 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 36, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 38, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo {
     padding-left: 0;
@@ -14428,7 +14456,7 @@ html[data-contrast="true"] .pagination span.current {
     display: flex;
   }
 
-  /* line 54, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 56, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo img {
     -ms-flex-item-align: center;
@@ -14439,14 +14467,14 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 61, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 63, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link {
   padding: 10px 20px;
   text-align: right;
 }
 
-/* line 65, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 67, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .btn,
 .banner .cta-link .btn-large,
@@ -14459,7 +14487,7 @@ html[data-contrast="true"] .pagination span.current {
   padding: 5px 2rem;
 }
 
-/* line 70, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 72, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .cta-headline {
   font-size: 0.9em;
@@ -14468,19 +14496,19 @@ html[data-contrast="true"] .pagination span.current {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 61, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 63, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link {
     padding: 10px 0;
   }
 
-  /* line 85, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 87, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .cta-headline {
     padding: 0 1rem;
   }
 
-  /* line 89, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 91, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .btn,
   .banner .cta-link .btn-large,
@@ -14493,26 +14521,26 @@ html[data-contrast="true"] .pagination span.current {
   }
 }
 
-/* line 95, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 97, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar {
   margin-bottom: 0;
 }
 
-/* line 99, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 101, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar[data-text-color="light"] .navbar-menu > ul > li > a,
 .banner .navbar[data-text-color="light"] .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 105, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 107, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper {
   position: relative;
 }
 
-/* line 108, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 110, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper [type="checkbox"] {
   position: absolute;
@@ -14520,13 +14548,13 @@ html[data-contrast="true"] .pagination span.current {
   pointer-events: none;
 }
 
-/* line 114, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 116, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper input:focus + label {
   outline: #7C878E auto 5px;
 }
 
-/* line 118, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 120, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label {
   display: block;
@@ -14540,27 +14568,27 @@ html[data-contrast="true"] .pagination span.current {
   float: right;
 }
 
-/* line 129, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 131, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label::before,
 .banner .menu-trigger-wrapper label::after {
   display: none;
 }
 
-/* line 133, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 135, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label i {
   font-size: 2em;
   line-height: 1.5em;
 }
 
-/* line 138, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 140, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 html[data-contrast="true"] .banner .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 147, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 149, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 nav ul a {
   text-decoration: none;
@@ -14570,19 +14598,19 @@ nav ul a {
   font-size: 17px;
 }
 
-/* line 154, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 156, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 [data-font="3"] nav ul a {
   font-size: 1.2rem;
 }
 
-/* line 158, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 160, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .header-inline nav ul a {
   padding: 1rem 15px;
 }
 
-/* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 167, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu {
   border: none;
@@ -14592,7 +14620,7 @@ nav ul a {
   padding: 0 15px;
 }
 
-/* line 171, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 173, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu > ul {
   -webkit-box-flex: 1;
@@ -14600,20 +14628,20 @@ nav ul a {
           flex: 1 1 auto;
 }
 
-/* line 175, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 177, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li {
   padding: 10px 0;
   height: 100%;
 }
 
-/* line 179, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 181, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li::before {
   display: none;
 }
 
-/* line 183, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 185, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover,
 .navbar-menu li:focus,
@@ -14621,7 +14649,7 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 186, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 188, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover > a,
 .navbar-menu li:focus > a,
@@ -14629,21 +14657,21 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 192, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 194, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 192, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 194, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children a {
     cursor: pointer;
   }
 }
 
-/* line 200, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 202, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
   margin-top: 10px;
@@ -14654,14 +14682,14 @@ nav ul a {
   transition: max-height 0.3s ease;
 }
 
-/* line 207, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 209, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
   line-height: 0;
 }
 
-/* line 211, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 213, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li:hover,
 .navbar-menu li.menu-item-has-children .sub-menu li:focus,
@@ -14669,13 +14697,13 @@ nav ul a {
   background: #F5F5F5;
 }
 
-/* line 216, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 218, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
 }
 
-/* line 219, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 221, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -14688,12 +14716,12 @@ nav ul a {
   height: 20px;
   background-size: contain;
   background-repeat: no-repeat;
-  -webkit-transition: all .2s;
-  -o-transition: all .2s;
-  transition: all .2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
-/* line 233, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 235, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
@@ -14702,7 +14730,7 @@ nav ul a {
   background: transparent;
 }
 
-/* line 237, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 239, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -14712,7 +14740,7 @@ nav ul a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 200, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 202, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     max-height: 300em;
@@ -14734,7 +14762,7 @@ nav ul a {
   }
 }
 
-/* line 261, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 263, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14742,20 +14770,20 @@ nav ul a {
   height: auto;
 }
 
-/* line 280, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 282, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
-  /* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 167, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     height: 4.66667em;
   }
 
-  /* line 288, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 290, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14767,7 +14795,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 293, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 295, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14775,7 +14803,7 @@ nav ul a {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 167, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     -webkit-box-orient: vertical;
@@ -14793,26 +14821,26 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 307, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 309, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 311, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 313, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 317, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 319, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 322, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 324, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
@@ -14871,7 +14899,7 @@ nav ul a {
 .page-footer .footer-main {
   margin: 0;
   padding: 2.5em 0;
-  background: #1f2a3a;
+  background: #1F2A3A;
 }
 
 /* line 30, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
@@ -15098,6 +15126,941 @@ nav ul a {
   margin-bottom: 4rem;
 }
 
+/* line 1, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+button,
+input,
+optgroup,
+select,
+textarea,
+.entry-content .mec-wrap h1,
+.entry-content .mec-wrap h2,
+.entry-content .mec-wrap h3,
+.entry-content .mec-wrap h4,
+.entry-content .mec-wrap h5,
+.entry-content .mec-wrap h6,
+.mec-wrap h1,
+.mec-wrap h2,
+.mec-wrap h3,
+.mec-wrap .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social .mec-wrap h3,
+.mec-wrap h4,
+.mec-wrap h5,
+.mec-wrap h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* line 6, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap,
+.mec-wrap div:not([class^=elementor-]) {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* line 10, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .row,
+.mec-wrap .sidebar-primary .wrap,
+.sidebar-primary .mec-wrap .wrap,
+.mec-wrap .archive .wrap,
+.archive .mec-wrap .wrap {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* line 15, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box {
+  border: none;
+  background: none;
+  padding: 0;
+  overflow: visible;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+/* line 22, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span,
+.mec-wrap .mec-totalcal-box input,
+.mec-wrap .mec-totalcal-box select {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* line 26, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box .mec-totalcal-view {
+  float: none;
+  text-align: center;
+}
+
+/* line 30, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span {
+  border: 1px solid #FFF;
+  background: #4B9CD3;
+  color: #FFF;
+  width: 33%;
+  font-size: 0.8rem;
+}
+
+/* line 37, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span:hover,
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span:focus,
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span:active,
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span.mec-totalcalview-selected {
+  background: #012169;
+  border-color: #FFF;
+  color: #FFF;
+}
+
+/* line 47, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-date-search i {
+  border: 1px solid #FFF;
+  background: #012169;
+  color: #FFF;
+  border-radius: 0;
+}
+
+/* line 55, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper {
+  display: inline-block;
+}
+
+/* line 58, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper select {
+  display: none;
+}
+
+/* line 62, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper input.select-dropdown {
+  border: 1px solid #FFF;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #4B9CD3;
+  color: #FFF;
+  height: 36px;
+  width: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* line 74, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper input.select-dropdown:hover,
+.mec-wrap .select-wrapper input.select-dropdown:focus,
+.mec-wrap .select-wrapper input.select-dropdown:active {
+  background: #012169;
+  color: #FFF;
+}
+
+/* line 80, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper .caret {
+  fill: #FFF;
+  z-index: 1;
+}
+
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper ul.dropdown-content {
+  font-family: 'Poppins', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* line 90, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper ul.dropdown-content li {
+  min-height: 36px;
+}
+
+/* line 93, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper ul.dropdown-content li span {
+  line-height: 18px;
+  padding: 9px 16px;
+}
+
+/* line 98, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper ul.dropdown-content li.selected {
+  background: #012169;
+  border: 1px solid #FFF;
+}
+
+/* line 102, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper ul.dropdown-content li.selected span {
+  color: #FFF;
+}
+
+/* line 111, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .filter-selects [class*=col-md] {
+  padding: 0;
+}
+
+/* line 115, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .filter-selects .select-wrapper {
+  width: 100%;
+}
+
+/* line 119, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .filter-selects i {
+  display: none;
+}
+
+/* line 124, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-text-input-search input[type="search"] {
+  width: calc(100% - 50px);
+  min-height: 36px;
+  height: 36px;
+  line-height: 36px;
+  background: #FFF;
+  font-size: 13px;
+  color: #FFF;
+  margin: 0 0 0 -1px;
+  float: left;
+  padding: 0 5px;
+}
+
+/* line 139, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+/* line 143, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-topsec,
+.mec-calendar .mec-calendar-header {
+  width: 100%;
+}
+
+/* line 147, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-side {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  width: 50%;
+  padding: 0 20px 0 10px;
+}
+
+/* line 153, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-side .mec-month-navigator {
+  position: relative;
+}
+
+/* line 157, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-side .mec-previous-month,
+.mec-calendar .mec-calendar-side .mec-next-month {
+  color: #7C878E;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  z-index: 2;
+}
+
+/* line 163, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-side .mec-previous-month i,
+.mec-calendar .mec-calendar-side .mec-next-month i {
+  color: #7C878E;
+}
+
+/* line 167, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-side .mec-previous-month:hover,
+.mec-calendar .mec-calendar-side .mec-previous-month:focus,
+.mec-calendar .mec-calendar-side .mec-previous-month:active,
+.mec-calendar .mec-calendar-side .mec-next-month:hover,
+.mec-calendar .mec-calendar-side .mec-next-month:focus,
+.mec-calendar .mec-calendar-side .mec-next-month:active {
+  color: #4B9CD3;
+}
+
+/* line 174, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-table-head dt {
+  font-weight: 300;
+  font-size: 1rem;
+  color: #4B9CD3;
+}
+
+/* line 181, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar dt {
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+/* line 186, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-table-nullday {
+  color: #A2AAAD;
+}
+
+/* line 190, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event {
+  border-radius: 0;
+}
+
+/* line 193, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event a {
+  text-decoration: none;
+  border-radius: 0;
+  -webkit-transition: background 0.3s ease;
+  -o-transition: background 0.3s ease;
+  transition: background 0.3s ease;
+}
+
+/* line 198, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event a:hover,
+.mec-calendar .mec-has-event a:active,
+.mec-calendar .mec-has-event a:focus {
+  background: #4B9CD3;
+  color: #FFF;
+}
+
+/* line 204, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event::after {
+  background-color: #4B9CD3;
+  border-radius: 0;
+}
+
+/* line 209, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event:hover,
+.mec-calendar .mec-has-event:active,
+.mec-calendar .mec-has-event:focus {
+  background: #4B9CD3 !important;
+}
+
+/* line 214, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-selected-day {
+  background: #012169;
+  border-radius: 0;
+}
+
+/* line 218, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-selected-day a {
+  font-weight: bold;
+}
+
+/* line 223, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-events-side {
+  padding: 0 10px 0 20px;
+  border: none;
+}
+
+/* line 227, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-events-side .mec-table-side-title {
+  font-size: 22px;
+  color: #1F2A3A;
+  font-weight: 700;
+  letter-spacing: normal;
+}
+
+/* line 234, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-events-side .mec-table-side-day {
+  font-size: 22px;
+  border-radius: 0;
+  border-color: #4B9CD3;
+}
+
+/* line 241, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-event-article {
+  padding: 15px;
+  min-height: 100px;
+  margin-bottom: 20px;
+}
+
+/* line 248, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-event-article:hover,
+.mec-calendar .mec-event-article:focus,
+.mec-calendar .mec-event-article:active {
+  background: #FFF;
+}
+
+/* line 254, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-event-article .mec-event-title {
+  margin-top: 0;
+  font-size: 0.9rem;
+}
+
+/* line 259, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-event-article .mec-event-title a:hover,
+.mec-calendar .mec-event-article .mec-event-title a:focus,
+.mec-calendar .mec-event-article .mec-event-title a:active {
+  color: #4B9CD3;
+}
+
+/* line 265, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-event-article .mec-event-time,
+.mec-calendar .mec-event-article .mec-event-detail {
+  font-size: 0.8rem;
+  color: #7C878E;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* line 273, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-yearly-calendar .mec-calendar-table-head dl dt {
+  background: transparent;
+}
+
+/* line 279, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-daily .mec-calendar-a-month {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+/* line 283, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-daily .mec-calendar-a-month h4 {
+  border: none;
+}
+
+/* line 290, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-previous-month,
+.mec-calendar.mec-calendar-weekly .mec-next-month {
+  color: #7C878E;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border-radius: 0;
+  z-index: 2;
+}
+
+/* line 297, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-previous-month i,
+.mec-calendar.mec-calendar-weekly .mec-next-month i {
+  color: #7C878E;
+}
+
+/* line 301, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:active,
+.mec-calendar.mec-calendar-weekly .mec-next-month:hover,
+.mec-calendar.mec-calendar-weekly .mec-next-month:focus,
+.mec-calendar.mec-calendar-weekly .mec-next-month:active {
+  color: #4B9CD3;
+}
+
+/* line 304, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:active i,
+.mec-calendar.mec-calendar-weekly .mec-next-month:hover i,
+.mec-calendar.mec-calendar-weekly .mec-next-month:focus i,
+.mec-calendar.mec-calendar-weekly .mec-next-month:active i {
+  color: #4B9CD3;
+}
+
+/* line 310, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-top {
+  background: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: none;
+}
+
+/* line 315, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-top h3 {
+  border: 0;
+  font-weight: normal;
+  color: #A2AAAD;
+}
+
+/* line 322, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table {
+  border: 0;
+  margin-bottom: 40px;
+}
+
+/* line 326, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt {
+  clear: none;
+  border: none;
+}
+
+/* line 330, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
+  color: #4B9CD3;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+/* line 336, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-monthday {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+/* line 341, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:hover,
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:focus,
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+/* line 349, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+/* line 353, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec {
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding: 0;
+}
+
+/* line 358, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year {
+  left: 0;
+}
+
+/* line 362, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year {
+  right: 0;
+}
+
+/* line 366, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year {
+  color: #7C878E;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  z-index: 2;
+}
+
+/* line 372, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year i,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year i {
+  color: #7C878E;
+}
+
+/* line 376, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:active,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:hover,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:focus,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:active {
+  color: #4B9CD3;
+}
+
+/* line 382, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-calendar-sec {
+  background: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding: 0 20px 0 0;
+}
+
+/* line 388, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-agenda-sec {
+  padding: 20px;
+}
+
+/* line 391, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda {
+  padding: 15px;
+  min-height: 100px;
+  margin-bottom: 20px;
+}
+
+/* line 404, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-date-wrap {
+  font-size: 0.8rem;
+  padding: 0;
+}
+
+/* line 408, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-date-wrap span.mec-agenda-day {
+  font-size: 1em;
+}
+
+/* line 413, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-events-wrap {
+  padding: 0;
+  background: none;
+}
+
+/* line 418, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-event-title {
+  padding-left: 0;
+}
+
+/* line 421, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-event-title a {
+  font-size: 0.8rem;
+}
+
+/* line 424, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-event-title a:hover,
+.mec-yearly-view-wrap .mec-agenda-event-title a:focus,
+.mec-yearly-view-wrap .mec-agenda-event-title a:active {
+  color: #4B9CD3;
+}
+
+/* line 432, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.entry-content ul.mec-weekly-view-dates-events li {
+  padding-left: 0;
+}
+
+/* line 435, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.entry-content ul.mec-weekly-view-dates-events li::before {
+  display: none;
+}
+
+/* line 441, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+span.event-color {
+  display: none;
+}
+
+/* line 445, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-event-footer {
+  display: none;
+}
+
+/* line 449, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
+.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
+.mec-event-grid-classic article .mec-fc-style,
+.mec-event-grid-minimal article .mec-fc-style,
+.mec-event-grid-simple article .mec-fc-style,
+.mec-timetable-wrap article .mec-fc-style,
+.mec-wrap .mec-event-list-accordion article .mec-fc-style,
+.mec-wrap .mec-event-list-modern article .mec-fc-style,
+.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style,
+.mec-wrap article.mec-event-cover-classic .mec-fc-style,
+.mec-wrap article.mec-event-cover-clean .mec-fc-style,
+.mec-wrap article.mec-event-cover-modern .mec-fc-style,
+.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style {
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
+  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), color-stop(33%, #012169), color-stop(66%, #82052A), color-stop(99%, #C00));
+  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+}
+
+/* line 453, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-daily-view-date-events article::before,
+ul.mec-weekly-view-dates-events article::before {
+  top: 20px !important;
+}
+
+/* line 457, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-event-grid-minimal article .mec-fc-style::before,
+.mec-event-grid-simple article .mec-fc-style::before,
+.mec-timetable-wrap article .mec-fc-style::before,
+.mec-wrap .mec-event-list-accordion article .mec-fc-style::before,
+.mec-wrap .mec-event-list-modern article .mec-fc-style::before,
+.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before,
+.mec-wrap article.mec-event-cover-classic .mec-fc-style::before,
+.mec-wrap article.mec-event-cover-clean .mec-fc-style::before,
+.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
+  color: #4B9CD3;
+}
+
+/* line 461, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-color,
+.mec-color-before ::before,
+.mec-color-hover:hover,
+.mec-wrap .mec-color,
+.mec-wrap .mec-color-before ::before,
+.mec-wrap .mec-color-hover:hover {
+  color: #4B9CD3;
+}
+
+/* line 465, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.mec-load-more-button {
+  border-radius: 0;
+}
+
+/* line 470, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-container {
+  padding: 0;
+}
+
+/* line 474, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .row.mec-single-event,
+.single-mec-events .sidebar-primary .mec-single-event.wrap,
+.sidebar-primary .single-mec-events .mec-single-event.wrap,
+.single-mec-events .archive .mec-single-event.wrap,
+.archive .single-mec-events .mec-single-event.wrap {
+  margin-top: 0;
+}
+
+/* line 478, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-single-event-bar {
+  margin-top: 0;
+  background: rgba(71, 215, 172, 0.2);
+}
+
+/* line 482, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-single-event-bar > div {
+  width: 20%;
+}
+
+/* line 485, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-single-event-bar > div h3,
+.single-mec-events .mec-event-social .mec-single-event-bar > div h3 {
+  padding-left: 0;
+}
+
+/* line 489, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-single-event-bar > div dd {
+  padding-left: 0;
+  margin-left: 0;
+  color: #1F2A3A;
+  font-size: 0.9rem;
+}
+
+/* line 498, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-cost,
+.single-mec-events .mec-event-more-info,
+.single-mec-events .mec-event-website,
+.single-mec-events .mec-events-meta-date,
+.single-mec-events .mec-single-event-additional-organizers,
+.single-mec-events .mec-single-event-category,
+.single-mec-events .mec-single-event-date,
+.single-mec-events .mec-single-event-label,
+.single-mec-events .mec-single-event-location,
+.single-mec-events .mec-single-event-organizer,
+.single-mec-events .mec-single-event-time {
+  background: none;
+}
+
+/* line 502, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .col-md-4 {
+  margin-top: 40px;
+}
+
+/* line 505, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .col-md-4 .mec-frontbox {
+  margin: 0 !important;
+  padding: 0;
+  background: none;
+}
+
+/* line 513, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul {
+  display: block;
+  margin: 0;
+  padding: 12px 14px;
+}
+
+/* line 518, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li {
+  display: block;
+  text-align: left !important;
+  margin-bottom: 20px;
+}
+
+/* line 523, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
+  float: none;
+  margin: 0;
+  display: block;
+  border: 1px solid #4B9CD3;
+  color: #4B9CD3;
+}
+
+/* line 530, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:active {
+  background: #4B9CD3;
+  color: #FFF;
+}
+
+/* line 540, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta h3 {
+  margin: 0;
+  padding: 0;
+}
+
+/* line 545, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta dd {
+  padding-left: 0;
+  margin-left: 0;
+  color: #1F2A3A;
+  font-size: 0.9rem;
+}
+
+/* line 553, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-events-event-image {
+  margin: 10px;
+}
+
+/* line 557, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-single-title {
+  font-weight: bold;
+  font-size: 3rem;
+  margin-bottom: 0.3em;
+}
+
+/* line 564, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-events-content h2 {
+  font-size: 2rem;
+  padding: 0;
+}
+
+/* line 571, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-events-content h3 {
+  margin-bottom: 1em;
+}
+
+/* line 575, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-events-content p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  color: #1F2A3A;
+}
+
+/* line 582, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-booking-button {
+  margin: 20px 10px;
+  background-color: #4B9CD3;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+/* line 589, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-social {
+  text-align: left;
+  border: none;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding: 0;
+}
+
+/* line 595, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-social h3 {
+  text-align: left;
+  border-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* line 602, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-social h3::before {
+  display: none;
+}
+
+/* line 607, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-social .mec-event-sharing {
+  margin-top: 0;
+}
+
+/* line 611, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-social .mec-event-social-icon {
+  text-align: center;
+}
+
 /* line 1, ../rtp-core/resources/assets/styles/layouts/_tinymce.scss */
 
 body#tinymce {
@@ -15140,7 +16103,11 @@ body .h2 {
 /* line 24, resources/assets/styles/common/_typography.scss */
 
 body h3,
-body .h3 {
+body .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social body h3,
+body .h3,
+body .single-mec-events .mec-events-content h2,
+.single-mec-events .mec-events-content body h2 {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   line-height: 1.3em;
@@ -15215,10 +16182,258 @@ body .h3 {
   color: #FFF;
 }
 
+/* line 52, resources/assets/styles/layouts/_header.scss */
+
+.page-header .container,
+.page-header .container-wide,
+.page-header .sidebar-primary .content,
+.sidebar-primary .page-header .content,
+.page-header .archive .content,
+.archive .page-header .content {
+  background: rgba(71, 215, 172, 0.8);
+}
+
 /* line 2, resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social {
   background: rgba(87, 193, 165, 0.1);
+}
+
+/* line 1, resources/assets/styles/layouts/_events.scss */
+
+.entry-content .mec-wrap h1,
+.entry-content .mec-wrap h2,
+.entry-content .mec-wrap h3,
+.entry-content .mec-wrap h4,
+.entry-content .mec-wrap h5,
+.entry-content .mec-wrap h6,
+.mec-wrap h1,
+.mec-wrap h2,
+.mec-wrap h3,
+.mec-wrap .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social .mec-wrap h3,
+.mec-wrap h4,
+.mec-wrap h5,
+.mec-wrap h6 {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* line 8, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span {
+  background: #47D7AC;
+}
+
+/* line 11, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span:hover,
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span:focus,
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span:active,
+.mec-wrap .mec-totalcal-box .mec-totalcal-view span.mec-totalcalview-selected {
+  background: #219774;
+}
+
+/* line 19, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .mec-date-search i {
+  background: #219774;
+}
+
+/* line 25, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper input.select-dropdown {
+  background: #47D7AC;
+}
+
+/* line 28, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper input.select-dropdown:hover,
+.mec-wrap .select-wrapper input.select-dropdown:focus,
+.mec-wrap .select-wrapper input.select-dropdown:active {
+  background: #219774;
+}
+
+/* line 34, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap .select-wrapper ul.dropdown-content li.selected {
+  background: #219774;
+}
+
+/* line 44, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-side .mec-previous-month:hover,
+.mec-calendar .mec-calendar-side .mec-previous-month:focus,
+.mec-calendar .mec-calendar-side .mec-previous-month:active,
+.mec-calendar .mec-calendar-side .mec-next-month:hover,
+.mec-calendar .mec-calendar-side .mec-next-month:focus,
+.mec-calendar .mec-calendar-side .mec-next-month:active {
+  color: #47D7AC;
+}
+
+/* line 51, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-table-head dt {
+  color: #47D7AC;
+}
+
+/* line 58, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event a:hover,
+.mec-calendar .mec-has-event a:active,
+.mec-calendar .mec-has-event a:focus {
+  background: #47D7AC;
+}
+
+/* line 63, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event::after {
+  background-color: #47D7AC;
+}
+
+/* line 67, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-has-event:hover,
+.mec-calendar .mec-has-event:active,
+.mec-calendar .mec-has-event:focus {
+  background: #47D7AC !important;
+}
+
+/* line 72, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-selected-day {
+  background: #219774;
+}
+
+/* line 77, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-calendar-events-side .mec-table-side-day {
+  border-color: #47D7AC;
+}
+
+/* line 85, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar .mec-event-article .mec-event-title a:hover,
+.mec-calendar .mec-event-article .mec-event-title a:focus,
+.mec-calendar .mec-event-article .mec-event-title a:active {
+  color: #47D7AC;
+}
+
+/* line 94, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:active,
+.mec-calendar.mec-calendar-weekly .mec-next-month:hover,
+.mec-calendar.mec-calendar-weekly .mec-next-month:focus,
+.mec-calendar.mec-calendar-weekly .mec-next-month:active {
+  color: #47D7AC;
+}
+
+/* line 97, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
+.mec-calendar.mec-calendar-weekly .mec-previous-month:active i,
+.mec-calendar.mec-calendar-weekly .mec-next-month:hover i,
+.mec-calendar.mec-calendar-weekly .mec-next-month:focus i,
+.mec-calendar.mec-calendar-weekly .mec-next-month:active i {
+  color: #47D7AC;
+}
+
+/* line 105, resources/assets/styles/layouts/_events.scss */
+
+.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
+  color: #47D7AC;
+}
+
+/* line 116, resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:active,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:hover,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:focus,
+.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:active {
+  color: #47D7AC;
+}
+
+/* line 124, resources/assets/styles/layouts/_events.scss */
+
+.mec-yearly-view-wrap .mec-agenda-event-title a:hover,
+.mec-yearly-view-wrap .mec-agenda-event-title a:focus,
+.mec-yearly-view-wrap .mec-agenda-event-title a:active {
+  color: #47D7AC;
+}
+
+/* line 131, resources/assets/styles/layouts/_events.scss */
+
+.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
+.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
+.mec-event-grid-classic article .mec-fc-style,
+.mec-event-grid-minimal article .mec-fc-style,
+.mec-event-grid-simple article .mec-fc-style,
+.mec-timetable-wrap article .mec-fc-style,
+.mec-wrap .mec-event-list-accordion article .mec-fc-style,
+.mec-wrap .mec-event-list-modern article .mec-fc-style,
+.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style,
+.mec-wrap article.mec-event-cover-classic .mec-fc-style,
+.mec-wrap article.mec-event-cover-clean .mec-fc-style,
+.mec-wrap article.mec-event-cover-modern .mec-fc-style,
+.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style {
+  background: #F7406C;
+}
+
+/* line 135, resources/assets/styles/layouts/_events.scss */
+
+.mec-event-grid-minimal article .mec-fc-style::before,
+.mec-event-grid-simple article .mec-fc-style::before,
+.mec-timetable-wrap article .mec-fc-style::before,
+.mec-wrap .mec-event-list-accordion article .mec-fc-style::before,
+.mec-wrap .mec-event-list-modern article .mec-fc-style::before,
+.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before,
+.mec-wrap article.mec-event-cover-classic .mec-fc-style::before,
+.mec-wrap article.mec-event-cover-clean .mec-fc-style::before,
+.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
+  color: #47D7AC;
+}
+
+/* line 139, resources/assets/styles/layouts/_events.scss */
+
+.mec-color,
+.mec-color-before ::before,
+.mec-color-hover:hover,
+.mec-wrap .mec-color,
+.mec-wrap .mec-color-before ::before,
+.mec-wrap .mec-color-hover:hover {
+  color: #47D7AC;
+}
+
+/* line 144, resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-single-event-bar {
+  background: rgba(71, 215, 172, 0.2);
+}
+
+/* line 151, resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
+  border: 1px solid #47D7AC;
+  color: #47D7AC;
+}
+
+/* line 155, resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
+.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:active {
+  background: #47D7AC;
+  color: #FFF;
+}
+
+/* line 164, resources/assets/styles/layouts/_events.scss */
+
+.single-mec-events .mec-booking-button {
+  background-color: #47D7AC;
 }
 
 

@@ -36,7 +36,7 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
 
     <div class="mec-totalcal-box">
         <?php if($this->sf_status): ?>
-        <span id="mec_search_form_<?php echo $this->id; ?>">
+        <div id="mec_search_form_<?php echo $this->id; ?>">
             <?php
                 $sf_month_filter = (isset($this->sf_options['month_filter']) ? $this->sf_options['month_filter'] : array());
                 $sf_category = (isset($this->sf_options['category']) ? $this->sf_options['category'] : array());
@@ -61,56 +61,57 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
 
                 $sf_columns = 8;
             ?>
-            <?php if($sf_month_filter_status): $sf_columns -= 3; ?>
-            <div class="col-md-3">
-                <?php echo $this->sf_search_field('month_filter', $sf_month_filter); ?>
+            <div class="row">
+              <?php if($sf_month_filter_status): ?>
+                <div class="col m6 input-field">
+                  <span class="label">Jump to date</span>
+                  <?php echo $this->sf_search_field('month_filter', $sf_month_filter); ?>
+                </div>
+              <?php endif; ?>
+              <?php if($sf_text_search_status): ?>
+                <div class="col m6 align-right">
+                  <span class="label">&nbsp;</span>
+                  <?php echo $this->sf_search_field('text_search', $sf_text_search); ?>
+                </div>
+              <?php endif; ?>
             </div>
-            <?php endif; ?>
-            <?php if($sf_category_status): $sf_columns -= 2; ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('category', $sf_category); ?>
+
+            <div class="row">
+              <div class="col m6">
+                <span class="label">View by</span>
+                <div class="mec-totalcal-view">
+                  <?php if($this->yearly): ?><span class="mec-totalcal-yearlyview<?php if($this->default_view == 'yearly') echo ' mec-totalcalview-selected'; ?>" data-skin="yearly"><?php _e('Year', 'mec'); ?></span><?php endif; ?>
+                  <?php if($this->monthly): ?><span class="mec-totalcal-monthlyview<?php if($this->default_view == 'monthly') echo ' mec-totalcalview-selected'; ?>" data-skin="monthly"><?php _e('Month', 'mec'); ?></span><?php endif; ?>
+                  <?php if($this->weekly): ?><span class="mec-totalcal-weeklyview<?php if($this->default_view == 'weekly') echo ' mec-totalcalview-selected'; ?>" data-skin="weekly"><?php _e('Week', 'mec'); ?></span><?php endif; ?>
+                  <?php if($this->daily): ?><span class="mec-totalcal-dailyview<?php if($this->default_view == 'daily') echo ' mec-totalcalview-selected'; ?>" data-skin="daily"><?php _e('Day', 'mec'); ?></span><?php endif; ?>
+                  <?php if($this->list): ?><span class="mec-totalcal-listview<?php if($this->default_view == 'list') echo ' mec-totalcalview-selected'; ?>" data-skin="list"><?php _e('List', 'mec'); ?></span><?php endif; ?>
                 </div>
-            <?php endif; ?>
-            <?php if($sf_location_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('location', $sf_location); ?>
+              </div>
+              <div class="col m6">
+                <span class="label">Filter view</span>
+                <div class="filter-selects row">
+                  <?php if($sf_category_status): $sf_columns -= 2; ?>
+                    <div class="col-md-4">
+                      <?php echo $this->sf_search_field('category', $sf_category); ?>
+                    </div>
+                  <?php endif; ?>
+                  <?php if($sf_location_status): ?>
+                    <div class="col-md-4">
+                      <?php echo $this->sf_search_field('location', $sf_location); ?>
+                    </div>
+                  <?php endif; ?>
+                  <?php if($sf_label_status): ?>
+                    <div class="col-md-4">
+                      <?php echo $this->sf_search_field('label', $sf_label); ?>
+                    </div>
+                  <?php endif; ?>
                 </div>
-            <?php endif; ?>
-            <?php if($sf_organizer_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('organizer', $sf_organizer); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_speaker_status and $speakers_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('speaker', $sf_speaker); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_tag_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('tag', $sf_tag); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_label_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('label', $sf_label); ?>
-                </div>
-            <?php endif; ?>
-            <div class="col-md-<?php echo $sf_columns; ?>">
-                <?php if($sf_text_search_status): ?>
-                <?php echo $this->sf_search_field('text_search', $sf_text_search); ?>
-                <?php endif; ?>
-            </div>
-        </span>
+              </div>
+          </div>
+        </div>
         <?php endif; ?>
         <div class="col-md-12">
-            <div class="mec-totalcal-view">
-                <?php if($this->yearly): ?><span class="mec-totalcal-yearlyview<?php if($this->default_view == 'yearly') echo ' mec-totalcalview-selected'; ?>" data-skin="yearly"><?php _e('Yearly', 'mec'); ?></span><?php endif; ?>
-                <?php if($this->monthly): ?><span class="mec-totalcal-monthlyview<?php if($this->default_view == 'monthly') echo ' mec-totalcalview-selected'; ?>" data-skin="monthly"><?php _e('Monthly', 'mec'); ?></span><?php endif; ?>
-                <?php if($this->weekly): ?><span class="mec-totalcal-weeklyview<?php if($this->default_view == 'weekly') echo ' mec-totalcalview-selected'; ?>" data-skin="weekly"><?php _e('Weekly', 'mec'); ?></span><?php endif; ?>
-                <?php if($this->daily): ?><span class="mec-totalcal-dailyview<?php if($this->default_view == 'daily') echo ' mec-totalcalview-selected'; ?>" data-skin="daily"><?php _e('Daily', 'mec'); ?></span><?php endif; ?>
-                <?php if($this->list): ?><span class="mec-totalcal-listview<?php if($this->default_view == 'list') echo ' mec-totalcalview-selected'; ?>" data-skin="list"><?php _e('List', 'mec'); ?></span><?php endif; ?>
-            </div>
+
         </div>
     </div>
 

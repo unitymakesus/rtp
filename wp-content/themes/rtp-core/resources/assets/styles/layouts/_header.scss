@@ -5,8 +5,10 @@
   height: 400px;
   display: flex;
   align-items: flex-end;
+  padding: 0 20px;
 
-  .container-wide {
+  .container {
+    background: rgba($color-unc, 0.8);
     text-align: left;
     padding: 1em 1em 4em;
   }
@@ -183,7 +185,7 @@ nav {
     &:hover, &:focus, &:active {
       background-color: #F3F3F3;
 
-      >a {
+      > a {
         background-color: #F3F3F3;
       }
     }
@@ -227,7 +229,7 @@ nav {
             height: 20px;
             background-size: contain;
             background-repeat: no-repeat;
-            transition: all .2s;
+            transition: all 0.2s;
           }
 
           &:hover, &:focus, &:hover {

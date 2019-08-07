@@ -7,7 +7,19 @@ body {
 }
 
 .container {
-  max-width: 1300px;
+  max-width: 1260px;
+  width: 100%;
+}
+
+@media #{$medium-and-up} {
+  .container {
+    width: 100%;
+  }
+}
+@media #{$large-and-up} {
+  .container {
+    width: 100%;
+  }
 }
 
 .container-wide {
@@ -72,7 +84,6 @@ body {
       }
     }
   }
-
   @media #{$small-and-up} {
     &.m2x {
       .flex-item {
@@ -86,7 +97,6 @@ body {
       }
     }
   }
-
   @media #{$medium-and-up} {
     &.l3x {
       .flex-item {

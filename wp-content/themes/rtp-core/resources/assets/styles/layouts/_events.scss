@@ -1,0 +1,615 @@
+button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-content .mec-wrap h2, .entry-content .mec-wrap h3, .entry-content .mec-wrap h4, .entry-content .mec-wrap h5, .entry-content .mec-wrap h6, .mec-wrap h1, .mec-wrap h2, .mec-wrap h3, .mec-wrap h4, .mec-wrap h5, .mec-wrap h6 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.mec-wrap {
+  &, div:not([class^=elementor-]) {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .mec-totalcal-box {
+    border: none;
+    background: none;
+    padding: 0;
+    overflow: visible;
+    box-shadow: none;
+
+    .mec-totalcal-view span, input, select {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .mec-totalcal-view {
+      float: none;
+      text-align: center;
+
+      span {
+        border: 1px solid $color-white;
+        background: $color-unc;
+        color: $color-white;
+        width: 33%;
+        font-size: 0.8rem;
+
+        &:hover, &:focus, &:active, &.mec-totalcalview-selected {
+          background: $color-duke;
+          border-color: $color-white;
+          color: $color-white;
+        }
+      }
+    }
+  }
+
+  .mec-date-search {
+    i {
+      border: 1px solid $color-white;
+      background: $color-duke;
+      color: $color-white;
+      border-radius: 0;
+    }
+  }
+
+  .select-wrapper {
+    display: inline-block;
+
+    select {
+      display: none;
+    }
+
+    input.select-dropdown {
+      border: 1px solid $color-white;
+      box-sizing: border-box;
+      background: $color-unc;
+      color: $color-white;
+      height: 36px;
+      width: 100%;
+      margin: 0;
+      font-size: 0.8rem;
+      text-align: center;
+      text-transform: uppercase;
+
+      &:hover, &:focus, &:active {
+        background: $color-duke;
+        color: $color-white;
+      }
+    }
+
+    .caret {
+      fill: $color-white;
+      z-index: 1;
+    }
+
+    ul.dropdown-content {
+      font-family: 'Poppins', sans-serif;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+
+      li {
+        min-height: 36px;
+
+        span {
+          line-height: 18px;
+          padding: 9px 16px;
+        }
+
+        &.selected {
+          background: $color-duke;
+          border: 1px solid $color-white;
+
+          span {
+            color: $color-white;
+          }
+        }
+      }
+    }
+  }
+
+  .filter-selects {
+    [class*=col-md] {
+      padding: 0;
+    }
+
+    .select-wrapper {
+      width: 100%;
+    }
+
+    i {
+      display: none;
+    }
+  }
+
+  .mec-text-input-search input[type="search"] {
+    width: calc(100% - 50px);
+    min-height: 36px;
+    height: 36px;
+    line-height: 36px;
+    background: $color-white;
+    font-size: 13px;
+    color: $color-white;
+    // border: 1px solid #efefef;
+    margin: 0 0 0 -1px;
+    float: left;
+    padding: 0 5px;
+  }
+}
+
+.mec-calendar {
+  border: none;
+  box-shadow: none;
+
+  .mec-calendar-topsec, .mec-calendar-header {
+    width: 100%;
+  }
+
+  .mec-calendar-side {
+    border: none;
+    box-shadow: none;
+    width: 50%;
+    padding: 0 20px 0 10px;
+
+    .mec-month-navigator {
+      position: relative;
+    }
+
+    .mec-previous-month, .mec-next-month {
+      color: $color-grey-dark;
+      border: none;
+      box-shadow: none;
+      z-index: 2;
+
+      i {
+        color: $color-grey-dark;
+      }
+
+      &:hover, &:focus, &:active {
+        color: $color-unc;
+      }
+    }
+  }
+
+  .mec-calendar-table-head {
+    dt {
+      font-weight: 300;
+      font-size: 1rem;
+      color: $color-unc;
+    }
+  }
+
+  dt {
+    font-weight: 300;
+    font-size: 1rem;
+  }
+
+  .mec-table-nullday {
+    color: $color-grey-medium;
+  }
+
+  .mec-has-event {
+    border-radius: 0;
+
+    a {
+      text-decoration: none;
+      border-radius: 0;
+      transition: background 0.3s ease;
+
+      &:hover, &:active, &:focus {
+        background: $color-unc;
+        color: $color-white;
+      }
+    }
+
+    &::after {
+      background-color: $color-unc;
+      border-radius: 0;
+    }
+
+    &:hover, &:active, &:focus {
+      background: $color-unc !important;
+    }
+  }
+
+  .mec-selected-day {
+    background: $color-duke;
+    border-radius: 0;
+
+    a {
+      font-weight: bold;
+    }
+  }
+
+  .mec-calendar-events-side {
+    padding: 0 10px 0 20px;
+    border: none;
+
+    .mec-table-side-title {
+      font-size: 22px;
+      color: $color-slate-dark;
+      font-weight: 700;
+      letter-spacing: normal;
+    }
+
+    .mec-table-side-day {
+      font-size: 22px;
+      border-radius: 0;
+      border-color: $color-unc;
+    }
+  }
+
+  .mec-event-article {
+    @extend .z-depth-1;
+
+    padding: 15px;
+    min-height: 100px;
+    margin-bottom: 20px;
+
+    &:hover, &:focus, &:active {
+      @extend .z-depth-2;
+
+      background: $color-white;
+    }
+
+    .mec-event-title {
+      margin-top: 0;
+      font-size: 0.9rem;
+
+      a {
+        &:hover, &:focus, &:active {
+          color: $color-unc;
+        }
+      }
+    }
+
+    .mec-event-time, .mec-event-detail {
+      font-size: 0.8rem;
+      color: $color-grey-dark;
+      font-family: 'Poppins', sans-serif;
+    }
+  }
+
+  &.mec-yearly-calendar {
+    .mec-calendar-table-head dl dt {
+      background: transparent;
+    }
+  }
+
+  &.mec-calendar-daily {
+    .mec-calendar-a-month {
+      border: none;
+      box-shadow: none;
+
+      h4 {
+        border: none;
+      }
+    }
+  }
+
+  &.mec-calendar-weekly {
+    .mec-previous-month, .mec-next-month {
+      color: $color-grey-dark;
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      z-index: 2;
+
+      i {
+        color: $color-grey-dark;
+      }
+
+      &:hover, &:focus, &:active {
+        color: $color-unc;
+
+        i {
+          color: $color-unc;
+        }
+      }
+    }
+
+    .mec-calendar-d-top {
+      background: none;
+      box-shadow: none;
+      border: none;
+
+      h3 {
+        border: 0;
+        font-weight: normal;
+        color: $color-grey-medium;
+      }
+    }
+
+    .mec-calendar-d-table {
+      border: 0;
+      margin-bottom: 40px;
+
+      dl dt {
+        clear: none;
+        border: none;
+
+        .mec-weekly-view-weekday {
+          color: $color-unc;
+          font-size: 0.9rem;
+          font-weight: normal;
+        }
+
+        .mec-weekly-view-monthday {
+          font-size: 1rem;
+          margin-top: 0;
+        }
+
+        &:hover, &:focus, &:active {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.mec-yearly-view-wrap {
+  border: none;
+  box-shadow: none;
+
+  .mec-yearly-title-sec {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+
+    .mec-previous-year {
+      left: 0;
+    }
+
+    .mec-next-year {
+      right: 0;
+    }
+
+    .mec-previous-year, .mec-next-year {
+      color: $color-grey-dark;
+      border: none;
+      box-shadow: none;
+      z-index: 2;
+
+      i {
+        color: $color-grey-dark;
+      }
+
+      &:hover, &:focus, &:active {
+        color: $color-unc;
+      }
+    }
+  }
+
+  .mec-yearly-calendar-sec {
+    background: none;
+    box-shadow: none;
+    padding: 0 20px 0 0;
+  }
+
+  .mec-yearly-agenda-sec {
+    padding: 20px;
+
+    .mec-events-agenda {
+      @extend .z-depth-1;
+
+      padding: 15px;
+      min-height: 100px;
+      margin-bottom: 20px;
+
+      &:hover, &:focus, &:active {
+        @extend .z-depth-2;
+      }
+    }
+  }
+
+  .mec-agenda-date-wrap {
+    font-size: 0.8rem;
+    padding: 0;
+
+    span.mec-agenda-day {
+      font-size: 1em;
+    }
+  }
+
+  .mec-agenda-events-wrap {
+    padding: 0;
+    background: none;
+  }
+
+  .mec-agenda-event-title {
+    padding-left: 0;
+
+    a {
+      font-size: 0.8rem;
+
+      &:hover, &:focus, &:active {
+        color: $color-unc;
+      }
+    }
+  }
+}
+
+.entry-content ul.mec-weekly-view-dates-events {
+  li {
+    padding-left: 0;
+
+    &::before {
+      display: none;
+    }
+  }
+}
+
+span.event-color {
+  display: none;
+}
+
+.mec-event-footer {
+  display: none;
+}
+
+.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before, .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before, .mec-event-grid-classic article .mec-fc-style, .mec-event-grid-minimal article .mec-fc-style, .mec-event-grid-simple article .mec-fc-style, .mec-timetable-wrap article .mec-fc-style, .mec-wrap .mec-event-list-accordion article .mec-fc-style, .mec-wrap .mec-event-list-modern article .mec-fc-style, .mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style, .mec-wrap article.mec-event-cover-classic .mec-fc-style, .mec-wrap article.mec-event-cover-clean .mec-fc-style, .mec-wrap article.mec-event-cover-modern .mec-fc-style, .mec-wrap article[class^=mec-event-countdown-] .mec-fc-style {
+  @include rtp-gradient;
+}
+
+.mec-daily-view-date-events article::before, ul.mec-weekly-view-dates-events article::before {
+  top: 20px !important;
+}
+
+.mec-event-grid-minimal article .mec-fc-style::before, .mec-event-grid-simple article .mec-fc-style::before, .mec-timetable-wrap article .mec-fc-style::before, .mec-wrap .mec-event-list-accordion article .mec-fc-style::before, .mec-wrap .mec-event-list-modern article .mec-fc-style::before, .mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before, .mec-wrap article.mec-event-cover-classic .mec-fc-style::before, .mec-wrap article.mec-event-cover-clean .mec-fc-style::before, .mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
+  color: $color-unc;
+}
+
+.mec-color, .mec-color-before ::before, .mec-color-hover:hover, .mec-wrap .mec-color, .mec-wrap .mec-color-before ::before, .mec-wrap .mec-color-hover:hover {
+  color: $color-unc;
+}
+
+.mec-load-more-button {
+  border-radius: 0;
+}
+
+.single-mec-events {
+  .mec-container {
+    padding: 0;
+  }
+
+  .row.mec-single-event {
+    margin-top: 0;
+  }
+
+  .mec-single-event-bar {
+    margin-top: 0;
+    background: rgba($color-mint, 0.2);
+
+    & > div {
+      width: 20%;
+
+      h3 {
+        padding-left: 0;
+      }
+
+      dd {
+        padding-left: 0;
+        margin-left: 0;
+        color: $color-slate-dark;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .mec-event-cost, .mec-event-more-info, .mec-event-website, .mec-events-meta-date, .mec-single-event-additional-organizers, .mec-single-event-category, .mec-single-event-date, .mec-single-event-label, .mec-single-event-location, .mec-single-event-organizer, .mec-single-event-time {
+    background: none;
+  }
+
+  .col-md-4 {
+    margin-top: 40px;
+
+    .mec-frontbox {
+      margin: 0 !important;
+      padding: 0;
+      background: none;
+    }
+  }
+
+  .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details {
+    ul {
+      display: block;
+      margin: 0;
+      padding: 12px 14px;
+
+      li {
+        display: block;
+        text-align: left !important;
+        margin-bottom: 20px;
+
+        a {
+          float: none;
+          margin: 0;
+          display: block;
+          border: 1px solid $color-unc;
+          color: $color-unc;
+
+          &:hover, &:focus, &:active {
+            background: $color-unc;
+            color: $color-white;
+          }
+        }
+      }
+    }
+  }
+
+  .mec-event-meta.mec-event-meta.mec-event-meta {
+    h3 {
+      margin: 0;
+      padding: 0;
+    }
+
+    dd {
+      padding-left: 0;
+      margin-left: 0;
+      color: $color-slate-dark;
+      font-size: 0.9rem;
+    }
+  }
+
+  .mec-events-event-image {
+    margin: 10px;
+  }
+
+  .mec-single-title {
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 0.3em;
+  }
+
+  .mec-events-content {
+    h2 {
+      @extend .h3;
+
+      font-size: 2rem;
+      padding: 0;
+    }
+
+    h3 {
+      margin-bottom: 1em;
+    }
+
+    p {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      color: $color-slate-dark;
+    }
+  }
+
+  .mec-booking-button {
+    margin: 20px 10px;
+    background-color: $color-unc;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+  }
+
+  .mec-event-social {
+    text-align: left;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+
+    h3 {
+      @extend h3;
+
+      text-align: left;
+      border-bottom: 0;
+      margin-bottom: 0;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .mec-event-sharing {
+      margin-top: 0;
+    }
+
+    .mec-event-social-icon {
+      text-align: center;
+    }
+  }
+}
