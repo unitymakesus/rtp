@@ -194,6 +194,102 @@ function load_custom_modules() {
       ]
     ] );
 
+    // Custom Posts Module
+    require_once 'modules/cbb-custom-posts/cbb-custom-posts.php';
+    FLBuilder::register_module( 'CbbCustomPostsModules', [
+      'cbb-custom-posts-general' => [
+        'title' => __( 'General', 'cbb' ),
+        'sections' => [
+          'cbb-custom-posts-structure' => [
+            'title' => __('Layout', 'cbb'),
+            'fields' => [
+              'structure' => [
+                'type' => 'select',
+                'label' => __('Layout', 'cbb'),
+                'default' => 'default',
+                'options' => [
+                  'default' => __('Background Image', 'cbb'),
+                  'vertical' => __('Vertical', 'cbb'),
+                  'horizontal' => __('Horizontal', 'cbb')
+                ]
+              ],
+              'image' => [
+                'type' => 'photo',
+                'label' => __('Image', 'cbb'),
+              ],
+              'image_alt' => [
+                'type' => 'text',
+                'label' => __('Image Alt Text', 'cbb'),
+              ],
+              'image_align' => [
+                'type' => 'select',
+                'label' => __('Image Alignment', 'cbb'),
+                'default' => 'left',
+                'options' => [
+                  'left' => __('Left', 'cbb'),
+                  'right' => __('Right', 'cbb')
+                ]
+              ]
+            ]
+          ],
+          'cbb-custom-posts-title' => [
+            'title' => __( 'Title', 'cbb' ),
+            'fields' => [
+              'badge' => [
+                'type' => 'select',
+                'label' => __('Badge', 'cbb'),
+                'default' => 'RTP',
+                'options' => [
+                  'RTP' => 'RTP',
+                  'Hub' => 'Hub',
+                  'Boxyard' => 'Boxyard',
+                  'Frontier' => 'Frontier',
+                  'STEM' => 'STEM'
+                ]
+              ],
+              'title' => [
+                'type' => 'text',
+                'label' => __('Title', 'cbb'),
+              ]
+            ]
+          ],
+          'cbb-custom-posts-content' => [
+            'title' => __( 'Content', 'cbb' ),
+            'fields' => [
+              'content' => [
+                'type' => 'editor',
+                'label' => '',
+                'media_buttons' => false,
+                'rows' => 4,
+              ]
+            ]
+          ],
+          'cbb-custom-posts-cta' => [
+            'title' => __( 'Call To Action', 'cbb' ),
+            'fields' => [
+              'enable_cta' => [
+                'type' => 'select',
+                'label' => __('Call To Action', 'cbb'),
+                'default' => 'none',
+                'options' => [
+                  'none' => __('No', 'cbb'),
+                  'block' => __('Yes', 'cbb'),
+                ]
+              ],
+              'cta_text' => [
+                'type' => 'text',
+                'label' => __('CTA Text', 'cbb'),
+              ],
+              'cta_link' => [
+                'type' => 'link',
+                'label' => __('CTA Link', 'cbb'),
+              ]
+            ]
+          ]
+        ]
+      ]
+    ] );
+
     // FLBuilder::register_settings_form('card_content', array(
     //   'title' => __('Editorial Card', 'cbb'),
     //   'tabs'  => array(

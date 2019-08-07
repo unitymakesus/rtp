@@ -17,7 +17,7 @@ class CbbFigureCardModule extends FLBuilderModule {
 	}
 
 	/**
-	 * Function to get the icon for the RTP Splash module
+	 * Function to get the icon for the Figure Card module
 	 *
 	 * @method get_icons
 	 * @param string $icon gets the icon for the module.
