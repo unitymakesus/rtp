@@ -129,11 +129,11 @@
 }
 
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before, .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before, .mec-event-grid-classic article .mec-fc-style, .mec-event-grid-minimal article .mec-fc-style, .mec-event-grid-simple article .mec-fc-style, .mec-timetable-wrap article .mec-fc-style, .mec-wrap .mec-event-list-accordion article .mec-fc-style, .mec-wrap .mec-event-list-modern article .mec-fc-style, .mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style, .mec-wrap article.mec-event-cover-classic .mec-fc-style, .mec-wrap article.mec-event-cover-clean .mec-fc-style, .mec-wrap article.mec-event-cover-modern .mec-fc-style, .mec-wrap article[class^=mec-event-countdown-] .mec-fc-style {
-  background: $color-frontier-pink;
+  background: $color-pink;
 }
 
 .mec-event-grid-minimal article .mec-fc-style::before, .mec-event-grid-simple article .mec-fc-style::before, .mec-timetable-wrap article .mec-fc-style::before, .mec-wrap .mec-event-list-accordion article .mec-fc-style::before, .mec-wrap .mec-event-list-modern article .mec-fc-style::before, .mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before, .mec-wrap article.mec-event-cover-classic .mec-fc-style::before, .mec-wrap article.mec-event-cover-clean .mec-fc-style::before, .mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
-  color: $color-mint;
+  color: $color-pink;
 }
 
 .mec-color, .mec-color-before ::before, .mec-color-hover:hover, .mec-wrap .mec-color, .mec-wrap .mec-color-before ::before, .mec-wrap .mec-color-hover:hover {

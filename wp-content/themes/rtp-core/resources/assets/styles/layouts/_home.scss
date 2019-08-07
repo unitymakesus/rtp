@@ -1,0 +1,47 @@
+// Homepage Hero
+.homepage-cta-row {
+  .card {
+    @include rtp-gradient-trans;
+
+    color: $color-white;
+    padding: 0;
+    box-shadow: none !important;
+
+    .card-title {
+      // font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      font-size: 55px;
+      font-weight: 500;
+      // letter-spacing: -0.3px;
+      line-height: 1.2em;
+      padding: 10px 20px 10px 30px;
+
+      @media #{$small-and-down} {
+        font-size: 45px;
+      }
+    }
+
+    .card-badge {
+      border-color: $color-white;
+      position: relative;
+      top: 40px;
+      left: 31px;
+    }
+
+    .card-cta {
+      @include unc-duke-gradient;
+
+      border-top: 0;
+      margin: 0;
+      padding: 10px 20px;
+
+      a {
+        color: $color-white;
+
+        .arrow path {
+          fill: $color-white;
+        }
+      }
+    }
+  }
+}

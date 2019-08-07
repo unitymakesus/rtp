@@ -3,29 +3,34 @@
 $color-black:                 #000;
 $color-slate-dark:            #1F2A3A;
 $color-slate:                 #333F48;
-$color-grey-dark:             #7C878E;
-$color-grey-medium:           #A2AAAD;
-$color-grey-light:            #C7C9C7;
+$color-grey-dark:             #7A868C;
+$color-grey-medium:           #A2A9AE;
+$color-grey-light:            #CBC8C7;
 $color-white:                 #FFF;
 
 // Master Brand
-$color-unc:                   #4B9CD3;
-$color-duke:                  #012169;
-$color-state:                 #C00;
+$color-blue-unc:              #4B9CD3;
+$color-blue-duke:             #012169;
+$color-red-state:             #C00;
 
 // Accents
-$color-nccu:                  #82052A;
+$color-red-nccu:              #82052A;
 $color-orange:                #FC4C02;
 $color-purple:                #654EA3;
 
 // Frontier
-$color-mint:                  #47D7AC;
+$color-mint:                  #57C1A5;
+$color-mint-light:            #88E3D1;
+$color-pink:                  #F7406C;
+$color-pink-light:            #EE9AAC;
+$color-blue:                  #0094C9;
+$color-blue-light:            #A1DAE8;
 
 $primary-color:               $color-slate;
 $secondary-color:             $color-black;
 $success-color:               $color-mint;
-$error-color:                 $color-state;
-$link-color:                  $color-unc;
+$error-color:                 $color-red-state;
+$link-color:                  $color-blue-unc;
 $opacity-list: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
 
 /** Buttons */
@@ -80,28 +85,28 @@ $interval-size: $range / $intervals;
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=#{$gradient-type}, startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}');
 }
 @mixin rtp-gradient {
-  @include filter-gradient($color-unc, $color-state);
+  @include filter-gradient($color-blue-unc, $color-red-state);
 
-  background-image: -o-linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
-  background-image: -moz-linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
-  background-image: -ms-linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
-  background-image: linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
+  background-image: -o-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 33%, $color-red-nccu 66%, $color-red-state 99%);
+  background-image: -moz-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 33%, $color-red-nccu 66%, $color-red-state 99%);
+  background-image: -ms-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 33%, $color-red-nccu 66%, $color-red-state 99%);
+  background-image: linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 33%, $color-red-nccu 66%, $color-red-state 99%);
 }
 @mixin rtp-gradient-trans {
-  @include filter-gradient($color-unc, $color-state);
+  @include filter-gradient($color-blue-unc, $color-red-state);
 
-  background-image: -o-linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
-  background-image: -moz-linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
-  background-image: -ms-linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
-  background-image: linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
+  background-image: -o-linear-gradient(90deg, rgba($color-blue-unc, 0.7) 0%, rgba($color-blue-duke, 0.7) 33%, rgba($color-red-nccu, 0.7) 66%, rgba($color-red-state, 0.7) 99%);
+  background-image: -moz-linear-gradient(90deg, rgba($color-blue-unc, 0.7) 0%, rgba($color-blue-duke, 0.7) 33%, rgba($color-red-nccu, 0.7) 66%, rgba($color-red-state, 0.7) 99%);
+  background-image: -ms-linear-gradient(90deg, rgba($color-blue-unc, 0.7) 0%, rgba($color-blue-duke, 0.7) 33%, rgba($color-red-nccu, 0.7) 66%, rgba($color-red-state, 0.7) 99%);
+  background-image: linear-gradient(90deg, rgba($color-blue-unc, 0.7) 0%, rgba($color-blue-duke, 0.7) 33%, rgba($color-red-nccu, 0.7) 66%, rgba($color-red-state, 0.7) 99%);
 }
 @mixin unc-duke-gradient {
-  @include filter-gradient($color-unc, $color-duke);
+  @include filter-gradient($color-blue-unc, $color-blue-duke);
 
-  background-image: -o-linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
-  background-image: -moz-linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
-  background-image: -ms-linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
-  background-image: linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
+  background-image: -o-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
+  background-image: -moz-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
+  background-image: -ms-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
+  background-image: linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
 }
 @mixin triangle($direction, $color) {
   background-image: -o-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);

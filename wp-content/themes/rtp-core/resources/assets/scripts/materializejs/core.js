@@ -1,306 +1,17 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/wp-content/themes/rtp-child-frontier/dist/";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rtp_core_dist_scripts_main_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rtp_core_dist_scripts_main_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__rtp_core_dist_scripts_main_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util_Router__ = __webpack_require__(4);
-// Import parent JS
-
-
-/** Import local dependencies */
-
-// import common from './routes/common';
-// import home from './routes/home';
-// import aboutUs from './routes/about';
-// import archive from './routes/archive';
-
-/** Populate Router instance with DOM routes */
-var routes = new __WEBPACK_IMPORTED_MODULE_1__util_Router__["a" /* default */]({
-  // common,
-  // home,
-  // aboutUs,
-  // archive,
-});
-
-/** Load Events */
-jQuery(document).ready(function () { return routes.loadEvents(); });
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(jQuery) {/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/wp-content/themes/rtp-core/dist/";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
-
-module.exports = jQuery;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(2);
-module.exports = __webpack_require__(14);
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__materializejs_core_js__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__materializejs_core_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__materializejs_core_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__autoload_webfonts_js__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__autoload_webfonts_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__autoload_webfonts_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__util_Router__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__routes_common__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__routes_home__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__routes_about__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__routes_archive__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__routes_calendar__ = __webpack_require__(13);
-// import external dependencies
-
-
-// Core Materialize JS
-// import 'materialize-css/js/cash.js';
-// import './materializejs/component.js';
-// import 'materialize-css/js/global.js';
-// import 'materialize-css/js/anime.min.js';
-
-// import 'materialize-css/js/cash.js';
-// import 'materialize-css/js/component.js';
-// import 'materialize-css/js/global.js';
-// import 'materialize-css/js/anime.min.js';
-// import 'materialize-css/js/collapsible.js';
-// import 'materialize-css/js/dropdown.js';
-// import 'materialize-css/js/modal.js';
-// import 'materialize-css/js/materialbox.js';
-// import 'materialize-css/js/parallax.js';
-// import 'materialize-css/js/tabs.js';
-// import 'materialize-css/js/tooltip.js';
-// import 'materialize-css/js/waves.js';
-// import 'materialize-css/js/toasts.js';
-// import 'materialize-css/js/sidenav.js';
-// import 'materialize-css/js/scrollspy.js';
-// import 'materialize-css/js/autocomplete.js';
-// import 'materialize-css/js/forms.js';
-// import 'materialize-css/js/slider.js';
-// import 'materialize-css/js/cards.js';
-// import 'materialize-css/js/chips.js';
-// import 'materialize-css/js/pushpin.js';
-// import 'materialize-css/js/buttons.js';
-// import 'materialize-css/js/datepicker.js';
-// import 'materialize-css/js/timepicker.js';
-// import 'materialize-css/js/characterCounter.js';
-// import 'materialize-css/js/carousel.js';
-// import 'materialize-css/js/tapTarget.js';
-// import 'materialize-css/js/select.js';
-// import 'materialize-css/js/range.js';
-
-// Materialize form interactions
-// import 'materialize-css/js/forms.js';
-
-// import 'materialize-css/js/dropdown.js';
-// import './materializejs/select.js';
-
-// Import everything from autoload
-
-
-// import local dependencies
-
-
-
-
-
-
-
-/** Populate Router instance with DOM routes */
-var routes = new __WEBPACK_IMPORTED_MODULE_3__util_Router__["a" /* default */]({
-  // All pages
-  common: __WEBPACK_IMPORTED_MODULE_4__routes_common__["a" /* default */],
-  // Home page
-  home: __WEBPACK_IMPORTED_MODULE_5__routes_home__["a" /* default */],
-  // About Us page, note the change from about-us to aboutUs.
-  aboutUs: __WEBPACK_IMPORTED_MODULE_6__routes_about__["a" /* default */],
-  archive: __WEBPACK_IMPORTED_MODULE_7__routes_archive__["a" /* default */],
-  calendar: __WEBPACK_IMPORTED_MODULE_8__routes_calendar__["a" /* default */],
-});
-
-// Load Events
-jQuery(document).ready(function () { return routes.loadEvents(); });
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery, jQuery, $, global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* eslint-disable */
+/* eslint-disable */
 
 /*!
  * Materialize v1.0.0 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
-var _get = function get(object, property, receiver) { if (object === null) { object = Function.prototype; } var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) { descriptor.writable = true; } Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) { defineProperties(Constructor.prototype, protoProps); } if (staticProps) { defineProperties(Constructor, staticProps); } return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) { Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -358,8 +69,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   }
 
   function Init(selector, context) {
-    var this$1 = this;
-
     if (!selector) {
       return this;
     }
@@ -399,7 +108,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       // Treat like an array and loop through each item.
       length = this.length = elems.length;
       for (; i < length; i++) {
-        this$1[i] = elems[i];
+        this[i] = elems[i];
       }
     }
 
@@ -544,8 +253,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
   fn.extend({
     data: function (name, value) {
-      var this$1 = this;
-
       if (isString(name)) {
         return value === undefined ? getData(this[0], name) : this.each(function (v) {
           return setData(v, name, value);
@@ -553,7 +260,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       for (var key in name) {
-        this$1.data(key, name[key]);
+        this.data(key, name[key]);
       }
 
       return this;
@@ -606,8 +313,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     },
 
     attr: function (name, value) {
-      var this$1 = this;
-
       if (!name) {
         return undefined;
       }
@@ -627,7 +332,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       for (var key in name) {
-        this$1.attr(key, name[key]);
+        this.attr(key, name[key]);
       }
 
       return this;
@@ -646,8 +351,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     },
 
     prop: function (name, value) {
-      var this$1 = this;
-
       if (isString(name)) {
         return value === undefined ? this[0][name] : this.each(function (v) {
           v[name] = value;
@@ -655,7 +358,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       for (var key in name) {
-        this$1.prop(key, name[key]);
+        this.prop(key, name[key]);
       }
 
       return this;
@@ -797,8 +500,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
   fn.extend({
     css: function (prop, value) {
-      var this$1 = this;
-
       if (isString(prop)) {
         prop = getPrefixedProp(prop);
         return arguments.length > 1 ? this.each(function (v) {
@@ -807,7 +508,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       }
 
       for (var key in prop) {
-        this$1.css(key, prop[key]);
+        this.css(key, prop[key]);
       }
 
       return this;
@@ -873,13 +574,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     },
 
     on: function (eventName, delegate, callback, runOnce) {
-      var this$1 = this;
-
       // jshint ignore:line
       var originalCallback;
       if (!isString(eventName)) {
         for (var key in eventName) {
-          this$1.on(key, delegate, eventName[key]);
+          this.on(key, delegate, eventName[key]);
         }
         return this;
       }
@@ -897,11 +596,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       if (delegate) {
         originalCallback = callback;
         callback = function (e) {
-          var this$1 = this;
-
           var t = e.target;
           while (!matches(t, delegate)) {
-            if (t === this$1 || t === null) {
+            if (t === this || t === null) {
               return t = false;
             }
 
@@ -1372,15 +1069,14 @@ var Component = function () {
   }
 
   // Check for jQuery
-  M.jQueryLoaded = !!__webpack_provided_window_dot_jQuery;
+  M.jQueryLoaded = !!window.jQuery;
 })(window);
 
 // AMD
-if (true) {
-  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+if (typeof define === 'function' && define.amd) {
+  define('M', [], function () {
     return M;
-  }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  });
 
   // Common JS
 } else if (typeof exports !== 'undefined' && !exports.nodeType) {
@@ -1756,7 +1452,7 @@ M.throttle = function (func, wait, options) {
   };
   return function () {
     var now = getTime();
-    if (!previous && options.leading === false) { previous = now; }
+    if (!previous && options.leading === false) previous = now;
     var remaining = wait - (now - previous);
     context = this;
     args = arguments;
@@ -1778,7 +1474,7 @@ M.throttle = function (func, wait, options) {
   Released under the MIT license
   */
 var $jscomp = { scope: {} };$jscomp.defineProperty = "function" == typeof Object.defineProperties ? Object.defineProperty : function (e, r, p) {
-  if (p.get || p.set) { throw new TypeError("ES3 does not support getters and setters."); }e != Array.prototype && e != Object.prototype && (e[r] = p.value);
+  if (p.get || p.set) throw new TypeError("ES3 does not support getters and setters.");e != Array.prototype && e != Object.prototype && (e[r] = p.value);
 };$jscomp.getGlobal = function (e) {
   return "undefined" != typeof window && window === e ? e : "undefined" != typeof global && null != global ? global : e;
 };$jscomp.global = $jscomp.getGlobal(this);$jscomp.SYMBOL_PREFIX = "jscomp_symbol_";
@@ -1829,9 +1525,9 @@ $jscomp.polyfill = function (e, r, p, m) {
   M.anime = r();
 })(function () {
   function e(a) {
-    if (!h.col(a)) { try {
+    if (!h.col(a)) try {
       return document.querySelectorAll(a);
-    } catch (c) {} }
+    } catch (c) {}
   }function r(a, c) {
     for (var d = a.length, b = 2 <= arguments.length ? arguments[1] : void 0, f = [], n = 0; n < d; n++) {
       if (n in a) {
@@ -1843,7 +1539,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       return a.concat(h.arr(d) ? p(d) : d);
     }, []);
   }function m(a) {
-    if (h.arr(a)) { return a; }
+    if (h.arr(a)) return a;
     h.str(a) && (a = e(a) || a);return a instanceof NodeList || a instanceof HTMLCollection ? [].slice.call(a) : [a];
   }function u(a, c) {
     return a.some(function (a) {
@@ -1875,25 +1571,25 @@ $jscomp.polyfill = function (e, r, p, m) {
       0 > b && (b += 1);1 < b && --b;return b < 1 / 6 ? a + 6 * (c - a) * b : .5 > b ? c : b < 2 / 3 ? a + (c - a) * (2 / 3 - b) * 6 : a;
     }var d = /hsl\((\d+),\s*([\d.]+)%,\s*([\d.]+)%\)/g.exec(a) || /hsla\((\d+),\s*([\d.]+)%,\s*([\d.]+)%,\s*([\d.]+)\)/g.exec(a);a = parseInt(d[1]) / 360;var b = parseInt(d[2]) / 100,
         f = parseInt(d[3]) / 100,
-        d = d[4] || 1;if (0 == b) { f = b = a = f; }else {
+        d = d[4] || 1;if (0 == b) f = b = a = f;else {
       var n = .5 > f ? f * (1 + b) : f + b - f * b,
           k = 2 * f - n,
           f = c(k, n, a + 1 / 3),
           b = c(k, n, a);a = c(k, n, a - 1 / 3);
     }return "rgba(" + 255 * f + "," + 255 * b + "," + 255 * a + "," + d + ")";
   }function y(a) {
-    if (a = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(a)) { return a[2]; }
+    if (a = /([\+\-]?[0-9#\.]+)(%|px|pt|em|rem|in|cm|mm|ex|ch|pc|vw|vh|vmin|vmax|deg|rad|turn)?$/.exec(a)) return a[2];
   }function V(a) {
-    if (-1 < a.indexOf("translate") || "perspective" === a) { return "px"; }if (-1 < a.indexOf("rotate") || -1 < a.indexOf("skew")) { return "deg"; }
+    if (-1 < a.indexOf("translate") || "perspective" === a) return "px";if (-1 < a.indexOf("rotate") || -1 < a.indexOf("skew")) return "deg";
   }function I(a, c) {
     return h.fnc(a) ? a(c.target, c.id, c.total) : a;
   }function E(a, c) {
-    if (c in a.style) { return getComputedStyle(a).getPropertyValue(c.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()) || "0"; }
+    if (c in a.style) return getComputedStyle(a).getPropertyValue(c.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()) || "0";
   }function J(a, c) {
-    if (h.dom(a) && u(W, c)) { return "transform"; }if (h.dom(a) && (a.getAttribute(c) || h.svg(a) && a[c])) { return "attribute"; }if (h.dom(a) && "transform" !== c && E(a, c)) { return "css"; }if (null != a[c]) { return "object"; }
+    if (h.dom(a) && u(W, c)) return "transform";if (h.dom(a) && (a.getAttribute(c) || h.svg(a) && a[c])) return "attribute";if (h.dom(a) && "transform" !== c && E(a, c)) return "css";if (null != a[c]) return "object";
   }function X(a, c) {
     var d = V(c),
-        d = -1 < c.indexOf("scale") ? 1 : 0 + d;a = a.style.transform;if (!a) { return d; }for (var b = [], f = [], n = [], k = /(\w+)\((.+?)\)/g; b = k.exec(a);) {
+        d = -1 < c.indexOf("scale") ? 1 : 0 + d;a = a.style.transform;if (!a) return d;for (var b = [], f = [], n = [], k = /(\w+)\((.+?)\)/g; b = k.exec(a);) {
       f.push(b[1]), n.push(b[2]);
     }a = r(n, function (a, b) {
       return f[b] === c;
@@ -1904,7 +1600,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         return E(a, c);case "attribute":
         return a.getAttribute(c);}return a[c] || 0;
   }function L(a, c) {
-    var d = /^(\*=|\+=|-=)/.exec(a);if (!d) { return a; }var b = y(a) || 0;c = parseFloat(c);a = parseFloat(a.replace(d[0], ""));switch (d[0][0]) {case "+":
+    var d = /^(\*=|\+=|-=)/.exec(a);if (!d) return a;var b = y(a) || 0;c = parseFloat(c);a = parseFloat(a.replace(d[0], ""));switch (d[0][0]) {case "+":
         return c + a + b;case "-":
         return c - a + b;case "*":
         return c * a + b;}
@@ -1915,7 +1611,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       var f = a.getItem(b);0 < b && (c += F(d, f));d = f;
     }return c;
   }function N(a) {
-    if (a.getTotalLength) { return a.getTotalLength(); }switch (a.tagName.toLowerCase()) {case "circle":
+    if (a.getTotalLength) return a.getTotalLength();switch (a.tagName.toLowerCase()) {case "circle":
         return 2 * Math.PI * a.getAttribute("r");case "rect":
         return 2 * a.getAttribute("width") + 2 * a.getAttribute("height");case "line":
         return F({ x: a.getAttribute("x1"), y: a.getAttribute("y1") }, { x: a.getAttribute("x2"), y: a.getAttribute("y2") });case "polyline":
@@ -1936,8 +1632,8 @@ $jscomp.polyfill = function (e, r, p, m) {
         b;b = h.pth(a) ? a.totalLength : a;if (h.col(b)) {
       if (h.rgb(b)) {
         var f = /rgb\((\d+,\s*[\d]+,\s*[\d]+)\)/g.exec(b);b = f ? "rgba(" + f[1] + ",1)" : b;
-      } else { b = h.hex(b) ? T(b) : h.hsl(b) ? U(b) : void 0; }
-    } else { f = (f = y(b)) ? b.substr(0, b.length - f.length) : b, b = c && !/\s/g.test(b) ? f + c : f; }b += "";return { original: b, numbers: b.match(d) ? b.match(d).map(Number) : [0], strings: h.str(a) || c ? b.split(d) : [] };
+      } else b = h.hex(b) ? T(b) : h.hsl(b) ? U(b) : void 0;
+    } else f = (f = y(b)) ? b.substr(0, b.length - f.length) : b, b = c && !/\s/g.test(b) ? f + c : f;b += "";return { original: b, numbers: b.match(d) ? b.match(d).map(Number) : [0], strings: h.str(a) || c ? b.split(d) : [] };
   }function P(a) {
     a = a ? p(h.arr(a) ? a.map(m) : m(a)) : [];return r(a, function (a, d, b) {
       return b.indexOf(a) === d;
@@ -1977,7 +1673,7 @@ $jscomp.polyfill = function (e, r, p, m) {
       return c.map(function (b) {
         var c = J(a.target, b.name);if (c) {
           var d = da(b, a);b = { type: c, property: b.name, animatable: a, tweens: d, duration: d[d.length - 1].end, delay: d[0].delay };
-        } else { b = void 0; }return b;
+        } else b = void 0;return b;
       });
     })), function (a) {
       return !h.und(a);
@@ -2015,14 +1711,14 @@ $jscomp.polyfill = function (e, r, p, m) {
               x = l.to.numbers[t],
               q = l.from.numbers[t],
               x = l.isPath ? Y(l.value, w * x) : q + w * (x - q);p && (l.isColor && 2 < t || (x = Math.round(x * p) / p));n.push(x);
-        }if (l = h.length) { for (m = h[0], w = 0; w < l; w++) {
+        }if (l = h.length) for (m = h[0], w = 0; w < l; w++) {
           p = h[w + 1], t = n[w], isNaN(t) || (m = p ? m + (t + p) : m + (t + " "));
-        } } else { m = n[0]; }ha[e.type](k.target, e.property, m, c, k.id);e.currentValue = m;b++;
-      }if (b = Object.keys(c).length) { for (d = 0; d < b; d++) {
+        } else m = n[0];ha[e.type](k.target, e.property, m, c, k.id);e.currentValue = m;b++;
+      }if (b = Object.keys(c).length) for (d = 0; d < b; d++) {
         H || (H = E(document.body, "transform") ? "transform" : "-webkit-transform"), g.animatables[d].target.style[H] = c[d].join(" ");
-      } }g.currentTime = a;g.progress = a / g.duration * 100;
+      }g.currentTime = a;g.progress = a / g.duration * 100;
     }function f(a) {
-      if (g[a]) { g[a](g); }
+      if (g[a]) g[a](g);
     }function e() {
       g.remaining && !0 !== g.remaining && g.remaining--;
     }function k(a) {
@@ -2034,12 +1730,12 @@ $jscomp.polyfill = function (e, r, p, m) {
           q = d(a);if (g.children.length) {
         var u = g.children,
             v = u.length;
-        if (q >= g.currentTime) { for (var G = 0; G < v; G++) {
+        if (q >= g.currentTime) for (var G = 0; G < v; G++) {
           u[G].seek(q);
-        } } else { for (; v--;) {
+        } else for (; v--;) {
           u[v].seek(q);
-        } }
-      }if (q >= w || !k) { g.began || (g.began = !0, f("begin")), f("run"); }if (q > n && q < k) { b(q); }else if (q <= n && 0 !== r && (b(0), x && e()), q >= k && r !== k || !k) { b(k), x || e(); }f("update");a >= k && (g.remaining ? (t = h, "alternate" === g.direction && (g.reversed = !g.reversed)) : (g.pause(), g.completed || (g.completed = !0, f("complete"), "Promise" in window && (p(), m = c()))), l = 0);
+        }
+      }if (q >= w || !k) g.began || (g.began = !0, f("begin")), f("run");if (q > n && q < k) b(q);else if (q <= n && 0 !== r && (b(0), x && e()), q >= k && r !== k || !k) b(k), x || e();f("update");a >= k && (g.remaining ? (t = h, "alternate" === g.direction && (g.reversed = !g.reversed)) : (g.pause(), g.completed || (g.completed = !0, f("complete"), "Promise" in window && (p(), m = c()))), l = 0);
     }a = void 0 === a ? {} : a;var h,
         t,
         l = 0,
@@ -2102,18 +1798,18 @@ $jscomp.polyfill = function (e, r, p, m) {
       return (((1 - 3 * b + 3 * d) * a + (3 * b - 6 * d)) * a + 3 * d) * a;
     }return function (c, d, b, f) {
       if (0 <= c && 1 >= c && 0 <= b && 1 >= b) {
-        var e = new Float32Array(11);if (c !== d || b !== f) { for (var k = 0; 11 > k; ++k) {
+        var e = new Float32Array(11);if (c !== d || b !== f) for (var k = 0; 11 > k; ++k) {
           e[k] = a(.1 * k, c, b);
-        } }return function (k) {
-          if (c === d && b === f) { return k; }if (0 === k) { return 0; }if (1 === k) { return 1; }for (var h = 0, l = 1; 10 !== l && e[l] <= k; ++l) {
+        }return function (k) {
+          if (c === d && b === f) return k;if (0 === k) return 0;if (1 === k) return 1;for (var h = 0, l = 1; 10 !== l && e[l] <= k; ++l) {
             h += .1;
           }--l;var l = h + (k - e[l]) / (e[l + 1] - e[l]) * .1,
               n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;if (.001 <= n) {
             for (h = 0; 4 > h; ++h) {
-              n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;if (0 === n) { break; }var m = a(l, c, b) - k,
+              n = 3 * (1 - 3 * b + 3 * c) * l * l + 2 * (3 * b - 6 * c) * l + 3 * c;if (0 === n) break;var m = a(l, c, b) - k,
                   l = l - m / n;
             }k = l;
-          } else if (0 === n) { k = l; }else {
+          } else if (0 === n) k = l;else {
             var l = h,
                 h = h + .1,
                 g = 0;do {
@@ -2162,7 +1858,7 @@ $jscomp.polyfill = function (e, r, p, m) {
         for (var d = 0; d < b;) {
           v[d] && v[d].tick(c), d++;
         }a();
-      } else { cancelAnimationFrame(B), B = 0; }
+      } else cancelAnimationFrame(B), B = 0;
     }return a;
   }();q.version = "2.2.0";q.speed = 1;q.running = v;q.remove = function (a) {
     a = P(a);for (var c = v.length; c--;) {
@@ -2457,8 +2153,6 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_handleDropdownKeydown",
       value: function _handleDropdownKeydown(e) {
-        var this$1 = this;
-
         if (e.which === M.keys.TAB) {
           e.preventDefault();
           this.close();
@@ -2472,7 +2166,7 @@ $jscomp.polyfill = function (e, r, p, m) {
           do {
             newFocusedIndex = newFocusedIndex + direction;
 
-            if (!!this$1.dropdownEl.children[newFocusedIndex] && this$1.dropdownEl.children[newFocusedIndex].tabIndex !== -1) {
+            if (!!this.dropdownEl.children[newFocusedIndex] && this.dropdownEl.children[newFocusedIndex].tabIndex !== -1) {
               foundNewIndex = true;
               break;
             }
@@ -3237,17 +2931,15 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "_setSelectedStates",
       value: function _setSelectedStates() {
-        var this$1 = this;
-
         this._keysSelected = {};
 
-        for (var key in this$1._valueDict) {
-          var option = this$1._valueDict[key];
+        for (var key in this._valueDict) {
+          var option = this._valueDict[key];
           var optionIsSelected = $(option.el).prop('selected');
           $(option.optionEl).find('input[type="checkbox"]').prop('checked', optionIsSelected);
           if (optionIsSelected) {
-            this$1._activateOption($(this$1.dropdownOptions), $(option.optionEl));
-            this$1._keysSelected[key] = true;
+            this._activateOption($(this.dropdownOptions), $(option.optionEl));
+            this._keysSelected[key] = true;
           } else {
             $(option.optionEl).removeClass('selected');
           }
@@ -3280,11 +2972,9 @@ $jscomp.polyfill = function (e, r, p, m) {
     }, {
       key: "getSelectedValues",
       value: function getSelectedValues() {
-        var this$1 = this;
-
         var selectedValues = [];
-        for (var key in this$1._keysSelected) {
-          selectedValues.push(this$1._valueDict[key].el.value);
+        for (var key in this._keysSelected) {
+          selectedValues.push(this._valueDict[key].el.value);
         }
         return selectedValues;
       }
@@ -3321,530 +3011,3 @@ $jscomp.polyfill = function (e, r, p, m) {
   }
 })(cash);
 ;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0), __webpack_require__(0), __webpack_require__(4)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		{ g = window; }
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Web Font Loader
-var WebFont = __webpack_require__(6);
-
-WebFont.load({
- google: {
-   families: ['Poppins:300,300i,500,500i,700', 'Material Icons']
- }
-});
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;/* Web Font Loader v1.6.28 - (c) Adobe Systems, Google. License: Apache 2.0 */(function(){function aa(a,b,c){return a.call.apply(a.bind,arguments)}function ba(a,b,c){if(!a){ throw Error(); }if(2<arguments.length){var d=Array.prototype.slice.call(arguments,2);return function(){var c=Array.prototype.slice.call(arguments);Array.prototype.unshift.apply(c,d);return a.apply(b,c)}}return function(){return a.apply(b,arguments)}}function p(a,b,c){p=Function.prototype.bind&&-1!=Function.prototype.bind.toString().indexOf("native code")?aa:ba;return p.apply(null,arguments)}var q=Date.now||function(){return+new Date};function ca(a,b){this.a=a;this.o=b||a;this.c=this.o.document}var da=!!window.FontFace;function t(a,b,c,d){b=a.c.createElement(b);if(c){ for(var e in c){ c.hasOwnProperty(e)&&("style"==e?b.style.cssText=c[e]:b.setAttribute(e,c[e])); } }d&&b.appendChild(a.c.createTextNode(d));return b}function u(a,b,c){a=a.c.getElementsByTagName(b)[0];a||(a=document.documentElement);a.insertBefore(c,a.lastChild)}function v(a){a.parentNode&&a.parentNode.removeChild(a)}
-function w(a,b,c){b=b||[];c=c||[];for(var d=a.className.split(/\s+/),e=0;e<b.length;e+=1){for(var f=!1,g=0;g<d.length;g+=1){ if(b[e]===d[g]){f=!0;break} }f||d.push(b[e])}b=[];for(e=0;e<d.length;e+=1){f=!1;for(g=0;g<c.length;g+=1){ if(d[e]===c[g]){f=!0;break} }f||b.push(d[e])}a.className=b.join(" ").replace(/\s+/g," ").replace(/^\s+|\s+$/,"")}function y(a,b){for(var c=a.className.split(/\s+/),d=0,e=c.length;d<e;d++){ if(c[d]==b){ return!0; } }return!1}
-function ea(a){return a.o.location.hostname||a.a.location.hostname}function z(a,b,c){function d(){m&&e&&f&&(m(g),m=null)}b=t(a,"link",{rel:"stylesheet",href:b,media:"all"});var e=!1,f=!0,g=null,m=c||null;da?(b.onload=function(){e=!0;d()},b.onerror=function(){e=!0;g=Error("Stylesheet failed to load");d()}):setTimeout(function(){e=!0;d()},0);u(a,"head",b)}
-function A(a,b,c,d){var e=a.c.getElementsByTagName("head")[0];if(e){var f=t(a,"script",{src:b}),g=!1;f.onload=f.onreadystatechange=function(){g||this.readyState&&"loaded"!=this.readyState&&"complete"!=this.readyState||(g=!0,c&&c(null),f.onload=f.onreadystatechange=null,"HEAD"==f.parentNode.tagName&&e.removeChild(f))};e.appendChild(f);setTimeout(function(){g||(g=!0,c&&c(Error("Script load timeout")))},d||5E3);return f}return null};function B(){this.a=0;this.c=null}function C(a){a.a++;return function(){a.a--;D(a)}}function E(a,b){a.c=b;D(a)}function D(a){0==a.a&&a.c&&(a.c(),a.c=null)};function F(a){this.a=a||"-"}F.prototype.c=function(a){
-var arguments$1 = arguments;
-for(var b=[],c=0;c<arguments.length;c++){ b.push(arguments$1[c].replace(/[\W_]+/g,"").toLowerCase()); }return b.join(this.a)};function G(a,b){this.c=a;this.f=4;this.a="n";var c=(b||"n4").match(/^([nio])([1-9])$/i);c&&(this.a=c[1],this.f=parseInt(c[2],10))}function fa(a){return H(a)+" "+(a.f+"00")+" 300px "+I(a.c)}function I(a){var b=[];a=a.split(/,\s*/);for(var c=0;c<a.length;c++){var d=a[c].replace(/['"]/g,"");-1!=d.indexOf(" ")||/^\d/.test(d)?b.push("'"+d+"'"):b.push(d)}return b.join(",")}function J(a){return a.a+a.f}function H(a){var b="normal";"o"===a.a?b="oblique":"i"===a.a&&(b="italic");return b}
-function ga(a){var b=4,c="n",d=null;a&&((d=a.match(/(normal|oblique|italic)/i))&&d[1]&&(c=d[1].substr(0,1).toLowerCase()),(d=a.match(/([1-9]00|normal|bold)/i))&&d[1]&&(/bold/i.test(d[1])?b=7:/[1-9]00/.test(d[1])&&(b=parseInt(d[1].substr(0,1),10))));return c+b};function ha(a,b){this.c=a;this.f=a.o.document.documentElement;this.h=b;this.a=new F("-");this.j=!1!==b.events;this.g=!1!==b.classes}function ia(a){a.g&&w(a.f,[a.a.c("wf","loading")]);K(a,"loading")}function L(a){if(a.g){var b=y(a.f,a.a.c("wf","active")),c=[],d=[a.a.c("wf","loading")];b||c.push(a.a.c("wf","inactive"));w(a.f,c,d)}K(a,"inactive")}function K(a,b,c){if(a.j&&a.h[b]){ if(c){ a.h[b](c.c,J(c)); }else { a.h[b]() } }};function ja(){this.c={}}function ka(a,b,c){var d=[],e;for(e in b){ if(b.hasOwnProperty(e)){var f=a.c[e];f&&d.push(f(b[e],c))} }return d};function M(a,b){this.c=a;this.f=b;this.a=t(this.c,"span",{"aria-hidden":"true"},this.f)}function N(a){u(a.c,"body",a.a)}function O(a){return"display:block;position:absolute;top:-9999px;left:-9999px;font-size:300px;width:auto;height:auto;line-height:normal;margin:0;padding:0;font-variant:normal;white-space:nowrap;font-family:"+I(a.c)+";"+("font-style:"+H(a)+";font-weight:"+(a.f+"00")+";")};function P(a,b,c,d,e,f){this.g=a;this.j=b;this.a=d;this.c=c;this.f=e||3E3;this.h=f||void 0}P.prototype.start=function(){var a=this.c.o.document,b=this,c=q(),d=new Promise(function(d,e){function f(){q()-c>=b.f?e():a.fonts.load(fa(b.a),b.h).then(function(a){1<=a.length?d():setTimeout(f,25)},function(){e()})}f()}),e=null,f=new Promise(function(a,d){e=setTimeout(d,b.f)});Promise.race([f,d]).then(function(){e&&(clearTimeout(e),e=null);b.g(b.a)},function(){b.j(b.a)})};function Q(a,b,c,d,e,f,g){this.v=a;this.B=b;this.c=c;this.a=d;this.s=g||"BESbswy";this.f={};this.w=e||3E3;this.u=f||null;this.m=this.j=this.h=this.g=null;this.g=new M(this.c,this.s);this.h=new M(this.c,this.s);this.j=new M(this.c,this.s);this.m=new M(this.c,this.s);a=new G(this.a.c+",serif",J(this.a));a=O(a);this.g.a.style.cssText=a;a=new G(this.a.c+",sans-serif",J(this.a));a=O(a);this.h.a.style.cssText=a;a=new G("serif",J(this.a));a=O(a);this.j.a.style.cssText=a;a=new G("sans-serif",J(this.a));a=
-O(a);this.m.a.style.cssText=a;N(this.g);N(this.h);N(this.j);N(this.m)}var R={D:"serif",C:"sans-serif"},S=null;function T(){if(null===S){var a=/AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(window.navigator.userAgent);S=!!a&&(536>parseInt(a[1],10)||536===parseInt(a[1],10)&&11>=parseInt(a[2],10))}return S}Q.prototype.start=function(){this.f.serif=this.j.a.offsetWidth;this.f["sans-serif"]=this.m.a.offsetWidth;this.A=q();U(this)};
-function la(a,b,c){for(var d in R){ if(R.hasOwnProperty(d)&&b===a.f[R[d]]&&c===a.f[R[d]]){ return!0; } }return!1}function U(a){var b=a.g.a.offsetWidth,c=a.h.a.offsetWidth,d;(d=b===a.f.serif&&c===a.f["sans-serif"])||(d=T()&&la(a,b,c));d?q()-a.A>=a.w?T()&&la(a,b,c)&&(null===a.u||a.u.hasOwnProperty(a.a.c))?V(a,a.v):V(a,a.B):ma(a):V(a,a.v)}function ma(a){setTimeout(p(function(){U(this)},a),50)}function V(a,b){setTimeout(p(function(){v(this.g.a);v(this.h.a);v(this.j.a);v(this.m.a);b(this.a)},a),0)};function W(a,b,c){this.c=a;this.a=b;this.f=0;this.m=this.j=!1;this.s=c}var X=null;W.prototype.g=function(a){var b=this.a;b.g&&w(b.f,[b.a.c("wf",a.c,J(a).toString(),"active")],[b.a.c("wf",a.c,J(a).toString(),"loading"),b.a.c("wf",a.c,J(a).toString(),"inactive")]);K(b,"fontactive",a);this.m=!0;na(this)};
-W.prototype.h=function(a){var b=this.a;if(b.g){var c=y(b.f,b.a.c("wf",a.c,J(a).toString(),"active")),d=[],e=[b.a.c("wf",a.c,J(a).toString(),"loading")];c||d.push(b.a.c("wf",a.c,J(a).toString(),"inactive"));w(b.f,d,e)}K(b,"fontinactive",a);na(this)};function na(a){0==--a.f&&a.j&&(a.m?(a=a.a,a.g&&w(a.f,[a.a.c("wf","active")],[a.a.c("wf","loading"),a.a.c("wf","inactive")]),K(a,"active")):L(a.a))};function oa(a){this.j=a;this.a=new ja;this.h=0;this.f=this.g=!0}oa.prototype.load=function(a){this.c=new ca(this.j,a.context||this.j);this.g=!1!==a.events;this.f=!1!==a.classes;pa(this,new ha(this.c,a),a)};
-function qa(a,b,c,d,e){var f=0==--a.h;(a.f||a.g)&&setTimeout(function(){var a=e||null,m=d||null||{};if(0===c.length&&f){ L(b.a); }else{b.f+=c.length;f&&(b.j=f);var h,l=[];for(h=0;h<c.length;h++){var k=c[h],n=m[k.c],r=b.a,x=k;r.g&&w(r.f,[r.a.c("wf",x.c,J(x).toString(),"loading")]);K(r,"fontloading",x);r=null;if(null===X){ if(window.FontFace){var x=/Gecko.*Firefox\/(\d+)/.exec(window.navigator.userAgent),xa=/OS X.*Version\/10\..*Safari/.exec(window.navigator.userAgent)&&/Apple/.exec(window.navigator.vendor);
-X=x?42<parseInt(x[1],10):xa?!1:!0}else { X=!1; } }X?r=new P(p(b.g,b),p(b.h,b),b.c,k,b.s,n):r=new Q(p(b.g,b),p(b.h,b),b.c,k,b.s,a,n);l.push(r)}for(h=0;h<l.length;h++){ l[h].start() }}},0)}function pa(a,b,c){var d=[],e=c.timeout;ia(b);var d=ka(a.a,c,a.c),f=new W(a.c,b,e);a.h=d.length;b=0;for(c=d.length;b<c;b++){ d[b].load(function(b,d,c){qa(a,f,b,d,c)}) }};function ra(a,b){this.c=a;this.a=b}
-ra.prototype.load=function(a){function b(){if(f["__mti_fntLst"+d]){var c=f["__mti_fntLst"+d](),e=[],h;if(c){ for(var l=0;l<c.length;l++){var k=c[l].fontfamily;void 0!=c[l].fontStyle&&void 0!=c[l].fontWeight?(h=c[l].fontStyle+c[l].fontWeight,e.push(new G(k,h))):e.push(new G(k))} }a(e)}else { setTimeout(function(){b()},50) }}var c=this,d=c.a.projectId,e=c.a.version;if(d){var f=c.c.o;A(this.c,(c.a.api||"https://fast.fonts.net/jsapi")+"/"+d+".js"+(e?"?v="+e:""),function(e){e?a([]):(f["__MonotypeConfiguration__"+
-d]=function(){return c.a},b())}).id="__MonotypeAPIScript__"+d}else { a([]) }};function sa(a,b){this.c=a;this.a=b}sa.prototype.load=function(a){
-var this$1 = this;
-var b,c,d=this.a.urls||[],e=this.a.families||[],f=this.a.testStrings||{},g=new B;b=0;for(c=d.length;b<c;b++){ z(this$1.c,d[b],C(g)); }var m=[];b=0;for(c=e.length;b<c;b++){ if(d=e[b].split(":"),d[1]){ for(var h=d[1].split(","),l=0;l<h.length;l+=1){ m.push(new G(d[0],h[l])); } }else { m.push(new G(d[0])); } }E(g,function(){a(m,f)})};function ta(a,b){a?this.c=a:this.c=ua;this.a=[];this.f=[];this.g=b||""}var ua="https://fonts.googleapis.com/css";function va(a,b){for(var c=b.length,d=0;d<c;d++){var e=b[d].split(":");3==e.length&&a.f.push(e.pop());var f="";2==e.length&&""!=e[1]&&(f=":");a.a.push(e.join(f))}}
-function wa(a){if(0==a.a.length){ throw Error("No fonts to load!"); }if(-1!=a.c.indexOf("kit=")){ return a.c; }for(var b=a.a.length,c=[],d=0;d<b;d++){ c.push(a.a[d].replace(/ /g,"+")); }b=a.c+"?family="+c.join("%7C");0<a.f.length&&(b+="&subset="+a.f.join(","));0<a.g.length&&(b+="&text="+encodeURIComponent(a.g));return b};function ya(a){this.f=a;this.a=[];this.c={}}
-var za={latin:"BESbswy","latin-ext":"\u00e7\u00f6\u00fc\u011f\u015f",cyrillic:"\u0439\u044f\u0416",greek:"\u03b1\u03b2\u03a3",khmer:"\u1780\u1781\u1782",Hanuman:"\u1780\u1781\u1782"},Aa={thin:"1",extralight:"2","extra-light":"2",ultralight:"2","ultra-light":"2",light:"3",regular:"4",book:"4",medium:"5","semi-bold":"6",semibold:"6","demi-bold":"6",demibold:"6",bold:"7","extra-bold":"8",extrabold:"8","ultra-bold":"8",ultrabold:"8",black:"9",heavy:"9",l:"3",r:"4",b:"7"},Ba={i:"i",italic:"i",n:"n",normal:"n"},
-Ca=/^(thin|(?:(?:extra|ultra)-?)?light|regular|book|medium|(?:(?:semi|demi|extra|ultra)-?)?bold|black|heavy|l|r|b|[1-9]00)?(n|i|normal|italic)?$/;
-function Da(a){for(var b=a.f.length,c=0;c<b;c++){var d=a.f[c].split(":"),e=d[0].replace(/\+/g," "),f=["n4"];if(2<=d.length){var g;var m=d[1];g=[];if(m){ for(var m=m.split(","),h=m.length,l=0;l<h;l++){var k;k=m[l];if(k.match(/^[\w-]+$/)){var n=Ca.exec(k.toLowerCase());if(null==n){ k=""; }else{k=n[2];k=null==k||""==k?"n":Ba[k];n=n[1];if(null==n||""==n){ n="4"; }else { var r=Aa[n],n=r?r:isNaN(n)?"4":n.substr(0,1); }k=[k,n].join("")}}else { k=""; }k&&g.push(k)} }0<g.length&&(f=g);3==d.length&&(d=d[2],g=[],d=d?d.split(","):
-g,0<d.length&&(d=za[d[0]])&&(a.c[e]=d))}a.c[e]||(d=za[e])&&(a.c[e]=d);for(d=0;d<f.length;d+=1){ a.a.push(new G(e,f[d])) }}};function Ea(a,b){this.c=a;this.a=b}var Fa={Arimo:!0,Cousine:!0,Tinos:!0};Ea.prototype.load=function(a){var b=new B,c=this.c,d=new ta(this.a.api,this.a.text),e=this.a.families;va(d,e);var f=new ya(e);Da(f);z(c,wa(d),C(b));E(b,function(){a(f.a,f.c,Fa)})};function Ga(a,b){this.c=a;this.a=b}Ga.prototype.load=function(a){var b=this.a.id,c=this.c.o;b?A(this.c,(this.a.api||"https://use.typekit.net")+"/"+b+".js",function(b){if(b){ a([]); }else if(c.Typekit&&c.Typekit.config&&c.Typekit.config.fn){b=c.Typekit.config.fn;for(var e=[],f=0;f<b.length;f+=2){ for(var g=b[f],m=b[f+1],h=0;h<m.length;h++){ e.push(new G(g,m[h])); } }try{c.Typekit.load({events:!1,classes:!1,async:!0})}catch(l){}a(e)}},2E3):a([])};function Ha(a,b){this.c=a;this.f=b;this.a=[]}Ha.prototype.load=function(a){var b=this.f.id,c=this.c.o,d=this;b?(c.__webfontfontdeckmodule__||(c.__webfontfontdeckmodule__={}),c.__webfontfontdeckmodule__[b]=function(b,c){for(var g=0,m=c.fonts.length;g<m;++g){var h=c.fonts[g];d.a.push(new G(h.name,ga("font-weight:"+h.weight+";font-style:"+h.style)))}a(d.a)},A(this.c,(this.f.api||"https://f.fontdeck.com/s/css/js/")+ea(this.c)+"/"+b+".js",function(b){b&&a([])})):a([])};var Y=new oa(window);Y.a.c.custom=function(a,b){return new sa(b,a)};Y.a.c.fontdeck=function(a,b){return new Ha(b,a)};Y.a.c.monotype=function(a,b){return new ra(b,a)};Y.a.c.typekit=function(a,b){return new Ga(b,a)};Y.a.c.google=function(a,b){return new Ea(b,a)};var Z={load:p(Y.load,Y)}; true?!(__WEBPACK_AMD_DEFINE_RESULT__ = (function(){return Z}).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):"undefined"!==typeof module&&module.exports?module.exports=Z:(window.WebFont=Z,window.WebFontConfig&&Y.load(window.WebFontConfig));}());
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__camelCase__ = __webpack_require__(8);
-
-
-/**
- * DOM-based Routing
- *
- * Based on {@link http://goo.gl/EUTi53|Markup-based Unobtrusive Comprehensive DOM-ready Execution} by Paul Irish
- *
- * The routing fires all common scripts, followed by the page specific scripts.
- * Add additional events for more control over timing e.g. a finalize event
- */
-var Router = function Router(routes) {
-  this.routes = routes;
-};
-
-/**
- * Fire Router events
- * @param {string} route DOM-based route derived from body classes (`<body class="...">`)
- * @param {string} [event] Events on the route. By default, `init` and `finalize` events are called.
- * @param {string} [arg] Any custom argument to be passed to the event.
- */
-Router.prototype.fire = function fire (route, event, arg) {
-    if ( event === void 0 ) { event = 'init'; }
-
-  document.dispatchEvent(new CustomEvent('routed', {
-    bubbles: true,
-    detail: {
-      route: route,
-      fn: event,
-    },
-  }));
-
-  var fire = route !== '' && this.routes[route] && typeof this.routes[route][event] === 'function';
-  if (fire) {
-    this.routes[route][event](arg);
-  }
-};
-
-/**
- * Automatically load and fire Router events
- *
- * Events are fired in the following order:
- ** common init
- ** page-specific init
- ** page-specific finalize
- ** common finalize
- */
-Router.prototype.loadEvents = function loadEvents () {
-    var this$1 = this;
-
-  // Fire common init JS
-  this.fire('common');
-
-  // Fire page-specific init JS, and then finalize JS
-  document.body.className
-    .toLowerCase()
-    .replace(/-/g, '_')
-    .split(/\s+/)
-    .map(__WEBPACK_IMPORTED_MODULE_0__camelCase__["a" /* default */])
-    .forEach(function (className) {
-      this$1.fire(className);
-      this$1.fire(className, 'finalize');
-    });
-
-  // Fire common finalize JS
-  this.fire('common', 'finalize');
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (Router);
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * the most terrible camelizer on the internet, guaranteed!
- * @param {string} str String that isn't camel-case, e.g., CAMeL_CaSEiS-harD
- * @return {string} String converted to camel-case, e.g., camelCaseIsHard
- */
-/* harmony default export */ __webpack_exports__["a"] = (function (str) { return ("" + (str.charAt(0).toLowerCase()) + (str.replace(/[\W_]/g, '|').split('|')
-  .map(function (part) { return ("" + (part.charAt(0).toUpperCase()) + (part.slice(1))); })
-  .join('')
-  .slice(1))); });;
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony default export */ __webpack_exports__["a"] = ({
-  init: function init() {
-    /**
-     * Set aria labels for current navigation items
-     */
-    // Main navigation in header and footer
-    $('.menu-primary-menu-container .menu-item').each(function() {
-      if ($(this).hasClass('current-page-ancestor')) {
-        $(this).children('a').attr('aria-current', 'true');
-      }
-      if ($(this).hasClass('current-menu-item')) {
-        $(this).children('a').attr('aria-current', 'page');
-      }
-    });
-    // Sidebar navigation
-    $('.widget_nav_menu .menu-item').each(function() {
-      if ($(this).hasClass('current-page-ancestor')) {
-        $(this).children('a').attr('aria-current', 'true');
-      }
-      if ($(this).hasClass('current-menu-item')) {
-        $(this).children('a').attr('aria-current', 'page');
-      }
-    });
-  },
-  finalize: function finalize() {
-    // Media query
-    var smDown = window.matchMedia( '(max-width: 768px)' );
-
-    // Show a11y toolbar
-    function showA11yToolbar() {
-      $('body').addClass('a11y-tools-active');
-      $('#a11y-tools-trigger + label i').attr('aria-label', 'Hide accessibility tools');
-
-      // Enable focus of tools using tabindex
-      $('.a11y-tools').each(function() {
-        var el = $(this);
-        $('input', el).attr('tabindex', '0');
-      });
-    }
-
-    // Hide a11y toolbar
-    function hideA11yToolbar() {
-      $('body').removeClass('a11y-tools-active');
-      $('#a11y-tools-trigger + label i').attr('aria-label', 'Show accessibility tools');
-
-      // Disable focus of tools using tabindex
-      $('.a11y-tools').each(function() {
-        var el = $(this);
-        $('input', el).attr('tabindex', '-1');
-      });
-    }
-
-    // Toggle a11y toolbar
-    $('#a11y-tools-trigger').on('change', function() {
-      if (smDown.matches) {
-        if ($(this).prop('checked')) {
-          showA11yToolbar();
-        } else {
-          hideA11yToolbar();
-        }
-      }
-    });
-
-    // Make a11y toolbar keyboard accessible
-    $('.a11y-tools').on('focusout', 'input', function() {
-      setTimeout(function () {
-        if (smDown.matches) {
-          if ($(':focus').closest('.a11y-tools').length == 0) {
-            $('#a11y-tools-trigger').prop('checked', false);
-            hideA11yToolbar();
-          }
-        }
-      }, 200);
-    });
-
-    // Controls for changing text size
-    $('#text-size input[name="text-size"]').on('change', function() {
-      var tsize = $(this).val();
-      $('html').attr('data-text-size', tsize);
-      document.cookie = 'data_text_size=' + tsize + ';max-age=31536000;path=/';
-    });
-
-    // Controls for changing contrast
-    $('#toggle-contrast input[name="contrast"]').on('change', function() {
-      var contrast = $(this).is(':checked');
-      $('html').attr('data-contrast', contrast);
-      document.cookie = 'data_contrast=' + contrast + ';max-age=31536000;path=/';
-    });
-
-    // Show mobile nav
-    function showMobileNav() {
-      $('body').addClass('mobilenav-active');
-      $('#menu-trigger + label i').attr('aria-label', 'Hide navigation menu');
-
-      // Enable focus of nav items using tabindex
-      $('.navbar-menu').each(function() {
-        var el = $(this);
-        $('a', el).attr('tabindex', '0');
-      });
-    }
-
-    // Hide mobile nav
-    function hideMobileNav() {
-      $('body').removeClass('mobilenav-active');
-      $('#menu-trigger + label i').attr('aria-label', 'Show navigation menu');
-
-      // Disable focus of nav items using tabindex
-      $('.navbar-menu').each(function() {
-        var el = $(this);
-        $('a', el).attr('tabindex', '-1');
-      });
-    }
-
-    // Toggle mobile nav
-    $('#menu-trigger').on('change focusout', function() {
-      if ($(this).prop('checked')) {
-        showMobileNav();
-      } else {
-        hideMobileNav();
-      }
-    });
-
-    // Only show mobile nav if an element inside is receiving focus
-    $('.navbar-menu').each(function () {
-      var el = $(this);
-
-      $('a', el).on('focus', function() {
-        $(this).parents('li').addClass('hover');
-      }).on('focusout', function() {
-        $(this).parents('li').removeClass('hover');
-
-        if (smDown.matches) {
-          setTimeout(function () {
-            if ($(':focus').closest('#menu-main-menu').length == 0) {
-              $('#menu-trigger').prop('checked', false);
-              hideMobileNav();
-            }
-          }, 200);
-        }
-      });
-    });
-
-    /**
-     * Form label controls
-     */
-    $('.wpcf7-form-control-wrap').children('input[type="text"], input[type="email"], input[type="tel"], textarea').each(function() {
-      // Remove br
-      $(this).parent().prevAll('br').remove();
-
-      // Set field wrapper to active
-      $(this).on('focus', function() {
-        $(this).parent().prev('label').addClass('active');
-      });
-
-      // Remove field wrapper active state
-      $(this).on('blur', function() {
-        var val = $.trim($(this).val());
-
-        if (!val) {
-          $(this).parent().prev('label').removeClass('active');
-        }
-      });
-    });
-
-    $('.wpcf7-form-control-wrap').find('.has-free-text').each(function() {
-      var $input = $(this).find('input[type="radio"], input[type="checkbox"]');
-
-      $input.on('focus', function() {
-        $input.parent().addClass('active');
-      })
-    });
-  },
-});
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init: function init() {
-    // JavaScript to be fired on the home page
-  },
-  finalize: function finalize() {
-    // JavaScript to be fired on the home page, after the init JS
-  },
-});
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init: function init() {
-    // JavaScript to be fired on the about us page
-  },
-});
-
-
-/***/ }),
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// import Macy from 'macy/dist/macy.js';
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-  init: function init() {
-    // if (document.querySelector('.grid') !== null) {
-    //   var macyGrid = Macy({   // eslint-disable-line no-unused-vars
-    //     container: '.grid',
-    //     trueOrder: true,
-    //     columns: 2,
-    //     margin: {
-    //       x: 20,
-    //       y: 30,
-    //     },
-    //     breakAt: {
-    //       767: 1,
-    //     },
-    //   });
-    // }
-  },
-  finalize: function finalize() {
-  },
-});
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony default export */ __webpack_exports__["a"] = ({
-  init: function init() {
-    $('.mec-date-search select').formSelect();
-    $('.mec-dropdown-search select').formSelect();
-  },
-});
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ })
-/******/ ]);
-//# sourceMappingURL=main.js.map
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__camelCase__ = __webpack_require__(5);
-
-
-/**
- * DOM-based Routing
- *
- * Based on {@link http://goo.gl/EUTi53|Markup-based Unobtrusive Comprehensive DOM-ready Execution} by Paul Irish
- *
- * The routing fires all common scripts, followed by the page specific scripts.
- * Add additional events for more control over timing e.g. a finalize event
- */
-var Router = function Router(routes) {
-  this.routes = routes;
-};
-
-/**
- * Fire Router events
- * @param {string} route DOM-based route derived from body classes (`<body class="...">`)
- * @param {string} [event] Events on the route. By default, `init` and `finalize` events are called.
- * @param {string} [arg] Any custom argument to be passed to the event.
- */
-Router.prototype.fire = function fire (route, event, arg) {
-    if ( event === void 0 ) event = 'init';
-
-  document.dispatchEvent(new CustomEvent('routed', {
-    bubbles: true,
-    detail: {
-      route: route,
-      fn: event,
-    },
-  }));
-    
-  var fire = route !== '' && this.routes[route] && typeof this.routes[route][event] === 'function';
-  if (fire) {
-    this.routes[route][event](arg);
-  }
-};
-
-/**
- * Automatically load and fire Router events
- *
- * Events are fired in the following order:
- ** common init
- ** page-specific init
- ** page-specific finalize
- ** common finalize
- */
-Router.prototype.loadEvents = function loadEvents () {
-    var this$1 = this;
-
-  // Fire common init JS
-  this.fire('common');
-
-  // Fire page-specific init JS, and then finalize JS
-  document.body.className
-    .toLowerCase()
-    .replace(/-/g, '_')
-    .split(/\s+/)
-    .map(__WEBPACK_IMPORTED_MODULE_0__camelCase__["a" /* default */])
-    .forEach(function (className) {
-      this$1.fire(className);
-      this$1.fire(className, 'finalize');
-    });
-
-  // Fire common finalize JS
-  this.fire('common', 'finalize');
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (Router);
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * the most terrible camelizer on the internet, guaranteed!
- * @param {string} str String that isn't camel-case, e.g., CAMeL_CaSEiS-harD
- * @return {string} String converted to camel-case, e.g., camelCaseIsHard
- */
-/* harmony default export */ __webpack_exports__["a"] = (function (str) { return ("" + (str.charAt(0).toLowerCase()) + (str.replace(/[\W_]/g, '|').split('|')
-  .map(function (part) { return ("" + (part.charAt(0).toUpperCase()) + (part.slice(1))); })
-  .join('')
-  .slice(1))); });;
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ })
-/******/ ]);
-//# sourceMappingURL=main.js.map

@@ -29,13 +29,13 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
 
       span {
         border: 1px solid $color-white;
-        background: $color-unc;
+        background: $color-blue-unc;
         color: $color-white;
         width: 33%;
         font-size: 0.8rem;
 
         &:hover, &:focus, &:active, &.mec-totalcalview-selected {
-          background: $color-duke;
+          background: $color-blue-duke;
           border-color: $color-white;
           color: $color-white;
         }
@@ -46,7 +46,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
   .mec-date-search {
     i {
       border: 1px solid $color-white;
-      background: $color-duke;
+      background: $color-blue-duke;
       color: $color-white;
       border-radius: 0;
     }
@@ -62,7 +62,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     input.select-dropdown {
       border: 1px solid $color-white;
       box-sizing: border-box;
-      background: $color-unc;
+      background: $color-blue-unc;
       color: $color-white;
       height: 36px;
       width: 100%;
@@ -72,7 +72,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       text-transform: uppercase;
 
       &:hover, &:focus, &:active {
-        background: $color-duke;
+        background: $color-blue-duke;
         color: $color-white;
       }
     }
@@ -96,7 +96,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
         }
 
         &.selected {
-          background: $color-duke;
+          background: $color-blue-duke;
           border: 1px solid $color-white;
 
           span {
@@ -165,7 +165,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       }
 
       &:hover, &:focus, &:active {
-        color: $color-unc;
+        color: $color-blue-unc;
       }
     }
   }
@@ -174,7 +174,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     dt {
       font-weight: 300;
       font-size: 1rem;
-      color: $color-unc;
+      color: $color-blue-unc;
     }
   }
 
@@ -196,23 +196,23 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       transition: background 0.3s ease;
 
       &:hover, &:active, &:focus {
-        background: $color-unc;
+        background: $color-blue-unc;
         color: $color-white;
       }
     }
 
     &::after {
-      background-color: $color-unc;
+      background-color: $color-blue-unc;
       border-radius: 0;
     }
 
     &:hover, &:active, &:focus {
-      background: $color-unc !important;
+      background: $color-blue-unc !important;
     }
   }
 
   .mec-selected-day {
-    background: $color-duke;
+    background: $color-blue-duke;
     border-radius: 0;
 
     a {
@@ -234,7 +234,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     .mec-table-side-day {
       font-size: 22px;
       border-radius: 0;
-      border-color: $color-unc;
+      border-color: $color-blue-unc;
     }
   }
 
@@ -254,10 +254,11 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     .mec-event-title {
       margin-top: 0;
       font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
 
       a {
         &:hover, &:focus, &:active {
-          color: $color-unc;
+          color: $color-blue-unc;
         }
       }
     }
@@ -299,10 +300,10 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       }
 
       &:hover, &:focus, &:active {
-        color: $color-unc;
+        color: $color-blue-unc;
 
         i {
-          color: $color-unc;
+          color: $color-blue-unc;
         }
       }
     }
@@ -328,7 +329,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
         border: none;
 
         .mec-weekly-view-weekday {
-          color: $color-unc;
+          color: $color-blue-unc;
           font-size: 0.9rem;
           font-weight: normal;
         }
@@ -374,7 +375,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       }
 
       &:hover, &:focus, &:active {
-        color: $color-unc;
+        color: $color-blue-unc;
       }
     }
   }
@@ -422,7 +423,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       font-size: 0.8rem;
 
       &:hover, &:focus, &:active {
-        color: $color-unc;
+        color: $color-blue-unc;
       }
     }
   }
@@ -455,11 +456,11 @@ span.event-color {
 }
 
 .mec-event-grid-minimal article .mec-fc-style::before, .mec-event-grid-simple article .mec-fc-style::before, .mec-timetable-wrap article .mec-fc-style::before, .mec-wrap .mec-event-list-accordion article .mec-fc-style::before, .mec-wrap .mec-event-list-modern article .mec-fc-style::before, .mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before, .mec-wrap article.mec-event-cover-classic .mec-fc-style::before, .mec-wrap article.mec-event-cover-clean .mec-fc-style::before, .mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
-  color: $color-unc;
+  color: $color-blue-unc;
 }
 
 .mec-color, .mec-color-before ::before, .mec-color-hover:hover, .mec-wrap .mec-color, .mec-wrap .mec-color-before ::before, .mec-wrap .mec-color-hover:hover {
-  color: $color-unc;
+  color: $color-blue-unc;
 }
 
 .mec-load-more-button {
@@ -477,7 +478,7 @@ span.event-color {
 
   .mec-single-event-bar {
     margin-top: 0;
-    background: rgba($color-mint, 0.2);
+    background: rgba($color-blue-unc, 0.2);
 
     & > div {
       width: 20%;
@@ -524,11 +525,11 @@ span.event-color {
           float: none;
           margin: 0;
           display: block;
-          border: 1px solid $color-unc;
-          color: $color-unc;
+          border: 1px solid $color-blue-unc;
+          color: $color-blue-unc;
 
           &:hover, &:focus, &:active {
-            background: $color-unc;
+            background: $color-blue-unc;
             color: $color-white;
           }
         }
@@ -581,7 +582,7 @@ span.event-color {
 
   .mec-booking-button {
     margin: 20px 10px;
-    background-color: $color-unc;
+    background-color: $color-blue-unc;
     text-transform: uppercase;
     font-size: 1.1rem;
   }
