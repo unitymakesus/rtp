@@ -8,6 +8,12 @@ $classes = [
   'badge-' . strtolower($settings->badge)
 ];
 
+if ($settings->badge !== "RTP") {
+  $badge = $settings->badge . ' RTP';
+} else {
+  $badge = $settings->badge;
+}
+
 if ($settings->structure == 'horizontal') {
   $classes[] = 'figure-align-' . $settings->image_align;
 }
@@ -19,7 +25,7 @@ if ($settings->structure == 'horizontal') {
   <?php } ?>
 
   <div class="card" itemprop="description">
-    <div class="card-badge"><span><?php echo $settings->badge; ?></span></div>
+    <div class="card-badge"><span><?php echo $badge; ?></span></div>
     <h3 class="card-title" itemprop="name"><?php echo $settings->title; ?></h3>
 
 		<div class="card-content">

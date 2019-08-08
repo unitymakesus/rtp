@@ -10,13 +10,11 @@
   @endif
 
   <div class="card card-cta card-pattern" itemprop="description">
-    <div class="badge"><span>BADGE</span></div>
+    <div class="badge"><span>{{ Content::siteBadge() }}</span></div>
     <div class="meta">
       <time class="date updated published" datetime="{{ get_post_time('c', true) }}" itemprop="datePublished">{{ get_the_date('F j, Y') }}</time>
     </div>
     <h3 class="card-title" itemprop="name"><a href="{{ get_permalink() }}">{!! get_the_title() !!}</a></h3>
-
-    <!-- @php the_advanced_excerpt() @endphp -->
 
     <div class="cta"><a href="{{ get_permalink() }}">Read More <span class="arrow">@svg('arrow-right')</span></a></div>
   </div>

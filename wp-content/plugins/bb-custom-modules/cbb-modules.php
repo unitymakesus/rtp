@@ -145,10 +145,10 @@ function load_custom_modules() {
                 'default' => 'RTP',
                 'options' => [
                   'RTP' => 'RTP',
-                  'Hub' => 'Hub',
-                  'Boxyard' => 'Boxyard',
-                  'Frontier' => 'Frontier',
-                  'STEM' => 'STEM'
+                  'Hub' => 'Hub RTP',
+                  'Boxyard' => 'Boxyard RTP',
+                  'Frontier' => 'Frontier RTP',
+                  'STEM' => 'STEM RTP'
                 ]
               ],
               'title' => [
@@ -200,20 +200,19 @@ function load_custom_modules() {
       'cbb-custom-posts-general' => [
         'title' => __( 'General', 'cbb' ),
         'sections' => [
-          'cbb-custom-posts-structure' => [
-            'title' => __('Layout', 'cbb'),
+          'cbb-custom-posts-type' => [
+            'title' => __('Post Type', 'cbb'),
             'fields' => [
-              'structure' => [
+              'post_type' => [
                 'type' => 'select',
-                'label' => __('Layout', 'cbb'),
-                'default' => 'default',
+                'label' => __('Post Type', 'cbb'),
+                'default' => 'posts',
                 'options' => [
-                  'default' => __('Background Image', 'cbb'),
-                  'vertical' => __('Vertical', 'cbb'),
-                  'horizontal' => __('Horizontal', 'cbb')
+                  'posts' => __('Blog Posts', 'cbb'),
+                  'mec-events' => __('Events', 'cbb'),
                 ]
               ],
-              'image' => [
+              'catgories' => [
                 'type' => 'photo',
                 'label' => __('Image', 'cbb'),
               ],
