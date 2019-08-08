@@ -16221,6 +16221,103 @@ body .single-mec-events .mec-events-content h2,
   background: rgba(1, 33, 105, 0.8);
 }
 
+/* line 2, resources/assets/styles/layouts/_blog.scss */
+
+.blog .page-header {
+  margin-bottom: 2em;
+}
+
+/* line 6, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card {
+  position: relative;
+  width: 31.3%;
+  margin: 0 1%;
+}
+
+/* line 11, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card img {
+  width: 100%;
+  height: 250px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* line 17, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card {
+  margin: -65px 30px 60px;
+  z-index: 2;
+  background: #FFF;
+  padding: 24px 24px 4px;
+  position: relative;
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
+  -o-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  -webkit-box-shadow: 0;
+          box-shadow: 0;
+  -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* line 28, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card .card-title a {
+  color: black;
+}
+
+/* line 33, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card p {
+  height: 110px;
+  overflow: hidden;
+}
+
+/* line 38, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card .cta {
+  border-color: #47D7AC;
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 4px;
+  padding: 5px;
+}
+
+/* line 45, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card .cta a {
+  color: #000;
+  display: block;
+  text-align: right;
+  width: 100%;
+  height: 40px;
+  font-size: 0.9em;
+  line-height: 40px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  -webkit-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+  vertical-align: middle;
+}
+
+/* line 58, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card .cta a .arrow {
+  display: inline-block;
+  padding: 4px 0 14px 14px;
+  width: 40px;
+  height: 40px;
+  transition: -webkit-transform 0.3s ease;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+}
+
 /* line 1, resources/assets/styles/layouts/_events.scss */
 
 .entry-content .mec-wrap h1,
@@ -16456,6 +16553,61 @@ body .single-mec-events .mec-events-content h2,
 
 .single-mec-events .mec-booking-button {
   background-color: #57C1A5;
+}
+
+/* line 2, resources/assets/styles/components/_cards.scss */
+
+.figure-card-horizontal img {
+  width: 66vw;
+  left: 50%;
+  margin-left: -50vw;
+  position: relative;
+  z-index: 1;
+  height: 500px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* line 14, resources/assets/styles/components/_cards.scss */
+
+.figure-card-vertical img {
+  position: relative;
+  z-index: 1;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* line 3, resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup {
+  background: transparent;
+  padding: 0;
+}
+
+/* line 7, resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup #mc_embed_signup_scroll {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* line 12, resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup input.email {
+  width: auto;
+  border-radius: 0;
+}
+
+/* line 17, resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup .button {
+  border-radius: 0;
+  background: #0094C9;
 }
 
 
