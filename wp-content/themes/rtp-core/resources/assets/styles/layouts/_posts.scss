@@ -63,18 +63,18 @@
 }
 
 .archive {
-  .content {
-    @extend .container;
-  }
-
-  .wrap {
-    @extend .row;
-  }
-
-  .main {
-    @extend .col;
-    @extend .s12;
-  }
+  // .content {
+  //   @extend .container;
+  // }
+  //
+  // .wrap {
+  //   @extend .row;
+  // }
+  //
+  // .main {
+  //   @extend .col;
+  //   @extend .s12;
+  // }
 }
 
 .single-post {

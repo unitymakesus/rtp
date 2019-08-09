@@ -9,7 +9,7 @@
     </div>
     {!! get_search_form(false) !!}
   @endif
-  <div class="flex-grid l3x m2x">
+  <div class="container flex-grid l3x m2x">
     @while (have_posts()) @php the_post() @endphp
       @include('partials.content-'.get_post_type())
     @endwhile
