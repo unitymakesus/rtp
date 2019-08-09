@@ -383,6 +383,8 @@ function deleteExistingEvents() {
     // Permanently delete (bypass trash) all these events
     foreach ($results as $post) {
       wp_delete_post($post->ID, true);
+      $wpdb->delete("{$prefix}mec_events", array('post_id' => $post->ID));
+      $wpdb->delete("{$prefix}mec_dates", array('post_id' => $post->ID));
     }
 
     restore_current_blog();
