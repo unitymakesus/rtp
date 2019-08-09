@@ -17,6 +17,10 @@
         margin: 0;
         padding: 1em;
 
+        @media #{$small-and-down} {
+          width: 100%;
+        }
+
         h1 {
           color: $color-mint;
         }
