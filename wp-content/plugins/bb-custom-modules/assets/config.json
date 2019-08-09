@@ -6,6 +6,9 @@
     ],
     "cbb-figure-card": [
       "./styles/cbb-figure-card.scss"
+    ],
+    "cbb-blog-events-feeds": [
+      "./styles/cbb-blog-events-feeds.scss"
     ]
   },
   "publicPath": "/wp-content/plugins/bb-custom-modules",

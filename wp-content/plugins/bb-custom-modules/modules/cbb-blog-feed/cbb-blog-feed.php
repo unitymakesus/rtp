@@ -13,7 +13,7 @@ class CbbBlogFeedModule extends FLBuilderModule {
 		));
 
 		// Include custom CSS
-		$this->add_css('cbb-blog-feed', CBB_MODULES_URL . 'dist/styles/cbb-blog-feed.css');
+		$this->add_css('cbb-blog-feed', CBB_MODULES_URL . 'dist/styles/cbb-figure-card.css');
 	}
 
 	/**

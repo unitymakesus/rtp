@@ -1,0 +1,15 @@
+.flex-item.figure-card {
+  padding: 0 !important;
+}
+
+.figure-card {
+  .card {
+    .meta {
+      position: absolute;
+      right: 24px;
+      top: 35px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+  }
+}

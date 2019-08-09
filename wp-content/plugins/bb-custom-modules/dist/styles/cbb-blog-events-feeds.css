@@ -1,0 +1,18 @@
+/* line 1, stdin */
+
+.flex-item.figure-card {
+  padding: 0 !important;
+}
+
+/* line 7, stdin */
+
+.figure-card .card .meta {
+  position: absolute;
+  right: 24px;
+  top: 35px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+
+/*# sourceMappingURL=cbb-blog-events-feeds.css.map*/

@@ -3,6 +3,11 @@
 global $post;
 $initial_current_post = $post;
 
+$classes = [
+  'figure-card-vertical',
+  'badge-' . str_replace(' ', '-', strtolower($module->siteBadge()))
+];
+
 $events = $module->query_events($settings);
 ?>
 
@@ -22,7 +27,7 @@ $events = $module->query_events($settings);
     $locationID = get_post_meta($id, 'mec_location_id', true);
     $location = get_term($locationID, 'mec_location');
     ?>
-    <article class="figure-card">
+    <article class="flex-item figure-card <?php echo implode(' ', $classes); ?>">
       <?php if (has_post_thumbnail()) : ?>
         <?php
           $thumbnail_id = get_post_thumbnail_id( $post->ID );
@@ -33,8 +38,8 @@ $events = $module->query_events($settings);
         <div class="placeholder"></div>
       <?php endif; ?>
 
-      <div class="card card-cta card-pattern" itemprop="description">
-        <div class="badge"><span><?php echo $module->siteBadge(); ?></span></div>
+      <div class="card" itemprop="description">
+        <div class="card-badge"><span><?php echo $module->siteBadge(); ?></span></div>
 
         <div class="meta">
           <time class="date startDate" datetime="<?php echo date('F j, Y', $startDate); ?>" itemprop="startDate"><?php echo date('F j, Y', $startDate); ?></time>
@@ -42,13 +47,13 @@ $events = $module->query_events($settings);
 
         <h3 class="card-title" itemprop="name"><a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
 
-        <div class="details">
+        <div class="card-content">
           <div class="time"><?php echo "$startH:$starti"; if ($starta !== $enda) echo " $starta"; ?> -
             <?php echo "$endH:$endi $enda"; ?></div>
           <div class="location"><?php echo $location->name; ?></div>
         </div>
 
-        <div class="cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/arrow-right.svg'); ?></span></a></div>
+        <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/arrow-right.svg'); ?></span></a></div>
       </div>
 
       <div class="pattern-background">

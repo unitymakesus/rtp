@@ -13,10 +13,8 @@ class CbbEventsFeedModule extends FLBuilderModule {
 		));
 
 		// Include custom CSS
-		$this->add_css('cbb-events-feed', CBB_MODULES_URL . 'dist/styles/cbb-events-feed.css');
-
-		// Filter query
-		// add_filter('fl_builder_loop_query_args', array($this, 'filter_query_today'));
+		$this->add_css('cbb-figure-card', CBB_MODULES_URL . 'dist/styles/cbb-figure-card.css');
+		$this->add_css('cbb-blog-events-feeds', CBB_MODULES_URL . 'dist/styles/cbb-blog-events-feeds.css');
 	}
 
 	/**

@@ -54,9 +54,10 @@
   left: 24px;
   width: 30px;
   height: 30px;
+  text-transform: uppercase;
 }
 
-/* line 30, stdin */
+/* line 31, stdin */
 
 .figure-card .card-badge span {
   position: absolute;
@@ -68,7 +69,7 @@
   white-space: nowrap;
 }
 
-/* line 41, stdin */
+/* line 42, stdin */
 
 .figure-card .card-title {
   margin: 40px 16px 20px;
@@ -76,11 +77,28 @@
 
 /* line 45, stdin */
 
-.figure-card .card-content {
-  margin: 0 16px 20px;
+.figure-card .card-title a {
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #000;
 }
 
-/* line 49, stdin */
+/* line 50, stdin */
+
+.figure-card .card-title a:hover,
+.figure-card .card-title a:focus,
+.figure-card .card-title a:active {
+  text-decoration: underline !important;
+}
+
+/* line 56, stdin */
+
+.figure-card .card-content {
+  margin: 0 16px 20px;
+  font-weight: 300;
+}
+
+/* line 61, stdin */
 
 .figure-card .card-cta {
   border-style: solid;
@@ -90,7 +108,7 @@
   margin: 0 16px;
 }
 
-/* line 56, stdin */
+/* line 68, stdin */
 
 .figure-card .card-cta a {
   color: #000;
@@ -109,13 +127,13 @@
   vertical-align: middle;
 }
 
-/* line 70, stdin */
+/* line 82, stdin */
 
 .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 74, stdin */
+/* line 86, stdin */
 
 .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -129,7 +147,7 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 81, stdin */
+/* line 93, stdin */
 
 .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -138,7 +156,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 87, stdin */
+/* line 99, stdin */
 
 .figure-card .card-cta a:hover,
 .figure-card .card-cta a:focus,
@@ -146,7 +164,7 @@
   text-decoration: underline !important;
 }
 
-/* line 90, stdin */
+/* line 102, stdin */
 
 .figure-card .card-cta a:hover .arrow,
 .figure-card .card-cta a:focus .arrow,
@@ -155,14 +173,15 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 98, stdin */
+/* line 110, stdin */
 
 .figure-card.badge-rtp .card-badge,
 .figure-card.badge-rtp .card-cta {
   border-color: #333F48;
+  color: #333F48;
 }
 
-/* line 103, stdin */
+/* line 116, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover,
 .figure-card.badge-rtp .card-cta a:focus,
@@ -170,7 +189,7 @@
   color: #333F48;
 }
 
-/* line 106, stdin */
+/* line 119, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -178,119 +197,155 @@
   fill: #333F48;
 }
 
-/* line 114, stdin */
+/* line 127, stdin */
 
 .figure-card.badge-hub .card-badge,
-.figure-card.badge-hub .card-cta {
+.figure-card.badge-hub .card-cta,
+.figure-card.badge-hub-rtp .card-badge,
+.figure-card.badge-hub-rtp .card-cta {
   border-color: #4B9CD3;
-}
-
-/* line 119, stdin */
-
-.figure-card.badge-hub .card-cta a:hover,
-.figure-card.badge-hub .card-cta a:focus,
-.figure-card.badge-hub .card-cta a:active {
   color: #4B9CD3;
 }
 
-/* line 122, stdin */
+/* line 133, stdin */
+
+.figure-card.badge-hub .card-cta a:hover,
+.figure-card.badge-hub .card-cta a:focus,
+.figure-card.badge-hub .card-cta a:active,
+.figure-card.badge-hub-rtp .card-cta a:hover,
+.figure-card.badge-hub-rtp .card-cta a:focus,
+.figure-card.badge-hub-rtp .card-cta a:active {
+  color: #4B9CD3;
+}
+
+/* line 136, stdin */
 
 .figure-card.badge-hub .card-cta a:hover .arrow path,
 .figure-card.badge-hub .card-cta a:focus .arrow path,
-.figure-card.badge-hub .card-cta a:active .arrow path {
+.figure-card.badge-hub .card-cta a:active .arrow path,
+.figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
+.figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
+.figure-card.badge-hub-rtp .card-cta a:active .arrow path {
   fill: #4B9CD3;
 }
 
-/* line 130, stdin */
+/* line 144, stdin */
 
 .figure-card.badge-boxyard .card-badge,
-.figure-card.badge-boxyard .card-cta {
+.figure-card.badge-boxyard .card-cta,
+.figure-card.badge-boxyard-rtp .card-badge,
+.figure-card.badge-boxyard-rtp .card-cta {
   border-color: #E63C2F;
-}
-
-/* line 135, stdin */
-
-.figure-card.badge-boxyard .card-cta a:hover,
-.figure-card.badge-boxyard .card-cta a:focus,
-.figure-card.badge-boxyard .card-cta a:active {
   color: #E63C2F;
 }
 
-/* line 138, stdin */
+/* line 150, stdin */
+
+.figure-card.badge-boxyard .card-cta a:hover,
+.figure-card.badge-boxyard .card-cta a:focus,
+.figure-card.badge-boxyard .card-cta a:active,
+.figure-card.badge-boxyard-rtp .card-cta a:hover,
+.figure-card.badge-boxyard-rtp .card-cta a:focus,
+.figure-card.badge-boxyard-rtp .card-cta a:active {
+  color: #E63C2F;
+}
+
+/* line 153, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .figure-card.badge-boxyard .card-cta a:focus .arrow path,
-.figure-card.badge-boxyard .card-cta a:active .arrow path {
+.figure-card.badge-boxyard .card-cta a:active .arrow path,
+.figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
+.figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
+.figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
   fill: #E63C2F;
 }
 
-/* line 146, stdin */
+/* line 161, stdin */
 
 .figure-card.badge-frontier .card-badge,
-.figure-card.badge-frontier .card-cta {
+.figure-card.badge-frontier .card-cta,
+.figure-card.badge-frontier-rtp .card-badge,
+.figure-card.badge-frontier-rtp .card-cta {
   border-color: #47D7AC;
-}
-
-/* line 151, stdin */
-
-.figure-card.badge-frontier .card-cta a:hover,
-.figure-card.badge-frontier .card-cta a:focus,
-.figure-card.badge-frontier .card-cta a:active {
-  color: #2FA787;
-}
-
-/* line 154, stdin */
-
-.figure-card.badge-frontier .card-cta a:hover .arrow path,
-.figure-card.badge-frontier .card-cta a:focus .arrow path,
-.figure-card.badge-frontier .card-cta a:active .arrow path {
-  fill: #47D7AC;
-}
-
-/* line 162, stdin */
-
-.figure-card.badge-stem .card-badge,
-.figure-card.badge-stem .card-cta {
-  border-color: #654EA3;
+  color: #47D7AC;
 }
 
 /* line 167, stdin */
 
-.figure-card.badge-stem .card-cta a:hover,
-.figure-card.badge-stem .card-cta a:focus,
-.figure-card.badge-stem .card-cta a:active {
-  color: #654EA3;
+.figure-card.badge-frontier .card-cta a:hover,
+.figure-card.badge-frontier .card-cta a:focus,
+.figure-card.badge-frontier .card-cta a:active,
+.figure-card.badge-frontier-rtp .card-cta a:hover,
+.figure-card.badge-frontier-rtp .card-cta a:focus,
+.figure-card.badge-frontier-rtp .card-cta a:active {
+  color: #2FA787;
 }
 
 /* line 170, stdin */
 
+.figure-card.badge-frontier .card-cta a:hover .arrow path,
+.figure-card.badge-frontier .card-cta a:focus .arrow path,
+.figure-card.badge-frontier .card-cta a:active .arrow path,
+.figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
+.figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
+.figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
+  fill: #47D7AC;
+}
+
+/* line 178, stdin */
+
+.figure-card.badge-stem .card-badge,
+.figure-card.badge-stem .card-cta,
+.figure-card.badge-stem-rtp .card-badge,
+.figure-card.badge-stem-rtp .card-cta {
+  border-color: #654EA3;
+  color: #654EA3;
+}
+
+/* line 184, stdin */
+
+.figure-card.badge-stem .card-cta a:hover,
+.figure-card.badge-stem .card-cta a:focus,
+.figure-card.badge-stem .card-cta a:active,
+.figure-card.badge-stem-rtp .card-cta a:hover,
+.figure-card.badge-stem-rtp .card-cta a:focus,
+.figure-card.badge-stem-rtp .card-cta a:active {
+  color: #654EA3;
+}
+
+/* line 187, stdin */
+
 .figure-card.badge-stem .card-cta a:hover .arrow path,
 .figure-card.badge-stem .card-cta a:focus .arrow path,
-.figure-card.badge-stem .card-cta a:active .arrow path {
+.figure-card.badge-stem .card-cta a:active .arrow path,
+.figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
+.figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
+.figure-card.badge-stem-rtp .card-cta a:active .arrow path {
   fill: #654EA3;
 }
 
-/* line 177, stdin */
+/* line 194, stdin */
 
 .figure-card.figure-card-vertical {
   position: relative;
 }
 
-/* line 180, stdin */
+/* line 197, stdin */
 
 .figure-card.figure-card-vertical img {
   position: relative;
   z-index: 1;
 }
 
-/* line 185, stdin */
+/* line 202, stdin */
 
 .figure-card.figure-card-vertical .card {
   margin: -65px 30px 60px;
   z-index: 2;
 }
 
-/* line 190, stdin */
+/* line 207, stdin */
 
 .figure-card.figure-card-vertical .pattern-background {
   position: absolute;
@@ -301,14 +356,14 @@
   right: 0;
 }
 
-/* line 198, stdin */
+/* line 215, stdin */
 
 .figure-card.figure-card-vertical .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 205, stdin */
+/* line 222, stdin */
 
 .figure-card.figure-card-horizontal {
   display: -webkit-box;
@@ -316,7 +371,7 @@
   display: flex;
 }
 
-/* line 208, stdin */
+/* line 225, stdin */
 
 .figure-card.figure-card-horizontal img {
   width: 66vw;
@@ -326,7 +381,7 @@
   z-index: 1;
 }
 
-/* line 216, stdin */
+/* line 233, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -338,7 +393,7 @@
   z-index: 2;
 }
 
-/* line 226, stdin */
+/* line 243, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right img {
   left: auto;
@@ -347,7 +402,7 @@
   margin-right: -50vw;
 }
 
-/* line 233, stdin */
+/* line 250, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card {
   left: 30px;

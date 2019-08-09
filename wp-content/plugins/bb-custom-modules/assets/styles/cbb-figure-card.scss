@@ -26,6 +26,7 @@
     left: 24px;
     width: 30px;
     height: 30px;
+    text-transform: uppercase;
 
     span {
       position: absolute;
@@ -40,10 +41,21 @@
 
   .card-title {
     margin: 40px 16px 20px;
+
+    a {
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      color: $color-black;
+
+      &:hover, &:focus, &:active {
+        text-decoration: underline !important;
+      }
+    }
   }
 
   .card-content {
     margin: 0 16px 20px;
+    font-weight: 300;
   }
 
   .card-cta {
@@ -97,6 +109,7 @@
   &.badge-rtp {
     .card-badge, .card-cta {
       border-color: $color-slate;
+      color: $color-slate;
     }
 
     .card-cta a {
@@ -110,9 +123,10 @@
     }
   }
 
-  &.badge-hub {
+  &.badge-hub, &.badge-hub-rtp {
     .card-badge, .card-cta {
       border-color: $color-unc;
+      color: $color-unc;
     }
 
     .card-cta a {
@@ -126,9 +140,10 @@
     }
   }
 
-  &.badge-boxyard {
+  &.badge-boxyard, &.badge-boxyard-rtp {
     .card-badge, .card-cta {
       border-color: $color-boxyard;
+      color: $color-boxyard;
     }
 
     .card-cta a {
@@ -142,9 +157,10 @@
     }
   }
 
-  &.badge-frontier {
+  &.badge-frontier, &.badge-frontier-rtp {
     .card-badge, .card-cta {
       border-color: $color-mint;
+      color: $color-mint;
     }
 
     .card-cta a {
@@ -158,9 +174,10 @@
     }
   }
 
-  &.badge-stem {
+  &.badge-stem, &.badge-stem-rtp {
     .card-badge, .card-cta {
       border-color: $color-purple;
+      color: $color-purple;
     }
 
     .card-cta a {
