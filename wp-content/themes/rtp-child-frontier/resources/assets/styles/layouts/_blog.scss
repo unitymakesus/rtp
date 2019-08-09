@@ -6,7 +6,7 @@
   .figure-card {
     position: relative;
     width: 31.3%;
-    margin: 0 1%;
+    margin: 0.8em 1%;
 
     img {
       width: 100%;
@@ -16,7 +16,6 @@
 
     .card {
       margin: -65px 30px 60px;
-      z-index: 2;
       background: #FFF;
       padding: 24px 24px 4px;
       position: relative;
@@ -25,6 +24,9 @@
       box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
 
       .card-title {
+        margin-top: 1.5em;
+        min-height: 150px;
+
         a {
           color: black;
         }
@@ -63,6 +65,46 @@
             transition: -webkit-transform 0.3s ease;
             transition: transform 0.3s ease;
           }
+        }
+      }
+
+      .badge {
+        border-color: #47D7AC;
+        border-style: solid;
+        border-width: 0;
+        border-top-width: 8px;
+        border-left-width: 8px;
+        font-weight: bold;
+        position: absolute;
+        top: 24px;
+        left: 24px;
+        width: 30px;
+        height: 30px;
+
+        span {
+          padding-left: 5px;
+          font-size: 14px;
+        }
+      }
+
+      .meta {
+        position: absolute;
+        right: 24px;
+        top: 35px;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+      .pattern-background {
+        position: absolute;
+        z-index: -10;
+        top: 0;
+        bottom: -30px;
+        right: -30px;
+
+        svg {
+          width: 100%;
+          height: 100%;
         }
       }
     }
