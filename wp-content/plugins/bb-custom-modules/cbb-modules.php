@@ -194,161 +194,23 @@ function load_custom_modules() {
       ]
     ] );
 
-    // Custom Posts Module
-    require_once 'modules/cbb-custom-posts/cbb-custom-posts.php';
-    FLBuilder::register_module( 'CbbCustomPostsModules', [
-      'cbb-custom-posts-general' => [
+    // Blog Feed Module
+    require_once 'modules/cbb-blog-feed/cbb-blog-feed.php';
+    FLBuilder::register_module( 'CbbBlogFeedModule', [
+      'cbb-blog-feed-general' => [
         'title' => __( 'General', 'cbb' ),
-        'sections' => [
-          'cbb-custom-posts-type' => [
-            'title' => __('Post Type', 'cbb'),
-            'fields' => [
-              'post_type' => [
-                'type' => 'select',
-                'label' => __('Post Type', 'cbb'),
-                'default' => 'posts',
-                'options' => [
-                  'posts' => __('Blog Posts', 'cbb'),
-                  'mec-events' => __('Events', 'cbb'),
-                ]
-              ],
-              'catgories' => [
-                'type' => 'photo',
-                'label' => __('Image', 'cbb'),
-              ],
-              'image_alt' => [
-                'type' => 'text',
-                'label' => __('Image Alt Text', 'cbb'),
-              ],
-              'image_align' => [
-                'type' => 'select',
-                'label' => __('Image Alignment', 'cbb'),
-                'default' => 'left',
-                'options' => [
-                  'left' => __('Left', 'cbb'),
-                  'right' => __('Right', 'cbb')
-                ]
-              ]
-            ]
-          ],
-          'cbb-custom-posts-title' => [
-            'title' => __( 'Title', 'cbb' ),
-            'fields' => [
-              'badge' => [
-                'type' => 'select',
-                'label' => __('Badge', 'cbb'),
-                'default' => 'RTP',
-                'options' => [
-                  'RTP' => 'RTP',
-                  'Hub' => 'Hub',
-                  'Boxyard' => 'Boxyard',
-                  'Frontier' => 'Frontier',
-                  'STEM' => 'STEM'
-                ]
-              ],
-              'title' => [
-                'type' => 'text',
-                'label' => __('Title', 'cbb'),
-              ]
-            ]
-          ],
-          'cbb-custom-posts-content' => [
-            'title' => __( 'Content', 'cbb' ),
-            'fields' => [
-              'content' => [
-                'type' => 'editor',
-                'label' => '',
-                'media_buttons' => false,
-                'rows' => 4,
-              ]
-            ]
-          ],
-          'cbb-custom-posts-cta' => [
-            'title' => __( 'Call To Action', 'cbb' ),
-            'fields' => [
-              'enable_cta' => [
-                'type' => 'select',
-                'label' => __('Call To Action', 'cbb'),
-                'default' => 'none',
-                'options' => [
-                  'none' => __('No', 'cbb'),
-                  'block' => __('Yes', 'cbb'),
-                ]
-              ],
-              'cta_text' => [
-                'type' => 'text',
-                'label' => __('CTA Text', 'cbb'),
-              ],
-              'cta_link' => [
-                'type' => 'link',
-                'label' => __('CTA Link', 'cbb'),
-              ]
-            ]
-          ]
-        ]
+        'file' => CBB_MODULES_DIR . 'modules/cbb-blog-feed/includes/loop-settings.php'
       ]
     ] );
 
-    // FLBuilder::register_settings_form('card_content', array(
-    //   'title' => __('Editorial Card', 'cbb'),
-    //   'tabs'  => array(
-    //     'general'      => array(
-    //       'title'         => __('General', 'cbb'),
-    //       'sections'      => array(
-    //         'general'       => array(
-    //           'title'         => '',
-    //           'fields'        => array(
-    //             'card_title'     => array(
-    //               'type'          => 'text',
-    //               'label'         => __( 'Title', 'cbb' ),
-    //             ),
-    //             'card_text'     => array(
-    //               'type'          => 'text',
-    //               'label'         => __( 'Content', 'cbb' ),
-    //             ),
-    //             'card_link'     => array(
-    //               'type'          => 'link',
-    //               'label'         => __( 'Link', 'cbb' ),
-    //             ),
-    //             'card_background' => array(
-    //               'type'          => 'photo',
-    //               'label'         => __('Background Image', 'cbb'),
-    //               'show_remove'   => false,
-    //             ),
-    //             'card_icon' => array(
-    //               'type'          => 'icon',
-    //               'label'         => __( 'Icon', 'cbb' ),
-    //               'show_remove'   => true
-    //             ),
-    //           )
-    //         ),
-    //       )
-    //     )
-    //   )
-    // ));
-    //
-    // // Editorial Cards
-    // require_once 'cbb-editorial-cards/cbb-editorial-cards.php';
-    // FLBuilder::register_module( 'CbbEditorialCardsModule', array(
-    //   'general-tab'      => array(
-    //     'title'         => __( 'General', 'cbb' ),
-    //     'sections'      => array(
-    //       'source-section'  => array(
-    //         'title'         => __( 'Source', 'cbb' ),
-    //         'fields'        => array(
-    //           'cards' => array(
-    //             'type'          => 'form',
-    //             'label'         => __('Editorial Card', 'cbb'),
-    //             'form'          => 'card_content',
-    //             'preview_text'  => 'label',
-    //             'multiple'     => true,
-    //           ),
-    //         )
-    //       ),
-    //     )
-    //   )
-    // ) );
-
+    // Events Feed Module
+    require_once 'modules/cbb-events-feed/cbb-events-feed.php';
+    FLBuilder::register_module( 'CbbEventsFeedModule', [
+      'cbb-events-feed-general' => [
+        'title' => __( 'General', 'cbb' ),
+        'file' => CBB_MODULES_DIR . 'modules/cbb-events-feed/includes/loop-settings.php'
+      ]
+    ] );
   }
 }
 add_action( 'init', 'load_custom_modules' );
