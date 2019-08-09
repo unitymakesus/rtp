@@ -12983,9 +12983,6 @@ body {
 
 .flex-grid .flex-item {
   padding: 10px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   position: relative;
 }
 
@@ -16186,6 +16183,12 @@ body .single-mec-events .mec-events-content h2,
   margin-top: 0;
 }
 
+/* line 34, resources/assets/styles/common/_typography.scss */
+
+body .entry-content a {
+  color: #57C1A5;
+}
+
 /* line 2, resources/assets/styles/layouts/_header.scss */
 
 .banner .logo {
@@ -16227,26 +16230,26 @@ body .single-mec-events .mec-events-content h2,
   margin-bottom: 2em;
 }
 
-/* line 7, resources/assets/styles/layouts/_blog.scss */
+/* line 6, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card {
+.blog .figure-card {
   position: relative;
   width: 31.3%;
   margin: 0.8em 1%;
 }
 
-/* line 12, resources/assets/styles/layouts/_blog.scss */
+/* line 11, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card img {
+.blog .figure-card img {
   width: 100%;
   height: 250px;
   -o-object-fit: cover;
      object-fit: cover;
 }
 
-/* line 18, resources/assets/styles/layouts/_blog.scss */
+/* line 17, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card {
+.blog .figure-card .card {
   margin: -65px 30px 60px;
   background: #FFF;
   padding: 24px 24px 4px;
@@ -16262,29 +16265,29 @@ body .single-mec-events .mec-events-content h2,
           box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 27, resources/assets/styles/layouts/_blog.scss */
+/* line 26, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .card-title {
+.blog .figure-card .card .card-title {
   margin-top: 1.5em;
   min-height: 150px;
 }
 
-/* line 31, resources/assets/styles/layouts/_blog.scss */
+/* line 30, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .card-title a {
+.blog .figure-card .card .card-title a {
   color: black;
 }
 
-/* line 36, resources/assets/styles/layouts/_blog.scss */
+/* line 35, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card p {
+.blog .figure-card .card p {
   height: 110px;
   overflow: hidden;
 }
 
-/* line 41, resources/assets/styles/layouts/_blog.scss */
+/* line 40, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .badge {
+.blog .figure-card .card .badge {
   border-color: #47D7AC;
   border-style: solid;
   border-width: 0;
@@ -16298,16 +16301,16 @@ body .single-mec-events .mec-events-content h2,
   height: 30px;
 }
 
-/* line 54, resources/assets/styles/layouts/_blog.scss */
+/* line 53, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .badge span {
+.blog .figure-card .card .badge span {
   padding-left: 5px;
   font-size: 14px;
 }
 
-/* line 60, resources/assets/styles/layouts/_blog.scss */
+/* line 59, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .meta {
+.blog .figure-card .card .meta {
   position: absolute;
   right: 24px;
   top: 35px;
@@ -16315,9 +16318,9 @@ body .single-mec-events .mec-events-content h2,
   text-transform: uppercase;
 }
 
-/* line 68, resources/assets/styles/layouts/_blog.scss */
+/* line 67, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .cta {
+.blog .figure-card .card .cta {
   border-color: #47D7AC;
   border-style: solid;
   border-width: 0;
@@ -16325,9 +16328,9 @@ body .single-mec-events .mec-events-content h2,
   padding: 5px;
 }
 
-/* line 75, resources/assets/styles/layouts/_blog.scss */
+/* line 74, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .cta a {
+.blog .figure-card .card .cta a {
   color: #000;
   display: block;
   text-align: right;
@@ -16343,9 +16346,9 @@ body .single-mec-events .mec-events-content h2,
   vertical-align: middle;
 }
 
-/* line 88, resources/assets/styles/layouts/_blog.scss */
+/* line 87, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .card .cta a .arrow {
+.blog .figure-card .card .cta a .arrow {
   display: inline-block;
   padding: 4px 0 14px 14px;
   width: 40px;
@@ -16357,9 +16360,9 @@ body .single-mec-events .mec-events-content h2,
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 100, resources/assets/styles/layouts/_blog.scss */
+/* line 99, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .pattern-background {
+.blog .figure-card .pattern-background {
   position: absolute;
   z-index: -10;
   top: 0;
@@ -16367,9 +16370,9 @@ body .single-mec-events .mec-events-content h2,
   right: -30px;
 }
 
-/* line 107, resources/assets/styles/layouts/_blog.scss */
+/* line 106, resources/assets/styles/layouts/_blog.scss */
 
-.figure-card .pattern-background svg {
+.blog .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
@@ -16611,7 +16614,7 @@ body .single-mec-events .mec-events-content h2,
   background-color: #57C1A5;
 }
 
-/* line 2, resources/assets/styles/layouts/single.scss */
+/* line 2, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header {
   background-color: #57C1A5;
@@ -16624,7 +16627,7 @@ body .single-mec-events .mec-events-content h2,
   margin-bottom: 4em;
 }
 
-/* line 10, resources/assets/styles/layouts/single.scss */
+/* line 10, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container,
 .single .page-header .container-wide,
@@ -16636,7 +16639,7 @@ body .single-mec-events .mec-events-content h2,
   padding: 0;
 }
 
-/* line 14, resources/assets/styles/layouts/single.scss */
+/* line 14, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container .entry-title-container,
 .single .page-header .container-wide .entry-title-container,
@@ -16650,7 +16653,20 @@ body .single-mec-events .mec-events-content h2,
   padding: 1em;
 }
 
-/* line 20, resources/assets/styles/layouts/single.scss */
+@media only screen and (max-width: 768px) {
+  /* line 14, resources/assets/styles/layouts/_single.scss */
+
+  .single .page-header .container .entry-title-container,
+  .single .page-header .container-wide .entry-title-container,
+  .single .page-header .sidebar-primary .content .entry-title-container,
+  .sidebar-primary .single .page-header .content .entry-title-container,
+  .single .page-header .archive .content .entry-title-container,
+  .archive .single .page-header .content .entry-title-container {
+    width: 100%;
+  }
+}
+
+/* line 24, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container .entry-title-container h1,
 .single .page-header .container-wide .entry-title-container h1,
@@ -16661,7 +16677,15 @@ body .single-mec-events .mec-events-content h2,
   color: #57C1A5;
 }
 
-/* line 2, resources/assets/styles/components/_cards.scss */
+/* line 3, resources/assets/styles/components/_cards.scss */
+
+.figure-card .card-badge span {
+  min-width: 100px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* line 12, resources/assets/styles/components/_cards.scss */
 
 .figure-card-horizontal img {
   width: 66vw;
@@ -16674,7 +16698,15 @@ body .single-mec-events .mec-events-content h2,
      object-fit: cover;
 }
 
-/* line 14, resources/assets/styles/components/_cards.scss */
+/* line 23, resources/assets/styles/components/_cards.scss */
+
+.figure-card-horizontal .card-content img {
+  height: auto;
+  margin-left: 0;
+  position: static;
+}
+
+/* line 32, resources/assets/styles/components/_cards.scss */
 
 .figure-card-vertical img {
   position: relative;
@@ -16682,6 +16714,14 @@ body .single-mec-events .mec-events-content h2,
   height: 300px;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+/* line 40, resources/assets/styles/components/_cards.scss */
+
+.figure-card-vertical .card-content img {
+  height: auto;
+  margin-left: 0;
+  position: static;
 }
 
 /* line 3, resources/assets/styles/components/_forms.scss */
