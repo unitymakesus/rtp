@@ -16232,7 +16232,7 @@ body .single-mec-events .mec-events-content h2,
 .figure-card {
   position: relative;
   width: 31.3%;
-  margin: 0 1%;
+  margin: 0.8em 1%;
 }
 
 /* line 12, resources/assets/styles/layouts/_blog.scss */
@@ -16248,7 +16248,6 @@ body .single-mec-events .mec-events-content h2,
 
 .figure-card .card {
   margin: -65px 30px 60px;
-  z-index: 2;
   background: #FFF;
   padding: 24px 24px 4px;
   position: relative;
@@ -16263,20 +16262,60 @@ body .single-mec-events .mec-events-content h2,
           box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 29, resources/assets/styles/layouts/_blog.scss */
+/* line 27, resources/assets/styles/layouts/_blog.scss */
+
+.figure-card .card .card-title {
+  margin-top: 1.5em;
+  min-height: 150px;
+}
+
+/* line 31, resources/assets/styles/layouts/_blog.scss */
 
 .figure-card .card .card-title a {
   color: black;
 }
 
-/* line 34, resources/assets/styles/layouts/_blog.scss */
+/* line 36, resources/assets/styles/layouts/_blog.scss */
 
 .figure-card .card p {
   height: 110px;
   overflow: hidden;
 }
 
-/* line 39, resources/assets/styles/layouts/_blog.scss */
+/* line 41, resources/assets/styles/layouts/_blog.scss */
+
+.figure-card .card .badge {
+  border-color: #47D7AC;
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 8px;
+  border-left-width: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 30px;
+  height: 30px;
+}
+
+/* line 54, resources/assets/styles/layouts/_blog.scss */
+
+.figure-card .card .badge span {
+  padding-left: 5px;
+  font-size: 14px;
+}
+
+/* line 60, resources/assets/styles/layouts/_blog.scss */
+
+.figure-card .card .meta {
+  position: absolute;
+  right: 24px;
+  top: 35px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+/* line 68, resources/assets/styles/layouts/_blog.scss */
 
 .figure-card .card .cta {
   border-color: #47D7AC;
@@ -16286,7 +16325,7 @@ body .single-mec-events .mec-events-content h2,
   padding: 5px;
 }
 
-/* line 46, resources/assets/styles/layouts/_blog.scss */
+/* line 75, resources/assets/styles/layouts/_blog.scss */
 
 .figure-card .card .cta a {
   color: #000;
@@ -16304,7 +16343,7 @@ body .single-mec-events .mec-events-content h2,
   vertical-align: middle;
 }
 
-/* line 59, resources/assets/styles/layouts/_blog.scss */
+/* line 88, resources/assets/styles/layouts/_blog.scss */
 
 .figure-card .card .cta a .arrow {
   display: inline-block;
@@ -16316,6 +16355,23 @@ body .single-mec-events .mec-events-content h2,
   -o-transition: -o-transform 0.3s ease;
   transition: transform 0.3s ease;
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+}
+
+/* line 100, resources/assets/styles/layouts/_blog.scss */
+
+.figure-card .pattern-background {
+  position: absolute;
+  z-index: -10;
+  top: 0;
+  bottom: -30px;
+  right: -30px;
+}
+
+/* line 107, resources/assets/styles/layouts/_blog.scss */
+
+.figure-card .pattern-background svg {
+  width: 100%;
+  height: 100%;
 }
 
 /* line 1, resources/assets/styles/layouts/_events.scss */
@@ -16555,6 +16611,56 @@ body .single-mec-events .mec-events-content h2,
   background-color: #57C1A5;
 }
 
+/* line 2, resources/assets/styles/layouts/single.scss */
+
+.single .page-header {
+  background-color: #57C1A5;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-size: 65.5% 100%;
+  background-repeat: no-repeat;
+  background-position: right;
+  margin-bottom: 4em;
+}
+
+/* line 10, resources/assets/styles/layouts/single.scss */
+
+.single .page-header .container,
+.single .page-header .container-wide,
+.single .page-header .sidebar-primary .content,
+.sidebar-primary .single .page-header .content,
+.single .page-header .archive .content,
+.archive .single .page-header .content {
+  background: transparent;
+  padding: 0;
+}
+
+/* line 14, resources/assets/styles/layouts/single.scss */
+
+.single .page-header .container .entry-title-container,
+.single .page-header .container-wide .entry-title-container,
+.single .page-header .sidebar-primary .content .entry-title-container,
+.sidebar-primary .single .page-header .content .entry-title-container,
+.single .page-header .archive .content .entry-title-container,
+.archive .single .page-header .content .entry-title-container {
+  background: rgba(255, 255, 255, 0.9);
+  width: 60%;
+  margin: 0;
+  padding: 1em;
+}
+
+/* line 20, resources/assets/styles/layouts/single.scss */
+
+.single .page-header .container .entry-title-container h1,
+.single .page-header .container-wide .entry-title-container h1,
+.single .page-header .sidebar-primary .content .entry-title-container h1,
+.sidebar-primary .single .page-header .content .entry-title-container h1,
+.single .page-header .archive .content .entry-title-container h1,
+.archive .single .page-header .content .entry-title-container h1 {
+  color: #57C1A5;
+}
+
 /* line 2, resources/assets/styles/components/_cards.scss */
 
 .figure-card-horizontal img {
@@ -16608,6 +16714,22 @@ footer #mc_embed_signup input.email {
 footer #mc_embed_signup .button {
   border-radius: 0;
   background: #0094C9;
+}
+
+/* line 1, resources/assets/styles/components/_map.scss */
+
+.uabb-hotspot-tooltip-content {
+  background: rgba(87, 193, 165, 0.8) !important;
+  width: 400px;
+  font-size: 14px;
+  color: #000 !important;
+  text-align: left;
+}
+
+/* line 8, resources/assets/styles/components/_map.scss */
+
+.uabb-hotspot-tooltip-content::after {
+  border-color: transparent !important;
 }
 
 

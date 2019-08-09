@@ -1,0 +1,26 @@
+.single {
+  .page-header {
+    background-color: $color-mint;
+    align-items: center;
+    background-size: 65.5% 100%;
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-bottom: 4em;
+
+    .container {
+      background: transparent;
+      padding: 0;
+
+      .entry-title-container {
+        background: rgba($color-white, 0.9);
+        width: 60%;
+        margin: 0;
+        padding: 1em;
+
+        h1 {
+          color: $color-mint;
+        }
+      }
+    }
+  }
+}
