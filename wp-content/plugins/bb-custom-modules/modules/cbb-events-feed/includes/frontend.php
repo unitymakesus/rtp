@@ -4,11 +4,19 @@ global $post;
 $initial_current_post = $post;
 
 $classes = [
-  'figure-card-vertical',
   'badge-' . str_replace(' ', '-', strtolower($module->siteBadge()))
 ];
 
 $events = $module->query_events($settings);
+$count = sizeof($events);
+
+if ($count >= 3) {
+  $grid_class = "l3x m2x";
+} elseif ($count == 2) {
+  $grid_class = "l2x m2x";
+} else {
+  $grid_class = "m1x";
+}
 ?>
 
 <div class="flex-grid l3x m2x">
@@ -27,40 +35,43 @@ $events = $module->query_events($settings);
     $locationID = get_post_meta($id, 'mec_location_id', true);
     $location = get_term($locationID, 'mec_location');
     ?>
-    <article class="flex-item figure-card <?php echo implode(' ', $classes); ?>">
-      <?php if (has_post_thumbnail()) : ?>
-        <?php
-          $thumbnail_id = get_post_thumbnail_id( $post->ID );
-          $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-          echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
-        ?>
-      <?php else : ?>
-        <div class="placeholder"></div>
-      <?php endif; ?>
+    <div class="flex-item">
+      <article class="figure-card no-image <?php echo implode(' ', $classes); ?>">
+        <?php /*if (has_post_thumbnail()) : ?>
+          <?php
+            $thumbnail_id = get_post_thumbnail_id( $post->ID );
+            $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+            echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
+          ?>
+        <?php else : ?>
+          <div class="placeholder"></div>
+        <?php endif;*/ ?>
 
-      <div class="card" itemprop="description">
-        <div class="card-badge"><span><?php echo $module->siteBadge(); ?></span></div>
+        <div class="card" itemprop="description">
+          <div class="meta">
+            <time class="date startDate" datetime="<?php echo date('F j, Y', $startDate); ?>" itemprop="startDate"><?php echo date('F j, Y', $startDate); ?></time>
+          </div>
 
-        <div class="meta">
-          <time class="date startDate" datetime="<?php echo date('F j, Y', $startDate); ?>" itemprop="startDate"><?php echo date('F j, Y', $startDate); ?></time>
+          <div class="card-inner">
+            <div class="card-badge"><span><?php echo $module->siteBadge(); ?></span></div>
+
+            <h3 class="card-title" itemprop="name"><a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
+
+            <div class="card-content">
+              <div class="time"><?php echo "$startH:$starti"; if ($starta !== $enda) echo " $starta"; ?> -
+                <?php echo "$endH:$endi $enda"; ?></div>
+              <div class="location"><?php echo $location->name; ?></div>
+            </div>
+
+            <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/arrow-right.svg'); ?></span></a></div>
+          </div>
         </div>
 
-        <h3 class="card-title" itemprop="name"><a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
-
-        <div class="card-content">
-          <div class="time"><?php echo "$startH:$starti"; if ($starta !== $enda) echo " $starta"; ?> -
-            <?php echo "$endH:$endi $enda"; ?></div>
-          <div class="location"><?php echo $location->name; ?></div>
+        <div class="pattern-background">
+          <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/includes/pattern-bracket.php'); ?>
         </div>
-
-        <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/arrow-right.svg'); ?></span></a></div>
-      </div>
-
-      <div class="pattern-background">
-        <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/includes/pattern-bracket.php'); ?>
-      </div>
-    </article>
-
+      </article>
+    </div>
     <?php
   endforeach;
 

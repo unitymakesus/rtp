@@ -14,7 +14,13 @@
 
 /** Gradients */
 
-/* line 4, stdin */
+/* line 3, stdin */
+
+.figure-card {
+  position: relative;
+}
+
+/* line 6, stdin */
 
 .figure-card .card {
   background: #FFF;
@@ -32,7 +38,7 @@
   z-index: 2;
 }
 
-/* line 13, stdin */
+/* line 15, stdin */
 
 .figure-card .card:hover,
 .figure-card .card:focus,
@@ -41,7 +47,7 @@
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 18, stdin */
+/* line 20, stdin */
 
 .figure-card .card-badge {
   border-style: solid;
@@ -57,7 +63,7 @@
   text-transform: uppercase;
 }
 
-/* line 31, stdin */
+/* line 33, stdin */
 
 .figure-card .card-badge span {
   position: absolute;
@@ -69,13 +75,13 @@
   white-space: nowrap;
 }
 
-/* line 42, stdin */
+/* line 44, stdin */
 
 .figure-card .card-title {
   margin: 40px 16px 20px;
 }
 
-/* line 45, stdin */
+/* line 47, stdin */
 
 .figure-card .card-title a {
   font-weight: 600 !important;
@@ -83,7 +89,7 @@
   color: #000;
 }
 
-/* line 50, stdin */
+/* line 52, stdin */
 
 .figure-card .card-title a:hover,
 .figure-card .card-title a:focus,
@@ -91,14 +97,14 @@
   text-decoration: underline !important;
 }
 
-/* line 56, stdin */
+/* line 58, stdin */
 
 .figure-card .card-content {
   margin: 0 16px 20px;
   font-weight: 300;
 }
 
-/* line 61, stdin */
+/* line 63, stdin */
 
 .figure-card .card-cta {
   border-style: solid;
@@ -108,7 +114,7 @@
   margin: 0 16px;
 }
 
-/* line 68, stdin */
+/* line 70, stdin */
 
 .figure-card .card-cta a {
   color: #000;
@@ -127,13 +133,13 @@
   vertical-align: middle;
 }
 
-/* line 82, stdin */
+/* line 84, stdin */
 
 .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 86, stdin */
+/* line 88, stdin */
 
 .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -147,7 +153,7 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 93, stdin */
+/* line 95, stdin */
 
 .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -156,7 +162,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 99, stdin */
+/* line 101, stdin */
 
 .figure-card .card-cta a:hover,
 .figure-card .card-cta a:focus,
@@ -164,7 +170,7 @@
   text-decoration: underline !important;
 }
 
-/* line 102, stdin */
+/* line 104, stdin */
 
 .figure-card .card-cta a:hover .arrow,
 .figure-card .card-cta a:focus .arrow,
@@ -173,7 +179,25 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 110, stdin */
+/* line 111, stdin */
+
+.figure-card .pattern-background {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: -30px;
+  left: 65px;
+  right: 0;
+}
+
+/* line 119, stdin */
+
+.figure-card .pattern-background svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 126, stdin */
 
 .figure-card.badge-rtp .card-badge,
 .figure-card.badge-rtp .card-cta {
@@ -181,7 +205,7 @@
   color: #333F48;
 }
 
-/* line 116, stdin */
+/* line 132, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover,
 .figure-card.badge-rtp .card-cta a:focus,
@@ -189,7 +213,7 @@
   color: #333F48;
 }
 
-/* line 119, stdin */
+/* line 135, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -197,7 +221,7 @@
   fill: #333F48;
 }
 
-/* line 127, stdin */
+/* line 143, stdin */
 
 .figure-card.badge-hub .card-badge,
 .figure-card.badge-hub .card-cta,
@@ -207,7 +231,7 @@
   color: #4B9CD3;
 }
 
-/* line 133, stdin */
+/* line 149, stdin */
 
 .figure-card.badge-hub .card-cta a:hover,
 .figure-card.badge-hub .card-cta a:focus,
@@ -218,7 +242,7 @@
   color: #4B9CD3;
 }
 
-/* line 136, stdin */
+/* line 152, stdin */
 
 .figure-card.badge-hub .card-cta a:hover .arrow path,
 .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -229,7 +253,7 @@
   fill: #4B9CD3;
 }
 
-/* line 144, stdin */
+/* line 160, stdin */
 
 .figure-card.badge-boxyard .card-badge,
 .figure-card.badge-boxyard .card-cta,
@@ -239,7 +263,7 @@
   color: #E63C2F;
 }
 
-/* line 150, stdin */
+/* line 166, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover,
 .figure-card.badge-boxyard .card-cta a:focus,
@@ -250,7 +274,7 @@
   color: #E63C2F;
 }
 
-/* line 153, stdin */
+/* line 169, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -261,7 +285,7 @@
   fill: #E63C2F;
 }
 
-/* line 161, stdin */
+/* line 177, stdin */
 
 .figure-card.badge-frontier .card-badge,
 .figure-card.badge-frontier .card-cta,
@@ -271,7 +295,7 @@
   color: #47D7AC;
 }
 
-/* line 167, stdin */
+/* line 183, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover,
 .figure-card.badge-frontier .card-cta a:focus,
@@ -282,7 +306,7 @@
   color: #2FA787;
 }
 
-/* line 170, stdin */
+/* line 186, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -293,7 +317,7 @@
   fill: #47D7AC;
 }
 
-/* line 178, stdin */
+/* line 194, stdin */
 
 .figure-card.badge-stem .card-badge,
 .figure-card.badge-stem .card-cta,
@@ -303,7 +327,7 @@
   color: #654EA3;
 }
 
-/* line 184, stdin */
+/* line 200, stdin */
 
 .figure-card.badge-stem .card-cta a:hover,
 .figure-card.badge-stem .card-cta a:focus,
@@ -314,7 +338,7 @@
   color: #654EA3;
 }
 
-/* line 187, stdin */
+/* line 203, stdin */
 
 .figure-card.badge-stem .card-cta a:hover .arrow path,
 .figure-card.badge-stem .card-cta a:focus .arrow path,
@@ -325,45 +349,27 @@
   fill: #654EA3;
 }
 
-/* line 194, stdin */
+/* line 210, stdin */
 
 .figure-card.figure-card-vertical {
   position: relative;
 }
 
-/* line 197, stdin */
+/* line 213, stdin */
 
 .figure-card.figure-card-vertical img {
   position: relative;
   z-index: 1;
 }
 
-/* line 202, stdin */
+/* line 218, stdin */
 
 .figure-card.figure-card-vertical .card {
   margin: -65px 30px 60px;
   z-index: 2;
 }
 
-/* line 207, stdin */
-
-.figure-card.figure-card-vertical .pattern-background {
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  bottom: -30px;
-  left: 65px;
-  right: 0;
-}
-
-/* line 215, stdin */
-
-.figure-card.figure-card-vertical .pattern-background svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* line 222, stdin */
+/* line 224, stdin */
 
 .figure-card.figure-card-horizontal {
   display: -webkit-box;
@@ -371,7 +377,7 @@
   display: flex;
 }
 
-/* line 225, stdin */
+/* line 227, stdin */
 
 .figure-card.figure-card-horizontal img {
   width: 66vw;
@@ -381,7 +387,7 @@
   z-index: 1;
 }
 
-/* line 233, stdin */
+/* line 235, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -393,7 +399,7 @@
   z-index: 2;
 }
 
-/* line 243, stdin */
+/* line 245, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right img {
   left: auto;
@@ -402,7 +408,7 @@
   margin-right: -50vw;
 }
 
-/* line 250, stdin */
+/* line 252, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card {
   left: 30px;

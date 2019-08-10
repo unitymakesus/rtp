@@ -1,5 +1,23 @@
-.flex-item.figure-card {
-  padding: 0 !important;
+.flex-grid {
+  .flex-item {
+    margin-bottom: 20px;
+
+    .figure-card {
+      height: 100%;
+
+      &.no-image {
+        .card {
+          height: calc(100% - 30px);
+          margin: 0 30px 30px 0;
+        }
+
+        .pattern-background {
+          bottom: 0;
+          left: 30px;
+        }
+      }
+    }
+  }
 }
 
 .figure-card {
@@ -10,6 +28,16 @@
       top: 35px;
       font-size: 13px;
       text-transform: uppercase;
+    }
+
+    .card-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .card-cta {
+        margin-top: auto;
+      }
     }
   }
 }

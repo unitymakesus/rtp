@@ -14244,12 +14244,13 @@ nav ul a {
 
 .homepage-cta-row .card .card-badge {
   border-color: #FFF;
+  color: #FFF;
   position: relative;
   top: 40px;
   left: 31px;
 }
 
-/* line 31, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 32, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-cta {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FF012169');
@@ -14263,13 +14264,13 @@ nav ul a {
   padding: 10px 20px;
 }
 
-/* line 38, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 39, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-cta a {
   color: #FFF;
 }
 
-/* line 41, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 42, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-cta a .arrow path {
   fill: #FFF;
