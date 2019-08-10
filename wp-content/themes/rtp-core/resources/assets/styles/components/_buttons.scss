@@ -15,43 +15,39 @@ a.btn {
   color: $color-white;
 }
 
-// @for $n from 1 through length($themes-list) {
-//   [data-color="#{nth($themes-list, $n)}"] {
-//     .btn-primary {
-//       background: nth($color-primary-list, $n);
-//
-//       &:hover, &:active, &:focus {
-//         background: darken(nth($color-primary-list, $n), 15%);
-//       }
-//     }
-//
-//     .btn-secondary {
-//       background: nth($color-secondary-list, $n);
-//
-//       &:hover, &:active, &:focus {
-//         background: darken(nth($color-secondary-list, $n), 15%);
-//       }
-//     }
-//
-//     .btn-tertiary {
-//       background: nth($color-tertiary-list, $n);
-//       color: $color-black;
-//
-//       &:hover, &:active, &:focus {
-//         background: darken(nth($color-tertiary-list, $n), 15%);
-//       }
-//     }
-//   }
-// }
-
 .fl-builder-content.fl-builder-content a.fl-button.fl-button {
-  @extend .btn;
-  // @extend .btn-primary;
-
   border: none;
-  font-size: 1em;
+  background: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.9em;
+  box-shadow: none;
 
   span {
-    color: inherit;
+    color: $color-black;
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    padding: 4px 0 14px 14px;
+    width: 40px;
+    height: 25px;
+    background-image: url(../images/arrow-right.svg);
+    background-size: 26px 20.5px;
+    background-repeat: no-repeat;
+    background-position: right center;
+    transition: transform 0.3s ease;
+    vertical-align: -0.4em;
+  }
+
+  &:hover, &:focus, &:active {
+    span {
+      text-decoration: underline;
+    }
+
+    &::after {
+      transform: translate3d(10px, 0, 0);
+    }
   }
 }

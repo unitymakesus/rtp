@@ -135,3 +135,34 @@ textarea.materialize-textarea {
 //     }
 //   }
 // }
+
+.mec-fes-form {
+  #mec-exceptional-days {
+    display: none;
+    speak: none;
+  }
+
+  #mec-location, #mec-organizer {
+    .mec-tooltip {
+      display: none;
+      speak: none;
+    }
+  }
+
+  #mec_location_id option[value="0"] {
+    display: none;
+    speak: none;
+  }
+
+  #mec_location_new_container + .mec-form-row {
+    display: none;
+    speak: none;
+  }
+
+  #mec_organizer_new_container + h4 {
+    &, & + .mec-form-row {
+      display: none;
+      speak: none;
+    }
+  }
+}

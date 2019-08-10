@@ -217,12 +217,14 @@ nav {
 
         a {
           cursor: pointer;
+          position: relative;
 
           &::after {
             content: '';
             background-image: image('arrow-right.svg');
             position: absolute;
             right: 30px;
+            top: 10px;
             z-index: 1000;
             width: 20px;
             opacity: 0;
@@ -233,7 +235,6 @@ nav {
           }
 
           &:hover, &:focus, &:hover {
-            position: relative;
             background: transparent;
 
             &::after {
