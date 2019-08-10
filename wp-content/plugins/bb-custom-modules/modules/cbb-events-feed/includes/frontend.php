@@ -68,7 +68,7 @@ if ($count >= 3) {
         </div>
 
         <div class="pattern-background">
-          <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/includes/pattern-bracket.php'); ?>
+          <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/pattern-bracket.svg'); ?>
         </div>
       </article>
     </div>

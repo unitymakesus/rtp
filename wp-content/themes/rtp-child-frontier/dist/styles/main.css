@@ -14192,6 +14192,382 @@ nav ul a {
   }
 }
 
+/* line 2, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .page-header {
+  margin-bottom: 2em;
+}
+
+/* line 6, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .flex-item {
+  margin-bottom: 20px;
+}
+
+/* line 10, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card {
+  position: relative;
+  height: 100%;
+}
+
+/* line 14, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card img {
+  width: 100%;
+  height: 250px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+/* line 22, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card {
+  margin: -65px 30px 50px;
+  height: calc(100% - 250px);
+  background: #FFF;
+  padding: 24px 24px 4px;
+  position: relative;
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
+  -o-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  -webkit-box-shadow: 0;
+          box-shadow: 0;
+  -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* line 33, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card:hover,
+.blog .figure-card .card:focus,
+.blog .figure-card .card:active {
+  -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* line 37, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card .meta {
+  position: absolute;
+  right: 24px;
+  top: 35px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+/* line 46, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+
+/* line 52, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-badge {
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 8px;
+  border-left-width: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 30px;
+  height: 30px;
+  text-transform: uppercase;
+}
+
+/* line 65, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-badge span {
+  position: absolute;
+  display: block;
+  font-size: 0.8em;
+  font-weight: 300;
+  left: 9px;
+  top: 7px;
+  white-space: nowrap;
+}
+
+/* line 76, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-title {
+  margin: 40px 16px 20px;
+}
+
+/* line 79, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-title a {
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #000;
+}
+
+/* line 84, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-title a:hover,
+.blog .figure-card .card-title a:focus,
+.blog .figure-card .card-title a:active {
+  text-decoration: underline !important;
+}
+
+/* line 90, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta {
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 4px;
+  padding: 5px;
+  margin: auto 16px 0;
+}
+
+/* line 97, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a {
+  color: #000;
+  display: block;
+  text-align: right;
+  width: 100%;
+  height: 40px;
+  font-size: 0.9em;
+  line-height: 40px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  -webkit-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+  vertical-align: middle;
+}
+
+/* line 110, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a span {
+  vertical-align: middle;
+}
+
+/* line 114, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a .arrow {
+  display: inline-block;
+  padding: 4px 0 14px 14px;
+  width: 40px;
+  height: 40px;
+  transition: -webkit-transform 0.3s ease;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+}
+
+/* line 122, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a .arrow path {
+  fill: #000;
+  -webkit-transition: fill 0.3s ease;
+  -o-transition: fill 0.3s ease;
+  transition: fill 0.3s ease;
+}
+
+/* line 128, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a:hover,
+.blog .figure-card .card-cta a:focus,
+.blog .figure-card .card-cta a:active {
+  text-decoration: underline !important;
+}
+
+/* line 131, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a:hover .arrow,
+.blog .figure-card .card-cta a:focus .arrow,
+.blog .figure-card .card-cta a:active .arrow {
+  -webkit-transform: translate3d(10px, 0, 0);
+          transform: translate3d(10px, 0, 0);
+}
+
+/* line 138, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .pattern-background {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 30px;
+  left: 65px;
+  right: 0;
+}
+
+/* line 146, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .pattern-background svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 153, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-rtp .card-badge,
+.blog .figure-card.badge-rtp .card-cta {
+  border-color: #333F48;
+  color: #333F48;
+}
+
+/* line 159, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-rtp .card-cta a:hover,
+.blog .figure-card.badge-rtp .card-cta a:focus,
+.blog .figure-card.badge-rtp .card-cta a:active {
+  color: #333F48;
+}
+
+/* line 162, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-rtp .card-cta a:active .arrow path {
+  fill: #333F48;
+}
+
+/* line 170, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-hub .card-badge,
+.blog .figure-card.badge-hub .card-cta,
+.blog .figure-card.badge-hub-rtp .card-badge,
+.blog .figure-card.badge-hub-rtp .card-cta {
+  border-color: #4B9CD3;
+  color: #4B9CD3;
+}
+
+/* line 176, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-hub .card-cta a:hover,
+.blog .figure-card.badge-hub .card-cta a:focus,
+.blog .figure-card.badge-hub .card-cta a:active,
+.blog .figure-card.badge-hub-rtp .card-cta a:hover,
+.blog .figure-card.badge-hub-rtp .card-cta a:focus,
+.blog .figure-card.badge-hub-rtp .card-cta a:active {
+  color: #4B9CD3;
+}
+
+/* line 179, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-hub .card-cta a:hover .arrow path,
+.blog .figure-card.badge-hub .card-cta a:focus .arrow path,
+.blog .figure-card.badge-hub .card-cta a:active .arrow path,
+.blog .figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-hub-rtp .card-cta a:active .arrow path {
+  fill: #4B9CD3;
+}
+
+/* line 187, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-boxyard .card-badge,
+.blog .figure-card.badge-boxyard .card-cta,
+.blog .figure-card.badge-boxyard-rtp .card-badge,
+.blog .figure-card.badge-boxyard-rtp .card-cta {
+  border-color: #E63C2F;
+  color: #E63C2F;
+}
+
+/* line 193, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-boxyard .card-cta a:hover,
+.blog .figure-card.badge-boxyard .card-cta a:focus,
+.blog .figure-card.badge-boxyard .card-cta a:active,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:hover,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:focus,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:active {
+  color: #E63C2F;
+}
+
+/* line 196, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-boxyard .card-cta a:hover .arrow path,
+.blog .figure-card.badge-boxyard .card-cta a:focus .arrow path,
+.blog .figure-card.badge-boxyard .card-cta a:active .arrow path,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
+  fill: #E63C2F;
+}
+
+/* line 204, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-frontier .card-badge,
+.blog .figure-card.badge-frontier .card-cta,
+.blog .figure-card.badge-frontier-rtp .card-badge,
+.blog .figure-card.badge-frontier-rtp .card-cta {
+  border-color: #57C1A5;
+  color: #57C1A5;
+}
+
+/* line 210, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-frontier .card-cta a:hover,
+.blog .figure-card.badge-frontier .card-cta a:focus,
+.blog .figure-card.badge-frontier .card-cta a:active,
+.blog .figure-card.badge-frontier-rtp .card-cta a:hover,
+.blog .figure-card.badge-frontier-rtp .card-cta a:focus,
+.blog .figure-card.badge-frontier-rtp .card-cta a:active {
+  color: #2FA787;
+}
+
+/* line 213, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-frontier .card-cta a:hover .arrow path,
+.blog .figure-card.badge-frontier .card-cta a:focus .arrow path,
+.blog .figure-card.badge-frontier .card-cta a:active .arrow path,
+.blog .figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
+  fill: #57C1A5;
+}
+
+/* line 221, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-stem .card-badge,
+.blog .figure-card.badge-stem .card-cta,
+.blog .figure-card.badge-stem-rtp .card-badge,
+.blog .figure-card.badge-stem-rtp .card-cta {
+  border-color: #654EA3;
+  color: #654EA3;
+}
+
+/* line 227, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-stem .card-cta a:hover,
+.blog .figure-card.badge-stem .card-cta a:focus,
+.blog .figure-card.badge-stem .card-cta a:active,
+.blog .figure-card.badge-stem-rtp .card-cta a:hover,
+.blog .figure-card.badge-stem-rtp .card-cta a:focus,
+.blog .figure-card.badge-stem-rtp .card-cta a:active {
+  color: #654EA3;
+}
+
+/* line 230, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-stem .card-cta a:hover .arrow path,
+.blog .figure-card.badge-stem .card-cta a:focus .arrow path,
+.blog .figure-card.badge-stem .card-cta a:active .arrow path,
+.blog .figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-stem-rtp .card-cta a:active .arrow path {
+  fill: #654EA3;
+}
+
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
 
 .badges img {
@@ -15395,159 +15771,6 @@ body .entry-content a {
 
 .homepage-cta-row .card .card-cta {
   background: rgba(1, 33, 105, 0.8);
-}
-
-/* line 2, resources/assets/styles/layouts/_blog.scss */
-
-.blog .page-header {
-  margin-bottom: 2em;
-}
-
-/* line 6, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card {
-  position: relative;
-  width: 31.3%;
-  margin: 0.8em 1%;
-}
-
-/* line 11, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card img {
-  width: 100%;
-  height: 250px;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-/* line 17, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card {
-  margin: -65px 30px 60px;
-  background: #FFF;
-  padding: 24px 24px 4px;
-  position: relative;
-  -webkit-transition: -webkit-box-shadow 0.3s;
-  transition: -webkit-box-shadow 0.3s;
-  -o-transition: box-shadow 0.3s;
-  transition: box-shadow 0.3s;
-  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
-  -webkit-box-shadow: 0;
-          box-shadow: 0;
-  -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
-          box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
-}
-
-/* line 26, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .card-title {
-  margin-top: 1.5em;
-  min-height: 150px;
-}
-
-/* line 30, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .card-title a {
-  color: black;
-}
-
-/* line 35, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card p {
-  height: 110px;
-  overflow: hidden;
-}
-
-/* line 40, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .badge {
-  border-color: #47D7AC;
-  border-style: solid;
-  border-width: 0;
-  border-top-width: 8px;
-  border-left-width: 8px;
-  font-weight: bold;
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  width: 30px;
-  height: 30px;
-}
-
-/* line 53, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .badge span {
-  padding-left: 5px;
-  font-size: 14px;
-}
-
-/* line 59, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .meta {
-  position: absolute;
-  right: 24px;
-  top: 35px;
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-/* line 67, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .cta {
-  border-color: #47D7AC;
-  border-style: solid;
-  border-width: 0;
-  border-top-width: 4px;
-  padding: 5px;
-}
-
-/* line 74, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .cta a {
-  color: #000;
-  display: block;
-  text-align: right;
-  width: 100%;
-  height: 40px;
-  font-size: 0.9em;
-  line-height: 40px;
-  text-transform: uppercase;
-  text-decoration: none !important;
-  -webkit-transition: color 0.3s ease;
-  -o-transition: color 0.3s ease;
-  transition: color 0.3s ease;
-  vertical-align: middle;
-}
-
-/* line 87, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .card .cta a .arrow {
-  display: inline-block;
-  padding: 4px 0 14px 14px;
-  width: 40px;
-  height: 40px;
-  transition: -webkit-transform 0.3s ease;
-  -webkit-transition: -webkit-transform 0.3s ease;
-  -o-transition: -o-transform 0.3s ease;
-  transition: transform 0.3s ease;
-  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
-}
-
-/* line 99, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .pattern-background {
-  position: absolute;
-  z-index: -10;
-  top: 0;
-  bottom: -30px;
-  right: -30px;
-}
-
-/* line 106, resources/assets/styles/layouts/_blog.scss */
-
-.blog .figure-card .pattern-background svg {
-  width: 100%;
-  height: 100%;
 }
 
 /* line 1, resources/assets/styles/layouts/_events.scss */

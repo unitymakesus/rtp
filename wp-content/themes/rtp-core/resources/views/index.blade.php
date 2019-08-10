@@ -11,7 +11,9 @@
   @endif
   <div class="container flex-grid l3x m2x">
     @while (have_posts()) @php the_post() @endphp
-      @include('partials.content-'.get_post_type())
+      <div class="flex-item">
+        @include('partials.content-'.get_post_type())
+      </div>
     @endwhile
   </div>
 
