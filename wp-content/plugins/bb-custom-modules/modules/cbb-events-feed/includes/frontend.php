@@ -3,10 +3,6 @@
 global $post;
 $initial_current_post = $post;
 
-$classes = [
-  'badge-' . str_replace(' ', '-', strtolower($module->siteBadge()))
-];
-
 $events = $module->query_events($settings);
 $count = sizeof($events);
 
@@ -19,13 +15,15 @@ if ($count >= 3) {
 }
 ?>
 
-<div class="flex-grid l3x m2x">
+<div class="flex-grid <?php echo $grid_class; ?>">
   <?php
 
-    if (!empty($events)) : foreach ($events as $post) : setup_postdata($post);
+  if (!empty($events)) : foreach ($events as $event) :
+    $post = $event['result'];
+    setup_postdata($post);
 
     $id = get_the_ID();
-    $startDate = strtotime(get_post_meta($id, 'mec_start_date', true));
+    $startDate = strtotime($event['date']);
     $startH = get_post_meta($id, 'mec_start_time_hour', true);
     $starti = get_post_meta($id, 'mec_start_time_minutes', true);
     $starta = get_post_meta($id, 'mec_start_time_ampm', true);
@@ -34,6 +32,11 @@ if ($count >= 3) {
     $enda = get_post_meta($id, 'mec_end_time_ampm', true);
     $locationID = get_post_meta($id, 'mec_location_id', true);
     $location = get_term($locationID, 'mec_location');
+
+    $badge = $module->siteBadge(get_the_ID());
+    $classes = [
+      'badge-' . str_replace(' ', '-', strtolower($badge))
+    ];
     ?>
     <div class="flex-item">
       <article class="figure-card no-image <?php echo implode(' ', $classes); ?>">

@@ -358,18 +358,22 @@
 /* line 213, stdin */
 
 .figure-card.figure-card-vertical img {
+  width: 100%;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
   position: relative;
   z-index: 1;
 }
 
-/* line 218, stdin */
+/* line 221, stdin */
 
 .figure-card.figure-card-vertical .card {
   margin: -65px 30px 60px;
   z-index: 2;
 }
 
-/* line 224, stdin */
+/* line 227, stdin */
 
 .figure-card.figure-card-horizontal {
   display: -webkit-box;
@@ -377,7 +381,7 @@
   display: flex;
 }
 
-/* line 227, stdin */
+/* line 230, stdin */
 
 .figure-card.figure-card-horizontal img {
   width: 66vw;
@@ -387,7 +391,7 @@
   z-index: 1;
 }
 
-/* line 235, stdin */
+/* line 238, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -399,7 +403,7 @@
   z-index: 2;
 }
 
-/* line 245, stdin */
+/* line 248, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right img {
   left: auto;
@@ -408,7 +412,7 @@
   margin-right: -50vw;
 }
 
-/* line 252, stdin */
+/* line 255, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card {
   left: 30px;

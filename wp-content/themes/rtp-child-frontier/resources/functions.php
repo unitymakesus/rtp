@@ -125,3 +125,16 @@ add_action('widgets_init', function () {
     'id'            => 'footer-utility-right'
   ] + $config);
 });
+
+/**
+ * Register options page
+ */
+ if( function_exists('acf_add_options_page') ) {
+ 	acf_add_options_page(array(
+ 		'page_title' 	=> 'Frontier 800 Schedule',
+ 		'menu_title'	=> 'Frontier 800 Schedule',
+ 		'menu_slug' 	=> 'schedule-settings',
+ 		'capability'	=> 'manage_options',
+ 		'redirect'		=> false
+ 	));
+}

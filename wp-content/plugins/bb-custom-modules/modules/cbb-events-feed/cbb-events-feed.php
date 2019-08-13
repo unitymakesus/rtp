@@ -49,10 +49,12 @@ class CbbEventsFeedModule extends FLBuilderModule {
     return $siteName;
   }
 
-	/*
-	Filter query for MEC events
-	 */
-	// public function filter_query_today($query_args) {
+	/**
+	 * Query MEC events
+	 *
+	 * @param object $settings from the module
+	 * @return array of events
+   */
 	public function query_events($settings) {
 		global $wpdb;
 		$dates = array();
@@ -63,21 +65,14 @@ class CbbEventsFeedModule extends FLBuilderModule {
 			// Build Query
 			$prefix = $wpdb->get_blog_prefix($site);
 
-			// Start searching now
+			// Start searching today
 			$today = current_time('Y-m-d');
-			$now = time();
 			$seconds_start = strtotime($today);
 
-			if ($settings->today == '1') {
-				// Search til the end of today!
-				if(date('H:i:s', strtotime($today)) == '00:00:00') $end .= ' 23:59:59';
-				$seconds_end = strtotime($end);
-			} else {
-				// Search til 2 years from now
-				$end = date('Y-m-t', strtotime('+1 Year', strtotime($today)));
-				if(date('H:i:s', strtotime($end)) == '00:00:00') $end .= ' 23:59:59';
-				$seconds_end = strtotime($end);
-			}
+			// Search til 2 years from now
+			$end = date('Y-m-t', strtotime('+1 Year', strtotime($today)));
+			if(date('H:i:s', strtotime($end)) == '00:00:00') $end .= ' 23:59:59';
+			$seconds_end = strtotime($end);
 
 			// Get matching dates for events in calendar
 			$sql = "SELECT * FROM {$prefix}mec_dates
@@ -94,6 +89,7 @@ class CbbEventsFeedModule extends FLBuilderModule {
 			  $e = strtotime($mec_date->dend);
 
 			  // Hide Events Based on End Time
+				// $now = time();
 			  // if($now >= $mec_date->tend) continue;
 
 				// Get array of dates
@@ -140,7 +136,10 @@ class CbbEventsFeedModule extends FLBuilderModule {
 				$results = $query->posts;
 
 				foreach ($results as $result) {
-					$events[] = $result;
+					$events[] = array(
+						'date' => $date,
+						'result' => $result
+					);
 				}
 
 				// Exit if we have found enough posts

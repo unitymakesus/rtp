@@ -7,24 +7,37 @@
 /* line 5, stdin */
 
 .flex-grid .flex-item .figure-card {
+  position: relative;
   height: 100%;
 }
 
 /* line 9, stdin */
 
-.flex-grid .flex-item .figure-card.no-image .card {
-  height: calc(100% - 30px);
-  margin: 0 30px 30px 0;
+.flex-grid .flex-item .figure-card .card {
+  margin: -65px 30px 50px;
+  height: calc(100% - 300px);
 }
 
 /* line 14, stdin */
 
-.flex-grid .flex-item .figure-card.no-image .pattern-background {
+.flex-grid .flex-item .figure-card .pattern-background {
   bottom: 0;
+}
+
+/* line 19, stdin */
+
+.flex-grid .flex-item .figure-card.no-image .card {
+  height: calc(100% - 50px);
+  margin: 0 30px 50px 0;
+}
+
+/* line 24, stdin */
+
+.flex-grid .flex-item .figure-card.no-image .pattern-background {
   left: 30px;
 }
 
-/* line 25, stdin */
+/* line 34, stdin */
 
 .figure-card .card .meta {
   position: absolute;
@@ -34,7 +47,7 @@
   text-transform: uppercase;
 }
 
-/* line 33, stdin */
+/* line 42, stdin */
 
 .figure-card .card .card-inner {
   display: -webkit-box;
@@ -47,7 +60,7 @@
   height: 100%;
 }
 
-/* line 38, stdin */
+/* line 47, stdin */
 
 .figure-card .card .card-inner .card-cta {
   margin-top: auto;

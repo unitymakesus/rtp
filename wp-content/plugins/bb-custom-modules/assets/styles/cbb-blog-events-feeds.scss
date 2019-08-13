@@ -3,16 +3,25 @@
     margin-bottom: 20px;
 
     .figure-card {
+      position: relative;
       height: 100%;
+
+      .card {
+        margin: -65px 30px 50px;
+        height: calc(100% - 300px);
+      }
+
+      .pattern-background {
+        bottom: 0;
+      }
 
       &.no-image {
         .card {
-          height: calc(100% - 30px);
-          margin: 0 30px 30px 0;
+          height: calc(100% - 50px);
+          margin: 0 30px 50px 0;
         }
 
         .pattern-background {
-          bottom: 0;
           left: 30px;
         }
       }
