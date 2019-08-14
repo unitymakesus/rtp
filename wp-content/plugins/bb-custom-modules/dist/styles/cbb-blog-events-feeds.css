@@ -1,43 +1,49 @@
-/* line 2, stdin */
+/* line 1, stdin */
+
+.flex-grid {
+  margin: 0 -10px;
+}
+
+/* line 4, stdin */
 
 .flex-grid .flex-item {
   margin-bottom: 20px;
 }
 
-/* line 5, stdin */
+/* line 7, stdin */
 
 .flex-grid .flex-item .figure-card {
   position: relative;
   height: 100%;
 }
 
-/* line 9, stdin */
+/* line 11, stdin */
 
 .flex-grid .flex-item .figure-card .card {
   margin: -65px 30px 50px;
   height: calc(100% - 300px);
 }
 
-/* line 14, stdin */
+/* line 16, stdin */
 
 .flex-grid .flex-item .figure-card .pattern-background {
   bottom: 0;
 }
 
-/* line 19, stdin */
+/* line 21, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .card {
   height: calc(100% - 50px);
   margin: 0 30px 50px 0;
 }
 
-/* line 24, stdin */
+/* line 26, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .pattern-background {
   left: 30px;
 }
 
-/* line 34, stdin */
+/* line 36, stdin */
 
 .figure-card .card .meta {
   position: absolute;
@@ -47,7 +53,7 @@
   text-transform: uppercase;
 }
 
-/* line 42, stdin */
+/* line 44, stdin */
 
 .figure-card .card .card-inner {
   display: -webkit-box;
@@ -60,7 +66,7 @@
   height: 100%;
 }
 
-/* line 47, stdin */
+/* line 49, stdin */
 
 .figure-card .card .card-inner .card-cta {
   margin-top: auto;

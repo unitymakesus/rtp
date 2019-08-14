@@ -63,9 +63,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 		if ($settings->type == 'cbb-today-feed') {
 
 			$limit = (int)$settings->posts_per_page;
-			$hide_done = false;
-
-			// var_dump($settings);
+			$show_ended = false;
 
 			// Does this need a category query?
 			if ($settings->tax_post_category_matching !== "1") {
@@ -80,6 +78,8 @@ class CbbTodayFeedModule extends FLBuilderModule {
 				$tax_post_category = false;
 			}
 
+			date_default_timezone_set(get_option('timezone_string'));
+
 			// Start searching today
 			$today = strtotime(current_time('Y-m-d'));
 
@@ -88,15 +88,15 @@ class CbbTodayFeedModule extends FLBuilderModule {
 			$end_of_today = strtotime($end);
 
 			// Get MEC events!
-			$dates = $this->get_ids_for_query($today, $end_of_today, $hide_done);
+			$dates = $this->get_ids_for_query($today, $end_of_today, $show_ended);
 			$events = $this->get_events($limit, $dates, $operator, $tax_post_category);
 			$found = sizeof($events);
 
 			// Get more upcoming events if there are not enough to fill out the view
-			if ($found < $limit) {
+			if ($found < ($limit - 1)) {
 
 				// Add "plan ahead" placeholder
-				$events[] = "Plan Ahead";
+				$events[] = "Coming up...";
 				$found ++;
 
 				// Set new limit for query
@@ -110,7 +110,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 				if(date('H:i:s', strtotime($end)) == '00:00:00') $end .= ' 23:59:59';
 				$one_month_away = strtotime($end);
 
-				$moredates = $this->get_ids_for_query($tomorrow, $one_month_away, $hide_done);
+				$moredates = $this->get_ids_for_query($tomorrow, $one_month_away, $show_ended);
 				$moreevents = $this->get_events($newlimit, $moredates, $operator, $tax_post_category);
 
 				$events = array_merge($events, $moreevents);
@@ -125,11 +125,12 @@ class CbbTodayFeedModule extends FLBuilderModule {
 	/**
 	 * Build the query to get MEC events
 	 *
+	 * @param  integer $seconds_start
 	 * @param  integer $seconds_end
-	 * @param	 bool    $hide_done
+	 * @param	 bool    $show_ended
 	 * @return array   $dates
 	 */
-	private function get_ids_for_query($seconds_start, $seconds_end, $hide_done) {
+	private function get_ids_for_query($seconds_start, $seconds_end, $show_ended) {
 		global $wpdb;
 		$dates = array();
 
@@ -143,15 +144,13 @@ class CbbTodayFeedModule extends FLBuilderModule {
 		$query = $wpdb->prepare($sql, $seconds_start, $seconds_end, $seconds_end, $seconds_end, $seconds_start, $seconds_start, $order);
 		$mec_dates = $wpdb->get_results($query);
 
-		// var_dump($mec_dates);
-
 		// Create array of dates with post IDs to query
 		foreach ($mec_dates as $mec_date) {
 		  $s = strtotime($mec_date->dstart);
 		  $e = strtotime($mec_date->dend);
 
 			// Hide Events Based on End Time
-			if ($hide_done) {
+			if (!$show_ended) {
 				$now = time();
 			  if($now >= $mec_date->tend) continue;
 			}
@@ -164,6 +163,14 @@ class CbbTodayFeedModule extends FLBuilderModule {
 		return $dates;
 	}
 
+	/**
+	 * Build the query to get MEC events
+	 * @param  [type] $limit             [description]
+	 * @param  [type] $dates             [description]
+	 * @param  [type] $operator          [description]
+	 * @param  [type] $tax_post_category [description]
+	 * @return [type]                    [description]
+	 */
 	private function get_events($limit, $dates, $operator, $tax_post_category) {
 		$found = 0;
 		$events = array();

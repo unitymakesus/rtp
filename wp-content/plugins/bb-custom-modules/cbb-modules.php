@@ -249,6 +249,22 @@ function load_custom_modules() {
           			'size'        => '8',
           			'placeholder' => '3',
           		],
+              'show_thumb' => [
+                'type'    => 'select',
+                'label'   => __('Show thumbnail image?', 'cbb'),
+                'options' => [
+                  '1' => __( 'Yes', 'cbb' ),
+                  '0' => __( 'No', 'cbb' )
+                ]
+          		],
+              'show_ended' => [
+                'type'    => 'select',
+                'label'   => __('Show today\'s events that have already ended?', 'cbb'),
+                'options' => [
+                  '1' => __( 'Yes', 'cbb' ),
+                  '0' => __( 'No', 'cbb' )
+                ]
+              ],
               'tax_post_category_matching' => [
                 'type'    => 'select',
                 'label'   => 'Event Category',

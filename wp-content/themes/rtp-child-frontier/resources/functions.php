@@ -166,9 +166,9 @@ add_shortcode('frontier-800-schedule', function($atts) {
 
     $openday = date('l, F j, Y', $nextopen['schedule']);
 
-    $schedule = "{$status['schedule']} We'll reopen at {$regular['open']} on $openday.";
+    $schedule = "{$status['schedule']} We'll reopen at {$regular['open']} on $openday. Our regular hours on Mondays-Fridays are from {$regular['open']} to {$regular['close']}.";
   } else {
-    $schedule = "Frontier 800 is open from {$regular['open']} to {$regular['close']}.";
+    $schedule = "Frontier 800 is open weekdays from {$regular['open']} to {$regular['close']}.";
   }
 
   return $schedule;
@@ -191,7 +191,7 @@ function get_day_status($test) {
   // Is it the weekend?
   if ($dayofweek > 5) {
     $closed = true;
-    $schedule = 'We\'re closed for the weekend.';
+    $schedule = 'Frontier 800 is closed for the weekend.';
   }
 
   if (!$closed) {

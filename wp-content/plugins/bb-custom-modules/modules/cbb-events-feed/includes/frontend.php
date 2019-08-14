@@ -39,16 +39,18 @@ if ($count >= 3) {
     ];
     ?>
     <div class="flex-item">
-      <article class="figure-card no-image <?php echo implode(' ', $classes); ?>">
-        <?php /*if (has_post_thumbnail()) : ?>
-          <?php
-            $thumbnail_id = get_post_thumbnail_id( $post->ID );
-            $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-            echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
-          ?>
-        <?php else : ?>
-          <div class="placeholder"></div>
-        <?php endif;*/ ?>
+      <article class="figure-card <?php echo (($settings->show_thumb) ? 'figure-card-vertical' : 'no-image'); ?> <?php echo implode(' ', $classes); ?>">
+        <?php if ($settings->show_thumb) : ?>
+          <?php if (has_post_thumbnail()) : ?>
+            <?php
+              $thumbnail_id = get_post_thumbnail_id( $post->ID );
+              $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+              echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
+            ?>
+          <?php else : ?>
+            <div class="placeholder"></div>
+          <?php endif; ?>
+        <?php endif; ?>
 
         <div class="card" itemprop="description">
           <div class="meta">

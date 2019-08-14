@@ -8,16 +8,24 @@
     box-shadow: none !important;
 
     .card-title {
-      // font-family: 'Oswald', sans-serif;
       text-transform: uppercase;
       font-size: 55px;
       font-weight: 500;
-      // letter-spacing: -0.3px;
       line-height: 1.2em;
       padding: 10px 20px 10px 30px;
+      max-width: 900px;
 
       @media #{$small-and-down} {
         font-size: 45px;
+      }
+    }
+
+    .card-content {
+      padding: 10px 20px 10px 30px;
+      max-width: 900px;
+
+      p {
+        margin: 0;
       }
     }
 

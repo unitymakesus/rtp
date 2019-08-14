@@ -25,7 +25,7 @@ if ($count >= 3) {
       'badge-' . str_replace(' ', '-', strtolower($badge))
     ];
 
-    if ($event == 'Plan Ahead') {
+    if (!isset($event['result'])) {
       $nextday = $events[$n+1]['date'];
       ?>
       <div class="flex-item">

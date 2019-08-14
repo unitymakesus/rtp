@@ -14295,7 +14295,7 @@ nav ul a {
 
 .blog .figure-card img {
   width: 100%;
-  height: 250px;
+  height: 300px;
   -o-object-fit: cover;
      object-fit: cover;
   position: relative;
@@ -14306,7 +14306,7 @@ nav ul a {
 
 .blog .figure-card .card {
   margin: -65px 30px 50px;
-  height: calc(100% - 250px);
+  height: calc(100% - 300px);
   background: #FFF;
   padding: 24px 24px 4px;
   position: relative;
@@ -14661,6 +14661,13 @@ nav ul a {
 
 .page-header {
   text-align: center;
+  color: #000;
+}
+
+/* line 13, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
+
+.page-header p {
+  font-weight: 400;
 }
 
 /* line 3, ../rtp-core/resources/assets/styles/layouts/_home.scss */
@@ -14686,6 +14693,7 @@ nav ul a {
   font-weight: 500;
   line-height: 1.2em;
   padding: 10px 20px 10px 30px;
+  max-width: 900px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -14696,7 +14704,20 @@ nav ul a {
   }
 }
 
-/* line 24, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 23, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+
+.homepage-cta-row .card .card-content {
+  padding: 10px 20px 10px 30px;
+  max-width: 900px;
+}
+
+/* line 27, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+
+.homepage-cta-row .card .card-content p {
+  margin: 0;
+}
+
+/* line 32, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-badge {
   border-color: #FFF;
@@ -14706,7 +14727,7 @@ nav ul a {
   left: 31px;
 }
 
-/* line 32, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 40, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-cta {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FF012169');
@@ -14720,13 +14741,13 @@ nav ul a {
   padding: 10px 20px;
 }
 
-/* line 39, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 47, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-cta a {
   color: #FFF;
 }
 
-/* line 42, ../rtp-core/resources/assets/styles/layouts/_home.scss */
+/* line 50, ../rtp-core/resources/assets/styles/layouts/_home.scss */
 
 .homepage-cta-row .card .card-cta a .arrow path {
   fill: #FFF;
@@ -15772,7 +15793,6 @@ body .h1 {
   text-transform: uppercase;
   font-size: 55px;
   font-weight: 600;
-  color: #FFF;
   letter-spacing: -0.3px;
   line-height: 1.2em;
 }
