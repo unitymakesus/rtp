@@ -4,7 +4,9 @@ global $post;
 $initial_current_post = $post;
 
 $events = $module->query_events($settings);
+$limit = (int)$settings->posts_per_page;
 $count = sizeof($events);
+$i = 0;
 
 if ($count >= 3) {
   $grid_class = "l3x m2x";
@@ -18,15 +20,15 @@ if ($count >= 3) {
 <div class="flex-grid l3x m2x">
   <?php
 
-  if (!empty($events)) : foreach ($events as $n=>$event) :
+  if (!empty($events)) : while ($i < $limit) :
 
     $badge = $module->siteBadge(get_the_ID());
     $classes = [
       'badge-' . str_replace(' ', '-', strtolower($badge))
     ];
 
-    if (!isset($event['result'])) {
-      $nextday = $events[$n+1]['date'];
+    if (!isset($events[$i]['result'])) {
+      $nextday = $events[$i+1]['date'];
       ?>
       <div class="flex-item">
         <article class="figure-card no-image <?php echo implode(' ', $classes); ?>">
@@ -51,11 +53,11 @@ if ($count >= 3) {
       </div>
       <?php
     } else {
-      $post = $event['result'];
+      $post = $events[$i]['result'];
       setup_postdata($post);
 
       $id = get_the_ID();
-      $startDate = strtotime($event['date']);
+      $startDate = strtotime($events[$i]['date']);
       $startH = get_post_meta($id, 'mec_start_time_hour', true);
       $starti = sprintf('%02d', get_post_meta($id, 'mec_start_time_minutes', true));
       $starta = get_post_meta($id, 'mec_start_time_ampm', true);
@@ -109,7 +111,8 @@ if ($count >= 3) {
       </div>
       <?php
     }
-  endforeach; endif;
+    $i++;
+  endwhile; endif;
 
   wp_reset_postdata();
 

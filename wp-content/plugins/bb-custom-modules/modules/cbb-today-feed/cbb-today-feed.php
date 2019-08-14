@@ -93,7 +93,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 			$found = sizeof($events);
 
 			// Get more upcoming events if there are not enough to fill out the view
-			if ($found < ($limit - 1)) {
+			if ($found < $limit) {
 
 				// Add "plan ahead" placeholder
 				$events[] = "Coming up...";
