@@ -63,7 +63,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 		if ($settings->type == 'cbb-today-feed') {
 
 			$limit = (int)$settings->posts_per_page;
-			$show_ended = false;
+			$show_ended = true;
 
 			// Does this need a category query?
 			if ($settings->tax_post_category_matching !== "1") {
