@@ -12922,6 +12922,38 @@ textarea.materialize-textarea {
   speak: none;
 }
 
+/* line 172, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup {
+  background: transparent;
+  padding: 0;
+}
+
+/* line 176, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup #mc_embed_signup_scroll {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* line 181, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup input.email {
+  width: auto;
+  border-radius: 0;
+}
+
+/* line 186, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+footer #mc_embed_signup .button {
+  border-radius: 0;
+  background: #4B9CD3;
+}
+
 /* line 1, ../rtp-core/resources/assets/styles/components/_icons.scss */
 
 .social-icons,
