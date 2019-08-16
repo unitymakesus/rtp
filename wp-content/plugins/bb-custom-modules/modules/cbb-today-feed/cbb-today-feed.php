@@ -1,15 +1,15 @@
 <?php
 
-class CbbEventsFeedModule extends FLBuilderModule {
+class CbbTodayFeedModule extends FLBuilderModule {
 
 	public function __construct() {
 		parent::__construct(array(
-			'name'            => __( 'Events Feed', 'fl-builder' ),
-			'description'     => __( 'A module that pulls in upcoming events from the calendar.', 'fl-builder' ),
+			'name'            => __( 'Today Feed', 'fl-builder' ),
+			'description'     => __( 'A module that pulls in today\'s events from the calendar and Frontier building schedule.', 'fl-builder' ),
 			'icon'            => 'format-aside.svg',
 			'category'        => __( 'Layout', 'fl-builder' ),
-			'dir'             => CBB_MODULES_DIR . 'modules/cbb-events-feed/',
-			'url'             => CBB_MODULES_URL . 'modules/cbb-events-feed/'
+			'dir'             => CBB_MODULES_DIR . 'modules/cbb-today-feed/',
+			'url'             => CBB_MODULES_URL . 'modules/cbb-today-feed/'
 		));
 
 		// Include custom CSS
@@ -20,14 +20,13 @@ class CbbEventsFeedModule extends FLBuilderModule {
 	/**
 	 * Function to get the icon for the Custom Posts module.
 	 *
-	 * @method get_icons
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
 
 		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'modules/cbb-events-feed/images/' . $icon ) ) {
-			$path = CBB_MODULES_DIR . 'modules/cbb-events-feed/images/' . $icon;
+		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'modules/cbb-today-feed/images/' . $icon ) ) {
+			$path = CBB_MODULES_DIR . 'modules/cbb-today-feed/images/' . $icon;
 		}
 
 		if ( file_exists( $path ) ) {
@@ -37,8 +36,12 @@ class CbbEventsFeedModule extends FLBuilderModule {
 		}
 	}
 
-	public function siteBadge() {
-    $postID = get_the_ID();
+	/**
+	 * Function to get the badge label
+	 *
+	 * @return string $siteName shows the site of the original content
+	 */
+	public function siteBadge($postID) {
     $siteID = get_post_meta($postID, 'dt_original_blog_id', true);
     if ($siteID == 1) {
       $siteName = 'RTP';
@@ -57,10 +60,10 @@ class CbbEventsFeedModule extends FLBuilderModule {
    */
 	public function query_events($settings) {
 
-		if ($settings->type == 'cbb-events-feed') {
+		if ($settings->type == 'cbb-today-feed') {
 
 			$limit = (int)$settings->posts_per_page;
-			$show_ended = $settings->show_ended;
+			$show_ended = true;
 
 			// Does this need a category query?
 			if ($settings->tax_post_category_matching !== "1") {
@@ -75,20 +78,48 @@ class CbbEventsFeedModule extends FLBuilderModule {
 				$tax_post_category = false;
 			}
 
+			date_default_timezone_set(get_option('timezone_string'));
+
 			// Start searching today
 			$today = strtotime(current_time('Y-m-d'));
 
-			// Search til 1 year from now
-			$end = date('Y-m-t', strtotime('+1 Year', $today));
-			if(date('H:i:s', strtotime($end)) == '00:00:00') $end .= ' 23:59:59';
-			$one_year_away = strtotime($end);
+			// Search til the end of today!
+			if(date('H:i:s', $today) == '00:00:00') $end .= ' 23:59:59';
+			$end_of_today = strtotime($end);
 
 			// Get MEC events!
-			$dates = $this->get_ids_for_query($today, $one_year_away, $show_ended);
+			$dates = $this->get_ids_for_query($today, $end_of_today, $show_ended);
 			$events = $this->get_events($limit, $dates, $operator, $tax_post_category);
+			$found = sizeof($events);
+
+			// Get more upcoming events if there are not enough to fill out the view
+			if ($found < $limit) {
+
+				// Add "plan ahead" placeholder
+				$events[] = "Coming up...";
+				$found ++;
+
+				// Set new limit for query
+				$newlimit = $limit - $found;
+
+				// Start searching tomorrow
+				$tomorrow = strtotime('+1 Day', $today);
+
+				// Search til one month from now
+				$end = date('Y-m-t', strtotime('+1 Month', $today));
+				if(date('H:i:s', strtotime($end)) == '00:00:00') $end .= ' 23:59:59';
+				$one_month_away = strtotime($end);
+
+				$moredates = $this->get_ids_for_query($tomorrow, $one_month_away, $show_ended);
+				$moreevents = $this->get_events($newlimit, $moredates, $operator, $tax_post_category);
+
+				$events = array_merge($events, $moreevents);
+			}
 
 			return $events;
+
 		}
+
 	}
 
 	/**

@@ -3,10 +3,6 @@
 global $post;
 $initial_current_post = $post;
 
-$classes = [
-  'badge-' . str_replace(' ', '-', strtolower($module->siteBadge()))
-];
-
 $events = $module->query_events($settings);
 $count = sizeof($events);
 
@@ -19,33 +15,42 @@ if ($count >= 3) {
 }
 ?>
 
-<div class="flex-grid l3x m2x">
+<div class="flex-grid <?php echo $grid_class; ?>">
   <?php
 
-    if (!empty($events)) : foreach ($events as $post) : setup_postdata($post);
+  if (!empty($events)) : foreach ($events as $event) :
+    $post = $event['result'];
+    setup_postdata($post);
 
     $id = get_the_ID();
-    $startDate = strtotime(get_post_meta($id, 'mec_start_date', true));
+    $startDate = strtotime($event['date']);
     $startH = get_post_meta($id, 'mec_start_time_hour', true);
-    $starti = get_post_meta($id, 'mec_start_time_minutes', true);
+    $starti = sprintf('%02d', get_post_meta($id, 'mec_start_time_minutes', true));
     $starta = get_post_meta($id, 'mec_start_time_ampm', true);
     $endH = get_post_meta($id, 'mec_end_time_hour', true);
-    $endi = get_post_meta($id, 'mec_end_time_minutes', true);
+    $endi = sprintf('%02d', get_post_meta($id, 'mec_end_time_minutes', true));
     $enda = get_post_meta($id, 'mec_end_time_ampm', true);
     $locationID = get_post_meta($id, 'mec_location_id', true);
     $location = get_term($locationID, 'mec_location');
+
+    $badge = $module->siteBadge(get_the_ID());
+    $classes = [
+      'badge-' . str_replace(' ', '-', strtolower($badge))
+    ];
     ?>
     <div class="flex-item">
-      <article class="figure-card no-image <?php echo implode(' ', $classes); ?>">
-        <?php /*if (has_post_thumbnail()) : ?>
-          <?php
-            $thumbnail_id = get_post_thumbnail_id( $post->ID );
-            $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-            echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
-          ?>
-        <?php else : ?>
-          <div class="placeholder"></div>
-        <?php endif;*/ ?>
+      <article class="figure-card <?php echo (($settings->show_thumb) ? 'figure-card-vertical' : 'no-image'); ?> <?php echo implode(' ', $classes); ?>">
+        <?php if ($settings->show_thumb) : ?>
+          <?php if (has_post_thumbnail()) : ?>
+            <?php
+              $thumbnail_id = get_post_thumbnail_id( $post->ID );
+              $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+              echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
+            ?>
+          <?php else : ?>
+            <div class="placeholder"></div>
+          <?php endif; ?>
+        <?php endif; ?>
 
         <div class="card" itemprop="description">
           <div class="meta">

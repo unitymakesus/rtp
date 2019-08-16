@@ -125,3 +125,78 @@ add_action('widgets_init', function () {
     'id'            => 'footer-utility-right'
   ] + $config);
 });
+
+/**
+ * Register options page
+ */
+ if( function_exists('acf_add_options_page') ) {
+ 	acf_add_options_page(array(
+ 		'page_title' 	=> 'Frontier 800 Schedule',
+ 		'menu_title'	=> 'Frontier 800 Schedule',
+ 		'menu_slug' 	=> 'schedule-settings',
+ 		'capability'	=> 'manage_options',
+ 		'redirect'		=> false
+ 	));
+}
+
+
+/**
+ * Frontier 800 schedule shortcode
+ */
+add_shortcode('frontier-800-schedule', function($atts) {
+	$regular = get_field('regular_schedule', 'option');
+
+  $today = strtotime(current_time('Y-m-d'));
+  $dayofweek = date('N', $today);
+
+  $status = get_day_status($today);
+
+  // If it's closed, when will it reopen?
+  if ($status['closed'] == true) {
+    $i = 1;
+
+    $closed = $status['closed'];
+    // Loop through upcoming days until it's open again
+    while ($closed == true) {
+      $day = strtotime("+$i Days", current_time('timestamp'));
+      $nextopen = get_day_status($day);
+      $closed = $nextopen['closed'];
+      $i++;
+    }
+
+    $openday = date('l, F j, Y', $nextopen['schedule']);
+
+    $schedule = "{$status['schedule']} We'll reopen at {$regular['open']} on $openday. Our regular hours on Mondays-Fridays are from {$regular['open']} to {$regular['close']}.";
+  } else {
+    $schedule = "Frontier 800 is open weekdays from {$regular['open']} to {$regular['close']}.";
+  }
+
+  return $schedule;
+});
+
+function get_day_status($test) {
+  $exceptions = get_field('closed_days', 'option');
+  $closed = false;
+
+  // Is it a holiday?
+  foreach($exceptions as $exception) {
+    $date = strtotime($exception['date']);
+    if ($test == $date) {
+      $closed = true;
+      $schedule = "Frontier 800 is closed today, {$exception['date']} {$exception['reason']} {$exception['fill_in_the_blank']}.";
+      break;
+    }
+  }
+
+  // Is it the weekend?
+  if ($dayofweek > 5) {
+    $closed = true;
+    $schedule = 'Frontier 800 is closed for the weekend.';
+  }
+
+  if (!$closed) {
+    $schedule = $test;
+  }
+
+  return array('closed' => $closed, 'schedule' => $schedule);
+}

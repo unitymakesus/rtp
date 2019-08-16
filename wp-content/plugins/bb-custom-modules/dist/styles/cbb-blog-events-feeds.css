@@ -1,40 +1,59 @@
-/* line 2, stdin */
+/* line 1, stdin */
+
+.flex-grid {
+  margin: 0 -10px;
+}
+
+/* line 4, stdin */
 
 .flex-grid .flex-item {
   margin-bottom: 20px;
 }
 
-/* line 5, stdin */
+/* line 7, stdin */
 
 .flex-grid .flex-item .figure-card {
+  position: relative;
   height: 100%;
 }
 
-/* line 9, stdin */
+/* line 11, stdin */
 
-.flex-grid .flex-item .figure-card.no-image .card {
-  height: calc(100% - 30px);
-  margin: 0 30px 30px 0;
+.flex-grid .flex-item .figure-card .card {
+  margin: -65px 30px 50px;
+  height: calc(100% - 300px);
 }
 
-/* line 14, stdin */
+/* line 16, stdin */
+
+.flex-grid .flex-item .figure-card .pattern-background {
+  bottom: 0;
+}
+
+/* line 21, stdin */
+
+.flex-grid .flex-item .figure-card.no-image .card {
+  height: calc(100% - 50px);
+  margin: 0 30px 50px 0;
+}
+
+/* line 26, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .pattern-background {
-  bottom: 0;
   left: 30px;
 }
 
-/* line 25, stdin */
+/* line 36, stdin */
 
 .figure-card .card .meta {
   position: absolute;
   right: 24px;
-  top: 35px;
+  top: 38px;
   font-size: 13px;
   text-transform: uppercase;
 }
 
-/* line 33, stdin */
+/* line 44, stdin */
 
 .figure-card .card .card-inner {
   display: -webkit-box;
@@ -47,7 +66,7 @@
   height: 100%;
 }
 
-/* line 38, stdin */
+/* line 49, stdin */
 
 .figure-card .card .card-inner .card-cta {
   margin-top: auto;

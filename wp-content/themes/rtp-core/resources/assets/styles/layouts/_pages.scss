@@ -8,4 +8,9 @@
 
 .page-header {
   text-align: center;
+  color: $color-white;
+
+  p {
+    font-weight: 400;
+  }
 }

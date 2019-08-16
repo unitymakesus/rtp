@@ -199,7 +199,36 @@ function load_custom_modules() {
     FLBuilder::register_module( 'CbbBlogFeedModule', [
       'cbb-blog-feed-general' => [
         'title' => __( 'General', 'cbb' ),
-        'file' => CBB_MODULES_DIR . 'modules/cbb-blog-feed/includes/loop-settings.php'
+        'sections' => [
+          'cbb-blog-feed' => [
+            'title' => __( 'Content', 'cbb' ),
+            'fields' => [
+              'posts_per_page' => [
+          			'type'        => 'text',
+          			'label'       => __( 'Post Count', 'uabb' ),
+          			'help'        => __( 'Enter the total number of posts you want to display in module.', 'cbb' ),
+          			'default'     => '3',
+          			'size'        => '8',
+          			'placeholder' => '3',
+          		],
+              'tax_post_category_matching' => [
+                'type'    => 'select',
+                'label'   => 'Event Category',
+                'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
+                'options' => [
+                  '1' => __( 'Match these categories', 'cbb' ),
+                  '0' => __( 'Do not match these categories', 'cbb' )
+                ]
+              ],
+              'tax_post_category' => [
+                'type'   => 'suggest',
+                'action' => 'fl_as_terms',
+                'data'   => 'category',
+                'label'  => '&nbsp',
+              ]
+            ]
+          ]
+        ]
       ]
     ] );
 
@@ -208,7 +237,90 @@ function load_custom_modules() {
     FLBuilder::register_module( 'CbbEventsFeedModule', [
       'cbb-events-feed-general' => [
         'title' => __( 'General', 'cbb' ),
-        'file' => CBB_MODULES_DIR . 'modules/cbb-events-feed/includes/loop-settings.php'
+        'sections' => [
+          'cbb-events-feed' => [
+            'title' => __( 'Content', 'cbb' ),
+            'fields' => [
+              'posts_per_page' => [
+          			'type'        => 'text',
+          			'label'       => __( 'Post Count', 'uabb' ),
+          			'help'        => __( 'Enter the total number of events you want to display in module.', 'cbb' ),
+          			'default'     => '3',
+          			'size'        => '8',
+          			'placeholder' => '3',
+          		],
+              'show_thumb' => [
+                'type'    => 'select',
+                'label'   => __('Show thumbnail image?', 'cbb'),
+                'options' => [
+                  '1' => __( 'Yes', 'cbb' ),
+                  '0' => __( 'No', 'cbb' )
+                ]
+          		],
+              'show_ended' => [
+                'type'    => 'select',
+                'label'   => __('Show today\'s events that have already ended?', 'cbb'),
+                'options' => [
+                  '1' => __( 'Yes', 'cbb' ),
+                  '0' => __( 'No', 'cbb' )
+                ]
+              ],
+              'tax_post_category_matching' => [
+                'type'    => 'select',
+                'label'   => 'Event Category',
+                'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
+                'options' => [
+                  '1' => __( 'Match these categories', 'cbb' ),
+                  '0' => __( 'Do not match these categories', 'cbb' )
+                ]
+              ],
+              'tax_post_category' => [
+                'type'   => 'suggest',
+                'action' => 'fl_as_terms',
+                'data'   => 'mec_category',
+                'label'  => '&nbsp',
+              ]
+            ]
+          ]
+        ]
+      ]
+    ] );
+
+    // Today Feed Module
+    require_once 'modules/cbb-today-feed/cbb-today-feed.php';
+    FLBuilder::register_module( 'CbbTodayFeedModule', [
+      'cbb-today-feed-general' => [
+        'title' => __( 'General', 'cbb' ),
+        'sections' => [
+          'cbb-today-feed' => [
+            'title' => __( 'Content', 'cbb' ),
+            'fields' => [
+              'posts_per_page' => [
+          			'type'        => 'text',
+          			'label'       => __( 'Post Count', 'uabb' ),
+          			'help'        => __( 'Enter the total number of events you want to display in module.', 'cbb' ),
+          			'default'     => '3',
+          			'size'        => '8',
+          			'placeholder' => '3',
+          		],
+              'tax_post_category_matching' => [
+                'type'    => 'select',
+                'label'   => 'Event Category',
+                'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
+                'options' => [
+                  '1' => __( 'Match these categories', 'cbb' ),
+                  '0' => __( 'Do not match these categories', 'cbb' )
+                ]
+              ],
+              'tax_post_category' => [
+                'type'   => 'suggest',
+                'action' => 'fl_as_terms',
+                'data'   => 'mec_category',
+                'label'  => '&nbsp',
+              ]
+            ]
+          ]
+        ]
       ]
     ] );
   }
