@@ -1,10 +1,9 @@
-// Homepage Hero
-.homepage-cta-row {
-  .card {
+.home-banner-wrapper {
+  .home-banner {
     background: rgba($color-mint, 0.8);
+  }
 
-    .card-cta {
-      background: rgba($color-blue-duke, 0.8);
-    }
+  .banner-cta {
+    background: rgba($color-blue, 0.8);
   }
 }

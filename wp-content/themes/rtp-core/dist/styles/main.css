@@ -12638,17 +12638,59 @@ a.btn-small,
   color: #FFF;
 }
 
-/* line 47, resources/assets/styles/components/_buttons.scss */
+/* line 18, resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button {
   border: none;
-  font-size: 1em;
+  background: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.9em;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
-/* line 54, resources/assets/styles/components/_buttons.scss */
+/* line 26, resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button span {
-  color: inherit;
+  color: #000;
+}
+
+/* line 30, resources/assets/styles/components/_buttons.scss */
+
+.fl-builder-content.fl-builder-content a.fl-button.fl-button::after {
+  content: '';
+  display: inline-block;
+  padding: 4px 0 14px 14px;
+  width: 40px;
+  height: 25px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogIDxkZWZzPgogICAgPHBhdGggZD0iTTIwLjQ1IDkuODcySC43N2MtLjQyNiAwLS43Ny0uMzE2LS43Ny0uNzA1IDAtLjM5LjM0NC0uNzA1Ljc3LS43MDVoMTkuNjhsLTcuOTE3LTcuMjU4YS42NjQuNjY0IDAgMCAxIDAtLjk5Ny44Mi44MiAwIDAgMSAxLjA4OCAwbDkuMjMgOC40NjFjLjMwMS4yNzUuMzAxLjcyMiAwIC45OTdsLTkuMjMgOC40NjJhLjgyLjgyIDAgMCAxLTEuMDg4IDAgLjY2NC42NjQgMCAwIDEgMC0uOTk3bDcuOTE4LTcuMjU4eiIgaWQ9ImEiLz4KICA8L2RlZnM+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAuNDcpIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPG1hc2sgaWQ9ImIiIGZpbGw9IiMwMDAiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8dXNlIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz4KICAgIDxnIG1hc2s9InVybCgjYikiIGZpbGw9IiMwMDAiPgogICAgICA8cGF0aCBkPSJNLTYuOTIzLTcuNzU2aDM3djM0aC0zN3oiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPgo=);
+  background-size: 26px 20.5px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+  vertical-align: -0.4em;
+}
+
+/* line 45, resources/assets/styles/components/_buttons.scss */
+
+.fl-builder-content.fl-builder-content a.fl-button.fl-button:hover span,
+.fl-builder-content.fl-builder-content a.fl-button.fl-button:focus span,
+.fl-builder-content.fl-builder-content a.fl-button.fl-button:active span {
+  text-decoration: underline;
+}
+
+/* line 49, resources/assets/styles/components/_buttons.scss */
+
+.fl-builder-content.fl-builder-content a.fl-button.fl-button:hover::after,
+.fl-builder-content.fl-builder-content a.fl-button.fl-button:focus::after,
+.fl-builder-content.fl-builder-content a.fl-button.fl-button:active::after {
+  -webkit-transform: translate3d(10px, 0, 0);
+          transform: translate3d(10px, 0, 0);
 }
 
 /* line 2, resources/assets/styles/components/_forms.scss */
@@ -12841,6 +12883,43 @@ textarea.materialize-textarea {
 
 .wp-core-ui select#media-attachment-date-filters {
   width: auto;
+}
+
+/* line 140, resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec-exceptional-days {
+  display: none;
+  speak: none;
+}
+
+/* line 146, resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec-location .mec-tooltip,
+.mec-fes-form #mec-organizer .mec-tooltip {
+  display: none;
+  speak: none;
+}
+
+/* line 152, resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_location_id option[value="0"] {
+  display: none;
+  speak: none;
+}
+
+/* line 157, resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_location_new_container + .mec-form-row {
+  display: none;
+  speak: none;
+}
+
+/* line 163, resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_organizer_new_container + h4,
+.mec-fes-form #mec_organizer_new_container + h4 + .mec-form-row {
+  display: none;
+  speak: none;
 }
 
 /* line 1, resources/assets/styles/components/_icons.scss */
@@ -13876,15 +13955,17 @@ nav ul a {
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
+  position: relative;
 }
 
-/* line 221, resources/assets/styles/layouts/_header.scss */
+/* line 222, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
   background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogIDxkZWZzPgogICAgPHBhdGggZD0iTTIwLjQ1IDkuODcySC43N2MtLjQyNiAwLS43Ny0uMzE2LS43Ny0uNzA1IDAtLjM5LjM0NC0uNzA1Ljc3LS43MDVoMTkuNjhsLTcuOTE3LTcuMjU4YS42NjQuNjY0IDAgMCAxIDAtLjk5Ny44Mi44MiAwIDAgMSAxLjA4OCAwbDkuMjMgOC40NjFjLjMwMS4yNzUuMzAxLjcyMiAwIC45OTdsLTkuMjMgOC40NjJhLjgyLjgyIDAgMCAxLTEuMDg4IDAgLjY2NC42NjQgMCAwIDEgMC0uOTk3bDcuOTE4LTcuMjU4eiIgaWQ9ImEiLz4KICA8L2RlZnM+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAuNDcpIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPG1hc2sgaWQ9ImIiIGZpbGw9IiMwMDAiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8dXNlIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz4KICAgIDxnIG1hc2s9InVybCgjYikiIGZpbGw9IiMwMDAiPgogICAgICA8cGF0aCBkPSJNLTYuOTIzLTcuNzU2aDM3djM0aC0zN3oiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPgo=);
   position: absolute;
   right: 30px;
+  top: 10px;
   z-index: 1000;
   width: 20px;
   opacity: 0;
@@ -13896,16 +13977,15 @@ nav ul a {
   transition: all 0.2s;
 }
 
-/* line 235, resources/assets/styles/layouts/_header.scss */
+/* line 237, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
 .navbar-menu li.menu-item-has-children .sub-menu a:hover {
-  position: relative;
   background: transparent;
 }
 
-/* line 239, resources/assets/styles/layouts/_header.scss */
+/* line 240, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -13937,7 +14017,7 @@ nav ul a {
   }
 }
 
-/* line 263, resources/assets/styles/layouts/_header.scss */
+/* line 264, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -13945,7 +14025,7 @@ nav ul a {
   height: auto;
 }
 
-/* line 282, resources/assets/styles/layouts/_header.scss */
+/* line 283, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
@@ -13958,7 +14038,7 @@ nav ul a {
     height: 4.66667em;
   }
 
-  /* line 290, resources/assets/styles/layouts/_header.scss */
+  /* line 291, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -13970,7 +14050,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 295, resources/assets/styles/layouts/_header.scss */
+  /* line 296, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -13996,26 +14076,26 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 309, resources/assets/styles/layouts/_header.scss */
+  /* line 310, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 313, resources/assets/styles/layouts/_header.scss */
+  /* line 314, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 319, resources/assets/styles/layouts/_header.scss */
+  /* line 320, resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 324, resources/assets/styles/layouts/_header.scss */
+/* line 325, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
@@ -14192,6 +14272,382 @@ nav ul a {
   }
 }
 
+/* line 2, resources/assets/styles/layouts/_blog.scss */
+
+.blog .page-header {
+  margin-bottom: 2em;
+}
+
+/* line 6, resources/assets/styles/layouts/_blog.scss */
+
+.blog .flex-item {
+  margin-bottom: 20px;
+}
+
+/* line 10, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card {
+  position: relative;
+  height: 100%;
+}
+
+/* line 14, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card img {
+  width: 100%;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+/* line 22, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card {
+  margin: -65px 30px 50px;
+  height: calc(100% - 300px);
+  background: #FFF;
+  padding: 24px 24px 4px;
+  position: relative;
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
+  -o-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  -webkit-box-shadow: 0;
+          box-shadow: 0;
+  -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* line 33, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card:hover,
+.blog .figure-card .card:focus,
+.blog .figure-card .card:active {
+  -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* line 37, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card .meta {
+  position: absolute;
+  right: 24px;
+  top: 35px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+/* line 46, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100%;
+}
+
+/* line 52, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-badge {
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 8px;
+  border-left-width: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 30px;
+  height: 30px;
+  text-transform: uppercase;
+}
+
+/* line 65, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-badge span {
+  position: absolute;
+  display: block;
+  font-size: 0.8em;
+  font-weight: 300;
+  left: 9px;
+  top: 7px;
+  white-space: nowrap;
+}
+
+/* line 76, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-title {
+  margin: 40px 16px 20px;
+}
+
+/* line 79, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-title a {
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  color: #000;
+}
+
+/* line 84, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-title a:hover,
+.blog .figure-card .card-title a:focus,
+.blog .figure-card .card-title a:active {
+  text-decoration: underline !important;
+}
+
+/* line 90, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta {
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 4px;
+  padding: 5px;
+  margin: auto 16px 0;
+}
+
+/* line 97, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a {
+  color: #000;
+  display: block;
+  text-align: right;
+  width: 100%;
+  height: 40px;
+  font-size: 0.9em;
+  line-height: 40px;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  -webkit-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+  transition: color 0.3s ease;
+  vertical-align: middle;
+}
+
+/* line 110, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a span {
+  vertical-align: middle;
+}
+
+/* line 114, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a .arrow {
+  display: inline-block;
+  padding: 4px 0 14px 14px;
+  width: 40px;
+  height: 40px;
+  transition: -webkit-transform 0.3s ease;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+}
+
+/* line 122, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a .arrow path {
+  fill: #000;
+  -webkit-transition: fill 0.3s ease;
+  -o-transition: fill 0.3s ease;
+  transition: fill 0.3s ease;
+}
+
+/* line 128, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a:hover,
+.blog .figure-card .card-cta a:focus,
+.blog .figure-card .card-cta a:active {
+  text-decoration: underline !important;
+}
+
+/* line 131, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .card-cta a:hover .arrow,
+.blog .figure-card .card-cta a:focus .arrow,
+.blog .figure-card .card-cta a:active .arrow {
+  -webkit-transform: translate3d(10px, 0, 0);
+          transform: translate3d(10px, 0, 0);
+}
+
+/* line 138, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .pattern-background {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 30px;
+  left: 65px;
+  right: 0;
+}
+
+/* line 146, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card .pattern-background svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 153, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-rtp .card-badge,
+.blog .figure-card.badge-rtp .card-cta {
+  border-color: #333F48;
+  color: #333F48;
+}
+
+/* line 159, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-rtp .card-cta a:hover,
+.blog .figure-card.badge-rtp .card-cta a:focus,
+.blog .figure-card.badge-rtp .card-cta a:active {
+  color: #333F48;
+}
+
+/* line 162, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-rtp .card-cta a:active .arrow path {
+  fill: #333F48;
+}
+
+/* line 170, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-hub .card-badge,
+.blog .figure-card.badge-hub .card-cta,
+.blog .figure-card.badge-hub-rtp .card-badge,
+.blog .figure-card.badge-hub-rtp .card-cta {
+  border-color: #4B9CD3;
+  color: #4B9CD3;
+}
+
+/* line 176, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-hub .card-cta a:hover,
+.blog .figure-card.badge-hub .card-cta a:focus,
+.blog .figure-card.badge-hub .card-cta a:active,
+.blog .figure-card.badge-hub-rtp .card-cta a:hover,
+.blog .figure-card.badge-hub-rtp .card-cta a:focus,
+.blog .figure-card.badge-hub-rtp .card-cta a:active {
+  color: #4B9CD3;
+}
+
+/* line 179, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-hub .card-cta a:hover .arrow path,
+.blog .figure-card.badge-hub .card-cta a:focus .arrow path,
+.blog .figure-card.badge-hub .card-cta a:active .arrow path,
+.blog .figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-hub-rtp .card-cta a:active .arrow path {
+  fill: #4B9CD3;
+}
+
+/* line 187, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-boxyard .card-badge,
+.blog .figure-card.badge-boxyard .card-cta,
+.blog .figure-card.badge-boxyard-rtp .card-badge,
+.blog .figure-card.badge-boxyard-rtp .card-cta {
+  border-color: #E63C2F;
+  color: #E63C2F;
+}
+
+/* line 193, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-boxyard .card-cta a:hover,
+.blog .figure-card.badge-boxyard .card-cta a:focus,
+.blog .figure-card.badge-boxyard .card-cta a:active,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:hover,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:focus,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:active {
+  color: #E63C2F;
+}
+
+/* line 196, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-boxyard .card-cta a:hover .arrow path,
+.blog .figure-card.badge-boxyard .card-cta a:focus .arrow path,
+.blog .figure-card.badge-boxyard .card-cta a:active .arrow path,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
+  fill: #E63C2F;
+}
+
+/* line 204, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-frontier .card-badge,
+.blog .figure-card.badge-frontier .card-cta,
+.blog .figure-card.badge-frontier-rtp .card-badge,
+.blog .figure-card.badge-frontier-rtp .card-cta {
+  border-color: #57C1A5;
+  color: #57C1A5;
+}
+
+/* line 210, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-frontier .card-cta a:hover,
+.blog .figure-card.badge-frontier .card-cta a:focus,
+.blog .figure-card.badge-frontier .card-cta a:active,
+.blog .figure-card.badge-frontier-rtp .card-cta a:hover,
+.blog .figure-card.badge-frontier-rtp .card-cta a:focus,
+.blog .figure-card.badge-frontier-rtp .card-cta a:active {
+  color: #2FA787;
+}
+
+/* line 213, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-frontier .card-cta a:hover .arrow path,
+.blog .figure-card.badge-frontier .card-cta a:focus .arrow path,
+.blog .figure-card.badge-frontier .card-cta a:active .arrow path,
+.blog .figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
+  fill: #57C1A5;
+}
+
+/* line 221, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-stem .card-badge,
+.blog .figure-card.badge-stem .card-cta,
+.blog .figure-card.badge-stem-rtp .card-badge,
+.blog .figure-card.badge-stem-rtp .card-cta {
+  border-color: #654EA3;
+  color: #654EA3;
+}
+
+/* line 227, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-stem .card-cta a:hover,
+.blog .figure-card.badge-stem .card-cta a:focus,
+.blog .figure-card.badge-stem .card-cta a:active,
+.blog .figure-card.badge-stem-rtp .card-cta a:hover,
+.blog .figure-card.badge-stem-rtp .card-cta a:focus,
+.blog .figure-card.badge-stem-rtp .card-cta a:active {
+  color: #654EA3;
+}
+
+/* line 230, resources/assets/styles/layouts/_blog.scss */
+
+.blog .figure-card.badge-stem .card-cta a:hover .arrow path,
+.blog .figure-card.badge-stem .card-cta a:focus .arrow path,
+.blog .figure-card.badge-stem .card-cta a:active .arrow path,
+.blog .figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
+.blog .figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
+.blog .figure-card.badge-stem-rtp .card-cta a:active .arrow path {
+  fill: #654EA3;
+}
+
 /* line 2, resources/assets/styles/layouts/_pages.scss */
 
 .badges img {
@@ -14205,75 +14661,13 @@ nav ul a {
 
 .page-header {
   text-align: center;
-}
-
-/* line 3, resources/assets/styles/layouts/_home.scss */
-
-.homepage-cta-row .card {
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
-  background-image: -o-linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(75, 156, 211, 0.7)), color-stop(33%, rgba(1, 33, 105, 0.7)), color-stop(66%, rgba(130, 5, 42, 0.7)), color-stop(99%, rgba(204, 0, 0, 0.7)));
-  background-image: -webkit-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  background-image: -o-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  background-image: linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  color: #FFF;
-  padding: 0;
-  -webkit-box-shadow: none !important;
-          box-shadow: none !important;
-}
-
-/* line 10, resources/assets/styles/layouts/_home.scss */
-
-.homepage-cta-row .card .card-title {
-  text-transform: uppercase;
-  font-size: 55px;
-  font-weight: 500;
-  line-height: 1.2em;
-  padding: 10px 20px 10px 30px;
-}
-
-@media only screen and (max-width: 768px) {
-  /* line 10, resources/assets/styles/layouts/_home.scss */
-
-  .homepage-cta-row .card .card-title {
-    font-size: 45px;
-  }
-}
-
-/* line 24, resources/assets/styles/layouts/_home.scss */
-
-.homepage-cta-row .card .card-badge {
-  border-color: #FFF;
-  color: #FFF;
-  position: relative;
-  top: 40px;
-  left: 31px;
-}
-
-/* line 32, resources/assets/styles/layouts/_home.scss */
-
-.homepage-cta-row .card .card-cta {
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FF012169');
-  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 100%);
-  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), to(#012169));
-  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 100%);
-  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 100%);
-  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 100%);
-  border-top: 0;
-  margin: 0;
-  padding: 10px 20px;
-}
-
-/* line 39, resources/assets/styles/layouts/_home.scss */
-
-.homepage-cta-row .card .card-cta a {
   color: #FFF;
 }
 
-/* line 42, resources/assets/styles/layouts/_home.scss */
+/* line 13, resources/assets/styles/layouts/_pages.scss */
 
-.homepage-cta-row .card .card-cta a .arrow path {
-  fill: #FFF;
+.page-header p {
+  font-weight: 400;
 }
 
 /* line 1, resources/assets/styles/layouts/_posts.scss */
