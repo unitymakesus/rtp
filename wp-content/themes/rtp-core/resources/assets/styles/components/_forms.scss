@@ -166,3 +166,26 @@ textarea.materialize-textarea {
     }
   }
 }
+
+// Mailchimp signup
+footer {
+  #mc_embed_signup {
+    background: transparent;
+    padding: 0;
+
+    #mc_embed_signup_scroll {
+      display: flex;
+      align-items: center;
+    }
+
+    input.email {
+      width: auto;
+      border-radius: 0;
+    }
+
+    .button {
+      border-radius: 0;
+      background: $color-blue-unc;
+    }
+  }
+}
