@@ -4,6 +4,9 @@
       "./scripts/cbb-rtp-splash.js",
       "./styles/cbb-rtp-splash.scss"
     ],
+    "cbb-hero-banner": [
+      "./styles/cbb-hero-banner.scss"
+    ],
     "cbb-figure-card": [
       "./styles/cbb-figure-card.scss"
     ],

@@ -33,14 +33,14 @@ if ($settings->structure == 'horizontal') {
 		</div>
 
 		<?php if ($settings->enable_cta == 'block') { ?>
-    	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>"><span><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-figure-card/images/arrow-right.svg'); ?></span></a></div>
+    	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>"><span><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
 		<?php } ?>
 
   </div>
 
   <?php if ($settings->structure == 'vertical') { ?>
     <div class="pattern-background">
-      <?php include(CBB_MODULES_DIR . 'modules/cbb-figure-card/includes/pattern-bracket.php'); ?>
+      <?php include(CBB_MODULES_DIR . 'assets/images/pattern-bracket.svg'); ?>
     </div>
   <?php } ?>
 </article>

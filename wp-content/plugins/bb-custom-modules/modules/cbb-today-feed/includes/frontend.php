@@ -47,7 +47,7 @@ if ($count >= 3) {
           </div>
 
           <div class="pattern-background">
-            <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/pattern-bracket.svg'); ?>
+            <?php include(CBB_MODULES_DIR . 'assets/images/pattern-bracket.svg'); ?>
           </div>
         </article>
       </div>
@@ -100,12 +100,12 @@ if ($count >= 3) {
                 <div class="location"><?php echo $location->name; ?></div>
               </div>
 
-              <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/arrow-right.svg'); ?></span></a></div>
+              <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
             </div>
           </div>
 
           <div class="pattern-background">
-            <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/pattern-bracket.svg'); ?>
+            <?php include(CBB_MODULES_DIR . 'assets/images/pattern-bracket.svg'); ?>
           </div>
         </article>
       </div>

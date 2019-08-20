@@ -6,7 +6,7 @@ class CbbEventsFeedModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'            => __( 'Events Feed', 'fl-builder' ),
 			'description'     => __( 'A module that pulls in upcoming events from the calendar.', 'fl-builder' ),
-			'icon'            => 'format-aside.svg',
+			'icon'            => 'events.svg',
 			'category'        => __( 'Layout', 'fl-builder' ),
 			'dir'             => CBB_MODULES_DIR . 'modules/cbb-events-feed/',
 			'url'             => CBB_MODULES_URL . 'modules/cbb-events-feed/'
@@ -26,8 +26,8 @@ class CbbEventsFeedModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'modules/cbb-events-feed/images/' . $icon ) ) {
-			$path = CBB_MODULES_DIR . 'modules/cbb-events-feed/images/' . $icon;
+		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'assets/icons/' . $icon ) ) {
+			$path = CBB_MODULES_DIR . 'assets/icons/' . $icon;
 		}
 
 		if ( file_exists( $path ) ) {
@@ -189,4 +189,58 @@ class CbbEventsFeedModule extends FLBuilderModule {
 
 }
 
+/*
+	Register the module
+ */
+FLBuilder::register_module( 'CbbEventsFeedModule', [
+	'cbb-events-feed-general' => [
+		'title' => __( 'General', 'cbb' ),
+		'sections' => [
+			'cbb-events-feed' => [
+				'title' => __( 'Content', 'cbb' ),
+				'fields' => [
+					'posts_per_page' => [
+						'type'        => 'text',
+						'label'       => __( 'Post Count', 'uabb' ),
+						'help'        => __( 'Enter the total number of events you want to display in module.', 'cbb' ),
+						'default'     => '3',
+						'size'        => '8',
+						'placeholder' => '3',
+					],
+					'show_thumb' => [
+						'type'    => 'select',
+						'label'   => __('Show thumbnail image?', 'cbb'),
+						'options' => [
+							'1' => __( 'Yes', 'cbb' ),
+							'0' => __( 'No', 'cbb' )
+						]
+					],
+					'show_ended' => [
+						'type'    => 'select',
+						'label'   => __('Show today\'s events that have already ended?', 'cbb'),
+						'options' => [
+							'1' => __( 'Yes', 'cbb' ),
+							'0' => __( 'No', 'cbb' )
+						]
+					],
+					'tax_post_category_matching' => [
+						'type'    => 'select',
+						'label'   => 'Event Category',
+						'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
+						'options' => [
+							'1' => __( 'Match these categories', 'cbb' ),
+							'0' => __( 'Do not match these categories', 'cbb' )
+						]
+					],
+					'tax_post_category' => [
+						'type'   => 'suggest',
+						'action' => 'fl_as_terms',
+						'data'   => 'mec_category',
+						'label'  => '&nbsp',
+					]
+				]
+			]
+		]
+	]
+] );
 ?>

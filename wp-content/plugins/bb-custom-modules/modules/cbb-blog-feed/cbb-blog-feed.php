@@ -6,7 +6,7 @@ class CbbBlogFeedModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'            => __( 'Blog Feed', 'fl-builder' ),
 			'description'     => __( 'A module that pulls in recent posts from the blog.', 'fl-builder' ),
-			'icon'            => 'format-aside.svg',
+			'icon'            => 'blog.svg',
 			'category'        => __( 'Layout', 'fl-builder' ),
 			'dir'             => CBB_MODULES_DIR . 'modules/cbb-blog-feed/',
 			'url'             => CBB_MODULES_URL . 'modules/cbb-blog-feed/'
@@ -25,8 +25,8 @@ class CbbBlogFeedModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'modules/cbb-blog-feed/images/' . $icon ) ) {
-			$path = CBB_MODULES_DIR . 'modules/cbb-blog-feed/images/' . $icon;
+		if ( '' != $icon && file_exists( CBB_MODULES_DIR . 'assets/icons/' . $icon ) ) {
+			$path = CBB_MODULES_DIR . 'assets/icons/' . $icon;
 		}
 
 		if ( file_exists( $path ) ) {
@@ -50,4 +50,42 @@ class CbbBlogFeedModule extends FLBuilderModule {
 
 }
 
+/*
+	Register the module
+ */
+FLBuilder::register_module( 'CbbBlogFeedModule', [
+	'cbb-blog-feed-general' => [
+		'title' => __( 'General', 'cbb' ),
+		'sections' => [
+			'cbb-blog-feed' => [
+				'title' => __( 'Content', 'cbb' ),
+				'fields' => [
+					'posts_per_page' => [
+						'type'        => 'text',
+						'label'       => __( 'Post Count', 'uabb' ),
+						'help'        => __( 'Enter the total number of posts you want to display in module.', 'cbb' ),
+						'default'     => '3',
+						'size'        => '8',
+						'placeholder' => '3',
+					],
+					'tax_post_category_matching' => [
+						'type'    => 'select',
+						'label'   => 'Event Category',
+						'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
+						'options' => [
+							'1' => __( 'Match these categories', 'cbb' ),
+							'0' => __( 'Do not match these categories', 'cbb' )
+						]
+					],
+					'tax_post_category' => [
+						'type'   => 'suggest',
+						'action' => 'fl_as_terms',
+						'data'   => 'category',
+						'label'  => '&nbsp',
+					]
+				]
+			]
+		]
+	]
+] );
 ?>

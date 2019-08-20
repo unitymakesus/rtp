@@ -1,19 +1,19 @@
 <?php
 
-class CbbFigureCardModule extends FLBuilderModule {
+class CbbHeroBannerModule extends FLBuilderModule {
 
 	public function __construct() {
 		parent::__construct(array(
-			'name'            => __( 'Card', 'fl-builder' ),
-			'description'     => __( 'A card module that includes a badge and optional CTA', 'fl-builder' ),
-			'icon'            => 'card.svg',
+			'name'            => __( 'Hero Banner', 'fl-builder' ),
+			'description'     => __( 'A module for a page hero that includes a banner with an optional CTA', 'fl-builder' ),
+			'icon'            => 'banner.svg',
 			'category'        => __( 'Layout', 'fl-builder' ),
-			'dir'             => CBB_MODULES_DIR . 'modules/cbb-figure-card/',
-			'url'             => CBB_MODULES_URL . 'modules/cbb-figure-card/'
+			'dir'             => CBB_MODULES_DIR . 'modules/cbb-hero-banner/',
+			'url'             => CBB_MODULES_URL . 'modules/cbb-hero-banner/'
 		));
 
 		// Include custom CSS
-		$this->add_css('cbb-figure-card', CBB_MODULES_URL . 'dist/styles/cbb-figure-card.css');
+		$this->add_css('cbb-hero-banner', CBB_MODULES_URL . 'dist/styles/cbb-hero-banner.css');
 	}
 
 	/**
@@ -41,53 +41,25 @@ class CbbFigureCardModule extends FLBuilderModule {
 /*
 	Register the module
  */
-FLBuilder::register_module( 'CbbFigureCardModule', [
-	'cbb-figure-card-general' => [
+FLBuilder::register_module( 'CbbHeroBannerModule', [
+	'cbb-hero-banner-general' => [
 		'title' => __( 'General', 'cbb' ),
 		'sections' => [
-			'cbb-figure-card-structure' => [
-				'title' => __('Layout', 'cbb'),
+			'cbb-hero-banner-hero' => [
+				'title' => __('Image', 'cbb'),
 				'fields' => [
-					'structure' => [
-						'type' => 'select',
-						'label' => __('Layout', 'cbb'),
-						'default' => 'default',
-						'options' => [
-							'default' => __('Background Image', 'cbb'),
-							'vertical' => __('Vertical', 'cbb'),
-							'horizontal' => __('Horizontal', 'cbb')
-						],
-						'toggle' => [
-							'default' => [],
-							'vertical' => [
-								'fields' => ['image', 'image_alt', 'image_align']
-							],
-							'horizontal' => [
-								'fields' => ['image', 'image_alt', 'image_align']
-							]
-						]
-					],
 					'image' => [
 						'type' => 'photo',
-						'label' => __('Image', 'cbb'),
+						'label' => __('Hero Image', 'cbb'),
 					],
 					'image_alt' => [
 						'type' => 'text',
-						'label' => __('Image Alt Text', 'cbb'),
-					],
-					'image_align' => [
-						'type' => 'select',
-						'label' => __('Image Alignment', 'cbb'),
-						'default' => 'left',
-						'options' => [
-							'left' => __('Left', 'cbb'),
-							'right' => __('Right', 'cbb')
-						]
+						'label' => __('Hero Image Alt Text', 'cbb'),
 					]
 				]
 			],
-			'cbb-figure-card-title' => [
-				'title' => __( 'Title', 'cbb' ),
+			'cbb-hero-banner-banner' => [
+				'title' => __( 'Banner', 'cbb' ),
 				'fields' => [
 					'badge' => [
 						'type' => 'select',
@@ -103,22 +75,17 @@ FLBuilder::register_module( 'CbbFigureCardModule', [
 					],
 					'title' => [
 						'type' => 'text',
-						'label' => __('Title', 'cbb'),
-					]
-				]
-			],
-			'cbb-figure-card-content' => [
-				'title' => __( 'Content', 'cbb' ),
-				'fields' => [
+						'label' => __('Banner Text', 'cbb'),
+					],
 					'content' => [
 						'type' => 'editor',
-						'label' => '',
+						'label' => __('Content (optional)', 'cbb'),
 						'media_buttons' => false,
 						'rows' => 4,
 					]
 				]
 			],
-			'cbb-figure-card-cta' => [
+			'cbb-hero-banner-cta' => [
 				'title' => __( 'Call To Action', 'cbb' ),
 				'fields' => [
 					'enable_cta' => [
@@ -149,4 +116,5 @@ FLBuilder::register_module( 'CbbFigureCardModule', [
 		]
 	]
 ] );
+
 ?>

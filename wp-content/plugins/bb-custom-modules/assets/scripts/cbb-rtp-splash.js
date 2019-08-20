@@ -1,10 +1,7 @@
 import TimelineMax from 'TimelineMax'; // eslint-disable-line no-unused-vars
-// import TweenMax from 'TweenMax'; // eslint-disable-line no-unused-vars
 import ScrollMagic from 'ScrollMagic';
 import 'animation.gsap';
 import 'debug';
-// import * as Ease from 'EasePack'; // eslint-disable-line no-unused-vars
-// import 'gsap/TextPlugin';
 
 jQuery(document).ready(function($) {
   // Set up the controller

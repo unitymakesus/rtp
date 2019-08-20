@@ -27,13 +27,13 @@
 	</div>
 
 	<div id="landing-graphic-swipe" class="landing-graphic-swipe">
-		<img src="<?php echo $settings->cbb_rtp_splash_hero_image_src; ?>" alt="<?php echo $settings->cbb_rtp_splash_hero_image_alt; ?>" />
-		<div id="landing-banner-wrapper" class="landing-banner-wrapper">
-			<div class="landing-banner-gradient">
-				<div class="badge"><span><?php echo $settings->cbb_rtp_splash_hero_badge; ?></span></div>
-				<h1><?php echo $settings->cbb_rtp_splash_hero_title; ?></h1>
+		<img src="<?php echo $settings->image_src; ?>" alt="<?php echo $settings->image_alt; ?>" />
+		<div id="landing-banner-wrapper" class="home-banner-wrapper">
+			<div class="home-banner">
+				<div class="banner-badge"><span><?php echo $settings->badge; ?></span></div>
+				<h1><?php echo $settings->title; ?></h1>
 			</div>
-			<div class="cta-anchor-bar"><a href="<?php echo $settings->cbb_rtp_splash_hero_cta_link; ?>"><?php echo $settings->cbb_rtp_splash_hero_cta_text; ?> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-rtp-splash/images/arrow-right.svg'); ?></span></a></div>
+			<div class="banner-cta"><a href="<?php echo $settings->cta_link; ?>"><span><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
 		</div>
 	</div>
 </div>

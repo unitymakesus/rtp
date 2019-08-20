@@ -1,20 +1,4 @@
-/** Colors */
-
-/** Buttons */
-
-/** Navigation */
-
-/** Footer */
-
-/** Box Model  */
-
-/** Modified Breakpoints */
-
-/** Flow Text  */
-
-/** Gradients */
-
-/* line 3, stdin */
+/* line 1, stdin */
 
 .landing-graphic-pin {
   text-transform: uppercase;
@@ -22,10 +6,11 @@
   position: relative;
   width: 100%;
   height: calc(90vh - 200px);
+  min-height: 504px;
   z-index: 1;
 }
 
-/* line 12, stdin */
+/* line 11, stdin */
 
 #svg-text {
   position: absolute;
@@ -35,128 +20,36 @@
           transform: translate3d(-50%, -49%, 0);
   z-index: 1;
   max-width: 90%;
-  width: 1300px;
+  width: 1260px;
 }
 
-/* line 22, stdin */
+/* line 21, stdin */
 
 .landing-graphic-swipe {
   position: relative;
   z-index: 2;
 }
 
-/* line 26, stdin */
+/* line 25, stdin */
 
 .landing-graphic-swipe img {
   max-width: 100%;
 }
 
-/* line 31, stdin */
+/* line 29, stdin */
 
-.landing-banner-wrapper {
-  color: #FFF;
-  margin: 0 auto;
-  width: 1300px;
-  max-width: 90%;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  -webkit-transform: translate3d(-50%, 0, 0);
-          transform: translate3d(-50%, 0, 0);
+.landing-graphic-swipe .home-banner-wrapper {
   opacity: 0;
   max-height: 0;
-  height: auto;
-  overflow: hidden;
-  z-index: 1;
+  top: 0;
+  bottom: auto;
 }
 
-/* line 46, stdin */
+/* line 35, stdin */
 
-.landing-banner-wrapper.open {
+.landing-graphic-swipe .home-banner-wrapper.open {
   opacity: 1;
   max-height: 500px;
-}
-
-/* line 52, stdin */
-
-.landing-banner-gradient {
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
-  background-image: -o-linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  background-image: -webkit-gradient(linear, left top, right top, from(rgba(75, 156, 211, 0.7)), color-stop(33%, rgba(1, 33, 105, 0.7)), color-stop(66%, rgba(130, 5, 42, 0.7)), color-stop(99%, rgba(204, 0, 0, 0.7)));
-  background-image: -webkit-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  background-image: -o-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  background-image: linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
-  padding: 20px 20px 10px;
-}
-
-/* line 57, stdin */
-
-.landing-banner-gradient .badge {
-  border-color: #FFF;
-  border-style: solid;
-  border-width: 0;
-  border-top-width: 8px;
-  border-left-width: 8px;
-  font-weight: bold;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 26px;
-  height: 26px;
-}
-
-/* line 70, stdin */
-
-.landing-banner-gradient .badge span {
-  position: absolute;
-  display: block;
-  font-size: 0.8em;
-  font-weight: 300;
-  left: 17px;
-  top: 10px;
-}
-
-/* line 80, stdin */
-
-.landing-banner-gradient h1 {
-  font-weight: 300;
-  margin-bottom: 0;
-}
-
-/* line 86, stdin */
-
-.cta-anchor-bar {
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FF012169');
-  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 100%);
-  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), to(#012169));
-  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 100%);
-  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 100%);
-  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 100%);
-  padding: 10px 20px;
-  font-size: 0.9em;
-}
-
-/* line 92, stdin */
-
-.cta-anchor-bar a {
-  color: #FFF;
-  position: relative;
-  text-decoration: none;
-}
-
-/* line 98, stdin */
-
-.cta-anchor-bar .arrow {
-  display: inline-block;
-  width: 20px;
-  margin-left: 20px;
-}
-
-/* line 103, stdin */
-
-.cta-anchor-bar .arrow svg {
-  width: 100%;
-  max-width: 100%;
 }
 
 

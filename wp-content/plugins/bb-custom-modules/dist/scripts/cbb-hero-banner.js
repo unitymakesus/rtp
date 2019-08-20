@@ -60,20 +60,20 @@
 /******/ 	__webpack_require__.p = "/wp-content/plugins/bb-custom-modules/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 15:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(12);
 
 
 /***/ }),
 
-/***/ 16:
+/***/ 12:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -81,4 +81,4 @@ module.exports = __webpack_require__(16);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=cbb-blog-events-feeds.js.map
+//# sourceMappingURL=cbb-hero-banner.js.map

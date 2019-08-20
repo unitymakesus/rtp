@@ -68,46 +68,18 @@ if ($count >= 3) {
               <div class="location"><?php echo $location->name; ?></div>
             </div>
 
-            <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/arrow-right.svg'); ?></span></a></div>
+            <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
           </div>
         </div>
 
         <div class="pattern-background">
-          <?php include(CBB_MODULES_DIR . 'modules/cbb-events-feed/images/pattern-bracket.svg'); ?>
+          <?php include(CBB_MODULES_DIR . 'assets/images/pattern-bracket.svg'); ?>
         </div>
       </article>
     </div>
     <?php
   endforeach;
 
-  else:
-    /*?>
-
-    <article class="figure-card figure-card-vertical">
-  		<?php echo wp_get_attachment_image($settings->image, 'full', false, ['alt' => $settings->image_alt, 'itemprop' => 'image']); ?>
-
-      <div class="card" itemprop="description">
-        <div class="card-badge"><span><?php echo $badge; ?></span></div>
-        <h3 class="card-title" itemprop="name"><?php echo $settings->title; ?></h3>
-
-    		<div class="card-content">
-    			<?php echo $settings->content; ?>
-    		</div>
-
-    		<?php if ($settings->enable_cta == 'block') { ?>
-        	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>"><span><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'modules/cbb-figure-card/images/arrow-right.svg'); ?></span></a></div>
-    		<?php } ?>
-
-      </div>
-
-      <?php if ($settings->structure == 'vertical') { ?>
-        <div class="pattern-background">
-          <?php include(CBB_MODULES_DIR . 'modules/cbb-figure-card/includes/pattern-bracket.php'); ?>
-        </div>
-      <?php } ?>
-    </article>
-
-    <?php*/
   endif;
 
   wp_reset_postdata();

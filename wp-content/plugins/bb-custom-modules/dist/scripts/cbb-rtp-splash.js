@@ -6277,12 +6277,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_debug__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_debug___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_debug__);
  // eslint-disable-line no-unused-vars
-// import TweenMax from 'TweenMax'; // eslint-disable-line no-unused-vars
 
 
 
-// import * as Ease from 'EasePack'; // eslint-disable-line no-unused-vars
-// import 'gsap/TextPlugin';
 
 jQuery(document).ready(function($) {
   // Set up the controller
