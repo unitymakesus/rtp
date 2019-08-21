@@ -33,24 +33,27 @@ if ($count >= 3) {
     $locationID = get_post_meta($id, 'mec_location_id', true);
     $location = get_term($locationID, 'mec_location');
 
-    $badge = $module->siteBadge(get_the_ID());
+    $badge = $module->siteBadge($id);
     $classes = [
       'badge-' . str_replace(' ', '-', strtolower($badge))
     ];
     ?>
     <div class="flex-item">
       <article class="figure-card <?php echo (($settings->show_thumb) ? 'figure-card-vertical' : 'no-image'); ?> <?php echo implode(' ', $classes); ?>">
-        <?php if ($settings->show_thumb) : ?>
-          <?php if (has_post_thumbnail()) : ?>
-            <?php
-              $thumbnail_id = get_post_thumbnail_id( $post->ID );
-              $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-              echo get_the_post_thumbnail( $post->ID, 'full', ['alt' => $alt, 'itemprop' => 'image'] );
-            ?>
-          <?php else : ?>
-            <div class="placeholder"></div>
-          <?php endif; ?>
-        <?php endif; ?>
+        <?php if ($settings->show_thumb) {
+          $siteID = get_post_meta($id, 'dt_original_blog_id', true);
+          $origID = get_post_meta($id, 'dt_original_post_id', true);
+
+          if (!empty($siteID)) {
+            // If this is a syndicated post, switch to original site to get featured image
+            switch_to_blog($siteID);
+            $module->featuredImage($origID);
+            restore_current_blog();
+          } else {
+            // Just get the featured image from this site
+            $module->featuredImage($id);
+          }
+        } ?>
 
         <div class="card" itemprop="description">
           <div class="meta">

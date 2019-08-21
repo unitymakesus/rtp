@@ -6,15 +6,21 @@
   if ( $query->have_posts() ) : while ( $query->have_posts() ) : $query->the_post();
     ?>
     <article class="figure-card">
-      <?php if (has_post_thumbnail()) : ?>
-        <?php
-          $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
-          $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-          echo get_the_post_thumbnail( get_the_ID(), 'full', ['alt' => $alt, 'itemprop' => 'image'] );
-        ?>
-      <?php else : ?>
-        <div class="placeholder"></div>
-      <?php endif; ?>
+      <?php
+      $id = get_the_ID();
+      $siteID = get_post_meta($id, 'dt_original_blog_id', true);
+      $origID = get_post_meta($id, 'dt_original_post_id', true);
+
+      if (!empty($siteID)) {
+        // If this is a syndicated post, switch to original site to get featured image
+        switch_to_blog($siteID);
+        $module->featuredImage($origID);
+        restore_current_blog();
+      } else {
+        // Just get the featured image from this site
+        $module->featuredImage($id);
+      }
+      ?>
 
       <div class="card card-cta card-pattern" itemprop="description">
         <div class="badge"><span><?php echo $module->siteBadge(); ?></span></div>
@@ -29,7 +35,7 @@
       </div>
 
       <div class="pattern-background">
-        <?php include(CBB_MODULES_DIR . 'modules/cbb-blog-feed/includes/pattern-bracket.php'); ?>
+        <?php include(CBB_MODULES_DIR . 'assets/images/pattern-bracket.svg'); ?>
       </div>
     </article>
 

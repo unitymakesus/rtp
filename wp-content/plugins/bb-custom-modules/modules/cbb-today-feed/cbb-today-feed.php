@@ -52,6 +52,16 @@ class CbbTodayFeedModule extends FLBuilderModule {
     return $siteName;
   }
 
+	public function featuredImage($post_id) {
+		if (has_post_thumbnail($post_id)) {
+			$thumbnail_id = get_post_thumbnail_id( $post_id );
+			$alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+			echo get_the_post_thumbnail( $post_id, 'medium-square-thumbnail', ['alt' => $alt, 'itemprop' => 'image'] );
+		} else {
+			echo '<div class="placeholder"></div>';
+		}
+	}
+
 	/**
 	 * Query MEC events
 	 *
