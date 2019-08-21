@@ -27,7 +27,9 @@
 	</div>
 
 	<div id="landing-graphic-swipe" class="landing-graphic-swipe">
-		<img src="<?php echo $settings->image_src; ?>" alt="<?php echo $settings->image_alt; ?>" />
+		<div class="home-hero">
+			<img src="<?php echo $settings->image_src; ?>" alt="<?php echo $settings->image_alt; ?>" />
+		</div>
 		<div id="landing-banner-wrapper" class="home-banner-wrapper">
 			<div class="home-banner">
 				<div class="banner-badge"><span><?php echo $settings->badge; ?></span></div>
