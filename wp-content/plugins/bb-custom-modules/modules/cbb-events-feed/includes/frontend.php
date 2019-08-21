@@ -61,7 +61,7 @@ if ($count >= 3) {
           </div>
 
           <div class="card-inner">
-            <div class="card-badge"><span><?php echo $module->siteBadge(); ?></span></div>
+            <div class="card-badge"><span><?php echo $badge; ?></span></div>
 
             <h3 class="card-title" itemprop="name"><a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
 

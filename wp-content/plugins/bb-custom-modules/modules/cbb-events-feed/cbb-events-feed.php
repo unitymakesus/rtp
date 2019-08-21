@@ -37,9 +37,14 @@ class CbbEventsFeedModule extends FLBuilderModule {
 		}
 	}
 
-	public function siteBadge() {
-    $postID = get_the_ID();
+	public function siteBadge($postID) {
     $siteID = get_post_meta($postID, 'dt_original_blog_id', true);
+
+		if (empty($siteID)) {
+			$current = get_current_site();
+			$siteID = $current->id;
+		}
+
     if ($siteID == 1) {
       $siteName = 'RTP';
     } else {
