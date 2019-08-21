@@ -13,6 +13,16 @@
         height: calc(100% - 300px);
       }
 
+      .card-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .card-cta {
+          margin-top: auto;
+        }
+      }
+
       .pattern-background {
         bottom: 0;
       }
@@ -39,16 +49,6 @@
       top: 38px;
       font-size: 13px;
       text-transform: uppercase;
-    }
-
-    .card-inner {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-
-      .card-cta {
-        margin-top: auto;
-      }
     }
   }
 }

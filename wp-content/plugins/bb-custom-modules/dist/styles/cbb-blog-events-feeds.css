@@ -26,36 +26,7 @@
 
 /* line 16, stdin */
 
-.flex-grid .flex-item .figure-card .pattern-background {
-  bottom: 0;
-}
-
-/* line 21, stdin */
-
-.flex-grid .flex-item .figure-card.no-image .card {
-  height: calc(100% - 50px);
-  margin: 0 30px 50px 0;
-}
-
-/* line 26, stdin */
-
-.flex-grid .flex-item .figure-card.no-image .pattern-background {
-  left: 30px;
-}
-
-/* line 36, stdin */
-
-.figure-card .card .meta {
-  position: absolute;
-  right: 24px;
-  top: 38px;
-  font-size: 13px;
-  text-transform: uppercase;
-}
-
-/* line 44, stdin */
-
-.figure-card .card .card-inner {
+.flex-grid .flex-item .figure-card .card-inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,10 +37,39 @@
   height: 100%;
 }
 
-/* line 49, stdin */
+/* line 21, stdin */
 
-.figure-card .card .card-inner .card-cta {
+.flex-grid .flex-item .figure-card .card-inner .card-cta {
   margin-top: auto;
+}
+
+/* line 26, stdin */
+
+.flex-grid .flex-item .figure-card .pattern-background {
+  bottom: 0;
+}
+
+/* line 31, stdin */
+
+.flex-grid .flex-item .figure-card.no-image .card {
+  height: calc(100% - 50px);
+  margin: 0 30px 50px 0;
+}
+
+/* line 36, stdin */
+
+.flex-grid .flex-item .figure-card.no-image .pattern-background {
+  left: 30px;
+}
+
+/* line 46, stdin */
+
+.figure-card .card .meta {
+  position: absolute;
+  right: 24px;
+  top: 38px;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
 
