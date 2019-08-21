@@ -90,7 +90,7 @@ function cbb_disable_modules( $enabled, $instance ) {
     'pricing-table',
     'sidebar',
     // 'tabs',
-    // 'numbers',
+    'numbers',
     'post-grid',
     'post-carousel',
     'cbb-latest-masonry',
