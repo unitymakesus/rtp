@@ -74,7 +74,7 @@ if ($count >= 3) {
       ?>
       <div class="flex-item">
         <article class="figure-card figure-card-vertical <?php echo implode(' ', $classes); ?>">
-          <?php if ($settings->show_thumb) {
+          <?php
             $siteID = get_post_meta($id, 'dt_original_blog_id', true);
             $origID = get_post_meta($id, 'dt_original_post_id', true);
 
@@ -87,7 +87,7 @@ if ($count >= 3) {
               // Just get the featured image from this site
               $module->featuredImage($id);
             }
-          } ?>
+          ?>
 
           <div class="card" itemprop="description">
             <div class="meta">
