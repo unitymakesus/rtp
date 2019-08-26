@@ -1,0 +1,35 @@
+.single {
+  .page-header {
+    background-color: $color-blue-light;
+    align-items: center;
+    background-size: 65.5% 100%;
+    background-repeat: no-repeat;
+    background-position: right;
+    margin-bottom: 4em;
+
+    .container {
+      background: transparent;
+      padding: 0;
+
+      .entry-title-container {
+        background: rgba($color-white, 0.9);
+        width: 60%;
+        margin: 0;
+        padding: 1em;
+
+        @media #{$small-and-down} {
+          width: 100%;
+        }
+
+        h1 {
+          @include rtp-gradient;
+
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
