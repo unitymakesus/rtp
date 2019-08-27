@@ -22,8 +22,8 @@
               <figcaption class="thumb-caption">{!! $thumb_caption !!}</figcaption>
             @endif
           </figure>
-          @include('partials/entry-meta')
         @endif
+        @include('partials/entry-meta')
       </div>
 
       <div class="col m8 s12">

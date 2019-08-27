@@ -1,6 +1,6 @@
 .single {
   .page-header {
-    // @include rtp-gradient;
+    background-color: $color-blue-light;
 
     .container {
       background: transparent;
@@ -11,6 +11,8 @@
 
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      display: inline-block;
+      font-weight: 600;
     }
   }
 }

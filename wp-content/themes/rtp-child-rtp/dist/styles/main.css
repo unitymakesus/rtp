@@ -3872,10 +3872,10 @@ a {
 
 .z-depth-0,
 .pagination,
-.pagination a.active,
-.pagination a.current,
-.pagination span.active,
-.pagination span.current {
+.pagination .page-numbers.active,
+.pagination .page-numbers.current,
+.pagination .page-numbers.dots:hover,
+.pagination .page-numbers.dots:focus {
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
 }
@@ -3928,10 +3928,8 @@ nav,
 .footer-col-right .menu li a:hover,
 .footer-col-right .menu li a:active,
 .footer-col-right .menu li a:focus,
-.pagination a:hover,
-.pagination a:focus,
-.pagination span:hover,
-.pagination span:focus,
+.pagination .page-numbers:hover,
+.pagination .page-numbers:focus,
 .mec-calendar .mec-event-article:hover,
 .mec-calendar .mec-event-article:focus,
 .mec-calendar .mec-event-article:active,
@@ -13352,22 +13350,23 @@ figure.post-thumbnail {
 .pagination {
   background: none;
   text-align: center;
+  margin-bottom: 4em;
 }
 
-/* line 7, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 8, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li {
   padding: 0;
   height: auto;
 }
 
-/* line 11, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 12, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li::before {
   display: none;
 }
 
-/* line 16, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 17, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li.gap.before::before {
   display: inline-block;
@@ -13378,7 +13377,7 @@ figure.post-thumbnail {
   left: 0;
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 26, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li.gap.after::after {
   display: inline-block;
@@ -13389,72 +13388,59 @@ figure.post-thumbnail {
   left: 0;
 }
 
-/* line 36, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 37, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-.pagination a,
-.pagination span {
-  color: #FFF !important;
+.pagination .page-numbers {
+  color: #333F48;
   display: inline-block;
   min-width: 40px;
-  padding: 0 15px !important;
+  padding: 0 15px;
   height: 40px;
-  line-height: 1.7em !important;
-  font-size: 1.2em;
+  line-height: 40px;
+  font-size: 1em;
   font-weight: normal;
   text-decoration: none;
+  -webkit-transition: all .2s;
+  -o-transition: all .2s;
+  transition: all .2s;
 }
 
-/* line 47, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 49, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-.pagination a:hover,
-.pagination a:focus,
-.pagination span:hover,
-.pagination span:focus {
+.pagination .page-numbers:hover,
+.pagination .page-numbers:focus {
+  color: #333F48;
+}
+
+/* line 55, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+
+.pagination .page-numbers.active,
+.pagination .page-numbers.current {
+  background: #333F48;
   color: #FFF;
-}
-
-/* line 53, ../rtp-core/resources/assets/styles/components/_pagination.scss */
-
-.pagination a.active,
-.pagination a.current,
-.pagination span.active,
-.pagination span.current {
-  color: #FFF;
-}
-
-/* line 59, ../rtp-core/resources/assets/styles/components/_pagination.scss */
-
-html[data-contrast="true"] .pagination a,
-html[data-contrast="true"] .pagination span {
-  background: #000;
-  border-color: #FFF;
-}
-
-/* line 63, ../rtp-core/resources/assets/styles/components/_pagination.scss */
-
-html[data-contrast="true"] .pagination a:hover,
-html[data-contrast="true"] .pagination a:focus,
-html[data-contrast="true"] .pagination span:hover,
-html[data-contrast="true"] .pagination span:focus {
-  background: #FFF;
-  color: #000 !important;
 }
 
 /* line 68, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-html[data-contrast="true"] .pagination a.active,
-html[data-contrast="true"] .pagination a.current,
-html[data-contrast="true"] .pagination span.active,
-html[data-contrast="true"] .pagination span.current {
-  background: #7A868C;
-  color: #FFF !important;
+html[data-contrast="true"] .pagination .page-numbers {
+  background: #000;
+  border-color: #FFF;
 }
 
-/* line 76, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 72, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-[data-font="3"] .pagination a,
-[data-font="3"] .pagination span {
-  line-height: 1.4em !important;
+html[data-contrast="true"] .pagination .page-numbers:hover,
+html[data-contrast="true"] .pagination .page-numbers:focus {
+  background: #FFF;
+  color: #000;
+}
+
+/* line 77, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+
+html[data-contrast="true"] .pagination .page-numbers.active,
+html[data-contrast="true"] .pagination .page-numbers.current {
+  background: #7A868C;
+  color: #FFF;
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/components/_people.scss */
@@ -14380,7 +14366,7 @@ nav ul a {
 .blog .figure-card .card .meta {
   position: absolute;
   right: 24px;
-  top: 35px;
+  top: 39px;
   font-size: 13px;
   text-transform: uppercase;
 }
@@ -14420,7 +14406,7 @@ nav ul a {
   position: absolute;
   display: block;
   font-size: 0.8em;
-  font-weight: 300;
+  font-weight: 400;
   left: 9px;
   top: 7px;
   white-space: nowrap;
@@ -14429,10 +14415,11 @@ nav ul a {
 /* line 80, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-title {
-  margin: 40px 16px 20px;
+  margin: 50px 16px 20px;
+  min-height: 80px;
 }
 
-/* line 83, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 84, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-title a {
   font-weight: 600 !important;
@@ -14440,7 +14427,7 @@ nav ul a {
   color: #000;
 }
 
-/* line 88, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 89, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-title a:hover,
 .blog .figure-card .card-title a:focus,
@@ -14448,17 +14435,17 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 94, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 95, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta {
   border-style: solid;
   border-width: 0;
   border-top-width: 4px;
   padding: 5px;
-  margin: auto 16px 0;
+  margin: auto 0 5px;
 }
 
-/* line 101, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 102, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta a {
   color: #000;
@@ -14476,13 +14463,13 @@ nav ul a {
   vertical-align: middle;
 }
 
-/* line 114, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 115, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 118, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 119, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -14496,7 +14483,7 @@ nav ul a {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 126, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 127, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -14505,7 +14492,7 @@ nav ul a {
   transition: fill 0.3s ease;
 }
 
-/* line 132, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 133, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta a:hover,
 .blog .figure-card .card-cta a:focus,
@@ -14513,7 +14500,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 135, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 136, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .card-cta a:hover .arrow,
 .blog .figure-card .card-cta a:focus .arrow,
@@ -14522,7 +14509,7 @@ nav ul a {
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 142, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 143, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .pattern-background {
   position: absolute;
@@ -14533,14 +14520,14 @@ nav ul a {
   right: 0;
 }
 
-/* line 150, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 151, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 157, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 158, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-rtp .card-badge,
 .blog .figure-card.badge-rtp .card-cta {
@@ -14548,7 +14535,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 163, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 164, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-rtp .card-cta a:hover,
 .blog .figure-card.badge-rtp .card-cta a:focus,
@@ -14556,7 +14543,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 166, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 167, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .blog .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -14564,7 +14551,7 @@ nav ul a {
   fill: #333F48;
 }
 
-/* line 174, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 175, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-hub .card-badge,
 .blog .figure-card.badge-hub .card-cta,
@@ -14574,7 +14561,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 180, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 181, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-hub .card-cta a:hover,
 .blog .figure-card.badge-hub .card-cta a:focus,
@@ -14585,7 +14572,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 183, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 184, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-hub .card-cta a:hover .arrow path,
 .blog .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -14596,7 +14583,7 @@ nav ul a {
   fill: #4B9CD3;
 }
 
-/* line 191, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 192, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-boxyard .card-badge,
 .blog .figure-card.badge-boxyard .card-cta,
@@ -14606,7 +14593,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 197, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 198, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-boxyard .card-cta a:hover,
 .blog .figure-card.badge-boxyard .card-cta a:focus,
@@ -14617,7 +14604,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 200, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 201, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .blog .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -14628,7 +14615,7 @@ nav ul a {
   fill: #E63C2F;
 }
 
-/* line 208, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 209, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-frontier .card-badge,
 .blog .figure-card.badge-frontier .card-cta,
@@ -14638,7 +14625,7 @@ nav ul a {
   color: #57C1A5;
 }
 
-/* line 214, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 215, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-frontier .card-cta a:hover,
 .blog .figure-card.badge-frontier .card-cta a:focus,
@@ -14649,7 +14636,7 @@ nav ul a {
   color: #2FA787;
 }
 
-/* line 217, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 218, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .blog .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -14660,7 +14647,7 @@ nav ul a {
   fill: #57C1A5;
 }
 
-/* line 225, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 226, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-stem .card-badge,
 .blog .figure-card.badge-stem .card-cta,
@@ -14670,7 +14657,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 231, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 232, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-stem .card-cta a:hover,
 .blog .figure-card.badge-stem .card-cta a:focus,
@@ -14681,7 +14668,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 234, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 235, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .blog .figure-card.badge-stem .card-cta a:hover .arrow path,
 .blog .figure-card.badge-stem .card-cta a:focus .arrow path,
@@ -15888,6 +15875,12 @@ p {
   background: rgba(75, 156, 211, 0.1);
 }
 
+/* line 2, resources/assets/styles/layouts/_single.scss */
+
+.single .page-header {
+  background-color: #A1DAE8;
+}
+
 /* line 5, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container,
@@ -15908,6 +15901,8 @@ p {
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
+  font-weight: 600;
 }
 
 
