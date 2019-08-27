@@ -1,5 +1,6 @@
 <article {!! post_class() !!}>
-  <header class="page-header" style="background-image: url('http://files.rtp.org/wp-content/uploads/sites/2/2019/08/09155923/textureB-blog-header.png')">
+  <header class="page-header">
+    <div class="texture"></div>
     <div class="container">
       <div class="entry-title-container">
         <h1 class="entry-title">{!! get_the_title() !!}</h1>

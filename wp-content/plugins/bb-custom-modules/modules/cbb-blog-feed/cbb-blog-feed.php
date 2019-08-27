@@ -85,7 +85,7 @@ FLBuilder::register_module( 'CbbBlogFeedModule', [
 					],
 					'tax_post_category_matching' => [
 						'type'    => 'select',
-						'label'   => 'Event Category',
+						'label'   => 'Blog Category',
 						'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
 						'options' => [
 							'1' => __( 'Match these categories', 'cbb' ),

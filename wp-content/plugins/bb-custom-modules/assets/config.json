@@ -12,6 +12,9 @@
     ],
     "cbb-blog-events-feeds": [
       "./styles/cbb-blog-events-feeds.scss"
+    ],
+    "cbb-people-card": [
+      "./styles/cbb-people-card.scss"
     ]
   },
   "publicPath": "/wp-content/plugins/bb-custom-modules",
