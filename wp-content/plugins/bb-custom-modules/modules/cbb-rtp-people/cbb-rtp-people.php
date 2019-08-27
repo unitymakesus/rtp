@@ -6,7 +6,7 @@ class CbbPeopleModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'            => __( 'People', 'fl-builder' ),
 			'description'     => __( 'A module that pulls in people from the RTP People post type.', 'fl-builder' ),
-			'icon'            => 'blog.svg',
+			'icon'            => 'people.svg',
 			'category'        => __( 'Layout', 'fl-builder' ),
 			'dir'             => CBB_MODULES_DIR . 'modules/cbb-rtp-people/',
 			'url'             => CBB_MODULES_URL . 'modules/cbb-rtp-people/'
