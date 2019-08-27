@@ -41,8 +41,7 @@ class CbbEventsFeedModule extends FLBuilderModule {
     $siteID = get_post_meta($postID, 'dt_original_blog_id', true);
 
 		if (empty($siteID)) {
-			$current = get_current_site();
-			$siteID = $current->id;
+			$siteID = get_current_blog_id();
 		}
 
     if ($siteID == 1) {
