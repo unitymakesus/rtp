@@ -3,6 +3,8 @@
   // Make sure we're querying people
   $settings->post_type = 'rtp-people';
   $settings->posts_per_page = '-1';
+  $settings->order_by = 'menu_order';
+  $settings->order = 'ASC';
 
   $query = FLBuilderLoop::query( $settings );
 
