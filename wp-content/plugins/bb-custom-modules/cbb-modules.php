@@ -65,6 +65,9 @@ function load_custom_modules() {
 
     // Today Feed Module
     require_once 'modules/cbb-today-feed/cbb-today-feed.php';
+
+    // People Module
+    require_once 'modules/cbb-rtp-people/cbb-rtp-people.php';
   }
 }
 add_action( 'init', 'load_custom_modules' );

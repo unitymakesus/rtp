@@ -40,8 +40,7 @@ class CbbBlogFeedModule extends FLBuilderModule {
     $siteID = get_post_meta($postID, 'dt_original_blog_id', true);
 
 		if (empty($siteID)) {
-			$current = get_current_site();
-			$siteID = $current->id;
+			$siteID = get_current_blog_id();
 		}
 
     if ($siteID == 1) {
@@ -85,7 +84,7 @@ FLBuilder::register_module( 'CbbBlogFeedModule', [
 					],
 					'tax_post_category_matching' => [
 						'type'    => 'select',
-						'label'   => 'Event Category',
+						'label'   => 'Blog Category',
 						'help'    => __( 'Enter a comma separated list of categories. Only posts with these categories will be shown.', 'cbb' ),
 						'options' => [
 							'1' => __( 'Match these categories', 'cbb' ),

@@ -14808,6 +14808,59 @@ nav ul a {
   margin-bottom: 4rem;
 }
 
+/* line 2, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .page-header {
+  background: #7A868C;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 4em;
+  position: relative;
+}
+
+/* line 8, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .page-header .texture {
+  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/texture-single-header.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 34.5%;
+  right: 0;
+  z-index: 0;
+}
+
+/* line 20, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .page-header .container,
+.single .page-header .container-wide,
+.single .page-header .sidebar-primary .content,
+.sidebar-primary .single .page-header .content {
+  background: transparent;
+  padding: 0;
+  z-index: 1;
+}
+
+/* line 26, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .page-header .entry-title-container {
+  background: rgba(255, 255, 255, 0.9);
+  width: 60%;
+  margin: 0;
+  padding: 1em;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 26, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+  .single .page-header .entry-title-container {
+    width: 100%;
+  }
+}
+
 /* line 1, ../rtp-core/resources/assets/styles/layouts/_events.scss */
 
 button,
@@ -16075,54 +16128,20 @@ body .entry-content a {
 
 .single .page-header {
   background-color: #57C1A5;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-size: 65.5% 100%;
-  background-repeat: no-repeat;
-  background-position: right;
-  margin-bottom: 4em;
 }
 
-/* line 10, resources/assets/styles/layouts/_single.scss */
+/* line 5, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container,
 .single .page-header .container-wide,
 .single .page-header .sidebar-primary .content,
 .sidebar-primary .single .page-header .content {
   background: transparent;
-  padding: 0;
 }
 
-/* line 14, resources/assets/styles/layouts/_single.scss */
+/* line 9, resources/assets/styles/layouts/_single.scss */
 
-.single .page-header .container .entry-title-container,
-.single .page-header .container-wide .entry-title-container,
-.single .page-header .sidebar-primary .content .entry-title-container,
-.sidebar-primary .single .page-header .content .entry-title-container {
-  background: rgba(255, 255, 255, 0.9);
-  width: 60%;
-  margin: 0;
-  padding: 1em;
-}
-
-@media only screen and (max-width: 768px) {
-  /* line 14, resources/assets/styles/layouts/_single.scss */
-
-  .single .page-header .container .entry-title-container,
-  .single .page-header .container-wide .entry-title-container,
-  .single .page-header .sidebar-primary .content .entry-title-container,
-  .sidebar-primary .single .page-header .content .entry-title-container {
-    width: 100%;
-  }
-}
-
-/* line 24, resources/assets/styles/layouts/_single.scss */
-
-.single .page-header .container .entry-title-container h1,
-.single .page-header .container-wide .entry-title-container h1,
-.single .page-header .sidebar-primary .content .entry-title-container h1,
-.sidebar-primary .single .page-header .content .entry-title-container h1 {
+.single .page-header h1 {
   color: #57C1A5;
 }
 

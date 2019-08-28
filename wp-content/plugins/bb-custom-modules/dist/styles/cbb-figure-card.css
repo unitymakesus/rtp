@@ -47,7 +47,17 @@
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 20, stdin */
+/* line 19, stdin */
+
+.figure-card .card .meta {
+  position: absolute;
+  right: 24px;
+  top: 38px;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+/* line 28, stdin */
 
 .figure-card .card-badge {
   border-style: solid;
@@ -63,7 +73,7 @@
   text-transform: uppercase;
 }
 
-/* line 33, stdin */
+/* line 41, stdin */
 
 .figure-card .card-badge span {
   position: absolute;
@@ -75,13 +85,13 @@
   white-space: nowrap;
 }
 
-/* line 44, stdin */
+/* line 52, stdin */
 
 .figure-card .card-title {
   margin: 40px 16px 20px;
 }
 
-/* line 47, stdin */
+/* line 55, stdin */
 
 .figure-card .card-title a {
   font-weight: 600 !important;
@@ -89,7 +99,7 @@
   color: #000;
 }
 
-/* line 52, stdin */
+/* line 60, stdin */
 
 .figure-card .card-title a:hover,
 .figure-card .card-title a:focus,
@@ -97,14 +107,14 @@
   text-decoration: underline !important;
 }
 
-/* line 58, stdin */
+/* line 66, stdin */
 
 .figure-card .card-content {
   margin: 0 16px 20px;
   font-weight: 300;
 }
 
-/* line 63, stdin */
+/* line 71, stdin */
 
 .figure-card .card-cta {
   border-style: solid;
@@ -114,7 +124,7 @@
   margin: 0 16px;
 }
 
-/* line 70, stdin */
+/* line 78, stdin */
 
 .figure-card .card-cta a {
   color: #000;
@@ -133,13 +143,13 @@
   vertical-align: middle;
 }
 
-/* line 84, stdin */
+/* line 92, stdin */
 
 .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 88, stdin */
+/* line 96, stdin */
 
 .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -153,7 +163,7 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 95, stdin */
+/* line 103, stdin */
 
 .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -162,7 +172,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 101, stdin */
+/* line 109, stdin */
 
 .figure-card .card-cta a:hover,
 .figure-card .card-cta a:focus,
@@ -170,7 +180,7 @@
   text-decoration: underline !important;
 }
 
-/* line 104, stdin */
+/* line 112, stdin */
 
 .figure-card .card-cta a:hover .arrow,
 .figure-card .card-cta a:focus .arrow,
@@ -179,7 +189,7 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 111, stdin */
+/* line 119, stdin */
 
 .figure-card .pattern-background {
   position: absolute;
@@ -190,14 +200,14 @@
   right: 0;
 }
 
-/* line 119, stdin */
+/* line 127, stdin */
 
 .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 126, stdin */
+/* line 134, stdin */
 
 .figure-card.badge-rtp .card-badge,
 .figure-card.badge-rtp .card-cta {
@@ -205,7 +215,7 @@
   color: #333F48;
 }
 
-/* line 132, stdin */
+/* line 140, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover,
 .figure-card.badge-rtp .card-cta a:focus,
@@ -213,7 +223,7 @@
   color: #333F48;
 }
 
-/* line 135, stdin */
+/* line 143, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -221,7 +231,7 @@
   fill: #333F48;
 }
 
-/* line 143, stdin */
+/* line 151, stdin */
 
 .figure-card.badge-hub .card-badge,
 .figure-card.badge-hub .card-cta,
@@ -231,7 +241,7 @@
   color: #4B9CD3;
 }
 
-/* line 149, stdin */
+/* line 157, stdin */
 
 .figure-card.badge-hub .card-cta a:hover,
 .figure-card.badge-hub .card-cta a:focus,
@@ -242,7 +252,7 @@
   color: #4B9CD3;
 }
 
-/* line 152, stdin */
+/* line 160, stdin */
 
 .figure-card.badge-hub .card-cta a:hover .arrow path,
 .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -253,7 +263,7 @@
   fill: #4B9CD3;
 }
 
-/* line 160, stdin */
+/* line 168, stdin */
 
 .figure-card.badge-boxyard .card-badge,
 .figure-card.badge-boxyard .card-cta,
@@ -263,7 +273,7 @@
   color: #E63C2F;
 }
 
-/* line 166, stdin */
+/* line 174, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover,
 .figure-card.badge-boxyard .card-cta a:focus,
@@ -274,7 +284,7 @@
   color: #E63C2F;
 }
 
-/* line 169, stdin */
+/* line 177, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -285,7 +295,7 @@
   fill: #E63C2F;
 }
 
-/* line 177, stdin */
+/* line 185, stdin */
 
 .figure-card.badge-frontier .card-badge,
 .figure-card.badge-frontier .card-cta,
@@ -295,7 +305,7 @@
   color: #47D7AC;
 }
 
-/* line 183, stdin */
+/* line 191, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover,
 .figure-card.badge-frontier .card-cta a:focus,
@@ -306,7 +316,7 @@
   color: #2FA787;
 }
 
-/* line 186, stdin */
+/* line 194, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -317,7 +327,7 @@
   fill: #47D7AC;
 }
 
-/* line 194, stdin */
+/* line 202, stdin */
 
 .figure-card.badge-stem .card-badge,
 .figure-card.badge-stem .card-cta,
@@ -327,7 +337,7 @@
   color: #654EA3;
 }
 
-/* line 200, stdin */
+/* line 208, stdin */
 
 .figure-card.badge-stem .card-cta a:hover,
 .figure-card.badge-stem .card-cta a:focus,
@@ -338,7 +348,7 @@
   color: #654EA3;
 }
 
-/* line 203, stdin */
+/* line 211, stdin */
 
 .figure-card.badge-stem .card-cta a:hover .arrow path,
 .figure-card.badge-stem .card-cta a:focus .arrow path,
@@ -349,13 +359,13 @@
   fill: #654EA3;
 }
 
-/* line 210, stdin */
+/* line 218, stdin */
 
 .figure-card.figure-card-vertical {
   position: relative;
 }
 
-/* line 213, stdin */
+/* line 221, stdin */
 
 .figure-card.figure-card-vertical img,
 .figure-card.figure-card-vertical .placeholder {
@@ -367,7 +377,7 @@
   z-index: 1;
 }
 
-/* line 221, stdin */
+/* line 229, stdin */
 
 .figure-card.figure-card-vertical .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -378,14 +388,14 @@
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 225, stdin */
+/* line 233, stdin */
 
 .figure-card.figure-card-vertical .card {
   margin: -65px 30px 60px;
   z-index: 2;
 }
 
-/* line 231, stdin */
+/* line 239, stdin */
 
 .figure-card.figure-card-horizontal {
   display: -webkit-box;
@@ -393,7 +403,7 @@
   display: flex;
 }
 
-/* line 234, stdin */
+/* line 242, stdin */
 
 .figure-card.figure-card-horizontal img {
   width: 66vw;
@@ -403,7 +413,7 @@
   z-index: 1;
 }
 
-/* line 242, stdin */
+/* line 250, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -415,7 +425,7 @@
   z-index: 2;
 }
 
-/* line 252, stdin */
+/* line 260, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right img {
   left: auto;
@@ -424,7 +434,7 @@
   margin-right: -50vw;
 }
 
-/* line 259, stdin */
+/* line 267, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card {
   left: 30px;

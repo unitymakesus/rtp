@@ -1,0 +1,50 @@
+/* line 2, stdin */
+
+.flex-grid .flex-item .figure-card.figure-card-people {
+  position: relative;
+  height: 0;
+  padding-bottom: 100%;
+  overflow: hidden;
+}
+
+/* line 8, stdin */
+
+.flex-grid .flex-item .figure-card.figure-card-people img,
+.flex-grid .flex-item .figure-card.figure-card-people .placeholder {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+/* line 15, stdin */
+
+.flex-grid .flex-item .figure-card.figure-card-people .card {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  padding: 10px;
+  height: auto;
+  margin: 0;
+}
+
+/* line 25, stdin */
+
+.flex-grid .flex-item .figure-card.figure-card-people .card-title {
+  margin: 0 0 0.25em;
+  font-size: 1em;
+}
+
+/* line 30, stdin */
+
+.flex-grid .flex-item .figure-card.figure-card-people .card-subtitle {
+  margin: 0;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+
+/*# sourceMappingURL=cbb-people-card.css.map*/

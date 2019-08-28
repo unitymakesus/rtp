@@ -1,6 +1,7 @@
 .pagination {
   background: none;
   text-align: center;
+  margin-bottom: 4em;
 
   @extend .z-depth-0;
 
@@ -33,27 +34,35 @@
     }
   }
 
-  a, span {
-    color: $color-white;
+  .page-numbers {
+    color: $color-slate;
     display: inline-block;
     min-width: 40px;
-    padding: 0 15px !important;
+    padding: 0 15px;
     height: 40px;
-    line-height: 1.7em !important;
-    font-size: 1.2em;
+    line-height: 40px;
+    font-size: 1em;
     font-weight: normal;
     text-decoration: none;
+    transition: all .2s;
 
     &:hover, &:focus {
-      color: $color-white;
+      color: $color-slate;
 
       @extend .z-depth-2;
     }
 
     &.active, &.current {
+      background: $color-slate;
       color: $color-white;
 
       @extend .z-depth-0;
+    }
+
+    &.dots {
+      &:hover, &:focus {
+        @extend .z-depth-0;
+      }
     }
 
     html[data-contrast="true"] & {
@@ -62,46 +71,13 @@
 
       &:hover, &:focus {
         background: $color-white;
-        color: $color-black !important;
+        color: $color-black;
       }
 
       &.active, &.current {
         background: $color-grey-dark;
-        color: $color-white !important;
+        color: $color-white;
       }
-    }
-  }
-
-  [data-font="3"] & {
-    a, span {
-      line-height: 1.4em !important;
-    }
-  }
-}
-
-// Blog Pagination
-.nav-links {
-  margin-bottom: 4em;
-  font-size: 12px;
-
-  .page-numbers {
-    color: $color-slate;
-    height: auto;
-    transition: all .2s;
-
-    &:hover, &:active, &:focus {
-      box-shadow: none;
-      color: $color-slate;
-      background: #ececec;
-    }
-  }
-
-  .current {
-    background: $color-slate;
-
-    &:hover, &:active, &:focus {
-      background: $color-slate;
-      color: $color-white;
     }
   }
 }

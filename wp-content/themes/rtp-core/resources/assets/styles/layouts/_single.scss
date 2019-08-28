@@ -1,0 +1,57 @@
+.single {
+  .page-header {
+    background: $color-grey-dark;
+    align-items: center;
+    margin-bottom: 4em;
+    position: relative;
+
+    .texture {
+      background-image: url('../images/texture-single-header.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 34.5%;
+      right: 0;
+      z-index: 0;
+    }
+
+    .container {
+      background: transparent;
+      padding: 0;
+      z-index: 1;
+    }
+
+    .entry-title-container {
+      background: rgba($color-white, 0.9);
+      width: 60%;
+      margin: 0;
+      padding: 1em;
+
+      @media #{$small-and-down} {
+        width: 100%;
+      }
+    }
+  }
+
+  .meta {
+    .contact {
+      padding: 5px 0;
+
+      .icon {
+        display: inline-block;
+        padding: 5px 10px;
+      }
+
+      path {
+        fill: $color-slate;
+      }
+
+      a {
+        color: $color-slate;
+        text-decoration: underline;
+      }
+    }
+  }
+}
