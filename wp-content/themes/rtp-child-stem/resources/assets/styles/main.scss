@@ -4,4 +4,11 @@
 // Import child theme overrides into this file
 @import "common/variables";
 @import "common/typography";
+@import "layouts/header";
+@import "layouts/footer";
 @import "layouts/home";
+@import "layouts/events";
+@import "layouts/single";
+@import "components/cards";
+@import "components/forms";
+@import "components/map";
