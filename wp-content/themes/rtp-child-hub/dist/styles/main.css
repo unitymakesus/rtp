@@ -15827,13 +15827,12 @@ body .h1 {
 
 body h2,
 body .h2 {
-  color: #E53D2F;
   font-family: Helvetica, sans-serif;
   font-weight: 600;
   font-size: 40px;
 }
 
-/* line 21, resources/assets/styles/common/_typography.scss */
+/* line 20, resources/assets/styles/common/_typography.scss */
 
 body h3,
 body .single-mec-events .mec-event-social h3,
@@ -15856,7 +15855,7 @@ body .single-mec-events .mec-events-content h2,
 /* line 6, resources/assets/styles/layouts/_home.scss */
 
 .home-banner-wrapper .banner-cta {
-  background: rgba(0, 0, 0, 0.8);
+  background: #194685;
 }
 
 
