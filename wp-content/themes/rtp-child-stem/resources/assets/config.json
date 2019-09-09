@@ -5,7 +5,7 @@
       "./styles/main.scss"
     ]
   },
-  "publicPath": "/wp-content/themes/rtp-child-frontier",
+  "publicPath": "/wp-content/themes/rtp-child-stem",
   "devUrl": "http://stem.rtf-multi.test",
   "proxyUrl": "http://localhost:3000",
   "cacheBusting": "[name]_[hash:8]",
