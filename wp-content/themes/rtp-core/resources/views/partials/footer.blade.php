@@ -37,7 +37,7 @@
       <div class="col m6 s12">
         @php dynamic_sidebar('footer-utility-left') @endphp
       </div>
-      <div class="footer-utility-right col m6 s12 flex align-center flex-end">
+      <div class="footer-utility-right col m12 s12 flex align-center flex-end">
         @php dynamic_sidebar('footer-utility-right') @endphp
         <p class="copyright">&copy; {!! current_time('Y') !!} RTP</p>
       </div>
