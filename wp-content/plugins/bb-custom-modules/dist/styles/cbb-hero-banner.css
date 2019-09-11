@@ -39,9 +39,12 @@
   left: 50%;
   -webkit-transform: translate3d(-50%, -50%, 0);
           transform: translate3d(-50%, -50%, 0);
+  -o-object-fit: cover;
+     object-fit: cover;
+  min-height: 100%;
 }
 
-/* line 23, stdin */
+/* line 25, stdin */
 
 .home-banner-wrapper {
   color: #FFF;
@@ -58,7 +61,7 @@
   z-index: 1;
 }
 
-/* line 37, stdin */
+/* line 39, stdin */
 
 .home-banner {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -70,7 +73,7 @@
   padding: 60px 36px 30px;
 }
 
-/* line 42, stdin */
+/* line 44, stdin */
 
 .home-banner .banner-badge {
   border-color: #FFF;
@@ -87,7 +90,7 @@
   text-transform: uppercase;
 }
 
-/* line 56, stdin */
+/* line 58, stdin */
 
 .home-banner .banner-badge span {
   position: absolute;
@@ -99,19 +102,19 @@
   white-space: nowrap;
 }
 
-/* line 67, stdin */
+/* line 69, stdin */
 
 .home-banner .banner-content {
   max-width: 900px;
 }
 
-/* line 71, stdin */
+/* line 73, stdin */
 
 .home-banner h1 {
   padding: 0;
 }
 
-/* line 76, stdin */
+/* line 78, stdin */
 
 .banner-cta {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FF012169');
@@ -124,7 +127,7 @@
   text-align: right;
 }
 
-/* line 82, stdin */
+/* line 84, stdin */
 
 .banner-cta a {
   color: #FFF !important;
@@ -142,13 +145,13 @@
   vertical-align: middle;
 }
 
-/* line 95, stdin */
+/* line 97, stdin */
 
 .banner-cta a span {
   vertical-align: middle;
 }
 
-/* line 99, stdin */
+/* line 101, stdin */
 
 .banner-cta a .arrow {
   display: inline-block;
@@ -162,7 +165,7 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 106, stdin */
+/* line 108, stdin */
 
 .banner-cta a .arrow path {
   fill: #FFF;
@@ -171,7 +174,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 112, stdin */
+/* line 114, stdin */
 
 .banner-cta a:hover,
 .banner-cta a:focus,
@@ -179,7 +182,7 @@
   text-decoration: underline !important;
 }
 
-/* line 115, stdin */
+/* line 117, stdin */
 
 .banner-cta a:hover .arrow,
 .banner-cta a:focus .arrow,
