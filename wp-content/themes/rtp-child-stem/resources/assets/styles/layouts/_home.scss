@@ -1,9 +1,9 @@
 .home-banner-wrapper {
   .home-banner {
-    background-image: none;
+    background: rgba($color-blue-unc, 0.8);
   }
 
   .banner-cta {
-    background: rgba($color-blue, 0.8);
+    background: rgba(darken($color-blue-unc, 15%), 0.8);
   }
 }

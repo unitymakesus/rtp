@@ -3872,10 +3872,10 @@ a {
 
 .z-depth-0,
 .pagination,
-.pagination a.active,
-.pagination a.current,
-.pagination span.active,
-.pagination span.current {
+.pagination .page-numbers.active,
+.pagination .page-numbers.current,
+.pagination .page-numbers.dots:hover,
+.pagination .page-numbers.dots:focus {
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
 }
@@ -3928,10 +3928,8 @@ nav,
 .footer-col-right .menu li a:hover,
 .footer-col-right .menu li a:active,
 .footer-col-right .menu li a:focus,
-.pagination a:hover,
-.pagination a:focus,
-.pagination span:hover,
-.pagination span:focus,
+.pagination .page-numbers:hover,
+.pagination .page-numbers:focus,
 .mec-calendar .mec-event-article:hover,
 .mec-calendar .mec-event-article:focus,
 .mec-calendar .mec-event-article:active,
@@ -12648,15 +12646,17 @@ a.btn-small,
   font-size: 0.9em;
   -webkit-box-shadow: none;
           box-shadow: none;
+  letter-spacing: 0;
+  padding: 0;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 28, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button span {
   color: #000;
 }
 
-/* line 30, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 32, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button::after {
   content: '';
@@ -12676,7 +12676,7 @@ a.btn-small,
   vertical-align: -0.4em;
 }
 
-/* line 45, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 47, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:hover span,
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:focus span,
@@ -12684,7 +12684,7 @@ a.btn-small,
   text-decoration: underline;
 }
 
-/* line 49, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 51, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:hover::after,
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:focus::after,
@@ -13352,22 +13352,23 @@ figure.post-thumbnail {
 .pagination {
   background: none;
   text-align: center;
+  margin-bottom: 4em;
 }
 
-/* line 7, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 8, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li {
   padding: 0;
   height: auto;
 }
 
-/* line 11, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 12, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li::before {
   display: none;
 }
 
-/* line 16, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 17, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li.gap.before::before {
   display: inline-block;
@@ -13378,7 +13379,7 @@ figure.post-thumbnail {
   left: 0;
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 26, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
 .pagination ul li.gap.after::after {
   display: inline-block;
@@ -13389,72 +13390,59 @@ figure.post-thumbnail {
   left: 0;
 }
 
-/* line 36, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 37, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-.pagination a,
-.pagination span {
-  color: #FFF !important;
+.pagination .page-numbers {
+  color: #333F48;
   display: inline-block;
   min-width: 40px;
-  padding: 0 15px !important;
+  padding: 0 15px;
   height: 40px;
-  line-height: 1.7em !important;
-  font-size: 1.2em;
+  line-height: 40px;
+  font-size: 1em;
   font-weight: normal;
   text-decoration: none;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
-/* line 47, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 49, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-.pagination a:hover,
-.pagination a:focus,
-.pagination span:hover,
-.pagination span:focus {
+.pagination .page-numbers:hover,
+.pagination .page-numbers:focus {
+  color: #333F48;
+}
+
+/* line 55, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+
+.pagination .page-numbers.active,
+.pagination .page-numbers.current {
+  background: #333F48;
   color: #FFF;
-}
-
-/* line 53, ../rtp-core/resources/assets/styles/components/_pagination.scss */
-
-.pagination a.active,
-.pagination a.current,
-.pagination span.active,
-.pagination span.current {
-  color: #FFF;
-}
-
-/* line 59, ../rtp-core/resources/assets/styles/components/_pagination.scss */
-
-html[data-contrast="true"] .pagination a,
-html[data-contrast="true"] .pagination span {
-  background: #000;
-  border-color: #FFF;
-}
-
-/* line 63, ../rtp-core/resources/assets/styles/components/_pagination.scss */
-
-html[data-contrast="true"] .pagination a:hover,
-html[data-contrast="true"] .pagination a:focus,
-html[data-contrast="true"] .pagination span:hover,
-html[data-contrast="true"] .pagination span:focus {
-  background: #FFF;
-  color: #000 !important;
 }
 
 /* line 68, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-html[data-contrast="true"] .pagination a.active,
-html[data-contrast="true"] .pagination a.current,
-html[data-contrast="true"] .pagination span.active,
-html[data-contrast="true"] .pagination span.current {
-  background: #7A868C;
-  color: #FFF !important;
+html[data-contrast="true"] .pagination .page-numbers {
+  background: #000;
+  border-color: #FFF;
 }
 
-/* line 76, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+/* line 72, ../rtp-core/resources/assets/styles/components/_pagination.scss */
 
-[data-font="3"] .pagination a,
-[data-font="3"] .pagination span {
-  line-height: 1.4em !important;
+html[data-contrast="true"] .pagination .page-numbers:hover,
+html[data-contrast="true"] .pagination .page-numbers:focus {
+  background: #FFF;
+  color: #000;
+}
+
+/* line 77, ../rtp-core/resources/assets/styles/components/_pagination.scss */
+
+html[data-contrast="true"] .pagination .page-numbers.active,
+html[data-contrast="true"] .pagination .page-numbers.current {
+  background: #7A868C;
+  color: #FFF;
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/components/_people.scss */
@@ -14306,27 +14294,27 @@ nav ul a {
 
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .page-header {
+.archive .page-header {
   margin-bottom: 2em;
 }
 
 /* line 6, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .flex-item {
+.archive .flex-item {
   margin-bottom: 20px;
 }
 
 /* line 10, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card {
+.archive .figure-card {
   position: relative;
   height: 100%;
 }
 
 /* line 14, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card img,
-.blog .figure-card .placeholder {
+.archive .figure-card img,
+.archive .figure-card .placeholder {
   width: 100%;
   height: 300px;
   -o-object-fit: cover;
@@ -14337,7 +14325,7 @@ nav ul a {
 
 /* line 22, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .placeholder {
+.archive .figure-card .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
   background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
   background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), color-stop(33%, #012169), color-stop(66%, #82052A), color-stop(99%, #C00));
@@ -14348,7 +14336,7 @@ nav ul a {
 
 /* line 26, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card {
+.archive .figure-card .card {
   margin: -65px 30px 50px;
   height: calc(100% - 300px);
   background: #FFF;
@@ -14368,26 +14356,26 @@ nav ul a {
 
 /* line 37, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card:hover,
-.blog .figure-card .card:focus,
-.blog .figure-card .card:active {
+.archive .figure-card .card:hover,
+.archive .figure-card .card:focus,
+.archive .figure-card .card:active {
   -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
 /* line 41, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card .meta {
+.archive .figure-card .card .meta {
   position: absolute;
   right: 24px;
-  top: 35px;
+  top: 39px;
   font-size: 13px;
   text-transform: uppercase;
 }
 
 /* line 50, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-inner {
+.archive .figure-card .card-inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -14400,7 +14388,7 @@ nav ul a {
 
 /* line 56, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-badge {
+.archive .figure-card .card-badge {
   border-style: solid;
   border-width: 0;
   border-top-width: 8px;
@@ -14416,11 +14404,11 @@ nav ul a {
 
 /* line 69, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-badge span {
+.archive .figure-card .card-badge span {
   position: absolute;
   display: block;
   font-size: 0.8em;
-  font-weight: 300;
+  font-weight: 400;
   left: 9px;
   top: 7px;
   white-space: nowrap;
@@ -14428,39 +14416,40 @@ nav ul a {
 
 /* line 80, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-title {
-  margin: 40px 16px 20px;
+.archive .figure-card .card-title {
+  margin: 50px 16px 20px;
+  min-height: 80px;
 }
 
-/* line 83, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 84, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-title a {
+.archive .figure-card .card-title a {
   font-weight: 600 !important;
   text-decoration: none !important;
   color: #000;
 }
 
-/* line 88, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 89, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-title a:hover,
-.blog .figure-card .card-title a:focus,
-.blog .figure-card .card-title a:active {
+.archive .figure-card .card-title a:hover,
+.archive .figure-card .card-title a:focus,
+.archive .figure-card .card-title a:active {
   text-decoration: underline !important;
 }
 
-/* line 94, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 95, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta {
+.archive .figure-card .card-cta {
   border-style: solid;
   border-width: 0;
   border-top-width: 4px;
   padding: 5px;
-  margin: auto 16px 0;
+  margin: auto 0 5px;
 }
 
-/* line 101, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 102, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta a {
+.archive .figure-card .card-cta a {
   color: #000;
   display: block;
   text-align: right;
@@ -14476,15 +14465,15 @@ nav ul a {
   vertical-align: middle;
 }
 
-/* line 114, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 115, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta a span {
+.archive .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 118, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 119, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta a .arrow {
+.archive .figure-card .card-cta a .arrow {
   display: inline-block;
   padding: 4px 0 14px 14px;
   width: 40px;
@@ -14496,35 +14485,35 @@ nav ul a {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 126, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 127, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta a .arrow path {
+.archive .figure-card .card-cta a .arrow path {
   fill: #000;
   -webkit-transition: fill 0.3s ease;
   -o-transition: fill 0.3s ease;
   transition: fill 0.3s ease;
 }
 
-/* line 132, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 133, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta a:hover,
-.blog .figure-card .card-cta a:focus,
-.blog .figure-card .card-cta a:active {
+.archive .figure-card .card-cta a:hover,
+.archive .figure-card .card-cta a:focus,
+.archive .figure-card .card-cta a:active {
   text-decoration: underline !important;
 }
 
-/* line 135, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 136, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .card-cta a:hover .arrow,
-.blog .figure-card .card-cta a:focus .arrow,
-.blog .figure-card .card-cta a:active .arrow {
+.archive .figure-card .card-cta a:hover .arrow,
+.archive .figure-card .card-cta a:focus .arrow,
+.archive .figure-card .card-cta a:active .arrow {
   -webkit-transform: translate3d(10px, 0, 0);
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 142, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 143, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .pattern-background {
+.archive .figure-card .pattern-background {
   position: absolute;
   z-index: 0;
   top: 0;
@@ -14533,162 +14522,162 @@ nav ul a {
   right: 0;
 }
 
-/* line 150, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 151, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card .pattern-background svg {
+.archive .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 157, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 158, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-rtp .card-badge,
-.blog .figure-card.badge-rtp .card-cta {
+.archive .figure-card.badge-rtp .card-badge,
+.archive .figure-card.badge-rtp .card-cta {
   border-color: #333F48;
   color: #333F48;
 }
 
-/* line 163, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 164, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-rtp .card-cta a:hover,
-.blog .figure-card.badge-rtp .card-cta a:focus,
-.blog .figure-card.badge-rtp .card-cta a:active {
+.archive .figure-card.badge-rtp .card-cta a:hover,
+.archive .figure-card.badge-rtp .card-cta a:focus,
+.archive .figure-card.badge-rtp .card-cta a:active {
   color: #333F48;
 }
 
-/* line 166, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 167, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-rtp .card-cta a:hover .arrow path,
-.blog .figure-card.badge-rtp .card-cta a:focus .arrow path,
-.blog .figure-card.badge-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-rtp .card-cta a:hover .arrow path,
+.archive .figure-card.badge-rtp .card-cta a:focus .arrow path,
+.archive .figure-card.badge-rtp .card-cta a:active .arrow path {
   fill: #333F48;
 }
 
-/* line 174, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 175, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-hub .card-badge,
-.blog .figure-card.badge-hub .card-cta,
-.blog .figure-card.badge-hub-rtp .card-badge,
-.blog .figure-card.badge-hub-rtp .card-cta {
+.archive .figure-card.badge-hub .card-badge,
+.archive .figure-card.badge-hub .card-cta,
+.archive .figure-card.badge-hub-rtp .card-badge,
+.archive .figure-card.badge-hub-rtp .card-cta {
   border-color: #4B9CD3;
   color: #4B9CD3;
 }
 
-/* line 180, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 181, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-hub .card-cta a:hover,
-.blog .figure-card.badge-hub .card-cta a:focus,
-.blog .figure-card.badge-hub .card-cta a:active,
-.blog .figure-card.badge-hub-rtp .card-cta a:hover,
-.blog .figure-card.badge-hub-rtp .card-cta a:focus,
-.blog .figure-card.badge-hub-rtp .card-cta a:active {
+.archive .figure-card.badge-hub .card-cta a:hover,
+.archive .figure-card.badge-hub .card-cta a:focus,
+.archive .figure-card.badge-hub .card-cta a:active,
+.archive .figure-card.badge-hub-rtp .card-cta a:hover,
+.archive .figure-card.badge-hub-rtp .card-cta a:focus,
+.archive .figure-card.badge-hub-rtp .card-cta a:active {
   color: #4B9CD3;
 }
 
-/* line 183, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 184, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-hub .card-cta a:hover .arrow path,
-.blog .figure-card.badge-hub .card-cta a:focus .arrow path,
-.blog .figure-card.badge-hub .card-cta a:active .arrow path,
-.blog .figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
-.blog .figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
-.blog .figure-card.badge-hub-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-hub .card-cta a:hover .arrow path,
+.archive .figure-card.badge-hub .card-cta a:focus .arrow path,
+.archive .figure-card.badge-hub .card-cta a:active .arrow path,
+.archive .figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
+.archive .figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
+.archive .figure-card.badge-hub-rtp .card-cta a:active .arrow path {
   fill: #4B9CD3;
 }
 
-/* line 191, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 192, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-boxyard .card-badge,
-.blog .figure-card.badge-boxyard .card-cta,
-.blog .figure-card.badge-boxyard-rtp .card-badge,
-.blog .figure-card.badge-boxyard-rtp .card-cta {
+.archive .figure-card.badge-boxyard .card-badge,
+.archive .figure-card.badge-boxyard .card-cta,
+.archive .figure-card.badge-boxyard-rtp .card-badge,
+.archive .figure-card.badge-boxyard-rtp .card-cta {
   border-color: #E63C2F;
   color: #E63C2F;
 }
 
-/* line 197, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 198, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-boxyard .card-cta a:hover,
-.blog .figure-card.badge-boxyard .card-cta a:focus,
-.blog .figure-card.badge-boxyard .card-cta a:active,
-.blog .figure-card.badge-boxyard-rtp .card-cta a:hover,
-.blog .figure-card.badge-boxyard-rtp .card-cta a:focus,
-.blog .figure-card.badge-boxyard-rtp .card-cta a:active {
+.archive .figure-card.badge-boxyard .card-cta a:hover,
+.archive .figure-card.badge-boxyard .card-cta a:focus,
+.archive .figure-card.badge-boxyard .card-cta a:active,
+.archive .figure-card.badge-boxyard-rtp .card-cta a:hover,
+.archive .figure-card.badge-boxyard-rtp .card-cta a:focus,
+.archive .figure-card.badge-boxyard-rtp .card-cta a:active {
   color: #E63C2F;
 }
 
-/* line 200, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 201, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-boxyard .card-cta a:hover .arrow path,
-.blog .figure-card.badge-boxyard .card-cta a:focus .arrow path,
-.blog .figure-card.badge-boxyard .card-cta a:active .arrow path,
-.blog .figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
-.blog .figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
-.blog .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-boxyard .card-cta a:hover .arrow path,
+.archive .figure-card.badge-boxyard .card-cta a:focus .arrow path,
+.archive .figure-card.badge-boxyard .card-cta a:active .arrow path,
+.archive .figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
+.archive .figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
+.archive .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
   fill: #E63C2F;
 }
 
-/* line 208, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 209, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-frontier .card-badge,
-.blog .figure-card.badge-frontier .card-cta,
-.blog .figure-card.badge-frontier-rtp .card-badge,
-.blog .figure-card.badge-frontier-rtp .card-cta {
+.archive .figure-card.badge-frontier .card-badge,
+.archive .figure-card.badge-frontier .card-cta,
+.archive .figure-card.badge-frontier-rtp .card-badge,
+.archive .figure-card.badge-frontier-rtp .card-cta {
   border-color: #57C1A5;
   color: #57C1A5;
 }
 
-/* line 214, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 215, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-frontier .card-cta a:hover,
-.blog .figure-card.badge-frontier .card-cta a:focus,
-.blog .figure-card.badge-frontier .card-cta a:active,
-.blog .figure-card.badge-frontier-rtp .card-cta a:hover,
-.blog .figure-card.badge-frontier-rtp .card-cta a:focus,
-.blog .figure-card.badge-frontier-rtp .card-cta a:active {
+.archive .figure-card.badge-frontier .card-cta a:hover,
+.archive .figure-card.badge-frontier .card-cta a:focus,
+.archive .figure-card.badge-frontier .card-cta a:active,
+.archive .figure-card.badge-frontier-rtp .card-cta a:hover,
+.archive .figure-card.badge-frontier-rtp .card-cta a:focus,
+.archive .figure-card.badge-frontier-rtp .card-cta a:active {
   color: #2FA787;
 }
 
-/* line 217, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 218, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-frontier .card-cta a:hover .arrow path,
-.blog .figure-card.badge-frontier .card-cta a:focus .arrow path,
-.blog .figure-card.badge-frontier .card-cta a:active .arrow path,
-.blog .figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
-.blog .figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
-.blog .figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-frontier .card-cta a:hover .arrow path,
+.archive .figure-card.badge-frontier .card-cta a:focus .arrow path,
+.archive .figure-card.badge-frontier .card-cta a:active .arrow path,
+.archive .figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
+.archive .figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
+.archive .figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
   fill: #57C1A5;
 }
 
-/* line 225, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 226, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-stem .card-badge,
-.blog .figure-card.badge-stem .card-cta,
-.blog .figure-card.badge-stem-rtp .card-badge,
-.blog .figure-card.badge-stem-rtp .card-cta {
+.archive .figure-card.badge-stem .card-badge,
+.archive .figure-card.badge-stem .card-cta,
+.archive .figure-card.badge-stem-rtp .card-badge,
+.archive .figure-card.badge-stem-rtp .card-cta {
   border-color: #654EA3;
   color: #654EA3;
 }
 
-/* line 231, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 232, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-stem .card-cta a:hover,
-.blog .figure-card.badge-stem .card-cta a:focus,
-.blog .figure-card.badge-stem .card-cta a:active,
-.blog .figure-card.badge-stem-rtp .card-cta a:hover,
-.blog .figure-card.badge-stem-rtp .card-cta a:focus,
-.blog .figure-card.badge-stem-rtp .card-cta a:active {
+.archive .figure-card.badge-stem .card-cta a:hover,
+.archive .figure-card.badge-stem .card-cta a:focus,
+.archive .figure-card.badge-stem .card-cta a:active,
+.archive .figure-card.badge-stem-rtp .card-cta a:hover,
+.archive .figure-card.badge-stem-rtp .card-cta a:focus,
+.archive .figure-card.badge-stem-rtp .card-cta a:active {
   color: #654EA3;
 }
 
-/* line 234, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 235, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.blog .figure-card.badge-stem .card-cta a:hover .arrow path,
-.blog .figure-card.badge-stem .card-cta a:focus .arrow path,
-.blog .figure-card.badge-stem .card-cta a:active .arrow path,
-.blog .figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
-.blog .figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
-.blog .figure-card.badge-stem-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-stem .card-cta a:hover .arrow path,
+.archive .figure-card.badge-stem .card-cta a:focus .arrow path,
+.archive .figure-card.badge-stem .card-cta a:active .arrow path,
+.archive .figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
+.archive .figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
+.archive .figure-card.badge-stem-rtp .card-cta a:active .arrow path {
   fill: #654EA3;
 }
 
@@ -14792,17 +14781,11 @@ nav ul a {
 
 /* line 81, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
-.single-post header {
-  text-align: center;
-}
-
-/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
-
 .single-post .entry-title {
   margin-bottom: 0;
 }
 
-/* line 89, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
 .single-post .entry-content {
   margin-bottom: 4rem;
@@ -14811,7 +14794,7 @@ nav ul a {
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header {
-  background: #7A868C;
+  background: #BCCFE9;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -14859,6 +14842,32 @@ nav ul a {
   .single .page-header .entry-title-container {
     width: 100%;
   }
+}
+
+/* line 39, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .meta .contact {
+  padding: 5px 0;
+}
+
+/* line 42, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .meta .contact .icon {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+/* line 47, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .meta .contact path {
+  fill: #333F48;
+}
+
+/* line 51, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
+.single .meta .contact a {
+  color: #333F48;
+  text-decoration: underline;
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/layouts/_events.scss */
@@ -16127,7 +16136,7 @@ body .entry-content a {
 /* line 2, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header {
-  background-color: #57C1A5;
+  background-color: #AFE5D9;
 }
 
 /* line 5, resources/assets/styles/layouts/_single.scss */

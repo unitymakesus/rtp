@@ -2,9 +2,10 @@
 @import "/../../../../rtp-core/resources/assets/styles/main";
 
 // Import child theme overrides into this file
-@import "common/variables";
 @import "common/typography";
+@import "components/give";
 @import "layouts/header";
 @import "layouts/footer";
 @import "layouts/home";
+@import "layouts/blog";
 @import "layouts/single";

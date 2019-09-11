@@ -1,5 +1,9 @@
 .page-footer {
   .footer-social {
-    background: rgba($color-mint, 0.1);
+    background: $color-purple-light;
+  }
+
+  h3 {
+    color: $color-white;
   }
 }

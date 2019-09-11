@@ -12646,15 +12646,17 @@ a.btn-small,
   font-size: 0.9em;
   -webkit-box-shadow: none;
           box-shadow: none;
+  letter-spacing: 0;
+  padding: 0;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 28, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button span {
   color: #000;
 }
 
-/* line 30, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 32, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button::after {
   content: '';
@@ -12674,7 +12676,7 @@ a.btn-small,
   vertical-align: -0.4em;
 }
 
-/* line 45, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 47, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:hover span,
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:focus span,
@@ -12682,7 +12684,7 @@ a.btn-small,
   text-decoration: underline;
 }
 
-/* line 49, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 51, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:hover::after,
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:focus::after,
@@ -13400,9 +13402,9 @@ figure.post-thumbnail {
   font-size: 1em;
   font-weight: normal;
   text-decoration: none;
-  -webkit-transition: all .2s;
-  -o-transition: all .2s;
-  transition: all .2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 /* line 49, ../rtp-core/resources/assets/styles/components/_pagination.scss */
@@ -14779,17 +14781,11 @@ nav ul a {
 
 /* line 81, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
-.single-post header {
-  text-align: center;
-}
-
-/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
-
 .single-post .entry-title {
   margin-bottom: 0;
 }
 
-/* line 89, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
 .single-post .entry-content {
   margin-bottom: 4rem;
@@ -14798,7 +14794,7 @@ nav ul a {
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header {
-  background: #7A868C;
+  background: #BCCFE9;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -15875,13 +15871,7 @@ p {
   background: rgba(75, 156, 211, 0.1);
 }
 
-/* line 2, resources/assets/styles/layouts/_single.scss */
-
-.single .page-header {
-  background-color: #A1DAE8;
-}
-
-/* line 5, resources/assets/styles/layouts/_single.scss */
+/* line 3, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container,
 .single .page-header .container-wide,
@@ -15890,7 +15880,7 @@ p {
   background: transparent;
 }
 
-/* line 9, resources/assets/styles/layouts/_single.scss */
+/* line 7, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header h1 {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');

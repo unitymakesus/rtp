@@ -12646,15 +12646,17 @@ a.btn-small,
   font-size: 0.9em;
   -webkit-box-shadow: none;
           box-shadow: none;
+  letter-spacing: 0;
+  padding: 0;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 28, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button span {
   color: #000;
 }
 
-/* line 30, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 32, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button::after {
   content: '';
@@ -12674,7 +12676,7 @@ a.btn-small,
   vertical-align: -0.4em;
 }
 
-/* line 45, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 47, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:hover span,
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:focus span,
@@ -12682,7 +12684,7 @@ a.btn-small,
   text-decoration: underline;
 }
 
-/* line 49, ../rtp-core/resources/assets/styles/components/_buttons.scss */
+/* line 51, ../rtp-core/resources/assets/styles/components/_buttons.scss */
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:hover::after,
 .fl-builder-content.fl-builder-content a.fl-button.fl-button:focus::after,
@@ -13400,9 +13402,9 @@ figure.post-thumbnail {
   font-size: 1em;
   font-weight: normal;
   text-decoration: none;
-  -webkit-transition: all .2s;
-  -o-transition: all .2s;
-  transition: all .2s;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 /* line 49, ../rtp-core/resources/assets/styles/components/_pagination.scss */
@@ -14779,17 +14781,11 @@ nav ul a {
 
 /* line 81, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
-.single-post header {
-  text-align: center;
-}
-
-/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
-
 .single-post .entry-title {
   margin-bottom: 0;
 }
 
-/* line 89, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
 .single-post .entry-content {
   margin-bottom: 4rem;
@@ -14798,7 +14794,7 @@ nav ul a {
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header {
-  background: #7A868C;
+  background: #BCCFE9;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -15816,12 +15812,9 @@ body#tinymce {
 
 body h1,
 body .h1 {
-  font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
-  font-size: 55px;
   font-weight: 600;
-  letter-spacing: -0.3px;
-  line-height: 1.2em;
+  font-size: 60px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -15833,18 +15826,17 @@ body .h1 {
   }
 }
 
-/* line 15, resources/assets/styles/common/_typography.scss */
+/* line 12, resources/assets/styles/common/_typography.scss */
 
 body h2,
 body .h2 {
-  font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: 600;
+  color: #654EA3;
   font-size: 40px;
-  color: #57C1A5;
 }
 
-/* line 23, resources/assets/styles/common/_typography.scss */
+/* line 19, resources/assets/styles/common/_typography.scss */
 
 body h3,
 body .single-mec-events .mec-event-social h3,
@@ -15852,58 +15844,126 @@ body .single-mec-events .mec-event-social h3,
 body .h3,
 body .single-mec-events .mec-events-content h2,
 .single-mec-events .mec-events-content body h2 {
-  font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
-  line-height: 1.3em;
   font-weight: 600;
-  font-size: 30px;
+  color: #654EA3;
+  font-size: 26px;
   letter-spacing: 0;
-  margin-top: 0;
 }
 
-/* line 33, resources/assets/styles/common/_typography.scss */
+/* line 27, resources/assets/styles/common/_typography.scss */
 
 body .entry-content a {
-  color: #57C1A5;
+  color: #654EA3;
+}
+
+/* line 32, resources/assets/styles/common/_typography.scss */
+
+strong,
+.card-cta span {
+  font-weight: 600;
+}
+
+/* line 2, resources/assets/styles/components/_give.scss */
+
+.give-form-wrap [type="radio"]:not(:checked),
+.give-form-wrap [type="radio"]:checked {
+  position: relative;
+  opacity: 1;
+}
+
+/* line 7, resources/assets/styles/components/_give.scss */
+
+.give-form-wrap li {
+  margin-bottom: 10px !important;
+}
+
+/* line 12, resources/assets/styles/components/_give.scss */
+
+form[id*=give-form] #give-donation-level-radio-list > li label {
+  display: inline;
+  color: #000;
+  font-size: 16px;
+}
+
+/* line 18, resources/assets/styles/components/_give.scss */
+
+.give-btn {
+  background: #4B9CD3;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: #FFF;
+  padding: 10px 2rem;
+}
+
+/* line 26, resources/assets/styles/components/_give.scss */
+
+.give-btn:hover,
+.give-btn:active,
+.give-btn:focus {
+  background: #4B9CD3;
+  text-decoration: underline;
+}
+
+/* line 32, resources/assets/styles/components/_give.scss */
+
+#give-receipt {
+  max-width: 1260px;
+  margin: 4em auto;
+}
+
+/* line 38, resources/assets/styles/components/_give.scss */
+
+.give-success .page-header {
+  background-image: url(/wp-content/themes/rtp-child-stem/dist/images/texture-single-header.png) !important;
 }
 
 /* line 2, resources/assets/styles/layouts/_header.scss */
-
-.banner .logo {
-  max-width: 160px;
-}
-
-/* line 7, resources/assets/styles/layouts/_header.scss */
 
 .page-header .container,
 .page-header .container-wide,
 .page-header .sidebar-primary .content,
 .sidebar-primary .page-header .content {
-  background: rgba(87, 193, 165, 0.8);
+  background: rgba(75, 156, 211, 0.8);
 }
 
 /* line 2, resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social {
-  background: rgba(87, 193, 165, 0.1);
+  background: #EEEDF5;
+}
+
+/* line 6, resources/assets/styles/layouts/_footer.scss */
+
+.page-footer h3,
+.page-footer .single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social .page-footer h3 {
+  color: #FFF;
 }
 
 /* line 2, resources/assets/styles/layouts/_home.scss */
 
 .home-banner-wrapper .home-banner {
-  background-image: none;
+  background: rgba(75, 156, 211, 0.8);
 }
 
 /* line 6, resources/assets/styles/layouts/_home.scss */
 
 .home-banner-wrapper .banner-cta {
-  background: rgba(0, 148, 201, 0.8);
+  background: rgba(41, 117, 168, 0.8);
+}
+
+/* line 1, resources/assets/styles/layouts/_blog.scss */
+
+.archive .figure-card .card-title {
+  text-transform: none;
 }
 
 /* line 2, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header {
-  background-color: #57C1A5;
+  background-color: #BCCFE9;
 }
 
 /* line 5, resources/assets/styles/layouts/_single.scss */
@@ -15918,7 +15978,7 @@ body .entry-content a {
 /* line 9, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header h1 {
-  color: #57C1A5;
+  color: #654EA3;
 }
 
 
