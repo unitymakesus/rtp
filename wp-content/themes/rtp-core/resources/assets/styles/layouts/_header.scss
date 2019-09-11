@@ -218,6 +218,7 @@ nav {
         a {
           cursor: pointer;
           position: relative;
+          padding-right: 40px;
 
           &::after {
             content: '';

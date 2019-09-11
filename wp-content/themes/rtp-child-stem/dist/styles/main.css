@@ -13976,9 +13976,10 @@ nav ul a {
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
   position: relative;
+  padding-right: 40px;
 }
 
-/* line 222, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 223, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -13997,7 +13998,7 @@ nav ul a {
   transition: all 0.2s;
 }
 
-/* line 237, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 238, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
@@ -14005,7 +14006,7 @@ nav ul a {
   background: transparent;
 }
 
-/* line 240, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 241, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -14037,7 +14038,7 @@ nav ul a {
   }
 }
 
-/* line 264, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 265, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14045,7 +14046,7 @@ nav ul a {
   height: auto;
 }
 
-/* line 283, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 284, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
@@ -14058,7 +14059,7 @@ nav ul a {
     height: 4.66667em;
   }
 
-  /* line 291, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 292, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14070,7 +14071,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 296, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 297, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14096,26 +14097,26 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 310, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 311, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 314, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 315, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 320, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 321, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 325, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 326, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
