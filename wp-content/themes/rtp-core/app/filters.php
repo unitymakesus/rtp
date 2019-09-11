@@ -229,3 +229,5 @@ if ( ! is_admin() ) { // Don't touch anything inside of the WordPress Dashboard,
     return $title;
   }, 10, 2 );
 }
+
+add_filter( 'http_request_host_is_external', '__return_true' );
