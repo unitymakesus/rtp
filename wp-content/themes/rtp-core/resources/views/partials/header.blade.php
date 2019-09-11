@@ -45,8 +45,8 @@
         </div>
         <div class="navbar-menu flex flex-center space-between">
           {!! wp_nav_menu(['theme_location' => 'primary_navigation', 'container' => FALSE, 'menu_class' => 'flex flex-center space-between']) !!}
-        @endif
-      </div>
+        </div>
+      @endif
     </div>
   </nav>
 </header>
