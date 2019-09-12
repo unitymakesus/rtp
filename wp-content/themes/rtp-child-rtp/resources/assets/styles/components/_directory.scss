@@ -1,0 +1,62 @@
+.company-directory {
+  .page-header {
+    margin-bottom: 3rem;
+  }
+}
+
+.filter-selects {
+  .facet-label {
+    @extend .screen-reader-text;
+  }
+
+  .facetwp-type-dropdown {
+    width: 33%;
+    float: left;
+
+    input.select-dropdown {
+      border: 1px solid $color-white;
+      box-sizing: border-box;
+      background: $color-blue-unc;
+      color: $color-white;
+      height: 36px;
+      width: 100%;
+      margin: 0;
+      font-size: 0.8rem;
+      text-align: center;
+      text-transform: uppercase;
+
+      &:hover, &:focus, &:active {
+        background: $color-blue-duke;
+        color: $color-white;
+      }
+    }
+
+    .caret {
+      fill: $color-white;
+      z-index: 1;
+    }
+
+    ul.dropdown-content {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+
+      li {
+        min-height: 36px;
+
+        span {
+          line-height: 18px;
+          padding: 9px 16px;
+        }
+
+        &.selected {
+          background: $color-blue-duke;
+          border: 1px solid $color-white;
+
+          span {
+            color: $color-white;
+          }
+        }
+      }
+    }
+  }
+}

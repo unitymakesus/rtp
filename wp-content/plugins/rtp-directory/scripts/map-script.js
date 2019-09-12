@@ -392,24 +392,4 @@ jQuery(document).ready(function($) {
     set_map_facets();
   });
 
-  // Stick map to fixed position when it reaches top of screen on scroll
-  var $window = $(window);
-  var distance = $('#map').offset().top;
-
-  $window.scroll(function() {
-    if ( $window.scrollTop() >= distance ) {
-      $('#map').addClass('fixed');
-
-    } else {
-      $('#map').removeClass('fixed');
-    }
-  });
-
-  // Slide Toggle the Filter Bar
-  $('#filter-toggle').click(function() {
-    $('.filters .container-fluid').slideToggle('slow', function() {
-      distance = $('#map').offset().top;
-    });
-    $('#filter-toggle span').toggleClass('arrow-toggle');
-  });
 });

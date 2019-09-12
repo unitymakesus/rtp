@@ -291,7 +291,7 @@ class RTP_Dir_Listing {
   public function get_paged_locations() {
     $locations = new WP_Query(array(
       'post_type' => ['rtp-company', 'rtp-facility', 'rtp-site', 'rtp-space'],
-      'posts_per_page' => 20,
+      'posts_per_page' => 10,
       'post_status' => 'publish',
       'orderby' => 'post_type title',
       'order' => 'ASC',

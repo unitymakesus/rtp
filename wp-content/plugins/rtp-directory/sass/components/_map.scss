@@ -1,5 +1,5 @@
 .directory-map {
-  height: calc(100vh);
+  height: calc(100% - 200px);
   width: 100%;
   position: relative;
 
@@ -8,61 +8,54 @@
       display: none;
     }
   }
+}
 
-  &.fixed {
-    width: calc(50vw - 48px);
-    position: fixed;
-    top: 0;
-    right: 0;
-  }
+.company-directory.company-directory .key {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-  .key {
-    background: #f2f6f7;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 200px;
-    z-index: 100;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    padding: 10px;
+    li {
+      padding-left: 32px;
+      font-size: 0.9em;
+      position: relative;
 
-    h6 {
-      margin: 0;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    [class^="icon-"] {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      margin-right: 5px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-
-      &.icon-company {
-        background-image: url('../images/icon-company.svg');
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        left: 0;
+        top: 0;
       }
 
-      &.icon-recreation {
-        background-image: url('../images/icon-recreation.svg');
+      &.icon-company::before {
+        background-image: url('../images/icon-map-company.svg');
       }
 
-      &.icon-realestate {
-        background-image: url('../images/icon-realestate.svg');
+      &.icon-recreation::before {
+        background-image: url('../images/icon-map-recreation.svg');
       }
 
-      &.icon-multitenant {
-        background-image: url('../images/icon-multitenant.svg');
+      &.icon-forsale::before {
+        background-image: url('../images/icon-map-forsale.svg');
       }
 
-      &.icon-trails {
-        background-image: url('../images/icon-trail.svg');
+      &.icon-forlease::before {
+        background-image: url('../images/icon-map-forlease.svg');
+      }
+
+      &.icon-multitenant::before {
+        background-image: url('../images/icon-map-multitenant.svg');
+      }
+
+      &.icon-trails::before {
+        background-image: url('../images/icon-map-trail.svg');
       }
     }
   }

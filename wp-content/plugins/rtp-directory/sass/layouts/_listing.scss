@@ -4,10 +4,10 @@
 }
 
 .directory-listing {
-  border-top: 5px solid darken(#f2f6f7, 10%);
+  // border-top: 5px solid darken(#f2f6f7, 10%);
 
   .label {
-    font-size: 0.85em;
+    // font-size: 0.85em;
     display: block;
 
     div {
@@ -26,17 +26,16 @@
 }
 
 .result-item {
-  margin-bottom: 15px;
   overflow: hidden;
   clear: both;
   display: flex;
   align-items: center;
+  border-top: 1px solid #CBC8C7;
 
   .result-logo {
     margin-right: 10px;
     width: 96px;
     height: 73px;
-    border: 1px solid #979797;
     flex: 0 0 auto;
     box-sizing: content-box;
 
@@ -45,12 +44,12 @@
       display: block;
       margin: 0 auto;
       height: inherit;
-      padding: 5px;
     }
   }
 
   h4 {
     margin: 0;
+    font-size: 1rem;
 
     a {
       text-decoration: none;

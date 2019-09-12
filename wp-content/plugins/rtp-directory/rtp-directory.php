@@ -314,13 +314,13 @@ final class RTP_Dir {
    * @since   1.0.0
    */
   public function load_scripts_styles() {
-    if (is_page_template('templates/page-directory.php')) {
+    if (is_page_template('templates/page-directory.php') || is_page('company-directory')) {
       // Enqueue scripts
-      wp_enqueue_script( 'mapbox-script', 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js', array(), null, true );
+      wp_enqueue_script( 'mapbox-script', 'https://api.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js', array(), null, true );
       wp_enqueue_script( 'rtp-dir-script', $this->plugin_url . 'scripts/map-script.js', array('mapbox-script'), '1.0.0', true );
 
       // Enqueue styles
-      wp_enqueue_style( 'mapbox-style', 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css', null, false);
+      wp_enqueue_style( 'mapbox-style', 'https://api.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css', null, false);
       wp_enqueue_style( 'rtp-dir-style', $this->plugin_url . 'css/style.css', null, '1.0.0');
 
       // Set up JS vars

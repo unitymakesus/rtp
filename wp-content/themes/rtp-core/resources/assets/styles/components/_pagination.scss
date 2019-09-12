@@ -34,7 +34,7 @@
     }
   }
 
-  .page-numbers {
+  .page-numbers, .facetwp-page {
     color: $color-slate;
     display: inline-block;
     min-width: 40px;
@@ -48,6 +48,7 @@
 
     &:hover, &:focus {
       color: $color-slate;
+      background: none;
 
       @extend .z-depth-2;
     }
