@@ -29,22 +29,25 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 			$this->prefix = $prefix;
 			$this->mainfile = $mainfile;
 			$this->domain = $domain;
+			$this->is_theme = ( strpos( $this->mainfile, '-theme' ) !== false  );
 
-			register_activation_hook( $mainfile, array( $this, 'show_meowapps_create_rating_date' ) );
-
-			if ( is_admin() ) {
-				$license = get_option( $this->prefix . '_license', "" );
-				if ( ( !empty( $license ) ) && !file_exists( plugin_dir_path( $this->mainfile ) . 'common/meowapps/admin.php' ) ) {
-					add_action( 'admin_notices', array( $this, 'admin_notices_licensed_free' ) );
-				}
-				if ( !$disableReview ) {
-					$rating_date = $this->create_rating_date();
-					if ( time() > $rating_date ) {
-						add_action( 'admin_notices', array( $this, 'admin_notices_rating' ) );
+			// If there is no mainfile, it's either a Pro only Plugin (with no Free version available) or a Theme.
+			if ( !$this->is_theme ) {
+				register_activation_hook( $mainfile, array( $this, 'show_meowapps_create_rating_date' ) );
+				if ( is_admin() ) {
+					$license = get_option( $this->prefix . '_license', "" );
+					if ( ( !empty( $license ) ) && !file_exists( plugin_dir_path( $this->mainfile ) . 'common/meowapps/admin.php' ) ) {
+						add_action( 'admin_notices', array( $this, 'admin_notices_licensed_free' ) );
+					}
+					if ( !$disableReview ) {
+						$rating_date = $this->create_rating_date();
+						if ( time() > $rating_date ) {
+							add_action( 'admin_notices', array( $this, 'admin_notices_rating' ) );
+						}
 					}
 				}
 			}
-
+			
 			add_filter( 'edd_sl_api_request_verify_ssl', array( $this, 'request_verify_ssl' ), 10, 0 );
 		}
 
@@ -348,30 +351,41 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 				
 				<h2 style="margin-bottom: 0px; margin-top: 25px;">Featured Plugins</h2>
 				<div class="meow-row meow-featured-plugins">
-					<div class="meow-box meow-col meow-span_1_of_2 ">
-						<ul class="">
-							<li><img src='<?= $this->common_url( 'img/wplr-sync.jpg' ) ?>' /><b>WP/LR Sync</b>
-								<?php echo $this->check_install( 'wplr-sync' ) ?><br />
-								Synchronize photos (folders, collections, keywords) from Lightroom to WordPress.</li>
-							<li><img src='<?= $this->common_url( 'img/meow-lightbox.jpg' ) ?>' /><b>Meow Lightbox</b>
-								<?php echo $this->check_install( 'meow-lightbox' ) ?><br />
-								Light but powerful lightbox that can also display photo information (EXIF).</li>
-							<li><img src='<?= $this->common_url( 'img/meow-gallery.jpg' ) ?>' /><b>Meow Gallery</b>
-								<?php echo $this->check_install( 'meow-gallery' ) ?><br />
-								Gallery (using the built-in WP gallery) that makes your website look better.</li>
-						</ul>
-					</div>
 					<div class="meow-box meow-col meow-span_1_of_2">
 						<ul class="">
-							<li><img src='<?= $this->common_url( 'img/media-file-renamer.jpg' ) ?>' /><b>Media File Renamer</b>
-								 <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
-								For nicer filenames and better SEO.</li>
-							<li><img src='<?= $this->common_url( 'img/media-cleaner.jpg' ) ?>' /><b>Media Cleaner</b>
+							<li><img src='<?= $this->common_url( 'img/media-cleaner.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/media-cleaner/'><b>Media Cleaner</b></a>
 								<?php echo $this->check_install( 'media-cleaner' ) ?><br />
 								Detect the files which are not in use.</li>
-							<li><img src='<?= $this->common_url( 'img/wp-retina-2x.jpg' ) ?>' /><b>WP Retina 2x</b>
+							<li><img src='<?= $this->common_url( 'img/media-file-renamer.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/media-file-renamer/'><b>Media File Renamer</b></a>
+								 <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
+								For nicer filenames and a better SEO.</li>
+							<li><img src='<?= $this->common_url( 'img/default.png' ) ?>' />
+								<a href='https://meowapps.com/plugin/contact-form-block/'><b>Contact Form Block</b></a>
+								<?php echo $this->check_install( 'contact-form-block' ) ?><br />
+								A simpler, nicer, prettier contact form.</li>
+							<!--li><img src='<?= $this->common_url( 'img/wp-retina-2x.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/wp-retina-2x/'><b>WP Retina 2x</b></a>
 								<?php echo $this->check_install( 'wp-retina-2x' ) ?><br />
-								The famous plugin that adds Retina support.</li>
+								The famous plugin that adds Retina support.</li-->
+
+						</ul>
+					</div>
+					<div class="meow-box meow-col meow-span_1_of_2 ">
+						<ul class="">
+							<li><img src='<?= $this->common_url( 'img/meow-gallery.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/meow-gallery/'><b>Meow Gallery</b></a>
+								<?php echo $this->check_install( 'meow-gallery' ) ?><br />
+								Beautiful but lightweight gallery with many layouts. The only one that allows you to uninstall it without losing anything.</li>
+							<li><img src='<?= $this->common_url( 'img/meow-lightbox.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/meow-lightbox/'><b>Meow Lightbox</b></a>
+								<?php echo $this->check_install( 'meow-lightbox' ) ?><br />
+								Pretty and ultra-optimized Lightbox which can also display your EXIF data. You will love it.</li>
+							<li><img src='<?= $this->common_url( 'img/wplr-sync.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/wplr-sync/'><b>WP/LR Sync</b></a>
+								<?php echo $this->check_install( 'wplr-sync' ) ?><br />
+								Synchronize your Lightroom to your WordPress. This plugin is loved by all the photographers using Lightroom and WordPress.</li>
 						</ul>
 					</div>
 				</div>

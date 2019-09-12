@@ -38,7 +38,7 @@ class PolicyLog404s extends Firewall {
             if ( Yoda::is_blacklisted() ) { 
                 
                 // Block display of any 404 errors
-                $this->block( '404s', 'IP is blacklisted. [' . __LINE__ . ']' );
+                $this->block( '404s', __( 'IP is blacklisted.', SECSAFE_SLUG ) . ' [' . __LINE__ . ']' );
                 return; 
 
             }

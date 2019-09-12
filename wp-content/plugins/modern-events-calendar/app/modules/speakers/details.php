@@ -20,7 +20,7 @@ if(!count($speakers)) return false;
         <?php foreach($speakers as $speaker): ?>
         <li>
             <div class="mec-speaker-avatar">
-                <a class="mec-color-hover" href="#mec-speaker-info-<?php echo $event->ID.'-'.$speaker['id']; ?>" data-lity>
+                <a class="mec-color-hover" href="#mec-speaker-info-<?php echo $event->ID.'-'.$speaker['id']; ?>">
                     <?php if(isset($speaker['thumbnail']) and trim($speaker['thumbnail'])): ?>
                     <img class="mec-border-color-hover" src="<?php echo $speaker['thumbnail']; ?>" alt="<?php echo $speaker['name']; ?>">
                     <?php endif; ?>

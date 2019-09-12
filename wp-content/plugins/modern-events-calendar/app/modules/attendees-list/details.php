@@ -20,14 +20,16 @@ $start_date = (isset($date['start']) and isset($date['start']['date'])) ? $date[
 $limit = isset($settings['bp_attendees_module_limit']) ? $settings['bp_attendees_module_limit'] : 20;
 $bookings = $this->get_bookings($event->data->ID, $start_date, $limit);
 
+// Book Library
+$book = $this->getBook();
+
 // Start Date belongs to future but booking module cannot show so return without any output
 if(!$this->can_show_booking_module($event) and strtotime($start_date) > time()) return;
 
 $attendees = array();
 foreach($bookings as $booking)
 {
-    if(!isset($attendees[$booking->post_author])) $attendees[$booking->post_author] = 1;
-    else $attendees[$booking->post_author]++;
+    $attendees[$booking->post_author] = $booking->ID;
 }
 ?>
 <div class="mec-attendees-list-details mec-frontbox" id="mec_attendees_list_details">
@@ -36,7 +38,7 @@ foreach($bookings as $booking)
     <p><?php _e('No attendee found! Be the first one to book!', 'mec'); ?></p>
     <?php else: ?>
     <ul>
-        <?php do_action('mec_attendeed_hook', $attendees); foreach($attendees as $attendee_id=>$tickets): ?>
+        <?php do_action('mec_attendeed_hook', $attendees); foreach($attendees as $attendee_id=>$booking_id): ?>
         <li>
             <div class="mec-attendee-avatar">
                 <a href="<?php echo bp_core_get_user_domain($attendee_id); ?>" title="<?php echo bp_core_get_user_displayname($attendee_id); ?>">
@@ -51,7 +53,7 @@ foreach($bookings as $booking)
                 if(!$name) $name = $user->display_name;
             ?>
             <div class="mec-attendee-profile-link">
-                <?php echo '<a href="'.$link.'">'.$name.'</a>'.($tickets > 0 ? ' <span>'.sprintf(__('%s tickets', 'mec'), $tickets).'</span>' : ''); ?>
+                <?php echo '<a href="'.$link.'">'.$name.'</a>'.(' <span>'.sprintf(__('%s tickets', 'mec'), $book->get_total_attendees($booking_id)).'</span>'); ?>
             </div>
         </li>
         <?php endforeach; ?>

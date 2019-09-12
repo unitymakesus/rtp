@@ -29,7 +29,7 @@ FLBuilder::register_module('FLMapModule', array(
 			'general' => array(
 				'title'  => '',
 				'fields' => array(
-					'address' => array(
+					'address'             => array(
 						'type'        => 'textarea',
 						'rows'        => '3',
 						'label'       => __( 'Address', 'fl-builder' ),
@@ -38,7 +38,7 @@ FLBuilder::register_module('FLMapModule', array(
 							'type' => 'none',
 						),
 					),
-					'height'  => array(
+					'height'              => array(
 						'type'       => 'unit',
 						'label'      => __( 'Height', 'fl-builder' ),
 						'default'    => '400',
@@ -58,7 +58,14 @@ FLBuilder::register_module('FLMapModule', array(
 							'property' => 'height',
 						),
 					),
-					'border'  => array(
+					'map_title_attribute' => array(
+						'type'        => 'text',
+						'label'       => __( 'Map title attribute for accessibility', 'fl-builder' ),
+						'default'     => '',
+						'placeholder' => __( 'Map title here', 'fl-builder' ),
+						'connections' => array( 'string' ),
+					),
+					'border'              => array(
 						'type'       => 'border',
 						'label'      => __( 'Border', 'fl-builder' ),
 						'responsive' => true,

@@ -44,7 +44,7 @@ final class Table404s extends Table {
             'referer'       => __( 'HTTP Referer', SECSAFE_SLUG ),
             'ip'            => __( 'IP Address', SECSAFE_SLUG ),
             'status'        => __( 'Status', SECSAFE_SLUG ),
-            'threats'        => __( 'Threat', SECSAFE_SLUG )
+            'threats'       => __( 'Threat', SECSAFE_SLUG )
         ];
 
 
@@ -70,7 +70,8 @@ final class Table404s extends Table {
     protected function get_status() {
 
         return [ 
-                'blocked' => 'blocked'
+            //  'value'     => 'label'
+                'blocked'   => __( 'Blocked', SECSAFE_SLUG )
             ];
 
     } // get_status()
@@ -98,6 +99,7 @@ final class Table404s extends Table {
         $columns = [
                         [
                             'id'            => 'errors',
+                            'label'         => __( '404 Errors', SECSAFE_SLUG ),
                             'color'         => '#dc3232',
                             'type'          => 'area-spline',
                             'db'            => '404s'
@@ -113,7 +115,7 @@ final class Table404s extends Table {
         ];
 
         $args = [
-            'date_start'    => date('Y-m-d 00:00:00', strtotime('-' . $days_ago . ' days') ),
+            'date_start'    => date( 'Y-m-d 00:00:00', strtotime( '-' . $days_ago . ' days' ) ),
             'date_end'      => date( 'Y-m-d 23:59:59', time() ),
             'date_days'     => $days,
             'date_days_ago' => $days_ago,
@@ -126,7 +128,7 @@ final class Table404s extends Table {
 
                 <div class="chart chart-404s-line td td-12 center">
 
-                    <h3>' . __( '404 Errors Over The Past', SECSAFE_SLUG ) . ' ' . $days . ' ' . __( 'Days', SECSAFE_SLUG ) . '</h3>
+                    <h3>' . sprintf( __( '404 Errors Over The Past %d Days', SECSAFE_SLUG ), $days ) . '</h3>
                     <p>' . substr( $args['date_start'], 0, 10 ) . ' - ' . substr( $args['date_end'], 0, 10 ) . '
                     <div id="chart-line"></div>
 

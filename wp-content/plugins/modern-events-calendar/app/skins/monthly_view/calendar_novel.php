@@ -101,6 +101,8 @@ elseif($week_start == 5) // Friday
                     $image = !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ;
                     $price_schema = isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; 
                     $currency_schema = isset($settings['currency']) ? $settings['currency'] : '' ;
+                    $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                    if($schema_settings == '1' ):                    
                     echo '
                     <script type="application/ld+json">
                     {
@@ -128,7 +130,7 @@ elseif($week_start == 5) // Friday
                     }
                     </script>
                     ';
-
+                    endif;
                     echo '<a class="event-single-link-novel" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'"><div style="background:'.$event_color.'" class="mec-single-event-novel mec-event-article '.$this->get_event_classes($event).'">';
                     echo '<h4 class="mec-event-title">'.$event->data->title.'</h4>';
                     echo '</div></a>';

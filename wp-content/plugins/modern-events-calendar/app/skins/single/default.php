@@ -2,17 +2,20 @@
 /** no direct access **/
 defined('MECEXEC') or die();
 $single = new MEC_skin_single();
+wp_enqueue_style('mec-lity-style', $this->main->asset('packages/lity/lity.min.css'));
+wp_enqueue_script('mec-lity-script', $this->main->asset('packages/lity/lity.min.js'));
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?> clearfix <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->uniqueid; ?>">
+    <?php do_action('mec_top_single_event' , get_the_ID()); ?>
     <article class="row mec-single-event">
         <!-- start breadcrumbs -->
         <?php
-        $breadcrumbs_settings = $settings['breadcrumbs'];
+        $breadcrumbs_settings = isset( $settings['breadcrumbs'] ) ? $settings['breadcrumbs'] : '';
         if($breadcrumbs_settings == '1' ): ?>
             <div class="mec-breadcrumbs">
-                <?php  $single->MEC_breadcrumbs( get_the_ID() ); ?>
+                <?php  $single->display_breadcrumb_widget( get_the_ID() ); ?>
             </div>
-        <?php endif ;?>
+        <?php endif; ?>
         <!-- end breadcrumbs --> 
         <div class="col-md-8">
             <div class="mec-events-event-image"><?php echo $event->data->thumbnails['full']; ?></div>
@@ -33,7 +36,7 @@ $single = new MEC_skin_single();
             <?php endif; ?>
 
             <!-- Hourly Schedule -->
-            <?php $this->show_hourly_schedules($event); ?>
+            <?php $this->display_hourly_schedules_widget($event); ?>
 
             <!-- Booking Module -->
             <?php if($this->main->is_sold($event, (trim($occurrence) ? $occurrence : $event->date['start']['date'])) and count($event->dates) <= 1): ?>
@@ -215,6 +218,7 @@ $single = new MEC_skin_single();
                                 <i class="mec-sl-sitemap"></i>
                                 <h6><?php _e('Website', 'mec'); ?></h6>
                                 <span><a href="<?php echo (strpos($organizer['url'], 'http') === false ? 'http://'.$organizer['url'] : $organizer['url']); ?>" class="mec-color-hover" target="_blank"><?php echo $organizer['url']; ?></a></span>
+                                <?php do_action( 'mec_single_default_organizer', $organizer ); ?>
                             </dd>
                             <?php endif; ?>
                         </div>
@@ -225,8 +229,8 @@ $single = new MEC_skin_single();
 
                 <!-- Register Booking Button -->
                 <?php if($this->main->can_show_booking_module($event)): ?>
-                    <?php $data_lity = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity = 'data-lity'; ?>
-                    <a class="mec-booking-button mec-bg-color <?php if( isset($settings['single_booking_style']) and $settings['single_booking_style'] != 'modal' ) echo 'simple-booking'; ?>" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                    <?php $data_lity = $data_lity_class =  ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ){ $data_lity = 'data-lity'; $data_lity_class = 'mec-booking-data-lity'; }  ?>
+                    <a class="mec-booking-button mec-bg-color <?php echo $data_lity_class; ?> <?php if( isset($settings['single_booking_style']) and $settings['single_booking_style'] != 'modal' ) echo 'simple-booking'; ?>" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>"  ><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
                 <?php elseif(isset($event->data->meta['mec_more_info']) and trim($event->data->meta['mec_more_info']) and $event->data->meta['mec_more_info'] != 'http://'): ?>
                     <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php if(isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) echo esc_html(trim($event->data->meta['mec_more_info_title']), 'mec'); else echo esc_html($this->main->m('register_button', __('REGISTER', 'mec')));
                      ?>
@@ -393,7 +397,7 @@ $single = new MEC_skin_single();
                 <?php
                 // Event Organizer
                 if(isset($event->data->organizers[$event->data->meta['mec_organizer_id']]) && !empty($event->data->organizers[$event->data->meta['mec_organizer_id']]) and $single->found_value('event_orgnizer', $settings) == 'on')
-                { 
+                {
                     $organizer = $event->data->organizers[$event->data->meta['mec_organizer_id']];
                     ?>
                     <div class="mec-single-event-organizer">
@@ -426,6 +430,7 @@ $single = new MEC_skin_single();
                             <i class="mec-sl-sitemap"></i>
                             <h6><?php _e('Website', 'mec'); ?></h6>
                             <span><a href="<?php echo (strpos($organizer['url'], 'http') === false ? 'http://'.$organizer['url'] : $organizer['url']); ?>" class="mec-color-hover" target="_blank"><?php echo $organizer['url']; ?></a></span>
+                            <?php do_action( 'mec_single_default_organizer', $organizer ); ?>
                         </dd>
                         <?php endif; ?>
                     </div>
@@ -436,10 +441,10 @@ $single = new MEC_skin_single();
 
                 <!-- Register Booking Button -->
                 <?php if($this->main->can_show_booking_module($event) and $single->found_value('register_btn', $settings) == 'on'): ?>
-                    <?php $data_lity = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity = 'data-lity'; ?>
-                    <a class="mec-booking-button mec-bg-color <?php if( isset($settings['single_booking_style']) and $settings['single_booking_style'] != 'modal' ) echo 'simple-booking'; ?>" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" <?php echo $data_lity; ?>><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
+                    <?php $data_lity = $data_lity_class =  ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ){ $data_lity = 'data-lity'; $data_lity_class = 'mec-booking-data-lity'; }  ?>
+                    <a class="mec-booking-button mec-bg-color <?php echo $data_lity_class; ?> <?php if( isset($settings['single_booking_style']) and $settings['single_booking_style'] != 'modal' ) echo 'simple-booking'; ?>" href="#mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>"  ><?php echo esc_html($this->main->m('register_button', __('REGISTER', 'mec'))); ?></a>
                 <?php elseif($single->found_value('register_btn', $settings) == 'on' and isset($event->data->meta['mec_more_info']) and trim($event->data->meta['mec_more_info']) and $event->data->meta['mec_more_info'] != 'http://'): ?>
-                    <a class="mec-booking-button mec-bg-color" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php if(isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) echo esc_html(trim($event->data->meta['mec_more_info_title']), 'mec'); else echo esc_html($this->main->m('register_button', __('REGISTER', 'mec')));
+                    <a class="mec-booking-button mec-bg-color" target="<?php echo (isset($event->data->meta['mec_more_info_target']) ? $event->data->meta['mec_more_info_target'] : '_self'); ?>" href="<?php echo $event->data->meta['mec_more_info']; ?>"><?php if(isset($event->data->meta['mec_more_info_title']) and trim($event->data->meta['mec_more_info_title'])) echo esc_html(trim($event->data->meta['mec_more_info_title']), 'mec'); else echo esc_html($this->main->m('register_button', __('REGISTER', 'mec')));
                      ?></a>
                 <?php endif; ?>
             </div>
@@ -474,9 +479,9 @@ $single = new MEC_skin_single();
             <?php dynamic_sidebar('mec-single-sidebar'); ?>
 
         </div>
-
         <?php endif; ?>
     </article>
+    <?php $this->display_related_posts_widget($event->ID); ?>
 </div>
 <?php
 $speakers = '""';
@@ -493,6 +498,9 @@ if(!empty($event->data->speakers))
     } 
     $speakers = json_encode($speakers);
 }
+
+$schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+if($schema_settings == '1' ):
 ?>
 <script type="application/ld+json">
 {
@@ -518,4 +526,20 @@ if(!empty($event->data->speakers))
 	"name" 			: "<?php esc_html_e(get_the_title()); ?>",
 	"url"			: "<?php the_permalink(); ?>"
 }
+</script>
+<?php endif; ?>
+<script>
+// Fix modal speaker in some themes
+jQuery( ".mec-speaker-avatar a" ).click(function(e) {
+    e.preventDefault();
+    var id =  jQuery(this).attr('href');
+    lity(id);
+});
+
+// Fix modal booking in some themes
+jQuery( ".mec-booking-button.mec-booking-data-lity" ).click(function(e) {
+    e.preventDefault();
+    var book_id =  jQuery(this).attr('href');
+    lity(book_id);
+});
 </script>

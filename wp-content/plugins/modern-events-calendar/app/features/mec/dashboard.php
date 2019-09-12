@@ -87,10 +87,38 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
         <?php if(!$this->getPRO()): ?>
         <div class="w-row mec-pro-notice">
             <div class="w-col-sm-12">
-                <div class="info-msg"><?php echo sprintf(__("You're using %s version of Modern Events Calendar. To use advanced booking system, modern skins like Agenda, Timetable, Masonry, Yearly View, Available Spots, etc you should %s to the Pro version.", 'mec'), '<strong>'.__('lite', 'mec').'</strong>', '<a class="info-msg-link" href="'.$this->get_pro_link().'" target="_blank">'.__('upgrade', 'wpl').'</a>'); ?></div>
+                <div class="info-msg">
+                    <p>
+                        <?php echo sprintf(__("You're using %s version of Modern Events Calendar. To use advanced booking system, modern skins like Agenda, Timetable, Masonry, Yearly View, Available Spots, etc you should upgrade to the Pro version.", 'mec'), '<strong>'.__('lite', 'mec').'</strong>'); ?>
+                    </p>
+                    <a class="info-msg-link" href="https://webnus.net/mec-purchase/" target="_blank">
+                        <?php esc_html_e('GO PREMIUM', 'modern-events-claendar-lite'); ?>
+                    </a>
+                    <div class="info-msg-coupon">
+                        <?php echo sprintf(__("Easily get a discount coupon by rating us on %s or following and reposting us on social media. Just send a screenshot to %s and you'll receive the %s", 'mec'), '<a href="https://wordpress.org/plugins/modern-events-calendar-lite/#reviews" target="_blank">'.__('WordPress', 'mec').'</a>', '<a href="mailto:sales@webnus.net" target="_blank">sales@webnus.net</a>','<strong>'.__('Copouns!', 'mec').'</strong>'); ?>
+                    </div>
+                    <div class="socialfollow">
+                        <a target="_blank" href="https://www.facebook.com/WebnusCo/" class="facebook">
+                            <i class="mec-sl-social-facebook"></i>
+                        </a>
+                        <a target="_blank" href="https://twitter.com/webnus" class="twitter">
+                            <i class="mec-sl-social-twitter"></i>
+                        </a>
+                        <a target="_blank" href="https://www.instagram.com/webnus/" class="instagram">
+                            <i class="mec-sl-social-instagram"></i>
+                        </a>
+                        <a target="_blank" href="https://www.youtube.com/channel/UCmQ-VeVK7nLR3bGpAkSYB1Q" class="youtube">
+                            <i class="mec-sl-social-youtube"></i>
+                        </a>
+                        <a target="_blank" href="https://dribbble.com/Webnus" class="dribbble">
+                            <i class="mec-sl-social-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <?php endif; ?>
+        <?php echo $this->addons_msg(); ?>
 
         <div class="w-row">
             <div class="w-col-sm-12">
@@ -115,30 +143,36 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
                     <div class="w-box-head">
                         <?php _e('MEC Activate', 'mec'); ?>
                     </div>
+                    <?php 
+                        if (current_user_can( 'administrator' )):
+                    ?>                    
                     <div class="w-box-content">
                         <p><?php echo esc_html__('In order to use all plugin features and options, please enter your purchase code.', 'mec'); ?></p>
                         <div class="box-mec-avtivation">
                             <?php 
                                 $mec_options = get_option('mec_options');
                                 $one_license = $five_license = $ten_license = $product_license = '';
-                                if ( !empty($mec_options) && isset($mec_options['product_name']) ):
-                                    if ( $mec_options['product_name'] == '1 License for MEC Plugin' )
+
+                                if(!empty($mec_options) && isset($mec_options['product_name']))
+                                {
+                                    if($mec_options['product_name'] == '1 License for MEC Plugin')
                                     {
                                         $one_license = 'checked';
-                                    } 
-                                    elseif ( $mec_options['product_name'] == '5 License for MEC Plugin' )
+                                    }
+                                    elseif($mec_options['product_name'] == '5 License for MEC Plugin')
                                     {
                                         $five_license = 'checked';
                                     }
-                                    elseif ( $mec_options['product_name'] == '10 License for MEC Plugin' )
+                                    elseif($mec_options['product_name'] == '10 License for MEC Plugin')
                                     {
                                         $ten_license = 'checked';
                                     }
-                                    if ( $mec_options['product_name'] != '' )
+
+                                    if($mec_options['product_name'] != '')
                                     {
                                         $product_license = $mec_options['purchase_code'];
                                     }
-                                endif;
+                                }
                             ?>
                             <form id="MECActivation" action="#" method="post">
                                 <div class="LicenseType">
@@ -158,7 +192,7 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
                                     {
                                         $license_status = 'PurchaseSuccess';
                                     } 
-                                    elseif ( !empty($mec_options['purchase_code']) && is_null($verify) )
+                                    elseif(!empty($mec_options['purchase_code']) && is_null($verify))
                                     {
                                         $license_status = 'PurchaseError';
                                     }
@@ -177,6 +211,14 @@ $box_stats = apply_filters('mec_dashboard_box_stats', true);
                             </div>
                         </div>
                     </div>
+                    <?php
+                        else: ?>
+                        <div class="w-box-content">
+                            <p style="background: #f7f7f7f7;display: inline-block;padding: 17px 35px;border-radius: 3px;/* box-shadow: 0 1px 16px rgba(0,0,0,.034); */"><?php echo esc_html__('You cannot access this section.', 'mec'); ?></p>
+                        </div>
+                            <?php                            
+                        endif;
+                    ?>                    
                 </div>
             </div>
             <?php endif; ?>

@@ -135,6 +135,12 @@ class FLBuilderArt {
 		);
 
 		$args = wp_parse_args( $args, $defaults );
+		/**
+		 * Filter shape args during shape_register()
+		 * @see fl_builder_art_register_shape
+		 * @since 2.2.5
+		 */
+		$args = apply_filters( 'fl_builder_art_register_shape', $args );
 		$key  = $args['name'];
 
 		/**

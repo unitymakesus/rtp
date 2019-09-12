@@ -2101,6 +2101,9 @@ Y.namespace('FL').SlideshowImage = Y.Base.create('fl-slideshow-image', Y.Widget,
 			this._image.set( 'aria-hidden', 'true')
 			this._image.set( 'alt', "")
 		}
+		else {
+			this._image.set( 'alt', this._imageInfo.alt )
+		}
 
 		// Remove load events.
 		this._image.detachAll();
@@ -3330,6 +3333,7 @@ Y.namespace('FL').SlideshowNav = Y.Base.create('fl-slideshow-nav', Y.Widget, [Y.
 				}
 
 				this._buttons[name].set('name', name);
+				this._buttons[name].set('aria-label', name);
 				this._buttons[name].addClass('fl-slideshow-nav-' + name);
 				b[i].container.appendChild(this._buttons[name]);
 			}
@@ -9226,6 +9230,7 @@ Y.namespace('FL').SlideshowAlbumLoader = Y.Base.create('fl-slideshow-album-loade
 			album.images[i].filename = this._source.urls[i].largeURL.split('/').pop();
 			album.images[i].format = '';
 			album.images[i].caption = this._source.urls[i].caption || '';
+			album.images[i].alt = this._source.urls[i].alt || '';
 			album.images[i].link = this._source.urls[i].largeURL;
 			album.images[i].thumbURL = this._source.urls[i].thumbURL || this._source.urls[i].largeURL;
 			album.images[i].smallURL = this._source.urls[i].smallURL || this._source.urls[i].largeURL;

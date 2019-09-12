@@ -15,6 +15,11 @@ var mecSingleEventDisplayer = {
                 jQuery('.mec-modal-result').removeClass("mec-modal-preloader");
                 lity(response);
 
+                setTimeout(function()
+                {
+                    grecaptcha.render("g-recaptcha", {sitekey: mecdata.recapcha_key});
+                }, 1000);
+
                 if(image_popup != 0)
                 {
                     if(jQuery('.lity-content .mec-events-content a img').length > 0)
@@ -89,36 +94,36 @@ var mecSingleEventDisplayer = {
             search();
         });
 
-        $("#mec_sf_year_"+settings.id).on('change', function(e)
-        {
-            // Change Month to January if it's set to ignore date and year changed
-            if($("#mec_sf_month_"+settings.id).val() === 'ignore_date') $("#mec_sf_month_"+settings.id).val('01');
-            
+        $("#mec_sf_event_type_" + settings.id).on('change', function (e) {
             search();
         });
-        
-        function search()
-        {
-            var s = $("#mec_sf_s_"+settings.id).length ? $("#mec_sf_s_"+settings.id).val() : '';
-            var category = $("#mec_sf_category_"+settings.id).length ? $("#mec_sf_category_"+settings.id).val() : '';
-            var location = $("#mec_sf_location_"+settings.id).length ? $("#mec_sf_location_"+settings.id).val() : '';
-            var organizer = $("#mec_sf_organizer_"+settings.id).length ? $("#mec_sf_organizer_"+settings.id).val() : '';
-            var speaker = $("#mec_sf_speaker_"+settings.id).length ? $("#mec_sf_speaker_"+settings.id).val() : '';
-            var tag = $("#mec_sf_tag_"+settings.id).length ? $("#mec_sf_tag_"+settings.id).val() : '';
-            var label = $("#mec_sf_label_"+settings.id).length ? $("#mec_sf_label_"+settings.id).val() : '';
-            var month = $("#mec_sf_month_"+settings.id).length ? $("#mec_sf_month_"+settings.id).val() : '';
-            var year = $("#mec_sf_year_"+settings.id).length ? $("#mec_sf_year_"+settings.id).val() : '';
+
+        $("#mec_sf_event_type_2_" + settings.id).on('change', function (e) {
+            search();
+        });
+
+        function search() {
+            var s = $("#mec_sf_s_" + settings.id).length ? $("#mec_sf_s_" + settings.id).val() : '';
+            var category = $("#mec_sf_category_" + settings.id).length ? $("#mec_sf_category_" + settings.id).val() : '';
+            var location = $("#mec_sf_location_" + settings.id).length ? $("#mec_sf_location_" + settings.id).val() : '';
+            var organizer = $("#mec_sf_organizer_" + settings.id).length ? $("#mec_sf_organizer_" + settings.id).val() : '';
+            var speaker = $("#mec_sf_speaker_" + settings.id).length ? $("#mec_sf_speaker_" + settings.id).val() : '';
+            var tag = $("#mec_sf_tag_" + settings.id).length ? $("#mec_sf_tag_" + settings.id).val() : '';
+            var label = $("#mec_sf_label_" + settings.id).length ? $("#mec_sf_label_" + settings.id).val() : '';
+            var month = $("#mec_sf_month_" + settings.id).length ? $("#mec_sf_month_" + settings.id).val() : '';
+            var year = $("#mec_sf_year_" + settings.id).length ? $("#mec_sf_year_" + settings.id).val() : '';
+            var event_type = $("#mec_sf_event_type_" + settings.id).length ? $("#mec_sf_event_type_" + settings.id).val() : '';
+            var event_type_2 = $("#mec_sf_event_type_2_" + settings.id).length ? $("#mec_sf_event_type_2_" + settings.id).val() : '';
             var skip_date = false;
-            
-            if(month === 'ignore_date') skip_date = true;
+
+            if (month === 'ignore_date') skip_date = true;
 
             // Skip filter by date
-            if(skip_date === true)
-            {
+            if (skip_date === true) {
                 month = '';
                 year = '';
             }
-            var atts = settings.atts+'&sf[s]='+s+'&sf[month]='+month+'&sf[year]='+year+'&sf[category]='+category+'&sf[location]='+location+'&sf[organizer]='+organizer+'&sf[speaker]='+speaker+'&sf[tag]='+tag+'&sf[label]='+label;
+            var atts = settings.atts + '&sf[s]=' + s + '&sf[month]=' + month + '&sf[year]=' + year + '&sf[category]=' + category + '&sf[location]=' + location + '&sf[organizer]=' + organizer + '&sf[speaker]=' + speaker + '&sf[tag]=' + tag + '&sf[label]=' + label + '&sf[event_type]=' + event_type + '&sf[event_type_2]=' + event_type_2;
             settings.callback(atts);
         }
     };
@@ -156,6 +161,7 @@ var mecSingleEventDisplayer = {
         var map;
         var infowindow;
         var loadedMarkers = new Array();
+        var markerCluster;
 
         var canvas = this;
         var DOM = canvas[0];
@@ -204,6 +210,60 @@ var mecSingleEventDisplayer = {
             // Load Markers
             loadMarkers(settings.markers);
 
+            var clusterCalculator = function(markers, numStyles)
+            {
+                var weight = 0;
+
+                for(var i = 0; i < markers.length; ++i)
+                {
+                    weight += markers[i].weight;
+                }
+
+                return {
+                    text: weight,
+                    index: Math.min(String(weight).length, numStyles)
+                };
+            };
+
+            markerClusterOptions = {
+                styles: [{
+                    height: 53,
+                    url: settings.clustering_images + '1.png',
+                    width: 53,
+                    textColor: '#fff'
+                },
+                {
+                    height: 56,
+                    url: settings.clustering_images + '2.png',
+                    width: 56,
+                    textColor: '#000'
+                },
+                {
+                    height: 66,
+                    url: settings.clustering_images + '3.png',
+                    width: 66,
+                    textColor: '#fff'
+                },
+                {
+                    height: 78,
+                    url: settings.clustering_images + '4.png',
+                    width: 78,
+                    textColor: '#fff'
+                },
+                {
+                    height: 90,
+                    url: settings.clustering_images + '5.png',
+                    width: 90,
+                    textColor: '#fff'
+                }
+                ]
+            }
+
+            markerCluster = new MarkerClusterer(map, null, markerClusterOptions);
+
+            markerCluster.setCalculator(clusterCalculator);
+            markerCluster.addMarkers(loadedMarkers);
+
             // Initialize get direction feature
             if(settings.getDirection === 1) initSimpleGetDirection();
             else if(settings.getDirection === 2) initAdvancedGetDirection();
@@ -244,7 +304,8 @@ var mecSingleEventDisplayer = {
                     lightbox: dataMarker.lightbox,
                     icon: (dataMarker.icon ? dataMarker.icon : settings.icon),
                     content: '<div class="mec-marker-container"><span class="mec-marker-wrap"><span class="mec-marker">'+dataMarker.count+'</span><span class="mec-marker-pulse-wrap"><span class="mec-marker-pulse"></span></span></span></div>',
-                    shadow: 'none'
+                    shadow: 'none',
+                    weight: dataMarker.count
                 });
 
                 // Marker Info-Window
@@ -295,6 +356,10 @@ var mecSingleEventDisplayer = {
                     
                     // Load Markers
                     loadMarkers(response.markers);
+
+                    markerCluster.clearMarkers();
+                    markerCluster.addMarkers(loadedMarkers, false);
+                    markerCluster.redraw();
                     
                     // Remove loader
                     $("#mec_googlemap_canvas"+settings.id).removeClass("mec-loading");
@@ -486,6 +551,12 @@ var mecSingleEventDisplayer = {
                     
                     // Remove loader
                     $('.mec-modal-result').removeClass("mec-month-navigator-loading");
+
+                    // Focus First Active Day
+                    mec_focus_day(settings.id);
+
+                    // Focus First Active Week
+                    mec_focus_week(settings.id);
                 },
                 error: function()
                 {
@@ -511,6 +582,12 @@ var mecSingleEventDisplayer = {
                     
                     // Remove loader
                     $('.mec-modal-result').removeClass("mec-month-navigator-loading");
+
+                    // Focus First Active Day
+                    mec_focus_day(settings.id);
+
+                    // Focus First Active Week
+                    mec_focus_week(settings.id);
                 },
                 error: function()
                 {
@@ -594,6 +671,11 @@ var mecSingleEventDisplayer = {
                 callback: function(atts)
                 {
                     settings.atts = atts;
+                    active_year = $('.mec-yearly-view-wrap .mec-year-navigator').filter(function()
+                    {
+                        return $(this).css('display') == "block";
+                    });
+                    active_year = parseInt(active_year.find('h2').text());
                     search(active_year);
                 }
             });
@@ -849,7 +931,7 @@ var mecSingleEventDisplayer = {
                 var year = $(this).data("mec-year");
                 var month = $(this).data("mec-month");
 
-                setMonth(year, month);
+                setMonth(year, month, false, true);
             });
         }
         
@@ -898,9 +980,10 @@ var mecSingleEventDisplayer = {
             });
         }
         
-        function setMonth(year, month, do_in_background)
+        function setMonth(year, month, do_in_background, navigator_click)
         {
             if(typeof do_in_background === "undefined") do_in_background = false;
+            navigator_click = navigator_click || false;
             var month_id = year+""+month;
 
             if(!do_in_background)
@@ -928,7 +1011,7 @@ var mecSingleEventDisplayer = {
                 $.ajax(
                 {
                     url: settings.ajax_url,
-                    data: "action=mec_monthly_view_load_month&mec_year="+year+"&mec_month="+month+"&"+settings.atts+"&apply_sf_date=0",
+                    data: "action=mec_monthly_view_load_month&mec_year="+year+"&mec_month="+month+"&"+settings.atts+"&apply_sf_date=0"+"&navigator_click="+navigator_click,
                     dataType: "json",
                     type: "post",
                     success: function(response)
@@ -967,6 +1050,17 @@ var mecSingleEventDisplayer = {
                             $("#mec_month_navigator_"+settings.id+"_"+response.current_month.id).hide();
                             $("#mec_month_side_"+settings.id+"_"+response.current_month.id).hide();
                         }
+                        if (typeof custom_month !== undefined) var custom_month;
+                        if (typeof custom_month != undefined)
+                        {
+                            if (custom_month == 'true')
+                            {
+                                $(".mec-month-container .mec-calendar-day").removeClass('mec-has-event');
+                                $(".mec-month-container .mec-calendar-day").removeClass('mec-selected-day');
+                                $('.mec-calendar-day').unbind('click');
+                            }
+                        }
+                        
                     },
                     error: function()
                     {
@@ -1061,13 +1155,48 @@ var mecSingleEventDisplayer = {
         function mec_tooltip()
         {
             if ($('.mec-monthly-tooltip').length > 1) {
-                $('.mec-monthly-tooltip').tooltipster({
-                    theme: 'tooltipster-shadow',
-                    interactive: true,
-                    delay: 100,
-                    minWidth: 350,
-                    maxWidth: 350,
-                });
+                if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) > 768) {
+                    $('.mec-monthly-tooltip').tooltipster({
+                        theme: 'tooltipster-shadow',
+                        interactive: true,
+                        delay: 100,
+                        minWidth: 350,
+                        maxWidth: 350
+                    });
+                } else {
+                    var touchtime = 0;
+                    $(".mec-monthly-tooltip").on("click", function (event) {
+                        event.preventDefault();
+                        if (touchtime == 0) {
+                            $('.mec-monthly-tooltip').tooltipster({
+                                theme: 'tooltipster-shadow',
+                                interactive: true,
+                                delay: 100,
+                                minWidth: 350,
+                                maxWidth: 350,
+                                trigger: "custom",
+                                triggerOpen: {
+                                    click: true,
+                                    tap: true
+                                },
+                                triggerClose: {
+                                    click: true,
+                                    tap: true
+                                }
+                            });
+                            touchtime = new Date().getTime();
+                        } else {
+                            if (((new Date().getTime()) - touchtime) < 200) {
+                                var el = $(this);
+                                var link = el.attr("href");
+                                window.location = link;
+                                touchtime = 0;
+                            } else {
+                                touchtime = new Date().getTime();
+                            }
+                        }
+                    });
+                }
             }
         }
     };
@@ -1132,10 +1261,6 @@ var mecSingleEventDisplayer = {
         {
             $(settings.changeWeekElement).off('click').on('click', function(e)
             {
-                // Disable Auto Focus If Human Click On Change Week Element
-                var auto_focus = false;
-                if(e.isTrigger) auto_focus = true;
-
                 var week = $('#mec_skin_'+settings.id+' .mec-weekly-view-week-active').data('week-id');
                 var max_weeks = $('#mec_skin_'+settings.id+' .mec-weekly-view-week-active').data('max-weeks');
                 var new_week_number = active_week_number;
@@ -1169,7 +1294,7 @@ var mecSingleEventDisplayer = {
                 }
                 else
                 {
-                    setThisWeek(week, auto_focus);
+                    setThisWeek(week);
                 }
             });
             
@@ -1212,35 +1337,7 @@ var mecSingleEventDisplayer = {
             }
             
             // Go To Event Week
-            if(auto_focus)
-            {
-                var week_items = $('#mec_weekly_view_week_'+settings.id+'_'+week).find('dt');
-                var week_items_length = parseInt(week_items.length);
-                var changeNextWeek = $('#mec_skin_'+settings.id+' .mec-next-month.mec-load-week');
-                
-                week_items.each(function(index)
-                {
-                    var index_plus = index+1;
-                    if($(this).data('events-count') > 0)
-                    {
-                        return false;
-                    }
-                    else if(index_plus==week_items_length && changeNextWeek.css("cursor") != "default")
-                    {
-                        setTimeout(function()
-                        {
-                            changeNextWeek.trigger('click');
-                        }, 33);
-                    }
-                    else if(changeNextWeek.css("cursor") == "default")
-                    {
-                        // If Not Event In All Week Reset Week
-                        setThisWeek(settings.month_id+settings.week, false);
-                        $('#mec_skin_'+settings.id+' .mec-load-week, #mec_skin_'+settings.id+' .mec-load-week i').css({'opacity': 1, 'cursor': 'pointer'});
-                        return false;
-                    }
-                }); 
-            }
+            if(auto_focus) mec_focus_week(settings.id);
         }
 
         function initMonthNavigator(month_id)
@@ -1251,11 +1348,11 @@ var mecSingleEventDisplayer = {
                 var year = $(this).data('mec-year');
                 var month = $(this).data('mec-month');
 
-                setMonth(year, month, active_week);
+                setMonth(year, month, active_week, true);
             });
         }
         
-        function search(year, month, week)
+        function search(year, month, week, navigation_click)
         {
             var week_number = (String(week).slice(-1));
 
@@ -1287,7 +1384,7 @@ var mecSingleEventDisplayer = {
                     toggleMonth(response.current_month.id);
 
                     // Set active week
-                    setThisWeek(active_week);
+                    setThisWeek(active_week, true);
                 },
                 error: function()
                 {
@@ -1295,14 +1392,15 @@ var mecSingleEventDisplayer = {
             });
         }
         
-        function setMonth(year, month, week)
+        function setMonth(year, month, week, navigation_click)
         {
             var month_id = ''+year+month;
             var week_number = (String(week).slice(-1));
             
             active_month = month;
             active_year = year;
-
+            navigation_click = navigation_click || false;
+            
             // Month exists so we just show it
             if($("#mec_weekly_view_month_"+settings.id+"_"+month_id).length)
             {
@@ -1321,7 +1419,7 @@ var mecSingleEventDisplayer = {
                 $.ajax(
                 {
                     url: settings.ajax_url,
-                    data: "action=mec_weekly_view_load_month&mec_year="+year+"&mec_month="+month+"&mec_week="+week_number+"&"+settings.atts+"&apply_sf_date=0",
+                    data: "action=mec_weekly_view_load_month&mec_year="+year+"&mec_month="+month+"&mec_week="+week_number+"&"+settings.atts+"&apply_sf_date=0"+"&navigator_click="+navigation_click,
                     dataType: "json",
                     type: "post",
                     success: function(response)
@@ -1342,7 +1440,7 @@ var mecSingleEventDisplayer = {
                         toggleMonth(response.current_month.id);
 
                         // Set active week
-                        setThisWeek(response.week_id);
+                        setThisWeek(response.week_id, true);
                         
                         // Set Month Filter values in search widget
                         $("#mec_sf_month_"+settings.id).val(month);
@@ -1494,15 +1592,14 @@ var mecSingleEventDisplayer = {
                 var year = $(this).data('mec-year');
                 var month = $(this).data('mec-month');
 
-                setMonth(year, month, current_monthday);
+                setMonth(year, month, current_monthday, true);
             });
         }
 
-        var owl_go_month_id;
         function initDaysSlider(month_id, day_id)
         {
             // Set Global Month Id
-            owl_go_month_id = month_id;
+            mec_g_month_id = month_id;
 
             // Check RTL website
             var owl_rtl = $('body').hasClass('rtl') ? true : false;
@@ -1594,7 +1691,7 @@ var mecSingleEventDisplayer = {
                     setToday(''+active_year+active_month+active_day);
 
                     // Focus First Active Day
-                    FocusDay();
+                    mec_focus_day(settings.id);
                 },
                 error: function()
                 {
@@ -1602,14 +1699,15 @@ var mecSingleEventDisplayer = {
             });
         }
         
-        function setMonth(year, month, day)
+        function setMonth(year, month, day, navigation_click)
         {
             var month_id = '' + year + month;
             
             active_month = month;
             active_year = year;
             active_day = day;
-            
+            navigation_click = navigation_click || false;
+
             // Month exists so we just show it
             if($("#mec_daily_view_month_"+settings.id+"_"+month_id).length)
             {
@@ -1628,7 +1726,7 @@ var mecSingleEventDisplayer = {
                 $.ajax(
                 {
                     url: settings.ajax_url,
-                    data: "action=mec_daily_view_load_month&mec_year="+year+"&mec_month="+month+"&mec_day="+day+"&"+settings.atts+"&apply_sf_date=0",
+                    data: "action=mec_daily_view_load_month&mec_year="+year+"&mec_month="+month+"&mec_day="+day+"&"+settings.atts+"&apply_sf_date=0"+"&navigator_click="+navigation_click,
                     dataType: "json",
                     type: "post",
                     success: function(response)
@@ -1662,26 +1760,6 @@ var mecSingleEventDisplayer = {
             }
         }
 
-        // Focus First Active day
-        function FocusDay()
-        { 
-            // Focus event
-            setTimeout(function()
-            {
-                var owlGo =  jQuery("#mec-owl-calendar-d-table-"+settings.id+"-"+owl_go_month_id);
-                owlGo.find('.owl-stage > div').each(function(index)
-                {
-                    if(parseInt(jQuery(this).children('div').data("events-count")) > 0)
-                    {
-                        var index_plus = index+1;
-                        $('#mec_daily_view_day'+settings.id+'_'+owl_go_month_id+(index < 10 ? '0'+index_plus:index_plus)).trigger('click');
-                        owlGo.trigger('to.owl.carousel', index_plus);
-                        return false;
-                    }
-                });
-            },1000);
-        }
-
         function toggleMonth(month_id, day_id)
         {
             // Show related events
@@ -1698,7 +1776,7 @@ var mecSingleEventDisplayer = {
             initDaysSlider(month_id, day_id);
 
             // Focus First Active Day
-            FocusDay();
+            mec_focus_day(settings.id);
         }
         
         function sed()
@@ -2124,86 +2202,103 @@ var mecSingleEventDisplayer = {
         setListeners();
 
         // Init Masonry
-        if (mecdata.elementor_edit_mode == 'no') {
-            jQuery(window).load(function () {
-                initMasonry();
-                if (typeof custom_dev != undefined && custom_dev == 'yes') {
-                    $(".mec-wrap").css("height", "1550");
-                    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 768) {
-                        $(".mec-wrap").css("height", "5500");
-                    }
-                    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 480) {
-                        $(".mec-wrap").css("height", "5000");
-                    }
-                    $(".mec-event-masonry.shuffle .mec-masonry-item-wrap:nth-child(n+20)").css("display", "none");
-                    $(".mec-load-more-button").on("click", function () {
-                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap:nth-child(n+20)").css("display", "block");
-                        $(".mec-wrap").css("height", "auto");
-                        initMasonry();
-                        $(".mec-load-more-button").hide();
-                    })
-                    $(".mec-events-masonry-cats a:first-child").on("click", function () {
-                        $(".mec-wrap").css("height", "auto");
-                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap:nth-child(n+20)").css("display", "block");
-                        $(".mec-load-more-button").hide();
-                        initMasonry();
-                    })
-                    $(".mec-events-masonry-cats a:not(:first-child)").on("click", function () {
-                        $(".mec-load-more-button").hide();
-                        $(".mec-wrap").css("height", "auto");
-                        $(".mec-wrap").css("min-height", "400");
-                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap").css("display", "block");
-                        var element = document.querySelector("#mec_skin_" + settings.id + " .mec-event-masonry");
-                        var selector = $(this).attr('data-group');
-                        var CustomShuffle = new Shuffle(element, {
-                            itemSelector: '.mec-masonry-item-wrap',
-                        });
-                        CustomShuffle.sort({
-                            by: element.getAttribute('data-created'),
-                        });
-                        CustomShuffle.filter(selector != '*' ? selector : Shuffle.ALL_ITEMS);
-                        $(".mec-event-masonry.shuffle .mec-masonry-item-wrap").css("visibility", "visible");
-                    })
-                }
-            });
-        } else {
+        jQuery(window).load(function () {
             initMasonry();
-        }
-
-        function initMasonry()
-        {
-            var Shuffle = window.Shuffle;
-            var element = document.querySelector("#mec_skin_"+settings.id+" .mec-event-masonry");
-
-            if (element === null) {
-                return;
-            }
-            
-            var shuffleInstance = new Shuffle(element, {
-                itemSelector: '.mec-masonry-item-wrap',
-            });
-            
-            shuffleInstance.sort({
-                by: element.getAttribute('data-created'),
-            });
-
-            if (settings.masonry_like_grid == 1) {
-                shuffleInstance.sort({
-                    by: element.getAttribute('sort-masonry'),
-                });
-            }
-
-            $("#mec_skin_"+settings.id+" .mec-events-masonry-cats a").click(function() {
-                $("#mec_skin_"+settings.id+" .mec-events-masonry-cats a").removeClass('mec-masonry-cat-selected');
-                $(this).addClass('mec-masonry-cat-selected');
-                var selector = $(this).attr('data-group');
-                shuffleInstance.filter(selector != '*' ? selector : Shuffle.ALL_ITEMS);
-                if (settings.masonry_like_grid == 1) {
-                    shuffleInstance.sort({
-                        by: element.getAttribute('sort-masonry'),
-                    });
+            if ( typeof custom_dev !== undefined ) var custom_dev;
+            if (custom_dev == 'yes') {
+                $(".mec-wrap").css("height", "1550");
+                if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 768) {
+                    $(".mec-wrap").css("height", "5500");
                 }
+                if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 480) {
+                    $(".mec-wrap").css("height", "5000");
+                }
+                $(".mec-event-masonry .mec-masonry-item-wrap:nth-child(n+20)").css("display", "none");
+                $(".mec-load-more-button").on("click", function () {
+                    $(".mec-event-masonry .mec-masonry-item-wrap:nth-child(n+20)").css("display", "block");
+                    $(".mec-wrap").css("height", "auto");
+                    initMasonry();
+                    $(".mec-load-more-button").hide();
+                })
+                $(".mec-events-masonry-cats a:first-child").on("click", function () {
+                    $(".mec-wrap").css("height", "auto");
+                    $(".mec-event-masonry .mec-masonry-item-wrap:nth-child(n+20)").css("display", "block");
+                    $(".mec-load-more-button").hide();
+                    initMasonry();
+                })
+                $(".mec-events-masonry-cats a:not(:first-child)").on("click", function () {
+                    $(".mec-load-more-button").hide();
+                    $(".mec-wrap").css("height", "auto");
+                    $(".mec-wrap").css("min-height", "400");
+                    $(".mec-event-masonry .mec-masonry-item-wrap").css("display", "block");
+                    var element = document.querySelector("#mec_skin_" + settings.id + " .mec-event-masonry");
+                    var selector = $(this).attr('data-group');
+                    var CustomShuffle = new Shuffle(element, {
+                        itemSelector: '.mec-masonry-item-wrap',
+                    });
+                    CustomShuffle.sort({
+                        by: element.getAttribute('data-created'),
+                    });
+                    CustomShuffle.filter(selector != '*' ? selector : Shuffle.ALL_ITEMS);
+                    $(".mec-event-masonry .mec-masonry-item-wrap").css("visibility", "visible");
+                })
+            }
+        });
+        function initMasonry() {
+            var $container = $("#mec_skin_" + settings.id + " .mec-event-masonry");
+            var $grid = $container.isotope({
+                filter: '*',
+                itemSelector: '.mec-masonry-item-wrap',
+                getSortData: {
+                    date: '[data-sort-masonry]',
+                },
+                sortBy: 'date',
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false
+                },
+            });
+
+            if (settings.fit_to_row == 1) $grid.isotope({layoutMode: 'fitRows'});
+
+            // Fix Elementor tab
+            $('.elementor-tabs').find('.elementor-tab-title').click(function () {
+                $grid.isotope({ sortBy: 'date' });
+            });
+
+            $("#mec_skin_" + settings.id + " .mec-events-masonry-cats a").click(function () {
+                var selector = $(this).attr('data-filter');
+                var $grid_cat = $container.isotope(
+                    {
+                        filter: selector,
+                        itemSelector: '.mec-masonry-item-wrap',
+                        getSortData: {
+                            date: '[data-sort-masonry]',
+                        },
+                        sortBy: 'date',
+                        animationOptions: {
+                            duration: 750,
+                            easing: 'linear',
+                            queue: false
+                        },
+                    });
+                if (settings.masonry_like_grid == 1) $grid_cat.isotope({ sortBy: 'date' });
                 return false;
+            });
+
+            var $optionSets = $("#mec_skin_" + settings.id + " .mec-events-masonry-cats"),
+                $optionLinks = $optionSets.find('a');
+
+            $optionLinks.click(function () {
+                var $this = $(this);
+
+                // don't proceed if already selected
+                if ($this.hasClass('selected')) return false;
+
+                var $optionSet = $this.parents('.mec-events-masonry-cats');
+                $optionSet.find('.mec-masonry-cat-selected').removeClass('mec-masonry-cat-selected');
+                $this.addClass('mec-masonry-cat-selected');
             });
         }
 
@@ -2215,6 +2310,11 @@ var mecSingleEventDisplayer = {
             }
 
         }
+
+        $("#mec_skin_"+settings.id+" .mec-load-more-button").on("click", function()
+        {
+            loadMore();
+        });
 
         function sed()
         {
@@ -2228,6 +2328,63 @@ var mecSingleEventDisplayer = {
                 var occurrence = get_parameter_by_name('occurrence', href);
 
                 mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
+            });
+        }
+
+        function loadMore()
+        {
+            // Add loading Class
+            $("#mec_skin_"+settings.id+" .mec-load-more-button").addClass("mec-load-more-loading");
+
+            $.ajax(
+            {
+                url: settings.ajax_url,
+                data: "action=mec_masonry_load_more&mec_start_date="+settings.end_date+"&mec_offset="+settings.offset+"&"+settings.atts+"&apply_sf_date=0",
+                dataType: "json",
+                type: "post",
+                success: function(response)
+                {
+                    if(response.count == "0")
+                    {
+                        // Remove loading Class
+                        $("#mec_skin_"+settings.id+" .mec-load-more-button").removeClass("mec-load-more-loading");
+
+                        // Hide load more button
+                        $("#mec_skin_"+settings.id+" .mec-load-more-button").addClass("mec-util-hidden");
+                    }
+                    else
+                    {
+                        // Show load more button
+                        $("#mec_skin_"+settings.id+" .mec-load-more-button").removeClass("mec-util-hidden");
+                       
+                        // Append Items
+                        var node = $("#mec_skin_"+settings.id+" .mec-event-masonry");
+                        var markup = '', newItems = $(response.html).find('.mec-masonry-item-wrap');
+
+                        newItems.each(function(index)
+                        {
+                            node.isotope()
+                                .append(newItems[index])
+                                .isotope('appended', newItems[index]);
+                        });
+
+                        // Remove loading Class
+                        $("#mec_skin_"+settings.id+" .mec-load-more-button").removeClass("mec-load-more-loading");
+
+                        // Update the variables
+                        settings.end_date = response.end_date;
+                        settings.offset = response.offset;
+                        
+                        // Single Event Method
+                        if(settings.sed_method != '0')
+                        {
+                            sed();
+                        }
+                    }
+                },
+                error: function()
+                {
+                }
             });
         }
     };
@@ -2250,6 +2407,7 @@ var mecSingleEventDisplayer = {
             current_month_divider: '',
             end_date: '',
             offset: 0,
+            limit: 0
         }, options);
         
         // Set onclick Listeners
@@ -2375,6 +2533,7 @@ var mecSingleEventDisplayer = {
 
                 mecSingleEventDisplayer.getSinglePage(id, occurrence, settings.ajax_url, settings.sed_method, settings.image_popup);
             });
+
             $("#mec_skin_"+settings.id+" .mec-event-image a img").off('click').on('click', function(e)
             {
                 e.preventDefault();
@@ -2400,7 +2559,7 @@ var mecSingleEventDisplayer = {
                 type: "post",
                 success: function(response)
                 {
-                    if(response.count == "0")
+                    if(response.count == '0')
                     {
                         // Remove loading Class
                         $("#mec_skin_"+settings.id+" .mec-load-more-button").removeClass("mec-load-more-loading");
@@ -2453,6 +2612,7 @@ var mecSingleEventDisplayer = {
             // Add loading Class
             if(jQuery('.mec-modal-result').length === 0) jQuery('.mec-wrap').append('<div class="mec-modal-result"></div>');
             jQuery('.mec-modal-result').addClass('mec-month-navigator-loading');
+            jQuery("#gmap-data").val("");
 
             $.ajax(
             {
@@ -2470,6 +2630,9 @@ var mecSingleEventDisplayer = {
                         // Remove loading Class
                         $('.mec-modal-result').removeClass("mec-month-navigator-loading");
 
+                        // Hide Map
+                        $('.mec-skin-map-container').addClass("mec-util-hidden");
+
                         // Hide it
                         $("#mec_skin_"+settings.id+" .mec-load-more-button").addClass("mec-util-hidden");
                         
@@ -2483,6 +2646,9 @@ var mecSingleEventDisplayer = {
 
                         // Remove loading Class
                         $('.mec-modal-result').removeClass("mec-month-navigator-loading");
+
+                        // Show Map
+                        $('.mec-skin-map-container').removeClass("mec-util-hidden");
 
                         // Show load more button
                         if(response.count >= settings.limit) $("#mec_skin_"+settings.id+" .mec-load-more-button").removeClass("mec-util-hidden");
@@ -2651,7 +2817,8 @@ var mecSingleEventDisplayer = {
             // Add loading Class
             if(jQuery('.mec-modal-result').length === 0) jQuery('.mec-wrap').append('<div class="mec-modal-result"></div>');
             jQuery('.mec-modal-result').addClass('mec-month-navigator-loading');
-
+            jQuery("#gmap-data").val("");
+            
             $.ajax(
             {
                 url: settings.ajax_url,
@@ -2668,6 +2835,9 @@ var mecSingleEventDisplayer = {
                         // Remove loading Class
                         $('.mec-modal-result').removeClass("mec-month-navigator-loading");
 
+                        // Hide Map
+                        $('.mec-skin-map-container').addClass("mec-util-hidden");
+
                         // Hide it
                         $("#mec_skin_"+settings.id+" .mec-load-more-button").addClass("mec-util-hidden");
                         
@@ -2681,6 +2851,9 @@ var mecSingleEventDisplayer = {
 
                         // Remove loading Class
                         $('.mec-modal-result').removeClass("mec-month-navigator-loading");
+
+                        // Show Map
+                        $('.mec-skin-map-container').removeClass("mec-util-hidden");
 
                         // Show load more button
                         if(response.count >= settings.limit) $("#mec_skin_"+settings.id+" .mec-load-more-button").removeClass("mec-util-hidden");
@@ -3199,6 +3372,51 @@ function get_parameter_by_name(name, url)
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+// Focus events day
+var mec_g_month_id = null;
+function mec_focus_day(id)
+{
+    setTimeout(function()
+    {
+        var owl_go =  jQuery("#mec-owl-calendar-d-table-"+id+"-"+mec_g_month_id);
+        owl_go.find('.owl-stage > div').each(function(index)
+        {
+            if(parseInt(jQuery(this).children('div').data("events-count")) > 0)
+            {
+                var index_plus = index+1;
+                jQuery('#mec_daily_view_day'+id+'_'+mec_g_month_id+(index < 10 ? '0'+index_plus:index_plus)).trigger('click');
+                owl_go.trigger('to.owl.carousel', index_plus);
+                return false;
+            }
+        });
+    }, 1000);
+}
+
+// Focus events week
+function mec_focus_week(id)
+{
+    var days = jQuery('.mec-weeks-container .mec-weekly-view-week-active').parent().find('dt');
+    var days_count = parseInt(days.length);
+    days.each(function(index)
+    {
+        var index_plus = index+1; 
+        var week = parseInt(jQuery(this).parent().index());
+        
+        if(jQuery(this).data('events-count') > 0)
+        {
+            for(var i = 0; i < week; i++)
+            {
+                setTimeout(function()
+                {
+                    var event = new Event('click');
+                    jQuery('#mec_skin_'+id+' .mec-next-month.mec-load-week')[0].dispatchEvent(event);
+                }, 33);
+            }
+            return false;
+        }
+    });
+}
+
 // TODO must be cleaned JS codes
 (function($)
 {
@@ -3281,3 +3499,150 @@ function get_parameter_by_name(name, url)
 
     });
 })(jQuery);
+
+// Weather
+(function($){
+     // Convart fahrenheit to centigrade
+     function convertToC(value)
+     {
+         return Math.round(((parseFloat(value) -32) *5 /9));
+     }
+     
+     // Convert centigrade to fahrenheit
+     function convertToF(value)
+     {
+         return Math.round(((1.8 * parseFloat(value)) +32));
+     }
+ 
+     // Convert miles to kilometers
+     function MPHToKPH(value)
+     {
+        return Math.round(1.609344 * parseFloat(value));
+     }
+ 
+     // Convert kilometers to miles
+     function KPHToMPH(value)
+     {
+        return Math.round((0.6214 * parseFloat(value)));
+     }
+
+     $(document).ready(function($)
+     {
+        var degree = $('.mec-weather-summary-temp');
+        var weather_extra = $('.mec-weather-extras');
+        var wind = weather_extra.children('.mec-weather-wind');
+        var visibility = weather_extra.children('.mec-weather-visibility');
+
+        //  Events
+        $('.degrees-mode').click(function()
+        {
+            var degree_mode = degree.children('var').text().trim();
+            var wind_text = wind.text().substring(5);
+            var visibility_text = visibility.text().substring(11);
+
+            if(degree_mode == degree.data('c').trim())
+            {
+                degree.html(convertToF(parseInt(degree.text())) +' <var>'+degree.data('f')+'</var>');
+                wind.html('<span>Wind:</span> '+ KPHToMPH(parseInt(wind_text)) +'<var>'+wind.data('mph')+'</var>');
+                visibility.html('<span>Visibility:</span> ' + KPHToMPH(parseInt(visibility_text)) +'<var>'+visibility.data('mph')+'</var>');
+                $(this).text($(this).data('metric'));
+            }
+            else if(degree_mode == degree.data('f').trim())
+            {
+                degree.html(convertToC(parseInt(degree.text())) +' <var>'+degree.data('c')+'</var>');
+                wind.html('<span>Wind:</span> '+ MPHToKPH(parseInt(wind_text)) +'<var>'+wind.data('kph')+'</var>');
+                visibility.html('<span>Visibility:</span> ' + MPHToKPH(parseInt(visibility_text)) +'<var>'+visibility.data('kph')+'</var>');
+                $(this).text($(this).data('imperial'));
+            }
+        });
+
+        $('a').on('click', function(){})
+        
+        // FES Speakers Adding
+        $('#mec_add_speaker_button').on('click', function()
+        {
+            var $this = this;
+            var content = $($this).parent().find('input');
+            var list = $('#mec-fes-speakers-list');
+            var key = list.find('.mec-error').length;
+
+            $($this).prop("disabled", true).css('cursor', 'wait');
+            $.post(ajaxurl,
+            {
+                action: "speaker_adding",
+                content: content.val(),
+                key: key
+            })
+            .done(function(data)
+            {
+                if($(data).hasClass('mec-error'))
+                {
+                    list.prepend(data);
+                    setTimeout(function()
+                    {
+                       $('#mec-speaker-error-${key}').remove();
+                    }, 1500);
+                }
+                else
+                {
+                    list.html(data);
+                    content.val('');
+                }
+
+                $($this).prop("disabled", false).css('cursor', 'pointer');
+            });
+        });
+     });
+})(jQuery);
+
+// Google map Skin
+function gmapSkin(NewJson)
+{
+    var gmap_temp = jQuery("#gmap-data");
+    var beforeJson = gmap_temp.val();
+    if(typeof beforeJson === 'undefined') beforeJson = '';
+
+    var newJson = NewJson;
+    var jsonPush = (typeof beforeJson != 'undefined' && beforeJson.trim() == "") ? [] : JSON.parse(beforeJson);
+    var pushState = jsonPush.length < 1 ? false : true;
+
+    for(var key in newJson)
+    {
+        if(pushState)
+        {
+            jsonPush.forEach(function(Item, Index)
+            {
+               var render_location = jsonPush[Index].latitude + "," +  jsonPush[Index].longitude;
+               if(key.trim() == render_location.trim())
+               {
+                    // LightBox Count Update
+                    newJson[key].count = newJson[key].count + jsonPush[Index].count;
+
+                    // LightBox Ids Update
+                    newJson[key].event_ids = newJson[key].event_ids.concat(jsonPush[Index].event_ids);
+
+                    // LightBox Initialize
+                    var dom = jQuery(newJson[key].lightbox).find("div:nth-child(2)");
+                    var main_items = dom.html();
+                    var new_items = jQuery(jsonPush[Index].lightbox).find("div:nth-child(2)").html();
+
+                    var render_items = dom.html(main_items + new_items).html();
+                    var new_info_lightbox = '<div><div class="mec-event-detail mec-map-view-event-detail"><i class="mec-sl-map-marker"></i> '+newJson[key].name+'</div><div>'+render_items+'</div></div>';
+                    newJson[key].lightbox = new_info_lightbox;
+
+                    // LightBox info                        
+                    var new_info_window = '<div class="mec-marker-infowindow-wp"><div class="mec-marker-infowindow-count">'+newJson[key].count+'</div><div class="mec-marker-infowindow-content"><span>Event at this location</span><span>'+newJson[key].name+'</span></div></div>';
+                    newJson[key].infowindow = new_info_window;
+
+                    // Remove before values of this location
+                    jsonPush.splice(Index, 1);
+               }
+            });
+        }
+
+        jsonPush.push(newJson[key]);
+    }
+    
+    gmap_temp.val(JSON.stringify(jsonPush));
+    return jsonPush;
+}

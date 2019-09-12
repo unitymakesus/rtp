@@ -332,6 +332,12 @@ FLBuilder::register_module('FLMenuModule', array(
 							'type' => 'none',
 						),
 					),
+					'mobile_title'         => array(
+						'label'   => __( 'Menu Name', 'fl-builder' ),
+						'type'    => 'text',
+						'help'    => __( 'This is used as the menu aria attribute for accessibility and label for responsive menus.', 'fl-builder' ),
+						'default' => __( 'Menu', 'fl-builder' ),
+					),
 				),
 			),
 			'mobile'  => array(
@@ -352,17 +358,12 @@ FLBuilder::register_module('FLMenuModule', array(
 								'fields' => array( 'mobile_full_width', 'mobile_breakpoint' ),
 							),
 							'hamburger-label' => array(
-								'fields' => array( 'mobile_full_width', 'mobile_breakpoint', 'mobile_title' ),
+								'fields' => array( 'mobile_full_width', 'mobile_breakpoint' ),
 							),
 							'text'            => array(
-								'fields' => array( 'mobile_full_width', 'mobile_breakpoint', 'mobile_title' ),
+								'fields' => array( 'mobile_full_width', 'mobile_breakpoint' ),
 							),
 						),
-					),
-					'mobile_title'      => array(
-						'label'   => __( 'Responsive Menu Label', 'fl-builder' ),
-						'type'    => 'text',
-						'default' => __( 'Menu', 'fl-builder' ),
 					),
 					'mobile_full_width' => array(
 						'type'    => 'select',

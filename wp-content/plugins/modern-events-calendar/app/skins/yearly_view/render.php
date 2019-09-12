@@ -67,6 +67,8 @@ $settings = $this->main->get_settings();
                     } 
                     $speakers = json_encode($speakers);
                 }
+                $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                if($schema_settings == '1' ):
                 ?>
                 <script type="application/ld+json">
                 {
@@ -93,6 +95,7 @@ $settings = $this->main->get_settings();
                     "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                 }
                 </script>
+                <?php endif; ?>
                 <?php if($this->style == 'modern'): ?>
                     <div data-style="" class="mec-agenda-event <?php echo $this->get_event_classes($event); ?>">
                         <i class="mec-sl-clock "></i>

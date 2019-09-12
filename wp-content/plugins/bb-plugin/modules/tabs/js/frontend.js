@@ -72,6 +72,8 @@
 
 			// Reload Google Map embed.
 			FLBuilderLayout.reloadGoogleMap( wrap.find('.fl-tabs-panel-content[data-index="' + index + '"]') );
+
+			e.preventDefault();
 		},
 
 		_responsiveLabelClick: function(e)

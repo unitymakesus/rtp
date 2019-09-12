@@ -9,8 +9,14 @@ ob_start();
 include $render_path;
 $items_html = ob_get_clean();
 
+if(isset($this->atts['return_items']) and $this->atts['return_items'])
+{
+    echo json_encode(array('html'=>$items_html, 'end_date'=>$this->end_date, 'offset'=>($this->next_offset +1), 'count'=>$this->found, 'current_month_divider'=>$current_month_divider));
+    exit;
+}
+
 // Inclue Isotope Assets
-$this->main->load_shuffle_assets();
+$this->main->load_isotope_assets();
 
 // Generating javascript code tpl
 $javascript = '<script type="text/javascript">
@@ -27,6 +33,7 @@ jQuery(document).ready(function()
         sed_method: "'.$this->sed_method.'",
         image_popup: "'.$this->image_popup.'",
         masonry_like_grid: "'.$this->masonry_like_grid.'",
+        fit_to_row: "'.$this->fit_to_row.'",
         sf:
         {
             container: "'.($this->sf_status ? '#mec_search_form_'.$this->id : '').'"
@@ -41,6 +48,7 @@ else $this->factory->params('footer', $javascript);
 
 $styling = $this->main->get_styling();
 $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])) ? ' colorskin-custom ' : '';
+do_action('mec_masonry_skin_head');
 ?>
 <div class="mec-wrap mec-skin-masonry-container<?php echo $event_colorskin; ?><?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     <?php if(trim($this->filter_by)) echo $this->filter_by(); ?>
@@ -58,5 +66,8 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
     </div>
     <?php endif; ?>
     
+    <?php if($this->load_more_button and $this->found >= $this->limit): ?>
+    <div class="mec-load-more-wrap"><div class="mec-load-more-button" onclick=""><?php echo __('Load More', 'mec'); ?></div></div>
+    <?php endif; ?>
 </div>
 <?php do_action('mec_masonry_customization'); ?>

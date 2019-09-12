@@ -612,7 +612,7 @@ body .fl-builder-bar .fl-builder-bar-content.is-muted > *:not(.fl-builder-publis
 	padding:0;
 	z-index: -1;
 	font-size: 16px;
-	overflow: visible;
+	overflow-y: scroll;
 	height: auto !important;
 	max-height: calc(100vh - 66px);
 	min-height: 300px;
@@ -4911,7 +4911,7 @@ span.select2-container.select2-container--open {
 }
 
 .fl-field[data-type="link"] .fl-field-connection {
-	bottom: 25px;
+	bottom: 20px;
 }
 .fl-field-connections-menu[data-field="fl-field-text"] {
     margin-top:30px

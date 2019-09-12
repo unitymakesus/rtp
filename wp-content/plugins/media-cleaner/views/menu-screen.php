@@ -190,6 +190,18 @@
 					echo "</p></div>";
 				}
 
+				if ( class_exists( 'Oxygen_VSB_Dynamic_Shortcodes' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>Oxygen Builder has been detected</b>. The free version might detect the files used by Oxygen Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
+				if ( class_exists( 'Brizy_Editor_Post' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>Brizy has been detected</b>. The free version might detect the files used by Brizy correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
 				if ( function_exists( 'amd_zlrecipe_convert_to_recipe' ) ) {
 					echo "<div class='notice notice-warning'><p>";
 					_e( "<b>ZipList Recipe has been detected</b>. The free version might detect the files used by ZipList Recipe correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );

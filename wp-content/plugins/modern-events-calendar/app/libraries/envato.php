@@ -21,7 +21,7 @@ class MEC_envato extends MEC_base
     /**
      * The plugin url
      */
-    public $itemurl = 'https://codecanyon.net/item/modern-events-calendar-responsive-event-scheduler-booking-for-wordpress/17731780?s_rank=1';
+    public $itemurl = '';
 
     /**
      * User for cashing directory
@@ -200,26 +200,83 @@ class MEC_envato extends MEC_base
      */
     public function check_info($false, $action, $arg)
     {
+        $dl_link = !is_null($this->get_MEC_info('dl')) ? $this->set_update_path($this->get_MEC_info('dl')) : NULL;
+        $version = json_decode(json_encode($this->get_MEC_info('version')->version), true);
+        $data_url = 'https://webnus.net/modern-events-calendar/addons-api/addons-api.json';
+        
+        $get_data = file_get_contents($data_url);
+        if( $get_data !== false AND !empty($get_data) )
+        {
+            $obj = json_decode($get_data);
+            $i = count((array)$obj);
+        }
+        elseif ( function_exists('curl_version') )
+        {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_URL, $data_url);
+            $result = curl_exec($ch);
+            curl_close($ch);
+            $obj = json_decode($result);
+            $i = count((array)$obj);
+        } else {
+            $obj = '';
+        }
+        $addons = '';
+        if ( !empty( $obj ) ) :
+                $addons .= '<div class="mec-details-addons-container">';
+            foreach ($obj as $key => $value) :
+                $addons .= '
+                <div class="mec-details-addons-wrap">
+                    <a href="https://webnus.net/modern-events-calendar/addons/" target="_blank"><img src="'.$value->img.'" /></a>
+                    <div class="mec-details-addons-title"><a href="https://webnus.net/modern-events-calendar/addons/" target="_blank"><span>'. esc_html__($value->name) .'</span></a></div>
+                    <p>'. esc_html__($value->desc) .'</p>
+                </div>
+                
+                ';
+            endforeach;
+                $addons .= '</div>';
+        endif;
+
         if(isset($arg->slug) and $arg->slug === $this->slug)
         {
-            $information = $this->get_MEC_info('info');
-            if($information->item)
-            {
-                $arg->fields->short_description = true;
-                $arg->fields->description = true;
-                $arg->fields->sections = true;
-                $arg->slug = $this->slug;
-                $arg->plugin_name = 'Modern Events Calendar';
-                $arg->author = 'webnus';
-                $arg->homepage = $this->itemurl;
-                $arg->banners['low'] = 'https://0.s3.envato.com/files/202920118/mec-preview1.png';
-                
-                return $arg;
-            }
+            $information = $this->getRemote_information();
+            $information = json_decode($information);
+            
+            $information->name = 'Modern Events Calendar';
+            $information->slug = 'modern-events-calendar';
+            $information->plugin_name = 'Modern Events Calendar';
+            $information->version = $version;
+            $information->download_link  = $this->get_update_path();
+            $information->banners['low'] = 'https://ps.w.org/modern-events-calendar-lite/assets/banner-772x250.png?rev=1912767';
+            $information->tested = '5.2.2';
+            $information->active_installs = '10000';
+            $information->sections = (array) $information->sections;
+            unset($information->sections['installation']);
+            unset($information->sections['faq']);
+            unset($information->sections['screenshots']);
+            
+            $information->sections['addons'] = $addons;
+
+            return $information;
         }
         
         return false;
     }
+
+    /**
+	 * Get information about the remote version
+	 * @return bool|object
+	 */
+	public function getRemote_information()
+	{
+		$request = wp_remote_post('https://api.wordpress.org/plugins/info/1.0/modern-events-calendar-lite.json', array( 'timeout' => 30 ));
+		if (!is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200) {
+			return $request['body'];
+		}
+		return false;
+	}
 
     /**
      * Return details from envato

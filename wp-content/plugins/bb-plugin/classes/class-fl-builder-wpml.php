@@ -15,7 +15,7 @@ final class FLBuilderWPML {
 		if ( ! defined( 'ICL_SITEPRESS_VERSION' ) ) {
 			return;
 		}
-
+		add_filter( 'fl_inline_editing_enabled', '__return_false' );
 		add_filter( 'fl_get_wp_widgets_exclude', __CLASS__ . '::filter_wp_widgets_exclude' );
 		add_filter( 'fl_builder_node_template_post_id', __CLASS__ . '::filter_node_template_post_id' );
 		add_filter( 'fl_builder_parent_template_node_id', __CLASS__ . '::filter_parent_template_node_id', 10, 3 );

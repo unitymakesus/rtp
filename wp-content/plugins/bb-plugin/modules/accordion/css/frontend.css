@@ -5,22 +5,50 @@
 .fl-accordion-button:focus {
 	outline: 0
 }
+
 .fl-accordion-button-label {
 	display: table-cell;
 	width: 100%;
+	border: none;
+	background: none;
+	text-align: left;
+	outline: 1px;
+	text-decoration: none;
 }
+
+.fl-accordion-button-label:focus,
+.fl-accordion-button-label:active,
+.fl-accordion-button-icon:focus,
+.fl-accordion-button-icon:active {
+	background: none;
+	outline-color: -webkit-focus-ring-color;
+	outline-style: auto;
+	text-decoration: none;
+}
+
+.fl-accordion-button-label:hover,
+.fl-accordion-button-icon:hover {
+	text-decoration: none;
+}
+
 .fl-accordion-button-icon {
 	display: table-cell;
 	line-height: inherit;
-	opacity: .5;
-	filter: alpha(opacity = 50);
 	padding-left: 15px;
 	vertical-align: middle;
 }
+
 .fl-accordion-button-icon-left {
 	padding-left: 0;
 	padding-right: 10px;
 }
+
+.fl-accordion-button-icon-left, .fl-accordion-button-icon-right {
+	opacity: .5;
+	filter: alpha(opacity = 50);
+}
+
+
 .fl-accordion-content {
 	display: none;
 }

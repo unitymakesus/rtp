@@ -73,9 +73,10 @@ final class TableLogins extends Table {
     protected function get_status() {
 
         return [ 
-                'success' => 'success',
-                'failed' => 'failed',
-                'blocked' => 'blocked'
+            //  'key'       => 'label'
+                'success'   => __( 'Success', SECSAFE_SLUG ),
+                'failed'    => __( 'Failed', SECSAFE_SLUG ),
+                'blocked'   => __( 'Blocked', SECSAFE_SLUG )
             ];
 
     } // get_status()
@@ -104,7 +105,7 @@ final class TableLogins extends Table {
 
                 <div class="chart chart-logins-line td td-9 center">
 
-                    <h3>' . __( 'Login Attempts Over The Past', SECSAFE_SLUG ) . ' ' . $days . ' ' . __( 'Days', SECSAFE_SLUG ) . '</h3>
+                    <h3>' . sprintf( __( 'Login Attempts Over The Past %d Days', SECSAFE_SLUG ), $days ) . '</h3>
                     <div id="chart-line"></div>
 
                 </div><div class="chart chart-logins-pie td td-3 center">
@@ -122,6 +123,7 @@ final class TableLogins extends Table {
         $columns = [
                         [
                             'id'            => 'total',
+                            'label'         => __( 'Total', SECSAFE_SLUG ),
                             'color'         => '#aaaaaa',
                             'type'          => 'area-spline',
                             'db'            => 'logins'
@@ -129,24 +131,28 @@ final class TableLogins extends Table {
                         ],
                         [
                             'id'            => 'threats',
+                            'label'         => __( 'Threats', SECSAFE_SLUG ),
                             'color'         => '#f6c600',
                             'type'          => 'bar',
                             'db'            => 'logins_threats'
                         ],
                         [
                             'id'            => 'blocked',
+                            'label'         => __( 'Blocked', SECSAFE_SLUG ),
                             'color'         => '#0073aa',
                             'type'          => 'bar',
                             'db'            => 'logins_blocked'
                         ],
                         [
                             'id'            => 'failed',
+                            'label'         => __( 'Failed', SECSAFE_SLUG ),
                             'color'         => '#dc3232',
                             'type'          => 'bar',
                             'db'            => 'logins_failed'
                         ],
                         [
                             'id'            => 'success',
+                            'label'         => __( 'Success', SECSAFE_SLUG ),
                             'color'         => '#029e45',
                             'type'          => 'bar',
                             'db'            => 'logins_success'

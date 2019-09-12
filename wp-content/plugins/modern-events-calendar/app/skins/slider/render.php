@@ -14,7 +14,7 @@ $settings = $this->main->get_settings();
                 foreach($date as $event):
                 
                 // Skip to next event if there is no image
-                if(empty($event->data->featured_image['large'])) continue;
+                // if(empty($event->data->featured_image['large'])) continue;
 
                 // Featured Image
                 $src = $event->data->featured_image['large'];
@@ -66,6 +66,8 @@ $settings = $this->main->get_settings();
             ?>
                 <?php if($this->style == 't1'): ?>
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+                    <?php $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                          if($schema_settings == '1' ): ?>                    
                         <script type="application/ld+json">
                         {
                             "@context" 		: "http://schema.org",
@@ -91,6 +93,7 @@ $settings = $this->main->get_settings();
                             "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                         }
                         </script>
+                        <?php endif; ?>
                         <div class="mec-slider-t1-img" style="background: url(<?php echo $src; ?> );"></div>
 
                         <div class="mec-slider-t1-content mec-event-grid-modern">
@@ -112,6 +115,8 @@ $settings = $this->main->get_settings();
                     </article>
                 <?php elseif($this->style == 't2'): ?>
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+                    <?php $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                          if($schema_settings == '1' ): ?>  
                         <script type="application/ld+json">
                         {
                             "@context" 		: "http://schema.org",
@@ -137,6 +142,7 @@ $settings = $this->main->get_settings();
                             "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                         }
                         </script>
+                        <?php endif; ?>
                         <div class="mec-slider-t2-img" style="background: url(<?php echo $src; ?> );"></div>
                         <div class="mec-slider-t2-content mec-event-grid-modern mec-bg-color">
 
@@ -157,6 +163,8 @@ $settings = $this->main->get_settings();
                     </article>
                 <?php elseif($this->style == 't3'): ?>
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+                    <?php $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                          if($schema_settings == '1' ): ?>  
                         <script type="application/ld+json">
                         {
                             "@context" 		: "http://schema.org",
@@ -182,6 +190,7 @@ $settings = $this->main->get_settings();
                             "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                         }
                         </script>
+                        <?php endif; ?>
                         <div class="mec-slider-t3-img" style="background: url(<?php echo $src; ?> );"></div>
                         <div class="mec-slider-t3-content mec-event-grid-modern">
                             <div class="event-grid-modern-head clearfix">
@@ -201,6 +210,8 @@ $settings = $this->main->get_settings();
                     </article>
                 <?php elseif($this->style == 't4'): ?>
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+                    <?php $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                          if($schema_settings == '1' ): ?>
                         <script type="application/ld+json">
                         {
                             "@context" 		: "http://schema.org",
@@ -226,6 +237,7 @@ $settings = $this->main->get_settings();
                             "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                         }
                         </script>
+                        <?php endif; ?>
                         <div class="mec-slider-t4-img" style="background: url(<?php echo $src; ?> );"></div>
                         <div class="mec-slider-t4-content mec-event-grid-modern">
 
@@ -246,6 +258,8 @@ $settings = $this->main->get_settings();
                     </article>
                 <?php elseif($this->style == 't5'): ?>
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+                    <?php $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                          if($schema_settings == '1' ): ?>
                         <script type="application/ld+json">
                         {
                             "@context" 		: "http://schema.org",
@@ -271,6 +285,7 @@ $settings = $this->main->get_settings();
                             "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                         }
                         </script>
+                        <?php endif; ?>
                         <div class="mec-slider-t5-img" style="background: url(<?php echo $src; ?> );"></div>
                         <div class="mec-slider-t5-content mec-event-grid-modern">
                             <div class="event-grid-modern-head clearfix">

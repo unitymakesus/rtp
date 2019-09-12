@@ -38,6 +38,10 @@ class PrliLinksController extends PrliBaseController {
     add_filter('manage_edit-'.PrliLink::$cpt.'_columns', array($this,'columns'));
     add_filter('manage_edit-'.PrliLink::$cpt.'_sortable_columns', array($this,'sortable_columns'));
     add_filter('default_hidden_columns', array($this, 'default_hidden_columns'), 10, 2);
+    add_action('quick_edit_custom_box', array($this, 'quick_bulk_edit_add'), 10, 2);
+    add_action('bulk_edit_custom_box', array($this, 'quick_bulk_edit_add'), 10, 2);
+    add_action('save_post', array($this, 'save_quick_edit'), 10, 2);
+    add_action('wp_ajax_prli_links_list_save_bulk_edit', array($this, 'save_bulk_edit'));
 
     add_filter('post_row_actions', array($this, 'add_row_actions'), 10, 2);
 
@@ -539,9 +543,9 @@ class PrliLinksController extends PrliBaseController {
       elseif('links' == $column) {
         PrliLinksHelper::link_list_url_clipboard($link);
       }
-      elseif('slug' == $column) {
-        echo esc_html(stripslashes($link->slug));
-      }
+      // elseif('slug' == $column) {
+        // echo esc_html(stripslashes($link->slug));
+      // }
       elseif('target' == $column) {
         printf(
           '<a href="%s" target="_blank">%s</a>',
@@ -567,6 +571,102 @@ class PrliLinksController extends PrliBaseController {
     return $hidden;
   }
 
+  public function quick_bulk_edit_add($column, $post_type) {
+    if($column != 'settings' || $post_type != PrliLink::$cpt) { return; }
+
+    ?>
+      <fieldset class="inline-edit-col-right inline-edit-prli-links-<?php echo "{$column}"; ?>">
+        <div class="inline-edit-group">
+          <label>
+            <span class="title"><?php echo esc_html(__('No Follow', 'pretty-link')); ?></span>
+            <select name="prli_quick_edit_nofollow">
+              <option value="no-change"> - <?php echo esc_html(__('No Change', 'pretty-link')); ?> - </option>
+              <option value="on"><?php echo esc_html(__('Enabled', 'pretty-link')); ?></option>
+              <option value="off"><?php echo esc_html(__('Disabled', 'pretty-link')); ?></option>
+            </select>
+            <br/>
+            <span class="title"><?php echo esc_html(__('Tracking', 'pretty-link')); ?></span>
+            <select name="prli_quick_edit_tracking">
+              <option value="no-change"> - <?php echo esc_html(__('No Change', 'pretty-link')); ?> - </option>
+              <option value="on"><?php echo esc_html(__('Enabled', 'pretty-link')); ?></option>
+              <option value="off"><?php echo esc_html(__('Disabled', 'pretty-link')); ?></option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset class="inline-edit-col-right">
+        <!-- here to capture the tags field in bulk edit. WP uses JS to append tag field to last fieldset. -->
+        <span id="prli_bulk_edit_spinner"><img src="<?php echo admin_url('images/wpspin_light.gif'); ?>" /></span>
+      </fieldset>
+    <?php
+  }
+
+  public function save_quick_edit($post_id, $post) {
+    global $prli_link;
+
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) { return $post_id; }
+    if(isset($post->post_type) && $post->post_type == 'revision') { return $post_id; }
+    if(!isset($_POST['action']) || $_POST['action'] != 'inline-save') { return $post_id; } // This action is set when doing Quick Edit save
+
+    if($post->post_type == PrliLink::$cpt) {
+      $id = $prli_link->get_link_from_cpt($post->ID);
+      $link = $prli_link->getOne($id);
+
+      $tracking = ($_POST['prli_quick_edit_tracking'] == 'no-change') ? '' : ( ($_POST['prli_quick_edit_tracking'] == 'on') ? true : false );
+      $nofollow = ($_POST['prli_quick_edit_nofollow'] == 'no-change') ? '' : ( ($_POST['prli_quick_edit_nofollow'] == 'on') ? true : false );
+
+      prli_update_pretty_link(
+        $link->id,
+        $link->url,
+        $link->slug,
+        sanitize_text_field(stripslashes($_POST['post_title'])),
+        $link->description,
+        null,// group_id deprecated
+        $tracking,
+        $nofollow,
+        $link->redirect_type,
+        $link->param_forwarding,
+        '' // param_struct deprecated
+      );
+    }
+  }
+
+  public function save_bulk_edit() {
+    global $prli_link;
+
+    $post_ids = (isset($_POST['post_ids']) && !empty($_POST['post_ids'])) ? $_POST['post_ids'] : array();
+
+    if(!empty($post_ids) && is_array($post_ids)) {
+      foreach($post_ids as $post_id) {
+        $post_type = get_post_type($post_id);
+
+        if($post_type != PrliLink::$cpt) { return; }
+
+        $tracking = ($_POST['tracking'] == 'no-change') ? '' : ( ($_POST['tracking'] == 'on') ? true : false );
+        $nofollow = ($_POST['nofollow'] == 'no-change') ? '' : ( ($_POST['nofollow'] == 'on') ? true : false );
+
+        if($tracking === '' && $nofollow === '') { return; } // Nothing to change
+
+        $id = $prli_link->get_link_from_cpt($post_id);
+        $link = $prli_link->getOne($id);
+
+        prli_update_pretty_link(
+          $link->id,
+          $link->url,
+          $link->slug,
+          $link->name,
+          $link->description,
+          null,// group_id deprecated
+          $tracking,
+          $nofollow,
+          $link->redirect_type,
+          $link->param_forwarding,
+          '' // param_struct deprecated
+        );
+      }
+    }
+  }
+
   /**
   * Append row actions to list page
   * @see add_filter('post_row_actions')
@@ -585,6 +685,8 @@ class PrliLinksController extends PrliBaseController {
 
       $new_actions = array();
       $new_actions['edit']  = $actions['edit'];
+      $new_actions['trash'] = $actions['trash'];
+      $new_actions['inline hide-if-no-js'] = $actions['inline hide-if-no-js'];
       $new_actions['reset'] = PrliLinksHelper::link_action_reset($link, __('Reset', 'pretty-link'));
 
       if( $link->redirect_type !== 'pixel' ) {
@@ -620,7 +722,6 @@ class PrliLinksController extends PrliBaseController {
         }
       }
 
-      $new_actions['trash'] = $actions['trash'];
       $actions = $new_actions;
     }
 

@@ -1242,6 +1242,10 @@ if ( ! $version_bb_check ) {
 
 @media only screen and (max-width: <?php echo $global_settings->medium_breakpoint; ?>px) {
 
+	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle-container,
+	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text {
+		text-align: <?php echo ( isset( $settings->creative_menu_navigation_alignment_medium ) ? $settings->creative_menu_navigation_alignment_medium : '' ); ?>;
+	}
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu .menu > li {
 			<?php
 			if ( isset( $settings->creative_menu_link_margin_dimension_top_medium ) ) {
@@ -1447,6 +1451,10 @@ if ( ! $version_bb_check ) {
 
 @media only screen and (max-width: <?php echo $global_settings->responsive_breakpoint; ?>px) {
 
+	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle-container,
+	.fl-node-<?php echo $id; ?> .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text {
+		text-align: <?php echo ( isset( $settings->creative_menu_navigation_alignment_responsive ) ? $settings->creative_menu_navigation_alignment_responsive : '' ); ?>;
+	}
 	.fl-node-<?php echo $id; ?> .uabb-creative-menu .menu > li {
 		<?php
 		if ( isset( $settings->creative_menu_link_margin_dimension_top_responsive ) ) {

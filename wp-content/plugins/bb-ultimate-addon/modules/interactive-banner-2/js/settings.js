@@ -13,8 +13,24 @@
             var a = $('.fl-builder-interactive-banner-2-settings').find('.fl-builder-settings-tabs a');
             a.on('click', this._toggleHoverAndTypographyTabs);
             $( '.fl-builder-content' ).on( 'fl-builder.layout-rendered', this._toggleAfterRender );
-        },
 
+            var form            = $('.fl-builder-settings');
+            save_button = form.find('.fl-builder-settings-save');
+            save_button.off( 'click' ).on( 'click', this.submit);
+        },
+        submit: function()
+        {
+
+            var form      = $( '.fl-builder-settings' );
+                photo       = form.find('input[name=banner_image]').val();
+
+            if ( 0 === photo.length ) {
+                FLBuilder.alert( 'Banner Image Fields are required' );
+                return false;
+            }
+
+            return true;
+        },
         _toggleHoverAndTypographyTabs: function() {
             var anchorHref = $(this).attr('href');
             var node = jQuery(this).closest( 'form' ).attr( 'data-node' );

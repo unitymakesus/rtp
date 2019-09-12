@@ -1,6 +1,7 @@
 <?php // @codingStandardsIgnoreFile ?>
 <?php if ( 'wordpress' == $row->settings->bg_video_source ) { ?>
 <div class="fl-bg-video"
+data-video-mobile="<?php if ( isset( $row->settings->bg_video_mobile ) ) { echo $row->settings->bg_video_mobile;} ?>"
 data-width="<?php if ( isset( $vid_data['mp4'] ) ) { echo $vid_data['mp4']->width;
 } else { echo $vid_data['webm']->width;
 } ?>"
@@ -22,6 +23,7 @@ data-webm-type="video/<?php echo $vid_data['webm']->extension; ?>"
 
 <?php if ( 'video_url' == $row->settings->bg_video_source ) { ?>
 <div class="fl-bg-video"
+data-video-mobile="<?php if ( isset( $row->settings->bg_video_mobile ) ) { echo $row->settings->bg_video_mobile;} ?>"
 data-fallback="<?php if ( isset( $row->settings->bg_video_fallback_src ) ) { echo $row->settings->bg_video_fallback_src;} ?>"
 <?php if ( isset( $row->settings->bg_video_url_mp4 ) ) : ?>
 data-mp4="<?php echo $row->settings->bg_video_url_mp4; ?>"
@@ -34,13 +36,14 @@ data-webm-type="video/webm"
 <?php } ?>
 
 <?php if ( 'video_service' == $row->settings->bg_video_source ) {
-	$video_data = FLBuilderUtils::get_video_data( $row->settings->bg_video_service_url ); ?>
+	$video_data = FLBuilderUtils::get_video_data( do_shortcode( $row->settings->bg_video_service_url ) ); ?>
 <div class="fl-bg-video"
 data-fallback="<?php if ( isset( $row->settings->bg_video_fallback_src ) ) { echo $row->settings->bg_video_fallback_src;} ?>"
 <?php if ( isset( $row->settings->bg_video_service_url ) ) : ?>
-data-<?php echo $video_data['type']; ?>="<?php echo $row->settings->bg_video_service_url; ?>"
+data-<?php echo $video_data['type']; ?>="<?php echo do_shortcode( $row->settings->bg_video_service_url );  ?>"
 data-video-id="<?php echo $video_data['video_id']; ?>"
 data-enable-audio="<?php echo $row->settings->bg_video_audio; ?>"
+data-video-mobile="<?php if ( isset( $row->settings->bg_video_mobile ) ) { echo $row->settings->bg_video_mobile;} ?>"
 <?php if ( isset( $video_data['params'] ) ) : ?>
 	<?php foreach ( $video_data['params'] as $key => $val ) : ?>
 		data-<?php echo $key . '="' . $val . '"'; ?>

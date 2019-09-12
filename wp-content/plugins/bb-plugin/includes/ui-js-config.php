@@ -4,7 +4,7 @@
  * Filter main UI JS config.
  * @see fl_builder_ui_js_config
  */
-echo 'FLBuilderConfig              = ' . json_encode( apply_filters('fl_builder_ui_js_config', array(
+echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filters('fl_builder_ui_js_config', array(
 	'adminUrl'                   => admin_url(),
 	'ajaxNonce'                  => wp_create_nonce( 'fl_ajax_update' ),
 	'builderEnabled'             => get_post_meta( $post_id, '_fl_builder_enabled', true ) ? true : false,
@@ -69,7 +69,7 @@ echo 'FLBuilderConfig              = ' . json_encode( apply_filters('fl_builder_
  * Filter UI JS Strings.
  * @see fl_builder_ui_js_strings
  */
-echo 'FLBuilderStrings             = ' . json_encode( apply_filters('fl_builder_ui_js_strings', array(
+echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filters('fl_builder_ui_js_strings', array(
 	'actionsLightboxTitle'           => esc_attr__( 'What would you like to do?', 'fl-builder' ),
 	/* translators: %s: field name */
 	'addField'                       => esc_attr_x( 'Add %s', 'Field name to add.', 'fl-builder' ),

@@ -101,7 +101,7 @@ class MEC_skin_map extends MEC_skins
         $this->args['meta_key'] = 'mec_start_day_seconds';
         
         // Show Past Events
-        $this->args['mec-past-events'] = isset($this->atts['show_past_events']) ? $this->atts['show_past_events'] : '0';
+        $this->args['mec-past-events'] = isset($this->atts['show_past_events']) ? $this->atts['show_past_events'] : 0;
 
         // Geolocation
         $this->geolocation = isset($this->skin_options['geolocation']) ? $this->skin_options['geolocation'] : 0;
@@ -162,7 +162,7 @@ class MEC_skin_map extends MEC_skins
                 $data = new stdClass();
                 $data->ID = $event_id;
                 $data->data = $rendered;
-                $data->dates = $this->render->dates($event_id, $rendered, 6);
+                $data->dates = $this->render->dates($event_id, $rendered, 1);
                 $data->date = isset($data->dates[0]) ? $data->dates[0] : array();
                 
                 // Proceed to next event if it's expired

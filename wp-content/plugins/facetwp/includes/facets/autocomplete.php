@@ -3,15 +3,50 @@
 class FacetWP_Facet_Autocomplete extends FacetWP_Facet
 {
 
+    public $is_buffering = false;
+
+
     function __construct() {
         $this->label = __( 'Autocomplete', 'fwp' );
 
         // ajax
-        add_action( 'facetwp_autocomplete_load', array( $this, 'ajax_load' ) );
+        add_action( 'facetwp_autocomplete_load', [ $this, 'ajax_load' ] );
+
+        // css-based template
+        $this->maybe_buffer_output();
+        add_action( 'facetwp_found_main_query', [ $this, 'template_handler' ] );
 
         // deprecated
-        add_action( 'wp_ajax_facetwp_autocomplete_load', array( $this, 'ajax_load' ) );
-        add_action( 'wp_ajax_nopriv_facetwp_autocomplete_load', array( $this, 'ajax_load' ) );
+        add_action( 'wp_ajax_facetwp_autocomplete_load', [ $this, 'ajax_load' ] );
+        add_action( 'wp_ajax_nopriv_facetwp_autocomplete_load', [ $this, 'ajax_load' ] );
+    }
+
+
+    /**
+     * For page templates with a custom WP_Query, we need to prevent the
+     * page header from being output with the autocomplete JSON
+     */
+    function maybe_buffer_output() {
+        if ( isset( $_POST['action'] ) && 'facetwp_autocomplete_load' == $_POST['action'] ) {
+            $this->is_buffering = true;
+            ob_start();
+        }
+    }
+
+
+    /**
+     * For CSS-based templates, the "facetwp_autocomplete_load" action isn't fired
+     * so we need to manually check the action
+     */
+    function template_handler() {
+        if ( isset( $_POST['action'] ) && 'facetwp_autocomplete_load' == $_POST['action'] ) {
+            if ( $this->is_buffering ) {
+                while ( ob_get_level() ) {
+                    ob_end_clean();
+                }
+            }
+            $this->ajax_load();
+        }
     }
 
 
@@ -23,10 +58,10 @@ class FacetWP_Facet_Autocomplete extends FacetWP_Facet
         $output = '';
         $value = (array) $params['selected_values'];
         $value = empty( $value ) ? '' : stripslashes( $value[0] );
-        $placeholder = isset( $params['facet']['placeholder'] ) ? $params['facet']['placeholder'] : __( 'Start typing...', 'fwp' );
+        $placeholder = isset( $params['facet']['placeholder'] ) ? $params['facet']['placeholder'] : __( 'Start typing', 'fwp-front' ) + '...';
         $placeholder = facetwp_i18n( $placeholder );
-        $output .= '<input type="search" class="facetwp-autocomplete" value="' . esc_attr( $value ) . '" placeholder="' . esc_attr( $placeholder ) . '" />';
-        $output .= '<input type="button" class="facetwp-autocomplete-update" value="' . __( 'Update', 'fwp' ) . '" />';
+        $output .= '<input type="text" class="facetwp-autocomplete" value="' . esc_attr( $value ) . '" placeholder="' . esc_attr( $placeholder ) . '" />';
+        $output .= '<input type="button" class="facetwp-autocomplete-update" value="' . __( 'Go', 'fwp-front' ) . '" />';
         return $output;
     }
 
@@ -56,33 +91,10 @@ class FacetWP_Facet_Autocomplete extends FacetWP_Facet
 
 
     /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/autocomplete', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-placeholder').val(obj.placeholder);
-    });
-
-    wp.hooks.addFilter('facetwp/save/autocomplete', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['placeholder'] = $this.find('.facet-placeholder').val();
-        return obj;
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
      * Output any front-end scripts
      */
     function front_scripts() {
-        FWP()->display->json['no_results'] = __( 'No results', 'fwp' );
+        FWP()->display->json['no_results'] = __( 'No results', 'fwp-front' );
         FWP()->display->assets['jquery.autocomplete.js'] = FACETWP_URL . '/assets/vendor/jquery-autocomplete/jquery.autocomplete.min.js';
         FWP()->display->assets['jquery.autocomplete.css'] = FACETWP_URL . '/assets/vendor/jquery-autocomplete/jquery.autocomplete.css';
     }
@@ -94,30 +106,45 @@ class FacetWP_Facet_Autocomplete extends FacetWP_Facet
     function ajax_load() {
         global $wpdb;
 
-        $query = FWP()->helper->sanitize( $wpdb->esc_like( $_POST['query'] ) );
+        // optimizations
+        $_POST['data']['soft_refresh'] = 1;
+        $_POST['data']['extras'] = [];
+
+        $query = stripslashes( $_POST['query'] );
+        $query = FWP()->helper->sanitize( $wpdb->esc_like( $query ) );
         $facet_name = FWP()->helper->sanitize( $_POST['facet_name'] );
-        $output = array();
+        $output = [];
+
+        // simulate a refresh
+        FWP()->facet->render(
+            FWP()->ajax->process_post_data()
+        );
+
+        // then grab the matching post IDs
+        $where_clause = $this->get_where_clause( [ 'name' => $facet_name ] );
 
         if ( ! empty( $query ) && ! empty( $facet_name ) ) {
             $sql = "
             SELECT DISTINCT facet_display_value
             FROM {$wpdb->prefix}facetwp_index
-            WHERE facet_name = '$facet_name' AND facet_display_value LIKE '%$query%'
+            WHERE
+                facet_name = '$facet_name' AND
+                facet_display_value LIKE '%$query%'
+                $where_clause
             ORDER BY facet_display_value ASC
             LIMIT 10";
 
             $results = $wpdb->get_results( $sql );
 
             foreach ( $results as $result ) {
-                $output[] = array(
+                $output[] = [
                     'value' => $result->facet_display_value,
                     'data' => $result->facet_display_value,
-                );
+                ];
             }
         }
 
-        echo json_encode( array( 'suggestions' => $output ) );
-        exit;
+        wp_send_json( [ 'suggestions' => $output ] );
     }
 
 
@@ -126,10 +153,10 @@ class FacetWP_Facet_Autocomplete extends FacetWP_Facet
      */
     function settings_html() {
 ?>
-        <tr>
-            <td><?php _e( 'Placeholder text', 'fwp' ); ?>:</td>
-            <td><input type="text" class="facet-placeholder" value="" /></td>
-        </tr>
+        <div class="facetwp-row">
+            <div><?php _e( 'Placeholder text', 'fwp' ); ?>:</div>
+            <div><input type="text" class="facet-placeholder" /></div>
+        </div>
 <?php
     }
 }

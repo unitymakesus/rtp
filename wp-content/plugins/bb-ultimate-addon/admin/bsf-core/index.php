@@ -38,6 +38,11 @@ if ( ! defined( 'BSF_UPDATER_VERSION' ) ) {
 	define( 'BSF_UPDATER_VERSION', $bsf_core_version );
 }
 
+// Do not initialize graupi in the customizer.
+if ( isset( $_GET['customize_theme'] ) || is_customize_preview() ) {
+	return;
+}
+
 /* product registration */
 require_once 'includes/helpers.php';
 require_once 'includes/system-info.php';

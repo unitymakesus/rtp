@@ -47,6 +47,7 @@ else $this->factory->params('footer', $javascript);
 
 $styling = $this->main->get_styling();
 $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])) ? 'colorskin-custom' : '';
+do_action('mec_agenda_skin_head');
 ?>
 <div class="mec-wrap mec-events-agenda-container <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     

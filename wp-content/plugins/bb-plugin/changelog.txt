@@ -1,3 +1,94 @@
+<h4>2.2.5.2 - 09/11/2019</h4>
+<p><strong>Hot Fix</strong></p>
+<ul>
+	<li>Fixed unescaped alt tag in slideshow javascript.</li>
+	<li>Fixed row content layout when margin-top is set to negative value.</li>
+</ul>
+
+<h4>2.2.5.1 - 09/05/2019</h4>
+<p><strong>Hot Fix</strong></p>
+<ul>
+	<li>Fixed background video issues.</li>
+	<li>Fixed responsive visibility issue with equal heights column.</li>
+	<li>Fixed vertical tabs display issue.</li>
+</ul>
+
+<h4>2.2.5 - 09/04/2019</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Accessibility: Added title attribute setting for iframe in Map module.</li>
+	<li>Accessibility: Added TAB functionaility to Menu module.</li>
+	<li>Accessibility: Improved accessibility of Tabs and Accordion modules.</li>
+	<li>Accessibility: Added alt attribute to slideshow images.</li>
+	<li>Accessibility: Always show label setting as it is also used for aria attribute in Menu module.</li>
+	<li>Added maxlength setting for Textarea fields.</li>
+	<li>Row videos can now use shortcodes for url.</li>
+	<li>Added an option to enable video background in mobile.</li>
+	<li>Added Collection Schema to Posts module when not post post-type.</li>
+	<li>Added new filter <code>fl_builder_get_asset_info_post_id</code>.</li>
+	<li>Added new filter <code>fl_render_featured_image_fallback</code>.</li>
+	<li>Added global option to disable column max-width on responsive layout.</li>
+	<li>Added preload="none" to self hosted videos.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed issue with settings lightbox if off the screen last time it was saved.</li>
+	<li>Fixed template post type links showing as results in Gutenberg suggested links.</li>
+	<li>Fixed PHP notice when post types option is not empty in the network admin settings.</li>
+	<li>Fixed updater logic clearing caches for all subsites when not needed on multisites.</li>
+	<li>Fixed bullet point css issue in Pricing module.</li>
+	<li>Fixed equal height issue on columns when visibility is set to medium.</li>
+	<li>Fixed FireFox bug for row with negative margins not working on equal height columns.</li>
+	<li>Fixed circle cut-off on Number Counter when the Stroke Size value is large.</li>
+	<li>Fixed saved column settings update/save error.</li>
+	<li>Fixed Mobile Menu not closing when clicked outside the toggle button.</li>
+	<li>Fixed row bg disappearing with ACF field connection and Yoast active</li>
+	<li>Fixed inline editor issues when WPML is enabled.</li>
+	<li>Fixed responsive issue in post carousel when equal height is enabled and parent row is set to full height or custom.</li>
+</ul>
+
+<h4>2.2.4.5 - 08/28/2019</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>New filter added <code>fl_builder_art_register_shape</code>.</li>
+	<li>Added support for Nginx Helper plugin in cache extension.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed Infusionsoft fatal error due to missing library folder.</li>
+	<li>Fixed jQuery Validate issue if no messages object is setup in settings.js</li>
+</ul>
+
+<h4>2.2.4.4 - 08/21/2019</h4>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed fallback image and text alignment on Posts module List Layout.</li>
+	<li>Fixed Numbers Module if float value is used.</li>
+	<li>Fixed Subscribe Form module's URL Redirect.</li>
+	<li>Fixed Editor tab missing when using Classic Editor and Yoast plugins.</li>
+	<li>Fixed Beaver Builder sorting link appearing in EDD main settings.</li>
+</ul>
+
+
+<h4>2.2.4.3 - 07/31/2019</h4>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed issue when json_encode returns no output stopping module settings from displaying.</li>
+	<li>Fixed possible JS issue and PHP buffer issue when editing pages when SEO plugins are enabled.</li>
+</ul>
+
+<h4>2.2.4.2 - 07/24/2019</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added support for Yoast and RankMath to analyse layout contents for SEO in post edit screen.</li>
+	<li>Removed template post-type from Yoast and RankMath sitemaps.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed database query issue when duplicating layouts on MariaDB 10.3+</li>
+	<li>Fixed issue with ThirstyAffiliates plugin.</li>
+</ul>
+
 <h4>2.2.4.1 - 07/20/2019</h4>
 <p><strong>Hot Fix</strong></p>
 <ul>

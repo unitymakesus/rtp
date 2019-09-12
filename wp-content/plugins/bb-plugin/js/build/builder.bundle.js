@@ -20693,6 +20693,7 @@ var InlineEditor = function (_Component) {
 					menubar: false,
 					paste_as_text: true,
 					relative_urls: false,
+					convert_urls: false,
 					skin: FLBuilder ? false : 'lightgray',
 					skin_url: FLBuilder ? false : tinyMCEPreInit.baseURL + '/skins/lightgray/',
 					theme: 'modern',
@@ -20832,9 +20833,9 @@ var InlineEditor = function (_Component) {
 				var textarea = settings.find('#fl-field-' + field.name + ' textarea.wp-editor-area');
 				var editorId = textarea.attr('id');
 				if (textarea.closest('.tmce-active').length) {
-					tinymce.get(editorId).setContent(this.fixURLs(content));
+					tinymce.get(editorId).setContent(content);
 				} else {
-					textarea.val(this.fixURLs(content));
+					textarea.val(content);
 				}
 			} else {
 				var _textarea = document.createElement('textarea');
@@ -21005,16 +21006,6 @@ var InlineEditor = function (_Component) {
 		key: 'matchHTML',
 		value: function matchHTML(a, b) {
 			return this.cleanHTML(a) === this.cleanHTML(b);
-		}
-	}, {
-		key: 'fixURLs',
-		value: function fixURLs(html) {
-			html = html.replace(/<a href="[^http]/g, '<a href="' + FLBuilderConfig.homeUrl + '/');
-			html = html.replace(/<a href="(\.\.\/){1,2}/g, '<a href="' + FLBuilderConfig.homeUrl + '/');
-
-			html = html.replace(/src="(\.\.\/){1,2}/g, 'src="' + FLBuilderConfig.homeUrl + '/');
-			html = html.replace(/src="[^http]/g, 'src="' + FLBuilderConfig.homeUrl + '/');
-			return html;
 		}
 	}, {
 		key: 'cleanHTML',

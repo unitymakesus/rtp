@@ -8,9 +8,9 @@
 				continue;
 			}
 			?>
-		<div class="fl-tabs-label<?php if ( 0 == $i ) { echo ' fl-tab-active';} ?>" id="<?php echo 'fl-tabs-' . $module->node . '-label-' . $i; ?>" data-index="<?php echo $i; ?>" aria-selected="<?php echo ($i > 0) ? 'false' : 'true';?>" aria-controls="<?php echo 'fl-tabs-' . $module->node . '-panel-' . $i; ?>" aria-expanded="<?php echo ( $i > 0 ) ? 'false' : 'true'; ?>" role="tab" tabindex="0"><?php // @codingStandardsIgnoreLine ?>
-			<?php echo $settings->items[ $i ]->label; ?>
-		</div>
+			<a href="#" class="fl-tabs-label<?php if ( 0 == $i ) { echo ' fl-tab-active';} ?>" id="<?php echo 'fl-tabs-' . $module->node . '-label-' . $i; ?>" data-index="<?php echo $i; ?>" aria-selected="<?php echo ($i > 0) ? 'false' : 'true';?>" aria-controls="<?php echo 'fl-tabs-' . $module->node . '-panel-' . $i; ?>" aria-expanded="<?php echo ( $i > 0 ) ? 'false' : 'true'; ?>" role="tab" tabindex="0"><?php // @codingStandardsIgnoreLine ?>
+				<?php echo $settings->items[ $i ]->label; ?>
+			</a>
 		<?php endfor; ?>
 	</div>
 

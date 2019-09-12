@@ -89,6 +89,7 @@ class FLSlideshowModule extends FLBuilderModule {
 				// Photo data object
 				$data          = new stdClass();
 				$data->caption = $photo->caption;
+				$data->alt     = $photo->alt;
 
 				// Photo sizes
 				if ( isset( $photo->sizes->large ) ) {
@@ -138,7 +139,8 @@ class FLSlideshowModule extends FLBuilderModule {
 				$urls .= 'thumbURL: "' . $photo->thumbURL . '",'; // @codingStandardsIgnoreLine
 				$urls .= 'largeURL: "' . $photo->largeURL . '",'; // @codingStandardsIgnoreLine
 				$urls .= 'x3largeURL: "' . $photo->x3largeURL . '",'; // @codingStandardsIgnoreLine
-				$urls     .= 'caption: "' . $caption . '"';
+				$urls     .= 'caption: "' . $caption . '",';
+				$urls     .= 'alt: "' . esc_attr( $photo->alt ) . '"';
 				$urls     .= '}';
 				$objects[] = $urls;
 			}

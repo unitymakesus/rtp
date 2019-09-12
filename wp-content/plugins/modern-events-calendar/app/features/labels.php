@@ -76,6 +76,7 @@ class MEC_feature_labels extends MEC_base
                     'new_item_name'=>sprintf(__('New %s Name', 'mec'), $singular_label),
                     'popular_items'=>sprintf(__('Popular %s', 'mec'), $plural_label),
                     'search_items'=>sprintf(__('Search %s', 'mec'), $plural_label),
+                    'back_to_items'=>sprintf(__('← Back to  %s', 'mec'), $plural_label),
                 ),
                 'rewrite'=>array('slug'=>'events-label'),
                 'public'=>false,
@@ -235,6 +236,7 @@ class MEC_feature_labels extends MEC_base
                 <?php foreach($labels as $label): ?>
                 <div class="mec-label-row">
                     <input <?php if(in_array($label->term_id, $terms)) echo 'checked="checked"'; ?> name="mec[labels][]" type="checkbox" value="<?php echo $label->term_id; ?>" id="mec_label<?php echo $label->term_id; ?>" />
+                    <?php do_action('mec_label_to_checkbox_backend',$label, $terms ); ?>
                     <label for="mec_label<?php echo $label->term_id; ?>"><?php echo $label->name; ?></label>
                     <span class="mec-color" style="background-color: <?php echo get_term_meta($label->term_id, 'color', true); ?>"></span>
                 </div>

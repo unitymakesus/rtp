@@ -18,7 +18,7 @@ $occurrence_end_date = trim($occurrence) ? $this->get_end_date_by_occurrence($ev
 $start_time = strtotime((trim($occurrence) ? $occurrence : $event->date['start']['date']).' '.sprintf("%02d", $event->date['start']['hour']).':'.sprintf("%02d", $event->date['start']['minutes']).' '.$event->date['start']['ampm']);
 $end_time = strtotime((trim($occurrence_end_date) ? $occurrence_end_date : $event->date['end']['date']).' '.sprintf("%02d", $event->date['end']['hour']).':'.sprintf("%02d", $event->date['end']['minutes']).' '.$event->date['end']['ampm']);
 
-$gmt_offset_seconds = $this->get_gmt_offset_seconds();
+$gmt_offset_seconds = $this->get_gmt_offset_seconds($start_time);
 ?>
 <div class="mec-event-export-module mec-frontbox">
      <div class="mec-event-exporting">

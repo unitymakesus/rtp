@@ -74,6 +74,7 @@ class MEC_feature_organizers extends MEC_base
                     'new_item_name'=>sprintf(__('New %s Name', 'mec'), $singular_label),
                     'popular_items'=>sprintf(__('Popular %s', 'mec'), $plural_label),
                     'search_items'=>sprintf(__('Search %s', 'mec'), $plural_label),
+                    'back_to_items'=>sprintf(__('← Back to  %s', 'mec'), $plural_label),
                 ),
                 'rewrite'=>array('slug'=>'events-organizer'),
                 'public'=>false,
@@ -121,6 +122,7 @@ class MEC_feature_organizers extends MEC_base
                 <input type="text" placeholder="<?php esc_attr_e('Use this field to link organizer to other user profile pages', 'mec'); ?>" name="url" id="mec_url" value="<?php echo $url; ?>" />
             </td>
         </tr>
+        <?php do_action( 'mec_edit_organizer_extra_fields' , $term ); ?>
         <tr class="form-field">
             <th scope="row" valign="top">
                 <label for="mec_thumbnail_button"><?php _e('Thumbnail', 'mec'); ?></label>
@@ -154,6 +156,7 @@ class MEC_feature_organizers extends MEC_base
             <label for="mec_url"><?php _e('Link to organizer page', 'mec'); ?></label>
             <input type="text" name="url" placeholder="<?php esc_attr_e('Use this field to link organizer to other user profile pages', 'mec'); ?>" id="mec_url" value="" />
         </div>
+        <?php do_action( 'mec_add_organizer_extra_fields' ); ?>
         <div class="form-field">
             <label for="mec_thumbnail_button"><?php _e('Thumbnail', 'mec'); ?></label>
             <div id="mec_thumbnail_img"></div>
@@ -180,6 +183,8 @@ class MEC_feature_organizers extends MEC_base
         update_term_meta($term_id, 'email', $email);
         update_term_meta($term_id, 'url', $url);
         update_term_meta($term_id, 'thumbnail', $thumbnail);
+
+        do_action( 'mec_save_organizer_extra_fields' , $term_id );
     }
     
     /**

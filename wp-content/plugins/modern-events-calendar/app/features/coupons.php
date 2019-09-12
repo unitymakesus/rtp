@@ -85,6 +85,7 @@ class MEC_feature_coupons extends MEC_base
                     'new_item_name'=>__('New Coupon Name', 'mec'),
                     'popular_items'=>__('Popular Coupons', 'mec'),
                     'search_items'=>__('Search Coupons', 'mec'),
+                    'back_to_items'=>__('← Back to Coupons', 'mec'),
                 ),
                 'public'=>true,
                 'show_ui'=>true,

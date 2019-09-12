@@ -48,6 +48,7 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-list-icon.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-video-gallery.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-price-list.php';
+				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-business-hours.php';
 			}
 
 		}
@@ -1005,20 +1006,10 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 			);
 
 			// Business Hours.
-			$form['business-hours'] = array(
-				'conditions' => array( 'type' => 'business-hours' ),
-				'fields'     => array(
-					array(
-						'field'       => 'days',
-						'type'        => __( 'Business Hours : Enter Day', 'uabb' ),
-						'editor_type' => 'LINE',
-					),
-					array(
-						'field'       => 'hours',
-						'type'        => __( 'Business Hours : Enter Time', 'uabb' ),
-						'editor_type' => 'LINE',
-					),
-				),
+			$form['uabb-business-hours'] = array(
+				'conditions'        => array( 'type' => 'uabb-business-hours' ),
+				'fields'            => array(),
+				'integration-class' => 'WPML_UABB_Business_Hours',
 			);
 
 			// Woo - Add to Cart.

@@ -29,6 +29,7 @@ if(count($this->events))
             styles: '.((isset($settings['google_maps_style']) and trim($settings['google_maps_style']) != '') ? $this->main->get_googlemap_style($settings['google_maps_style']) : "''").',
             markers: '.json_encode($this->render->markers($this->events)).',
             HTML5geolocation: '.$this->geolocation.',
+            clustering_images: "'.$this->main->asset('img/cluster1/m').'",
             getDirection: 0,
             ajax_url: "'.admin_url('admin-ajax.php', NULL).'",
             sf:
@@ -43,6 +44,7 @@ if(count($this->events))
     if($this->main->is_ajax()) echo $javascript;
     else $this->factory->params('footer', $javascript);
 }
+do_action('mec_map_skin_head');
 ?>
 <div class="mec-wrap mec-skin-map-container <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     

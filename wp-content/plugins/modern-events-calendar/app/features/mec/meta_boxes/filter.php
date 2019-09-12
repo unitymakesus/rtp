@@ -161,6 +161,7 @@ $MEC_tax_walker = new MEC_tax_walker();
             </ul>
             <p class="description"><?php _e('Choose your desired authors for filtering the events.', 'mec'); ?></p>
         </div>
+        <?php do_action('mec_shortcode_filters' , $post->ID , $MEC_tax_walker ); ?>
         <div class="mec-form-row">
             <h4><?php _e('Dates', 'mec'); ?></h4>
             <div class="mec-form-row mec-switcher">

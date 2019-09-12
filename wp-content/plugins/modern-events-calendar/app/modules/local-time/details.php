@@ -20,10 +20,10 @@ $date_format1 = (isset($settings['single_date_format1']) and trim($settings['sin
 $occurrence = isset($_GET['occurrence']) ? sanitize_text_field($_GET['occurrence']) : '';
 $occurrence_end_date = trim($occurrence) ? $this->get_end_date_by_occurrence($event->data->ID, (isset($event->date['start']['date']) ? $event->date['start']['date'] : $occurrence)) : '';
 
-$gmt_offset_seconds = $this->get_gmt_offset_seconds();
+$gmt_offset_seconds = $this->get_gmt_offset_seconds((trim($occurrence) ? $occurrence : $event->date['start']['date']));
 
 $gmt_start_time = strtotime((trim($occurrence) ? $occurrence : $event->date['start']['date']).' '.sprintf("%02d", $event->date['start']['hour']).':'.sprintf("%02d", $event->date['start']['minutes']).' '.$event->date['start']['ampm']) - $gmt_offset_seconds;
-$gmt_end_time = strtotime((trim($occurrence_end_date) ? $occurrence_end_date : $event->date['end']['date']).' '.sprintf("%02d", $event->date['end']['hour']).':'.sprintf("%02d", $event->date['end']['minutes']).' '.$event->date['end']['ampm']) - $gmt_offset_seconds;
+$gmt_end_time = strtotime((trim($occurrence_end_date) ? $occurrence_end_date : $event->date['end']['date']).' '.sprintf("%02d", ($event->date['end']['hour'] == '0') ? '12' : $event->date['end']['hour']).':'.sprintf("%02d", $event->date['end']['minutes']).' '.$event->date['end']['ampm']) - $gmt_offset_seconds;
 
 $user_timezone = new DateTimeZone($timezone);
 $gmt_timezone = new DateTimeZone('GMT');

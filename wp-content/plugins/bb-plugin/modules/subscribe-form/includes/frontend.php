@@ -12,6 +12,9 @@
 		<div class="fl-form-error-message"><?php _e( 'Please enter a valid email address.', 'fl-builder' ); ?></div>
 	</div>
 
+	<input type="hidden" name="fl-success-message" value="<?php echo esc_attr( do_shortcode( $settings->success_message ) ); ?>">
+	<input type="hidden" name="fl-success-url" value="<?php echo esc_attr( do_shortcode( $settings->success_url ) ); ?>">
+
 	<?php if ( 'stacked' == $settings->layout ) : ?>
 		<?php if ( 'show' == $settings->terms_checkbox ) : ?>
 			<div class="fl-form-field fl-terms-checkbox">

@@ -35,6 +35,18 @@
 			}
 
 		}, this ) );
+
+		$( 'body' ).on( 'click', $.proxy( function( e ) {
+			if ( 'undefined' !== typeof FLBuilderConfig ){
+				return;
+			}
+
+			if ( $( this.wrapperClass ).find( '.fl-menu-mobile-toggle' ).hasClass( 'fl-active' ) && ( 'expanded' !== this.mobileToggle ) ){
+				$( this.wrapperClass ).find( '.fl-menu-mobile-toggle' ).trigger( 'click' );
+			}
+
+		}, this ) );
+
 	};
 
 	FLBuilderMenu.prototype = {
@@ -132,11 +144,16 @@
 
 				$('.fl-menu .focus').removeClass('focus');
 
-				$menuItem.addClass('focus');
-				$parents.addClass('focus');
+				$menuItem.addClass('focus')
+				$parents.addClass('focus')
 
 			}, this ) ).on( 'focusout', 'a', $.proxy( function( e ){
-				$( e.target ).parentsUntil( this.wrapperClass ).removeClass( 'focus' );
+
+				el = $(e.target).parent()
+
+				if( el.is(':last-child' ) ) {
+					$( e.target ).parentsUntil( this.wrapperClass ).removeClass( 'focus' );
+				}
 			}, this ) );
 		},
 
@@ -160,6 +177,7 @@
 					e.preventDefault();
 				}
 				else {
+					e.stopPropagation();
 					window.location.href = $href;
 					return;
 				}
@@ -178,6 +196,7 @@
 
 				$subMenu.slideToggle();
 				$link.toggleClass( 'fl-active' );
+				e.stopPropagation();
 
 			}, this ) );
 
@@ -355,6 +374,8 @@
 					else {
 						$menu.slideToggle();
 					}
+
+					e.stopPropagation();
 				} );
 
 				// Hide active menu when click on anchor link ID that exists on a page.
@@ -506,8 +527,9 @@
 
 			wrapper.find( '.fl-menu-mobile-flyout' ).height( win.height() );
 
-			wrapper.on( 'click', '.fl-menu-mobile-opacity, .fl-menu-mobile-close', function(){
+			wrapper.on( 'click', '.fl-menu-mobile-opacity, .fl-menu-mobile-close', function(e){
 				button.trigger( 'click' );
+				e.stopPropagation();
 			});
 
 			if ( 'undefined' !== typeof FLBuilder ) {

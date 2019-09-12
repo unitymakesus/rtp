@@ -107,6 +107,8 @@ class FLSubscribeFormModule extends FLBuilderModule {
 	public function submit() {
 		$name             = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : false;
 		$email            = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : false;
+		$success_message  = isset( $_POST['success_message'] ) ? sanitize_text_field( $_POST['success_message'] ) : false;
+		$success_url      = isset( $_POST['success_url'] ) ? sanitize_text_field( $_POST['success_url'] ) : false;
 		$terms_checked    = isset( $_POST['terms_checked'] ) && 1 == $_POST['terms_checked'] ? true : false;
 		$recaptcha        = isset( $_POST['recaptcha'] ) ? $_POST['recaptcha'] : false;
 		$post_id          = isset( $_POST['post_id'] ) ? $_POST['post_id'] : false;
@@ -167,9 +169,11 @@ class FLSubscribeFormModule extends FLBuilderModule {
 					$result['action'] = $settings->success_action;
 
 					if ( 'message' == $settings->success_action ) {
-						$result['message'] = $settings->success_message;
-					} else {
-						$result['url'] = $settings->success_url;
+						$result['message'] = $success_message;
+					}
+
+					if ( 'redirect' == $settings->success_action ) {
+						$result['url'] = $success_url;
 					}
 				}
 

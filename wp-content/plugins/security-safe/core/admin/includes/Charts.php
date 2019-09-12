@@ -77,17 +77,17 @@ class Charts {
 
             if ( isset( $c['color'] ) ){
             
-                $colors .= $c['id'] . ': "' . $c['color'] . '",';
+                $colors .= '"' . $c['label'] . '": "' . $c['color'] . '",';
 
             }
 
             if ( isset( $c['type'] ) ){
             
-                $types .= $c['id'] . ': "' . $c['type'] . '",';
+                $types .= '"' . $c['label'] . '": "' . $c['type'] . '",';
 
             }
 
-            $groups .= '"' . $c['id'] . '"';
+            $groups .= '"' . $c['label'] . '"';
 
             $num++;
 
@@ -155,7 +155,7 @@ class Charts {
 
             if ( isset( $c['color'] ) ){
             
-                $colors .= $c['id'] . ': "' . $c['color'] . '",';
+                $colors .= '"' . $c['label'] . '": "' . $c['color'] . '",';
 
             }
 
@@ -233,7 +233,7 @@ class Charts {
                 bindto: "#' . $chart['id'] . '",
                 data: {
                     columns: [
-                        ["' . $chart['columns'][1]['id'] . '", percent]
+                        ["' . $chart['columns'][1]['label'] . '", percent]
                     ],
                     type: "gauge"
                 },
@@ -259,12 +259,18 @@ class Charts {
      */
     static function dependencies() {
 
-        // Get updated css/JS here: https://cdnjs.com/libraries
+        /** 
+         * Get updated css/JS here: https://cdnjs.com/libraries
+         * Current Installed Version
+         * https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.min.css
+         * https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js 
+         * https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.min.js
+         */
         
         echo '
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.min.css" integrity="sha256-RSMIOX07BNUXyf71hwmYRrUZ8RmiBxMTpqI0GOAy0GM=" crossorigin="anonymous" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/c3/0.7.0/c3.min.js" integrity="sha256-TWSsNUpvg6NO1kRGAQV01Aqit3mr/IguqEzgTECFU+I=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="' . SECSAFE_URL_ADMIN_ASSETS . 'css/c3.min.css?ver=' . SECSAFE_VERSION . '" />
+        <script src="' . SECSAFE_URL_ADMIN_ASSETS . 'js/d3.min.js?ver=' . SECSAFE_VERSION . '"></script>
+        <script src="' . SECSAFE_URL_ADMIN_ASSETS . 'js/c3.min.js?ver=' . SECSAFE_VERSION . '"></script>
         ';
 
     } // dependencies()
@@ -307,13 +313,17 @@ class Charts {
                 $date = ( $day == 0 ) ? date('Y-m-d') : date('Y-m-d', strtotime('-' . $day . ' days') );
                 $day = $day - 1;
 
-                $result_date = substr( $results[ $results_num ]['date'], 0, 10 );
+                if ( isset( $results[ $results_num ]['date'] ) ) {
 
-                if ( $result_date == $date ) {
+                    $result_date = substr( $results[ $results_num ]['date'], 0, 10 );
 
-                    $dates[ $date ] = $results[ $results_num ];
+                    if ( $result_date == $date ) {
 
-                    $results_num++;
+                        $dates[ $date ] = $results[ $results_num ];
+
+                        $results_num++;
+
+                    }
 
                 }
 
@@ -322,7 +332,7 @@ class Charts {
                     if ( $day == ( $args['date_days_ago'] - 1 ) ) {
 
                         // Beginning
-                        $stats[ $column['id'] ] = '["' . $column['id'] . '", ';
+                        $stats[ $column['id'] ] = '["' . $column['label'] . '", ';
 
                     }
 

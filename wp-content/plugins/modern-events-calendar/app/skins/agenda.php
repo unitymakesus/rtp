@@ -171,9 +171,6 @@ class MEC_skin_agenda extends MEC_skins
         // Apply Maximum Date
         if($this->request->getVar('apply_sf_date', 0) == 1 and isset($this->sf) and isset($this->sf['month']) and trim($this->sf['month'])) $this->maximum_date = date('Y-m-t', strtotime($this->start_date));
         
-        // Maximum days for loop
-        $this->max_days_loop = 732; // 2 years
-        
         // Found Events
         $this->found = 0;
     }

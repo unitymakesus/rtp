@@ -24,34 +24,48 @@ class AdminPageAccess extends AdminPage {
         $this->description = __( 'Control how users access your admin area.', SECSAFE_SLUG );
 
         $this->tabs[] = [
-            'id' => 'settings',
-            'label' => __( 'Settings', SECSAFE_SLUG ),
-            'title' => __( 'User Access Settings', SECSAFE_SLUG ),
-            'heading' => false,
-            'intro' => false,
-            'content_callback' => 'tab_settings',
+            'id'                    => 'settings',
+            'label'                 => __( 'Settings', SECSAFE_SLUG ),
+            'title'                 => __( 'User Access Settings', SECSAFE_SLUG ),
+            'heading'               => false,
+            'intro'                 => false,
+            'content_callback'      => 'tab_settings',
+        ];
+
+        /**
+         * @todo Create the ability to audit users
+            disabled for now 20190722 
+         */
+        $notused = [
+            'id'                    => 'users',
+            'label'                 => __( 'Users', SECSAFE_SLUG ),
+            'title'                 => __( 'Users', SECSAFE_SLUG ),
+            'heading'               => false,
+            'intro'                 => false,
+            'classes'               => [ 'full' ],
+            'content_callback'      => 'tab_users',
         ];
 
         $this->tabs[] = [
-            'id' => 'logins',
-            'label' => __( 'Logins', SECSAFE_SLUG ),
-            'title' => __( 'Login Log', SECSAFE_SLUG ),
-            'heading' => false,
-            'intro' => false,
-            'classes' => [ 'full' ],
-            'content_callback' => 'tab_logins',
+            'id'                    => 'logins',
+            'label'                 => __( 'Logins', SECSAFE_SLUG ),
+            'title'                 => __( 'Login Log', SECSAFE_SLUG ),
+            'heading'               => false,
+            'intro'                 => false,
+            'classes'               => [ 'full' ],
+            'content_callback'      => 'tab_logins',
         ];
 
         if ( SECSAFE_DEBUG ) {
 
             $this->tabs[] = [
-                'id' => 'activity',
-                'label' => __( 'Activity Log', SECSAFE_SLUG ),
-                'title' => __( 'Admin Activity Log', SECSAFE_SLUG ),
-                'heading' => false,
-                'intro' => false,
-                'classes' => [ 'full' ],
-                'content_callback' => 'tab_activity',
+                'id'                => 'activity',
+                'label'             => __( 'Activity Log', SECSAFE_SLUG ),
+                'title'             => __( 'Admin Activity Log', SECSAFE_SLUG ),
+                'heading'           => false,
+                'intro'             => false,
+                'classes'           => [ 'full' ],
+                'content_callback'  => 'tab_activity',
             ];
 
         }
@@ -111,22 +125,6 @@ class AdminPageAccess extends AdminPage {
         );
         $html .= $this->form_table( $rows );
 
-        // Remote Access
-        $html .= $this->form_section( 
-            __( 'Remote Control', SECSAFE_SLUG ), 
-            __( 'How do you want your users to access your site?', SECSAFE_SLUG ) 
-        );
-
-        $rows = $this->form_checkbox( 
-            $this->settings, 
-            __( 'XML-RPC', SECSAFE_SLUG ), 
-            'xml_rpc', 
-            __( 'Disable Remote Control', SECSAFE_SLUG ), 
-            __( 'The xmlrpc.php file allows remote execution of scripts. This can be useful in some cases, but most of the time it is not needed.', SECSAFE_SLUG ) 
-        );
-
-        $html .= $this->form_table( $rows );
-
         // Brute Force
         $html .= $this->form_section( 
             __( 'Brute Force Logins', SECSAFE_SLUG ), 
@@ -138,7 +136,15 @@ class AdminPageAccess extends AdminPage {
             __( 'Local Logins', SECSAFE_SLUG ), 
             'login_local', 
             __( 'Only Allow Local Logins', SECSAFE_SLUG ), 
-            __( 'Software can remotely log in without actually visiting your website or using the login form. Unless you know that you need to be able to remotely login, it is recommended to only allow local logins. This is compatible with ManageWP.', SECSAFE_SLUG ) 
+            __( 'Software can remotely log in without actually visiting your website or using the login form. Unless you know that you need to be able to remotely login, it is recommended to only allow local logins. This does not disable XML-RPC. This is compatible with ManageWP.', SECSAFE_SLUG ) 
+        );
+
+        $rows .= $this->form_checkbox( 
+            $this->settings, 
+            __( 'XML-RPC', SECSAFE_SLUG ), 
+            'xml_rpc', 
+            __( 'Disable XML-RPC', SECSAFE_SLUG ), 
+            __( 'The xmlrpc.php file allows remote execution of scripts. This can be useful in some cases, but most of the time it is not needed. Attackers often use XML-RPC to brute force login to your website.', SECSAFE_SLUG ) 
         );
         
         $html .= $this->form_table( $rows );
@@ -150,6 +156,27 @@ class AdminPageAccess extends AdminPage {
 
     } // tab_settings()
 
+
+    /**
+     * This tab displays the users.
+     * @since  2.1.3
+     */ 
+    function tab_users() {
+
+        /**
+         * @todo Create the ability to audit users
+         
+        require_once( SECSAFE_DIR_ADMIN_TABLES . '/TableUsers.php' );
+
+        ob_start();
+
+        include( ABSPATH . 'wp-admin/users.php' );
+
+        return ob_get_clean();
+
+        */
+       
+    } // tab_users()
 
     /**
      * This tab displays the login log.

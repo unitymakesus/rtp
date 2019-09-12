@@ -1,0 +1,120 @@
+/* WPForms Styler CSS */
+
+.uabb-wpf-styler .wpforms-form .wpforms-field input:not([type=submit]):not([type=image]):not([type=button]):not([type=file]):not([type=radio]):not([type=checkbox]),
+.uabb-wpf-styler .wpforms-form .wpforms-field textarea,
+.uabb-wpf-styler .wpforms-form .wpforms-field select {
+    height: auto;
+}
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=tel],
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=email],
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=text],
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=url],
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=number],
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=date],
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type=password],
+.uabb-wpf-styler .wpforms-form .wpforms-field textarea,
+.uabb-wpf-styler .wpforms-form .wpforms-field select {
+	display: block;
+	font-family: inherit;
+	line-height: normal;
+	outline: none;
+  padding: 12px 15px;
+  width: 100%;
+}
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type='checkbox'] + label:before,
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type='radio'] + label:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    text-align: center;
+}
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type='checkbox']:checked + label:before {
+
+    line-height: 1.2;
+}
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type="radio"] + label:before {
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type='checkbox'] + label:before,
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type='checkbox']:checked + label:before,
+.uabb-wpf-styler .wpforms-form .wpforms-field input[type="radio"] + label:before {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+     box-sizing: content-box;
+}
+
+.uabb-wpf-styler input[type=checkbox],
+.uabb-wpf-styler input[type=file] {
+	display: inline-block;
+	border: none;
+	vertical-align: middle;
+}
+
+.uabb-wpf-styler .wpforms-form button[type=submit],
+.uabb-wpf-styler .wpforms-form .wpforms-page-button {
+    font-size: 13px;
+    padding: 10px 20px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: none;
+}
+.uabb-wpf-styler .uabb-wpf-styler-transparent .wpforms-form button[type=submit],
+.uabb-wpf-styler .uabb-wpf-styler-transparent .wpforms-form .wpforms-page-button{
+  background-color: transparent;
+}
+
+.uabb-wpf-styler textarea:focus,
+.uabb-wpf-styler input:focus {
+	-webkit-box-shadow: none;
+   box-shadow: none;
+}
+.uabb-wpf-styler .wpforms-form button[type=submit]{
+  display: block;
+  width: auto;
+}
+.uabb-wpf-styler .uabb-inline-group {
+	width: 100%;
+	padding: 0;
+}
+.uabb-wpf-styler .inline-fields .wpforms-form button[type=submit] {
+  display: block;
+  width: 100%;
+}
+/* Responsive style */
+@media only screen and (max-width: 769px) {
+.uabb-wpf-styler .uabb-wpf-col-1 {
+	width: 100%;
+  padding: 0 10px;
+  clear: left;
+}
+.uabb-wpf-styler .uabb-wpf-col-2 {
+	width: 50%;
+	float: left;
+  padding: 0 10px;
+
+}
+.uabb-wpf-styler .uabb-wpf-col-3 {
+	width: 33.33%;
+	float: left;
+  padding: 0 10px;
+}
+.uabb-wpf-styler .uabb-wpf-col-4 {
+	width: 25%;
+	float: left;
+  padding: 0 10px;
+}
+
+.uabb-wpf-styler .uabb-wpf-col-5 {
+	width: 20%;
+	float: left;
+  padding: 0 10px;
+}
+
+.uabb-wpf-styler .uabb-wpf-col-6 {
+	width: 16.66%;
+	float: left;
+  padding: 0 10px;
+}
+}

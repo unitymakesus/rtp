@@ -155,22 +155,10 @@ class Threats {
      */ 
     public static function is_login() {
 
-        if ( ! isset( $_SERVER['HTTP_HOST'] ) || ! $_SERVER['HTTP_HOST'] ) {
-
-            // If Host is not set
-            return 1;
-        
-        } else if ( ! isset( $_SERVER['HTTP_REFERER'] ) || ! $_SERVER['HTTP_REFERER'] ) {
-
-            // If Refferrer is not set
-            return 1;
-
-        } else if ( strpos( $_SERVER['HTTP_REFERER'], $_SERVER['SERVER_NAME'] ) === false ) {
-
-            // If Refferrer does not contain site's domain name
-            return 1;
-
-        }
+        /**
+         * @todo  I need to add in nonce to login form by default and only 
+         * check to see if the nonce is valid if the Local Login setting is enabled.
+         */ 
 
         // Default No
         return 0;

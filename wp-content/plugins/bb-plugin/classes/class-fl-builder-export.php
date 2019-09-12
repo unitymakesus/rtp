@@ -74,7 +74,7 @@ final class FLBuilderExport {
 			);
 		}
 
-		echo json_encode( $data );
+		echo FLBuilderUtils::json_encode( $data );
 
 		die();
 	}

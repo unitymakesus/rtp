@@ -77,7 +77,7 @@
       }
     });
 
-    if ($.fn.tooltipster && window.ClipboardJS) {
+    if (window.ClipboardJS) {
       var $el = $('.prli-edit-link-clipboard'),
         copy_text = PrliLinkValidation.copy_text,
         copied_text = PrliLinkValidation.copied_text,
@@ -86,9 +86,11 @@
           text: function () {
             return PrliLinkValidation.blogurl + PrliLinkValidation.permalink_pre_slug_uri + $('#prli_slug').val();
           }
-        }),
-        instance = $el
-          .tooltipster({
+        });
+
+      if ($.fn.tooltipster) {
+        try {
+          var instance = $el.tooltipster({
             theme: 'tooltipster-borderless',
             content: copy_text,
             trigger: 'custom',
@@ -100,24 +102,30 @@
               mouseenter: true,
               touchstart: true
             }
-          })
-          .tooltipster('instance');
+          }).tooltipster('instance');
 
-      clipboard
-        .on('success', function(e) {
-          instance
-            .content(copied_text)
-            .one('after', function(){
-              instance.content(copy_text);
+          clipboard
+            .on('success', function(e) {
+              instance
+                .content(copied_text)
+                .one('after', function(){
+                  instance.content(copy_text);
+              });
+            })
+            .on('error', function(e) {
+              instance
+                .content(copy_error_text)
+                .one('after', function(){
+                  instance.content(copy_text);
+              });
             });
-        })
-        .on('error', function(e) {
-          instance
-            .content(copy_error_text)
-            .one('after', function(){
-              instance.content(copy_text);
-            });
-        });
+        } catch (e) {
+          // With tooltipster <=3.3.0 an error will be caught here, just display a static tooltip
+          $el.tooltipster('destroy').tooltipster({
+            content: copy_text
+          });
+        }
+      }
     }
   });
 })(jQuery);

@@ -99,9 +99,14 @@ if ( !empty($event->data->speakers))
     } 
     $speakers = json_encode($speakers);
 }
+do_action('mec_available_spot_skin_head');
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?> <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
     <div class="mec-av-spot-wrap">
+    <?php
+        $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+        if($schema_settings == '1' ):
+    ?>
         <script type="application/ld+json">
         {
             "@context" 		: "http://schema.org",
@@ -127,6 +132,7 @@ if ( !empty($event->data->speakers))
             "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
         }
         </script>
+        <?php endif; ?>        
         <div class="mec-av-spot">
             <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
 

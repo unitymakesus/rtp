@@ -6,6 +6,7 @@ defined('MECEXEC') or die();
 $headings = $this->main->get_weekday_abbr_labels();
 echo '<dl class="mec-calendar-table-head"><dt class="mec-calendar-day-head">'.implode('</dt><dt class="mec-calendar-day-head">', $headings).'</dt></dl>';
 
+
 // Start day of week
 $week_start = $this->main->get_first_day_of_week();
 
@@ -72,6 +73,31 @@ elseif($week_start == 5) // Friday
                     $start_time = (isset($event->data->time) ? $event->data->time['start'] : '');
                     $end_time = (isset($event->data->time) ? $event->data->time['end'] : '');
                     $label_style = '';
+                    
+                    // Check for sold out event tickets if sold out is shown sold out label
+                    $event_id = (isset($event->ID)) ?  intval($event->ID) : 0;
+                    $startDate = !empty($event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '';
+                    $endDate = !empty($event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ;
+                    $event_start_date = !empty($event->date['start']['date']) ? $event->date['start']['date'] : '';
+                    $event_end_date = !empty($event->date['end']['date']) ? $event->date['end']['date'] : '';
+                    $is_soldout = $this->main->is_soldout($event_id, $event_start_date);
+                    $dynamic_period = $this->main->date_diff($event_start_date, $event_end_date)->d;
+
+                    if($dynamic_period >= 0)
+                    {
+                        $static_period = (!isset($static_period)) ? $this->main->date_diff($startDate, $endDate)->d : $static_period;
+
+                        // For events no multiple days but repeating is multiple days
+                        $static_period = ($dynamic_period > $static_period) ? $dynamic_period : $static_period;
+
+                        // For compare next days of start point events
+                        $level = abs($static_period - $dynamic_period);
+
+                        // For events multiple days repeating
+                        if(($dynamic_period < ($static_period)) and (($dynamic_period) >= 0) and $this->main->is_soldout($event_id,
+                        date('Y-m-d',strtotime("- {$level}day", strtotime($event_start_date))))) $is_soldout = true;
+                    }
+                    
                     if ( !empty($event->data->labels) ):
                     foreach( $event->data->labels as $label)
                     {
@@ -100,14 +126,14 @@ elseif($week_start == 5) // Friday
                         } 
                         $speakers = json_encode($speakers);
                     }
-                    $startDate = !empty( $event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '';
-                    $endDate = !empty( $event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ;
                     $location_name = isset($location['name']) ? $location['name'] : '' ;
                     $location_image = isset($location['thumbnail']) ? esc_url($location['thumbnail'] ) : '' ;
                     $location_address = isset($location['address']) ? $location['address'] : '' ;
                     $image = !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ;
                     $price_schema = isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; 
                     $currency_schema = isset($settings['currency']) ? $settings['currency'] : '' ;
+                    $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                    if($schema_settings == '1' ):
                     $events_str .= '
                     <script type="application/ld+json">
                     {
@@ -135,11 +161,14 @@ elseif($week_start == 5) // Friday
                     }
                     </script>
                     ';
-                    $events_str .= '<article data-style="'.$label_style.'" class="mec-event-article '.$this->get_event_classes($event).'">';
+                    endif;
+                    $events_str .= '<article data-style="'.$label_style.'" class="mec-event-article '.$this->get_event_classes($event, $is_soldout).'">';
                     $events_str .= '<div class="mec-event-image">'.$event->data->thumbnails['thumblist'].'</div>';
                     if(trim($start_time)) $events_str .= '<div class="mec-event-time mec-color"><i class="mec-sl-clock-o"></i> '.$start_time.(trim($end_time) ? ' - '.$end_time : '').'</div>';
-					$event_color =  isset($event->data->meta['mec_color'])?'<span class="event-color" style="background: #'.$event->data->meta['mec_color'].'"></span>':'';
-                    $events_str .= '<h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event->data->title.'</a>'.$event_color.'</h4>';
+                    $event_color =  isset($event->data->meta['mec_color'])?'<span class="event-color" style="background: #'.$event->data->meta['mec_color'].'"></span>':'';
+                    $sold_out_css_class = ($is_soldout) ? ' mec-event-title-soldout' : '';
+                    $sold_out = ($is_soldout) ? ' <span class=soldout>' . __('Sold Out', 'mec') . '</span> ' : '';
+                    $events_str .= '<h4 class="mec-event-title'.$sold_out_css_class.'"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event->data->title.'</a>'.$sold_out.$event_color.'</h4>';
                     $events_str .= '<div class="mec-event-detail">'.(isset($location['name']) ? $location['name'] : '').'</div>';
                     $events_str .= '</article>';
                 }

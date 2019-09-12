@@ -1,7 +1,7 @@
 var UABBWooCategories;
 
 (function($) {
-	
+
 	/**
 	 * Class for Number Counter Module
 	 *
@@ -26,13 +26,15 @@ var UABBWooCategories;
 		this.medium				= settings.medium;
 		this.small_breakpoint	= settings.small_breakpoint;
 		this.small				= settings.small;
+		this.next_arrow = settings.next_arrow;
+    this.prev_arrow = settings.prev_arrow;
 
-		// initialize 
+		// initialize
 		this._initWooProducts();
 	};
-	
+
 	UABBWooCategories.prototype = {
-		
+
 		nodeID				: '',
 		nodeClass			: '',
 		nodeScope			: '',
@@ -48,7 +50,7 @@ var UABBWooCategories;
 		medium 				: '',
 		small_breakpoint	: '',
 		small 				: '',
-		
+
 		_initWooProducts: function(){
 			//alert();
 			var self = this;
@@ -56,9 +58,9 @@ var UABBWooCategories;
 			/* Slider */
 			if ( 'carousel' === self.layout ) {
 				var slider_wrapper 	= self.nodeScope.find('.uabb-woo-categories-carousel');
-				
+
 				if ( slider_wrapper.length > 0 ) {
-					
+
 					var slider_selector = slider_wrapper.find('ul.products');
 
 					slider_selector.imagesLoaded( function(e) {
@@ -71,8 +73,8 @@ var UABBWooCategories;
 			                slidesToScroll: self.slidesToScroll,
 			                autoplay: self.autoplay,
 			                autoplaySpeed: self.autoplaySpeed,
-							prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class="fas fa-angle-left"></i></button>',
-							nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="fas fa-angle-right"></i></button>',
+											prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class=" '+ self.prev_arrow +' "></i></button>',
+											nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="'+ self.next_arrow +' "></i></button>',
 			                responsive: [
 			                    {
 			                        breakpoint: self.medium_breakpoint,

@@ -422,6 +422,7 @@
 				webmType    = wrap.data( 'webm-type' ),
 				fallback    = wrap.data( 'fallback' ),
 				loaded      = wrap.data( 'loaded' ),
+				videoMobile = wrap.data( 'video-mobile' ),
 				fallbackTag = '',
 				videoTag    = null,
 				mp4Tag      = null,
@@ -463,14 +464,21 @@
 				videoTag.append( webmTag );
 			}
 
-			// Check what video player we are going to load in a row
-			if ( 'undefined' != typeof youtube && ! FLBuilderLayout._isMobile() ) {
-				FLBuilderLayout._initYoutubeBgVideo.apply( this );
-			}
-			else if ( 'undefined' != typeof vimeo && ! FLBuilderLayout._isMobile() ) {
-				FLBuilderLayout._initVimeoBgVideo.apply( this );
+			// This is either desktop, or mobile is enabled.
+			if ( ! FLBuilderLayout._isMobile() || ( FLBuilderLayout._isMobile() && "yes" == videoMobile ) ) {
+				if ( 'undefined' != typeof youtube ) {
+					FLBuilderLayout._initYoutubeBgVideo.apply( this );
+				}
+				else if ( 'undefined' != typeof vimeo ) {
+					FLBuilderLayout._initVimeoBgVideo.apply( this );
+				}
+				else {
+					wrap.append( videoTag );
+				}
 			}
 			else {
+				// if we are here, it means we are on mobile and NO is set so remove video src and use fallback
+				videoTag.attr('src', '')
 				wrap.append( videoTag );
 			}
 
@@ -487,16 +495,14 @@
 		 */
 		_initYoutubeBgVideo: function()
 		{
-			var playerWrap	= $(this),
-				videoId 		= playerWrap.data('video-id'),
+			var playerWrap  = $(this),
+				videoId     = playerWrap.data('video-id'),
 				videoPlayer = playerWrap.find('.fl-bg-video-player'),
 				enableAudio = playerWrap.data('enable-audio'),
 				audioButton = playerWrap.find('.fl-bg-video-audio'),
-				startTime 	= 'undefined' !== typeof playerWrap.data('start') ? playerWrap.data('start') : 0,
-				endTime 		= 'undefined' !== typeof playerWrap.data('end') ? playerWrap.data('end') : 0,
-				loop 				= 'undefined' !== typeof playerWrap.data('loop') ? playerWrap.data('loop') : 1,
-				vidPlayed   = false,
-				didUnmute   = false,
+				startTime   = 'undefined' !== typeof playerWrap.data('start') ? playerWrap.data('start') : 0,
+				endTime     = 'undefined' !== typeof playerWrap.data('end') ? playerWrap.data('end') : 0,
+				loop        = 'undefined' !== typeof playerWrap.data('loop') ? playerWrap.data('loop') : 1,
 				stateCount  = 0,
 				player;
 
@@ -508,10 +514,10 @@
 							videoId: videoId,
 							events: {
 								onReady: function(event) {
-									if ( "no" === enableAudio ) {
+									if ( "no" === enableAudio || FLBuilderLayout._isMobile() ) {
 										event.target.mute();
 									}
-									else if ("yes" === enableAudio && event.target.isMuted ) {
+									else if ( "yes" === enableAudio && event.target.isMuted ) {
 										event.target.unMute();
 									}
 
@@ -522,7 +528,7 @@
 									// Queue the video.
 									event.target.playVideo();
 
-									if ( audioButton.length > 0 ) {
+									if ( audioButton.length > 0 && ! FLBuilderLayout._isMobile() ) {
 										audioButton.on( 'click', {button: audioButton, player: player}, FLBuilderLayout._toggleBgVideoAudio );
 									}
 								},
@@ -555,6 +561,7 @@
 								}
 							},
 							playerVars: {
+								playsinline: FLBuilderLayout._isMobile() ? 1 : 0,
 								controls: 0,
 								showinfo: 0,
 								rel : 0,

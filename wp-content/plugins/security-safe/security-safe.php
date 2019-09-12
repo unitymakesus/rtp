@@ -6,13 +6,18 @@ namespace SovereignStack\SecuritySafe;
 if ( !defined( 'ABSPATH' ) ) {
     die;
 }
-define( 'SECSAFE_VERSION', '2.1.1' );
-define( 'SECSAFE_DEBUG', false );
+// Do not move the following constants to Yoda
 define( 'SECSAFE_TIME_START', microtime( true ) );
+define( 'SECSAFE_DEBUG', false );
 define( 'SECSAFE_FILE', __FILE__ );
 define( 'SECSAFE_DIR', __DIR__ );
 define( 'SECSAFE_DIR_CORE', SECSAFE_DIR . '/core' );
 define( 'SECSAFE_DIR_INCLUDES', SECSAFE_DIR_CORE . '/includes' );
+// Load Yoda Before We Translate
+require_once SECSAFE_DIR_INCLUDES . '/Yoda.php';
+Yoda::set_constants();
+define( 'SECSAFE_VERSION', '2.2.2' );
+define( 'SECSAFE_DESC', __( 'Firewall, Security Hardening, Auditing & Privacy', SECSAFE_SLUG ) );
 /**
  * WP Security Safe Plugin.
  *
@@ -22,9 +27,9 @@ define( 'SECSAFE_DIR_INCLUDES', SECSAFE_DIR_CORE . '/includes' );
  *
  * @wordpress-plugin
  * Plugin Name: WP Security Safe
- * Version:     2.1.1
+ * Version:     2.2.2
  * Plugin URI: https://sovstack.com/security-safe
- * Description: WP Security Safe - Firewall, Security Hardening, Auditing & Privacy
+ * Description: Firewall, Security Hardening, Auditing & Privacy
  * Author: Sovereign Stack, LLC
  * Author URI: https://sovstack.com
  * Text Domain: security-safe
@@ -75,9 +80,6 @@ if ( !function_exists( 'security_safe' ) ) {
     do_action( 'security_safe_loaded' );
 }
 
-// Load Yoda
-require_once SECSAFE_DIR_INCLUDES . '/Yoda.php';
-Yoda::set_constants();
 // Load Janitor
 require_once SECSAFE_DIR_INCLUDES . '/Janitor.php';
 $Janitor = new Janitor();

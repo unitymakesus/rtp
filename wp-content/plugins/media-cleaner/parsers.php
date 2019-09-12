@@ -21,6 +21,9 @@ class MeowApps_WPMC_Parsers {
 
 		if ( class_exists( 'Mega_Menu' ) )
 			require_once( 'parsers/maxmegamenu.php' );
+
+		if ( class_exists( 'WPSEO_Options' ) )
+			require_once( 'parsers/wpseo.php' );
 	}
 }
 

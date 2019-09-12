@@ -3,7 +3,12 @@
 
 	<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>">
 		<?php
-			echo wp_get_attachment_image( $settings->image_fallback, $settings->image_size );
+		/**
+		 * @since 2.2.5
+		 * @see fl_render_featured_image_fallback
+		 */
+		$fallback_image = apply_filters( 'fl_render_featured_image_fallback', $settings->image_fallback, $settings );
+		echo wp_get_attachment_image( $fallback_image, $settings->image_size );
 		?>
 	</a>
 

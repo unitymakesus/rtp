@@ -338,6 +338,14 @@ jQuery(document).ready(function($)
 
     // Set onclick listener for add option fields
     mec_reg_fields_option_listeners();
+
+    // Advanced Reapiting
+    $('#mec-advanced-wraper ul > ul > li').click(function()
+    {
+        if($(this).attr('class') == '') $(this).attr('class', 'mec-active');
+        else $(this).attr('class', '');
+        $('#mec_date_repeat_advanced').val($('#mec-advanced-wraper div:first-child > ul').find('.mec-active').find('span').text().slice(0, -1));
+    });
 });
 
 function mec_location_toggle()
@@ -368,6 +376,7 @@ function mec_repeat_type_toggle()
         jQuery('#mec_repeat_certain_weekdays_container').show();
         jQuery('#mec_exceptions_in_days_container').hide();
         jQuery('#mec_end_wrapper').show();
+        jQuery('#mec-advanced-wraper').hide();
     }
     else if(repeat_type == 'custom_days')
     {
@@ -375,6 +384,15 @@ function mec_repeat_type_toggle()
         jQuery('#mec_repeat_certain_weekdays_container').hide();
         jQuery('#mec_exceptions_in_days_container').show();
         jQuery('#mec_end_wrapper').hide();
+        jQuery('#mec-advanced-wraper').hide();
+    }
+    else if(repeat_type == 'advanced')
+    {
+        jQuery('#mec_repeat_interval_container').hide();
+        jQuery('#mec_repeat_certain_weekdays_container').hide();
+        jQuery('#mec_exceptions_in_days_container').hide();
+        jQuery('#mec_end_wrapper').show();
+        jQuery('#mec-advanced-wraper').show();
     }
     else if(repeat_type != 'daily' && repeat_type != 'weekly')
     {
@@ -382,6 +400,7 @@ function mec_repeat_type_toggle()
         jQuery('#mec_repeat_certain_weekdays_container').hide();
         jQuery('#mec_exceptions_in_days_container').hide();
         jQuery('#mec_end_wrapper').show();
+        jQuery('#mec-advanced-wraper').hide();
     }
     else
     {
@@ -389,6 +408,7 @@ function mec_repeat_type_toggle()
         jQuery('#mec_repeat_certain_weekdays_container').hide();
         jQuery('#mec_exceptions_in_days_container').hide();
         jQuery('#mec_end_wrapper').show();
+        jQuery('#mec-advanced-wraper').hide();
     }
 }
 

@@ -241,7 +241,7 @@ final class FLBuilderAJAX {
 		}
 
 		// JSON encode the result.
-		echo json_encode( $result );
+		echo FLBuilderUtils::json_encode( $result );
 
 		// Complete the request.
 		die();

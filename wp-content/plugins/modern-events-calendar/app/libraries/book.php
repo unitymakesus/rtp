@@ -218,7 +218,8 @@ class MEC_book extends MEC_base
         update_post_meta($book_id, 'mec_date', $transaction['date']);
         update_post_meta($book_id, 'mec_ticket_id', $ticket_ids);
         update_post_meta($book_id, 'mec_booking_time', current_time('Y-m-d H:i:s'));
-
+        if(isset($values['mec_attendees'])) update_post_meta($book_id, 'mec_attendees', $values['mec_attendees']);
+        
         $price = isset($transaction['price']) ? $transaction['price'] : (isset($transaction['total']) ? $transaction['total'] : 0);
         update_post_meta($book_id, 'mec_price', $price);
         
@@ -592,6 +593,8 @@ class MEC_book extends MEC_base
      */
     public function get_invoice_link($transaction_id)
     {
+        if(isset($this->settings['booking_invoice']) and !$this->settings['booking_invoice']) return '';
+
         $main = $this->getMain();
 
         $url = $main->URL('site');
@@ -631,20 +634,18 @@ class MEC_book extends MEC_base
         $attendees = get_post_meta($book_id, 'mec_attendees', true);
         $count = 0;
      
-        if(is_array($attendees)) {
-            foreach ( $attendees as $key => $attendee) {
-                if ($key === 'attachments') {
-                    continue;
-                }
-                if (!isset($attendee[0]['MEC_TYPE_OF_DATA'])) {
-                    $count++;
-                } else if ($attendee[0]['MEC_TYPE_OF_DATA'] != 'attachment') {
-                    $count++;
-                }
+        if(is_array($attendees))
+        {
+            foreach($attendees as $key => $attendee)
+            {
+                if($key === 'attachments') continue;
+
+                if(!isset($attendee[0]['MEC_TYPE_OF_DATA'])) $count++;
+                elseif($attendee[0]['MEC_TYPE_OF_DATA'] != 'attachment') $count++;
             }
         }
+
         return $count;
-        // return 1;
     }
 
     public function get_transaction_id_book_id($book_id)

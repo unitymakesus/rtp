@@ -170,3 +170,12 @@ table.wp-list-table .prli-pro-only-indicator a:hover {
   }
 }
 
+span#prli_bulk_edit_spinner {
+  display:block;
+  text-align:right;
+  width:100%;
+}
+span#prli_bulk_edit_spinner img {
+  display:none;
+  padding-top:10px;
+}

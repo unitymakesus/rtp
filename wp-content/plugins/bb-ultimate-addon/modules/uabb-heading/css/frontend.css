@@ -6,11 +6,6 @@
 .uabb-heading-wrapper .uabb-heading a {
 	text-decoration: none;
 }
-
-.uabb-heading-wrapper .uabb-subheading * {
-	margin: 0;
-}
-
 .uabb-heading-align-left .uabb-heading,
 .uabb-heading-align-left .uabb-subheading,
 .uabb-heading-align-left .uabb-subheading * {

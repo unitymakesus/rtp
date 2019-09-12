@@ -27,5 +27,7 @@ jQuery(document).ready(function() {
 		small:<?php echo ( $settings->gallery_columns_responsive ); ?>,
 		slidesToScroll_medium :<?php echo ( $settings->slides_to_scroll_medium ) ? $settings->slides_to_scroll_medium : '1'; ?>,
 		slidesToScroll_small :<?php echo ( $settings->slides_to_scroll_responsive ) ? $settings->slides_to_scroll_responsive : '1'; ?>,
+		next_arrow: '<?php echo apply_filters( 'uabb_video_gallery_carousel_next_arrow_icon', 'fas fa-angle-right' ); ?>',
+		prev_arrow: '<?php echo apply_filters( 'uabb_video_gallery_carousel_previous_arrow_icon', 'fas fa-angle-left' ); ?>',
 	});
 });

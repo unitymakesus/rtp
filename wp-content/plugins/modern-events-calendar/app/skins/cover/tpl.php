@@ -47,8 +47,13 @@ if ( !empty($event->data->speakers))
     } 
     $speakers = json_encode($speakers);
 }
+do_action('mec_cover_skin_head');
 ?>
 <div class="mec-wrap <?php echo $event_colorskin . ' ' . $this->html_class; ?>">
+<?php
+    $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+    if($schema_settings == '1' ):
+?>
     <script type="application/ld+json">
     {
         "@context" 		: "http://schema.org",
@@ -74,7 +79,9 @@ if ( !empty($event->data->speakers))
         "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
     }
     </script>
-    <?php if($this->style == 'modern' and $event_thumb_url): ?>
+    <?php
+    endif;
+    if($this->style == 'modern' and $event_thumb_url): ?>
     <article class="mec-event-cover-modern <?php echo $this->get_event_classes($event); ?>" style="background: url('<?php echo $event_thumb_url; ?>'); height: 678px;background-size: cover;">
         <a href="<?php echo $event_link; ?>" class="mec-event-cover-a">
         <div class="mec-event-overlay mec-bg-color"></div>

@@ -283,7 +283,8 @@ class MEC_skin_daily_view extends MEC_skins
         $this->sf = $this->request->getVar('sf', array());
         $apply_sf_date = $this->request->getVar('apply_sf_date', 1);
         $atts = $this->sf_apply($this->request->getVar('atts', array()), $this->sf, $apply_sf_date);
-        
+        $navigator_click = $this->request->getVar('navigator_click', false);
+
         // Initialize the skin
         $this->initialize($atts);
         
@@ -324,11 +325,9 @@ class MEC_skin_daily_view extends MEC_skins
             // Fetch the events
             $this->fetch();
             
-             // Break the loop if not resault
-             if($break)
-             {
-                 break;
-             }
+            // Break the loop if not resault
+            if($break) break;
+            if($navigator_click) break;
 
             $c++;
            

@@ -77,7 +77,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			self::$lead_generation	= __( 'Lead Generation', 'uabb' );
 			self::$extra_additions	= __( 'Extra Additions', 'uabb' );
 			self::$woo_modules		= __( 'Woo Modules', 'uabb' );
-	
+
 			$branding         = BB_Ultimate_Addon_Helper::get_builder_uabb_branding();
 			$branding_name    = 'UABB';
 			$branding_modules = __( 'UABB Modules', 'uabb' );
@@ -284,6 +284,10 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			if ( class_exists( 'GFForms' ) ) {
 				$modules_array['uabb-gravity-form'] = 'Gravity Forms Styler';
 			}
+			/* Include WP form styler */
+			if ( class_exists( 'WPForms_Pro' ) || class_exists( 'WPForms_Lite' ) ) {
+			    $modules_array['uabb-wp-forms-styler'] = 'WPForms Styler';
+		    }
 			/* Include WooCommerce modules*/
 			if ( class_exists( 'WooCommerce' ) ) {
 				$modules_array['uabb-woo-products'] = 'Woo - Products';
@@ -439,7 +443,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 * @since 1.14.0
 		 */
 		static public function get_uabb_branding() {
-			
+
 			$uabb_brand_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 
 			if ( empty( $uabb_brand_short_name ) ) {
@@ -561,7 +565,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				return $icons;
 			}
 		}
-	}	
+	}
 
 	new BB_Ultimate_Addon_Helper();
 }

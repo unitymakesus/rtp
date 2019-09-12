@@ -107,7 +107,8 @@ jQuery(document).ready(function($)
     });
     
     // Initialize WP Color Picker
-    $('.mec-color-picker').wpColorPicker();
+    if ($.fn.wpColorPicker) jQuery('.mec-color-picker').wpColorPicker();
+    
     
     // Initialize MEC Skin Switcher
     $('#mec_skin').on('change', function()
@@ -143,12 +144,12 @@ jQuery(document).ready(function($)
     });
 
     // MEC Setting Sticky
-    if($('.wns-be-container').length > 0)
+    if ($('.wns-be-container-sticky').length > 0)
     {
         var stickyNav = function () {
-            var stickyNavTop = $('.wns-be-container').offset().top;
+            var stickyNavTop = $('.wns-be-container-sticky').offset().top;
             var scrollTop = $(window).scrollTop();
-            var width = $('.wns-be-container').width();
+            var width = $('.wns-be-container-sticky').width();
             if (scrollTop > stickyNavTop) {
                 $('#wns-be-infobar').addClass('sticky');
                 $('#wns-be-infobar').css({
@@ -304,6 +305,23 @@ jQuery(document).ready(function($)
             }
         });
     }
+
+    /* Addons Notification */
+    $('.mec-addons-notification-box-wrap span').on('click', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: mec_admin_localize.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'close_notification',
+                nonce: mec_admin_localize.ajax_nonce,
+            },
+            success: function (response) {
+                $(".mec-addons-notification-set-box").fadeOut(100, function () { $(this).remove(); });
+                $(".mec-addons-notification-wrap").fadeOut(100, function () { $(this).remove(); });
+            },
+        });
+    });
 });
 
 function mec_skin_toggle()
@@ -364,40 +382,59 @@ function mec_skin_style_changed(skin, style)
     jQuery('#mec_skin_'+skin+'_date_format_'+style+'_container').show();
 }
 
-// TinyMce Plugins
-var items = JSON.parse(mec_admin_localize.mce_items);
-var menu = new Array();
-if(items && typeof tinymce !== 'undefined')
+function mec_show_widget_check(context)
 {
-    tinymce.PluginManager.add('mec_mce_buttons', function (editor, url) 
+    var skin = jQuery(context).find(':selected').data('skin');
+
+    if(skin == 'monthly_view')
     {
-        items.shortcodes.forEach(function(e, i)
-        {
-            menu.push(
-                {
-                    text: items.shortcodes[i]['PN'].replace(/-/g, ' '),
-                    id: items.shortcodes[i]['ID'],
-                    classes: 'mec-mce-items',
-                    onselect: function(e)
-                    {
-                        editor.insertContent(`[MEC id="${e.control.settings.id}"]`);
-                    }
-                });
-        });
-        // Add menu button
-        editor.addButton('mec_mce_buttons', 
-        {
-            text: items.mce_title,
-            icon: false,
-            type: 'menubutton',
-            menu: menu
-        });
-    });
+        jQuery(context).parent().parent().find('.mec-current-check-wrap').show();
+    }
+    else
+    {
+        jQuery(context).parent().parent().find('.mec-current-check-wrap').hide();
+    }
 }
 
-// Block Editor
+// Niceselect
+jQuery(document).ready(function() {
+    jQuery('.wn-mec-select').niceSelect();
+});
+
+// TinyMce Plugins
+if (jQuery('.mec-fes-form').length < 1)
+{
+    var items = JSON.parse(mec_admin_localize.mce_items);
+    var menu = new Array();
+    if (items && typeof tinymce !== 'undefined') {
+        tinymce.PluginManager.add('mec_mce_buttons', function (editor, url) {
+            items.shortcodes.forEach(function (e, i) {
+                menu.push(
+                    {
+                        text: items.shortcodes[i]['PN'].replace(/-/g, ' '),
+                        id: items.shortcodes[i]['ID'],
+                        classes: 'mec-mce-items',
+                        onselect: function (e) {
+                            editor.insertContent(`[MEC id="${e.control.settings.id}"]`);
+                        }
+                    });
+            });
+            // Add menu button
+            editor.addButton('mec_mce_buttons',
+                {
+                    text: items.mce_title,
+                    icon: false,
+                    type: 'menubutton',
+                    menu: menu
+                });
+        });
+    }
+}
+
+
 (function(wp, $)
 {
+    // Block Editor
     if(items && wp && wp.blocks)
     {
         items.shortcodes.forEach(function(e, i)

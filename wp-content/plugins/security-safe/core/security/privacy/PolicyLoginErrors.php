@@ -28,7 +28,7 @@ class PolicyLoginErrors {
      */ 
     function login_errors(){
       
-      return 'Invalid username or password.';
+      return __( 'Invalid username or password.', SECSAFE_SLUG );
 
     } // login_errors()
 

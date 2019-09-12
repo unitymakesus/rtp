@@ -32,6 +32,7 @@
 				bg_type 			= form.find('select[name=bg_type]');
 				info_title			= form.find('input[name=title]');
 				info_title_perfix	= form.find('input[name=heading_prefix]');
+				save_button = form.find('.fl-builder-settings-save');
 
 			// Init validation events.
 			/*this._imageTypeChanged();*/
@@ -45,6 +46,7 @@
 			
 			// Validation events.
 			/*imageType.on('change', this._imageTypeChanged);*/
+			save_button.off( 'click' ).on( 'click', this.submit);
 			ctaType.on('change', this._ctaTypeChanged);
 			photoSource.on('change', $.proxy( this._photoSourceChanged, this ) );
 			image_type.on('change', $.proxy( this._toggleImageIcon, this ) );
@@ -76,7 +78,25 @@
 			UABBButton.init();
 			
 		},
+		submit: function()
+		{
 
+			var form      = $( '.fl-builder-settings' );
+				imageType   = form.find('select[name=image_type]').val();
+				photo       = form.find('input[name=photo]').val();
+				icon       = form.find('input[name=icon]');
+
+			if ( 'none' === imageType || 'icon' === imageType ) {
+				return true;
+			}
+
+			if ( 0 === photo.length ) {
+				FLBuilder.alert( 'Photo Fields are required' );
+				return false;
+			}
+
+			return true;
+		},
 		_InfoBoxPadding: function() {
 			window.setTimeout(function(){
 				var form    			= $('.fl-builder-settings'),

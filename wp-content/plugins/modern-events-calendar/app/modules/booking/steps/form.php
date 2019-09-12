@@ -13,35 +13,38 @@ $event_tickets = isset($event->data->tickets) ? $event->data->tickets : array();
 
 $current_user = wp_get_current_user();
 $first_for_all = (!isset($this->settings['booking_first_for_all']) or (isset($this->settings['booking_first_for_all']) and $this->settings['booking_first_for_all'] == 1)) ? true : false;
+
 $mec_email = false;
 $mec_name = false;
-foreach ( $reg_fields as $field ) {
-	if ( isset( $field['type'] ) ) {
-		if ( $field['type'] == 'mec_email' ) {
-			$mec_email = true;
-		}
-		if ( $field['type'] == 'name' ) {
-			$mec_name = true;
-		}
-	} else {
+foreach($reg_fields as $field)
+{
+	if(isset($field['type']))
+	{
+		if($field['type'] == 'mec_email') $mec_email = true;
+		if($field['type'] == 'name') $mec_name = true;
+	}
+	else
+	{
 		break;
 	}
 }
 
-if ( ! $mec_name ) {
-    $reg_fields[] = [
+if(!$mec_name)
+{
+    $reg_fields[] = array(
         'mandatory' => '0',
 		'type'      => 'name',
 		'label'     => esc_html__( 'Name', 'mec' ),
-	];
+    );
 }
 
-if ( ! $mec_email ) {
-    $reg_fields[] = [
+if(!$mec_email)
+{
+    $reg_fields[] = array(
         'mandatory' => '0',
         'type'      => 'mec_email',
         'label'     => esc_html__( 'Email', 'mec' ),
-    ];
+    );
 }
 ?>
 
@@ -57,6 +60,7 @@ if ( ! $mec_email ) {
                 <span class="mec-ticket-price"><?php echo $this->book->get_ticket_price_label($ticket, current_time('Y-m-d')); ?></span>
             </h4>
             <?php endif; ?>
+
             <!-- Custom fields -->
             <?php if(count($reg_fields)): foreach($reg_fields as $reg_field_id=>$reg_field): if(!is_numeric($reg_field_id) or !isset($reg_field['type'])) continue; ?>
 
@@ -83,9 +87,9 @@ if ( ! $mec_email ) {
                 <input id="mec_book_reg_field_reg<?php echo $j.'_'.$reg_field_id; ?>" type="text" name="book[tickets][<?php echo $j; ?>][reg][<?php echo $reg_field_id; ?>]" value="" placeholder="<?php _e($reg_field['label'], 'mec'); ?>" <?php if(isset($reg_field['mandatory']) and $reg_field['mandatory']) echo 'required'; ?> />
 
                 <?php /** Date **/ elseif($reg_field['type'] == 'date'): ?>
-                <input id="mec_book_reg_field_reg<?php echo $j.'_'.$reg_field_id; ?>" type="date" name="book[tickets][<?php echo $j; ?>][reg][<?php echo $reg_field_id; ?>]" value="" placeholder="<?php _e($reg_field['label'], 'mec'); ?>" <?php if(isset($reg_field['mandatory']) and $reg_field['mandatory']) echo 'required'; ?> />
+                <input id="mec_book_reg_field_reg<?php echo $j.'_'.$reg_field_id; ?>" type="date" name="book[tickets][<?php echo $j; ?>][reg][<?php echo $reg_field_id; ?>]" value="" placeholder="<?php _e($reg_field['label'], 'mec'); ?>" <?php if(isset($reg_field['mandatory']) and $reg_field['mandatory']) echo 'required'; ?> min="1970-01-01" max="2099-12-31" />
                 
-                <?php /** Email **/ elseif($reg_field['type'] == 'file'): ?>
+                <?php /** File **/ elseif($reg_field['type'] == 'file'): ?>
                 <input id="mec_book_reg_field_reg<?php echo $j.'_'.$reg_field_id; ?>" type="file" name="book[tickets][<?php echo $j; ?>][reg][<?php echo $reg_field_id; ?>]" value="" placeholder="<?php _e($reg_field['label'], 'mec'); ?>" <?php if(isset($reg_field['mandatory']) and $reg_field['mandatory']) echo 'required'; ?> />
 
                 <?php /** Email **/ elseif($reg_field['type'] == 'email'): ?>
@@ -124,7 +128,7 @@ if ( ! $mec_email ) {
                 <label for="mec_book_reg_field_reg<?php echo $j.'_'.$reg_field_id; ?>">
                     <input type="checkbox" id="mec_book_reg_field_reg<?php echo $j.'_'.$reg_field_id; ?>" name="book[tickets][<?php echo $j; ?>][reg][<?php echo $reg_field_id; ?>]" value="1" <?php echo (!isset($reg_field['status']) or (isset($reg_field['status']) and $reg_field['status'] == 'checked')) ? 'checked="checked"' : ''; ?> />
                     <?php echo ((isset($reg_field['mandatory']) and $reg_field['mandatory']) ? '<span class="wbmec-mandatory">*</span>' : ''); ?>
-                    <?php echo sprintf(__($reg_field['label'], 'mec'), '<a href="'.get_the_permalink($reg_field['page']).'" target="_blank">'.get_the_title($reg_field['page']).'</a>'); ?>
+                    <?php echo sprintf(__(stripslashes($reg_field['label']), 'mec'), '<a href="'.get_the_permalink($reg_field['page']).'" target="_blank">'.get_the_title($reg_field['page']).'</a>'); ?>
                 </label>
 
                 <?php /** Paragraph **/ elseif($reg_field['type'] == 'p'): ?>

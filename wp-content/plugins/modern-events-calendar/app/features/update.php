@@ -58,6 +58,7 @@ class MEC_feature_update extends MEC_base
         if(version_compare($version, '3.5.0', '<')) $this->version350();
         if(version_compare($version, '4.0.0', '<')) $this->version400();
         if(version_compare($version, '4.3.0', '<')) $this->version430();
+        if(version_compare($version, '4.4.6', '<')) $this->version446();
 
         // Update to latest version to prevent running the code twice
         update_option('mec_version', $this->main->get_version());
@@ -259,5 +260,10 @@ class MEC_feature_update extends MEC_base
             // Save new options
             update_option('mec_options', $current);
         }
+    }
+
+    public function version446()
+    {
+        if(!wp_next_scheduled('mec_syncScheduler')) wp_schedule_event(time(), 'daily', 'mec_syncScheduler');
     }
 }

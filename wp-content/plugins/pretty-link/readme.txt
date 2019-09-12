@@ -4,7 +4,7 @@ Donate link: https://prettylinks.com
 Tags: links, link, url, urls, affiliate, affiliates, pretty, marketing, redirect, redirection, forward, plugin, twitter, tweet, rewrite, shorturl, hoplink, hop, shortlink, short, shorten, shortening, click, clicks, track, tracking, tiny, tinyurl, budurl, shrinking, domain, shrink, mask, masking, cloak, cloaking, slug, slugs, admin, administration, stats, statistics, stat, statistic, email, ajax, javascript, ui, csv, download, page, post, pages, posts, shortcode, seo, automation, widget, widgets, dashboard
 Requires at least: 5.1
 Tested up to: 5.2.2
-Stable tag: 3.0.6
+Stable tag: 3.0.9
 
 Shrink, beautify, track, manage and share any URL on or off of your WordPress website. Create links that look how you want using your own domain name!
 
@@ -64,6 +64,17 @@ http://blairwilliams.com/w7a
 3. Make sure you have changed your permalink Common Settings in Settings -> Permalinks away from "Default" to something else. I prefer using custom and then "/%year%/%month%/%postname%/" for the simplest possible URL slugs with the best performance.
 
 == Changelog ==
+= 3.0.9 =
+* Change shortcut key to CTRL + P instead of CTRL + K
+* Support for Nofollow and Tracking Quick Edit and Bulk Edit on the links list page
+* Fix keyword replacement regex
+
+= 3.0.8 =
+* PRO: Fix replacements checkbox getting unchecked when using page builders
+
+= 3.0.7 =
+* Fix broken Add New link page - theme conflicts
+
 = 3.0.6 =
 * Disable "enter" key on the Target URL field
 * Add copy to clipboard to the add/edit link page

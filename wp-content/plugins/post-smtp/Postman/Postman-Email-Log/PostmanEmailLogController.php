@@ -1,5 +1,9 @@
 <?php
-require_once dirname(__DIR__) . '/PostmanEmailLogs.php';
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly
+}
+
+require_once dirname(__DIR__) . '/PostmanLogFields.php';
 require_once 'PostmanEmailLogService.php';
 require_once 'PostmanEmailLogView.php';
 
@@ -73,12 +77,12 @@ class PostmanEmailLogController {
 	/**
 	 */
 	public function resendMail() {
-		check_ajax_referer( 'resend', 'security' );
+        check_admin_referer( 'resend', 'security' );
 
 		// get the email address of the recipient from the HTTP Request
 		$postid = $this->getRequestParameter( 'email' );
 		if ( ! empty( $postid ) ) {
-			$meta_values = PostmanEmailLogs::get_data( $postid );
+			$meta_values = PostmanLogFields::get_instance()->get( $postid );
 
 			if ( isset( $_POST['mail_to'] ) && ! empty( $_POST['mail_to'] ) ) {
 				$emails = explode( ',', $_POST['mail_to'] );
@@ -200,9 +204,14 @@ class PostmanEmailLogController {
 		// only do this for administrators
 		if ( PostmanUtils::isAdmin() ) {
 			$this->logger->trace( 'handling view item' );
-			$postid = $_REQUEST ['email'];
+			$postid = absint( $_REQUEST ['email'] );
 			$post = get_post( $postid );
-			$meta_values = PostmanEmailLogs::get_data( $postid );
+
+			if ( $post->post_type !== 'postman_sent_mail' ) {
+			    return;
+            }
+
+			$meta_values = PostmanLogFields::get_instance()->get( $postid );
 			// https://css-tricks.com/examples/hrs/
 			print '<html><head><style>body {font-family: monospace;} hr {
     border: 0;
@@ -260,7 +269,7 @@ class PostmanEmailLogController {
 			$this->logger->trace( 'handling view transcript item' );
 			$postid = $_REQUEST ['email'];
 			$post = get_post( $postid );
-			$meta_values = PostmanEmailLogs::get_data( $postid );
+			$meta_values = PostmanLogFields::get_instance()->get( $postid );
 			// https://css-tricks.com/examples/hrs/
 			print '<html><head><style>body {font-family: monospace;} hr {
     border: 0;
@@ -369,18 +378,21 @@ class PostmanEmailLogController {
 	?>
 
 	<form id="postman-email-log-filter" method="post">
+        <input type="hidden" action="post-smtp-filter" value="1">
+        <?php wp_nonce_field('post-smtp', 'post-smtp-log'); ?>
+
 		<div id="email-log-filter" class="postman-log-row">
 			<div class="form-control">
 				<label for="from_date"><?php _e( 'From Date', 'post-smtp' ); ?></label>
-				<input id="from_date" class="email-log-date" value="<?php echo $from_date; ?>" type="text" name="from_date" placeholder="<?php _e( 'From Date', 'post-smtp' ); ?>">
+				<input id="from_date" class="email-log-date" value="<?php echo esc_attr($from_date); ?>" type="text" name="from_date" placeholder="<?php _e( 'From Date', 'post-smtp' ); ?>">
 			</div>
 			<div class="form-control">
 				<label for="to_date"><?php _e( 'To Date', 'post-smtp' ); ?></label>		
-				<input id="to_date" class="email-log-date" value="<?php echo $to_date; ?>" type="text" name="to_date" placeholder="<?php _e( 'To Date', 'post-smtp' ); ?>">
+				<input id="to_date" class="email-log-date" value="<?php echo esc_attr($to_date); ?>" type="text" name="to_date" placeholder="<?php _e( 'To Date', 'post-smtp' ); ?>">
 			</div>
 			<div class="form-control">
 				<label for="search"><?php _e( 'Search', 'post-smtp' ); ?></label>		
-				<input id="search" type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php _e( 'Search', 'post-smtp' ); ?>">
+				<input id="search" type="text" name="search" value="<?php echo esc_attr($search); ?>" placeholder="<?php _e( 'Search', 'post-smtp' ); ?>">
 			</div>
 			<div class="form-control">
 				<label id="postman_page_records"><?php _e( 'Records per page', 'post-smtp' ); ?></label>

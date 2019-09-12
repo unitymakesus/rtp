@@ -23,6 +23,7 @@ class MEC_render extends MEC_base
         // Add image size for list and carousel 
         add_image_size('thumblist', '300', '300', true);
         add_image_size('meccarouselthumb', '474', '324', true);
+        add_image_size('gridsquare', '391', '260', true);
 
         // Import MEC skin class
         MEC::import('app.libraries.skins');
@@ -244,7 +245,7 @@ class MEC_render extends MEC_base
      */
     public function vdefault($atts = array())
     {
-        $monthly_skin = (isset($this->settings['monthly_view_archive_skin']) and trim($this->settings['monthly_view_archive_skin']) != '') ? $this->settings['monthly_view_archive_skin'] : 'classic';
+        $monthly_skin = (isset($this->settings['monthly_view_archive_skin']) and trim($this->settings['monthly_view_archive_skin']) != '') ? $this->settings['monthly_view_archive_skin'] : 'clean';
         $list_skin = (isset($this->settings['list_archive_skin']) and trim($this->settings['list_archive_skin']) != '') ? $this->settings['list_archive_skin'] : 'standard';
         $grid_skin = (isset($this->settings['grid_archive_skin']) and trim($this->settings['grid_archive_skin']) != '') ? $this->settings['grid_archive_skin'] : 'classic';
         $timetable_skin = (isset($this->settings['timetable_archive_skin']) and trim($this->settings['timetable_archive_skin']) != '') ? $this->settings['timetable_archive_skin'] : 'modern';
@@ -467,6 +468,7 @@ class MEC_render extends MEC_base
         // Thumbnails
         $thumbnail = get_the_post_thumbnail($post_id, 'thumbnail', array('data-mec-postid'=>$post_id));
         $thumblist = get_the_post_thumbnail($post_id, 'thumblist' , array('data-mec-postid'=>$post_id));        
+        $gridsquare = get_the_post_thumbnail($post_id, 'gridsquare' , array('data-mec-postid'=>$post_id));        
         $meccarouselthumb = get_the_post_thumbnail($post_id, 'meccarouselthumb' , array('data-mec-postid'=>$post_id));
         $medium = get_the_post_thumbnail($post_id, 'medium', array('data-mec-postid'=>$post_id));
         $large = get_the_post_thumbnail($post_id, 'large', array('data-mec-postid'=>$post_id));
@@ -478,6 +480,7 @@ class MEC_render extends MEC_base
         $data->thumbnails = array(
             'thumbnail'=>$thumbnail,
             'thumblist'=>$thumblist,
+            'gridsquare'=>$gridsquare,
             'meccarouselthumb'=>$meccarouselthumb,
             'medium'=>$medium,
             'large'=>$large,
@@ -488,6 +491,7 @@ class MEC_render extends MEC_base
         $data->featured_image = array(
             'thumbnail'=>esc_url(get_the_post_thumbnail_url($post_id, 'thumbnail')),
             'thumblist'=>esc_url(get_the_post_thumbnail_url($post_id, 'thumblist' )),
+            'gridsquare'=>esc_url(get_the_post_thumbnail_url($post_id, 'gridsquare' )),
             'meccarouselthumb'=>esc_url(get_the_post_thumbnail_url($post_id, 'meccarouselthumb')),
             'medium'=>esc_url(get_the_post_thumbnail_url($post_id, 'medium')),
             'large'=>esc_url(get_the_post_thumbnail_url($post_id, 'large')),
@@ -604,7 +608,7 @@ class MEC_render extends MEC_base
             if(in_array($repeat_type, array('daily', 'weekly')))
             {
                 $repeat_interval = $event->meta['mec_repeat_interval'];
-
+                
                 $date_interval = $this->main->date_diff($start_date['date'], $today);
                 $passed_days = $date_interval ? $date_interval->days : 0;
 
@@ -831,14 +835,139 @@ class MEC_render extends MEC_base
                     );
                 }
             }
+            elseif($repeat_type == 'advanced')
+            { 
+                // Get user specifed days of month for repeat
+                $advanced_days = get_post_meta($event_id, 'mec_advanced_days', true);
+
+                // Generate dates for event
+                $event_info = array('start' => $start_date, 'end' => $end_date, 'allday' => $allday, 'hide_time' => $hide_time, 'finish_date' => $finish_date['date'], 'exceptional_days' => $exceptional_days, 'mec_repeat_end' => $event->meta['mec_repeat']['end'], 'occurrences' => $event->meta['mec_repeat']['end_at_occurrences']);
+                $dates = $this->generate_advanced_days($advanced_days, $event_info, $maximum, $today);
+            }
         }
-        
-        // Set to cache
-        wp_cache_set($event_id.'-'.$original_start_date, $dates, 'mec-events-dates', 86400);
         
         return $dates;
     }
     
+    /**
+     *  Render advanced dates
+     * @author Webnus <info@webnus.biz>
+     * @param array $advanced_days
+     * @return array
+     */
+    function generate_advanced_days($advanced_days = array(), $event_info = array(), $maximum = 6, $today = NULL, $mode = 'render')
+    {
+        if(!count($advanced_days)) return array();
+        if(!trim($today)) $today = date( 'Y-m-d', current_time( 'timestamp', 0 ));
+
+        $levels = array('first', 'second', 'third', 'fourth', 'last');
+        $year = date('Y');
+        $dates = array();
+        
+        // Set last month for include current month results
+        $month = date('m', strtotime('first day of last month'));
+        $current_day = date("d");
+        $last_day =substr(end($advanced_days), 0, 3);
+        
+        $maximum = intval($maximum);
+        $i = 0;
+
+        // Event info
+        $exceptional_days =  array_key_exists('exceptional_days', $event_info) ? $event_info['exceptional_days'] : array();
+        $start_date = $event_info['start'];
+        $end_date = $event_info['end'];
+        $allday = array_key_exists('allday', $event_info) ? $event_info['allday'] : 0;
+        $hide_time = array_key_exists('hide_time', $event_info) ? $event_info['hide_time'] : 0;
+        $finish_date = array_key_exists('finish_date', $event_info) ? $event_info['finish_date'] : '0000-00-00';
+        $event_period = $this->main->date_diff($start_date['date'], $end_date['date']);
+        $event_period_days = $event_period ? $event_period->days : 0;
+        $mec_repeat_end = array_key_exists('mec_repeat_end', $event_info) ? $event_info['mec_repeat_end'] : '';
+        $occurrences = array_key_exists('occurrences', $event_info) ? $event_info['occurrences'] : 0;
+
+        // Include default start date to resualts
+        if(!$this->main->is_past($start_date['date'], $today) and !in_array($start_date['date'], $exceptional_days))
+        {
+            $dates[] = array(
+                'start' => $start_date,
+                'end' => $end_date,
+                'allday' => $allday,
+                'hide_time' => $hide_time,
+                'past' => 0
+            );
+
+            if($mode == 'render') $i++;
+        }
+
+        while($i < $maximum)
+        {
+            foreach($advanced_days as $day)
+            {
+                if($i >= $maximum) break;
+
+                // Explode $day value for example (Sun.1) to Sun and 1
+                $d = explode('.', $day);
+
+                // Set indexes for {$levels} index if number day is Last(Sun.l) then indexes set 4th {$levels} index
+                $index = intval($d[1]) ? (intval($d[1]) - 1) : 4;
+
+                // Generate date
+                $date = "{$year}-{$month}-{$current_day}";
+
+                // Generate start date for example "first Sun of next month"
+                $start = date('Y-m-d', strtotime("{$levels[$index]} {$d[0]} of next month", strtotime(date($date))));
+                $end = date('Y-m-d', strtotime("+{$event_period_days} Days", strtotime($start)));
+                
+                // When ends repeat date set
+                if($mode == 'render' and $this->main->is_past($finish_date, $start)) continue;
+
+                // Jump to next level if start date is past
+                if($this->main->is_past($start, $today) or in_array($start, $exceptional_days)) continue;
+
+                // Add dates
+                $dates[] = array(
+                    'start' => array('date'=>$start, 'hour'=>$start_date['hour'], 'minutes'=>$start_date['minutes'], 'ampm'=>$start_date['ampm']),
+                    'end' => array('date'=>$end, 'hour'=>$end_date['hour'], 'minutes'=>$end_date['minutes'], 'ampm'=>$end_date['ampm']),
+                    'allday' => $allday,
+                    'hide_time' => $hide_time,
+                    'past' => 0
+                );
+
+                $i++;
+            }
+
+            // When ends repeat date set
+            if($mode == 'render' and $this->main->is_past($finish_date, $start)) break;
+            
+            // Change month and years for next resualts
+            if(intval($month) == 12)
+            {
+                $year = intval($year)+1;
+                $month = '00';
+            }
+
+            $month = sprintf("%02d", intval($month)+1);
+        }
+        
+        if($mode == 'render' and trim($mec_repeat_end) == 'occurrences' and count($dates) > $occurrences) 
+        {
+            $max = strtotime(reset($dates)['start']['date']);
+            $pos = 0;
+            
+            for($i = 1; $i < count($dates); $i++)
+            {
+                if(strtotime($dates[$i]['start']['date']) > $max)
+                {
+                    $max = strtotime($dates[$i]['start']['date']);
+                    $pos = $i;
+                }
+            }
+
+            unset($dates[$pos]);
+        }
+        
+        return $dates;
+    }
+
     /**
      * Render markers
      * @author Webnus <info@webnus.biz>

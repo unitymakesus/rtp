@@ -185,7 +185,7 @@ FLBuilder::register_settings_form('global', array(
 							),
 							'toggle'  => array(
 								'1' => array(
-									'fields' => array( 'auto_spacing', 'responsive_breakpoint', 'medium_breakpoint' ),
+									'fields' => array( 'auto_spacing', 'responsive_breakpoint', 'medium_breakpoint', 'responsive_col_max_width' ),
 								),
 							),
 						),
@@ -218,6 +218,16 @@ FLBuilder::register_settings_form('global', array(
 							'description' => 'px',
 							'sanitize'    => 'absint',
 							'help'        => __( 'The browser width at which the layout will adjust for small devices such as phones.', 'fl-builder' ),
+						),
+						'responsive_col_max_width' => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Column Max Width', 'fl-builder' ),
+							'default' => '1',
+							'options' => array(
+								'0' => __( 'No', 'fl-builder' ),
+								'1' => __( 'Yes', 'fl-builder' ),
+							),
+							'help'    => __( 'When enabled, columns assigned 50% width or less are limited to max width 400px when screen width reaches or goes below the small device breakpoint.' ),
 						),
 						'responsive_base_fontsize' => array(
 							'type'        => 'text',

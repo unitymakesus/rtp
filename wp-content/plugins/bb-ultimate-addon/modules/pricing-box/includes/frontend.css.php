@@ -361,7 +361,7 @@ for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 			if ( 'yes' == $settings->show_spacing ) {
 				$border_size = ( '' != $settings->border_size ) ? $settings->border_size : 1;
 				if ( 'none' != $settings->border_style ) {
-					echo ( 'none' != $settings->border_style ) ? 'border: ' . $border_size . 'px ' . $settings->border_style . ' ' . $settings->border_color : '';
+					echo 'border: ' . $border_size . 'px ' . $settings->border_style . ' ' . $settings->border_color;
 				} else {
 					echo ( '' != $settings->border_radius ) ? 'border-radius: ' . $settings->border_radius . 'px;' : 'border-radius: 1px;';
 				}
@@ -377,7 +377,58 @@ for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 			}
 			?>
 		}
-
+		.fl-node-<?php echo $id; ?> .uabb-pricing-table .uabb-pricing-table-outter-<?php echo $i + 1; ?> .uabb-pricing-table-column-<?php echo $i + 1; ?> {
+			<?php
+			if ( isset( $settings->box_padding_top ) ) {
+				echo ( '' !== $settings->box_padding_top ) ? 'padding-top:' . $settings->box_padding_top . 'px;' : '';
+			}
+			if ( isset( $settings->box_padding_right ) ) {
+				echo ( '' !== $settings->box_padding_right ) ? 'padding-right:' . $settings->box_padding_right . 'px;' : '';
+			}
+			if ( isset( $settings->box_padding_bottom ) ) {
+				echo ( '' !== $settings->box_padding_bottom ) ? 'padding-bottom:' . $settings->box_padding_bottom . 'px;' : '';
+			}
+			if ( isset( $settings->box_padding_left ) ) {
+				echo ( '' !== $settings->box_padding_left ) ? 'padding-left:' . $settings->box_padding_left . 'px;' : '';
+			}
+			?>
+		}
+		@media ( max-width: <?php echo $global_settings->medium_breakpoint; ?>px ) {
+			.fl-node-<?php echo $id; ?> .uabb-pricing-table .uabb-pricing-table-outter-<?php echo $i + 1; ?>.uabb-pricing-table-column-<?php echo $i + 1; ?> {
+				<?php
+				if ( isset( $settings->box_padding_top_medium ) ) {
+					echo ( '' !== $settings->box_padding_top_medium ) ? 'padding-top:' . $settings->box_padding_top_medium . 'px;' : '';
+				}
+				if ( isset( $settings->box_padding_right_medium ) ) {
+					echo ( '' !== $settings->box_padding_right_medium ) ? 'padding-right:' . $settings->box_padding_right_medium . 'px;' : '';
+				}
+				if ( isset( $settings->box_padding_bottom_medium ) ) {
+					echo ( '' !== $settings->box_padding_bottom_medium ) ? 'padding-bottom:' . $settings->box_padding_bottom_medium . 'px;' : '';
+				}
+				if ( isset( $settings->box_padding_left_medium ) ) {
+					echo ( '' !== $settings->box_padding_left_medium ) ? 'padding-left:' . $settings->box_padding_left_medium . 'px;' : '';
+				}
+				?>
+			}
+		}
+		@media ( max-width: <?php echo $global_settings->responsive_breakpoint; ?>px ) {
+			.fl-node-<?php echo $id; ?> .uabb-pricing-table .uabb-pricing-table-outter-<?php echo $i + 1; ?> .uabb-pricing-table-column-<?php echo $i + 1; ?> {
+				<?php
+				if ( isset( $settings->box_padding_top_responsive ) ) {
+					echo ( '' !== $settings->box_padding_top_responsive ) ? 'padding-top:' . $settings->box_padding_top_responsive . 'px;' : '';
+				}
+				if ( isset( $settings->box_padding_right_responsive ) ) {
+					echo ( '' !== $settings->box_padding_right_responsive ) ? 'padding-right:' . $settings->box_padding_right_responsive . 'px;' : '';
+				}
+				if ( isset( $settings->box_padding_bottom_responsive ) ) {
+					echo ( '' !== $settings->box_padding_bottom_responsive ) ? 'padding-bottom:' . $settings->box_padding_bottom_responsive . 'px;' : '';
+				}
+				if ( isset( $settings->box_padding_left_responsive ) ) {
+					echo ( '' !== $settings->box_padding_left_responsive ) ? 'padding-left:' . $settings->box_padding_left_responsive . 'px;' : '';
+				}
+				?>
+			}
+		}
 		<?php
 		if ( 'yes' == $settings->responsive_size ) {
 			$size = ( '' != $settings->resp_size ) ? $settings->resp_size : '768';

@@ -2,7 +2,7 @@ var UABBWooProducts;
 var key_array = new Array();
 
 (function($) {
-	
+
 	/**
 	 * Class for Number Counter Module
 	 *
@@ -29,10 +29,13 @@ var key_array = new Array();
 		this.medium				= settings.medium;
 		this.small_breakpoint	= settings.small_breakpoint;
 		this.small				= settings.small;
+		this.next_arrow = settings.next_arrow;
+    this.prev_arrow = settings.prev_arrow;
+
 
 		key_array.push({'id' : settings.id, 'set' : settings.module_settings});
 
-		// initialize 
+		// initialize
 		this._initWooProducts();
 
 		$( document )
@@ -90,9 +93,9 @@ var key_array = new Array();
 
 		} );
 	};
-	
+
 	UABBWooProducts.prototype = {
-		
+
 		nodeID				: '',
 		nodeClass			: '',
 		nodeScope			: '',
@@ -110,7 +113,7 @@ var key_array = new Array();
 		medium 				: '',
 		small_breakpoint	: '',
 		small 				: '',
-		
+
 		_initWooProducts: function(){
 			//alert();
 			var self = this;
@@ -125,7 +128,7 @@ var key_array = new Array();
 			if ( 'carousel' === self.layout ) {
 				var slider_wrapper 	= self.nodeScope.find('.uabb-woo-products-carousel');
 				if ( slider_wrapper.length > 0 ) {
-					
+
 					var slider_selector = slider_wrapper.find('ul.products');
 
 					slider_selector.imagesLoaded( function(e) {
@@ -138,8 +141,8 @@ var key_array = new Array();
 			                slidesToScroll: self.slidesToScroll,
 			                autoplay: self.autoplay,
 			                autoplaySpeed: self.autoplaySpeed,
-							prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class="fas fa-angle-left"></i></button>',
-							nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="fas fa-angle-right"></i></button>',
+											prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class=" '+ self.prev_arrow +' "></i></button>',
+											nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button"><i class="'+ self.next_arrow +' "></i></button>',
 			                responsive: [
 			                    {
 			                        breakpoint: self.medium_breakpoint,
@@ -194,7 +197,7 @@ var key_array = new Array();
 				.off( 'click', '.uabb-quick-view-btn' )
 				.on( 'click', '.uabb-quick-view-btn', function(e){
 					e.preventDefault();
-					
+
 					var $this       = $(this);
 					var	wrap 		= $this.closest('li.product');
 					var product_id  = $this.data( 'product_id' );
@@ -240,7 +243,7 @@ var key_array = new Array();
 				form_variation.trigger( 'reset_image' );
 
 				if (!uabb_qv_modal.hasClass('open')) {
-					
+
 					uabb_qv_modal.removeClass('loading').addClass('open');
 
 					var scrollbar_width = uabb_get_scrollbar_width();
@@ -279,17 +282,17 @@ var key_array = new Array();
 				// stop loader
 				$(document).trigger('uabb_quick_view_loader_stop');
 			};
-			
+
 			var uabb_qv_close_modal = function() {
 
 				// Close box by click overlay
 				uabb_qv_wrapper.on( 'click', function(e){
-					
+
 					if ( this === e.target ) {
 						uabb_qv_close();
-					} 
+					}
 				});
-		        
+
 				// Close box with esc key
 				$(document).keyup(function(e){
 					if( e.keyCode === 27 ) {
@@ -317,7 +320,7 @@ var key_array = new Array();
 
 
 			/*var	ast_qv_center_modal = function() {
-				
+
 				ast_qv_wrapper.css({
 					'width'     : '',
 					'height'    : ''
@@ -357,17 +360,17 @@ var key_array = new Array();
 				}
 			};
 
-			var uabb_get_scrollbar_width = function () { 
-				
-				var div = $('<div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;"><div style="height:100px;"></div>'); 
-				// Append our div, do our calculation and then remove it 
-				$('body').append(div); 
-				var w1 = $('div', div).innerWidth(); 
-				div.css('overflow-y', 'scroll'); 
-				var w2 = $('div', div).innerWidth(); 
+			var uabb_get_scrollbar_width = function () {
+
+				var div = $('<div style="width:50px;height:50px;overflow:hidden;position:absolute;top:-200px;left:-200px;"><div style="height:100px;"></div>');
+				// Append our div, do our calculation and then remove it
+				$('body').append(div);
+				var w1 = $('div', div).innerWidth();
+				div.css('overflow-y', 'scroll');
+				var w2 = $('div', div).innerWidth();
 				$(div).remove();
 
-				return (w1 - w2); 
+				return (w1 - w2);
 			}
 
 
@@ -377,7 +380,7 @@ var key_array = new Array();
 			window.addEventListener("resize", function(event) {
 				uabb_update_summary_height();
 			});
-			
+
 			/* Add to cart ajax */
 			/**
 			 * uabb_add_to_cart_ajax class.
@@ -390,7 +393,7 @@ var key_array = new Array();
 					.on( 'click', '#uabb-quick-view-content .single_add_to_cart_button', this.onAddToCart )
 					.on( 'uabb_added_to_cart', this.updateButton );
 			};
-			
+
 			/**
 			 * Handle the add to cart event.
 			 */
@@ -456,7 +459,7 @@ var key_array = new Array();
 
 				}
 			};
-			
+
 			/**
 			 * Init uabb_add_to_cart_ajax.
 			 */
@@ -483,7 +486,7 @@ var key_array = new Array();
 					.on( 'click', '.uabb-product-actions .uabb-add-to-cart-btn.product_type_simple', this.onAddToCart )
 					.on( 'uabb_product_actions_added_to_cart', this.updateButton );
 			};
-			
+
 			/**
 			 * Handle the add to cart event.
 			 */
@@ -495,7 +498,7 @@ var key_array = new Array();
 					product_id 	= $thisbutton.data('product_id'),
 					quantity 	= 1,
 					cart_icon 	= $thisbutton.find('uabb-action-item');
-				
+
 				$thisbutton.removeClass( 'added' );
 				$thisbutton.addClass( 'loading' );
 
@@ -529,7 +532,7 @@ var key_array = new Array();
 					}*/
 				}
 			};
-			
+
 			/**
 			 * Init style_add_to_cart.
 			 */
@@ -573,7 +576,7 @@ var key_array = new Array();
 
 			var sAgent = window.navigator.userAgent;
 			var Idx = sAgent.indexOf("MSIE");
-			
+
 		 	if (Idx > 0 || !!navigator.userAgent.match(/Trident\/7\./) ) {
 				Number.isInteger = Number.isInteger || function(value) {
 					return typeof value === "number" &&
@@ -622,12 +625,12 @@ var key_array = new Array();
 				circle = Math.PI*(r*2),
 				val    = this.number,
 				max    = this.type == 'percent' ? 100 : this.max;
-   
+
 			if (val < 0) { val = 0;}
 			if (val > max) { val = max;}
-			
+
 			if( this.type == 'percent' ){
-				var pct = ( ( 100 - val ) /100) * circle;			
+				var pct = ( ( 100 - val ) /100) * circle;
 			} else {
 				var pct = ( 1 - ( val / max ) ) * circle;
 			}
@@ -638,7 +641,7 @@ var key_array = new Array();
 		        duration: this.speed,
 		        easing: 'swing'
 		    });
-			
+
 		},
 
 		_triggerSemiCircle: function(){
@@ -651,9 +654,9 @@ var key_array = new Array();
 
 			if (val < 0) { val = 0;}
 			if (val > max) { val = max;}
-			
+
 			if( this.type == 'percent' ){
-				var pct = ( ( 100 - val ) /100) * circle;			
+				var pct = ( ( 100 - val ) /100) * circle;
 			} else {
 				var pct = ( 1 - ( val / max ) ) * circle;
 			}
@@ -664,7 +667,7 @@ var key_array = new Array();
 		        duration: this.speed,
 		        easing: 'swing'
 		    });
-			
+
 		},
 
 		_triggerBar: function(){
@@ -685,7 +688,7 @@ var key_array = new Array();
 		    });
 
 		}
-	
+
 	};
-		
+
 })(jQuery);

@@ -109,6 +109,13 @@ FLBuilder::register_module(
 								'property' => 'text-align',
 							),
 						),
+						'box_padding'            => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'units'      => array( 'px' ),
+							'slider'     => true,
+							'responsive' => true,
+						),
 					),
 				),
 				'general'          => array(

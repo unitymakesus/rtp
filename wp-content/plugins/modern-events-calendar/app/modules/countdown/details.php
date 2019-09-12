@@ -54,7 +54,7 @@ if(isset($_SERVER['HTTP_USER_AGENT']) and strpos($_SERVER['HTTP_USER_AGENT'], 'T
 $defaultjs = '<script type="text/javascript">
 jQuery(document).ready(function()
 {
-    jQuery("#countdown").mecCountDown(
+    jQuery("#mec_countdown_details").mecCountDown(
     {
         date: "'.$start_time.$gmt_offset.'",
         format: "off"

@@ -46,7 +46,7 @@ $date_format = (isset($settings['booking_date_format1']) and trim($settings['boo
         <?php endforeach; ?>
     </div>
     
-    <?php if($this->get_recaptcha_status('booking')): ?><div class="mec-google-recaptcha"><div class="g-recaptcha" data-sitekey="<?php echo $settings['google_recaptcha_sitekey']; ?>"></div></div><?php endif; ?>
+    <?php if($this->get_recaptcha_status('booking')): ?><div class="mec-google-recaptcha"><div id="g-recaptcha" class="g-recaptcha" data-sitekey="<?php echo $settings['google_recaptcha_sitekey']; ?>"></div></div><?php endif; ?>
     <input type="hidden" name="action" value="mec_book_form" />
     <input type="hidden" name="event_id" value="<?php echo $event_id; ?>" />
     <input type="hidden" name="uniqueid" value="<?php echo $uniqueid; ?>" />

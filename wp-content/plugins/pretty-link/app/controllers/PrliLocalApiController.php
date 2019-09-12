@@ -138,8 +138,8 @@ class PrliLocalApiController extends PrliBaseController {
     $values['redirect_type']    = (($redirect_type == '')?$record->redirect_type:$redirect_type);
     $values['nofollow']         = (($nofollow === '')?$record->nofollow:$nofollow);
     $values['track_me']         = (($track_me === '')?(int)$record->track_me:$track_me);
-    $values['param_forwarding'] = !empty($param_forwarding);
-    $values['param_struct']     = (($param_struct == -1)?$record->param_struct:$param_struct);
+    $values['param_forwarding'] = (($param_forwarding === '')?(int)$record->param_forwarding:$param_forwarding);
+    $values['param_struct']     = ''; // deprecated
     $values['link_cpt_id']      = $record->link_cpt_id;
 
     // make array look like $_POST
@@ -147,21 +147,23 @@ class PrliLocalApiController extends PrliBaseController {
       unset($values['nofollow']);
     if(empty($values['track_me']) or !$values['track_me'])
       unset($values['track_me']);
+    if(empty($values['param_forwarding']) or !$values['param_forwarding'])
+      unset($values['param_forwarding']);
 
     $prli_error_messages = $prli_link->validate( $values, $id );
 
-    if( count($prli_error_messages) == 0 )
-    {
-      if( $prli_link->update( $id, $values ) )
+    if( count($prli_error_messages) == 0 ) {
+      if( $prli_link->update( $id, $values ) ) {
         return true;
-      else
-      {
+      }
+      else {
         $prli_error_messages[] = __("An error prevented your Pretty Link from being created", 'pretty-link');
         return false;
       }
     }
-    else
+    else {
       return false;
+    }
   }
 
   /**

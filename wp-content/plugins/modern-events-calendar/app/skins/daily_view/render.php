@@ -14,6 +14,31 @@ $settings = $this->main->get_settings();
                 $end_time = (isset($event->data->time) ? $event->data->time['end'] : '');
                 $event_color =  isset($event->data->meta['mec_color'])?'<span class="event-color" style="background: #'.$event->data->meta['mec_color'].'"></span>':'';
                 $label_style = '';
+
+                // Check for sold out event tickets if sold out is shown sold out label
+                $event_id = (isset($event->ID)) ?  intval($event->ID) : 0;
+                $startDate = !empty($event->data->meta['mec_date']['start']['date'] ) ? $event->data->meta['mec_date']['start']['date'] : '';
+                $endDate = !empty($event->data->meta['mec_date']['end']['date'] ) ? $event->data->meta['mec_date']['end']['date'] : '' ;
+                $event_start_date = !empty($event->date['start']['date']) ? $event->date['start']['date'] : '';
+                $event_end_date = !empty($event->date['end']['date']) ? $event->date['end']['date'] : '';
+                $is_soldout = $this->main->is_soldout($event_id, $event_start_date);
+                $dynamic_period = $this->main->date_diff($event_start_date, $event_end_date)->d;
+
+                if($dynamic_period >= 0)
+                {
+                    $static_period = (!isset($static_period)) ? $this->main->date_diff($startDate, $endDate)->d : $static_period;
+
+                    // For events no multiple days but repeating is multiple days
+                    $static_period = ($dynamic_period > $static_period) ? $dynamic_period : $static_period;
+
+                    // For compare next days of start point events
+                    $level = abs($static_period - $dynamic_period);
+
+                    // For events multiple days repeating
+                    if(($dynamic_period < ($static_period)) and (($dynamic_period) >= 0) and $this->main->is_soldout($event_id,
+                    date('Y-m-d',strtotime("- {$level}day", strtotime($event_start_date))))) $is_soldout = true;
+                }
+                
                 if ( !empty($event->data->labels) ):
                 foreach( $event->data->labels as $label)
                 {
@@ -42,6 +67,8 @@ $settings = $this->main->get_settings();
                     } 
                     $speakers = json_encode($speakers);
                 }
+            $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+            if($schema_settings == '1' ):
             ?>
             <script type="application/ld+json">
             {
@@ -68,10 +95,15 @@ $settings = $this->main->get_settings();
                 "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
             }
             </script>
+            <?php endif; ?>
             <article data-style="<?php echo $label_style; ?>" class="mec-event-article <?php echo $this->get_event_classes($event); ?>">
                 <div class="mec-event-image"><?php echo $event->data->thumbnails['thumbnail']; ?></div>
                 <?php if(trim($start_time)): ?><div class="mec-event-time mec-color"><i class="mec-sl-clock-o"></i> <?php echo $start_time.(trim($end_time) ? ' - '.$end_time : ''); ?></div><?php endif; ?>
-                <h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->title; ?></a><?php echo $event_color; ?></h4><div class="mec-event-detail"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></div>
+                <?php 
+                    $sold_out_css_class = ($is_soldout) ? ' mec-event-title-soldout' : '';
+                    $sold_out = ($is_soldout) ? ' <span class=soldout>' . __('Sold Out', 'mec') . '</span> ' : ''; 
+                ?>
+                <h4 class="mec-event-title <?php echo $sold_out_css_class; ?>"><a class="mec-color-hover" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->title; ?></a><?php echo $sold_out.$event_color; ?></h4><div class="mec-event-detail"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></div>
             </article>
         <?php endforeach; ?>
         <?php else: ?>

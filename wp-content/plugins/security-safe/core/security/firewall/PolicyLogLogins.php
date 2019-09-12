@@ -22,8 +22,10 @@ class PolicyLogLogins extends Firewall {
         // Run parent class constructor first
         parent::__construct();
 
-        add_action( 'wp_login_failed', array( $this, 'failed' ) ); 
-        add_action( 'wp_login', array( $this, 'success' ), 10, 2 ); 
+        add_action( 'wp_login_failed', [ $this, 'failed' ] ); 
+        add_action( 'wp_login',  [ $this, 'success' ] , 10, 2 );
+        add_filter( 'authenticate', [ $this, 'blacklist_check' ], 30, 3 );  // Normal Login
+        add_filter( 'xmlrpc_enabled', [ $this, 'disable' ], 60 );           // XML-RPC Login
 
 	} // __construct()
 
@@ -67,14 +69,14 @@ class PolicyLogLogins extends Firewall {
 
         $args = [];
         $args['type'] = 'logins';
-        $args['username'] = $username;
+        $args['username'] = ( $username ) ? filter_var( $username, FILTER_SANITIZE_STRING ) : '';
         $args['status'] = ( $status == 'success' ) ? 'success' : 'failed';
 
         if ( defined('XMLRPC_REQUEST') ) {
 
             $args['threats'] = 1;
 
-            $args['details'] = ( $args['status'] == 'failed' ) ? 'XML-RPC Login Attempt.' : 'XML-RPC Login Successful.';
+            $args['details'] = ( $args['status'] == 'failed' ) ? __( 'XML-RPC Login Attempt.', SECSAFE_SLUG ) : __( 'XML-RPC Login Successful.', SECSAFE_SLUG );
             
         }
 
@@ -95,21 +97,50 @@ class PolicyLogLogins extends Firewall {
      * @since  2.0.0
      * @uses  $this->block
      */
-    public function blacklist_check() {
+    public function blacklist_check( $user, $username, $password ) {
 
-        // If attempt to Login
-        if ( strpos( $_SERVER['REQUEST_URI'], 'wp-login.php' ) !== false && isset( $_POST['log'] ) && isset( $_POST['pwd'] ) ) {
+        if ( Yoda::is_blacklisted() ) { 
+            
+            $args = [];
+            $args['type'] = 'logins';
+            $args['details'] = __( 'IP is blacklisted.', SECSAFE_SLUG ) . '[' . __LINE__ . ']';
+            $args['username'] = ( $username ) ? filter_var( $username, FILTER_SANITIZE_STRING ) : '';
 
-            if ( Yoda::is_blacklisted() ) { 
-                
-                // Block display of any 404 errors
-                $this->block( 'logins', 'IP is blacklisted. [' . __LINE__ . ']' );
-
-            }
+            // Block the attempt
+            $this->block( $args );
 
         }
 
+        return $user;
+
     } // blacklist_check()
+
+
+    /**
+     * Checks to see if the XML-RPC request is blacklisted by IP
+     * @since  2.2.0
+     * @uses  $this->block
+     */ 
+    function xmlrpc_blacklist_check() {
+
+        if ( Yoda::is_blacklisted() ) { 
+
+            $args = [];
+            $args['type'] = 'logins';
+            $args['details'] = __( 'IP is blacklisted.', SECSAFE_SLUG ) . '[' . __LINE__ . ']';
+
+            // Get Username
+            $data = file_get_contents( 'php://input' );
+            $xml= simplexml_load_string( $data );
+            $username = ( $xml && isset( $xml->params->param[2]->value->string ) ) ? $xml->params->param[2]->value->string : '';
+            $args['username'] = ( $username ) ? filter_var( $username, FILTER_SANITIZE_STRING ) : '';
+
+            // Block the attempt
+            $this->block( $args );
+
+        }
+
+    } // xmlrpc_blacklist_check()
 
 
 } // PolicyLogLogins()

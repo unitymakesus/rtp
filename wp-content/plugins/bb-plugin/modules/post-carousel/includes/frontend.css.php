@@ -3,6 +3,7 @@
 	$layout         = isset( $settings->layout ) ? $settings->layout : 'grid';
 	$posts_per_view = ! empty( $settings->posts_per_view ) ? $settings->posts_per_view : 3;
 	$icon_position  = isset( $settings->post_icon_position ) ? $settings->post_icon_position : 'above';
+	$parent_row     = FLBuilderModel::get_node_parent_by_type( $id, 'row' );
 
 ?>
 
@@ -13,6 +14,17 @@
 		display: flex;
 		height: 100%;
 	}
+
+	<?php
+	if ( ! empty( $parent_row->settings->full_height ) && 'default' != $parent_row->settings->full_height ) {
+		if ( 'fixed' == $parent_row->settings->content_width ) {
+			echo '.fl-node-' . $parent_row->node . ' .fl-row-content {';
+			echo '	 width: 100%;';
+			echo '}';
+		}
+	}
+	?>
+
 <?php endif; ?>
 
 .fl-node-<?php echo $id; ?> .fl-post-carousel .fl-post-carousel-post {

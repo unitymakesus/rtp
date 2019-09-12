@@ -26,6 +26,8 @@
 			autoplaySpeed: <?php echo ( '' != $settings->animation_speed ) ? $settings->animation_speed : '1000'; ?>,
 			small_breakpoint: <?php echo $global_settings->responsive_breakpoint; ?>,
 			medium_breakpoint: <?php echo $global_settings->medium_breakpoint; ?>,
+			next_arrow: '<?php echo apply_filters( 'uabb_woo_categories_carousel_next_arrow_icon', 'fas fa-angle-right' ); ?>',
+			prev_arrow: '<?php echo apply_filters( 'uabb_woo_categories_carousel_previous_arrow_icon', 'fas fa-angle-left' ); ?>',
 		});
 	});
 

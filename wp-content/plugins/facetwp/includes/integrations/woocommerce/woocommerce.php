@@ -3,28 +3,40 @@
 class FacetWP_Integration_WooCommerce
 {
 
-    public $cache = array();
-    public $lookup = array();
-    public $storage = array();
-    public $variations = array();
+    public $cache = [];
+    public $lookup = [];
+    public $storage = [];
+    public $variations = [];
+    public $post_clauses = false;
 
 
     function __construct() {
-        add_action( 'wp_enqueue_scripts', array( $this, 'front_scripts' ) );
-        add_filter( 'facetwp_facet_sources', array( $this, 'facet_sources' ) );
-        add_filter( 'facetwp_indexer_post_facet', array( $this, 'index_woo_values' ), 10, 2 );
+        add_action( 'wp_enqueue_scripts', [ $this, 'front_scripts' ] );
+        add_filter( 'facetwp_facet_sources', [ $this, 'facet_sources' ] );
+        add_filter( 'facetwp_indexer_post_facet', [ $this, 'index_woo_values' ], 10, 2 );
 
         // Support WooCommerce product variations
         $is_enabled = ( 'yes' === FWP()->helper->get_setting( 'wc_enable_variations', 'no' ) );
 
         if ( apply_filters( 'facetwp_enable_product_variations', $is_enabled ) ) {
-            add_filter( 'facetwp_indexer_post_facet_defaults', array( $this, 'force_taxonomy' ), 10, 2 );
-            add_filter( 'facetwp_indexer_query_args', array( $this, 'index_variations' ) );
-            add_filter( 'facetwp_index_row', array( $this, 'attribute_variations' ), 1 );
-            add_filter( 'facetwp_wpdb_sql', array( $this, 'wpdb_sql' ), 10, 2 );
-            add_filter( 'facetwp_wpdb_get_col', array( $this, 'wpdb_get_col' ), 10, 3 );
-            add_filter( 'facetwp_filtered_post_ids', array( $this, 'process_variations' ) );
-            add_filter( 'facetwp_facet_where', array( $this, 'facet_where' ), 10, 2 );
+            add_filter( 'facetwp_indexer_post_facet_defaults', [ $this, 'force_taxonomy' ], 10, 2 );
+            add_filter( 'facetwp_indexer_query_args', [ $this, 'index_variations' ] );
+            add_filter( 'facetwp_index_row', [ $this, 'attribute_variations' ], 1 );
+            add_filter( 'facetwp_wpdb_sql', [ $this, 'wpdb_sql' ], 10, 2 );
+            add_filter( 'facetwp_wpdb_get_col', [ $this, 'wpdb_get_col' ], 10, 3 );
+            add_filter( 'facetwp_filtered_post_ids', [ $this, 'process_variations' ] );
+            add_filter( 'facetwp_facet_where', [ $this, 'facet_where' ], 10, 2 );
+        }
+
+        // Preserve the WooCommerce sort
+        add_filter( 'posts_clauses', [ $this, 'preserve_sort' ], 20, 2 );
+
+        // Prevent WooCommerce from redirecting to a single result page
+        add_filter( 'woocommerce_redirect_single_search_result', [ $this, 'redirect_single_search_result' ] );
+
+        // Dynamic counts when Shop Page Display = "Categories" or "Both"
+        if ( apply_filters( 'facetwp_woocommerce_support_categories_display', false ) ) {
+            include( FACETWP_DIR . '/includes/integrations/woocommerce/taxonomy.php' );
         }
     }
 
@@ -44,9 +56,9 @@ class FacetWP_Integration_WooCommerce
      * @since 2.1.4
      */
     function facet_sources( $sources ) {
-        $sources['woocommerce'] = array(
+        $sources['woocommerce'] = [
             'label' => __( 'WooCommerce', 'fwp' ),
-            'choices' => array(
+            'choices' => [
                 'woo/price'             => __( 'Price' ),
                 'woo/sale_price'        => __( 'Sale Price' ),
                 'woo/regular_price'     => __( 'Regular Price' ),
@@ -54,9 +66,9 @@ class FacetWP_Integration_WooCommerce
                 'woo/stock_status'      => __( 'Stock Status' ),
                 'woo/on_sale'           => __( 'On Sale' ),
                 'woo/product_type'      => __( 'Product Type' ),
-            ),
+            ],
             'weight' => 5
-        );
+        ];
 
         // Move WC taxonomy choices
         foreach ( $sources['taxonomies']['choices'] as $key => $label ) {
@@ -95,13 +107,14 @@ class FacetWP_Integration_WooCommerce
 
         // Saving a single product
         if ( ! empty( $args['p'] ) ) {
-            if ( 'product' == get_post_type( $args['p'] ) ) {
-                $product = wc_get_product( $args['p'] );
-                if ( 'variable' == $product->get_type() ) {
+            $post_id = (int) $args['p'];
+            if ( 'product' == get_post_type( $post_id ) ) {
+                if ( 'variable' == $this->get_product_type( $post_id ) ) {
+                    $product = wc_get_product( $post_id );
                     $children = $product->get_children();
-                    $args['post_type'] = array( 'product', 'product_variation' );
+                    $args['post_type'] = [ 'product', 'product_variation' ];
                     $args['post__in'] = $children;
-                    $args['post__in'][] = $args['p'];
+                    $args['post__in'][] = $post_id;
                     $args['posts_per_page'] = -1;
                     unset( $args['p'] );
                 }
@@ -187,8 +200,9 @@ class FacetWP_Integration_WooCommerce
             $type = in_array( $post_id, $variations_array ) ? 'products' : 'variations';
 
             if ( isset( $this->cache[ $facet_name ][ $type ] ) ) {
-                $temp = $this->cache[ $facet_name ][ $type ];
-                $this->cache[ $facet_name ][ $type ] = array_merge( $temp, $variations_array );
+                foreach ( $variations_array as $id ) {
+                    $this->cache[ $facet_name ][ $type ][] = $id;
+                }
             }
             else {
                 $this->cache[ $facet_name ][ $type ] = $variations_array;
@@ -206,7 +220,7 @@ class FacetWP_Integration_WooCommerce
     function generate_lookup_array( $post_ids ) {
         global $wpdb;
 
-        $output = array();
+        $output = [];
 
         if ( ! empty( $post_ids ) ) {
             $sql = "
@@ -226,6 +240,27 @@ class FacetWP_Integration_WooCommerce
 
 
     /**
+     * Efficiently grab the product type without wc_get_product()
+     * @since 3.3.8
+     */
+    function get_product_type( $post_id ) {
+        global $wpdb;
+
+        $sql = "
+        SELECT t.name
+        FROM $wpdb->terms t
+        INNER JOIN $wpdb->term_taxonomy tt ON tt.term_id = t.term_id AND tt.taxonomy = 'product_type'
+        INNER JOIN $wpdb->term_relationships tr ON tr.term_taxonomy_id = tt.term_taxonomy_id AND tr.object_id = %d";
+
+        $type = $wpdb->get_var(
+            $wpdb->prepare( $sql, $post_id )
+        );
+
+        return ( null !== $type ) ? $type : 'simple';
+    }
+
+
+    /**
      * Determine valid variation IDs
      * @since 2.7
      */
@@ -238,17 +273,19 @@ class FacetWP_Integration_WooCommerce
 
         // Loop through each facet's data
         foreach ( $this->cache as $facet_name => $groups ) {
-            $this->storage[ $facet_name ] = array();
+            $this->storage[ $facet_name ] = [];
 
             // Create an array of variation IDs
             foreach ( $groups as $type => $ids ) { // products or variations
-                $this->storage[ $facet_name ] = array_merge( $this->storage[ $facet_name ], $ids );
+                foreach ( $ids as $id ) {
+                    $this->storage[ $facet_name ][] = $id;
 
-                // Lookup variation IDs for each product
-                if ( 'products' == $type ) {
-                    foreach ( $ids as $id ) {
+                    // Lookup variation IDs for each product
+                    if ( 'products' == $type ) {
                         if ( ! empty( $this->lookup['get_variations'][ $id ] ) ) {
-                            $this->storage[ $facet_name ] = array_merge( $this->storage[ $facet_name ], $this->lookup['get_variations'][ $id ] );
+                            foreach ( $this->lookup['get_variations'][ $id ] as $variation_id ) {
+                                $this->storage[ $facet_name ][] = $variation_id;
+                            }
                         }
                     }
                 }
@@ -257,8 +294,8 @@ class FacetWP_Integration_WooCommerce
 
         $result = $this->calculate_variations();
         $this->variations = $result['variations'];
-        $post_ids = array_intersect( $post_ids, array_keys( $result['products'] ) );
-        $post_ids = empty( $post_ids ) ? array( 0 ) : $post_ids;
+        $post_ids = array_intersect( $post_ids, $result['products'] );
+        $post_ids = empty( $post_ids ) ? [ 0 ] : $post_ids;
         return $post_ids;
     }
 
@@ -272,8 +309,8 @@ class FacetWP_Integration_WooCommerce
     function calculate_variations( $facet_name = false ) {
 
         $new = true;
-        $final_products = array();
-        $final_variations = array();
+        $final_products = [];
+        $final_variations = [];
 
         // Intersect product + variation IDs across facets
         foreach ( $this->storage as $name => $variation_ids ) {
@@ -295,13 +332,16 @@ class FacetWP_Integration_WooCommerce
         }
 
         // Append product IDs to the variations array
-        $final_variations = array_merge( $final_variations, array_keys( $final_products ) );
-        $final_variations = array_unique( $final_variations );
+        $final_products = array_keys( $final_products );
 
-        return array(
+        foreach ( $final_products as $id ) {
+            $final_variations[] = $id;
+        }
+
+        return [
             'products' => $final_products,
-            'variations' => $final_variations
-        );
+            'variations' => array_unique( $final_variations )
+        ];
     }
 
 
@@ -355,9 +395,8 @@ class FacetWP_Integration_WooCommerce
 
         // Ignore product attributes with "Used for variations" ticked
         if ( 0 === strpos( $facet['source'], 'tax/pa_' ) ) {
-            $product = wc_get_product( $post_id );
-
-            if ( $product->is_type( 'variable' ) ) {
+            if ( 'variable' == $this->get_product_type( $post_id ) ) {
+                $product = wc_get_product( $post_id );
                 $attrs = $product->get_attributes();
                 $attr_name = str_replace( 'tax/', '', $facet['source'] );
                 if ( isset( $attrs[ $attr_name ] ) && 1 === $attrs[ $attr_name ]['is_variation'] ) {
@@ -367,35 +406,29 @@ class FacetWP_Integration_WooCommerce
         }
 
         // Custom woo fields
-        if ( 0 === strpos( $facet['source'], 'woo' ) ) {
+        if ( 0 === strpos( $facet['source'], 'woo/' ) ) {
             $product = wc_get_product( $post_id );
+            $source = substr( $facet['source'], 4 );
 
             // Price
-            if ( 'woo/price' == $facet['source'] ) {
-                $price = $product->get_price();
-                $defaults['facet_value'] = $price;
-                $defaults['facet_display_value'] = $price;
-                FWP()->indexer->index_row( $defaults );
-            }
+            if ( 'price' == $source || 'sale_price' == $source || 'regular_price' == $source ) {
+                if ( $product->is_type( 'variable' ) ) {
+                    $method_name = "get_variation_$source";
+                    $price_min = $product->$method_name( 'min' ); // get_variation_price()
+                    $price_max = $product->$method_name( 'max' );
+                }
+                else {
+                    $method_name = "get_$source";
+                    $price_min = $price_max = $product->$method_name(); // get_price()
+                }
 
-            // Sale Price
-            elseif ( 'woo/sale_price' == $facet['source'] ) {
-                $price = $product->get_sale_price();
-                $defaults['facet_value'] = $price;
-                $defaults['facet_display_value'] = $price;
-                FWP()->indexer->index_row( $defaults );
-            }
-
-            // Regular Price
-            elseif ( 'woo/regular_price' == $facet['source'] ) {
-                $price = $product->get_regular_price();
-                $defaults['facet_value'] = $price;
-                $defaults['facet_display_value'] = $price;
+                $defaults['facet_value'] = $price_min;
+                $defaults['facet_display_value'] = $price_max;
                 FWP()->indexer->index_row( $defaults );
             }
 
             // Average Rating
-            elseif ( 'woo/average_rating' == $facet['source'] ) {
+            elseif ( 'average_rating' == $source ) {
                 $rating = $product->get_average_rating();
                 $defaults['facet_value'] = $rating;
                 $defaults['facet_display_value'] = $rating;
@@ -403,24 +436,24 @@ class FacetWP_Integration_WooCommerce
             }
 
             // Stock Status
-            elseif ( 'woo/stock_status' == $facet['source'] ) {
+            elseif ( 'stock_status' == $source ) {
                 $in_stock = $product->is_in_stock();
                 $defaults['facet_value'] = (int) $in_stock;
-                $defaults['facet_display_value'] = $in_stock ? __( 'In Stock', 'fwp' ) : __( 'Out of Stock', 'fwp' );
+                $defaults['facet_display_value'] = $in_stock ? __( 'In Stock', 'fwp-front' ) : __( 'Out of Stock', 'fwp-front' );
                 FWP()->indexer->index_row( $defaults );
             }
 
             // On Sale
-            elseif ( 'woo/on_sale' == $facet['source'] ) {
+            elseif ( 'on_sale' == $source ) {
                 if ( $product->is_on_sale() ) {
                     $defaults['facet_value'] = 1;
-                    $defaults['facet_display_value'] = __( 'On Sale', 'fwp' );
+                    $defaults['facet_display_value'] = __( 'On Sale', 'fwp-front' );
                     FWP()->indexer->index_row( $defaults );
                 }
             }
 
             // Product Type
-            elseif ( 'woo/product_type' == $facet['source'] ) {
+            elseif ( 'product_type' == $source ) {
                 $type = $product->get_type();
                 $defaults['facet_value'] = $type;
                 $defaults['facet_display_value'] = $type;
@@ -431,6 +464,57 @@ class FacetWP_Integration_WooCommerce
         }
 
         return $return;
+    }
+
+
+    /**
+     * WooCommerce removes its sort hooks after the main product_query runs
+     * We need to preserve the sort for FacetWP to work
+     *
+     * @since 3.2.8
+     */
+    function preserve_sort( $clauses, $query ) {
+
+        if ( ! apply_filters( 'facetwp_woocommerce_preserve_sort', true ) ) {
+            return $clauses;
+        }
+
+        $prefix = FWP()->helper->get_setting( 'prefix' );
+        $using_sort = isset( FWP()->facet->http_params['get'][ $prefix . 'sort' ] );
+
+        if ( 'product_query' == $query->get( 'wc_query' ) && true === $query->get( 'facetwp' ) && ! $using_sort ) {
+            if ( false === $this->post_clauses ) {
+                $this->post_clauses = $clauses;
+            }
+            else {
+                $clauses['join'] = $this->post_clauses['join'];
+                $clauses['where'] = $this->post_clauses['where'];
+                $clauses['orderby'] = $this->post_clauses['orderby'];
+
+                // Narrow the main query results
+                $where_clause = FWP()->facet->where_clause;
+
+                if ( ! empty( $where_clause ) ) {
+                    $column = $GLOBALS['wpdb']->posts;
+                    $clauses['where'] .= str_replace( 'post_id', "$column.ID", $where_clause );
+                }
+            }
+        }
+
+        return $clauses;
+    }
+
+
+    /**
+     * Prevent WooCommerce from redirecting to single result page
+     * @since 3.3.7
+     */
+    function redirect_single_search_result( $bool ) {
+        if ( FWP()->ajax->is_refresh || ! empty( FWP()->ajax->url_vars ) ) {
+            $bool = false;
+        }
+
+        return $bool;
     }
 }
 

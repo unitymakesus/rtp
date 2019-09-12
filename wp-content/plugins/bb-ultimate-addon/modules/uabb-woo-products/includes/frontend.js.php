@@ -16,6 +16,8 @@
 			ajaxurl: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
 			layout: "<?php echo $settings->layout; ?>",
 			skin: "<?php echo $settings->skin; ?>",
+			next_arrow: '<?php echo apply_filters( 'uabb_woo_products_carousel_next_arrow_icon', 'fas fa-angle-right' ); ?>',
+			prev_arrow: '<?php echo apply_filters( 'uabb_woo_products_carousel_previous_arrow_icon', 'fas fa-angle-left' ); ?>',
 
 			/* Slider */
 			infinite: <?php echo ( 'yes' == $settings->infinite_loop ) ? 'true' : 'false'; ?>,

@@ -20,7 +20,7 @@ class PolicyXMLRPC extends Firewall {
 
         if ( $setting ) {
 
-            add_filter( 'xmlrpc_enabled', [ $this, 'disable' ] );
+            add_filter( 'xmlrpc_enabled', [ $this, 'disable' ], 50 );
             
             // Remove Link From Head
             remove_action( 'wp_head', 'rsd_link' );
@@ -34,7 +34,7 @@ class PolicyXMLRPC extends Firewall {
 
         $args = [];
         $args['type'] = 'logins';
-        $args['details'] = 'XML-RPC Disabled.';
+        $args['details'] = __( 'XML-RPC Disabled.', SECSAFE_SLUG );
 
         // Get Username
         $data = file_get_contents( 'php://input' );

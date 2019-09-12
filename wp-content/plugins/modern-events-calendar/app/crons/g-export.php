@@ -53,7 +53,7 @@ $render = $main->getRender();
 
 // Timezone Options
 $timezone = $main->get_timezone();
-$gmt_offset = $main->get_gmt_offset('gmt_offset');
+$gmt_offset = $main->get_gmt_offset();
 
 $g_events_not_inserted = array();
 $g_events_inserted = array();
@@ -71,90 +71,7 @@ foreach($mec_events as $mec_event)
     $location = isset($data->locations[$data->meta['mec_location_id']]) ? $data->locations[$data->meta['mec_location_id']] : array();
     $organizer = isset($data->organizers[$data->meta['mec_organizer_id']]) ? $data->organizers[$data->meta['mec_organizer_id']] : array();
 
-    $recurrence = array();
-    if(isset($data->mec->repeat) and $data->mec->repeat)
-    {
-        $finish = ($data->mec->end != '0000-00-00' ? date('Ymd\THis\Z', strtotime($data->mec->end.' '.$data->time['end'])) : '');
-        $freq = '';
-        $interval = '1';
-        $byday = '';
-        $wkst = '';
-
-        $repeat_type = $data->meta['mec_repeat_type'];
-        $week_day_mapping = array('1'=>'MO', '2'=>'TU', '3'=>'WE', '4'=>'TH', '5'=>'FR', '6'=>'SA', '7'=>'SU');
-
-        if($repeat_type == 'daily')
-        {
-            $freq = 'DAILY';
-            $interval = $data->mec->rinterval;
-        }
-        elseif($repeat_type == 'weekly')
-        {
-            $freq = 'WEEKLY';
-            $interval = ($data->mec->rinterval/7);
-        }
-        elseif($repeat_type == 'monthly') $freq = 'MONTHLY';
-        elseif($repeat_type == 'yearly') $freq = 'YEARLY';
-        elseif($repeat_type == 'weekday')
-        {
-            $mec_weekdays = explode(',', trim($data->mec->weekdays, ','));
-            foreach($mec_weekdays as $mec_weekday) $byday .= $week_day_mapping[$mec_weekday].',';
-
-            $byday = trim($byday, ', ');
-            $freq = 'WEEKLY';
-        }
-        elseif($repeat_type == 'weekend')
-        {
-            $mec_weekdays = explode(',', trim($data->mec->weekdays, ','));
-            foreach($mec_weekdays as $mec_weekday) $byday .= $week_day_mapping[$mec_weekday].',';
-
-            $byday = trim($byday, ', ');
-            $freq = 'WEEKLY';
-        }
-        elseif($repeat_type == 'certain_weekdays')
-        {
-            $mec_weekdays = explode(',', trim($data->mec->weekdays, ','));
-            foreach($mec_weekdays as $mec_weekday) $byday .= $week_day_mapping[$mec_weekday].',';
-
-            $byday = trim($byday, ', ');
-            $freq = 'WEEKLY';
-        }
-        elseif($repeat_type == 'custom_days')
-        {
-            $freq = '';
-            $mec_periods = explode(',', trim($data->mec->days, ','));
-
-            $days = '';
-            foreach($mec_periods as $mec_period)
-            {
-                $mec_days = explode(':', trim($mec_period, ': '));
-                $days .= date('Ymd\THis', strtotime($mec_days[0].' '.$data->time['start'])).$gmt_offset.'/'.date('Ymd\THis', strtotime($mec_days[1].' '.$data->time['end'])).$gmt_offset.',';
-            }
-
-            // Add RDATE
-            $recurrence[] = trim('RDATE;VALUE=PERIOD:'.trim($days, ', '), '; ');
-        }
-
-        $rrule = 'RRULE:FREQ='.$freq.';'
-                .($interval > 1 ? 'INTERVAL='.$interval.';' : '')
-                .(($finish != '0000-00-00' and $finish != '') ? 'UNTIL='.$finish.';' : '')
-                .($wkst != '' ? 'WKST='.$wkst.';' : '')
-                .($byday != '' ? 'BYDAY='.$byday.';' : '');
-
-        // Add RRULE
-        if(trim($freq)) $recurrence[] = trim($rrule, '; ');
-
-        if(trim($data->mec->not_in_days))
-        {
-            $mec_not_in_days = explode(',', trim($data->mec->not_in_days, ','));
-
-            $not_in_days = '';
-            foreach($mec_not_in_days as $mec_not_in_day) $not_in_days .= date('Ymd', strtotime($mec_not_in_day)).',';
-
-            // Add EXDATE
-            $recurrence[] = trim('EXDATE;VALUE=DATE:'.trim($not_in_days, ', '), '; ');
-        }
-    }
+    $recurrence = $main->get_ical_rrules($data);
 
     $event = new Google_Service_Calendar_Event(array
     (

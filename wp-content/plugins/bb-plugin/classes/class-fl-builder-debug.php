@@ -310,6 +310,26 @@ final class FL_Debug {
 		);
 		self::register( 'recursion', $args );
 
+		$zlib = self::safe_ini_get( 'zlib.output_compression' );
+
+		if ( $zlib ) {
+			$args = array(
+				'name' => 'ZLIB Output Compression',
+				'data' => $zlib,
+			);
+			self::register( 'zlib', $args );
+		}
+
+		$zlib_handler = self::safe_ini_get( 'zlib.output_handler' );
+
+		if ( $zlib_handler ) {
+			$args = array(
+				'name' => 'ZLIB Handler',
+				'data' => $zlib,
+			);
+			self::register( 'zlib_handler', $zlib_handler );
+		}
+
 		$args = array(
 			'name' => 'BB Products',
 			'data' => self::divider(),

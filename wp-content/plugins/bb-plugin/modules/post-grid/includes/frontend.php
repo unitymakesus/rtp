@@ -11,10 +11,11 @@ if ( $query->have_posts() ) :
 
 	do_action( 'fl_builder_posts_module_before_posts', $settings, $query );
 
-	$paged = ( FLBuilderLoop::get_paged() > 0 ) ? ' fl-paged-scroll-to' : '';
-
+	$data_source = isset( $settings->data_source ) ? $settings->data_source : 'custom_query';
+	$post_type   = isset( $settings->post_type ) ? $settings->post_type : 'post';
+	$paged       = ( FLBuilderLoop::get_paged() > 0 ) ? ' fl-paged-scroll-to' : '';
 	?>
-	<div class="fl-post-<?php echo $module->get_layout_slug() . $paged; ?>"<?php echo FLPostGridModule::print_schema( ' itemscope="itemscope" itemtype="https://schema.org/Blog"' ); ?>>
+	<div class="fl-post-<?php echo $module->get_layout_slug() . $paged; ?>"<?php echo FLPostGridModule::print_schema( ' itemscope="itemscope" itemtype="' . FLPostGridModule::schema_collection_type( $data_source, $post_type ) . '"' ); ?>>
 	<?php
 
 	if ( 'li' == $module->get_posts_container() ) :

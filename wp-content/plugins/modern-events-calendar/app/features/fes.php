@@ -13,7 +13,8 @@ class MEC_feature_fes extends MEC_base
     public $db;
     public $settings;
     public $PT;
-
+    public $render;
+    
     /**
      * Constructor method
      * @author Webnus <info@webnus.biz>
@@ -251,8 +252,24 @@ class MEC_feature_fes extends MEC_base
             $g_recaptcha_response = isset($_POST['g-recaptcha-response']) ? sanitize_text_field($_POST['g-recaptcha-response']) : NULL;
             if(!$this->main->get_recaptcha_response($g_recaptcha_response)) $this->main->response(array('success'=>0, 'message'=>__('Captcha is invalid! Please try again.', 'mec'), 'code'=>'CAPTCHA_IS_INVALID'));
         }
-        
+
         $post_id = isset($mec['post_id']) ? sanitize_text_field($mec['post_id']) : -1;
+
+        $start_date = (isset($mec['date']['start']['date']) and trim($mec['date']['start']['date'])) ? $mec['date']['start']['date'] : date('Y-m-d');
+        $end_date = (isset($mec['date']['end']['date']) and trim($mec['date']['end']['date'])) ? $mec['date']['end']['date'] : date('Y-m-d');
+
+        $event = $this->db->select("SELECT * FROM `#__mec_events` WHERE `post_id` = {$post_id}", 'loadAssoc');
+        if(!is_array($event)) $event = array();
+
+        $booking_date_update = false;
+        if(count($event))
+        {
+            $past_start_date = (isset($event['start']) and trim($event['start'])) ? $event['start'] : '';
+            $past_end_date = (isset($event['end']) and trim($event['end'])) ? $event['end'] : '';
+
+            if(trim($start_date) != trim($past_start_date) or trim($end_date) != trim($past_end_date)) $booking_date_update = true;
+        }
+
         $post_title = isset($mec['title']) ? sanitize_text_field($mec['title']) : '';
         $post_content = isset($mec['content']) ? $mec['content'] : '';
         $post_tags = isset($mec['tags']) ? sanitize_text_field($mec['tags']) : '';
@@ -300,6 +317,7 @@ class MEC_feature_fes extends MEC_base
         foreach($post_labels as $post_label=>$value) $labels[] = (int) $post_label;
         
         wp_set_post_terms($post_id, $labels, 'mec_label');
+        do_action('mec_label_change_to_radio' , $labels, $post_labels,$post_id);
         
         // Color
         $color = isset($mec['color']) ? sanitize_text_field(trim($mec['color'], '# ')) : '';
@@ -446,8 +464,7 @@ class MEC_feature_fes extends MEC_base
         
         // Date Options
         $date = isset($mec['date']) ? $mec['date'] : array();
-        
-        $start_date = (isset($date['start']) and trim($date['start']['date'])) ? $date['start']['date'] : date('Y-m-d');
+
         $start_date = date('Y-m-d', strtotime($start_date));
         
         // Set the date if it's empty
@@ -456,8 +473,7 @@ class MEC_feature_fes extends MEC_base
         $start_time_hour = isset($date['start']) ? $date['start']['hour'] : '8';
         $start_time_minutes = isset($date['start']) ? $date['start']['minutes'] : '00';
         $start_time_ampm = (isset($date['start']) and isset($date['start']['ampm'])) ? $date['start']['ampm'] : 'AM';
-        
-        $end_date = (isset($date['end']) and trim($date['end']['date'])) ? $date['end']['date'] : date('Y-m-d');
+
         $end_date = date('Y-m-d', strtotime($end_date));
 
         // Fix end_date if it's smaller than start_date
@@ -549,6 +565,10 @@ class MEC_feature_fes extends MEC_base
         $repeat_type = ($repeat_status and isset($repeat['type'])) ? $repeat['type'] : '';
         
         $repeat_interval = ($repeat_status and isset($repeat['interval']) and trim($repeat['interval'])) ? $repeat['interval'] : 1;
+
+        // Advanced Repeat
+        $advanced = isset( $repeat['advanced'] ) ? sanitize_text_field($repeat['advanced']) : '';
+        
         if(!is_numeric($repeat_interval)) $repeat_interval = NULL;
         
         if($repeat_type == 'weekly') $interval_multiply = 7;
@@ -558,6 +578,10 @@ class MEC_feature_fes extends MEC_base
         if($repeat_type != 'certain_weekdays') $certain_weekdays = array();
         
         if(!is_null($repeat_interval)) $repeat_interval = $repeat_interval*$interval_multiply;
+        
+        // String To Array
+		if($repeat_type == 'advanced' and trim($advanced)) $advanced = explode('-', $advanced);
+        else $advanced = array();
         
         $repeat_end = ($repeat_status and isset($repeat['end'])) ? $repeat['end'] : '';
         $repeat_end_at_occurrences = ($repeat_status and isset($repeat['end_at_occurrences'])) ? ($repeat['end_at_occurrences']-1) : '';
@@ -577,6 +601,7 @@ class MEC_feature_fes extends MEC_base
         update_post_meta($post_id, 'mec_repeat_end', $repeat_end);
         update_post_meta($post_id, 'mec_repeat_end_at_occurrences', $repeat_end_at_occurrences);
         update_post_meta($post_id, 'mec_repeat_end_at_date', $repeat_end_at_date);
+        update_post_meta($post_id, 'mec_advanced_days', $advanced);
         
         // Creating $event array for inserting in mec_events table
         $event = array('post_id'=>$post_id, 'start'=>$start_date, 'repeat'=>$repeat_status, 'rinterval'=>(!in_array($repeat_type, array('daily', 'weekly')) ? NULL : $repeat_interval), 'time_start'=>$day_start_seconds, 'time_end'=>$day_end_seconds);
@@ -670,6 +695,19 @@ class MEC_feature_fes extends MEC_base
             
             $week = '*';
             $weekday = '*';
+        }
+        elseif($repeat_type == "advanced")
+        {
+            // Render class object
+            $this->render = $this->getRender();
+
+            // Get finish date
+            $event_info = array('start' => $date['start'], 'end' => $date['end']);
+            $dates = $this->render->generate_advanced_days($advanced, $event_info, $repeat_end_at_occurrences +1, date( 'Y-m-d', current_time( 'timestamp', 0 )), 'events');
+            
+            $period_date = $this->main->date_diff($start_date, end($dates)['end']['date']);
+
+            $plus_date = '+' . $period_date->days . ' Days';            
         }
 
         // "In Days" and "Not In Days"
@@ -791,6 +829,64 @@ class MEC_feature_fes extends MEC_base
         if($reg_fields_global_inheritance) $reg_fields = array();
 
         update_post_meta($post_id, 'mec_reg_fields', $reg_fields);
+
+        // Organizer Payment Options
+        $op = isset($mec['op']) ? $mec['op'] : array();
+        update_post_meta($post_id, 'mec_op', $op);
+        update_user_meta(get_post_field('post_author', $post_id), 'mec_op', $op);
+
+        if($booking_date_update)
+        {
+            $render_date = $past_start_date . ':' . $past_end_date;
+            $new_date = $start_date . ':' . $end_date;
+
+            $books_query = new WP_Query(array(
+                'post_type' => 'mec-books',
+                'nopaging' => true,
+                'post_status' => array('publish','pending','draft','future','private'),
+                'meta_query' => array(
+                    'relation' => 'AND',
+                    array(
+                        'key'     => 'mec_event_id',
+                        'value'   => $post_id.'',
+                        'type'    => 'numeric',
+                        'compare' => '='
+                    ),
+                    array(
+                        'key'     => 'mec_date',
+                        'value'   => $render_date,
+                        'compare' => '=',
+                    )
+                )
+            ));
+
+            if($books_query->have_posts())
+            {
+                $book = $this->getBook();
+
+                while($books_query->have_posts())
+                {
+                    $books_query->the_post();
+                    $booking_id = get_the_ID();
+
+                    // Update Booking
+                    update_post_meta($booking_id, 'mec_date', trim($new_date));
+                    wp_update_post(array(
+                        'ID' => $booking_id,
+                        'post_date' => $start_date
+                    ));
+
+                    // Update Transaction
+                    $transaction_id = get_post_meta($booking_id, 'mec_transaction_id', true);
+                    $transaction = $book->get_transaction($transaction_id);
+
+                    $transaction['date'] = trim($new_date);
+                    $book->update_transaction($transaction_id, $transaction);
+                }
+
+                wp_reset_postdata();
+            }
+        }
 
         $message = '';
         if($status == 'pending') $message = __('The event submitted. It will publish as soon as possible.', 'mec');

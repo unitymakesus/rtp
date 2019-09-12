@@ -40,11 +40,12 @@ FLBuilder::register_module(
 							'type'        => 'editor',
 							'label'       => '',
 							'default'     => __( 'Enter description text here.', 'uabb' ),
-							'connections' => array( 'string', 'html' ),
 							'preview'     => array(
 								'type'     => 'text',
 								'selector' => '.info-table-description',
 							),
+							'connections' => array( 'string', 'html' ),
+							'wpautop'     => false,
 						),
 						'it_link_type'     => array(
 							'type'    => 'select',

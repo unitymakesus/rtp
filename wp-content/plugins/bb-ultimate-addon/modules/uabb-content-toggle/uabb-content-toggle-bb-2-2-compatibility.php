@@ -69,6 +69,7 @@ FLBuilder::register_module(
 								'selector'  => '.uabb-rbs-toggle-sections .uabb-rbs-content-1',
 								'important' => true,
 							),
+							'wpautop'     => false,
 							'connections' => array( 'string', 'html' ),
 						),
 						'cont1_saved_rows'     => array(
@@ -149,6 +150,7 @@ FLBuilder::register_module(
 								'selector'  => '.uabb-rbs-toggle-sections .uabb-rbs-content-2',
 								'important' => true,
 							),
+							'wpautop'     => false,
 							'connections' => array( 'string', 'html' ),
 						),
 						'cont2_saved_rows'     => array(

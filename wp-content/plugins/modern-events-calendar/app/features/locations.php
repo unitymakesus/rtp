@@ -74,6 +74,7 @@ class MEC_feature_locations extends MEC_base
                     'new_item_name'=>sprintf(__('New %s Name', 'mec'), $singular_label),
                     'popular_items'=>sprintf(__('Popular %s', 'mec'), $plural_label),
                     'search_items'=>sprintf(__('Search %s', 'mec'), $plural_label),
+                    'back_to_items'=>sprintf(__('← Back to  %s', 'mec'), $plural_label),                    
                 ),
                 'rewrite'=>array('slug'=>'events-location'),
                 'public'=>false,
@@ -198,7 +199,7 @@ class MEC_feature_locations extends MEC_base
         $thumbnail = isset($_POST['thumbnail']) ? sanitize_text_field($_POST['thumbnail']) : '';
 
         // Geo Point is Empty or Address Changed
-        if(!trim($latitude) or !trim($longitude) or ($address != get_term_meta($term_id, 'address', true)))
+        if(!floatval($latitude) or !floatval($longitude) or (trim($address) and ($address != get_term_meta($term_id, 'address', true))))
         {
             $geo_point = $this->main->get_lat_lng($address);
             

@@ -1,6 +1,6 @@
 .fl-number,
 .fl-number .fl-number-circle-container{
-	margin: 0 auto; 
+	margin: 0 auto;
 }
 
 .fl-number-before-text,
@@ -9,9 +9,9 @@
 }
 .fl-number-before-text { margin-bottom: 10px; }
 .fl-number-after-text { margin-top: 10px; }
-.fl-number-string { 
-	line-height: 1; 
-	white-space: nowrap; 
+.fl-number-string {
+	line-height: 1;
+	white-space: nowrap;
 	overflow: hidden;
 }
 
@@ -23,9 +23,9 @@
 }
 
 .fl-number.fl-number-bars .fl-number-text{ text-align: left; }
-.fl-number .fl-number-bar{ 
+.fl-number .fl-number-bar{
 	text-align: right;
-	padding: 5px; 
+	padding: 5px;
 }
 
 .fl-number .fl-number-position-above .fl-number-bar {
@@ -46,6 +46,7 @@
 
 .fl-number .svg-container .svg{
 	position: absolute;
+	overflow: visible;
 	top: 0;
 	left: 0;
 	width: 100%;

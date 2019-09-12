@@ -20,7 +20,8 @@ $url    = add_query_arg( $params, 'https://www.google.com/maps/embed/v1/place' )
 if ( false !== strpos( do_shortcode( $settings->address ), 'iframe' ) ) {
 	$iframe = preg_replace( '#\s?style=\'.+\'#', '', do_shortcode( $settings->address ) );
 } else {
-	$iframe = sprintf( '<iframe src="%s"></iframe>', $url );
+	$title  = '' !== $settings->map_title_attribute ? ' title="' . $settings->map_title_attribute . '"' : '';
+	$iframe = sprintf( '<iframe src="%s" aria-hidden="true"%s></iframe>', $url, $title );
 }
 
 ?>

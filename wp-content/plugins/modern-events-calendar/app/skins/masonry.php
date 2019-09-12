@@ -16,6 +16,7 @@ class MEC_skin_masonry extends MEC_skins
     public $date_format_2 = 'F';
     public $filter_by = 'category';
     public $masonry_like_grid;
+    public $fit_to_row;
 
     /**
      * Constructor method
@@ -67,11 +68,19 @@ class MEC_skin_masonry extends MEC_skins
         // Set the ID
         if(!isset($this->atts['id'])) $this->atts['id'] = $this->id;
         
+        // Show "Load More" button or not
+        $this->load_more_button = isset($this->skin_options['load_more_button']) ? $this->skin_options['load_more_button'] : true;
+
+        // Show Masonry like grid
+        $this->masonry_like_grid = isset($this->skin_options['masonry_like_grid']) ? $this->skin_options['masonry_like_grid'] : true;
+
+        // Show "Sort by date" button or not
+        $this->fit_to_row = isset($this->skin_options['fit_to_row']) ? $this->skin_options['fit_to_row'] : true;
+
         // HTML class
         $this->html_class = '';
         if(isset($this->atts['html-class']) and trim($this->atts['html-class']) != '') $this->html_class = $this->atts['html-class'];
 
-        $this->masonry_like_grid = isset($this->skin_options['masonry_like_grid']) ? $this->skin_options['masonry_like_grid'] : 0;
 
         // SED Method
         $this->sed_method = isset($this->skin_options['sed_method']) ? $this->skin_options['sed_method'] : '0';
@@ -152,9 +161,6 @@ class MEC_skin_masonry extends MEC_skins
         // Apply Maximum Date
         if($this->request->getVar('apply_sf_date', 0) == 1 and isset($this->sf) and isset($this->sf['month']) and trim($this->sf['month'])) $this->maximum_date = date('Y-m-t', strtotime($this->start_date));
         
-        // Maximum days for loop
-        $this->max_days_loop = 732; // 2 years
-        
         // Found Events
         $this->found = 0;
     }
@@ -192,6 +198,41 @@ class MEC_skin_masonry extends MEC_skins
         return $date;
     }
 
+    /**
+     * Load more events for AJAX requert
+     * @author Webnus <info@webnus.biz>
+     * @return void
+     */
+    public function load_more()
+    {
+        $this->sf = $this->request->getVar('sf', array());
+        $apply_sf_date = $this->request->getVar('apply_sf_date', 1);
+        $atts = $this->sf_apply($this->request->getVar('atts', array()), $this->sf, $apply_sf_date);
+        
+        // Initialize the skin
+        $this->initialize($atts);
+        
+        // Override variables
+        $this->start_date = $this->request->getVar('mec_start_date', date('y-m-d'));
+        $this->end_date = $this->start_date;
+        $this->offset = $this->request->getVar('mec_offset', 0);
+		
+        // Apply Maximum Date
+        if($apply_sf_date == 1 and isset($this->sf) and isset($this->sf['month']) and trim($this->sf['month'])) $this->maximum_date = date('Y-m-t', strtotime($this->start_date));
+        
+        // Return the events
+        $this->atts['return_items'] = true;
+        
+        // Fetch the events
+        $this->fetch();
+        
+        // Return the output
+        $output = $this->output();
+        
+        echo json_encode($output);
+        exit;
+    }
+
     public function filter_by()
     {
         $output = '<div class="mec-events-masonry-cats"><a href="#" class="mec-masonry-cat-selected" data-filter="*">'.__('All', 'mec').'</a>';
@@ -203,7 +244,7 @@ class MEC_skin_masonry extends MEC_skins
             'include' => ((isset($this->atts[$this->filter_by]) and trim($this->atts[$this->filter_by])) ? $this->atts[$this->filter_by] : ''),
         ));
 
-        foreach($terms as $term) $output .= '<a href="#" data-group="'.$term->term_id.'">'.$term->name.'</a>';
+        foreach($terms as $term) $output .= '<a href="#" data-filter=".mec-t'.$term->term_id.'">'.$term->name.'</a>';
 
         $output .= '</div>';
         return $output;

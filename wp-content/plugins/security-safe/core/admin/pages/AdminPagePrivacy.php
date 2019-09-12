@@ -114,7 +114,7 @@ class AdminPagePrivacy extends AdminPage {
                 __( 'Website Information', SECSAFE_SLUG ), 
                 'http_headers_useragent', 
                 __( 'Make Website Anonymous', SECSAFE_SLUG ), 
-                __( 'When checking for updates, WordPress gets access to your current version and your website URL. The default info looks like this: "WordPress/X.X; http://www.example.com" This feature removes your URL address from the information sent.', SECSAFE_SLUG ), 
+                __( 'When checking for updates, WordPress gets access to your current version and your website URL. The default info looks like this: "WordPress/X.X; https://www.your-website.com" This feature removes your URL address from the information sent.', SECSAFE_SLUG ), 
                 $classes, 
                 false );
         

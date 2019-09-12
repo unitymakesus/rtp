@@ -37,12 +37,12 @@ class AdminPageFirewall extends AdminPage {
 
         $this->tabs[] = [
             'id'                => 'blocked',
-            'label'             => __( 'Blocked', SECSAFE_SLUG ),
-            'title'             => __( 'Blocked Access', SECSAFE_SLUG ),
+            'label'             => __( 'Threats', SECSAFE_SLUG ),
+            'title'             => __( 'Detected Threats', SECSAFE_SLUG ),
             'heading'           => false,
             'intro'             => false,
             'classes'           => [ 'full' ],
-            'content_callback'  => 'tab_blocked',
+            'content_callback'  => 'tab_threats',
         ];
 
         $this->tabs[] = [
@@ -92,7 +92,7 @@ class AdminPageFirewall extends AdminPage {
             $rows = $this->form_checkbox( 
                 $this->settings, 
                 __( '5-min Login Block', SECSAFE_SLUG ), 
-                __( 'block_login_5min', SECSAFE_SLUG ), 
+                'block_login_5min', 
                 __( '5 Failed Login Attempts', SECSAFE_SLUG ), 
                 __( 'The firewall blocks the IP address after 5 failed login attempts within the past 2 minute.', SECSAFE_SLUG ), 
                 $classes, 
@@ -115,7 +115,7 @@ class AdminPageFirewall extends AdminPage {
 
             $rows .= $this->form_checkbox( 
                 $this->settings, 
-                __('30-day', SECSAFE_SLUG ), 
+                __( '30-day', SECSAFE_SLUG ), 
                 'block_login_30day', 
                 __( 'The third 24-hr Block', SECSAFE_SLUG ), 
                 __( 'The third 24-hr login block within the past 3 days becomes a 30-day block.', SECSAFE_SLUG ), 
@@ -155,10 +155,10 @@ class AdminPageFirewall extends AdminPage {
 
 
     /**
-     * This tab displays the 404 error log.
-     * @since  2.0.0
+     * This tab displays threats and blocks.
+     * @since  2.2.0
      */ 
-    function tab_blocked() {
+    function tab_threats() {
 
         require_once( SECSAFE_DIR_ADMIN_TABLES . '/TableBlocked.php' );
 
@@ -167,12 +167,12 @@ class AdminPageFirewall extends AdminPage {
         $table = new TableBlocked();
         $table->prepare_items();
         $table->display_charts();
-        $table->search_box( __( 'Search blocks', SECSAFE_SLUG ), 'log' );
+        $table->search_box( __( 'Search threats', SECSAFE_SLUG ), 'log' );
         $table->display();
 
         return ob_get_clean();
 
-    } // tab_blocked()
+    } // tab_threats()
 
 
 } // AdminPageFirewall()

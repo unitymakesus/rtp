@@ -6187,6 +6187,10 @@
 		{
 			var form = $('.fl-builder-settings').last();
 
+			if ( ! messages ) {
+				messages = {}
+			}
+
 			form.validate({
 				ignore: '.fl-ignore-validation',
 				rules: rules,
@@ -9313,19 +9317,14 @@
 			})
 			.always( FLBuilder._ajaxComplete )
 			.fail( function( xhr, status, error ){
+				msg = false;
 				switch(xhr.status) {
-					case 0:
-						msg = false
-					break;
 					case 403:
 					case 409:
 						msg  = 'Something you entered has triggered a ' + xhr.status + ' error.<br /><br />This is nearly always due to mod_security settings from your hosting provider.'
 						if ( ! window.crash_vars.white_label ) {
 							msg += '<br /><br />See this <a target="_blank" style="color: #428bca;font-size:inherit" href="https://kb.wpbeaverbuilder.com/article/40-403-forbidden-or-blocked-error">Knowledge Base</a> article for more info.</br />'
 						}
-					break;
-					default:
-						msg  = 'Error ' + xhr.status + ' while trying to save.<br /><br />Check error logs for more information.'
 					break;
 				}
 				if ( msg ) {

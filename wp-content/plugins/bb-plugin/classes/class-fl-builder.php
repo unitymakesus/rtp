@@ -485,7 +485,7 @@ final class FLBuilder {
 					wp_enqueue_script( 'imagesloaded' );
 					if ( 'video_service' == $row->settings->bg_video_source ) {
 
-						$video_data = FLBuilderUtils::get_video_data( $row->settings->bg_video_service_url );
+						$video_data = FLBuilderUtils::get_video_data( do_shortcode( $row->settings->bg_video_service_url ) );
 
 						if ( 'youtube' == $video_data['type'] ) {
 							wp_enqueue_script( 'youtube-player' );
@@ -2004,6 +2004,10 @@ final class FLBuilder {
 			if ( isset( $row->settings->content_alignment ) ) {
 				$attrs['class'][] = 'fl-row-align-' . $row->settings->content_alignment;
 			}
+
+			if ( isset( $row->settings->margin_top ) && (int) $row->settings->margin_top < 0 ) {
+				$attrs['class'][] = 'fl-row-overlap-top';
+			}
 		}
 		if ( ! empty( $row->settings->full_height ) && 'custom' == $row->settings->full_height ) {
 
@@ -2011,6 +2015,10 @@ final class FLBuilder {
 
 			if ( isset( $row->settings->content_alignment ) ) {
 				$attrs['class'][] = 'fl-row-align-' . $row->settings->content_alignment;
+			}
+
+			if ( isset( $row->settings->margin_top ) && (int) $row->settings->margin_top < 0 ) {
+				$attrs['class'][] = 'fl-row-overlap-top';
 			}
 		}
 		if ( in_array( $row->settings->bg_type, $overlay_bgs ) ) {
@@ -2223,13 +2231,13 @@ final class FLBuilder {
 		 * @see fl_builder_column_custom_class
 		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
 		 */
-		$custom_class = apply_filters( 'fl_builder_column_custom_class', $col->settings->class, $col );
-		$overlay_bgs  = array( 'photo' );
-		$nested       = FLBuilderModel::get_nodes( 'column-group', $col );
-		$active       = FLBuilderModel::is_builder_active();
-		$visible      = FLBuilderModel::is_node_visible( $col );
-		$has_rules    = FLBuilderModel::node_has_visibility_rules( $col );
-		$attrs        = array(
+		$custom_class    = apply_filters( 'fl_builder_column_custom_class', $col->settings->class, $col );
+		$overlay_bgs     = array( 'photo' );
+		$nested          = FLBuilderModel::get_nodes( 'column-group', $col );
+		$active          = FLBuilderModel::is_builder_active();
+		$visible         = FLBuilderModel::is_node_visible( $col );
+		$has_rules       = FLBuilderModel::node_has_visibility_rules( $col );
+		$attrs           = array(
 			'id'        => $col->settings->id,
 			'class'     => array(
 				'fl-col',
@@ -2238,10 +2246,15 @@ final class FLBuilder {
 			'data-node' => $col->node,
 			'style'     => array(),
 		);
+		$global_settings = FLBuilderModel::get_global_settings();
 
 		// Classes
 		if ( $col->settings->size <= 50 ) {
 			$attrs['class'][] = 'fl-col-small';
+
+			if ( $global_settings->responsive_enabled && ! $global_settings->responsive_col_max_width ) {
+				$attrs['class'][] = 'fl-col-small-full-width';
+			}
 		}
 		if ( count( $nested ) > 0 ) {
 			$attrs['class'][] = 'fl-col-has-cols';

@@ -3,7 +3,7 @@
 defined('MECEXEC') or die();
 ?>
 
-<div class="wns-be-container">
+<div class="wns-be-container wns-be-container-sticky">
 
     <div id="wns-be-infobar"></div>
 
@@ -37,7 +37,7 @@ defined('MECEXEC') or die();
                     </a>
                 </li>
 
-            <?php endif;?>
+            <?php endif; ?>
 
             <li class="wns-be-group-menu-li">
                 <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-notifications'); ?>" id="" class="wns-be-group-tab-link-a">
@@ -123,7 +123,7 @@ defined('MECEXEC') or die();
                                         <?php endif; ?>
                                         <div class="w-button">
                                             <?php if(!$this->getPRO()): ?>
-                                                <a href="https://webnus.net/pricing/#plugins" target="_blank"><?php echo esc_html__('GO PREMIUM', 'mec'); ?></a>
+                                                <a href="https://webnus.net/mec-purchase/" target="_blank"><?php echo esc_html__('GO PREMIUM', 'mec'); ?></a>
                                             <?php else: ?>
                                                 <a href="https://webnus.ticksy.com/" target="_blank"><?php echo esc_html__('OPEN A TICKET', 'mec'); ?></a>
                                             <?php endif; ?>

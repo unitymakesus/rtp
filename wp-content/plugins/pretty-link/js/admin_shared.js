@@ -15,10 +15,5 @@ jQuery(document).ready(function($) {
       }
     });
   }
-
-  // Remove Status from Link quick edit
-  if (window.pagenow === 'edit-pretty-link' && $('#bulk-edit').length) {
-    $('#bulk-edit').find('select[name="_status"]').closest('.inline-edit-col').remove();
-  }
 });
 

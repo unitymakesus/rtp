@@ -42,8 +42,8 @@ final class TableAllowDeny extends Table {
             'date'          => __( 'Date Added', SECSAFE_SLUG ),
             'date_expire'   => __( 'Expires', SECSAFE_SLUG ),
             'ip'            => __( 'IP Address', SECSAFE_SLUG ),
-            'status'        => __( 'Status', SECSAFE_SLUG ),
-            'details'       => __( 'Details', SECSAFE_SLUG )
+            'status'        => __( 'Rule', SECSAFE_SLUG ),
+            'details'       => __( 'Notes', SECSAFE_SLUG )
         ];
 
     } // get_columns()
@@ -95,7 +95,26 @@ final class TableAllowDeny extends Table {
      */ 
     protected function add_ip_form() {
 
-        echo '<p class="add_ip_form"><input name="ip" type="text" value="" placeholder="' . __( 'IP Address', SECSAFE_SLUG ) . '"><select name="ip_rule"><option value="">- ' . __( 'Rule', SECSAFE_SLUG ) . ' -</option><option value="allow">' . __( 'allow', SECSAFE_SLUG ) . '</option><option value="deny">' . __( 'deny', SECSAFE_SLUG ) . '</option></select><select name="ip_expire"><option value="">- ' . __( 'Expires', SECSAFE_SLUG ) . ' -</option><option value="1">1 ' . __( 'day', SECSAFE_SLUG ) . '</option><option value="3">3 ' . __( 'days', SECSAFE_SLUG ) . '</option><option value="7">7 ' . __( 'days', SECSAFE_SLUG ) . '</option><option value="30">1 ' . __( 'month', SECSAFE_SLUG ) . '</option><option value="90">3 ' . __( 'months', SECSAFE_SLUG ) . '</option><option value="180">6 ' . __( 'months', SECSAFE_SLUG ) . '</option><option value="999">' . __( 'never', SECSAFE_SLUG ) . '</option></select><input type="submit" name="ip_submit" class="button" value="' . __( 'Add IP', SECSAFE_SLUG ) . '" /></p>';
+        echo '<p class="add_ip_form">' . 
+        '<input name="ip" type="text" value="" placeholder="' . __( 'IP Address', SECSAFE_SLUG ) . '">' . 
+        '<select name="ip_rule">' . 
+            '<option value="">- ' .     __( 'Rule', SECSAFE_SLUG )          . ' -</option>' . 
+            '<option value="allow">' .  __( 'allow', SECSAFE_SLUG )         . '</option>' . 
+            '<option value="deny">' .   __( 'deny', SECSAFE_SLUG )          . '</option>' . 
+        '</select>' . 
+        '<select name="ip_expire">' . 
+            '<option value="">- ' .     __( 'Timespan', SECSAFE_SLUG )       . ' -</option>' . 
+            '<option value="1">1 ' .    __( 'day', SECSAFE_SLUG )           . '</option>' . 
+            '<option value="3">3 ' .    __( 'days', SECSAFE_SLUG )          . '</option>' . 
+            '<option value="7">7 ' .    __( 'days', SECSAFE_SLUG )          . '</option>' . 
+            '<option value="30">1 ' .   __( 'month', SECSAFE_SLUG )         . '</option>' . 
+            '<option value="90">3 ' .   __( 'months', SECSAFE_SLUG )        . '</option>' . 
+            '<option value="180">6 ' .  __( 'months', SECSAFE_SLUG )        . '</option>' . 
+            '<option value="999">' .    __( 'forever', SECSAFE_SLUG )       . '</option>' . 
+        '</select>' . 
+        '<input name="ip_details" type="text" value="" placeholder="' . __( 'Notes', SECSAFE_SLUG ) . '">' . 
+        '<input type="submit" name="ip_submit" class="button" value="' . __( 'Add IP', SECSAFE_SLUG ) . '" />' . 
+        '</p>';
 
     } // add_ip_form()
 
@@ -105,9 +124,13 @@ final class TableAllowDeny extends Table {
      */ 
     function add_ip() {
 
-        global $wpdb, $SecuritySafe;
+        global $SecuritySafe;
 
-        if ( isset( $_REQUEST['ip'] ) && isset( $_REQUEST['ip_rule'] ) && isset( $_REQUEST['ip_expire'] ) ){
+        if ( 
+            isset( $_REQUEST['ip'] ) && 
+            isset( $_REQUEST['ip_rule'] ) && 
+            isset( $_REQUEST['ip_expire'] ) 
+        ){
 
             $ip = filter_var( $_REQUEST['ip'], FILTER_VALIDATE_IP );
             $expire = filter_var( $_REQUEST['ip_expire'], FILTER_VALIDATE_INT );
@@ -116,33 +139,47 @@ final class TableAllowDeny extends Table {
 
                 // Valid IP Address
                 
-                $args = array();
+                $args = [];
                 $args['date_expire'] = ( $expire == '999' ) ? '0000-00-00 00:00:00' : date( 'Y-m-d H:i:s', strtotime( "+". abs( $expire ) . " day" ) );
-                $args['date'] = current_time('mysql');
                 $args['ip'] = $ip;
                 $args['status'] = ( $_REQUEST['ip_rule'] == 'deny' ) ? 'deny' : 'allow';
+                $args['details'] = ( isset( $_REQUEST['ip_details'] ) ) ? filter_var( $_REQUEST['ip_details'], FILTER_SANITIZE_STRING ) : '';
                 $args['type'] = $type = 'allow_deny'; // Sanitized
-                $table_main = Yoda::get_table_main(); // Sanitized
 
                 $result = $this->is_ip_whitelisted( $ip );
 
                 if ( $result ) {
 
-                    $SecuritySafe->messages[] = [ __( 'IP address is already in the database.', SECSAFE_SLUG ), 2, 0 ];
+                    $SecuritySafe->messages[] = [ sprintf( __( 'Notice: %1$s -  IP address is already in the database.', SECSAFE_SLUG ), $ip ), 2, 0 ];
 
                 } else {
 
-                    // Add data to DB and insert() is sanitized by WP
-                    $wpdb->insert( $table_main, $args );
+                    $result = Janitor::add_entry( $args );
 
-                    $SecuritySafe->messages[] = [ $ip . ' - ' . __( 'IP address added with ' . $args['status'] . ' rule.', SECSAFE_SLUG ), 0, 0 ];
+                    if ( $result ) {
+
+                        $SecuritySafe->messages[] = [ sprintf( __( '%1$s - IP address added with %2$s rule.', SECSAFE_SLUG ), $ip, $args['status'] ), 0, 0 ];
+                    
+                    } else {
+
+                        $SecuritySafe->messages[] = [ sprintf( __( 'Error: %1$s - IP address could not be added. Unknown reason.', SECSAFE_SLUG ), $ip ), 3, 0 ];
+                    
+                    }
 
                 }
 
             } else {
 
-                $SecuritySafe->messages[] = [ __( 'IP address or expiration not valid.', SECSAFE_SLUG ), 3, 0 ];
+                if ( ! $ip ) {
 
+                    $SecuritySafe->messages[] = [ sprintf( __( 'Error: %s - IP address not valid.', SECSAFE_SLUG ), esc_html( $_REQUEST['ip'] ) ), 3, 0 ];
+
+                } else {
+
+                    $SecuritySafe->messages[] = [ sprintf( __( 'Error: %s - Timespan not valid.', SECSAFE_SLUG ), esc_html( $_REQUEST['ip_expire'] ) ), 3, 0 ];
+
+                }
+                
             }
 
         } else {
@@ -151,11 +188,11 @@ final class TableAllowDeny extends Table {
 
                 if ( !isset( $_REQUEST['ip_rule'] ) ) {
 
-                    $SecuritySafe->messages[] = [ __( 'IP Addition failed. Rule not provided.', SECSAFE_SLUG ), 3, 0 ];
+                    $SecuritySafe->messages[] = [ __( 'Error: IP Addition failed. Rule not provided.', SECSAFE_SLUG ), 3, 0 ];
 
                 } else if ( !isset( $_REQUEST['ip_expire'] ) ) {
 
-                    $SecuritySafe->messages[] = [ __( 'IP Addition failed. Expiration not provided.', SECSAFE_SLUG ), 3, 0 ];
+                    $SecuritySafe->messages[] = [ __( 'Error: IP Addition failed. Timespan not provided.', SECSAFE_SLUG ), 3, 0 ];
 
                 }
 
@@ -197,7 +234,7 @@ final class TableAllowDeny extends Table {
 
             if ( ! $whitelisted ) {
 
-                $SecuritySafe->messages[] = [ __('Your IP', SECSAFE_SLUG ) . ': ' . $ip . ' - ' . __( 'We recommend adding your IP to the whitelist using the form below.', SECSAFE_SLUG ), 2, 0 ];
+                $SecuritySafe->messages[] = [ sprintf( __( '%s We recommend adding your IP to the whitelist using the form below.', SECSAFE_SLUG ), $ip ), 2, 0 ];
 
                 // Display Messages
                 $SecuritySafe->display_notices();

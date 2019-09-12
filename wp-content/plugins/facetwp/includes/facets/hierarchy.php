@@ -20,7 +20,7 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
         $selected_values = (array) $params['selected_values'];
         $facet_parent_id = 0;
-        $output = array();
+        $output = [];
 
         // Orderby
         $orderby = $this->get_orderby( $facet );
@@ -42,7 +42,7 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
             // Invalid term
             if ( $facet_parent_id < 1 ) {
-                return array();
+                return [];
             }
 
             // Create term lookup array
@@ -52,22 +52,22 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
             // Loop backwards
             for ( $i = 0; $i <= $max_depth; $i++ ) {
-                $output[] = array(
+                $output[] = [
                     'facet_value'           => $depths[ $last_parent_id ]['slug'],
                     'facet_display_value'   => $depths[ $last_parent_id ]['name'],
                     'depth'                 => $depths[ $last_parent_id ]['depth'] + 1,
                     'counter'               => 1, // FWP.settings.num_choices
-                );
+                ];
 
                 $last_parent_id = (int) $depths[ $last_parent_id ]['parent_id'];
             }
 
-            $output[] = array(
+            $output[] = [
                 'facet_value'           => '',
-                'facet_display_value'   => __( 'Any', 'fwp' ),
+                'facet_display_value'   => __( 'Any', 'fwp-front' ),
                 'depth'                 => 0,
                 'counter'               => 1,
-            );
+            ];
 
             // Reverse it
             $output = array_reverse( $output );
@@ -148,8 +148,8 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
             if ( $num_visible < $num ) {
                 $output .= '</div>';
-                $output .= '<a class="facetwp-toggle">' . __( 'See more', 'fwp' ) . '</a>';
-                $output .= '<a class="facetwp-toggle facetwp-hidden">' . __( 'See less', 'fwp' ) . '</a>';
+                $output .= '<a class="facetwp-toggle">' . __( 'See more', 'fwp-front' ) . '</a>';
+                $output .= '<a class="facetwp-toggle facetwp-hidden">' . __( 'See less', 'fwp-front' ) . '</a>';
             }
 
             for ( $i = 0; $i <= $last_depth; $i++ ) {
@@ -179,56 +179,31 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
 
     /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/hierarchy', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-orderby').val(obj.orderby);
-        $this.find('.facet-count').val(obj.count);
-    });
-
-    wp.hooks.addFilter('facetwp/save/hierarchy', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['orderby'] = $this.find('.facet-orderby').val();
-        obj['count'] = $this.find('.facet-count').val();
-        return obj;
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
      * Output admin settings HTML
      */
     function settings_html() {
 ?>
-        <tr>
-            <td><?php _e( 'Sort by', 'fwp' ); ?>:</td>
-            <td>
+        <div class="facetwp-row">
+            <div><?php _e( 'Sort by', 'fwp' ); ?>:</div>
+            <div>
                 <select class="facet-orderby">
                     <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
                     <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
                     <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
                     <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
+            </div>
+        </div>
+        <div class="facetwp-row">
+            <div>
                 <?php _e( 'Count', 'fwp' ); ?>:
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content"><?php _e( 'The maximum number of facet choices to show', 'fwp' ); ?></div>
                 </div>
-            </td>
-            <td><input type="text" class="facet-count" value="10" /></td>
-        </tr>
+            </div>
+            <div><input type="text" class="facet-count" value="10" /></div>
+        </div>
 <?php
     }
 }

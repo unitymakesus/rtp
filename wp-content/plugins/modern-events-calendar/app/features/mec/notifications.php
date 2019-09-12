@@ -5,136 +5,13 @@ defined('MECEXEC') or die();
 $notifications = $this->main->get_notifications();
 ?>
 
-<div class="wns-be-container">
+<div class="wns-be-container wns-be-container-sticky">
     <div id="wns-be-infobar">
         <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
     </div>
 
     <div class="wns-be-sidebar">
-
-        <ul class="wns-be-group-menu">
-
-            <li class="wns-be-group-menu-li has-sub">
-                <a href="<?php echo $this->main->remove_qs_var('tab'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <span class="extra-icon">
-                        <i class="sl-arrow-down"></i>
-                    </span>
-                    <i class="mec-sl-settings"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Settings', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <?php if($this->main->getPRO() and isset($this->settings['booking_status']) and $this->settings['booking_status']): ?>
-
-                <li class="wns-be-group-menu-li">
-                    <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-reg-form'); ?>" id="" class="wns-be-group-tab-link-a">
-                        <i class="mec-sl-layers"></i> 
-                        <span class="wns-be-group-menu-title"><?php _e('Booking Form', 'mec'); ?></span>
-                    </a>
-                </li>            
-
-                <li class="wns-be-group-menu-li">
-                    <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-gateways'); ?>" id="" class="wns-be-group-tab-link-a">
-                        <i class="mec-sl-wallet"></i> 
-                        <span class="wns-be-group-menu-title"><?php _e('Payment Gateways', 'mec'); ?></span>
-                    </a>
-                </li>
-                
-            <?php endif;?>
-
-            <li class="wns-be-group-menu-li active">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-notifications'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <span class="extra-icon">
-                        <i class="mec-sl-arrow-down"></i>
-                    </span>                
-                    <i class="mec-sl-envelope"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Notifications', 'mec'); ?></span>
-                </a>
-
-                <ul id="" class="subsection" style="display: block;">
-                    <?php if($this->main->getPRO() and isset($this->settings['booking_status']) and $this->settings['booking_status']): ?>
-                    <li id="" class="pr-be-group-menu-li active">
-                        <a data-id= "booking_notification" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('Booking Notification', 'mec'); ?></span>
-                        </a>
-                    </li>
-
-                    <li id="" class="pr-be-group-menu-li">
-                        <a data-id= "booking_verification" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('Booking Verification', 'mec'); ?></span>
-                        </a>
-                    </li>
-
-                    <li id="" class="pr-be-group-menu-li">
-                        <a data-id= "booking_confirmation" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('Booking Confirmation', 'mec'); ?></span>
-                        </a>
-                    </li>
-
-                    <li id="" class="pr-be-group-menu-li">
-                        <a data-id= "cancellation_notification" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('Booking Cancellation', 'mec'); ?></span>
-                        </a>
-                    </li>
-
-                    <li id="" class="pr-be-group-menu-li">
-                        <a data-id= "admin_notification" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('Admin Notification', 'mec'); ?></span>
-                        </a>
-                    </li>
-
-                    <li id="" class="pr-be-group-menu-li">
-                        <a data-id= "booking_reminder" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('Booking Reminder', 'mec'); ?></span>
-                        </a>
-                    </li>
-                    <?php endif;?>
-                    <li id="" class="pr-be-group-menu-li <?php if($this->settings['booking_status'] == 0) echo 'active'; ?>">
-                        <a data-id= "new_event" class="wns-be-group-tab-link-a WnTabLinks">
-                            <span class="pr-be-group-menu-title"><?php _e('New Event', 'mec'); ?></span>
-                        </a>
-                    </li>               
-
-                </ul>
-                
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-styling'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-equalizer"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Styling Options', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-customcss'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-wrench"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Custom CSS', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-messages'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-bubble"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Messages', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-ie'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-refresh"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Import / Export', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <!-- <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-support'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-support"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Support', 'mec'); ?></span>
-                </a>
-            </li> -->
-
-        </ul>
+        <?php $this->main->get_sidebar_menu('notifications'); ?>
     </div>
 
 
@@ -151,7 +28,7 @@ $notifications = $this->main->get_notifications();
 
                         <div id="booking_notification" class="mec-options-fields active">
 
-                            <h4 class="mec-form-subtitle"><?php _e('Booking Notification', 'mec'); ?></h4>
+                            <h4 class="mec-form-subtitle"><?php _e('Booking', 'mec'); ?></h4>
                             <div class="mec-form-row">
                                 <label>
                                     <input type="hidden" name="mec[notifications][booking_notification][status]" value="0" />
@@ -196,6 +73,7 @@ $notifications = $this->main->get_notifications();
                                     <li><span>%%blog_description%%</span>: <?php _e('Your website description', 'mec'); ?></li>
                                     <li><span>%%event_title%%</span>: <?php _e('Event title', 'mec'); ?></li>
                                     <li><span>%%event_link%%</span>: <?php _e('Event link', 'mec'); ?></li>
+                                    <li><span>%%event_speaker_name%%</span>: <?php _e('Speaker name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_name%%</span>: <?php _e('Organizer name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_tel%%</span>: <?php _e('Organizer tel of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_email%%</span>: <?php _e('Organizer email of booked event', 'mec'); ?></li>
@@ -211,8 +89,6 @@ $notifications = $this->main->get_notifications();
                                 </ul>
                             </div>
                         </div>
-
-
 
                         <div id="booking_verification" class="mec-options-fields">
 
@@ -250,6 +126,7 @@ $notifications = $this->main->get_notifications();
                                 <li><span>%%blog_description%%</span>: <?php _e('Your website description', 'mec'); ?></li>
                                 <li><span>%%event_title%%</span>: <?php _e('Event title', 'mec'); ?></li>
                                 <li><span>%%event_link%%</span>: <?php _e('Event link', 'mec'); ?></li>
+                                <li><span>%%event_speaker_name%%</span>: <?php _e('Speaker name of booked event', 'mec'); ?></li>
                                 <li><span>%%event_organizer_name%%</span>: <?php _e('Organizer name of booked event', 'mec'); ?></li>
                                 <li><span>%%event_organizer_tel%%</span>: <?php _e('Organizer tel of booked event', 'mec'); ?></li>
                                 <li><span>%%event_organizer_email%%</span>: <?php _e('Organizer email of booked event', 'mec'); ?></li>
@@ -264,7 +141,6 @@ $notifications = $this->main->get_notifications();
                             </ul>
 
                         </div>
-
 
                         <div id="booking_confirmation" class="mec-options-fields">
 
@@ -283,7 +159,7 @@ $notifications = $this->main->get_notifications();
                                         <div class="content"><p><?php esc_attr_e('Insert comma separated emails for multiple recipients.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/notifications/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                     </div>
                                     <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                </span>                                             
+                                </span>
                             </div>
                             <div class="mec-form-row">
                                 <label for="mec_notifications_booking_confirmation_content"><?php _e('Email Content', 'mec'); ?></label>
@@ -302,6 +178,7 @@ $notifications = $this->main->get_notifications();
                                 <li><span>%%blog_description%%</span>: <?php _e('Your website description', 'mec'); ?></li>
                                 <li><span>%%event_title%%</span>: <?php _e('Event title', 'mec'); ?></li>
                                 <li><span>%%event_link%%</span>: <?php _e('Event link', 'mec'); ?></li>
+                                <li><span>%%event_speaker_name%%</span>: <?php _e('Speaker name of booked event', 'mec'); ?></li>
                                 <li><span>%%event_organizer_name%%</span>: <?php _e('Organizer name of booked event', 'mec'); ?></li>
                                 <li><span>%%event_organizer_tel%%</span>: <?php _e('Organizer tel of booked event', 'mec'); ?></li>
                                 <li><span>%%event_organizer_email%%</span>: <?php _e('Organizer email of booked event', 'mec'); ?></li>
@@ -318,7 +195,6 @@ $notifications = $this->main->get_notifications();
 
                         </div>
 
-                        
                         <div id="cancellation_notification" class="mec-options-fields">
                             <h4 class="mec-form-subtitle"><?php _e('Booking Cancellation', 'mec'); ?></h4>
                             <div class="mec-form-row">
@@ -342,7 +218,7 @@ $notifications = $this->main->get_notifications();
                                             <div class="content"><p><?php esc_attr_e('Insert comma separated emails for multiple recipients.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/notifications/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                         </div>
                                         <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                    </span>                                             
+                                    </span>
                                 </div>
                                 <div class="mec-form-row">
                                     <input type="checkbox" name="mec[notifications][cancellation_notification][send_to_admin]" value="1" id="mec_notifications_cancellation_notification_send_to_admin" <?php echo ((!isset($notifications['cancellation_notification']['send_to_admin']) or $notifications['cancellation_notification']['send_to_admin'] == 1) ? 'checked="checked"' : ''); ?> />
@@ -373,6 +249,7 @@ $notifications = $this->main->get_notifications();
                                     <li><span>%%blog_description%%</span>: <?php _e('Your website description', 'mec'); ?></li>
                                     <li><span>%%event_title%%</span>: <?php _e('Event title', 'mec'); ?></li>
                                     <li><span>%%event_link%%</span>: <?php _e('Event link', 'mec'); ?></li>
+                                    <li><span>%%event_speaker_name%%</span>: <?php _e('Speaker name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_name%%</span>: <?php _e('Organizer name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_tel%%</span>: <?php _e('Organizer tel of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_email%%</span>: <?php _e('Organizer email of booked event', 'mec'); ?></li>
@@ -387,7 +264,7 @@ $notifications = $this->main->get_notifications();
 
                         <div id="admin_notification" class="mec-options-fields">
 
-                            <h4 class="mec-form-subtitle"><?php _e('Admin Notification', 'mec'); ?></h4>
+                            <h4 class="mec-form-subtitle"><?php _e('Admin', 'mec'); ?></h4>
                             <div class="mec-form-row">
                                 <label>
                                     <input type="hidden" name="mec[notifications][admin_notification][status]" value="0" />
@@ -409,7 +286,7 @@ $notifications = $this->main->get_notifications();
                                             <div class="content"><p><?php esc_attr_e('Insert comma separated emails for multiple recipients.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/notifications/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                         </div>
                                         <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                    </span>                                             
+                                    </span>
                                 </div>
                                 <div class="mec-form-row">
                                     <input type="checkbox" name="mec[notifications][admin_notification][send_to_organizer]" value="1" id="mec_notifications_admin_notification_send_to_organizer" <?php echo ((isset($notifications['admin_notification']['send_to_organizer']) and $notifications['admin_notification']['send_to_organizer'] == 1) ? 'checked="checked"' : ''); ?> />
@@ -432,6 +309,7 @@ $notifications = $this->main->get_notifications();
                                     <li><span>%%blog_description%%</span>: <?php _e('Your website description', 'mec'); ?></li>
                                     <li><span>%%event_title%%</span>: <?php _e('Event title', 'mec'); ?></li>
                                     <li><span>%%event_link%%</span>: <?php _e('Event link', 'mec'); ?></li>
+                                    <li><span>%%event_speaker_name%%</span>: <?php _e('Speaker name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_name%%</span>: <?php _e('Organizer name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_tel%%</span>: <?php _e('Organizer tel of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_email%%</span>: <?php _e('Organizer email of booked event', 'mec'); ?></li>
@@ -443,7 +321,6 @@ $notifications = $this->main->get_notifications();
                                 </ul>
                             </div>
                         </div>
-
 
                         <div id="booking_reminder" class="mec-options-fields">
 
@@ -472,7 +349,7 @@ $notifications = $this->main->get_notifications();
                                             <div class="content"><p><?php esc_attr_e('Insert comma separated emails for multiple recipients.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/notifications/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                         </div>
                                         <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                    </span>                                                 
+                                    </span>
                                 </div>
                                 <div class="mec-form-row">
                                     <label for="mec_notifications_booking_reminder_days"><?php _e('Days', 'mec'); ?></label>
@@ -483,7 +360,7 @@ $notifications = $this->main->get_notifications();
                                             <div class="content"><p><?php esc_attr_e('Insert comma separated emails for multiple recipients.', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/notifications/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                         </div>
                                         <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                    </span>                                                 
+                                    </span>
                                 </div>
                                 <div class="mec-form-row">
                                     <label for="mec_notifications_booking_reminder_content"><?php _e('Email Content', 'mec'); ?></label>
@@ -502,6 +379,7 @@ $notifications = $this->main->get_notifications();
                                     <li><span>%%blog_description%%</span>: <?php _e('Your website description', 'mec'); ?></li>
                                     <li><span>%%event_title%%</span>: <?php _e('Event title', 'mec'); ?></li>
                                     <li><span>%%event_link%%</span>: <?php _e('Event link', 'mec'); ?></li>
+                                    <li><span>%%event_speaker_name%%</span>: <?php _e('Speaker name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_name%%</span>: <?php _e('Organizer name of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_tel%%</span>: <?php _e('Organizer tel of booked event', 'mec'); ?></li>
                                     <li><span>%%event_organizer_email%%</span>: <?php _e('Organizer email of booked event', 'mec'); ?></li>
@@ -621,9 +499,6 @@ jQuery("#mec_notifications_form").on('submit', function(event)
 });
 </script>
 
-
-
-
 <script type="text/javascript">
 jQuery(document).ready(function()
 {   
@@ -642,6 +517,8 @@ jQuery(document).ready(function()
                 scrollTop: jQuery("#"+ContentId+"").offset().top - 140
             }, 300);
         });
+        var hash = window.location.hash.replace('#', '');
+        jQuery('[data-id="'+hash+'"]').trigger('click');
     });
    
     jQuery(".wns-be-sidebar .pr-be-group-menu-li").on('click', function(event)
@@ -650,8 +527,6 @@ jQuery(document).ready(function()
         jQuery(this).addClass('active');
     });
 });
-
-
 
 jQuery("#mec_notifications_form").on('submit', function(event)
 {
@@ -664,7 +539,7 @@ jQuery("#mec_notifications_form").on('submit', function(event)
     if(jQuery(".mec-purchase-verify").text() != '<?php echo esc_js(esc_attr__('Verified', 'mec')); ?>')
     {
         jQuery(".mec-purchase-verify").text("<?php echo esc_js(esc_attr__('Checking ...', 'mec')); ?>");
-    } 
+    }
     
     var settings = jQuery("#mec_notifications_form").serialize();
     jQuery.ajax(

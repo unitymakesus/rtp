@@ -55,7 +55,8 @@ class MEC_MEC_widget extends WP_Widget
 		}
         
         $calendar_id = isset($instance['calendar_id']) ? $instance['calendar_id'] : 0;
-        $atts = array('html-class'=>'mec-widget', 'style'=>'classic', 'widget'=>true);
+        $current_hide = isset($instance['current_hide']) ? $instance['current_hide'] : '';
+        $atts = array('html-class'=>'mec-widget '.$current_hide, 'style'=>'classic', 'widget'=>true);
         
         // Print the skin output
         echo $this->render->widget($calendar_id, $atts);
@@ -73,7 +74,9 @@ class MEC_MEC_widget extends WP_Widget
     public function form($instance)
     {
         $calendars = get_posts(array('post_type'=>'mec_calendars', 'posts_per_page'=>'-1', 'meta_query'=>array(array('key'=>'skin', 'value'=>array('list', 'grid', 'monthly_view'), 'compare'=>'IN'))));
-        
+        $current_hide = isset($instance['current_hide']) ? $instance['current_hide'] : '';
+        $checkbox_state = false;
+
         echo '<p class="mec-widget-row-container">'
         .'<label for="'.$this->get_field_id('title').'">'.__('Title:', 'mec').'</label>'
         .'<input class="widefat" type="text" id="'.$this->get_field_id('title').'" name="'.$this->get_field_name('title').'" value="'.(isset($instance['title']) ? $instance['title'] : '').'" />'
@@ -83,12 +86,16 @@ class MEC_MEC_widget extends WP_Widget
         {
             echo '<p class="mec-widget-row-container">'
                 .'<label for="'.$this->get_field_id('calendar_id').'">'.__('Shortcode:', 'mec').'</label>'
-                .'<select class="widefat" name="'.$this->get_field_name('calendar_id').'" id="'.$this->get_field_id('calendar_id').'"><option value="">-----</option>';
+                .'<select class="widefat" name="'.$this->get_field_name('calendar_id').'" id="'.$this->get_field_id('calendar_id').'" onchange="mec_show_widget_check(this);"><option value="">-----</option>';
             
-            foreach($calendars as $calendar) echo '<option value="'.$calendar->ID.'" '.((isset($instance['calendar_id']) and $instance['calendar_id'] == $calendar->ID) ? 'selected="selected"' : '').'>'.$calendar->post_title.'</option>';
+            foreach($calendars as $calendar) 
+            {
+                $skin = get_post_meta($calendar->ID, 'skin', true);
+                $checkbox_state = (trim($skin) == 'monthly_view' and (isset($instance['calendar_id']) and $instance['calendar_id'] == $calendar->ID)) ? true : false;
+                echo '<option data-skin="'.trim($skin).'" value="'.$calendar->ID.'" '.((isset($instance['calendar_id']) and $instance['calendar_id'] == $calendar->ID) ? 'selected="selected"' : '').'>'.$calendar->post_title.'</option>';
+            }
             
-            echo '</select>'
-                .'</p>';
+            echo '</select>'.'</p>'.'<p class="mec-widget-row-container mec-current-check-wrap '.(($checkbox_state) ? '':'mec-util-hidden').'"><label for="'.$this->get_field_id('current_hide').'">'.__('Enable No Event Block Display: ', 'mec').'</label><input type="checkbox" id="'.$this->get_field_id('current_hide').'" name="'.$this->get_field_name('current_hide').'" value="current-hide"'.checked($current_hide, 'current-hide').'>';
         }
         else
         {
@@ -108,7 +115,8 @@ class MEC_MEC_widget extends WP_Widget
         $instance = array();
         $instance['title'] = $new_instance['title'];
         $instance['calendar_id'] = $new_instance['calendar_id'];
-        
+        $instance['current_hide'] = $new_instance['current_hide'];
+
         return $instance;
     }
 }

@@ -36,6 +36,11 @@ final class FLBuilderUpdate {
 			return;
 		}
 
+		// Only run on the main site for multisite installs.
+		if ( is_multisite() && ! is_main_site() ) {
+			return;
+		}
+
 		// Get the saved version.
 		$saved_version = get_site_option( '_fl_builder_version' );
 

@@ -8,20 +8,6 @@ $settings = $this->main->get_settings();
 ?>
 <div class="mec-wrap <?php echo $event_colorskin; ?>">
     <div class="mec-event-carousel-<?php echo $this->style; ?>">
-        <?php if($this->style == 'type4'):  ?>
-        <div class="row mec-carousel-type4-head">
-            <div class="col-md-6 col-xs-6">
-                <div class="mec-carousel-type4-head-title">
-                    <?php if(!empty( $this->head_text )) : ?><?php esc_html_e($this->head_text); ?><?php endif; ?>
-                </div>
-            </div>
-            <div class="col-md-6 col-xs-6">
-                <div class="mec-carousel-type4-head-link">
-                    <?php if(!empty( $this->archive_link )) : ?><a class="mec-bg-color-hover" href="<?php echo esc_html($this->archive_link); ?>"><?php esc_html_e('View All' , 'mec'); ?></a><?php endif; ?>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
         <?php 
             if( $this->style == 'type4' ) 
             {
@@ -42,7 +28,7 @@ $settings = $this->main->get_settings();
                 foreach($date as $event):
 
                 // Skip to next event if there is no image
-                if(empty($event->data->thumbnails['meccarouselthumb'])) continue;
+                // if(empty($event->data->thumbnails['meccarouselthumb'])) continue;
 
                 $location = isset($event->data->locations[$event->data->meta['mec_location_id']])? $event->data->locations[$event->data->meta['mec_location_id']] : array();
                 $organizer = isset($event->data->organizers[$event->data->meta['mec_organizer_id']])? $event->data->organizers[$event->data->meta['mec_organizer_id']] : array();
@@ -77,7 +63,11 @@ $settings = $this->main->get_settings();
                     $speakers = json_encode($speakers);
                 }
             ?>
-            <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
+            <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>" itemscope>
+            <?php
+                $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                if($schema_settings == '1' ):
+            ?>            
                 <script type="application/ld+json">
                 {
                     "@context" 		: "http://schema.org",
@@ -103,11 +93,19 @@ $settings = $this->main->get_settings();
                     "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
                 }
                 </script>
-                <?php if($this->style == 'type1'):  ?>
+                <?php
+                endif;
+                if($this->style == 'type1'):  ?>
                 <div class="event-carousel-type1-head clearfix">
                     <div class="mec-event-date mec-color">
                         <div class="mec-event-image">
-                            <?php echo $event->data->thumbnails['meccarouselthumb']; ?>
+                        <?php 
+                            if ($event->data->thumbnails['meccarouselthumb']) {
+                                echo $event->data->thumbnails['meccarouselthumb'];
+                            } else {
+                                echo '<img src="'. plugin_dir_url(__FILE__ ) .'../../../assets/img/no-image.png'.'" />';
+                            }
+                        ?>
                         </div>
                         <div class="mec-event-date-carousel">
                             <?php echo date_i18n($this->date_format_type1_1, strtotime($event->date['start']['date'])); ?>
@@ -123,7 +121,13 @@ $settings = $this->main->get_settings();
                 <?php elseif($this->style == 'type2'): ?>
                 <div class="event-carousel-type2-head clearfix">
                     <div class="mec-event-image">
-                        <?php echo $event->data->thumbnails['meccarouselthumb']; ?>
+                        <?php 
+                            if ($event->data->thumbnails['meccarouselthumb']) {
+                                echo $event->data->thumbnails['meccarouselthumb'];
+                            } else {
+                                echo '<img src="'. plugin_dir_url(__FILE__ ) .'../../../assets/img/no-image.png'.'" />';
+                            }
+                        ?>
                     </div>
                     <div class="mec-event-carousel-content-type2">
                         <?php if(isset($settings['multiple_day_show_method']) && $settings['multiple_day_show_method'] == 'all_days') : ?>
@@ -142,7 +146,11 @@ $settings = $this->main->get_settings();
                                     <i class="mec-sl-share mec-bg-color-hover mec-border-color-hover"></i>
                                 </a>
                             </li>
-                            <ul class="mec-event-sharing"><?php echo $this->main->module('links.list', array('event'=>$event)); ?></ul>
+                            <li>
+                                <ul class="mec-event-sharing">
+                                    <?php echo $this->main->module('links.list', array('event'=>$event)); ?>
+                                </ul>
+                            </li>
                         </ul>
                     <?php endif; ?>
                         <a class="mec-booking-button mec-bg-color-hover mec-border-color-hover" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>" target="_self"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')) ; ?></a>
@@ -151,7 +159,13 @@ $settings = $this->main->get_settings();
                 <?php elseif($this->style == 'type3'): ?>
                 <div class="event-carousel-type3-head clearfix">
                     <div class="mec-event-image">
-                        <?php echo $event->data->thumbnails['meccarouselthumb']; ?>
+                        <?php 
+                            if ($event->data->thumbnails['meccarouselthumb']) {
+                                echo $event->data->thumbnails['meccarouselthumb'];
+                            } else {
+                                echo '<img src="'. plugin_dir_url(__FILE__ ) .'../../../assets/img/no-image.png'.'" />';
+                            }
+                        ?>
                     </div>
                     <div class="mec-event-footer-carousel-type3">
                         <?php if(isset($settings['multiple_day_show_method']) && $settings['multiple_day_show_method'] == 'all_days') : ?>
@@ -168,8 +182,11 @@ $settings = $this->main->get_settings();
                                         <i class="mec-sl-share mec-bg-color-hover mec-border-color-hover"></i>
                                     </a>
                                 </li>
-                                <ul class="mec-event-sharing"><?php echo $this->main->module('links.list', array('event'=>$event)); ?>
-                                </ul>
+                                <li>
+                                    <ul class="mec-event-sharing">
+                                        <?php echo $this->main->module('links.list', array('event'=>$event)); ?>
+                                    </ul>
+                                </li>
                             </ul>
                         <?php endif; ?>
                         <a class="mec-booking-button mec-bg-color-hover mec-border-color-hover" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>" target="_self"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')) ; ?></a>
@@ -178,7 +195,13 @@ $settings = $this->main->get_settings();
                 <?php elseif($this->style == 'type4'): ?>
                 <div class="event-carousel-type4-head clearfix">
                     <div class="mec-event-image">
-                        <?php echo $event->data->thumbnails['full']; ?>
+                        <?php 
+                            if ($event->data->thumbnails['full']) {
+                                echo $event->data->thumbnails['full'];
+                            } else {
+                                echo '<img src="'. plugin_dir_url(__FILE__ ) .'../../../assets/img/no-image.png'.'" />';
+                            }
+                        ?>
                     </div>
                     <div class="mec-event-overlay"></div>
                     <div class="mec-event-hover-carousel-type4">
@@ -195,5 +218,19 @@ $settings = $this->main->get_settings();
             <?php endforeach; ?>
             <?php endforeach; ?>
         </div>
+        <?php if($this->style == 'type4'):  ?>
+        <div class="row mec-carousel-type4-head">
+            <div class="col-md-6 col-xs-6">
+                <div class="mec-carousel-type4-head-link">
+                    <?php if(!empty( $this->archive_link )) : ?><a class="mec-bg-color-hover" href="<?php echo esc_html($this->archive_link); ?>"><?php esc_html_e('View All Events' , 'mec'); ?></a><?php endif; ?>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+                <div class="mec-carousel-type4-head-title">
+                    <?php if(!empty( $this->head_text )) : ?><?php esc_html_e($this->head_text); ?><?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
 	</div>
 </div>

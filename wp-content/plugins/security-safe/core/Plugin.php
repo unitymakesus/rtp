@@ -442,7 +442,7 @@ class Plugin {
 
                 } else {
 
-                    $this->messages[] = [ __( 'There was an error. Settings not saved.', SECSAFE_SLUG ), 3 ];
+                    $this->messages[] = [ __( 'Error: Settings not saved.', SECSAFE_SLUG ), 3 ];
                     Janitor::log( 'Added error message.' );
 
                 } // $success

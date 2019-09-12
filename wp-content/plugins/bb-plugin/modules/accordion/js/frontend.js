@@ -68,6 +68,8 @@
 					icon.removeClass( this.settings.labelIcon );
 					icon.addClass( this.settings.activeIcon );
 				}
+
+				icon.find('span').text( 'Collapse' );
 			}
 			else {
 				button.attr('aria-expanded', 'false');
@@ -81,6 +83,8 @@
 					icon.removeClass( this.settings.activeIcon );
 					icon.addClass( this.settings.labelIcon );
 				}
+
+				icon.find('span').text( 'Expand' );
 			}
 		},
 

@@ -755,7 +755,7 @@ function fl_theme_builder_cat_archive_post_grid( $query ) {
 		return;
 	}
 
-	$args      = array(
+	$args       = array(
 		'post_type'   => 'fl-theme-layout',
 		'post_status' => 'publish',
 		'fields'      => 'ids',
@@ -778,8 +778,9 @@ function fl_theme_builder_cat_archive_post_grid( $query ) {
 			),
 		),
 	);
-	$post_grid = null;
-	$object    = null;
+	$post_grid  = null;
+	$object     = null;
+	$exclusions = array();
 
 	if ( $query->get( 'cat' ) ) {
 		$term = get_term( $query->get( 'cat' ), 'category' );
@@ -804,9 +805,7 @@ function fl_theme_builder_cat_archive_post_grid( $query ) {
 			$exclusions = FLThemeBuilderRulesLocation::get_saved_exclusions( $post_id );
 			$exclude    = false;
 
-			if ( empty( $exclusions ) ) {
-				continue;
-			} elseif ( $object && in_array( $object, $exclusions ) ) {
+			if ( $object && in_array( $object, $exclusions ) ) {
 				$exclude = true;
 			} elseif ( in_array( 'taxonomy:category', $exclusions ) ) {
 				$exclude = true;
@@ -844,4 +843,33 @@ function fl_theme_builder_cat_archive_post_grid( $query ) {
 	}
 
 	return $post_grid;
+}
+
+/**
+ * Remove sorting from download type if EDD is active.
+ * @since 2.2.5
+ */
+add_filter( 'fl_builder_admin_edit_sort_blocklist', 'fl_builder_admin_edit_sort_blocklist_edd' );
+function fl_builder_admin_edit_sort_blocklist_edd( $blocklist ) {
+	$types = FLBuilderModel::get_post_types();
+	if ( in_array( 'download', $types ) && class_exists( 'Easy_Digital_Downloads' ) ) {
+		$blocklist[] = 'download';
+	}
+	return $blocklist;
+}
+
+/**
+	* Remove BB Template types from Gute Editor suggested urls
+	* @since 2.2.5
+	*/
+add_action( 'pre_get_posts', 'fl_gute_links_fix' );
+function fl_gute_links_fix( $query ) {
+	if ( defined( 'REST_REQUEST' ) && $query->is_search() ) {
+		$types = (array) $query->get( 'post_type' );
+		$key   = array_search( 'fl-builder-template', $types, true );
+		if ( $key ) {
+			unset( $types[ $key ] );
+			$query->set( 'post_type', $types );
+		}
+	}
 }

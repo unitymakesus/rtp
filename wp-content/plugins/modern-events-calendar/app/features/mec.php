@@ -118,9 +118,16 @@ class MEC_feature_mec extends MEC_base
         $this->factory->action('wp_ajax_activate_license', array($this, 'activate_license'));
         $this->factory->action('wp_ajax_nopriv_activate_license', array($this, 'activate_license'));
 
+        // Close Notification
+        $this->factory->action('wp_ajax_close_notification', array($this, 'close_notification'));
+        $this->factory->action('wp_ajax_nopriv_close_notification', array($this, 'close_notification'));
+
         // Scheduler Cronjob
         $schedule = $this->getSchedule();
         $this->factory->action('mec_scheduler', array($schedule, 'cron'));
+
+        $syncSchedule = $this->getSyncSchedule();
+        $this->factory->action('mec_syncScheduler', array($syncSchedule, 'sync'));
     }
 
     /* Activate License */
@@ -176,6 +183,17 @@ class MEC_feature_mec extends MEC_base
         header('Expires: 0');
         header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
         print_r($content);
+        wp_die();
+    }
+
+    /* Close addons notification */
+    public function close_notification()
+    {
+        if(!wp_verify_nonce( $_REQUEST['nonce'], 'mec_settings_nonce'))
+        {
+            exit();
+        }
+        update_option('mec_addons_notification_option', 'open');
         wp_die();
     }
 
@@ -448,6 +466,8 @@ class MEC_feature_mec extends MEC_base
         update_post_meta($post_id, 'tag', $tags);
         update_post_meta($post_id, 'author', $authors);
         
+        do_action('mec_shortcode_filters_save' , $post_id , $terms );
+        
         $mec = isset($_POST['mec']) ? $_POST['mec'] : array();
         
         foreach($mec as $key=>$value) update_post_meta($post_id, $key, $value);
@@ -581,11 +601,14 @@ class MEC_feature_mec extends MEC_base
         if($tab == 'MEC-customcss') $this->styles();
         elseif($tab == 'MEC-ie') $this->import_export();
         //elseif($tab == 'MEC-support') $this->support();
-        elseif($tab == 'MEC-reg-form') $this->regform();
-        elseif($tab == 'MEC-gateways') $this->gateways();
+        // elseif($tab == 'MEC-reg-form') $this->regform();
+        // elseif($tab == 'MEC-gateways') $this->gateways();
         elseif($tab == 'MEC-notifications') $this->notifications();
         elseif($tab == 'MEC-messages') $this->messages();
         elseif($tab == 'MEC-styling') $this->styling();
+        elseif($tab == 'MEC-single') $this->single();
+        elseif($tab == 'MEC-booking') $this->booking();
+        elseif($tab == 'MEC-modules') $this->modules();
         else $this->settings();
     }
     
@@ -630,6 +653,48 @@ class MEC_feature_mec extends MEC_base
         include $path;
         echo $output = ob_get_clean();
     }
+    
+    /**
+     * Show content of single tab
+     * @author Webnus <info@webnus.biz>
+     * @return void
+     */
+    public function single()
+    {
+        $path = MEC::import('app.features.mec.single', true, true);
+
+        ob_start();
+        include $path;
+        echo $output = ob_get_clean();
+    }
+    
+    /**
+     * Show content of booking tab
+     * @author Webnus <info@webnus.biz>
+     * @return void
+     */
+    public function booking()
+    {
+        $path = MEC::import('app.features.mec.booking', true, true);
+
+        ob_start();
+        include $path;
+        echo $output = ob_get_clean();
+    }
+    
+    /**
+     * Show content of modules tab
+     * @author Webnus <info@webnus.biz>
+     * @return void
+     */
+    public function modules()
+    {
+        $path = MEC::import('app.features.mec.modules', true, true);
+
+        ob_start();
+        include $path;
+        echo $output = ob_get_clean();
+    }
 
     /**
      * Show content of import/export tab
@@ -664,28 +729,28 @@ class MEC_feature_mec extends MEC_base
      * @author Webnus <info@webnus.biz>
      * @return void
      */
-    public function regform()
-    {
-        $path = MEC::import('app.features.mec.regform', true, true);
+    // public function regform()
+    // {
+    //     $path = MEC::import('app.features.mec.regform', true, true);
 
-        ob_start();
-        include $path;
-        echo $output = ob_get_clean();
-    }
+    //     ob_start();
+    //     include $path;
+    //     echo $output = ob_get_clean();
+    // }
     
     /**
      * Show content of gateways tab
      * @author Webnus <info@webnus.biz>
      * @return void
      */
-    public function gateways()
-    {
-        $path = MEC::import('app.features.mec.gateways', true, true);
+    // public function gateways()
+    // {
+    //     $path = MEC::import('app.features.mec.gateways', true, true);
         
-        ob_start();
-        include $path;
-        echo $output = ob_get_clean();
-    }
+    //     ob_start();
+    //     include $path;
+    //     echo $output = ob_get_clean();
+    // }
     
     /**
      * Show content of notifications tab

@@ -69,7 +69,7 @@ class AdminPageGeneral extends AdminPage
         $rows .= $this->form_button(
             __( 'Reset Settings', SECSAFE_SLUG ),
             'link-delete',
-            get_admin_url( '', 'admin.php?page=security-safe&reset=1' ),
+            admin_url( 'admin.php?page=security-safe&reset=1' ),
             __( 'Click this button to reset the settings back to default. WARNING: You will lose all configuration changes you have made.', SECSAFE_SLUG ),
             $classes
         );
@@ -103,15 +103,25 @@ class AdminPageGeneral extends AdminPage
         $html = '<h3>' . __( 'Current Settings', SECSAFE_SLUG ) . '</h3>
                 <table class="wp-list-table widefat fixed striped file-perm-table" cellpadding="10px">
                 <thead><tr><th>' . __( 'Policies', SECSAFE_SLUG ) . '</th><th>' . __( 'Setting', SECSAFE_SLUG ) . '</th><th>' . __( 'Value', SECSAFE_SLUG ) . '</th></tr></thead>';
+        $labels = [
+            'privacy'  => __( 'Privacy', SECSAFE_SLUG ),
+            'files'    => __( 'Files', SECSAFE_SLUG ),
+            'content'  => __( 'Content', SECSAFE_SLUG ),
+            'access'   => __( 'User Access', SECSAFE_SLUG ),
+            'firewall' => __( 'Firewall', SECSAFE_SLUG ),
+            'backups'  => __( 'Backups', SECSAFE_SLUG ),
+            'general'  => __( 'General', SECSAFE_SLUG ),
+            'plugin'   => __( 'Plugin', SECSAFE_SLUG ),
+        ];
         foreach ( $settings as $label => $section ) {
             if ( $label == 'plugin' ) {
-                $html .= '<tr style="background: #e5e5e5;"><td><b>' . strtoupper( esc_html( $label ) ) . '</b></td><td colspan="2"></td></tr>';
+                $html .= '<tr style="background: #e5e5e5;"><td><b>' . strtoupper( $labels[$label] ) . '</b></td><td colspan="2"></td></tr>';
             }
             foreach ( $section as $setting => $value ) {
                 if ( $setting != 'version_history' ) {
                     
                     if ( $setting == 'on' ) {
-                        $html .= '<tr style="background: #e5e5e5;"><td><b>' . strtoupper( esc_html( $label ) ) . '</b></td><td>' . esc_html( $setting ) . '</td><td>' . esc_html( $value ) . '</td></tr>';
+                        $html .= '<tr style="background: #e5e5e5;"><td><b>' . strtoupper( $labels[$label] ) . '</b></td><td>' . esc_html( $setting ) . '</td><td>' . esc_html( $value ) . '</td></tr>';
                     } else {
                         $html .= '<tr><td></td><td>' . esc_html( $setting ) . '</td><td>' . esc_html( $value ) . '</td></tr>';
                     }

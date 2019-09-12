@@ -6,6 +6,7 @@ defined('MECEXEC') or die();
 $headings = $this->main->get_weekday_abbr_labels();
 echo '<dl class="mec-calendar-table-head"><dt class="mec-calendar-day-head">'.implode('</dt><dt class="mec-calendar-day-head">', $headings).'</dt></dl>';
 
+
 // Start day of week
 $week_start = $this->main->get_first_day_of_week();
 
@@ -67,10 +68,14 @@ elseif($week_start == 5) // Friday
                     $event_color = isset($event->data->meta['mec_color'])? '#'.$event->data->meta['mec_color']:'';
                     $start_time = (isset($event->data->time) ? $event->data->time['start'] : '');
                     $end_time = (isset($event->data->time) ? $event->data->time['end'] : '');
-
+                    
+                    
+                    echo '<div class="ended-relative simple-skin-ended">';
                     echo '<a class="mec-monthly-tooltip event-single-link-simple" data-tooltip-content="#mec-tooltip-'.$event->data->ID.'-'.$day_id.'" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">';
                     echo '<h4 class="mec-event-title">'.$event->data->title.'</h4>';
                     echo '</a>';
+                    echo '</div>';
+
                     $tooltip_content = '';
                     $tooltip_content .= !empty( $event->data->title) ? '<div class="mec-tooltip-event-title">'.$event->data->title.'</div>' : '' ;
                     $tooltip_content .= trim($start_time) ? '<div class="mec-tooltip-event-time"><i class="mec-sl-clock-o"></i> '.$start_time.(trim($end_time) ? ' - '.$end_time : '').'</div>' : '' ;
@@ -100,6 +105,8 @@ elseif($week_start == 5) // Friday
                     $image = !empty($event->data->featured_image['full']) ? esc_html($event->data->featured_image['full']) : '' ;
                     $price_schema = isset($event->data->meta['mec_cost']) ? $event->data->meta['mec_cost'] : '' ; 
                     $currency_schema = isset($settings['currency']) ? $settings['currency'] : '' ;
+                    $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                    if($schema_settings == '1' ):                    
                     echo '
                     <script type="application/ld+json">
                     {
@@ -127,6 +134,7 @@ elseif($week_start == 5) // Friday
                     }
                     </script>
                     ';
+                    endif;
                     echo '
                         <div class="tooltip_templates event-single-content-simple">
                             <div id="mec-tooltip-'.$event->data->ID.'-'.$day_id.'">

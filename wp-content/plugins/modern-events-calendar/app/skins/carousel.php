@@ -148,9 +148,6 @@ class MEC_skin_carousel extends MEC_skins
         // Apply Maximum Date
         if($this->request->getVar('apply_sf_date', 0) == 1) $this->maximum_date = date('Y-m-t', strtotime($this->start_date));
         
-        // Maximum days for loop
-        $this->max_days_loop = 366;
-        
         // Found Events
         $this->found = 0;
     }

@@ -197,6 +197,17 @@ defined('MECEXEC') or die();
                 
             </div>
 
+            <?php
+            
+            if(!empty($this->main->module('speakers.details', array('event'=>$event)))) {
+                ?>
+                <div class="mec-color-before mec-frontbox">
+                    <?php echo $this->main->module('speakers.details', array('event'=>$event)); ?>
+                </div>
+                <?php
+            }
+            ?>
+
             <!-- Attendees List Module -->
             <?php echo $this->main->module('attendees-list.details', array('event'=>$event)); ?>
             
@@ -229,7 +240,7 @@ defined('MECEXEC') or die();
             <?php endif; ?>
 
             <!-- Hourly Schedule -->
-            <?php $this->show_hourly_schedules($event); ?>
+            <?php $this->display_hourly_schedules_widget($event); ?>
 
             <!-- Booking Module -->
             <?php if($this->main->is_sold($event, (trim($occurrence) ? $occurrence : $event->date['start']['date'])) and count($event->dates) <= 1): ?>
@@ -247,3 +258,15 @@ defined('MECEXEC') or die();
         </div>
     </article>
 </div>
+<script>
+jQuery( ".mec-speaker-avatar a" ).click(function(e) {
+    e.preventDefault();
+    var id =  jQuery(this).attr('href');
+    var instance = lity(id);
+    jQuery(document).on('lity:close', function(event, instance) {
+        jQuery( ".mec-hourly-schedule-speaker-info" ).addClass('lity-hide');
+    });
+});
+
+
+</script>

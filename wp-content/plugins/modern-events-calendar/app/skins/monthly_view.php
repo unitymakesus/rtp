@@ -243,7 +243,8 @@ class MEC_skin_monthly_view extends MEC_skins
         $this->sf = $this->request->getVar('sf', array());
         $apply_sf_date = $this->request->getVar('apply_sf_date', 1);
         $atts = $this->sf_apply($this->request->getVar('atts', array()), $this->sf, $apply_sf_date);
-        
+        $navigator_click = $this->request->getVar('navigator_click', false);
+
         // Initialize the skin
         $this->initialize($atts);
         
@@ -303,7 +304,8 @@ class MEC_skin_monthly_view extends MEC_skins
             }
 
             // Set active day to current day if not resault
-            if(count($this->events))$this->active_day = key($this->events);
+            if(count($this->events)) $this->active_day = key($this->events);
+            if($navigator_click) break;
           
             $c++;
         }

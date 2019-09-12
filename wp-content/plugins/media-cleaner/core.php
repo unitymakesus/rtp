@@ -5,6 +5,7 @@ class Meow_WPMC_Core {
 	public $admin = null;
 	public $last_analysis = null; //TODO: Is it actually used?
 	public $engine = null;
+	public $catch_timeout = true; // This will halt the plugin before reaching the PHP timeout.
 	private $regex_file = '/[A-Za-z0-9-_,.\(\)\s]+[.]{1}(MIMETYPES)/';
 	public $current_method = 'media';
 	private $refcache = array();
@@ -93,16 +94,18 @@ class Meow_WPMC_Core {
 	function timeout_check() {
 		$this->time_elapsed = time() - $this->start_time;
 		$this->time_remaining = $this->max_execution_time - $this->wordpress_init_time - $this->time_elapsed;
-		if ( $this->time_remaining - $this->item_scan_avg_time < 0 ) {
-			error_log("Media Cleaner Timeout! Check the Media Cleaner logs for more info.");
-			$this->log( "Timeout! Some info for debug:" );
-			$this->log( "Elapsed time: $this->time_elapsed" );
-			$this->log( "WP init time: $this->wordpress_init_time" );
-			$this->log( "Remaining time: $this->time_remaining" );
-			$this->log( "Scan time per item: $this->item_scan_avg_time" );
-			$this->log( "PHP max_execution_time: $this->max_execution_time" );
-			header("HTTP/1.0 408 Request Timeout");
-			exit;
+		if ( $this->catch_timeout ) {
+			if ( $this->time_remaining - $this->item_scan_avg_time < 0 ) {
+				error_log("Media Cleaner Timeout! Check the Media Cleaner logs for more info.");
+				$this->log( "Timeout! Some info for debug:" );
+				$this->log( "Elapsed time: $this->time_elapsed" );
+				$this->log( "WP init time: $this->wordpress_init_time" );
+				$this->log( "Remaining time: $this->time_remaining" );
+				$this->log( "Scan time per item: $this->item_scan_avg_time" );
+				$this->log( "PHP max_execution_time: $this->max_execution_time" );
+				header("HTTP/1.0 408 Request Timeout");
+				exit;
+			}
 		}
 	}
 
@@ -147,6 +150,10 @@ class Meow_WPMC_Core {
 	function get_urls_from_html( $html ) {
 		if ( empty( $html ) )
 			return array();
+
+		// Proposal/fix by @copytrans
+		// Discussion: https://wordpress.org/support/topic/bug-in-core-php/#post-11647775
+		$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
 
 		// Resolve src-set and shortcodes
 		$html = do_shortcode( $html );
@@ -208,6 +215,7 @@ class Meow_WPMC_Core {
 		// Images, src, srcset
 		$imgs = $dom->getElementsByTagName( 'img' );
 		foreach ( $imgs as $img ) {
+			//error_log($img->getAttribute('src'));
 			$src = $this->clean_url( $img->getAttribute('src') );
     			array_push( $results, $src );
 			$srcset = $img->getAttribute('srcset');
@@ -276,9 +284,10 @@ class Meow_WPMC_Core {
 					continue;
 				else if ( is_numeric( $value ) )
 					array_push( $ids, $value );
-				else
+				else {
 					if ( $this->is_url( $value ) )
 						array_push( $urls, $this->clean_url( $value ) );
+				}
 			}
 		}
 	}

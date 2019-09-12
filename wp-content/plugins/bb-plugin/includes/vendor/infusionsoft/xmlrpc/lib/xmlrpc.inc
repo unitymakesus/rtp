@@ -44,17 +44,17 @@
  * If it is included, the library will work without any further autoloading
  *****************************************************************************/
 
-include_once(__DIR__.'/../src/PhpXmlRpc.php');
-include_once(__DIR__.'/../src/Value.php');
-include_once(__DIR__.'/../src/Request.php');
-include_once(__DIR__.'/../src/Response.php');
-include_once(__DIR__.'/../src/Client.php');
-include_once(__DIR__.'/../src/Encoder.php');
-include_once(__DIR__.'/../src/Helper/Charset.php');
-include_once(__DIR__.'/../src/Helper/Date.php');
-include_once(__DIR__.'/../src/Helper/Http.php');
-include_once(__DIR__.'/../src/Helper/Logger.php');
-include_once(__DIR__.'/../src/Helper/XMLParser.php');
+include_once(__DIR__.'/../xmlrpc-src/PhpXmlRpc.php');
+include_once(__DIR__.'/../xmlrpc-src/Value.php');
+include_once(__DIR__.'/../xmlrpc-src/Request.php');
+include_once(__DIR__.'/../xmlrpc-src/Response.php');
+include_once(__DIR__.'/../xmlrpc-src/Client.php');
+include_once(__DIR__.'/../xmlrpc-src/Encoder.php');
+include_once(__DIR__.'/../xmlrpc-src/Helper/Charset.php');
+include_once(__DIR__.'/../xmlrpc-src/Helper/Date.php');
+include_once(__DIR__.'/../xmlrpc-src/Helper/Http.php');
+include_once(__DIR__.'/../xmlrpc-src/Helper/Logger.php');
+include_once(__DIR__.'/../xmlrpc-src/Helper/XMLParser.php');
 
 
 /* Expose the global variables which used to be defined */

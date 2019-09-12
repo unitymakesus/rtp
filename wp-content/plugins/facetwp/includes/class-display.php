@@ -4,27 +4,30 @@ class FacetWP_Display
 {
 
     /* (array) Facet types being used on the page */
-    public $active_types = array();
+    public $active_types = [];
 
     /* (array) Facets being used on the page */
-    public $active_facets = array();
+    public $active_facets = [];
+
+    /* (array) Saved shortcode attributes */
+    public $shortcode_atts = [];
 
     /* (boolean) Whether to enable FacetWP for the current page */
     public $load_assets = false;
 
     /* (array) Scripts and stylesheets to enqueue */
-    public $assets = array();
+    public $assets = [];
 
     /* (array) Data to pass to front-end JS */
-    public $json = array();
+    public $json = [];
 
 
     function __construct() {
         add_filter( 'widget_text', 'do_shortcode' );
-        add_action( 'loop_start', array( $this, 'add_template_tag' ) );
-        add_action( 'loop_no_results', array( $this, 'add_template_tag' ) );
-        add_action( 'wp_footer', array( $this, 'front_scripts' ), 25 );
-        add_shortcode( 'facetwp', array( $this, 'shortcode' ) );
+        add_action( 'loop_start', [ $this, 'add_template_tag' ] );
+        add_action( 'loop_no_results', [ $this, 'add_template_tag' ] );
+        add_action( 'wp_footer', [ $this, 'front_scripts' ], 25 );
+        add_shortcode( 'facetwp', [ $this, 'shortcode' ] );
     }
 
 
@@ -33,7 +36,7 @@ class FacetWP_Display
      */
     function add_template_tag( $wp_query ) {
         if ( true === $wp_query->get( 'facetwp' ) && did_action( 'wp_head' ) ) {
-            echo '<!--fwp-loop-->';
+            echo "<!--fwp-loop-->\n";
         }
     }
 
@@ -42,6 +45,8 @@ class FacetWP_Display
      * Register shortcodes
      */
     function shortcode( $atts ) {
+        $this->shortcode_atts[] = $atts;
+
         $output = '';
         if ( isset( $atts['facet'] ) ) {
             $facet = FWP()->helper->get_facet_by_name( $atts['facet'] );
@@ -105,12 +110,20 @@ class FacetWP_Display
     function front_scripts() {
 
         // Not enqueued - front.js needs to load before front_scripts()
-        if ( true === apply_filters( 'facetwp_load_assets', $this->load_assets ) ) {
-            if ( true === apply_filters( 'facetwp_load_css', true ) ) {
+        if ( apply_filters( 'facetwp_load_assets', $this->load_assets ) ) {
+
+            // Load CSS?
+            if ( apply_filters( 'facetwp_load_css', true ) ) {
                 $this->assets['front.css'] = FACETWP_URL . '/assets/css/front.css';
             }
 
+            // Load required JS
             $this->assets['front.js'] = FACETWP_URL . '/assets/js/dist/front.min.js';
+
+            // Load a11y?
+            if ( apply_filters( 'facetwp_load_a11y', false ) ) {
+                $this->assets['accessibility.js'] = FACETWP_URL . '/assets/js/src/accessibility.js';
+            }
 
             // Use the REST API?
             $ajaxurl = admin_url( 'admin-ajax.php' );
@@ -119,11 +132,11 @@ class FacetWP_Display
             }
 
             // Pass GET and URI params
-            $http_params = array(
+            $http_params = [
                 'get' => $_GET,
                 'uri' => FWP()->helper->get_uri(),
                 'url_vars' => FWP()->ajax->url_vars,
-            );
+            ];
 
             // See FWP()->facet->get_query_args()
             if ( ! empty( FWP()->facet->archive_args ) ) {
@@ -135,6 +148,7 @@ class FacetWP_Display
             $this->json['prefix'] = FWP()->helper->get_setting( 'prefix' );
             $this->json['no_results_text'] = __( 'No results found', 'fwp' );
             $this->json['ajaxurl'] = $ajaxurl;
+            $this->json['nonce'] = wp_create_nonce( 'wp_rest' );
 
             if ( apply_filters( 'facetwp_use_preloader', true ) ) {
                 $this->json['preload_data'] = $this->prepare_preload_data();
@@ -163,6 +177,8 @@ class FacetWP_Display
                     $url .= '?ver=' . FACETWP_VERSION;
                 }
 
+                $html = apply_filters( 'facetwp_asset_html', $html, $url );
+
                 echo str_replace( '{url}', $url, $html ) . "\n";
             }
 
@@ -182,16 +198,16 @@ window.FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
      * and pass it client-side through the FWP_JSON object
      */
     function prepare_preload_data() {
-        $overrides = array();
+        $overrides = [];
         $url_vars = FWP()->ajax->url_vars;
 
         foreach ( $this->active_facets as $name ) {
-            $selected_values = isset( $url_vars[ $name ] ) ? $url_vars[ $name ] : array();
+            $selected_values = isset( $url_vars[ $name ] ) ? $url_vars[ $name ] : [];
 
-            $overrides['facets'][] = array(
+            $overrides['facets'][] = [
                 'facet_name' => $name,
                 'selected_values' => $selected_values,
-            );
+            ];
         }
 
         if ( isset( $this->active_extras['counts'] ) ) {

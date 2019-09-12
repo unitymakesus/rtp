@@ -183,6 +183,14 @@
 	min-height: 100vh;
 
 }
+.fl-row-overlap-top .fl-row-content-wrap {
+	display: -webkit-inline-box;
+	display: -webkit-inline-flex;
+	display: -moz-inline-box;
+	display: -ms-inline-flexbox;
+	display: inline-flex;
+	width: 100%;
+}
 .fl-row-custom-height .fl-row-content-wrap {
 	min-height: 0;
 }
@@ -313,6 +321,7 @@
     -webkit-flex-wrap: wrap;
     	-ms-flex-wrap: wrap;
     		flex-wrap: wrap;
+			    width: 100%;
 }
 .fl-col-group-equal-height.fl-col-group-has-child-loading {
     -webkit-flex-wrap: nowrap;

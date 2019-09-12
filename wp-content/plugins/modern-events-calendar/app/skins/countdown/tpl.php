@@ -81,12 +81,17 @@ jQuery(document).ready(function()
 // Include javascript code into the page
 if($this->main->is_ajax()) echo $javascript;
 else $this->factory->params('footer', $javascript);
+do_action('mec_countdown_skin_head');
 ?>
 <style>
 .mec-wrap .mec-event-countdown-style2, .mec-wrap .mec-event-countdown-style1, .mec-event-countdown-style1 .mec-event-countdown-part3 .mec-event-button {background: <?php echo $this->bg_color; ?> ;}
 .mec-wrap .mec-event-countdown-style1 .mec-event-countdown-part2:after { border-color: transparent transparent transparent<?php echo $this->bg_color; ?>;}
 </style>
 <div class="mec-wrap <?php echo $this->html_class; ?>" id="mec_skin_<?php echo $this->id; ?>">
+<?php
+    $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+    if($schema_settings == '1' ):
+?>
     <script type="application/ld+json">
     {
         "@context" 		: "http://schema.org",
@@ -112,7 +117,9 @@ else $this->factory->params('footer', $javascript);
         "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
     }
     </script>
-    <?php if($this->style == 'style1'): ?>
+    <?php
+    endif;
+    if($this->style == 'style1'): ?>
     <article class="mec-event-countdown-style1 col-md-12 <?php echo $this->get_event_classes($event); ?>">
         <div class="mec-event-countdown-part1 col-md-4">
             <div class="mec-event-upcoming"><?php echo sprintf(__('%s Upcoming Event', 'mec'), '<span>'.__('Next', 'mec').'</span>'); ?></div>

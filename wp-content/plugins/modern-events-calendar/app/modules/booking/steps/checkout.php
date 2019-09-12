@@ -10,6 +10,13 @@ foreach($gateways as $gateway)
 {
     if(!$gateway->enabled()) continue;
     $active_gateways[] = $gateway;
+
+    // When Stripe Connect is enabled and organizer is connected then skip other gateways
+    if($gateway->id() == 7 and get_user_meta(get_post_field('post_author', $event_id), 'mec_stripe_id', true)) // Stripe Connect
+    {
+        $active_gateways = array($gateway);
+        break;
+    }
 }
 ?>
 <div id="mec_book_payment_form">

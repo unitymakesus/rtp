@@ -71,13 +71,13 @@ class Table extends WP_List_Table {
     function get_sortable_columns() {
 
         return [
-            'date' => [ 'date', true ], 
-            'uri' => [ 'uri', true ], 
-            'ip' => [ 'ip', true ],
-            'status' => [ 'status', true ],
-            'username' => [ 'username', true ],
-            'user_agent' => [ 'user_agent', true ],
-            'referer' => [ 'referer', true ]
+            'date'          => [ 'date', true ], 
+            'uri'           => [ 'uri', true ], 
+            'ip'            => [ 'ip', true ],
+            'status'        => [ 'status', true ],
+            'username'      => [ 'username', true ],
+            'user_agent'    => [ 'user_agent', true ],
+            'referer'       => [ 'referer', true ]
         ];
 
     } // get_sortable_columns()
@@ -118,11 +118,33 @@ class Table extends WP_List_Table {
     } // column_ip()
 
 
+    protected function column_status( $item ) {
+
+        $status = [ 
+            //  'value'     => 'label'
+                'blocked'       => __( 'Blocked', SECSAFE_SLUG ),
+                'not_blocked'   => __( 'not blocked', SECSAFE_SLUG ),
+                'success'       => __( 'Success', SECSAFE_SLUG ),
+                'failed'        => __( 'Failed', SECSAFE_SLUG ),
+                'test'          => __( 'System Test', SECSAFE_SLUG ),
+                'manual'        => __( 'Manual', SECSAFE_SLUG ),
+                'automatic'     => __( 'Automatic', SECSAFE_SLUG ),
+                'deny'          => __( 'Deny', SECSAFE_SLUG ),
+                'allow'         => __( 'Allow', SECSAFE_SLUG ),
+            ];
+
+        $value = ( isset( $status[ $item->status ] ) ) ? $status[ $item->status ] : esc_html( $item->status );
+        
+        return $value;
+    
+    } // column_status()
+
+
     protected function column_threats( $item ) {
 
-        return ( $item->threats ) ? __( 'yes', SECSAFE_SLUG ) : __( 'no', SECSAFE_SLUG );
+        return ( $item->threats ) ? __( 'Yes', SECSAFE_SLUG ) : __( 'No', SECSAFE_SLUG );
         
-    } // column_details()
+    } // column_threats()
 
 
     protected function column_date_expire( $item ) {
@@ -132,7 +154,7 @@ class Table extends WP_List_Table {
 
         return $date_expire;
     
-    } // column_ip()
+    } // column_date_expire()
 
 
     /** 
@@ -217,14 +239,18 @@ class Table extends WP_List_Table {
 
         global $wpdb;
 
+        $types = Yoda::get_types();
+
         // Bail if the type is not valid
-        if ( ! $this->type || ! in_array( $this->type, Yoda::get_types() ) ) { return; }
+        if ( ! $this->type || ! isset( $types[ $this->type ] ) ) { return; }
         
         // Process Bulk Deletes
         if ( 'delete' === $this->current_action() ) {
 
             $deleted = $this->bulk_delete();
-            echo '<div id="message" class="updated"><p>' . $deleted . ' rows deleted</p></div>';
+            echo '<div id="message" class="updated"><p>';
+            printf( __( '%d rows deleted', SECSAFE_SLUG ), $deleted );
+            echo '</p></div>';
 
         }
         
@@ -235,36 +261,40 @@ class Table extends WP_List_Table {
         $search = $this->get_search_query(); // Sanitized
         $order = isset( $_REQUEST['order'] ) && $_REQUEST['order'] && strtolower( $_REQUEST['order'] ) == 'asc' ? 'ASC' : 'DESC'; // Sanitized
         $limit = $wpdb->esc_like( ( ( $page - 1 ) * $per_page ) . ',' . $per_page ); // Sanitized
-        $status = ( isset( $_REQUEST['status'] ) && $_REQUEST['status'] ) ? " AND status like '" . $wpdb->esc_like( $_REQUEST['status'] ) . "' " : ''; // Sanitized
         $sortable_columns = $this->get_sortable_columns();
         $orderby = ( isset( $_REQUEST['orderby'] ) && $_REQUEST['orderby'] && isset( $sortable_columns[ $_REQUEST['orderby'] ] ) ) ? $sortable_columns[ $_REQUEST['orderby'] ][0] : 'date'; // NOT Sanitized
+
+        // Status 
+        $status = ( isset( $_REQUEST['status'] ) && $_REQUEST['status'] ) ? $wpdb->esc_like( $_REQUEST['status'] ) : ''; // Sanitized
         
-        $blocked = ( $this->type == 'blocked' ) ? true : false;
+        if ( $status ) {
+
+            $status = ( 'not\_' == mb_substr( $status, 0, 5 ) ) ? " AND status NOT LIKE '" . str_replace( 'not\_', '', $status ) . "' " : " AND status LIKE '" . $status . "' "; // Sanitized
+
+        }
+
         $threats = ( $this->type == 'threats' ) ? true : false;
 
-        if ( $blocked || $threats ) {
+        if ( $threats ) {
 
-            $type = ( $blocked ) ? "status like 'blocked'" : "";
-            $type = ( $threats ) ? "threats = '1'" : $type;
+            $type = "threats = '1'";
 
         } else { 
 
-            $type = "type like '" . $this->type . "'";
-        
+            $type = "type LIKE '" . $this->type . "'";
+
         }
 
-        $type .= ( $this->type == 'activity' ) ? " OR ( type like 'logins' AND status like 'success' )" : "" ;
+        $type .= ( $this->type == 'activity' ) ? " OR ( type LIKE 'logins' AND status LIKE 'success' )" : "" ;
 
         $query = "SELECT SQL_CALC_FOUND_ROWS * FROM $table WHERE $type $status $search ORDER BY $orderby $order LIMIT $limit";
-        //echo $query;
+        // echo $query;
 
         $this->items = $wpdb->get_results( $query );
         $total_items = $wpdb->get_var( "SELECT FOUND_ROWS()" );
 
-        $limit_total = ( $blocked || $threats ) ? -1 : Yoda::get_display_limits( $this->type );
+        $limit_total = ( $threats ) ? -1 : Yoda::get_display_limits( $this->type );
         $total_items = ( $total_items > $limit_total && $limit_total != -1 ) ? $limit_total : $total_items;
-
-        
 
         $this->set_pagination_args( [
             'total_items' => $total_items,
@@ -338,7 +368,7 @@ class Table extends WP_List_Table {
 
         $html .= '<select name="per_page">';
 
-        $per_page = array( '25', '50', '100', '250' );
+        $per_page = ['25', '50', '100', '250'];
 
         foreach ( $per_page as $value ) {
 

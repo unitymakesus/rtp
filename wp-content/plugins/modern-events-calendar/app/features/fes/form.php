@@ -174,6 +174,11 @@ $this->factory->params('footer', $javascript);
         
             $start_date = get_post_meta($post_id, 'mec_start_date', true);
 
+            // Advanced Repeating Day
+		    $advanced_days = get_post_meta( $post->ID, 'mec_advanced_days', true );
+		    $advanced_days = (is_array($advanced_days)) ? $advanced_days : array();
+		    $advanced_str = (count($advanced_days)) ? implode('-', $advanced_days) : '';
+
             $start_time_hour = get_post_meta($post_id, 'mec_start_time_hour', true);
             if(trim($start_time_hour) == '') $start_time_hour = 8;
 
@@ -338,6 +343,7 @@ $this->factory->params('footer', $javascript);
                                 <option <?php if($repeat_type == 'monthly') echo 'selected="selected"'; ?> value="monthly"><?php _e('Monthly', 'mec'); ?></option>
                                 <option <?php if($repeat_type == 'yearly') echo 'selected="selected"'; ?> value="yearly"><?php _e('Yearly', 'mec'); ?></option>
                                 <option <?php if($repeat_type == 'custom_days') echo 'selected="selected"'; ?> value="custom_days"><?php _e('Custom Days', 'mec'); ?></option>
+                                <option <?php if($repeat_type == 'advanced') echo 'selected="selected"'; ?> value="advanced"><?php _e('Advanced', 'mec'); ?></option>
                             </select>
                         </div>
                         <div class="mec-form-row" id="mec_repeat_interval_container">
@@ -381,6 +387,222 @@ $this->factory->params('footer', $javascript);
                                 </div>
                             </div>
                         </div>
+                        <div id="mec-advanced-wraper">
+                            <div class="mec-form-row">
+                                <ul>
+                                    <li>
+                                        <?php _e('First', 'mec'); ?>
+                                    </li>
+                                    <ul>
+                                        <?php $day_1th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 1); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_1th}.1"); ?>">
+                                            <?php _e($day_1th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_1th ?>.1-</span>
+                                        </li>
+                                        <?php $day_2th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 2); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_2th}.1"); ?>">
+                                            <?php _e($day_2th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_2th ?>.1-</span>
+                                        </li>
+                                        <?php $day_3th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 3); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_3th}.1"); ?>">
+                                            <?php _e($day_3th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_3th ?>.1-</span>
+                                        </li>
+                                        <?php $day_4th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 4); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_4th}.1"); ?>">
+                                            <?php _e($day_4th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_4th ?>.1-</span>
+                                        </li>
+                                        <?php $day_5th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 5); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_5th}.1"); ?>">
+                                            <?php _e($day_5th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_5th ?>.1-</span>
+                                        </li>
+                                        <?php $day_6th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 6); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_6th}.1"); ?>">
+                                            <?php _e($day_6th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_6th ?>.1-</span>
+                                        </li>
+                                        <?php $day_7th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 7); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_7th}.1"); ?>">
+                                            <?php _e($day_7th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_7th ?>.1-</span>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <?php _e('Second', 'mec'); ?>
+                                    </li>
+                                    <ul>
+                                        <?php $day_1th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 1); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_1th}.2"); ?>">
+                                            <?php _e($day_1th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_1th ?>.2-</span>
+                                        </li>
+                                        <?php $day_2th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 2); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_2th}.2"); ?>">
+                                            <?php _e($day_2th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_2th ?>.2-</span>
+                                        </li>
+                                        <?php $day_3th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 3); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_3th}.2"); ?>">
+                                            <?php _e($day_3th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_3th ?>.2-</span>
+                                        </li>
+                                        <?php $day_4th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 4); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_4th}.2"); ?>">
+                                            <?php _e($day_4th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_4th ?>.2-</span>
+                                        </li>
+                                        <?php $day_5th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 5); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_5th}.2"); ?>">
+                                            <?php _e($day_5th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_5th ?>.2-</span>
+                                        </li>
+                                        <?php $day_6th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 6); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_6th}.2"); ?>">
+                                            <?php _e($day_6th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_6th ?>.2-</span>
+                                        </li>
+                                        <?php $day_7th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 7); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_7th}.2"); ?>">
+                                            <?php _e($day_7th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_7th ?>.2-</span>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <?php _e('Third', 'mec'); ?>
+                                    </li>
+                                    <ul>
+                                        <?php $day_1th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 1); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_1th}.3"); ?>">
+                                            <?php _e($day_1th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_1th ?>.3-</span>
+                                        </li>
+                                        <?php $day_2th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 2); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_2th}.3"); ?>">
+                                            <?php _e($day_2th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_2th ?>.3-</span>
+                                        </li>
+                                        <?php $day_3th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 3); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_3th}.3"); ?>">
+                                            <?php _e($day_3th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_3th ?>.3-</span>
+                                        </li>
+                                        <?php $day_4th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 4); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_4th}.3"); ?>">
+                                            <?php _e($day_4th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_4th ?>.3-</span>
+                                        </li>
+                                        <?php $day_5th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 5); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_5th}.3"); ?>">
+                                            <?php _e($day_5th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_5th ?>.3-</span>
+                                        </li>
+                                        <?php $day_6th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 6); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_6th}.3"); ?>">
+                                            <?php _e($day_6th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_6th ?>.3-</span>
+                                        </li>
+                                        <?php $day_7th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 7); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_7th}.3"); ?>">
+                                            <?php _e($day_7th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_7th ?>.3-</span>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <?php _e('Fourth', 'mec'); ?>
+                                    </li>
+                                    <ul>
+                                        <?php $day_1th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 1); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_1th}.4"); ?>">
+                                            <?php _e($day_1th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_1th ?>.4-</span>
+                                        </li>
+                                        <?php $day_2th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 2); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_2th}.4"); ?>">
+                                            <?php _e($day_2th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_2th ?>.4-</span>
+                                        </li>
+                                        <?php $day_3th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 3); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_3th}.4"); ?>">
+                                            <?php _e($day_3th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_3th ?>.4-</span>
+                                        </li>
+                                        <?php $day_4th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 4); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_4th}.4"); ?>">
+                                            <?php _e($day_4th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_4th ?>.4-</span>
+                                        </li>
+                                        <?php $day_5th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 5); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_5th}.4"); ?>">
+                                            <?php _e($day_5th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_5th ?>.4-</span>
+                                        </li>
+                                        <?php $day_6th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 6); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_6th}.4"); ?>">
+                                            <?php _e($day_6th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_6th ?>.4-</span>
+                                        </li>
+                                        <?php $day_7th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 7); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_7th}.4"); ?>">
+                                            <?php _e($day_7th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_7th ?>.4-</span>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <?php _e('Last', 'mec'); ?>
+                                    </li>
+                                    <ul>
+                                        <?php $day_1th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 1); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_1th}.l"); ?>">
+                                            <?php _e($day_1th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_1th ?>.l-</span>
+                                        </li>
+                                        <?php $day_2th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 2); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_2th}.l"); ?>">
+                                            <?php _e($day_2th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_2th ?>.l-</span>
+                                        </li>
+                                        <?php $day_3th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 3); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_3th}.l"); ?>">
+                                            <?php _e($day_3th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_3th ?>.l-</span>
+                                        </li>
+                                        <?php $day_4th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 4); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_4th}.l"); ?>">
+                                            <?php _e($day_4th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_4th ?>.l-</span>
+                                        </li>
+                                        <?php $day_5th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 5); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_5th}.l"); ?>">
+                                            <?php _e($day_5th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_5th ?>.l-</span>
+                                        </li>
+                                        <?php $day_6th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 6); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_6th}.l"); ?>">
+                                            <?php _e($day_6th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_6th ?>.l-</span>
+                                        </li>
+                                        <?php $day_7th = $this->main->advanced_repeating_sort_day($this->main->get_first_day_of_week(), 7); ?>
+                                        <li class="<?php $this->main->mec_active($advanced_days, "{$day_7th}.l"); ?>">
+                                            <?php _e($day_7th, 'mec'); ?>
+                                            <span class="key"><?php echo $day_7th ?>.l-</span>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <input class="mec-col-2" type="hidden" name="mec[date][repeat][advanced]"
+                                 id="mec_date_repeat_advanced"  value="<?php echo esc_attr($advanced_str); ?>" />
+                            </div>
+                        </div>
                         <div id="mec_end_wrapper">
                             <div class="mec-form-row">
                                 <label for="mec_repeat_ends_never"><h5 class="mec-title"><?php _e('Ends Repeat', 'mec'); ?></h5></label>
@@ -394,14 +616,14 @@ $this->factory->params('footer', $javascript);
                                     <input <?php if($mec_repeat_end == 'date') echo 'checked="checked"'; ?> type="radio" value="date" name="mec[date][repeat][end]" id="mec_repeat_ends_date" />
                                     <label for="mec_repeat_ends_date"><?php _e('On', 'mec'); ?></label>
                                 </div>
-                                <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_date]" id="mec_date_repeat_end_at_date" value="<?php echo esc_attr($repeat_end_at_date); ?>" />
+                                <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_date]" id="mec_date_repeat_end_at_date" autocomplete="off" value="<?php echo esc_attr($repeat_end_at_date); ?>" />
                             </div>
                             <div class="mec-form-row">
                                 <div class="mec-col-3">
                                     <input <?php if($mec_repeat_end == 'occurrences') echo 'checked="checked"'; ?> type="radio" value="occurrences" name="mec[date][repeat][end]" id="mec_repeat_ends_occurrences" />
                                     <label for="mec_repeat_ends_occurrences"><?php _e('After', 'mec'); ?></label>
                                 </div>
-                                <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_occurrences]" id="mec_date_repeat_end_at_occurrences" placeholder="<?php _e('Occurrences times', 'mec'); ?>"  value="<?php echo esc_attr(($repeat_end_at_occurrences+1)); ?>" />
+                                <input class="mec-col-2" type="text" name="mec[date][repeat][end_at_occurrences]" id="mec_date_repeat_end_at_occurrences" autocomplete="off" placeholder="<?php _e('Occurrences times', 'mec'); ?>"  value="<?php echo esc_attr(($repeat_end_at_occurrences+1)); ?>" />
                                 <span class="mec-tooltip">
                                     <div class="box">
                                         <h5 class="title"><?php _e('Occurrences times', 'mec'); ?></h5>
@@ -550,6 +772,7 @@ $this->factory->params('footer', $javascript);
                     <?php foreach($label_terms as $label_term): ?>
                     <label for="mec_fes_labels<?php echo $label_term->term_id; ?>">
                         <input type="checkbox" name="mec[labels][<?php echo $label_term->term_id; ?>]" id="mec_fes_labels<?php echo $label_term->term_id; ?>" value="1" <?php echo (in_array($label_term->term_id, $labels) ? 'checked="checked"' : ''); ?> />
+                        <?php do_action('mec_label_to_checkbox_frontend', $label_term, $labels ) ?>
                         <?php echo $label_term->name; ?>
                     </label>
                     <?php endforeach; ?>
@@ -611,19 +834,24 @@ $this->factory->params('footer', $javascript);
 
                 $speaker_terms = get_terms(array('taxonomy'=>'mec_speaker', 'hide_empty'=>false));
                 ?>
-                <?php if(count($speaker_terms)): ?>
                     <div class="mec-meta-box-fields" id="mec-speakers">
                         <h4><?php echo $this->main->m('taxonomy_speakers', __('Speakers', 'mec')); ?></h4>
                         <div class="mec-form-row">
+                            <input type="text" name="mec[speakers][datas][names]" id="mec_speaker_input_names" placeholder="<?php _e('Speakers Names', 'mec'); ?>" class="" />
+                            <p><?php _e('Separate names with commas Similar Justin, Cris', 'mec'); ?></p>
+                            <button class="button" type="button" id="mec_add_speaker_button"><?php _e('Add', 'mec'); ?></button>
+                        </div>
+                        <div class="mec-form-row" id="mec-fes-speakers-list">
+                        <?php if(count($speaker_terms)): ?>
                             <?php foreach($speaker_terms as $speaker_term): ?>
                                 <label for="mec_fes_speakers<?php echo $speaker_term->term_id; ?>">
                                     <input type="checkbox" name="mec[speakers][<?php echo $speaker_term->term_id; ?>]" id="mec_fes_speakers<?php echo $speaker_term->term_id; ?>" value="1" <?php echo (in_array($speaker_term->term_id, $speakers) ? 'checked="checked"' : ''); ?> />
                                     <?php echo $speaker_term->name; ?>
                                 </label>
                             <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
-                <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="mec-form-row mec-fes-submit-wide">

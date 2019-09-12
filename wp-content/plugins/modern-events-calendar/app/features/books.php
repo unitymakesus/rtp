@@ -202,7 +202,9 @@ class MEC_feature_books extends MEC_base
         if(!$transaction_id) return false;
     ?>
         <p class="mec-book-invoice">
-            <?php echo sprintf(__('Here, you can %s invoice of %s transaction.', 'mec'), '<a href="'.$this->book->get_invoice_link($transaction_id).'" target="_blank">'.__('download', 'mec').'</a>', '<strong>'.$transaction_id.'</strong>'); ?>
+            <?php
+                if(!isset($this->settings['booking_invoice']) or (isset($this->settings['booking_invoice']) and $this->settings['booking_invoice'])) echo sprintf(__('Here, you can %s invoice of %s transaction.', 'mec'), '<a href="'.$this->book->get_invoice_link($transaction_id).'" target="_blank">'.__('download', 'mec').'</a>', '<strong>'.$transaction_id.'</strong>');
+            ?>
         </p>
     <?php
     }
@@ -236,7 +238,6 @@ class MEC_feature_books extends MEC_base
     public function meta_box_booking_form($post)
     {
         $meta = $this->main->get_post_meta($post->ID);
-
         $event_id = (isset($meta['mec_event_id']) and $meta['mec_event_id']) ? $meta['mec_event_id'] : 0;
 
         // The booking is saved so we will skip this form and show booking info instead.
@@ -427,9 +428,12 @@ class MEC_feature_books extends MEC_base
      */
     public function filter_columns($columns)
     {
+        unset($columns['title']);
         unset($columns['date']);
         unset($columns['author']);
 
+        $columns['id'] = __('ID', 'mec');
+        $columns['title'] = __('Title', 'mec');
         $columns['attendees'] = __('Attendees', 'mec');
         $columns['event'] = __('Event', 'mec');
         $columns['price'] = __('Price', 'mec');
@@ -449,6 +453,7 @@ class MEC_feature_books extends MEC_base
      */
     public function filter_sortable_columns($columns)
     {
+        $columns['id'] = 'id';
         $columns['event'] = 'event';
         $columns['price'] = 'price';
         $columns['confirmation'] = 'confirmation';
@@ -515,6 +520,10 @@ class MEC_feature_books extends MEC_base
         {
             echo '<a href="'.$this->main->add_qs_var('m', date('Ymd', get_post_time('U', false, $post_id))).'">'.get_the_date('', $post_id).'</a>';
         }
+        elseif($column_name == 'id')
+        {
+            echo $post_id;
+        }
     }
 
     /**
@@ -550,6 +559,10 @@ class MEC_feature_books extends MEC_base
             $query->set('meta_key', 'mec_verified');
             $query->set('orderby', 'mec_verified');
         }
+        elseif($orderby == 'id')
+        {
+            $query->set('orderby', 'ID');
+        }
         
         // Meta Query
         $meta_query = array();
@@ -575,6 +588,26 @@ class MEC_feature_books extends MEC_base
             );
         }
         
+        // Filter by Ticket Name
+        if(isset($_REQUEST['mec_ticket_name']) and trim($_REQUEST['mec_ticket_name']))
+        {
+            $mec_ticket_end = explode(':..:', $_REQUEST['mec_ticket_name']);
+            $meta_query[] = array(
+                'relation' => 'AND',
+                array(
+                    'key'     => 'mec_ticket_id',
+                    'value'   => sanitize_text_field(end($mec_ticket_end)),
+                    'compare' => 'LIKE',
+                ),
+                array(
+                    'key'     => 'mec_event_id',
+                    'value'   => sanitize_text_field(current(explode(':..:', $_REQUEST['mec_ticket_name']))),
+                    'type'    => 'numeric',
+                    'compare' => '=',
+                )
+            );
+        }
+
         // Filter by Transaction ID
         if(isset($_REQUEST['mec_transaction_id']) and trim($_REQUEST['mec_transaction_id']))
         {
@@ -607,6 +640,14 @@ class MEC_feature_books extends MEC_base
             );
         }
         
+        // Filter by Verification
+        if(isset($_REQUEST['id']) and trim($_REQUEST['id']) != '')
+        {
+            $meta_query[] = array(
+                'orderby' => 'ID'
+            );
+        }
+
         if(count($meta_query)) $query->set('meta_query', $meta_query);
     }
     
@@ -622,6 +663,33 @@ class MEC_feature_books extends MEC_base
         foreach($events as $event) echo '<option value="'.$event->ID.'" '.($mec_event_id == $event->ID ? 'selected="selected"' : '').'>'.$event->post_title.'</option>';
         echo '</select>';
         
+        $tickets = $this->db->select("SELECT `post_id`, `meta_value` FROM `#__postmeta` WHERE `meta_key`='mec_tickets'", 'loadAssocList');
+        if(!is_array($tickets)) $tickets = array();
+
+        $mec_ticket_name = isset($_REQUEST['mec_ticket_name']) ? sanitize_text_field($_REQUEST['mec_ticket_name']) : '';
+
+        echo '<select name="mec_ticket_name">';
+        echo '<option value="">'.__('Ticket', 'mec').'</option>';
+
+        foreach($tickets as $single_ticket) 
+        {
+            $ticket_value = (is_serialized($single_ticket['meta_value'])) ? unserialize($single_ticket['meta_value']) : array();
+            foreach($ticket_value as $ticket)
+            {
+                $rendered_tickets = array();
+                if(!in_array($ticket['name'], $rendered_tickets))
+                {
+                    $value = $single_ticket['post_id'].':..:'.','.key($ticket_value).',';
+                    echo '<option value="'.$value.'"'.selected($value, $mec_ticket_name).'>'.(!trim($ticket['name']) ? get_the_title($single_ticket['post_id']) .  __(' - Ticket', 'mec') . intval(key($ticket_value)) : $ticket['name']) . '</option>';
+                    $rendered_tickets[] = $ticket['name'];
+                }
+
+                next($ticket_value);
+            }
+        }
+
+        echo '</select>';
+
         $mec_confirmed = isset($_REQUEST['mec_confirmed']) ? sanitize_text_field($_REQUEST['mec_confirmed']) : '';
         
         echo '<select name="mec_confirmed">';
@@ -699,7 +767,6 @@ class MEC_feature_books extends MEC_base
                 header('Content-Disposition: attachment; filename=bookings-'.md5(time().mt_rand(100, 999)).'.csv');
 
                 $post_ids = (isset($_REQUEST['post']) and is_array($_REQUEST['post'])) ? $_REQUEST['post'] : array();
-
                 $event_ids = array();
                 foreach($post_ids as $post_id) $event_ids[] = get_post_meta($post_id, 'mec_event_id', true);
                 $event_ids = array_unique($event_ids);
@@ -708,7 +775,7 @@ class MEC_feature_books extends MEC_base
                 if(count($event_ids) == 1) $main_event_id = $event_ids[0];
 
                 $columns = array(__('ID', 'mec'), __('Event', 'mec'), __('Date', 'mec'), $this->main->m('ticket', __('Ticket', 'mec')), __('Transaction ID', 'mec'), __('Total Price', 'mec'), __('Name', 'mec'), __('Email', 'mec'), __('Confirmation', 'mec'), __('Verification', 'mec'));
-
+                $columns = apply_filters('mec_csv_export_columns', $columns);
                 $reg_fields = $this->main->get_reg_fields($main_event_id);
                 foreach($reg_fields as $reg_field_key=>$reg_field)
                 {
@@ -766,6 +833,7 @@ class MEC_feature_books extends MEC_base
                         
                         $ticket_id = isset($attendee['id']) ? $attendee['id'] : get_post_meta($post_id, 'mec_ticket_id', true);
                         $booking = array($post_id, get_the_title($event_id), get_the_date('', $post_id), (isset($tickets[$ticket_id]['name']) ? $tickets[$ticket_id]['name'] : __('Unknown', 'mec')), $transaction_id, $this->main->render_price(($price ? $price : 0)), (isset($attendee['name']) ? $attendee['name'] : (isset($booker->first_name) ? trim($booker->first_name.' '.$booker->last_name) : '')), (isset($attendee['email']) ? $attendee['email'] : @$booker->user_email), $confirmed, $verified);
+                        $booking = apply_filters('mec_csv_export_booking', $booking, $post_id, $event_id);
 
                         $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array();
                         foreach($reg_fields as $field_id=>$reg_field)
@@ -804,7 +872,7 @@ class MEC_feature_books extends MEC_base
                 if(count($event_ids) == 1) $main_event_id = $event_ids[0];
 
                 $columns = array(__('ID', 'mec'), __('Event', 'mec'), __('Date', 'mec'), $this->main->m('ticket', __('Ticket', 'mec')), __('Transaction ID', 'mec'), __('Total Price', 'mec'), __('Name', 'mec'), __('Email', 'mec'), __('Confirmation', 'mec'), __('Verification', 'mec'));
-
+                $columns = apply_filters('mec_excel_export_columns', $columns);
                 $reg_fields = $this->main->get_reg_fields($main_event_id);
                 foreach($reg_fields as $reg_field_key=>$reg_field)
                 {
@@ -862,6 +930,7 @@ class MEC_feature_books extends MEC_base
                         }
                         $ticket_id = isset($attendee['id']) ? $attendee['id'] : get_post_meta($post_id, 'mec_ticket_id', true);
                         $booking = array($post_id, get_the_title($event_id), get_the_date('', $post_id), (isset($tickets[$ticket_id]['name']) ? $tickets[$ticket_id]['name'] : __('Unknown', 'mec')), $transaction_id, $this->main->render_price(($price ? $price : 0)), (isset($attendee['name']) ? $attendee['name'] : (isset($booker->first_name) ? trim($booker->first_name.' '.$booker->last_name) : '')), (isset($attendee['email']) ? $attendee['email'] : $booker->user_email), $confirmed, $verified,$attachments);
+                        $booking = apply_filters('mec_excel_export_booking', $booking, $post_id, $event_id);
 
                         $reg_form = isset($attendee['reg']) ? $attendee['reg'] : array();
                         foreach($reg_fields as $field_id=>$reg_field)
@@ -927,7 +996,7 @@ class MEC_feature_books extends MEC_base
             $ticket_id = isset($_POST['mec_ticket_id']) ? sanitize_text_field($_POST['mec_ticket_id']) : '';
             $event_id = isset($_POST['mec_event_id']) ? sanitize_text_field($_POST['mec_event_id']) : '';
 
-            $tickets = array(array_merge($attendee, array('id'=>$ticket_id, 'count'=>1, 'variations'=>array(), 'reg'=>array())));
+            $tickets = array(array_merge($attendee, array('id'=>$ticket_id, 'count'=>1, 'variations'=>array(), 'reg'=>(isset($attendee['reg']) ? $attendee['reg'] : array()))));
             $raw_tickets = array($ticket_id=>1);
             $event_tickets = get_post_meta($event_id, 'mec_tickets', true);
 
@@ -1023,17 +1092,21 @@ class MEC_feature_books extends MEC_base
         // Verify that the nonce is valid.
         if(!wp_verify_nonce(sanitize_text_field($_REQUEST['_wpnonce']), 'mec_book_form_'.$event_id)) $this->main->response(array('success'=>0, 'message'=>__('Security nonce is invalid.', 'mec'), 'code'=>'NONCE_IS_INVALID'));
 
-        if(!function_exists('wp_handle_upload')){
-            require_once(ABSPATH . 'wp-admin/includes/file.php');
-        }
-        if ( isset(  $_FILES['book'] ) ) {
+        if(!function_exists('wp_handle_upload')) require_once(ABSPATH . 'wp-admin/includes/file.php');
+
+        if(isset($_FILES['book']))
+        {
             $counter = 0;
             $attachments = [];
             $files = $_FILES['book'];
-            foreach ($files['name'] as $key => $value) {
-                if ($files['name'][$key]) {
-                    foreach ($files['name'][$key][1]['reg'] as $id => $reg) {
-                        if ( ! empty ( $files['name'][$key][1]['reg'][$id] ) ) {
+            foreach($files['name'] as $key => $value)
+            {
+                if($files['name'][$key])
+                {
+                    foreach($files['name'][$key][1]['reg'] as $id => $reg)
+                    {
+                        if(!empty($files['name'][$key][1]['reg'][$id]))
+                        {
                             $file = array(
                                 'name'     => $files['name'][$key][1]['reg'][$id],
                                 'type'     => $files['type'][$key][1]['reg'][$id],
@@ -1043,7 +1116,8 @@ class MEC_feature_books extends MEC_base
                             );
                             
                             $maxFileSize = isset($this->settings['upload_field_max_upload_size']) && $this->settings['upload_field_max_upload_size'] ? $this->settings['upload_field_max_upload_size'] * 1048576 : wp_max_upload_size();
-                            if ( $file['error'] || $file['size'] > $maxFileSize) {
+                            if($file['error'] || $file['size'] > $maxFileSize)
+                            {
                                 $this->main->response(array('success'=>0, 'message'=> '"'.$files['name'][$key][1]['reg'][$id] .'"<br />'.__('Uploaded file size exceeds the maximum allowed size.', 'mec')));
                                 die();
                             }
@@ -1052,25 +1126,31 @@ class MEC_feature_books extends MEC_base
                             $file_extension = count(explode(".", $file['name'])) >= 2 ? end(explode(".", $file['name'])) : '';
                             $has_valid_type = false;
 
-                            foreach ($extensions as $extension) {
-                                if ($extension == $file_extension) {
+                            foreach($extensions as $extension)
+                            {
+                                if($extension == $file_extension)
+                                {
                                     $has_valid_type = true;
                                     break;
                                 }
                             }
-                            if ( ! $has_valid_type ) {
+
+                            if(!$has_valid_type)
+                            {
                                 $this->main->response(array('success'=>0, 'message'=> '"'.$files['name'][$key][1]['reg'][$id] .'"<br />'.__('Uploaded file type is not valid.', 'mec')));
                                 die();
                             }
                             
                             $uploaded_file = wp_handle_upload($file, array('test_form' => false));
-                            if( $uploaded_file && ! isset( $uploaded_file['error'] ) ) {
+                            if($uploaded_file && !isset($uploaded_file['error']))
+                            {
                                 $attachments[$counter]['MEC_TYPE_OF_DATA'] = "attachment";
                                 $attachments[$counter]['response'] = "SUCCESS";
                                 $attachments[$counter]['filename'] = basename( $uploaded_file['url'] );
                                 $attachments[$counter]['url'] = $uploaded_file['url'];
                                 $attachments[$counter]['type'] = $uploaded_file['type'];
                             }
+
                             $counter++;
                         }
                     }
@@ -1084,7 +1164,7 @@ class MEC_feature_books extends MEC_base
         $date = isset($book['date']) ? $book['date'] : NULL;
         $tickets = isset($book['tickets']) ? $book['tickets'] : NULL;
         $uniqueid = isset($_REQUEST['uniqueid']) ? sanitize_text_field($_REQUEST['uniqueid']) : $event_id;
-        
+
         if(is_null($date) or is_null($tickets)) $this->main->response(array('success'=>0, 'message'=>__('Invalid request.', 'mec'), 'code'=>'INVALID_REQUEST'));
         
         // Render libraary
@@ -1098,7 +1178,7 @@ class MEC_feature_books extends MEC_base
         // Next Booking step
         $next_step = 'form';
         $response_data = array();
-        
+
         switch($step)
         {
             case '1':
@@ -1146,7 +1226,7 @@ class MEC_feature_books extends MEC_base
 
                         $ticket['name'] = $first_attendee['name'];
                         $ticket['email'] = $first_attendee['email'];
-                        $ticket['reg'] = $first_attendee['reg'];
+                        $ticket['reg'] = isset($first_attendee['reg']) ?  $first_attendee['reg'] : '';
                         $ticket['variations'] = isset($first_attendee['variations']) ? $first_attendee['variations'] : array();
 
                         $rendered_tickets[] = $ticket;
@@ -1155,9 +1235,35 @@ class MEC_feature_books extends MEC_base
                     $tickets = $rendered_tickets;
                 }
 
+                $booking_options = get_post_meta($event_id, 'mec_booking', true);
+                $attendees_info = array();
+                $unlimited = false;
+                $limit = 12;
+                $mec_settings = $this->main->get_settings();
+                
+                // Total user booking limited
+                if(isset($booking_options['bookings_user_limit_unlimited']) and !trim($booking_options['bookings_user_limit_unlimited']))
+                {   
+                    $limit = (isset($booking_options['bookings_user_limit']) and trim($booking_options['bookings_user_limit'])) ? trim($booking_options['bookings_user_limit']) : $limit;
+                }
+                else
+                {
+                    // If Inherit from global options activate
+                    if(!isset($mec_settings['booking_limit']) or (isset($mec_settings['booking_limit']) and !trim($mec_settings['booking_limit']))) $unlimited = true;
+                    else $limit = trim($mec_settings['booking_limit']);
+                }
+                
                 foreach($tickets as $ticket)
                 {
                     if(isset($ticket['email']) and (trim($ticket['email']) == '' or !filter_var($ticket['email'], FILTER_VALIDATE_EMAIL))) continue;
+                    
+                    // Booking limit attendee
+                    if(!$unlimited)
+                    {
+                        if(!array_key_exists($ticket['email'], $attendees_info)) $attendees_info[$ticket['email']] = array('count' => $ticket['count']);
+                        else $attendees_info[$ticket['email']]['count'] = ($attendees_info[$ticket['email']]['count'] + $ticket['count']);
+                    }
+
                     if(!isset($ticket['name']) or (isset($ticket['name']) and trim($ticket['name']) == '')) continue;
 
                     if(!isset($raw_tickets[$ticket['id']])) $raw_tickets[$ticket['id']] = 1;
@@ -1177,22 +1283,45 @@ class MEC_feature_books extends MEC_base
                     $validated_tickets[] = $ticket;
                 }
                 
+                if(!$unlimited)
+                {
+                    foreach($attendees_info as $attendee_info)
+                    {
+                        if(current($attendee_info) > $limit)
+                        {
+                            $this->main->response(array('success'=>0, 'message'=>__("Your booking limit reached or you're not able to book these amount of tickets!", 'mec'), 'code'=>'LIMIT_REACHED'));
+                            return;
+                        }
+                        else
+                        {
+                            $attendee_email = key($attendees_info);
+                            $permitted = $this->main->booking_permitted($attendee_email, array('event_id' => $event_id, 'date' => explode(':', $date)[0], 'count'=> current($attendee_info)), $limit);
+
+                            if($permitted === false)
+                            {
+                                $this->main->response(array('success'=>0, 'message'=>__("Your booking limit reached or you're not able to book these amount of tickets!", 'mec'), 'code'=>'LIMIT_REACHED'));
+                                return;
+                            }
+                        }
+
+                        next($attendees_info);
+                    }
+                }
+
                 // Attendee form is not filled correctly
                 if(!count($validated_tickets)) $this->main->response(array('success'=>0, 'message'=>__('Please fill the form correctly. Email and Name fields are required!', 'mec'), 'code'=>'ATTENDEE_FORM_INVALID'));
+
                 // Attachments
-                if (isset($attachments)) {
+                if(isset($attachments))
+                {
                     $validated_tickets['attachments'] = $attachments;
                 }
 
                 // Tickets
                 $event_tickets = isset($event->data->tickets) ? $event->data->tickets : array();
-
-                // Booking Date
-                $date_ex = explode(':', $book['date']);
-                $occurrence = $date_ex[0];
                 
                 // Calculate price of bookings
-                $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, $raw_variations, $occurrence);
+                $price_details = $this->book->get_price_details($raw_tickets, $event_id, $event_tickets, $raw_variations);
                 
                 $book['tickets'] = $validated_tickets;
                 $book['price_details'] = $price_details;
@@ -1286,9 +1415,36 @@ class MEC_feature_books extends MEC_base
         // Booking Form
         $reg_fields = $this->main->get_reg_fields($event_id);
 
+        $mec_email = false;
+        $mec_name = false;
+        foreach($reg_fields as $field)
+        {
+            if(isset($field['type']))
+            {
+                if($field['type'] == 'mec_email') $mec_email = true;
+                if($field['type'] == 'name') $mec_name = true;
+            }
+        }
+
+        if(!$mec_name)
+        {
+            $reg_fields[] = array(
+                'mandatory' => '0',
+                'type'      => 'name',
+                'label'     => esc_html__( 'Name', 'mec' ),
+            );
+        }
+
+        if(!$mec_email)
+        {
+            $reg_fields[] = array(
+                'mandatory' => '0',
+                'type'      => 'mec_email',
+                'label'     => esc_html__( 'Email', 'mec' ),
+            );
+        }
+
         $booking_form_options = '';
-        $booking_form_options .= '<div class="mec-form-row"><div class="mec-col-2"><label for="mec_book_reg_field_name">'.__('Name', 'mec').'</label></div><div class="mec-col-6"><input class="widefat" id="mec_book_reg_field_name" type="text" name="mec_attendee[name]" value="" placeholder="'.__('Name', 'mec').'" required="required" /></div></div>';
-        $booking_form_options .= '<div class="mec-form-row"><div class="mec-col-2"><label for="mec_book_reg_field_email">'.__('Email', 'mec').'</label></div><div class="mec-col-6"><input class="widefat" id="mec_book_reg_field_email" type="email" name="mec_attendee[email]" value="" placeholder="'.__('Email', 'mec').'" required="required" /></div></div>';
 
         if(count($reg_fields))
         {
@@ -1304,17 +1460,40 @@ class MEC_feature_books extends MEC_base
                 $booking_form_options .= '<div class="mec-col-6">';
                 $mandatory = (isset($reg_field['mandatory']) and $reg_field['mandatory']) ? true : false;
 
-                if ($reg_field['type'] == 'text') {
+                if($reg_field['type'] == 'name')
+                {
+                    $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="text" name="mec_attendee[name]" value="" placeholder="'.__('Name', 'mec').'" required="required" />';
+                }
+                elseif($reg_field['type'] == 'mec_email')
+                {
+                    $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="email" name="mec_attendee[email]" value="" placeholder="'.__('Email', 'mec').'" required="required" />';
+                }
+                elseif($reg_field['type'] == 'text')
+                {
                     $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="text" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
-                } elseif ($reg_field['type'] == 'email') {
+                }
+                elseif($reg_field['type'] == 'date')
+                {
+                    $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="date" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' min="1970-01-01" max="2099-12-31" />';
+                }
+                elseif($reg_field['type'] == 'email')
+                {
                     $booking_form_options .= '<input class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" type="email" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
-                } elseif ($reg_field['type'] == 'tel') {
+                }
+                elseif ($reg_field['type'] == 'tel')
+                {
                     $booking_form_options .= '<input class="widefat" oninput="this.value=this.value.replace(/(?![0-9])./gmi,"")" id="mec_book_reg_field_reg'.$reg_field_id.'" type="tel" name="mec_attendee[reg]['.$reg_field_id.']" value="" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').' />';
-                } elseif ($reg_field['type'] == 'textarea') {
+                }
+                elseif($reg_field['type'] == 'textarea')
+                {
                     $booking_form_options .= '<textarea class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" name="mec_attendee[reg]['.$reg_field_id.']" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').'></textarea>';
-                } elseif ($reg_field['type'] == 'p') {
+                }
+                elseif($reg_field['type'] == 'p')
+                {
                     $booking_form_options .= '<p>'.__($reg_field['content'], 'mec').'</p>';
-                } elseif ($reg_field['type'] == 'select') {
+                }
+                elseif($reg_field['type'] == 'select')
+                {
                     $booking_form_options .= '<select class="widefat" id="mec_book_reg_field_reg'.$reg_field_id.'" name="mec_attendee[reg]['.$reg_field_id.']" placeholder="'.__($reg_field['label'], 'mec').'" '.($mandatory ? 'required="required"' : '').'>';
                     foreach($reg_field['options'] as $reg_field_option) $booking_form_options .= '<option value="'.esc_attr__($reg_field_option['label'], 'mec').'">'.__($reg_field_option['label'], 'mec').'</option>';
                     $booking_form_options .= '</select>';
@@ -1348,7 +1527,6 @@ class MEC_feature_books extends MEC_base
                 }
 
                 $booking_form_options .= '</div>';
-
                 $booking_form_options .= '</div>';
             }
         }

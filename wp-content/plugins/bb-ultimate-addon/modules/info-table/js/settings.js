@@ -18,6 +18,7 @@
 				librarySource   = form.find('select[name=photo_src]'),
 				urlSource       = form.find('input[name=photo_url]'),
 				it_link_type	= form.find('select[name=it_link_type]');
+				save_button = form.find('.fl-builder-settings-save');
 
 			this.box_design_changed();
 			this._toggleImageIcon();
@@ -25,6 +26,7 @@
 
 			box_design.on('change', this.box_design_changed );
 			color_scheme.on('change', this.box_design_changed );
+			save_button.off( 'click' ).on( 'click', this.submit);
 
 			photoSource.on('change', $.proxy( this._photoSourceChanged, this ) );
 			image_type.on('change', $.proxy( this._toggleImageIcon, this ) );
@@ -33,7 +35,23 @@
 			it_link_type.on('change', $.proxy( this._toggleLinkRequired, this ) ) ;
 
 		},
+		submit: function()
+		{
+			var form      = $( '.fl-builder-settings' );
+				imageType   = form.find('select[name=image_type]').val();
+				photo       = form.find('input[name=photo]').val();
+				icon       = form.find('input[name=icon]');
 
+			if ( 'none' === imageType || 'icon' === imageType ) {
+				return true;
+			}
+			if ( 0 === photo.length ) {
+				FLBuilder.alert( 'Photo Fields are required' );
+				return false;
+			}
+
+			return true;
+		},
 		box_design_changed: function(){
 			var form    	= $('.fl-builder-settings'),
 				color_scheme 	= form.find('select[name=color_scheme]').val(),

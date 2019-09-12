@@ -267,4 +267,16 @@ final class FLBuilderUtils {
 		return 0;
 	}
 
+	/**
+	 * Version safe json_encode
+	 * @since 2.2.4
+	 */
+	static public function json_encode( $data ) {
+		if ( version_compare( PHP_VERSION, '5.5', '<' ) ) {
+			return json_encode( $data );
+		} else {
+			return json_encode( $data, JSON_PARTIAL_OUTPUT_ON_ERROR );
+		}
+	}
+
 }

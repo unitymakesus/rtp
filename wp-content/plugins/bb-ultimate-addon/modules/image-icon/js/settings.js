@@ -10,12 +10,12 @@
 				photoSource     = form.find('select[name=photo_source]'),
 				librarySource   = form.find('select[name=photo_src]'),
 				urlSource       = form.find('input[name=photo_url]');
-			
+				save_button = form.find('.fl-builder-settings-save');
 			//console.log( this );
 			// Init validation events.
 			//this._photoSourceChanged();
 			this._toggleImageIcon();
-
+			save_button.off( 'click' ).on( 'click', this.submit);
 				// Validation events
 			photoSource.on('change', $.proxy( this._photoSourceChanged, this ) );
 			image_type.on('change', $.proxy( this._toggleImageIcon, this ) );
@@ -23,7 +23,25 @@
 			image_style.on('change', $.proxy( this._toggleBorderOptions, this ) ) ;
 			//image_type.trigger('change');
 		},
-		
+		submit: function()
+		{
+
+			var form      = $( '.fl-builder-settings' );
+				imageType   = form.find('select[name=image_type]').val();
+				photo       = form.find('input[name=photo]').val();
+				icon       = form.find('input[name=icon]');
+
+			if ( 'none' === imageType || 'icon' === imageType ) {
+				return true;
+			}
+
+			if ( 0 === photo.length ) {
+				FLBuilder.alert( 'Photo Fields are required' );
+				return false;
+			}
+
+			return true;
+		},
 		_toggleBorderOptions: function() {
 			var form		= $('.fl-builder-settings'),
 				show_border = false

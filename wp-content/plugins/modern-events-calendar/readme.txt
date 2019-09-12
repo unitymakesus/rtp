@@ -3,26 +3,86 @@ Contributors: webnus
 Donate link: https://webnus.net
 Tags: Event, Events, Calendar, Booking, Schedule, Organizer, Venue
 Requires at least: 4.0.0
-Tested up to: 5.2.1
-Stable tag: 4.3.2
+Tested up to: 5.2.3
+Stable tag: 4.5.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Manage your single and recurring events and present them in different modern styles and skins.
+WordPress event calendar is a free plugin that allows you to manage your single and recurring events and present them in different, modern style and skin.
 
 == Description ==
+WordPress event calendar plugin is a trending FREE tool used for managing events in websites. Modern Events Calendar is a responsive, mobile-friendly, FREE, and comprehensive events management plugin which is extremely user-friendly and well-designed for displaying the events calendar on the websites, ever easier.
 
-If you are running an event website or you want to provide a website with booking services on WordPress, you will need a strong and practical plugin for it which can provide you all possible features. MEC is easy to use a plugin that you can add and publish your events easily to your WordPress website and also, organize and categories them in the best way. Also, you can sync it with lots of other features to have the best outcome.
+* [Demos](https://webnus.net/modern-events-calendar/)
+* [Documentation](https://webnus.net/dox/modern-events-calendar/)
+* [Toturials](https://webnus.net/dox/modern-events-calendar/video-tutorials/)
+* [Test Drive](https://webnus.net/modern-events-calendar/mec-test)
 
 [Modern Events Calendar](https://webnus.net/modern-events-calendar/) has been created according to trending design methods and latest technology with attractive design based on practical concept of design.
-We gathered all features of [event calendar](https://webnus.net/modern-events-calendar/) as you desire with advanced booking system ([Pro Version](https://webnus.net/pricing/#plugins)) and many other useful options which are practical in real world!
+We gathered all features of [event calendar](https://webnus.net/modern-events-calendar/) as you desire with advanced booking system ([Pro Version](https://webnus.net/mec-purchase/)) and many other useful options which are practical in real world!
 Using [Modern Events Calendar Lite](https://webnus.net/modern-events-calendar/), you can create different single or [recurring events](https://webnus.net/modern-events-calendar/) and show them in frontend of your website using many modern skins and styles.
 
-https://www.youtube.com/watch?v=YYcksr-dgNg
+https://www.youtube.com/watch?v=erKILCKDxis
+
+Fortunately, though WordPress doesn’t enable these functions out of the box, there’s a plugin you can use. Modern Events Calendar is an easy way to manage events of all kinds on your WordPress site. As the name suggests, the core benefit of Modern Events Calendar is that it lets you create an events calendar that looks pretty great out of the box. That latter part is important because some popular event calendar plugins require a lot of custom styling to make them look good, which is tough if you don’t know your way around CSS.
+
+https://www.youtube.com/watch?v=cnVy2YzDMOk
+
+== Experts Opinions ==
+>The Modern Events Calendar plugin combined with Divi’s beautiful layouts are an effective combination both in design and functionality. To start things off I’m going to go through the settings we need to get the functionality we want for our event scheduling and booking. There are a ton of options available which really is empowering when you are trying to perfect the user experience when scheduling or booking events.
+><strong>Jason Champagne</strong>
+>[Elegant Themes Blog](https://www.elegantthemes.com/blog/divi-resources/how-to-add-event-scheduling-and-booking-to-your-site-using-the-pottery-studio-layout-pack)
+
+>Created to deliver a selection of useful features and a well-designed user experience, the Modern Events Calendar plugin is a tool for publishing events on WordPress websites.  With free and paid versions available, whether you simply want to add basic events publishing functionality to your website or you have more demanding needs, there’s a good chance this plugin will meet your requirements.
+><strong>Joe Fylan</strong>
+>[AThemes Blog](https://athemes.com/reviews/modern-events-calendar-review/)
+
+>Hence the name, Modern Events Calendar Lite is a WordPress plugin that follows all the latest trends and regulations. When it comes to creating the niftiest event calendars, this tool might be the perfect solution for what you are up to. And if you are already using another plugin, but you are not fully satisfied, you can import the data quickly and effortlessly, too. The process of setting up the calendar that you require is simple and swift.
+><strong>Vishnu</strong>
+>[Colorlib Blog](https://colorlib.com/wp/event-calendar-plugins/)
+
+>As the name suggests, the core benefit of Modern Events Calendar is that it lets you create an events calendar that looks pretty great out of the box. That latter part is important because some popular event calendar plugins require a lot of custom styling to make them look good, which is tough if you don’t know your way around CSS. Modern Events Calendar lets you create great-looking event displays right out of the box, along with advanced features like ticketing and a custom event display builder. You can even integrate with Elementor for more design flexibility, and WooCommerce for more ticketing/payment flexibility.
+><strong>Colin Newcomer</strong>
+>[WPlift Blog](https://wplift.com/modern-events-calendar-review)
+
+>Many WordPress site owners can benefit from having an online booking system. Integrated online event registration helps your customers purchase tickets, schedule appointments, and sign up for events whenever it’s convenient for them. When it comes to managing events in WordPress, Modern Events Calendar really has it all. From simple calendar displays to personalized bookings with variable tickets, you can create the perfect system to meet your site’s needs.
+><strong>Will Morris</strong>
+>[WPmayor Blog](https://wpmayor.com/how-to-manage-online-bookings-with-modern-events-calendar/)
+
+>If you are running an event website or you want to start a WordPress powered website with booking services, you need a managed WordPress hosting that will not disappoint you and a strong and practical plugin that can provide all the required features. The most important factor in such projects is the user-friendly environment the plugin creates. In this regard, both Lite and Pro versions of Modern Events Calendar (MEC) can help you.
+><strong>Mustaasam Saleem</strong>
+>[Cloudways Blog](https://www.cloudways.com/blog/modern-events-calendar-wordpress-plugin-review/)
+
+>The Modern Events Calendar plugin says quite a bit in its name, since it’s a high-quality, professional, and modern take on your standard events management layout. You can choose from a wide variety of designs, making it an excellent solution for branding and fitting in your website. It also includes a powerful booking system at only $34. Since this is sold on CodeCanyon you’re also signing up for a year of premium support, beating out some of those free plugins we’ve talked about earlier.
+><strong>Brian Jackson</strong>
+>[Kinsta Blog](https://kinsta.com/blog/wordpress-event-management-plugins/)
+
+== Some New Features ==
+*   **Shortcode For Page Builders** - A shortcode which is fully compatible with your Page Builders including: Elementor, Divi Builder, Visual Composer, King Composer
+*   **Schema Ready** - Event Schema markup to a single page and shortcodes, recommended for SEO
+*   **A particular day of month** - Adding a repeat for a particular day in month, for example, the last Tuseday of the month, with the ability to be a never ending event
+*   **Search Bar shortcode** - Place the shortcode in any page you want and the result of the search will be the events along with all their features. 
+*   **Custom Archive Skin Feature** - For the category & archives you can simply choose a pre-built skin or a particular skin of the shortcodes just like the archive page.
+*   **Event Status In Submission Form** - It shows the user’s event status in the events list. Therefore, the end users will know about the status of their sent event by the event submission.
+*   **Breadcrumb** - Breadcrumbs for the Single Event Page have the home page link and events archive
+*   **Multiple Location** - Choose several locations for an event and display these widgets in the single event page
+*   **Import From Meetup** - Easily transfer your events from Meetup to MEC, by only a single click.
+
+== User Reviews ==
+>I moved over from a different calendar plugin and found the import process to be easy and straightforward. MEC worked perfectly out of the box.
+>[johnlund1](https://wordpress.org/support/topic/easy-to-import-and-setup/)
+
+>This plugin looks very stylish and works great. It is also well supported for updates which is reassuring. My client is very happy with it because it is fairly easy to use once it’s set up. Thanks for your hard work on this plugin!
+>[SherryBrimacombe](https://wordpress.org/support/topic/stylish-and-easy-to-use-3/)
+
+>I love it… design functionality, features, responsive, support and… M.E. Calendar is growing fast and when I see the changelog, I amazed. I would like the reservation system to be free, but it isn’t… But I love it yet…
+>Thank you for your plugin
+>[gabidoet](https://wordpress.org/support/topic/perfect-in-every-way-possible/)
+
+[All Reviews](https://wordpress.org/support/plugin/modern-events-calendar-lite/reviews/)
 
 == Convert your events in a few seconds ==
-
-If you are using event-on plugin or the event calendar and you are willing to migrate to [WordPress Event Calendar](https://webnus.net/modern-events-calendar/)’s best plugin then no need to worry about transferring your current content.
+If you are using event-on plugin or the event calendar and you are willing to migrate to [WordPress Events Calendar](https://webnus.net/modern-events-calendar/)’s best plugin then no need to worry about transferring your current content.
 Only by a few clicks in a couple of seconds your current content [events](https://webnus.net/modern-events-calendar/) will be imported automatically with full details.
 
 == Addons ==
@@ -34,8 +94,7 @@ We have begun to create practical [add-ons](https://webnus.net/modern-events-cal
 
 
 == Helpful Documentation ==
-
-[WordPress Event Calendar](https://webnus.net/modern-events-calendar/)’s best plugin [documentation](https://webnus.net/dox/modern-events-calendar/) is useful without overstatement for [Modern Event Calendar](https://webnus.net/modern-events-calendar/). It starts with simple steps for easy configuration and covers all essential aspects from beginning to the most advanced parts with step by step configuration of the plugin.
+WordPress Events Calendar’s best plugin [documentation](https://webnus.net/dox/modern-events-calendar/) is useful without overstatement for [Modern Event Calendar](https://webnus.net/modern-events-calendar/). It starts with simple steps for easy configuration and covers all essential aspects from beginning to the most advanced parts with step by step configuration of the plugin.
 
 You can see [plugin demo here](https://webnus.net/modern-events-calendar/)
 You can see [plugin documentation here](https://webnus.net/dox/modern-events-calendar/)
@@ -102,31 +161,58 @@ You can see [plugin documentation here](https://webnus.net/dox/modern-events-cal
 - Ability to override skin files in a theme
 - Ability to filter plugin options using WordPress filtering system
 - Ability to fire custom functions using WordPress actions API
+- [Developer documentation](https://webnus.net/dox/modern-events-calendar/category/developer-document/)
 
-== Bold Features ==
+== Key Features ==
 - Mailchimp Integration
 - BuddyPress Integration
-- Archive Page Skin
-- Single and Multiple day events
+- Archive Page Skins
+- Category Page Skins
+- Category Events Method
+- Single and Multiple Day Events
+- Frontend Events Submission Archive Status
 - Advanced Google Maps
+- Slugs/Permalinks Options
 - Import events from Google Calendar
+- Import From Meetup
+- Import From Facebook
 - Export filtered events into CSV, MS Excel, JSON and XML formats
 - Exceptional Days
 - Google Recaptcha
+- Geolocation for map skin
 - Event countdown
 - Hourly Schedule
+- Breadcrumbs
+- Event Color
+- Event cost
+- Speakers for Hourly Schedule
+- Full Responsive
+- Gutenberg Ready
+- Speaker Options
+- Event Link Options
+- Translation-ready messages
 - Import from third party plugins
 - Available Widget in all Sidebar
 - Matching Shortcode and Widget
 - Matching Shortcode and Visual Composer
 - Custom CSS
 - Currency options 
+- Daily, Weekday, Weekends, Weekly, Monthly and Yearly Repeating
+- Custom Repeating
+- Certain Weekdays Repeating
+- Advance Repeating
+- End Repeating
 - Advanced categorizing and filtering options
+- Full search bar for all shortcodes
 - Event note for frontend event submission
 - Frontend Event Submission
-- Notifications
+- Event Status In Submission Form
+- New Event Notification
+- Customizable Notifications Emails
 - Recurring/Repeating events
 - Next Event Module
+- Custom Booking Form for Single Events
+- Payments for Certain Single Events
 - Shortcode Creator
 - Multiple color skins
 - [Slider](https://webnus.net/modern-events-calendar/slider-view-type-1/) View
@@ -137,17 +223,28 @@ You can see [plugin documentation here](https://webnus.net/dox/modern-events-cal
 - [Weekly](https://webnus.net/modern-events-calendar/weekly-view/) View
 - [Daily](https://webnus.net/modern-events-calendar/daily-view/) View
 - [List/Grid](https://webnus.net/modern-events-calendar/list-view-classic-style/) View
+- [Search bar](https://webnus.net/dox/modern-events-calendar/search-bar/) Shortcode
 - RTL support
 - Multiple organizers
 - event submission by guest (Not logged-in) users
 - Event Details/Single Event Page
+- Settings Import/Export Feature
 - Multisite Ready
 - WPML Ready
 - SEO ready
+- Upload Field Options
 - Developer friendly
+- Shortcode For Page Builders
+- Search Bar Feature
+- Customizable Timetable
+- Additional Organizers
+- Multiple Location
 - Choose Weekends
+- Profile page
 - Eruop language completed
+- [Reporting Dashboard](https://webnus.net/dox/modern-events-calendar/modern-events-calendar-intro-page/) (*pro*)
 - [Map View](https://webnus.net/modern-events-calendar/map-view/) (*pro*)
+- [Yearly view](https://webnus.net/modern-events-calendar/yearly-view-clean-style/) (*pro*)
 - [Available spot](https://webnus.net/modern-events-calendar/available-spot/) (*pro*)
 - [Timetable view](https://webnus.net/modern-events-calendar/timetable-view-clean-style/) (*pro*)
 - [Masonry view](https://webnus.net/modern-events-calendar/masonry-view/) (*pro*)
@@ -155,15 +252,20 @@ You can see [plugin documentation here](https://webnus.net/dox/modern-events-cal
 - [Map view + Directions](https://webnus.net/modern-events-calendar/map-view/) (*pro*)
 - [Import .ics file](https://webnus.net/modern-events-calendar/) (*pro*)
 - [Reminders notification](https://webnus.net/dox/modern-events-calendar/notifications/) (*pro*)
+- [Cancellation notification](https://webnus.net/dox/modern-events-calendar/notifications/) (*pro*)
+- [Reminders notification](https://webnus.net/dox/modern-events-calendar/notifications/) (*pro*)
 - [Booking](https://webnus.net/dox/modern-events-calendar/booking/) (*pro*)
 - [Booking reminder notification](https://webnus.net/dox/modern-events-calendar/notifications/) (*pro*)
+- [Organizer payment](https://webnus.net/dox/modern-events-calendar/organizer-payment/) (*pro*)
 - [Individual booking form per event](https://webnus.net/dox/modern-events-calendar/booking-form/) (*pro*)
 - [Advanced Tax/Fee system](https://webnus.net/dox/modern-events-calendar/taxes-or-fees/) (*pro*)
 - [Multiple Tickets system](https://webnus.net/dox/modern-events-calendar/tickets-and-taxes-fees/) (*pro*)
+- [Ticket Variations](https://webnus.net/dox/modern-events-calendar/ticket-variations/) (*pro*)
 - [Coupons/Discount system](https://webnus.net/dox/modern-events-calendar/coupons/) (*pro*)
-- [PayPal Integration](https://webnus.net/modern-events-calendar/) (*pro*)
+- [PayPal Integration](https://webnus.net/dox/modern-events-calendar/payment-gateways/) (*pro*)
 - [Booking form builder](https://webnus.net/dox/modern-events-calendar/booking-form/) (*pro*)
 - [Auto verification](https://webnus.net/modern-events-calendar/) (*pro*)
+- [Synchronization](https://webnus.net/dox/modern-events-calendar/import-and-export-events/) (*pro*)
 - [WooCommerce Payment Integreation](https://webnus.net/dox/modern-events-calendar/woocommerce/) (*pro*)
 - [Stripe Payment Integreation](https://webnus.net/modern-events-calendar/) (*pro*)
 - [Auto Update](https://webnus.net/dox/modern-events-calendar/how-to-auto-update-plugin/) (*pro*)
@@ -175,37 +277,164 @@ You can see [plugin documentation here](https://webnus.net/dox/modern-events-cal
 - [Create various kind of tickets](https://webnus.net/dox/modern-events-calendar/tickets-and-taxes-fees/) (*pro*)
 - [Set a limit on total bookings](https://webnus.net/dox/modern-events-calendar/add-a-booking-system/) (*pro*)
 - [Set a limit for certain tickets](https://webnus.net/dox/modern-events-calendar/add-a-booking-system/) (*pro*)
+- [Attendee list](https://webnus.net/dox/modern-events-calendar/buddypress/) (*pro*)
 
 == Screenshots ==
-1. Settings 01
-2. Settings 02
-3. Settings 03
-4. Settings 04
-5. Settings 05
-6. Settings 06
-7. Settings 07
-8. Settings 08
-9. Settings 09
-10. Settings 10
-11. Settings 11
-12. Full Calendar view
-13. Monthly view
-14. Slider view
-15. Carousel view
-16. Countdown view
-17. Grid - Novel view
-18. List view
-19. Cover view
-20. Weekly view
-21. Timetable view
-22. Widget
+1. WordPress Event Calendar - Full Calendar view
+2. WordPress Event Calendar - Monthly view
+3. WordPress Event Calendar - Slider view
+4. WordPress Event Calendar - Carousel view
+5. WordPress Event Calendar - Countdown view
+6. WordPress Event Calendar - Grid Novel view
+7. WordPress Event Calendar - List view
+8. WordPress Event Calendar - Cover view
+9. WordPress Event Calendar - Weekly view
+10. WordPress Event Calendar - Timetable view
+11. WordPress Event Calendar - Widgets
+12. WordPress Event Calendar - Settings 01
+13. WordPress Event Calendar - Settings 02
+14. WordPress Event Calendar - Settings 03
+15. WordPress Event Calendar - Settings 04
+16. WordPress Event Calendar - Settings 05
+17. WordPress Event Calendar - Settings 06
+18. WordPress Event Calendar - Settings 07
+19. WordPress Event Calendar - Settings 08
+20. WordPress Event Calendar - Settings 09
+21. WordPress Event Calendar - Settings 10
+22. WordPress Event Calendar - Settings 11
+23. WordPress Event Calendar - Settings 12
+24. WordPress Event Calendar - Settings 13
+25. WordPress Event Calendar - Settings 14
+26. WordPress Event Calendar - Settings 15
+27. WordPress Event Calendar - Settings 16
+28. WordPress Event Calendar - Settings 17
+29. WordPress Event Calendar - Settings 18
+30. WordPress Event Calendar - Settings 19
+31. WordPress Event Calendar - Settings 20
 
 == Changelog ==
 
-= 4.3.2 =
+= 4.5.1 - 11 September 2019
+- Compatibility: WordPress 5.2.3
+- Fixed: Showing multiple names and emails in backend booking form.
+- Fixed: Date field in backend of booking form.
+- Fixed: Local time module regarding hour.
+- Fixed: Maximum year number in date fields in frontend and backend forms.
+- Fixed: Location, saving latitude and longitude.
+- Fixed: Send emails to all attendees instead of main attendees.
+- Fixed: Displaying Google Recaptcha in modals.
+- Fixed: Showing registration form data in backend.
+- Fixed: Ticket filter in booking management menu.
+
+= 4.5.0 - 4 September 2019
+- Added: SCA compatibility for Stripe Payment Gateways (pro)
+- Added: Google Maps option in list and Grid skins (pro)
+- Added: A feature to update booking dates when event date is updated (pro)
+- Updated: Stripe API to the latest version (pro)
+- Upgraded: Stripe Element (pro)
+- Fixed: Global limit for bookers (pro)
+- Fixed: Twin search strings in backend
+
+= 4.4.9 - 27 August 2019
+- Fixed: Ajax live search
+- Fixed: Some minor issue
+
+= 4.4.8 - 22 August 2019 =
+- Fixed: Disabling Schema option
+- Fixed: Some minor issue
+
+= 4.4.7 - 21 August 2019 =
+- Added: Modern style search bar
+- Added: Auto set cronjobs for synchronization
+- Added: An option to not open current day in MEC widget
+- Added: ID column and sort by ID in booking menu
+- Added: Filter by ticket name in bookings menu
+- Added: Advanced clustering feature for Google Maps
+- Added: Duplicate link in event action links
+- Added: An option for disabling Schema
+- Fixed: Double tap feature for monthly calendar (simple skin)
+- Fixed: Advanced repeat type
+- Fixed: Countdown in module view and Countdown skin
+- Fixed: Carousel view and "load more" button in Internet explorer
+
+= 4.4.6 - 13 August 2019 =
+- Added: Ajax live search to search bar
+- Added: Filter before wp_mail (Booking Notification) for developers
+- Fixed: Simple monthly calendar style
+- Fixed: Daylight saving
+- Fixed: Multiple days events
+- Fixed: A two-year limit for filtering events
+- Fixed: Yearly view search filter
+- Fixed: Displaying total attendees in Booking Confirmation email
+- Fixed: Displaying invoice link in booking when the invoice is disabled
+- Fixed: Booking module in some themes (Lity popup)
+- Fixed: Some minor issues
+
+= 4.4.5 - 3 August 2019 =
+- Added: Stripe Connect gateway to divide the booking payment between organizer and site owner
+- Added: Ability to insert new speakers from "Frontend Event Submission"
+- Improved: Only the role of administrators can see the license
+- Fixed: Agreement field type
+- Fixed: Booking Limit per user email option 
+- Fixed: General search function in WordPress Media, Pages, Posts and all custom post types caused by Search Bar feature
+- Fixed: Show "Sold Out" badge in monthly skin when an occurence is sold out completely
+- Fixed "Load More" button at the bottom of the events page
+- Fixed: Import from EventOn (when organizer "tel" field contains an email)
+- Fixed: The mec_button and tiny_mce in FES form (JS error)
+- Fixed: Popup image src on some of the themes
+- Fixed: Back to Taxonomy Items when editing items (Organizers, Labels, Locations, Speaker)
+- Fixed: Unclickable settings menus
+- Fixed: Slider and Carousel view when events don't have featured images
+- Fixed: Some minor issues
+
+= 4.4.0 - 15 July 2019 =
+- Added: Search bar shortcode
+- Added: Organizer payment options
+- Added: MEC shortcode element for the Divi builder
+- Added: A new option to disable invoice
+- Added: An option to limit maximum tickets that someone can book for all the tickets
+- Added: Imperial units to weather module in addition to metric units
+- Added: An option to toggle between imperial and metric units in weather module
+- Added: The developer documentation [link](https://bit.ly/2NReYuf)
+- Fixed: "New Window" in more info link when booking is disabled
+- Fixed: Load more button
+- Fixed: Saving the changes in registration form builder
+- Fixed: Not showing other events due to a problem in exceptional days
+- Fixed: Masonry view by returning to Isotope library (hard-refresh required)
+- Fixed: Some minor issues
+
+= 4.3.6 - 2 July 2019 =
+- Added: Limit option to full calendar skin in order to show more than 12 events per day
+- Added: Recurring rule to the ICS export on event details page
+- Added: End repeat option for advanced repeat type
+- Fixed: Attendee module on showing count of tickets
+- Fixed: "Invalid Request" notification in Booking form 
+- Fixed: Frontend submission advance repeating style
+- Fixed: RTL settings
+- Fixed: Addon notifications style
+- Fixed: Countdown mobile/tablet style
+
+= 4.3.5 – 27 June 2019 =
+- Compatibility: WordPress 5.2.2
+- Added: advanced repeat type.
+- Added: Speaker name to notifications
+- Added: Functions to display widgets separately (For using in custom single event page)
+- Added: do_action('mec_{skin_name}_skin_head'); at top of each shortcode
+- Added: M.E. Calendar blocks to make it compatible with WordPress Block editor
+- Added: Change settings styling to tabs
+- Fixed: Page not scrolled to booking section when the button is clicked
+- Fixed: Speaker popup in Divi theme
+- Fixed: Display speakers in modal view
+- Fixed: W3 validation for shortcodes
+- Fixed: Full calendar search form
+- Fixed: Sticky in settings
+- Fixed: saving issue of categorized setting options in backend.
+- Fixed: Some minor issues
+
+= 4.3.2 – 17 June 2019 =
 Fixed: Notification tabs in settings
 
-= 4.3.1 =
+= 4.3.1 – 17 June 2019 =
 - Added: "Number of Days" and "Week Start Day" options to clean style of timetable skin
 - Added: Instagram to speakers
 - Added: Search form to the clean style of timetable skin
@@ -221,7 +450,7 @@ Fixed: Notification tabs in settings
 - Fixed: Additional locations in single event modern skin
 - Fixed: Responsive issue in Monthly view (simple style)
 
-= 4.3.0 =
+= 4.3.0 – 10 June 2019 =
 - Added: Booking cancellation notification
 - Added: New feature to disable admin notification
 - Fixed: Not showing the event when it is on current day and it is not started yet
@@ -229,7 +458,7 @@ Fixed: Notification tabs in settings
 - Fixed: Issue regarding showing day title when only 1 day is added
 - Fixed: Some PHP notices
 
-= 4.2.5 =
+= 4.2.5 – 3 June 2019 =
 - Improved: Tooltip notifications in the admin panel
 - Improved: Notifications tab in settings
 - Added: Breadcrumb in the single event page
@@ -240,7 +469,7 @@ Fixed: Notification tabs in settings
 - Fixed: "Load More" button in skins
 - Fixed: Google Calendar Export in email notifications
 
-= 4.2.4 =
+= 4.2.4 – 28 May 2019 =
 - Improved: slider skin by printing the feature image directly
 - Fixed: Showing only upcoming events of The Events Calendar for import
 - Fixed: Schedule when the event starts at 00:00
@@ -249,7 +478,7 @@ Fixed: Notification tabs in settings
 - Fixed: PHP notices on weekly, daily and monthly skins 
 - Fixed: Notifications and booking module
 
-= 4.2.3 =
+= 4.2.3 – 21 May 2019 =
 - Compatibility: WordPress 5.2.1
 - Added: link to masonry image
 - Added: Gutenberg editor to event edit page
@@ -262,12 +491,12 @@ Fixed: Notification tabs in settings
 - Fixed: Scheduler for generating start time and end time
 - Fixed: Some minor issues
 
-= 4.2.2 =
+= 4.2.2 – 13 May 2019 =
 - Fixed: Tag filtering issue
 - Fixed: Displaying attendee email in attendees module
 - Fixed: Google export link to include event description in addition to event title
 
-= 4.2.1 =
+= 4.2.1 – 7 May 2019 =
 - Added: "attachment_url" to MEC RSS
 - Added: Offers (event price) to schema structure
 - Fixed: Displaying comment form on MEC pages when comment is disabled
@@ -281,7 +510,7 @@ Fixed: Notification tabs in settings
 - Fixed: Email in woocommerce paymant
 - Fixed: Some minor issues
 
-= 4.2.0 =
+= 4.2.0 – 30 April 2019 =
 - Compatibility: WordPress 5.2
 - Added: Additional Location feature
 - Added: MEC_Name and MEC_Email field to edit booking form
@@ -295,7 +524,7 @@ Fixed: Notification tabs in settings
 - Fixed: Attached image in frontend submission form
 - Fixed: Exporting custom day events to Google Calendar in manual export and automated synchronization
 
-= 4.1.0 =
+= 4.1.0 – 22 April 2019 =
 - Added: Tag and Speaker filter to shortcodes
 - Fixed: Sold out ticket notification
 - Fixed: Modal view when Youtube video is in event content
@@ -310,7 +539,7 @@ Fixed: Notification tabs in settings
 - Fixed: Creating custom days events from frontend
 - Fixed: Displaying events of end day of the month on daily, monthly and weekly skins
 
-= 4.0.0 =
+= 4.0.0 – 14 April 2019 =
 - Refactored: Search system completely
 - Improved: Search speed
 - Reduced: Number of queries to have better performance
@@ -331,15 +560,15 @@ Fixed: Notification tabs in settings
 - Fixed: Some PHP notices
 - Fixed: Some minor issues
 
-= 3.5.2 =
+= 3.5.2 – 21 March 2019 =
 - Fixed: Slider view
 
-= 3.5.1 =
+= 3.5.1 – 20 March 2019 =
 - Fixed: Issue in saving settings
 - Fixed: Issue in disable google font
 - Fixed: Issue in frontend event submission of custom days event
 
-= 3.5.0 =
+= 3.5.0 – 16 March 2019 =
 - Added: Facebook events importer
 - Added: Activation box in welcome page and removed activation tab from MEC settings
 - Added: Ability to define date period for custom days
@@ -354,7 +583,7 @@ Fixed: Notification tabs in settings
 - Fixed: Checkout button style
 
 
-= 3.4.5 =
+= 3.4.5 – 27 February 2019 =
 - Added: Disable Google Fonts options due to GDPR
 - Added: Search field for settings
 - Added: Settings import/export feature
@@ -374,7 +603,7 @@ Fixed: Notification tabs in settings
 - Fixed: Showing booking tickets.
 - Fixed: Some PHP notices.
 
-= 3.4.0 =
+= 3.4.0 – 23 January 2019 =
 - Added: Profile shortcode to show user bookings’ details
 - Added: Import from Meetup
 - Added: Auto sync for importing meetup events
@@ -399,7 +628,7 @@ Fixed: Notification tabs in settings
 - Fixed: Invalid occurrence date in single event pages
 - Fixed: Some minor issues
 
-= 3.3.5 =
+= 3.3.5 – 8 December 2018 =
 - Compatibility: WordPress v5.0
 - Improved: WPML Compatibility
 - Fixed: Stripe gateway
@@ -407,7 +636,7 @@ Fixed: Notification tabs in settings
 - Fixed: Time issue on Google calendar import
 - Fixed: Some minor issues
 
-= 3.3.0 =
+= 3.3.0 – 19 November 2018 =
 - Added: Category filter to the full calendar skin
 - Added: Featured and Canceled styles for events with certain labels
 - Added: Speakers taxonomy
@@ -434,7 +663,7 @@ Fixed: Notification tabs in settings
 - Fixed: Showing ticket name in booking details page in backend
 - Fixed: Typo on exports
 
-= 3.2.0 =
+= 3.2.0 – 1 October 2018 =
 - Improved: Speed optimization on data rendering of events
 - Improved: Speed optimization on next event module
 - Improved: Speed optimization on database
@@ -442,29 +671,29 @@ Fixed: Notification tabs in settings
 - Added: iCal file download link in email in settings > notifications (%%ics_link%%)
 - Added: Google Calendar link in email in settings > notification (%%google_calendar_link%%)
 
-= 3.1.6 =
+= 3.1.6 – 10 September 2018 =
 - Fixed: Auto update in PRO version
 
-= 3.1.5 =
+= 3.1.5 – 9 September 2018 =
 - Fixed: Issue on showing multiple events in unwanted months when the repeat is set to yearly
 - Preparation for Gutenberg Editor
 
-= 3.1.4 =
+= 3.1.4 – 28 August 2018 =
 - Added: VK social sharing
 - Fixed: Titles containing '&' when shared via email
 - Fixed: Sold-out message when '0' is set for ticket numbers
 
-= 3.1.3 =
+= 3.1.3 – 21 August 2018 =
 - Fixed: Language pack - you should re-activate plugin in this version (Lite Version)
 
-= 3.1.2 =
+= 3.1.2 – 31 July 2018 =
 - Fixed: Update from WordPress (Lite Version)
 
-= 3.1.1 =
+= 3.1.1 – 30 July 2018 =
 Changed: Admin style
 Changed: MEC Pro links to new URL
 
-= 3.1.0 =
+= 3.1.0 – 19 July 2018 =
 * Lite version is released!
 
 == Installation ==
@@ -478,4 +707,40 @@ For installing Modern Events Calendar Lite please follow below steps:
 
 = How to upgrade to Pro version? =
 
-You can buy the Pro version from [Webnus.net](https://webnus.net/pricing/#plugins). After that uninstall the lite version and install the Pro version on your website. If you want to move the data of lite version to Pro version, make sure that you disable the "Remove MEC Data on Plugin Uninstall" option in M.E. Calendar -> Settings menu before uninstalling the lite version.
+You can buy the Pro version from [Webnus.net](https://webnus.net/mec-purchase/). After that uninstall the lite version and install the Pro version on your website. If you want to move the data of lite version to Pro version, make sure that you disable the "Remove MEC Data on Plugin Uninstall" option in M.E. Calendar -> Settings menu before uninstalling the lite version.
+
+= How can I create or edit event? =
+
+Alright it’s time to create an event. To add an event, go to WordPress menu and navigate to M.E. Calendar > Add Event. [Follow this image](https://webnus.net/dox/modern-events-calendar/wp-content/uploads/2018/05/single_event_backend-434x1024.png)
+
+1- Set the date and time of your event. Also, you can set up your event during the whole day and without a specific time, or you can hide the end time from single events page; or both the start and end time.
+Note: You can set event repeats and end repeat for your events here as well.
+2- You can set an hourly schedule for your event. For example, if your event starts at 8 A.M. and continues until 6 P.M., then you can set an hourly schedule from 8 to 10, and specify the plan or content of these two hours. There is no limit for defining hourly schedules.
+3- You can specify the venue, plus the name of the place, address, coordinates, etc.
+4- Here, you can add external links and/or info links to your event so that when your users click on them, they’ll be directed to another page with extra information on the event.
+5- Add your organizer here. You can then fill the form with the information of your organizer. This information includes name, phone number, email address, and website or link.
+6- Add your event cost with its currency label here.
+7- For more information on total booking limit please click [here](https://webnus.net/dox/modern-events-calendar/total-booking-limits/).
+8- Here, you can add tickets for your event. You can create tickets with different titles; if you are going to sell tickets with different prices then this option is what you want.
+Note: If you change the title to the name of a particular day, then the user will know on a certain day the price of the ticket is different.
+9- Enter the information about Fees/Taxes.
+
+= Can I customize the event pages? =
+
+Yes, it is possible. In order to see the related documentations, please [click here](https://webnus.net/dox/modern-events-calendar/mec-theme-integration-guide/).
+
+= Does MEC have default languages or it needs to be translated? =
+
+Yes, for some of the languages MEC has the translation file as default. However, since these translations have been done by the users, they may be incomplete, hence updating them might be required. For more information, please [click here](https://webnus.net/dox/modern-events-calendar/translate-mec/).
+
+= Can I have more than one calendar in one website? =
+
+Unfortunately, MEC does not support more than 1 calendar in a single website, however, it will be added in its upcoming updates.
+
+= Can I import/export from/to MEC? =
+
+Yes, you can get an XML export from MEC data or import the file you've exported to MEC. Also, if you are using one of the following plugins (The event calendar, calendarize it, EventOn, Events Schedule WP Plugin), then you can easily transfer your events to MEC.
+
+= Do I lose all my data or customization if I update MEC? =
+
+If you’ve added a file to the main folder of MEC, this file will be removed after the update. Therefore, please do get a full back up before proceeding with the update process.

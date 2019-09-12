@@ -30,8 +30,8 @@ wp_enqueue_script('mec-lity-script', $this->main->asset('packages/lity/lity.min.
                     <div class="w-box-content">
                         <p><?php esc_html_e('Advice and answers from the Webnus Team'); ?></p>  
                         <div class="search-form">
-                            <form action="https://intercom.help/webnus" method="">
-                                <input type="text" placeholder="<?php esc_html_e('Search...'); ?>" name="q">
+                            <form action="https://webnus.crisp.help/en/" method="">
+                                <input type="text" placeholder="<?php esc_html_e('Search...'); ?>" name="search_query">
                                 <button><i class="mec-sl-magnifier"></i></button>
                             </form>
                         </div>
@@ -280,12 +280,5 @@ wp_enqueue_script('mec-lity-script', $this->main->asset('packages/lity/lity.min.
 })(jQuery);
 </script>
 <?php if($this->getPRO()) : ?>
-<script>
-  var APP_ID = "w23d92wv";
-
- window.intercomSettings = {
-    app_id: APP_ID
-  };
-</script>
-<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/' + APP_ID;var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();</script>
+<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="4c1b818f-12d2-4b87-a045-d843628eb07c";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
 <?php endif; ?>

@@ -21,9 +21,10 @@ final class TableBlocked extends Table {
      */
     protected function set_type() {
 
-        $this->type = 'blocked';
+        $this->type = 'threats';
 
     } // set_type()
+
 
     /**
      * Get a list of columns. The format is:
@@ -43,10 +44,22 @@ final class TableBlocked extends Table {
             'user_agent'    => __( 'User Agent', SECSAFE_SLUG ),
             'referer'       => __( 'HTTP Referer', SECSAFE_SLUG ),
             'ip'            => __( 'IP Address', SECSAFE_SLUG ),
+            'status'        => __( 'Status', SECSAFE_SLUG ),
             'details'       => __( 'Details', SECSAFE_SLUG )
         ];
 
     } // get_columns()
+
+
+    protected function get_status() {
+
+        return [ 
+            //  'key'           => 'label'
+                'not_blocked'   => __( 'not blocked', SECSAFE_SLUG ),
+                'blocked'       => __( 'blocked', SECSAFE_SLUG )
+            ];
+
+    } // get_status()
 
 
     /**
@@ -75,6 +88,32 @@ final class TableBlocked extends Table {
     } // bulk_actions()
 
 
+    protected function column_status( $item ) {
+
+        return ( $item->status == 'blocked' ) ? __( 'blocked', SECSAFE_SLUG ) : __( 'not blocked', SECSAFE_SLUG );
+    
+    } // column_status()
+
+
+    protected function column_details( $item ) {
+
+        $details = $item->details;
+
+        if ( $item->type == 'logins' ) {
+
+            $details .= ' ';
+            $details .= ( $item->status == 'success' ) ? __( 'Login attempt was successful.', SECSAFE_SLUG ) : '';
+            $details .= ( $item->status == 'failed' ) ? __( 'Login attempt failed.', SECSAFE_SLUG ) : '';
+            $details .= ( $item->status == 'blocked' ) ? __( 'Login attempt blocked.', SECSAFE_SLUG ) : '';
+            $details .= ( $item->username ) ? ' ' . sprintf( __( 'Username: %s', SECSAFE_SLUG ), $item->username ) : '';
+
+        }
+
+        return esc_html( $details );
+    
+    } // column_details()
+
+
     public function display_charts() {
 
         if ( $this->hide_charts() ) { return; }
@@ -88,12 +127,12 @@ final class TableBlocked extends Table {
 
                 <div class="chart chart-blocked-line td td-8 center">
 
-                    <h3>' . __( 'Threats Over The Past', SECSAFE_SLUG ) . ' ' . $days . ' ' . __( 'Days', SECSAFE_SLUG ) . '</h3>
+                    <h3>' . sprintf( __( 'Threats Over The Past %d Days', SECSAFE_SLUG ), $days ) . '</h3>
                     <div id="chart-line"></div>
 
                 </div><div class="chart chart-blocked-guage td td-4 center">
 
-                    <h3>Threats Blocked</h3>
+                    <h3>' . __( 'Threats Blocked', SECSAFE_SLUG ) . '</h3>
                     <div id="chart-guage"></div>
 
                 </div>
@@ -106,12 +145,14 @@ final class TableBlocked extends Table {
         $columns = [
                         [
                             'id'            => 'threats',
+                            'label'         => __( 'Threats', SECSAFE_SLUG ),
                             'color'         => '#f6c600',
                             'type'          => 'area-spline',
                             'db'            => 'threats'
                         ],
                         [
                             'id'            => 'blocked',
+                            'label'         => __( 'Blocked', SECSAFE_SLUG ),
                             'color'         => '#0073aa',
                             'type'          => 'area-spline',
                             'db'            => 'blocked'
@@ -122,7 +163,7 @@ final class TableBlocked extends Table {
             'id'            => 'chart-line',
             'type'          => 'line',
             'columns'       => $columns,
-            'y-label'       => '# Threats'
+            'y-label'       => __( '# Threats', SECSAFE_SLUG )
         ];
 
         $charts[] = [ 
@@ -132,14 +173,13 @@ final class TableBlocked extends Table {
         ];
 
         $args = [
-            'date_start'    => date('Y-m-d 00:00:00', strtotime('-' . $days_ago . ' days') ),
+            'date_start'    => date( 'Y-m-d 00:00:00', strtotime( '-' . $days_ago . ' days' ) ),
             'date_end'      => date( 'Y-m-d 23:59:59', time() ),
             'date_days'     => $days, 
             'date_days_ago' => $days_ago,
             'charts'        => $charts
         ];
         
-
         // Load Charts
         Admin::load_charts( $args );
 

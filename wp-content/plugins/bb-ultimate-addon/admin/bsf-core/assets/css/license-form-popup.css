@@ -83,8 +83,8 @@
 	cursor: pointer;
 	outline: none;
 	-webkit-transition: color .1s ease-in-out, background .1s ease-in-out;
-	-webkit-transform: translateX(100%);  
-	transform: translateX(100%);
+	-webkit-transform: translateX(100%) translateY(-100%);
+	transform: translateX(100%) translateY(-100%);
 	transition: color .1s ease-in-out, background .1s ease-in-out;
 	color: #eee;
 }

@@ -10,6 +10,8 @@ class Meow_WPMC_UI {
 		"CONTENT (URL)" => "Found in content (as an URL).",
 		"THEME" => "Found in theme.",
 		"PAGE BUILDER" => "Found in Page Builder.",
+		"PAGE BUILDER (ID)" => "Found in Page Builder (as an ID).",
+		"PAGE BUILDER (URL)" => "Found in Page Builder (as an URL).",
 		"GALLERY" => "Found in gallery.",
 		"META" => "Found in meta.",
 		"META (ID)" => "Found in meta (as an ID).",

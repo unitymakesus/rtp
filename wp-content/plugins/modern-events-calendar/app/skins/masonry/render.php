@@ -46,6 +46,8 @@ $settings = $this->main->get_settings();
 
             $speakers = json_encode($speakers);
         }
+        $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+        if($schema_settings == '1' ):       
         ?>
             <script type="application/ld+json">
             {
@@ -73,6 +75,7 @@ $settings = $this->main->get_settings();
             }
             </script>
             <?php
+            endif;
             $masonry_filter = '';
             if ( $this->filter_by == 'category' ) {
                 if ( isset($event->data->categories) && !empty($event->data->categories) ) :
@@ -114,7 +117,7 @@ $settings = $this->main->get_settings();
             
             if ( empty($masonry_filter )) $masonry_filter = "[\"\"]";
             ?>
-            <div <?php if ( $this->masonry_like_grid == 1) echo 'data-sort-masonry="'.$event->date['start']['date'].'"'; ?> class="mec-masonry-item-wrap <?php echo $this->filter_by_classes($event->data->ID); ?>"  data-groups='<?php echo $masonry_filter; ?>' data-date-created="<?php echo $event->date['start']['date']; ?>">
+            <div data-sort-masonry="<?php echo $event->date['start']['date']; ?>" class="mec-masonry-item-wrap <?php echo $this->filter_by_classes($event->data->ID); ?>">
                 <div class="mec-masonry">
 
                     <article data-style="<?php echo $label_style; ?>" class="mec-event-article mec-clear <?php echo $this->get_event_classes($event); ?>">
@@ -173,6 +176,7 @@ $settings = $this->main->get_settings();
                             </div>
                             <div class="mec-event-footer">
                                 <a class="mec-booking-button" data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>" target="_self"><?php echo (is_array($event->data->tickets) and count($event->data->tickets)) ? $this->main->m('register_button', __('REGISTER', 'mec')) : $this->main->m('view_detail', __('View Detail', 'mec')) ; ?></a>
+                                <?php do_action( 'mec_masonry_button', $event ); ?>
                             </div>
                         </div>
                     </article>

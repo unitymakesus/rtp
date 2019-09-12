@@ -11,6 +11,7 @@ $plugins  = \FLCacheClear\Plugin::get_plugins();
 			<p><?php _e( 'This tool applies to caches created by the following:', 'fl-builder' ); ?></p>
 			<?php echo $plugins; ?>
 			<p>
+				<?php /* translators: %s: branded builder name */ ?>
 				<?php printf( __( 'Enable the following setting to clear the caches created by any of these caching plugins. If enabled, cache clearing occurs when layouts and templates are saved and when WordPress finishes updating plugins and themes. This setting also defines the DONOTCACHEPAGE constant, which is respected by most cache plugins, to keep the page from being cached when the %s editor is active.', 'fl-builder' ), FLBuilderModel::get_branding() ); ?>
 			</p>
 			<p>

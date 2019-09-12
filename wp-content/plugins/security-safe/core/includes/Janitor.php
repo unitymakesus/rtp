@@ -167,8 +167,10 @@ class Janitor {
 
         global $wpdb;
 
-        // Cleanup Valid Types
-        if ( in_array( $type, Yoda::get_types() ) ) {
+        $types = Yoda::get_types();
+
+        // Require Valid Type
+        if ( isset( $types[ $type ] ) ) {
 
             $args = [];
 
@@ -222,7 +224,9 @@ class Janitor {
         $args = [];
             
         // Cleanup Valid Types
-        if ( in_array( $type, Yoda::get_types() ) ) {
+        $types = Yoda::get_types();
+
+        if ( isset( $types[ $type ] ) ) {
 
             $table_main = Yoda::get_table_main();
 
@@ -236,7 +240,7 @@ class Janitor {
 
         } else {
 
-            $args['details'] = sprintf( __( '[ Error ] %s is not a valid type.', SECSAFE_SLUG ), $type );
+            $args['details'] = sprintf( __( 'Error: %s is not a valid type.', SECSAFE_SLUG ), $type );
 
         }
 
@@ -341,10 +345,13 @@ class Janitor {
 
         global $wpdb;
 
-        $args = ( is_array( $args ) ) ? $args : [];
+        $args = ( isset( $args['type'] ) ) ? $args : [];
+        $type = ( isset( $args['type'] ) ) ? $args['type'] : false;
+        $types = Yoda::get_types();
+        $result = false; // Default
 
-        // Require Type
-        if ( isset( $args['type'] ) && in_array( $args['type'], Yoda::get_types() ) ) {
+        // Require Valid Type
+        if ( isset( $types[ $type ] ) ) {
 
             /**
              * Statically set for now
@@ -352,10 +359,13 @@ class Janitor {
              */
             $args['date'] = current_time('mysql');
             
-            if ( $args['type'] != 'activty' ) {
+            if ( 
+                $args['type'] != 'activty' && 
+                $args['type'] != 'allow_deny' 
+            ) {
 
-                $args['uri'] = ( isset( $_SERVER['REQUEST_URI'] ) ) ? $_SERVER['REQUEST_URI'] : '';
-                $args['referer'] = ( isset( $_SERVER['HTTP_REFERER'] ) ) ? $_SERVER['HTTP_REFERER'] : '';
+                $args['uri'] = ( isset( $_SERVER['REQUEST_URI'] ) ) ? filter_var( $_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL ) : '';
+                $args['referer'] = ( isset( $_SERVER['HTTP_REFERER'] ) ) ? filter_var( $_SERVER['HTTP_REFERER'], FILTER_SANITIZE_URL ) : '';
                 $args['user_agent'] = Yoda::get_user_agent();
                 $args['ip'] = Yoda::get_ip();
 
@@ -390,6 +400,8 @@ class Janitor {
             }
             
         }
+
+        return $result;
 
     } // add_entry()
 

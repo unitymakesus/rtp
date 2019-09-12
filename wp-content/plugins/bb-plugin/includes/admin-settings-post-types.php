@@ -6,7 +6,7 @@
 
 		<?php if ( FLBuilderAdminSettings::multisite_support() && ! is_network_admin() ) : ?>
 		<label>
-			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php checked( get_option( '_fl_builder_post_types' ), 1 ); ?> />
+			<input class="fl-override-ms-cb" type="checkbox" name="fl-override-ms" value="1" <?php echo ( get_option( '_fl_builder_post_types' ) ) ? 'checked="checked"' : ''; ?> />
 			<?php _e( 'Override network settings?', 'fl-builder' ); ?>
 		</label>
 		<?php endif; ?>

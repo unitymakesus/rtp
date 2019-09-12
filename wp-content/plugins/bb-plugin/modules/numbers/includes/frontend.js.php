@@ -19,8 +19,8 @@
 			id: '<?php echo $id; ?>',
 			layout: '<?php echo $layout; ?>',
 			type: '<?php echo $type; ?>',
-			number: parseInt( ( 'undefined' !== typeof window.number_module_<?php echo $id; ?> ) ? window.number_module_<?php echo $id; ?>.number : <?php echo $number; ?> ),
-			max: parseInt( ( 'undefined' !== typeof window.number_module_<?php echo $id; ?> ) ? window.number_module_<?php echo $id; ?>.max : <?php echo $max; ?> ),
+			number: parseFloat( ( 'undefined' !== typeof window.number_module_<?php echo $id; ?> ) ? window.number_module_<?php echo $id; ?>.number : <?php echo $number; ?> ),
+			max: parseFloat( ( 'undefined' !== typeof window.number_module_<?php echo $id; ?> ) ? window.number_module_<?php echo $id; ?>.max : <?php echo $max; ?> ),
 			speed: <?php echo $speed; ?>,
 			delay: <?php echo $delay; ?>,
 			format: {

@@ -1,10 +1,8 @@
 <?php
 /**
- * @package The_SEO_Framework
- * @subpackage Bootstrap
- * @TODO change namespace to The_SEO_Framework\Bootstrap
- *       in a future major release.
+ * @package The_SEO_Framework\Bootstrap
  */
+
 namespace The_SEO_Framework;
 
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
@@ -30,6 +28,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 /**
  * Plugin locale 'autodescription'
  * Files located in plugin folder `../autodescription/language/`
+ *
  * @since 2.8.0
  */
 function _init_locale() {
@@ -67,28 +66,35 @@ function _init_tsf() {
 	if ( $tsf )
 		return $tsf;
 
+	// @TODO use autoloader instead?
+	_load_trait( 'core/overload' );
+
 	/**
 	 * @package The_SEO_Framework
 	 */
 	if ( \The_SEO_Framework\_can_load() ) {
 		if ( \is_admin() ) {
-			//! TODO: admin-only loader.
+			//! TODO: admin-only loader?
 			$tsf         = new \The_SEO_Framework\Load();
 			$tsf->loaded = true;
 
+			$tsf->_load_early_compat_files();
+
 			/**
-			 * Runs after TSF is loaded in the admin.
 			 * @since 3.1.0
+			 * Runs after TSF is loaded in the admin.
 			 */
 			\do_action( 'the_seo_framework_admin_loaded' );
 		} else {
 			$tsf         = new \The_SEO_Framework\Load();
 			$tsf->loaded = true;
+
+			$tsf->_load_early_compat_files();
 		}
 
 		/**
-		 * Runs after TSF is loaded.
 		 * @since 3.1.0
+		 * Runs after TSF is loaded.
 		 */
 		\do_action( 'the_seo_framework_loaded' );
 	} else {
@@ -97,7 +103,7 @@ function _init_tsf() {
 	}
 
 	// did_action() checks for current action too.
-	if ( false === \did_action( 'plugins_loaded' ) )
+	if ( ! \did_action( 'plugins_loaded' ) )
 		$tsf->_doing_it_wrong( 'the_seo_framework() or ' . __FUNCTION__, 'Use <code>the_seo_framework()</code> after action <code>plugins_loaded</code> priority 5.', '3.1' );
 
 	return $tsf;
@@ -109,43 +115,51 @@ spl_autoload_register( __NAMESPACE__ . '\\_autoload_classes', true, true );
  * the plugin classes.
  *
  * @since 2.8.0
- * @since 3.1.0 1. No longer maintains cache.
- *              2. Now always returns void.
+ * @since 3.1.0 : 1. No longer maintains cache.
+ *                2. Now always returns void.
+ * @since 4.0.0 : 1. Streamlined folder lookup by more effectively using the namespace.
+ *                2. Added timing functionality
+ *                3. No longer loads interfaces automatically.
  * @uses THE_SEO_FRAMEWORK_DIR_PATH_CLASS
  * @access private
+ * @staticvar bool $_timenow Whether to time this request. Used to prevent stacking timers during class extending.
  *
  * @NOTE 'The_SEO_Framework\' is a reserved namespace. Using it outside of this
- *       plugin's scope coul result in an error.
+ *       plugin's scope could result in an error.
  *
  * @param string $class The class name.
  * @return void Early if the class is not within the current namespace.
  */
 function _autoload_classes( $class ) {
 
-	if ( 0 !== strpos( $class, 'The_SEO_Framework\\', 0 ) )
-		return;
+	if ( 0 !== strpos( $class, 'The_SEO_Framework\\', 0 ) ) return;
 
-	$strip = 'The_SEO_Framework\\';
-
-	if ( strpos( $class, '_Interface' ) ) {
-		$path      = THE_SEO_FRAMEWORK_DIR_PATH_INTERFACE;
-		$extension = '.interface.php';
-		$class     = str_replace( '_Interface', '', $class );
+	static $_timenow = true;
+	if ( $_timenow ) {
+		$_bootstrap_timer = microtime( true );
+		$_timenow         = false;
 	} else {
-		$path      = THE_SEO_FRAMEWORK_DIR_PATH_CLASS;
-		$extension = '.class.php';
-
-		//: substr_count( $class, '\\', 2 ) >= 2 // strrpos... str_split...
-		if ( 0 === strpos( $class, 'The_SEO_Framework\\Builders\\' ) ) {
-			$path  .= 'builders' . DIRECTORY_SEPARATOR;
-			$strip .= 'Builders\\';
-		}
+		$_bootstrap_timer = 0;
 	}
 
-	$class = strtolower( str_replace( $strip, '', $class ) );
-	$class = str_replace( '_', '-', $class );
+	$_chunks       = explode( '\\', strtolower( $class ) );
+	$_chunck_count = count( $_chunks );
 
-	require $path . $class . $extension;
+	if ( $_chunck_count > 2 ) {
+		//? directory position = $_chunck_count - ( 2 = $offset (1) + $class name (1) )
+		$rel_dir = implode( DIRECTORY_SEPARATOR, array_splice( $_chunks, 1, $_chunck_count - 2 ) ) . DIRECTORY_SEPARATOR;
+	} else {
+		$rel_dir = '';
+	}
+
+	$class = str_replace( '_', '-', end( $_chunks ) );
+
+	require THE_SEO_FRAMEWORK_DIR_PATH_CLASS . $rel_dir . $class . '.class.php';
+
+	if ( $_bootstrap_timer ) {
+		_bootstrap_timer( microtime( true ) - $_bootstrap_timer );
+		$_timenow = true;
+	}
 }
 
 \add_action( 'activate_' . THE_SEO_FRAMEWORK_PLUGIN_BASENAME, __NAMESPACE__ . '\\_do_plugin_activation' );

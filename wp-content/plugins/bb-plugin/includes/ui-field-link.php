@@ -3,7 +3,7 @@
 		<input type="text" name="{{data.name}}" value="{{{data.value}}}" class="text fl-link-field-input" placeholder="<# if ( data.field.placeholder ) { #>{{data.field.placeholder}}<# } else { #><?php _ex( 'http://www.example.com', 'Link placeholder', 'fl-builder' ); ?><# } #>" />
 		<button class="fl-link-field-select fl-builder-button fl-builder-button-small" href="javascript:void(0);" onclick="return false;"><?php _e( 'Select', 'fl-builder' ); ?></button>
 	</div>
-	<# if ( data.field.show_target || data.field.show_nofollow ) { #>
+
 	<div class="fl-link-field-options-wrap">
 		<# if ( data.field.show_target ) {
 			var value = data.settings[ data.name + '_target' ];
@@ -25,8 +25,12 @@
 			<span><?php _e( 'No Follow', 'fl-builder' ); ?></span>
 		</label>
 		<# } #>
+
+		<# if ( ! ( data.field.show_target && data.field.show_nofollow ) ) { #>
+				<label></label>
+		<# } #>
 	</div>
-	<# } #>
+
 	<div class="fl-link-field-search">
 		<span class="fl-link-field-search-title"><?php _e( 'Enter a post title to search.', 'fl-builder' ); ?></span>
 		<input type="text" name="{{data.name}}-search" class="text text-full fl-link-field-search-input" placeholder="<?php esc_attr_e( 'Start typing...', 'fl-builder' ); ?>" />

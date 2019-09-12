@@ -13,8 +13,9 @@
 // Colors
 $green: #157F7A;
 $yellow: #e8d700;
+$gold: #DAA520;
 $black: #111111;
-$blue: #497593;
+$blue: #0081A6;
 $gray: #555555;
 $orange: #DC602E;
 $orange_2: #ffb900;
@@ -171,8 +172,8 @@ $white: #ffffff;
 
                 &.active { 
                     background: $white;
-                    border-color: $orange;
-                    color: $orange; 
+                    border-color: $blue;
+                    color: $blue; 
                 }
 
                 &.disabled,
@@ -195,8 +196,8 @@ $white: #ffffff;
                 }
 
                 &:hover {
-                    border-color: $green;
-                    color: $green; 
+                    border-color: $gold;
+                    color: $gold; 
                 }
 
                 &.icon-privacy:before {
@@ -244,7 +245,7 @@ $white: #ffffff;
 
     h2 {
         font-size: 1.8125em;
-        color: $green; 
+        color: $blue; 
     }
 
     h3 {
@@ -326,6 +327,7 @@ $white: #ffffff;
                 color: $blue;
                 text-align: center;
                 margin: 0 0 21px;
+                line-height: 1;
             }
 
             p {
@@ -366,9 +368,10 @@ $white: #ffffff;
             h5 {
                 font-size: 2.125em;
                 letter-spacing: 0.01em;
-                color: $green;
+                color: $blue;
                 text-align: center;
                 margin: 0 0 21px;
+                line-height: 1;
             }
 
             p {
@@ -380,13 +383,13 @@ $white: #ffffff;
             .cta a { 
                 font-size: 21px;
                 text-decoration: none;
-                color: $orange; 
+                color: $blue; 
                 -webkit-transition: color 1s; /* Safari */
                 transition: color 1s;
 
                 &:hover {
 
-                    color: $green;
+                    color: $gray;
 
                     &:before { 
                     left: 167px; }
@@ -612,10 +615,18 @@ $white: #ffffff;
             border-radius: 3px;
             max-width: 479px;
 
+            input[type="button"] { cursor: pointer; }
+
             label { 
                 display: block;
                 font-weight: bold;
-                margin: 0 0 3px; }
+                margin: 0 0 8px; }
+
+            #import-file { display: none; }
+
+            .file-selected {     
+                font-size: 16px;
+                padding: 0 0 0 5px; }
 
         } // .file-upload-wrap
 

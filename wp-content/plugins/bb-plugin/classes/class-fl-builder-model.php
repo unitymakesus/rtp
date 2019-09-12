@@ -784,6 +784,13 @@ final class FLBuilderModel {
 		$active    = self::is_builder_active();
 		$preview   = self::is_builder_draft_preview();
 
+		/**
+		 *
+		 * @see fl_builder_get_asset_info_post_id
+		 * @since 2.2.5
+		 */
+		$post_id = apply_filters( 'fl_builder_get_asset_info_post_id', $post_id, $post_data, $active, $preview );
+
 		if ( isset( $post_data['node_preview'] ) ) {
 			$suffix = '-layout-preview';
 		} elseif ( $active || $preview ) {
@@ -2098,8 +2105,8 @@ final class FLBuilderModel {
 	static public function process_col_settings( $col, $new_settings ) {
 		$post_data = self::get_post_data();
 
-		// Don't process for preview nodes.
-		if ( isset( $post_data['node_preview'] ) ) {
+		// Don't process for preview nodes or if column is parent.
+		if ( isset( $post_data['node_preview'] ) || empty( $col->parent ) ) {
 			return $new_settings;
 		}
 
@@ -4118,8 +4125,6 @@ final class FLBuilderModel {
 
 		if ( count( $post_meta ) !== 0 ) {
 
-			$sql = "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) ";
-
 			foreach ( $post_meta as $meta_info ) {
 				$meta_key = $meta_info->meta_key;
 
@@ -4128,14 +4133,10 @@ final class FLBuilderModel {
 				} else {
 					$meta_value = addslashes( $meta_info->meta_value );
 				}
-
-				$sql_select[] = "SELECT {$new_post_id}, '{$meta_key}', '{$meta_value}'";
+				// @codingStandardsIgnoreStart
+				$wpdb->query( "INSERT INTO {$wpdb->postmeta} (post_id, meta_key, meta_value) values ({$new_post_id}, '{$meta_key}', '{$meta_value}')" );
+				// @codingStandardsIgnoreEnd
 			}
-
-			$sql .= implode( ' UNION ALL ', $sql_select );
-			// @codingStandardsIgnoreStart
-			$wpdb->query($sql);
-			// @codingStandardsIgnoreEnd
 		}
 
 		// Duplicate post terms.

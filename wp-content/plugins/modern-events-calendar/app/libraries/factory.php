@@ -129,8 +129,7 @@ class MEC_factory extends MEC_base
         $this->filter('request', array($this->main, 'filter_request'));
 
         // Block Editor Category
-        if(function_exists('register_block_type'))
-        $this->filter('block_categories', array($this->main, 'add_custome_block_cateogry'), 9999);
+        if(function_exists('register_block_type')) $this->filter('block_categories', array($this->main, 'add_custom_block_cateogry'), 9999);
 
         // Add Taxonomy etc to filters
         $this->filter('mec_vyear_atts', array($this->main, 'add_search_filters'));
@@ -234,22 +233,35 @@ class MEC_factory extends MEC_base
 
         // Include WordPress color picker JavaScript file
         wp_enqueue_script('wp-color-picker');
-        
-        // Include jQuery date picker
-        //wp_enqueue_script('jquery-ui-datepicker');
-        
-        // Include MEC backend script file
+
+        // Include MEC typekit script file
         wp_enqueue_script('mec-typekit-script', $this->main->asset('js/jquery.typewatch.js'));
-        wp_enqueue_script('mec-backend-script', $this->main->asset('js/backend.js'), array('wp-color-picker', 'jquery-ui-datepicker'));
+        
+        //Include the nice-select
+        wp_enqueue_script('mec-niceselect-script', $this->main->asset('js/jquery.nice-select.min.js'));
+
+        // Backend Dependencies
+        $dependencies = array('wp-color-picker', 'jquery-ui-datepicker');
+
+        // Get Current Screen
+        global $current_screen;
+        if(!isset($current_screen)) $current_screen = get_current_screen();
+
+        // Add WP Blocks to the dependencies only when needed!
+        if(method_exists($current_screen, 'is_block_editor') and $current_screen->is_block_editor()) $dependencies[] = 'wp-blocks';
+
+        // Include MEC backend script file
+        wp_enqueue_script('mec-backend-script', $this->main->asset('js/backend.js'), $dependencies);
+
         // Register New Block Editor 
-        if(function_exists('register_block_type'))
-        register_block_type('mec/blockeditor', array('editor_script' => 'block.editor'));
+        if(function_exists('register_block_type')) register_block_type('mec/blockeditor', array('editor_script' => 'block.editor'));
+
         wp_localize_script( 'mec-backend-script', 'mec_admin_localize', 
             array( 
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
                 'ajax_nonce' => wp_create_nonce('mec_settings_nonce'),
                 'mce_items' => $this->main->mce_get_shortcode_list(),
-            ) 
+            )
         );
 
         wp_enqueue_script('mec-events-script', $this->main->asset('js/events.js'));
@@ -282,6 +294,9 @@ class MEC_factory extends MEC_base
 
         // Google Fonts Status
         $gfonts_status = (isset($styling['disable_gfonts']) and $styling['disable_gfonts']) ? false : true;
+
+        
+        
         
         // Include WordPress jQuery
         wp_enqueue_script('jquery');
@@ -289,6 +304,11 @@ class MEC_factory extends MEC_base
         // Include jQuery date picker
         wp_enqueue_script('jquery-ui-datepicker');
         
+        // Load Isotope
+        if(class_exists('ET_Builder_Element')) $this->main->load_isotope_assets();
+        
+        wp_enqueue_script('mec-typekit-script', $this->main->asset('js/jquery.typewatch.js'));
+
         // Include MEC frontend script files
         wp_enqueue_script('mec-frontend-script', $this->main->asset('js/frontend.js'));
         wp_enqueue_script('mec-tooltip-script', $this->main->asset('packages/tooltip/tooltip.js'));
@@ -310,6 +330,10 @@ class MEC_factory extends MEC_base
             $elementor_edit_mode = 'no';
         }
         
+         // Settings
+         $settings = $this->main->get_settings();
+         $grecaptcha_key = isset($settings['google_recaptcha_sitekey']) ? trim($settings['google_recaptcha_sitekey']) : '';
+
         // Localize Some Strings
         wp_localize_script('mec-frontend-script', 'mecdata', array
         (
@@ -322,6 +346,7 @@ class MEC_factory extends MEC_base
             'second'=>__('second', 'mec'),
             'seconds'=>__('seconds', 'mec'),
             'elementor_edit_mode'=>$elementor_edit_mode,
+            'recapcha_key'=>$grecaptcha_key
         ));
         
         // Include Google Recaptcha Javascript API
@@ -450,6 +475,11 @@ class MEC_factory extends MEC_base
         $this->import('app.addons.elementor');
         $MEC_addon_elementor = new MEC_addon_elementor();
         $MEC_addon_elementor->init();
+
+        // Import MEC Divi addon Class
+        $this->import('app.addons.divi');
+        $MEC_addon_divi = new MEC_addon_divi();
+        $MEC_addon_divi->init();
     }
     
     /**
@@ -604,6 +634,7 @@ class MEC_factory extends MEC_base
 
         // Clear Scheduler Cronjob
         wp_clear_scheduled_hook('mec_scheduler');
+        wp_clear_scheduled_hook('mec_syncScheduler');
 	}
     
     /**
@@ -840,6 +871,7 @@ class MEC_factory extends MEC_base
 
         // Scheduler Cron job
         if(!wp_next_scheduled('mec_scheduler')) wp_schedule_event(time(), 'hourly', 'mec_scheduler');
+        if(!wp_next_scheduled('mec_syncScheduler')) wp_schedule_event(time(), 'daily', 'mec_syncScheduler');
         
         // Mark this blog as installed
         update_option('mec_installed', 1);

@@ -3,6 +3,7 @@ Contributors: justinbusa, RobbyMcCullough, billyyoung, hinampaksh, diegoliv, web
 Tags: page builder, beaver builder, landing page, front-end builder, drag and drop editor
 Requires at least: 4.6
 Tested up to: 5.2
+Requires PHP: 5.6
 Stable tag: trunk
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

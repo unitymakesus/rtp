@@ -1,5 +1,122 @@
-﻿v 4.3.2 – 17 June 2019
-Fixed: Notification tabs in settings
+﻿v 4.5.1 - 11 September 2019
+- Compatibility: WordPress 5.2.3
+- Fixed: Showing multiple names and emails in backend booking form.
+- Fixed: Date field in backend of booking form.
+- Fixed: Local time module regarding hour.
+- Fixed: Maximum year number in date fields in frontend and backend forms.
+- Fixed: Location, saving latitude and longitude.
+- Fixed: Send emails to all attendees instead of main attendees.
+- Fixed: Displaying Google Recaptcha in modals.
+- Fixed: Showing registration form data in backend.
+- Fixed: Ticket filter in booking management menu.
+
+v 4.5.0 - 4 September 2019
+- Added: SCA compatibility for Stripe Payment Gateways (pro)
+- Added: Google Maps option in list and Grid skins (pro)
+- Added: A feature to update booking dates when event date is updated (pro)
+- Updated: Stripe API to the latest version (pro)
+- Upgraded: Stripe Element (pro)
+- Fixed: Global limit for bookers (pro)
+- Fixed: Twin search strings in backend
+
+v 4.4.9 - 27 August 2019
+- Fixed: Ajax live search
+- Fixed: Some minor issue
+
+v 4.4.8 - 22 August 2019
+- Fixed: Disabling Schema option
+- Fixed: Some minor issue
+
+v 4.4.7 - 21 August 2019
+- Added: Modern style search bar
+- Added: Auto set cronjobs for synchronization
+- Added: An option to not open current day in MEC widget
+- Added: ID column and sort by ID in booking menu
+- Added: Filter by ticket name in bookings menu
+- Added: Advanced clustering feature for Google Maps
+- Added: Duplicate link in event action links
+- Added: An option for disabling Schema
+- Fixed: Double tap feature for monthly calendar (simple skin)
+- Fixed: Advanced repeat type
+- Fixed: Countdown in module view and Countdown skin
+- Fixed: Carousel view and "load more" button in Internet explorer
+
+v 4.4.6 - 13 August 2019
+- Added: Ajax live search to search bar
+- Added: Filter before wp_mail (Booking Notification) for developers
+- Fixed: Simple monthly calendar style
+- Fixed: Daylight saving
+- Fixed: Multiple days events
+- Fixed: A two-year limit for filtering events
+- Fixed: Yearly view search filter
+- Fixed: Displaying total attendees in Booking Confirmation email
+- Fixed: Displaying invoice link in booking when the invoice is disabled
+- Fixed: Booking module in some themes (Lity popup)
+- Fixed: Some minor issues
+
+v 4.4.5 - 3 August 2019
+- Added: Stripe Connect gateway to divide the booking payment between organizer and site owner
+- Added: Ability to insert new speakers from "Frontend Event Submission"
+- Improved: Only the role of administrators can see the license
+- Fixed: Agreement field type
+- Fixed: Booking Limit per user email option 
+- Fixed: General search function in WordPress Media, Pages, Posts and all custom post types caused by Search Bar feature
+- Fixed: Show "Sold Out" badge in monthly skin when an occurence is sold out completely
+- Fixed "Load More" button at the bottom of the events page
+- Fixed: Import from EventOn (when organizer "tel" field contains an email)
+- Fixed: The mec_button and tiny_mce in FES form (JS error)
+- Fixed: Popup image src on some of the themes
+- Fixed: Back to Taxonomy Items when editing items (Organizers, Labels, Locations, Speaker)
+- Fixed: Unclickable settings menus
+- Fixed: Slider and Carousel view when events don't have featured images
+- Fixed: Some minor issues
+
+v 4.4.0 - 15 July 2019
+- Added: Search bar shortcode
+- Added: Organizer payment options
+- Added: MEC shortcode element for the Divi builder
+- Added: A new option to disable invoice
+- Added: An option to limit maximum tickets that someone can book for all the tickets
+- Added: Imperial units to weather module in addition to metric units
+- Added: An option to toggle between imperial and metric units in weather module
+- Added: The developer documentation <a href="https://bit.ly/2NReYuf" target="_blank">link</a>
+- Fixed: "New Window" in more info link when booking is disabled
+- Fixed: Load more button
+- Fixed: Saving the changes in registration form builder
+- Fixed: Not showing other events due to a problem in exceptional days
+- Fixed: Masonry view by returning to Isotope library (hard-refresh required)
+- Fixed: Some minor issues
+
+v 4.3.6 - 2 July 2019
+- Added: Limit option to full calendar skin in order to show more than 12 events per day
+- Added: Recurring rule to the ICS export on event details page
+- Added: End repeat option for advanced repeat type
+- Fixed: Attendee module on showing count of tickets
+- Fixed: "Invalid Request" notification in Booking form 
+- Fixed: Frontend submission advance repeating style
+- Fixed: RTL settings
+- Fixed: Addon notifications style
+- Fixed: Countdown mobile/tablet style
+
+v 4.3.5 – 27 June 2019
+- Compatibility: WordPress 5.2.2
+- Added: Advanced repeating for the "nth" day of the week in a month
+- Added: Speaker name to notifications
+- Added: Functions to display widgets separately (For using in custom single event page)
+- Added: do_action('mec_{skin_name}_skin_head'); at top of each shortcode
+- Added: M.E. Calendar blocks to make it compatible with WordPress Block editor
+- Added: Change settings styling to tabs
+- Fixed: Page not scrolled to booking section when the button is clicked
+- Fixed: Speaker popup in Divi theme
+- Fixed: Display speakers in modal view
+- Fixed: W3 validation for shortcodes
+- Fixed: Full calendar search form
+- Fixed: Sticky in settings
+- Fixed: saving issue of categorized setting options in backend.
+- Fixed: Some minor issues
+
+v 4.3.2 – 17 June 2019
+- Fixed: Notification tabs in settings
 
 v 4.3.1 – 17 June 2019
 - Added: "Number of Days" and "Week Start Day" options to clean style of timetable skin

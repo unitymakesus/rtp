@@ -31,12 +31,13 @@ else $this->factory->params('footer', $javascript);
 
 $styling = $this->main->get_styling();
 $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color'])) ? 'colorskin-custom' : '';
+do_action('mec_full_skin_head');
 ?>
 <div id="mec_skin_<?php echo $this->id; ?>" class="mec-wrap <?php echo $event_colorskin; ?> mec-full-calendar-wrap">
     
-    <div class="mec-totalcal-box">
-        <?php if($this->sf_status): ?>
-        <span id="mec_search_form_<?php echo $this->id; ?>">
+    <div class="mec-search-form mec-totalcal-box">
+        <?php
+        if($this->sf_status): ?>        
             <?php
                 $sf_month_filter = (isset($this->sf_options['month_filter']) ? $this->sf_options['month_filter'] : array());
                 $sf_category = (isset($this->sf_options['category']) ? $this->sf_options['category'] : array());
@@ -55,54 +56,51 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
                 $sf_tag_status = (isset($sf_tag['type']) and trim($sf_tag['type'])) ? true : false;
                 $sf_label_status = (isset($sf_label['type']) and trim($sf_label['type'])) ? true : false;
                 $sf_text_search_status = (isset($sf_text_search['type']) and trim($sf_text_search['type'])) ? true : false;
-                
+
                 // Status of Speakers Feature
                 $speakers_status = (!isset($this->settings['speakers_status']) or (isset($this->settings['speakers_status']) and !$this->settings['speakers_status'])) ? false : true;
-        
                 $sf_columns = 8;
             ?>
-            <?php if($sf_month_filter_status): $sf_columns -= 3; ?>
+        <?php
+            if ( (!empty($sf_category) && $sf_category["type"] == 'dropdown') || (!empty($sf_location) && $sf_location["type"] == 'dropdown') || (!empty($sf_organizer) && $sf_organizer["type"] == 'dropdown') || (!empty($sf_speaker) && $sf_speaker["type"] == 'dropdown') || (!empty($sf_tag) && $sf_tag["type"] == 'dropdown') || (!empty($sf_label) && $sf_label["type"] == 'dropdown') ):
+                $wrapper_class = 'class="mec-dropdown-wrap"';
+            else:
+                $wrapper_class = '';
+            endif;
+        ?>
+        <div id="mec_search_form_<?php echo $this->id; ?>" <?php echo $wrapper_class; ?>>
+            <?php if($sf_category_status): ?>
+                <?php echo $this->sf_search_field('category', $sf_category); ?>
+            <?php endif; ?>
+            <?php if($sf_location_status): ?>
+                <?php echo $this->sf_search_field('location', $sf_location); ?>
+            <?php endif; ?>
+            <?php if($sf_organizer_status): ?>
+                <?php echo $this->sf_search_field('organizer', $sf_organizer); ?>
+            <?php endif; ?>
+            <?php if($sf_speaker_status and $speakers_status): ?>
+                <?php echo $this->sf_search_field('speaker', $sf_speaker); ?>
+            <?php endif; ?>
+            <?php if($sf_tag_status): ?>
+                <?php echo $this->sf_search_field('tag', $sf_tag); ?>
+            <?php endif; ?>
+            <?php if($sf_label_status): ?>
+                <?php echo $this->sf_search_field('label', $sf_label); ?>
+            <?php endif; ?>
+        </div>
+        <div id="mec_search_form_<?php echo $this->id; ?>">
+        <?php if($sf_month_filter_status): $sf_columns -= 3; ?>
             <div class="col-md-3">
                 <?php echo $this->sf_search_field('month_filter', $sf_month_filter); ?>
             </div>
-            <?php endif; ?>
-            <?php if($sf_category_status): $sf_columns -= 2; ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('category', $sf_category); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_location_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('location', $sf_location); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_organizer_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('organizer', $sf_organizer); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_speaker_status and $speakers_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('speaker', $sf_speaker); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_tag_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('tag', $sf_tag); ?>
-                </div>
-            <?php endif; ?>
-            <?php if($sf_label_status): ?>
-                <div class="col-md-2">
-                <?php echo $this->sf_search_field('label', $sf_label); ?>
-                </div>
-            <?php endif; ?>
+        <?php endif; ?>
             <div class="col-md-<?php echo $sf_columns; ?>">
                 <?php if($sf_text_search_status): ?>
-                <?php echo $this->sf_search_field('text_search', $sf_text_search); ?>
+                    <?php echo $this->sf_search_field('text_search', $sf_text_search); ?>
                 <?php endif; ?>
-            </div>
-        </span>
+            </div>        
         <?php endif; ?>
+        </div>
         <div class="col-md-4">
             <div class="mec-totalcal-view">
                 <?php if($this->yearly): ?><span class="mec-totalcal-yearlyview<?php if($this->default_view == 'yearly') echo ' mec-totalcalview-selected'; ?>" data-skin="yearly"><?php _e('Yearly', 'mec'); ?></span><?php endif; ?>

@@ -310,7 +310,7 @@ class AdminPage {
 
     protected function form_input( $page_options, $name, $slug, $placeholder, $long_desc, $styles = '', $classes = '', $required = false ) {
     
-        $html = '<tr class="form-input '. $classes .'">';
+        $html = '<tr class="form-input '. esc_html( $classes ) .'">';
 
         if ( is_array( $page_options ) && $slug ) {
 
@@ -330,7 +330,7 @@ class AdminPage {
 
         } else {
 
-            $html .= '<td>There is an issue.</td>';
+            $html .= '<td>' . sprintf( __( 'Error: There is an issue displaying this form field: %s.', SECSAFE_SLUG ), 'input' ) . '</td>';
 
         } // is_array( $options )
 
@@ -363,7 +363,7 @@ class AdminPage {
 
             } else {
 
-                $html .= '<option>Not An Array!</option>';
+                $html .= '<option>' . __( 'Error: Form field "select" is not an array.', SECSAFE_SLUG ) . '</option>';
 
             } // is_array( $options )
 
@@ -379,7 +379,7 @@ class AdminPage {
 
         } else {
 
-            $html .= '<td colspan="2">There is an issue.</td>';
+            $html .= '<td colspan="2">' . sprintf( __( 'Error: There is an issue displaying this form field: %s.', SECSAFE_SLUG ), 'select' ) . '</td>';
 
         } // is_array( $options ) && $slug ...
 
@@ -412,7 +412,7 @@ class AdminPage {
     protected function form_file_upload( $text, $name, $long_desc = '', $classes = '' ) {
 
         $html = '<tr class="form-file-upload '. esc_html( $classes ) .'">';
-        $html .= '<div class="file-upload-wrap cf"><label>' . esc_html( $text ) . '</label><input name="' . esc_html( $name ) . '" id="' . esc_html( $name ) . '" type="file">';
+        $html .= '<div class="file-upload-wrap cf"><label>' . esc_html( $text ) . '</label><input name="' . esc_html( $name ) . '" id="' . esc_html( $name ) . '" type="file" class="file-input"><input type="button" class="file-select" value="' . __( 'Choose File', SECSAFE_SLUG ) . '"><span class="file-selected">' . __( 'No File Chosen', SECSAFE_SLUG ) . '</span>';
         $html .= '</div></tr>';
 
         return $html;

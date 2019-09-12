@@ -193,7 +193,7 @@ class AdminPageBackups extends AdminPage {
 
         // Shutoff Switch
         $rows = $this->form_select( $this->settings, 'Backup Status', $freq . '_on', [ '0' => 'Paused', '1' => 'Scheduled' ], 'The status is paused by default to prevent it from running before your settings are configured.' );
-        $rows .= $this->form_button( 'Run Backup Now', 'link-delete', get_admin_url() . '?page=security-safe-backups&tab=monthly&mannual=1', 'Force this backup process to run now.' );
+        $rows .= $this->form_button( 'Run Backup Now', 'link-delete', admin_url( 'admin.php?page=security-safe-backups&tab=monthly&mannual=1' ), 'Force this backup process to run now.' );
         $html .= $this->form_table( $rows );
 
         // File Settings

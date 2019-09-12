@@ -1,4 +1,26 @@
+/* fSelect 1.0.1 - https://github.com/mgibbs189/fselect */
+
 (function($) {
+
+    String.prototype.unaccented = function() {
+        var accent = [
+            /[\300-\306]/g, /[\340-\346]/g, // A, a
+            /[\310-\313]/g, /[\350-\353]/g, // E, e
+            /[\314-\317]/g, /[\354-\357]/g, // I, i
+            /[\322-\330]/g, /[\362-\370]/g, // O, o
+            /[\331-\334]/g, /[\371-\374]/g, // U, u
+            /[\321]/g, /[\361]/g, // N, n
+            /[\307]/g, /[\347]/g, // C, c
+        ];
+        var noaccent = ['A','a','E','e','I','i','O','o','U','u','N','n','C','c'];
+
+        var str = this;
+        for (var i = 0; i < accent.length; i++) {
+            str = str.replace(accent[i], noaccent[i]);
+        }
+
+        return str;
+    }
 
     $.fn.fSelect = function(options) {
 
@@ -11,6 +33,7 @@
                 numDisplayed: 3,
                 overflowText: '{n} selected',
                 searchText: 'Search',
+                noResultsText: 'No results found',
                 showSearch: true,
                 optionFormatter: false
             }, options);
@@ -32,29 +55,40 @@
          */
         fSelect.prototype = {
             create: function() {
-                this.settings.multiple = this.$select.is('[multiple]');
-                var multiple = this.settings.multiple ? ' multiple' : '';
-                this.$select.wrap('<div class="fs-wrap' + multiple + '" tabindex="0" />');
-                this.$select.before('<div class="fs-label-wrap"><div class="fs-label">' + this.settings.placeholder + '</div><span class="fs-arrow"></span></div>');
-                this.$select.before('<div class="fs-dropdown hidden"><div class="fs-options"></div></div>');
-                this.$select.addClass('hidden');
-                this.$wrap = this.$select.closest('.fs-wrap');
-                this.$wrap.data('id', window.fSelect.num_items);
-                window.fSelect.num_items++;
-                this.reload();
-            },
-
-            reload: function() {
-                if (this.settings.showSearch) {
-                    var search = '<div class="fs-search"><input type="search" placeholder="' + this.settings.searchText + '" /></div>';
-                    this.$wrap.find('.fs-dropdown').prepend(search);
-                }
                 this.idx = 0;
                 this.optgroup = 0;
                 this.selected = [].concat(this.$select.val()); // force an array
-                var choices = this.buildOptions(this.$select);
-                this.$wrap.find('.fs-options').html(choices);
+                this.settings.multiple = this.$select.is('[multiple]');
+
+                var search_html = '';
+                var no_results_html = '';
+                var choices_html = this.buildOptions(this.$select);
+
+                if (this.settings.showSearch) {
+                    search_html = '<div class="fs-search"><input type="text" placeholder="' + this.settings.searchText + '" /></div>';
+                }
+                if ('' !== this.settings.noResultsText) {
+                    no_results_html = '<div class="fs-no-results hidden">' + this.settings.noResultsText + '</div>';
+                }
+
+                var html = '<div class="fs-label-wrap"><div class="fs-label"></div><span class="fs-arrow"></span></div>';
+                html += '<div class="fs-dropdown hidden">{search}{no-results}<div class="fs-options">' + choices_html + '</div></div>';
+                html = html.replace('{search}', search_html);
+                html = html.replace('{no-results}', no_results_html);
+
+                this.$select.wrap('<div class="fs-wrap' + (this.settings.multiple ? ' multiple' : '') + '" tabindex="0" />');
+                this.$select.addClass('hidden');
+                this.$select.before(html);
+                this.$wrap = this.$select.closest('.fs-wrap');
+                this.$wrap.data('id', window.fSelect.num_items);
+                window.fSelect.num_items++;
+
                 this.reloadDropdownLabel();
+            },
+
+            reload: function() {
+                this.destroy();
+                this.create();
             },
 
             destroy: function() {
@@ -77,13 +111,15 @@
                     }
                     else {
                         var val = $el.prop('value');
+                        var classes = $el.attr('class');
+                        classes = ('undefined' !== typeof classes) ? ' ' + classes : '';
 
                         // exclude the first option in multi-select mode
                         if (0 < $this.idx || '' != val || ! $this.settings.multiple) {
                             var disabled = $el.is(':disabled') ? ' disabled' : '';
                             var selected = -1 < $.inArray(val, $this.selected) ? ' selected' : '';
                             var group = ' g' + $this.optgroup;
-                            var row = '<div class="fs-option' + selected + disabled + group + '" data-value="' + val + '" data-index="' + $this.idx + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                            var row = '<div class="fs-option' + selected + disabled + group + classes + '" data-value="' + val + '" data-index="' + $this.idx + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
 
                             if ('function' === typeof $this.settings.optionFormatter) {
                                 row = $this.settings.optionFormatter(row);
@@ -103,7 +139,7 @@
                 var labelText = [];
 
                 this.$wrap.find('.fs-option.selected').each(function(i, el) {
-                    labelText.push($(el).find('.fs-option-label').text());
+                    labelText.push($(el).find('.fs-option-label').html());
                 });
 
                 if (labelText.length < 1) {
@@ -118,7 +154,6 @@
 
                 this.$wrap.find('.fs-label').html(labelText);
                 this.$wrap.toggleClass('fs-default', labelText === settings.placeholder);
-                this.$select.change();
             }
         }
 
@@ -154,7 +189,13 @@
 
     $(document).on('click', '.fs-option:not(.hidden, .disabled)', function(e) {
         var $wrap = $(this).closest('.fs-wrap');
+        var $select = $wrap.find('select');
         var do_close = false;
+
+        // prevent selections
+        if ($wrap.hasClass('fs-disabled')) {
+            return;
+        }
 
         if ($wrap.hasClass('multiple')) {
             var selected = [];
@@ -190,8 +231,9 @@
             do_close = true;
         }
 
-        $wrap.find('select').val(selected);
-        $wrap.find('select').fSelect('reloadDropdownLabel');
+        $select.val(selected);
+        $select.fSelect('reloadDropdownLabel');
+        $select.change();
 
         // fire an event
         $(document).trigger('fs:changed', $wrap);
@@ -215,8 +257,10 @@
 
         if ('' != keywords) {
             $wrap.find('.fs-option').each(function() {
-                var regex = new RegExp(keywords, 'gi');
-                if (null === $(this).find('.fs-option-label').text().match(regex)) {
+                var regex = new RegExp(keywords.unaccented(), 'gi');
+                var formatedValue = $(this).find('.fs-option-label').text().unaccented();
+
+                if (null === formatedValue.match(regex)) {
                     $(this).addClass('hidden');
                 }
             });
@@ -231,6 +275,7 @@
         }
 
         setIndexes($wrap);
+        checkNoResults($wrap);
     });
 
     $(document).on('click', function(e) {
@@ -268,7 +313,8 @@
 
         // toggle the dropdown on space
         if ($target.hasClass('fs-wrap')) {
-            if (32 == e.which) {
+            if (32 == e.which || 13 == e.which) {
+                e.preventDefault();
                 $target.find('.fs-label').trigger('click');
                 return;
             }
@@ -329,6 +375,11 @@
         }
     });
 
+    function checkNoResults($wrap) {
+        var addOrRemove = $wrap.find('.fs-option:not(.hidden)').length > 0;
+        $wrap.find('.fs-no-results').toggleClass('hidden', addOrRemove);
+    }
+
     function setIndexes($wrap) {
         $wrap.find('.fs-option.hl').removeClass('hl');
         $wrap.find('.fs-search input').focus();
@@ -358,9 +409,11 @@
         window.fSelect.active_el = $wrap;
         window.fSelect.active_id = $wrap.data('id');
         window.fSelect.initial_values = $wrap.find('select').val();
+        $(document).trigger('fs:opened', $wrap);
         $wrap.find('.fs-dropdown').removeClass('hidden');
         $wrap.addClass('fs-open');
         setIndexes($wrap);
+        checkNoResults($wrap);
     }
 
     function closeDropdown($wrap) {

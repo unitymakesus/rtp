@@ -41,6 +41,10 @@ function mec_get_tickets_availability'.$uniqueid.'(event_id, date)
     // Abort previous request
     if(mec_tickets_availability_ajax'.$uniqueid.') mec_tickets_availability_ajax'.$uniqueid.'.abort();
     
+    //Start Preloader
+    jQuery(".mec-event-tickets-list").addClass("mec-cover-loader");
+    jQuery(".mec-event-tickets-list").append( "<div class=\"mec-loader\"></div>" );
+
     mec_tickets_availability_ajax'.$uniqueid.' = jQuery.ajax(
     {
         type: "GET",
@@ -96,6 +100,9 @@ function mec_get_tickets_availability'.$uniqueid.'(event_id, date)
                 
                 jQuery("#mec_booking'.$uniqueid.' #mec_event_ticket"+ticket_id+" .mec-event-ticket-price").html(price_label);
             }
+            // Remove Preloader
+            jQuery(".mec-loader").remove();
+            jQuery(".mec-event-tickets-list").removeClass("mec-cover-loader");
         },
         error: function(jqXHR, textStatus, errorThrown)
         {
@@ -301,6 +308,9 @@ function mec_book_form_submit'.$uniqueid.'()
                 {
                     setTimeout(function(){window.location.href = data.data.redirect_to;}, 2000);
                 }
+                jQuery("html,body").animate({
+                    scrollTop: jQuery(".mec-events-meta-group-booking").offset().top - 100
+                }, "slow");
             }
             else
             {

@@ -27,87 +27,14 @@ if(is_array($fonts))
     }
 }
 ?>
-<div class="wns-be-container">
+<div class="wns-be-container wns-be-container-sticky">
 
     <div id="wns-be-infobar">
         <a href="" id="" class="dpr-btn dpr-save-btn"><?php _e('Save Changes', 'mec'); ?></a>
     </div>
     
     <div class="wns-be-sidebar">
-
-        <ul class="wns-be-group-menu">
-
-            <li class="wns-be-group-menu-li has-sub">
-                <a href="<?php echo $this->main->remove_qs_var('tab'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <span class="extra-icon">
-                        <i class="sl-arrow-down"></i>
-                    </span>
-                    <i class="mec-sl-settings"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Settings', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <?php if($this->main->getPRO() and isset($this->settings['booking_status']) and $this->settings['booking_status']): ?>
-
-                <li class="wns-be-group-menu-li">
-                    <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-reg-form'); ?>" id="" class="wns-be-group-tab-link-a">
-                        <i class="mec-sl-layers"></i> 
-                        <span class="wns-be-group-menu-title"><?php _e('Booking Form', 'mec'); ?></span>
-                    </a>
-                </li>            
-
-                <li class="wns-be-group-menu-li">
-                    <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-gateways'); ?>" id="" class="wns-be-group-tab-link-a">
-                        <i class="mec-sl-wallet"></i> 
-                        <span class="wns-be-group-menu-title"><?php _e('Payment Gateways', 'mec'); ?></span>
-                    </a>
-                </li>
-
-            <?php endif;?>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-notifications'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-envelope"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Notifications', 'mec'); ?></span>
-                </a>
-            </li>            
-
-            <li class="wns-be-group-menu-li active">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-styling'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-equalizer"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Styling Options', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-customcss'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-wrench"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Custom CSS', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-messages'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-bubble"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Messages', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-ie'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-refresh"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Import / Export', 'mec'); ?></span>
-                </a>
-            </li>
-
-            <!-- <li class="wns-be-group-menu-li">
-                <a href="<?php echo $this->main->add_qs_var('tab', 'MEC-support'); ?>" id="" class="wns-be-group-tab-link-a">
-                    <i class="mec-sl-support"></i> 
-                    <span class="wns-be-group-menu-title"><?php _e('Support', 'mec'); ?></span>
-                </a>
-            </li> -->
-
-        </ul>
+        <?php $this->main->get_sidebar_menu('styling'); ?>
     </div>
 
     <div class="wns-be-main">
@@ -119,21 +46,8 @@ if(is_array($fonts))
                 <h2><?php _e('Styling Option', 'mec'); ?></h2>
                 <div class="mec-container">
                     <form id="mec_styling_form">
-                        <?php /*<!-- <p>
-                            <input type="text" class="wp-color-picker-field" id="mec_settings_color" name="mec[styling][color]" value="<?php echo (isset($styling['color']) ? $styling['color'] : ''); ?>" data-default-color="" />
-                        </p>
-                        <p>
-                            <input type="text" class="up-text wpsa-url" id="mec_settings_upload" name="mec[styling][upload]" value="<?php echo (isset($styling['upload']) ? $styling['upload'] : ''); ?>"/>
-                            <input type="button" class="button wpsa-browse" value="Upload" />
-                        </p>
-                        <p>
-                        </p>
-                        <p>
-                            <input type="text" id="mec_settings_text" name="mec[styling][text]" value="<?php echo ((isset($styling['text']) and trim($styling['text']) != '') ? $styling['text'] : ''); ?>" />
-                        </p> -->
-                        <!-- <input type="text" class="wp-color-picker-field" id="mec_settings_color" name="mec[styling][color]" value="<?php echo (isset($styling['color']) ? $styling['color'] : ''); ?>" data-default-color="" /> -->*/ ?>
 
-                        <!-- Colorskin -->
+                    <!-- Colorskin -->
                         <h4 class="mec-form-subtitle"><?php esc_html_e('Color Skin', 'mec' ); ?></h4>
                         <div class="mec-form-row">
                             <div class="mec-col-3">
@@ -302,7 +216,7 @@ if(is_array($fonts))
                                         <div class="content"><p><?php esc_attr_e('You can enter your theme container size in this field', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/style-options/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                     </div>
                                     <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                </span>                                  
+                                </span>
                             </div>
                         </div>
                         <div class="mec-form-row">
@@ -315,7 +229,7 @@ if(is_array($fonts))
                                         <div class="content"><p><?php esc_attr_e('You can enter your theme container size in this field', 'mec'); ?><a href="https://webnus.net/dox/modern-events-calendar/style-options/" target="_blank"><?php _e('Read More', 'mec'); ?></a></p></div>    
                                     </div>
                                     <i title="" class="dashicons-before dashicons-editor-help"></i>
-                                </span>                                  
+                                </span>
                             </div>
                         </div>
 

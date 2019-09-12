@@ -6,7 +6,11 @@
 .fl-visible-medium,
 .fl-col-group .fl-visible-desktop.fl-col,
 .fl-col-group .fl-visible-desktop-medium.fl-col,
-.fl-col-group .fl-visible-medium.fl-col {
+.fl-col-group .fl-visible-medium.fl-col,
+.fl-col-group-equal-height .fl-visible-desktop-medium,
+.fl-col-group-equal-height .fl-visible-medium,
+.fl-col-group.fl-col-group-equal-height .fl-visible-desktop-medium.fl-col,
+.fl-col-group.fl-col-group-equal-height .fl-visible-medium.fl-col {
 	display: none;
 }
 .fl-visible-medium-mobile,
@@ -156,7 +160,7 @@
 	margin-right: auto;
 	width: auto !important;
 }
-.fl-col-small {
+.fl-col-small:not(.fl-col-small-full-width) {
 	max-width: 400px;
 }
 .fl-block-col-resize {

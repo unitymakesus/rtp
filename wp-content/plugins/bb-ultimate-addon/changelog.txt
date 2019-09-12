@@ -1,3 +1,18 @@
+Version 1.20.1 - Monday, 19th August 2019
+- Improvement: Advanced Menu - Added Responsive support for Navigation Alignment settings options
+- Improvement: Heading - Added Background color and Padding setting options for Heading
+- Improvement: Heading - Added Filter for removing default space between Description Paragraph
+- Improvement: Price Box - Added Padding settings option for Price Box
+- Improvement: Added filter for Carousel Next & Previous Arrows
+- Fixed: Woo - Add To Cart - Resolved fatal error when WooCommerce plugin is deactivated and Add to Cart module is used
+- Fixed: Line breaks in paragraphs not working while editing certain modules in the editor
+- Fixed: Resolved JavaScript error when Photo field is empty in some cases
+
+Version 1.20.0 - Monday, 5th August 2019
+- New: Introduced WPForms Styler
+- Improvement: Business Hours - Added WPML support
+- Fixed: Heading - Heading Font size not overriding Theme Font size in some cases
+
 Version 1.19.0 - Wednesday, 17th July 2019
 - New: Introduced Off Canvas
 - Improvement: Image / Icon - Added Responsive field support to the Alignment
@@ -5,7 +20,7 @@ Version 1.19.0 - Wednesday, 17th July 2019
 - Fixed: Advanced Menu - Link Padding settings not reflecting in preview mode
 - Fixed: Fancy Text - Fancy Text color overriding Row Text color
 - Fixed: Fancy Text - Text color overriding Column Text color
-- Fixed: Particle Backgrounds - Resolved JavaScript error when Column Group is used.
+- Fixed: Particle Backgrounds - Resolved JavaScript error when Column Group is used
 
 Version 1.18.2 - Monday, 1st July 2019
 - Improvement: Business Reviews - Improved Schema Rating.
@@ -98,17 +113,17 @@ Version 1.15.0 - Thursday, February 14, 2019
 Version 1.14.4 - Thursday, 31st January 2019
 - Fixed: Advanced Menu - Fixed Show Border settings not working correctly
 - Fixed: Advanced Menu - Resolved default Sub Menu Border Width issue
-- Fixed: Advanced Icon - Resolved Background Color Opacity issue 
+- Fixed: Advanced Icon - Resolved Background Color Opacity issue
 - Fixed: Button - Fixed Link nofollow option not working correctly
-- Fixed: CF7 Styler - Resolved default Border Width issue 
-- Fixed: Gravity Form Styler - Resolved default Border Width issue 
-- Fixed: Heading - Fixed Mobile alignment not working correctly 
+- Fixed: CF7 Styler - Resolved default Border Width issue
+- Fixed: Gravity Form Styler - Resolved default Border Width issue
+- Fixed: Heading - Fixed Mobile alignment not working correctly
 - Fixed: Info Box - Fixed Background Color Opacity settings
 - Fixed: Info Box - Resolved Text  nofollow option not working
 - Fixed: Modal Popup - Fixed Mobile alignment not working correctly
 - Fixed: Table - Typography settings not reflecting for preview mode
 - Fixed: Video Gallery - Resolved default Border Width issue
-- Fixed: Woo Products - Resolved console error of Invalid or Unexpected Token 
+- Fixed: Woo Products - Resolved console error of Invalid or Unexpected Token
 
 Version 1.14.3 - Tuesday, 15th January 2019
 - Fixed: Advanced Menu - Sub menu Typography settings not working in case of Beaver Builder 2.2
@@ -119,9 +134,9 @@ Version 1.14.3 - Tuesday, 15th January 2019
 - Fixed: Info Box - Link option not working in case of Beaver Builder 2.2
 - Fixed: Info List - Description Typography settings not working in case of Beaver Builder 2.2
 
-Version 1.14.2 - Friday, 11th January 2019 
+Version 1.14.2 - Friday, 11th January 2019
 - Fixed: Info Box - Fixed Icon and Image alignment issue
-- Fixed: Advanced Separator - Fixed Text Content width issue 
+- Fixed: Advanced Separator - Fixed Text Content width issue
 - Fixed: Non Numeric value notice for line height in rare cases
 
 Version 1.14.1 - Thursday, 10th January 2019

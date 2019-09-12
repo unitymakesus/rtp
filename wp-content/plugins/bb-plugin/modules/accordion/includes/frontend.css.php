@@ -27,9 +27,25 @@ FLBuilderCSS::border_field_rule( array(
 	'selector'     => ".fl-node-$id .fl-accordion-item",
 ) );
 
-// Label Colors
+// Label BG Colors
 FLBuilderCSS::rule( array(
 	'selector' => ".fl-node-$id .fl-accordion-button",
+	'props'    => array(
+		'background-color' => $settings->label_bg_color,
+	),
+) );
+
+// Label Text Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id .fl-accordion-button-label",
+	'props'    => array(
+		'color' => $settings->label_text_color,
+	),
+) );
+
+// Icon Colors
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-node-$id .fl-accordion-button-icon",
 	'props'    => array(
 		'background-color' => $settings->label_bg_color,
 		'color'            => $settings->label_text_color,

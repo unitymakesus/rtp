@@ -1,7 +1,7 @@
 <?php
 
 $vid_data = $module->get_data();
-$preload  = FLBuilderModel::is_builder_active() ? ' preload="none"' : '';
+$preload  = FLBuilderModel::is_builder_active() && ! empty( $vid_data->poster ) ? ' preload="none"' : '';
 $schema   = $module->get_structured_data( $module );
 
 ?>

@@ -67,21 +67,23 @@
 		_submitForm: function( e )
 		{
 			var submitButton    = $( e.currentTarget ),
-				currentForm     = submitButton.closest( '.fl-subscribe-form' ),
-				postId      	= currentForm.closest( '.fl-builder-content' ).data( 'post-id' ),
-				templateId		= currentForm.data( 'template-id' ),
-				templateNodeId	= currentForm.data( 'template-node-id' ),
-				nodeId      	= currentForm.closest( '.fl-module' ).data( 'node' ),
-				buttonText  	= submitButton.find( '.fl-button-text' ).text(),
-				waitText    	= submitButton.closest( '.fl-form-button' ).data( 'wait-text' ),
-				name        	= currentForm.find( 'input[name=fl-subscribe-form-name]' ),
-				email       	= currentForm.find( 'input[name=fl-subscribe-form-email]' ),
-				termsCheckbox   = currentForm.find( 'input[name=fl-terms-checkbox]'),
-				recaptcha 		= currentForm.find( '.fl-grecaptcha' ),
-				reCaptchaValue	= recaptcha.data( 'fl-grecaptcha-response' ),
-				re          	= /\S+@\S+\.\S+/,
-				valid       	= true,
-				ajaxData 		= null;
+				currentForm     	= submitButton.closest( '.fl-subscribe-form' ),
+				postId      			= currentForm.closest( '.fl-builder-content' ).data( 'post-id' ),
+				templateId				= currentForm.data( 'template-id' ),
+				templateNodeId		= currentForm.data( 'template-node-id' ),
+				nodeId      			= currentForm.closest( '.fl-module' ).data( 'node' ),
+				buttonText  			= submitButton.find( '.fl-button-text' ).text(),
+				waitText    			= submitButton.closest( '.fl-form-button' ).data( 'wait-text' ),
+				name        			= currentForm.find( 'input[name=fl-subscribe-form-name]' ),
+				email       			= currentForm.find( 'input[name=fl-subscribe-form-email]' ),
+				successMessage		= currentForm.find( 'input[name=fl-success-message]' ),
+				successUrl				= currentForm.find( 'input[name=fl-success-url]' ),
+				termsCheckbox   	= currentForm.find( 'input[name=fl-terms-checkbox]'),
+				recaptcha 				= currentForm.find( '.fl-grecaptcha' ),
+				reCaptchaValue		= recaptcha.data( 'fl-grecaptcha-response' ),
+				re          			= /\S+@\S+\.\S+/,
+				valid       			= true,
+				ajaxData 					= null;
 
 			e.preventDefault();
 
@@ -138,10 +140,12 @@
 				submitButton.addClass( 'fl-form-button-disabled' );
 
 				ajaxData = {
-					action  			: 'fl_builder_subscribe_form_submit',
-					name    			: name.val(),
-					email   			: email.val(),
-					terms_checked       : termsCheckbox.is(':checked') ? '1' : '0',
+					action  					: 'fl_builder_subscribe_form_submit',
+					name    					: name.val(),
+					email   					: email.val(),
+					success_message		: successMessage.val(),
+					success_url				: successUrl.val(),
+					terms_checked      : termsCheckbox.is(':checked') ? '1' : '0',
 					post_id 			: postId,
 					template_id 		: templateId,
 					template_node_id 	: templateNodeId,

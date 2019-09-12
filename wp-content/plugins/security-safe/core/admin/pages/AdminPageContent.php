@@ -25,22 +25,22 @@ class AdminPageContent extends AdminPage {
         $this->description = __( 'Deter visitors from stealing your content.', SECSAFE_SLUG );
 
         $this->tabs[] = [
-            'id' => 'settings',
-            'label' => __( 'Settings', SECSAFE_SLUG ),
-            'title' => __( 'Content Settings', SECSAFE_SLUG ),
-            'heading' => false,
-            'intro' => false,
-            'content_callback' => 'tab_settings',
+            'id'                => 'settings',
+            'label'             => __( 'Settings', SECSAFE_SLUG ),
+            'title'             => __( 'Content Settings', SECSAFE_SLUG ),
+            'heading'           => false,
+            'intro'             => false,
+            'content_callback'  => 'tab_settings',
         ];
 
         $this->tabs[] = [
-            'id' => '404s',
-            'label' => __( '404 Errors', SECSAFE_SLUG ),
-            'title' => __( '404 Error Log', SECSAFE_SLUG ),
-            'heading' => false,
-            'intro' => false,
-            'classes' => [ 'full' ],
-            'content_callback' => 'tab_404s',
+            'id'                => '404s',
+            'label'             => __( '404 Errors', SECSAFE_SLUG ),
+            'title'             => __( '404 Error Log', SECSAFE_SLUG ),
+            'heading'           => false,
+            'intro'             => false,
+            'classes'           => [ 'full' ],
+            'content_callback'  => 'tab_404s',
         ];
 
     } // set_page()
@@ -104,7 +104,7 @@ class AdminPageContent extends AdminPage {
         $rows = $this->form_checkbox( 
             $this->settings, 
             __( 'Hide Posts', SECSAFE_SLUG ), 
-            __( 'hide_password_protected_posts', SECSAFE_SLUG ), 
+            'hide_password_protected_posts',
             __( 'Hide All Protected Posts', SECSAFE_SLUG ), 
             __( 'Prevent password protected content from being listed in the blog, search results, and any other public areas. (only affects the loop)', SECSAFE_SLUG ) 
         );

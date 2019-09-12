@@ -52,6 +52,8 @@ $settings = $this->main->get_settings();
                     } 
                     $speakers = json_encode($speakers);
                 }
+                $schema_settings = isset( $settings['schema'] ) ? $settings['schema'] : '';
+                if($schema_settings == '1' ):                
             ?>
             <script type="application/ld+json">
             {
@@ -78,6 +80,7 @@ $settings = $this->main->get_settings();
                 "url"			: "<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"
             }
             </script>
+            <?php endif; ?>
             <article class="mec-timetable-event mec-timetable-day-<?php echo $this->id; ?>-<?php echo date('Ymd', strtotime($date)); ?> <?php echo $this->get_event_classes($event); ?>">
                 <span class="mec-timetable-event-span mec-timetable-event-time">
                     <i class="mec-sl-clock"></i>

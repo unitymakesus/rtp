@@ -507,6 +507,7 @@ FLBuilder::register_module(
 							'type'    => 'align',
 							'label'   => __( 'Navigation Alignment', 'uabb' ),
 							'default' => 'center',
+							'responsive' => true,
 							'preview' => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-creative-menu-mobile-toggle-container, .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text',
