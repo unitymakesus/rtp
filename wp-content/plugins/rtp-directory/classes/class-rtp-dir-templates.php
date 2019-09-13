@@ -176,10 +176,10 @@ class RTP_Dir_Templates {
 	public function single_location_templates($template) {
 		global $post;
 		// Check active theme for template override
-		$single_company_override = locate_template('single-rtp-company.php');
-		$single_facility_override = locate_template('single-rtp-facility.php');
-		$single_site_override = locate_template('single-rtp-site.php');
-		$single_space_override = locate_template('single-rtp-space.php');
+		$single_company_override = locate_template(['single-rtp-company.php', 'views/single-rtp-company.blade.php']);
+		$single_facility_override = locate_template(['single-rtp-facility.php', 'views/single-rtp-facility.blade.php']);
+		$single_site_override = locate_template(['single-rtp-site.php', 'views/single-rtp-site.blade.php']);
+		$single_space_override = locate_template(['single-rtp-space.php', 'views/single-rtp-site.blade.php']);
 
 		// Use default template set in this plugin if no overrides are set in theme
 		if($post->post_type == 'rtp-company' && $single_company_override == '') {

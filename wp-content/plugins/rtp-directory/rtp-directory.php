@@ -314,47 +314,42 @@ final class RTP_Dir {
    * @since   1.0.0
    */
   public function load_scripts_styles() {
-    if (is_page_template('templates/page-directory.php') || is_page('company-directory')) {
+		// Enqueue scripts
+		wp_enqueue_script( 'mapbox-script', 'https://api.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js', array(), null, true );
+
+		// Enqueue styles
+		wp_enqueue_style( 'mapbox-style', 'https://api.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css', null, false);
+		wp_enqueue_style( 'rtp-dir-style', $this->plugin_url . 'css/style.css', null, '1.0.0');
+
+		$localized_vars = array(
+			'ajax_uri'      		=> admin_url('admin-ajax.php'),
+			'_ajax_nonce'   		=> $this->nonce,
+			'marker_company'		=> $this->plugin_url . 'images/icon-map-company@2x.png',
+			'marker_recreation'	=> $this->plugin_url . 'images/icon-map-recreation@2x.png',
+			'marker_forsale'		=> $this->plugin_url . 'images/icon-map-forsale@2x.png',
+			'marker_forlease'		=> $this->plugin_url . 'images/icon-map-forlease@2x.png',
+			'pattern_forsale'		=> $this->plugin_url . 'images/pattern-map-forsale.png',
+			'company_type_images' => $this->company_type_images
+		);
+
+    if (is_page_template('templates/page-directory.php') || is_page('directory-map')) {
       // Enqueue scripts
-      wp_enqueue_script( 'mapbox-script', 'https://api.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js', array(), null, true );
       wp_enqueue_script( 'rtp-dir-script', $this->plugin_url . 'scripts/map-script.js', array('mapbox-script'), '1.0.0', true );
 
-      // Enqueue styles
-      wp_enqueue_style( 'mapbox-style', 'https://api.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css', null, false);
-      wp_enqueue_style( 'rtp-dir-style', $this->plugin_url . 'css/style.css', null, '1.0.0');
-
       // Set up JS vars
-      wp_localize_script('rtp-dir-script', 'rtp_dir_vars', array(
-        'ajax_uri'      		=> admin_url('admin-ajax.php'),
-        '_ajax_nonce'   		=> $this->nonce,
-				'marker_company'		=> $this->plugin_url . 'images/icon-company-3d@2x.png',
-				'marker_recreation'	=> $this->plugin_url . 'images/icon-recreation-3d@2x.png',
-				'marker_realestate'	=> $this->plugin_url . 'images/icon-realestate-3d@2x.png',
-				'company_type_images' => $this->company_type_images
-      ));
+      wp_localize_script('rtp-dir-script', 'rtp_dir_vars', $localized_vars);
     }
 
 		if (is_singular('rtp-company') || is_singular('rtp-facility') || is_singular('rtp-site') || is_singular('rtp-space')) {
 			// Enqueue scripts
-			wp_enqueue_script( 'mapbox-script', 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.js', array(), null, true );
 			wp_enqueue_script( 'rtp-dir-location-script', $this->plugin_url . 'scripts/single-location-script.js', array('mapbox-script'), '1.0.0', true );
 
-			// Enqueue JS for edit directory
-			wp_enqueue_script( 'rtp-dir-tingle', $this->plugin_url . 'scripts/vendor/tingle.min.js', array(), '1.0.0', true );
-			wp_enqueue_script( 'rtp-dir-edit-directory', $this->plugin_url . 'scripts/edit-directory.js', array('rtp-dir-tingle'), '1.0.0', true );
-
-			// Enqueue styles
-			wp_enqueue_style( 'mapbox-style', 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.45.0/mapbox-gl.css', null, false);
-			wp_enqueue_style( 'rtp-dir-style', $this->plugin_url . 'css/style.css', null, '1.0.0');
-
 			// Set up JS vars
-			wp_localize_script('rtp-dir-location-script', 'rtp_dir_vars', array(
-				'ajax_uri'      		=> admin_url('admin-ajax.php'),
-        '_ajax_nonce'   		=> $this->nonce,
-				'marker_company'		=> $this->plugin_url . 'images/icon-company-3d@2x.png',
-				'marker_recreation'	=> $this->plugin_url . 'images/icon-recreation-3d@2x.png',
-				'marker_realestate'	=> $this->plugin_url . 'images/icon-realestate-3d@2x.png',
-			));
+			wp_localize_script('rtp-dir-location-script', 'rtp_dir_vars', $localized_vars);
+
+			// Enqueue JS for edit directory
+			// wp_enqueue_script( 'rtp-dir-tingle', $this->plugin_url . 'scripts/vendor/tingle.min.js', array(), '1.0.0', true );
+			// wp_enqueue_script( 'rtp-dir-edit-directory', $this->plugin_url . 'scripts/edit-directory.js', array('rtp-dir-tingle'), '1.0.0', true );
 		}
   }
 

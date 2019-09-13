@@ -32,7 +32,7 @@
 		        <h3 class="label">Company Listing</h3>
             <div class="clearfix pagination">
               <div class="float-left">
-								<div class="count">Showing <?php echo do_shortcode('[facetwp counts="true"]'); ?></div>
+								<div class="count">Results: <?php echo do_shortcode('[facetwp counts="true"]'); ?></div>
 							</div>
 							<div class="float-right text-right">
 								<nav role="navigation" aria-label="Results Pagination">
@@ -128,7 +128,7 @@
 
 						<div class="clearfix pagination bottom">
 							<div class="float-left">
-								<div class="count">Showing <?php echo do_shortcode('[facetwp counts="true"]'); ?></div>
+								<div class="count">Results: <?php echo do_shortcode('[facetwp counts="true"]'); ?></div>
 							</div>
 							<div class="float-right text-right">
 								<nav role="navigation" aria-label="Results Pagination">
@@ -151,42 +151,7 @@
             </div>
 
 	        	<div id="map" class="directory-map">
-							<div class="rtp-loader-wrap">
-								<div class="rtp-loader-icon">
-								  <div class="row">
-								     <div class="arrow up outer outer-18"></div>
-								     <div class="arrow down outer outer-17"></div>
-								     <div class="arrow up outer outer-16"></div>
-								     <div class="arrow down outer outer-15"></div>
-								     <div class="arrow up outer outer-14"></div>
-								  </div>
-								  <div class="row">
-								     <div class="arrow up outer outer-1"></div>
-								     <div class="arrow down outer outer-2"></div>
-								     <div class="arrow up inner inner-6"></div>
-								     <div class="arrow down inner inner-5"></div>
-								     <div class="arrow up inner inner-4"></div>
-								     <div class="arrow down outer outer-13"></div>
-								     <div class="arrow up outer outer-12"></div>
-								  </div>
-								  <div class="row">
-								     <div class="arrow down outer outer-3"></div>
-								     <div class="arrow up outer outer-4"></div>
-								     <div class="arrow down inner inner-1"></div>
-								     <div class="arrow up inner inner-2"></div>
-								     <div class="arrow down inner inner-3"></div>
-								     <div class="arrow up outer outer-11"></div>
-								     <div class="arrow down outer outer-10"></div>
-								  </div>
-								  <div class="row">
-								     <div class="arrow down outer outer-5"></div>
-								     <div class="arrow up outer outer-6"></div>
-								     <div class="arrow down outer outer-7"></div>
-								     <div class="arrow up outer outer-8"></div>
-								     <div class="arrow down outer outer-9"></div>
-								  </div>
-								</div>
-							</div>
+							@include('partials.rtp-loader')
 						</div>
 					</div>
 				</div>

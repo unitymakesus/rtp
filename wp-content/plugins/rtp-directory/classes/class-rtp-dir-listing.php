@@ -30,33 +30,36 @@ class RTP_Dir_Listing {
     }
 
     // Query locations from WPDB
-    $locations = new WP_Query(array(
-      'post_type' => ['rtp-company', 'rtp-facility', 'rtp-site', 'rtp-space'],
-      'posts_per_page' => -1,
-      'post_status' => 'publish',
-      'orderby' => 'title',
-      'order' => 'ASC',
-    ));
+    if ( false === ( $locations_json = get_transient( 'locations_json' ) ) ) {
+      $locations = new WP_Query(array(
+        'post_type' => ['rtp-company', 'rtp-facility', 'rtp-site', 'rtp-space'],
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'orderby' => 'title',
+        'order' => 'ASC',
+      ));
 
-    // Set up array containers
-    $locations_array = array(
-      'type' => 'FeatureCollection',
-      'features' => array(),
-    );
+      // Set up array containers
+      $locations_array = array(
+        'type' => 'FeatureCollection',
+        'features' => array(),
+      );
 
-    if ($locations->have_posts()) :
-      while ($locations->have_posts()) :
-        $locations->the_post();
-        $id = get_the_id();
-        $location_type = get_post_type();
-        $coords_array = array();
-        $this->setup_location_array($id, $location_type, $locations_array, true);
-      endwhile;
-    endif;
-    wp_reset_postdata();
+      if ($locations->have_posts()) :
+        while ($locations->have_posts()) :
+          $locations->the_post();
+          $id = get_the_id();
+          $location_type = get_post_type();
+          $coords_array = array();
+          $this->setup_location_array($id, $location_type, $locations_array, true);
+        endwhile;
+      endif;
+      wp_reset_postdata();
 
-    $locations_json = str_replace(['["[', ']"]'], ['[[', ']]'], json_encode($locations_array));
-    error_log($locations_json);
+      $locations_json = str_replace(['["[', ']"]'], ['[[', ']]'], json_encode($locations_array));
+      set_transient( 'locations_json', $locations_json, 12 * HOUR_IN_SECONDS );
+    }
+
     echo $locations_json;
     wp_die();
   }
@@ -78,8 +81,8 @@ class RTP_Dir_Listing {
     );
 
     $this->setup_location_array($id, $location_type, $locations_array, false);
-    // error_log(print_r($locations_array, true));
     $locations_json = str_replace(['["[', ']"]'], ['[[', ']]'], json_encode($locations_array));
+
     echo $locations_json;
     wp_die();
   }
@@ -134,18 +137,18 @@ class RTP_Dir_Listing {
         'facility-type' => $facility_type[0]->slug,
         'street_address' => get_field('street_address', $id),
         'zip_code' => get_field('zip_code', $id),
-        'color' => '#038798',
-        'hover-color' => '#0A0398',
-        'opacity' => 1,
+        'color' => '#333F48',
+        'hover-color' => '#1F2A3A',
+        'opacity' => 0.8,
         'hover-opacity' => 1
       ));
 
       // Add all tenant ids as properties if this is for all locations view
       if ($all == true) {
         if ($facility_type[0]->slug == 'multi-tenant') {
-          $tenants = $this->get_facility_tenant_ids($id);
+          $tenants = $this->get_facility_tenants($id);
           foreach ($tenants as $t) {
-            $properties['tenant-id-' . $t->id] = true;
+            $properties['tenant-id-' . $t->ID] = true;
           }
         }
       }
@@ -156,13 +159,21 @@ class RTP_Dir_Listing {
 
       $properties = array_merge($properties, array(
         'photo' => get_the_post_thumbnail_url($id, 'medium'),
-        'color' => '#850B7E',
-        'hover-color' => '#850B7E',
+        'color' => '#333F48',
+        'hover-color' => '#7A868C',
+        'opacity' => 0.2,
+        'hover-opacity' => 1,
+      ));
+
+      $properties = array_merge($properties, array(
+        'photo' => get_the_post_thumbnail_url($id, 'medium'),
+        'color' => '#333F48',
+        'hover-color' => '#7A868C',
         'opacity' => 0.2,
         'hover-opacity' => 1
       ));
 
-      // Add availabilities as properties if this is for all locations view
+      // Add availabilities as properties
       if ($all == true) {
         foreach ($availability as $avail) {
           $properties['availability-'.$avail->slug] = true;
@@ -211,8 +222,8 @@ class RTP_Dir_Listing {
             'logo' => get_field('company_logo', $id),
             'photo' => $location_photo['sizes']['medium'],
             'related_photo' => get_the_post_thumbnail_url($related_facility, 'medium'),
-            'color' => '#038798',
-            'hover-color' => '#0A0398',
+            'color' => '#000000',
+            'hover-color' => '#1F2A3A',
             'opacity' => 1,
             'hover-opacity' => 1
           ));
@@ -259,15 +270,15 @@ class RTP_Dir_Listing {
             'zip_code' => $zip_code,
             'photo' => $location_photo['sizes']['medium'],
             'related_photo' => get_the_post_thumbnail_url($related_facility[0], 'medium'),
-            'color' => '#038798',
-            'hover-color' => '#0A0398',
+            'color' => '#000000',
+            'hover-color' => '#1F2A3A',
             'opacity' => 1,
             'hover-opacity' => 1
           ));
         }
       }
 
-      // Add availabilities as properties if this is for all locations view
+      // Add availabilities as properties
       $availability = wp_get_object_terms($id, 'rtp-availability', array('fields' => 'all'));
       if ($all == true) {
         foreach ($availability as $avail) {
@@ -301,11 +312,21 @@ class RTP_Dir_Listing {
     return $locations;
   }
 
-  public function get_facility_tenant_ids($id) {
-    global $wpdb;
-    $query = "SELECT id FROM {$wpdb->prefix}posts AS p INNER JOIN {$wpdb->prefix}postmeta AS pm ON (p.ID = pm.post_id) WHERE 1=1 AND (pm.meta_key = 'related_facility' AND pm.meta_value = %s) AND p.post_type IN ('rtp-company', 'rtp-space') AND p.post_status = 'publish' GROUP BY p.ID ORDER BY p.post_type DESC, p.post_name ASC";
-    $sql = $wpdb->prepare($query, $id);
-    $tenants = $wpdb->get_results($sql);
+  public function get_facility_tenants($facility_id) {
+    $tenants = new WP_Query(array(
+      'post_type' => ['rtp-company', 'rtp-space'],
+      'posts_per_page' => 10,
+      'meta_query' => [
+        [
+          'key' => 'related_facility',
+          'value' => $facility_id,
+          'compare' => '='
+        ]
+      ],
+      'orderby' => 'post_type title',
+      'order' => 'ASC',
+      'facetwp' => true,
+    ));
 
     return $tenants;
   }

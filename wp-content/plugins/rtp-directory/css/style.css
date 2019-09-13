@@ -1236,6 +1236,9 @@
   bottom: 0;
   z-index: 200;
 }
+.rtp-loader-wrap .row {
+  margin: 0;
+}
 
 .rtp-loader-icon {
   display: flex;
@@ -1342,26 +1345,27 @@
     opacity: 0.1;
   }
 }
-.directory-map {
-  height: calc(100% - 200px);
+div.directory-map {
+  height: calc(100% - 120px);
+  min-height: 550px;
   width: 100%;
   position: relative;
 }
-.directory-map.loaded .rtp-loader-wrap {
+div.directory-map.loaded .rtp-loader-wrap {
   display: none;
 }
 
-.company-directory.company-directory .key ul {
+body.directory-map .key ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.company-directory.company-directory .key ul li {
+body.directory-map .key ul li {
   padding-left: 32px;
   font-size: 0.9em;
   position: relative;
 }
-.company-directory.company-directory .key ul li::before {
+body.directory-map .key ul li::before {
   content: "";
   display: block;
   position: absolute;
@@ -1373,22 +1377,22 @@
   left: 0;
   top: 0;
 }
-.company-directory.company-directory .key ul li.icon-company::before {
+body.directory-map .key ul li.icon-company::before {
   background-image: url("../images/icon-map-company.svg");
 }
-.company-directory.company-directory .key ul li.icon-recreation::before {
+body.directory-map .key ul li.icon-recreation::before {
   background-image: url("../images/icon-map-recreation.svg");
 }
-.company-directory.company-directory .key ul li.icon-forsale::before {
+body.directory-map .key ul li.icon-forsale::before {
   background-image: url("../images/icon-map-forsale.svg");
 }
-.company-directory.company-directory .key ul li.icon-forlease::before {
+body.directory-map .key ul li.icon-forlease::before {
   background-image: url("../images/icon-map-forlease.svg");
 }
-.company-directory.company-directory .key ul li.icon-multitenant::before {
+body.directory-map .key ul li.icon-multitenant::before {
   background-image: url("../images/icon-map-multitenant.svg");
 }
-.company-directory.company-directory .key ul li.icon-trails::before {
+body.directory-map .key ul li.icon-trails::before {
   background-image: url("../images/icon-map-trail.svg");
 }
 
@@ -1491,6 +1495,9 @@
 }
 .directory-listing .label div {
   display: inline-block;
+}
+.directory-listing h3.label {
+  margin-top: 0;
 }
 .directory-listing a.label {
   text-decoration: underline !important;

@@ -79,7 +79,7 @@ if ( have_posts() ) : while ( have_posts() ) : the_post();
         <div class="row">
           <div class="col-xs-12 col-sm-6 facetwp-template">
             <?php
-            $tenants = (new RTP_Dir_Listing)->get_facility_tenant_ids($id);
+            $tenants = (new RTP_Dir_Listing)->get_facility_tenants($id);
             ?>
             <div class="clearfix vertical-padding">
               <a class="label" href="<?php echo get_permalink(get_page_by_path('/directory-map')); ?>">&laquo; Back to RTP directory</a>

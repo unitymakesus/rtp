@@ -1,5 +1,6 @@
-.directory-map {
-  height: calc(100% - 200px);
+div.directory-map {
+  height: calc(100% - 120px);
+  min-height: 550px;
   width: 100%;
   position: relative;
 
@@ -10,7 +11,7 @@
   }
 }
 
-.company-directory.company-directory .key {
+body.directory-map .key {
   ul {
     list-style: none;
     padding: 0;

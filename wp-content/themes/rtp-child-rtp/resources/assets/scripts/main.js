@@ -5,7 +5,8 @@ import '../../../../rtp-core/dist/scripts/main.js';
 import Router from './util/Router';
 // import common from './routes/common';
 import home from './routes/home';
-import companyDirectory from './routes/directory';
+import directoryMap from './routes/directory';
+import singleRtpFacility from './routes/directory';
 // import aboutUs from './routes/about';
 // import archive from './routes/archive';
 
@@ -13,7 +14,8 @@ import companyDirectory from './routes/directory';
 const routes = new Router({
   // common,
   home,
-  companyDirectory,
+  directoryMap,
+  singleRtpFacility,
   // aboutUs,
   // archive,
 });
