@@ -1,4 +1,4 @@
-$color: #2EBAA5;
+$color: #333F48;
 $size: 12px;
 $time: 1;
 
@@ -6,7 +6,7 @@ $time: 1;
    display: flex;
    justify-content: center;
    align-items: center;
-   background: rgba(#07444C, 0.7);
+   background: rgba(#333F48, 0.7);
    position: absolute;
    top: 0;
    left: 0;
@@ -27,37 +27,37 @@ $time: 1;
    .r {
       display: flex;
    }
-}
 
-.arrow {
-   width: 0;
-   height: 0;
-   margin: 0 (-$size / 2);
-   border-left: $size solid transparent;
-   border-right: $size solid transparent;
-   border-bottom: ($size * 1.8) solid $color;
-   animation: blink $time + s infinite;
-   // filter: drop-shadow(0 0 ($size * 1.5) $color);
+   .arrow {
+      width: 0;
+      height: 0;
+      margin: 0 (-$size / 2);
+      border-left: $size solid transparent;
+      border-right: $size solid transparent;
+      border-bottom: ($size * 1.8) solid #333F48;
+      animation: blink $time + s infinite;
+      // filter: drop-shadow(0 0 ($size * 1.5) #333F48);
 
-   &.down {
-      transform: rotate(180deg);
-   }
+      &.down {
+         transform: rotate(180deg);
+      }
 
-   @for $i from 1 through 18 {
-      &.outer-#{$i} {
-         animation-delay: -($time / 18) * $i + s;
+      @for $i from 1 through 18 {
+         &.outer-#{$i} {
+            animation-delay: -($time / 18) * $i + s;
+         }
+      }
+
+      @for $i from 1 through 6 {
+         &.inner-#{$i} {
+            animation-delay: -($time / 6) * $i + s;
+         }
       }
    }
 
-   @for $i from 1 through 6 {
-      &.inner-#{$i} {
-         animation-delay: -($time / 6) * $i + s;
-      }
+   @keyframes blink {
+     0% { opacity: 0.1; }
+     30% { opacity: 1; }
+     100% { opacity: 0.1; }
    }
-}
-
-@keyframes blink {
-  0% { opacity: 0.1; }
-  30% { opacity: 1; }
-  100% { opacity: 0.1; }
 }

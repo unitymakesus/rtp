@@ -240,7 +240,7 @@ jQuery(document).ready(function($) {
                         street_address +
                       '</p>' +
                       image +
-                      '<p><a class="button secondary" href="' + prop.permalink + '">More Information</a></p>' +
+                      '<p><a href="' + prop.permalink + '">More Info <span class="cta-arrow"></span></a></p>' +
                     '</div>';
 
       popup = new mapboxgl.Popup()
@@ -275,7 +275,7 @@ jQuery(document).ready(function($) {
                           street_address +
                         '</p>' +
                         image +
-                        '<p><a class="button secondary" href="' + prop.permalink + '">More Information</a></p>' +
+                        '<p><a href="' + prop.permalink + '">More Info <span class="cta-arrow"></span></a></p>' +
                       '</div>';
 
         popup = new mapboxgl.Popup({ offset: 5 })
@@ -302,7 +302,7 @@ jQuery(document).ready(function($) {
       var tooltip = '<div class="tooltip">' +
                       '<p class="title">' + prop.title + '</p>' +
                       image +
-                      '<p><a class="button secondary" href="' + prop.permalink + '">More Information</a></p>' +
+                      '<p><a href="' + prop.permalink + '">More Info <span class="cta-arrow"></span></a></p>' +
                     '</div>';
 
       popup = new mapboxgl.Popup()
