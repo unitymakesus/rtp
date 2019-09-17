@@ -1,8 +1,3 @@
-.facetwp-template {
-  padding-left: 3rem;
-  padding-top: 1rem;
-}
-
 .directory-listing {
   // border-top: 5px solid darken(#f2f6f7, 10%);
 
@@ -25,6 +20,26 @@
 
     &:hover, &:active, &:focus {
       color: #194685;
+    }
+  }
+
+  .facet-search-wrapper {
+    min-height: 5rem;
+  }
+
+  .pagination {
+    margin: 0.5em 0 1em;
+    font-size: 0.9em;
+
+    &.bottom {
+      margin: 0;
+      padding: 1em 0;
+      border-top: 1px solid #CBC8C7;
+      border-bottom: 1px solid #CBC8C7;
+    }
+
+    .count {
+      line-height: 40px;
     }
   }
 }

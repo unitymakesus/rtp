@@ -16,24 +16,6 @@
   display: inline-block;
 }
 
-.facetwp-template {
-  .pagination {
-    margin: 0.5em 0 1em;
-    font-size: 0.9em;
-
-    &.bottom {
-      margin: 0;
-      padding: 1em 0;
-      border-top: 1px solid #CBC8C7;
-      border-bottom: 1px solid #CBC8C7;
-    }
-
-    .count {
-      line-height: 40px;
-    }
-  }
-}
-
 // .facetwp-pager {
 //   .facetwp-pager-label {
 //     display: none;

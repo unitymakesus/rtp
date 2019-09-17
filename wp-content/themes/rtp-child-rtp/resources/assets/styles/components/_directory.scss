@@ -5,6 +5,9 @@
 }
 
 .filter-selects {
+  height: 3rem;
+  margin-bottom: 40px;
+
   .facet-label {
     @extend .screen-reader-text;
   }
@@ -12,6 +15,7 @@
   .facetwp-type-dropdown {
     width: 33%;
     float: left;
+    margin-bottom: 0;
 
     input.select-dropdown {
       border: 1px solid $color-white;

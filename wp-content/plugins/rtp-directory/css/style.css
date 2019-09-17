@@ -1205,20 +1205,6 @@
   display: inline-block;
 }
 
-.facetwp-template .pagination {
-  margin: 0.5em 0 1em;
-  font-size: 0.9em;
-}
-.facetwp-template .pagination.bottom {
-  margin: 0;
-  padding: 1em 0;
-  border-top: 1px solid #CBC8C7;
-  border-bottom: 1px solid #CBC8C7;
-}
-.facetwp-template .pagination .count {
-  line-height: 40px;
-}
-
 .checkboxIcons {
   width: 17px;
   margin: 0 5px;
@@ -1520,11 +1506,6 @@ body.directory-map .key ul li.icon-trails::before {
   display: block;
 }
 
-.facetwp-template {
-  padding-left: 3rem;
-  padding-top: 1rem;
-}
-
 .directory-listing .label {
   display: block;
 }
@@ -1540,6 +1521,22 @@ body.directory-map .key ul li.icon-trails::before {
 }
 .directory-listing a.label:hover, .directory-listing a.label:active, .directory-listing a.label:focus {
   color: #194685;
+}
+.directory-listing .facet-search-wrapper {
+  min-height: 5rem;
+}
+.directory-listing .pagination {
+  margin: 0.5em 0 1em;
+  font-size: 0.9em;
+}
+.directory-listing .pagination.bottom {
+  margin: 0;
+  padding: 1em 0;
+  border-top: 1px solid #CBC8C7;
+  border-bottom: 1px solid #CBC8C7;
+}
+.directory-listing .pagination .count {
+  line-height: 40px;
 }
 
 .result-item {

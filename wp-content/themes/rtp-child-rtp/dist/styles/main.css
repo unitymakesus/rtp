@@ -15894,14 +15894,22 @@ p {
   margin-bottom: 3rem;
 }
 
-/* line 12, resources/assets/styles/components/_directory.scss */
+/* line 7, resources/assets/styles/components/_directory.scss */
+
+.filter-selects {
+  height: 3rem;
+  margin-bottom: 40px;
+}
+
+/* line 15, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown {
   width: 33%;
   float: left;
+  margin-bottom: 0;
 }
 
-/* line 16, resources/assets/styles/components/_directory.scss */
+/* line 20, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown input.select-dropdown {
   border: 1px solid #FFF;
@@ -15917,7 +15925,7 @@ p {
   text-transform: uppercase;
 }
 
-/* line 28, resources/assets/styles/components/_directory.scss */
+/* line 32, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown input.select-dropdown:hover,
 .filter-selects .facetwp-type-dropdown input.select-dropdown:focus,
@@ -15926,41 +15934,41 @@ p {
   color: #FFF;
 }
 
-/* line 34, resources/assets/styles/components/_directory.scss */
+/* line 38, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown .caret {
   fill: #FFF;
   z-index: 1;
 }
 
-/* line 39, resources/assets/styles/components/_directory.scss */
+/* line 43, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown ul.dropdown-content {
   font-family: 'Poppins', sans-serif;
   font-size: 0.9rem;
 }
 
-/* line 43, resources/assets/styles/components/_directory.scss */
+/* line 47, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown ul.dropdown-content li {
   min-height: 36px;
 }
 
-/* line 46, resources/assets/styles/components/_directory.scss */
+/* line 50, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown ul.dropdown-content li span {
   line-height: 18px;
   padding: 9px 16px;
 }
 
-/* line 51, resources/assets/styles/components/_directory.scss */
+/* line 55, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown ul.dropdown-content li.selected {
   background: #012169;
   border: 1px solid #FFF;
 }
 
-/* line 55, resources/assets/styles/components/_directory.scss */
+/* line 59, resources/assets/styles/components/_directory.scss */
 
 .filter-selects .facetwp-type-dropdown ul.dropdown-content li.selected span {
   color: #FFF;
