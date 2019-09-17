@@ -1344,7 +1344,7 @@
   }
 }
 div.directory-map {
-  height: calc(100% - 120px);
+  height: calc(100% - 230px);
   min-height: 550px;
   width: 100%;
   position: relative;
