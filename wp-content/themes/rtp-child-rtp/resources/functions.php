@@ -125,3 +125,60 @@ add_action('widgets_init', function () {
     'id'            => 'footer-utility-right'
   ] + $config);
 });
+
+/**
+ * Add Shortcode for Directory Search
+ */
+add_shortcode('directory-search-filter', function($atts) {
+  ob_start();
+  ?>
+  <form class="directory-search-filter" action="/directory-map/"  method="get">
+    <div class="row">
+      <div class="col s6">
+        <label for="fwp_search_directory">Search</label>
+      	<input type="search" placeholder="Keywords" value="" name="fwp_search_directory" id="fwp_search_directory" aria-label="Keyword">
+      </div>
+      <div class="col s6">
+        <div class="filter-selects">
+          <div class="label">Filter</div>
+          <div class="dropdown">
+            <select name="fwp_company_types" aria-label="Company Type" class="default">
+              <option value="" selected>Company Type</option>
+              <?php
+                $topics = get_terms(['taxonomy' => 'rtp-company-type', 'hide_empty' => TRUE]);
+                foreach ($topics as $t) {
+                  echo '<option value="' . $t->slug . '">' . $t->name . ' (' . $t->count . ')</option>';
+                }
+              ?>
+            </select>
+          </div>
+          <div class="dropdown">
+            <select name="fwp_facility_types" aria-label="Facility Type" class="default">
+              <option value="" selected>Facility Type</option>
+              <?php
+                $topics = get_terms(['taxonomy' => 'rtp-facility-type', 'hide_empty' => TRUE]);
+                foreach ($topics as $t) {
+                  echo '<option value="' . $t->slug . '">' . $t->name . ' (' . $t->count . ')</option>';
+                }
+              ?>
+            </select>
+          </div>
+          <div class="dropdown">
+            <select name="fwp_availability" aria-label="Real Estate" class="default">
+              <option value="" selected>Real Estate</option>
+              <?php
+                $topics = get_terms(['taxonomy' => 'rtp-availability', 'hide_empty' => TRUE]);
+                foreach ($topics as $t) {
+                  echo '<option value="' . $t->slug . '">' . $t->name . ' (' . $t->count . ')</option>';
+                }
+              ?>
+            </select>
+          </div>
+        </div>
+      	<button type="submit">Explore the directory <span class="cta-arrow"></span></button>
+      </div>
+    </div>
+  </form>
+  <?php
+  return ob_get_clean();
+});
