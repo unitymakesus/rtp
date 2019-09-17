@@ -1572,9 +1572,15 @@ body.directory-map .key ul li.icon-trails::before {
 .result-item h4 a:hover, .result-item h4 a:focus, .result-item h4 a:active {
   text-decoration: underline;
 }
+.result-item .meta-icon {
+  font-weight: 300;
+  font-size: 0.8em;
+  text-transform: uppercase;
+}
 .result-item .meta-icon img {
   height: 18px;
   display: inline-block;
+  vertical-align: -3px;
 }
 
 .single-rtp-company .container-fluid, .single-rtp-facility .container-fluid, .single-rtp-site .container-fluid, .single-rtp-space .container-fluid {

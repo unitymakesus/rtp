@@ -35,8 +35,6 @@ jQuery(document).ready(function($) {
   // Get facets on page load
   var facets = FWP.facets;
 
-  // console.log('Facets Init');
-
 	map.on('load', function() {
 
     // console.log('Map Loaded');
@@ -73,8 +71,6 @@ jQuery(document).ready(function($) {
       var locations = JSON.parse(response);
       // Add locations data source to map
   		map.getSource('locations').setData(locations);
-      // Filter layers on map
-      set_map_facets();
       // Remove loading state
       $('#map').addClass('loaded');
     });
@@ -208,6 +204,8 @@ jQuery(document).ready(function($) {
       });
     });
 
+    // console.log('layers loaded');
+
     // When the user moves their mouse over the states-fill layer, we'll update the filter in
     // the state-fills-hover layer to only show the matching state, thus making a hover effect.
     polyLayers.forEach(function(layer) {
@@ -315,34 +313,72 @@ jQuery(document).ready(function($) {
 
   // HANDLE FACETS CHANGING
   $(document).on('facetwp-loaded', function() {
-    // Re-calc map distance from top
-    distance = $('#map').offset().top;
-
-    // Set company icons and checkboxes
-    // var checkboxCats = $('.facetwp-checkbox');
-    // var companyImages = rtp_dir_vars.company_type_images;
-    //
-    // // If checkboxes have an icon, set it after content
-    // checkboxCats.each(function(i) {
-    //   var dataValue = $(this);
-    //   for (key in companyImages) {
-    //     if(dataValue.attr('data-value') == key && !dataValue.hasClass('has-icon')) {
-    //       dataValue.addClass('has-icon');
-    //       dataValue.prepend('<img class="checkboxIcons" src="' + companyImages[key] + '" alt="" />');
-    //     }
-    //   }
-    // });
-
-    // Get rid of tooltip/popup
+    // Get rid of any tooltips/popups
     if (popup) {
       popup.remove();
     }
 
-    console.log(allLayers);
-
     // Filter layers on map
     set_map_facets();
   });
+
+  // Set facets on the map
+  function set_map_facets() {
+
+    // Get data from FacetsWP
+    var facets = FWP.facets;
+    var result_ids = FWP.settings.post_ids;
+
+    // console.log(facets);
+    // console.log(result_ids);
+
+    // console.log('Start Map Facets');
+
+    // Set up filters for each layer individually
+    allLayers.forEach(function(layer) {
+      // Start building layer's filters from scratch to avoid duplicate filters being set
+      var cleaned = reset_layer_filter(layer),
+          new_expression = ['any'],
+          new_filter = [];
+
+      // Check if any facets are actually set
+      if (areFacetsSet(facets) == true) {
+        result_ids.forEach(function(id) {
+          // Match on ids for any location
+          new_expression.push(['==', 'id', Number(id)]);
+
+          // Also match on ids of tenants within facility
+          if (($.inArray(layer, polyLayers) != '-1')) {
+            new_expression.push(['==', 'tenant-id-' + id, true]);
+          }
+        });
+
+        // Add new expression to cleaned filter
+        if (cleaned[0] == '==') {
+          new_filter = ['all', cleaned, new_expression];
+        } else {
+          new_filter = cleaned.concat([new_expression]);
+        }
+      } else {
+        // If there are no filters set, reset the filter to the cleaned one
+        new_filter = cleaned;
+      }
+
+      // Set this layer's filter
+      set_layer_filter(layer, new_filter);
+    });
+  }
+
+  function set_layer_filter(layer, new_filter) {
+    var check = map.getLayer(layer);
+    if (check == undefined) {
+      // It's not safe to manipulate layers yet, so wait 200ms and then check again
+      setTimeout(function() { set_layer_filter(layer, new_filter) }, 200);
+      return;
+    }
+
+    map.setFilter(layer, new_filter);
+  }
 
   // Reset layer filters
   function reset_layer_filter(layer) {
@@ -386,54 +422,12 @@ jQuery(document).ready(function($) {
     return set;
   }
 
-  // Set facets on the map
-  function set_map_facets() {
+  // Check if the Mapbox-GL style is loaded.
+  function isMapStyleLoaded() {
     if (map.isStyleLoaded()) {
-
-      // Get data from FacetsWP
-      var facets = FWP.facets;
-      var result_ids = FWP.settings.post_ids;
-
-      console.log(facets);
-      console.log(result_ids);
-
-      // console.log('Start Map Facets');
-
-      // Set up filters for each layer individually
-      allLayers.forEach(function(layer) {
-        // Start building layer's filters from scratch to avoid duplicate filters being set
-        var cleaned = reset_layer_filter(layer),
-            new_expression = ['any'],
-            new_filter = [];
-
-        // Check if any facets are actually set
-        if (areFacetsSet(facets) == true) {
-          result_ids.forEach(function(id) {
-            // Match on ids for any location
-            new_expression.push(['==', 'id', Number(id)]);
-
-            // Also match on ids of tenants within facility
-            if (($.inArray(layer, polyLayers) != '-1')) {
-              new_expression.push(['==', 'tenant-id-' + id, true]);
-            }
-          });
-
-          // Add new expression to cleaned filter
-          if (cleaned[0] == '==') {
-            new_filter = ['all', cleaned, new_expression];
-          } else {
-            new_filter = cleaned.concat([new_expression]);
-          }
-        } else {
-          // If there are no filters set, reset the filter to the cleaned one
-          new_filter = cleaned;
-        }
-
-        console.log(layer, new_filter);
-
-        // Set this layer's filter
-        map.setFilter(layer, new_filter);
-      });
+      return true; // When it is safe to manipulate layers
+    } else {
+      return false; // When it is not safe to manipulate layers
     }
   }
 

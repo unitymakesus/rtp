@@ -64,8 +64,15 @@
     }
   }
 
-  .meta-icon img {
-    height: 18px;
-    display: inline-block;
+  .meta-icon {
+    font-weight: 300;
+    font-size: 0.8em;
+    text-transform: uppercase;
+
+    img {
+      height: 18px;
+      display: inline-block;
+      vertical-align: -3px;
+    }
   }
 }

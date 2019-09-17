@@ -124,8 +124,6 @@ class RTP_Dir_Listing {
       'content-type' => $location_type
     );
 
-    // error_log(print_r($properties, true));
-
     // Iterate through the different post types
     if ($location_type == 'rtp-facility') {
       $feature_type = get_field('geometry_type', $id);
@@ -144,12 +142,10 @@ class RTP_Dir_Listing {
       ));
 
       // Add all tenant ids as properties if this is for all locations view
-      if ($all == true) {
-        if ($facility_type[0]->slug == 'multi-tenant') {
-          $tenants = $this->get_facility_tenants($id);
-          foreach ($tenants as $t) {
-            $properties['tenant-id-' . $t->ID] = true;
-          }
+      if ($facility_type[0]->slug == 'multi-tenant') {
+        $tenants = $this->get_all_facility_tenants($id);
+        foreach ($tenants->posts as $t) {
+          $properties['tenant-id-' . $t->ID] = true;
         }
       }
     } elseif ($location_type == 'rtp-site') {
@@ -310,6 +306,24 @@ class RTP_Dir_Listing {
     ));
 
     return $locations;
+  }
+
+  public function get_all_facility_tenants($facility_id) {
+    $tenants = new WP_Query(array(
+      'post_type' => ['rtp-company', 'rtp-space'],
+      'posts_per_page' => -1,
+      'meta_query' => [
+        [
+          'key' => 'related_facility',
+          'value' => $facility_id,
+          'compare' => '='
+        ]
+      ],
+      'orderby' => 'post_type title',
+      'order' => 'ASC',
+    ));
+
+    return $tenants;
   }
 
   public function get_facility_tenants($facility_id) {

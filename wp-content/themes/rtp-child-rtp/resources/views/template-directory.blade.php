@@ -34,11 +34,11 @@
               <div class="float-left">
 								<div class="count">Results: <?php echo do_shortcode('[facetwp counts="true"]'); ?></div>
 							</div>
-							<div class="float-right text-right">
+							{{-- <div class="float-right text-right">
 								<nav role="navigation" aria-label="Results Pagination">
-									<?php echo do_shortcode('[facetwp pager="true"]'); ?>
+									{{ do_shortcode('[facetwp pager="true"]') }}
 								</nav>
-							</div>
+							</div> --}}
             </div>
 
 						<?php
