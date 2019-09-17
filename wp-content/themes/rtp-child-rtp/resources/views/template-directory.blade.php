@@ -14,21 +14,14 @@
 					<div class="col s6">
             @php the_content() @endphp
 					</div>
-					<div class="col s6">
-
-            {!! do_shortcode('[facetwp facet="search_directory"]') !!}
-
-            <div class="label">Filter</div>
-            <div class="filter-selects">
-							{!! do_shortcode('[facetwp facet="company_types"]') !!}
-							{!! do_shortcode('[facetwp facet="facility_types"]') !!}
-							{!! do_shortcode('[facetwp facet="availability"]') !!}
-  					</div>
-					</div>
-				</div>
+          <div class="col s6"></div>
+        </div>
 
   			<div class="directory-listing row">
 					<div class="col xs12 s6 facetwp-template">
+
+            {!! do_shortcode('[facetwp facet="search_directory"]') !!}
+
 		        <h3 class="label">Company Listing</h3>
             <div class="clearfix pagination">
               <div class="float-left">
@@ -138,6 +131,14 @@
 						</div>
 					</div>
 					<div class="col xs12 s6">
+
+            <div class="label">Filter</div>
+            <div class="filter-selects">
+							{!! do_shortcode('[facetwp facet="company_types"]') !!}
+							{!! do_shortcode('[facetwp facet="facility_types"]') !!}
+							{!! do_shortcode('[facetwp facet="availability"]') !!}
+  					</div>
+
             <div class="key">
               <div class="label">Map Key</div>
               <ul class="flex flex-grid m3x s1x">
