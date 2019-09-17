@@ -34,10 +34,29 @@
       <div class="container">
         <div class="entry-title-container">
           <h1 class="entry-title">{!! get_the_title() !!}</h1>
-          <p><a class="label" href="<?php echo get_permalink(get_page_by_path('/directory-map')); ?>">&laquo; Back to RTP directory</a></p>
+          <p>{{ $street_address }}<br />
+            RTP, NC
+            @if (!empty($zip_code))
+              {{ $zip_code }}
+            @else
+              27709
+            @endif
+          </p>
+
+          @if (!empty($website))
+            <a class="website button secondary large" href="{{ $website }}" target="_blank" rel="noopener">Visit Website</a>
+          @endif
+
         </div>
       </div>
     </header>
+
+    <div class="container">
+      <div class="row">
+        <div class="col s12">
+          <a class="back-to-directory" href="<?php echo get_permalink(get_page_by_path('/directory-map')); ?>">&laquo; Back to RTP directory</a>
+        </div>
+      </div>
 
       {{--
         Multi-Tenant Facility Layout
@@ -46,55 +65,35 @@
       @if ($location_terms[0]->slug == 'multi-tenant')
 
         <div class="directory-listing row">
-          <div class="col xs12 s6 facetwp-template">
-            <div class="address">
-              @if (!empty($street_address))
-                <h3 class="label">Address</h3>
-                {{ $street_address }}<br />
-                RTP, NC
-                @if (!empty($zip_code))
-                  {{ $zip_code }}
-                @else
-                  27709
-                @endif
-              @endif
-
-              @if (!empty($website))
-                <a class="website button secondary large" href="{{ $website }}" target="_blank" rel="noopener">Visit Website</a>
-              @endif
-
-              @if (($location_terms[0]->slug == 'multi-tenant') && !empty(get_the_content()) && get_the_content() !== '<p></p>')
-                <div class="facility-info">
-                  <?php the_content(); ?>
-                </div>
-              @endif
-            </div>
+          <div class="col xs12 s6">
 
             @php $tenants = (new RTP_Dir_Listing)->get_facility_tenants($id) @endphp
             @if($tenants->have_posts())
+
               <h3 class="label">Company Listing</h3>
 
               <div class="clearfix pagination">
                 <div class="float-left">
   								<div class="count">Results: <?php echo do_shortcode('[facetwp counts="true"]'); ?></div>
   							</div>
-  							<div class="float-right text-right">
+  							{{-- <div class="float-right text-right">
   								<nav role="navigation" aria-label="Results Pagination">
-  									<?php echo do_shortcode('[facetwp pager="true"]'); ?>
+  									{!! do_shortcode('[facetwp pager="true"]') !!}
   								</nav>
-  							</div>
+  							</div> --}}
               </div>
 
-              <div class="clearfix vertical-padding">
+              <div class="clearfix vertical-padding facetwp-template">
                 @while($tenants->have_posts()) @php $tenants->the_post() @endphp
                   @php
-    								$location_type = get_post_type($tenant->id);
+    								$location_type = get_post_type(get_the_id());
 
     								if ($location_type == 'rtp-space' || $location_type == 'rtp-site') {
-    									$location_terms = wp_get_object_terms($tenant->id, 'rtp-availability', array('fields' => 'all'));
+    									$location_terms = wp_get_object_terms(get_the_id(), 'rtp-availability', array('fields' => 'all'));
     								} elseif ($location_type == 'rtp-company') {
-    									$location_terms = wp_get_object_terms($tenant->id, 'rtp-company-type', array('fields' => 'all'));
+    									$location_terms = wp_get_object_terms(get_the_id(), 'rtp-company-type', array('fields' => 'all'));
     								}
+
   								@endphp
 
   								<div class="result-item">
@@ -164,7 +163,9 @@
           </div>
           <div class="col xs12 s6">
 
-            {!! do_shortcode('[facetwp facet="search_directory"]') !!}
+            <div class="facet-search-wrapper">
+              {!! do_shortcode('[facetwp facet="search_directory"]') !!}
+            </div>
 
             <div id="location-map" class="directory-map" data-post-type="rtp-facility" data-feature-type="<?php echo $geometry; ?>" data-location-id="<?php echo get_the_id(); ?>">
               @include('partials.rtp-loader')
@@ -206,7 +207,7 @@
             </div>
 
             <?php if (!empty($contact_ppl)) { ?>
-              <h2>Get In Touch</h2>
+              <h3 class="label">Get In Touch</h3>
 
               <?php foreach($contact_ppl as $contact) { ?>
                 <dl>

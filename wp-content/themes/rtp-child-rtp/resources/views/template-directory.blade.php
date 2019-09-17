@@ -31,7 +31,7 @@
 							</div>
 							{{-- <div class="float-right text-right">
 								<nav role="navigation" aria-label="Results Pagination">
-									{{ do_shortcode('[facetwp pager="true"]') }}
+									{!! do_shortcode('[facetwp pager="true"]') !!}
 								</nav>
 							</div> --}}
             </div>
@@ -98,8 +98,8 @@
   										<h4><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h4>
   										<?php if (!empty($location_terms)) : ?>
   											<div class="result-meta">
-  												<div class="meta-icon">
   													<?php foreach ($location_terms as $lt) : ?>
+                              <div class="meta-icon">
   														<?php if (function_exists('get_wp_term_image')) :?>
   															<?php $meta_image = get_wp_term_image($lt->term_id);?>
   															<img src="<?php echo $meta_image;?>" alt="<?php echo $lt->name; ?>" title="<?php echo $lt->name; ?>" />
@@ -107,8 +107,8 @@
   																echo $lt->name;
   															} ?>
   														<?php endif; ?>
-  													<?php endforeach; ?>
-  												</div>
+                            </div>
+													<?php endforeach; ?>
   											</div>
   										<?php endif; ?>
   									</div>

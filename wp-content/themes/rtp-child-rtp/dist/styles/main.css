@@ -14867,6 +14867,7 @@ nav ul a {
 
 .single .page-header .entry-title-container {
   background: rgba(255, 255, 255, 0.9);
+  color: #000;
   width: 60%;
   margin: 0;
   padding: 1em;
@@ -14880,26 +14881,26 @@ nav ul a {
   }
 }
 
-/* line 51, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 52, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact {
   padding: 5px 0;
 }
 
-/* line 54, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 55, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact .icon {
   display: inline-block;
   padding: 5px 10px;
 }
 
-/* line 59, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 60, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact path {
   fill: #333F48;
 }
 
-/* line 63, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 64, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact a {
   color: #333F48;

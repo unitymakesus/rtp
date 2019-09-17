@@ -1478,23 +1478,10 @@ body.directory-map .key ul li.icon-trails::before {
   text-align: right;
 }
 
-.page-template-page-directory .footer-container {
+.page-template-page-directory .footer-container, .rtp-facility-template-default .footer-container {
   display: none;
 }
-.page-template-page-directory .content-container {
-  margin-bottom: 0px !important;
-}
-.page-template-page-directory .facetwp-template {
-  min-height: 100vh;
-}
-
-.rtp-facility-template-default .facetwp-template {
-  min-height: 100vh;
-}
-.rtp-facility-template-default .footer-container {
-  display: none;
-}
-.rtp-facility-template-default .content-container {
+.page-template-page-directory .content-container, .rtp-facility-template-default .content-container {
   margin-bottom: 0px !important;
 }
 
