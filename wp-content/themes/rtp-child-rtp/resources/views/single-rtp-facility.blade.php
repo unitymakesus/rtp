@@ -39,36 +39,6 @@
       </div>
     </header>
 
-      <div class="container">
-        <div class="row">
-          <div class="col s12">
-            <div class="box">
-              <div class="address">
-                @if (!empty($street_address))
-                  <h3 class="label">Address</h3>
-                  {{ $street_address }}<br />
-                  RTP, NC
-                  @if (!empty($zip_code))
-                    {{ $zip_code }}
-                  @else
-                    27709
-                  @endif
-                @endif
-
-                @if (!empty($website))
-                  <a class="website button secondary large" href="{{ $website }}" target="_blank" rel="noopener">Visit Website</a>
-                @endif
-
-                @if (($location_terms[0]->slug == 'multi-tenant') && !empty(get_the_content()) && get_the_content() !== '<p></p>')
-                  <div class="facility-info">
-                    <?php the_content(); ?>
-                  </div>
-                @endif
-              </div>
-            </div>
-          </div>
-        </div>
-
       {{--
         Multi-Tenant Facility Layout
       --}}
@@ -77,7 +47,27 @@
 
         <div class="directory-listing row">
           <div class="col xs12 s6 facetwp-template">
-            <div class="clearfix vertical-padding">
+            <div class="address">
+              @if (!empty($street_address))
+                <h3 class="label">Address</h3>
+                {{ $street_address }}<br />
+                RTP, NC
+                @if (!empty($zip_code))
+                  {{ $zip_code }}
+                @else
+                  27709
+                @endif
+              @endif
+
+              @if (!empty($website))
+                <a class="website button secondary large" href="{{ $website }}" target="_blank" rel="noopener">Visit Website</a>
+              @endif
+
+              @if (($location_terms[0]->slug == 'multi-tenant') && !empty(get_the_content()) && get_the_content() !== '<p></p>')
+                <div class="facility-info">
+                  <?php the_content(); ?>
+                </div>
+              @endif
             </div>
 
             @php $tenants = (new RTP_Dir_Listing)->get_facility_tenants($id) @endphp
@@ -191,6 +181,29 @@
         <div class="company-info row">
           <div class="col xs12 s6">
             <?php the_content(); ?>
+
+            <div class="address">
+              @if (!empty($street_address))
+                <h3 class="label">Address</h3>
+                {{ $street_address }}<br />
+                RTP, NC
+                @if (!empty($zip_code))
+                  {{ $zip_code }}
+                @else
+                  27709
+                @endif
+              @endif
+
+              @if (!empty($website))
+                <a class="website button secondary large" href="{{ $website }}" target="_blank" rel="noopener">Visit Website</a>
+              @endif
+
+              @if (($location_terms[0]->slug == 'multi-tenant') && !empty(get_the_content()) && get_the_content() !== '<p></p>')
+                <div class="facility-info">
+                  <?php the_content(); ?>
+                </div>
+              @endif
+            </div>
 
             <?php if (!empty($contact_ppl)) { ?>
               <h2>Get In Touch</h2>

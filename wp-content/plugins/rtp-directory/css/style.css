@@ -1512,6 +1512,14 @@ body.directory-map .key ul li.icon-trails::before {
   margin-bottom: 0px !important;
 }
 
+.back-to-directory {
+  text-transform: uppercase;
+  color: #333F48;
+  font-size: 0.85em;
+  margin: -2em 0 2em;
+  display: block;
+}
+
 .facetwp-template {
   padding-left: 3rem;
   padding-top: 1rem;
@@ -1578,26 +1586,10 @@ body.directory-map .key ul li.icon-trails::before {
   float: right;
 }
 .single-rtp-company .company-logo, .single-rtp-facility .company-logo, .single-rtp-site .company-logo, .single-rtp-space .company-logo {
-  border: 1px solid #979797;
-  width: 100%;
+  max-width: 50%;
   position: relative;
 }
-.single-rtp-company .company-logo > div, .single-rtp-facility .company-logo > div, .single-rtp-site .company-logo > div, .single-rtp-space .company-logo > div {
-  width: 100%;
-  height: 0;
-  padding-bottom: 60%;
-  position: relative;
-}
-.single-rtp-company .company-logo > div > div, .single-rtp-facility .company-logo > div > div, .single-rtp-site .company-logo > div > div, .single-rtp-space .company-logo > div > div {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: content-box;
-}
-.single-rtp-company .company-logo > div > div img, .single-rtp-facility .company-logo > div > div img, .single-rtp-site .company-logo > div > div img, .single-rtp-space .company-logo > div > div img {
-  object-fit: contain;
+.single-rtp-company .company-logo img, .single-rtp-facility .company-logo img, .single-rtp-site .company-logo img, .single-rtp-space .company-logo img {
   display: block;
   margin: 0 auto;
   height: inherit;
@@ -1609,12 +1601,18 @@ body.directory-map .key ul li.icon-trails::before {
 .single-rtp-company .company-title, .single-rtp-facility .company-title, .single-rtp-site .company-title, .single-rtp-space .company-title {
   flex: 1 1 calc(100% - 180px);
 }
+.single-rtp-company .meta-term, .single-rtp-facility .meta-term, .single-rtp-site .meta-term, .single-rtp-space .meta-term {
+  background: none;
+}
 .single-rtp-company h1, .single-rtp-facility h1, .single-rtp-site h1, .single-rtp-space h1 {
   margin-top: 0;
   margin-bottom: 0;
 }
-.single-rtp-company h2, .single-rtp-facility h2, .single-rtp-site h2, .single-rtp-space h2 {
-  margin: 1.25rem 0 0.625rem;
+.single-rtp-company .location-meta .meta-term, .single-rtp-facility .location-meta .meta-term, .single-rtp-site .location-meta .meta-term, .single-rtp-space .location-meta .meta-term {
+  background: none;
+  color: #000;
+  -webkit-text-fill-color: #000;
+  display: block;
 }
 .single-rtp-company .location-meta .meta-icon, .single-rtp-facility .location-meta .meta-icon, .single-rtp-site .location-meta .meta-icon, .single-rtp-space .location-meta .meta-icon {
   display: inline-block;
@@ -1632,11 +1630,37 @@ body.directory-map .key ul li.icon-trails::before {
 .single-rtp-company .company-info > .row > div[class*="col-"]:last-child, .single-rtp-facility .company-info > .row > div[class*="col-"]:last-child, .single-rtp-site .company-info > .row > div[class*="col-"]:last-child, .single-rtp-space .company-info > .row > div[class*="col-"]:last-child {
   padding-left: 0;
 }
-.single-rtp-company .company-info .address, .single-rtp-facility .company-info .address, .single-rtp-site .company-info .address, .single-rtp-space .company-info .address {
-  padding: 15px;
+.single-rtp-company .website-link a, .single-rtp-facility .website-link a, .single-rtp-site .website-link a, .single-rtp-space .website-link a {
+  color: #000;
+  display: block;
+  text-align: right;
+  width: 100%;
+  height: 40px;
+  font-size: 0.9em;
+  font-weight: 400;
+  line-height: 40px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  vertical-align: middle;
+  border-top: 4px solid #000;
+  padding-top: 10px;
 }
-.single-rtp-company .indent, .single-rtp-facility .indent, .single-rtp-site .indent, .single-rtp-space .indent {
-  padding: 0 20px;
+.single-rtp-company .website-link a .cta-arrow, .single-rtp-facility .website-link a .cta-arrow, .single-rtp-site .website-link a .cta-arrow, .single-rtp-space .website-link a .cta-arrow {
+  display: inline-block;
+  width: 26px;
+  height: 22px;
+  margin: 0 0 0 14px;
+  vertical-align: -5px;
+  transition: transform 0.3s ease;
+  background-image: url("../images/arrow-right.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.single-rtp-company .website-link a:hover, .single-rtp-company .website-link a:active, .single-rtp-company .website-link a:focus, .single-rtp-facility .website-link a:hover, .single-rtp-facility .website-link a:active, .single-rtp-facility .website-link a:focus, .single-rtp-site .website-link a:hover, .single-rtp-site .website-link a:active, .single-rtp-site .website-link a:focus, .single-rtp-space .website-link a:hover, .single-rtp-space .website-link a:active, .single-rtp-space .website-link a:focus {
+  text-decoration: underline !important;
+}
+.single-rtp-company .website-link a:hover .cta-arrow, .single-rtp-company .website-link a:active .cta-arrow, .single-rtp-company .website-link a:focus .cta-arrow, .single-rtp-facility .website-link a:hover .cta-arrow, .single-rtp-facility .website-link a:active .cta-arrow, .single-rtp-facility .website-link a:focus .cta-arrow, .single-rtp-site .website-link a:hover .cta-arrow, .single-rtp-site .website-link a:active .cta-arrow, .single-rtp-site .website-link a:focus .cta-arrow, .single-rtp-space .website-link a:hover .cta-arrow, .single-rtp-space .website-link a:active .cta-arrow, .single-rtp-space .website-link a:focus .cta-arrow {
+  transform: translate3d(10px, 0, 0);
 }
 .single-rtp-company dl, .single-rtp-facility dl, .single-rtp-site dl, .single-rtp-space dl {
   display: flex;
@@ -1647,7 +1671,7 @@ body.directory-map .key ul li.icon-trails::before {
   flex: 1 0 10em;
   margin: 0 0 5px;
   padding-right: 8px;
-  color: #02444D;
+  font-weight: 400;
 }
 .single-rtp-company dl dd, .single-rtp-facility dl dd, .single-rtp-site dl dd, .single-rtp-space dl dd {
   flex: 1 0 calc(100% - 10em);

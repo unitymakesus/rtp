@@ -14828,6 +14828,7 @@ nav ul a {
   background-image: url(/wp-content/themes/rtp-child-rtp/dist/images/texture-single-header.png);
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -14838,6 +14839,21 @@ nav ul a {
 
 /* line 20, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
+.single .page-header .texture img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  min-height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  z-index: 1;
+}
+
+/* line 32, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+
 .single .page-header .container,
 .single .page-header .container-wide,
 .single .page-header .sidebar-primary .content,
@@ -14847,7 +14863,7 @@ nav ul a {
   z-index: 1;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 38, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .entry-title-container {
   background: rgba(255, 255, 255, 0.9);
@@ -14857,33 +14873,33 @@ nav ul a {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 26, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+  /* line 38, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
   .single .page-header .entry-title-container {
     width: 100%;
   }
 }
 
-/* line 39, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 51, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact {
   padding: 5px 0;
 }
 
-/* line 42, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 54, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact .icon {
   display: inline-block;
   padding: 5px 10px;
 }
 
-/* line 47, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 59, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact path {
   fill: #333F48;
 }
 
-/* line 51, ../rtp-core/resources/assets/styles/layouts/_single.scss */
+/* line 63, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .meta .contact a {
   color: #333F48;

@@ -229,31 +229,6 @@ defined('MECEXEC') or die();
                 <?php echo $this->main->module('googlemap.details', array('event'=>$this->events)); ?>
             </div>
 
-            <!-- Countdown module -->
-            <?php if($this->main->can_show_countdown_module($event)): ?>
-            <div class="mec-events-meta-group mec-events-meta-group-countdown">
-                <?php echo $this->main->module('countdown.details', array('event'=>$this->events)); ?>
-            </div>
-            <?php endif; ?>
-
-            <!-- Hourly Schedule -->
-            <?php $this->show_hourly_schedules($event); ?>
-
-            <!-- Booking Module -->
-            <?php if($this->main->is_sold($event, (trim($occurrence) ? $occurrence : $event->date['start']['date'])) and count($event->dates) <= 1): ?>
-            <div class="mec-sold-tickets warning-msg"><?php _e('Sold out!', 'wpl'); ?></div>
-            <?php elseif($this->main->can_show_booking_module($event)): ?>
-            <?php $data_lity_class = ''; if( isset($settings['single_booking_style']) and $settings['single_booking_style'] == 'modal' ) $data_lity_class = 'lity-hide '; ?>
-            <div id="mec-events-meta-group-booking-<?php echo $this->uniqueid; ?>" class="<?php echo $data_lity_class; ?>mec-events-meta-group mec-events-meta-group-booking">
-                <?php echo $this->main->module('booking.default', array('event'=>$this->events)); ?>
-            </div>
-            <?php endif ?>
-
-            <!-- Tags -->
-            <div class="mec-events-meta-group mec-events-meta-group-tags">
-                <?php the_tags(__('Tags: ', 'mec'), ', ', '<br />'); ?>
-            </div>
-
         </div>
     </article>
 </div>
