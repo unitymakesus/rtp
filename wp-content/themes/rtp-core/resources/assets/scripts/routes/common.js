@@ -169,5 +169,7 @@ export default {
         $input.parent().addClass('active');
       })
     });
+
+    $('.gfield select').formSelect();
   },
 };

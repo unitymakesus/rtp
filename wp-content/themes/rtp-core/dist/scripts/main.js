@@ -3542,6 +3542,8 @@ Router.prototype.loadEvents = function loadEvents () {
         $input.parent().addClass('active');
       })
     });
+
+    $('.gfield select').formSelect();
   },
 });
 

@@ -151,6 +151,13 @@ textarea.materialize-textarea {
         }
       }
     }
+
+    input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"], textarea {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
   }
 
   .gfield_label {
@@ -168,6 +175,10 @@ textarea.materialize-textarea {
     margin-top: 0 !important;
   }
 
+  div.ginput_container_checkbox {
+    margin-bottom: 15px !important;
+  }
+
   .field_sublabel_below {
     .ginput_complex {
       input {
@@ -178,7 +189,16 @@ textarea.materialize-textarea {
           margin-bottom: 0;
         }
       }
+
+      .caret {
+        top: 10px;
+      }
     }
+  }
+
+  .field_description_below .gfield_description {
+    padding-top: 0;
+    margin-top: -15px;
   }
 
   .gform_button.button {
@@ -209,6 +229,50 @@ textarea.materialize-textarea {
     font-weight: 400;
   }
 
+  .select-wrapper {
+    padding-top: 2px;
+    display: inline-block;
+
+    input.select-dropdown {
+      height: 3rem;
+      background: $color-white;
+      border: 1px solid $color-grey-light;
+      text-align: left;
+      text-transform: none;
+
+      &:hover, &:focus {
+        background: $color-blue-unc-light;
+      }
+    }
+
+    ul.dropdown-content li {
+      text-transform: none;
+
+      span {
+        padding: 16px;
+        min-height: 50px;
+      }
+
+      &.selected {
+        background: $color-blue-unc-light;
+
+        span {
+          color: $color-slate-dark;
+        }
+      }
+    }
+
+    .caret {
+      fill: $color-grey-dark;
+    }
+
+    + label {
+      position: relative;
+      top: auto;
+      color: $color-slate;
+    }
+  }
+
   .gfield_radio, .gfield_checkbox {
     input[type="radio"], input[type="checkbox"] {
       + label {
@@ -220,7 +284,7 @@ textarea.materialize-textarea {
         height: 25px;
         line-height: 25px;
         font-size: 1rem;
-        transition: .28s ease;
+        transition: 0.28s ease;
         user-select: none;
 
         &::before, &::after {
@@ -232,7 +296,7 @@ textarea.materialize-textarea {
           width: 16px;
           height: 16px;
           z-index: 0;
-          transition: .28s ease;
+          transition: 0.28s ease;
           border-radius: 50%;
           border: 2px solid $color-grey-dark;
         }
@@ -271,7 +335,7 @@ textarea.materialize-textarea {
           &::after {
             border: $color-blue-unc;
             background-color: $color-blue-unc;
-            transform: scale(.5);
+            transform: scale(0.5);
           }
         }
       }
