@@ -156,7 +156,8 @@ textarea.materialize-textarea {
   .gfield_label {
     color: $color-slate-dark;
     line-height: 1.2em !important;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 400;
   }
 
   .gfield_required {
@@ -240,7 +241,11 @@ textarea.materialize-textarea {
       &:focus {
         + label {
           font-weight: 400;
+        }
+      }
 
+      &:not(:checked):focus {
+        + label {
           &::before {
             @extend .z-depth-1;
           }
