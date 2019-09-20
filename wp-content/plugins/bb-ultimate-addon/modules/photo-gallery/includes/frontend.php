@@ -18,9 +18,14 @@ $filter_data = json_encode( array_keys( $filters ) );
 <?php if ( 'grid' == $settings->layout ) : ?>
 	<div class="uabb-module-content uabb-photo-gallery uabb-gallery-grid<?php echo $settings->grid_column; ?> <?php echo ( 'none' != $settings->hover_effects ) ? $settings->hover_effects : ''; ?> <?php echo ( 'yes' == $settings->filterable_gallery_enable ) ? 'uabb-photo-gallery-filter-grid' : ''; ?>" data-all-filters=<?php echo ( isset( $filter_data ) ) ? $filter_data : ''; ?> >
 <?php
+$category = '';
 foreach ( $module->get_photos() as $photo ) :
 
-	$tags = explode( ',', strtolower( $photo->category ) );
+	if ( isset( $photo->category ) ) {
+		$category = $photo->category;
+	}
+
+	$tags = explode( ',', strtolower( $category ) );
 
 	$tags = array_map( 'trim', $tags );
 
@@ -94,7 +99,11 @@ foreach ( $module->get_photos() as $photo ) :
 		<div class="uabb-grid-sizer"></div>
 		<?php foreach ( $module->get_photos() as $photo ) : ?>
 			<?php
-			$tags = explode( ',', strtolower( $photo->category ) );
+			$category = '';
+			if ( isset( $photo->category ) ) {
+				$category = $photo->category;
+			}
+			$tags = explode( ',', strtolower( $category ) );
 
 			$tags = array_map( 'trim', $tags );
 

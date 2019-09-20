@@ -221,7 +221,8 @@ final class UABBBuilderAdminSettings {
 	 * @param hook $hook get the hooks for the styles.
 	 * @return void
 	 */
-	static public function styles_scripts( $hook ) {
+	public static function styles_scripts( $hook ) {
+
 		wp_register_style( 'uabb-admin-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-admin.css', array() );
 		wp_register_script( 'uabb-admin-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin.js', array( 'jquery' ), '', true );
 		wp_localize_script( 'uabb-admin-js', 'uabb', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
@@ -253,7 +254,6 @@ final class UABBBuilderAdminSettings {
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_style( 'uabb-admin-css' );
 			wp_enqueue_script( 'uabb-admin-js' );
-			wp_enqueue_script( 'uabb-cloud-templates' );
 			wp_enqueue_script( 'uabb-lazyload' );
 
 			wp_enqueue_script( 'uabb-cloud-templates' );

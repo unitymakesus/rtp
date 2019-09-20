@@ -422,9 +422,15 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 		$data = $this->get_wordpress_photos();
 
+		$category = '';
+
 		foreach ( $data as $item ) {
 
-			$cat = trim( $item->category );
+			if ( isset( $item->category ) ) {
+				$category = $item->category;
+			}
+
+			$cat = trim( $category );
 
 			$cat_arr = explode( ',', $cat );
 

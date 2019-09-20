@@ -114,7 +114,9 @@ class UABB_Extend_RowColumn {
 					'triangle_svg'          => __( 'Triangle', 'uabb' ),
 					'waves'                 => __( 'Waves', 'uabb' ),
 					'wave_slide'            => __( 'Wave Slide', 'uabb' ),
-				), 10, 1
+				),
+				10,
+				1
 			);
 
 			$bot_sep_options = apply_filters(
@@ -146,7 +148,9 @@ class UABB_Extend_RowColumn {
 					'triangle_svg'          => __( 'Triangle', 'uabb' ),
 					'waves'                 => __( 'Waves', 'uabb' ),
 					'wave_slide'            => __( 'Wave Slide', 'uabb' ),
-				), 10, 1
+				),
+				10,
+				1
 			);
 
 			$row_setting_arr = array(

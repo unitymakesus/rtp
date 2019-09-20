@@ -1,10 +1,10 @@
-=== Contact Form 7 Controls ===
+=== Controls for Contact Form 7 ===
 
 Contributors: kasparsd, buzztone   
-Tags: Contact Form 7, cf7, admin, backend, redirect, tracking, google analytics, facebook pixel, ga, simple, interface, dashboard, recaptcha   
+Tags: Contact Form 7, cf7, forms, form, admin, backend, redirect, tracking, analytics, google analytics, facebook pixel, ga, simple, interface, dashboard, recaptcha   
 Requires at least: 4.6   
-Tested up to: 5.1   
-Stable tag: 0.7.1   
+Tested up to: 5.2   
+Stable tag: 0.7.2   
 
 Simple controls, analytics, tracking and redirects for Contact Form 7.
 
@@ -59,9 +59,14 @@ The [standard Contact event](https://developers.facebook.com/docs/facebook-pixel
 - Add [a translation to your language](https://translate.wordpress.org/projects/wp-plugins/contact-form-7-extras).
 
 
+== Changelog ==
+
+See the [release notes](https://github.com/kasparsd/contact-form-7-extras/releases) for the complete changelog.
+
+
 == Installation ==
 
-Search for "Contact Form 7 Controls" using the standard plugin installer.
+Search for "Controls for Contact Form 7" under "Plugins" → "Add New" in your WordPress administration panel.
 
 Alternatively, add it as [a Composer dependency](https://packagist.org/packages/kasparsd/contact-form-7-extras):
 
@@ -77,7 +82,7 @@ The "[Storage for Contact Form 7](https://codecanyon.net/item/storage-for-contac
 
 == Screenshots ==
 
-1. Contact Form 7 Advanced Controls
+1. Advanced Controls for Contact Form 7
 
 
 == Upgrade Notice ==

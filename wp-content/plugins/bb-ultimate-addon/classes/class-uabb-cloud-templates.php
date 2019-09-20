@@ -457,7 +457,7 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 		function download_cloud_templates() {
 
 			// Check folder exist or not?
-			$dir_info = self::create_local_dir();
+			$dir_info = $this->create_local_dir();
 
 			// Get template details.
 			$dat_file_url                = $dir_info['url'] . basename( $_POST['dat_file'] );
@@ -743,7 +743,7 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 		 * @since 1.2.0.2
 		 * @param string $dir_name verifies the dir name with bb-ultimate-addon.
 		 */
-		static public function create_local_dir( $dir_name = 'bb-ultimate-addon' ) {
+		function create_local_dir( $dir_name = 'bb-ultimate-addon' ) {
 
 			$wp_info = wp_upload_dir();
 
@@ -761,13 +761,13 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 			);
 
 			// Create the upload dir if it doesn't exist.
-			if ( ! file_exists( $dir_info['path'] ) ) {
+			if ( ! fl_builder_filesystem()->file_exists( $dir_info['path'] ) ) {
 
 				// Create the directory.
-				mkdir( $dir_info['path'] );
+				fl_builder_filesystem()->mkdir( $dir_info['path'] );
 
 				// Add an index file for security.
-				file_put_contents( $dir_info['path'] . 'index.html', '' );
+				fl_builder_filesystem()->file_put_contents( $dir_info['path'] . 'index.html', '' );
 			}
 
 			return $dir_info;

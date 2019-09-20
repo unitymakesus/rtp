@@ -347,7 +347,10 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 		 */
 		public static function prepare_plugins_for_update( $plugins ) {
 			foreach ( $plugins as $key => $plugin ) {
-				if ( ! isset( $plugin[ 'template' ] ) || ! file_exists( dirname( realpath( WP_PLUGIN_DIR . '/' . $plugin[ 'template' ] ) ) ) ) {
+				if ( isset( $plugin[ 'template' ] ) && ! file_exists( dirname( realpath( WP_PLUGIN_DIR . '/' . $plugin[ 'template' ] ) ) ) ) {
+					unset( $plugins[ $key ] );
+				}
+				if ( isset( $plugin[ 'init' ] ) && ! file_exists( dirname( realpath( WP_PLUGIN_DIR . '/' . $plugin[ 'init' ] ) ) ) ) {
 					unset( $plugins[ $key ] );
 				}
 			}

@@ -1787,8 +1787,8 @@ class BlogPostsModule extends FLBuilderModule {
 
 							foreach ( $category_detail as $cat_details ) {
 								if ( ! empty( $tax_value ) ) {
-									if (  $tax_slug === $this->settings->{ 'masonary_filter_' . $post_type }  ) {
-										if ( '0' === $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) {
+									if (  isset( $this->settings->{ 'masonary_filter_' . $post_type } ) && $tax_slug === $this->settings->{ 'masonary_filter_' . $post_type }  ) {
+										if ( isset( $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) && '0' === $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) {
 											if (  ! in_array( $cat_details->term_id, $tax_value ) ) {
 												echo '<option class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</option>';
 											}
@@ -1808,8 +1808,8 @@ class BlogPostsModule extends FLBuilderModule {
 								echo '<li class="uabb-masonary-filter-' . $this->node . ' uabb-masonary-current" data-filter="*">' . ( isset( $this->settings->$all_text ) ? $this->settings->$all_text : __( 'All', 'uabb' ) ) . '</li>';
 							foreach ( $category_detail as $cat_details ) {
 								if ( ! empty( $tax_value ) ) {
-									if ( $tax_slug === $this->settings->{ 'masonary_filter_' . $post_type } ) {
-										if ( '0' === $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) {
+									if ( isset( $this->settings->{ 'masonary_filter_' . $post_type } ) && $tax_slug === $this->settings->{ 'masonary_filter_' . $post_type } ) {
+										if ( isset( $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) && '0' === $this->settings->{'tax_' . $post_type . '_' . $tax_slug . '_matching'} ) {
 											if (  ! in_array( $cat_details->term_id, $tax_value ) ) {
 												echo '<li class="uabb-masonary-filter-' . $this->node . '" data-filter=".uabb-masonary-cat-' . $cat_details->term_id . '">' . $cat_details->name . '</li>';
 											}

@@ -86,6 +86,7 @@ if ( ! class_exists( 'UABB_Plugin_Update' ) ) {
 
 			do_action( 'uabb_update_version_after' );
 		}
+
 	}
 }
 UABB_Plugin_Update::get_instance();

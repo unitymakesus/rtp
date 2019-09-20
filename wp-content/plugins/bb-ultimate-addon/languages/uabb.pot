@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Ultimate Addons for Beaver Builder package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Addons for Beaver Builder 1.20.1\n"
+"Project-Id-Version: Ultimate Addons for Beaver Builder 1.20.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/bb-ultimate-addon\n"
-"POT-Creation-Date: 2019-08-19 08:29:31+00:00\n"
+"POT-Creation-Date: 2019-09-12 04:19:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -159,76 +159,76 @@ msgid ""
 "newsletter."
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:417
+#: admin/bsf-core/BSF_License_Manager.php:426
 msgid "Product id is missing."
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:495
+#: admin/bsf-core/BSF_License_Manager.php:504
 msgid ""
 "<p>Click on the button below to activate your license and subscribe to our "
 "newsletter.</p>"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:497
+#: admin/bsf-core/BSF_License_Manager.php:506
 msgid "<p>Enter your purchase key and activate automatic updates.</p>"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:524
+#: admin/bsf-core/BSF_License_Manager.php:533
 msgid "Your license is active."
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:634
-#: admin/bsf-core/BSF_License_Manager.php:649
+#: admin/bsf-core/BSF_License_Manager.php:643
+#: admin/bsf-core/BSF_License_Manager.php:658
 msgid "Activate License"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:637
+#: admin/bsf-core/BSF_License_Manager.php:646
 #: classes/class-uabb-admin-settings.php:335
 #: includes/admin-settings-license.php:10
 msgid "License"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:650
+#: admin/bsf-core/BSF_License_Manager.php:659
 msgid "Deactivate License"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:652
+#: admin/bsf-core/BSF_License_Manager.php:661
 msgid "Your license is not active!"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:653
+#: admin/bsf-core/BSF_License_Manager.php:662
 msgid "Your license is activated!"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:699
+#: admin/bsf-core/BSF_License_Manager.php:708
 msgid "Close"
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:519
+#: admin/bsf-core/BSF_Update_Manager.php:522
 msgid ""
 " <br>This plugin is came bundled with the <i>%1$s</i>. For receiving "
 "updates, you need to register license of <i>%2$s</i> <a "
 "href=\"%3$s\">here</a>."
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:521
+#: admin/bsf-core/BSF_Update_Manager.php:524
 msgid ""
 " <i>Please <a href=\"%1$s\">activate your license</a> to update the "
 "plugin.</i>"
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:585
-#: admin/bsf-core/BSF_Update_Manager.php:612
+#: admin/bsf-core/BSF_Update_Manager.php:588
+#: admin/bsf-core/BSF_Update_Manager.php:615
 msgid ""
 "Click <a target=\"_blank\" href=\"%1$1s\">here</a> to activate license of "
 "<i>%2$2s</i> to receive automatic updates."
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:591
+#: admin/bsf-core/BSF_Update_Manager.php:594
 msgid "Activate license of <i>%2s</i> to receive automatic updates."
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:597
+#: admin/bsf-core/BSF_Update_Manager.php:600
 msgid ""
 "This plugin is came bundled with the <i>%1$1s</i>. For receiving updates, "
 "you need to register license of <i>%2$2s</i> <a target=\"_blank\" "
@@ -473,7 +473,7 @@ msgstr ""
 
 #: admin/bsf-core/plugin-installer/index.php:182
 #: admin/bsf-core/plugin-installer/index.php:300
-#: classes/class-uabb-admin-settings.php:244
+#: classes/class-uabb-admin-settings.php:245
 #: classes/class-uabb-cloud-templates.php:698
 msgid "Install"
 msgstr ""
@@ -485,7 +485,7 @@ msgstr ""
 
 #: admin/bsf-core/plugin-installer/index.php:198
 #: admin/bsf-core/plugin-installer/index.php:315
-#: classes/class-uabb-admin-settings.php:245
+#: classes/class-uabb-admin-settings.php:246
 #: classes/class-uabb-cloud-templates.php:682
 msgid "Installed"
 msgstr ""
@@ -536,8 +536,35 @@ msgstr ""
 msgid "Return to Plugins Page"
 msgstr ""
 
+#: classes/batch-process/class-uabb-batch-process.php:111
+msgid "We will notify you once the process is complete."
+msgstr ""
+
+#: classes/batch-process/class-uabb-batch-process.php:266
+msgid "Procress Completed."
+msgstr ""
+
+#: classes/batch-process/helpers/class-uabb-importer-image.php:173
+#. translators: %1$s is error message and %2$s is image URL
+msgid "Failed ! WP error - %1$s - %2$s"
+msgstr ""
+
+#: classes/batch-process/helpers/class-uabb-importer-image.php:179
+#. translators: %1$s is  response code and %2$s is image URL
+msgid "Failed ! Invalid Response Code - %1$s ! Expected Response Code 200 - %2$s"
+msgstr ""
+
+#: classes/batch-process/helpers/class-uabb-importer-image.php:186
+#. translators: %1$s is image URL
+msgid "Failed ! Empty Image Content - %1$s"
+msgstr ""
+
+#: classes/batch-process/helpers/class-wp-background-process.php:435
+msgid "Every %d Minutes"
+msgstr ""
+
 #: classes/class-extended-row-column.php:91
-#: classes/class-extended-row-column.php:123
+#: classes/class-extended-row-column.php:125
 #: classes/uabb-global-settings-form.php:155
 #: modules/adv-testimonials/adv-testimonials-bb-2-2-compatibility.php:368
 #: modules/adv-testimonials/adv-testimonials-bb-2-2-compatibility.php:1124
@@ -782,142 +809,142 @@ msgid "None"
 msgstr ""
 
 #: classes/class-extended-row-column.php:92
-#: classes/class-extended-row-column.php:124
+#: classes/class-extended-row-column.php:126
 msgid "Arrow Inward"
 msgstr ""
 
 #: classes/class-extended-row-column.php:93
-#: classes/class-extended-row-column.php:125
+#: classes/class-extended-row-column.php:127
 msgid "Arrow Outward"
 msgstr ""
 
 #: classes/class-extended-row-column.php:94
-#: classes/class-extended-row-column.php:126
+#: classes/class-extended-row-column.php:128
 msgid "Big Triangle"
 msgstr ""
 
 #: classes/class-extended-row-column.php:95
-#: classes/class-extended-row-column.php:127
+#: classes/class-extended-row-column.php:129
 msgid "Big Triangle Reverse"
 msgstr ""
 
 #: classes/class-extended-row-column.php:96
-#: classes/class-extended-row-column.php:128
+#: classes/class-extended-row-column.php:130
 msgid "Big Triangle Left"
 msgstr ""
 
 #: classes/class-extended-row-column.php:97
-#: classes/class-extended-row-column.php:129
+#: classes/class-extended-row-column.php:131
 msgid "Big Triangle Right"
 msgstr ""
 
 #: classes/class-extended-row-column.php:98
-#: classes/class-extended-row-column.php:130
+#: classes/class-extended-row-column.php:132
 msgid "Clouds"
 msgstr ""
 
 #: classes/class-extended-row-column.php:99
-#: classes/class-extended-row-column.php:131
+#: classes/class-extended-row-column.php:133
 msgid "Curve Center"
 msgstr ""
 
 #: classes/class-extended-row-column.php:100
-#: classes/class-extended-row-column.php:132
+#: classes/class-extended-row-column.php:134
 msgid "Curve Left"
 msgstr ""
 
 #: classes/class-extended-row-column.php:101
-#: classes/class-extended-row-column.php:133
+#: classes/class-extended-row-column.php:135
 msgid "Curve Right"
 msgstr ""
 
 #: classes/class-extended-row-column.php:102
-#: classes/class-extended-row-column.php:134
+#: classes/class-extended-row-column.php:136
 msgid "Grass"
 msgstr ""
 
 #: classes/class-extended-row-column.php:103
-#: classes/class-extended-row-column.php:135
+#: classes/class-extended-row-column.php:137
 msgid "Grass Bend"
 msgstr ""
 
 #: classes/class-extended-row-column.php:104
-#: classes/class-extended-row-column.php:136
+#: classes/class-extended-row-column.php:138
 msgid "Half Circle"
 msgstr ""
 
 #: classes/class-extended-row-column.php:105
-#: classes/class-extended-row-column.php:137
+#: classes/class-extended-row-column.php:139
 msgid "Multi Triangle"
 msgstr ""
 
 #: classes/class-extended-row-column.php:106
-#: classes/class-extended-row-column.php:138
+#: classes/class-extended-row-column.php:140
 msgid "Multiple Triangles"
 msgstr ""
 
 #: classes/class-extended-row-column.php:107
-#: classes/class-extended-row-column.php:139
+#: classes/class-extended-row-column.php:141
 msgid "Pine Tree"
 msgstr ""
 
 #: classes/class-extended-row-column.php:108
-#: classes/class-extended-row-column.php:140
+#: classes/class-extended-row-column.php:142
 msgid "Pine Tree Bend"
 msgstr ""
 
 #: classes/class-extended-row-column.php:109
-#: classes/class-extended-row-column.php:141
+#: classes/class-extended-row-column.php:143
 msgid "Round Split"
 msgstr ""
 
 #: classes/class-extended-row-column.php:110
-#: classes/class-extended-row-column.php:142
+#: classes/class-extended-row-column.php:144
 msgid "Slime"
 msgstr ""
 
 #: classes/class-extended-row-column.php:111
-#: classes/class-extended-row-column.php:143
+#: classes/class-extended-row-column.php:145
 msgid "Stamp"
 msgstr ""
 
 #: classes/class-extended-row-column.php:112
-#: classes/class-extended-row-column.php:144
+#: classes/class-extended-row-column.php:146
 msgid "Tilt Left"
 msgstr ""
 
 #: classes/class-extended-row-column.php:113
-#: classes/class-extended-row-column.php:145
+#: classes/class-extended-row-column.php:147
 msgid "Tilt Right"
 msgstr ""
 
 #: classes/class-extended-row-column.php:114
-#: classes/class-extended-row-column.php:146
+#: classes/class-extended-row-column.php:148
 msgid "Triangle"
 msgstr ""
 
 #: classes/class-extended-row-column.php:115
-#: classes/class-extended-row-column.php:147
+#: classes/class-extended-row-column.php:149
 msgid "Waves"
 msgstr ""
 
 #: classes/class-extended-row-column.php:116
-#: classes/class-extended-row-column.php:148
+#: classes/class-extended-row-column.php:150
 msgid "Wave Slide"
 msgstr ""
 
-#: classes/class-extended-row-column.php:153
+#: classes/class-extended-row-column.php:157
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-2-2-compatibility.php:546
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-less-than-2-2-compatibility.php:611
 msgid "Effects"
 msgstr ""
 
-#: classes/class-extended-row-column.php:156
+#: classes/class-extended-row-column.php:160
 msgid "Top Row Separator"
 msgstr ""
 
-#: classes/class-extended-row-column.php:160
-#: classes/class-extended-row-column.php:307 includes/column-settings.php:178
+#: classes/class-extended-row-column.php:164
+#: classes/class-extended-row-column.php:311 includes/column-settings.php:178
 #: includes/row-settings.php:167
 #: modules/advanced-accordion/advanced-accordion-bb-2-2-compatibility.php:482
 #: modules/advanced-accordion/advanced-accordion-bb-less-than-2-2-compatibility.php:183
@@ -947,8 +974,8 @@ msgstr ""
 msgid "Type"
 msgstr ""
 
-#: classes/class-extended-row-column.php:243
-#: classes/class-extended-row-column.php:397
+#: classes/class-extended-row-column.php:247
+#: classes/class-extended-row-column.php:401
 #: modules/advanced-separator/advanced-separator-bb-2-2-compatibility.php:734
 #: modules/advanced-separator/advanced-separator-bb-less-than-2-2-compatibility.php:704
 #: modules/blog-posts/blog-posts-bb-2-2-compatibility.php:713
@@ -1014,8 +1041,8 @@ msgstr ""
 msgid "Width"
 msgstr ""
 
-#: classes/class-extended-row-column.php:260
-#: classes/class-extended-row-column.php:414
+#: classes/class-extended-row-column.php:264
+#: classes/class-extended-row-column.php:418
 #: modules/google-map/google-map-bb-2-2-compatibility.php:61
 #: modules/google-map/google-map-bb-less-than-2-2-compatibility.php:45
 #: modules/progress-bar/progress-bar-bb-2-2-compatibility.php:280
@@ -1027,8 +1054,8 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-#: classes/class-extended-row-column.php:277
-#: classes/class-extended-row-column.php:431
+#: classes/class-extended-row-column.php:281
+#: classes/class-extended-row-column.php:435
 #: modules/blog-posts/blog-posts-bb-2-2-compatibility.php:702
 #: modules/blog-posts/blog-posts-bb-2-2-compatibility.php:824
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:668
@@ -1062,13 +1089,13 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
-#: classes/class-extended-row-column.php:280
-#: classes/class-extended-row-column.php:434
+#: classes/class-extended-row-column.php:284
+#: classes/class-extended-row-column.php:438
 msgid "Mostly, this should be background color of your adjacent row section."
 msgstr ""
 
-#: classes/class-extended-row-column.php:284
-#: classes/class-extended-row-column.php:438
+#: classes/class-extended-row-column.php:288
+#: classes/class-extended-row-column.php:442
 #: classes/uabb-global-settings-form.php:88
 #: classes/uabb-global-settings-form.php:105
 #: modules/adv-testimonials/adv-testimonials-bb-2-2-compatibility.php:230
@@ -1280,13 +1307,13 @@ msgstr ""
 msgid "Opacity"
 msgstr ""
 
-#: classes/class-extended-row-column.php:293
-#: classes/class-extended-row-column.php:447
+#: classes/class-extended-row-column.php:297
+#: classes/class-extended-row-column.php:451
 msgid "Bring to Front"
 msgstr ""
 
-#: classes/class-extended-row-column.php:296
-#: classes/class-extended-row-column.php:450 includes/column-settings.php:56
+#: classes/class-extended-row-column.php:300
+#: classes/class-extended-row-column.php:454 includes/column-settings.php:56
 #: includes/column-settings.php:111 includes/column-settings.php:136
 #: includes/column-settings.php:256 includes/column-settings.php:293
 #: includes/column-settings.php:366 includes/column-settings.php:422
@@ -1679,8 +1706,8 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: classes/class-extended-row-column.php:297
-#: classes/class-extended-row-column.php:451 includes/column-settings.php:57
+#: classes/class-extended-row-column.php:301
+#: classes/class-extended-row-column.php:455 includes/column-settings.php:57
 #: includes/column-settings.php:112 includes/column-settings.php:137
 #: includes/column-settings.php:257 includes/column-settings.php:294
 #: includes/column-settings.php:367 includes/column-settings.php:423
@@ -2103,11 +2130,11 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: classes/class-extended-row-column.php:303
+#: classes/class-extended-row-column.php:307
 msgid "Bottom Row Separator"
 msgstr ""
 
-#: classes/class-extended-row-column.php:486 includes/column-settings.php:82
+#: classes/class-extended-row-column.php:490 includes/column-settings.php:82
 #: includes/row-settings.php:76
 #: modules/advanced-tabs/advanced-tabs-bb-2-2-compatibility.php:400
 #: modules/advanced-tabs/advanced-tabs-bb-less-than-2-2-compatibility.php:333
@@ -2139,7 +2166,7 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: classes/class-extended-row-column.php:492
+#: classes/class-extended-row-column.php:496
 #: modules/advanced-accordion/advanced-accordion-bb-2-2-compatibility.php:204
 #: modules/advanced-accordion/advanced-accordion-bb-2-2-compatibility.php:382
 #: modules/advanced-tabs/advanced-tabs-bb-2-2-compatibility.php:553
@@ -2198,32 +2225,32 @@ msgstr ""
 msgid "Border"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:238
+#: classes/class-uabb-admin-settings.php:239
 msgid "Something went wrong!"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:239
+#: classes/class-uabb-admin-settings.php:240
 msgid "Complete"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:240
+#: classes/class-uabb-admin-settings.php:241
 msgid "Refreshed!"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:241
+#: classes/class-uabb-admin-settings.php:242
 msgid "Try Again!"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:242
+#: classes/class-uabb-admin-settings.php:243
 msgid "Installed!"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:243
+#: classes/class-uabb-admin-settings.php:244
 #: classes/class-uabb-cloud-templates.php:675
 msgid "Remove"
 msgstr ""
 
-#: classes/class-uabb-admin-settings.php:246
+#: classes/class-uabb-admin-settings.php:247
 msgid "Removed!"
 msgstr ""
 
@@ -2577,11 +2604,11 @@ msgid ""
 "(Free, Standard, Pro and Agency) You can use it with on any WordPress theme."
 msgstr ""
 
-#: classes/class-uabb-init.php:337
+#: classes/class-uabb-init.php:340
 msgid "plugin requires"
 msgstr ""
 
-#: classes/class-uabb-init.php:337
+#: classes/class-uabb-init.php:340
 msgid " plugin installed & activated."
 msgstr ""
 

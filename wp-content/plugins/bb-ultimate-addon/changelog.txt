@@ -1,3 +1,7 @@
+Version 1.20.2 - Thursday, 12th September 2019
+- Improvement: Introduced background process to change all the HotLink Image URLs.This process will download images from the UABB Template Cloud and upload it to your media library.Earlier all the Image URLs used to come from our server. With this update all of them will be uploaded to your media library.
+- Fixed: Heading - Resolved font issue of text being enlarged
+
 Version 1.20.1 - Monday, 19th August 2019
 - Improvement: Advanced Menu - Added Responsive support for Navigation Alignment settings options
 - Improvement: Heading - Added Background color and Padding setting options for Heading
@@ -11,7 +15,7 @@ Version 1.20.1 - Monday, 19th August 2019
 Version 1.20.0 - Monday, 5th August 2019
 - New: Introduced WPForms Styler
 - Improvement: Business Hours - Added WPML support
-- Fixed: Heading - Heading Font size not overriding Theme Font size in some cases
+- Fixed: Heading - Heading Font size not overriding Theme's Font size in some cases
 
 Version 1.19.0 - Wednesday, 17th July 2019
 - New: Introduced Off Canvas
