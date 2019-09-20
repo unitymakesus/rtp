@@ -19,7 +19,6 @@
       if (in_array($_REQUEST['company_edit'], $approved_ppl)) {
         acf_form_head();
         $user_can_edit = true;
-        $edit_button = '<span class="modal-btn">&#9998;</span>';
       }
 
       $id = get_the_id();
@@ -73,9 +72,9 @@
           <?php } ?>
         </div>
         <div class="container">
-          <div class="entry-title-container {{ ($user_can_edit ? 'user-can-edit" data-target="modal-header' : '') }}">
+          <div class="entry-title-container {!! ($user_can_edit ? 'user-can-edit' : '') !!}">
             <h1><?php the_title(); ?>
-              {!! ($user_can_edit ? $edit_button : '') !!}
+              {!! ($user_can_edit ? '<button class="modaal" data-modaal-content-source="#modal-header">&#9998;</button>': '') !!}
             </h1>
             @if (!empty($location_terms))
               <div class="location-meta">
@@ -105,35 +104,33 @@
 
         <div class="row company-info">
           <div class="col xs12 m6">
-            {{-- COMPANY LOGO --}}
-            @if (!empty($company_logo))
-              <div class="company-logo">
-                <img src="{{ $company_logo }}" alt="{{ get_the_title() }}" />
-              </div>
-            @endif
+            <div class="{!! ($user_can_edit ? 'user-can-edit' : '') !!}">
+              {{-- COMPANY LOGO --}}
+              @if (!empty($company_logo))
+                <div class="company-logo">
+                  <img src="{{ $company_logo }}" alt="{{ get_the_title() }}" />
+                </div>
+              @endif
 
             {{-- COMPANY DESCRIPTION --}}
-            <div class="{{ ($user_can_edit ? 'user-can-edit" data-target="modal-description' : '') }}">
-              {!! ($user_can_edit ? '<h3>Company Description ' . $edit_button . '</h3>' : '') !!}
+              {!! ($user_can_edit ? '<h3>Company Description <button class="modaal" data-modaal-content-source="#modal-description">&#9998;</button></h3>' : '') !!}
               @if (!empty($description))
                 {!! $description !!}
               @elseif ($user_can_edit)
                 <p>Add company description.</p>
               @endif
-            </div>
 
-            {{-- COMPANY WEBSITE LINK --}}
-            <div class="website-link">
-              @if (!empty($website))
-                <a class="button secondary large" href="<?php echo $website; ?>" target="_blank" rel="noopener">Visit Website <span class="cta-arrow"></span></a>
-              @endif
+              {{-- COMPANY WEBSITE LINK --}}
+              <div class="website-link">
+                @if (!empty($website))
+                  <a class="button secondary large" href="<?php echo $website; ?>" target="_blank" rel="noopener">Visit Website <span class="cta-arrow"></span></a>
+                @endif
+              </div>
             </div>
 
             {{-- PHYSICAL ADDRESS/LOCATION --}}
-            <div class="address {{ ($user_can_edit ? 'user-can-edit" data-target="modal-location' : '') }}">
-              <h3 class="label">Address</h3>
-
-              {!! ($user_can_edit ? $edit_button : '') !!}
+            <div class="address {!! ($user_can_edit ? 'user-can-edit' : '') !!}">
+              <h3 class="label">Address {!! ($user_can_edit ? '<button class="modaal" data-modaal-content-source="#modal-location">&#9998;</button>' : '') !!}</h3>
 
               <p>
                 @if ($within_facility == 'true')
@@ -159,9 +156,9 @@
             </div>
 
             @if (!empty($year_in_rtp) || ($employment_public == true && !empty($company_size)) || !empty($university[0]) || (!empty($locations) && $locations !== 'Located in RTP only'))
-              <div class="<?php echo ($user_can_edit ? 'user-can-edit" data-target="modal-details' : ''); ?>">
+              <div class="<?php echo ($user_can_edit ? 'user-can-edit' : ''); ?>">
                 <h3 class="label">Additional Details
-                  <?php echo ($user_can_edit ? $edit_button : ''); ?>
+                  <?php echo ($user_can_edit ? '<button class="modaal" data-modaal-content-source="#modal-details">&#9998;</button>' : ''); ?>
                 </h3>
 
                 <dl>
@@ -194,16 +191,16 @@
                 </dl>
               </div>
             @elseif ($user_can_edit)
-              <div class="user-can-edit" data-target="modal-details">
-                <h3 class="label">Additional Details<?php echo $edit_button; ?></h3>
+              <div class="user-can-edit">
+                <h3 class="label">Additional Details <button class="modaal" data-modaal-content-source="#modal-details">&#9998;</button></h3>
                 <p>Add company details.</p>
               </div>
             @endif
 
             @if (($phone['public'] == true && !empty($phone['number'])) || ($fax['public'] == true && !empty($fax['number'])) || !empty($twitter) || !empty($mailing_address) || !empty($contact_ppl))
-              <div class="<?php echo ($user_can_edit ? 'user-can-edit" data-target="modal-contact' : ''); ?>">
+              <div class="<?php echo ($user_can_edit ? 'user-can-edit' : ''); ?>">
                 <h3 class="label">Get In Touch
-                  <?php echo ($user_can_edit ? $edit_button : ''); ?>
+                  <?php echo ($user_can_edit ? '<button class="modaal" data-modaal-content-source="#modal-contact">&#9998;</button>' : ''); ?>
                 </h3>
 
                 <dl>
@@ -262,8 +259,8 @@
                   <?php } ?>
                 </dl>
               @elseif ($user_can_edit)
-                <div class="user-can-edit" data-target="modal-contact">
-                  <h3 class="label">Get In Touch <?php echo $edit_button; ?></h3>
+                <div class="user-can-edit">
+                  <h3 class="label">Get In Touch <button class="modaal" data-modaal-content-source="#modal-contact">&#9998;</button></h3>
                   <p>Add contact information</p>
                 </div>
               @endif
@@ -283,11 +280,11 @@
 
     @if ($user_can_edit)
       <div class="modal" id="modal-header">
-        <?php acf_form(['fields' => ['company_type', 'website', 'company_logo'], 'uploader' => 'basic', 'post_title' => true]); ?>
+        <?php acf_form(['fields' => ['company_type', 'location_photograph'], 'uploader' => 'basic', 'post_title' => true]); ?>
       </div>
 
       <div class="modal" id="modal-description">
-        <?php acf_form(['fields' => ['description']]); ?>
+        <?php acf_form(['fields' => ['description', 'website', 'company_logo'], 'uploader' => 'basic']); ?>
       </div>
 
       <div class="modal" id="modal-details">
@@ -299,7 +296,7 @@
       </div>
 
       <div class="modal" id="modal-location">
-        <?php acf_form(['fields' => ['within_facility', 'related_facility', 'suite_or_building', 'street_address', 'zip_code', 'coordinates', 'location_photograph'], 'uploader' => 'basic']); ?>
+        <?php acf_form(['fields' => ['within_facility', 'related_facility', 'suite_or_building', 'street_address', 'zip_code', 'coordinates']]); ?>
       </div>
 
       <div class="modal" id="modal-reporting-data">

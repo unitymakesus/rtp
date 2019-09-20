@@ -348,8 +348,8 @@ final class RTP_Dir {
 			wp_localize_script('rtp-dir-location-script', 'rtp_dir_vars', $localized_vars);
 
 			// Enqueue JS for edit directory
-			// wp_enqueue_script( 'rtp-dir-tingle', $this->plugin_url . 'scripts/vendor/tingle.min.js', array(), '1.0.0', true );
-			// wp_enqueue_script( 'rtp-dir-edit-directory', $this->plugin_url . 'scripts/edit-directory.js', array('rtp-dir-tingle'), '1.0.0', true );
+			wp_enqueue_script( 'modaal', $this->plugin_url . 'scripts/vendor/modaal.min.js', array('jquery'), '1.0.0', true );
+			wp_enqueue_script( 'rtp-dir-edit-directory', $this->plugin_url . 'scripts/edit-directory.js', array('jquery', 'modaal'), '1.0.0', true );
 		}
   }
 

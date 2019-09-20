@@ -76,9 +76,7 @@
   .website-link {
     a {
       color: #000;
-      display: block;
-      text-align: right;
-      width: 100%;
+      display: inline-block;
       height: 40px;
       font-size: 0.9em;
       font-weight: 400;
@@ -86,8 +84,8 @@
       text-transform: uppercase;
       transition: color 0.3s ease;
       vertical-align: middle;
-      border-top: 4px solid #000;
       padding-top: 10px;
+      padding-left: 0;
 
       .cta-arrow {
         display: inline-block;
