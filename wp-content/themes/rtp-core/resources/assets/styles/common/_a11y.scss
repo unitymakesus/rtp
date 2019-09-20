@@ -1,3 +1,7 @@
+:focus {
+  outline: $color-blue-unc auto 5px;
+}
+
 .screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: polygon(0 0, 0 0, 0 0, 0 0);

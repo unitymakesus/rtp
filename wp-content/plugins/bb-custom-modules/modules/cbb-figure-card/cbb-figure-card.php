@@ -14,6 +14,7 @@ class CbbFigureCardModule extends FLBuilderModule {
 
 		// Include custom CSS
 		$this->add_css('cbb-figure-card', CBB_MODULES_URL . 'dist/styles/cbb-figure-card.css');
+		$this->add_js('cbb-figure-card', CBB_MODULES_URL . 'dist/scripts/cbb-figure-card.js');
 	}
 
 	/**
@@ -126,13 +127,17 @@ FLBuilder::register_module( 'CbbFigureCardModule', [
 						'label' => __('Call To Action', 'cbb'),
 						'default' => 'none',
 						'options' => [
-							'none' => __('No', 'cbb'),
-							'block' => __('Yes', 'cbb'),
+							'none' => __('None', 'cbb'),
+							'block' => __('Link', 'cbb'),
+							'modaal' => __('Popup', 'cbb')
 						],
 						'toggle' => [
 							'none' => [],
 							'block' => [
 								'fields' => ['cta_text', 'cta_link']
+							],
+							'modaal' => [
+								'fields' => ['cta_text', 'modaal_content']
 							]
 						]
 					],
@@ -143,6 +148,12 @@ FLBuilder::register_module( 'CbbFigureCardModule', [
 					'cta_link' => [
 						'type' => 'link',
 						'label' => __('CTA Link', 'cbb'),
+					],
+					'modaal_content' => [
+						'type' => 'editor',
+						'media_buttons' => false,
+						'wpautop' => false,
+						'label' => __('Popup Content', 'cbb')
 					]
 				]
 			]

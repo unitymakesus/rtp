@@ -125,17 +125,189 @@ textarea.materialize-textarea {
   }
 }
 
-// @for $n from 1 through length($themes-list) {
-//   [data-color="#{nth($themes-list, $n)}"] {
-//     .input-field {
-//       label:not(.label-icon).active {
-//         color: nth($color-secondary-list, $n);
-//         transform: translateY(-22px) scale(0.8);
-//       }
-//     }
-//   }
-// }
+// Gravity Form Styles
+.uabb-gf-style.uabb-gf-style {
+  padding: 0;
+}
 
+.gform_wrapper.gform_wrapper {
+  .gfield {
+    padding-left: 0;
+
+    &.m6 {
+      @media #{$medium-and-up} {
+        float: left;
+        clear: none;
+        width: 50%;
+        padding-right: 10px !important;
+
+        input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"] {
+          width: 100%;
+        }
+
+        & + .m6 {
+          padding-left: 7px;
+          padding-right: 2px !important;
+        }
+      }
+    }
+  }
+
+  .gfield_label {
+    color: $color-slate-dark;
+    line-height: 1.2em !important;
+    font-size: 1.2rem;
+  }
+
+  .gfield_required {
+    color: $color-red-state;
+  }
+
+  div.ginput_container {
+    margin-top: 0 !important;
+  }
+
+  .field_sublabel_below {
+    .ginput_complex {
+      input {
+        margin-bottom: 0 !important;
+
+        + label {
+          color: $color-slate;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .gform_button.button {
+    @extend .btn;
+
+    background: $color-blue-unc !important;
+    border: $color-blue-unc !important;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 0;
+
+    &:hover, &:focus {
+      @extend .z-depth-2;
+    }
+
+    &:focus {
+      outline: $color-blue-unc auto 5px;
+    }
+
+    &:active {
+      background: $color-blue-duke !important;
+      border: $color-blue-duke !important;
+    }
+  }
+
+  input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
+    color: $color-slate;
+    font-weight: 400;
+  }
+
+  .gfield_radio, .gfield_checkbox {
+    input[type="radio"], input[type="checkbox"] {
+      + label {
+        color: $color-slate;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1rem;
+        transition: .28s ease;
+        user-select: none;
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 4px;
+          width: 16px;
+          height: 16px;
+          z-index: 0;
+          transition: .28s ease;
+          border-radius: 50%;
+          border: 2px solid $color-grey-dark;
+        }
+      }
+
+      &:focus {
+        + label {
+          font-weight: 400;
+
+          &::before {
+            @extend .z-depth-1;
+          }
+        }
+      }
+    }
+
+    input[type="radio"] {
+      &:not(:checked) {
+        + label {
+          &::after {
+            transform: scale(0);
+          }
+        }
+      }
+
+      &:checked {
+        + label {
+          &::before {
+            border: 2px solid $color-blue-unc;
+          }
+
+          &::after {
+            border: $color-blue-unc;
+            background-color: $color-blue-unc;
+            transform: scale(.5);
+          }
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      + label {
+        &::after {
+          display: none;
+        }
+
+        &::before {
+          width: 18px;
+          height: 18px;
+          border-radius: 1px;
+          margin: 3px 0 0 0;
+        }
+      }
+
+      &:checked {
+        + label {
+          &::before {
+            top: -4px;
+            left: -5px;
+            width: 12px;
+            height: 22px;
+            border-top: 2px solid transparent;
+            border-left: 2px solid transparent;
+            border-right-color: $color-blue-unc;
+            border-bottom-color: $color-blue-unc;
+            transform: rotate(40deg);
+            backface-visibility: hidden;
+            transform-origin: 100% 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Modern Events Calendar Form Styles
 .mec-fes-form {
   #mec-exceptional-days {
     display: none;

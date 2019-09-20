@@ -8,6 +8,7 @@
       "./styles/cbb-hero-banner.scss"
     ],
     "cbb-figure-card": [
+      "./scripts/cbb-figure-card.js",
       "./styles/cbb-figure-card.scss"
     ],
     "cbb-blog-events-feeds": [

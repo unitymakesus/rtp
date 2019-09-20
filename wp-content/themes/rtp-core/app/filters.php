@@ -229,3 +229,15 @@ if ( ! is_admin() ) { // Don't touch anything inside of the WordPress Dashboard,
     return $title;
   }, 10, 2 );
 }
+
+/**
+ * Exclude Beaver Builder editor pages from loading WP External Link plugin
+ */
+add_action( 'wpel_apply_settings', function () {
+
+   if ( strpos($_SERVER['REQUEST_URI'], '?fl_builder') !== false ) {
+     return false;
+   }
+
+   return true;
+}, 10 );
