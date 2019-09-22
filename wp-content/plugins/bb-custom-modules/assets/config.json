@@ -7,8 +7,11 @@
     "cbb-hero-banner": [
       "./styles/cbb-hero-banner.scss"
     ],
+    "cbb-cta": [
+      "./scripts/cbb-cta.js",
+      "./styles/cbb-cta.scss"
+    ],
     "cbb-figure-card": [
-      "./scripts/cbb-figure-card.js",
       "./styles/cbb-figure-card.scss"
     ],
     "cbb-blog-events-feeds": [

@@ -57,6 +57,9 @@ function load_custom_modules() {
     // Figure Card Module
     require_once 'modules/cbb-figure-card/cbb-figure-card.php';
 
+    // CTA Module
+    require_once 'modules/cbb-cta/cbb-cta.php';
+
     // Blog Feed Module
     require_once 'modules/cbb-blog-feed/cbb-blog-feed.php';
 

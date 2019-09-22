@@ -14,7 +14,7 @@ class CbbFigureCardModule extends FLBuilderModule {
 
 		// Include custom CSS
 		$this->add_css('cbb-figure-card', CBB_MODULES_URL . 'dist/styles/cbb-figure-card.css');
-		$this->add_js('cbb-figure-card', CBB_MODULES_URL . 'dist/scripts/cbb-figure-card.js');
+		$this->add_js('cbb-cta', CBB_MODULES_URL . 'dist/scripts/cbb-cta.js');
 	}
 
 	/**
