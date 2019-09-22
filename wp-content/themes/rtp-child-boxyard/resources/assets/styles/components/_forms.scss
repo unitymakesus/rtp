@@ -1,0 +1,51 @@
+.gform_wrapper.gform_wrapper {
+  .gform_button.button {
+    background: $color-boxyard !important;
+    border: $color-boxyard !important;
+
+    &:active {
+      background: $color-red-nccu !important;
+      border: $color-red-nccu !important;
+    }
+  }
+
+  .select-wrapper {
+    input.select-dropdown {
+      &:hover &:focus {
+        background: $color-red-nccu-light;
+      }
+    }
+
+    ul.dropdown-content li {
+      &.selected {
+        background: $color-red-nccu-light;
+      }
+    }
+
+    input[type="radio"] {
+      &:checked {
+        + label {
+          &::before {
+            border-color: $color-boxyard;
+          }
+
+          &::after {
+            border: $color-boxyard;
+            background-color: $color-boxyard;
+          }
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      &:checked {
+        + label {
+          &::before {
+            border-right-color: $color-boxyard;
+            border-bottom-color: $color-boxyard;
+          }
+        }
+      }
+    }
+  }
+}
