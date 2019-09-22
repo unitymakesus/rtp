@@ -33,11 +33,11 @@ if ($settings->structure == 'horizontal') {
 		</div>
 
 		<?php if ($settings->enable_cta == 'block') { ?>
-    	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>"><span><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
+    	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>"><span class="text"><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
 		<?php } ?>
 
     <?php if ($settings->enable_cta == 'modaal') { ?>
-      <div class="card-cta"><a class="modaal" href="#modal-<?php echo $id; ?>"><span><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
+      <div class="card-cta"><a class="modaal" href="#modal-<?php echo $id; ?>"><span class="text"><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
       <div id="modal-<?php echo $id; ?>" style="display:none;">
       	<?php echo $settings->modaal_content; ?>
       </div>

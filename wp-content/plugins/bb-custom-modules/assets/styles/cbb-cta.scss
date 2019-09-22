@@ -33,7 +33,9 @@
     }
 
     &:hover, &:focus, &:active {
-      text-decoration: underline !important;
+      .text {
+        text-decoration: underline !important;
+      }
 
       .arrow {
         transform: translate3d(10px, 0, 0);

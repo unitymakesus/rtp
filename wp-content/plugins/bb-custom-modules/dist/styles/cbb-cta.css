@@ -1077,15 +1077,15 @@
   transition: fill 0.3s ease;
 }
 
-/* line 35, stdin */
+/* line 36, stdin */
 
-.rtp-cta a:hover,
-.rtp-cta a:focus,
-.rtp-cta a:active {
+.rtp-cta a:hover .text,
+.rtp-cta a:focus .text,
+.rtp-cta a:active .text {
   text-decoration: underline !important;
 }
 
-/* line 38, stdin */
+/* line 40, stdin */
 
 .rtp-cta a:hover .arrow,
 .rtp-cta a:focus .arrow,
@@ -1094,13 +1094,13 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 45, stdin */
+/* line 47, stdin */
 
 .rtp-cta.align-right a {
   text-align: right;
 }
 
-/* line 51, stdin */
+/* line 53, stdin */
 
 .rtp-cta.align-center a {
   text-align: center;
