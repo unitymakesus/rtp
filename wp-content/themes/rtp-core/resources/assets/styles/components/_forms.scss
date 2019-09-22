@@ -132,23 +132,28 @@ textarea.materialize-textarea {
 
 .gform_wrapper.gform_wrapper {
   .gfield {
-    padding-left: 0;
+    &::before {
+      display: none;
+    }
 
-    &.m6 {
-      @media #{$medium-and-up} {
+    padding-left: 0;
+    padding-right: 16px !important;
+
+    @media #{$medium-and-up} {
+      input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"] {
+        width: 100%;
+      }
+
+      &.m6 {
         float: left;
         clear: none;
         width: 50%;
-        padding-right: 10px !important;
+      }
 
-        input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"] {
-          width: 100%;
-        }
-
-        & + .m6 {
-          padding-left: 7px;
-          padding-right: 2px !important;
-        }
+      &.m4 {
+        float: left;
+        clear: none;
+        width: calc(100% / 3);
       }
     }
 
@@ -158,6 +163,15 @@ textarea.materialize-textarea {
       padding-left: 16px !important;
       padding-right: 16px !important;
     }
+  }
+
+  .gsection_title {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    color: $color-slate;
+    -webkit-text-fill-color: $color-slate;
+    margin-top: 1.5em !important;
   }
 
   .gfield_label {
@@ -247,6 +261,11 @@ textarea.materialize-textarea {
 
     ul.dropdown-content li {
       text-transform: none;
+      padding-left: 0;
+
+      &::before {
+        display: none;
+      }
 
       span {
         padding: 16px;
@@ -264,6 +283,7 @@ textarea.materialize-textarea {
 
     .caret {
       fill: $color-grey-dark;
+      z-index: 1;
     }
 
     + label {
@@ -274,6 +294,10 @@ textarea.materialize-textarea {
   }
 
   .gfield_radio, .gfield_checkbox {
+    li::before {
+      display: none;
+    }
+
     input[type="radio"], input[type="checkbox"] {
       + label {
         color: $color-slate;
