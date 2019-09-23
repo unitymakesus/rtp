@@ -173,5 +173,7 @@ export default {
     $('.gfield select').formSelect();
 
     $('.mec-fes-form select').formSelect();
+
+    $('.acf-field select').formSelect();
   },
 };

@@ -13155,7 +13155,7 @@ textarea.materialize-textarea {
 
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:hover,
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:focus {
-  background: #BCCFE9;
+  background: rgba(0, 0, 0, 0.08);
 }
 
 /* line 265, ../rtp-core/resources/assets/styles/components/_forms.scss */
@@ -13558,7 +13558,7 @@ textarea.materialize-textarea {
 
 .mec-fes-form .select-wrapper input.select-dropdown:hover,
 .mec-fes-form .select-wrapper input.select-dropdown:focus {
-  background: #BCCFE9;
+  background: rgba(0, 0, 0, 0.08);
 }
 
 /* line 579, ../rtp-core/resources/assets/styles/components/_forms.scss */

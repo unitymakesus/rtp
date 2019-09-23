@@ -258,7 +258,7 @@ textarea.materialize-textarea {
       text-transform: none;
 
       &:hover, &:focus {
-        background: $color-blue-unc-light;
+        background: rgba(0, 0, 0, 0.08);
       }
     }
 
@@ -572,7 +572,7 @@ textarea.materialize-textarea {
       text-transform: none;
 
       &:hover, &:focus {
-        background: $color-blue-unc-light;
+        background: rgba(0, 0, 0, 0.08);
       }
     }
 

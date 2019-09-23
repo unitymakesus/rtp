@@ -356,7 +356,7 @@ $this->factory->params('footer', $javascript);
             <div class="mec-meta-box-fields" id="mec-event-links">
                 <h4><?php _e('Event Link', 'mec'); ?></h4>
                 <div class="mec-form-row">
-                    <label class="mec-col-2" for="mec_more_info_link"><?php echo $this->main->m('more_info_link', __('Link to More Info', 'mec')); ?></label>
+                    <label class="mec-col-2" for="mec_more_info_link"><?php echo $this->main->m('more_info_link', __('Link URL', 'mec')); ?></label>
                     <input class="mec-col-5" type="url" name="mec[more_info]" id="mec_more_info_link" value="<?php echo esc_attr($more_info); ?>" placeholder="<?php _e('https://', 'mec'); ?>" />
                     <label class="mec-col-2" for="mec_more_info_title"><?php _e('Link Text', 'mec'); ?></label>
                     <input class="mec-col-2" type="text" name="mec[more_info_title]" id="mec_more_info_title" value="<?php echo esc_attr($more_info_title); ?>" placeholder="<?php _e('RSVP', 'mec'); ?>" />

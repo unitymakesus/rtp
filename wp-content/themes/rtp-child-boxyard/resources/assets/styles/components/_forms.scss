@@ -16,12 +16,6 @@
       }
     }
 
-    ul.dropdown-content li {
-      &.selected {
-        background: $color-red-nccu-light;
-      }
-    }
-
     input[type="radio"] {
       &:checked {
         + label {

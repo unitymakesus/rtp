@@ -122,3 +122,125 @@
     @include select_dropdown;
   }
 }
+
+.acf-form {
+  .acf-image-uploader .image-wrap img {
+    background: $color-white;
+
+    @extend .z-depth-1;
+  }
+
+  .acf-switch {
+    height: 3rem;
+
+    span {
+      line-height: 3rem;
+      padding: 0 15px;
+    }
+
+    &.-on {
+      background-color: $color-blue-unc;
+      border-color: $color-blue-unc;
+
+      .acf-switch-slider {
+        border-color: $color-blue-unc;
+      }
+    }
+  }
+
+  .acf-field {
+    .acf-label label {
+      color: $color-slate-dark;
+      line-height: 1.2em !important;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    input[type="text"], input[type="password"], input[type="number"], input[type="search"], input[type="email"], input[type="url"], textarea {
+      font-size: inherit !important;
+      padding: 2px 10px;
+    }
+  }
+
+  .select2-container--default .select2-selection--single {
+    height: 3rem;
+    border-radius: 0;
+
+    .select2-selection__rendered {
+      line-height: 3rem;
+    }
+  }
+
+  .select2-container.-acf .select2-selection--multiple .select2-selection__choice {
+    padding: 5px;
+  }
+
+  .acf-basic-uploader input {
+    line-height: 2.5rem;
+    border-radius: 0;
+  }
+
+  .acf-url {
+    input[type="url"] {
+      padding-left: 25px;
+    }
+
+    i {
+      top: 14px;
+    }
+  }
+
+  .acf-form-submit {
+    padding: 15px 12px;
+  }
+
+  .acf-button, .acf-input .button {
+    @extend .btn;
+
+    width: auto;
+    background: $color-blue-unc !important;
+    border: $color-blue-unc !important;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 0;
+
+    &:hover, &:focus {
+      @extend .z-depth-2;
+
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: $color-blue-unc auto 5px;
+    }
+
+    &:active {
+      background: $color-blue-duke !important;
+      border: $color-blue-duke !important;
+    }
+  }
+
+  .acf-checkbox-list {
+    li {
+      padding: 10px 0;
+
+      label {
+        color: $color-slate-dark;
+        line-height: 1.2em;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+    }
+
+    input[type="checkbox"] {
+      opacity: 1;
+      position: relative;
+      pointer-events: auto;
+    }
+  }
+
+  .acf-input-prepend, .acf-input-append {
+    line-height: calc(3rem - 2px);
+    padding: 0 7px;
+  }
+}
