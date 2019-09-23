@@ -228,33 +228,38 @@ $this->factory->params('footer', $javascript);
                         </div>
                         <div class="mec-col-6 mec-time-picker">
                             <?php if(isset($this->settings['time_format']) and $this->settings['time_format'] == 24): if($start_time_ampm == 'PM' and $start_time_hour != 12) $start_time_hour += 12; if($start_time_ampm == 'AM' and $start_time_hour == 12) $start_time_hour += 12; ?>
-                            <select name="mec[date][start][hour]" id="mec_start_hour">
-                                <?php for($i=0; $i<=23; $i++): ?>
-                                <option <?php if($start_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            <span class="time-dv">:</span>
-                            <select name="mec[date][start][minutes]" id="mec_start_minutes">
-                                <?php for($i=0; $i<=11; $i++): ?>
-                                <option <?php if($start_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
-                                <?php endfor; ?>
-                            </select>
+                              <label for="mec_start_hour" class="screen-reader-text">Start Time: Hour</label>
+                              <select name="mec[date][start][hour]" id="mec_start_hour">
+                                  <?php for($i=0; $i<=23; $i++): ?>
+                                  <option <?php if($start_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                  <?php endfor; ?>
+                              </select>
+                              <span class="time-dv">:</span>
+                              <label for="mec_start_minutes" class="screen-reader-text">Start Time: Minutes</label>
+                              <select name="mec[date][start][minutes]" id="mec_start_minutes">
+                                  <?php for($i=0; $i<=11; $i++): ?>
+                                  <option <?php if($start_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
+                                  <?php endfor; ?>
+                              </select>
                             <?php else: ?>
-                            <select name="mec[date][start][hour]" id="mec_start_hour">
-                                <?php for($i=1; $i<=12; $i++): ?>
-                                <option <?php if($start_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            <span class="time-dv">:</span>
-                            <select name="mec[date][start][minutes]" id="mec_start_minutes">
-                                <?php for($i=0; $i<=11; $i++): ?>
-                                <option <?php if($start_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            <select name="mec[date][start][ampm]" id="mec_start_ampm">
-                                <option <?php if($start_time_ampm == 'AM') echo 'selected="selected"'; ?> value="AM"><?php _e('AM', 'mec'); ?></option>
-                                <option <?php if($start_time_ampm == 'PM') echo 'selected="selected"'; ?> value="PM"><?php _e('PM', 'mec'); ?></option>
-                            </select>
+                              <label for="mec_start_hour" class="screen-reader-text">Start Time: Hour</label>
+                              <select name="mec[date][start][hour]" id="mec_start_hour">
+                                  <?php for($i=1; $i<=12; $i++): ?>
+                                  <option <?php if($start_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                  <?php endfor; ?>
+                              </select>
+                              <span class="time-dv">:</span>
+                              <label for="mec_start_minutes" class="screen-reader-text">Start Time: Minutes</label>
+                              <select name="mec[date][start][minutes]" id="mec_start_minutes">
+                                  <?php for($i=0; $i<=11; $i++): ?>
+                                  <option <?php if($start_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
+                                  <?php endfor; ?>
+                              </select>
+                              <label for="mec_start_ampm" class="screen-reader-text">Start Time: AM or PM</label>
+                              <select name="mec[date][start][ampm]" id="mec_start_ampm">
+                                  <option <?php if($start_time_ampm == 'AM') echo 'selected="selected"'; ?> value="AM"><?php _e('AM', 'mec'); ?></option>
+                                  <option <?php if($start_time_ampm == 'PM') echo 'selected="selected"'; ?> value="PM"><?php _e('PM', 'mec'); ?></option>
+                              </select>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -268,33 +273,38 @@ $this->factory->params('footer', $javascript);
                         </div>
                         <div class="mec-col-6 mec-time-picker">
                             <?php if(isset($this->settings['time_format']) and $this->settings['time_format'] == 24): if($end_time_ampm == 'PM' and $end_time_hour != 12) $end_time_hour += 12; if($end_time_ampm == 'AM' and $end_time_hour == 12) $end_time_hour += 12; ?>
-                            <select name="mec[date][end][hour]" id="mec_end_hour">
-                                <?php for($i=0; $i<=23; $i++): ?>
-                                <option <?php if($end_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            <span class="time-dv">:</span>
-                            <select name="mec[date][end][minutes]" id="mec_end_minutes">
-                                <?php for($i=0; $i<=11; $i++): ?>
-                                <option <?php if($end_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
-                                <?php endfor; ?>
-                            </select>
+                              <label for="mec_end_hour" class="screen-reader-text">End Time: Hour</label>
+                              <select name="mec[date][end][hour]" id="mec_end_hour">
+                                  <?php for($i=0; $i<=23; $i++): ?>
+                                  <option <?php if($end_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                  <?php endfor; ?>
+                              </select>
+                              <span class="time-dv">:</span>
+                              <label for="mec_end_minutes" class="screen-reader-text">End Time: Minutes</label>
+                              <select name="mec[date][end][minutes]" id="mec_end_minutes">
+                                  <?php for($i=0; $i<=11; $i++): ?>
+                                  <option <?php if($end_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
+                                  <?php endfor; ?>
+                              </select>
                             <?php else: ?>
-                            <select name="mec[date][end][hour]" id="mec_end_hour">
-                                <?php for($i=1; $i<=12; $i++): ?>
-                                <option <?php if($end_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            <span class="time-dv">:</span>
-                            <select name="mec[date][end][minutes]" id="mec_end_minutes">
-                                <?php for($i=0; $i<=11; $i++): ?>
-                                <option <?php if($end_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
-                                <?php endfor; ?>
-                            </select>
-                            <select name="mec[date][end][ampm]" id="mec_end_ampm">
-                                <option <?php if($end_time_ampm == 'AM') echo 'selected="selected"'; ?> value="AM"><?php _e('AM', 'mec'); ?></option>
-                                <option <?php if($end_time_ampm == 'PM') echo 'selected="selected"'; ?> value="PM"><?php _e('PM', 'mec'); ?></option>
-                            </select>
+                              <label for="mec_end_hour" class="screen-reader-text">End Time: Hour</label>
+                              <select name="mec[date][end][hour]" id="mec_end_hour">
+                                  <?php for($i=1; $i<=12; $i++): ?>
+                                  <option <?php if($end_time_hour == $i) echo 'selected="selected"'; ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                  <?php endfor; ?>
+                              </select>
+                              <span class="time-dv">:</span>
+                              <label for="mec_end_minutes" class="screen-reader-text">End Time: Minutes</label>
+                              <select name="mec[date][end][minutes]" id="mec_end_minutes">
+                                  <?php for($i=0; $i<=11; $i++): ?>
+                                  <option <?php if($end_time_minutes == ($i*5)) echo 'selected="selected"'; ?> value="<?php echo ($i*5); ?>"><?php echo sprintf("%02d", ($i*5)); ?></option>
+                                  <?php endfor; ?>
+                              </select>
+                              <label for="mec_end_ampm" class="screen-reader-text">End Time: AM or PM</label>
+                              <select name="mec[date][end][ampm]" id="mec_end_ampm">
+                                  <option <?php if($end_time_ampm == 'AM') echo 'selected="selected"'; ?> value="AM"><?php _e('AM', 'mec'); ?></option>
+                                  <option <?php if($end_time_ampm == 'PM') echo 'selected="selected"'; ?> value="PM"><?php _e('PM', 'mec'); ?></option>
+                              </select>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -305,9 +315,9 @@ $this->factory->params('footer', $javascript);
 
             <?php /* Note feature is enabled */ if($this->main->is_note_visible(get_post_status($post_id))): $note = get_post_meta($post_id, 'mec_note', true); ?>
             <div class="mec-meta-box-fields" id="mec-event-note">
-                <h4><?php _e('Note to reviewer', 'mec'); ?></h4>
+                <h4 id="mec-event-note-label"><?php _e('Note to reviewer', 'mec'); ?></h4>
                 <div id="mec_meta_box_event_note">
-                    <textarea name="mec[note]"><?php echo $note; ?></textarea>
+                    <textarea name="mec[note]" aria-labelledby="mec-event-note-label"><?php echo $note; ?></textarea>
                 </div>
             </div>
             <?php endif; ?>
@@ -346,9 +356,10 @@ $this->factory->params('footer', $javascript);
             <div class="mec-meta-box-fields" id="mec-event-links">
                 <h4><?php _e('Event Link', 'mec'); ?></h4>
                 <div class="mec-form-row">
-                    <label class="mec-col-2" for="mec_more_info_link"><?php echo $this->main->m('more_info_link', __('More Info', 'mec')); ?></label>
-                    <input class="mec-col-5" type="text" name="mec[more_info]" id="mec_more_info_link" value="<?php echo esc_attr($more_info); ?>" placeholder="<?php _e('http://yoursite.com/your-event', 'mec'); ?>" />
-                    <input class="mec-col-2" type="text" name="mec[more_info_title]" id="mec_more_info_title" value="<?php echo esc_attr($more_info_title); ?>" placeholder="<?php _e('More Information', 'mec'); ?>" />
+                    <label class="mec-col-2" for="mec_more_info_link"><?php echo $this->main->m('more_info_link', __('Link to More Info', 'mec')); ?></label>
+                    <input class="mec-col-5" type="url" name="mec[more_info]" id="mec_more_info_link" value="<?php echo esc_attr($more_info); ?>" placeholder="<?php _e('https://', 'mec'); ?>" />
+                    <label class="mec-col-2" for="mec_more_info_title"><?php _e('Link Text', 'mec'); ?></label>
+                    <input class="mec-col-2" type="text" name="mec[more_info_title]" id="mec_more_info_title" value="<?php echo esc_attr($more_info_title); ?>" placeholder="<?php _e('RSVP', 'mec'); ?>" />
                     <input type="hidden" name="mec[more_info_target]" value="_blank">
                 </div>
             </div>
@@ -358,10 +369,10 @@ $this->factory->params('footer', $javascript);
             <?php if(!isset($this->settings['fes_section_cost']) or (isset($this->settings['fes_section_cost']) and $this->settings['fes_section_cost'])): ?>
             <?php $cost = get_post_meta($post_id, 'mec_cost', true); ?>
             <div class="mec-meta-box-fields" id="mec-event-cost">
-                <h4><?php echo $this->main->m('event_cost', __('Event Cost', 'mec')); ?></h4>
+                <h4 id="mec_cost_label"><?php echo $this->main->m('event_cost', __('Event Cost', 'mec')); ?></h4>
                 <div id="mec_meta_box_cost_form">
                     <div class="mec-form-row">
-                        <input type="text" class="mec-col-6" name="mec[cost]" id="mec_cost" value="<?php echo esc_attr($cost); ?>" placeholder="<?php _e('Cost', 'mec'); ?>" />
+                        <input type="text" class="mec-col-6" name="mec[cost]" id="mec_cost" aria-labelledby="mec_cost_label" value="<?php echo esc_attr($cost); ?>" placeholder="<?php _e('Cost', 'mec'); ?>" />
                     </div>
                 </div>
             </div>
@@ -377,10 +388,17 @@ $this->factory->params('footer', $javascript);
             <div class="mec-meta-box-fields" id="mec-featured-image">
                 <h4><?php _e('Event Image', 'mec'); ?></h4>
                 <div class="mec-form-row">
+                    <div class="file-field input-field">
+                      <div class="btn btn-small">
+                        <span>File</span>
+                        <input type="file" id="mec_featured_image_file" aria-label="Upload Image File" onchange="mec_fes_upload_featured_image();" />
+                      </div>
+                      <div class="file-path-wrapper">
+                        <input readonly type="text" id="mec_fes_thumbnail" name="mec[featured_image]" value="<?php echo (trim($featured_image) ? $featured_image : ''); ?>" />
+                      </div>
+                    </div>
                     <span id="mec_fes_thumbnail_img"><?php echo (trim($featured_image) ? '<img src="'.$featured_image.'" />' : ''); ?></span>
-                    <input type="hidden" id="mec_fes_thumbnail" name="mec[featured_image]" value="<?php echo (trim($featured_image) ? $featured_image : ''); ?>" />
-                    <input type="file" id="mec_featured_image_file" onchange="mec_fes_upload_featured_image();" />
-                    <span id="mec_fes_remove_image_button" class="<?php echo (trim($featured_image) ? '' : 'mec-util-hidden'); ?>"><?php _e('Remove Image', 'mec'); ?></span>
+                    <a id="mec_fes_remove_image_button" href="javascript:void(0)" class="<?php echo (trim($featured_image) ? '' : 'mec-util-hidden'); ?>"><?php _e('Remove Image', 'mec'); ?></a>
                 </div>
             </div>
             <?php endif; ?>

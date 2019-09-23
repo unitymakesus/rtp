@@ -3712,6 +3712,8 @@ Router.prototype.loadEvents = function loadEvents () {
     });
 
     $('.gfield select').formSelect();
+
+    $('.mec-fes-form select').formSelect();
   },
 });
 

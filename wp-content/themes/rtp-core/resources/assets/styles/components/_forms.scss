@@ -206,6 +206,7 @@ textarea.materialize-textarea {
 
       .caret {
         top: 10px;
+        pointer-events: none;
       }
     }
   }
@@ -428,6 +429,206 @@ textarea.materialize-textarea {
     &, & + .mec-form-row {
       display: none;
       speak: none;
+    }
+  }
+
+  .mec-dashicons {
+    display: none;
+    speak: none;
+  }
+
+  .mec-fes-form-cntt {
+    margin-top: 2rem;
+  }
+
+  label {
+    color: $color-slate-dark;
+    line-height: 1.2em !important;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"] {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 5px 16px !important;
+    box-sizing: border-box;
+    height: 3rem !important;
+  }
+
+  input[type="file"] {
+    line-height: 3rem;
+  }
+
+  .file-field {
+    .btn {
+      border-radius: 0;
+    }
+
+    .file-path-wrapper {
+      input[type="text"] {
+        margin-top: 0;
+        font-size: inherit !important;
+        text-align: right;
+        direction: rtl;
+      }
+    }
+  }
+
+  #mec_fes_thumbnail_img {
+    img {
+      @extend .z-depth-1;
+    }
+  }
+
+  #mec_fes_remove_image_button {
+    font-size: 0.9em;
+    text-align: right;
+    cursor: pointer;
+    display: block;
+
+    &.mec-util-hidden {
+      display: none;
+    }
+  }
+
+  select {
+    display: none;
+  }
+
+  textarea {
+    font-size: inherit !important;
+    font-family: inherit !important;
+    background: $color-white;
+    border: 1px solid $color-grey-light;
+    box-shadow: none;
+    padding: 16px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  button.mec-fes-sub-button {
+    @extend .btn;
+
+    width: auto;
+    background: $color-blue-unc !important;
+    border: $color-blue-unc !important;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 0;
+
+    &:hover, &:focus {
+      @extend .z-depth-2;
+    }
+
+    &:focus {
+      outline: $color-blue-unc auto 5px;
+    }
+
+    &:active {
+      background: $color-blue-duke !important;
+      border: $color-blue-duke !important;
+    }
+  }
+
+  .mec-meta-box-fields {
+    clear: both;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-top: 2rem;
+
+    h4 {
+      background: none;
+      border-bottom: 1px solid #CCC;
+      padding: 0 0 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      margin: 1.5em 0 20px;
+      letter-spacing: normal;
+    }
+  }
+
+  .mec-title {
+    clear: both;
+  }
+
+  .select-wrapper {
+    display: inline-block;
+
+    input.select-dropdown {
+      width: 100%;
+      height: 3rem;
+      background: $color-white;
+      border: 1px solid $color-grey-light;
+      text-align: left;
+      text-transform: none;
+
+      &:hover, &:focus {
+        background: $color-blue-unc-light;
+      }
+    }
+
+    ul.dropdown-content li {
+      text-transform: none;
+      padding-left: 0;
+
+      &::before {
+        display: none;
+      }
+
+      span {
+        padding: 16px;
+        min-height: 50px;
+      }
+
+      &.selected {
+        background: $color-blue-unc-light;
+
+        span {
+          color: $color-slate-dark;
+        }
+      }
+    }
+
+    .caret {
+      z-index: 1;
+      pointer-events: none;
+    }
+  }
+
+  .mec-time-picker {
+    .select-wrapper {
+      width: 5rem;
+    }
+  }
+
+  .mec-form-row {
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  .mec-fes-form-sdbr {
+    input:not([type]):not(.browser-default), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default) {
+      width: 100%;
+    }
+  }
+
+  @media #{$medium-and-up} {
+    .mec-col-4 {
+      float: left;
+      width: calc(100% / 3);
+    }
+
+    .mec-col-6 {
+      float: left;
+      width: 50%;
     }
   }
 }
