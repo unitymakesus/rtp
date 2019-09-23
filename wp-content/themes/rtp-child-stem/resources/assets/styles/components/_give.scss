@@ -1,18 +1,98 @@
-.give-form-wrap {
-  [type="radio"]:not(:checked), [type="radio"]:checked {
-    position: relative;
-    opacity: 1;
+form[id*=give-form] {
+  .give-currency-symbol, .give-donation-total-label {
+    height: 3rem !important;
+    line-height: 3rem !important;
+    background: $color-blue-unc-light !important;
   }
 
-  li {
-    margin-bottom: 10px !important;
+  input#give-amount, .give-final-total-amount {
+    height: 3rem !important;
+    padding: 5px 16px !important;
   }
-}
 
-form[id*=give-form] #give-donation-level-radio-list > li label {
-  display: inline;
-  color: $color-black;
-  font-size: 16px;
+  .give-donation-levels-wrap {
+    li {
+      &::before {
+        display: none;
+      }
+    }
+
+    label {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      height: auto;
+    }
+
+    input[type="radio"] {
+      + label {
+        color: $color-slate;
+        position: relative;
+        padding-left: 35px;
+        cursor: pointer;
+        display: inline-block;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1rem;
+        transition: 0.28s ease;
+        user-select: none;
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 10px;
+          margin: 4px;
+          width: 16px;
+          height: 16px;
+          z-index: 0;
+          transition: 0.28s ease;
+          border-radius: 50%;
+          border: 2px solid $color-grey-dark;
+        }
+      }
+
+      &:focus {
+        + label {
+          font-weight: 400;
+        }
+      }
+
+      &:not(:checked) {
+        label {
+          &::after {
+            transform: scale(0);
+          }
+        }
+
+        &:focus {
+          + label {
+            &::before {
+              @extend .z-depth-1;
+            }
+          }
+        }
+      }
+
+      &:checked {
+        + label {
+          &::before {
+            border: 2px solid $color-blue-unc;
+          }
+
+          &::after {
+            border: $color-blue-unc;
+            background-color: $color-blue-unc;
+            transform: scale(0.5);
+          }
+        }
+      }
+    }
+  }
+
+  .form-row label {
+    color: $color-slate;
+    font-weight: 400;
+  }
 }
 
 .give-btn {
@@ -22,14 +102,32 @@ form[id*=give-form] #give-donation-level-radio-list > li label {
   letter-spacing: 0;
   color: $color-white;
   padding: 10px 2rem;
+  line-height: 36px;
 
-  &:hover, &:active, &:focus {
+  &:hover, &:focus {
+    @extend .z-depth-2;
+
     background: $color-blue-unc;
     text-decoration: underline;
   }
+
+  &:focus {
+    outline: $color-blue-unc auto 5px;
+  }
+
+  &:active {
+    background: $color-blue-duke !important;
+    border: $color-blue-duke !important;
+  }
 }
 
-#give-receipt {
-  max-width: 1260px;
-  margin: 4em auto;
+body.donation-confirmation {
+  .entry-content {
+    padding: 50px 20px;
+  }
+
+  #give-receipt {
+    max-width: 1260px;
+    margin: 2em auto;
+  }
 }

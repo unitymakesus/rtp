@@ -13111,34 +13111,41 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 232, resources/assets/styles/components/_forms.scss */
+/* line 228, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .gform_button.button:hover,
+.gform_wrapper.gform_wrapper .gform_button.button:focus {
+  text-decoration: underline;
+}
+
+/* line 234, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gform_button.button:focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 236, resources/assets/styles/components/_forms.scss */
+/* line 238, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gform_button.button:active {
   background: #012169 !important;
   border: #012169 !important;
 }
 
-/* line 242, resources/assets/styles/components/_forms.scss */
+/* line 244, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper input:not([type=radio]):not([type="checkbox"]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
   color: #333F48;
   font-weight: 400;
 }
 
-/* line 247, resources/assets/styles/components/_forms.scss */
+/* line 249, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper {
   padding-top: 2px;
   display: inline-block;
 }
 
-/* line 251, resources/assets/styles/components/_forms.scss */
+/* line 253, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown {
   height: 3rem;
@@ -13148,53 +13155,53 @@ textarea.materialize-textarea {
   text-transform: none;
 }
 
-/* line 258, resources/assets/styles/components/_forms.scss */
+/* line 260, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:hover,
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:focus {
   background: #BCCFE9;
 }
 
-/* line 263, resources/assets/styles/components/_forms.scss */
+/* line 265, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li {
   text-transform: none;
   padding-left: 0;
 }
 
-/* line 267, resources/assets/styles/components/_forms.scss */
+/* line 269, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li::before {
   display: none;
 }
 
-/* line 271, resources/assets/styles/components/_forms.scss */
+/* line 273, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li span {
   padding: 16px;
   min-height: 50px;
 }
 
-/* line 276, resources/assets/styles/components/_forms.scss */
+/* line 278, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li.selected {
   background: #BCCFE9;
 }
 
-/* line 279, resources/assets/styles/components/_forms.scss */
+/* line 281, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li.selected span {
   color: #1F2A3A;
 }
 
-/* line 285, resources/assets/styles/components/_forms.scss */
+/* line 287, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper .caret {
   fill: #7A868C;
   z-index: 1;
 }
 
-/* line 290, resources/assets/styles/components/_forms.scss */
+/* line 292, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper + label {
   position: relative;
@@ -13202,14 +13209,14 @@ textarea.materialize-textarea {
   color: #333F48;
 }
 
-/* line 298, resources/assets/styles/components/_forms.scss */
+/* line 300, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio li::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox li::before {
   display: none;
 }
 
-/* line 303, resources/assets/styles/components/_forms.scss */
+/* line 305, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"] + label,
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"] + label,
@@ -13232,7 +13239,7 @@ textarea.materialize-textarea {
           user-select: none;
 }
 
-/* line 315, resources/assets/styles/components/_forms.scss */
+/* line 317, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"] + label::before,
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"] + label::after,
@@ -13257,7 +13264,7 @@ textarea.materialize-textarea {
   border: 2px solid #7A868C;
 }
 
-/* line 331, resources/assets/styles/components/_forms.scss */
+/* line 333, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:focus + label,
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"]:focus + label,
@@ -13266,7 +13273,7 @@ textarea.materialize-textarea {
   font-weight: 400;
 }
 
-/* line 348, resources/assets/styles/components/_forms.scss */
+/* line 350, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:not(:checked) + label::after,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="radio"]:not(:checked) + label::after {
@@ -13275,14 +13282,14 @@ textarea.materialize-textarea {
           transform: scale(0);
 }
 
-/* line 356, resources/assets/styles/components/_forms.scss */
+/* line 358, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:checked + label::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="radio"]:checked + label::before {
   border: 2px solid #4B9CD3;
 }
 
-/* line 360, resources/assets/styles/components/_forms.scss */
+/* line 362, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:checked + label::after,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="radio"]:checked + label::after {
@@ -13293,14 +13300,14 @@ textarea.materialize-textarea {
           transform: scale(0.5);
 }
 
-/* line 371, resources/assets/styles/components/_forms.scss */
+/* line 373, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"] + label::after,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"] + label::after {
   display: none;
 }
 
-/* line 375, resources/assets/styles/components/_forms.scss */
+/* line 377, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"] + label::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"] + label::before {
@@ -13310,7 +13317,7 @@ textarea.materialize-textarea {
   margin: 3px 0 0 0;
 }
 
-/* line 385, resources/assets/styles/components/_forms.scss */
+/* line 387, resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"]:checked + label::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"]:checked + label::before {
@@ -13332,14 +13339,14 @@ textarea.materialize-textarea {
           transform-origin: 100% 100%;
 }
 
-/* line 406, resources/assets/styles/components/_forms.scss */
+/* line 408, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec-exceptional-days {
   display: none;
   speak: none;
 }
 
-/* line 412, resources/assets/styles/components/_forms.scss */
+/* line 414, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec-location .mec-tooltip,
 .mec-fes-form #mec-organizer .mec-tooltip {
@@ -13347,21 +13354,21 @@ textarea.materialize-textarea {
   speak: none;
 }
 
-/* line 418, resources/assets/styles/components/_forms.scss */
+/* line 420, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_location_id option[value="0"] {
   display: none;
   speak: none;
 }
 
-/* line 423, resources/assets/styles/components/_forms.scss */
+/* line 425, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_location_new_container + .mec-form-row {
   display: none;
   speak: none;
 }
 
-/* line 429, resources/assets/styles/components/_forms.scss */
+/* line 431, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_organizer_new_container + h4,
 .mec-fes-form #mec_organizer_new_container + h4 + .mec-form-row {
@@ -13369,20 +13376,20 @@ textarea.materialize-textarea {
   speak: none;
 }
 
-/* line 435, resources/assets/styles/components/_forms.scss */
+/* line 437, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-dashicons {
   display: none;
   speak: none;
 }
 
-/* line 440, resources/assets/styles/components/_forms.scss */
+/* line 442, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-fes-form-cntt {
   margin-top: 2rem;
 }
 
-/* line 444, resources/assets/styles/components/_forms.scss */
+/* line 446, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form label {
   color: #1F2A3A;
@@ -13391,7 +13398,7 @@ textarea.materialize-textarea {
   font-weight: 400;
 }
 
-/* line 451, resources/assets/styles/components/_forms.scss */
+/* line 453, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form input[type="text"],
 .mec-fes-form input[type="textarea"],
@@ -13408,13 +13415,13 @@ textarea.materialize-textarea {
   height: 3rem !important;
 }
 
-/* line 461, resources/assets/styles/components/_forms.scss */
+/* line 463, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form input[type="file"] {
   line-height: 3rem;
 }
 
-/* line 466, resources/assets/styles/components/_forms.scss */
+/* line 468, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .file-field .btn,
 .mec-fes-form .file-field .btn-large,
@@ -13429,7 +13436,7 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 471, resources/assets/styles/components/_forms.scss */
+/* line 473, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .file-field .file-path-wrapper input[type="text"] {
   margin-top: 0;
@@ -13438,7 +13445,7 @@ textarea.materialize-textarea {
   direction: rtl;
 }
 
-/* line 486, resources/assets/styles/components/_forms.scss */
+/* line 488, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_fes_remove_image_button {
   font-size: 0.9em;
@@ -13447,19 +13454,19 @@ textarea.materialize-textarea {
   display: block;
 }
 
-/* line 492, resources/assets/styles/components/_forms.scss */
+/* line 494, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_fes_remove_image_button.mec-util-hidden {
   display: none;
 }
 
-/* line 497, resources/assets/styles/components/_forms.scss */
+/* line 499, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form select {
   display: none;
 }
 
-/* line 501, resources/assets/styles/components/_forms.scss */
+/* line 503, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form textarea {
   font-size: inherit !important;
@@ -13473,7 +13480,7 @@ textarea.materialize-textarea {
   margin-bottom: 15px;
 }
 
-/* line 512, resources/assets/styles/components/_forms.scss */
+/* line 514, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button {
   width: auto;
@@ -13484,20 +13491,27 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 526, resources/assets/styles/components/_forms.scss */
+/* line 524, resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form button.mec-fes-sub-button:hover,
+.mec-fes-form button.mec-fes-sub-button:focus {
+  text-decoration: underline;
+}
+
+/* line 530, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 530, resources/assets/styles/components/_forms.scss */
+/* line 534, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:active {
   background: #012169 !important;
   border: #012169 !important;
 }
 
-/* line 536, resources/assets/styles/components/_forms.scss */
+/* line 540, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-meta-box-fields {
   clear: both;
@@ -13508,7 +13522,7 @@ textarea.materialize-textarea {
   margin-top: 2rem;
 }
 
-/* line 543, resources/assets/styles/components/_forms.scss */
+/* line 547, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-meta-box-fields h4 {
   background: none;
@@ -13521,19 +13535,19 @@ textarea.materialize-textarea {
   letter-spacing: normal;
 }
 
-/* line 555, resources/assets/styles/components/_forms.scss */
+/* line 559, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-title {
   clear: both;
 }
 
-/* line 559, resources/assets/styles/components/_forms.scss */
+/* line 563, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper {
   display: inline-block;
 }
 
-/* line 562, resources/assets/styles/components/_forms.scss */
+/* line 566, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper input.select-dropdown {
   width: 100%;
@@ -13544,59 +13558,59 @@ textarea.materialize-textarea {
   text-transform: none;
 }
 
-/* line 570, resources/assets/styles/components/_forms.scss */
+/* line 574, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper input.select-dropdown:hover,
 .mec-fes-form .select-wrapper input.select-dropdown:focus {
   background: #BCCFE9;
 }
 
-/* line 575, resources/assets/styles/components/_forms.scss */
+/* line 579, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li {
   text-transform: none;
   padding-left: 0;
 }
 
-/* line 579, resources/assets/styles/components/_forms.scss */
+/* line 583, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li::before {
   display: none;
 }
 
-/* line 583, resources/assets/styles/components/_forms.scss */
+/* line 587, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li span {
   padding: 16px;
   min-height: 50px;
 }
 
-/* line 588, resources/assets/styles/components/_forms.scss */
+/* line 592, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li.selected {
   background: #BCCFE9;
 }
 
-/* line 591, resources/assets/styles/components/_forms.scss */
+/* line 595, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li.selected span {
   color: #1F2A3A;
 }
 
-/* line 597, resources/assets/styles/components/_forms.scss */
+/* line 601, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper .caret {
   z-index: 1;
   pointer-events: none;
 }
 
-/* line 604, resources/assets/styles/components/_forms.scss */
+/* line 608, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-time-picker .select-wrapper {
   width: 5rem;
 }
 
-/* line 610, resources/assets/styles/components/_forms.scss */
+/* line 614, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-form-row::after {
   content: "";
@@ -13604,7 +13618,7 @@ textarea.materialize-textarea {
   clear: both;
 }
 
-/* line 618, resources/assets/styles/components/_forms.scss */
+/* line 622, resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-fes-form-sdbr input:not([type]):not(.browser-default),
 .mec-fes-form .mec-fes-form-sdbr input[type=text]:not(.browser-default),
@@ -13622,14 +13636,14 @@ textarea.materialize-textarea {
 }
 
 @media only screen and (min-width: 769px) {
-  /* line 624, resources/assets/styles/components/_forms.scss */
+  /* line 628, resources/assets/styles/components/_forms.scss */
 
   .mec-fes-form .mec-col-4 {
     float: left;
     width: calc(100% / 3);
   }
 
-  /* line 629, resources/assets/styles/components/_forms.scss */
+  /* line 633, resources/assets/styles/components/_forms.scss */
 
   .mec-fes-form .mec-col-6 {
     float: left;
@@ -13637,14 +13651,14 @@ textarea.materialize-textarea {
   }
 }
 
-/* line 638, resources/assets/styles/components/_forms.scss */
+/* line 642, resources/assets/styles/components/_forms.scss */
 
 footer #mc_embed_signup {
   background: transparent;
   padding: 0;
 }
 
-/* line 642, resources/assets/styles/components/_forms.scss */
+/* line 646, resources/assets/styles/components/_forms.scss */
 
 footer #mc_embed_signup #mc_embed_signup_scroll {
   display: -webkit-box;
@@ -13655,14 +13669,14 @@ footer #mc_embed_signup #mc_embed_signup_scroll {
           align-items: center;
 }
 
-/* line 647, resources/assets/styles/components/_forms.scss */
+/* line 651, resources/assets/styles/components/_forms.scss */
 
 footer #mc_embed_signup input.email {
   width: auto;
   border-radius: 0;
 }
 
-/* line 652, resources/assets/styles/components/_forms.scss */
+/* line 656, resources/assets/styles/components/_forms.scss */
 
 footer #mc_embed_signup .button {
   border-radius: 0;

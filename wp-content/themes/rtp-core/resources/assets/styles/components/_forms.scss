@@ -227,6 +227,8 @@ textarea.materialize-textarea {
 
     &:hover, &:focus {
       @extend .z-depth-2;
+
+      text-decoration: underline;
     }
 
     &:focus {
@@ -521,6 +523,8 @@ textarea.materialize-textarea {
 
     &:hover, &:focus {
       @extend .z-depth-2;
+
+      text-decoration: underline;
     }
 
     &:focus {
