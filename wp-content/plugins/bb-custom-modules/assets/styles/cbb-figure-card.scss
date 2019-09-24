@@ -244,8 +244,10 @@
 
     img {
       width: 66vw;
+      height: 500px;
       left: 50%;
       margin-left: -50vw;
+      object-fit: cover;
       position: relative;
       z-index: 1;
     }

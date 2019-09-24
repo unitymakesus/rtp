@@ -1,6 +1,6 @@
 h1 {
   font-weight: 300;
-  font-size: 60px;
+  font-size: 3rem;
 }
 
 h2 {
@@ -11,6 +11,10 @@ h2 {
   font-size: 42px;
   display: inline-block;
   font-weight: 600;
+
+  .rtp-history & {
+    -webkit-text-fill-color: initial;
+  }
 }
 
 h3 {

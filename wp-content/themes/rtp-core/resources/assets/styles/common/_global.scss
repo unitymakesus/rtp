@@ -73,7 +73,6 @@ body {
 
   .flex-item {
     padding: 10px;
-    // display: flex;
     position: relative;
   }
 
@@ -187,8 +186,4 @@ img {
 .border-top {
   border-top: 1px solid $color-grey-light;
   padding-top: 1em;
-}
-
-.page-footer {
-  padding-top: 0;
 }

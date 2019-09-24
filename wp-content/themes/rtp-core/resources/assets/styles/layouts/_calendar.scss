@@ -19,6 +19,13 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     overflow: visible;
     box-shadow: none;
 
+    .col-md-4 {
+      width: 33% !important;
+      position: relative !important;
+      top: auto !important;
+      right: auto !important;
+    }
+
     .mec-totalcal-view span, input, select {
       font-family: 'Poppins', sans-serif;
     }

@@ -1423,13 +1423,16 @@
 
 .figure-card.figure-card-horizontal img {
   width: 66vw;
+  height: 500px;
   left: 50%;
   margin-left: -50vw;
+  -o-object-fit: cover;
+     object-fit: cover;
   position: relative;
   z-index: 1;
 }
 
-/* line 253, stdin */
+/* line 255, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -1441,7 +1444,7 @@
   z-index: 2;
 }
 
-/* line 263, stdin */
+/* line 265, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right img {
   left: auto;
@@ -1450,7 +1453,7 @@
   margin-right: -50vw;
 }
 
-/* line 270, stdin */
+/* line 272, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card {
   left: 30px;

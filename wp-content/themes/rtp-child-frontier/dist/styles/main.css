@@ -4991,8 +4991,7 @@ input[type=range] + .thumb {
 /* line 1, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
 .container,
-.container-wide,
-.sidebar-primary .content {
+.container-wide {
   margin: 0 auto;
   max-width: 1280px;
   width: 90%;
@@ -5002,8 +5001,7 @@ input[type=range] + .thumb {
   /* line 7, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
   .container,
-  .container-wide,
-  .sidebar-primary .content {
+  .container-wide {
     width: 85%;
   }
 }
@@ -5012,21 +5010,14 @@ input[type=range] + .thumb {
   /* line 12, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
   .container,
-  .container-wide,
-  .sidebar-primary .content {
+  .container-wide {
     width: 70%;
   }
 }
 
 /* line 16, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.col .row,
-.sidebar-primary .wrap .main .row,
-.sidebar-primary .wrap .sidebar .row,
-.col .sidebar-primary .wrap,
-.sidebar-primary .col .wrap,
-.sidebar-primary .wrap .main .wrap,
-.sidebar-primary .wrap .sidebar .wrap {
+.col .row {
   margin-left: -10px;
   margin-right: -10px;
 }
@@ -5058,8 +5049,7 @@ input[type=range] + .thumb {
 
 /* line 56, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row,
-.sidebar-primary .wrap {
+.row {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
@@ -5067,8 +5057,7 @@ input[type=range] + .thumb {
 
 /* line 62, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row:after,
-.sidebar-primary .wrap:after {
+.row:after {
   content: "";
   display: table;
   clear: both;
@@ -5076,10 +5065,7 @@ input[type=range] + .thumb {
 
 /* line 68, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col,
-.sidebar-primary .wrap .col,
-.sidebar-primary .wrap .main,
-.sidebar-primary .wrap .sidebar {
+.row .col {
   float: left;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -5090,22 +5076,13 @@ input[type=range] + .thumb {
 /* line 74, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
 .row .col[class*="push-"],
-.sidebar-primary .wrap .col[class*="push-"],
-.sidebar-primary .wrap .main[class*="push-"],
-.sidebar-primary .wrap .sidebar[class*="push-"],
-.row .col[class*="pull-"],
-.sidebar-primary .wrap .col[class*="pull-"],
-.sidebar-primary .wrap .main[class*="pull-"],
-.sidebar-primary .wrap .sidebar[class*="pull-"] {
+.row .col[class*="pull-"] {
   position: relative;
 }
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s1,
-.sidebar-primary .wrap .col.s1,
-.sidebar-primary .wrap .s1.main,
-.sidebar-primary .wrap .s1.sidebar {
+.row .col.s1 {
   width: 8.33333%;
   margin-left: auto;
   left: auto;
@@ -5114,10 +5091,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s2,
-.sidebar-primary .wrap .col.s2,
-.sidebar-primary .wrap .s2.main,
-.sidebar-primary .wrap .s2.sidebar {
+.row .col.s2 {
   width: 16.66667%;
   margin-left: auto;
   left: auto;
@@ -5126,10 +5100,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s3,
-.sidebar-primary .wrap .col.s3,
-.sidebar-primary .wrap .s3.main,
-.sidebar-primary .wrap .s3.sidebar {
+.row .col.s3 {
   width: 25%;
   margin-left: auto;
   left: auto;
@@ -5138,10 +5109,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s4,
-.sidebar-primary .wrap .col.s4,
-.sidebar-primary .wrap .s4.main,
-.sidebar-primary .wrap .s4.sidebar {
+.row .col.s4 {
   width: 33.33333%;
   margin-left: auto;
   left: auto;
@@ -5150,10 +5118,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s5,
-.sidebar-primary .wrap .col.s5,
-.sidebar-primary .wrap .s5.main,
-.sidebar-primary .wrap .s5.sidebar {
+.row .col.s5 {
   width: 41.66667%;
   margin-left: auto;
   left: auto;
@@ -5162,10 +5127,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s6,
-.sidebar-primary .wrap .col.s6,
-.sidebar-primary .wrap .s6.main,
-.sidebar-primary .wrap .s6.sidebar {
+.row .col.s6 {
   width: 50%;
   margin-left: auto;
   left: auto;
@@ -5174,10 +5136,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s7,
-.sidebar-primary .wrap .col.s7,
-.sidebar-primary .wrap .s7.main,
-.sidebar-primary .wrap .s7.sidebar {
+.row .col.s7 {
   width: 58.33333%;
   margin-left: auto;
   left: auto;
@@ -5186,10 +5145,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s8,
-.sidebar-primary .wrap .col.s8,
-.sidebar-primary .wrap .s8.main,
-.sidebar-primary .wrap .s8.sidebar {
+.row .col.s8 {
   width: 66.66667%;
   margin-left: auto;
   left: auto;
@@ -5198,10 +5154,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s9,
-.sidebar-primary .wrap .col.s9,
-.sidebar-primary .wrap .s9.main,
-.sidebar-primary .wrap .s9.sidebar {
+.row .col.s9 {
   width: 75%;
   margin-left: auto;
   left: auto;
@@ -5210,10 +5163,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s10,
-.sidebar-primary .wrap .col.s10,
-.sidebar-primary .wrap .s10.main,
-.sidebar-primary .wrap .s10.sidebar {
+.row .col.s10 {
   width: 83.33333%;
   margin-left: auto;
   left: auto;
@@ -5222,10 +5172,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s11,
-.sidebar-primary .wrap .col.s11,
-.sidebar-primary .wrap .s11.main,
-.sidebar-primary .wrap .s11.sidebar {
+.row .col.s11 {
   width: 91.66667%;
   margin-left: auto;
   left: auto;
@@ -5234,10 +5181,7 @@ input[type=range] + .thumb {
 
 /* line 82, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.s12,
-.sidebar-primary .wrap .col.s12,
-.sidebar-primary .wrap .main,
-.sidebar-primary .wrap .sidebar {
+.row .col.s12 {
   width: 100%;
   margin-left: auto;
   left: auto;
@@ -5246,335 +5190,224 @@ input[type=range] + .thumb {
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s1,
-.sidebar-primary .wrap .col.offset-s1,
-.sidebar-primary .wrap .offset-s1.main,
-.sidebar-primary .wrap .offset-s1.sidebar {
+.row .col.offset-s1 {
   margin-left: 8.33333%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s1,
-.sidebar-primary .wrap .col.pull-s1,
-.sidebar-primary .wrap .pull-s1.main,
-.sidebar-primary .wrap .pull-s1.sidebar {
+.row .col.pull-s1 {
   right: 8.33333%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s1,
-.sidebar-primary .wrap .col.push-s1,
-.sidebar-primary .wrap .push-s1.main,
-.sidebar-primary .wrap .push-s1.sidebar {
+.row .col.push-s1 {
   left: 8.33333%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s2,
-.sidebar-primary .wrap .col.offset-s2,
-.sidebar-primary .wrap .offset-s2.main,
-.sidebar-primary .wrap .offset-s2.sidebar {
+.row .col.offset-s2 {
   margin-left: 16.66667%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s2,
-.sidebar-primary .wrap .col.pull-s2,
-.sidebar-primary .wrap .pull-s2.main,
-.sidebar-primary .wrap .pull-s2.sidebar {
+.row .col.pull-s2 {
   right: 16.66667%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s2,
-.sidebar-primary .wrap .col.push-s2,
-.sidebar-primary .wrap .push-s2.main,
-.sidebar-primary .wrap .push-s2.sidebar {
+.row .col.push-s2 {
   left: 16.66667%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s3,
-.sidebar-primary .wrap .col.offset-s3,
-.sidebar-primary .wrap .offset-s3.main,
-.sidebar-primary .wrap .offset-s3.sidebar {
+.row .col.offset-s3 {
   margin-left: 25%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s3,
-.sidebar-primary .wrap .col.pull-s3,
-.sidebar-primary .wrap .pull-s3.main,
-.sidebar-primary .wrap .pull-s3.sidebar {
+.row .col.pull-s3 {
   right: 25%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s3,
-.sidebar-primary .wrap .col.push-s3,
-.sidebar-primary .wrap .push-s3.main,
-.sidebar-primary .wrap .push-s3.sidebar {
+.row .col.push-s3 {
   left: 25%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s4,
-.sidebar-primary .wrap .col.offset-s4,
-.sidebar-primary .wrap .offset-s4.main,
-.sidebar-primary .wrap .offset-s4.sidebar {
+.row .col.offset-s4 {
   margin-left: 33.33333%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s4,
-.sidebar-primary .wrap .col.pull-s4,
-.sidebar-primary .wrap .pull-s4.main,
-.sidebar-primary .wrap .pull-s4.sidebar {
+.row .col.pull-s4 {
   right: 33.33333%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s4,
-.sidebar-primary .wrap .col.push-s4,
-.sidebar-primary .wrap .push-s4.main,
-.sidebar-primary .wrap .push-s4.sidebar {
+.row .col.push-s4 {
   left: 33.33333%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s5,
-.sidebar-primary .wrap .col.offset-s5,
-.sidebar-primary .wrap .offset-s5.main,
-.sidebar-primary .wrap .offset-s5.sidebar {
+.row .col.offset-s5 {
   margin-left: 41.66667%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s5,
-.sidebar-primary .wrap .col.pull-s5,
-.sidebar-primary .wrap .pull-s5.main,
-.sidebar-primary .wrap .pull-s5.sidebar {
+.row .col.pull-s5 {
   right: 41.66667%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s5,
-.sidebar-primary .wrap .col.push-s5,
-.sidebar-primary .wrap .push-s5.main,
-.sidebar-primary .wrap .push-s5.sidebar {
+.row .col.push-s5 {
   left: 41.66667%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s6,
-.sidebar-primary .wrap .col.offset-s6,
-.sidebar-primary .wrap .offset-s6.main,
-.sidebar-primary .wrap .offset-s6.sidebar {
+.row .col.offset-s6 {
   margin-left: 50%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s6,
-.sidebar-primary .wrap .col.pull-s6,
-.sidebar-primary .wrap .pull-s6.main,
-.sidebar-primary .wrap .pull-s6.sidebar {
+.row .col.pull-s6 {
   right: 50%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s6,
-.sidebar-primary .wrap .col.push-s6,
-.sidebar-primary .wrap .push-s6.main,
-.sidebar-primary .wrap .push-s6.sidebar {
+.row .col.push-s6 {
   left: 50%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s7,
-.sidebar-primary .wrap .col.offset-s7,
-.sidebar-primary .wrap .offset-s7.main,
-.sidebar-primary .wrap .offset-s7.sidebar {
+.row .col.offset-s7 {
   margin-left: 58.33333%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s7,
-.sidebar-primary .wrap .col.pull-s7,
-.sidebar-primary .wrap .pull-s7.main,
-.sidebar-primary .wrap .pull-s7.sidebar {
+.row .col.pull-s7 {
   right: 58.33333%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s7,
-.sidebar-primary .wrap .col.push-s7,
-.sidebar-primary .wrap .push-s7.main,
-.sidebar-primary .wrap .push-s7.sidebar {
+.row .col.push-s7 {
   left: 58.33333%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s8,
-.sidebar-primary .wrap .col.offset-s8,
-.sidebar-primary .wrap .offset-s8.main,
-.sidebar-primary .wrap .offset-s8.sidebar {
+.row .col.offset-s8 {
   margin-left: 66.66667%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s8,
-.sidebar-primary .wrap .col.pull-s8,
-.sidebar-primary .wrap .pull-s8.main,
-.sidebar-primary .wrap .pull-s8.sidebar {
+.row .col.pull-s8 {
   right: 66.66667%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s8,
-.sidebar-primary .wrap .col.push-s8,
-.sidebar-primary .wrap .push-s8.main,
-.sidebar-primary .wrap .push-s8.sidebar {
+.row .col.push-s8 {
   left: 66.66667%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s9,
-.sidebar-primary .wrap .col.offset-s9,
-.sidebar-primary .wrap .offset-s9.main,
-.sidebar-primary .wrap .offset-s9.sidebar {
+.row .col.offset-s9 {
   margin-left: 75%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s9,
-.sidebar-primary .wrap .col.pull-s9,
-.sidebar-primary .wrap .pull-s9.main,
-.sidebar-primary .wrap .pull-s9.sidebar {
+.row .col.pull-s9 {
   right: 75%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s9,
-.sidebar-primary .wrap .col.push-s9,
-.sidebar-primary .wrap .push-s9.main,
-.sidebar-primary .wrap .push-s9.sidebar {
+.row .col.push-s9 {
   left: 75%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s10,
-.sidebar-primary .wrap .col.offset-s10,
-.sidebar-primary .wrap .offset-s10.main,
-.sidebar-primary .wrap .offset-s10.sidebar {
+.row .col.offset-s10 {
   margin-left: 83.33333%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s10,
-.sidebar-primary .wrap .col.pull-s10,
-.sidebar-primary .wrap .pull-s10.main,
-.sidebar-primary .wrap .pull-s10.sidebar {
+.row .col.pull-s10 {
   right: 83.33333%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s10,
-.sidebar-primary .wrap .col.push-s10,
-.sidebar-primary .wrap .push-s10.main,
-.sidebar-primary .wrap .push-s10.sidebar {
+.row .col.push-s10 {
   left: 83.33333%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s11,
-.sidebar-primary .wrap .col.offset-s11,
-.sidebar-primary .wrap .offset-s11.main,
-.sidebar-primary .wrap .offset-s11.sidebar {
+.row .col.offset-s11 {
   margin-left: 91.66667%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s11,
-.sidebar-primary .wrap .col.pull-s11,
-.sidebar-primary .wrap .pull-s11.main,
-.sidebar-primary .wrap .pull-s11.sidebar {
+.row .col.pull-s11 {
   right: 91.66667%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s11,
-.sidebar-primary .wrap .col.push-s11,
-.sidebar-primary .wrap .push-s11.main,
-.sidebar-primary .wrap .push-s11.sidebar {
+.row .col.push-s11 {
   left: 91.66667%;
 }
 
 /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.offset-s12,
-.sidebar-primary .wrap .col.offset-s12,
-.sidebar-primary .wrap .offset-s12.main,
-.sidebar-primary .wrap .offset-s12.sidebar {
+.row .col.offset-s12 {
   margin-left: 100%;
 }
 
 /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.pull-s12,
-.sidebar-primary .wrap .col.pull-s12,
-.sidebar-primary .wrap .pull-s12.main,
-.sidebar-primary .wrap .pull-s12.sidebar {
+.row .col.pull-s12 {
   right: 100%;
 }
 
 /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-.row .col.push-s12,
-.sidebar-primary .wrap .col.push-s12,
-.sidebar-primary .wrap .push-s12.main,
-.sidebar-primary .wrap .push-s12.sidebar {
+.row .col.push-s12 {
   left: 100%;
 }
 
 @media only screen and (min-width: 769px) {
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m1,
-  .sidebar-primary .wrap .col.m1,
-  .sidebar-primary .wrap .m1.main,
-  .sidebar-primary .wrap .m1.sidebar {
+  .row .col.m1 {
     width: 8.33333%;
     margin-left: auto;
     left: auto;
@@ -5583,10 +5416,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m2,
-  .sidebar-primary .wrap .col.m2,
-  .sidebar-primary .wrap .m2.main,
-  .sidebar-primary .wrap .m2.sidebar {
+  .row .col.m2 {
     width: 16.66667%;
     margin-left: auto;
     left: auto;
@@ -5595,10 +5425,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m3,
-  .sidebar-primary .wrap .col.m3,
-  .sidebar-primary .wrap .m3.main,
-  .sidebar-primary .wrap .m3.sidebar {
+  .row .col.m3 {
     width: 25%;
     margin-left: auto;
     left: auto;
@@ -5607,10 +5434,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m4,
-  .sidebar-primary .wrap .col.m4,
-  .sidebar-primary .wrap .m4.main,
-  .sidebar-primary .wrap .sidebar {
+  .row .col.m4 {
     width: 33.33333%;
     margin-left: auto;
     left: auto;
@@ -5619,10 +5443,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m5,
-  .sidebar-primary .wrap .col.m5,
-  .sidebar-primary .wrap .m5.main,
-  .sidebar-primary .wrap .m5.sidebar {
+  .row .col.m5 {
     width: 41.66667%;
     margin-left: auto;
     left: auto;
@@ -5631,10 +5452,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m6,
-  .sidebar-primary .wrap .col.m6,
-  .sidebar-primary .wrap .m6.main,
-  .sidebar-primary .wrap .m6.sidebar {
+  .row .col.m6 {
     width: 50%;
     margin-left: auto;
     left: auto;
@@ -5643,10 +5461,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m7,
-  .sidebar-primary .wrap .col.m7,
-  .sidebar-primary .wrap .m7.main,
-  .sidebar-primary .wrap .m7.sidebar {
+  .row .col.m7 {
     width: 58.33333%;
     margin-left: auto;
     left: auto;
@@ -5655,10 +5470,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m8,
-  .sidebar-primary .wrap .col.m8,
-  .sidebar-primary .wrap .main,
-  .sidebar-primary .wrap .m8.sidebar {
+  .row .col.m8 {
     width: 66.66667%;
     margin-left: auto;
     left: auto;
@@ -5667,10 +5479,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m9,
-  .sidebar-primary .wrap .col.m9,
-  .sidebar-primary .wrap .m9.main,
-  .sidebar-primary .wrap .m9.sidebar {
+  .row .col.m9 {
     width: 75%;
     margin-left: auto;
     left: auto;
@@ -5679,10 +5488,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m10,
-  .sidebar-primary .wrap .col.m10,
-  .sidebar-primary .wrap .m10.main,
-  .sidebar-primary .wrap .m10.sidebar {
+  .row .col.m10 {
     width: 83.33333%;
     margin-left: auto;
     left: auto;
@@ -5691,10 +5497,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m11,
-  .sidebar-primary .wrap .col.m11,
-  .sidebar-primary .wrap .m11.main,
-  .sidebar-primary .wrap .m11.sidebar {
+  .row .col.m11 {
     width: 91.66667%;
     margin-left: auto;
     left: auto;
@@ -5703,10 +5506,7 @@ input[type=range] + .thumb {
 
   /* line 101, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.m12,
-  .sidebar-primary .wrap .col.m12,
-  .sidebar-primary .wrap .m12.main,
-  .sidebar-primary .wrap .m12.sidebar {
+  .row .col.m12 {
     width: 100%;
     margin-left: auto;
     left: auto;
@@ -5715,325 +5515,217 @@ input[type=range] + .thumb {
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m1,
-  .sidebar-primary .wrap .col.offset-m1,
-  .sidebar-primary .wrap .offset-m1.main,
-  .sidebar-primary .wrap .offset-m1.sidebar {
+  .row .col.offset-m1 {
     margin-left: 8.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m1,
-  .sidebar-primary .wrap .col.pull-m1,
-  .sidebar-primary .wrap .pull-m1.main,
-  .sidebar-primary .wrap .pull-m1.sidebar {
+  .row .col.pull-m1 {
     right: 8.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m1,
-  .sidebar-primary .wrap .col.push-m1,
-  .sidebar-primary .wrap .push-m1.main,
-  .sidebar-primary .wrap .push-m1.sidebar {
+  .row .col.push-m1 {
     left: 8.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m2,
-  .sidebar-primary .wrap .col.offset-m2,
-  .sidebar-primary .wrap .offset-m2.main,
-  .sidebar-primary .wrap .offset-m2.sidebar {
+  .row .col.offset-m2 {
     margin-left: 16.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m2,
-  .sidebar-primary .wrap .col.pull-m2,
-  .sidebar-primary .wrap .pull-m2.main,
-  .sidebar-primary .wrap .pull-m2.sidebar {
+  .row .col.pull-m2 {
     right: 16.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m2,
-  .sidebar-primary .wrap .col.push-m2,
-  .sidebar-primary .wrap .push-m2.main,
-  .sidebar-primary .wrap .push-m2.sidebar {
+  .row .col.push-m2 {
     left: 16.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m3,
-  .sidebar-primary .wrap .col.offset-m3,
-  .sidebar-primary .wrap .offset-m3.main,
-  .sidebar-primary .wrap .offset-m3.sidebar {
+  .row .col.offset-m3 {
     margin-left: 25%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m3,
-  .sidebar-primary .wrap .col.pull-m3,
-  .sidebar-primary .wrap .pull-m3.main,
-  .sidebar-primary .wrap .pull-m3.sidebar {
+  .row .col.pull-m3 {
     right: 25%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m3,
-  .sidebar-primary .wrap .col.push-m3,
-  .sidebar-primary .wrap .push-m3.main,
-  .sidebar-primary .wrap .push-m3.sidebar {
+  .row .col.push-m3 {
     left: 25%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m4,
-  .sidebar-primary .wrap .col.offset-m4,
-  .sidebar-primary .wrap .offset-m4.main,
-  .sidebar-primary .wrap .offset-m4.sidebar {
+  .row .col.offset-m4 {
     margin-left: 33.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m4,
-  .sidebar-primary .wrap .col.pull-m4,
-  .sidebar-primary .wrap .pull-m4.main,
-  .sidebar-primary .wrap .pull-m4.sidebar {
+  .row .col.pull-m4 {
     right: 33.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m4,
-  .sidebar-primary .wrap .col.push-m4,
-  .sidebar-primary .wrap .push-m4.main,
-  .sidebar-primary .wrap .push-m4.sidebar {
+  .row .col.push-m4 {
     left: 33.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m5,
-  .sidebar-primary .wrap .col.offset-m5,
-  .sidebar-primary .wrap .offset-m5.main,
-  .sidebar-primary .wrap .offset-m5.sidebar {
+  .row .col.offset-m5 {
     margin-left: 41.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m5,
-  .sidebar-primary .wrap .col.pull-m5,
-  .sidebar-primary .wrap .pull-m5.main,
-  .sidebar-primary .wrap .pull-m5.sidebar {
+  .row .col.pull-m5 {
     right: 41.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m5,
-  .sidebar-primary .wrap .col.push-m5,
-  .sidebar-primary .wrap .push-m5.main,
-  .sidebar-primary .wrap .push-m5.sidebar {
+  .row .col.push-m5 {
     left: 41.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m6,
-  .sidebar-primary .wrap .col.offset-m6,
-  .sidebar-primary .wrap .offset-m6.main,
-  .sidebar-primary .wrap .offset-m6.sidebar {
+  .row .col.offset-m6 {
     margin-left: 50%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m6,
-  .sidebar-primary .wrap .col.pull-m6,
-  .sidebar-primary .wrap .pull-m6.main,
-  .sidebar-primary .wrap .pull-m6.sidebar {
+  .row .col.pull-m6 {
     right: 50%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m6,
-  .sidebar-primary .wrap .col.push-m6,
-  .sidebar-primary .wrap .push-m6.main,
-  .sidebar-primary .wrap .push-m6.sidebar {
+  .row .col.push-m6 {
     left: 50%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m7,
-  .sidebar-primary .wrap .col.offset-m7,
-  .sidebar-primary .wrap .offset-m7.main,
-  .sidebar-primary .wrap .offset-m7.sidebar {
+  .row .col.offset-m7 {
     margin-left: 58.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m7,
-  .sidebar-primary .wrap .col.pull-m7,
-  .sidebar-primary .wrap .pull-m7.main,
-  .sidebar-primary .wrap .pull-m7.sidebar {
+  .row .col.pull-m7 {
     right: 58.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m7,
-  .sidebar-primary .wrap .col.push-m7,
-  .sidebar-primary .wrap .push-m7.main,
-  .sidebar-primary .wrap .push-m7.sidebar {
+  .row .col.push-m7 {
     left: 58.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m8,
-  .sidebar-primary .wrap .col.offset-m8,
-  .sidebar-primary .wrap .offset-m8.main,
-  .sidebar-primary .wrap .offset-m8.sidebar {
+  .row .col.offset-m8 {
     margin-left: 66.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m8,
-  .sidebar-primary .wrap .col.pull-m8,
-  .sidebar-primary .wrap .pull-m8.main,
-  .sidebar-primary .wrap .pull-m8.sidebar {
+  .row .col.pull-m8 {
     right: 66.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m8,
-  .sidebar-primary .wrap .col.push-m8,
-  .sidebar-primary .wrap .push-m8.main,
-  .sidebar-primary .wrap .push-m8.sidebar {
+  .row .col.push-m8 {
     left: 66.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m9,
-  .sidebar-primary .wrap .col.offset-m9,
-  .sidebar-primary .wrap .offset-m9.main,
-  .sidebar-primary .wrap .offset-m9.sidebar {
+  .row .col.offset-m9 {
     margin-left: 75%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m9,
-  .sidebar-primary .wrap .col.pull-m9,
-  .sidebar-primary .wrap .pull-m9.main,
-  .sidebar-primary .wrap .pull-m9.sidebar {
+  .row .col.pull-m9 {
     right: 75%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m9,
-  .sidebar-primary .wrap .col.push-m9,
-  .sidebar-primary .wrap .push-m9.main,
-  .sidebar-primary .wrap .push-m9.sidebar {
+  .row .col.push-m9 {
     left: 75%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m10,
-  .sidebar-primary .wrap .col.offset-m10,
-  .sidebar-primary .wrap .offset-m10.main,
-  .sidebar-primary .wrap .offset-m10.sidebar {
+  .row .col.offset-m10 {
     margin-left: 83.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m10,
-  .sidebar-primary .wrap .col.pull-m10,
-  .sidebar-primary .wrap .pull-m10.main,
-  .sidebar-primary .wrap .pull-m10.sidebar {
+  .row .col.pull-m10 {
     right: 83.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m10,
-  .sidebar-primary .wrap .col.push-m10,
-  .sidebar-primary .wrap .push-m10.main,
-  .sidebar-primary .wrap .push-m10.sidebar {
+  .row .col.push-m10 {
     left: 83.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m11,
-  .sidebar-primary .wrap .col.offset-m11,
-  .sidebar-primary .wrap .offset-m11.main,
-  .sidebar-primary .wrap .offset-m11.sidebar {
+  .row .col.offset-m11 {
     margin-left: 91.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m11,
-  .sidebar-primary .wrap .col.pull-m11,
-  .sidebar-primary .wrap .pull-m11.main,
-  .sidebar-primary .wrap .pull-m11.sidebar {
+  .row .col.pull-m11 {
     right: 91.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m11,
-  .sidebar-primary .wrap .col.push-m11,
-  .sidebar-primary .wrap .push-m11.main,
-  .sidebar-primary .wrap .push-m11.sidebar {
+  .row .col.push-m11 {
     left: 91.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-m12,
-  .sidebar-primary .wrap .col.offset-m12,
-  .sidebar-primary .wrap .offset-m12.main,
-  .sidebar-primary .wrap .offset-m12.sidebar {
+  .row .col.offset-m12 {
     margin-left: 100%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-m12,
-  .sidebar-primary .wrap .col.pull-m12,
-  .sidebar-primary .wrap .pull-m12.main,
-  .sidebar-primary .wrap .pull-m12.sidebar {
+  .row .col.pull-m12 {
     right: 100%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-m12,
-  .sidebar-primary .wrap .col.push-m12,
-  .sidebar-primary .wrap .push-m12.main,
-  .sidebar-primary .wrap .push-m12.sidebar {
+  .row .col.push-m12 {
     left: 100%;
   }
 }
@@ -6041,10 +5733,7 @@ input[type=range] + .thumb {
 @media only screen and (min-width: 993px) {
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l1,
-  .sidebar-primary .wrap .col.l1,
-  .sidebar-primary .wrap .l1.main,
-  .sidebar-primary .wrap .l1.sidebar {
+  .row .col.l1 {
     width: 8.33333%;
     margin-left: auto;
     left: auto;
@@ -6053,10 +5742,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l2,
-  .sidebar-primary .wrap .col.l2,
-  .sidebar-primary .wrap .l2.main,
-  .sidebar-primary .wrap .l2.sidebar {
+  .row .col.l2 {
     width: 16.66667%;
     margin-left: auto;
     left: auto;
@@ -6065,10 +5751,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l3,
-  .sidebar-primary .wrap .col.l3,
-  .sidebar-primary .wrap .l3.main,
-  .sidebar-primary .wrap .sidebar {
+  .row .col.l3 {
     width: 25%;
     margin-left: auto;
     left: auto;
@@ -6077,10 +5760,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l4,
-  .sidebar-primary .wrap .col.l4,
-  .sidebar-primary .wrap .l4.main,
-  .sidebar-primary .wrap .l4.sidebar {
+  .row .col.l4 {
     width: 33.33333%;
     margin-left: auto;
     left: auto;
@@ -6089,10 +5769,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l5,
-  .sidebar-primary .wrap .col.l5,
-  .sidebar-primary .wrap .l5.main,
-  .sidebar-primary .wrap .l5.sidebar {
+  .row .col.l5 {
     width: 41.66667%;
     margin-left: auto;
     left: auto;
@@ -6101,10 +5778,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l6,
-  .sidebar-primary .wrap .col.l6,
-  .sidebar-primary .wrap .l6.main,
-  .sidebar-primary .wrap .l6.sidebar {
+  .row .col.l6 {
     width: 50%;
     margin-left: auto;
     left: auto;
@@ -6113,10 +5787,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l7,
-  .sidebar-primary .wrap .col.l7,
-  .sidebar-primary .wrap .main,
-  .sidebar-primary .wrap .l7.sidebar {
+  .row .col.l7 {
     width: 58.33333%;
     margin-left: auto;
     left: auto;
@@ -6125,10 +5796,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l8,
-  .sidebar-primary .wrap .col.l8,
-  .sidebar-primary .wrap .l8.main,
-  .sidebar-primary .wrap .l8.sidebar {
+  .row .col.l8 {
     width: 66.66667%;
     margin-left: auto;
     left: auto;
@@ -6137,10 +5805,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l9,
-  .sidebar-primary .wrap .col.l9,
-  .sidebar-primary .wrap .l9.main,
-  .sidebar-primary .wrap .l9.sidebar {
+  .row .col.l9 {
     width: 75%;
     margin-left: auto;
     left: auto;
@@ -6149,10 +5814,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l10,
-  .sidebar-primary .wrap .col.l10,
-  .sidebar-primary .wrap .l10.main,
-  .sidebar-primary .wrap .l10.sidebar {
+  .row .col.l10 {
     width: 83.33333%;
     margin-left: auto;
     left: auto;
@@ -6161,10 +5823,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l11,
-  .sidebar-primary .wrap .col.l11,
-  .sidebar-primary .wrap .l11.main,
-  .sidebar-primary .wrap .l11.sidebar {
+  .row .col.l11 {
     width: 91.66667%;
     margin-left: auto;
     left: auto;
@@ -6173,10 +5832,7 @@ input[type=range] + .thumb {
 
   /* line 121, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.l12,
-  .sidebar-primary .wrap .col.l12,
-  .sidebar-primary .wrap .l12.main,
-  .sidebar-primary .wrap .l12.sidebar {
+  .row .col.l12 {
     width: 100%;
     margin-left: auto;
     left: auto;
@@ -6185,325 +5841,217 @@ input[type=range] + .thumb {
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l1,
-  .sidebar-primary .wrap .col.offset-l1,
-  .sidebar-primary .wrap .offset-l1.main,
-  .sidebar-primary .wrap .offset-l1.sidebar {
+  .row .col.offset-l1 {
     margin-left: 8.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l1,
-  .sidebar-primary .wrap .col.pull-l1,
-  .sidebar-primary .wrap .pull-l1.main,
-  .sidebar-primary .wrap .pull-l1.sidebar {
+  .row .col.pull-l1 {
     right: 8.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l1,
-  .sidebar-primary .wrap .col.push-l1,
-  .sidebar-primary .wrap .push-l1.main,
-  .sidebar-primary .wrap .sidebar {
+  .row .col.push-l1 {
     left: 8.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l2,
-  .sidebar-primary .wrap .col.offset-l2,
-  .sidebar-primary .wrap .offset-l2.main,
-  .sidebar-primary .wrap .offset-l2.sidebar {
+  .row .col.offset-l2 {
     margin-left: 16.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l2,
-  .sidebar-primary .wrap .col.pull-l2,
-  .sidebar-primary .wrap .pull-l2.main,
-  .sidebar-primary .wrap .pull-l2.sidebar {
+  .row .col.pull-l2 {
     right: 16.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l2,
-  .sidebar-primary .wrap .col.push-l2,
-  .sidebar-primary .wrap .push-l2.main,
-  .sidebar-primary .wrap .push-l2.sidebar {
+  .row .col.push-l2 {
     left: 16.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l3,
-  .sidebar-primary .wrap .col.offset-l3,
-  .sidebar-primary .wrap .offset-l3.main,
-  .sidebar-primary .wrap .offset-l3.sidebar {
+  .row .col.offset-l3 {
     margin-left: 25%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l3,
-  .sidebar-primary .wrap .col.pull-l3,
-  .sidebar-primary .wrap .pull-l3.main,
-  .sidebar-primary .wrap .pull-l3.sidebar {
+  .row .col.pull-l3 {
     right: 25%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l3,
-  .sidebar-primary .wrap .col.push-l3,
-  .sidebar-primary .wrap .push-l3.main,
-  .sidebar-primary .wrap .push-l3.sidebar {
+  .row .col.push-l3 {
     left: 25%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l4,
-  .sidebar-primary .wrap .col.offset-l4,
-  .sidebar-primary .wrap .offset-l4.main,
-  .sidebar-primary .wrap .offset-l4.sidebar {
+  .row .col.offset-l4 {
     margin-left: 33.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l4,
-  .sidebar-primary .wrap .col.pull-l4,
-  .sidebar-primary .wrap .pull-l4.main,
-  .sidebar-primary .wrap .pull-l4.sidebar {
+  .row .col.pull-l4 {
     right: 33.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l4,
-  .sidebar-primary .wrap .col.push-l4,
-  .sidebar-primary .wrap .push-l4.main,
-  .sidebar-primary .wrap .push-l4.sidebar {
+  .row .col.push-l4 {
     left: 33.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l5,
-  .sidebar-primary .wrap .col.offset-l5,
-  .sidebar-primary .wrap .offset-l5.main,
-  .sidebar-primary .wrap .offset-l5.sidebar {
+  .row .col.offset-l5 {
     margin-left: 41.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l5,
-  .sidebar-primary .wrap .col.pull-l5,
-  .sidebar-primary .wrap .pull-l5.main,
-  .sidebar-primary .wrap .pull-l5.sidebar {
+  .row .col.pull-l5 {
     right: 41.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l5,
-  .sidebar-primary .wrap .col.push-l5,
-  .sidebar-primary .wrap .push-l5.main,
-  .sidebar-primary .wrap .push-l5.sidebar {
+  .row .col.push-l5 {
     left: 41.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l6,
-  .sidebar-primary .wrap .col.offset-l6,
-  .sidebar-primary .wrap .offset-l6.main,
-  .sidebar-primary .wrap .offset-l6.sidebar {
+  .row .col.offset-l6 {
     margin-left: 50%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l6,
-  .sidebar-primary .wrap .col.pull-l6,
-  .sidebar-primary .wrap .pull-l6.main,
-  .sidebar-primary .wrap .pull-l6.sidebar {
+  .row .col.pull-l6 {
     right: 50%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l6,
-  .sidebar-primary .wrap .col.push-l6,
-  .sidebar-primary .wrap .push-l6.main,
-  .sidebar-primary .wrap .push-l6.sidebar {
+  .row .col.push-l6 {
     left: 50%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l7,
-  .sidebar-primary .wrap .col.offset-l7,
-  .sidebar-primary .wrap .offset-l7.main,
-  .sidebar-primary .wrap .offset-l7.sidebar {
+  .row .col.offset-l7 {
     margin-left: 58.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l7,
-  .sidebar-primary .wrap .col.pull-l7,
-  .sidebar-primary .wrap .pull-l7.main,
-  .sidebar-primary .wrap .pull-l7.sidebar {
+  .row .col.pull-l7 {
     right: 58.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l7,
-  .sidebar-primary .wrap .col.push-l7,
-  .sidebar-primary .wrap .push-l7.main,
-  .sidebar-primary .wrap .push-l7.sidebar {
+  .row .col.push-l7 {
     left: 58.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l8,
-  .sidebar-primary .wrap .col.offset-l8,
-  .sidebar-primary .wrap .offset-l8.main,
-  .sidebar-primary .wrap .offset-l8.sidebar {
+  .row .col.offset-l8 {
     margin-left: 66.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l8,
-  .sidebar-primary .wrap .col.pull-l8,
-  .sidebar-primary .wrap .pull-l8.main,
-  .sidebar-primary .wrap .pull-l8.sidebar {
+  .row .col.pull-l8 {
     right: 66.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l8,
-  .sidebar-primary .wrap .col.push-l8,
-  .sidebar-primary .wrap .push-l8.main,
-  .sidebar-primary .wrap .push-l8.sidebar {
+  .row .col.push-l8 {
     left: 66.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l9,
-  .sidebar-primary .wrap .col.offset-l9,
-  .sidebar-primary .wrap .offset-l9.main,
-  .sidebar-primary .wrap .offset-l9.sidebar {
+  .row .col.offset-l9 {
     margin-left: 75%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l9,
-  .sidebar-primary .wrap .col.pull-l9,
-  .sidebar-primary .wrap .pull-l9.main,
-  .sidebar-primary .wrap .pull-l9.sidebar {
+  .row .col.pull-l9 {
     right: 75%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l9,
-  .sidebar-primary .wrap .col.push-l9,
-  .sidebar-primary .wrap .push-l9.main,
-  .sidebar-primary .wrap .push-l9.sidebar {
+  .row .col.push-l9 {
     left: 75%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l10,
-  .sidebar-primary .wrap .col.offset-l10,
-  .sidebar-primary .wrap .offset-l10.main,
-  .sidebar-primary .wrap .offset-l10.sidebar {
+  .row .col.offset-l10 {
     margin-left: 83.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l10,
-  .sidebar-primary .wrap .col.pull-l10,
-  .sidebar-primary .wrap .pull-l10.main,
-  .sidebar-primary .wrap .pull-l10.sidebar {
+  .row .col.pull-l10 {
     right: 83.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l10,
-  .sidebar-primary .wrap .col.push-l10,
-  .sidebar-primary .wrap .push-l10.main,
-  .sidebar-primary .wrap .push-l10.sidebar {
+  .row .col.push-l10 {
     left: 83.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l11,
-  .sidebar-primary .wrap .col.offset-l11,
-  .sidebar-primary .wrap .offset-l11.main,
-  .sidebar-primary .wrap .offset-l11.sidebar {
+  .row .col.offset-l11 {
     margin-left: 91.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l11,
-  .sidebar-primary .wrap .col.pull-l11,
-  .sidebar-primary .wrap .pull-l11.main,
-  .sidebar-primary .wrap .pull-l11.sidebar {
+  .row .col.pull-l11 {
     right: 91.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l11,
-  .sidebar-primary .wrap .col.push-l11,
-  .sidebar-primary .wrap .push-l11.main,
-  .sidebar-primary .wrap .push-l11.sidebar {
+  .row .col.push-l11 {
     left: 91.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-l12,
-  .sidebar-primary .wrap .col.offset-l12,
-  .sidebar-primary .wrap .offset-l12.main,
-  .sidebar-primary .wrap .offset-l12.sidebar {
+  .row .col.offset-l12 {
     margin-left: 100%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-l12,
-  .sidebar-primary .wrap .col.pull-l12,
-  .sidebar-primary .wrap .pull-l12.main,
-  .sidebar-primary .wrap .pull-l12.sidebar {
+  .row .col.pull-l12 {
     right: 100%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-l12,
-  .sidebar-primary .wrap .col.push-l12,
-  .sidebar-primary .wrap .push-l12.main,
-  .sidebar-primary .wrap .push-l12.sidebar {
+  .row .col.push-l12 {
     left: 100%;
   }
 }
@@ -6511,10 +6059,7 @@ input[type=range] + .thumb {
 @media only screen and (min-width: 1201px) {
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl1,
-  .sidebar-primary .wrap .col.xl1,
-  .sidebar-primary .wrap .xl1.main,
-  .sidebar-primary .wrap .xl1.sidebar {
+  .row .col.xl1 {
     width: 8.33333%;
     margin-left: auto;
     left: auto;
@@ -6523,10 +6068,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl2,
-  .sidebar-primary .wrap .col.xl2,
-  .sidebar-primary .wrap .xl2.main,
-  .sidebar-primary .wrap .xl2.sidebar {
+  .row .col.xl2 {
     width: 16.66667%;
     margin-left: auto;
     left: auto;
@@ -6535,10 +6077,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl3,
-  .sidebar-primary .wrap .col.xl3,
-  .sidebar-primary .wrap .xl3.main,
-  .sidebar-primary .wrap .xl3.sidebar {
+  .row .col.xl3 {
     width: 25%;
     margin-left: auto;
     left: auto;
@@ -6547,10 +6086,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl4,
-  .sidebar-primary .wrap .col.xl4,
-  .sidebar-primary .wrap .xl4.main,
-  .sidebar-primary .wrap .xl4.sidebar {
+  .row .col.xl4 {
     width: 33.33333%;
     margin-left: auto;
     left: auto;
@@ -6559,10 +6095,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl5,
-  .sidebar-primary .wrap .col.xl5,
-  .sidebar-primary .wrap .xl5.main,
-  .sidebar-primary .wrap .xl5.sidebar {
+  .row .col.xl5 {
     width: 41.66667%;
     margin-left: auto;
     left: auto;
@@ -6571,10 +6104,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl6,
-  .sidebar-primary .wrap .col.xl6,
-  .sidebar-primary .wrap .xl6.main,
-  .sidebar-primary .wrap .xl6.sidebar {
+  .row .col.xl6 {
     width: 50%;
     margin-left: auto;
     left: auto;
@@ -6583,10 +6113,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl7,
-  .sidebar-primary .wrap .col.xl7,
-  .sidebar-primary .wrap .xl7.main,
-  .sidebar-primary .wrap .xl7.sidebar {
+  .row .col.xl7 {
     width: 58.33333%;
     margin-left: auto;
     left: auto;
@@ -6595,10 +6122,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl8,
-  .sidebar-primary .wrap .col.xl8,
-  .sidebar-primary .wrap .xl8.main,
-  .sidebar-primary .wrap .xl8.sidebar {
+  .row .col.xl8 {
     width: 66.66667%;
     margin-left: auto;
     left: auto;
@@ -6607,10 +6131,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl9,
-  .sidebar-primary .wrap .col.xl9,
-  .sidebar-primary .wrap .xl9.main,
-  .sidebar-primary .wrap .xl9.sidebar {
+  .row .col.xl9 {
     width: 75%;
     margin-left: auto;
     left: auto;
@@ -6619,10 +6140,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl10,
-  .sidebar-primary .wrap .col.xl10,
-  .sidebar-primary .wrap .xl10.main,
-  .sidebar-primary .wrap .xl10.sidebar {
+  .row .col.xl10 {
     width: 83.33333%;
     margin-left: auto;
     left: auto;
@@ -6631,10 +6149,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl11,
-  .sidebar-primary .wrap .col.xl11,
-  .sidebar-primary .wrap .xl11.main,
-  .sidebar-primary .wrap .xl11.sidebar {
+  .row .col.xl11 {
     width: 91.66667%;
     margin-left: auto;
     left: auto;
@@ -6643,10 +6158,7 @@ input[type=range] + .thumb {
 
   /* line 141, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.xl12,
-  .sidebar-primary .wrap .col.xl12,
-  .sidebar-primary .wrap .xl12.main,
-  .sidebar-primary .wrap .xl12.sidebar {
+  .row .col.xl12 {
     width: 100%;
     margin-left: auto;
     left: auto;
@@ -6655,325 +6167,217 @@ input[type=range] + .thumb {
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl1,
-  .sidebar-primary .wrap .col.offset-xl1,
-  .sidebar-primary .wrap .offset-xl1.main,
-  .sidebar-primary .wrap .offset-xl1.sidebar {
+  .row .col.offset-xl1 {
     margin-left: 8.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl1,
-  .sidebar-primary .wrap .col.pull-xl1,
-  .sidebar-primary .wrap .pull-xl1.main,
-  .sidebar-primary .wrap .pull-xl1.sidebar {
+  .row .col.pull-xl1 {
     right: 8.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl1,
-  .sidebar-primary .wrap .col.push-xl1,
-  .sidebar-primary .wrap .push-xl1.main,
-  .sidebar-primary .wrap .push-xl1.sidebar {
+  .row .col.push-xl1 {
     left: 8.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl2,
-  .sidebar-primary .wrap .col.offset-xl2,
-  .sidebar-primary .wrap .offset-xl2.main,
-  .sidebar-primary .wrap .offset-xl2.sidebar {
+  .row .col.offset-xl2 {
     margin-left: 16.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl2,
-  .sidebar-primary .wrap .col.pull-xl2,
-  .sidebar-primary .wrap .pull-xl2.main,
-  .sidebar-primary .wrap .pull-xl2.sidebar {
+  .row .col.pull-xl2 {
     right: 16.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl2,
-  .sidebar-primary .wrap .col.push-xl2,
-  .sidebar-primary .wrap .push-xl2.main,
-  .sidebar-primary .wrap .push-xl2.sidebar {
+  .row .col.push-xl2 {
     left: 16.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl3,
-  .sidebar-primary .wrap .col.offset-xl3,
-  .sidebar-primary .wrap .offset-xl3.main,
-  .sidebar-primary .wrap .offset-xl3.sidebar {
+  .row .col.offset-xl3 {
     margin-left: 25%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl3,
-  .sidebar-primary .wrap .col.pull-xl3,
-  .sidebar-primary .wrap .pull-xl3.main,
-  .sidebar-primary .wrap .pull-xl3.sidebar {
+  .row .col.pull-xl3 {
     right: 25%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl3,
-  .sidebar-primary .wrap .col.push-xl3,
-  .sidebar-primary .wrap .push-xl3.main,
-  .sidebar-primary .wrap .push-xl3.sidebar {
+  .row .col.push-xl3 {
     left: 25%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl4,
-  .sidebar-primary .wrap .col.offset-xl4,
-  .sidebar-primary .wrap .offset-xl4.main,
-  .sidebar-primary .wrap .offset-xl4.sidebar {
+  .row .col.offset-xl4 {
     margin-left: 33.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl4,
-  .sidebar-primary .wrap .col.pull-xl4,
-  .sidebar-primary .wrap .pull-xl4.main,
-  .sidebar-primary .wrap .pull-xl4.sidebar {
+  .row .col.pull-xl4 {
     right: 33.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl4,
-  .sidebar-primary .wrap .col.push-xl4,
-  .sidebar-primary .wrap .push-xl4.main,
-  .sidebar-primary .wrap .push-xl4.sidebar {
+  .row .col.push-xl4 {
     left: 33.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl5,
-  .sidebar-primary .wrap .col.offset-xl5,
-  .sidebar-primary .wrap .offset-xl5.main,
-  .sidebar-primary .wrap .offset-xl5.sidebar {
+  .row .col.offset-xl5 {
     margin-left: 41.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl5,
-  .sidebar-primary .wrap .col.pull-xl5,
-  .sidebar-primary .wrap .pull-xl5.main,
-  .sidebar-primary .wrap .pull-xl5.sidebar {
+  .row .col.pull-xl5 {
     right: 41.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl5,
-  .sidebar-primary .wrap .col.push-xl5,
-  .sidebar-primary .wrap .push-xl5.main,
-  .sidebar-primary .wrap .push-xl5.sidebar {
+  .row .col.push-xl5 {
     left: 41.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl6,
-  .sidebar-primary .wrap .col.offset-xl6,
-  .sidebar-primary .wrap .offset-xl6.main,
-  .sidebar-primary .wrap .offset-xl6.sidebar {
+  .row .col.offset-xl6 {
     margin-left: 50%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl6,
-  .sidebar-primary .wrap .col.pull-xl6,
-  .sidebar-primary .wrap .pull-xl6.main,
-  .sidebar-primary .wrap .pull-xl6.sidebar {
+  .row .col.pull-xl6 {
     right: 50%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl6,
-  .sidebar-primary .wrap .col.push-xl6,
-  .sidebar-primary .wrap .push-xl6.main,
-  .sidebar-primary .wrap .push-xl6.sidebar {
+  .row .col.push-xl6 {
     left: 50%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl7,
-  .sidebar-primary .wrap .col.offset-xl7,
-  .sidebar-primary .wrap .offset-xl7.main,
-  .sidebar-primary .wrap .offset-xl7.sidebar {
+  .row .col.offset-xl7 {
     margin-left: 58.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl7,
-  .sidebar-primary .wrap .col.pull-xl7,
-  .sidebar-primary .wrap .pull-xl7.main,
-  .sidebar-primary .wrap .pull-xl7.sidebar {
+  .row .col.pull-xl7 {
     right: 58.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl7,
-  .sidebar-primary .wrap .col.push-xl7,
-  .sidebar-primary .wrap .push-xl7.main,
-  .sidebar-primary .wrap .push-xl7.sidebar {
+  .row .col.push-xl7 {
     left: 58.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl8,
-  .sidebar-primary .wrap .col.offset-xl8,
-  .sidebar-primary .wrap .offset-xl8.main,
-  .sidebar-primary .wrap .offset-xl8.sidebar {
+  .row .col.offset-xl8 {
     margin-left: 66.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl8,
-  .sidebar-primary .wrap .col.pull-xl8,
-  .sidebar-primary .wrap .pull-xl8.main,
-  .sidebar-primary .wrap .pull-xl8.sidebar {
+  .row .col.pull-xl8 {
     right: 66.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl8,
-  .sidebar-primary .wrap .col.push-xl8,
-  .sidebar-primary .wrap .push-xl8.main,
-  .sidebar-primary .wrap .push-xl8.sidebar {
+  .row .col.push-xl8 {
     left: 66.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl9,
-  .sidebar-primary .wrap .col.offset-xl9,
-  .sidebar-primary .wrap .offset-xl9.main,
-  .sidebar-primary .wrap .offset-xl9.sidebar {
+  .row .col.offset-xl9 {
     margin-left: 75%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl9,
-  .sidebar-primary .wrap .col.pull-xl9,
-  .sidebar-primary .wrap .pull-xl9.main,
-  .sidebar-primary .wrap .pull-xl9.sidebar {
+  .row .col.pull-xl9 {
     right: 75%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl9,
-  .sidebar-primary .wrap .col.push-xl9,
-  .sidebar-primary .wrap .push-xl9.main,
-  .sidebar-primary .wrap .push-xl9.sidebar {
+  .row .col.push-xl9 {
     left: 75%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl10,
-  .sidebar-primary .wrap .col.offset-xl10,
-  .sidebar-primary .wrap .offset-xl10.main,
-  .sidebar-primary .wrap .offset-xl10.sidebar {
+  .row .col.offset-xl10 {
     margin-left: 83.33333%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl10,
-  .sidebar-primary .wrap .col.pull-xl10,
-  .sidebar-primary .wrap .pull-xl10.main,
-  .sidebar-primary .wrap .pull-xl10.sidebar {
+  .row .col.pull-xl10 {
     right: 83.33333%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl10,
-  .sidebar-primary .wrap .col.push-xl10,
-  .sidebar-primary .wrap .push-xl10.main,
-  .sidebar-primary .wrap .push-xl10.sidebar {
+  .row .col.push-xl10 {
     left: 83.33333%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl11,
-  .sidebar-primary .wrap .col.offset-xl11,
-  .sidebar-primary .wrap .offset-xl11.main,
-  .sidebar-primary .wrap .offset-xl11.sidebar {
+  .row .col.offset-xl11 {
     margin-left: 91.66667%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl11,
-  .sidebar-primary .wrap .col.pull-xl11,
-  .sidebar-primary .wrap .pull-xl11.main,
-  .sidebar-primary .wrap .pull-xl11.sidebar {
+  .row .col.pull-xl11 {
     right: 91.66667%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl11,
-  .sidebar-primary .wrap .col.push-xl11,
-  .sidebar-primary .wrap .push-xl11.main,
-  .sidebar-primary .wrap .push-xl11.sidebar {
+  .row .col.push-xl11 {
     left: 91.66667%;
   }
 
   /* line 44, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.offset-xl12,
-  .sidebar-primary .wrap .col.offset-xl12,
-  .sidebar-primary .wrap .offset-xl12.main,
-  .sidebar-primary .wrap .offset-xl12.sidebar {
+  .row .col.offset-xl12 {
     margin-left: 100%;
   }
 
   /* line 47, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.pull-xl12,
-  .sidebar-primary .wrap .col.pull-xl12,
-  .sidebar-primary .wrap .pull-xl12.main,
-  .sidebar-primary .wrap .pull-xl12.sidebar {
+  .row .col.pull-xl12 {
     right: 100%;
   }
 
   /* line 50, ../rtp-core/node_modules/materialize-css/sass/components/_grid.scss */
 
-  .row .col.push-xl12,
-  .sidebar-primary .wrap .col.push-xl12,
-  .sidebar-primary .wrap .push-xl12.main,
-  .sidebar-primary .wrap .push-xl12.sidebar {
+  .row .col.push-xl12 {
     left: 100%;
   }
 }
@@ -8298,9 +7702,7 @@ body.keyboard-focused .dropdown-content li:focus {
 
 /* line 76, ../rtp-core/node_modules/materialize-css/sass/components/_dropdown.scss */
 
-.input-field.col .dropdown-content [type="checkbox"] + label,
-.sidebar-primary .wrap .input-field.main .dropdown-content [type="checkbox"] + label,
-.sidebar-primary .wrap .input-field.sidebar .dropdown-content [type="checkbox"] + label {
+.input-field.col .dropdown-content [type="checkbox"] + label {
   top: 1px;
   left: 0;
   height: 18px;
@@ -9417,20 +8819,14 @@ textarea.materialize-textarea + label:after,
 
 /* line 164, ../rtp-core/node_modules/materialize-css/sass/components/forms/_input-fields.scss */
 
-.input-field.col label,
-.sidebar-primary .wrap .input-field.main label,
-.sidebar-primary .wrap .input-field.sidebar label {
+.input-field.col label {
   left: 10px;
 }
 
 /* line 168, ../rtp-core/node_modules/materialize-css/sass/components/forms/_input-fields.scss */
 
 .input-field.col .prefix ~ label,
-.sidebar-primary .wrap .input-field.main .prefix ~ label,
-.sidebar-primary .wrap .input-field.sidebar .prefix ~ label,
-.input-field.col .prefix ~ .validate ~ label,
-.sidebar-primary .wrap .input-field.main .prefix ~ .validate ~ label,
-.sidebar-primary .wrap .input-field.sidebar .prefix ~ .validate ~ label {
+.input-field.col .prefix ~ .validate ~ label {
   width: calc(100% - 3rem - 20px);
 }
 
@@ -11732,9 +11128,7 @@ html[data-contrast="true"] .a11y-tools {
   /* line 101, ../rtp-core/resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .container,
-  .a11y-tools .container-wide,
-  .a11y-tools .sidebar-primary .content,
-  .sidebar-primary .a11y-tools .content {
+  .a11y-tools .container-wide {
     padding-right: 15px;
   }
 }
@@ -12143,8 +11537,7 @@ body {
 /* line 9, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .container,
-.container-wide,
-.sidebar-primary .content {
+.container-wide {
   max-width: 1260px;
   width: 100%;
 }
@@ -12153,8 +11546,7 @@ body {
   /* line 15, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .container,
-  .container-wide,
-  .sidebar-primary .content {
+  .container-wide {
     width: 100%;
   }
 }
@@ -12163,8 +11555,7 @@ body {
   /* line 20, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .container,
-  .container-wide,
-  .sidebar-primary .content {
+  .container-wide {
     width: 100%;
   }
 }
@@ -12266,7 +11657,7 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 82, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 81, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.s1x .flex-item {
     width: 100%;
@@ -12274,13 +11665,13 @@ body {
 }
 
 @media only screen and (min-width: 601px) {
-  /* line 89, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 88, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.m2x .flex-item {
     width: 50%;
   }
 
-  /* line 95, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 94, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.m3x .flex-item {
     width: 33.33%;
@@ -12288,20 +11679,20 @@ body {
 }
 
 @media only screen and (min-width: 769px) {
-  /* line 102, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 101, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.l3x .flex-item {
     width: 33.33%;
   }
 
-  /* line 108, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 107, ../rtp-core/resources/assets/styles/common/_global.scss */
 
   .flex-grid.l4x .flex-item {
     width: 25%;
   }
 }
 
-/* line 115, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 114, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .space-between {
   -webkit-box-pack: justify;
@@ -12309,14 +11700,14 @@ body {
           justify-content: space-between;
 }
 
-/* line 119, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 118, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .space-around {
   -ms-flex-pack: distribute;
       justify-content: space-around;
 }
 
-/* line 123, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 122, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .space-evenly {
   -webkit-box-pack: space-evenly;
@@ -12324,7 +11715,7 @@ body {
           justify-content: space-evenly;
 }
 
-/* line 127, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 126, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .justify-center {
   -webkit-box-pack: center;
@@ -12332,7 +11723,7 @@ body {
           justify-content: center;
 }
 
-/* line 131, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 130, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .align-center {
   -webkit-box-align: center;
@@ -12340,34 +11731,34 @@ body {
           align-items: center;
 }
 
-/* line 139, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 138, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .float-center {
   margin-left: auto;
   margin-right: auto;
 }
 
-/* line 144, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 143, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .absolute-right {
   position: absolute;
   right: 0;
 }
 
-/* line 149, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 148, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .relative-right {
   position: relative;
   right: 0;
 }
 
-/* line 154, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 153, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .relative {
   position: relative;
 }
 
-/* line 158, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 157, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .mega-link.mega-link {
   display: block;
@@ -12380,34 +11771,25 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 169, ../rtp-core/resources/assets/styles/common/_global.scss */
+  /* line 168, ../rtp-core/resources/assets/styles/common/_global.scss */
 
-  .row .col.xs12,
-  .sidebar-primary .wrap .col.xs12,
-  .sidebar-primary .wrap .xs12.main,
-  .sidebar-primary .wrap .xs12.sidebar {
+  .row .col.xs12 {
     width: 100%;
   }
 }
 
-/* line 174, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 173, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 img {
   max-width: 100%;
   height: auto;
 }
 
-/* line 187, ../rtp-core/resources/assets/styles/common/_global.scss */
+/* line 186, ../rtp-core/resources/assets/styles/common/_global.scss */
 
 .border-top {
   border-top: 1px solid #CBC8C7;
   padding-top: 1em;
-}
-
-/* line 192, ../rtp-core/resources/assets/styles/common/_global.scss */
-
-.page-footer {
-  padding-top: 0;
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/common/_typography.scss */
@@ -13013,9 +12395,7 @@ textarea.materialize-textarea {
 
   /* line 153, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
-  .gform_wrapper.gform_wrapper .gfield.m4,
-  .gform_wrapper.gform_wrapper .sidebar-primary .wrap .gfield.sidebar,
-  .sidebar-primary .wrap .gform_wrapper.gform_wrapper .gfield.sidebar {
+  .gform_wrapper.gform_wrapper .gfield.m4 {
     float: left;
     clear: none;
     width: calc(100% / 3);
@@ -14193,11 +13573,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 
 /* line 4, ../rtp-core/resources/assets/styles/components/_people.scss */
 
-.person .col,
-.person .sidebar-primary .wrap .main,
-.sidebar-primary .wrap .person .main,
-.person .sidebar-primary .wrap .sidebar,
-.sidebar-primary .wrap .person .sidebar {
+.person .col {
   padding-left: 0;
 }
 
@@ -14365,40 +13741,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   outline: none;
 }
 
-/* line 2, ../rtp-core/resources/assets/styles/layouts/_header.scss */
-
-.page-header {
-  background-size: cover;
-  background-position: center;
-  height: 400px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
-  padding: 0 20px;
-}
-
-/* line 10, ../rtp-core/resources/assets/styles/layouts/_header.scss */
-
-.page-header .container,
-.page-header .container-wide,
-.page-header .sidebar-primary .content,
-.sidebar-primary .page-header .content {
-  background: rgba(75, 156, 211, 0.8);
-  text-align: left;
-  padding: 1em 1em 4em;
-}
-
-/* line 17, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 1, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner {
   background: #FFF;
   z-index: 100;
 }
 
-/* line 21, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 5, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner nav {
   background: none;
@@ -14407,41 +13757,25 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
           box-shadow: none;
 }
 
-/* line 27, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 11, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner nav > .container > .row::after,
-.banner nav > .container-wide > .row::after,
-.banner .sidebar-primary nav > .content > .row::after,
-.sidebar-primary .banner nav > .content > .row::after,
-.banner .sidebar-primary nav > .container > .wrap::after,
-.sidebar-primary .banner nav > .container > .wrap::after,
-.banner .sidebar-primary nav > .container-wide > .wrap::after,
-.sidebar-primary .banner nav > .container-wide > .wrap::after,
-.banner .sidebar-primary nav > .content > .wrap::after,
-.sidebar-primary .banner nav > .content > .wrap::after {
+.banner nav > .container-wide > .row::after {
   display: none;
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 26, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 10, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner nav > .container > .row,
-  .banner nav > .container-wide > .row,
-  .banner .sidebar-primary nav > .content > .row,
-  .sidebar-primary .banner nav > .content > .row,
-  .banner .sidebar-primary nav > .container > .wrap,
-  .sidebar-primary .banner nav > .container > .wrap,
-  .banner .sidebar-primary nav > .container-wide > .wrap,
-  .sidebar-primary .banner nav > .container-wide > .wrap,
-  .banner .sidebar-primary nav > .content > .wrap,
-  .sidebar-primary .banner nav > .content > .wrap {
+  .banner nav > .container-wide > .row {
     -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
     margin-bottom: 0;
   }
 }
 
-/* line 38, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 22, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo {
   max-width: 120px;
@@ -14450,7 +13784,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   vertical-align: middle;
 }
 
-/* line 44, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 28, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .logo img {
   width: 100%;
@@ -14460,7 +13794,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 38, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 22, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo {
     padding-left: 0;
@@ -14470,7 +13804,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
     display: flex;
   }
 
-  /* line 56, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 40, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .logo img {
     -ms-flex-item-align: center;
@@ -14481,14 +13815,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   }
 }
 
-/* line 63, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 47, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link {
   padding: 10px 20px;
   text-align: right;
 }
 
-/* line 67, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 51, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .btn,
 .banner .cta-link .btn-large,
@@ -14505,7 +13839,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   padding: 5px 2rem;
 }
 
-/* line 72, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 56, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .cta-headline {
   font-size: 0.9em;
@@ -14514,19 +13848,19 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 63, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 47, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link {
     padding: 10px 0;
   }
 
-  /* line 87, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 71, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .cta-headline {
     padding: 0 1rem;
   }
 
-  /* line 91, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 75, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .btn,
   .banner .cta-link .btn-large,
@@ -14543,26 +13877,26 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   }
 }
 
-/* line 97, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 81, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar {
   margin-bottom: 0;
 }
 
-/* line 101, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar[data-text-color="light"] .navbar-menu > ul > li > a,
 .banner .navbar[data-text-color="light"] .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 107, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 91, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper {
   position: relative;
 }
 
-/* line 110, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 94, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper [type="checkbox"] {
   position: absolute;
@@ -14570,13 +13904,13 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   pointer-events: none;
 }
 
-/* line 116, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 100, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper input:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 120, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 104, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label {
   display: block;
@@ -14590,27 +13924,27 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   float: right;
 }
 
-/* line 131, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 115, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label::before,
 .banner .menu-trigger-wrapper label::after {
   display: none;
 }
 
-/* line 135, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 119, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label i {
   font-size: 2em;
   line-height: 1.5em;
 }
 
-/* line 140, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 124, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 html[data-contrast="true"] .banner .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 149, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 133, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 nav ul a {
   text-decoration: none;
@@ -14620,19 +13954,19 @@ nav ul a {
   font-size: 17px;
 }
 
-/* line 156, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 140, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 [data-font="3"] nav ul a {
   font-size: 1.2rem;
 }
 
-/* line 160, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 144, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .header-inline nav ul a {
   padding: 1rem 15px;
 }
 
-/* line 167, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 151, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu {
   border: none;
@@ -14642,7 +13976,7 @@ nav ul a {
   padding: 0 15px;
 }
 
-/* line 173, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 157, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu > ul {
   -webkit-box-flex: 1;
@@ -14650,20 +13984,20 @@ nav ul a {
           flex: 1 1 auto;
 }
 
-/* line 177, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 161, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li {
   padding: 10px 0;
   height: 100%;
 }
 
-/* line 181, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 165, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li::before {
   display: none;
 }
 
-/* line 185, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 169, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover,
 .navbar-menu li:focus,
@@ -14671,7 +14005,7 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 188, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 172, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover > a,
 .navbar-menu li:focus > a,
@@ -14679,21 +14013,21 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 194, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 178, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 194, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 178, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children a {
     cursor: pointer;
   }
 }
 
-/* line 202, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 186, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
   margin-top: 10px;
@@ -14704,14 +14038,14 @@ nav ul a {
   transition: max-height 0.3s ease;
 }
 
-/* line 209, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 193, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
   line-height: 0;
 }
 
-/* line 213, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 197, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li:hover,
 .navbar-menu li.menu-item-has-children .sub-menu li:focus,
@@ -14719,7 +14053,7 @@ nav ul a {
   background: #F5F5F5;
 }
 
-/* line 218, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 202, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
@@ -14727,7 +14061,7 @@ nav ul a {
   padding-right: 40px;
 }
 
-/* line 223, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 207, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -14746,7 +14080,7 @@ nav ul a {
   transition: all 0.2s;
 }
 
-/* line 238, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 222, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
@@ -14754,7 +14088,7 @@ nav ul a {
   background: transparent;
 }
 
-/* line 241, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 225, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -14764,7 +14098,7 @@ nav ul a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 202, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 186, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     max-height: 300em;
@@ -14786,7 +14120,7 @@ nav ul a {
   }
 }
 
-/* line 265, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 249, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14794,20 +14128,20 @@ nav ul a {
   height: auto;
 }
 
-/* line 284, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 268, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
-  /* line 167, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 151, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     height: 4.66667em;
   }
 
-  /* line 292, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 276, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14819,7 +14153,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 297, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 281, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14827,7 +14161,7 @@ nav ul a {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 167, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 151, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     -webkit-box-orient: vertical;
@@ -14845,51 +14179,39 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 311, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 295, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 315, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 299, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 321, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+  /* line 305, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 326, ../rtp-core/resources/assets/styles/layouts/_header.scss */
+/* line 310, ../rtp-core/resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
-}
-
-/* line 9, ../rtp-core/resources/assets/styles/layouts/_sidebar.scss */
-
-.sidebar-primary .wrap .main {
-  padding-top: 3em;
-}
-
-/* line 18, ../rtp-core/resources/assets/styles/layouts/_sidebar.scss */
-
-.sidebar-primary .wrap .sidebar {
-  padding-top: 3em;
-  position: relative;
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer {
   background: transparent;
+  padding-top: 0;
 }
 
-/* line 4, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 5, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social {
   padding: 3em 0;
@@ -14897,14 +14219,14 @@ nav ul a {
   color: #7A868C;
 }
 
-/* line 9, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 10, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social h2 {
   padding: 14px 10px;
   margin-top: 0;
 }
 
-/* line 14, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 15, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social .borders {
   padding: 1em 0;
@@ -14912,13 +14234,13 @@ nav ul a {
   border-bottom: 2px solid #CBC8C7;
 }
 
-/* line 20, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 21, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social .widget {
   padding-right: 10px;
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 26, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main {
   margin: 0;
@@ -14926,27 +14248,27 @@ nav ul a {
   background: #1F2A3A;
 }
 
-/* line 30, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 31, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main h3 {
   font-size: 21px;
   font-weight: 200;
 }
 
-/* line 35, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 36, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main p {
   font-size: 16px;
 }
 
-/* line 40, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 41, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main .widget_text a {
   color: #FFF;
   text-decoration: underline;
 }
 
-/* line 44, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 45, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main .widget_text a:hover,
 .page-footer .footer-main .widget_text a:focus,
@@ -14955,21 +14277,21 @@ nav ul a {
           text-decoration-style: double;
 }
 
-/* line 49, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 50, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main .widget_text img {
   width: 20px;
   margin-right: 5px;
 }
 
-/* line 55, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 56, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main .menu a {
   font-size: 20px;
   color: #FFF;
 }
 
-/* line 59, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 60, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-main .menu a:hover,
 .page-footer .footer-main .menu a:focus,
@@ -14977,23 +14299,29 @@ nav ul a {
   text-decoration: underline;
 }
 
-/* line 65, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 66, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-utility {
   padding: 1em 0;
   background-color: #000;
   margin-bottom: 0;
-  font-size: 0.8em;
+  font-size: 0.8rem;
 }
 
-/* line 71, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 72, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+
+.page-footer .footer-utility p {
+  font-size: 0.8rem;
+}
+
+/* line 76, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-utility a {
   color: #FFF;
   text-decoration: underline;
 }
 
-/* line 75, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 80, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-utility a:hover,
 .page-footer .footer-utility a:focus,
@@ -15002,7 +14330,7 @@ nav ul a {
           text-decoration-style: double;
 }
 
-/* line 80, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-utility .menu {
   display: -webkit-box;
@@ -15011,7 +14339,7 @@ nav ul a {
   margin-right: 2em;
 }
 
-/* line 84, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+/* line 89, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-utility .menu li {
   margin: 0 7px;
@@ -15024,14 +14352,14 @@ nav ul a {
     height: auto;
   }
 
-  /* line 93, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+  /* line 98, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
   .page-footer a.unity-link {
     display: block;
     margin: 1em auto;
   }
 
-  /* line 98, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
+  /* line 103, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
   .page-footer .footer-utility-right,
   .page-footer .footer-social-right {
@@ -15442,21 +14770,52 @@ nav ul a {
 /* line 9, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
 
 .page-header {
-  text-align: center;
-  color: #FFF;
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  padding: 0 20px;
 }
 
-/* line 13, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
+/* line 17, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
 
-.page-header p {
-  font-weight: 400;
+.page-header .container,
+.page-header .container-wide {
+  background: rgba(75, 156, 211, 0.8);
+  text-align: left;
+  padding: 1em 1em 4em;
+}
+
+@media only screen and (max-width: 992px) {
+  /* line 17, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
+
+  .page-header .container,
+  .page-header .container-wide {
+    padding: 1rem;
+  }
+
+  /* line 25, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
+
+  .page-header .container h1,
+  .page-header .container-wide h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* line 33, ../rtp-core/resources/assets/styles/layouts/_pages.scss */
+
+.page .main {
+  margin-bottom: 0;
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
-.sidebar-primary .wrap .col,
-.sidebar-primary .wrap .main,
-.sidebar-primary .wrap .sidebar {
+.sidebar-primary .wrap .col {
   padding: 0;
 }
 
@@ -15528,13 +14887,13 @@ nav ul a {
   fill: grey;
 }
 
-/* line 81, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
+/* line 66, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
 .single-post .entry-title {
   margin-bottom: 0;
 }
 
-/* line 85, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
+/* line 70, ../rtp-core/resources/assets/styles/layouts/_posts.scss */
 
 .single-post .entry-content {
   margin-bottom: 4rem;
@@ -15584,9 +14943,7 @@ nav ul a {
 /* line 32, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container,
-.single .page-header .container-wide,
-.single .page-header .sidebar-primary .content,
-.sidebar-primary .single .page-header .content {
+.single .page-header .container-wide {
   background: transparent;
   padding: 0;
   z-index: 1;
@@ -15637,7 +14994,7 @@ nav ul a {
   text-decoration: underline;
 }
 
-/* line 1, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 1, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 button,
 input,
@@ -15661,23 +15018,21 @@ textarea,
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 6, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 6, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap,
 .mec-wrap div:not([class^=elementor-]) {
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 10, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 10, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
-.mec-wrap .row,
-.mec-wrap .sidebar-primary .wrap,
-.sidebar-primary .mec-wrap .wrap {
+.mec-wrap .row {
   margin-left: 0;
   margin-right: 0;
 }
 
-/* line 15, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 15, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box {
   border: none;
@@ -15688,7 +15043,16 @@ textarea,
           box-shadow: none;
 }
 
-/* line 22, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 22, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+
+.mec-wrap .mec-totalcal-box .col-md-4 {
+  width: 33% !important;
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+}
+
+/* line 29, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span,
 .mec-wrap .mec-totalcal-box input,
@@ -15696,14 +15060,14 @@ textarea,
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 33, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box .mec-totalcal-view {
   float: none;
   text-align: center;
 }
 
-/* line 30, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 37, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span {
   border: 1px solid #FFF;
@@ -15713,7 +15077,7 @@ textarea,
   font-size: 0.8rem;
 }
 
-/* line 37, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 44, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span:hover,
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span:focus,
@@ -15724,7 +15088,7 @@ textarea,
   color: #FFF;
 }
 
-/* line 47, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 54, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-date-search i {
   border: 1px solid #FFF;
@@ -15733,19 +15097,19 @@ textarea,
   border-radius: 0;
 }
 
-/* line 55, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 62, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper {
   display: inline-block;
 }
 
-/* line 58, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 65, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper select {
   display: none;
 }
 
-/* line 62, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 69, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper input.select-dropdown {
   border: 1px solid #FFF;
@@ -15761,7 +15125,7 @@ textarea,
   text-transform: uppercase;
 }
 
-/* line 74, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 81, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper input.select-dropdown:hover,
 .mec-wrap .select-wrapper input.select-dropdown:focus,
@@ -15770,14 +15134,14 @@ textarea,
   color: #FFF;
 }
 
-/* line 80, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 87, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper .caret {
   fill: #FFF;
   z-index: 1;
 }
 
-/* line 85, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 92, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper ul.dropdown-content {
   font-family: 'Poppins', sans-serif;
@@ -15785,51 +15149,51 @@ textarea,
   font-size: 0.9rem;
 }
 
-/* line 90, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 97, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper ul.dropdown-content li {
   min-height: 36px;
 }
 
-/* line 93, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 100, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper ul.dropdown-content li span {
   line-height: 18px;
   padding: 9px 16px;
 }
 
-/* line 98, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 105, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper ul.dropdown-content li.selected {
   background: #012169;
   border: 1px solid #FFF;
 }
 
-/* line 102, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 109, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper ul.dropdown-content li.selected span {
   color: #FFF;
 }
 
-/* line 111, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 118, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .filter-selects [class*=col-md] {
   padding: 0;
 }
 
-/* line 115, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 122, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .filter-selects .select-wrapper {
   width: 100%;
 }
 
-/* line 119, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 126, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .filter-selects i {
   display: none;
 }
 
-/* line 124, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 131, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-text-input-search input[type="search"] {
   width: calc(100% - 50px);
@@ -15844,7 +15208,7 @@ textarea,
   padding: 0 5px;
 }
 
-/* line 139, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 146, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar {
   border: none;
@@ -15852,14 +15216,14 @@ textarea,
           box-shadow: none;
 }
 
-/* line 143, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 150, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-topsec,
 .mec-calendar .mec-calendar-header {
   width: 100%;
 }
 
-/* line 147, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 154, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side {
   border: none;
@@ -15869,13 +15233,13 @@ textarea,
   padding: 0 20px 0 10px;
 }
 
-/* line 153, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 160, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-month-navigator {
   position: relative;
 }
 
-/* line 157, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 164, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month,
 .mec-calendar .mec-calendar-side .mec-next-month {
@@ -15886,14 +15250,14 @@ textarea,
   z-index: 2;
 }
 
-/* line 163, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 170, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month i,
 .mec-calendar .mec-calendar-side .mec-next-month i {
   color: #7A868C;
 }
 
-/* line 167, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 174, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month:hover,
 .mec-calendar .mec-calendar-side .mec-previous-month:focus,
@@ -15904,7 +15268,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 174, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 181, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-table-head dt {
   font-weight: 300;
@@ -15912,26 +15276,26 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 181, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 188, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar dt {
   font-weight: 300;
   font-size: 1rem;
 }
 
-/* line 186, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 193, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-table-nullday {
   color: #A2A9AE;
 }
 
-/* line 190, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 197, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event {
   border-radius: 0;
 }
 
-/* line 193, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 200, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event a {
   text-decoration: none;
@@ -15941,7 +15305,7 @@ textarea,
   transition: background 0.3s ease;
 }
 
-/* line 198, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 205, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event a:hover,
 .mec-calendar .mec-has-event a:active,
@@ -15950,14 +15314,14 @@ textarea,
   color: #FFF;
 }
 
-/* line 204, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 211, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event::after {
   background-color: #4B9CD3;
   border-radius: 0;
 }
 
-/* line 209, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 216, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event:hover,
 .mec-calendar .mec-has-event:active,
@@ -15965,27 +15329,27 @@ textarea,
   background: #4B9CD3 !important;
 }
 
-/* line 214, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 221, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-selected-day {
   background: #012169;
   border-radius: 0;
 }
 
-/* line 218, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 225, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-selected-day a {
   font-weight: bold;
 }
 
-/* line 223, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 230, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side {
   padding: 0 10px 0 20px;
   border: none;
 }
 
-/* line 227, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 234, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side .mec-table-side-title {
   font-size: 22px;
@@ -15994,7 +15358,7 @@ textarea,
   letter-spacing: normal;
 }
 
-/* line 234, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 241, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side .mec-table-side-day {
   font-size: 22px;
@@ -16002,7 +15366,7 @@ textarea,
   border-color: #4B9CD3;
 }
 
-/* line 241, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 248, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article {
   padding: 15px;
@@ -16010,7 +15374,7 @@ textarea,
   margin-bottom: 20px;
 }
 
-/* line 248, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 255, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article:hover,
 .mec-calendar .mec-event-article:focus,
@@ -16018,7 +15382,7 @@ textarea,
   background: #FFF;
 }
 
-/* line 254, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 261, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-title {
   margin-top: 0;
@@ -16026,7 +15390,7 @@ textarea,
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 260, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 267, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-title a:hover,
 .mec-calendar .mec-event-article .mec-event-title a:focus,
@@ -16034,7 +15398,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 266, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 273, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-time,
 .mec-calendar .mec-event-article .mec-event-detail {
@@ -16043,13 +15407,13 @@ textarea,
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 274, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 281, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-yearly-calendar .mec-calendar-table-head dl dt {
   background: transparent;
 }
 
-/* line 280, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 287, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-daily .mec-calendar-a-month {
   border: none;
@@ -16057,13 +15421,13 @@ textarea,
           box-shadow: none;
 }
 
-/* line 284, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 291, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-daily .mec-calendar-a-month h4 {
   border: none;
 }
 
-/* line 291, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 298, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month,
 .mec-calendar.mec-calendar-weekly .mec-next-month {
@@ -16075,14 +15439,14 @@ textarea,
   z-index: 2;
 }
 
-/* line 298, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 305, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month i,
 .mec-calendar.mec-calendar-weekly .mec-next-month i {
   color: #7A868C;
 }
 
-/* line 302, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 309, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
 .mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
@@ -16093,7 +15457,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 305, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 312, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
 .mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
@@ -16104,7 +15468,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 311, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 318, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-top {
   background: none;
@@ -16113,7 +15477,7 @@ textarea,
   border: none;
 }
 
-/* line 316, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 323, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-top h3 {
   border: 0;
@@ -16121,21 +15485,21 @@ textarea,
   color: #A2A9AE;
 }
 
-/* line 323, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 330, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table {
   border: 0;
   margin-bottom: 40px;
 }
 
-/* line 327, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 334, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt {
   clear: none;
   border: none;
 }
 
-/* line 331, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 338, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
   color: #4B9CD3;
@@ -16143,14 +15507,14 @@ textarea,
   font-weight: normal;
 }
 
-/* line 337, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 344, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-monthday {
   font-size: 1rem;
   margin-top: 0;
 }
 
-/* line 342, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 349, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:hover,
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:focus,
@@ -16159,7 +15523,7 @@ textarea,
           box-shadow: none;
 }
 
-/* line 350, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 357, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap {
   border: none;
@@ -16167,7 +15531,7 @@ textarea,
           box-shadow: none;
 }
 
-/* line 354, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 361, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec {
   border: none;
@@ -16176,19 +15540,19 @@ textarea,
   padding: 0;
 }
 
-/* line 359, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 366, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year {
   left: 0;
 }
 
-/* line 363, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 370, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year {
   right: 0;
 }
 
-/* line 367, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 374, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year {
@@ -16199,14 +15563,14 @@ textarea,
   z-index: 2;
 }
 
-/* line 373, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 380, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year i,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year i {
   color: #7A868C;
 }
 
-/* line 377, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 384, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
@@ -16217,7 +15581,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 383, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 390, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-calendar-sec {
   background: none;
@@ -16226,13 +15590,13 @@ textarea,
   padding: 0 20px 0 0;
 }
 
-/* line 389, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 396, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-agenda-sec {
   padding: 20px;
 }
 
-/* line 392, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 399, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda {
   padding: 15px;
@@ -16240,39 +15604,39 @@ textarea,
   margin-bottom: 20px;
 }
 
-/* line 405, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 412, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-date-wrap {
   font-size: 0.8rem;
   padding: 0;
 }
 
-/* line 409, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 416, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-date-wrap span.mec-agenda-day {
   font-size: 1em;
 }
 
-/* line 414, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 421, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-events-wrap {
   padding: 0;
   background: none;
 }
 
-/* line 419, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 426, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title {
   padding-left: 0;
 }
 
-/* line 422, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 429, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title a {
   font-size: 0.8rem;
 }
 
-/* line 425, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 432, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title a:hover,
 .mec-yearly-view-wrap .mec-agenda-event-title a:focus,
@@ -16280,31 +15644,31 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 433, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 440, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .entry-content ul.mec-weekly-view-dates-events li {
   padding-left: 0;
 }
 
-/* line 436, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 443, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .entry-content ul.mec-weekly-view-dates-events li::before {
   display: none;
 }
 
-/* line 442, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 449, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 span.event-color {
   display: none;
 }
 
-/* line 446, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 453, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-event-footer {
   display: none;
 }
 
-/* line 450, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 457, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
@@ -16327,14 +15691,14 @@ span.event-color {
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 454, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 461, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-daily-view-date-events article::before,
 ul.mec-weekly-view-dates-events article::before {
   top: 20px !important;
 }
 
-/* line 458, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 465, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-event-grid-minimal article .mec-fc-style::before,
 .mec-event-grid-simple article .mec-fc-style::before,
@@ -16348,7 +15712,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 462, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 469, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-color,
 .mec-color-before ::before,
@@ -16359,47 +15723,45 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 466, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 473, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-load-more-button {
   border-radius: 0;
 }
 
-/* line 471, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 478, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-container {
   padding: 0;
 }
 
-/* line 475, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 482, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
-.single-mec-events .row.mec-single-event,
-.single-mec-events .sidebar-primary .mec-single-event.wrap,
-.sidebar-primary .single-mec-events .mec-single-event.wrap {
+.single-mec-events .row.mec-single-event {
   margin-top: 0;
 }
 
-/* line 479, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 486, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar {
   margin-top: 0;
   background: rgba(75, 156, 211, 0.2);
 }
 
-/* line 483, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 490, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div {
   width: 20%;
 }
 
-/* line 486, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 493, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div h3,
 .single-mec-events .mec-event-social .mec-single-event-bar > div h3 {
   padding-left: 0;
 }
 
-/* line 490, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 497, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div dd {
   padding-left: 0;
@@ -16408,7 +15770,7 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 0.9rem;
 }
 
-/* line 499, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 506, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-cost,
 .single-mec-events .mec-event-more-info,
@@ -16424,13 +15786,13 @@ ul.mec-weekly-view-dates-events article::before {
   background: none;
 }
 
-/* line 503, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 510, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .col-md-4 {
   margin-top: 40px;
 }
 
-/* line 506, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 513, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .col-md-4 .mec-frontbox {
   margin: 0 !important;
@@ -16438,7 +15800,7 @@ ul.mec-weekly-view-dates-events article::before {
   background: none;
 }
 
-/* line 514, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 521, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul {
   display: block;
@@ -16446,7 +15808,7 @@ ul.mec-weekly-view-dates-events article::before {
   padding: 12px 14px;
 }
 
-/* line 519, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 526, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li {
   display: block;
@@ -16454,7 +15816,7 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 20px;
 }
 
-/* line 524, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 531, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
   float: none;
@@ -16464,7 +15826,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 531, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 538, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
@@ -16473,14 +15835,14 @@ ul.mec-weekly-view-dates-events article::before {
   color: #FFF;
 }
 
-/* line 541, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 548, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta h3 {
   margin: 0;
   padding: 0;
 }
 
-/* line 546, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 553, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta dd {
   padding-left: 0;
@@ -16489,13 +15851,13 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 0.9rem;
 }
 
-/* line 554, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 561, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-event-image {
   margin: 10px;
 }
 
-/* line 558, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 565, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-title {
   font-weight: bold;
@@ -16503,20 +15865,20 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 0.3em;
 }
 
-/* line 565, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 572, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content h2 {
   font-size: 2rem;
   padding: 0;
 }
 
-/* line 572, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 579, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content h3 {
   margin-bottom: 1em;
 }
 
-/* line 576, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 583, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content p {
   font-family: 'Poppins', sans-serif;
@@ -16524,7 +15886,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #1F2A3A;
 }
 
-/* line 583, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 590, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-booking-button {
   margin: 20px 10px;
@@ -16533,7 +15895,7 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 1.1rem;
 }
 
-/* line 590, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 597, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social {
   text-align: left;
@@ -16543,7 +15905,7 @@ ul.mec-weekly-view-dates-events article::before {
   padding: 0;
 }
 
-/* line 596, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 603, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social h3 {
   text-align: left;
@@ -16551,19 +15913,19 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 0;
 }
 
-/* line 603, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 610, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social h3::before {
   display: none;
 }
 
-/* line 608, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 615, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-sharing {
   margin-top: 0;
 }
 
-/* line 612, ../rtp-core/resources/assets/styles/layouts/_events.scss */
+/* line 619, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-social-icon {
   text-align: center;
@@ -16639,9 +16001,7 @@ body .entry-content a {
 /* line 7, resources/assets/styles/layouts/_header.scss */
 
 .page-header .container,
-.page-header .container-wide,
-.page-header .sidebar-primary .content,
-.sidebar-primary .page-header .content {
+.page-header .container-wide {
   background: rgba(87, 193, 165, 0.8);
 }
 
@@ -16909,9 +16269,7 @@ body .entry-content a {
 /* line 5, resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .container,
-.single .page-header .container-wide,
-.single .page-header .sidebar-primary .content,
-.sidebar-primary .single .page-header .content {
+.single .page-header .container-wide {
   background: transparent;
 }
 
