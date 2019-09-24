@@ -67,10 +67,10 @@ FLBuilder::register_module( 'CbbHeroBannerModule', [
 						'default' => 'RTP',
 						'options' => [
 							'RTP' => 'RTP',
-							'Hub' => 'Hub RTP',
-							'Boxyard' => 'Boxyard RTP',
-							'Frontier' => 'Frontier RTP',
-							'STEM' => 'STEM RTP'
+							'Hub RTP' => 'Hub RTP',
+							'Boxyard RTP' => 'Boxyard RTP',
+							'Frontier RTP' => 'Frontier RTP',
+							'STEM RTP' => 'STEM RTP'
 						]
 					],
 					'title' => [
