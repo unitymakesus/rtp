@@ -1,9 +1,14 @@
 .home-banner-wrapper {
   .home-banner {
-    background: rgba($color-blue, 0.8);
+    background: rgba($color-blue-frontier, 0.8);
   }
 
   .banner-cta {
-    background: $color-hub-blue;
+    background: $color-blue-hub;
   }
+}
+
+.footer-social {
+  display: none;
+  speak: none;
 }

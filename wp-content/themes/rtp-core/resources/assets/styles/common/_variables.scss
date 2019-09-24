@@ -12,13 +12,16 @@ $color-white:                 #FFF;
 // Master Brand
 $color-blue-unc:              #4B9CD3;
 $color-blue-duke:             #012169;
+$color-red-nccu:              #82052A;
 $color-red-state:             #C00;
 
 // Accents
-$color-red-nccu:              #82052A;
 $color-orange:                #FC4C02;
 $color-purple:                #654EA3;
 $color-purple-light:          #EEEDF5;
+
+// Hub
+$color-blue-hub:              #194685;
 
 // Frontier
 $color-mint:                  #57C1A5;
@@ -27,8 +30,7 @@ $color-mint-lighter:          #AFE5D9;
 $color-mint-a11y:             #2FA787;
 $color-pink:                  #F7406C;
 $color-pink-light:            #EE9AAC;
-$color-blue:                  #0094C9;
-$color-blue-light:            #A1DAE8;
+$color-blue-frontier:         #0094C9;
 
 // STEM
 $color-blue-unc-light:        #BCCFE9;
@@ -37,25 +39,23 @@ $color-red-state-light:       #E19097;
 $color-red-nccu-light:        #C29399;
 
 // Boxyard
-$color-boxyard:               #E63C2F;
+$color-red-boxyard:           #E63C2F;
 
 $primary-color:               $color-slate;
 $secondary-color:             $color-black;
-$success-color:               $color-mint;
+$success-color:               $color-mint-a11y;
 $error-color:                 $color-red-state;
 $link-color:                  $color-blue-unc;
 $opacity-list: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
 
 /** Buttons */
 // Shared styles
-// $button-background-focus: lighten($color-purple, 10%);
-// $button-font-size: 1.2rem;
-// $button-height: 50px;
-// $button-padding: 0 1rem;
-// $button-radius: 0;
-//
-// // Raised buttons
-// $button-raised-background: $color-purple;
+$button-background-focus: $color-blue-hub;
+$button-font-size: 1rem;
+$button-radius: 0;
+
+// Raised buttons
+$button-raised-background: $color-blue-frontier;
 
 /** Navigation */
 $navbar-height: auto;
@@ -63,9 +63,7 @@ $navbar-height-mobile: auto;
 
 /** Footer */
 $footer-font-color: $color-white;
-// $footer-bg-color: $color-teal;
 $footer-copyright-font-color: $color-white;
-// $footer-copyright-bg-color: $color-purple-dark;
 
 /** Box Model  */
 $spacer: 2rem;
@@ -120,12 +118,6 @@ $interval-size: $range / $intervals;
   background-image: -moz-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
   background-image: -ms-linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
   background-image: linear-gradient(90deg, $color-blue-unc 0%, $color-blue-duke 100%);
-}
-@mixin triangle($direction, $color) {
-  background-image: -o-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
-  background-image: -moz-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
-  background-image: -ms-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
-  background-image: linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
 }
 
 // Rem-calc function from Zurb

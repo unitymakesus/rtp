@@ -28,9 +28,14 @@ body {
 
 h1, .h1 {
   font-size: rem-calc(50px);
-  font-weight: 400;
+  font-weight: 300;
   margin: 0;
   padding: 10px 0;
+  color: $color-white;
+
+  @media #{$medium-and-down} {
+    font-size: rem-calc(36px);
+  }
 }
 
 h2, .h2 {

@@ -190,16 +190,16 @@
 
     &.badge-boxyard, &.badge-boxyard-rtp {
       .card-badge, .card-cta {
-        border-color: $color-boxyard;
-        color: $color-boxyard;
+        border-color: $color-red-boxyard;
+        color: $color-red-boxyard;
       }
 
       .card-cta a {
         &:hover, &:focus, &:active {
-          color: $color-boxyard;
+          color: $color-red-boxyard;
 
           .arrow path {
-            fill: $color-boxyard;
+            fill: $color-red-boxyard;
           }
         }
       }

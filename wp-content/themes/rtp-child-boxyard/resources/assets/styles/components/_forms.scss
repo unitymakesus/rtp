@@ -1,7 +1,7 @@
 .gform_wrapper.gform_wrapper {
   .gform_button.button {
-    background: $color-boxyard !important;
-    border: $color-boxyard !important;
+    background: $color-red-boxyard !important;
+    border: $color-red-boxyard !important;
 
     &:active {
       background: $color-red-nccu !important;
@@ -20,12 +20,12 @@
       &:checked {
         + label {
           &::before {
-            border-color: $color-boxyard;
+            border-color: $color-red-boxyard;
           }
 
           &::after {
-            border: $color-boxyard;
-            background-color: $color-boxyard;
+            border: $color-red-boxyard;
+            background-color: $color-red-boxyard;
           }
         }
       }
@@ -35,8 +35,8 @@
       &:checked {
         + label {
           &::before {
-            border-right-color: $color-boxyard;
-            border-bottom-color: $color-boxyard;
+            border-right-color: $color-red-boxyard;
+            border-bottom-color: $color-red-boxyard;
           }
         }
       }

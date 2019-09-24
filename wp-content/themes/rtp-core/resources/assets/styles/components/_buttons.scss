@@ -9,10 +9,18 @@
   &:not(.btn-small) {
     padding: 10px 2rem;
   }
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
 }
 
 a.btn {
   color: $color-white;
+}
+
+input[type="submit"] {
+  @extend .btn;
 }
 
 .fl-builder-content.fl-builder-content a.fl-button.fl-button {
