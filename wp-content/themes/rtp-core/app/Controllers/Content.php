@@ -10,6 +10,11 @@ class Content extends Controller
   public static function siteBadge() {
     $postID = get_the_ID();
     $siteID = get_post_meta($postID, 'dt_original_blog_id', true);
+
+		if (empty($siteID)) {
+			$siteID = get_current_blog_id();
+		}
+
     if ($siteID == 1) {
       $siteName = 'RTP';
     } else {
