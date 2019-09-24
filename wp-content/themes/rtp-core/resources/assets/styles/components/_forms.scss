@@ -209,6 +209,7 @@ textarea.materialize-textarea {
 
         + label {
           color: $color-slate;
+          font-weight: 300;
           margin-bottom: 0;
         }
       }
@@ -646,25 +647,32 @@ textarea.materialize-textarea {
   }
 }
 
-// Mailchimp signup
-footer {
-  #mc_embed_signup {
-    background: transparent;
-    padding: 0;
+#mc_embed_signup#mc_embed_signup {
+  background: transparent;
+  padding: 0;
 
-    #mc_embed_signup_scroll {
-      display: flex;
-      align-items: center;
-    }
+  #mc_embed_signup_scroll {
+    display: flex;
+    align-items: center;
+  }
 
-    input.email {
+  p {
+    margin: 0;
+  }
+
+  input.email {
+    border-radius: 0;
+
+    .page-footer & {
       width: auto;
-      border-radius: 0;
     }
+  }
 
-    .button {
-      border-radius: 0;
-      background: $color-blue-unc;
+  .button {
+    border-radius: 0;
+
+    .page-footer & {
+      background: $color-blue-frontier;
     }
   }
 }

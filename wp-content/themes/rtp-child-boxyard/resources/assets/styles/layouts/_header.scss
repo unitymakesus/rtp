@@ -3,53 +3,7 @@
   max-width: 160px;
 }
 
-// Homepage Hero
-.homepage-cta-row {
-  .card {
-    background: rgba($color-red-boxyard-red, 0.9);
-    color: $color-white;
-    padding: 0;
-
-    &:hover, &:focus, &:active {
-      box-shadow: none;
-    }
-
-    .card-title {
-      font-family: Helvetica, sans-serif;
-      font-size: 50px;
-      font-weight: 600;
-      line-height: 1.2em;
-      padding: 10px 20px 10px 30px;
-
-      @media #{$small-and-down} {
-        font-size: 45px;
-      }
-    }
-
-    .card-badge {
-      border-color: $color-white;
-      position: relative;
-      top: 40px;
-      left: 31px;
-    }
-
-    .card-cta {
-      background: $color-black;
-      border-top: 0;
-      margin: 0;
-      padding: 10px 20px;
-
-      a {
-        color: $color-white;
-
-        .arrow path {
-          fill: $color-white;
-        }
-      }
-    }
-  }
-}
-
-.why-boxyard .homepage-cta-row .card {
-  border-bottom: 50px solid $color-black;
+// Page headers
+.page-header .container {
+  background: rgba($color-red-boxyard, 0.8);
 }

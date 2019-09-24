@@ -1,14 +1,28 @@
 // Tabs
 .fl-tabs-labels .fl-tabs-label {
   border: 1px solid $color-white !important;
-  background: $color-red-boxyard-red;
+  background: $color-red-boxyard;
   color: $color-white;
   padding-left: 50px;
   padding-right: 50px;
   transition: all 0.2s;
   border-bottom: none !important;
+  text-decoration: none;
+
+  &:hover, &:focus {
+    text-decoration: underline;
+  }
 
   &.fl-tab-active {
-    background: $color-red-boxyard-red-dark;
+    background: $color-red-boxyard-dark;
   }
+}
+
+.fl-tabs-panel, .fl-tabs-panels {
+  border-color: transparent !important;
+  border-top-color: #979797 !important;
+}
+
+.fl-tabs-panel-content {
+  padding: 18px 0;
 }
