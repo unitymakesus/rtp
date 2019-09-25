@@ -20,9 +20,16 @@ defined('MECEXEC') or die();
       $term_img = get_wp_term_image($terms[0]->term_id);
     @endphp
 
-    <header class="page-header" style="background-image: url('{{$term_img}}')">
+    <header class="page-header">
+      <div class="texture">
+        <?php if (!empty($term_img)) { ?>
+          <img src="{{$term_img}}" alt=""/>
+        <?php } ?>
+      </div>
       <div class="container">
-        <h1>{!! App::title() !!}</h1>
+        <div class="entry-title-container">
+          <h1 class="entry-title">{!! App::title() !!}</h1>
+        </div>
       </div>
     </header>
 
