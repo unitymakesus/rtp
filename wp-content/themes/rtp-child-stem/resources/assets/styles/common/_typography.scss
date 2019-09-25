@@ -2,33 +2,24 @@ body {
   h1, .h1 {
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 60px;
-
-    @media #{$small-and-down} {
-      font-size: 45px;
-    }
+    font-size: rem-calc(60px);
   }
 
   h2, .h2 {
     text-transform: uppercase;
     font-weight: 600;
     color: $color-purple;
-    font-size: 40px;
+    font-size: rem-calc(40px);
   }
 
   h3, .h3 {
     text-transform: uppercase;
     font-weight: 600;
     color: $color-purple;
-    font-size: 26px;
     letter-spacing: 0;
   }
 
   .entry-content a {
     color: $color-purple;
   }
-}
-
-strong, .card-cta span {
-  font-weight: 600;
 }

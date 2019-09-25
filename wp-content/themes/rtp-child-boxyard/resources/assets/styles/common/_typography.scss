@@ -1,27 +1,18 @@
 body {
   h1, .h1 {
     font-family: Helvetica, sans-serif;
-    font-size: 50px;
-    color: $color-white;
     font-weight: 600;
-    line-height: 1.2em;
-
-    @media #{$small-and-down} {
-      font-size: 45px;
-    }
   }
 
   h2, .h2 {
     color: $color-red-boxyard;
     font-family: Helvetica, sans-serif;
     font-weight: 600;
-    font-size: 40px;
+    font-size: rem-calc(40px);
   }
 
   h3, .h3 {
     font-family: Helvetica, sans-serif;
-    line-height: 1.1em;
     font-weight: 600;
-    font-size: 25px;
   }
 }
