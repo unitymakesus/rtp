@@ -20,11 +20,10 @@
 /* line 11, stdin */
 
 .flex-grid .flex-item .figure-card .card {
-  margin: -65px 30px 50px;
-  height: calc(100% - 300px);
+  height: calc(100% - 235px);
 }
 
-/* line 16, stdin */
+/* line 15, stdin */
 
 .flex-grid .flex-item .figure-card .card-inner {
   display: -webkit-box;
@@ -37,26 +36,26 @@
   height: 100%;
 }
 
-/* line 21, stdin */
+/* line 20, stdin */
 
 .flex-grid .flex-item .figure-card .card-inner .card-cta {
   margin-top: auto;
 }
 
-/* line 26, stdin */
+/* line 25, stdin */
 
 .flex-grid .flex-item .figure-card .pattern-background {
   bottom: 0;
 }
 
-/* line 31, stdin */
+/* line 30, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .card {
   height: calc(100% - 50px);
   margin: 0 30px 50px 0;
 }
 
-/* line 36, stdin */
+/* line 35, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .pattern-background {
   left: 30px;

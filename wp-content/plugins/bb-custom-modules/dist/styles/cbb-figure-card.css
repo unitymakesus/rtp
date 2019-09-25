@@ -1379,9 +1379,10 @@
 
 .figure-card.figure-card-vertical {
   position: relative;
+  padding-bottom: 50px;
 }
 
-/* line 224, stdin */
+/* line 225, stdin */
 
 .figure-card.figure-card-vertical img,
 .figure-card.figure-card-vertical .placeholder {
@@ -1389,11 +1390,12 @@
   height: 300px;
   -o-object-fit: cover;
      object-fit: cover;
+  display: block;
   position: relative;
   z-index: 1;
 }
 
-/* line 232, stdin */
+/* line 234, stdin */
 
 .figure-card.figure-card-vertical .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -1404,14 +1406,14 @@
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 236, stdin */
+/* line 238, stdin */
 
 .figure-card.figure-card-vertical .card {
-  margin: -65px 30px 60px;
+  margin: -65px 30px 0;
   z-index: 2;
 }
 
-/* line 242, stdin */
+/* line 244, stdin */
 
 .figure-card.figure-card-horizontal {
   display: -webkit-box;
@@ -1419,7 +1421,7 @@
   display: flex;
 }
 
-/* line 245, stdin */
+/* line 247, stdin */
 
 .figure-card.figure-card-horizontal img {
   width: 66vw;
@@ -1432,7 +1434,7 @@
   z-index: 1;
 }
 
-/* line 255, stdin */
+/* line 257, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -1444,7 +1446,7 @@
   z-index: 2;
 }
 
-/* line 265, stdin */
+/* line 267, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right img {
   left: auto;
@@ -1453,7 +1455,7 @@
   margin-right: -50vw;
 }
 
-/* line 272, stdin */
+/* line 274, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card {
   left: 30px;
