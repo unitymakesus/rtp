@@ -241,3 +241,12 @@ add_action( 'wpel_apply_settings', function () {
 
    return true;
 }, 10 );
+
+/**
+ * Add class to navigation links so WP External Links plugin can ignore them
+ */
+add_filter('nav_menu_link_attributes', function($atts, $item, $args) {
+  $atts['class'] = 'menu-link';
+
+  return $atts;
+}, 10, 3);
