@@ -13,20 +13,22 @@
     ?>
     <div class="flex-item">
       <article class="figure-card figure-card-vertical <?php echo implode(' ', $classes); ?>">
-        <?php
-        $siteID = get_post_meta($id, 'dt_original_blog_id', true);
-        $origID = get_post_meta($id, 'dt_original_post_id', true);
+        <div class="figure-card-img">
+          <?php
+          $siteID = get_post_meta($id, 'dt_original_blog_id', true);
+          $origID = get_post_meta($id, 'dt_original_post_id', true);
 
-        if (!empty($siteID)) {
-          // If this is a syndicated post, switch to original site to get featured image
-          switch_to_blog($siteID);
-          $module->featuredImage($origID);
-          restore_current_blog();
-        } else {
-          // Just get the featured image from this site
-          $module->featuredImage($id);
-        }
-        ?>
+          if (!empty($siteID)) {
+            // If this is a syndicated post, switch to original site to get featured image
+            switch_to_blog($siteID);
+            $module->featuredImage($origID);
+            restore_current_blog();
+          } else {
+            // Just get the featured image from this site
+            $module->featuredImage($id);
+          }
+          ?>
+        </div>
 
         <div class="card" itemprop="description">
           <div class="meta">

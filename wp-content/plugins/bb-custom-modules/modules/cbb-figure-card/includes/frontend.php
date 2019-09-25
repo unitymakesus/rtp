@@ -20,9 +20,11 @@ if ($settings->structure == 'horizontal') {
 ?>
 
 <article class="figure-card <?php echo implode(' ', $classes); ?>">
-  <?php if ($settings->structure !== 'default') { ?>
-		<?php echo wp_get_attachment_image($settings->image, 'full', false, ['alt' => $settings->image_alt, 'itemprop' => 'image']); ?>
-  <?php } ?>
+  <div class="figure-card-img">
+    <?php if ($settings->structure !== 'default') { ?>
+  		<?php echo wp_get_attachment_image($settings->image, 'full', false, ['alt' => $settings->image_alt, 'itemprop' => 'image']); ?>
+    <?php } ?>
+  </div>
 
   <div class="card" itemprop="description">
     <div class="card-badge"><span><?php echo $badge; ?></span></div>

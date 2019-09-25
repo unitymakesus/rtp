@@ -14,7 +14,7 @@
   }
 
   &.fl-tab-active {
-    background: $color-red-boxyard-dark;
+    background: darken($color-red-boxyard, 15%);
   }
 }
 

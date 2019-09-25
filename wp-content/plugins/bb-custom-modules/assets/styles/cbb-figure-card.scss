@@ -222,7 +222,7 @@
     position: relative;
     padding-bottom: 50px;
 
-    img, .placeholder {
+    .figure-card-img img, .placeholder {
       width: 100%;
       height: 300px;
       object-fit: cover;
@@ -244,14 +244,19 @@
   &.figure-card-horizontal {
     display: flex;
 
-    img {
-      width: 66vw;
-      height: 500px;
-      left: 50%;
-      margin-left: -50vw;
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
+    .figure-card-img {
+      display: flex;
+      width: 100%;
+
+      img {
+        width: 66vw;
+        height: 500px;
+        left: 50%;
+        margin-left: -50vw;
+        object-fit: cover;
+        position: relative;
+        z-index: 1;
+      }
     }
 
     .card {
@@ -264,7 +269,7 @@
     }
 
     &.figure-align-right {
-      img {
+      .figure-card-img img {
         left: auto;
         right: 50%;
         margin-left: auto;

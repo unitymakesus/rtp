@@ -15006,7 +15006,7 @@ nav ul a {
 /* line 8, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .texture {
-  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/texture-single-header.png);
+  background-image: url(/wp-content/themes/rtp-child-boxyard/dist/images/texture-single-header.png);
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
@@ -16040,25 +16040,21 @@ body#tinymce {
 
 body h1,
 body .h1 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  font-size: 3.05556rem;
+  font-family: Helvetica, sans-serif;
   font-weight: 600;
-  letter-spacing: -0.3px;
 }
 
-/* line 10, resources/assets/styles/common/_typography.scss */
+/* line 7, resources/assets/styles/common/_typography.scss */
 
 body h2,
 body .h2 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
+  color: #E63C2F;
+  font-family: Helvetica, sans-serif;
   font-weight: 600;
   font-size: 2.22222rem;
-  color: #57C1A5;
 }
 
-/* line 18, resources/assets/styles/common/_typography.scss */
+/* line 14, resources/assets/styles/common/_typography.scss */
 
 body h3,
 body .single-mec-events .mec-event-social h3,
@@ -16066,26 +16062,96 @@ body .single-mec-events .mec-event-social h3,
 body .h3,
 body .single-mec-events .mec-events-content h2,
 .single-mec-events .mec-events-content body h2 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
+  font-family: Helvetica, sans-serif;
   font-weight: 600;
-  font-size: 30px;
-  letter-spacing: 0;
-  margin-top: 0;
 }
 
-/* line 27, resources/assets/styles/common/_typography.scss */
+/* line 1, resources/assets/styles/components/_buttons.scss */
 
-body .entry-content a {
-  color: #57C1A5;
+.btn-secondary {
+  background: #E63C2F;
 }
 
-/* line 1, resources/assets/styles/layouts/_blog.scss */
+/* line 2, resources/assets/styles/components/_bbmodules.scss */
 
-.archive .figure-card .placeholder {
-  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/texture-single-header.png);
-  background-repeat: no-repeat;
-  background-size: cover;
+.fl-tabs-labels .fl-tabs-label {
+  border: 1px solid #FFF !important;
+  background: #E63C2F;
+  color: #FFF;
+  padding-left: 50px;
+  padding-right: 50px;
+  -webkit-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+  border-bottom: none !important;
+  text-decoration: none;
+}
+
+/* line 12, resources/assets/styles/components/_bbmodules.scss */
+
+.fl-tabs-labels .fl-tabs-label:hover,
+.fl-tabs-labels .fl-tabs-label:focus {
+  text-decoration: underline;
+}
+
+/* line 16, resources/assets/styles/components/_bbmodules.scss */
+
+.fl-tabs-labels .fl-tabs-label.fl-tab-active {
+  background: #b32116;
+}
+
+/* line 21, resources/assets/styles/components/_bbmodules.scss */
+
+.fl-tabs-panel,
+.fl-tabs-panels {
+  border-color: transparent !important;
+  border-top-color: #979797 !important;
+}
+
+/* line 26, resources/assets/styles/components/_bbmodules.scss */
+
+.fl-tabs-panel-content {
+  padding: 18px 0;
+}
+
+/* line 2, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .gform_button.button {
+  background: #E63C2F !important;
+  border: #E63C2F !important;
+}
+
+/* line 6, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .gform_button.button:active {
+  background: #82052A !important;
+  border: #82052A !important;
+}
+
+/* line 14, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:hover .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:focus {
+  background: #C29399;
+}
+
+/* line 22, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .select-wrapper input[type="radio"]:checked + label::before {
+  border-color: #E63C2F;
+}
+
+/* line 26, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .select-wrapper input[type="radio"]:checked + label::after {
+  border: #E63C2F;
+  background-color: #E63C2F;
+}
+
+/* line 37, resources/assets/styles/components/_forms.scss */
+
+.gform_wrapper.gform_wrapper .select-wrapper input[type="checkbox"]:checked + label::before {
+  border-right-color: #E63C2F;
+  border-bottom-color: #E63C2F;
 }
 
 /* line 2, resources/assets/styles/layouts/_header.scss */
@@ -16098,297 +16164,19 @@ body .entry-content a {
 
 .page-header .container,
 .page-header .container-wide {
-  background: rgba(87, 193, 165, 0.8);
-}
-
-/* line 2, resources/assets/styles/layouts/_footer.scss */
-
-.page-footer .footer-social {
-  background: rgba(87, 193, 165, 0.1);
+  background: rgba(230, 60, 47, 0.8);
 }
 
 /* line 2, resources/assets/styles/layouts/_home.scss */
 
 .home-banner-wrapper .home-banner {
-  background: rgba(87, 193, 165, 0.8);
+  background: rgba(230, 60, 47, 0.8);
 }
 
 /* line 6, resources/assets/styles/layouts/_home.scss */
 
 .home-banner-wrapper .banner-cta {
-  background: rgba(0, 148, 201, 0.8);
-}
-
-/* line 1, resources/assets/styles/layouts/_events.scss */
-
-.entry-content .mec-wrap h1,
-.entry-content .mec-wrap h2,
-.entry-content .mec-wrap h3,
-.entry-content .mec-wrap h4,
-.entry-content .mec-wrap h5,
-.entry-content .mec-wrap h6,
-.mec-wrap h1,
-.mec-wrap h2,
-.mec-wrap h3,
-.mec-wrap .single-mec-events .mec-event-social h3,
-.single-mec-events .mec-event-social .mec-wrap h3,
-.mec-wrap h4,
-.mec-wrap h5,
-.mec-wrap h6 {
-  font-family: 'Oswald', sans-serif;
-}
-
-/* line 8, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span {
-  background: #57C1A5;
-}
-
-/* line 11, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span:hover,
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span:focus,
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span:active,
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span.mec-totalcalview-selected {
-  background: #30826c;
-}
-
-/* line 19, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .mec-date-search i {
-  background: #30826c;
-}
-
-/* line 25, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .select-wrapper input.select-dropdown {
-  background: #57C1A5;
-}
-
-/* line 28, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .select-wrapper input.select-dropdown:hover,
-.mec-wrap .select-wrapper input.select-dropdown:focus,
-.mec-wrap .select-wrapper input.select-dropdown:active {
-  background: #30826c;
-}
-
-/* line 34, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .select-wrapper ul.dropdown-content li.selected {
-  background: #30826c;
-}
-
-/* line 44, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-calendar-side .mec-previous-month:hover,
-.mec-calendar .mec-calendar-side .mec-previous-month:focus,
-.mec-calendar .mec-calendar-side .mec-previous-month:active,
-.mec-calendar .mec-calendar-side .mec-next-month:hover,
-.mec-calendar .mec-calendar-side .mec-next-month:focus,
-.mec-calendar .mec-calendar-side .mec-next-month:active {
-  color: #57C1A5;
-}
-
-/* line 51, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-calendar-table-head dt {
-  color: #57C1A5;
-}
-
-/* line 58, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-has-event a:hover,
-.mec-calendar .mec-has-event a:active,
-.mec-calendar .mec-has-event a:focus {
-  background: #57C1A5;
-}
-
-/* line 63, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-has-event::after {
-  background-color: #57C1A5;
-}
-
-/* line 67, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-has-event:hover,
-.mec-calendar .mec-has-event:active,
-.mec-calendar .mec-has-event:focus {
-  background: #57C1A5 !important;
-}
-
-/* line 72, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-selected-day {
-  background: #30826c;
-}
-
-/* line 77, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-calendar-events-side .mec-table-side-day {
-  border-color: #57C1A5;
-}
-
-/* line 85, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-event-article .mec-event-title a:hover,
-.mec-calendar .mec-event-article .mec-event-title a:focus,
-.mec-calendar .mec-event-article .mec-event-title a:active {
-  color: #57C1A5;
-}
-
-/* line 94, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:active,
-.mec-calendar.mec-calendar-weekly .mec-next-month:hover,
-.mec-calendar.mec-calendar-weekly .mec-next-month:focus,
-.mec-calendar.mec-calendar-weekly .mec-next-month:active {
-  color: #57C1A5;
-}
-
-/* line 97, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:active i,
-.mec-calendar.mec-calendar-weekly .mec-next-month:hover i,
-.mec-calendar.mec-calendar-weekly .mec-next-month:focus i,
-.mec-calendar.mec-calendar-weekly .mec-next-month:active i {
-  color: #57C1A5;
-}
-
-/* line 105, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
-  color: #57C1A5;
-}
-
-/* line 116, resources/assets/styles/layouts/_events.scss */
-
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:active,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:hover,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:focus,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:active {
-  color: #57C1A5;
-}
-
-/* line 124, resources/assets/styles/layouts/_events.scss */
-
-.mec-yearly-view-wrap .mec-agenda-event-title a:hover,
-.mec-yearly-view-wrap .mec-agenda-event-title a:focus,
-.mec-yearly-view-wrap .mec-agenda-event-title a:active {
-  color: #57C1A5;
-}
-
-/* line 131, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
-.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
-.mec-event-grid-classic article .mec-fc-style,
-.mec-event-grid-minimal article .mec-fc-style,
-.mec-event-grid-simple article .mec-fc-style,
-.mec-timetable-wrap article .mec-fc-style,
-.mec-wrap .mec-event-list-accordion article .mec-fc-style,
-.mec-wrap .mec-event-list-modern article .mec-fc-style,
-.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style,
-.mec-wrap article.mec-event-cover-classic .mec-fc-style,
-.mec-wrap article.mec-event-cover-clean .mec-fc-style,
-.mec-wrap article.mec-event-cover-modern .mec-fc-style,
-.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style {
-  background: #F7406C;
-}
-
-/* line 135, resources/assets/styles/layouts/_events.scss */
-
-.mec-event-grid-minimal article .mec-fc-style::before,
-.mec-event-grid-simple article .mec-fc-style::before,
-.mec-timetable-wrap article .mec-fc-style::before,
-.mec-wrap .mec-event-list-accordion article .mec-fc-style::before,
-.mec-wrap .mec-event-list-modern article .mec-fc-style::before,
-.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before,
-.mec-wrap article.mec-event-cover-classic .mec-fc-style::before,
-.mec-wrap article.mec-event-cover-clean .mec-fc-style::before,
-.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
-  color: #F7406C;
-}
-
-/* line 139, resources/assets/styles/layouts/_events.scss */
-
-.mec-color,
-.mec-color-before ::before,
-.mec-color-hover:hover,
-.mec-wrap .mec-color,
-.mec-wrap .mec-color-before ::before,
-.mec-wrap .mec-color-hover:hover {
-  color: #57C1A5;
-}
-
-/* line 144, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-single-event-bar {
-  background: rgba(87, 193, 165, 0.2);
-}
-
-/* line 151, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
-  border: 1px solid #57C1A5;
-  color: #57C1A5;
-}
-
-/* line 155, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:active {
-  background: #57C1A5;
-  color: #FFF;
-}
-
-/* line 164, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-booking-button {
-  background-color: #57C1A5;
-}
-
-/* line 2, resources/assets/styles/layouts/_single.scss */
-
-.single .page-header {
-  background-color: #AFE5D9;
-}
-
-/* line 5, resources/assets/styles/layouts/_single.scss */
-
-.single .page-header .container,
-.single .page-header .container-wide {
-  background: transparent;
-}
-
-/* line 9, resources/assets/styles/layouts/_single.scss */
-
-.single .page-header h1 {
-  color: #57C1A5;
-}
-
-/* line 1, resources/assets/styles/components/_map.scss */
-
-.uabb-hotspot-tooltip-content {
-  background: rgba(87, 193, 165, 0.8) !important;
-  width: 400px;
-  font-size: 14px;
-  color: #000 !important;
-  text-align: left;
-}
-
-/* line 8, resources/assets/styles/components/_map.scss */
-
-.uabb-hotspot-tooltip-content::after {
-  border-color: transparent !important;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 
