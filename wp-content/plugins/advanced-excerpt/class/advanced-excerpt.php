@@ -229,7 +229,11 @@ class Advanced_Excerpt {
 
 		if ( true === apply_filters( 'advanced_excerpt_skip_excerpt_filtering', false ) ) {
 			return $content;
-		}
+        }
+        
+        if ( is_post_type_archive( 'tribe_events' ) ) {
+            return $content;
+        }
 
 		global $post;
 		if ( $the_content_no_break && false !== strpos( $post->post_content, '<!--more-->' ) && 'content' == $this->filter_type ) {
@@ -259,7 +263,7 @@ class Advanced_Excerpt {
 
 		// add our filter back in
 		if ( $content_has_filter ) { 
-			add_filter( 'the_content', array( $this, 'filter_content' ) );
+            add_filter( 'the_content', array( $this, 'filter_content' ) );
 		}
 
 		// From the default wp_trim_excerpt():
