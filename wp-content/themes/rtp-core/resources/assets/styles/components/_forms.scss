@@ -203,7 +203,7 @@ textarea.materialize-textarea {
       }
 
       input {
-        width: calc(100% - 20px);
+        width: 54px;
       }
 
       .select-wrapper {
@@ -273,7 +273,6 @@ textarea.materialize-textarea {
   }
 
   .select-wrapper {
-    padding-top: 2px;
     display: inline-block;
 
     input.select-dropdown {
