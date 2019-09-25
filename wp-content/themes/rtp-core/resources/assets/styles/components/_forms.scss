@@ -196,6 +196,22 @@ textarea.materialize-textarea {
 
   div.ginput_container {
     margin-top: 0 !important;
+
+    &.ginput_container_time {
+      i {
+        margin-top: 25%;
+      }
+
+      input {
+        width: calc(100% - 20px);
+      }
+
+      .select-wrapper {
+        input {
+          width: 100%;
+        }
+      }
+    }
   }
 
   div.ginput_container_checkbox {
