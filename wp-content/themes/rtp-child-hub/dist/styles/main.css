@@ -12515,33 +12515,34 @@ textarea.materialize-textarea {
 
 .gform_wrapper.gform_wrapper div.ginput_container.ginput_container_time i {
   margin-top: 25%;
+  width: 15px;
 }
 
-/* line 205, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 206, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper div.ginput_container.ginput_container_time input {
   width: 54px;
 }
 
-/* line 210, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 211, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper div.ginput_container.ginput_container_time .select-wrapper input {
   width: 100%;
 }
 
-/* line 217, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 218, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper div.ginput_container_checkbox {
   margin-bottom: 15px !important;
 }
 
-/* line 223, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 224, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .field_sublabel_below .ginput_complex input {
   margin-bottom: 0 !important;
 }
 
-/* line 226, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 227, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .field_sublabel_below .ginput_complex input + label {
   color: #333F48;
@@ -12549,21 +12550,21 @@ textarea.materialize-textarea {
   margin-bottom: 0;
 }
 
-/* line 233, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 234, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .field_sublabel_below .ginput_complex .caret {
   top: 10px;
   pointer-events: none;
 }
 
-/* line 240, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 241, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .field_description_below .gfield_description {
   padding-top: 0;
   margin-top: -15px;
 }
 
-/* line 245, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 246, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gform_button.button {
   background: #4B9CD3 !important;
@@ -12573,40 +12574,40 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 254, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 255, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gform_button.button:hover,
 .gform_wrapper.gform_wrapper .gform_button.button:focus {
   text-decoration: underline;
 }
 
-/* line 260, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 261, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gform_button.button:focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 264, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 265, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gform_button.button:active {
   background: #012169 !important;
   border: #012169 !important;
 }
 
-/* line 270, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 271, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper input:not([type=radio]):not([type="checkbox"]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
   color: #333F48;
   font-weight: 400;
 }
 
-/* line 275, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 276, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper {
   display: inline-block;
 }
 
-/* line 278, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 279, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown {
   height: 3rem;
@@ -12616,53 +12617,53 @@ textarea.materialize-textarea {
   text-transform: none;
 }
 
-/* line 285, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 286, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:hover,
 .gform_wrapper.gform_wrapper .select-wrapper input.select-dropdown:focus {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* line 290, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 291, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li {
   text-transform: none;
   padding-left: 0;
 }
 
-/* line 294, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 295, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li::before {
   display: none;
 }
 
-/* line 298, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 299, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li span {
   padding: 16px;
   min-height: 50px;
 }
 
-/* line 303, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 304, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li.selected {
   background: #BCCFE9;
 }
 
-/* line 306, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 307, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper ul.dropdown-content li.selected span {
   color: #1F2A3A;
 }
 
-/* line 312, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 313, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper .caret {
   fill: #7A868C;
   z-index: 1;
 }
 
-/* line 317, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 318, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .select-wrapper + label {
   position: relative;
@@ -12670,14 +12671,14 @@ textarea.materialize-textarea {
   color: #333F48;
 }
 
-/* line 325, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 326, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio li::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox li::before {
   display: none;
 }
 
-/* line 330, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 331, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"] + label,
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"] + label,
@@ -12700,7 +12701,7 @@ textarea.materialize-textarea {
           user-select: none;
 }
 
-/* line 342, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 343, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"] + label::before,
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"] + label::after,
@@ -12725,7 +12726,7 @@ textarea.materialize-textarea {
   border: 2px solid #7A868C;
 }
 
-/* line 358, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 359, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:focus + label,
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"]:focus + label,
@@ -12734,7 +12735,7 @@ textarea.materialize-textarea {
   font-weight: 400;
 }
 
-/* line 375, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 376, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:not(:checked) + label::after,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="radio"]:not(:checked) + label::after {
@@ -12743,14 +12744,14 @@ textarea.materialize-textarea {
           transform: scale(0);
 }
 
-/* line 383, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 384, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:checked + label::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="radio"]:checked + label::before {
   border: 2px solid #4B9CD3;
 }
 
-/* line 387, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 388, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="radio"]:checked + label::after,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="radio"]:checked + label::after {
@@ -12761,14 +12762,14 @@ textarea.materialize-textarea {
           transform: scale(0.5);
 }
 
-/* line 398, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 399, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"] + label::after,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"] + label::after {
   display: none;
 }
 
-/* line 402, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 403, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"] + label::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"] + label::before {
@@ -12778,7 +12779,7 @@ textarea.materialize-textarea {
   margin: 3px 0 0 0;
 }
 
-/* line 412, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 413, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .gform_wrapper.gform_wrapper .gfield_radio input[type="checkbox"]:checked + label::before,
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"]:checked + label::before {
@@ -12800,14 +12801,14 @@ textarea.materialize-textarea {
           transform-origin: 100% 100%;
 }
 
-/* line 433, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 434, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec-exceptional-days {
   display: none;
   speak: none;
 }
 
-/* line 439, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 440, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec-location .mec-tooltip,
 .mec-fes-form #mec-organizer .mec-tooltip {
@@ -12815,21 +12816,21 @@ textarea.materialize-textarea {
   speak: none;
 }
 
-/* line 445, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 446, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_location_id option[value="0"] {
   display: none;
   speak: none;
 }
 
-/* line 450, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 451, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_location_new_container + .mec-form-row {
   display: none;
   speak: none;
 }
 
-/* line 456, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 457, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_organizer_new_container + h4,
 .mec-fes-form #mec_organizer_new_container + h4 + .mec-form-row {
@@ -12837,20 +12838,20 @@ textarea.materialize-textarea {
   speak: none;
 }
 
-/* line 462, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 463, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-dashicons {
   display: none;
   speak: none;
 }
 
-/* line 467, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 468, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-fes-form-cntt {
   margin-top: 2rem;
 }
 
-/* line 471, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 472, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form label {
   color: #1F2A3A;
@@ -12859,7 +12860,7 @@ textarea.materialize-textarea {
   font-weight: 400;
 }
 
-/* line 478, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 479, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form input[type="text"],
 .mec-fes-form input[type="textarea"],
@@ -12876,13 +12877,13 @@ textarea.materialize-textarea {
   height: 3rem !important;
 }
 
-/* line 488, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 489, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form input[type="file"] {
   line-height: 3rem;
 }
 
-/* line 493, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 494, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .file-field .btn,
 .mec-fes-form .file-field .btn-large,
@@ -12898,7 +12899,7 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 498, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 499, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .file-field .file-path-wrapper input[type="text"] {
   margin-top: 0;
@@ -12907,7 +12908,7 @@ textarea.materialize-textarea {
   direction: rtl;
 }
 
-/* line 513, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 514, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_fes_remove_image_button {
   font-size: 0.9em;
@@ -12916,19 +12917,19 @@ textarea.materialize-textarea {
   display: block;
 }
 
-/* line 519, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 520, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_fes_remove_image_button.mec-util-hidden {
   display: none;
 }
 
-/* line 524, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 525, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form select {
   display: none;
 }
 
-/* line 528, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 529, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form textarea {
   font-size: inherit !important;
@@ -12942,7 +12943,7 @@ textarea.materialize-textarea {
   margin-bottom: 15px;
 }
 
-/* line 539, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 540, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button {
   width: auto;
@@ -12953,27 +12954,27 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 549, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 550, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:hover,
 .mec-fes-form button.mec-fes-sub-button:focus {
   text-decoration: underline;
 }
 
-/* line 555, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 556, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 559, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 560, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:active {
   background: #012169 !important;
   border: #012169 !important;
 }
 
-/* line 565, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 566, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-meta-box-fields {
   clear: both;
@@ -12984,7 +12985,7 @@ textarea.materialize-textarea {
   margin-top: 2rem;
 }
 
-/* line 572, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 573, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-meta-box-fields h4 {
   background: none;
@@ -12997,19 +12998,19 @@ textarea.materialize-textarea {
   letter-spacing: normal;
 }
 
-/* line 584, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 585, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-title {
   clear: both;
 }
 
-/* line 588, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 589, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper {
   display: inline-block;
 }
 
-/* line 591, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 592, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper input.select-dropdown {
   width: 100%;
@@ -13020,59 +13021,59 @@ textarea.materialize-textarea {
   text-transform: none;
 }
 
-/* line 599, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 600, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper input.select-dropdown:hover,
 .mec-fes-form .select-wrapper input.select-dropdown:focus {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* line 604, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 605, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li {
   text-transform: none;
   padding-left: 0;
 }
 
-/* line 608, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 609, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li::before {
   display: none;
 }
 
-/* line 612, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 613, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li span {
   padding: 16px;
   min-height: 50px;
 }
 
-/* line 617, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 618, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li.selected {
   background: #BCCFE9;
 }
 
-/* line 620, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 621, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li.selected span {
   color: #1F2A3A;
 }
 
-/* line 626, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 627, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper .caret {
   z-index: 1;
   pointer-events: none;
 }
 
-/* line 633, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 634, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-time-picker .select-wrapper {
   width: 5rem;
 }
 
-/* line 639, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 640, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-form-row::after {
   content: "";
@@ -13080,7 +13081,7 @@ textarea.materialize-textarea {
   clear: both;
 }
 
-/* line 647, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 648, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-fes-form-sdbr input:not([type]):not(.browser-default),
 .mec-fes-form .mec-fes-form-sdbr input[type=text]:not(.browser-default),
@@ -13098,14 +13099,14 @@ textarea.materialize-textarea {
 }
 
 @media only screen and (min-width: 769px) {
-  /* line 653, ../rtp-core/resources/assets/styles/components/_forms.scss */
+  /* line 654, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
   .mec-fes-form .mec-col-4 {
     float: left;
     width: calc(100% / 3);
   }
 
-  /* line 658, ../rtp-core/resources/assets/styles/components/_forms.scss */
+  /* line 659, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
   .mec-fes-form .mec-col-6 {
     float: left;
@@ -13113,14 +13114,14 @@ textarea.materialize-textarea {
   }
 }
 
-/* line 665, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 666, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup {
   background: transparent;
   padding: 0;
 }
 
-/* line 669, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 670, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup #mc_embed_signup_scroll {
   display: -webkit-box;
@@ -13131,43 +13132,43 @@ textarea.materialize-textarea {
           align-items: center;
 }
 
-/* line 674, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 675, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup p {
   margin: 0;
 }
 
-/* line 678, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 679, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup input.email {
   border-radius: 0;
 }
 
-/* line 681, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 682, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .page-footer #mc_embed_signup#mc_embed_signup input.email {
   width: auto;
 }
 
-/* line 686, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 687, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup .button {
   border-radius: 0;
 }
 
-/* line 689, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 690, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .page-footer #mc_embed_signup#mc_embed_signup .button {
   background: #0094C9;
 }
 
-/* line 695, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 696, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .post-password-form {
   padding: 50px 20px;
 }
 
-/* line 698, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 699, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .post-password-form > * {
   max-width: 1260px;
@@ -14506,9 +14507,11 @@ nav ul a {
      object-fit: cover;
   position: relative;
   z-index: 1;
+  background: #FFF;
+  display: block;
 }
 
-/* line 22, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 24, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -14519,11 +14522,11 @@ nav ul a {
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 28, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card {
-  margin: -65px 30px 50px;
-  height: calc(100% - 300px);
+  margin: -65px 30px 0;
+  height: calc(100% - 235px);
   background: #FFF;
   padding: 24px 24px 4px;
   position: relative;
@@ -14532,14 +14535,12 @@ nav ul a {
   -o-transition: box-shadow 0.3s;
   transition: box-shadow 0.3s;
   transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
-  -webkit-box-shadow: 0;
-          box-shadow: 0;
   -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
           box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
-/* line 37, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 38, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card:hover,
 .archive .figure-card .card:focus,
@@ -14548,7 +14549,7 @@ nav ul a {
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 41, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 42, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card .meta {
   position: absolute;
@@ -14558,7 +14559,7 @@ nav ul a {
   text-transform: uppercase;
 }
 
-/* line 50, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 51, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-inner {
   display: -webkit-box;
@@ -14571,7 +14572,7 @@ nav ul a {
   height: 100%;
 }
 
-/* line 56, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 57, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-badge {
   border-style: solid;
@@ -14587,7 +14588,7 @@ nav ul a {
   text-transform: uppercase;
 }
 
-/* line 69, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 70, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-badge span {
   position: absolute;
@@ -14599,14 +14600,14 @@ nav ul a {
   white-space: nowrap;
 }
 
-/* line 80, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 81, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title {
   margin: 50px 16px 20px;
   min-height: 80px;
 }
 
-/* line 84, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 85, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title a {
   font-weight: 600 !important;
@@ -14614,7 +14615,7 @@ nav ul a {
   color: #000;
 }
 
-/* line 89, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 90, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title a:hover,
 .archive .figure-card .card-title a:focus,
@@ -14622,7 +14623,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 95, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 96, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta {
   border-style: solid;
@@ -14632,7 +14633,7 @@ nav ul a {
   margin: auto 0 5px;
 }
 
-/* line 102, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 103, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a {
   color: #000;
@@ -14650,13 +14651,13 @@ nav ul a {
   vertical-align: middle;
 }
 
-/* line 115, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 116, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 119, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 120, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -14670,7 +14671,7 @@ nav ul a {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 127, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 128, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -14679,7 +14680,7 @@ nav ul a {
   transition: fill 0.3s ease;
 }
 
-/* line 133, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 134, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a:hover,
 .archive .figure-card .card-cta a:focus,
@@ -14687,7 +14688,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 136, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 137, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a:hover .arrow,
 .archive .figure-card .card-cta a:focus .arrow,
@@ -14696,7 +14697,7 @@ nav ul a {
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 143, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 144, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .pattern-background {
   position: absolute;
@@ -14707,14 +14708,14 @@ nav ul a {
   right: 0;
 }
 
-/* line 151, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 152, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 158, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 159, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-badge,
 .archive .figure-card.badge-rtp .card-cta {
@@ -14722,7 +14723,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 164, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 165, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover,
 .archive .figure-card.badge-rtp .card-cta a:focus,
@@ -14730,7 +14731,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 167, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 168, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -14738,7 +14739,7 @@ nav ul a {
   fill: #333F48;
 }
 
-/* line 175, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 176, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-badge,
 .archive .figure-card.badge-hub .card-cta,
@@ -14748,7 +14749,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 181, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 182, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover,
 .archive .figure-card.badge-hub .card-cta a:focus,
@@ -14759,7 +14760,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 184, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 185, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover .arrow path,
 .archive .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -14770,7 +14771,7 @@ nav ul a {
   fill: #4B9CD3;
 }
 
-/* line 192, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 193, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-badge,
 .archive .figure-card.badge-boxyard .card-cta,
@@ -14780,7 +14781,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 198, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 199, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover,
 .archive .figure-card.badge-boxyard .card-cta a:focus,
@@ -14791,7 +14792,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 201, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 202, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .archive .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -14802,7 +14803,7 @@ nav ul a {
   fill: #E63C2F;
 }
 
-/* line 209, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 210, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-badge,
 .archive .figure-card.badge-frontier .card-cta,
@@ -14812,7 +14813,7 @@ nav ul a {
   color: #57C1A5;
 }
 
-/* line 215, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 216, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover,
 .archive .figure-card.badge-frontier .card-cta a:focus,
@@ -14823,7 +14824,7 @@ nav ul a {
   color: #2FA787;
 }
 
-/* line 218, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 219, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .archive .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -14834,7 +14835,7 @@ nav ul a {
   fill: #57C1A5;
 }
 
-/* line 226, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 227, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-badge,
 .archive .figure-card.badge-stem .card-cta,
@@ -14844,7 +14845,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 232, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 233, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover,
 .archive .figure-card.badge-stem .card-cta a:focus,
@@ -14855,7 +14856,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 235, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 236, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover .arrow path,
 .archive .figure-card.badge-stem .card-cta a:focus .arrow path,

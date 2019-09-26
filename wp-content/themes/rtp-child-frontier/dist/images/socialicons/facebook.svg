@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>Icon / Social / Facebook Symbol</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M13.2325,3.984 L10.9735,3.9855 C9.202,3.9855 8.8585,4.827 8.8585,6.0615 L8.8585,8.7855 L13.084,8.7855 L12.5335,13.053 L8.8585,13.053 L8.8585,24 L4.453,24 L4.453,13.053 L0.769,13.053 L0.769,8.7855 L4.453,8.7855 L4.453,5.64 C4.453,1.9875 6.6835,0 9.94,0 C11.5,0 12.841,0.1155 13.2325,0.168 L13.2325,3.984 Z" id="path-1"></path>
+    </defs>
+    <g id="Icon-/-Social-/-Facebook-Symbol" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="↳🎨-Color" transform="translate(17.000000, 12.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#333F48" xlink:href="#path-1"></use>
+        </g>
+    </g>
+</svg>
