@@ -14504,9 +14504,10 @@ nav ul a {
 .archive .figure-card {
   position: relative;
   height: 100%;
+  padding-bottom: 40px;
 }
 
-/* line 14, resources/assets/styles/layouts/_blog.scss */
+/* line 15, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card img,
 .archive .figure-card .placeholder {
@@ -14520,7 +14521,7 @@ nav ul a {
   display: block;
 }
 
-/* line 24, resources/assets/styles/layouts/_blog.scss */
+/* line 25, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -14531,7 +14532,7 @@ nav ul a {
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 28, resources/assets/styles/layouts/_blog.scss */
+/* line 29, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card {
   margin: -65px 30px 0;
@@ -14549,7 +14550,7 @@ nav ul a {
   z-index: 2;
 }
 
-/* line 38, resources/assets/styles/layouts/_blog.scss */
+/* line 39, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card:hover,
 .archive .figure-card .card:focus,
@@ -14558,7 +14559,7 @@ nav ul a {
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 42, resources/assets/styles/layouts/_blog.scss */
+/* line 43, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card .meta {
   position: absolute;
@@ -14568,7 +14569,7 @@ nav ul a {
   text-transform: uppercase;
 }
 
-/* line 51, resources/assets/styles/layouts/_blog.scss */
+/* line 52, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-inner {
   display: -webkit-box;
@@ -14581,7 +14582,7 @@ nav ul a {
   height: 100%;
 }
 
-/* line 57, resources/assets/styles/layouts/_blog.scss */
+/* line 58, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-badge {
   border-style: solid;
@@ -14597,7 +14598,7 @@ nav ul a {
   text-transform: uppercase;
 }
 
-/* line 70, resources/assets/styles/layouts/_blog.scss */
+/* line 71, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-badge span {
   position: absolute;
@@ -14609,14 +14610,14 @@ nav ul a {
   white-space: nowrap;
 }
 
-/* line 81, resources/assets/styles/layouts/_blog.scss */
+/* line 82, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title {
   margin: 50px 16px 20px;
   min-height: 80px;
 }
 
-/* line 85, resources/assets/styles/layouts/_blog.scss */
+/* line 86, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title a {
   font-weight: 600 !important;
@@ -14624,7 +14625,7 @@ nav ul a {
   color: #000;
 }
 
-/* line 90, resources/assets/styles/layouts/_blog.scss */
+/* line 91, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title a:hover,
 .archive .figure-card .card-title a:focus,
@@ -14632,7 +14633,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 96, resources/assets/styles/layouts/_blog.scss */
+/* line 97, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta {
   border-style: solid;
@@ -14642,7 +14643,7 @@ nav ul a {
   margin: auto 0 5px;
 }
 
-/* line 103, resources/assets/styles/layouts/_blog.scss */
+/* line 104, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a {
   color: #000;
@@ -14660,13 +14661,13 @@ nav ul a {
   vertical-align: middle;
 }
 
-/* line 116, resources/assets/styles/layouts/_blog.scss */
+/* line 117, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 120, resources/assets/styles/layouts/_blog.scss */
+/* line 121, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -14680,7 +14681,7 @@ nav ul a {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 128, resources/assets/styles/layouts/_blog.scss */
+/* line 129, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -14689,7 +14690,7 @@ nav ul a {
   transition: fill 0.3s ease;
 }
 
-/* line 134, resources/assets/styles/layouts/_blog.scss */
+/* line 135, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a:hover,
 .archive .figure-card .card-cta a:focus,
@@ -14697,7 +14698,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 137, resources/assets/styles/layouts/_blog.scss */
+/* line 138, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a:hover .arrow,
 .archive .figure-card .card-cta a:focus .arrow,
@@ -14706,25 +14707,25 @@ nav ul a {
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 144, resources/assets/styles/layouts/_blog.scss */
+/* line 145, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .pattern-background {
   position: absolute;
   z-index: 0;
   top: 0;
-  bottom: 30px;
+  bottom: 0;
   left: 65px;
   right: 0;
 }
 
-/* line 152, resources/assets/styles/layouts/_blog.scss */
+/* line 153, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 159, resources/assets/styles/layouts/_blog.scss */
+/* line 160, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-badge,
 .archive .figure-card.badge-rtp .card-cta {
@@ -14732,7 +14733,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 165, resources/assets/styles/layouts/_blog.scss */
+/* line 166, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover,
 .archive .figure-card.badge-rtp .card-cta a:focus,
@@ -14740,7 +14741,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 168, resources/assets/styles/layouts/_blog.scss */
+/* line 169, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -14748,7 +14749,7 @@ nav ul a {
   fill: #333F48;
 }
 
-/* line 176, resources/assets/styles/layouts/_blog.scss */
+/* line 177, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-badge,
 .archive .figure-card.badge-hub .card-cta,
@@ -14758,7 +14759,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 182, resources/assets/styles/layouts/_blog.scss */
+/* line 183, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover,
 .archive .figure-card.badge-hub .card-cta a:focus,
@@ -14769,7 +14770,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 185, resources/assets/styles/layouts/_blog.scss */
+/* line 186, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover .arrow path,
 .archive .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -14780,7 +14781,7 @@ nav ul a {
   fill: #4B9CD3;
 }
 
-/* line 193, resources/assets/styles/layouts/_blog.scss */
+/* line 194, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-badge,
 .archive .figure-card.badge-boxyard .card-cta,
@@ -14790,7 +14791,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 199, resources/assets/styles/layouts/_blog.scss */
+/* line 200, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover,
 .archive .figure-card.badge-boxyard .card-cta a:focus,
@@ -14801,7 +14802,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 202, resources/assets/styles/layouts/_blog.scss */
+/* line 203, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .archive .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -14812,7 +14813,7 @@ nav ul a {
   fill: #E63C2F;
 }
 
-/* line 210, resources/assets/styles/layouts/_blog.scss */
+/* line 211, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-badge,
 .archive .figure-card.badge-frontier .card-cta,
@@ -14822,7 +14823,7 @@ nav ul a {
   color: #57C1A5;
 }
 
-/* line 216, resources/assets/styles/layouts/_blog.scss */
+/* line 217, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover,
 .archive .figure-card.badge-frontier .card-cta a:focus,
@@ -14833,7 +14834,7 @@ nav ul a {
   color: #2FA787;
 }
 
-/* line 219, resources/assets/styles/layouts/_blog.scss */
+/* line 220, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .archive .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -14844,7 +14845,7 @@ nav ul a {
   fill: #57C1A5;
 }
 
-/* line 227, resources/assets/styles/layouts/_blog.scss */
+/* line 228, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-badge,
 .archive .figure-card.badge-stem .card-cta,
@@ -14854,7 +14855,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 233, resources/assets/styles/layouts/_blog.scss */
+/* line 234, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover,
 .archive .figure-card.badge-stem .card-cta a:focus,
@@ -14865,7 +14866,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 236, resources/assets/styles/layouts/_blog.scss */
+/* line 237, resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover .arrow path,
 .archive .figure-card.badge-stem .card-cta a:focus .arrow path,

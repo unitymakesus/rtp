@@ -1047,14 +1047,12 @@
   -o-transition: box-shadow 0.3s;
   transition: box-shadow 0.3s;
   transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
-  -webkit-box-shadow: 0;
-          box-shadow: 0;
   -webkit-box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
           box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
 
-/* line 16, stdin */
+/* line 15, stdin */
 
 .figure-card .card:hover,
 .figure-card .card:focus,
@@ -1063,7 +1061,7 @@
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 20, stdin */
+/* line 19, stdin */
 
 .figure-card .card .meta {
   position: absolute;
@@ -1073,7 +1071,7 @@
   text-transform: uppercase;
 }
 
-/* line 29, stdin */
+/* line 28, stdin */
 
 .figure-card .card-badge {
   border-style: solid;
@@ -1089,7 +1087,7 @@
   text-transform: uppercase;
 }
 
-/* line 42, stdin */
+/* line 41, stdin */
 
 .figure-card .card-badge span {
   position: absolute;
@@ -1101,13 +1099,13 @@
   white-space: nowrap;
 }
 
-/* line 53, stdin */
+/* line 52, stdin */
 
 .figure-card .card-title {
   margin: 40px 16px 20px;
 }
 
-/* line 56, stdin */
+/* line 55, stdin */
 
 .figure-card .card-title a {
   font-weight: 600 !important;
@@ -1115,7 +1113,7 @@
   color: #000;
 }
 
-/* line 61, stdin */
+/* line 60, stdin */
 
 .figure-card .card-title a:hover,
 .figure-card .card-title a:focus,
@@ -1123,14 +1121,14 @@
   text-decoration: underline !important;
 }
 
-/* line 67, stdin */
+/* line 66, stdin */
 
 .figure-card .card-content {
   margin: 0 16px 20px;
   font-weight: 300;
 }
 
-/* line 72, stdin */
+/* line 71, stdin */
 
 .figure-card .card-cta {
   border-style: solid;
@@ -1140,7 +1138,7 @@
   margin: 0 16px;
 }
 
-/* line 79, stdin */
+/* line 78, stdin */
 
 .figure-card .card-cta a {
   color: #000;
@@ -1159,13 +1157,13 @@
   vertical-align: middle;
 }
 
-/* line 93, stdin */
+/* line 92, stdin */
 
 .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 97, stdin */
+/* line 96, stdin */
 
 .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -1179,7 +1177,7 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 104, stdin */
+/* line 103, stdin */
 
 .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -1188,7 +1186,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 111, stdin */
+/* line 110, stdin */
 
 .figure-card .card-cta a:hover .text,
 .figure-card .card-cta a:focus .text,
@@ -1196,7 +1194,7 @@
   text-decoration: underline !important;
 }
 
-/* line 115, stdin */
+/* line 114, stdin */
 
 .figure-card .card-cta a:hover .arrow,
 .figure-card .card-cta a:focus .arrow,
@@ -1205,25 +1203,25 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 122, stdin */
+/* line 121, stdin */
 
 .figure-card .pattern-background {
   position: absolute;
   z-index: 0;
   top: 0;
-  bottom: -30px;
+  bottom: 15px;
   left: 65px;
   right: 0;
 }
 
-/* line 130, stdin */
+/* line 129, stdin */
 
 .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 137, stdin */
+/* line 136, stdin */
 
 .figure-card.badge-rtp .card-badge,
 .figure-card.badge-rtp .card-cta {
@@ -1231,7 +1229,7 @@
   color: #333F48;
 }
 
-/* line 143, stdin */
+/* line 142, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover,
 .figure-card.badge-rtp .card-cta a:focus,
@@ -1239,7 +1237,7 @@
   color: #333F48;
 }
 
-/* line 146, stdin */
+/* line 145, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -1247,7 +1245,7 @@
   fill: #333F48;
 }
 
-/* line 154, stdin */
+/* line 153, stdin */
 
 .figure-card.badge-hub .card-badge,
 .figure-card.badge-hub .card-cta,
@@ -1257,7 +1255,7 @@
   color: #4B9CD3;
 }
 
-/* line 160, stdin */
+/* line 159, stdin */
 
 .figure-card.badge-hub .card-cta a:hover,
 .figure-card.badge-hub .card-cta a:focus,
@@ -1268,7 +1266,7 @@
   color: #4B9CD3;
 }
 
-/* line 163, stdin */
+/* line 162, stdin */
 
 .figure-card.badge-hub .card-cta a:hover .arrow path,
 .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -1279,7 +1277,7 @@
   fill: #4B9CD3;
 }
 
-/* line 171, stdin */
+/* line 170, stdin */
 
 .figure-card.badge-boxyard .card-badge,
 .figure-card.badge-boxyard .card-cta,
@@ -1289,7 +1287,7 @@
   color: #E63C2F;
 }
 
-/* line 177, stdin */
+/* line 176, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover,
 .figure-card.badge-boxyard .card-cta a:focus,
@@ -1300,7 +1298,7 @@
   color: #E63C2F;
 }
 
-/* line 180, stdin */
+/* line 179, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -1311,7 +1309,7 @@
   fill: #E63C2F;
 }
 
-/* line 188, stdin */
+/* line 187, stdin */
 
 .figure-card.badge-frontier .card-badge,
 .figure-card.badge-frontier .card-cta,
@@ -1321,7 +1319,7 @@
   color: #47D7AC;
 }
 
-/* line 194, stdin */
+/* line 193, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover,
 .figure-card.badge-frontier .card-cta a:focus,
@@ -1332,7 +1330,7 @@
   color: #2FA787;
 }
 
-/* line 197, stdin */
+/* line 196, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -1343,7 +1341,7 @@
   fill: #47D7AC;
 }
 
-/* line 205, stdin */
+/* line 204, stdin */
 
 .figure-card.badge-stem .card-badge,
 .figure-card.badge-stem .card-cta,
@@ -1353,7 +1351,7 @@
   color: #654EA3;
 }
 
-/* line 211, stdin */
+/* line 210, stdin */
 
 .figure-card.badge-stem .card-cta a:hover,
 .figure-card.badge-stem .card-cta a:focus,
@@ -1364,7 +1362,7 @@
   color: #654EA3;
 }
 
-/* line 214, stdin */
+/* line 213, stdin */
 
 .figure-card.badge-stem .card-cta a:hover .arrow path,
 .figure-card.badge-stem .card-cta a:focus .arrow path,
@@ -1375,14 +1373,14 @@
   fill: #654EA3;
 }
 
-/* line 221, stdin */
+/* line 220, stdin */
 
 .figure-card.figure-card-vertical {
   position: relative;
-  padding-bottom: 50px;
+  padding-bottom: 40px;
 }
 
-/* line 225, stdin */
+/* line 224, stdin */
 
 .figure-card.figure-card-vertical .figure-card-img img,
 .figure-card.figure-card-vertical .placeholder {
@@ -1393,6 +1391,7 @@
   display: block;
   position: relative;
   z-index: 1;
+  background: #FFF;
 }
 
 /* line 234, stdin */
