@@ -1,16 +1,10 @@
 .single {
-  .page-header {
-    .container {
-      background: transparent;
-    }
+  h1 {
+    @include rtp-gradient;
 
-    h1 {
-      @include rtp-gradient;
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-      font-weight: 600;
-    }
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    font-weight: 600;
   }
 }

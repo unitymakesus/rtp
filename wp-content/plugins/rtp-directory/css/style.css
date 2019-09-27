@@ -2157,6 +2157,7 @@ body.directory-map .key ul li.icon-trails::before {
 
 .user-can-edit {
   position: relative;
+  transition: box-shadow .3s;
 }
 
 button.modaal {
@@ -2185,10 +2186,6 @@ button.modaal:hover, button.modaal:focus, button.modaal:active {
   right: 20px;
 }
 
-.user-can-edit {
-  transition: box-shadow .3s;
-}
-
 .reporting {
   color: white;
   font-size: 1em;
@@ -2196,10 +2193,6 @@ button.modaal:hover, button.modaal:focus, button.modaal:active {
 }
 .reporting:hover {
   color: white;
-}
-
-.updated {
-  display: none;
 }
 
 .acf-field-message.acf-field-5b4df2133b7de {

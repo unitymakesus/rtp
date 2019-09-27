@@ -4,6 +4,7 @@
 
 .user-can-edit {
   position: relative;
+  transition: box-shadow .3s;
 }
 
 button.modaal {
@@ -34,10 +35,6 @@ button.modaal {
   }
 }
 
-.user-can-edit {
-  transition: box-shadow .3s;
-}
-
 .reporting {
   color: white;
   font-size: 1em;
@@ -46,10 +43,6 @@ button.modaal {
   &:hover {
     color: white;
   }
-}
-
-.updated {
-  display: none;
 }
 
 .acf-field-message.acf-field-5b4df2133b7de {

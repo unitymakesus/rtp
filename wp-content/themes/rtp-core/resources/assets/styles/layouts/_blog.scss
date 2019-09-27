@@ -23,7 +23,9 @@
     }
 
     .placeholder {
-      @include rtp-gradient;
+      background-image: url('../images/texture-single-header.png');
+      background-repeat: no-repeat;
+      background-size: cover;
     }
 
     .card {
