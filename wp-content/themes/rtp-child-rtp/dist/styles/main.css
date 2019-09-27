@@ -3898,6 +3898,8 @@ input[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit,
 .gform_wrapper.gform_wrapper .gform_button.button,
 .mec-fes-form button.mec-fes-sub-button,
+.acf-form .acf-button,
+.acf-form .acf-input .button,
 .btn-floating,
 .dropdown-content,
 .collapsible,
@@ -3908,7 +3910,8 @@ input[type="submit"],
 .gform_wrapper.gform_wrapper .gfield_checkbox input[type="checkbox"]:not(:checked):focus + label::before,
 .mec-fes-form #mec_fes_thumbnail_img img,
 .mec-calendar .mec-event-article,
-.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda {
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda,
+.acf-form .acf-image-uploader .image-wrap img {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -3924,6 +3927,8 @@ input:hover[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:hover,
 .gform_wrapper.gform_wrapper .gform_button.button:hover,
 .mec-fes-form button.mec-fes-sub-button:hover,
+.acf-form .acf-button:hover,
+.acf-form .acf-input .button:hover,
 .btn-floating:hover {
   -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
@@ -3956,7 +3961,11 @@ input:hover[type="submit"],
 .mec-calendar .mec-event-article:active,
 .mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:hover,
 .mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:focus,
-.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:active {
+.mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda:active,
+.acf-form .acf-button:hover,
+.acf-form .acf-button:focus,
+.acf-form .acf-input .button:hover,
+.acf-form .acf-input .button:focus {
   -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
@@ -6590,6 +6599,10 @@ nav ul .ctct-form-wrapper.ctct-form-wrapper a.ctct-submit,
 .ctct-form-wrapper.ctct-form-wrapper nav ul a.ctct-submit,
 nav ul .gform_wrapper.gform_wrapper a.gform_button.button,
 .gform_wrapper.gform_wrapper nav ul a.gform_button.button,
+nav ul .acf-form a.acf-button,
+.acf-form nav ul a.acf-button,
+nav ul .acf-form .acf-input a.button,
+.acf-form .acf-input nav ul a.button,
 nav ul a.btn-large,
 nav ul a.btn-flat,
 nav ul a.btn-floating {
@@ -6609,6 +6622,10 @@ nav ul .ctct-form-wrapper.ctct-form-wrapper a.ctct-submit > .material-icons,
 .ctct-form-wrapper.ctct-form-wrapper nav ul a.ctct-submit > .material-icons,
 nav ul .gform_wrapper.gform_wrapper a.gform_button.button > .material-icons,
 .gform_wrapper.gform_wrapper nav ul a.gform_button.button > .material-icons,
+nav ul .acf-form a.acf-button > .material-icons,
+.acf-form nav ul a.acf-button > .material-icons,
+nav ul .acf-form .acf-input a.button > .material-icons,
+.acf-form .acf-input nav ul a.button > .material-icons,
 nav ul a.btn-large > .material-icons,
 nav ul a.btn-flat > .material-icons,
 nav ul a.btn-floating > .material-icons {
@@ -7068,6 +7085,8 @@ input[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit,
 .gform_wrapper.gform_wrapper .gform_button.button,
 .mec-fes-form button.mec-fes-sub-button,
+.acf-form .acf-button,
+.acf-form .acf-input .button,
 .btn-flat {
   border: none;
   border-radius: 0;
@@ -7090,6 +7109,8 @@ input.disabled[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .disabled.ctct-submit,
 .gform_wrapper.gform_wrapper .disabled.gform_button.button,
 .mec-fes-form button.disabled.mec-fes-sub-button,
+.acf-form .disabled.acf-button,
+.acf-form .acf-input .disabled.button,
 .btn-floating.disabled,
 .btn-large.disabled,
 .btn-small.disabled,
@@ -7102,6 +7123,8 @@ input:disabled[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:disabled,
 .gform_wrapper.gform_wrapper .gform_button.button:disabled,
 .mec-fes-form button.mec-fes-sub-button:disabled,
+.acf-form .acf-button:disabled,
+.acf-form .acf-input .button:disabled,
 .btn-floating:disabled,
 .btn-large:disabled,
 .btn-small:disabled,
@@ -7114,6 +7137,8 @@ input[disabled][type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit[disabled],
 .gform_wrapper.gform_wrapper .gform_button.button[disabled],
 .mec-fes-form button.mec-fes-sub-button[disabled],
+.acf-form .acf-button[disabled],
+.acf-form .acf-input .button[disabled],
 .btn-floating[disabled],
 .btn-large[disabled],
 .btn-small[disabled],
@@ -7136,6 +7161,8 @@ input.disabled:hover[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .disabled.ctct-submit:hover,
 .gform_wrapper.gform_wrapper .disabled.gform_button.button:hover,
 .mec-fes-form button.disabled.mec-fes-sub-button:hover,
+.acf-form .disabled.acf-button:hover,
+.acf-form .acf-input .disabled.button:hover,
 .btn-floating.disabled:hover,
 .btn-large.disabled:hover,
 .btn-small.disabled:hover,
@@ -7148,6 +7175,8 @@ input:disabled:hover[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:disabled:hover,
 .gform_wrapper.gform_wrapper .gform_button.button:disabled:hover,
 .mec-fes-form button.mec-fes-sub-button:disabled:hover,
+.acf-form .acf-button:disabled:hover,
+.acf-form .acf-input .button:disabled:hover,
 .btn-floating:disabled:hover,
 .btn-large:disabled:hover,
 .btn-small:disabled:hover,
@@ -7160,6 +7189,8 @@ input[disabled]:hover[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit[disabled]:hover,
 .gform_wrapper.gform_wrapper .gform_button.button[disabled]:hover,
 .mec-fes-form button.mec-fes-sub-button[disabled]:hover,
+.acf-form .acf-button[disabled]:hover,
+.acf-form .acf-input .button[disabled]:hover,
 .btn-floating[disabled]:hover,
 .btn-large[disabled]:hover,
 .btn-small[disabled]:hover,
@@ -7178,6 +7209,8 @@ input[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit,
 .gform_wrapper.gform_wrapper .gform_button.button,
 .mec-fes-form button.mec-fes-sub-button,
+.acf-form .acf-button,
+.acf-form .acf-input .button,
 .btn-floating,
 .btn-large,
 .btn-small,
@@ -7196,6 +7229,8 @@ input[type="submit"] i,
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit i,
 .gform_wrapper.gform_wrapper .gform_button.button i,
 .mec-fes-form button.mec-fes-sub-button i,
+.acf-form .acf-button i,
+.acf-form .acf-input .button i,
 .btn-floating i,
 .btn-large i,
 .btn-small i,
@@ -7214,6 +7249,8 @@ input:focus[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:focus,
 .gform_wrapper.gform_wrapper .gform_button.button:focus,
 .mec-fes-form button.mec-fes-sub-button:focus,
+.acf-form .acf-button:focus,
+.acf-form .acf-input .button:focus,
 .btn-floating:focus {
   background-color: #006e96;
 }
@@ -7227,7 +7264,9 @@ input:focus[type="submit"],
 input[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit,
 .gform_wrapper.gform_wrapper .gform_button.button,
-.mec-fes-form button.mec-fes-sub-button {
+.mec-fes-form button.mec-fes-sub-button,
+.acf-form .acf-button,
+.acf-form .acf-input .button {
   text-decoration: none;
   color: #fff;
   background-color: #0094C9;
@@ -7248,7 +7287,9 @@ input[type="submit"],
 input:hover[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:hover,
 .gform_wrapper.gform_wrapper .gform_button.button:hover,
-.mec-fes-form button.mec-fes-sub-button:hover {
+.mec-fes-form button.mec-fes-sub-button:hover,
+.acf-form .acf-button:hover,
+.acf-form .acf-input .button:hover {
   background-color: #00a7e3;
 }
 
@@ -7810,6 +7851,10 @@ body.keyboard-focused .dropdown-content li:focus {
 .gform_wrapper.gform_wrapper .modal .modal-footer .gform_button.button,
 .modal .modal-footer .mec-fes-form button.mec-fes-sub-button,
 .mec-fes-form .modal .modal-footer button.mec-fes-sub-button,
+.modal .modal-footer .acf-form .acf-button,
+.acf-form .modal .modal-footer .acf-button,
+.modal .modal-footer .acf-form .acf-input .button,
+.acf-form .acf-input .modal .modal-footer .button,
 .modal .modal-footer .btn-flat {
   margin: 6px 0;
 }
@@ -8092,6 +8137,10 @@ body.keyboard-focused .dropdown-content li:focus {
 .ctct-form-wrapper.ctct-form-wrapper .sidenav li > a.ctct-submit,
 .sidenav .gform_wrapper.gform_wrapper li > a.gform_button.button,
 .gform_wrapper.gform_wrapper .sidenav li > a.gform_button.button,
+.sidenav .acf-form li > a.acf-button,
+.acf-form .sidenav li > a.acf-button,
+.sidenav .acf-form .acf-input li > a.button,
+.acf-form .acf-input .sidenav li > a.button,
 .sidenav li > a.btn-large,
 .sidenav li > a.btn-flat,
 .sidenav li > a.btn-floating {
@@ -8109,6 +8158,10 @@ body.keyboard-focused .dropdown-content li:focus {
 .ctct-form-wrapper.ctct-form-wrapper .sidenav li > a.ctct-submit,
 .sidenav .gform_wrapper.gform_wrapper li > a.gform_button.button,
 .gform_wrapper.gform_wrapper .sidenav li > a.gform_button.button,
+.sidenav .acf-form li > a.acf-button,
+.acf-form .sidenav li > a.acf-button,
+.sidenav .acf-form .acf-input li > a.button,
+.acf-form .acf-input .sidenav li > a.button,
 .sidenav li > a.btn-large,
 .sidenav li > a.btn-floating {
   color: #fff;
@@ -8131,6 +8184,10 @@ body.keyboard-focused .dropdown-content li:focus {
 .ctct-form-wrapper.ctct-form-wrapper .sidenav li > a.ctct-submit:hover,
 .sidenav .gform_wrapper.gform_wrapper li > a.gform_button.button:hover,
 .gform_wrapper.gform_wrapper .sidenav li > a.gform_button.button:hover,
+.sidenav .acf-form li > a.acf-button:hover,
+.acf-form .sidenav li > a.acf-button:hover,
+.sidenav .acf-form .acf-input li > a.button:hover,
+.acf-form .acf-input .sidenav li > a.button:hover,
 .sidenav li > a.btn-large:hover {
   background-color: #00a7e3;
 }
@@ -9896,7 +9953,11 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
 .file-field .gform_wrapper.gform_wrapper .gform_button.button,
 .gform_wrapper.gform_wrapper .file-field .gform_button.button,
 .file-field .mec-fes-form button.mec-fes-sub-button,
-.mec-fes-form .file-field button.mec-fes-sub-button {
+.mec-fes-form .file-field button.mec-fes-sub-button,
+.file-field .acf-form .acf-button,
+.acf-form .file-field .acf-button,
+.file-field .acf-form .acf-input .button,
+.acf-form .acf-input .file-field .button {
   float: left;
   height: 3rem;
   line-height: 3rem;
@@ -11006,7 +11067,8 @@ input[type=range]::-ms-thumb {
 
 /* line 5, ../rtp-core/resources/assets/styles/common/_a11y.scss */
 
-.screen-reader-text {
+.screen-reader-text,
+.filter-selects .facet-label {
   clip: rect(1px, 1px, 1px, 1px);
   -webkit-clip-path: polygon(0 0, 0 0, 0 0, 0 0);
           clip-path: polygon(0 0, 0 0, 0 0, 0 0);
@@ -11019,7 +11081,8 @@ input[type=range]::-ms-thumb {
 
 /* line 14, ../rtp-core/resources/assets/styles/common/_a11y.scss */
 
-.screen-reader-text:focus {
+.screen-reader-text:focus,
+.filter-selects .facet-label:focus {
   clip: auto;
   -webkit-clip-path: none;
           clip-path: none;
@@ -11469,6 +11532,10 @@ html[data-contrast="true"] .gform_wrapper.gform_wrapper .gform_button.button,
 .gform_wrapper.gform_wrapper html[data-contrast="true"] .gform_button.button,
 html[data-contrast="true"] .mec-fes-form button.mec-fes-sub-button,
 .mec-fes-form html[data-contrast="true"] button.mec-fes-sub-button,
+html[data-contrast="true"] .acf-form .acf-button,
+.acf-form html[data-contrast="true"] .acf-button,
+html[data-contrast="true"] .acf-form .acf-input .button,
+.acf-form .acf-input html[data-contrast="true"] .button,
 html[data-contrast="true"] .social-icons li a,
 html[data-contrast="true"] .page-footer .widget_nav_menu .menu li a {
   background: #000;
@@ -11489,6 +11556,10 @@ html[data-contrast="true"] .gform_wrapper.gform_wrapper .gform_button.button:hov
 .gform_wrapper.gform_wrapper html[data-contrast="true"] .gform_button.button:hover,
 html[data-contrast="true"] .mec-fes-form button.mec-fes-sub-button:hover,
 .mec-fes-form html[data-contrast="true"] button.mec-fes-sub-button:hover,
+html[data-contrast="true"] .acf-form .acf-button:hover,
+.acf-form html[data-contrast="true"] .acf-button:hover,
+html[data-contrast="true"] .acf-form .acf-input .button:hover,
+.acf-form .acf-input html[data-contrast="true"] .button:hover,
 html[data-contrast="true"] .btn:focus,
 html[data-contrast="true"] .btn-large:focus,
 html[data-contrast="true"] .btn-small:focus,
@@ -11501,6 +11572,10 @@ html[data-contrast="true"] .gform_wrapper.gform_wrapper .gform_button.button:foc
 .gform_wrapper.gform_wrapper html[data-contrast="true"] .gform_button.button:focus,
 html[data-contrast="true"] .mec-fes-form button.mec-fes-sub-button:focus,
 .mec-fes-form html[data-contrast="true"] button.mec-fes-sub-button:focus,
+html[data-contrast="true"] .acf-form .acf-button:focus,
+.acf-form html[data-contrast="true"] .acf-button:focus,
+html[data-contrast="true"] .acf-form .acf-input .button:focus,
+.acf-form .acf-input html[data-contrast="true"] .button:focus,
 html[data-contrast="true"] .social-icons li a:hover,
 html[data-contrast="true"] .social-icons li a:focus,
 html[data-contrast="true"] .page-footer .widget_nav_menu .menu li a:hover,
@@ -12097,7 +12172,9 @@ abbr[title] {
 input[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit,
 .gform_wrapper.gform_wrapper .gform_button.button,
-.mec-fes-form button.mec-fes-sub-button {
+.mec-fes-form button.mec-fes-sub-button,
+.acf-form .acf-button,
+.acf-form .acf-input .button {
   height: auto;
   font-weight: 700;
 }
@@ -12115,7 +12192,11 @@ input[type="submit"],
 [data-font="3"] .gform_wrapper.gform_wrapper .gform_button.button,
 .gform_wrapper.gform_wrapper [data-font="3"] .gform_button.button,
 [data-font="3"] .mec-fes-form button.mec-fes-sub-button,
-.mec-fes-form [data-font="3"] button.mec-fes-sub-button {
+.mec-fes-form [data-font="3"] button.mec-fes-sub-button,
+[data-font="3"] .acf-form .acf-button,
+.acf-form [data-font="3"] .acf-button,
+[data-font="3"] .acf-form .acf-input .button,
+.acf-form .acf-input [data-font="3"] .button {
   font-weight: 500;
 }
 
@@ -12128,7 +12209,9 @@ input[type="submit"],
 input:not(.btn-small)[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:not(.btn-small),
 .gform_wrapper.gform_wrapper .gform_button.button:not(.btn-small),
-.mec-fes-form button.mec-fes-sub-button:not(.btn-small) {
+.mec-fes-form button.mec-fes-sub-button:not(.btn-small),
+.acf-form .acf-button:not(.btn-small),
+.acf-form .acf-input .button:not(.btn-small) {
   padding: 10px 2rem;
 }
 
@@ -12142,6 +12225,8 @@ input:hover[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:hover,
 .gform_wrapper.gform_wrapper .gform_button.button:hover,
 .mec-fes-form button.mec-fes-sub-button:hover,
+.acf-form .acf-button:hover,
+.acf-form .acf-input .button:hover,
 .btn:focus,
 .btn-large:focus,
 .btn-small:focus,
@@ -12149,7 +12234,9 @@ input:hover[type="submit"],
 input:focus[type="submit"],
 .ctct-form-wrapper.ctct-form-wrapper .ctct-submit:focus,
 .gform_wrapper.gform_wrapper .gform_button.button:focus,
-.mec-fes-form button.mec-fes-sub-button:focus {
+.mec-fes-form button.mec-fes-sub-button:focus,
+.acf-form .acf-button:focus,
+.acf-form .acf-input .button:focus {
   text-decoration: underline;
 }
 
@@ -12160,7 +12247,9 @@ a.btn-large,
 a.btn-small,
 .fl-builder-content.fl-builder-content a.fl-button,
 .ctct-form-wrapper.ctct-form-wrapper a.ctct-submit,
-.gform_wrapper.gform_wrapper a.gform_button.button {
+.gform_wrapper.gform_wrapper a.gform_button.button,
+.acf-form a.acf-button,
+.acf-form .acf-input a.button {
   color: #FFF;
 }
 
@@ -12840,7 +12929,11 @@ textarea.materialize-textarea {
 .ctct-form-wrapper.ctct-form-wrapper .mec-fes-form .file-field .ctct-submit,
 .mec-fes-form .file-field .gform_wrapper.gform_wrapper .gform_button.button,
 .gform_wrapper.gform_wrapper .mec-fes-form .file-field .gform_button.button,
-.mec-fes-form .file-field button.mec-fes-sub-button {
+.mec-fes-form .file-field button.mec-fes-sub-button,
+.mec-fes-form .file-field .acf-form .acf-button,
+.acf-form .mec-fes-form .file-field .acf-button,
+.mec-fes-form .file-field .acf-form .acf-input .button,
+.acf-form .acf-input .mec-fes-form .file-field .button {
   border-radius: 0;
 }
 
@@ -13809,7 +13902,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_404.scss */
 
 body.error404 .page-header {
-  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/404.jpg);
+  background-image: url(/wp-content/themes/rtp-child-rtp/dist/images/404.jpg);
 }
 
 /* line 6, ../rtp-core/resources/assets/styles/layouts/_404.scss */
@@ -13912,7 +14005,11 @@ body.error404 .entry-content {
 .banner .cta-link .gform_wrapper.gform_wrapper .gform_button.button,
 .gform_wrapper.gform_wrapper .banner .cta-link .gform_button.button,
 .banner .cta-link .mec-fes-form button.mec-fes-sub-button,
-.mec-fes-form .banner .cta-link button.mec-fes-sub-button {
+.mec-fes-form .banner .cta-link button.mec-fes-sub-button,
+.banner .cta-link .acf-form .acf-button,
+.acf-form .banner .cta-link .acf-button,
+.banner .cta-link .acf-form .acf-input .button,
+.acf-form .acf-input .banner .cta-link .button {
   height: auto;
   padding: 5px 2rem;
 }
@@ -13951,7 +14048,11 @@ body.error404 .entry-content {
   .banner .cta-link .gform_wrapper.gform_wrapper .gform_button.button,
   .gform_wrapper.gform_wrapper .banner .cta-link .gform_button.button,
   .banner .cta-link .mec-fes-form button.mec-fes-sub-button,
-  .mec-fes-form .banner .cta-link button.mec-fes-sub-button {
+  .mec-fes-form .banner .cta-link button.mec-fes-sub-button,
+  .banner .cta-link .acf-form .acf-button,
+  .acf-form .banner .cta-link .acf-button,
+  .banner .cta-link .acf-form .acf-input .button,
+  .acf-form .acf-input .banner .cta-link .button {
     padding: 5px 1rem;
   }
 }
@@ -14508,7 +14609,7 @@ nav ul a {
 /* line 41, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .placeholder {
-  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/texture-single-header.png);
+  background-image: url(/wp-content/themes/rtp-child-rtp/dist/images/texture-single-header.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -15006,7 +15107,7 @@ nav ul a {
 /* line 8, ../rtp-core/resources/assets/styles/layouts/_single.scss */
 
 .single .page-header .texture {
-  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/texture-single-header.png);
+  background-image: url(/wp-content/themes/rtp-child-rtp/dist/images/texture-single-header.png);
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
@@ -16036,364 +16137,470 @@ body#tinymce {
   margin: 12px !important;
 }
 
-/* line 2, resources/assets/styles/common/_typography.scss */
+/* line 1, resources/assets/styles/common/_typography.scss */
 
-body h1,
-body .h1 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  font-size: 3.05556rem;
+h2 {
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
+  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), color-stop(33%, #012169), color-stop(66%, #82052A), color-stop(99%, #C00));
+  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 42px;
+  display: inline-block;
   font-weight: 600;
-  letter-spacing: -0.3px;
 }
 
 /* line 10, resources/assets/styles/common/_typography.scss */
 
-body h2,
-body .h2 {
-  font-family: 'Oswald', sans-serif;
+.rtp-history h2 {
+  -webkit-text-fill-color: initial;
+}
+
+/* line 15, resources/assets/styles/common/_typography.scss */
+
+h3,
+.single-mec-events .mec-event-social h3 {
+  font-weight: 500;
+}
+
+/* line 19, resources/assets/styles/common/_typography.scss */
+
+p {
+  font-size: 18px;
+}
+
+/* line 53, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+/* line 57, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter label,
+.directory-search-filter .label {
   text-transform: uppercase;
-  font-weight: 600;
-  font-size: 2.22222rem;
-  color: #57C1A5;
+  color: #1F2A3A;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
-/* line 18, resources/assets/styles/common/_typography.scss */
+/* line 64, resources/assets/styles/components/_directory.scss */
 
-body h3,
-body .single-mec-events .mec-event-social h3,
-.single-mec-events .mec-event-social body h3,
-body .h3,
-body .single-mec-events .mec-events-content h2,
-.single-mec-events .mec-events-content body h2 {
-  font-family: 'Oswald', sans-serif;
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 30px;
-  letter-spacing: 0;
-  margin-top: 0;
+.directory-search-filter input[type="search"] {
+  background: #FFF;
 }
 
-/* line 27, resources/assets/styles/common/_typography.scss */
+/* line 68, resources/assets/styles/components/_directory.scss */
 
-body .entry-content a:not(.btn):not(.btn-large):not(.btn-small):not(input[type="submit"]) {
-  color: #57C1A5;
-}
-
-/* line 3, resources/assets/styles/layouts/_404.scss */
-
-body.error404 .entry-content blockquote {
-  text-transform: none;
-  padding-left: 0;
-  margin-bottom: 2em;
-}
-
-/* line 8, resources/assets/styles/layouts/_404.scss */
-
-body.error404 .entry-content blockquote p {
+.directory-search-filter .dropdown {
+  width: 33%;
+  float: left;
   margin-bottom: 0;
 }
 
-/* line 12, resources/assets/styles/layouts/_404.scss */
+/* line 6, resources/assets/styles/components/_directory.scss */
 
-body.error404 .entry-content blockquote cite {
-  font-size: 0.8em;
+.directory-search-filter .dropdown input.select-dropdown {
+  border: 1px solid #FFF;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #4B9CD3;
+  color: #FFF;
+  height: 3rem;
+  width: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+  text-align: center;
+  text-transform: uppercase;
 }
 
-/* line 2, resources/assets/styles/layouts/_header.scss */
+/* line 18, resources/assets/styles/components/_directory.scss */
 
-.banner .logo {
-  max-width: 160px;
+.directory-search-filter .dropdown input.select-dropdown:hover,
+.directory-search-filter .dropdown input.select-dropdown:focus,
+.directory-search-filter .dropdown input.select-dropdown:active {
+  background: #012169;
+  color: #FFF;
 }
 
-/* line 7, resources/assets/styles/layouts/_header.scss */
+/* line 24, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter .dropdown .caret {
+  fill: #FFF;
+  z-index: 1;
+}
+
+/* line 29, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter .dropdown ul.dropdown-content {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+}
+
+/* line 33, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter .dropdown ul.dropdown-content li {
+  min-height: 36px;
+}
+
+/* line 36, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter .dropdown ul.dropdown-content li span {
+  line-height: 18px;
+  padding: 9px 16px;
+}
+
+/* line 41, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter .dropdown ul.dropdown-content li.selected {
+  background: #012169;
+  border: 1px solid #FFF;
+}
+
+/* line 45, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter .dropdown ul.dropdown-content li.selected span {
+  color: #FFF;
+}
+
+/* line 72, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter button[type="submit"] {
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.9em;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  letter-spacing: 0;
+  padding: 0;
+  float: right;
+}
+
+/* line 83, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter button[type="submit"] .cta-arrow {
+  content: '';
+  display: inline-block;
+  padding: 4px 0 14px 14px;
+  width: 40px;
+  height: 25px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMTkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPgogIDxkZWZzPgogICAgPHBhdGggZD0iTTIwLjQ1IDkuODcySC43N2MtLjQyNiAwLS43Ny0uMzE2LS43Ny0uNzA1IDAtLjM5LjM0NC0uNzA1Ljc3LS43MDVoMTkuNjhsLTcuOTE3LTcuMjU4YS42NjQuNjY0IDAgMCAxIDAtLjk5Ny44Mi44MiAwIDAgMSAxLjA4OCAwbDkuMjMgOC40NjFjLjMwMS4yNzUuMzAxLjcyMiAwIC45OTdsLTkuMjMgOC40NjJhLjgyLjgyIDAgMCAxLTEuMDg4IDAgLjY2NC42NjQgMCAwIDEgMC0uOTk3bDcuOTE4LTcuMjU4eiIgaWQ9ImEiLz4KICA8L2RlZnM+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAuNDcpIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPG1hc2sgaWQ9ImIiIGZpbGw9IiMwMDAiPgogICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICA8L21hc2s+CiAgICA8dXNlIGZpbGw9IiMwMDAiIGZpbGwtcnVsZT0ibm9uemVybyIgeGxpbms6aHJlZj0iI2EiLz4KICAgIDxnIG1hc2s9InVybCgjYikiIGZpbGw9IiMwMDAiPgogICAgICA8cGF0aCBkPSJNLTYuOTIzLTcuNzU2aDM3djM0aC0zN3oiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPgo=);
+  background-size: 26px 20.5px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  -o-transition: -o-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+  vertical-align: -0.4em;
+}
+
+/* line 97, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter button[type="submit"]:hover,
+.directory-search-filter button[type="submit"]:focus,
+.directory-search-filter button[type="submit"]:active {
+  text-decoration: underline;
+}
+
+/* line 100, resources/assets/styles/components/_directory.scss */
+
+.directory-search-filter button[type="submit"]:hover .cta-arrow,
+.directory-search-filter button[type="submit"]:focus .cta-arrow,
+.directory-search-filter button[type="submit"]:active .cta-arrow {
+  -webkit-transform: translate3d(10px, 0, 0);
+          transform: translate3d(10px, 0, 0);
+}
+
+/* line 108, resources/assets/styles/components/_directory.scss */
+
+.directory-map .page-header {
+  margin-bottom: 3rem;
+}
+
+/* line 113, resources/assets/styles/components/_directory.scss */
+
+.filter-selects {
+  height: 3rem;
+  margin-bottom: 40px;
+}
+
+/* line 121, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown {
+  width: 33%;
+  float: left;
+  margin-bottom: 0;
+}
+
+/* line 6, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown input.select-dropdown {
+  border: 1px solid #FFF;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background: #4B9CD3;
+  color: #FFF;
+  height: 3rem;
+  width: 100%;
+  margin: 0;
+  font-size: 0.8rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* line 18, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown input.select-dropdown:hover,
+.filter-selects .facetwp-type-dropdown input.select-dropdown:focus,
+.filter-selects .facetwp-type-dropdown input.select-dropdown:active {
+  background: #012169;
+  color: #FFF;
+}
+
+/* line 24, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown .caret {
+  fill: #FFF;
+  z-index: 1;
+}
+
+/* line 29, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown ul.dropdown-content {
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+}
+
+/* line 33, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown ul.dropdown-content li {
+  min-height: 36px;
+}
+
+/* line 36, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown ul.dropdown-content li span {
+  line-height: 18px;
+  padding: 9px 16px;
+}
+
+/* line 41, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown ul.dropdown-content li.selected {
+  background: #012169;
+  border: 1px solid #FFF;
+}
+
+/* line 45, resources/assets/styles/components/_directory.scss */
+
+.filter-selects .facetwp-type-dropdown ul.dropdown-content li.selected span {
+  color: #FFF;
+}
+
+/* line 127, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-image-uploader .image-wrap img {
+  background: #FFF;
+}
+
+/* line 133, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-switch {
+  height: 3rem;
+}
+
+/* line 136, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-switch span {
+  line-height: 3rem;
+  padding: 0 15px;
+}
+
+/* line 141, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-switch.-on {
+  background-color: #4B9CD3;
+  border-color: #4B9CD3;
+}
+
+/* line 145, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-switch.-on .acf-switch-slider {
+  border-color: #4B9CD3;
+}
+
+/* line 152, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-field .acf-label label {
+  color: #1F2A3A;
+  line-height: 1.2em !important;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* line 159, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-field input[type="text"],
+.acf-form .acf-field input[type="password"],
+.acf-form .acf-field input[type="number"],
+.acf-form .acf-field input[type="search"],
+.acf-form .acf-field input[type="email"],
+.acf-form .acf-field input[type="url"],
+.acf-form .acf-field textarea {
+  font-size: inherit !important;
+  padding: 2px 10px;
+}
+
+/* line 165, resources/assets/styles/components/_directory.scss */
+
+.acf-form .select2-container--default .select2-selection--single {
+  height: 3rem;
+  border-radius: 0;
+}
+
+/* line 169, resources/assets/styles/components/_directory.scss */
+
+.acf-form .select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 3rem;
+}
+
+/* line 174, resources/assets/styles/components/_directory.scss */
+
+.acf-form .select2-container.-acf .select2-selection--multiple .select2-selection__choice {
+  padding: 5px;
+}
+
+/* line 178, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-basic-uploader input {
+  line-height: 2.5rem;
+  border-radius: 0;
+}
+
+/* line 184, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-url input[type="url"] {
+  padding-left: 25px;
+}
+
+/* line 188, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-url i {
+  top: 14px;
+}
+
+/* line 193, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-form-submit {
+  padding: 15px 12px;
+}
+
+/* line 197, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-button,
+.acf-form .acf-input .button {
+  width: auto;
+  background: #4B9CD3 !important;
+  border: #4B9CD3 !important;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 0;
+}
+
+/* line 207, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-button:hover,
+.acf-form .acf-button:focus,
+.acf-form .acf-input .button:hover,
+.acf-form .acf-input .button:focus {
+  text-decoration: underline;
+}
+
+/* line 213, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-button:focus,
+.acf-form .acf-input .button:focus {
+  outline: #4B9CD3 auto 5px;
+}
+
+/* line 217, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-button:active,
+.acf-form .acf-input .button:active {
+  background: #012169 !important;
+  border: #012169 !important;
+}
+
+/* line 224, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-checkbox-list li {
+  padding: 10px 0;
+}
+
+/* line 227, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-checkbox-list li label {
+  color: #1F2A3A;
+  line-height: 1.2em;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+/* line 235, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-checkbox-list input[type="checkbox"] {
+  opacity: 1;
+  position: relative;
+  pointer-events: auto;
+}
+
+/* line 242, resources/assets/styles/components/_directory.scss */
+
+.acf-form .acf-input-prepend,
+.acf-form .acf-input-append {
+  line-height: calc(3rem - 2px);
+  padding: 0 7px;
+}
+
+/* line 3, resources/assets/styles/layouts/_header.scss */
 
 .page-header .container,
 .page-header .container-wide {
-  background: rgba(87, 193, 165, 0.8);
+  background-image: -webkit-gradient(linear, left top, right top, from(rgba(75, 156, 211, 0.7)), color-stop(33%, rgba(1, 33, 105, 0.7)), color-stop(66%, rgba(130, 5, 42, 0.7)), color-stop(99%, rgba(204, 0, 0, 0.7)));
+  background-image: -webkit-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+  background-image: -o-linear-gradient(left, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+  background-image: linear-gradient(90deg, rgba(75, 156, 211, 0.7) 0%, rgba(1, 33, 105, 0.7) 33%, rgba(130, 5, 42, 0.7) 66%, rgba(204, 0, 0, 0.7) 99%);
+  color: #FFF;
 }
 
 /* line 2, resources/assets/styles/layouts/_footer.scss */
 
 .page-footer .footer-social {
-  background: rgba(87, 193, 165, 0.1);
-}
-
-/* line 2, resources/assets/styles/layouts/_home.scss */
-
-.home-banner-wrapper .home-banner {
-  background: rgba(87, 193, 165, 0.8);
-}
-
-/* line 6, resources/assets/styles/layouts/_home.scss */
-
-.home-banner-wrapper .banner-cta {
-  background: rgba(0, 148, 201, 0.8);
-}
-
-/* line 1, resources/assets/styles/layouts/_events.scss */
-
-.entry-content .mec-wrap h1,
-.entry-content .mec-wrap h2,
-.entry-content .mec-wrap h3,
-.entry-content .mec-wrap h4,
-.entry-content .mec-wrap h5,
-.entry-content .mec-wrap h6,
-.mec-wrap h1,
-.mec-wrap h2,
-.mec-wrap h3,
-.mec-wrap .single-mec-events .mec-event-social h3,
-.single-mec-events .mec-event-social .mec-wrap h3,
-.mec-wrap h4,
-.mec-wrap h5,
-.mec-wrap h6 {
-  font-family: 'Oswald', sans-serif;
-}
-
-/* line 8, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span {
-  background: #57C1A5;
-}
-
-/* line 11, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span:hover,
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span:focus,
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span:active,
-.mec-wrap .mec-totalcal-box .mec-totalcal-view span.mec-totalcalview-selected {
-  background: #30826c;
-}
-
-/* line 19, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .mec-date-search i {
-  background: #30826c;
-}
-
-/* line 25, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .select-wrapper input.select-dropdown {
-  background: #57C1A5;
-}
-
-/* line 28, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .select-wrapper input.select-dropdown:hover,
-.mec-wrap .select-wrapper input.select-dropdown:focus,
-.mec-wrap .select-wrapper input.select-dropdown:active {
-  background: #30826c;
-}
-
-/* line 34, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap .select-wrapper ul.dropdown-content li.selected {
-  background: #30826c;
-}
-
-/* line 44, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-calendar-side .mec-previous-month:hover,
-.mec-calendar .mec-calendar-side .mec-previous-month:focus,
-.mec-calendar .mec-calendar-side .mec-previous-month:active,
-.mec-calendar .mec-calendar-side .mec-next-month:hover,
-.mec-calendar .mec-calendar-side .mec-next-month:focus,
-.mec-calendar .mec-calendar-side .mec-next-month:active {
-  color: #57C1A5;
-}
-
-/* line 51, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-calendar-table-head dt {
-  color: #57C1A5;
-}
-
-/* line 58, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-has-event a:hover,
-.mec-calendar .mec-has-event a:active,
-.mec-calendar .mec-has-event a:focus {
-  background: #57C1A5;
-}
-
-/* line 63, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-has-event::after {
-  background-color: #57C1A5;
-}
-
-/* line 67, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-has-event:hover,
-.mec-calendar .mec-has-event:active,
-.mec-calendar .mec-has-event:focus {
-  background: #57C1A5 !important;
-}
-
-/* line 72, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-selected-day {
-  background: #30826c;
-}
-
-/* line 77, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-calendar-events-side .mec-table-side-day {
-  border-color: #57C1A5;
-}
-
-/* line 85, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar .mec-event-article .mec-event-title a:hover,
-.mec-calendar .mec-event-article .mec-event-title a:focus,
-.mec-calendar .mec-event-article .mec-event-title a:active {
-  color: #57C1A5;
-}
-
-/* line 94, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:active,
-.mec-calendar.mec-calendar-weekly .mec-next-month:hover,
-.mec-calendar.mec-calendar-weekly .mec-next-month:focus,
-.mec-calendar.mec-calendar-weekly .mec-next-month:active {
-  color: #57C1A5;
-}
-
-/* line 97, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
-.mec-calendar.mec-calendar-weekly .mec-previous-month:active i,
-.mec-calendar.mec-calendar-weekly .mec-next-month:hover i,
-.mec-calendar.mec-calendar-weekly .mec-next-month:focus i,
-.mec-calendar.mec-calendar-weekly .mec-next-month:active i {
-  color: #57C1A5;
-}
-
-/* line 105, resources/assets/styles/layouts/_events.scss */
-
-.mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
-  color: #57C1A5;
-}
-
-/* line 116, resources/assets/styles/layouts/_events.scss */
-
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:active,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:hover,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:focus,
-.mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:active {
-  color: #57C1A5;
-}
-
-/* line 124, resources/assets/styles/layouts/_events.scss */
-
-.mec-yearly-view-wrap .mec-agenda-event-title a:hover,
-.mec-yearly-view-wrap .mec-agenda-event-title a:focus,
-.mec-yearly-view-wrap .mec-agenda-event-title a:active {
-  color: #57C1A5;
-}
-
-/* line 131, resources/assets/styles/layouts/_events.scss */
-
-.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
-.mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
-.mec-event-grid-classic article .mec-fc-style,
-.mec-event-grid-minimal article .mec-fc-style,
-.mec-event-grid-simple article .mec-fc-style,
-.mec-timetable-wrap article .mec-fc-style,
-.mec-wrap .mec-event-list-accordion article .mec-fc-style,
-.mec-wrap .mec-event-list-modern article .mec-fc-style,
-.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style,
-.mec-wrap article.mec-event-cover-classic .mec-fc-style,
-.mec-wrap article.mec-event-cover-clean .mec-fc-style,
-.mec-wrap article.mec-event-cover-modern .mec-fc-style,
-.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style {
-  background: #F7406C;
-}
-
-/* line 135, resources/assets/styles/layouts/_events.scss */
-
-.mec-event-grid-minimal article .mec-fc-style::before,
-.mec-event-grid-simple article .mec-fc-style::before,
-.mec-timetable-wrap article .mec-fc-style::before,
-.mec-wrap .mec-event-list-accordion article .mec-fc-style::before,
-.mec-wrap .mec-event-list-modern article .mec-fc-style::before,
-.mec-wrap .mec-events-agenda .mec-agenda-event .mec-fc-style::before,
-.mec-wrap article.mec-event-cover-classic .mec-fc-style::before,
-.mec-wrap article.mec-event-cover-clean .mec-fc-style::before,
-.mec-wrap article[class^=mec-event-countdown-] .mec-fc-style::before {
-  color: #F7406C;
-}
-
-/* line 139, resources/assets/styles/layouts/_events.scss */
-
-.mec-color,
-.mec-color-before ::before,
-.mec-color-hover:hover,
-.mec-wrap .mec-color,
-.mec-wrap .mec-color-before ::before,
-.mec-wrap .mec-color-hover:hover {
-  color: #57C1A5;
-}
-
-/* line 144, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-single-event-bar {
-  background: rgba(87, 193, 165, 0.2);
-}
-
-/* line 151, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
-  border: 1px solid #57C1A5;
-  color: #57C1A5;
-}
-
-/* line 155, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
-.single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:active {
-  background: #57C1A5;
-  color: #FFF;
-}
-
-/* line 164, resources/assets/styles/layouts/_events.scss */
-
-.single-mec-events .mec-booking-button {
-  background-color: #57C1A5;
+  background: rgba(75, 156, 211, 0.1);
 }
 
 /* line 2, resources/assets/styles/layouts/_single.scss */
 
-.single .page-header {
-  background-color: #AFE5D9;
-}
-
-/* line 5, resources/assets/styles/layouts/_single.scss */
-
-.single .page-header h1 {
-  color: #57C1A5;
-}
-
-/* line 1, resources/assets/styles/components/_map.scss */
-
-.uabb-hotspot-tooltip-content {
-  background: rgba(87, 193, 165, 0.8) !important;
-  width: 400px;
-  font-size: 14px;
-  color: #000 !important;
-  text-align: left;
-}
-
-/* line 8, resources/assets/styles/components/_map.scss */
-
-.uabb-hotspot-tooltip-content::after {
-  border-color: transparent !important;
+.single h1 {
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
+  background-image: -o-linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -webkit-gradient(linear, left top, right top, from(#4B9CD3), color-stop(33%, #012169), color-stop(66%, #82052A), color-stop(99%, #C00));
+  background-image: -webkit-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: -o-linear-gradient(left, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  font-weight: 600;
 }
 
 

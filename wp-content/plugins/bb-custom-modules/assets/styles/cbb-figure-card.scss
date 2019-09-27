@@ -7,10 +7,6 @@
   a.mega-link:hover ~ .card, &:focus-within .card {
     box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 
-    .card-title {
-      text-decoration: underline;
-    }
-
     .card-cta {
       a {
         .text {

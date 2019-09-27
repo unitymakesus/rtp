@@ -14461,6 +14461,29 @@ nav ul a {
 
 /* line 15, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
+.archive .figure-card a.mega-link:hover ~ .card,
+.archive .figure-card:focus-within .card {
+  -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+          box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* line 20, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.archive .figure-card a.mega-link:hover ~ .card .card-cta a .text,
+.archive .figure-card:focus-within .card .card-cta a .text {
+  text-decoration: underline !important;
+}
+
+/* line 24, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
+.archive .figure-card a.mega-link:hover ~ .card .card-cta a .arrow,
+.archive .figure-card:focus-within .card .card-cta a .arrow {
+  -webkit-transform: translate3d(10px, 0, 0);
+          transform: translate3d(10px, 0, 0);
+}
+
+/* line 31, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
 .archive .figure-card img,
 .archive .figure-card .placeholder {
   width: 100%;
@@ -14473,7 +14496,7 @@ nav ul a {
   display: block;
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 41, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .placeholder {
   background-image: url(/wp-content/themes/rtp-child-hub/dist/images/texture-single-header.png);
@@ -14481,7 +14504,7 @@ nav ul a {
   background-size: cover;
 }
 
-/* line 31, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 47, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card {
   margin: -65px 30px 0;
@@ -14499,7 +14522,7 @@ nav ul a {
   z-index: 2;
 }
 
-/* line 41, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 57, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card:hover,
 .archive .figure-card .card:focus,
@@ -14508,7 +14531,7 @@ nav ul a {
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 45, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 61, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card .meta {
   position: absolute;
@@ -14518,7 +14541,7 @@ nav ul a {
   text-transform: uppercase;
 }
 
-/* line 54, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 70, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-inner {
   display: -webkit-box;
@@ -14531,7 +14554,7 @@ nav ul a {
   height: 100%;
 }
 
-/* line 60, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 76, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-badge {
   border-style: solid;
@@ -14547,7 +14570,7 @@ nav ul a {
   text-transform: uppercase;
 }
 
-/* line 73, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 89, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-badge span {
   position: absolute;
@@ -14559,14 +14582,14 @@ nav ul a {
   white-space: nowrap;
 }
 
-/* line 84, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 100, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title {
   margin: 50px 16px 20px;
   min-height: 80px;
 }
 
-/* line 88, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 104, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title a {
   font-weight: 600 !important;
@@ -14574,7 +14597,7 @@ nav ul a {
   color: #000;
 }
 
-/* line 93, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 109, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-title a:hover,
 .archive .figure-card .card-title a:focus,
@@ -14582,7 +14605,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 99, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 115, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta {
   border-style: solid;
@@ -14592,7 +14615,7 @@ nav ul a {
   margin: auto 0 5px;
 }
 
-/* line 106, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 122, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a {
   color: #000;
@@ -14610,13 +14633,13 @@ nav ul a {
   vertical-align: middle;
 }
 
-/* line 119, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 135, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 123, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 139, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -14630,7 +14653,7 @@ nav ul a {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 131, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 147, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -14639,7 +14662,7 @@ nav ul a {
   transition: fill 0.3s ease;
 }
 
-/* line 137, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 153, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a:hover,
 .archive .figure-card .card-cta a:focus,
@@ -14647,7 +14670,7 @@ nav ul a {
   text-decoration: underline !important;
 }
 
-/* line 140, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 156, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .card-cta a:hover .arrow,
 .archive .figure-card .card-cta a:focus .arrow,
@@ -14656,7 +14679,7 @@ nav ul a {
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 147, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 163, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .pattern-background {
   position: absolute;
@@ -14667,14 +14690,14 @@ nav ul a {
   right: 0;
 }
 
-/* line 155, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 171, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 162, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 178, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-badge,
 .archive .figure-card.badge-rtp .card-cta {
@@ -14682,7 +14705,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 168, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 184, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover,
 .archive .figure-card.badge-rtp .card-cta a:focus,
@@ -14690,7 +14713,7 @@ nav ul a {
   color: #333F48;
 }
 
-/* line 171, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 187, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -14698,7 +14721,7 @@ nav ul a {
   fill: #333F48;
 }
 
-/* line 179, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 195, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-badge,
 .archive .figure-card.badge-hub .card-cta,
@@ -14708,7 +14731,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 185, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 201, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover,
 .archive .figure-card.badge-hub .card-cta a:focus,
@@ -14719,7 +14742,7 @@ nav ul a {
   color: #4B9CD3;
 }
 
-/* line 188, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 204, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover .arrow path,
 .archive .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -14730,7 +14753,7 @@ nav ul a {
   fill: #4B9CD3;
 }
 
-/* line 196, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 212, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-badge,
 .archive .figure-card.badge-boxyard .card-cta,
@@ -14740,7 +14763,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 202, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 218, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover,
 .archive .figure-card.badge-boxyard .card-cta a:focus,
@@ -14751,7 +14774,7 @@ nav ul a {
   color: #E63C2F;
 }
 
-/* line 205, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 221, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .archive .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -14762,7 +14785,7 @@ nav ul a {
   fill: #E63C2F;
 }
 
-/* line 213, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 229, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-badge,
 .archive .figure-card.badge-frontier .card-cta,
@@ -14772,7 +14795,7 @@ nav ul a {
   color: #57C1A5;
 }
 
-/* line 219, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 235, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover,
 .archive .figure-card.badge-frontier .card-cta a:focus,
@@ -14783,7 +14806,7 @@ nav ul a {
   color: #2FA787;
 }
 
-/* line 222, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 238, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .archive .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -14794,7 +14817,7 @@ nav ul a {
   fill: #57C1A5;
 }
 
-/* line 230, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 246, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-badge,
 .archive .figure-card.badge-stem .card-cta,
@@ -14804,7 +14827,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 236, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 252, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover,
 .archive .figure-card.badge-stem .card-cta a:focus,
@@ -14815,7 +14838,7 @@ nav ul a {
   color: #654EA3;
 }
 
-/* line 239, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 255, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover .arrow path,
 .archive .figure-card.badge-stem .card-cta a:focus .arrow path,
