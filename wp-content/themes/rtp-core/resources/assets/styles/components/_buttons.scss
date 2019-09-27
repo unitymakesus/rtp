@@ -23,7 +23,7 @@ input[type="submit"] {
   @extend .btn;
 }
 
-.fl-builder-content.fl-builder-content a.fl-button.fl-button {
+.fl-builder-content.fl-builder-content a.fl-button.fl-button, a.cta {
   border: none;
   background: none;
   text-transform: uppercase;

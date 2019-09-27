@@ -19,7 +19,7 @@ body {
     letter-spacing: 0;
   }
 
-  .entry-content a {
+  .entry-content a:not(.btn) {
     color: $color-purple;
   }
 }

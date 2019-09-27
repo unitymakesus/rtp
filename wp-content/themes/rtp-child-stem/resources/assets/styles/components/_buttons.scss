@@ -1,0 +1,7 @@
+.btn, .btn-secondary {
+  background: $color-purple;
+
+  &:hover, &:focus, &:active {
+    background: darken($color-purple, 15%);
+  }
+}

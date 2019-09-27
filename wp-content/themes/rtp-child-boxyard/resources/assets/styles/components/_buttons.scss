@@ -1,3 +1,7 @@
-.btn-secondary {
+.btn, .btn-secondary {
   background: $color-red-boxyard;
+
+  &:hover, &:focus, &:active {
+    background: darken($color-red-boxyard, 15%);
+  }
 }

@@ -1,0 +1,17 @@
+body.error404 {
+  .entry-content {
+    blockquote {
+      text-transform: none;
+      padding-left: 0;
+      margin-bottom: 2em;
+
+      p {
+        margin-bottom: 0;
+      }
+
+      cite {
+        font-size: 0.8em;
+      }
+    }
+  }
+}

@@ -57,8 +57,27 @@ add_filter('template_include', function ($template) {
         return ($blade_template) ? $blade_template : $template;
     }
 
+    // if (is_archive() && get_post_type() == 'mec-events') {
+    //   $blade_template = locate_template('archive-mec-events.blade.php');
+    //   return ($blade_template) ? $blade_template : $template;
+    // }
+
     return $template;
 }, 100);
+
+
+/**
+ * Redirect MEC category archives
+ */
+add_filter( 'archive_template', function(){
+  if ( is_archive() && get_post_type() == 'mec-events' ) {
+    // global $wp_query;
+    // $wp_query->set_404();
+    // status_header( 404 );
+    // // get_template_part( 404 ); exit();
+  }
+}, -1 );
+
 
 
 /**
