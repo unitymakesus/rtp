@@ -57,10 +57,10 @@ add_filter('template_include', function ($template) {
         return ($blade_template) ? $blade_template : $template;
     }
 
-    // if (is_archive() && get_post_type() == 'mec-events') {
-    //   $blade_template = locate_template('archive-mec-events.blade.php');
-    //   return ($blade_template) ? $blade_template : $template;
-    // }
+    if (is_tax() && get_post_type() == 'mec-events') {
+      $blade_template = locate_template('taxonomy-mec-category.blade.php');
+      return ($blade_template) ? $blade_template : $template;
+    }
 
     return $template;
 }, 100);

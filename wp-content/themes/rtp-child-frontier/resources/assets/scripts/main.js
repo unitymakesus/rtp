@@ -1,6 +1,9 @@
 // Import parent JS
 import '../../../../rtp-core/dist/scripts/main.js';
 
+// Import everything from autoload
+import './autoload/*';
+
 /** Import local dependencies */
 import Router from './util/Router';
 // import common from './routes/common';

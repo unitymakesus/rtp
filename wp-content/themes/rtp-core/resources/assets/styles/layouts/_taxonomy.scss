@@ -1,0 +1,51 @@
+.archive.taxonomy-data {
+  .page-header {
+    background: $color-blue-unc-light;
+    align-items: center;
+    margin-bottom: 4em;
+    position: relative;
+
+    .texture {
+      background-image: url('../images/texture-single-header.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 34.5%;
+      right: 0;
+      z-index: 0;
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        transform: translate3d(-50%, -50%, 0);
+        z-index: 1;
+      }
+    }
+
+    .container {
+      background: transparent;
+      padding: 0;
+      z-index: 1;
+    }
+
+    .entry-title-container {
+      background: rgba($color-white, 0.9);
+      color: $color-black;
+      width: 60%;
+      margin: 0;
+      padding: 1em;
+      position: relative;
+
+      @media #{$small-and-down} {
+        width: 100%;
+      }
+    }
+  }
+}

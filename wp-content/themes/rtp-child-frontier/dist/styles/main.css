@@ -15301,7 +15301,13 @@ textarea,
   padding: 0 5px;
 }
 
-/* line 146, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 145, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+
+.mec-wrap h2.mec-month-divider {
+  font-weight: 700;
+}
+
+/* line 150, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar {
   border: none;
@@ -15309,14 +15315,14 @@ textarea,
           box-shadow: none;
 }
 
-/* line 150, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 154, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-topsec,
 .mec-calendar .mec-calendar-header {
   width: 100%;
 }
 
-/* line 154, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 158, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side {
   border: none;
@@ -15326,13 +15332,13 @@ textarea,
   padding: 0 20px 0 10px;
 }
 
-/* line 160, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 164, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-month-navigator {
   position: relative;
 }
 
-/* line 164, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 168, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month,
 .mec-calendar .mec-calendar-side .mec-next-month {
@@ -15343,14 +15349,14 @@ textarea,
   z-index: 2;
 }
 
-/* line 170, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 174, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month i,
 .mec-calendar .mec-calendar-side .mec-next-month i {
   color: #7A868C;
 }
 
-/* line 174, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 178, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month:hover,
 .mec-calendar .mec-calendar-side .mec-previous-month:focus,
@@ -15361,7 +15367,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 181, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 185, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-table-head dt {
   font-weight: 300;
@@ -15369,26 +15375,26 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 188, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 192, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar dt {
   font-weight: 300;
   font-size: 1rem;
 }
 
-/* line 193, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 197, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-table-nullday {
   color: #A2A9AE;
 }
 
-/* line 197, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 201, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event {
   border-radius: 0;
 }
 
-/* line 200, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 204, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event a {
   text-decoration: none;
@@ -15398,7 +15404,7 @@ textarea,
   transition: background 0.3s ease;
 }
 
-/* line 205, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 209, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event a:hover,
 .mec-calendar .mec-has-event a:active,
@@ -15407,14 +15413,14 @@ textarea,
   color: #FFF;
 }
 
-/* line 211, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 215, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event::after {
   background-color: #4B9CD3;
   border-radius: 0;
 }
 
-/* line 216, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 220, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event:hover,
 .mec-calendar .mec-has-event:active,
@@ -15422,27 +15428,27 @@ textarea,
   background: #4B9CD3 !important;
 }
 
-/* line 221, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 225, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-selected-day {
   background: #012169;
   border-radius: 0;
 }
 
-/* line 225, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 229, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-selected-day a {
   font-weight: bold;
 }
 
-/* line 230, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 234, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side {
   padding: 0 10px 0 20px;
   border: none;
 }
 
-/* line 234, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 238, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side .mec-table-side-title {
   font-size: 22px;
@@ -15451,7 +15457,7 @@ textarea,
   letter-spacing: normal;
 }
 
-/* line 241, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 245, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side .mec-table-side-day {
   font-size: 22px;
@@ -15459,7 +15465,7 @@ textarea,
   border-color: #4B9CD3;
 }
 
-/* line 248, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 252, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article {
   padding: 15px;
@@ -15467,7 +15473,7 @@ textarea,
   margin-bottom: 20px;
 }
 
-/* line 255, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 259, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article:hover,
 .mec-calendar .mec-event-article:focus,
@@ -15475,7 +15481,7 @@ textarea,
   background: #FFF;
 }
 
-/* line 261, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 265, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-title {
   margin-top: 0;
@@ -15483,7 +15489,7 @@ textarea,
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 267, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 271, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-title a:hover,
 .mec-calendar .mec-event-article .mec-event-title a:focus,
@@ -15491,7 +15497,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 273, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 277, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-time,
 .mec-calendar .mec-event-article .mec-event-detail {
@@ -15500,13 +15506,13 @@ textarea,
   font-family: 'Poppins', sans-serif;
 }
 
-/* line 281, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 285, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-yearly-calendar .mec-calendar-table-head dl dt {
   background: transparent;
 }
 
-/* line 287, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 291, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-daily .mec-calendar-a-month {
   border: none;
@@ -15514,13 +15520,13 @@ textarea,
           box-shadow: none;
 }
 
-/* line 291, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 295, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-daily .mec-calendar-a-month h4 {
   border: none;
 }
 
-/* line 298, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 302, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month,
 .mec-calendar.mec-calendar-weekly .mec-next-month {
@@ -15532,14 +15538,14 @@ textarea,
   z-index: 2;
 }
 
-/* line 305, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 309, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month i,
 .mec-calendar.mec-calendar-weekly .mec-next-month i {
   color: #7A868C;
 }
 
-/* line 309, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 313, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
 .mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
@@ -15550,7 +15556,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 312, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 316, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
 .mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
@@ -15561,7 +15567,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 318, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 322, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-top {
   background: none;
@@ -15570,7 +15576,7 @@ textarea,
   border: none;
 }
 
-/* line 323, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 327, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-top h3 {
   border: 0;
@@ -15578,21 +15584,21 @@ textarea,
   color: #A2A9AE;
 }
 
-/* line 330, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 334, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table {
   border: 0;
   margin-bottom: 40px;
 }
 
-/* line 334, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 338, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt {
   clear: none;
   border: none;
 }
 
-/* line 338, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 342, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
   color: #4B9CD3;
@@ -15600,14 +15606,14 @@ textarea,
   font-weight: normal;
 }
 
-/* line 344, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 348, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-monthday {
   font-size: 1rem;
   margin-top: 0;
 }
 
-/* line 349, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 353, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:hover,
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt:focus,
@@ -15616,7 +15622,7 @@ textarea,
           box-shadow: none;
 }
 
-/* line 357, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 361, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap {
   border: none;
@@ -15624,7 +15630,7 @@ textarea,
           box-shadow: none;
 }
 
-/* line 361, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 365, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec {
   border: none;
@@ -15633,19 +15639,19 @@ textarea,
   padding: 0;
 }
 
-/* line 366, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 370, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year {
   left: 0;
 }
 
-/* line 370, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 374, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year {
   right: 0;
 }
 
-/* line 374, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 378, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year {
@@ -15656,14 +15662,14 @@ textarea,
   z-index: 2;
 }
 
-/* line 380, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 384, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year i,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year i {
   color: #7A868C;
 }
 
-/* line 384, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 388, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
@@ -15674,7 +15680,7 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 390, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 394, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-calendar-sec {
   background: none;
@@ -15683,13 +15689,13 @@ textarea,
   padding: 0 20px 0 0;
 }
 
-/* line 396, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 400, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-agenda-sec {
   padding: 20px;
 }
 
-/* line 399, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 403, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-agenda-sec .mec-events-agenda {
   padding: 15px;
@@ -15697,39 +15703,39 @@ textarea,
   margin-bottom: 20px;
 }
 
-/* line 412, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 416, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-date-wrap {
   font-size: 0.8rem;
   padding: 0;
 }
 
-/* line 416, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 420, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-date-wrap span.mec-agenda-day {
   font-size: 1em;
 }
 
-/* line 421, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 425, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-events-wrap {
   padding: 0;
   background: none;
 }
 
-/* line 426, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 430, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title {
   padding-left: 0;
 }
 
-/* line 429, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 433, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title a {
   font-size: 0.8rem;
 }
 
-/* line 432, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 436, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title a:hover,
 .mec-yearly-view-wrap .mec-agenda-event-title a:focus,
@@ -15737,31 +15743,31 @@ textarea,
   color: #4B9CD3;
 }
 
-/* line 440, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 444, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .entry-content ul.mec-weekly-view-dates-events li {
   padding-left: 0;
 }
 
-/* line 443, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 447, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .entry-content ul.mec-weekly-view-dates-events li::before {
   display: none;
 }
 
-/* line 449, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 453, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 span.event-color {
   display: none;
 }
 
-/* line 453, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 457, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-event-footer {
   display: none;
 }
 
-/* line 457, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 461, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
@@ -15784,14 +15790,14 @@ span.event-color {
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 461, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 465, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-daily-view-date-events article::before,
 ul.mec-weekly-view-dates-events article::before {
   top: 20px !important;
 }
 
-/* line 465, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 469, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-event-grid-minimal article .mec-fc-style::before,
 .mec-event-grid-simple article .mec-fc-style::before,
@@ -15805,7 +15811,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 469, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 473, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-color,
 .mec-color-before ::before,
@@ -15816,51 +15822,51 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 473, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 477, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .mec-load-more-button {
   border-radius: 0;
 }
 
-/* line 478, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 482, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .page-header {
   margin-bottom: 0;
 }
 
-/* line 482, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 486, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-container {
   padding: 0;
 }
 
-/* line 486, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 490, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .row.mec-single-event {
   margin-top: 0;
 }
 
-/* line 490, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 494, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar {
   margin-top: 0;
   background: rgba(75, 156, 211, 0.2);
 }
 
-/* line 494, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 498, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div {
   width: 20%;
 }
 
-/* line 497, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 501, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div h3,
 .single-mec-events .mec-event-social .mec-single-event-bar > div h3 {
   padding-left: 0;
 }
 
-/* line 501, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 505, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div dd {
   padding-left: 0;
@@ -15869,7 +15875,7 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 0.9rem;
 }
 
-/* line 510, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 514, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-cost,
 .single-mec-events .mec-event-more-info,
@@ -15885,13 +15891,13 @@ ul.mec-weekly-view-dates-events article::before {
   background: none;
 }
 
-/* line 514, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 518, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .col-md-4 {
   margin-top: 40px;
 }
 
-/* line 517, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 521, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .col-md-4 .mec-frontbox {
   margin: 0 !important;
@@ -15899,7 +15905,7 @@ ul.mec-weekly-view-dates-events article::before {
   background: none;
 }
 
-/* line 525, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 529, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul {
   display: block;
@@ -15907,7 +15913,7 @@ ul.mec-weekly-view-dates-events article::before {
   padding: 12px 14px;
 }
 
-/* line 530, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 534, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li {
   display: block;
@@ -15915,7 +15921,7 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 20px;
 }
 
-/* line 535, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 539, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
   float: none;
@@ -15925,7 +15931,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 542, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 546, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
@@ -15934,14 +15940,14 @@ ul.mec-weekly-view-dates-events article::before {
   color: #FFF;
 }
 
-/* line 552, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 556, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta h3 {
   margin: 0;
   padding: 0;
 }
 
-/* line 557, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 561, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta dd {
   padding-left: 0;
@@ -15950,13 +15956,13 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 0.9rem;
 }
 
-/* line 565, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 569, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-event-image {
   margin: 10px;
 }
 
-/* line 569, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 573, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-title {
   font-weight: bold;
@@ -15964,20 +15970,20 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 0.3em;
 }
 
-/* line 576, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 580, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content h2 {
   font-size: 2rem;
   padding: 0;
 }
 
-/* line 583, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 587, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content h3 {
   margin-bottom: 1em;
 }
 
-/* line 587, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 591, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content p {
   font-family: 'Poppins', sans-serif;
@@ -15985,7 +15991,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #1F2A3A;
 }
 
-/* line 594, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 598, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-booking-button {
   margin: 20px 10px;
@@ -15994,7 +16000,7 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 1.1rem;
 }
 
-/* line 601, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 605, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social {
   text-align: left;
@@ -16004,7 +16010,7 @@ ul.mec-weekly-view-dates-events article::before {
   padding: 0;
 }
 
-/* line 607, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 611, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social h3 {
   text-align: left;
@@ -16012,22 +16018,91 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 0;
 }
 
-/* line 614, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 618, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social h3::before {
   display: none;
 }
 
-/* line 619, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 623, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-sharing {
   margin-top: 0;
 }
 
-/* line 623, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 627, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-social-icon {
   text-align: center;
+}
+
+/* line 2, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
+
+.archive.taxonomy-data .page-header {
+  background: #BCCFE9;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 4em;
+  position: relative;
+}
+
+/* line 8, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
+
+.archive.taxonomy-data .page-header .texture {
+  background-image: url(/wp-content/themes/rtp-child-frontier/dist/images/texture-single-header.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 34.5%;
+  right: 0;
+  z-index: 0;
+}
+
+/* line 20, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
+
+.archive.taxonomy-data .page-header .texture img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  min-height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  z-index: 1;
+}
+
+/* line 32, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
+
+.archive.taxonomy-data .page-header .container,
+.archive.taxonomy-data .page-header .container-wide {
+  background: transparent;
+  padding: 0;
+  z-index: 1;
+}
+
+/* line 38, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
+
+.archive.taxonomy-data .page-header .entry-title-container {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  width: 60%;
+  margin: 0;
+  padding: 1em;
+  position: relative;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 38, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
+
+  .archive.taxonomy-data .page-header .entry-title-container {
+    width: 100%;
+  }
 }
 
 /* line 1, ../rtp-core/resources/assets/styles/layouts/_tinymce.scss */
@@ -16131,7 +16206,7 @@ body.error404 .entry-content blockquote cite {
   background: rgba(0, 148, 201, 0.8);
 }
 
-/* line 1, resources/assets/styles/layouts/_events.scss */
+/* line 1, resources/assets/styles/layouts/_calendar.scss */
 
 .entry-content .mec-wrap h1,
 .entry-content .mec-wrap h2,
@@ -16150,13 +16225,13 @@ body.error404 .entry-content blockquote cite {
   font-family: 'Oswald', sans-serif;
 }
 
-/* line 8, resources/assets/styles/layouts/_events.scss */
+/* line 8, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span {
   background: #57C1A5;
 }
 
-/* line 11, resources/assets/styles/layouts/_events.scss */
+/* line 11, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span:hover,
 .mec-wrap .mec-totalcal-box .mec-totalcal-view span:focus,
@@ -16165,19 +16240,19 @@ body.error404 .entry-content blockquote cite {
   background: #30826c;
 }
 
-/* line 19, resources/assets/styles/layouts/_events.scss */
+/* line 19, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .mec-date-search i {
   background: #30826c;
 }
 
-/* line 25, resources/assets/styles/layouts/_events.scss */
+/* line 25, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper input.select-dropdown {
   background: #57C1A5;
 }
 
-/* line 28, resources/assets/styles/layouts/_events.scss */
+/* line 28, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper input.select-dropdown:hover,
 .mec-wrap .select-wrapper input.select-dropdown:focus,
@@ -16185,13 +16260,19 @@ body.error404 .entry-content blockquote cite {
   background: #30826c;
 }
 
-/* line 34, resources/assets/styles/layouts/_events.scss */
+/* line 34, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap .select-wrapper ul.dropdown-content li.selected {
   background: #30826c;
 }
 
-/* line 44, resources/assets/styles/layouts/_events.scss */
+/* line 40, resources/assets/styles/layouts/_calendar.scss */
+
+.mec-wrap h2.mec-month-divider {
+  color: #2FA787;
+}
+
+/* line 48, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-side .mec-previous-month:hover,
 .mec-calendar .mec-calendar-side .mec-previous-month:focus,
@@ -16199,16 +16280,16 @@ body.error404 .entry-content blockquote cite {
 .mec-calendar .mec-calendar-side .mec-next-month:hover,
 .mec-calendar .mec-calendar-side .mec-next-month:focus,
 .mec-calendar .mec-calendar-side .mec-next-month:active {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 51, resources/assets/styles/layouts/_events.scss */
+/* line 55, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-table-head dt {
   color: #57C1A5;
 }
 
-/* line 58, resources/assets/styles/layouts/_events.scss */
+/* line 62, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event a:hover,
 .mec-calendar .mec-has-event a:active,
@@ -16216,13 +16297,13 @@ body.error404 .entry-content blockquote cite {
   background: #57C1A5;
 }
 
-/* line 63, resources/assets/styles/layouts/_events.scss */
+/* line 67, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event::after {
   background-color: #57C1A5;
 }
 
-/* line 67, resources/assets/styles/layouts/_events.scss */
+/* line 71, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-has-event:hover,
 .mec-calendar .mec-has-event:active,
@@ -16230,27 +16311,27 @@ body.error404 .entry-content blockquote cite {
   background: #57C1A5 !important;
 }
 
-/* line 72, resources/assets/styles/layouts/_events.scss */
+/* line 76, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-selected-day {
   background: #30826c;
 }
 
-/* line 77, resources/assets/styles/layouts/_events.scss */
+/* line 81, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-calendar-events-side .mec-table-side-day {
   border-color: #57C1A5;
 }
 
-/* line 85, resources/assets/styles/layouts/_events.scss */
+/* line 89, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar .mec-event-article .mec-event-title a:hover,
 .mec-calendar .mec-event-article .mec-event-title a:focus,
 .mec-calendar .mec-event-article .mec-event-title a:active {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 94, resources/assets/styles/layouts/_events.scss */
+/* line 98, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month:hover,
 .mec-calendar.mec-calendar-weekly .mec-previous-month:focus,
@@ -16258,10 +16339,10 @@ body.error404 .entry-content blockquote cite {
 .mec-calendar.mec-calendar-weekly .mec-next-month:hover,
 .mec-calendar.mec-calendar-weekly .mec-next-month:focus,
 .mec-calendar.mec-calendar-weekly .mec-next-month:active {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 97, resources/assets/styles/layouts/_events.scss */
+/* line 101, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-previous-month:hover i,
 .mec-calendar.mec-calendar-weekly .mec-previous-month:focus i,
@@ -16269,16 +16350,16 @@ body.error404 .entry-content blockquote cite {
 .mec-calendar.mec-calendar-weekly .mec-next-month:hover i,
 .mec-calendar.mec-calendar-weekly .mec-next-month:focus i,
 .mec-calendar.mec-calendar-weekly .mec-next-month:active i {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 105, resources/assets/styles/layouts/_events.scss */
+/* line 109, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-calendar.mec-calendar-weekly .mec-calendar-d-table dl dt .mec-weekly-view-weekday {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 116, resources/assets/styles/layouts/_events.scss */
+/* line 120, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:hover,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-previous-year:focus,
@@ -16286,18 +16367,18 @@ body.error404 .entry-content blockquote cite {
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:hover,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:focus,
 .mec-yearly-view-wrap .mec-yearly-title-sec .mec-next-year:active {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 124, resources/assets/styles/layouts/_events.scss */
+/* line 128, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-yearly-view-wrap .mec-agenda-event-title a:hover,
 .mec-yearly-view-wrap .mec-agenda-event-title a:focus,
 .mec-yearly-view-wrap .mec-agenda-event-title a:active {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 131, resources/assets/styles/layouts/_events.scss */
+/* line 135, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-canceled::before,
 .mec-wrap article:not([class^=mec-event-countdown]):not([class^=mec-event-cover-]).mec-label-featured::before,
@@ -16315,7 +16396,7 @@ body.error404 .entry-content blockquote cite {
   background: #F7406C;
 }
 
-/* line 135, resources/assets/styles/layouts/_events.scss */
+/* line 139, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-event-grid-minimal article .mec-fc-style::before,
 .mec-event-grid-simple article .mec-fc-style::before,
@@ -16329,7 +16410,7 @@ body.error404 .entry-content blockquote cite {
   color: #F7406C;
 }
 
-/* line 139, resources/assets/styles/layouts/_events.scss */
+/* line 143, resources/assets/styles/layouts/_calendar.scss */
 
 .mec-color,
 .mec-color-before ::before,
@@ -16337,46 +16418,48 @@ body.error404 .entry-content blockquote cite {
 .mec-wrap .mec-color,
 .mec-wrap .mec-color-before ::before,
 .mec-wrap .mec-color-hover:hover {
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 144, resources/assets/styles/layouts/_events.scss */
+/* line 148, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar {
   background: rgba(87, 193, 165, 0.2);
 }
 
-/* line 151, resources/assets/styles/layouts/_events.scss */
+/* line 155, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
   border: 1px solid #57C1A5;
-  color: #57C1A5;
+  color: #2FA787;
 }
 
-/* line 155, resources/assets/styles/layouts/_events.scss */
+/* line 159, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:active {
-  background: #57C1A5;
+  background: #2FA787;
   color: #FFF;
 }
 
-/* line 164, resources/assets/styles/layouts/_events.scss */
+/* line 168, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-booking-button {
-  background-color: #57C1A5;
+  background-color: #2FA787;
 }
 
 /* line 2, resources/assets/styles/layouts/_single.scss */
 
-.single .page-header {
+.single .page-header,
+.archive.taxonomy-data .page-header {
   background-color: #AFE5D9;
 }
 
 /* line 5, resources/assets/styles/layouts/_single.scss */
 
-.single .page-header h1 {
+.single .page-header h1,
+.archive.taxonomy-data .page-header h1 {
   color: #57C1A5;
 }
 
