@@ -20,6 +20,12 @@ if ($settings->structure == 'horizontal') {
 ?>
 
 <article class="figure-card <?php echo implode(' ', $classes); ?>">
+  <?php if ($settings->enable_cta == 'block') { ?>
+    <a tabindex="-1" aria-hidden="true" class="mega-link" href="<?php echo $settings->cta_link; ?>"></a>
+  <?php } elseif ($settings->enable_cta == 'modaal') { ?>
+    <a tabindex="-1" aria-hidden="true" class="modaal mega-link" href="#modal-<?php echo $id; ?>"></a>
+  <?php } ?>
+
   <div class="figure-card-img">
     <?php if ($settings->structure !== 'default') { ?>
   		<?php echo wp_get_attachment_image($settings->image, 'full', false, ['alt' => $settings->image_alt, 'itemprop' => 'image']); ?>

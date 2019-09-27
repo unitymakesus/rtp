@@ -5,11 +5,23 @@
     padding-bottom: 100%;
     overflow: hidden;
 
+    a.mega-link:hover ~ .figure-card-img, &:focus-within .figure-card-img {
+      img {
+        transform: scale(1.03);
+      }
+    }
+
+    .figure-card-img {
+      overflow: hidden;
+      position: relative;
+    }
+
     img, .placeholder {
       width: 100%;
       object-fit: cover;
       position: relative;
       z-index: 1;
+      transition: all 0.3s ease;
     }
 
     .card {

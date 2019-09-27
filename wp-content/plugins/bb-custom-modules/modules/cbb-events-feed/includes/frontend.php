@@ -40,6 +40,8 @@ if ($count >= 3) {
     ?>
     <div class="flex-item">
       <article class="figure-card <?php echo (($settings->show_thumb) ? 'figure-card-vertical' : 'no-image'); ?> <?php echo implode(' ', $classes); ?>">
+        <a tabindex="-1" aria-hidden="true" class="mega-link" href="<?php echo get_permalink(); ?>"></a>
+
         <div class="figure-card-img">
           <?php if ($settings->show_thumb) {
             $siteID = get_post_meta($id, 'dt_original_blog_id', true);
@@ -73,7 +75,7 @@ if ($count >= 3) {
               <div class="location"><?php echo $location->name; ?></div>
             </div>
 
-            <div class="card-cta"><a href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
+            <div class="card-cta"><a tabindex="-1" href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
           </div>
         </div>
 

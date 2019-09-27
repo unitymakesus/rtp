@@ -13,6 +13,8 @@
     ?>
     <div class="flex-item">
       <article class="figure-card figure-card-people">
+        <a tabindex="-1" aria-hidden="true" class="mega-link" href="<?php echo get_permalink(); ?>"></a>
+
         <div class="figure-card-img">
           <?php
           $siteID = get_post_meta($id, 'dt_original_blog_id', true);

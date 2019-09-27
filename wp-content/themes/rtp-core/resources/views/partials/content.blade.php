@@ -5,6 +5,8 @@ $classes = [
 ];
 @endphp
 <article {!! post_class(implode(' ', $classes)) !!}>
+  <a tabindex="-1" aria-hidden="true" class="mega-link" href="{{ get_permalink() }}"></a>
+
   @if (has_post_thumbnail())
     @php
       $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
@@ -23,7 +25,7 @@ $classes = [
       <div class="card-badge"><span>{{ Content::siteBadge() }}</span></div>
       <h3 class="card-title" itemprop="name"><a href="{{ get_permalink() }}">{!! get_the_title() !!}</a></h3>
 
-      <div class="card-cta"><a href="{{ get_permalink() }}">Read More <span class="arrow">@svg('arrow-right')</span></a></div>
+      <div class="card-cta"><a tabindex="-1" href="{{ get_permalink() }}">Read More <span class="arrow">@svg('arrow-right')</span></a></div>
     </div>
   </div>
   <div class="pattern-background">@svg('pattern-bracket')</div>

@@ -12,6 +12,26 @@
     height: 100%;
     padding-bottom: 40px;
 
+    a.mega-link:hover ~ .card, &:focus-within .card {
+      box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+
+      .card-title {
+        text-decoration: underline;
+      }
+
+      .card-cta {
+        a {
+          .text {
+            text-decoration: underline !important;
+          }
+
+          .arrow {
+            transform: translate3d(10px, 0, 0);
+          }
+        }
+      }
+    }
+
     img, .placeholder {
       width: 100%;
       height: 300px;
