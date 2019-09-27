@@ -307,6 +307,12 @@
 		 */
 		_multipleAudiosSelector        : null,
 
+
+		/**
+		 * @since 2.2.5
+		 */
+		_codeDisabled: false,
+
 		/**
 		 * Initializes the builder interface.
 		 *
@@ -5829,6 +5835,7 @@
 			FLBuilder._initSections();
 			FLBuilder._initButtonGroupFields();
 			FLBuilder._initCompoundFields();
+			FLBuilder._CodeFieldSSLCheck();
 			FLBuilder._initCodeFields();
 			FLBuilder._initColorPickers();
 			FLBuilder._initGradientPickers();
@@ -7002,6 +7009,18 @@
 		----------------------------------------------------------*/
 
 		/**
+		 * SiteGround ForceSSL fix
+		 */
+		 _CodeFieldSSLCheck: function() {
+			 $('body').append('<div class="sg-test" style="display:none"><svg xmlns="http://www.w3.org/2000/svg"></svg></div>');
+
+			 if ( 'https://www.w3.org/2000/svg' === $('.sg-test').find('svg').attr('xmlns') ) {
+				 FLBuilder._codeDisabled = true;
+			 }
+			 $('.sg-test').remove()
+		 },
+
+		/**
 		 * Initializes all code fields in a settings form.
 		 *
 		 * @since 2.0
@@ -7010,7 +7029,9 @@
 		 */
 		_initCodeFields: function()
 		{
-			$( '.fl-builder-settings:visible' ).find( '.fl-code-field' ).each( FLBuilder._initCodeField );
+			if ( ! FLBuilder._codeDisabled ) {
+				$( '.fl-builder-settings:visible' ).find( '.fl-code-field' ).each( FLBuilder._initCodeField );
+			}
 		},
 
 		/**
@@ -7421,7 +7442,9 @@
 
 					// Resize code editor fields.
 					$( prefix + inputArray[i] + suffix ).parent().find( '.fl-field[data-type="code"]' ).each( function() {
-						$( this ).data( 'editor' ).resize();
+						if ( ! FLBuilder._codeDisabled ) {
+							$( this ).data( 'editor' ).resize();
+						}
 					} );
 				}
 			}

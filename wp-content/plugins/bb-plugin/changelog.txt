@@ -1,3 +1,11 @@
+<h4>2.2.5.3 - 09/25/2019</h4>
+<p><strong>Hot Fix</strong></p>
+<ul>
+	<li>Fixed Content Slider: Style tab disappears once slides are edited.</li>
+	<li>Fixed another equal heights column with responsive visibility issue.</li>
+	<li>Fixed issue on with ace code editor on SiteGround if their ForceSSL option is enabled.</li>
+</ul>
+
 <h4>2.2.5.2 - 09/11/2019</h4>
 <p><strong>Hot Fix</strong></p>
 <ul>

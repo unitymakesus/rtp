@@ -41,11 +41,11 @@
 			}
 
 			if(show) {
-				$('a[href*=fl-builder-settings-tab-style]').show();
+				$('[data-form-id=content_slider_slide] a[href*=fl-builder-settings-tab-style]').show();
 				$('a[href*=fl-builder-settings-tab-cta]').show();
 			}
 			else {
-				$('a[href*=fl-builder-settings-tab-style]').hide();
+				$('[data-form-id=content_slider_slide] a[href*=fl-builder-settings-tab-style]').hide();
 				$('a[href*=fl-builder-settings-tab-cta]').hide();
 			}
 		},

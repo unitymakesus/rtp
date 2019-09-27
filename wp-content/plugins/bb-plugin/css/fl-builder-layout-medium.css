@@ -15,11 +15,8 @@
 .fl-col-group .fl-visible-medium-mobile.fl-col {
 	display: block;
 }
-.fl-col-group-equal-height .fl-visible-desktop-medium,
-.fl-col-group-equal-height .fl-visible-medium,
-.fl-col-group-equal-height .fl-visible-medium-mobile,
-.fl-col-group.fl-col-group-equal-height .fl-visible-desktop-medium.fl-col,
-.fl-col-group.fl-col-group-equal-height .fl-visible-medium.fl-col,
-.fl-col-group.fl-col-group-equal-height .fl-visible-medium-mobile.fl-col {
+.fl-col-group-equal-height .fl-visible-desktop-medium.fl-col,
+.fl-col-group-equal-height .fl-visible-medium.fl-col,
+.fl-col-group-equal-height .fl-visible-medium-mobile.fl-col {
 	display: flex;
 }

@@ -7,12 +7,11 @@
 .fl-col-group .fl-visible-desktop.fl-col,
 .fl-col-group .fl-visible-desktop-medium.fl-col,
 .fl-col-group .fl-visible-medium.fl-col,
-.fl-col-group-equal-height .fl-visible-desktop-medium,
-.fl-col-group-equal-height .fl-visible-medium,
-.fl-col-group.fl-col-group-equal-height .fl-visible-desktop-medium.fl-col,
-.fl-col-group.fl-col-group-equal-height .fl-visible-medium.fl-col {
+.fl-col-group-equal-height .fl-visible-desktop-medium.fl-col,
+.fl-col-group-equal-height .fl-visible-medium.fl-col {
 	display: none;
 }
+
 .fl-visible-medium-mobile,
 .fl-visible-mobile,
 .fl-col-group .fl-visible-medium-mobile.fl-col,
