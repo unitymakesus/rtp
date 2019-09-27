@@ -3,8 +3,8 @@ Contributors: crmperks, sbazzi, asif876
 Tags: gravity forms, gravity forms salesforce, gravity forms salesforce add on, gravity forms salesforce crm, gravity forms salesforce integration, salesforce wordpress gravity forms
 Requires at least: 3.8
 Tested up to: 5.2
-Stable tag: 1.1.1
-Version: 1.1.1
+Stable tag: 1.1.2
+Version: 1.1.2
 Requires PHP: 5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -173,6 +173,12 @@ Following features are not available in free version.
 Yes, as you connect your normal salesforce account similarly, you can connect your sandbox account. fields mapping is same for both normal and sandbox accounts.
 
 == Changelog ==
+
+= 1.1.3 =
+* fixed file_get_contents function for files.
+
+= 1.1.2 =
+* added separate note title feature.
 
 = 1.1.1 =
 * fixed another "self::$order is undefined" error.

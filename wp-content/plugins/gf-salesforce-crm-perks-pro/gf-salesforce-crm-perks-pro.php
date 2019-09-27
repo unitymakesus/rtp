@@ -1,8 +1,8 @@
 <?php
 /**
-* Plugin Name: Gravity Forms Salesforce
+* Plugin Name: Gravity Forms Salesforce Pro
 * Description: Integrates Gravity Forms with Salesforce allowing form submissions to be automatically sent to your Salesforce account 
-* Version: 1.1.1
+* Version: 1.1.2
 * Requires at least: 3.8
 * Tested up to: 5.2
 * Author URI: https://www.crmperks.com
@@ -25,7 +25,7 @@ class vxg_salesforce {
   public  $crm_name = 'salesforce';
   public  $id = 'vxg_salesforce';
   public  $domain = 'vxg-sales';
-  public  $version = "1.1.1";
+  public  $version = "1.1.2";
   public  $update_id = '30001';
   public  $min_gravityforms_version = '1.3.9';
   public $type = 'vxg_salesforce_pro';
@@ -69,7 +69,7 @@ register_activation_hook(__FILE__,(array($this,'activate')));
   * 
   */
   public  function init(){
-
+ 
       self::$gf_status= $this->gravity_forms_status();
     if(self::$gf_status !== 1){
   add_action( 'admin_notices', array( $this, 'install_gf_notice' ) );
@@ -500,6 +500,7 @@ return $result;
        }
      $value=trim(implode(" - \n",$v_temp));  
    } }
+
   $val=true;
   }else{ //check if full address
       if($gf_field_id=='entry_url'){
@@ -537,7 +538,6 @@ return $result;
   if($value && is_array($value)){
  // $value=implode(", ",$value);
   }
- 
   return $value;        
   }
   /**
@@ -1480,9 +1480,16 @@ if(!empty($data['note_fields']) && is_array($data['note_fields'])){
 }
 if(!empty($data['note_val'])){
     $entry_note=$this->process_tags($entry,$form,$data['note_val']);
+    $entry_note=str_replace("'", "", $entry_note);
+    $entry_note=esc_html($entry_note);
            if(empty($entry_note_title)){
+           $pos=strpos($entry_note,'?');
+               if($pos > 0){
+              $entry_note_title=substr($entry_note,0,$pos);     
+              $entry_note=substr($entry_note,$pos+1);     
+               }else{    
             $entry_note_title=substr($entry_note,0,20);   
-           }
+           } }
           if(!empty($entry_note)){
      $feed['__vx_entry_note']=array('Title'=>$entry_note_title,'Body'=>$entry_note);      
           }

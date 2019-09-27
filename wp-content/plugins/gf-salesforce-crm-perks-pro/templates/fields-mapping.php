@@ -615,7 +615,7 @@ foreach($ops as $v_op){
           $meta['note_val']='{'.implode("}\n{",$meta['note_fields'])."}";
 }
    echo $this->post('note_val',$meta); ?></textarea>
-<div class="howto"><?php echo sprintf(__('You can add a form field %s in custom value from following form fields','gravity-forms-salesforce-crm'),'<code>{field_id}</code>')?></div>
+<div class="howto"><?php echo sprintf(__('You can add a form field %s in custom value from following form fields. You can use %s for separating note title from body','gravity-forms-salesforce-crm'),'<code>{field_id}</code>','<code>?</code>')?></div>
 
 <select name="field"  class="vxc_field_option vx_input_100">
 <?php echo $options ?>

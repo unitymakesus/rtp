@@ -429,7 +429,7 @@ public function post_web($post,$info,$object='Lead', $test = false) {
   $post['oid'] =$this->post('org_id',$info);
   break;
   }
-
+//var_dump($post); die();
   // We need an Org ID to post to Salesforce successfully.
   if(empty($post['oid']) && empty($post['orgid'])) {
   
@@ -505,10 +505,11 @@ $post=implode('&',$body);
 public function verify_files($files,$old=array()){
         if(!is_array($files)){
         $files_temp=json_decode($files,true);
+        var_dump($files_temp);
      if(is_array($files_temp)){
     $files=$files_temp;     
-     }else if (!empty($files)){ //&& filter_var($files,FILTER_VALIDATE_URL)
-      $files=array($files);   
+     }else if(!empty($files)){ //&& filter_var($files,FILTER_VALIDATE_URL)
+      $files=array_map('trim',explode(',',$files));   
      }else{
       $files=array();    
      }   
@@ -524,8 +525,7 @@ public function verify_files($files,$old=array()){
   * @return array Salesforce Response and Object URL
   */
 public function push_object($object,$temp_fields,$meta){  
- 
-    
+
 //$res=$this->get_entry('Lead','00Q0H00001sbljWUAQ');
 //$res=$this->post_sales_arr('/services/data/v39.0/sobjects/RecordType/describe','get','');
 //var_dump($res); die();
@@ -565,7 +565,6 @@ public function push_object($object,$temp_fields,$meta){
   else{
   $fields_info=isset($meta['fields']) && is_array($meta['fields']) ? $meta['fields'] : array();
   if($event!='add_note'){
-  $fields=$this->clean_sf_fields($fields,$fields_info);
 
   //remove related list fields
   $files=array();
@@ -577,6 +576,8 @@ if($i>1){ $field_n.=$i; }
     unset($fields[$field_n]);  
   }
 }
+  $fields=$this->clean_sf_fields($fields,$fields_info);
+
 
 if(!empty($meta['owner'])){
     $fields['disable_rules']=1;
@@ -738,7 +739,12 @@ if($sent && !empty($id)){
         foreach($files as $k=>$file){ $k++;
          $file_name=substr($file,strrpos($file,'/')+1);   
     $post=array('Title'=>$file_name); 
+     if( filter_var($file, FILTER_VALIDATE_URL)) { //!ini_get('allow_url_fopen')
+      $upload_dir=wp_upload_dir();
+       $file=str_replace($upload_dir['baseurl'],$upload_dir['basedir'],$file); 
+    }
   $c=file_get_contents($file);
+  
   $post['VersionData']=base64_encode($c);
   $post['PathOnClient']=$file_name;
   $extra['Uploading File '.$k]=$file;
@@ -882,6 +888,7 @@ $meta['note_list']='';
  }
      } 
  }
+ 
 $post_data=json_encode($post);  
  $sales_response=$this->post_sales_arr('/services/data/'.$this->api_version.'/sobjects/'.$note_object,"POST",$post_data);
     if(isset($sales_response['id']) && !empty($meta['note_list']) && !empty($id)){
@@ -1106,7 +1113,7 @@ foreach($fixed as $field_key=>$field_val){
       if(is_array($field_val)){
        $field_val=html_entity_decode(implode(';',$field_val));   
       }
-  }
+  } 
   if(is_array($field_val)){ 
       $field_val=implode(', ',$field_val);
   }

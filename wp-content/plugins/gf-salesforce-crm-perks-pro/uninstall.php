@@ -6,7 +6,7 @@
     exit;
 }
 $path=plugin_dir_path(__FILE__);
-include_once($path . "gf-salesforce-crmperks.php");
+include_once($path . "gf-salesforce-crm-perks-pro.php");
  include_once($path . "includes/install.php");
  
    $install=new vxg_install_salesforce();
