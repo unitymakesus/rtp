@@ -51,7 +51,7 @@
 /* line 30, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .card {
-  height: calc(100% - 50px);
+  height: 100%;
   margin: 0 30px 50px 0;
 }
 
@@ -59,6 +59,7 @@
 
 .flex-grid .flex-item .figure-card.no-image .pattern-background {
   left: 30px;
+  bottom: -30px;
 }
 
 
