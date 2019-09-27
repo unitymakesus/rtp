@@ -200,3 +200,160 @@ function get_day_status($test) {
 
   return array('closed' => $closed, 'schedule' => $schedule);
 }
+
+/**
+ * Fix issue where page header loads before theme on non-SSL pages that load Give Square add-on
+ */
+remove_action( 'give_square_cc_form', 'give_square_credit_card_form', 10, 3 );
+add_action( 'give_square_cc_form', __NAMESPACE__ . '\rtp_give_square_credit_card_form', 10, 3 );
+function rtp_give_square_credit_card_form( $form_id, $args, $echo = true ) {
+
+	$id_prefix = ! empty( $args['id_prefix'] ) ? $args['id_prefix'] : '';
+
+	$card_number_class = 'form-row form-row-two-thirds form-row-responsive give-square-cc-field-wrap';
+	$card_cvc_class    = 'form-row form-row-one-third form-row-responsive give-square-cc-field-wrap';
+	$card_name_class   = 'form-row form-row-two-thirds form-row-responsive give-square-cc-field-wrap';
+	$card_exp_class    = 'form-row form-row-first form-row-responsive card-expiration give-square-cc-field-wrap';
+	$card_zip_class    = 'form-row form-row-last form-row-responsive give-square-cc-field-wrap';
+
+	if ( give_square_can_collect_billing_details() ) {
+		$card_exp_class = 'card-expiration form-row form-row-one-third form-row-responsive give-square-cc-field-wrap';
+		$card_zip_class = 'form-row form-row-one-third form-row-responsive give-square-cc-field-wrap';
+	}
+
+   // Show frontend notice when site not accessed with SSL.
+   if ( ! is_ssl() ) {
+      Give()->notices->print_frontend_notice( __( 'This page requires a valid SSL certificate for secure donations. Please try accessing this page with HTTPS in order to load Credit Card fields.', 'give-square' ) );
+      return false;
+   }
+
+	ob_start();
+
+	do_action( 'give_before_cc_fields', $form_id );
+	?>
+
+	<fieldset id="give_cc_fields" class="give-do-validate">
+		<legend><?php esc_html_e( 'Credit Card Info', 'give-square' ); ?></legend>
+       <?php
+       $application_id = give_square_get_application_id();
+       if ( empty( $application_id ) ) {
+
+           // Show frontend notice when Square is not configured properly.
+	        Give()->notices->print_frontend_notice(
+               sprintf(
+                   /* translators: 1. Text, 2. Link, 3. Link Text */
+            '%1$s <a href="%2$s">%3$s</a>',
+                   __( 'Square is not set up yet to accept payments. Please configure the gateway in order to accept donations. If you\'re having trouble please review', '' ),
+                   esc_url( 'http://docs.givewp.com/addon-square' ),
+                   __( 'Give\'s Square documentation.', 'give-square' )
+               )
+           );
+	        return false;
+       }
+       ?>
+       <div id="give_secure_site_wrapper">
+           <span class="give-icon padlock"></span>
+           <span>
+               <?php esc_attr_e( 'This is a secure SSL encrypted payment.', 'give-square' ); ?>
+           </span>
+       </div>
+
+		<div id="give-card-number-wrap" class="<?php echo esc_attr( $card_number_class ); ?>">
+			<div>
+				<label for="give-card-number-field-<?php echo esc_html( $id_prefix ); ?>" class="give-label">
+					<?php esc_attr_e( 'Card Number', 'give-square' ); ?>
+					<span class="give-required-indicator">*</span>
+					<span class="give-tooltip give-icon give-icon-question"
+						data-tooltip="<?php esc_attr_e( 'The (typically) 16 digits on the front of your credit card.', 'give-square' ); ?>"></span>
+					<span class="card-type"></span>
+				</label>
+				<div id="give-card-number-field-<?php echo esc_html( $id_prefix ); ?>" class="input empty give-square-cc-field give-square-card-number-field"></div>
+			</div>
+		</div>
+
+		<div id="give-card-cvc-wrap" class="<?php echo esc_attr( $card_cvc_class ); ?>">
+			<div>
+				<label for="give-card-cvc-field-<?php echo esc_html( $id_prefix ); ?>" class="give-label">
+					<?php esc_attr_e( 'CVC', 'give-square' ); ?>
+					<span class="give-required-indicator">*</span>
+					<span class="give-tooltip give-icon give-icon-question"
+						data-tooltip="<?php esc_attr_e( 'The 3 digit (back) or 4 digit (front) value on your card.', 'give-square' ); ?>"></span>
+				</label>
+				<div id="give-card-cvc-field-<?php echo esc_html( $id_prefix ); ?>" class="input empty give-square-cc-field give-square-card-cvc-field"></div>
+			</div>
+		</div>
+
+       <?php
+       if ( give_square_can_collect_billing_details() ) {
+           ?>
+           <div id="give-card-name-wrap" class="<?php echo esc_attr( $card_name_class ); ?>">
+               <label for="card_name" class="give-label">
+                   <?php esc_attr_e( 'Cardholder Name', 'give-square' ); ?>
+                   <span class="give-required-indicator">*</span>
+                   <span class="give-tooltip give-icon give-icon-question"
+                         data-tooltip="<?php esc_attr_e( 'The name of the credit card account holder.', 'give-square' ); ?>"></span>
+               </label>
+
+               <input
+                       type="text"
+                       autocomplete="off"
+                       id="card_name"
+                       name="card_name"
+                       class="card-name give-input required"
+                       placeholder="<?php esc_attr_e( 'Cardholder Name', 'give-square' ); ?>"
+               />
+           </div>
+           <?php
+       }
+
+       do_action( 'give_before_cc_expiration' );
+       ?>
+
+		<div id="give-card-expiration-wrap" class="<?php echo esc_attr( $card_exp_class ); ?>">
+			<div>
+				<label for="give-card-expiration-field-<?php echo esc_html( $id_prefix ); ?>" class="give-label">
+					<?php esc_attr_e( 'Expiration', 'give-square' ); ?>
+					<span class="give-required-indicator">*</span>
+					<span class="give-tooltip give-icon give-icon-question"
+						data-tooltip="<?php esc_attr_e( 'The date your credit card expires, typically on the front of the card.', 'give-square' ); ?>"></span>
+				</label>
+
+				<div id="give-card-expiration-field-<?php echo esc_html( $id_prefix ); ?>" class="input empty give-square-cc-field give-square-card-expiration-field"></div>
+			</div>
+		</div>
+
+       <?php
+       if ( ! give_square_can_collect_billing_details() ) {
+           ?>
+           <div id="give-card-zip-wrap" class="<?php echo esc_attr( $card_zip_class ); ?>">
+               <label for="card_zip" class="give-label">
+			        <?php esc_attr_e('Zip / Postal Code', 'give-square'); ?>
+                   <span class="give-required-indicator">*</span>
+			        <?php echo Give()->tooltips->render_help(__('The ZIP Code or postal code for your billing address.', 'give-square')); ?>
+               </label>
+
+               <div id="give-square-card-zip-<?php echo esc_html($id_prefix); ?>"
+                    class="input empty give-square-cc-field give-square-card-expiration-field"></div>
+           </div>
+	        <?php
+       }
+
+		do_action( 'give_after_cc_expiration', $form_id );
+		?>
+
+	</fieldset>
+	<?php
+
+	// Remove Address Fields if user has option enabled.
+	remove_action( 'give_after_cc_fields', 'give_default_cc_address_fields' );
+
+	do_action( 'give_square_after_cc_fields', $form_id, $args );
+
+	$form = ob_get_clean();
+
+	if ( false !== $echo ) {
+		echo $form;
+	}
+
+	return $form;
+}
