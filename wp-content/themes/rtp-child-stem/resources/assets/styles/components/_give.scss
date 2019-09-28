@@ -121,9 +121,11 @@ form[id*=give-form] {
   }
 }
 
-body.donation-confirmation {
+body.give-page {
   .entry-content {
-    padding: 50px 20px;
+    @extend .container;
+
+    padding: 3rem 20px;
   }
 
   #give-receipt {
