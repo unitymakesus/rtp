@@ -276,6 +276,11 @@ function cleanData($data, $idxMap, $notBefore, $notAfter) {
       continue;
     }
 
+    // Ignore events that say "No truck"
+    if (stripos($sheetEvent['title'], 'no truck') !== false) {
+      continue;
+    }
+
     // Wrangle rodeo trucks into single event
     if (!empty($sheetEvent['rodeo'])) {
 
