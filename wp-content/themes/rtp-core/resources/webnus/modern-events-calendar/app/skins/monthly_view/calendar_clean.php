@@ -136,7 +136,27 @@ elseif($week_start == 5) // Friday
                     </script>
                     ';
                     $events_str .= '<article data-style="'.$label_style.'" class="mec-event-article '.$this->get_event_classes($event).'">';
-                    $events_str .= '<div class="mec-event-image"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event->data->thumbnails['thumblist'].'</a></div>';
+                    // Get thumbnail
+                    $siteID = get_post_meta($event->data->ID, 'dt_original_blog_id', true);
+                    $origID = get_post_meta($event->data->ID, 'dt_original_post_id', true);
+                    if (!empty($siteID)) {
+                      // If this is a syndicated post, switch to original site to get featured image
+                      switch_to_blog($siteID);
+                      if (has_post_thumbnail($origID)) {
+                  			$thumbnail_id = get_post_thumbnail_id( $origID );
+                  			$alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                  			$event_thumb = get_the_post_thumbnail( $origID, 'medium-square-thumbnail', ['alt' => $alt, 'itemprop' => 'image'] );
+                  		}
+                      restore_current_blog();
+                    } else {
+                      // Just get the featured image from this site
+                      if (has_post_thumbnail($event->data->ID)) {
+                        $thumbnail_id = get_post_thumbnail_id( $event->data->ID );
+                        $alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                        $event_thumb = get_the_post_thumbnail( $event->data->ID, 'medium-square-thumbnail', ['alt' => $alt, 'itemprop' => 'image'] );
+                      }
+                    }
+                    $events_str .= '<div class="mec-event-image"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event_thumb.'</a></div>';
                     $events_str .= '<h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event->data->title.'</a>'.$event_color.'</h4>';
                     if(trim($start_time)) $events_str .= '<div class="mec-event-time"><i class="mec-sl-clock-o"></i> '.$start_time.(trim($end_time) ? ' - '.$end_time : '').'</div>';
                     $events_str .= '<div class="mec-event-detail">'.(isset($location['name']) ? $location['name'] : '').'</div>';

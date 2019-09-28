@@ -138,7 +138,29 @@ $event_colorskin = (isset($styling['mec_colorskin']) || isset($styling['color'])
                     ?>
                     <div class="mec-topsec">
                         <div class="col-md-3 mec-event-image-wrap mec-col-table-c">
-                            <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event->data->thumbnails['thumblist']; ?></a></div>
+													<?php
+														// Get thumbnail
+														$siteID = get_post_meta($event->data->ID, 'dt_original_blog_id', true);
+														$origID = get_post_meta($event->data->ID, 'dt_original_post_id', true);
+														if (!empty($siteID)) {
+															// If this is a syndicated post, switch to original site to get featured image
+															switch_to_blog($siteID);
+															if (has_post_thumbnail($origID)) {
+																$thumbnail_id = get_post_thumbnail_id( $origID );
+																$alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+																$event_thumb = get_the_post_thumbnail( $origID, 'medium-square-thumbnail', ['alt' => $alt, 'itemprop' => 'image'] );
+															}
+															restore_current_blog();
+														} else {
+															// Just get the featured image from this site
+															if (has_post_thumbnail($event->data->ID)) {
+																$thumbnail_id = get_post_thumbnail_id( $event->data->ID );
+																$alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+																$event_thumb = get_the_post_thumbnail( $event->data->ID, 'medium-square-thumbnail', ['alt' => $alt, 'itemprop' => 'image'] );
+															}
+														}
+													?>
+                          <div class="mec-event-image"><a data-event-id="<?php echo $event->data->ID; ?>" href="<?php echo $this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']); ?>"><?php echo $event_thumb; ?></a></div>
                         </div>
                         <div class="col-md-6 mec-col-table-c mec-event-content-wrap">
                             <div class="mec-event-content">
