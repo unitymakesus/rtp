@@ -107,7 +107,7 @@ function syncToCalendar($data, $notBefore, $notAfter) {
       $description = $settings_rodeo['mecft_default_rodeo_desc'] . "\n\nRodeo trucks include:\n<ul>";
       $img = $settings_rodeo['mecft_default_rodeo_img'];
       $truck = json_encode($trucks);
-      $location_id = 23;  // Frontier 600
+      $location_id = 752;  // Frontier 700, Parking Lot
 
       foreach ($event['trucks'] as $truck) {
         $description .= '<li><a href="' . $truck['website'] . '" target="_blank" rel="noopener">';
@@ -423,7 +423,7 @@ function syndicateToMain($post_id, $args) {
   if ($args['location_id'] == 24) {
     $args['location_id'] = 1197;  // Frontier 800
   } elseif ($args['location_id'] == 23) {
-    $args['location_id'] = 1198;   // Frontier 600
+    $args['location_id'] = 1215;   // Frontier 700, Parking Lot
   }
 
   // Do not sync media
