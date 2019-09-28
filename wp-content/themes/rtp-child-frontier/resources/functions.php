@@ -214,8 +214,8 @@ function get_day_status($test) {
     'projector' => '',
 		'microphone' => '',
 		'podium' => '',
-    'layouts' => '',
 		'sofa' => '',
+    'layouts' => '',
     'seats' => ''
 	), $atts );
 
