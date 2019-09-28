@@ -67,20 +67,6 @@ add_filter('template_include', function ($template) {
 
 
 /**
- * Redirect MEC category archives
- */
-add_filter( 'archive_template', function(){
-  if ( is_archive() && get_post_type() == 'mec-events' ) {
-    // global $wp_query;
-    // $wp_query->set_404();
-    // status_header( 404 );
-    // // get_template_part( 404 ); exit();
-  }
-}, -1 );
-
-
-
-/**
  * Render page using Blade
  */
  add_filter('template_include', function ($template) {
@@ -281,6 +267,20 @@ add_filter('dt_push_post_args', function($new_post_args, $post, $args) {
 /**
  * Remove draft option for distributing posts
  */
- add_filter('dt_allow_as_draft_distribute', function($as_draft, $connection, $post) {
-   return false;
- }, 10, 3);
+add_filter('dt_allow_as_draft_distribute', function($as_draft, $connection, $post) {
+  return false;
+}, 10, 3);
+
+/**
+ * Redirect distributed posts to the original post
+ */
+add_filter('template_redirect', function() {
+  global $post;
+  $orig_post_url = get_post_meta($post->ID, 'dt_original_post_url', true);
+  $orig_deleted = get_post_meta($post->ID, 'dt_original_post_deleted', true);
+
+  if (!empty($orig_post_url) && $orig_deleted !== 1) {
+    wp_redirect($orig_post_url, '301');
+    die;
+  }
+});
