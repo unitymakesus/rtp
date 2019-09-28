@@ -269,3 +269,14 @@ add_filter('nav_menu_link_attributes', function($atts, $item, $args) {
 
   return $atts;
 }, 10, 3);
+
+/**
+ * Set original date as the post date for distributed content
+ */
+add_filter('dt_push_post_args', function($new_post_args, $post, $args) {
+  $new_post_args['post_date'] = $post->post_date;
+  error_log(print_r($new_post_args, true));
+  error_log(print_r($post, true));
+  error_log(print_r($args, true));
+  return $new_post_args;
+}, 10, 3);
