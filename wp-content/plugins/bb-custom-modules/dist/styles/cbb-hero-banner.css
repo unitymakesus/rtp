@@ -191,5 +191,15 @@
           transform: translate3d(10px, 0, 0);
 }
 
+@media only screen and (min-width: 1200px) {
+  /* line 126, stdin */
+
+  .xlarge-align-top .home-hero img {
+    top: 0;
+    -webkit-transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+  }
+}
+
 
 /*# sourceMappingURL=cbb-hero-banner.css.map*/

@@ -120,3 +120,12 @@
     }
   }
 }
+
+@media only screen and (min-width: 1200px) {
+  .xlarge-align-top {
+    .home-hero img {
+      top: 0;
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}
