@@ -1,0 +1,55 @@
+.event-space-feature {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  background-position: center;
+  background-size: cover;
+  text-indent: -100em;
+  white-space: nowrap;
+  overflow: hidden;
+
+  &.feature-icon-wifi {
+    background-image: url('../images/featureicons/icon-wifi.svg');
+  }
+
+  &.feature-icon-microphone {
+    background-image: url('../images/featureicons/icon-microphone.svg');
+  }
+
+  &.feature-icon-whiteboard {
+    background-image: url('../images/featureicons/icon-whiteboard.svg');
+  }
+
+  &.feature-icon-screen {
+    background-image: url('../images/featureicons/icon-screen.svg');
+  }
+
+  &.feature-icon-projector {
+    background-image: url('../images/featureicons/icon-projector.svg');
+  }
+
+  &.feature-icon-tv {
+    background-image: url('../images/featureicons/icon-tv.svg');
+  }
+
+  &.feature-icon-layouts {
+    background-image: url('../images/featureicons/icon-layouts.svg');
+  }
+
+  &.feature-icon-podium {
+    background-image: url('../images/featureicons/icon-podium.svg');
+  }
+
+  &.feature-icon-sofa {
+    background-image: url('../images/featureicons/icon-sofa.svg');
+  }
+
+  &.feature-icon-hdmi {
+    background-image: url('../images/featureicons/icon-hdmi.svg');
+  }
+
+  &.feature-icon-seats {
+    background-image: url('../images/featureicons/icon-seats.svg');
+  }
+}

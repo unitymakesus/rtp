@@ -200,3 +200,32 @@ function get_day_status($test) {
 
   return array('closed' => $closed, 'schedule' => $schedule);
 }
+
+/**
+ * Event Space Features Shortcode
+ */
+ add_shortcode('event-space', function($atts) {
+   $features = shortcode_atts( array(
+		'wifi' => '',
+		'microphone' => '',
+		'whiteboard' => '',
+		'screen' => '',
+    'projector' => '',
+		'tv' => '',
+		'layouts' => '',
+		'podium' => '',
+		'sofa' => '',
+		'hdmi' => '',
+    'seats' => ''
+	), $atts );
+
+  ob_start();
+
+  foreach ($features as $icon => $feature) {
+    if (!empty($feature)) {
+      echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+    }
+  }
+
+  return ob_get_clean();
+ });
