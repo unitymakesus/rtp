@@ -13705,26 +13705,35 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   margin-bottom: 2rem;
 }
 
-/* line 11, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 10, ../rtp-core/resources/assets/styles/components/_search.scss */
+
+.search-results .excerpt {
+  border-radius: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  padding-bottom: 0 !important;
+}
+
+/* line 17, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .search-results .entry-summary p {
   display: inline;
   margin: 0;
 }
 
-/* line 19, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 25, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .entry-content .search-form {
   max-width: 500px;
 }
 
-/* line 26, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 32, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form {
   border-radius: 0;
 }
 
-/* line 29, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 35, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form::after {
   content: '';
@@ -13732,14 +13741,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 26, ../rtp-core/resources/assets/styles/components/_search.scss */
+  /* line 32, ../rtp-core/resources/assets/styles/components/_search.scss */
 
   .topbar .search-form {
     width: 100%;
   }
 }
 
-/* line 38, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 44, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form input.search-field {
   margin: auto;
@@ -13750,38 +13759,36 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   border-radius: 0;
   background: transparent !important;
   border: 1px solid #7A868C !important;
+  color: #FFF;
+  font-size: 0.72222rem;
 }
 
-/* line 47, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 55, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form input.search-field::-webkit-input-placeholder {
   color: #CBC8C7;
-  font-size: 13px;
 }
 
 .topbar .search-form input.search-field::-moz-placeholder {
   color: #CBC8C7;
-  font-size: 13px;
 }
 
 .topbar .search-form input.search-field::-ms-input-placeholder {
   color: #CBC8C7;
-  font-size: 13px;
 }
 
 .topbar .search-form input.search-field::placeholder {
   color: #CBC8C7;
-  font-size: 13px;
 }
 
-/* line 53, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 60, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form label {
   width: 100%;
   height: 100%;
 }
 
-/* line 58, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 65, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form .search-submit {
   display: none !important;
@@ -14465,19 +14472,22 @@ nav ul a {
 
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .page-header {
+.archive .page-header,
+.search-results .page-header {
   margin-bottom: 2em;
 }
 
 /* line 6, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .flex-item {
+.archive .flex-item,
+.search-results .flex-item {
   margin-bottom: 20px;
 }
 
 /* line 10, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card {
+.archive .figure-card,
+.search-results .figure-card {
   position: relative;
   height: 100%;
   padding-bottom: 40px;
@@ -14486,7 +14496,9 @@ nav ul a {
 /* line 15, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card a.mega-link:hover ~ .card,
-.archive .figure-card:focus-within .card {
+.archive .figure-card:focus-within .card,
+.search-results .figure-card a.mega-link:hover ~ .card,
+.search-results .figure-card:focus-within .card {
   -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
@@ -14494,14 +14506,18 @@ nav ul a {
 /* line 20, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card a.mega-link:hover ~ .card .card-cta a .text,
-.archive .figure-card:focus-within .card .card-cta a .text {
+.archive .figure-card:focus-within .card .card-cta a .text,
+.search-results .figure-card a.mega-link:hover ~ .card .card-cta a .text,
+.search-results .figure-card:focus-within .card .card-cta a .text {
   text-decoration: underline !important;
 }
 
 /* line 24, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card a.mega-link:hover ~ .card .card-cta a .arrow,
-.archive .figure-card:focus-within .card .card-cta a .arrow {
+.archive .figure-card:focus-within .card .card-cta a .arrow,
+.search-results .figure-card a.mega-link:hover ~ .card .card-cta a .arrow,
+.search-results .figure-card:focus-within .card .card-cta a .arrow {
   -webkit-transform: translate3d(10px, 0, 0);
           transform: translate3d(10px, 0, 0);
 }
@@ -14509,7 +14525,9 @@ nav ul a {
 /* line 31, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card img,
-.archive .figure-card .placeholder {
+.archive .figure-card .placeholder,
+.search-results .figure-card img,
+.search-results .figure-card .placeholder {
   width: 100%;
   height: 300px;
   -o-object-fit: cover;
@@ -14522,7 +14540,8 @@ nav ul a {
 
 /* line 41, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .placeholder {
+.archive .figure-card .placeholder,
+.search-results .figure-card .placeholder {
   background-image: url(/wp-content/themes/rtp-child-stem/dist/images/texture-single-header.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -14530,7 +14549,8 @@ nav ul a {
 
 /* line 47, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card {
+.archive .figure-card .card,
+.search-results .figure-card .card {
   margin: -65px 30px 0;
   height: calc(100% - 235px);
   background: #FFF;
@@ -14550,14 +14570,18 @@ nav ul a {
 
 .archive .figure-card .card:hover,
 .archive .figure-card .card:focus,
-.archive .figure-card .card:active {
+.archive .figure-card .card:active,
+.search-results .figure-card .card:hover,
+.search-results .figure-card .card:focus,
+.search-results .figure-card .card:active {
   -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
 /* line 61, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card .meta {
+.archive .figure-card .card .meta,
+.search-results .figure-card .card .meta {
   position: absolute;
   right: 24px;
   top: 39px;
@@ -14567,7 +14591,8 @@ nav ul a {
 
 /* line 70, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-inner {
+.archive .figure-card .card-inner,
+.search-results .figure-card .card-inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -14580,7 +14605,8 @@ nav ul a {
 
 /* line 76, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-badge {
+.archive .figure-card .card-badge,
+.search-results .figure-card .card-badge {
   border-style: solid;
   border-width: 0;
   border-top-width: 8px;
@@ -14596,7 +14622,8 @@ nav ul a {
 
 /* line 89, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-badge span {
+.archive .figure-card .card-badge span,
+.search-results .figure-card .card-badge span {
   position: absolute;
   display: block;
   font-size: 0.8em;
@@ -14608,14 +14635,16 @@ nav ul a {
 
 /* line 100, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-title {
+.archive .figure-card .card-title,
+.search-results .figure-card .card-title {
   margin: 50px 16px 20px;
   min-height: 80px;
 }
 
 /* line 104, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-title a {
+.archive .figure-card .card-title a,
+.search-results .figure-card .card-title a {
   font-weight: 600 !important;
   text-decoration: none !important;
   color: #000;
@@ -14625,13 +14654,17 @@ nav ul a {
 
 .archive .figure-card .card-title a:hover,
 .archive .figure-card .card-title a:focus,
-.archive .figure-card .card-title a:active {
+.archive .figure-card .card-title a:active,
+.search-results .figure-card .card-title a:hover,
+.search-results .figure-card .card-title a:focus,
+.search-results .figure-card .card-title a:active {
   text-decoration: underline !important;
 }
 
 /* line 115, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-cta {
+.archive .figure-card .card-cta,
+.search-results .figure-card .card-cta {
   border-style: solid;
   border-width: 0;
   border-top-width: 4px;
@@ -14641,7 +14674,8 @@ nav ul a {
 
 /* line 122, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-cta a {
+.archive .figure-card .card-cta a,
+.search-results .figure-card .card-cta a {
   color: #000;
   display: block;
   text-align: right;
@@ -14659,13 +14693,15 @@ nav ul a {
 
 /* line 135, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-cta a span {
+.archive .figure-card .card-cta a span,
+.search-results .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
 /* line 139, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-cta a .arrow {
+.archive .figure-card .card-cta a .arrow,
+.search-results .figure-card .card-cta a .arrow {
   display: inline-block;
   padding: 4px 0 14px 14px;
   width: 40px;
@@ -14679,7 +14715,8 @@ nav ul a {
 
 /* line 147, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .card-cta a .arrow path {
+.archive .figure-card .card-cta a .arrow path,
+.search-results .figure-card .card-cta a .arrow path {
   fill: #000;
   -webkit-transition: fill 0.3s ease;
   -o-transition: fill 0.3s ease;
@@ -14690,7 +14727,10 @@ nav ul a {
 
 .archive .figure-card .card-cta a:hover,
 .archive .figure-card .card-cta a:focus,
-.archive .figure-card .card-cta a:active {
+.archive .figure-card .card-cta a:active,
+.search-results .figure-card .card-cta a:hover,
+.search-results .figure-card .card-cta a:focus,
+.search-results .figure-card .card-cta a:active {
   text-decoration: underline !important;
 }
 
@@ -14698,14 +14738,18 @@ nav ul a {
 
 .archive .figure-card .card-cta a:hover .arrow,
 .archive .figure-card .card-cta a:focus .arrow,
-.archive .figure-card .card-cta a:active .arrow {
+.archive .figure-card .card-cta a:active .arrow,
+.search-results .figure-card .card-cta a:hover .arrow,
+.search-results .figure-card .card-cta a:focus .arrow,
+.search-results .figure-card .card-cta a:active .arrow {
   -webkit-transform: translate3d(10px, 0, 0);
           transform: translate3d(10px, 0, 0);
 }
 
 /* line 163, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .pattern-background {
+.archive .figure-card .pattern-background,
+.search-results .figure-card .pattern-background {
   position: absolute;
   z-index: 0;
   top: 0;
@@ -14716,160 +14760,241 @@ nav ul a {
 
 /* line 171, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
-.archive .figure-card .pattern-background svg {
+.archive .figure-card .pattern-background svg,
+.search-results .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
 /* line 178, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
+.archive .figure-card.no-image .card,
+.search-results .figure-card.no-image .card {
+  height: 100%;
+  margin: 0 0 50px 0;
+}
+
+/* line 185, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+
 .archive .figure-card.badge-rtp .card-badge,
-.archive .figure-card.badge-rtp .card-cta {
+.archive .figure-card.badge-rtp .card-cta,
+.search-results .figure-card.badge-rtp .card-badge,
+.search-results .figure-card.badge-rtp .card-cta {
   border-color: #333F48;
   color: #333F48;
 }
 
-/* line 184, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 191, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover,
 .archive .figure-card.badge-rtp .card-cta a:focus,
-.archive .figure-card.badge-rtp .card-cta a:active {
+.archive .figure-card.badge-rtp .card-cta a:active,
+.search-results .figure-card.badge-rtp .card-cta a:hover,
+.search-results .figure-card.badge-rtp .card-cta a:focus,
+.search-results .figure-card.badge-rtp .card-cta a:active {
   color: #333F48;
 }
 
-/* line 187, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 194, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-rtp .card-cta a:focus .arrow path,
-.archive .figure-card.badge-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-rtp .card-cta a:active .arrow path,
+.search-results .figure-card.badge-rtp .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-rtp .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-rtp .card-cta a:active .arrow path {
   fill: #333F48;
 }
 
-/* line 195, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 202, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-badge,
 .archive .figure-card.badge-hub .card-cta,
 .archive .figure-card.badge-hub-rtp .card-badge,
-.archive .figure-card.badge-hub-rtp .card-cta {
+.archive .figure-card.badge-hub-rtp .card-cta,
+.search-results .figure-card.badge-hub .card-badge,
+.search-results .figure-card.badge-hub .card-cta,
+.search-results .figure-card.badge-hub-rtp .card-badge,
+.search-results .figure-card.badge-hub-rtp .card-cta {
   border-color: #4B9CD3;
   color: #4B9CD3;
 }
 
-/* line 201, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 208, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover,
 .archive .figure-card.badge-hub .card-cta a:focus,
 .archive .figure-card.badge-hub .card-cta a:active,
 .archive .figure-card.badge-hub-rtp .card-cta a:hover,
 .archive .figure-card.badge-hub-rtp .card-cta a:focus,
-.archive .figure-card.badge-hub-rtp .card-cta a:active {
+.archive .figure-card.badge-hub-rtp .card-cta a:active,
+.search-results .figure-card.badge-hub .card-cta a:hover,
+.search-results .figure-card.badge-hub .card-cta a:focus,
+.search-results .figure-card.badge-hub .card-cta a:active,
+.search-results .figure-card.badge-hub-rtp .card-cta a:hover,
+.search-results .figure-card.badge-hub-rtp .card-cta a:focus,
+.search-results .figure-card.badge-hub-rtp .card-cta a:active {
   color: #4B9CD3;
 }
 
-/* line 204, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 211, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-hub .card-cta a:hover .arrow path,
 .archive .figure-card.badge-hub .card-cta a:focus .arrow path,
 .archive .figure-card.badge-hub .card-cta a:active .arrow path,
 .archive .figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
-.archive .figure-card.badge-hub-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-hub-rtp .card-cta a:active .arrow path,
+.search-results .figure-card.badge-hub .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-hub .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-hub .card-cta a:active .arrow path,
+.search-results .figure-card.badge-hub-rtp .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-hub-rtp .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-hub-rtp .card-cta a:active .arrow path {
   fill: #4B9CD3;
 }
 
-/* line 212, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 219, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-badge,
 .archive .figure-card.badge-boxyard .card-cta,
 .archive .figure-card.badge-boxyard-rtp .card-badge,
-.archive .figure-card.badge-boxyard-rtp .card-cta {
+.archive .figure-card.badge-boxyard-rtp .card-cta,
+.search-results .figure-card.badge-boxyard .card-badge,
+.search-results .figure-card.badge-boxyard .card-cta,
+.search-results .figure-card.badge-boxyard-rtp .card-badge,
+.search-results .figure-card.badge-boxyard-rtp .card-cta {
   border-color: #E63C2F;
   color: #E63C2F;
 }
 
-/* line 218, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 225, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover,
 .archive .figure-card.badge-boxyard .card-cta a:focus,
 .archive .figure-card.badge-boxyard .card-cta a:active,
 .archive .figure-card.badge-boxyard-rtp .card-cta a:hover,
 .archive .figure-card.badge-boxyard-rtp .card-cta a:focus,
-.archive .figure-card.badge-boxyard-rtp .card-cta a:active {
+.archive .figure-card.badge-boxyard-rtp .card-cta a:active,
+.search-results .figure-card.badge-boxyard .card-cta a:hover,
+.search-results .figure-card.badge-boxyard .card-cta a:focus,
+.search-results .figure-card.badge-boxyard .card-cta a:active,
+.search-results .figure-card.badge-boxyard-rtp .card-cta a:hover,
+.search-results .figure-card.badge-boxyard-rtp .card-cta a:focus,
+.search-results .figure-card.badge-boxyard-rtp .card-cta a:active {
   color: #E63C2F;
 }
 
-/* line 221, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 228, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .archive .figure-card.badge-boxyard .card-cta a:focus .arrow path,
 .archive .figure-card.badge-boxyard .card-cta a:active .arrow path,
 .archive .figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
-.archive .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path,
+.search-results .figure-card.badge-boxyard .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-boxyard .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-boxyard .card-cta a:active .arrow path,
+.search-results .figure-card.badge-boxyard-rtp .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-boxyard-rtp .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-boxyard-rtp .card-cta a:active .arrow path {
   fill: #E63C2F;
 }
 
-/* line 229, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 236, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-badge,
 .archive .figure-card.badge-frontier .card-cta,
 .archive .figure-card.badge-frontier-rtp .card-badge,
-.archive .figure-card.badge-frontier-rtp .card-cta {
+.archive .figure-card.badge-frontier-rtp .card-cta,
+.search-results .figure-card.badge-frontier .card-badge,
+.search-results .figure-card.badge-frontier .card-cta,
+.search-results .figure-card.badge-frontier-rtp .card-badge,
+.search-results .figure-card.badge-frontier-rtp .card-cta {
   border-color: #57C1A5;
   color: #57C1A5;
 }
 
-/* line 235, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 242, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover,
 .archive .figure-card.badge-frontier .card-cta a:focus,
 .archive .figure-card.badge-frontier .card-cta a:active,
 .archive .figure-card.badge-frontier-rtp .card-cta a:hover,
 .archive .figure-card.badge-frontier-rtp .card-cta a:focus,
-.archive .figure-card.badge-frontier-rtp .card-cta a:active {
+.archive .figure-card.badge-frontier-rtp .card-cta a:active,
+.search-results .figure-card.badge-frontier .card-cta a:hover,
+.search-results .figure-card.badge-frontier .card-cta a:focus,
+.search-results .figure-card.badge-frontier .card-cta a:active,
+.search-results .figure-card.badge-frontier-rtp .card-cta a:hover,
+.search-results .figure-card.badge-frontier-rtp .card-cta a:focus,
+.search-results .figure-card.badge-frontier-rtp .card-cta a:active {
   color: #2FA787;
 }
 
-/* line 238, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 245, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .archive .figure-card.badge-frontier .card-cta a:focus .arrow path,
 .archive .figure-card.badge-frontier .card-cta a:active .arrow path,
 .archive .figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
-.archive .figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-frontier-rtp .card-cta a:active .arrow path,
+.search-results .figure-card.badge-frontier .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-frontier .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-frontier .card-cta a:active .arrow path,
+.search-results .figure-card.badge-frontier-rtp .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-frontier-rtp .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-frontier-rtp .card-cta a:active .arrow path {
   fill: #57C1A5;
 }
 
-/* line 246, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 253, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-badge,
 .archive .figure-card.badge-stem .card-cta,
 .archive .figure-card.badge-stem-rtp .card-badge,
-.archive .figure-card.badge-stem-rtp .card-cta {
+.archive .figure-card.badge-stem-rtp .card-cta,
+.search-results .figure-card.badge-stem .card-badge,
+.search-results .figure-card.badge-stem .card-cta,
+.search-results .figure-card.badge-stem-rtp .card-badge,
+.search-results .figure-card.badge-stem-rtp .card-cta {
   border-color: #654EA3;
   color: #654EA3;
 }
 
-/* line 252, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 259, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover,
 .archive .figure-card.badge-stem .card-cta a:focus,
 .archive .figure-card.badge-stem .card-cta a:active,
 .archive .figure-card.badge-stem-rtp .card-cta a:hover,
 .archive .figure-card.badge-stem-rtp .card-cta a:focus,
-.archive .figure-card.badge-stem-rtp .card-cta a:active {
+.archive .figure-card.badge-stem-rtp .card-cta a:active,
+.search-results .figure-card.badge-stem .card-cta a:hover,
+.search-results .figure-card.badge-stem .card-cta a:focus,
+.search-results .figure-card.badge-stem .card-cta a:active,
+.search-results .figure-card.badge-stem-rtp .card-cta a:hover,
+.search-results .figure-card.badge-stem-rtp .card-cta a:focus,
+.search-results .figure-card.badge-stem-rtp .card-cta a:active {
   color: #654EA3;
 }
 
-/* line 255, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
+/* line 262, ../rtp-core/resources/assets/styles/layouts/_blog.scss */
 
 .archive .figure-card.badge-stem .card-cta a:hover .arrow path,
 .archive .figure-card.badge-stem .card-cta a:focus .arrow path,
 .archive .figure-card.badge-stem .card-cta a:active .arrow path,
 .archive .figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
 .archive .figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
-.archive .figure-card.badge-stem-rtp .card-cta a:active .arrow path {
+.archive .figure-card.badge-stem-rtp .card-cta a:active .arrow path,
+.search-results .figure-card.badge-stem .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-stem .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-stem .card-cta a:active .arrow path,
+.search-results .figure-card.badge-stem-rtp .card-cta a:hover .arrow path,
+.search-results .figure-card.badge-stem-rtp .card-cta a:focus .arrow path,
+.search-results .figure-card.badge-stem-rtp .card-cta a:active .arrow path {
   fill: #654EA3;
 }
 

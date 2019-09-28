@@ -1,4 +1,4 @@
-.archive {
+.archive, .search-results {
   .page-header {
     margin-bottom: 2em;
   }
@@ -171,6 +171,13 @@
       svg {
         width: 100%;
         height: 100%;
+      }
+    }
+
+    &.no-image {
+      .card {
+        height: 100%;
+        margin: 0 0 50px 0;
       }
     }
 
