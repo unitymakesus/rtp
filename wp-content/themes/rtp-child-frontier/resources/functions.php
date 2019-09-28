@@ -207,15 +207,15 @@ function get_day_status($test) {
  add_shortcode('event-space', function($atts) {
    $features = shortcode_atts( array(
 		'wifi' => '',
-		'microphone' => '',
-		'whiteboard' => '',
-		'screen' => '',
+    'whiteboard' => '',
+    'tv' => '',
+    'hdmi' => '',
+    'screen' => '',
     'projector' => '',
-		'tv' => '',
-		'layouts' => '',
+		'microphone' => '',
 		'podium' => '',
+    'layouts' => '',
 		'sofa' => '',
-		'hdmi' => '',
     'seats' => ''
 	), $atts );
 
