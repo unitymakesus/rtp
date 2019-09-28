@@ -277,3 +277,10 @@ add_filter('dt_push_post_args', function($new_post_args, $post, $args) {
   $new_post_args['post_date'] = $post->post_date;
   return $new_post_args;
 }, 10, 3);
+
+/**
+ * Remove draft option for distributing posts
+ */
+ add_filter('dt_allow_as_draft_distribute', function($as_draft, $connection, $post) {
+   return false;
+ }, 10, 3);
