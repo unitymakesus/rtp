@@ -40,6 +40,7 @@ add_action('after_setup_theme', function () {
      remove_action('wp_print_styles', 'print_emoji_styles');
      remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
      remove_action( 'admin_print_styles', 'print_emoji_styles' );
+     add_filter('emoji_svg_url', '__return_false');
 
     /**
      * Enable plugins to manage the document title
