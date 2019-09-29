@@ -12805,7 +12805,7 @@ textarea.materialize-textarea {
 
 /* line 429, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
-.mec-fes-form #mec_location_dont_show_map {
+.mec-fes-form #mec_location_new_container + .mec-form-row {
   display: none;
 }
 

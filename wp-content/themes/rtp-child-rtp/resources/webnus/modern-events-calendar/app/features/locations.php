@@ -289,12 +289,14 @@ class MEC_feature_locations extends MEC_base
         <select name="mec[location_id]" id="mec_location_id" title="<?php echo esc_attr__($this->main->m('taxonomy_location', __('Location', 'mec')), 'mec'); ?>">
           <?php if(is_admin()): ?>
             <option value="1"><?php _e('Hide location', 'mec'); ?></option>
-            <option value="0"><?php _e('Insert a new location', 'mec'); ?></option>
           <?php else : ?>
             <option value="1"><?php _e('Select a location', 'mec'); ?></option>
           <?php endif; ?>
+            <option value="0"><?php _e('Insert a new location', 'mec'); ?></option>
           <?php foreach($locations as $location): ?>
-            <option <?php if($location_id == $location->term_id) echo 'selected="selected"'; ?> value="<?php echo $location->term_id; ?>"><?php echo $location->name; ?></option>
+            <?php if (stripos($location->slug, 'Frontier') === false) : ?>
+              <option <?php if($location_id == $location->term_id) echo 'selected="selected"'; ?> value="<?php echo $location->term_id; ?>"><?php echo $location->name; ?></option>
+            <?php endif; ?>
           <?php endforeach; ?>
         </select>
         <span class="mec-tooltip">
@@ -305,27 +307,28 @@ class MEC_feature_locations extends MEC_base
           <i title="" class="dashicons-before dashicons-editor-help"></i>
         </span>
       </div>
-      <?php if(is_admin()): ?>
-        <div id="mec_location_new_container">
-          <div class="mec-form-row">
-            <input type="text" name="mec[location][name]" id="mec_location_name" value="" placeholder="<?php _e('Location Name', 'mec'); ?>" />
-            <p class="description"><?php _e('eg. City Hall', 'mec'); ?></p>
-          </div>
-          <div class="mec-form-row">
-            <input type="text" name="mec[location][address]" id="mec_location_address" value="" placeholder="<?php _e('Event Location', 'mec'); ?>" />
-            <p class="description"><?php _e('eg. City hall, Manhattan, New York', 'mec'); ?></p>
-            <?php if(isset($settings['google_maps_api_key']) and trim($settings['google_maps_api_key'])): ?>
-              <script type="text/javascript">
-              jQuery(document).ready(function()
+
+      <div id="mec_location_new_container">
+        <div class="mec-form-row">
+          <label for="mec_location_name">Location Name</label>
+          <input type="text" name="mec[location][name]" id="mec_location_name" value="" placeholder="<?php _e('Location Name', 'mec'); ?>" />
+        </div>
+        <div class="mec-form-row">
+          <label for="mec_location_address">Location Address</label>
+          <input type="text" name="mec[location][address]" id="mec_location_address" value="" placeholder="<?php _e('Location Address', 'mec'); ?>" />
+          <?php if(isset($settings['google_maps_api_key']) and trim($settings['google_maps_api_key'])): ?>
+            <script type="text/javascript">
+            jQuery(document).ready(function()
+            {
+              if(typeof google !== 'undefined')
               {
-                if(typeof google !== 'undefined')
-                {
-                  new google.maps.places.Autocomplete(document.getElementById('mec_location_address'));
-                }
-              });
-              </script>
-            <?php endif; ?>
-          </div>
+                new google.maps.places.Autocomplete(document.getElementById('mec_location_address'));
+              }
+            });
+            </script>
+          <?php endif; ?>
+        </div>
+        <?php /* Don't show this section in FES */ if(is_admin()): ?>
           <div class="mec-form-row mec-lat-lng-row">
             <input class="mec-has-tip" type="text" name="mec[location][latitude]" id="mec_location_latitude" value="" placeholder="<?php _e('Latitude', 'mec'); ?>" />
             <input class="mec-has-tip" type="text" name="mec[location][longitude]" id="mec_location_longitude" value="" placeholder="<?php _e('Longitude', 'mec'); ?>" />
@@ -337,28 +340,19 @@ class MEC_feature_locations extends MEC_base
               <i title="" class="dashicons-before dashicons-editor-help"></i>
             </span>
           </div>
-          <?php /* Don't show this section in FES */ if(is_admin()): ?>
             <div class="mec-form-row mec-thumbnail-row">
               <div id="mec_location_thumbnail_img"></div>
               <input type="hidden" name="mec[location][thumbnail]" id="mec_location_thumbnail" value="" />
               <button type="button" class="mec_location_upload_image_button button" id="mec_location_thumbnail_button"><?php echo __('Choose image', 'mec'); ?></button>
               <button type="button" class="mec_location_remove_image_button button mec-util-hidden"><?php echo __('Remove image', 'mec'); ?></button>
             </div>
-          <?php else: ?>
-            <div class="mec-form-row mec-thumbnail-row">
-              <span id="mec_fes_location_thumbnail_img"></span>
-              <input type="hidden" name="mec[location][thumbnail]" id="mec_fes_location_thumbnail" value="" />
-              <input type="file" id="mec_fes_location_thumbnail_file" onchange="mec_fes_upload_location_thumbnail();" />
-              <span class="mec_fes_location_remove_image_button button mec-util-hidden" id="mec_fes_location_remove_image_button"><?php echo __('Remove image', 'mec'); ?></span>
-            </div>
-          <?php endif; ?>
-        </div>
+        <?php endif; ?>
+      </div>
 
-        <div class="mec-form-row">
-          <input type="hidden" name="mec[dont_show_map]" value="0" />
-          <input type="checkbox" id="mec_location_dont_show_map" name="mec[dont_show_map]" value="1" <?php echo ($dont_show_map ? 'checked="checked"' : ''); ?> /><label for="mec_location_dont_show_map"><?php echo __("Don't show map in single event page", 'mec'); ?></label>
-        </div>
-      <?php endif; ?>
+      <div class="mec-form-row">
+        <input type="hidden" name="mec[dont_show_map]" value="0" />
+        <input type="checkbox" id="mec_location_dont_show_map" name="mec[dont_show_map]" value="1" <?php echo ($dont_show_map ? 'checked="checked"' : ''); ?> /><label for="mec_location_dont_show_map"><?php echo __("Don't show map in single event page", 'mec'); ?></label>
+      </div>
 
       <?php if($additional_locations_status and count($locations)): ?>
         <h4><?php echo $this->main->m('other_locations', __('Other Locations', 'mec')); ?></h4>
