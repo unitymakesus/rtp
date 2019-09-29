@@ -284,3 +284,15 @@ add_filter('template_redirect', function() {
     die;
   }
 });
+
+/**
+ * Set sender email address for Gravity Forms
+ */
+add_filter( 'gform_notification', function($notification, $form, $entry) {
+
+  $notification['fromName'] => 'RTP Website';
+  $notification['from'] => 'scan@rtp.org';
+
+  return $notification;
+
+}, 10, 3 );
