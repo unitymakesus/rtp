@@ -6785,7 +6785,7 @@ html {
 h1,
 h2,
 h3,
-.single-mec-events .mec-single-event-location h3,
+.single-mec-events .mec-single-event-location.mec-frontbox h3,
 h4,
 h5,
 h6 {
@@ -6798,7 +6798,7 @@ h6 {
 h1 a,
 h2 a,
 h3 a,
-.single-mec-events .mec-single-event-location h3 a,
+.single-mec-events .mec-single-event-location.mec-frontbox h3 a,
 h4 a,
 h5 a,
 h6 a {
@@ -6824,7 +6824,7 @@ h2 {
 /* line 34, ../rtp-core/node_modules/materialize-css/sass/components/_typography.scss */
 
 h3,
-.single-mec-events .mec-single-event-location h3 {
+.single-mec-events .mec-single-event-location.mec-frontbox h3 {
   font-size: 2.92rem;
   line-height: 110%;
   margin: 1.94667rem 0 1.168rem 0;
@@ -7808,8 +7808,8 @@ body.keyboard-focused .dropdown-content li:focus {
 .modal h1,
 .modal h2,
 .modal h3,
-.modal .single-mec-events .mec-single-event-location h3,
-.single-mec-events .mec-single-event-location .modal h3,
+.modal .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .modal h3,
 .modal h4 {
   margin-top: 0;
 }
@@ -11598,8 +11598,8 @@ html[data-contrast="true"] input[type="text"] {
 html[data-contrast="true"] h1,
 html[data-contrast="true"] h2,
 html[data-contrast="true"] h3,
-html[data-contrast="true"] .single-mec-events .mec-single-event-location h3,
-.single-mec-events .mec-single-event-location html[data-contrast="true"] h3,
+html[data-contrast="true"] .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox html[data-contrast="true"] h3,
 html[data-contrast="true"] h4,
 html[data-contrast="true"] h5,
 html[data-contrast="true"] h6,
@@ -11925,8 +11925,8 @@ body .h1,
 body h2,
 body .h2,
 body h3,
-body .single-mec-events .mec-single-event-location h3,
-.single-mec-events .mec-single-event-location body h3,
+body .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox body h3,
 body .h3,
 body .single-mec-events .mec-events-content h2,
 .single-mec-events .mec-events-content body h2,
@@ -11979,7 +11979,7 @@ h2,
 /* line 50, ../rtp-core/resources/assets/styles/common/_typography.scss */
 
 h3,
-.single-mec-events .mec-single-event-location h3,
+.single-mec-events .mec-single-event-location.mec-frontbox h3,
 .h3,
 .single-mec-events .mec-events-content h2 {
   font-size: 1.33333rem;
@@ -13721,8 +13721,8 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 
 .person h2,
 .person h3,
-.person .single-mec-events .mec-single-event-location h3,
-.single-mec-events .mec-single-event-location .person h3 {
+.person .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .person h3 {
   margin: 0;
 }
 
@@ -14420,7 +14420,9 @@ nav ul a {
 
 /* line 31, ../rtp-core/resources/assets/styles/layouts/_footer.scss */
 
-.page-footer .footer-main h3 {
+.page-footer .footer-main h3,
+.page-footer .footer-main .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .page-footer .footer-main h3 {
   font-size: 21px;
   font-weight: 200;
 }
@@ -15305,14 +15307,16 @@ textarea,
 .entry-content .mec-wrap h1,
 .entry-content .mec-wrap h2,
 .entry-content .mec-wrap h3,
+.entry-content .mec-wrap .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .entry-content .mec-wrap h3,
 .entry-content .mec-wrap h4,
 .entry-content .mec-wrap h5,
 .entry-content .mec-wrap h6,
 .mec-wrap h1,
 .mec-wrap h2,
 .mec-wrap h3,
-.mec-wrap .single-mec-events .mec-single-event-location h3,
-.single-mec-events .mec-single-event-location .mec-wrap h3,
+.mec-wrap .single-mec-events .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .mec-wrap h3,
 .mec-wrap h4,
 .mec-wrap h5,
 .mec-wrap h6 {
@@ -16054,27 +16058,36 @@ ul.mec-weekly-view-dates-events article::before {
   margin-top: 0;
 }
 
-/* line 494, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 493, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+
+.single-mec-events .row.mec-single-event p {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: #1F2A3A;
+}
+
+/* line 500, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar {
   margin-top: 0;
   background: rgba(75, 156, 211, 0.2);
 }
 
-/* line 498, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 504, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div {
   width: 20%;
 }
 
-/* line 501, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 507, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div h3,
-.single-mec-events .mec-single-event-location .mec-single-event-bar > div h3 {
+.single-mec-events .mec-single-event-bar > div .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .mec-single-event-bar > div h3 {
   padding-left: 0;
 }
 
-/* line 505, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 511, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-bar > div dd {
   padding-left: 0;
@@ -16083,7 +16096,7 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 0.9rem;
 }
 
-/* line 514, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 520, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-cost,
 .single-mec-events .mec-event-more-info,
@@ -16099,13 +16112,13 @@ ul.mec-weekly-view-dates-events article::before {
   background: none;
 }
 
-/* line 518, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 524, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .col-md-4 {
   margin-top: 40px;
 }
 
-/* line 521, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 527, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .col-md-4 .mec-frontbox {
   margin: 0 !important;
@@ -16113,7 +16126,7 @@ ul.mec-weekly-view-dates-events article::before {
   background: none;
 }
 
-/* line 529, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 535, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul {
   display: block;
@@ -16121,7 +16134,7 @@ ul.mec-weekly-view-dates-events article::before {
   padding: 12px 14px;
 }
 
-/* line 534, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 540, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li {
   display: block;
@@ -16129,7 +16142,7 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 20px;
 }
 
-/* line 539, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 545, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a {
   float: none;
@@ -16139,7 +16152,7 @@ ul.mec-weekly-view-dates-events article::before {
   color: #4B9CD3;
 }
 
-/* line 546, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 552, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:hover,
 .single-mec-events .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details ul li a:focus,
@@ -16148,29 +16161,40 @@ ul.mec-weekly-view-dates-events article::before {
   color: #FFF;
 }
 
-/* line 556, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 562, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta h3 {
   margin: 0;
   padding: 0;
 }
 
-/* line 561, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 567, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta dd {
   padding-left: 0;
   margin-left: 0;
+  margin-bottom: 0;
   color: #1F2A3A;
   font-size: 0.9rem;
 }
 
-/* line 569, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 576, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+
+.single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta a:hover,
+.single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta a:focus,
+.single-mec-events .mec-event-meta.mec-event-meta.mec-event-meta a:active {
+  background: #4B9CD3;
+  color: #FFF;
+  text-decoration: underline;
+}
+
+/* line 584, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-event-image {
   margin: 10px;
 }
 
-/* line 573, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 588, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-title {
   font-weight: bold;
@@ -16178,28 +16202,28 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 0.3em;
 }
 
-/* line 580, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 594, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+
+.single-mec-events .author {
+  font-size: 1rem;
+}
+
+/* line 599, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-events-content h2 {
   font-size: 2rem;
   padding: 0;
 }
 
-/* line 587, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 606, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
-.single-mec-events .mec-events-content h3 {
+.single-mec-events .mec-events-content h3,
+.single-mec-events .mec-events-content .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .mec-events-content h3 {
   margin-bottom: 1em;
 }
 
-/* line 591, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
-
-.single-mec-events .mec-events-content p {
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.9rem;
-  color: #1F2A3A;
-}
-
-/* line 598, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 611, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-booking-button {
   margin: 20px 10px;
@@ -16208,47 +16232,58 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 1.1rem;
 }
 
-/* line 605, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 618, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social {
   text-align: left;
-  padding: 12px 14px;
+  padding: 12px 14px !important;
 }
 
-/* line 609, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 622, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
-.single-mec-events .mec-event-social h3 {
+.single-mec-events .mec-event-social h3,
+.single-mec-events .mec-event-social .mec-single-event-location.mec-frontbox h3,
+.single-mec-events .mec-single-event-location.mec-frontbox .mec-event-social h3 {
   text-align: left;
   border-bottom: 0;
   margin-bottom: 0;
   padding-bottom: 0;
 }
 
-/* line 615, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 628, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
-.single-mec-events .mec-event-social h3::before {
+.single-mec-events .mec-event-social h3::before,
+.single-mec-events .mec-event-social .mec-single-event-location.mec-frontbox h3::before,
+.single-mec-events .mec-single-event-location.mec-frontbox .mec-event-social h3::before {
   display: none;
 }
 
-/* line 620, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 633, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-sharing {
   margin-top: 0;
 }
 
-/* line 624, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 637, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-social-icon {
   text-align: center;
 }
 
-/* line 629, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+/* line 642, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
 
-.single-mec-events .mec-single-event-location {
+.single-mec-events .mec-single-event-location.mec-frontbox {
   border: none;
-  padding: 0;
+  border-top: 1px solid #CBC8C7;
+  padding: 1rem 0 0 0;
   -webkit-box-shadow: none;
           box-shadow: none;
+}
+
+/* line 648, ../rtp-core/resources/assets/styles/layouts/_calendar.scss */
+
+.single-mec-events .mec-single-event-location.mec-frontbox h3 {
+  margin: 0 0 0.5em;
 }
 
 /* line 2, ../rtp-core/resources/assets/styles/layouts/_taxonomy.scss */
@@ -16351,7 +16386,7 @@ h2 {
 /* line 15, resources/assets/styles/common/_typography.scss */
 
 h3,
-.single-mec-events .mec-single-event-location h3 {
+.single-mec-events .mec-single-event-location.mec-frontbox h3 {
   font-weight: 500;
 }
 

@@ -55,7 +55,6 @@ defined('MECEXEC') or die();
         <div class="mec-single-event-location">
           <h3 class="mec-events-single-section-title mec-location"><?php echo $this->main->m('taxonomy_location', __('Location', 'mec')); ?></h3>
           <dd class="author fn org"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></dd>
-          <dd class="location"><address class="mec-events-address"><span class="mec-address"><?php echo (isset($location['address']) ? $location['address'] : ''); ?></span></address></dd>
         </div>
         <?php
       }
@@ -228,23 +227,28 @@ defined('MECEXEC') or die();
   {
     $location = $event->data->locations[$event->data->meta['mec_location_id']];
     ?>
-    <div class="mec-single-event-location mec-frontbox">
-      <?php if($location['thumbnail']): ?>
-        <img class="mec-img-location" src="<?php echo esc_url($location['thumbnail'] ); ?>" alt="<?php echo (isset($location['name']) ? $location['name'] : ''); ?>">
-      <?php endif; ?>
-      <h3 class="mec-events-single-section-title mec-location"><?php echo $this->main->m('taxonomy_location', __('Location', 'mec')); ?></h3>
-      <div class="author fn org"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></div>
-      <div class="location"><address class="mec-events-address"><span class="mec-address"><?php echo (isset($location['address']) ? $location['address'] : ''); ?></span></address></div>
+    <div class="mec-single-event-location mec-frontbox row">
+      <div class="col m6">
+        <h3 class="mec-events-single-section-title mec-location"><?php echo $this->main->m('taxonomy_location', __('Location', 'mec')); ?></h3>
+        <div class="author fn org"><?php echo (isset($location['name']) ? $location['name'] : ''); ?></div>
+        <div class="location"><address class="mec-events-address"><p class="mec-address"><?php echo (isset($location['address']) ? $location['address'] : ''); ?></p></address></div>
+      </div>
+      <div class="col m6">
+        <?php if($location['thumbnail']): ?>
+          <img class="mec-img-location" src="<?php echo esc_url($location['thumbnail'] ); ?>" alt="<?php echo (isset($location['name']) ? $location['name'] : ''); ?>">
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <!-- Google Maps Module -->
+    <div class="mec-events-meta-group mec-events-meta-group-gmap">
+      <?php echo $this->main->module('googlemap.details', array('event'=>$this->events)); ?>
     </div>
     <?php
     $this->show_other_locations($event); // Show Additional Locations
   }
   ?>
 
-  <!-- Google Maps Module -->
-  <div class="mec-events-meta-group mec-events-meta-group-gmap">
-    <?php echo $this->main->module('googlemap.details', array('event'=>$this->events)); ?>
-  </div>
 
 </div>
 </article>
