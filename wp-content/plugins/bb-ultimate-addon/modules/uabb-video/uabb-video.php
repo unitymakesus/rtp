@@ -240,7 +240,21 @@ class UABBVideo extends FLBuilderModule {
 		}
 		return $settings;
 	}
+	/**
+	 * Returns Video URL.
+	 *
+	 * @param string $url Video URL.
+	 * @param string $from From compare string.
+	 * @param string $to To compare string.
+	 * @since 1.21.0
+	 * @access protected
+	 */
+	protected function getStringBetween( $url, $from, $to ) {
+		$sub = substr( $url, strpos( $url, $from ) + strlen( $from ), strlen( $url ) );
+		$id  = substr( $sub, 0, strpos( $sub, $to ) );
 
+		return $id;
+	}
 	/**
 	 * Returns Video ID.
 	 *
@@ -252,20 +266,23 @@ class UABBVideo extends FLBuilderModule {
 		$id         = '';
 		$video_type = $this->settings->video_type;
 
-		if ( 'youtube' == $video_type ) {
+		if ( 'youtube' === $video_type ) {
 			$url = $this->settings->youtube_link;
 			if ( preg_match( '~^(?:https?://)? (?:www[.])?(?:youtube[.]com/watch[?]v=|youtu[.]be/)([^&]{11})~x', $url ) ) {
 				if ( preg_match( '/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches ) ) {
 					$id = $matches[1];
 				}
 			}
-		} elseif ( 'vimeo' == $video_type ) {
+		} elseif ( 'vimeo' === $video_type ) {
 			$url = $this->settings->vimeo_link;
 			if ( preg_match( '/https?:\/\/(?:www\.)?vimeo\.com\/\d{8}/', $url ) ) {
 				$id = preg_replace( '/[^\/]+[^0-9]|(\/)/', '', rtrim( $url, '/' ) );
 			}
-		}
+		} elseif ( 'wistia' === $video_type ) {
+			$url = $this->settings->wistia_link;
+			$id  = $this->getStringBetween( $url, 'wvideo=', '"' );
 
+		}
 		return $id;
 	}
 	/**
@@ -280,13 +297,17 @@ class UABBVideo extends FLBuilderModule {
 
 		if ( 'vimeo' == $this->settings->video_type ) {
 			$url = 'https://player.vimeo.com/video/';
-		} else {
+		} elseif ( 'youtube' === $this->settings->video_type ) {
 			$cookie = '';
 
 			if ( 'yes' == $this->settings->yt_privacy ) {
 				$cookie = '-nocookie';
 			}
 			$url = 'https://www.youtube' . $cookie . '.com/embed/';
+		} elseif ( 'wistia' === $this->settings->video_type ) {
+
+			$url = 'https://fast.wistia.net/embed/iframe/';
+
 		}
 
 		$url = add_query_arg( $params, $url . $id );
@@ -317,14 +338,17 @@ class UABBVideo extends FLBuilderModule {
 		if ( '' == $this->get_video_id() ) {
 			return '';
 		}
-		if ( 'yes' == $this->settings->show_image_overlay ) {
+		if ( 'yes' === $this->settings->show_image_overlay ) {
 			$thumb = $this->settings->image_overlay_src;
 		} else {
-			if ( 'youtube' == $this->settings->video_type ) {
+			if ( 'youtube' === $this->settings->video_type ) {
 				$thumb = 'https://i.ytimg.com/vi/' . $id . '/' . apply_filters( 'uabb_video_youtube_image_quality', $this->settings->yt_thumbnail_size ) . '.jpg';
-			} else {
+			} elseif ( 'vimeo' === $this->settings->video_type ) {
 				$vimeo = unserialize( file_get_contents( "https://vimeo.com/api/v2/video/$id.php" ) );
 				$thumb = str_replace( '_640', '_840', $vimeo[0]['thumbnail_large'] );
+			} elseif ( 'wistia' === $this->settings->video_type ) {
+				$url   = $this->settings->wistia_link;
+				$thumb = 'https://embedwistia-a.akamaihd.net/deliveries/' . $this->getStringBetween( $url, 'deliveries/', '?' );
 			}
 		}
 		return $thumb;
@@ -411,8 +435,10 @@ class UABBVideo extends FLBuilderModule {
 
 		if ( 'youtube' == $this->settings->video_type ) {
 			$autoplay = ( 'yes' == $this->settings->yt_autoplay ) ? '1' : '0';
-		} else {
+		} elseif ( 'vimeo' == $this->settings->video_type ) {
 			$autoplay = ( 'yes' == $this->settings->vimeo_autoplay ) ? '1' : '0';
+		} elseif ( 'wistia' == $this->settings->video_type ) {
+			$autoplay = ( 'yes' == $this->settings->wistia_autoplay ) ? '1' : '0';
 		}
 		if ( 'default' == $this->settings->play_source ) {
 			if ( 'youtube' == $this->settings->video_type ) {
@@ -420,6 +446,9 @@ class UABBVideo extends FLBuilderModule {
 			}
 			if ( 'vimeo' === $this->settings->video_type ) {
 				$html = '<svg version="1.1" height="100%" width="100%"  viewBox="0 14.375 95 66.25"><path class="uabb-vimeo-icon-bg" d="M12.5,14.375c-6.903,0-12.5,5.597-12.5,12.5v41.25c0,6.902,5.597,12.5,12.5,12.5h70c6.903,0,12.5-5.598,12.5-12.5v-41.25c0-6.903-5.597-12.5-12.5-12.5H12.5z"/><polygon fill="#FFFFFF" points="39.992,64.299 39.992,30.701 62.075,47.5 "/></svg>';
+			}
+			if ( 'wistia' === $this->settings->video_type ) {
+				$html = '<button class="uabb-video-wistia-play w-big-play-button w-css-reset-button-important w-vulcan-v2-button"><svg x="0px" y="0px" viewBox="0 0 125 80" enable-background="new 0 0 125 80" focusable="false" alt="" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><rect fill-rule="evenodd" clip-rule="evenodd" fill="none" width="125" height="80"></rect><polygon fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" points="53,22 53,58 79,40"></polygon></svg></button>';
 			}
 		} elseif ( 'icon' == $this->settings->play_source ) {
 			$html = '';
@@ -493,10 +522,13 @@ class UABBVideo extends FLBuilderModule {
 	 * @access public
 	 */
 	public function render() {
-		if ( '' == $this->settings->youtube_link && 'youtube' == $this->settings->video_type ) {
+		if ( '' === $this->settings->youtube_link && 'youtube' === $this->settings->video_type ) {
 			return '';
 		}
-		if ( '' == $this->settings->vimeo_link && 'vimeo' == $this->settings->video_type ) {
+		if ( '' === $this->settings->vimeo_link && 'vimeo' === $this->settings->video_type ) {
+			return '';
+		}
+		if ( '' === $this->settings->vimeo_link && 'wistia' === $this->settings->video_type ) {
 			return '';
 		}
 		$this->get_video_embed();
@@ -574,6 +606,37 @@ class UABBVideo extends FLBuilderModule {
 			$params['color']     = str_replace( '#', '', $this->settings->vimeo_color );
 			$params['autopause'] = '0';
 		}
+		if ( 'wistia' === $this->settings->video_type ) {
+
+			$wistia_options = array( 'autoplay', 'playbar', 'muted', 'loop' );
+
+			foreach ( $wistia_options as $option ) {
+
+				if ( 'autoplay' === $option ) {
+					if ( 'yes' === $this->settings->wistia_autoplay ) {
+						$params[ $option ] = '1';
+					}
+					continue;
+				}
+
+				if ( 'loop' === $option ) {
+					if ( 'yes' === $this->settings->wistia_loop ) {
+						$params['endVideoBehavior'] = 'loop';
+					}
+					continue;
+				}
+				if ( 'playbar' === $option ) {
+					$value             = ( 'yes' === $this->settings->wistia_playbar ) ? 'true' : 'false';
+					$params[ $option ] = $value;
+				}
+				if ( 'muted' === $option ) {
+					$value             = ( 'yes' === $this->settings->wistia_muted ) ? 'true' : 'false';
+					$params[ $option ] = $value;
+				}
+			}
+
+			$params['videoFoam'] = 'true';
+		}
 		return $params;
 	}
 
@@ -617,6 +680,17 @@ class UABBVideo extends FLBuilderModule {
 			);
 
 			return $vimeo_link_desc;
+		} elseif ( 'wistia_link' === $field ) {
+
+			$wistia_link_desc = sprintf( /* translators: %s: search term */
+				__(
+					'<div style="%1$s">Go to your Wistia video, right click, "Copy Link & Thumbnail" and paste here.</div>',
+					'uabb'
+				),
+				$style1
+			);
+
+			return $wistia_link_desc;
 		}
 
 		$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );

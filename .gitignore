@@ -14,6 +14,9 @@ sitemap.xml.gz
 searchreplacedb2.php
 rrrreplace/*
 
+# pro plugins
+wp-content/plugins/modern-events-calendar/
+
 # wordpress specific
 wp-config.php
 wp-content/advanced-cache.php

@@ -1154,6 +1154,18 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 					),
 				),
 			);
+
+			// Retina Image Module.
+			$form['uabb-retina-image'] = array(
+				'conditions' => array( 'type' => 'uabb-retina-image' ),
+				'fields'     => array(
+					array(
+						'field'       => 'custom_caption',
+						'type'        => __( 'Retina Image : Custom Caption', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
+			);
 			return $form;
 		}
 	}

@@ -1,1 +1,0 @@
-<span><?php _e('No search result.', 'mec'); ?></span>

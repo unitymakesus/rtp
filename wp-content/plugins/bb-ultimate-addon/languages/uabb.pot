@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Ultimate Addons for Beaver Builder package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Addons for Beaver Builder 1.20.2\n"
+"Project-Id-Version: Ultimate Addons for Beaver Builder 1.21.0\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/bb-ultimate-addon\n"
-"POT-Creation-Date: 2019-09-12 04:19:44+00:00\n"
+"POT-Creation-Date: 2019-09-24 09:53:38+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -540,8 +540,21 @@ msgstr ""
 msgid "We will notify you once the process is complete."
 msgstr ""
 
-#: classes/batch-process/class-uabb-batch-process.php:266
-msgid "Procress Completed."
+#: classes/batch-process/class-uabb-batch-process.php:255
+#. translators: %1$s: search term
+msgid ""
+"%1$s <a href=\" "
+"https://www.ultimatebeaver.com/docs/background-process-in-uabb/?utm_"
+"source=uabb-pro-backend&utm_medium=wordpress-screen&utm_campaign=batch-"
+"process-notice\">%2$s</a> %3$s."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Ultimate Addons for Beaver Builder"
+msgstr ""
+
+#: classes/batch-process/class-uabb-batch-process.php:283
+msgid "Process Completed."
 msgstr ""
 
 #: classes/batch-process/helpers/class-uabb-importer-image.php:173
@@ -737,9 +750,9 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:32
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:117
 #: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:97
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:259
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:260
 #: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:111
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:253
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:254
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:162
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:233
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:438
@@ -769,20 +782,22 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:285
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:346
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:872
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:130
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:133
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:126
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:122
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:960
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:1158
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:992
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1178
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:402
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:474
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:462
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:534
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:787
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:387
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:456
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:513
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:925
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:594
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:847
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:448
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:517
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:574
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:986
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:382
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:630
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:343
@@ -1023,8 +1038,8 @@ msgstr ""
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:673
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:639
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:655
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:323
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:308
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:325
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:310
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-2-2-compatibility.php:83
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php:74
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:397
@@ -1083,8 +1098,8 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:627
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:643
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:594
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:484
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:466
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:544
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:527
 #: objects/fl-nested-form-button.php:221 objects/fl-nested-form-button.php:586
 msgid "Background"
 msgstr ""
@@ -1299,6 +1314,9 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:243
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:242
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:261
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:245
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:250
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:269
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:266
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:283
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:292
@@ -1615,6 +1633,7 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:112
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:813
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:842
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:207
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:169
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:165
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:149
@@ -1631,24 +1650,30 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1077
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1119
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1263
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:99
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:137
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:146
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:156
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:171
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:186
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:291
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:670
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:736
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:92
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:130
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:139
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:149
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:164
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:179
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:281
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:732
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:788
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:111
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:149
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:158
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:168
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:183
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:198
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:251
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:266
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:285
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:351
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:730
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:796
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:105
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:143
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:152
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:162
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:177
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:192
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:244
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:259
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:278
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:342
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:793
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:849
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:156
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:198
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:245
@@ -2035,6 +2060,7 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:111
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:814
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:841
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:208
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:168
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:164
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:150
@@ -2051,28 +2077,34 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1078
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1120
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1264
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:100
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:138
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:147
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:157
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:172
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:187
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:292
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:425
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:587
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:671
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:735
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:93
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:131
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:140
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:150
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:165
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:180
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:282
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:410
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:574
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:733
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:787
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:112
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:150
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:159
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:169
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:184
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:199
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:252
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:267
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:286
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:352
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:485
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:647
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:731
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:795
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:106
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:144
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:153
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:163
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:178
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:193
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:245
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:260
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:279
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:343
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:471
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:635
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:794
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:848
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:157
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:199
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:246
@@ -2355,10 +2387,10 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:698
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:780
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:862
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:308
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:298
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:669
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:890
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:368
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:359
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:730
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:951
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:142
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:583
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:125
@@ -2540,7 +2572,7 @@ msgstr ""
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:170
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:152
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:153
-#: modules/uabb-video-gallery/uabb-video-gallery.php:734
+#: modules/uabb-video-gallery/uabb-video-gallery.php:770
 msgid "All"
 msgstr ""
 
@@ -2585,19 +2617,15 @@ msgstr ""
 msgid "%s"
 msgstr ""
 
-#: classes/class-uabb-helper.php:450
+#: classes/class-uabb-helper.php:451
 msgid "UABB"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Ultimate Addons for Beaver Builder"
 msgstr ""
 
 #. Author of the plugin/theme
 msgid "Brainstorm Force"
 msgstr ""
 
-#: classes/class-uabb-helper.php:498
+#: classes/class-uabb-helper.php:499
 msgid ""
 "Ultimate Addons is a premium extension for Beaver Builder that adds 55+ "
 "modules, 100+ templates and works on top of any Beaver Builder Package. "
@@ -2634,9 +2662,9 @@ msgstr ""
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:19
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:98
 #: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:22
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:349
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:351
 #: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:21
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:322
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:324
 #: modules/uabb-heading/uabb-heading.php:23
 msgid "Heading"
 msgstr ""
@@ -2683,9 +2711,9 @@ msgstr ""
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:31
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:559
 #: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:44
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:458
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:460
 #: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:52
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:454
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:456
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-2-2-compatibility.php:36
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:448
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:524
@@ -2819,6 +2847,8 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:110
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:610
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:784
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:154
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:156
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:1030
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:1036
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:1228
@@ -2827,14 +2857,18 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1051
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1233
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1237
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:50
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:57
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:41
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:48
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1007
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1014
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1177
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1184
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:55
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:62
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:69
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:47
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:54
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:61
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1012
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1019
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1026
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1182
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1189
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1196
 #: objects/fl-nested-form-button.php:35 objects/fl-nested-form-button.php:39
 #: objects/fl-nested-form-button.php:417 objects/fl-nested-form-button.php:421
 msgid "Link"
@@ -3406,6 +3440,10 @@ msgstr ""
 msgid "Off Canvas : Button Text"
 msgstr ""
 
+#: classes/class-uabb-wpml.php:1164
+msgid "Retina Image : Custom Caption"
+msgstr ""
+
 #: classes/class-ui-panel.php:360
 msgid "Search Module..."
 msgstr ""
@@ -3579,8 +3617,8 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:538
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:107
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:539
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:271
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:265
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:272
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:266
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:357
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:332
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-2-2-compatibility.php:76
@@ -3604,6 +3642,8 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:170
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:213
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:198
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:191
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:216
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:79
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:65
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:30
@@ -3769,6 +3809,8 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:593
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:201
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:767
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:14
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:14
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:14
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:13
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:184
@@ -3995,18 +4037,20 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:231
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:283
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:261
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:218
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:239
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:266
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:260
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:350
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:513
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:566
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:630
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:757
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:340
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:492
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:552
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:695
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:806
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:410
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:573
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:626
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:690
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:817
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:401
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:553
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:613
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:756
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:867
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:497
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:511
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:440
@@ -4189,20 +4233,22 @@ msgstr ""
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:513
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:575
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:577
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:377
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:558
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:387
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:641
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:379
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:560
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:389
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:643
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:523
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:646
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:405
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:538
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:375
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:422
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:881
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:1098
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:939
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1136
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:742
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:793
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:802
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:854
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:469
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:414
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:220
@@ -4384,9 +4430,9 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1400
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1495
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1626
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:351
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:470
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:605
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:353
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:472
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:607
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:563
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:686
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:469
@@ -4401,6 +4447,7 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:416
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:540
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:665
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:386
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:659
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:741
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:823
@@ -4538,7 +4585,7 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1174
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1296
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1419
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:623
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:625
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:575
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:698
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:487
@@ -4698,9 +4745,9 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1465
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1578
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1670
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:414
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:533
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:668
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:416
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:535
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:670
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:643
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:738
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:551
@@ -4715,11 +4762,12 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:488
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:614
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:723
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:449
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:711
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:793
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:875
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:648
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:868
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:709
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:929
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:874
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:954
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1034
@@ -4778,8 +4826,8 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:701
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:783
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:865
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:672
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:893
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:733
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:954
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:891
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:971
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1051
@@ -5755,6 +5803,8 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:100
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:57
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:91
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:102
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:118
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:53
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:69
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:81
@@ -5873,6 +5923,8 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:102
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:58
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:93
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:104
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:120
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:54
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:70
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:82
@@ -5899,7 +5951,7 @@ msgstr ""
 #: includes/row-settings.php:79 includes/row-settings.php:203
 #: modules/info-banner/info-banner-bb-2-2-compatibility.php:178
 #: modules/info-banner/info-banner-bb-less-than-2-2-compatibility.php:169
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:438
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:498
 msgid "Top Left"
 msgstr ""
 
@@ -5914,8 +5966,8 @@ msgstr ""
 #: includes/row-settings.php:81 includes/row-settings.php:206
 #: modules/info-banner/info-banner-bb-2-2-compatibility.php:184
 #: modules/info-banner/info-banner-bb-less-than-2-2-compatibility.php:175
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:442
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:431
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:502
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:492
 msgid "Bottom Left"
 msgstr ""
 
@@ -5923,8 +5975,8 @@ msgstr ""
 #: includes/row-settings.php:82 includes/row-settings.php:207
 #: modules/info-banner/info-banner-bb-2-2-compatibility.php:186
 #: modules/info-banner/info-banner-bb-less-than-2-2-compatibility.php:177
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:443
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:432
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:503
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:493
 msgid "Bottom Right"
 msgstr ""
 
@@ -6103,16 +6155,16 @@ msgstr ""
 #: includes/column-settings.php:211 includes/row-settings.php:200
 #: modules/info-banner/info-banner-bb-2-2-compatibility.php:181
 #: modules/info-banner/info-banner-bb-less-than-2-2-compatibility.php:172
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:440
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:429
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:500
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:490
 msgid "Center Left"
 msgstr ""
 
 #: includes/column-settings.php:212 includes/row-settings.php:201
 #: modules/info-banner/info-banner-bb-2-2-compatibility.php:183
 #: modules/info-banner/info-banner-bb-less-than-2-2-compatibility.php:174
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:441
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:430
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:501
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:491
 msgid "Center Right"
 msgstr ""
 
@@ -6814,8 +6866,8 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:793
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:861
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:865
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:306
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:296
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:366
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:357
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:584
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:565
 #: modules/uabb-woo-products/uabb-woo-products-bb-2-2-compatibility.php:288
@@ -7049,12 +7101,12 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1007
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1179
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1193
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:307
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:530
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:533
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:297
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:509
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:512
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:367
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:590
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:593
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:358
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:570
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:573
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:585
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:566
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:134
@@ -7149,8 +7201,8 @@ msgstr ""
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:88
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:157
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:147
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:199
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:205
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:200
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:206
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:113
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:714
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:103
@@ -7241,8 +7293,8 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:1192
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1019
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1205
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:553
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:540
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:613
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:601
 msgid "Icon Color"
 msgstr ""
 
@@ -7268,8 +7320,8 @@ msgstr ""
 #: modules/info-table/info-table-bb-less-than-2-2-compatibility.php:353
 #: modules/list-icon/list-icon-bb-2-2-compatibility.php:94
 #: modules/list-icon/list-icon-bb-less-than-2-2-compatibility.php:87
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:182
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:188
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:183
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:189
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:104
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:697
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:94
@@ -7311,8 +7363,8 @@ msgstr ""
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-2-2-compatibility.php:66
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:24
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:65
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:185
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:191
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:186
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:192
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:107
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:700
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:97
@@ -7323,6 +7375,10 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:23
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:673
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:873
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:24
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:58
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:24
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:57
 msgid "Media Library"
 msgstr ""
 
@@ -7360,8 +7416,8 @@ msgstr ""
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-2-2-compatibility.php:67
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:25
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:66
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:186
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:192
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:187
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:193
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:108
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:701
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:98
@@ -7374,6 +7430,12 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:117
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:674
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:874
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:25
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:59
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:161
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:25
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:58
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:163
 msgid "URL"
 msgstr ""
 
@@ -7405,8 +7467,8 @@ msgstr ""
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-2-2-compatibility.php:86
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:44
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:85
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:205
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:211
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:206
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:212
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:119
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:739
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:109
@@ -7484,9 +7546,9 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:422
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:438
 #: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:144
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:210
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:211
 #: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:158
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:216
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:217
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:90
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:124
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:81
@@ -7499,9 +7561,9 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:443
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:278
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:339
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:342
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:332
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:531
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:402
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:393
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:592
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:613
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:594
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:413
@@ -7525,8 +7587,8 @@ msgstr ""
 #: modules/progress-bar/progress-bar-bb-2-2-compatibility.php:385
 #: modules/progress-bar/progress-bar-bb-less-than-2-2-compatibility.php:255
 #: modules/progress-bar/progress-bar-bb-less-than-2-2-compatibility.php:304
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:223
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:224
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:224
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:225
 msgid "Responsive Size"
 msgstr ""
 
@@ -7536,8 +7598,8 @@ msgstr ""
 #: modules/advanced-separator/advanced-separator-bb-less-than-2-2-compatibility.php:119
 #: modules/flip-box/flip-box-bb-2-2-compatibility.php:257
 #: modules/flip-box/flip-box-bb-less-than-2-2-compatibility.php:253
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:232
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:228
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:233
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:229
 msgid ""
 "Image size below medium devices. Leave it blank if you want to keep same "
 "size"
@@ -7605,6 +7667,8 @@ msgstr ""
 #: modules/info-list/info-list-bb-less-than-2-2-compatibility.php:128
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:227
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:250
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:230
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:258
 msgid "Border Radius ( For Background )"
 msgstr ""
 
@@ -7663,10 +7727,12 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:487
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:193
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:215
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:198
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:223
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:108
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:109
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:498
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:478
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:558
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:539
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:187
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:181
 msgid "Background Size"
@@ -7782,6 +7848,8 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:80
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:101
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:92
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:103
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:119
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:52
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:68
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:80
@@ -7992,6 +8060,8 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:246
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:180
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:264
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:248
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:272
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:89
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:90
 msgid "Simple"
@@ -8194,11 +8264,11 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1122
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1222
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1107
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:346
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:366
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:462
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:547
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:319
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:348
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:368
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:464
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:549
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:321
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:570
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:577
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:651
@@ -8223,13 +8293,14 @@ msgstr ""
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:388
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:508
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:397
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:364
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:749
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:756
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:771
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:786
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:640
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:605
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:722
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:665
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:782
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:859
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:881
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:896
@@ -8425,8 +8496,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:702
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:993
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1131
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:534
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:580
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:536
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:582
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:485
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:444
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:920
@@ -8522,8 +8593,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:703
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:994
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1132
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:535
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:581
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:537
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:583
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:486
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:445
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:921
@@ -8619,8 +8690,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:704
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:995
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1133
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:536
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:582
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:538
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:584
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:487
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:446
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:922
@@ -8716,8 +8787,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:705
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:996
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1134
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:537
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:583
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:539
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:585
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:488
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:447
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:923
@@ -8813,8 +8884,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:706
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:997
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1135
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:538
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:584
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:540
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:586
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:489
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:448
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:924
@@ -8910,8 +8981,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:707
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:998
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1136
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:539
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:585
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:541
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:587
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:490
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:449
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:925
@@ -9001,8 +9072,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:708
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:999
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1137
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:540
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:586
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:542
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:588
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:491
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:450
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:926
@@ -9092,8 +9163,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:709
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1000
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1138
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:541
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:587
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:543
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:589
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:492
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:451
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:927
@@ -9183,8 +9254,8 @@ msgstr ""
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:710
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1001
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1139
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:542
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:588
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:544
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:590
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:493
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:452
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:928
@@ -9367,10 +9438,10 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1438
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1513
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1643
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:290
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:473
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:282
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:506
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:291
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:475
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:283
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:508
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:587
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:587
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:508
@@ -9385,10 +9456,10 @@ msgstr ""
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:20
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:249
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:245
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:375
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:616
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:362
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:683
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:435
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:676
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:423
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:744
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:640
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:621
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php:289
@@ -9480,10 +9551,12 @@ msgstr ""
 #: modules/team/team-bb-less-than-2-2-compatibility.php:1036
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:682
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:773
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:390
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:486
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:427
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:546
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:392
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:488
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:429
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:548
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:387
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:462
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:721
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:816
 msgid "Margin Top"
@@ -9539,10 +9612,12 @@ msgstr ""
 #: modules/team/team-bb-less-than-2-2-compatibility.php:1050
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:695
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:786
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:410
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:506
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:440
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:559
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:412
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:508
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:442
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:561
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:407
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:475
 #: modules/uabb-woo-products/uabb-woo-products-bb-2-2-compatibility.php:679
 #: modules/uabb-woo-products/uabb-woo-products-bb-less-than-2-2-compatibility.php:642
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:734
@@ -9689,8 +9764,8 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1388
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1483
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1614
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:458
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:593
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:460
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:595
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:551
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:674
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:457
@@ -9842,9 +9917,9 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1449
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1562
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1654
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:398
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:517
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:652
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:400
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:519
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:654
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:627
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:722
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:535
@@ -9857,11 +9932,12 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:1144
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:472
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:598
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:433
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:695
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:777
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:859
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:666
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:887
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:727
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:948
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:885
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:965
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1045
@@ -9911,8 +9987,8 @@ msgstr ""
 
 #: modules/advanced-accordion/advanced-accordion-bb-2-2-compatibility.php:31
 #: modules/advanced-accordion/advanced-accordion-bb-less-than-2-2-compatibility.php:30
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:718
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:780
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:778
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:841
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:39
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:30
 msgid "Settings"
@@ -9973,7 +10049,7 @@ msgstr ""
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-2-2-compatibility.php:460
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:435
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:547
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:443
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:445
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:633
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:656
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-2-2-compatibility.php:140
@@ -9985,10 +10061,11 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:376
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:264
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:243
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:642
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:770
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:707
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:903
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:439
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:702
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:830
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:768
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:964
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:405
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:371
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:101
@@ -10023,8 +10100,8 @@ msgstr ""
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php:537
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:256
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:251
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:389
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:374
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:449
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:435
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:661
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:641
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php:315
@@ -10501,6 +10578,8 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:748
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:67
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:60
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:110
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:99
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:67
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:49
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:74
@@ -10657,8 +10736,8 @@ msgstr ""
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:487
 #: modules/uabb-countdown/uabb-countdown-bb-2-2-compatibility.php:250
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:299
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:274
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:268
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:275
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:269
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:163
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:234
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:157
@@ -10761,8 +10840,8 @@ msgstr ""
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:490
 #: modules/uabb-countdown/uabb-countdown-bb-2-2-compatibility.php:251
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:300
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:275
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:269
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:276
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:270
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:164
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:235
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:158
@@ -10865,8 +10944,8 @@ msgstr ""
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:489
 #: modules/uabb-countdown/uabb-countdown-bb-2-2-compatibility.php:252
 #: modules/uabb-countdown/uabb-countdown-bb-less-than-2-2-compatibility.php:301
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:276
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:270
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:277
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:271
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:165
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:236
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:159
@@ -10962,8 +11041,8 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:728
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:376
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:488
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:277
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:271
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:278
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:272
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:166
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:237
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:160
@@ -11135,8 +11214,8 @@ msgstr ""
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:566
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:60
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:55
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:806
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:944
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:866
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:1005
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:320
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:296
 #: modules/uabb-woo-products/uabb-woo-products-bb-2-2-compatibility.php:818
@@ -11327,6 +11406,7 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:758
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:78
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:75
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:114
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:80
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:75
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:89
@@ -11345,6 +11425,7 @@ msgstr ""
 #: modules/info-box/info-box-bb-less-than-2-2-compatibility.php:752
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:80
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:77
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:116
 #: modules/uabb-social-share/uabb-social-share-bb-2-2-compatibility.php:82
 #: modules/uabb-social-share/uabb-social-share-bb-less-than-2-2-compatibility.php:77
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:97
@@ -11703,6 +11784,7 @@ msgstr ""
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:148
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:144
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:799
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:190
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1060
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1246
 #: objects/fl-nested-form-button.php:45
@@ -11739,6 +11821,7 @@ msgstr ""
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:152
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:147
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:802
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:193
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1063
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1249
 #: objects/fl-nested-form-button.php:48
@@ -11775,6 +11858,7 @@ msgstr ""
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:153
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:148
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:803
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:194
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1064
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1250
 #: objects/fl-nested-form-button.php:49
@@ -11906,8 +11990,8 @@ msgstr ""
 #: modules/list-icon/list-icon-bb-less-than-2-2-compatibility.php:83
 #: modules/team/team-bb-2-2-compatibility.php:18
 #: modules/team/team-bb-less-than-2-2-compatibility.php:17
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:178
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:184
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:179
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:185
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:100
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:90
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:524
@@ -12171,10 +12255,10 @@ msgstr ""
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:135
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:831
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:830
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:240
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:245
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:236
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:240
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:241
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:246
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:237
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:241
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:49
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:40
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:292
@@ -12184,8 +12268,8 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:391
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:395
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:431
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:599
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:589
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:659
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:650
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:68
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-less-than-2-2-compatibility.php:53
 #: objects/fl-nested-form-button.php:23 objects/fl-nested-form-button.php:405
@@ -12248,8 +12332,8 @@ msgstr ""
 #: modules/flip-box/flip-box-bb-less-than-2-2-compatibility.php:751
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:263
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:282
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:255
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:249
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:256
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:250
 msgid "Responsive Compatibility"
 msgstr ""
 
@@ -12257,8 +12341,8 @@ msgstr ""
 #: modules/advanced-separator/advanced-separator-bb-less-than-2-2-compatibility.php:645
 #: modules/dual-color-heading/dual-color-heading-bb-2-2-compatibility.php:148
 #: modules/dual-color-heading/dual-color-heading-bb-less-than-2-2-compatibility.php:167
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:256
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:250
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:257
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:251
 msgid ""
 "There might be responsive issues for long texts. If you are facing such "
 "issues then select appropriate devices width to make your module responsive."
@@ -12274,8 +12358,8 @@ msgstr ""
 #: modules/interactive-banner-1/interactive-banner-1-bb-less-than-2-2-compatibility.php:109
 #: modules/ribbon/ribbon-bb-2-2-compatibility.php:46
 #: modules/ribbon/ribbon-bb-less-than-2-2-compatibility.php:45
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:260
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:254
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:261
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:255
 msgid "Small Devices"
 msgstr ""
 
@@ -12285,8 +12369,8 @@ msgstr ""
 #: modules/dual-color-heading/dual-color-heading-bb-less-than-2-2-compatibility.php:172
 #: modules/ribbon/ribbon-bb-2-2-compatibility.php:47
 #: modules/ribbon/ribbon-bb-less-than-2-2-compatibility.php:46
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:261
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:255
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:262
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:256
 msgid "Medium & Small Devices"
 msgstr ""
 
@@ -12294,8 +12378,8 @@ msgstr ""
 #: modules/advanced-separator/advanced-separator-bb-less-than-2-2-compatibility.php:656
 #: modules/info-circle/info-circle-bb-2-2-compatibility.php:638
 #: modules/info-circle/info-circle-bb-less-than-2-2-compatibility.php:533
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:267
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:261
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:268
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:262
 msgid "Line Style"
 msgstr ""
 
@@ -12310,8 +12394,8 @@ msgstr ""
 #: modules/info-box/info-box-bb-less-than-2-2-compatibility.php:84
 #: modules/team/team-bb-2-2-compatibility.php:309
 #: modules/team/team-bb-less-than-2-2-compatibility.php:357
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:279
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:273
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:280
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:274
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:374
 #: modules/uabb-numbers/uabb-numbers-bb-less-than-2-2-compatibility.php:373
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:93
@@ -12329,8 +12413,8 @@ msgstr ""
 #: modules/progress-bar/progress-bar-bb-less-than-2-2-compatibility.php:126
 #: modules/team/team-bb-2-2-compatibility.php:339
 #: modules/team/team-bb-less-than-2-2-compatibility.php:372
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:302
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:293
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:304
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:295
 #: modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php:389
 #: modules/uabb-numbers/uabb-numbers-bb-less-than-2-2-compatibility.php:388
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:29
@@ -12340,8 +12424,8 @@ msgstr ""
 
 #: modules/advanced-separator/advanced-separator-bb-2-2-compatibility.php:730
 #: modules/advanced-separator/advanced-separator-bb-less-than-2-2-compatibility.php:700
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:312
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:298
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:314
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:300
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:39
 #: modules/uabb-separator/uabb-separator-bb-less-than-2-2-compatibility.php:37
 msgid "Thickness of Border"
@@ -12518,8 +12602,8 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:73
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:430
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:397
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:583
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:570
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:643
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:631
 msgid "Enable"
 msgstr ""
 
@@ -12733,10 +12817,10 @@ msgstr ""
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:58
 #: modules/spacer-gap/spacer-gap-bb-2-2-compatibility.php:21
 #: modules/spacer-gap/spacer-gap-bb-less-than-2-2-compatibility.php:20
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:475
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:788
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:457
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:926
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:535
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:848
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:518
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:987
 msgid "Desktop"
 msgstr ""
 
@@ -13166,12 +13250,12 @@ msgstr ""
 #: modules/photo-gallery/photo-gallery-bb-less-than-2-2-compatibility.php:40
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:30
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:29
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:234
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:241
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:226
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:233
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1035
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1205
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:294
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:301
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:287
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:294
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1047
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1217
 msgid "Thumbnail"
 msgstr ""
 
@@ -14610,14 +14694,16 @@ msgstr ""
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:241
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:295
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:1685
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:123
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:196
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:206
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:216
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:108
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:189
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:199
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:209
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:135
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:208
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:218
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:228
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:276
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:121
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:202
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:212
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:222
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:269
 #: modules/uabb-woo-products/uabb-woo-products-bb-2-2-compatibility.php:400
 #: modules/uabb-woo-products/uabb-woo-products-bb-less-than-2-2-compatibility.php:379
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:85
@@ -14645,14 +14731,16 @@ msgstr ""
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:242
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:296
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:1686
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:124
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:197
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:207
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:217
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:107
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:190
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:200
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:210
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:136
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:209
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:219
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:229
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:277
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:120
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:203
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:213
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:223
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:270
 #: modules/uabb-woo-products/uabb-woo-products-bb-2-2-compatibility.php:399
 #: modules/uabb-woo-products/uabb-woo-products-bb-less-than-2-2-compatibility.php:378
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:86
@@ -14789,8 +14877,8 @@ msgstr ""
 
 #: modules/blog-posts/blog-posts-bb-2-2-compatibility.php:1424
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:1331
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:364
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:352
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:424
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:413
 msgid "Hover Background Color"
 msgstr ""
 
@@ -14897,7 +14985,7 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:1107
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:563
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:799
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:822
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:882
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:939
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:324
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php:455
@@ -14925,7 +15013,7 @@ msgstr ""
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:1110
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:566
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:802
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:825
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:885
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:942
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:327
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php:458
@@ -15433,6 +15521,7 @@ msgstr ""
 #: modules/info-table/info-table-bb-less-than-2-2-compatibility.php:95
 #: modules/team/team-bb-less-than-2-2-compatibility.php:300
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:156
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:202
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1072
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1258
 msgid "Link Nofollow"
@@ -15445,6 +15534,7 @@ msgstr ""
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:163
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:159
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:811
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:205
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1075
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:1261
 msgid "Enable this to make this link nofollow."
@@ -15674,10 +15764,10 @@ msgstr ""
 
 #: modules/dual-button/dual-button-bb-2-2-compatibility.php:556
 #: modules/dual-button/dual-button-bb-less-than-2-2-compatibility.php:559
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:336
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:545
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:326
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:524
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:396
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:605
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:387
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:585
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:607
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:588
 msgid "Select Icon"
@@ -17101,6 +17191,8 @@ msgstr ""
 #: modules/interactive-banner-2/interactive-banner-2-bb-less-than-2-2-compatibility.php:112
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:136
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:137
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:178
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:183
 msgid "Link URL"
 msgstr ""
 
@@ -18351,8 +18443,8 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:176
 #: modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php:810
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:877
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:168
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:161
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:180
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:174
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:270
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:246
 msgid "Autoplay"
@@ -18861,6 +18953,8 @@ msgstr ""
 #: modules/team/team-bb-less-than-2-2-compatibility.php:121
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:244
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:262
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:246
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:270
 msgid "Grayscale"
 msgstr ""
 
@@ -19483,10 +19577,10 @@ msgstr ""
 #: modules/photo-gallery/photo-gallery-bb-less-than-2-2-compatibility.php:555
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:142
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:132
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:477
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:790
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:459
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:928
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:537
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:850
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:520
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:989
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:384
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:345
 msgid "Mobile"
@@ -19888,8 +19982,8 @@ msgstr ""
 
 #: modules/modal-popup/modal-popup-bb-2-2-compatibility.php:202
 #: modules/modal-popup/modal-popup-bb-less-than-2-2-compatibility.php:198
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:80
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:73
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:92
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:86
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:120
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:103
 msgid "Aspect Ratio"
@@ -19897,8 +19991,8 @@ msgstr ""
 
 #: modules/modal-popup/modal-popup-bb-2-2-compatibility.php:205
 #: modules/modal-popup/modal-popup-bb-less-than-2-2-compatibility.php:201
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:83
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:76
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:95
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:89
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:123
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:106
 msgid "16:9"
@@ -19906,8 +20000,8 @@ msgstr ""
 
 #: modules/modal-popup/modal-popup-bb-2-2-compatibility.php:206
 #: modules/modal-popup/modal-popup-bb-less-than-2-2-compatibility.php:202
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:84
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:77
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:96
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:90
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:124
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:107
 msgid "4:3"
@@ -20176,8 +20270,8 @@ msgstr ""
 #: modules/modal-popup/modal-popup-bb-less-than-2-2-compatibility.php:894
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php:161
 #: modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php:130
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:526
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:505
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:586
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:566
 msgid "Close Button"
 msgstr ""
 
@@ -20280,6 +20374,7 @@ msgstr ""
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:25
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:43
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:43
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:87
 msgid "Photo Size"
 msgstr ""
 
@@ -20439,6 +20534,7 @@ msgstr ""
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:133
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:117
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:118
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:164
 msgid "Lightbox"
 msgstr ""
 
@@ -20515,6 +20611,10 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:297
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:298
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:307
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:293
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:337
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:309
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:347
 msgid "Image Hover Effect"
 msgstr ""
 
@@ -20655,10 +20755,10 @@ msgstr ""
 #: modules/photo-gallery/photo-gallery-bb-less-than-2-2-compatibility.php:554
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:143
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:133
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:476
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:789
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:458
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:927
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:536
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:849
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:519
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:988
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:383
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:344
 msgid "Tablet"
@@ -20679,10 +20779,15 @@ msgstr ""
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:99
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:87
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:101
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:123
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:127
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:347
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:126
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:357
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:907
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1021
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1033
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:982
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1191
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1203
 msgid "Caption"
 msgstr ""
 
@@ -20690,8 +20795,10 @@ msgstr ""
 #: modules/photo-gallery/photo-gallery-bb-less-than-2-2-compatibility.php:699
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-2-2-compatibility.php:314
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php:304
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:353
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:326
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:355
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:328
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:351
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:361
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:866
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:811
 msgid "HTML Tag"
@@ -20710,10 +20817,11 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:963
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:1053
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:1143
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:369
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:488
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:630
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:849
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:371
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:490
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:404
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:691
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:910
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:856
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:936
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-less-than-2-2-compatibility.php:471
@@ -20738,8 +20846,8 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:699
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:781
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:863
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:670
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:891
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:731
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:952
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:889
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:969
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1049
@@ -20760,8 +20868,8 @@ msgstr ""
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:700
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:782
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:864
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:671
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:892
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:732
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:953
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:890
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:970
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1050
@@ -22294,9 +22402,10 @@ msgstr ""
 
 #: modules/uabb-business-hours/uabb-business-hours-bb-less-than-2-2-compatibility.php:317
 #: modules/uabb-business-hours/uabb-business-hours-bb-less-than-2-2-compatibility.php:427
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:343
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:600
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:818
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:345
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:378
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:661
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:879
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-less-than-2-2-compatibility.php:444
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-less-than-2-2-compatibility.php:527
 #: modules/uabb-woo-products/uabb-woo-products-bb-less-than-2-2-compatibility.php:849
@@ -22525,10 +22634,10 @@ msgstr ""
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:857
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:866
 #: modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php:880
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:424
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:586
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:409
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:573
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:484
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:646
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:470
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:634
 msgid "Yes "
 msgstr ""
 
@@ -22626,6 +22735,7 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:300
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:345
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:359
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:89
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:526
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:586
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:483
@@ -24354,19 +24464,19 @@ msgstr ""
 msgid "Between Heading & Description"
 msgstr ""
 
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:431
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:433
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:246
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:234
 msgid "Heading Background Color"
 msgstr ""
 
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:527
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:573
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:529
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:575
 msgid "Separator Text Typography"
 msgstr ""
 
-#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:531
-#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:577
+#: modules/uabb-heading/uabb-heading-bb-2-2-compatibility.php:533
+#: modules/uabb-heading/uabb-heading-bb-less-than-2-2-compatibility.php:579
 msgid "Text Tag"
 msgstr ""
 
@@ -24687,8 +24797,8 @@ msgstr ""
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php:256
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:329
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:343
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:399
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:384
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:459
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:445
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:627
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:608
 msgid "Hover Animation"
@@ -24698,8 +24808,8 @@ msgstr ""
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php:260
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:333
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:347
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:403
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:388
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:463
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:449
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:632
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:613
 msgid "Float"
@@ -24709,8 +24819,8 @@ msgstr ""
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php:261
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:334
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:348
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:404
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:389
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:464
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:450
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:631
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:612
 msgid "Sink"
@@ -24720,8 +24830,8 @@ msgstr ""
 #: modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php:262
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:335
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:349
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:405
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:390
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:465
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:451
 msgid "Wobble Vertical"
 msgstr ""
 
@@ -25154,21 +25264,26 @@ msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:89
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:91
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:130
 msgid "Show Caption"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:113
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:114
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:158
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:160
 msgid "Link Type"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:118
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:119
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:165
 msgid "Photo File"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:119
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:120
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:166
 msgid "Photo Page"
 msgstr ""
 
@@ -25207,25 +25322,34 @@ msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:240
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:258
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:242
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:266
 msgid "Image Effect"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:245
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:263
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:247
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:271
 msgid "Hue Rotate"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:262
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:280
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:267
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:291
 msgid "Image Opacity"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:275
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:289
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:280
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:300
 msgid "Image Hover Opacity"
 msgstr ""
 
 #: modules/uabb-photo/uabb-photo.php:41
+#: modules/uabb-retina-image/uabb-retina-image.php:24
 msgid "Upload a photo or display one from the media library."
 msgstr ""
 
@@ -25256,8 +25380,8 @@ msgstr ""
 
 #: modules/uabb-price-list/uabb-price-list-bb-2-2-compatibility.php:139
 #: modules/uabb-price-list/uabb-price-list-bb-less-than-2-2-compatibility.php:129
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:784
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:922
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:844
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:983
 msgid "Stack on"
 msgstr ""
 
@@ -25344,6 +25468,67 @@ msgstr ""
 
 #: modules/uabb-price-list/uabb-price-list.php:22
 msgid "Price List"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:21
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:55
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:21
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:54
+msgid "Image Source"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:38
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:38
+msgid "Default Image"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:44
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:78
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:44
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:77
+msgid "Image URL"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:72
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:71
+#: modules/uabb-retina-image/uabb-retina-image.php:23
+msgid "Retina Image"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:131
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:143
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:134
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:146
+msgid "Custom Caption"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:171
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:176
+msgid ""
+"Link type applies to how the image should be linked on click. You can "
+"choose a specific URL."
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:199
+msgid "Space between Image and background"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:308
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:318
+msgid "Image Hue"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:324
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:334
+msgid "Image Hover Hue"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:428
+msgid "Caption Background Color"
+msgstr ""
+
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:225
+msgid "Space between image and background"
 msgstr ""
 
 #: modules/uabb-separator/uabb-separator-bb-2-2-compatibility.php:75
@@ -25938,385 +26123,409 @@ msgstr ""
 msgid "Video Type"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:64
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:55
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:35
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:26
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:995
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1165
+msgid "Wistia"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:76
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:68
 msgid "Start Time"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:66
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:60
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:78
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:73
 msgid "Specify a start time (in seconds)."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:72
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:64
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:84
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:77
 msgid "End Time"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:74
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:69
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:86
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:82
 msgid "Specify a End time (in seconds)."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:85
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:78
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:97
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:91
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:125
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:108
 msgid "3:2"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:86
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:79
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:98
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:92
 msgid "1:1"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:92
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:85
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:104
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:244
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:98
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:237
 msgid "Video Options"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:96
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:89
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:108
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:248
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:102
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:241
 msgid "AutoPlay"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:107
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:100
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:119
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:259
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:113
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:252
 msgid "Thumbnail will not display if AutoPlay mode is enabled. "
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:111
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:104
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:123
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:117
 msgid "Suggested Videos"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:114
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:116
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:126
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:129
 msgid "Current Video Channel"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:115
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:117
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:127
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:130
 msgid "Any Random Video"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:120
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:113
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:132
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:126
 msgid "Player Control"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:134
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:127
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:146
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:282
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:140
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:275
 msgid "Mute"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:143
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:136
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:155
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:149
 msgid "Modest Branding"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:149
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:142
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:161
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:155
 msgid "This option lets you use a YouTube player that does not show a YouTube logo."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:153
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:146
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:165
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:159
 msgid "Privacy Mode"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:159
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:152
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:171
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:165
 msgid ""
 "When you turn on privacy mode, YouTube won't store information about "
 "visitors on your website unless they play the video."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:164
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:157
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:176
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:170
 msgid "Video option"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:179
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:172
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:191
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:185
 msgid "Thumbnail will not display if AutoPlay mode is enabled."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:183
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:176
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:195
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:263
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:189
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:256
 msgid "Loop"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:189
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:182
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:201
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:269
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:195
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:262
 msgid ""
 "Choose a video to play continuously in a loop. The video will automatically "
 "start again after reaching the end."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:193
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:186
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:205
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:199
 msgid "Intro Title"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:199
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:192
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:211
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:205
 msgid "Displays title of the video."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:203
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:196
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:215
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:209
 msgid "Intro Portrait"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:209
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:202
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:221
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:215
 msgid "Displays the author’s profile image."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:213
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:206
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:225
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:219
 msgid "Intro Byline"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:219
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:212
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:231
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:225
 msgid "Displays the author’s name of the video."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:224
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:216
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:236
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:229
 msgid "Controls Color"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:237
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:229
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:273
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:266
+msgid "Show Playbar"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:297
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:290
 msgid "Thumbnail & Overlay"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:244
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:236
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1038
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1208
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:304
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:297
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1050
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1220
 msgid "Custom Thumbnail"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:245
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:237
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1039
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1209
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:305
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:298
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1051
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1221
 msgid "Default Thumbnail"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:258
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:250
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:318
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:311
 msgid "Default Thumbnail Size"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:261
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:253
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1055
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1225
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:321
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:314
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1067
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1237
 msgid "Maximum Resolution"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:262
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:254
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1056
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1226
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:322
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:315
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1068
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1238
 msgid "High Quality"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:263
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:255
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1057
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1227
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:323
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:316
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1069
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1239
 msgid "Medium Quality"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:264
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:256
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1058
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1228
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:324
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:317
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1070
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1240
 msgid "Standard Quality"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:269
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:261
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:329
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:322
 msgid "Select Custom Thumbnail"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:276
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:267
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:336
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:328
 msgid "Overlay color"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:288
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:278
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:348
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:339
 msgid "Enable Double Click on Mobile"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:294
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:284
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:354
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:345
 msgid ""
 "Enable this option if you are not able to see custom thumbnail or overlay "
 "color on Mobile."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:299
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:289
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:359
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:350
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:576
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:557
 msgid "Play Button"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:303
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:293
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:363
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:354
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:580
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:561
 msgid "Image/Icon"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:330
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:320
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:390
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:381
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:601
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1063
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1075
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:582
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1233
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1245
 msgid "Select Image"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:414
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:399
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:474
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:460
 msgid "Sticky Video"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:417
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:402
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:477
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:463
 msgid "Sticky Video Settings "
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:421
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:406
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:481
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:467
 msgid "Enable Sticky Video"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:436
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:424
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:496
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:485
 msgid "Sticky Alignment"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:439
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:499
 msgid "Top Right "
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:448
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:437
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:508
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:498
 msgid "Video Width"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:471
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:453
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:531
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:514
 msgid "Hide Sticky Video on"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:478
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:460
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:538
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:521
 msgid "Tablet + Mobile"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:488
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:470
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:548
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:531
 msgid "Spacing from Edges"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:492
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:472
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:552
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:533
 msgid ""
 "Note: This is spacing around the sticky video with respect to the Alignment "
 "chosen."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:579
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:566
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:639
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:627
 msgid "Info Bar"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:589
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:576
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:649
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:637
 msgid "Enable this option to display the informative text under Sticky video."
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:600
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:590
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:660
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:651
 msgid "This is info bar"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:660
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:663
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:722
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:725
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:720
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:723
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:783
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:786
 msgid "YouTube Subscribe Bar"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:667
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:729
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:727
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:790
 msgid "Enable Subscribe Bar"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:682
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:744
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:742
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:805
 msgid "Select Channel ID/Channel Name"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:685
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:747
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:745
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:808
 msgid "Channel ID"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:686
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:748
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:746
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:809
 msgid "Channel Name"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:699
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:761
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:759
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:822
 msgid "YouTube Channel Name"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:705
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:767
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:765
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:828
 msgid "YouTube Channel ID"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:711
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:773
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:771
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:834
 msgid "Subscribe to channel text"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:732
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:784
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:792
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:845
 msgid "Show Subscribers Count"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:427
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:488
 msgid " Top Left"
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:428
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:489
 msgid " Top Right "
 msgstr ""
 
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:612
-#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:830
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:673
+#: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:891
 msgid "Font size"
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:386
+#: modules/uabb-video/uabb-video.php:410
 msgid "from "
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:595
+#: modules/uabb-video/uabb-video.php:658
 #. translators: %s: search term
 msgid ""
 "<div style=\"%2$s\"> Make sure you add the actual URL of the video and not "
@@ -26327,7 +26536,7 @@ msgid ""
 "https://youtu.be/HJRzUQMhJMQ</div>"
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:610
+#: modules/uabb-video/uabb-video.php:673
 #. translators: %s: search term
 msgid ""
 "<div style=\"%1$s\">Make sure you add the actual URL of the video and not "
@@ -26338,7 +26547,14 @@ msgid ""
 "https://vimeo.com/channels/staffpicks/274860274</div>"
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:629
+#: modules/uabb-video/uabb-video.php:686
+#. translators: %s: search term
+msgid ""
+"<div style=\"%1$s\">Go to your Wistia video, right click, \"Copy Link & "
+"Thumbnail\" and paste here.</div>"
+msgstr ""
+
+#: modules/uabb-video/uabb-video.php:703
 msgid ""
 "Click <a "
 "href=\"https://www.ultimatebeaver.com/docs/how-to-find-youtube-channel-name-"
@@ -26347,14 +26563,14 @@ msgid ""
 "here</strong> </a> to know how to find your YouTube Channel ID."
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:635
+#: modules/uabb-video/uabb-video.php:709
 msgid ""
 "Click <a href=\"https://support.google.com/youtube/answer/3250431?hl=en\" "
 "target=\"_blank\" rel=\"noopener\"> <strong> here</strong> </a> to know how "
 "to find your YouTube Channel ID."
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:644
+#: modules/uabb-video/uabb-video.php:718
 msgid ""
 "Click <a "
 "href=\"https://www.ultimatebeaver.com/docs/how-to-find-youtube-channel-name-"
@@ -26363,7 +26579,7 @@ msgid ""
 "here</strong> </a> to know how to find your YouTube Channel Name."
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:650
+#: modules/uabb-video/uabb-video.php:724
 msgid ""
 "Click <a href=\"https://support.google.com/youtube/answer/3250431?hl=en\" "
 "target=\"_blank\" rel=\"noopener\"> <strong> here</strong> </a> to know how "
@@ -26494,25 +26710,25 @@ msgstr ""
 msgid "Video Gallery"
 msgstr ""
 
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1023
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1193
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1035
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1205
 msgid "This title will be visible on hover."
 msgstr ""
 
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1028
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1198
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1040
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1210
 msgid "Categories"
 msgstr ""
 
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1030
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1200
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1042
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1212
 msgid ""
 "Add comma separated categories. These categories will be shown for "
 "filteration."
 msgstr ""
 
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1052
-#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1222
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:1064
+#: modules/uabb-video-gallery/uabb-video-gallery-bb-less-than-2-2-compatibility.php:1234
 msgid "Thumbnail Size"
 msgstr ""
 
@@ -26544,7 +26760,7 @@ msgstr ""
 msgid "Video  Gallery"
 msgstr ""
 
-#: modules/uabb-video-gallery/uabb-video-gallery.php:794
+#: modules/uabb-video-gallery/uabb-video-gallery.php:830
 #. translators: %s: search term
 msgid ""
 "<div style=\"%2$s\"> Make sure you add the actual URL of the video and not "
@@ -26555,7 +26771,7 @@ msgid ""
 "https://youtu.be/HJRzUQMhJMQ</div>"
 msgstr ""
 
-#: modules/uabb-video-gallery/uabb-video-gallery.php:807
+#: modules/uabb-video-gallery/uabb-video-gallery.php:845
 #. translators: %s: search term
 msgid ""
 "<div style=\"%1$s\">Make sure you add the actual URL of the video and not "
@@ -26564,6 +26780,12 @@ msgid ""
 "https://vimeo.com/274860274</div>\r\n"
 "\t\t\t        <div style=\"%1$s\"> <b> Invalid URL : </b> "
 "https://vimeo.com/channels/staffpicks/274860274</div>"
+msgstr ""
+
+#: modules/uabb-video-gallery/uabb-video-gallery.php:858
+msgid ""
+"Go to your Wistia video, right click, \"Copy Link & Thumbnail\" and paste "
+"here."
 msgstr ""
 
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:33
@@ -27287,6 +27509,8 @@ msgstr ""
 
 #: modules/uabb-photo/uabb-photo-bb-2-2-compatibility.php:115
 #: modules/uabb-photo/uabb-photo-bb-less-than-2-2-compatibility.php:116
+#: modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php:160
+#: modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php:162
 msgctxt "Link type."
 msgid "None"
 msgstr ""

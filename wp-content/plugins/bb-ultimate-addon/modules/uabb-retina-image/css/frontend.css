@@ -1,0 +1,50 @@
+
+.uabb-retina-img-content .uabb-retina-img {
+    -moz-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+.uabb-retina-img-content.uabb-img-grayscale .uabb-retina-img {
+  -webkit-filter: grayscale(100%);
+  -webkit-filter: gray;
+          filter: grayscale(100%);
+  		  filter: gray;
+}
+.uabb-retina-img-content .uabb-retina-img-caption {
+	pointer-events: none;
+}
+.uabb-retina-img {
+	max-height: inherit;
+    line-height: 0;
+    position: relative;
+    z-index: 2;
+}
+.uabb-retina-img-content {
+    border-radius: 0;
+    display: inline-block;
+    line-height: 0;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+.uabb-retina-img-content .uabb-retina-img {
+    border-radius: inherit;
+    display: inline;
+    height: auto;
+    max-width: 100%;
+    width: auto;
+}
+.uabb-retina-img-caption {
+    font-size: 13px;
+    line-height: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+.uabb-retina-img-caption .uabb-retina-img-caption-text {
+    display: inline-block;
+}

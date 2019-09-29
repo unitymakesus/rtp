@@ -99,16 +99,16 @@ if ( ! $version_bb_check ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'filter_font_typo',
-				'selector'     => ".fl-node-$id .uabb-video-gallery-title-text",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'filter_font_typo',
+					'selector'     => ".fl-node-$id .uabb-video-gallery-title-text",
+				)
+			);
 	}
 }
-?>
+	?>
 <?php } ?>
 /* css for Filterable Tabs*/
 
@@ -150,16 +150,16 @@ if ( ! $version_bb_check ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'cat_font_typo',
-				'selector'     => ".fl-node-$id  .uabb-video__gallery-filter",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'cat_font_typo',
+					'selector'     => ".fl-node-$id  .uabb-video__gallery-filter",
+				)
+			);
 	}
 }
-?>
+	?>
 	.fl-node-<?php echo $id; ?> .uabb-video__gallery-filter {
 		<?php
 		if ( isset( $settings->cat_filter_padding_top ) && isset( $settings->cat_filter_padding_right ) && isset( $settings->cat_filter_padding_bottom ) && isset( $settings->cat_filter_padding_left ) ) {
@@ -233,7 +233,7 @@ if ( ! $version_bb_check ) {
 			echo ( '' !== $settings->play_icon_size ) ? 'width:' . $settings->play_icon_size . 'px;' : '';
 		}
 		?>
-	} 
+	}
 	.fl-node-<?php echo $id; ?> .uabb-video__content img.uael-vg__play-image,
 	.fl-node-<?php echo $id; ?> .uabb-video__content .uabb-vg__play{
 		<?php
@@ -333,16 +333,16 @@ if ( ! $version_bb_check ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'caption_font_typo',
-				'selector'     => ".fl-node-$id .uabb-video__caption",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'caption_font_typo',
+					'selector'     => ".fl-node-$id .uabb-video__caption",
+				)
+			);
 	}
 }
-?>
+	?>
 <?php } ?>
 <?php if ( 'yes' == $settings->show_tag ) { ?>
 	.fl-node-<?php echo $id; ?> .uabb-video__tags {
@@ -375,16 +375,16 @@ if ( ! $version_bb_check ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'tag_font_typo',
-				'selector'     => ".fl-node-$id .uabb-video__tags",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'tag_font_typo',
+					'selector'     => ".fl-node-$id .uabb-video__tags",
+				)
+			);
 	}
 }
-?>
+	?>
 <?php } ?>
 
 <?php
@@ -471,22 +471,22 @@ if ( 'carousel' === $settings->layout && 'yes' === $settings->enable_dots ) {
 				echo ' ';
 				echo $settings->cat_filter_border_color;
 				?>
-				; 
+				;
 			}
 		<?php } ?>
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'cat_filter_border_param',
-				'selector'     => ".fl-node-$id .uabb-video__gallery-filters",
-			)
-		);
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'cat_filter_border_param',
+					'selector'     => ".fl-node-$id .uabb-video__gallery-filters",
+				)
+			);
 	}
 }
-?>
+	?>
 	<?php if ( ! $version_bb_check ) { ?>
 		<?php if ( isset( $settings->cat_filter_border_active ) && isset( $settings->cat_filter_border_active_type ) && isset( $settings->cat_filter_border_color ) ) { ?>
 			.fl-node-<?php echo $id; ?> .uabb-video__gallery-filter:hover,
@@ -500,22 +500,22 @@ if ( 'carousel' === $settings->layout && 'yes' === $settings->enable_dots ) {
 				echo ' ';
 				echo $settings->cat_filter_border_color_active;
 				?>
-				; 
+				;
 			}
 		<?php } ?>
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'cat_filter_border_active_param',
-				'selector'     => ".fl-node-$id .uabb-video__gallery-filter:hover,.fl-node-$id .uabb-video__gallery-filter.uabb-filter__current",
-			)
-		);
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'cat_filter_border_active_param',
+					'selector'     => ".fl-node-$id .uabb-video__gallery-filter:hover,.fl-node-$id .uabb-video__gallery-filter.uabb-filter__current",
+				)
+			);
 	}
 }
-?>
+	?>
 <?php } ?>
 
 <?php if ( $global_settings->responsive_enabled ) { ?>
@@ -549,7 +549,7 @@ if ( 'carousel' === $settings->layout && 'yes' === $settings->enable_dots ) {
 					echo ( '' !== $settings->column_gap_medium ) ? 'left:calc(' . $settings->column_gap_medium / 2 . 'px );' : '';
 				}
 				?>
-			}	
+			}
 		<?php } ?>
 		<?php if ( isset( $settings->row_gap_medium ) ) { ?>
 
@@ -870,7 +870,7 @@ if ( 'carousel' === $settings->layout && 'yes' === $settings->enable_dots ) {
 				echo ( '' !== $settings->play_icon_size_responsive ) ? 'width:' . $settings->play_icon_size_responsive . 'px;' : '';
 			}
 			?>
-		} 
+		}
 		.fl-node-<?php echo $id; ?> .uabb-video__content img.uael-vg__play-image,
 		.fl-node-<?php echo $id; ?> .uabb-video__content .uabb-vg__play{
 			<?php

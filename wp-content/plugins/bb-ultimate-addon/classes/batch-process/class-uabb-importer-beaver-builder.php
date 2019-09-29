@@ -1061,10 +1061,12 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 
 					$data->icon = $src;
 				}
-				foreach ( $data->sizes as $key => $value ) {
+				if ( isset( $data->sizes ) && ! empty( $data->sizes ) ) {
+					foreach ( $data->sizes as $key => $value ) {
 
-					if ( ! empty( $value->url ) ) {
-						$value->url = $photo_src;
+						if ( ! empty( $value->url ) ) {
+							$value->url = $photo_src;
+						}
 					}
 				}
 			}

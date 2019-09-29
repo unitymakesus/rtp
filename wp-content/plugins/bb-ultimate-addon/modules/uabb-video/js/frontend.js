@@ -2,7 +2,7 @@
   UABBVideo = function( settings ) {
     this.nodeClass         = '.fl-node-' + settings.id;
     this.id                = settings.id;
-    	
+    
     var outer_wrap = jQuery(this.nodeClass).find( '.uabb-video__outer-wrap' );
     var inner_wrap = jQuery(this.nodeClass).find( '.uabb-video-inner-wrap' );
     var sticky_margin_bottom = settings.stickybottom;
@@ -117,7 +117,7 @@
               inner_wrap.css( 'bottom', stick_bottom );
             }
           }
-        });   
+        });
      }
       /* Sticky video function End */
     };
@@ -139,6 +139,6 @@
       }
       selector.closest( '.uabb-video__outer-wrap' ).find( '.uabb-vimeo-wrap' ).hide();
   	},
-   
+
   }
 })(jQuery);

@@ -31,6 +31,12 @@ $settings->sticky_info_bar_bgcolor    = UABB_Helper::uabb_colorpicker( $settings
 	.fl-node-<?php echo $id; ?> .uabb-video__play-icon > img {
 		width:<?php echo( '' != $settings->play_icon_size ) ? $settings->play_icon_size . 'px;' : '75px;'; ?>
 	}
+	<?php if ( 'wistia' === $settings->video_type ) { ?>
+		.fl-node-<?php echo $id; ?> .uabb-video-wistia-play {
+			width:<?php echo( '' != $settings->play_icon_size ) ? $settings->play_icon_size . 'px;' : '75px;'; ?>
+			height:<?php echo( '' != $settings->play_icon_size ) ? $settings->play_icon_size . 'px;' : '75px;'; ?>
+		}
+<?php	} ?>
 <?php } ?>
 <?php if ( isset( $settings->play_icon_color ) && '' != $settings->play_icon_color ) { ?>
 	.fl-node-<?php echo $id; ?> .uabb-video__play-icon {
@@ -237,15 +243,15 @@ $settings->sticky_info_bar_bgcolor    = UABB_Helper::uabb_colorpicker( $settings
 	if ( isset( $settings->sticky_video_width ) && '' !== $settings->sticky_video_width ) {
 		?>
 			.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-16_9 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-			.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-16_9 .uabb-sticky-apply .uabb-video__thumb { 
+			.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-16_9 .uabb-sticky-apply .uabb-video__thumb {
 				<?php echo 'width: ' . $settings->sticky_video_width . 'px; height: calc( ' . $settings->sticky_video_width . 'px * 0.5625 )'; ?>
 			}
 			.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-4_3 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-			.fl-node-<?php echo $id; ?> uabb-aspect-ratio-4_3 .uabb-sticky-apply .uabb-video__thumb { 
+			.fl-node-<?php echo $id; ?> uabb-aspect-ratio-4_3 .uabb-sticky-apply .uabb-video__thumb {
 				<?php echo 'width: ' . $settings->sticky_video_width . 'px; height: calc( ' . $settings->sticky_video_width . 'px * 0.75 )'; ?>
 			}
 			.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-3_2 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-			.fl-node-<?php echo $id; ?> uabb-aspect-ratio-3_2 .uabb-sticky-apply .uabb-video__thumb { 
+			.fl-node-<?php echo $id; ?> uabb-aspect-ratio-3_2 .uabb-sticky-apply .uabb-video__thumb {
 				<?php echo 'width: ' . $settings->sticky_video_width . 'px; height: calc( ' . $settings->sticky_video_width . 'px * 0.6666666666666667 )'; ?>
 			}
 		<?php
@@ -378,11 +384,11 @@ $settings->sticky_info_bar_bgcolor    = UABB_Helper::uabb_colorpicker( $settings
 			<?php echo 'width: ' . $settings->sticky_video_width_medium . 'px; height: calc( ' . $settings->sticky_video_width_medium . 'px * 0.5625 )'; ?>
 		}
 		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-4_3 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-4_3 .uabb-sticky-apply .uabb-video__thumb{ 
+		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-4_3 .uabb-sticky-apply .uabb-video__thumb{
 			<?php echo 'width: ' . $settings->sticky_video_width_medium . 'px; height: calc( ' . $settings->sticky_video_width_medium . 'px * 0.75 )'; ?>
 		}
 		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-3_2 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-3_2 .uabb-sticky-apply .uabb-video__thumb{ 
+		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-3_2 .uabb-sticky-apply .uabb-video__thumb{
 			<?php echo 'width: ' . $settings->sticky_video_width_medium . 'px; height: calc( ' . $settings->sticky_video_width_medium . 'px * 0.6666666666666667 )'; ?>
 		}
 
@@ -392,7 +398,7 @@ $settings->sticky_info_bar_bgcolor    = UABB_Helper::uabb_colorpicker( $settings
 				<?php echo 'margin-bottom:' . $settings->subscribe_bar_spacing . 'px;'; ?>
 				margin-right: 0;
 			}
-		<?php } ?>		
+		<?php } ?>
 	}
 	<?php /* CSS For Mobile */ ?>
 	@media ( max-width: <?php echo $global_settings->responsive_breakpoint; ?>px ) {
@@ -451,7 +457,7 @@ $settings->sticky_info_bar_bgcolor    = UABB_Helper::uabb_colorpicker( $settings
 }
 if ( isset( $settings->sticky_video_margin_top_responsive ) && isset( $settings->sticky_video_margin_right_responsive ) && isset( $settings->sticky_video_margin_bottom_responsive ) && isset( $settings->sticky_video_margin_left_responsive ) ) {
 	?>
-	.fl-node-<?php echo $id; ?> .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap { 
+	.fl-node-<?php echo $id; ?> .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
 		<?php
 		if ( 'top_left' === $settings->sticky_alignment ) {
 			if ( isset( $settings->sticky_video_margin_top_responsive ) ) {
@@ -515,15 +521,15 @@ if ( isset( $settings->sticky_video_margin_top_responsive ) && isset( $settings-
 		<?php } ?>
 		<?php if ( isset( $settings->sticky_video_width_responsive ) && '' !== $settings->sticky_video_width_responsive ) { ?>
 		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-16_9 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-16_9 .uabb-sticky-apply .uabb-video__thumb{ 
+		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-16_9 .uabb-sticky-apply .uabb-video__thumb{
 			<?php echo 'width: ' . $settings->sticky_video_width_responsive . 'px; height: calc( ' . $settings->sticky_video_width_responsive . 'px * 0.5625 )'; ?>
 		}
 		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-4_3 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-4_3 .uabb-sticky-apply .uabb-video__thumb{  
+		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-4_3 .uabb-sticky-apply .uabb-video__thumb{
 			<?php echo 'width: ' . $settings->sticky_video_width_responsive . 'px; height: calc( ' . $settings->sticky_video_width_responsive . 'px * 0.75 )'; ?>
 		}
 		.fl-node-<?php echo $id; ?> .uabb-aspect-ratio-3_2 .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap,
-		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-3_2 .uabb-sticky-apply .uabb-video__thumb{ 
+		.fl-node-<?php echo $id; ?> uabb-aspect-ratio-3_2 .uabb-sticky-apply .uabb-video__thumb{
 			<?php echo 'width: ' . $settings->sticky_video_width_responsive . 'px; height: calc( ' . $settings->sticky_video_width_responsive . 'px * 0.6666666666666667 )'; ?>
 		}
 		<?php } ?>
@@ -571,7 +577,25 @@ if ( 'default' == $settings->play_source ) {
 			?>
 			}
 		<?php } ?>
-	<?php } ?>	
+	<?php } ?>
+	<?php
+	if ( 'wistia' === $settings->video_type ) {
+		if ( isset( $settings->play_default_icon_bg ) ) {
+			?>
+			.fl-node-<?php echo $id; ?> .uabb-video-wistia-play {
+				<?php echo ( '' != $settings->play_default_icon_bg ) ? 'background-color:' . $settings->play_default_icon_bg . ';' : 'background-color: rgba(84, 187, 255, 0.8);'; ?>
+			}
+			<?php
+		}
+		if ( isset( $settings->play_default_icon_bg_hover ) ) {
+			?>
+			.fl-node-<?php echo $id; ?> .uabb-video__outer-wrap:hover .uabb-video__play-icon .uabb-video-wistia-play {
+			<?php
+			echo ( '' != $settings->play_default_icon_bg_hover ) ? 'background-color:' . $settings->play_default_icon_bg_hover . ';' : 'background-color: rgba(0, 0, 0, 0.7);'
+			?>
+			}
+		<?php } ?>
+	<?php } ?>
 <?php } ?>
 <?php if ( isset( $settings->subscribe_bar_spacing ) && '' !== $settings->subscribe_bar_spacing ) { ?>
 	.fl-node-<?php echo $id; ?> .uabb-subscribe-bar-prefix {
@@ -580,12 +604,12 @@ if ( 'default' == $settings->play_source ) {
 	.fl-node-<?php echo $id; ?> .uabb-subscribe-responsive-desktop .uabb-subscribe-bar-prefix{
 		<?php echo 'margin-bottom:' . $settings->subscribe_bar_spacing . 'px;'; ?>
 		margin-right: 0;
-	} 
+	}
 <?php } ?>
 
 <?php /* CSS For Sticky video  */ ?>
 <?php if ( isset( $settings->sticky_video_color ) && '' !== $settings->sticky_video_color ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap { 
+	.fl-node-<?php echo $id; ?> .uabb-video__outer-wrap.uabb-sticky-apply .uabb-video-inner-wrap {
 		background:<?php echo $settings->sticky_video_color; ?>;
 	}
 <?php } ?>
@@ -593,12 +617,12 @@ if ( 'default' == $settings->play_source ) {
 <?php /* CSS For Sticky video  close button  */ ?>
 <?php if ( isset( $settings->enable_sticky_close_button ) && 'none' !== $settings->enable_sticky_close_button ) { ?>
 	<?php if ( isset( $settings->sticky_close_icon_color ) ) { ?>
-		.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-close { 
+		.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-close {
 			color: <?php echo $settings->sticky_close_icon_color; ?>;
 			}
 	<?php } ?>
 	<?php if ( isset( $settings->sticky_close_icon_bgcolor ) ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-close { 
+	.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-close {
 		background:<?php echo $settings->sticky_close_icon_bgcolor; ?>;
 	}
 		<?php
@@ -608,12 +632,12 @@ if ( 'default' == $settings->play_source ) {
 <?php /* CSS For Call to Action Bar */ ?>
 <?php if ( isset( $settings->sticky_info_bar_enable ) && 'yes' === $settings->sticky_info_bar_enable ) { ?>
 	<?php if ( isset( $settings->sticky_info_bar_color ) ) { ?>
-		.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-infobar { 
+		.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-infobar {
 		color: <?php echo $settings->sticky_info_bar_color; ?>;
 		}
 	<?php } ?>
 	<?php if ( isset( $settings->sticky_info_bar_bgcolor ) ) { ?>
-		.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-infobar { 
+		.fl-node-<?php echo $id; ?> .uabb-sticky-apply .uabb-video-sticky-infobar {
 		background: <?php echo $settings->sticky_info_bar_bgcolor; ?>;
 		}
 		<?php

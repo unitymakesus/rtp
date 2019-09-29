@@ -1,3 +1,10 @@
+Version 1.21.0 - Tuesday, 24th September 2019
+- New: Introduced Retina Image
+- Improvement: Video - Added Wistia  hosted videos support
+- Improvement: Video Gallery - Added Wistia  hosted videos support
+- Improvement: Heading: Added opacity support to the separator color field
+- Fixed: Branding is not applying correctly to the Background process notice
+
 Version 1.20.2 - Thursday, 12th September 2019
 - Improvement: Introduced background process to change all the HotLink Image URLs.This process will download images from the UABB Template Cloud and upload it to your media library.Earlier all the Image URLs used to come from our server. With this update all of them will be uploaded to your media library.
 - Fixed: Heading - Resolved font issue of text being enlarged

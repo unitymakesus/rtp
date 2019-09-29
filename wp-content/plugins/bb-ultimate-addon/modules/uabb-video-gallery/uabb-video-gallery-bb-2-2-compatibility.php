@@ -46,10 +46,10 @@ FLBuilder::register_module(
 									'tags'         => 'Vimeo',
 								),
 								array(
-									'video_type'   => 'youtube',
-									'youtube_link' => 'https://www.youtube.com/watch?v=HJRzUQMhJMQ',
+									'video_type'   => 'wistia',
+									'youtube_link' => '<p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2"><img src="https://embedwistia-a.akamaihd.net/deliveries/53eec5fa72737e60aa36731b57b607a7c0636f52.webp?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=54bbffe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p><p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2">Video Placeholder - Brainstorm Force - pratikc</a></p>',
 									'title'        => 'Third Video',
-									'tags'         => 'YouTube',
+									'tags'         => 'Wistia',
 								),
 								array(
 									'video_type'   => 'vimeo',
@@ -66,10 +66,10 @@ FLBuilder::register_module(
 
 								),
 								array(
-									'video_type'   => 'vimeo',
-									'youtube_link' => 'https://vimeo.com/274860274',
+									'video_type'   => 'wistia',
+									'youtube_link' => '<p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2"><img src="https://embedwistia-a.akamaihd.net/deliveries/53eec5fa72737e60aa36731b57b607a7c0636f52.webp?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=54bbffe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p><p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2">Video Placeholder - Brainstorm Force - pratikc</a></p>',
 									'title'        => 'Sixth Video',
-									'tags'         => 'Vimeo',
+									'tags'         => 'Wistia',
 								),
 							),
 						),
@@ -992,6 +992,8 @@ FLBuilder::register_settings_form(
 								'options' => array(
 									'youtube' => __( 'YouTube', 'uabb' ),
 									'vimeo'   => __( 'Vimeo', 'uabb' ),
+									'wistia'  => __( 'Wistia', 'uabb' ),
+
 								),
 								'toggle'  => array(
 									'youtube' => array(
@@ -999,6 +1001,9 @@ FLBuilder::register_settings_form(
 									),
 									'vimeo'   => array(
 										'fields' => array( 'vimeo_link' ),
+									),
+									'wistia'  => array(
+										'fields' => array( 'wistia_link' ),
 									),
 								),
 							),
@@ -1015,6 +1020,13 @@ FLBuilder::register_settings_form(
 								'default'     => 'https://vimeo.com/274860274',
 								'connections' => array( 'url' ),
 								'description' => UABBVideoGallery::get_description( 'vimeo_link' ),
+							),
+							'wistia_link'        => array(
+								'type'        => 'text',
+								'label'       => __( 'Link', 'uabb' ),
+								'default'     => '<p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2"><img src="https://embedwistia-a.akamaihd.net/deliveries/53eec5fa72737e60aa36731b57b607a7c0636f52.webp?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=54bbffe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p><p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2">Video Placeholder - Brainstorm Force - pratikc</a></p>',
+								'description' => UABBVideo::get_description( 'wistia_link' ),
+								'connections' => array( 'url' ),
 							),
 							'title'              => array(
 								'type'        => 'text',

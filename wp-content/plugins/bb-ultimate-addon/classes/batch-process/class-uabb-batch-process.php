@@ -241,14 +241,31 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 */
 		function register_notices() {
 
-			$batch_started = get_option( 'uabb_batch_process_started', false );
+			$batch_started       = get_option( 'uabb_batch_process_started', false );
+			$link                = '';
+			$branding_name       = '';
+			$branding_short_name = '';
 
+			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+			$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
+
+			if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
+
+				$link = sprintf( /* translators: %1$s: search term */
+				__( '%1$s <a href=" https://www.ultimatebeaver.com/docs/background-process-in-uabb/?utm_source=uabb-pro-backend&utm_medium=wordpress-screen&utm_campaign=batch-process-notice">%2$s</a> %3$s.', 'uabb' ), 'Read about', 'background process', 'in detail' );
+			}
+			if ( empty( $branding_name ) ) {
+				$branding_name = __( 'Ultimate Addons for Beaver Builder', 'uabb' );
+			}
+			if ( empty( $branding_short_name ) ) {
+				$branding_short_name = 'UABB';
+			}
 			if ( ! $batch_started ) {
 				Astra_Notices::add_notice(
 					array(
 						'id'                         => 'uabb-batch-process-start',
 						'type'                       => 'info',
-						'message'                    => '<div class="notice-content" style="margin:0;"><p style="margin-top:0;">Hello! Ultimate Addons of Beaver Builder version 1.20.2 includes a background process to change all the HotLink Image URLs. This will download images from the UABB Template Cloud and upload it to your media library. Read about <a href="https://www.ultimatebeaver.com/docs/background-process-in-uabb/?utm_source=uabb-pro-backend&utm_medium=wordpress-screen&utm_campaign=batch-process-notice">background process</a>  in detail.</p><a href="#" class="uabb-replace-hotlink-images button button-primary">Import Images</a><a href="#" class="astra-notice-close astra-review-notice button" style="margin-left: 10px;">Remind Me Later</a> <p style="margin-bottom:0;"> <b>If UABB Cloud Template is not used on the website please ignore this notice.</b></p></div>',
+						'message'                    => '<div class="notice-content" style="margin:0;"><p style="margin-top:0;">Hello! ' . $branding_name . ' version 1.20.2 includes a background process to change all the HotLink Image URLs. This will download images from the ' . $branding_short_name . ' Template Cloud and upload it to your media library. ' . $link . '</p><a href="#" class="uabb-replace-hotlink-images button button-primary">Import Images</a><a href="#" class="astra-notice-close astra-review-notice button" style="margin-left: 10px;">Remind Me Later</a> <p style="margin-bottom:0;"> <b>If ' . $branding_short_name . ' Cloud Template is not used on the website please ignore this notice.</b></p></div>',
 						'repeat-notice-after'        => MONTH_IN_SECONDS,
 						'priority'                   => 10,
 						'display-with-other-notices' => false,
@@ -263,7 +280,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 					array(
 						'id'                         => 'uabb-batch-process-complete',
 						'type'                       => 'info',
-						'message'                    => '<div class="notice-content">' . __( 'Procress Completed.', 'uabb' ) . '</div>',
+						'message'                    => '<div class="notice-content">' . __( 'Process Completed.', 'uabb' ) . '</div>',
 						'display-with-other-notices' => false,
 					)
 				);
