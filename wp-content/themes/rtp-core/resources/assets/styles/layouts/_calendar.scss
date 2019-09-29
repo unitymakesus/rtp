@@ -604,16 +604,13 @@ span.event-color {
 
   .mec-event-social {
     text-align: left;
-    border: none;
-    box-shadow: none;
-    padding: 0;
+    padding: 12px 14px;
 
     h3 {
-      @extend h3;
-
       text-align: left;
       border-bottom: 0;
       margin-bottom: 0;
+      padding-bottom: 0;
 
       &::before {
         display: none;
@@ -626,6 +623,16 @@ span.event-color {
 
     .mec-event-social-icon {
       text-align: center;
+    }
+  }
+
+  .mec-single-event-location {
+    border: none;
+    padding: 0;
+    box-shadow: none;
+
+    h3 {
+      @extend h3;
     }
   }
 }

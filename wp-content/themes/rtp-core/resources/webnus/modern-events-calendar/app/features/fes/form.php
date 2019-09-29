@@ -207,12 +207,12 @@ $this->factory->params('footer', $javascript);
         ?>
 
         <div class="mec-fes-form-cntt">
-            <div class="mec-form-row">
-                <label for="mec_fes_title"><?php _e('Name of Event', 'mec'); ?></label>
-                <input type="text" name="mec[title]" id="mec_fes_title" value="<?php echo (isset($post->post_title) ? $post->post_title : ''); ?>" required="required" />
+            <div class="mec-meta-box-fields">
+                <h4 id="mec_fes_title_label"><?php _e('Name of Event', 'mec'); ?></h4>
+                <input aria-labelledby="mec_fes_title_label" type="text" name="mec[title]" id="mec_fes_title" value="<?php echo (isset($post->post_title) ? $post->post_title : ''); ?>" required="required" />
             </div>
-            <div class="mec-form-row">
-              <label for="mec_fes_content"><?php _e('Event Description', 'mec'); ?></label>
+            <div class="mec-meta-box-fields">
+              <h4 id="mec_fes_content_label"><?php _e('Event Description', 'mec'); ?></h4>
                 <?php wp_editor((isset($post->post_content) ? $post->post_content : ''), 'mec_fes_content', array('textarea_name'=>'mec[content]', 'media_buttons'=>false, 'textarea_rows'=>6, 'teeny'=>true)); ?>
             </div>
             <div class="mec-meta-box-fields" id="mec-date-time">
@@ -429,6 +429,22 @@ $this->factory->params('footer', $javascript);
             <?php endif; ?>
 
             <!-- Event Label Section -->
+            <?php
+              $post_labels = get_the_terms($post_id, 'mec_label');
+
+              $labels = array();
+              if($post_labels) foreach($post_labels as $post_label) $labels[] = $post_label->term_id;
+
+              $label_terms = get_terms(array('taxonomy'=>'mec_label', 'hide_empty'=>false));
+
+              foreach($label_terms as $label_term):
+                if ($label_term->slug == 'community') : ?>
+                  <input type="hidden" name="mec[labels][<?php echo $label_term->term_id; ?>]" id="mec_fes_labels<?php echo $label_term->term_id; ?>" value="1" <?php echo (in_array($label_term->term_id, $labels) ? 'checked="checked"' : ''); ?> />
+                  <?php
+                endif;
+              endforeach;
+            ?>
+
             <?php if(!isset($this->settings['fes_section_labels']) or (isset($this->settings['fes_section_labels']) and $this->settings['fes_section_labels'])): ?>
             <?php
                 $post_labels = get_the_terms($post_id, 'mec_label');

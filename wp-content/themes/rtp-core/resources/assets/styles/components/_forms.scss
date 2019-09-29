@@ -7,6 +7,13 @@ form {
   }
 }
 
+.ui-datepicker-title {
+  select {
+    display: inline-block !important;
+    width: auto !important;
+  }
+}
+
 // Sign up Contact Form
 .ctct-form-wrapper.ctct-form-wrapper {
   .ctct-form-field {
@@ -193,8 +200,6 @@ textarea.materialize-textarea {
   .gform_button.button {
     @extend .btn;
 
-    background: $color-blue-unc !important;
-    border: $color-blue-unc !important;
     font-size: 1rem;
     font-weight: 400;
     border-radius: 0;
@@ -207,11 +212,6 @@ textarea.materialize-textarea {
 
     &:focus {
       outline: $color-blue-unc auto 5px;
-    }
-
-    &:active {
-      background: $color-blue-duke !important;
-      border: $color-blue-duke !important;
     }
   }
 
@@ -412,10 +412,6 @@ textarea.materialize-textarea {
     speak: none;
   }
 
-  .mec-fes-form-cntt {
-    margin-top: 2rem;
-  }
-
   label {
     color: $color-slate-dark;
     line-height: 1.2em !important;
@@ -488,8 +484,6 @@ textarea.materialize-textarea {
     @extend .btn;
 
     width: auto;
-    background: $color-blue-unc !important;
-    border: $color-blue-unc !important;
     font-size: 1rem;
     font-weight: 400;
     border-radius: 0;
@@ -502,11 +496,6 @@ textarea.materialize-textarea {
 
     &:focus {
       outline: $color-blue-unc auto 5px;
-    }
-
-    &:active {
-      background: $color-blue-duke !important;
-      border: $color-blue-duke !important;
     }
   }
 
