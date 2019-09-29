@@ -3,14 +3,16 @@
 @section('content')
   @include('partials.page-header')
 
-  <div class="container flex-grid l3x m2x">
-    @if (!have_posts())
-      <div class="alert alert-warning">
+  @if (!have_posts())
+    <div class="container entry-content">
+      <p class="alert alert-warning">
         {{ __('Sorry, no results were found.', 'sage') }}
-      </div>
+      </p>
       {!! get_search_form(false) !!}
-    @endif
+    </div>
+  @endif
 
+  <div class="container flex-grid l3x m2x">
     @while (have_posts()) @php the_post() @endphp
       <div class="flex-item">
         @include('partials.content-search')

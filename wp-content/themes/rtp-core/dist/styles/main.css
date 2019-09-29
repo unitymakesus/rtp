@@ -13701,39 +13701,56 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 
 /* line 6, resources/assets/styles/components/_search.scss */
 
-.search-results .main {
+.search-results .main,
+.search-no-results .main,
+.archive .main {
   margin-bottom: 2rem;
 }
 
 /* line 10, resources/assets/styles/components/_search.scss */
 
-.search-results .excerpt {
+.search-results .container.entry-content,
+.search-results .entry-content.container-wide,
+.search-no-results .container.entry-content,
+.search-no-results .entry-content.container-wide,
+.archive .container.entry-content,
+.archive .entry-content.container-wide {
+  padding: 3rem 20px;
+}
+
+/* line 14, resources/assets/styles/components/_search.scss */
+
+.search-results .excerpt,
+.search-no-results .excerpt,
+.archive .excerpt {
   border-radius: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
   padding-bottom: 0 !important;
 }
 
-/* line 17, resources/assets/styles/components/_search.scss */
+/* line 21, resources/assets/styles/components/_search.scss */
 
-.search-results .entry-summary p {
+.search-results .entry-summary p,
+.search-no-results .entry-summary p,
+.archive .entry-summary p {
   display: inline;
   margin: 0;
 }
 
-/* line 25, resources/assets/styles/components/_search.scss */
+/* line 29, resources/assets/styles/components/_search.scss */
 
 .entry-content .search-form {
   max-width: 500px;
 }
 
-/* line 32, resources/assets/styles/components/_search.scss */
+/* line 36, resources/assets/styles/components/_search.scss */
 
 .topbar .search-form {
   border-radius: 0;
 }
 
-/* line 35, resources/assets/styles/components/_search.scss */
+/* line 39, resources/assets/styles/components/_search.scss */
 
 .topbar .search-form::after {
   content: '';
@@ -13741,14 +13758,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 32, resources/assets/styles/components/_search.scss */
+  /* line 36, resources/assets/styles/components/_search.scss */
 
   .topbar .search-form {
     width: 100%;
   }
 }
 
-/* line 44, resources/assets/styles/components/_search.scss */
+/* line 48, resources/assets/styles/components/_search.scss */
 
 .topbar .search-form input.search-field {
   margin: auto;
@@ -13763,7 +13780,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   font-size: 0.72222rem;
 }
 
-/* line 55, resources/assets/styles/components/_search.scss */
+/* line 59, resources/assets/styles/components/_search.scss */
 
 .topbar .search-form input.search-field::-webkit-input-placeholder {
   color: #CBC8C7;
@@ -13781,14 +13798,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   color: #CBC8C7;
 }
 
-/* line 60, resources/assets/styles/components/_search.scss */
+/* line 64, resources/assets/styles/components/_search.scss */
 
 .topbar .search-form label {
   width: 100%;
   height: 100%;
 }
 
-/* line 65, resources/assets/styles/components/_search.scss */
+/* line 69, resources/assets/styles/components/_search.scss */
 
 .topbar .search-form .search-submit {
   display: none !important;

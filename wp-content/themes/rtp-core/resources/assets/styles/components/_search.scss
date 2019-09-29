@@ -2,9 +2,13 @@
   background: $color-grey-light;
 }
 
-.search-results {
+.search-results, .search-no-results, .archive {
   .main {
     margin-bottom: 2rem;
+  }
+
+  .container.entry-content {
+    padding: 3rem 20px;
   }
 
   .excerpt {

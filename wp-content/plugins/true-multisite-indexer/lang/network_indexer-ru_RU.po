@@ -1,0 +1,751 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ru translation for True Multisite Indexer\n"
+"POT-Creation-Date: 2018-04-14 21:13+0300\n"
+"PO-Revision-Date: 2018-04-14 21:13+0300\n"
+"Last-Translator: \n"
+"Language-Team: Misha Rudrastyh\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;esc_attr__;esc_attr_e;esc_html__;"
+"esc_html_e\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: classes/admin.php:104
+msgid "Network Index"
+msgstr "Индексация сети"
+
+#: classes/admin.php:104
+msgid "Index"
+msgstr "Индекс"
+
+#: classes/admin.php:110
+msgid "Globals"
+msgstr "Глобальные"
+
+#: classes/admin.php:111 classes/admin.php:150
+msgid "Rebuild Index"
+msgstr "Обновить индекс"
+
+#: classes/admin.php:112
+msgid "Debug log"
+msgstr "Журнал отладки"
+
+#: classes/admin.php:113
+msgid "License"
+msgstr "Лицензия"
+
+#: classes/admin.php:129
+msgid "Indexing is currently in process."
+msgstr "Индексация в процессе."
+
+#: classes/admin.php:134
+msgid "Rebuilding of the Post Index has been scheduled."
+msgstr "Обновление индекса запланировано."
+
+#: classes/admin.php:136
+msgid "Your settings have been updated."
+msgstr "Настройки были обновлены."
+
+#: classes/admin.php:148
+msgid ""
+"You can rebuild the Post Index by clicking on the <strong>Rebuild Index</"
+"strong> button below."
+msgstr ""
+"Вы можете перестроить весь индекс заново, кликнув по кнопке <strong>Обновить "
+"индекс</strong>."
+
+#: classes/admin.php:149
+msgid ""
+"Note: This may take a considerable amount of time and could impact the "
+"performance of your server."
+msgstr ""
+"Внимание: Это может занять какое-то количество времени в зависимости от "
+"размера вашей сети."
+
+#: classes/admin.php:157
+msgid "Showing the most recent <strong>200</strong> log entries."
+msgstr "Показываются последние <strong>200</strong> событий лога."
+
+#: classes/admin.php:173
+#, php-format
+msgid ""
+"The settings below allow you to set the defaults for all the sites in your "
+"network and processing that will take place across your entire index. You "
+"can override some of these settings on a site by site basis via the <a href="
+"%s>Sites admin page</a>."
+msgstr ""
+"На этой страницу вы можете установить настройки по умолчанию для всех сайтов "
+"сети. Но вы также можете презеписать какие-либо из этих настроек "
+"индивидуально для каждого сайта на <a href=%s>этой странице</a>."
+
+#: classes/admin.php:176
+msgid "Default Post Types"
+msgstr "Типы постов по умолчанию"
+
+#: classes/admin.php:177
+msgid ""
+"These are the default post types that will be indexed by the plugin. Place "
+"each post type on a seperate line."
+msgstr ""
+"Типы постов, индексируемые плагином по умолчанию. Расположите каждый из них "
+"на новой строчке."
+
+#: classes/admin.php:180
+msgid "Default Post Statuses"
+msgstr "Статусы постов по умолчанию"
+
+#: classes/admin.php:181
+msgid ""
+"These are the default post statuses that will be indexed by the plugin. "
+"Place each post status on a seperate line. <br />Please be careful if you "
+"want to change it."
+msgstr ""
+"Статусы постов, индексируемые плагином по умолчанию. Расположите каждый из "
+"них на новой строчке."
+
+#: classes/admin.php:184
+msgid "Remove indexed posts older than"
+msgstr "Удалять из индекса посты старше чем"
+
+#: classes/admin.php:192
+msgid "Hour(s)"
+msgstr "Часов"
+
+#: classes/admin.php:193
+msgid "Day(s)"
+msgstr "Дней"
+
+#: classes/admin.php:194
+msgid "Week(s)"
+msgstr "Недель"
+
+#: classes/admin.php:195
+msgid "Month(s)"
+msgstr "Месяцев"
+
+#: classes/admin.php:196
+msgid "Year(s)"
+msgstr "Лет"
+
+#: classes/admin.php:198
+msgid "Posts older than this time span will be removed from the global index."
+msgstr ""
+"Посты, опубликованные ранее указанного промежутка времени, будут "
+"автоматически удалены из индекса."
+
+#: classes/admin.php:202
+msgid "Global Search <sup>beta</sup>"
+msgstr "Глобальный поиск <sup>бета</sup>"
+
+#: classes/admin.php:205
+msgid "Off"
+msgstr "Отключено"
+
+#: classes/admin.php:206
+msgid "Add the Global Search widget"
+msgstr "Добавить виджет глобального поиска"
+
+#: classes/admin.php:207
+msgid "Replace the default WordPress search"
+msgstr "Попытаться заменить стандартный поиск WordPress"
+
+#: classes/admin.php:209
+msgid ""
+"If you don't like to mess with the code, this feature allows you to add the "
+"Global Search widget on your website<br />or to replace default WordPress "
+"search results with the global search results."
+msgstr "Если не любите возиться с кодом, можете попробовать эту опцию."
+
+#: classes/admin.php:213
+msgid "Indexed Posts Page"
+msgstr "Страница проиндексированных постов"
+
+#: classes/admin.php:214
+msgid "Hide from Network Dashboard"
+msgstr "Скрыть"
+
+#: classes/admin.php:217 classes/admin.php:230 classes/admin.php:621
+msgid "Save Changes"
+msgstr "Сохранить изменения"
+
+#: classes/admin.php:223
+msgid ""
+"License key is required to receive the latest plugin updates. Please note, "
+"that your license key is the billing email you purchased the plugin with (If "
+"you did it with PayPal, it is your PayPal email). If you don't set anything "
+"here, your main website email will be used."
+msgstr ""
+"Лицензионный ключ необходим для получения обновления плагинов. Обратите "
+"внимание, что лицензионным ключом является ваш email, который вы указывали "
+"при оплате (если вы платили с PayPal, то это ваш email PayPal). Если ничего "
+"не указывать, то скрипт будет использовать ваш основной email сайта в "
+"качестве ключа."
+
+#: classes/admin.php:226
+msgid "License key"
+msgstr "Лицензионный ключ"
+
+#: classes/admin.php:279
+msgid ""
+"Your site has <strong>DISABLE_WP_CRON</strong> defined as <strong>true</"
+"strong>. In most cases this means the plugin may not properly index your "
+"site(s) as it relies on the WordPress scheduler (WP_Cron). If you are "
+"running an alternate cron you can ignore this message."
+msgstr ""
+"Константа <strong>DISABLE_WP_CRON</strong> на вашем сайте установлена на "
+"значение <strong>true</strong>. В большинстве случаев это означает, что "
+"плагин не сможет нормально проиндексировать сайты, так как он делает это при "
+"помощи стандартного планировщика WordPress (WP_Cron). Если вы используете "
+"альтернативный планировщик, то просто проигнорируйте это сообщение."
+
+#: classes/admin.php:333 classes/admin.php:567
+msgid "Index Settings"
+msgstr "Настройки индекса"
+
+#: classes/admin.php:345
+msgid "Settings"
+msgstr "Настройки"
+
+#: classes/admin.php:354
+msgid "Network Index Statisticts"
+msgstr "Статистика индексации сети"
+
+#: classes/admin.php:355
+msgid "Recently Indexed Posts"
+msgstr "Недавно проиндексированные посты"
+
+#: classes/admin.php:356
+msgid "Recently Indexed Terms"
+msgstr "Недавно проиндексированные термины"
+
+#: classes/admin.php:366
+msgid "Indexed Post Types"
+msgstr "Типы постов"
+
+#: classes/admin.php:378
+msgid "Most Indexed Sites"
+msgstr "Самые индексируемые сайты"
+
+#: classes/admin.php:389
+msgid "Current Rebuild Queue Summary"
+msgstr "Статус текущего обновления индекса"
+
+#: classes/admin.php:391
+msgid "Sites in queue"
+msgstr "Сайтов в очереди"
+
+#: classes/admin.php:392
+msgid "Sites currently being processed"
+msgstr "В текущей момент обрабатывается"
+
+#: classes/admin.php:393
+msgid "Sites awaiting processing"
+msgstr "Ожидают обработки"
+
+#: classes/admin.php:394
+msgid "Sites will complete processing on next pass"
+msgstr "Будут обработаны следующим запросом"
+
+#: classes/admin.php:400
+#, php-format
+msgid "No data available. Try to rebuild index on <a href='%s'>this page</a>."
+msgstr ""
+"Данные недоступны. Попробуйте обновить индекс на <a href='%s'>этой странице</"
+"a>."
+
+#: classes/admin.php:411 classes/admin.php:412
+msgid "Post Title"
+msgstr "Заголовок"
+
+#: classes/admin.php:411 classes/admin.php:412
+msgid "Post Type"
+msgstr "Тип"
+
+#: classes/admin.php:411 classes/admin.php:412 classes/admin.php:437
+#: classes/admin.php:438
+msgid "Site"
+msgstr "Сайт"
+
+#: classes/admin.php:427
+msgid "No posts have been indexed yet."
+msgstr "Пока еще ничего не проиндексировано."
+
+#: classes/admin.php:437 classes/admin.php:438
+msgid "Term Name"
+msgstr "Название термина"
+
+#: classes/admin.php:437 classes/admin.php:438
+msgid "Taxonomy"
+msgstr "Таксономия"
+
+#: classes/admin.php:453
+msgid ""
+"No terms have been indexed yet. Please note, that empty terms won't be "
+"indexed."
+msgstr ""
+"Пока еще нет проиндексированных терминов. Обратите внимание, что пустые не "
+"индексируются."
+
+#: classes/admin.php:483
+msgid "Indexing disabled for the requested site."
+msgstr "Индексация запрещена для данного сайта."
+
+#: classes/admin.php:486
+msgid "Indexing enabled for the requested site."
+msgstr "Индексация разрешена для данного сайта."
+
+#: classes/admin.php:489
+msgid "Index scheduled for rebuilding for the requested site."
+msgstr "Обновление индекса запланировано для данного сайта."
+
+#: classes/admin.php:492
+msgid "Your settings have been updated for the requested site."
+msgstr "Настройки сайта обновлены."
+
+#: classes/admin.php:499
+msgid "Indexing"
+msgstr "Индекс"
+
+#: classes/admin.php:523
+msgid "Disable"
+msgstr "Запретить"
+
+#: classes/admin.php:526 classes/admin.php:541
+msgid "Configure"
+msgstr "Настроить"
+
+#: classes/admin.php:529
+msgid "Rebuild"
+msgstr "Обновить индекс"
+
+#: classes/admin.php:534
+msgid "Not Indexing"
+msgstr "Не индексируется"
+
+#: classes/admin.php:538
+msgid "Enable"
+msgstr "Разрешить"
+
+#: classes/admin.php:580
+msgid "Index Status"
+msgstr "Статус индексации"
+
+#: classes/admin.php:581
+msgid ""
+"You can enable or disable post indexing for this site using the setting "
+"below."
+msgstr ""
+"Вы можете разрешить или запретить индексацию данного сайта используя "
+"настройки ниже."
+
+#: classes/admin.php:584
+msgid "Indexing is"
+msgstr "Индексация:"
+
+#: classes/admin.php:587 classes/admin.php:616
+msgid "Enabled"
+msgstr "Включена"
+
+#: classes/admin.php:588 classes/admin.php:617
+msgid "Disabled"
+msgstr "Отключена"
+
+#: classes/admin.php:592
+msgid "Post Types to Index"
+msgstr "Индексируемые типы постов"
+
+#: classes/admin.php:593
+msgid "Select the post types that you want to be indexed for this site."
+msgstr ""
+"Выберите типы постов, которые вы бы хотели индексировать на данном сайте."
+
+#: classes/admin.php:596
+msgid "Currently Indexing"
+msgstr "В данный момент индексируются"
+
+#: classes/admin.php:610
+msgid "Auto Global Search"
+msgstr "Автоматический глобальный поиск"
+
+#: classes/admin.php:611
+msgid ""
+"The default search results for this site will be automatically replaced with "
+"the global search results."
+msgstr ""
+"Результаты поиска сайта будут автоматические заменены результатами поиска по "
+"всей сети."
+
+#: classes/admin.php:613
+msgid "Auto Global Search is"
+msgstr "Глобальный поиск:"
+
+#: classes/admin.php:635
+msgid "You do not have permission to access this page."
+msgstr "У вас нет доступа к этой странице"
+
+#: classes/query.php:137 classes/query.php:158 classes/query.php:178
+#: classes/query.php:202 classes/query.php:226 classes/query.php:250
+#: classes/query.php:279 classes/query.php:299 classes/query.php:319
+#: classes/query.php:339 classes/query.php:360 classes/query.php:380
+#: classes/query.php:410 classes/query.php:439 classes/query.php:459
+#: classes/query.php:486 classes/query.php:506 classes/query.php:526
+#: classes/query.php:546 classes/query.php:566 classes/query.php:595
+#: classes/query.php:622 classes/query.php:642 classes/query.php:662
+#: classes/query.php:682 classes/query.php:702
+msgid ""
+"Conditional query tags do not work before the query is run. Before then, "
+"they always return false."
+msgstr ""
+"Условные теги не работают, пока не запущен цикл. До тех пор они всегда "
+"возвращают false."
+
+#: classes/query.php:1975
+msgid ""
+"\"caller_get_posts\" is deprecated. Use \"ignore_sticky_posts\" instead."
+msgstr ""
+
+#: classes/rebuild.php:45 classes/rebuild.php:51 classes/rebuild.php:60
+#: classes/rebuild.php:66 classes/rebuild.php:71 classes/rebuild.php:80
+#: classes/rebuild.php:90
+msgid "First Pass"
+msgstr "Первый заход"
+
+#: classes/rebuild.php:45 classes/rebuild.php:101
+msgid "Initializing..."
+msgstr "Инициализация..."
+
+#: classes/rebuild.php:51
+#, php-format
+msgid "Processing %s queued items."
+msgstr "В обработке: %s "
+
+#: classes/rebuild.php:60 classes/rebuild.php:116
+#, php-format
+msgid "Blog: %d, is indexable."
+msgstr "Блог: %d индексируемый."
+
+#: classes/rebuild.php:66
+#, php-format
+msgid "Blog: %d, Highest Post ID is %d"
+msgstr "Блог: %d, ID последнего поста %d"
+
+#: classes/rebuild.php:71
+#, php-format
+msgid "Blog: %d, No Posts found removing from queue."
+msgstr "Блог: %d, постов не найдено, удаляю из очереди."
+
+#: classes/rebuild.php:80
+#, php-format
+msgid "Blog: %d, is NOT indexable - removing from queue."
+msgstr "Блог: %d, индексация отключена - удаляю из очереди."
+
+#: classes/rebuild.php:90 classes/rebuild.php:225
+msgid "Finished processing"
+msgstr "Завершено."
+
+#: classes/rebuild.php:101 classes/rebuild.php:107 classes/rebuild.php:116
+#: classes/rebuild.php:124 classes/rebuild.php:130 classes/rebuild.php:140
+#: classes/rebuild.php:144 classes/rebuild.php:172 classes/rebuild.php:178
+#: classes/rebuild.php:183 classes/rebuild.php:185 classes/rebuild.php:196
+#: classes/rebuild.php:204 classes/rebuild.php:214 classes/rebuild.php:225
+msgid "Second Pass"
+msgstr "Второй заход"
+
+#: classes/rebuild.php:107
+#, php-format
+msgid "Processing %d queued blogs."
+msgstr "Обрабатываю %d сайтов."
+
+#: classes/rebuild.php:124
+#, php-format
+msgid "Blog: %d, Processing %d posts"
+msgstr "Блог: %d, обрабатываю %d постов"
+
+#: classes/rebuild.php:130
+#, php-format
+msgid "Blog: %d, Post ID: %d, Begin processing"
+msgstr "Блог: %d, ID поста: %d, в обработке"
+
+#: classes/rebuild.php:140
+#, php-format
+msgid "Blog: %d, Post ID: %d, Indexing post: %s"
+msgstr "Блог: %d, ID поста: %d, индексируется: %s"
+
+#: classes/rebuild.php:144
+#, php-format
+msgid "Blog: %d, Post ID: %d, post metadata"
+msgstr "Блог: %d, ID поста: %d, обработка метаданных"
+
+#: classes/rebuild.php:172
+#, php-format
+msgid "Blog: %d, Post ID: %d,  processing taxonomies: %s"
+msgstr "Блог: %d, ID поста: %d, обработка таксономий: %s"
+
+#: classes/rebuild.php:178
+#, php-format
+msgid "BLog: %d, Post ID: %d, processing taxonomy: %s"
+msgstr "Блог: %d, ID поста: %d, обрабатываю таксономию: %s"
+
+#: classes/rebuild.php:183
+#, php-format
+msgid "Blog: %d, Post ID: %d, no associated taxonomies"
+msgstr "Блог: %d, ID поста: %d, нет связанных таксономий"
+
+#: classes/rebuild.php:185
+#, php-format
+msgid "Blog: %d, Post ID: %d, End processing"
+msgstr "Блог: %d, ID поста: %d, завершение обработки"
+
+#: classes/rebuild.php:196 classes/rebuild.php:204
+#, php-format
+msgid "Blog: %d, No Posts left removing from queue."
+msgstr "Блог: %d, постов не найдено, удаляю из очереди."
+
+#: classes/rebuild.php:214
+#, php-format
+msgid "Blog: %d, is NOT indexable removing from queue."
+msgstr "Блог: %d не индексируемый, удаляю из очереди."
+
+#: classes/rebuild.php:240 classes/rebuild.php:243
+msgid "Tags Tidy"
+msgstr "Очистка тегов"
+
+#: classes/rebuild.php:240
+msgid "Removing orphaned taxonomy entries"
+msgstr "Удаляю непривязынные элементы таксономий"
+
+#: classes/rebuild.php:243
+msgid "Recalculating taxonomy counts"
+msgstr "Пересчитываю счетчики таксономий"
+
+#: classes/rebuild.php:257
+msgid "Postmeta Tidy"
+msgstr "Очистка пост мета"
+
+#: classes/rebuild.php:257
+msgid "Removing orphaned post meta entries"
+msgstr "Удаляю пост меты, не привязанные к постам"
+
+#: classes/rebuild.php:276
+msgid "Aged Posts Tidy"
+msgstr "Удаление устаревших постов"
+
+#: classes/rebuild.php:276
+#, php-format
+msgid "Removing posts older than: %d %s"
+msgstr "Удаляю посты старше чем: %d %s"
+
+#: classes/rebuild.php:292
+msgid "Every 10 Mins"
+msgstr "Каждые 10 мин"
+
+#: classes/rebuild.php:293
+msgid "Every 5 Mins"
+msgstr "Каждые 5 мин"
+
+#: classes/upgrade.php:158
+#, php-format
+msgid ""
+" Please&nbsp;<a href=\"%1$s\">renew&nbsp;your&nbsp;license</a>&nbsp;to&nbsp;"
+"update. And make sure that you set your license key in plugin settings."
+msgstr ""
+" Чтобы обновиться, пожалуйста&nbsp;<a href=\"%1$s\">продлите&nbsp;вашу&nbsp;"
+"лицензию</a>. Убедитесь, что вы указали ваш лицензионный ключ в настройках."
+
+#: classes/upgrade.php:190
+msgid "FAQ"
+msgstr "ЧАВО"
+
+#: classes/upgrade.php:191
+msgid "Support"
+msgstr "Поддержка"
+
+#: classes/upgrade.php:195
+msgid "Check for updates"
+msgstr "Проверить обновления"
+
+#: ext/posts.php:9
+msgid "Multisite Posts"
+msgstr "Посты сети"
+
+#: ext/posts.php:10
+msgid "Posts"
+msgstr "Записи"
+
+#: ext/posts.php:43
+msgid "Search results for"
+msgstr "Результаты поиска для"
+
+#: ext/posts.php:61
+msgid "Search Posts:"
+msgstr "Искать посты:"
+
+#: ext/posts.php:137 ext/posts.php:185
+msgid "Title"
+msgstr "Заголовок"
+
+#: ext/posts.php:138 ext/posts.php:186
+msgid "Post ID"
+msgstr "ID поста"
+
+#: ext/posts.php:139 ext/posts.php:187
+msgid "Post type"
+msgstr "Тип"
+
+#: ext/posts.php:140 ext/posts.php:188
+msgid "Blog"
+msgstr "Сайт"
+
+#: ext/posts.php:141 ext/posts.php:189
+msgid "Date"
+msgstr "Дата"
+
+#: ext/posts.php:178
+msgid "No posts found."
+msgstr "Записей не найдено."
+
+#: ext/posts.php:231
+msgid "Unpublished"
+msgstr "Неопубликованный"
+
+#: ext/posts.php:234
+msgid "Y/m/d g:i:s a"
+msgstr "Y/m/d g:i:s a"
+
+#: ext/posts.php:241
+#, php-format
+msgid "%s ago"
+msgstr "%s назад"
+
+#: ext/posts.php:243
+msgid "Y/m/d"
+msgstr "Y/m/d"
+
+#: ext/posts.php:248
+msgid "Published"
+msgstr "Опубликован"
+
+#: ext/posts.php:251
+msgid "Missed schedule"
+msgstr "Расписание пропущено"
+
+#: ext/posts.php:253
+msgid "Scheduled"
+msgstr "Запланирован"
+
+#: ext/posts.php:256
+msgid "Last Modified"
+msgstr ""
+
+#: ext/posts.php:302
+msgid "First page"
+msgstr ""
+
+#: ext/posts.php:308
+msgid "Previous page"
+msgstr ""
+
+#: ext/posts.php:314
+msgid "Current Page"
+msgstr ""
+
+#: ext/posts.php:327
+msgid "Next page"
+msgstr ""
+
+#: ext/posts.php:333
+msgid "Last page"
+msgstr ""
+
+#: ext/vc_element.php:33
+msgid "Content"
+msgstr ""
+
+#: ext/vc_element.php:40
+msgid "Widget title"
+msgstr ""
+
+#: ext/vc_element.php:42
+msgid ""
+"What text use as a widget title. Leave blank to use default widget title."
+msgstr ""
+
+#: ext/vc_element.php:47
+msgid "Number of posts"
+msgstr ""
+
+#: ext/vc_element.php:48
+msgid "Enter number of posts to display."
+msgstr ""
+
+#: ext/vc_element.php:56 ext/widgets/recent-posts.php:86
+msgid "Display post date?"
+msgstr "Показать дату публикации?"
+
+#: ext/vc_element.php:58 ext/vc_element.php:75
+msgid "Yes"
+msgstr "Да"
+
+#: ext/vc_element.php:59
+msgid "If checked, date will be displayed."
+msgstr "Если отмечено, дата будет отображена."
+
+#: ext/vc_element.php:64
+msgid "Extra class name"
+msgstr "Дополнительный класс"
+
+#: ext/vc_element.php:66
+msgid ""
+"Style particular content element differently - add a class name and refer to "
+"it in custom CSS."
+msgstr ""
+
+#: ext/vc_element.php:73
+msgid "Display featured image?"
+msgstr "Отобразить изображение записи?"
+
+#: ext/widgets/recent-posts.php:12
+msgid "Multisite Recent Posts"
+msgstr "Недавние посты сети"
+
+#: ext/widgets/recent-posts.php:13
+msgid "Recent posts from specific blogs from your multisite network."
+msgstr "Недавние посты с определенных сайтов вашей сети."
+
+#: ext/widgets/recent-posts.php:76 ext/widgets/search.php:64
+msgid "Title:"
+msgstr "Заголовок:"
+
+#: ext/widgets/recent-posts.php:80
+msgid "Number of posts to show:"
+msgstr "Количество постов для отображения:"
+
+#: ext/widgets/search.php:14
+msgid ""
+"Works like the default WordPress search but shows results from all sites in "
+"your Multisite Network."
+msgstr ""
+"Работает как стандартный виджет поиска но показывает результаты со всех "
+"сайтов сети."
+
+#: ext/widgets/search.php:17
+msgid "Global Search"
+msgstr "Глобальный поиск"
+
+#: inc/functions.php:22
+msgid "(more...)"
+msgstr "(далее...)"
+
+#: true-multisite-indexer.php:316 true-multisite-indexer.php:379
+msgid "Please, configure the widget ☝"
+msgstr ""
+
+#~ msgid "Edit"
+#~ msgstr "Редактировать"

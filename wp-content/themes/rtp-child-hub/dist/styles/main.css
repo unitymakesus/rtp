@@ -13697,39 +13697,56 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 
 /* line 6, ../rtp-core/resources/assets/styles/components/_search.scss */
 
-.search-results .main {
+.search-results .main,
+.search-no-results .main,
+.archive .main {
   margin-bottom: 2rem;
 }
 
 /* line 10, ../rtp-core/resources/assets/styles/components/_search.scss */
 
-.search-results .excerpt {
+.search-results .container.entry-content,
+.search-results .entry-content.container-wide,
+.search-no-results .container.entry-content,
+.search-no-results .entry-content.container-wide,
+.archive .container.entry-content,
+.archive .entry-content.container-wide {
+  padding: 3rem 20px;
+}
+
+/* line 14, ../rtp-core/resources/assets/styles/components/_search.scss */
+
+.search-results .excerpt,
+.search-no-results .excerpt,
+.archive .excerpt {
   border-radius: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
   padding-bottom: 0 !important;
 }
 
-/* line 17, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 21, ../rtp-core/resources/assets/styles/components/_search.scss */
 
-.search-results .entry-summary p {
+.search-results .entry-summary p,
+.search-no-results .entry-summary p,
+.archive .entry-summary p {
   display: inline;
   margin: 0;
 }
 
-/* line 25, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 29, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .entry-content .search-form {
   max-width: 500px;
 }
 
-/* line 32, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 36, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form {
   border-radius: 0;
 }
 
-/* line 35, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 39, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form::after {
   content: '';
@@ -13737,14 +13754,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 32, ../rtp-core/resources/assets/styles/components/_search.scss */
+  /* line 36, ../rtp-core/resources/assets/styles/components/_search.scss */
 
   .topbar .search-form {
     width: 100%;
   }
 }
 
-/* line 44, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 48, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form input.search-field {
   margin: auto;
@@ -13759,7 +13776,7 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   font-size: 0.72222rem;
 }
 
-/* line 55, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 59, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form input.search-field::-webkit-input-placeholder {
   color: #CBC8C7;
@@ -13773,14 +13790,14 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   color: #CBC8C7;
 }
 
-/* line 60, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 64, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form label {
   width: 100%;
   height: 100%;
 }
 
-/* line 65, ../rtp-core/resources/assets/styles/components/_search.scss */
+/* line 69, ../rtp-core/resources/assets/styles/components/_search.scss */
 
 .topbar .search-form .search-submit {
   display: none !important;
