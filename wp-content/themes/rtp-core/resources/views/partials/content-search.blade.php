@@ -12,7 +12,7 @@ $classes = [
   <div class="card" itemprop="description">
     <div class="card-inner">
       <div class="card-badge"><span>{{ Content::siteBadge() }}</span></div>
-      <h3 class="card-title" itemprop="name"><a href="{{ get_permalink() }}">{{ get_the_title() }}</a></h3>
+      <h3 class="card-title" itemprop="name"><a href="{{ get_permalink() }}">{!! get_the_title() !!}</a></h3>
       <div class="entry-summary">
         @php the_excerpt() @endphp
       </div>
