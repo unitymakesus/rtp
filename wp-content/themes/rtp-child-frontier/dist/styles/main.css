@@ -12744,14 +12744,51 @@ textarea.materialize-textarea {
           transform-origin: 100% 100%;
 }
 
-/* line 381, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 382, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_fes_form.mec-fes-loading > * {
+  opacity: 0.4;
+}
+
+/* line 386, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_fes_form.mec-fes-loading::before {
+  display: none;
+}
+
+/* line 390, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_fes_form.mec-fes-loading::after {
+  content: url("/wp-content/plugins/modern-events-calendar/assets/img/ajax-loader.gif");
+  background: 0 0;
+  border-style: none;
+  display: block;
+  margin-left: 47%;
+}
+
+/* line 399, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form #mec_fes_form_message {
+  font-size: 1rem;
+  border-radius: 0;
+  padding: 1rem;
+}
+
+/* line 405, ../rtp-core/resources/assets/styles/components/_forms.scss */
+
+.mec-fes-form .mec-success {
+  color: #2FA787;
+  background-color: #e2ebf6;
+}
+
+/* line 410, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec-exceptional-days {
   display: none;
   speak: none;
 }
 
-/* line 387, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 416, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec-location .mec-tooltip,
 .mec-fes-form #mec-organizer .mec-tooltip {
@@ -12759,36 +12796,21 @@ textarea.materialize-textarea {
   speak: none;
 }
 
-/* line 393, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 423, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
-.mec-fes-form #mec_location_id option[value="0"] {
-  display: none;
-  speak: none;
+.mec-fes-form #mec-location .select-wrapper {
+  width: 400px;
+  max-width: 100%;
 }
 
-/* line 398, ../rtp-core/resources/assets/styles/components/_forms.scss */
-
-.mec-fes-form #mec_location_new_container + .mec-form-row {
-  display: none;
-  speak: none;
-}
-
-/* line 404, ../rtp-core/resources/assets/styles/components/_forms.scss */
-
-.mec-fes-form #mec_organizer_new_container + h4,
-.mec-fes-form #mec_organizer_new_container + h4 + .mec-form-row {
-  display: none;
-  speak: none;
-}
-
-/* line 410, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 429, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-dashicons {
   display: none;
   speak: none;
 }
 
-/* line 415, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 434, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form label {
   color: #1F2A3A;
@@ -12797,7 +12819,7 @@ textarea.materialize-textarea {
   font-weight: 400;
 }
 
-/* line 422, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 441, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form input[type="text"],
 .mec-fes-form input[type="textarea"],
@@ -12814,13 +12836,13 @@ textarea.materialize-textarea {
   height: 3rem !important;
 }
 
-/* line 432, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 451, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form input[type="file"] {
   line-height: 3rem;
 }
 
-/* line 437, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 456, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .file-field .btn,
 .mec-fes-form .file-field .btn-large,
@@ -12836,7 +12858,7 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 442, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 461, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .file-field .file-path-wrapper input[type="text"] {
   margin-top: 0;
@@ -12845,7 +12867,7 @@ textarea.materialize-textarea {
   direction: rtl;
 }
 
-/* line 457, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 476, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_fes_remove_image_button {
   font-size: 0.9em;
@@ -12854,19 +12876,19 @@ textarea.materialize-textarea {
   display: block;
 }
 
-/* line 463, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 482, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form #mec_fes_remove_image_button.mec-util-hidden {
   display: none;
 }
 
-/* line 468, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 487, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form select {
   display: none;
 }
 
-/* line 472, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 491, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form textarea {
   font-size: inherit !important;
@@ -12880,7 +12902,7 @@ textarea.materialize-textarea {
   margin-bottom: 15px;
 }
 
-/* line 483, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 502, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button {
   width: auto;
@@ -12889,20 +12911,20 @@ textarea.materialize-textarea {
   border-radius: 0;
 }
 
-/* line 491, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 510, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:hover,
 .mec-fes-form button.mec-fes-sub-button:focus {
   text-decoration: underline;
 }
 
-/* line 497, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 516, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form button.mec-fes-sub-button:focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 502, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 521, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-meta-box-fields {
   clear: both;
@@ -12913,7 +12935,7 @@ textarea.materialize-textarea {
   margin-top: 2rem;
 }
 
-/* line 509, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 528, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-meta-box-fields h4 {
   background: none;
@@ -12926,19 +12948,19 @@ textarea.materialize-textarea {
   letter-spacing: normal;
 }
 
-/* line 521, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 540, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-title {
   clear: both;
 }
 
-/* line 525, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 544, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper {
   display: inline-block;
 }
 
-/* line 528, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 547, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper input.select-dropdown {
   width: 100%;
@@ -12949,59 +12971,59 @@ textarea.materialize-textarea {
   text-transform: none;
 }
 
-/* line 536, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 555, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper input.select-dropdown:hover,
 .mec-fes-form .select-wrapper input.select-dropdown:focus {
   background: rgba(0, 0, 0, 0.08);
 }
 
-/* line 541, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 560, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li {
   text-transform: none;
   padding-left: 0;
 }
 
-/* line 545, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 564, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li::before {
   display: none;
 }
 
-/* line 549, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 568, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li span {
   padding: 16px;
   min-height: 50px;
 }
 
-/* line 554, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 573, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li.selected {
   background: #BCCFE9;
 }
 
-/* line 557, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 576, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper ul.dropdown-content li.selected span {
   color: #1F2A3A;
 }
 
-/* line 563, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 582, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .select-wrapper .caret {
   z-index: 1;
   pointer-events: none;
 }
 
-/* line 570, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 589, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-time-picker .select-wrapper {
   width: 5rem;
 }
 
-/* line 576, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 595, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-form-row::after {
   content: "";
@@ -13009,7 +13031,7 @@ textarea.materialize-textarea {
   clear: both;
 }
 
-/* line 584, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 603, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .mec-fes-form .mec-fes-form-sdbr input:not([type]):not(.browser-default),
 .mec-fes-form .mec-fes-form-sdbr input[type=text]:not(.browser-default),
@@ -13027,14 +13049,14 @@ textarea.materialize-textarea {
 }
 
 @media only screen and (min-width: 769px) {
-  /* line 590, ../rtp-core/resources/assets/styles/components/_forms.scss */
+  /* line 609, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
   .mec-fes-form .mec-col-4 {
     float: left;
     width: calc(100% / 3);
   }
 
-  /* line 595, ../rtp-core/resources/assets/styles/components/_forms.scss */
+  /* line 614, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
   .mec-fes-form .mec-col-6 {
     float: left;
@@ -13042,14 +13064,14 @@ textarea.materialize-textarea {
   }
 }
 
-/* line 602, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 621, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup {
   background: transparent;
   padding: 0;
 }
 
-/* line 606, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 625, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup #mc_embed_signup_scroll {
   display: -webkit-box;
@@ -13060,43 +13082,43 @@ textarea.materialize-textarea {
           align-items: center;
 }
 
-/* line 611, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 630, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup p {
   margin: 0;
 }
 
-/* line 615, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 634, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup input.email {
   border-radius: 0;
 }
 
-/* line 618, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 637, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .page-footer #mc_embed_signup#mc_embed_signup input.email {
   width: auto;
 }
 
-/* line 623, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 642, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 #mc_embed_signup#mc_embed_signup .button {
   border-radius: 0;
 }
 
-/* line 626, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 645, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .page-footer #mc_embed_signup#mc_embed_signup .button {
   background: #0094C9;
 }
 
-/* line 632, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 651, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .post-password-form {
   padding: 50px 20px;
 }
 
-/* line 635, ../rtp-core/resources/assets/styles/components/_forms.scss */
+/* line 654, ../rtp-core/resources/assets/styles/components/_forms.scss */
 
 .post-password-form > * {
   max-width: 1260px;

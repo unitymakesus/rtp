@@ -378,6 +378,35 @@ textarea.materialize-textarea {
 
 // Modern Events Calendar Form Styles
 .mec-fes-form {
+  #mec_fes_form.mec-fes-loading {
+    & > * {
+      opacity: 0.4;
+    }
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      content: url('/wp-content/plugins/modern-events-calendar/assets/img/ajax-loader.gif');
+      background: 0 0;
+      border-style: none;
+      display: block;
+      margin-left: 47%;
+    }
+  }
+
+  #mec_fes_form_message {
+    font-size: 1rem;
+    border-radius: 0;
+    padding: 1rem;
+  }
+
+  .mec-success {
+    color: $success-color;
+    background-color: lighten($color-blue-unc-light, 10%);
+  }
+
   #mec-exceptional-days {
     display: none;
     speak: none;
@@ -390,20 +419,10 @@ textarea.materialize-textarea {
     }
   }
 
-  #mec_location_id option[value="0"] {
-    display: none;
-    speak: none;
-  }
-
-  #mec_location_new_container + .mec-form-row {
-    display: none;
-    speak: none;
-  }
-
-  #mec_organizer_new_container + h4 {
-    &, & + .mec-form-row {
-      display: none;
-      speak: none;
+  #mec-location {
+    .select-wrapper {
+      width: 400px;
+      max-width: 100%;
     }
   }
 

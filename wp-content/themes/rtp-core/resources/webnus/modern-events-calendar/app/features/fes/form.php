@@ -16,10 +16,6 @@ jQuery(document).ready(function()
 
         // Add loading Class to the form
         jQuery("#mec_fes_form").addClass("mec-fes-loading");
-        jQuery(".mec-fes-form-cntt").hide();
-        jQuery(".mec-fes-form-sdbr").hide();
-        jQuery(".mec-fes-submit-wide").hide();
-
 
         // Fix WordPress editor issue
         jQuery("#mec_fes_content-html").click();
@@ -39,9 +35,6 @@ jQuery(document).ready(function()
             {
                 // Remove the loading Class from the form
                 jQuery("#mec_fes_form").removeClass("mec-fes-loading");
-                jQuery(".mec-fes-form-cntt").show();
-                jQuery(".mec-fes-form-sdbr").show();
-                jQuery(".mec-fes-submit-wide").show();
 
                 if(response.success == "1")
                 {
@@ -50,17 +43,27 @@ jQuery(document).ready(function()
 
                     // Set the event id
                     jQuery(".mec-fes-post-id").val(response.data.post_id);
+
+                    // Hide the form so it cannot be resubmitted
+                    jQuery(".mec-fes-form-cntt").hide();
+                    jQuery(".mec-fes-form-sdbr").hide();
+                    jQuery(".mec-fes-submit-wide").hide();
+
                 }
                 else
                 {
                     // Show the message
                     jQuery("#mec_fes_form_message").removeClass("mec-error").addClass("mec-error").html(response.message).css("display","inline-block");
+                    
+                    // Remove the loading Class from the form
+                    jQuery("#mec_fes_form").removeClass("mec-fes-loading");
+
                 }
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
                 // Remove the loading Class from the form
-                jQuery("#mec_fes_form").removeClass("loading");
+                jQuery("#mec_fes_form").removeClass("mec-fes-loading");
             }
         });
     });
@@ -208,7 +211,7 @@ $this->factory->params('footer', $javascript);
 
         <div class="mec-fes-form-cntt">
             <div class="mec-meta-box-fields">
-                <h4 id="mec_fes_title_label"><?php _e('Name of Event', 'mec'); ?></h4>
+                <h4 id="mec_fes_title_label"><?php _e('Name of Event', 'mec'); ?> <abbr title="required">*</abbr></h4>
                 <input aria-labelledby="mec_fes_title_label" type="text" name="mec[title]" id="mec_fes_title" value="<?php echo (isset($post->post_title) ? $post->post_title : ''); ?>" required="required" />
             </div>
             <div class="mec-meta-box-fields">
@@ -335,11 +338,11 @@ $this->factory->params('footer', $javascript);
             <div class="mec-meta-box-fields" id="mec-guest-email-link">
                 <h4><?php _e('Contact Information', 'mec'); ?></h4>
                 <div class="mec-form-row">
-                    <label class="mec-col-2" for="mec_guest_name"><?php _e('Contact Name', 'mec'); ?></label>
+                    <label class="mec-col-2" for="mec_guest_name"><?php _e('Contact Name', 'mec'); ?> <abbr title="required">*</abbr></label>
                     <input class="mec-col-7" type="text" required="required" name="mec[fes_guest_name]" id="mec_guest_name" value="<?php echo esc_attr($guest_name); ?>" placeholder="<?php _e('eg. John Smith', 'mec'); ?>" />
                 </div>
                 <div class="mec-form-row">
-                    <label class="mec-col-2" for="mec_guest_email"><?php _e('Contact Email', 'mec'); ?></label>
+                    <label class="mec-col-2" for="mec_guest_email"><?php _e('Contact Email', 'mec'); ?> <abbr title="required">*</abbr></label>
                     <input class="mec-col-7" type="email" required="required" name="mec[fes_guest_email]" id="mec_guest_email" value="<?php echo esc_attr($guest_email); ?>" placeholder="<?php _e('eg. yourname@gmail.com', 'mec'); ?>" />
                 </div>
             </div>
