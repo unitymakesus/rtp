@@ -16,6 +16,7 @@ jQuery(document).ready(function()
 
         // Add loading Class to the form
         jQuery("#mec_fes_form").addClass("mec-fes-loading");
+        jQuery(".mec-fes-submit-wide").hide();
 
         // Fix WordPress editor issue
         jQuery("#mec_fes_content-html").click();
@@ -54,9 +55,10 @@ jQuery(document).ready(function()
                 {
                     // Show the message
                     jQuery("#mec_fes_form_message").removeClass("mec-error").addClass("mec-error").html(response.message).css("display","inline-block");
-                    
+
                     // Remove the loading Class from the form
                     jQuery("#mec_fes_form").removeClass("mec-fes-loading");
+                    jQuery(".mec-fes-submit-wide").show();
 
                 }
             },
@@ -64,6 +66,7 @@ jQuery(document).ready(function()
             {
                 // Remove the loading Class from the form
                 jQuery("#mec_fes_form").removeClass("mec-fes-loading");
+                jQuery(".mec-fes-submit-wide").show();
             }
         });
     });
