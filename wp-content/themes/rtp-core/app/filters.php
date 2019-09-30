@@ -290,8 +290,8 @@ add_filter('template_redirect', function() {
  */
 add_filter( 'gform_notification', function($notification, $form, $entry) {
 
-  $notification['fromName'] => 'RTP Website';
-  $notification['from'] => 'scan@rtp.org';
+  $notification['fromName'] = 'RTP Website';
+  $notification['from'] = 'scan@rtp.org';
 
   return $notification;
 
