@@ -7,7 +7,7 @@
   @include('partials.head')
   <body {!! body_class(get_bloginfo('name')) !!}>
     @if (!is_user_logged_in())
-      @include('partials.gtm-body');
+      @include('partials.gtm-body')
     @endif
     <a href="#content" class="screen-reader-text">Skip to content</a>
     <!--[if IE]>

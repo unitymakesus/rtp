@@ -1,6 +1,6 @@
 <head>
   @if (!is_user_logged_in())
-    @include('partials.gtm-head');
+    @include('partials.gtm-head')
   @endif
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
