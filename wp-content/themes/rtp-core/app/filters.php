@@ -285,7 +285,6 @@ add_filter('template_redirect', function() {
 
   // Don't do this on blog, category, search, or calendar pages
   if (!is_home() && !is_archive() && !is_search() && !is_page('calendar')) {
-    var_dump($post);
     $orig_post_url = get_post_meta($post->ID, 'dt_original_post_url', true);
     $orig_deleted = get_post_meta($post->ID, 'dt_original_post_deleted', true);
 
