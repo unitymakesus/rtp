@@ -107,7 +107,7 @@ function syncToCalendar($data, $notBefore, $notAfter) {
       $description = $settings_rodeo['mecft_default_rodeo_desc'] . "\n\nRodeo trucks include:\n<ul>";
       $img = $settings_rodeo['mecft_default_rodeo_img'];
       $truck = json_encode($trucks);
-      $location_id = 752;  // Frontier 700, Parking Lot
+      $location_id = 752;  // Frontier 700 | Parking Lot
 
       foreach ($event['trucks'] as $truck) {
         $description .= '<li><a href="' . $truck['website'] . '" target="_blank" rel="noopener">';
@@ -383,6 +383,7 @@ function deleteExistingEvents() {
             AND {$prefix}mec_dates.tstart > %d
             ORDER BY {$prefix}mec_dates.tstart";
     $query = $wpdb->prepare($sql, $category->term_id, 'mec-events', 'publish', $notBefore);
+    // error_log($query);
     $results = $wpdb->get_results($query);
 
     // Permanently delete (bypass trash) all these events
@@ -423,12 +424,14 @@ function syndicateToMain($post_id, $args) {
   $connection = new \Distributor\InternalConnections\NetworkSiteConnection( get_site($site_id) );
   $args['post_status'] = 'publish';
 
+  // error_log($post_id);
+
   // Set args for RTP site taxonomies
   $args['organizer_id'] = 1201;
   if ($args['location_id'] == 24) {
     $args['location_id'] = 1197;  // Frontier 800
   } elseif ($args['location_id'] == 23) {
-    $args['location_id'] = 1215;   // Frontier 700, Parking Lot
+    $args['location_id'] = 1215;   // Frontier 700 | Parking Lot
   }
 
   // Do not sync media
@@ -439,11 +442,10 @@ function syndicateToMain($post_id, $args) {
   // Push to main site
 	$remote_id = $connection->push( $post_id, $args );
 
+  // error_log(print_r($remote_id, true));
+
 	if ( ! is_wp_error( $remote_id ) ) {
 		$origin_site = get_current_blog_id();
-
-    // Save post as MEC event
-    add_action( 'dt_push_post', 'mecft_push_mec', 10, 4 );
 
     // Record the main site's post id for this local post
     switch_to_blog( $site_id );
@@ -458,16 +460,4 @@ function syndicateToMain($post_id, $args) {
 
     update_post_meta( $post_id, 'dt_connection_map', $connection_map );
 	}
-}
-
-/**
- * Save new distributed post as an MEC event
- * @param  int   $new_post_id   Post ID on main site
- * @param  int   $post_id       Post ID on Frontier
- * @param  array $args          Args passed to wp_insert_post
- * @param  NetworkSiteConnection   $connection    Distributor's connection
- */
-function mecft_push_mec($new_post_id, $post_id, $args, $connection) {
-  $main = MEC::getInstance('app.libraries.main');
-  $e = $main->save_event($args, $new_post_id);
 }

@@ -296,3 +296,18 @@ add_filter( 'gform_notification', function($notification, $form, $entry) {
   return $notification;
 
 }, 10, 3 );
+
+
+/**
+ * Save new distributed event posts as an MEC event
+ * @param  int   $new_post_id   Post ID on target site
+ * @param  int   $post_id       Post ID on original site
+ * @param  array $args          Args passed to wp_insert_post
+ * @param  NetworkSiteConnection   $connection    Distributor's connection
+ */
+add_action( 'dt_push_post', function($new_post_id, $post_id, $args, $connection) {
+  if (get_post_type($new_post_id) == 'mec-events') {
+    $main = \MEC::getInstance('app.libraries.main');
+    $e = $main->save_event($args, $new_post_id);
+  }
+}, 10, 4 );
