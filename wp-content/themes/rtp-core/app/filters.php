@@ -236,15 +236,21 @@ if ( ! is_admin() ) { // Don't touch anything inside of the WordPress Dashboard,
 }
 
 /**
- * Exclude Beaver Builder editor pages from loading WP External Link plugin
+ * Prevent certain pages loading WP External Link plugin
  */
 add_action( 'wpel_apply_settings', function () {
 
-   if ( strpos($_SERVER['REQUEST_URI'], '?fl_builder') !== false ) {
-     return false;
-   }
+  // Exclude Beaver Builder editor pages
+  if ( strpos($_SERVER['REQUEST_URI'], '?fl_builder') !== false ) {
+    return false;
+  }
 
-   return true;
+  // Exclude directory pages that use FacetWP
+  if (is_page_template('templates/page-directory.php') || is_page('directory-map')) {
+    return false;
+  }
+
+  return true;
 }, 10 );
 
 /**
