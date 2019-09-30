@@ -282,13 +282,19 @@ add_filter('dt_allow_as_draft_distribute', function($as_draft, $connection, $pos
  */
 add_filter('template_redirect', function() {
   global $post;
-  $orig_post_url = get_post_meta($post->ID, 'dt_original_post_url', true);
-  $orig_deleted = get_post_meta($post->ID, 'dt_original_post_deleted', true);
 
-  if (!empty($orig_post_url) && $orig_deleted !== 1) {
-    wp_redirect($orig_post_url, '301');
-    die;
+  // Don't do this on blog, category, search, or calendar pages
+  if (!is_home() && !is_archive() && !is_search() && !is_page('calendar')) {
+    var_dump($post);
+    $orig_post_url = get_post_meta($post->ID, 'dt_original_post_url', true);
+    $orig_deleted = get_post_meta($post->ID, 'dt_original_post_deleted', true);
+
+    if (!empty($orig_post_url) && $orig_deleted !== 1) {
+      wp_redirect($orig_post_url, '301');
+      die;
+    }
   }
+
 });
 
 /**
