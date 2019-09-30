@@ -7,10 +7,7 @@
   @include('partials.head')
   <body {!! body_class(get_bloginfo('name')) !!}>
     @if (!is_user_logged_in())
-      <!-- Google Tag Manager (noscript) -->
-      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PZPJJVP"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-      <!-- End Google Tag Manager (noscript) -->
+      @include('partials.gtm-body');
     @endif
     <a href="#content" class="screen-reader-text">Skip to content</a>
     <!--[if IE]>
