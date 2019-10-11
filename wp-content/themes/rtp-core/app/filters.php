@@ -317,7 +317,6 @@ add_filter( 'gform_notification', function($notification, $form, $entry) {
  * @param  NetworkSiteConnection   $connection    Distributor's connection
  */
 add_action( 'dt_push_post', function($new_post_id, $post_id, $args, $connection) {
-  error_log($new_post_id);
 
   // Creating array for inserting in mec_events table
   $mec_event = array(
