@@ -854,11 +854,13 @@ class UABBVideoGallery extends FLBuilderModule {
 			return $vimeo_link_desc;
 		} elseif ( 'wistia_link' === $field ) {
 
-			$wistia_link_desc =
+			$wistia_link_desc = sprintf( /* translators: %s: search term */
 				__(
-					'Go to your Wistia video, right click, "Copy Link & Thumbnail" and paste here.',
+					'<div style="%1$s">Go to your Wistia video, right click, "Copy Link & Thumbnail" and paste here.</div>',
 					'uabb'
-				);
+				),
+				$style1
+			);
 
 			return $wistia_link_desc;
 		}
