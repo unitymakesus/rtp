@@ -366,11 +366,6 @@ function acf_add_local_field( $field, $prepared = false ) {
 		return acf_add_local_fields( array( $field ) );
 	}
 	
-	// Set menu order.
-	if( !isset($field['menu_order']) ) {
-		$field['menu_order'] = acf_count_local_fields( $field['parent'] );
-	}
-	
 	// Extract attributes.
 	$key = $field['key'];
 	$name = $field['name'];

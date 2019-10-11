@@ -316,15 +316,14 @@ class acf_field_gallery extends acf_field {
 			$thumb = wp_mime_type_icon( $id );	
 		}
 		
-		// Get attachment dimensions / time / size.
-		$dimensions = '';
+		// Get attachment dimentions / time / size.
 		if( $attachment['type'] === 'audio' ) {
-			$dimensions = __('Length', 'acf') . ': ' . $attachment['fileLength'];	
+			$dimentions = __('Length', 'acf') . ': ' . $attachment['fileLength'];	
 		} elseif( !empty($attachment['width']) ) {
-			$dimensions = $attachment['width'] . ' x ' . $attachment['height'];
+			$dimentions = $attachment['width'] . ' x ' . $attachment['height'];
 		}
 		if( !empty($attachment['filesizeHumanReadable']) ) {
-			$dimensions .=  ' (' . $attachment['filesizeHumanReadable'] . ')';
+			$dimentions .=  ' (' . $attachment['filesizeHumanReadable'] . ')';
 		}
 		
 		?>
@@ -332,7 +331,7 @@ class acf_field_gallery extends acf_field {
 			<img src="<?php echo esc_attr($thumb); ?>" alt="<?php echo esc_attr($attachment['alt']); ?>" />
 			<p class="filename"><strong><?php echo esc_html($attachment['filename']); ?></strong></p>
 			<p class="uploaded"><?php echo esc_html($attachment['dateFormatted']); ?></p>
-			<p class="dimensions"><?php echo esc_html($dimensions); ?></p>
+			<p class="dimensions"><?php echo esc_html($dimentions); ?></p>
 			<p class="actions">
 				<a href="#" class="acf-gallery-edit" data-id="<?php echo esc_attr($id); ?>"><?php _e('Edit', 'acf'); ?></a>
 				<a href="#" class="acf-gallery-remove" data-id="<?php echo esc_attr($id); ?>"><?php _e('Remove', 'acf'); ?></a>

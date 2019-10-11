@@ -12,12 +12,15 @@ $branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uab
 $branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 $branding            = '';
 $link                = '';
+$schema_link         = '';
 if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
-	$branding = 'no';
-	$link     = '<a href="https://www.ultimatebeaver.com/docs/unable-to-display-more-google-and-yelp-reviews/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=business-reviews-module" target="_blank" rel="noopener"> <b> here </b> </a>';
+	$branding    = 'no';
+	$link        = '<a href="https://www.ultimatebeaver.com/docs/unable-to-display-more-google-and-yelp-reviews/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=business-reviews-module" target="_blank" rel="noopener"> <b> here </b> </a>';
+	$schema_link = '<a href="https://www.ultimatebeaver.com/docs/schema-support-for-business-reviews/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=business-reviews-module" target="_blank" rel="noopener"> <b> here. </b> </a>';
 } else {
-	$branding = 'yes';
-	$link     = '';
+	$branding    = 'yes';
+	$link        = '';
+	$schema_link = '';
 }
 $review_notice_google      = sprintf( /* translators: %1$s: search term */
 		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
@@ -33,6 +36,10 @@ $review_text_yelp          = sprintf( /* translators: %1$s: search term */
 );
 $review_notice_yelp_google = sprintf( /* translators: %1$s: search term */
 		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews & Yelp allows maximum 3 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
+	$style1
+);
+$schema_notice             = sprintf( /* translators: %1$s: search term */
+		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Adding schema gives SEO benefits. It helps listing star ratings in search engine results. Read more from', 'uabb' ) . $schema_link . '</div>',
 	$style1
 );
 $filter_notice             = sprintf( /* translators: %1$s: search term */
@@ -303,6 +310,36 @@ FLBuilder::register_module(
 							'options' => array(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				),
+				'schema_section'           => array(
+					'title'  => __( 'Schema Support', 'uabb' ),
+					'fields' => array(
+						'enable_rating_schema' => array(
+							'type'        => 'select',
+							'label'       => __( 'Enable Rating Schema', 'uabb' ),
+							'default'     => 'no',
+							'description' => $schema_notice,
+							'options'     => array(
+								'yes' => __( 'Yes ', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'      => array(
+								'yes' => array(
+									'fields' => array( 'schema_type', 'schema_selection' ),
+								),
+							),
+						),
+						'schema_type'          => array(
+							'type'    => 'select',
+							'label'   => __( 'Schema Type', 'uabb' ),
+							'default' => 'Place',
+							'options' => array(
+								'Place'        => __( 'Place ', 'uabb' ),
+								'Organization' => __( 'Organization', 'uabb' ),
+								'Service'      => __( 'Service', 'uabb' ),
 							),
 						),
 					),

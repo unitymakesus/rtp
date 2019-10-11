@@ -275,7 +275,6 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
                 'uabb-business-reviews'	   => 'Business Reviews',
                 'uabb-off-canvas'          => 'Off Canvas',
                 'uabb-retina-image'        => 'Retina Image',
-                'uabb-registration-form'   => 'User Registration Form',
 			);
 
 			/* Include Contact form styler */
