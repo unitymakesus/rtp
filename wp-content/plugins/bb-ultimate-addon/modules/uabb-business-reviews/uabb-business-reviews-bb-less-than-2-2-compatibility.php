@@ -511,35 +511,6 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'schema_section'           => array(
-					'title'  => __( 'Schema', 'uabb' ),
-					'fields' => array(
-						'enable_rating_schema' => array(
-							'type'    => 'select',
-							'label'   => __( 'Enable Rating Schema', 'uabb' ),
-							'default' => 'no',
-							'options' => array(
-								'yes' => __( 'Yes ', 'uabb' ),
-								'no'  => __( 'NO', 'uabb' ),
-							),
-							'toggle'  => array(
-								'yes' => array(
-									'fields' => array( 'schema_type' ),
-								),
-							),
-						),
-						'schema_type'          => array(
-							'type'    => 'select',
-							'label'   => __( 'Schema Type', 'uabb' ),
-							'default' => 'Place',
-							'options' => array(
-								'Place'        => __( 'Place ', 'uabb' ),
-								'Organization' => __( 'Organization', 'uabb' ),
-								'Service'      => __( 'Service', 'uabb' ),
-							),
-						),
-					),
-				),
 			),
 		),
 		// Style tab Strat from here.

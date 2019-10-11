@@ -317,8 +317,46 @@ add_filter( 'gform_notification', function($notification, $form, $entry) {
  * @param  NetworkSiteConnection   $connection    Distributor's connection
  */
 add_action( 'dt_push_post', function($new_post_id, $post_id, $args, $connection) {
+  error_log($new_post_id);
+
+  // Creating array for inserting in mec_events table
+  $mec_event = array(
+    'post_id' => $new_post_id,
+    'start' => get_post_meta($new_post_id, 'mec_start_date', true),
+    'end' => get_post_meta($new_post_id, 'mec_end_date', true),
+    'repeat' => get_post_meta($new_post_id, 'mec_repeat_status', true),
+    'rinterval' => get_post_meta($new_post_id, 'mec_repeat_interval', true),
+    'year' => NULL,
+    'month' => NULL,
+    'day' => NULL,
+    'week' => NULL,
+    'weekday' => NULL,
+    'weekdays' => implode(',', get_post_meta($new_post_id, 'mec_certain_weekdays', true)),
+    'days' => get_post_meta($new_post_id, 'mec_in_days', true),
+    'not_in_days' => get_post_meta($new_post_id, 'mec_not_in_days', true),
+    'time_start' => get_post_meta($new_post_id, 'mec_start_day_seconds', true),
+    'time_end' => get_post_meta($new_post_id, 'mec_end_day_seconds', true),
+  );
+
   if (get_post_type($new_post_id) == 'mec-events') {
     $main = \MEC::getInstance('app.libraries.main');
-    $e = $main->save_event($args, $new_post_id);
+    // $e = $main->save_event($args, $new_post_id);
+    $db = $main->getDB();
+
+    $q1 = "";
+    $q2 = "";
+
+    foreach($mec_event as $key=>$value) {
+        $q1 .= "`$key`,";
+
+        if(is_null($value)) $q2 .= "NULL,";
+        else $q2 .= "'$value',";
+    }
+
+    $db->q("INSERT INTO `#__mec_events` (".trim($q1, ', ').") VALUES (".trim($q2, ', ').")", 'INSERT');
+
+    $repeat_type = get_post_meta($new_post_id, 'mec_repeat_type', true);
+    $schedule = $main->getSchedule();
+    $schedule->reschedule($new_post_id, $schedule->get_reschedule_maximum($repeat_type));
   }
 }, 10, 4 );

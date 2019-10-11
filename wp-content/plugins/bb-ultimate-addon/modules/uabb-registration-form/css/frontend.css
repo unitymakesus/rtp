@@ -1,0 +1,238 @@
+.uabb-register-error-message {
+	color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #f9f0c3;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+}
+.uabb-input-group.uabb-rf-success-message-wrap,
+.uabb-registration-form .uabb-registration-form-pass-verify {
+	margin-top:10px;
+}
+.uabb-input-group.uabb-recaptcha,
+.uabb-rf-success-message-wrap,
+.uabb-input-group.uabb-rform-exteral-link-wrap {
+	width:100%;
+}
+.uabb-rf-honeypot {
+	display: none;
+}
+.uabb-registration-form .uabb-registration_form-error-message-required {
+	margin-top: 7px;
+}
+.uabb-form-loader {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 1em;
+    color: inherit;
+    vertical-align: middle;
+    pointer-events: none;
+    border: .2em solid currentcolor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: 1s uabb-loader linear infinite;
+    position: relative;
+}
+@keyframes uabb-loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.uabb-input-group.uabb-rf-column-desktop_100 {
+	position: relative;
+	width: 100%;
+}
+.uabb-input-group.uabb-rf-column-desktop_75 {
+	position: relative;
+	width: 75%;
+}
+.uabb-input-group.uabb-rf-column-desktop_50 {
+	position: relative;
+	width: 50%;
+}
+.uabb-input-group.uabb-rf-column-desktop_25 {
+	position: relative;
+	width: 25%;
+}
+.uabb-input-group.uabb-rf-column-desktop_34 {
+	position: relative;
+	width: 34%;
+}
+.uabb-input-group.uabb-rf-column-desktop_66 {
+	position: relative;
+	width: 66%;
+}
+.uabb-submit-btn.uabb-rf-btn-col_100 {
+	width: 100%;
+	height: fit-content;
+}
+.uabb-submit-btn.uabb-rf-btn-col_75 {
+	width: 75%;
+	height: fit-content;
+}
+.uabb-submit-btn.uabb-rf-btn-col_66 {
+	width: 66%;
+	height: fit-content;
+}
+.uabb-submit-btn.uabb-rf-btn-col_50 {
+	width: 50%;
+	height: fit-content;
+}
+.uabb-submit-btn.uabb-rf-btn-col_34 {
+	width: 34%;
+	height: fit-content;
+}
+.uabb-submit-btn.uabb-rf-btn-col_25 {
+	width: 25%;
+	height: fit-content;
+}
+.uabb-input-group-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+	-webkit-flex-wrap: wrap;
+	    -ms-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.uabb-registration-form .uabb-inline-group {
+	display: inline-block;
+	width: 50%;
+	vertical-align: middle;
+}
+.uabb-rf-success-message-wrap {
+	display: none;
+}
+.uabb-registration-form .uabb-input-group-wrap input {
+	width: 100%;
+}
+.uabb-rform-requried-yes .uabb-label-mark:after {
+    content: '*';
+    color: red;
+    padding-left: 0.2em;
+}
+/* Style 2 Css End */
+.uabb-registration-form .uabb-registration-form-submit {
+	border: none;
+	-webkit-transition: all 0.3s;
+       -moz-transition: all 0.3s;
+  		 -o-transition: all 0.3s;
+  			transition: all 0.3s;
+}
+
+.uabb-registration-form .uabb-registration-form-submit:focus {
+	outline: 0;
+}
+.uabb-registration-form .uabb-registration-error {
+	display: none;
+}
+.uabb-registration-form .uabb-email .uabb-registration-error {
+	margin-right: 10%;
+}
+.uabb-registration-form .uabb-error .uabb-registration-error {
+	display: inline-block;
+}
+.uabb-registration-form .uabb-submit-btn.uabb-submit-btn-align-left {
+	margin-right:auto;
+}
+.uabb-registration-form .uabb-submit-btn.uabb-submit-btn-align-center {
+	margin-right:auto;
+	margin-left:auto;
+}
+.uabb-registration-form .uabb-submit-btn.uabb-submit-btn-align-right {
+	margin-left:auto;
+}
+/* Terms Checkbox and Text CSS end */
+@media (max-width: 992px) {
+	.uabb-input-group.uabb-rf-column-medium_100 {
+		position: relative;
+		width: 100%;
+	}
+	.uabb-input-group.uabb-rf-column-medium_75 {
+		position: relative;
+		width: 75%;
+	}
+	.uabb-input-group.uabb-rf-column-medium_66 {
+		position: relative;
+		width: 66%;
+	}
+	.uabb-input-group.uabb-rf-column-medium_50 {
+		position: relative;
+		width: 50%;
+	}
+	.uabb-input-group.uabb-rf-column-medium_34 {
+		position: relative;
+		width: 34%;
+	}
+	.uabb-input-group.uabb-rf-column-medium_25 {
+		position: relative;
+		width: 25%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-medium-col_100 {
+		width: 100%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-medium-col_75 {
+		width: 75%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-medium-col_66 {
+		width: 66%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-medium-col_50 {
+		width: 50%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-medium-col_34 {
+		width: 34%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-medium-col_25 {
+		width: 25%;
+	}
+}
+@media (max-width: 767px) {
+	.uabb-input-group.uabb-rf-column-responsive_100 {
+		position: relative;
+		width: 100%;
+	}
+	.uabb-input-group.uabb-rf-column-responsive_75 {
+		position: relative;
+		width: 75%;
+	}
+	.uabb-input-group.uabb-rf-column-responsive_66 {
+		position: relative;
+		width: 66%;
+	}
+	.uabb-input-group.uabb-rf-column-responsive_50 {
+		position: relative;
+		width: 50%;
+	}
+	.uabb-input-group.uabb-rf-column-responsive_34 {
+		position: relative;
+		width: 34%;
+	}
+	.uabb-input-group.uabb-rf-column-responsive_25 {
+		position: relative;
+		width: 25%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-responsive-col_100 {
+		width: 100%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-responsive-col_75 {
+		width: 75%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-responsive-col_66 {
+		width: 66%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-responsive-col_34 {
+		width: 34%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-responsive-col_50 {
+		width: 50%;
+	}
+	.uabb-submit-btn.uabb-rf-btn-responsive-col_25 {
+		width: 25%;
+	}
+}

@@ -221,8 +221,6 @@ class UabbBusinessReview extends FLBuilderModule {
 			return;
 		}
 
-		$aggregate = 0;
-
 		$api_key = $this->get_google_api_key();
 
 		if ( '' === $api_key || null === $api_key || false === $api_key ) {
@@ -621,21 +619,13 @@ class UabbBusinessReview extends FLBuilderModule {
 		$reviews            = '';
 		$reviews_max        = 8;
 		$disply_num_reviews = 8;
-		$aggregate          = 0;
 		$overall_align      = '';
 		$image_align        = '';
-		$schema_type        = '';
-		$aggregate          = 0;
-		$aggregate_count    = '';
 
 		$reviews = $this->get_review_data( $this->settings );
 
 		if ( ! isset( $reviews ) ) {
 			return;
-		}
-		if ( 'yes' === $this->settings->enable_rating_schema ) {
-
-			$schema_type = 'http://schema.org/' . $this->settings->schema_type;
 		}
 
 		$layout_class = ( 'carousel' == $this->settings->review_layout ) ? 'uabb-review-layout-carousel' : 'uabb-reviews-layout-grid';
@@ -653,7 +643,7 @@ class UabbBusinessReview extends FLBuilderModule {
 			}
 		}
 		?>
-		<div class="uabb-reviews-grid__column-<?php echo $this->settings->gallery_columns; ?> uabb-reviews-grid-tablet__column-<?php echo $this->settings->gallery_columns_medium; ?> uabb-reviews-grid-mobile__column-<?php echo $this->settings->gallery_columns_responsive; ?> <?php echo $layout_class; ?> uabb-reviews-align-<?php echo $overall_align; ?> <?php echo $image_align; ?> uabb-reviews-skin-<?php echo $skin; ?>" itemscope itemtype="<?php echo $schema_type; ?>" >
+		<div class="uabb-reviews-grid__column-<?php echo $this->settings->gallery_columns; ?> uabb-reviews-grid-tablet__column-<?php echo $this->settings->gallery_columns_medium; ?> uabb-reviews-grid-mobile__column-<?php echo $this->settings->gallery_columns_responsive; ?> <?php echo $layout_class; ?> uabb-reviews-align-<?php echo $overall_align; ?> <?php echo $image_align; ?> uabb-reviews-skin-<?php echo $skin; ?>">
 			<div class="uabb-reviews-module-wrap" >
 
 				<?php
@@ -681,27 +671,13 @@ class UabbBusinessReview extends FLBuilderModule {
 					$reviews        = array_slice( $reviews, 0, $display_number );
 				}
 
-				$min_rating      = $this->settings->reviews_min_rating;
-				$aggregate_count = sizeof( $reviews );
-
 				foreach ( $reviews as $key => $review ) {
-
-					$aggregate = ( is_numeric( $aggregate ) && is_numeric( $review['rating'] ) ) ? $aggregate + $review['rating'] : '';
 
 					$this->get_reviews( $review, $this->settings );
 				}
-				if ( ! is_null( $aggregate ) && 0 < $aggregate ) {
 
-					$aggregate = ( is_numeric( $aggregate ) && is_numeric( $aggregate_count ) ) ? $aggregate / $aggregate_count : '';
-				}
 				?>
 			</div>
-			<?php if ( 'yes' === $this->settings->enable_rating_schema ) { ?>
-				<div class="uabb-screen-only" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
-					<span itemprop="ratingValue" class="uabb-screen-only"><?php echo $aggregate; ?></span>
-					<span itemprop="reviewCount" class="uabb-screen-only"><?php echo $aggregate_count; ?></span>
-				</div>
-			<?php } ?>
 		</div>
 
 		<?php

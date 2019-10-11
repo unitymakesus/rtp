@@ -1,3 +1,10 @@
+Version 1.22.0 - Monday, 7th October 2019
+- New: Introduced User Registration Form
+- Improvement: Price Box - Added WPML support
+- Improvement: Slide Box - Added WPML support
+- Improvement: Business Reviews - Deprecated Reviews schema support
+- Fixed: Video Gallery - Resolved PHP error when video module is disabled from UABB settings
+
 Version 1.21.0 - Tuesday, 24th September 2019
 - New: Introduced Retina Image
 - Improvement: Video - Added Wistia  hosted videos support
