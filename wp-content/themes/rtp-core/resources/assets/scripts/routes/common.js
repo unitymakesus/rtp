@@ -140,6 +140,80 @@ export default {
       });
     });
 
+    // Show topbar nav
+    function showTopbarNav() {
+      $('body').addClass('topbarnav-active');
+      $('#topbar-menu-trigger + label i').attr('aria-label', 'Hide navigation menu');
+
+      // Enable focus of nav items using tabindex
+      $('.topbar-menu').each(function() {
+        var el = $(this);
+        $('a', el).attr('tabindex', '0');
+      });
+
+      // Enable focus of search box using tabindex
+      $('.topbar-wrapper .search-form input').attr('tabindex', '0');
+    }
+
+    // Hide topbar nav
+    function hideTopbarNav() {
+      $('body').removeClass('topbarnav-active');
+      $('#topbar-menu-trigger + label i').attr('aria-label', 'Show navigation menu');
+
+      // Disable focus of nav items using tabindex
+      $('.topbar-menu').each(function() {
+        var el = $(this);
+        $('a', el).attr('tabindex', '-1');
+      });
+
+      // Disable focus of search box using tabindex
+      $('.topbar-wrapper .search-form input').attr('tabindex', '-1');
+    }
+
+    // Toggle topbar nav
+    $('#topbar-menu-trigger').on('change focusout', function() {
+      if ($(this).prop('checked')) {
+        showTopbarNav();
+      } else {
+        hideTopbarNav();
+      }
+    });
+
+    // Only show topbar nav if an element inside is receiving focus
+    $('.topbar-menu').each(function () {
+      var el = $(this);
+
+      $('a', el).on('focus', function() {
+        $(this).parents('li').addClass('hover');
+      }).on('focusout', function() {
+        $(this).parents('li').removeClass('hover');
+
+        if (smDown.matches) {
+          setTimeout(function () {
+            if ($(':focus').closest('#menu-global').length == 0) {
+
+              // Only hide if we didn't just navigate to the search box
+              if ($(':focus').closest('.search-form').length == 0) {
+                $('#topbar-menu-trigger').prop('checked', false);
+                hideTopbarNav();
+              }
+            }
+          }, 200);
+        }
+      });
+    });
+
+    $('.topbar-wrapper .search-form input').on('focusout', function() {
+      if (smDown.matches) {
+        setTimeout(function () {
+          if ($(':focus').closest('#menu-global').length == 0) {
+            $('#topbar-menu-trigger').prop('checked', false);
+            hideTopbarNav();
+          }
+        }, 200);
+      }
+    });
+
     /**
      * Form label controls
      */

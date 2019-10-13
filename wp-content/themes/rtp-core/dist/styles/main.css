@@ -13424,31 +13424,100 @@ figure.post-thumbnail {
 
   .topbar-wrapper .rtp-logo {
     height: 20px;
+    margin-left: 10px;
   }
 }
 
-/* line 13, resources/assets/styles/components/_navigation.scss */
+/* line 15, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .menu-trigger-wrapper.menu-trigger-wrapper label {
+  color: #FFF;
+}
+
+/* line 20, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar {
   height: 40px;
 }
 
-/* line 17, resources/assets/styles/components/_navigation.scss */
+@media only screen and (max-width: 768px) {
+  /* line 20, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .topbar {
+    overflow: hidden;
+  }
+
+  /* line 26, resources/assets/styles/components/_navigation.scss */
+
+  .topbarnav-active .topbar-wrapper .topbar {
+    height: auto;
+  }
+}
+
+/* line 32, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu-wrapper {
   height: 100%;
+  width: 100%;
 }
 
-/* line 21, resources/assets/styles/components/_navigation.scss */
+@media only screen and (max-width: 768px) {
+  /* line 37, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .topbar-menu-wrapper .topnav-wrapper {
+    width: 100%;
+  }
+}
+
+/* line 43, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu {
   height: 100%;
 }
 
-@media only screen and (max-width: 992px) {
-  /* line 21, resources/assets/styles/components/_navigation.scss */
+/* line 46, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .topbar-menu ul {
+  height: 100%;
+}
+
+/* line 50, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .topbar-menu li {
+  height: 100%;
+  line-height: 38px;
+}
+
+/* line 54, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .topbar-menu li a {
+  color: #FFF;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: normal;
+  height: 100%;
+  padding: 11px 15px;
+}
+
+/* line 63, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .topbar-menu li a:hover,
+.topbar-wrapper .topbar-menu li a:focus,
+.topbar-wrapper .topbar-menu li a:active {
+  background: #333F48;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 43, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topbar-menu {
+    width: 100%;
+  }
+
+  /* line 72, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .topbar-menu ul {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -13464,64 +13533,130 @@ figure.post-thumbnail {
     overflow: hidden;
   }
 
-  /* line 33, resources/assets/styles/components/_navigation.scss */
+  /* line 81, resources/assets/styles/components/_navigation.scss */
 
-  .topbarnav-active .topbar-wrapper .topbar-menu {
+  .topbarnav-active .topbar-wrapper .topbar-menu ul {
     max-height: 100em;
+  }
+
+  /* line 86, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .topbar-menu li {
+    width: 100%;
   }
 }
 
-/* line 38, resources/assets/styles/components/_navigation.scss */
-
-.topbar-wrapper .topbar-menu ul {
-  height: 100%;
-}
-
-/* line 42, resources/assets/styles/components/_navigation.scss */
-
-.topbar-wrapper .topbar-menu li {
-  height: 100%;
-  line-height: 38px;
-}
-
-/* line 46, resources/assets/styles/components/_navigation.scss */
-
-.topbar-wrapper .topbar-menu li a {
-  color: #FFF;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  font-weight: normal;
-  height: 100%;
-  padding: 11px 15px;
-}
-
-/* line 55, resources/assets/styles/components/_navigation.scss */
-
-.topbar-wrapper .topbar-menu li a:hover,
-.topbar-wrapper .topbar-menu li a:focus,
-.topbar-wrapper .topbar-menu li a:active {
-  background: #333F48;
-}
-
-/* line 62, resources/assets/styles/components/_navigation.scss */
+/* line 93, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .current-site {
   background: #FFF;
 }
 
-/* line 65, resources/assets/styles/components/_navigation.scss */
+/* line 96, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .current-site a {
   color: #333F48 !important;
 }
 
-/* line 68, resources/assets/styles/components/_navigation.scss */
+/* line 99, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .current-site a:hover,
 .topbar-wrapper .current-site a:focus,
 .topbar-wrapper .current-site a:active {
   background: #FFF !important;
+}
+
+/* line 106, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .search-form {
+  border-radius: 0;
+}
+
+/* line 109, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .search-form::after {
+  content: '';
+  background-image: none;
+}
+
+/* line 114, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .search-form input.search-field {
+  margin: auto;
+  padding: 2px 10px;
+  height: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 0;
+  background: transparent !important;
+  border: 1px solid #7A868C !important;
+  color: #FFF;
+  font-size: 0.72222rem;
+}
+
+/* line 125, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .search-form input.search-field::-webkit-input-placeholder {
+  color: #CBC8C7;
+}
+
+.topbar-wrapper .search-form input.search-field::-moz-placeholder {
+  color: #CBC8C7;
+}
+
+.topbar-wrapper .search-form input.search-field::-ms-input-placeholder {
+  color: #CBC8C7;
+}
+
+.topbar-wrapper .search-form input.search-field::placeholder {
+  color: #CBC8C7;
+}
+
+/* line 130, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .search-form label {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 135, resources/assets/styles/components/_navigation.scss */
+
+.topbar-wrapper .search-form .search-submit {
+  display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  /* line 106, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .search-form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    margin: 0;
+    width: 100%;
+    -webkit-transition: max-height 0.3s ease;
+    -o-transition: max-height 0.3s ease;
+    transition: max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  /* line 148, resources/assets/styles/components/_navigation.scss */
+
+  .topbarnav-active .topbar-wrapper .search-form {
+    max-height: 100em;
+  }
+
+  /* line 152, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .search-form input.search-field {
+    height: 3rem;
+    margin: 10px auto;
+    display: block;
+  }
 }
 
 /* line 1, resources/assets/styles/components/_pagination.scss */
@@ -13744,73 +13879,6 @@ html[data-contrast="true"] .pagination .facetwp-page.current {
   max-width: 500px;
 }
 
-/* line 36, resources/assets/styles/components/_search.scss */
-
-.topbar .search-form {
-  border-radius: 0;
-}
-
-/* line 39, resources/assets/styles/components/_search.scss */
-
-.topbar .search-form::after {
-  content: '';
-  background-image: none;
-}
-
-@media only screen and (max-width: 768px) {
-  /* line 36, resources/assets/styles/components/_search.scss */
-
-  .topbar .search-form {
-    width: 100%;
-  }
-}
-
-/* line 48, resources/assets/styles/components/_search.scss */
-
-.topbar .search-form input.search-field {
-  margin: auto;
-  padding: 2px 10px;
-  height: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  border-radius: 0;
-  background: transparent !important;
-  border: 1px solid #7A868C !important;
-  color: #FFF;
-  font-size: 0.72222rem;
-}
-
-/* line 59, resources/assets/styles/components/_search.scss */
-
-.topbar .search-form input.search-field::-webkit-input-placeholder {
-  color: #CBC8C7;
-}
-
-.topbar .search-form input.search-field::-moz-placeholder {
-  color: #CBC8C7;
-}
-
-.topbar .search-form input.search-field::-ms-input-placeholder {
-  color: #CBC8C7;
-}
-
-.topbar .search-form input.search-field::placeholder {
-  color: #CBC8C7;
-}
-
-/* line 64, resources/assets/styles/components/_search.scss */
-
-.topbar .search-form label {
-  width: 100%;
-  height: 100%;
-}
-
-/* line 69, resources/assets/styles/components/_search.scss */
-
-.topbar .search-form .search-submit {
-  display: none !important;
-}
-
 /* line 1, resources/assets/styles/components/_unity.scss */
 
 .unity-link {
@@ -13927,14 +13995,22 @@ body.error404 .entry-content {
   }
 }
 
-/* line 47, resources/assets/styles/layouts/_header.scss */
+@media only screen and (max-width: 992px) {
+  /* line 22, resources/assets/styles/layouts/_header.scss */
+
+  .banner .logo {
+    padding-left: 10px;
+  }
+}
+
+/* line 50, resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link {
   padding: 10px 20px;
   text-align: right;
 }
 
-/* line 51, resources/assets/styles/layouts/_header.scss */
+/* line 54, resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .btn,
 .banner .cta-link .btn-large,
@@ -13952,7 +14028,7 @@ body.error404 .entry-content {
   padding: 5px 2rem;
 }
 
-/* line 56, resources/assets/styles/layouts/_header.scss */
+/* line 59, resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .cta-headline {
   font-size: 0.9em;
@@ -13961,19 +14037,19 @@ body.error404 .entry-content {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 47, resources/assets/styles/layouts/_header.scss */
+  /* line 50, resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link {
     padding: 10px 0;
   }
 
-  /* line 71, resources/assets/styles/layouts/_header.scss */
+  /* line 74, resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .cta-headline {
     padding: 0 1rem;
   }
 
-  /* line 75, resources/assets/styles/layouts/_header.scss */
+  /* line 78, resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .btn,
   .banner .cta-link .btn-large,
@@ -13991,26 +14067,26 @@ body.error404 .entry-content {
   }
 }
 
-/* line 81, resources/assets/styles/layouts/_header.scss */
+/* line 84, resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar {
   margin-bottom: 0;
 }
 
-/* line 85, resources/assets/styles/layouts/_header.scss */
+/* line 88, resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar[data-text-color="light"] .navbar-menu > ul > li > a,
 .banner .navbar[data-text-color="light"] .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 91, resources/assets/styles/layouts/_header.scss */
+/* line 94, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper {
   position: relative;
 }
 
-/* line 94, resources/assets/styles/layouts/_header.scss */
+/* line 97, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper [type="checkbox"] {
   position: absolute;
@@ -14018,13 +14094,13 @@ body.error404 .entry-content {
   pointer-events: none;
 }
 
-/* line 100, resources/assets/styles/layouts/_header.scss */
+/* line 103, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper input:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 104, resources/assets/styles/layouts/_header.scss */
+/* line 107, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label {
   display: block;
@@ -14038,27 +14114,27 @@ body.error404 .entry-content {
   float: right;
 }
 
-/* line 115, resources/assets/styles/layouts/_header.scss */
+/* line 118, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label::before,
 .banner .menu-trigger-wrapper label::after {
   display: none;
 }
 
-/* line 119, resources/assets/styles/layouts/_header.scss */
+/* line 122, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label i {
   font-size: 2em;
   line-height: 1.5em;
 }
 
-/* line 124, resources/assets/styles/layouts/_header.scss */
+/* line 127, resources/assets/styles/layouts/_header.scss */
 
 html[data-contrast="true"] .banner .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 133, resources/assets/styles/layouts/_header.scss */
+/* line 136, resources/assets/styles/layouts/_header.scss */
 
 nav ul a {
   text-decoration: none;
@@ -14068,19 +14144,19 @@ nav ul a {
   font-size: 17px;
 }
 
-/* line 140, resources/assets/styles/layouts/_header.scss */
+/* line 143, resources/assets/styles/layouts/_header.scss */
 
 [data-font="3"] nav ul a {
   font-size: 1.2rem;
 }
 
-/* line 144, resources/assets/styles/layouts/_header.scss */
+/* line 147, resources/assets/styles/layouts/_header.scss */
 
 .header-inline nav ul a {
   padding: 1rem 15px;
 }
 
-/* line 151, resources/assets/styles/layouts/_header.scss */
+/* line 154, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu {
   border: none;
@@ -14090,7 +14166,7 @@ nav ul a {
   padding: 0 15px;
 }
 
-/* line 157, resources/assets/styles/layouts/_header.scss */
+/* line 160, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu > ul {
   -webkit-box-flex: 1;
@@ -14098,20 +14174,20 @@ nav ul a {
           flex: 1 1 auto;
 }
 
-/* line 161, resources/assets/styles/layouts/_header.scss */
+/* line 164, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li {
   padding: 10px 0;
   height: 100%;
 }
 
-/* line 165, resources/assets/styles/layouts/_header.scss */
+/* line 168, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li::before {
   display: none;
 }
 
-/* line 169, resources/assets/styles/layouts/_header.scss */
+/* line 172, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover,
 .navbar-menu li:focus,
@@ -14119,7 +14195,7 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 172, resources/assets/styles/layouts/_header.scss */
+/* line 175, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover > a,
 .navbar-menu li:focus > a,
@@ -14127,21 +14203,21 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 178, resources/assets/styles/layouts/_header.scss */
+/* line 181, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 178, resources/assets/styles/layouts/_header.scss */
+  /* line 181, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children a {
     cursor: pointer;
   }
 }
 
-/* line 186, resources/assets/styles/layouts/_header.scss */
+/* line 189, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
   margin-top: 10px;
@@ -14152,14 +14228,14 @@ nav ul a {
   transition: max-height 0.3s ease;
 }
 
-/* line 192, resources/assets/styles/layouts/_header.scss */
+/* line 195, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
   line-height: 0;
 }
 
-/* line 196, resources/assets/styles/layouts/_header.scss */
+/* line 199, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li:hover,
 .navbar-menu li.menu-item-has-children .sub-menu li:focus,
@@ -14167,7 +14243,7 @@ nav ul a {
   background: #F5F5F5;
 }
 
-/* line 201, resources/assets/styles/layouts/_header.scss */
+/* line 204, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
@@ -14175,7 +14251,7 @@ nav ul a {
   padding-right: 40px;
 }
 
-/* line 206, resources/assets/styles/layouts/_header.scss */
+/* line 209, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -14194,7 +14270,7 @@ nav ul a {
   transition: all 0.2s;
 }
 
-/* line 221, resources/assets/styles/layouts/_header.scss */
+/* line 224, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
@@ -14202,7 +14278,7 @@ nav ul a {
   background: transparent;
 }
 
-/* line 224, resources/assets/styles/layouts/_header.scss */
+/* line 227, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -14212,7 +14288,7 @@ nav ul a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 186, resources/assets/styles/layouts/_header.scss */
+  /* line 189, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     max-height: 300em;
@@ -14234,7 +14310,7 @@ nav ul a {
   }
 }
 
-/* line 248, resources/assets/styles/layouts/_header.scss */
+/* line 251, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14242,20 +14318,20 @@ nav ul a {
   height: auto;
 }
 
-/* line 267, resources/assets/styles/layouts/_header.scss */
+/* line 270, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
-  /* line 151, resources/assets/styles/layouts/_header.scss */
+  /* line 154, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     height: 4.66667em;
   }
 
-  /* line 275, resources/assets/styles/layouts/_header.scss */
+  /* line 278, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14267,7 +14343,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 280, resources/assets/styles/layouts/_header.scss */
+  /* line 283, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14275,7 +14351,7 @@ nav ul a {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 151, resources/assets/styles/layouts/_header.scss */
+  /* line 154, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     -webkit-box-orient: vertical;
@@ -14293,26 +14369,26 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 294, resources/assets/styles/layouts/_header.scss */
+  /* line 297, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
   }
 
-  /* line 298, resources/assets/styles/layouts/_header.scss */
+  /* line 301, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 304, resources/assets/styles/layouts/_header.scss */
+  /* line 307, resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 309, resources/assets/styles/layouts/_header.scss */
+/* line 312, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
