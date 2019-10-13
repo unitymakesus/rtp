@@ -12,6 +12,14 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     margin-right: 0;
   }
 
+  .col {
+    .safari & {
+      &.m6 {
+        width: 49%;
+      }
+    }
+  }
+
   .mec-totalcal-box {
     border: none;
     background: none;
@@ -24,6 +32,15 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       position: relative !important;
       top: auto !important;
       right: auto !important;
+
+      .select-wrapper {
+        max-width: 100%;
+      }
+
+      .safari & {
+        flex-basis: 33%;
+        max-width: 33%;
+      }
     }
 
     .mec-totalcal-view span, input, select {
@@ -61,6 +78,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
 
   .select-wrapper {
     display: inline-block;
+    max-width: 33%;
 
     select {
       display: none;
@@ -72,6 +90,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
       background: $color-blue-unc;
       color: $color-white;
       height: 36px;
+      line-height: 36px;
       width: 100%;
       margin: 0;
       font-size: 0.8rem;
@@ -135,8 +154,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
     line-height: 36px;
     background: $color-white;
     font-size: 13px;
-    color: $color-white;
-    // border: 1px solid #efefef;
+    color: $color-slate-dark;
     margin: 0 0 0 -1px;
     float: left;
     padding: 0 5px;
