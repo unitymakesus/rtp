@@ -134,7 +134,15 @@ class RTP_Dir_Post_Type {
 			'show_in_menu' => true,
 			'query_var' => true,
 			'rewrite' => array( 'slug' => $single_slug ),
-			'capability_type' => 'post',
+			'capabilities' => array(
+	      'edit_post' => 'edit_' . $single_slug,
+	      'edit_posts' => 'edit_' . $archive_slug,
+	      'edit_others_posts' => 'edit_other_' . $archive_slug,
+	      'publish_posts' => 'publish_' . $archive_slug,
+	      'read_post' => 'read_' . $single_slug,
+	      'read_private_posts' => 'read_private_' . $archive_slug,
+	      'delete_post' => 'delete_' . $single_slug
+			),
 			'has_archive' => $archive_slug,
 			'hierarchical' => false,
 			'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),

@@ -61,3 +61,24 @@ function create_taxonomies() {
 
 }
 add_action( 'init', __NAMESPACE__.'\\create_taxonomies' );
+
+/**
+ * Add custom capabilities for MEC plugin
+ */
+function change_capabilities( $args, $post_type ){
+
+  if ( 'mec-events' == $post_type ) {
+    $args['capabilities'] = array(
+      'edit_post' => 'edit_mecevent',
+      'edit_posts' => 'edit_mecevents',
+      'edit_others_posts' => 'edit_other_mecevents',
+      'publish_posts' => 'publish_mecevents',
+      'read_post' => 'read_mecevent',
+      'read_private_posts' => 'read_private_mecevents',
+      'delete_post' => 'delete_mecevent'
+    );
+  }
+
+  return $args;
+}
+add_filter( 'register_post_type_args', __NAMESPACE__ . '\\change_capabilities' , 10, 2 );
