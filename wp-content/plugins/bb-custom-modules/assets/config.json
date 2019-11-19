@@ -19,6 +19,10 @@
     ],
     "cbb-people-card": [
       "./styles/cbb-people-card.scss"
+    ],
+    "cbb-bg-video-plyr": [
+      "./scripts/cbb-bg-video-plyr.js",
+      "./styles/cbb-bg-video-plyr.scss"
     ]
   },
   "publicPath": "/wp-content/plugins/bb-custom-modules",

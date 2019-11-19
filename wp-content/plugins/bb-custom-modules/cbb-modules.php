@@ -71,6 +71,9 @@ function load_custom_modules() {
 
     // People Module
     require_once 'modules/cbb-rtp-people/cbb-rtp-people.php';
+
+    // Background Video
+    require_once 'modules/cbb-bg-video-plyr/cbb-bg-video-plyr.php';
   }
 }
 add_action( 'init', 'load_custom_modules' );
