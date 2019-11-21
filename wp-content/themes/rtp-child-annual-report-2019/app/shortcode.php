@@ -23,7 +23,7 @@ add_shortcode('annual-report-boxyard', function($atts) {
       </div>
       <div class="box box-5"></div>
       <div class="box box-6">
-        <img src="/wp-content/themes/rtp-child-annual-report-2019/dist/images/logos/logo-medicinemama@2x_7695bcd6.png" alt="" />
+        <img src="/wp-content/themes/rtp-child-annual-report-2019/dist/images/logos/logo-medicinemamas_eab88541.png" alt="" />
       </div>
       <div class="box box-7"></div>
       <div class="box box-8">
