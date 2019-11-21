@@ -1,8 +1,20 @@
 export default {
   init() {
-    // JavaScript to be fired on all pages
   },
   finalize() {
-    // JavaScript to be fired on all pages, after the init JS
+    const boxyard = document.getElementById('boxyard');
+    const config = {
+      threshold: 0.5,
+    };
+
+    let observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio > 0) {
+          boxyard.classList.add('showtime');
+        }
+      });
+    }, config);
+
+    observer.observe(boxyard);
   },
 };

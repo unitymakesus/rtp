@@ -112,7 +112,7 @@ function cbb_disable_modules( $enabled, $instance ) {
     'list-icon',
     'uabb-separator',
     'team',
-    'uabb-video',
+    // 'uabb-video',
     'uabb-advanced-menu',
     'advanced-separator',
     'creative-link',
