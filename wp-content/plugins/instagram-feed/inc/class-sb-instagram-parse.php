@@ -104,7 +104,6 @@ class SB_Instagram_Parse
 		$account_type = isset( $post['images'] ) ? 'personal' : 'business';
 
 		if ( $account_type === 'personal' ) {
-
 			return $post['images']['standard_resolution']['url'];
 		} else {
 			if ($post['media_type'] === 'CAROUSEL_ALBUM' || $post['media_type'] === 'VIDEO') {
@@ -153,11 +152,6 @@ class SB_Instagram_Parse
 		} else {
 			$post_id = SB_Instagram_Parse::get_post_id( $post );
 
-			// use resized images if exists
-			if ( isset( $resized_images[ $post_id ]['id'] ) && $resized_images[ $post_id ]['id'] !== 'pending' && $resized_images[ $post_id ]['id'] !== 'video' ) {
-				$media_urls['640'] = 'uploads_dir' . $resized_images[ $post_id ]['id'] . 'full.jpg';
-			}
-
 			$permalink = SB_Instagram_Parse::fix_permalink( SB_Instagram_Parse::get_permalink( $post ) );
 
 			if ( ($post['media_type'] === 'CAROUSEL_ALBUM' || $post['media_type'] === 'VIDEO') && ($media_urls['640'] === '' || $media_urls['640'] === 'video' || $media_urls['640'] === 'pending')) {
@@ -168,6 +162,18 @@ class SB_Instagram_Parse
 			$media_urls['150'] = $permalink . 'media?size=t';
 			$media_urls['320'] = $permalink . 'media?size=m';
 
+			// use resized images if exists
+			if ( isset( $resized_images[ $post_id ]['id'] )
+			     && $resized_images[ $post_id ]['id'] !== 'pending'
+			     && $resized_images[ $post_id ]['id'] !== 'video'
+			     && $resized_images[ $post_id ]['id'] !== 'error' ) {
+				if ( isset( $resized_images[ $post_id ]['sizes']['full'] ) ) {
+					$media_urls['640'] = $resized_images[ $post_id ]['id'];
+				}
+				if ( isset( $resized_images[ $post_id ]['sizes']['low'] ) ) {
+					$media_urls['320'] = $resized_images[ $post_id ]['id'];
+				}
+			}
 
 		}
 

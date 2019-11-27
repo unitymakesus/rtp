@@ -86,6 +86,13 @@ class SB_Instagram_Feed
 	private $report;
 
 	/**
+	 * @var array
+	 *
+	 * @since 2.1.1/5.2.1
+	 */
+	private $resized_images;
+
+	/**
 	 * SB_Instagram_Feed constructor.
 	 *
 	 * @param string $transient_name ID of this feed
@@ -113,6 +120,8 @@ class SB_Instagram_Feed
 
 		// used for errors and the sbi_debug report
 		$this->report = array();
+
+		$this->resized_images = array();
 	}
 
 	/**
@@ -136,10 +145,28 @@ class SB_Instagram_Feed
 	/**
 	 * @return array
 	 *
+	 * @since 2.1.1/5.2.1
+	 */
+	public function set_resized_images( $resized_image_data ) {
+		$this->resized_images = $resized_image_data;
+	}
+
+	/**
+	 * @return array
+	 *
 	 * @since 2.0/5.0
 	 */
 	public function get_next_pages() {
 		return $this->next_pages;
+	}
+
+	/**
+	 * @return array
+	 *
+	 * @since 2.1.1/5.2.1
+	 */
+	public function get_resized_images() {
+		return $this->resized_images;
 	}
 
 	/**
@@ -177,12 +204,14 @@ class SB_Instagram_Feed
 	 * @since 2.0/5.0
 	 */
 	public function should_use_backup() {
-		return $this->should_use_backup;
+		return $this->should_use_backup || empty( $this->post_data );
 	}
 
 	/**
 	 * The header is only displayed when the setting is enabled and
 	 * an account has been connected
+	 *
+	 * Overwritten in the Pro version
 	 *
 	 * @param array $settings settings specific to this feed
 	 * @param array $feed_types_and_terms organized settings related to feed data
@@ -349,12 +378,13 @@ class SB_Instagram_Feed
 			$ids = $num_or_array_of_ids;
 
 			$id_string = '"' . implode( '","', $ids ) . '"';
-			$results = $wpdb->get_results( "
+			$results = $wpdb->get_results( $wpdb->prepare( "
 			SELECT p.media_id, p.instagram_id, p.aspect_ratio, p.sizes
 			FROM $posts_table_name AS p 
 			INNER JOIN $feeds_posts_table_name AS f ON p.id = f.id 
+			WHERE f.feed_id = %s
 			AND p.instagram_id IN($id_string)
-		  	AND p.images_done = 1", ARRAY_A );
+		  	AND p.images_done = 1", $feed_id ), ARRAY_A );
 
 			$return = array();
 			if ( !empty( $results ) && is_array( $results ) ) {
@@ -489,14 +519,23 @@ class SB_Instagram_Feed
 		$next_pages = $this->next_pages;
 		global $sb_instagram_posts_manager;
 
+		/**
+		 * Number of posts to retrieve in each API call
+		 *
+		 * @param int               Minimum number of posts needed in each API request
+		 * @param array $settings   Settings for this feed
+		 *
+		 * @since 2.0/5.0
+		 */
 		$num = apply_filters( 'sbi_num_in_request', $settings['minnum'], $settings );
-
+		$num = max( $num, (int)$settings['apinum'] );
 		$params = array(
 			'num' => $num
 		);
 
 		$one_successful_connection = false;
 		$next_page_found = false;
+		$one_api_request_delayed = false;
 
 		foreach ( $feed_types_and_terms as $type => $terms ) {
 			if ( is_array( $terms ) && count( $terms ) > 5 ) {
@@ -615,6 +654,8 @@ class SB_Instagram_Feed
 						}
 					}
 				} elseif ( $api_requests_delayed ) {
+					$one_api_request_delayed = true;
+
 					$this->add_report( 'delaying API request for ' . $term . ' - ' . $type );
 
 					$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed for this account.', 'instagram-feed' ), $connected_account_for_term['username'] ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b>';
@@ -626,7 +667,7 @@ class SB_Instagram_Feed
 			}
 		}
 
-		if ( ! $one_successful_connection ) {
+		if ( ! $one_successful_connection || ($one_api_request_delayed && empty( $new_post_sets )) ) {
 			$this->should_use_backup = true;
 		}
 		$posts = $this->merge_posts( $new_post_sets, $settings );
@@ -658,7 +699,7 @@ class SB_Instagram_Feed
 	 * @since 2.0/5.0
 	 */
 	public function set_remote_header_data( $settings, $feed_types_and_terms, $connected_accounts_for_feed ) {
-		$first_user = isset( $feed_types_and_terms['users'][0] ) ? $feed_types_and_terms['users'][0]['term'] : '';
+		$first_user = $this->get_first_user( $feed_types_and_terms );
 		$this->header_data = false;
 
 		if ( isset( $connected_accounts_for_feed[ $first_user ] ) ) {
@@ -727,20 +768,27 @@ class SB_Instagram_Feed
 	 * @since 2.0/5.1 duplicate posts removed, cache set trimmed to a maximum
 	 */
 	public function set_cron_cache( $to_cache, $cache_time, $save_backup = true ) {
-		$this->remove_duplicate_posts();
-		$this->trim_posts_to_max();
+		if ( ! empty( $this->post_data )
+		     || ! empty( $this->next_pages )
+		     || ! empty( $to_cache['data'] ) ) {
+			$this->remove_duplicate_posts();
+			$this->trim_posts_to_max();
 
-		$to_cache['data'] = isset( $to_cache['data'] ) ? $to_cache['data'] : $this->post_data;
-		$to_cache['pagination'] = isset( $to_cache['next_pages'] ) ? $to_cache['next_pages'] : $this->next_pages;
-		$to_cache['atts'] = isset( $to_cache['atts'] ) ? $to_cache['atts'] : $this->transient_atts;
-		$to_cache['last_requested'] = isset( $to_cache['last_requested'] ) ? $to_cache['last_requested'] : time();
-		$to_cache['last_retrieve'] = isset( $to_cache['last_retrieve'] ) ? $to_cache['last_retrieve'] : $this->last_retrieve;
+			$to_cache['data'] = isset( $to_cache['data'] ) ? $to_cache['data'] : $this->post_data;
+			$to_cache['pagination'] = isset( $to_cache['next_pages'] ) ? $to_cache['next_pages'] : $this->next_pages;
+			$to_cache['atts'] = isset( $to_cache['atts'] ) ? $to_cache['atts'] : $this->transient_atts;
+			$to_cache['last_requested'] = isset( $to_cache['last_requested'] ) ? $to_cache['last_requested'] : time();
+			$to_cache['last_retrieve'] = isset( $to_cache['last_retrieve'] ) ? $to_cache['last_retrieve'] : $this->last_retrieve;
 
-		set_transient( $this->regular_feed_transient_name, wp_json_encode( $to_cache ), $cache_time );
+			set_transient( $this->regular_feed_transient_name, wp_json_encode( $to_cache ), $cache_time );
 
-		if ( $save_backup ) {
-			update_option( $this->backup_feed_transient_name, wp_json_encode( $to_cache ), false );
+			if ( $save_backup ) {
+				update_option( $this->backup_feed_transient_name, wp_json_encode( $to_cache ), false );
+			}
+		} else {
+			$this->add_report( 'no data not caching' );
 		}
+
 	}
 
 	/**
@@ -846,6 +894,10 @@ class SB_Instagram_Feed
 		$first_username = false;
 		if ( $first_user ) {
 			$first_username = isset( $connected_accounts_for_feed[ $first_user ]['username'] ) ? $connected_accounts_for_feed[ $first_user ]['username'] : $first_user;
+		} elseif ( $header_data ) { // in case no connected account for feed
+			$first_username = SB_Instagram_Parse::get_username( $header_data );
+		} elseif ( isset( $feed_types_and_terms['users'] ) && isset( $this->post_data[0] ) ) { // in case no connected account and no header
+			$first_username = SB_Instagram_Parse::get_username( $this->post_data[0] );
 		}
 		$use_pagination = $this->should_use_pagination( $settings, 0 );
 
@@ -933,21 +985,6 @@ class SB_Instagram_Feed
 	}
 
 	/**
-	 * Additional options/settings added to the main div
-	 * for the feed
-	 *
-	 * Overwritten in the Pro version
-	 *
-	 * @param $other_atts
-	 * @param $settings
-	 *
-	 * @return string
-	 */
-	protected function add_other_atts( $other_atts, $settings ) {
-		return '';
-	}
-
-	/**
 	 * Generates HTML for individual sbi_item elements
 	 *
 	 * @param array $settings
@@ -1018,9 +1055,26 @@ class SB_Instagram_Feed
 		$encoded_options = wp_json_encode( $js_options );
 
 		$js_option_html = '<script type="text/javascript">var sb_instagram_js_options = ' . $encoded_options . ';</script>';
-		$js_option_html .= "<script type='text/javascript' src='" . trailingslashit( SBI_PLUGIN_URL ) . 'js/sb-instagram-2-0-1.min.js?ver=' . SBIVER . "'></script>";
+		$js_option_html .= "<script type='text/javascript' src='" . trailingslashit( SBI_PLUGIN_URL ) . 'js/sb-instagram.min.js?ver=' . SBIVER . "'></script>";
 
 		return $js_option_html;
+	}
+
+	/**
+	 * Overwritten in the Pro version
+	 *
+	 * @param $feed_types_and_terms
+	 *
+	 * @return string
+	 *
+	 * @since 2.1/5.2
+	 */
+	public function get_first_user( $feed_types_and_terms ) {
+		if ( isset( $feed_types_and_terms['users'][0] ) ) {
+			return $feed_types_and_terms['users'][0]['term'];
+		} else {
+			return '';
+		}
 	}
 
 	/**
@@ -1041,6 +1095,21 @@ class SB_Instagram_Feed
 	 */
 	public function get_report() {
 		return $this->report;
+	}
+
+	/**
+	 * Additional options/settings added to the main div
+	 * for the feed
+	 *
+	 * Overwritten in the Pro version
+	 *
+	 * @param $other_atts
+	 * @param $settings
+	 *
+	 * @return string
+	 */
+	protected function add_other_atts( $other_atts, $settings ) {
+		return '';
 	}
 
 	/**
@@ -1151,6 +1220,7 @@ class SB_Instagram_Feed
 		$image_ids = array();
 		$post_index = $offset;
 		$icon_type = $settings['font_method'];
+		$resized_images = $this->get_resized_images();
 
 		foreach ( $posts as $post ) {
 			$image_ids[] = SB_Instagram_Parse::get_post_id( $post );
@@ -1219,6 +1289,7 @@ class SB_Instagram_Feed
 	 * @return mixed|array
 	 *
 	 * @since 2.0/5.0
+	 * @since 2.1/5.2 added filter hook for applying custom sorting
 	 */
 	private function sort_posts( $post_set, $settings ) {
 		if ( empty( $post_set ) ) {
@@ -1227,22 +1298,32 @@ class SB_Instagram_Feed
 
 		// sorting done with "merge_posts" to be more efficient
 		if ( $settings['sortby'] === 'alternate' ) {
-			return $post_set;
-		} elseif ( $settings['sortby'] !== 'random' ) {
+			$return_post_set = $post_set;
+		} elseif ( $settings['sortby'] === 'random' ) {
+			/*
+             * randomly selects posts in a random order. Cache saves posts
+             * in this random order so paginating does not cause some posts to show up
+             * twice or not at all
+             */
+			usort($post_set, 'sbi_rand_sort' );
+			$return_post_set = $post_set;
+
+		} else {
 			// compares posted on dates of posts
 			usort($post_set, 'sbi_date_sort' );
-
-			return $post_set;
-		} else {
-			/*
-			 * randomly selects posts in a random order. Cache saves posts
-			 * in this random order so paginating does not cause some posts to show up
-			 * twice or not at all
-			 */
-			usort($post_set, 'sbi_rand_sort' );
-
-			return $post_set;
+			$return_post_set = $post_set;
 		}
+
+		/**
+		 * Apply a custom sorting of posts
+		 *
+		 * @param array $return_post_set    Ordered set of filtered posts
+		 * @param array $settings           Settings for this feed
+		 *
+		 * @since 2.1/5.2
+		 */
+
+		return apply_filters( 'sbi_sorted_posts', $return_post_set, $settings );
 	}
 
 	/**

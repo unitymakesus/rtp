@@ -60,6 +60,7 @@ final class Ping {
 	 * @since 3.2.3 1. Now works as intended again.
 	 *              2. Removed Easter egg.
 	 * @since 4.0.0 Moved to \The_SEO_Framework\Bridges\Ping
+	 * @since 4.0.2 Added action.
 	 *
 	 * @return void Early if blog is not public.
 	 */
@@ -71,15 +72,19 @@ final class Ping {
 
 		$transient = $tsf->generate_cache_key( 0, '', 'ping' );
 
-		//* NOTE: Use legacy get_transient to prevent ping spam.
+		//* NOTE: Use legacy get_transient to bypass TSF's transient filters and prevent ping spam.
 		if ( false === \get_transient( $transient ) ) {
-			//* Transient doesn't exist yet.
-
 			if ( $tsf->get_option( 'ping_google' ) )
 				static::ping_google();
 
 			if ( $tsf->get_option( 'ping_bing' ) )
 				static::ping_bing();
+
+			/**
+			 * @since 4.0.2
+			 * @param string $class The current class name.
+			 */
+			\do_action( 'the_seo_framework_ping_search_engines', static::class );
 
 			/**
 			 * @since 2.5.1
@@ -98,10 +103,11 @@ final class Ping {
 	 * @since 2.2.9
 	 * @since 3.1.0 Updated ping URL. Old one still worked, too.
 	 * @since 4.0.0 Moved to \The_SEO_Framework\Bridges\Ping
+	 * @since 4.0.3 Google now redirects to HTTPS. Updated URL scheme to accomodate.
 	 * @link https://support.google.com/webmasters/answer/6065812?hl=en
 	 */
 	public static function ping_google() {
-		$pingurl = 'http://www.google.com/ping?sitemap=' . rawurlencode(
+		$pingurl = 'https://www.google.com/ping?sitemap=' . rawurlencode(
 			\The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url()
 		);
 		\wp_safe_remote_get( $pingurl, [ 'timeout' => 3 ] );
@@ -113,10 +119,11 @@ final class Ping {
 	 * @since 2.2.9
 	 * @since 3.2.3 Updated ping URL. Old one still worked, too.
 	 * @since 4.0.0 Moved to \The_SEO_Framework\Bridges\Ping
+	 * @since 4.0.3 Bing now redirects to HTTPS. Updated URL scheme to accomodate.
 	 * @link https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4
 	 */
 	public static function ping_bing() {
-		$pingurl = 'http://www.bing.com/ping?sitemap=' . rawurlencode(
+		$pingurl = 'https://www.bing.com/ping?sitemap=' . rawurlencode(
 			\The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url()
 		);
 		\wp_safe_remote_get( $pingurl, [ 'timeout' => 3 ] );

@@ -148,7 +148,7 @@ class Sanitize extends Admin_Pages {
 	}
 
 	/**
-	 * Register each of the settings with a sanitization filter type.
+	 * Registers each of the settings with a sanitization filter type.
 	 *
 	 * @since 2.8.0
 	 * @since 3.1.0 Added caching, preventing duplicate registrations.
@@ -281,6 +281,8 @@ class Sanitize extends Admin_Pages {
 
 				'paged_noindex',
 				'home_paged_noindex',
+
+				'set_copyright_directives',
 
 				'homepage_noindex',
 				'homepage_nofollow',
@@ -453,6 +455,23 @@ class Sanitize extends Admin_Pages {
 			THE_SEO_FRAMEWORK_SITE_OPTIONS,
 			[
 				'sitemap_query_limit',
+			]
+		);
+
+		$this->add_option_filter(
+			's_image_preview',
+			THE_SEO_FRAMEWORK_SITE_OPTIONS,
+			[
+				'max_image_preview',
+			]
+		);
+
+		$this->add_option_filter(
+			's_snippet_length',
+			THE_SEO_FRAMEWORK_SITE_OPTIONS,
+			[
+				'max_snippet_length',
+				'max_video_preview',
 			]
 		);
 	}
@@ -638,6 +657,8 @@ class Sanitize extends Admin_Pages {
 				's_twitter_card'        => [ $this, 's_twitter_card' ],
 				's_canonical_scheme'    => [ $this, 's_canonical_scheme' ],
 				's_min_max_sitemap'     => [ $this, 's_min_max_sitemap' ],
+				's_image_preview'       => [ $this, 's_image_preview' ],
+				's_snippet_length'      => [ $this, 's_snippet_length' ],
 			]
 		);
 	}
@@ -1265,6 +1286,29 @@ class Sanitize extends Admin_Pages {
 	}
 
 	/**
+	 * Makes non-relative URLs absolute, corrects the scheme to most preferred when the
+	 * domain matches the current site, and makes it safer regardless afterward.
+	 *
+	 * Could not think of a good name. Enjoy.
+	 *
+	 * @since 4.0.2
+	 *
+	 * @param string $new_value String, an (invalid) URL, possibly unsafe.
+	 * @return string String a safe URL with Query Arguments.
+	 */
+	public function s_url_relative_to_current_scheme( $new_value ) {
+
+		if ( $this->matches_this_domain( $new_value ) ) {
+			$url = $this->set_preferred_url_scheme( $new_value );
+		} else {
+			// This also sets preferred URL scheme if path.
+			$url = $this->convert_to_url_if_path( $new_value );
+		}
+
+		return $this->s_url_query( $url );
+	}
+
+	/**
 	 * Makes Email Addresses safe, via sanitize_email()
 	 *
 	 * @since 2.2.2
@@ -1430,7 +1474,7 @@ class Sanitize extends Admin_Pages {
 	 */
 	public function s_redirect_url( $new_value ) {
 
-		// phpcs:ignore, WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- This is simple and performant sanity.
+		// phpcs:ignore, WordPress.WP.AlternativeFunctions.strip_tags_strip_tags -- This is simple, performant sanity.
 		$url = strip_tags( $new_value );
 
 		if ( ! $url ) return '';
@@ -1439,14 +1483,8 @@ class Sanitize extends Admin_Pages {
 		if ( ! $this->allow_external_redirect() )
 			$url = $this->set_url_scheme( $url, 'relative' );
 
-		$new_url = $this->convert_to_url_if_path( $url );
-
-		// Only adjust scheme if it used to be relative.
-		if ( $new_url !== $url ) {
-			$url = $this->set_preferred_url_scheme( $new_url );
-		} else {
-			$url = $new_url;
-		}
+		// Only adjust scheme if it used to be relative. Do not use `s_url_relative_to_current_scheme()`.
+		$url = $this->convert_to_url_if_path( $url );
 
 		/**
 		 * @since 2.5.0
@@ -1476,7 +1514,6 @@ class Sanitize extends Admin_Pages {
 			$new_value = $this->s_url_query( $url );
 		}
 
-		//* Save url
 		return $new_value;
 	}
 
@@ -1585,6 +1622,43 @@ class Sanitize extends Admin_Pages {
 	}
 
 	/**
+	 * Sanitizes image preview directive value.
+	 *
+	 * @since 4.0.2
+	 *
+	 * @param string $new_value String with potentially unwanted values.
+	 * @return string The robots image snippet preview directive value.
+	 */
+	public function s_image_preview( $new_value ) {
+
+		if ( ! in_array( $new_value, [ 'none', 'standard', 'large' ], true ) )
+			$new_value = 'standard';
+
+		return $new_value;
+	}
+
+	/**
+	 * Sanitizes video and snippet preview length directive values.
+	 *
+	 * @since 4.0.2
+	 *
+	 * @param int $new_value Integer with potentially unwanted values.
+	 * @return int The robots video and snippet preview directive value.
+	 */
+	public function s_snippet_length( $new_value ) {
+
+		$new_value = (int) $new_value;
+
+		if ( $new_value < 0 ) {
+			$new_value = -1;
+		} elseif ( $new_value > 600 ) {
+			$new_value = 600;
+		}
+
+		return $new_value;
+	}
+
+	/**
 	 * Sanitizeses ID. Mainly removing spaces and coding characters.
 	 *
 	 * Unlike sanitize_key(), it doesn't alter the case nor applies filters.
@@ -1685,7 +1759,7 @@ class Sanitize extends Admin_Pages {
 		foreach ( [ 'clear', 'space' ] as $type ) {
 			if ( empty( $args[ $type ] ) ) continue;
 
-			$_regex   = sprintf( '<(%s)[^>]*?>((.*?)(<\/\1>))?', implode( $args[ $type ], '|' ) );
+			$_regex   = sprintf( '<(%s)[^>]*?>((.*?)(<\/\1>))?', implode( '|', $args[ $type ] ) );
 			$_replace = 'space' === $type ? ' $2 ' : ' ';
 
 			$input = preg_replace( "/$_regex/si", $_replace, $input );
@@ -1699,6 +1773,7 @@ class Sanitize extends Admin_Pages {
 	 * Cleans known parameters from image details.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.2 Now finds smaller images when they're over 4K.
 	 * @NOTE If the input details are in an associative array, they'll be converted to sequential.
 	 *
 	 * @param array $details The image details, either associative (see $defaults) or sequential.
@@ -1727,13 +1802,7 @@ class Sanitize extends Admin_Pages {
 
 		if ( ! $url ) return $defaults;
 
-		if ( $this->matches_this_domain( $url ) ) {
-			$url = $this->set_preferred_url_scheme( $url );
-		} else {
-			// Also sets preferred URL scheme if path.
-			$url = $this->convert_to_url_if_path( $url );
-		}
-		$url = $this->s_url_query( $url );
+		$url = $this->s_url_relative_to_current_scheme( $url );
 
 		if ( ! $url ) return $defaults;
 
@@ -1743,7 +1812,16 @@ class Sanitize extends Admin_Pages {
 		if ( ! $width || ! $height )
 			$width = $height = 0;
 
-		if ( $width > 4096 || $height > 4096 ) return $defaults;
+		if ( $width > 4096 || $height > 4096 ) {
+			$new_image = $this->get_largest_acceptable_image_src( $id, 4096 );
+			$url       = $new_image ? $this->s_url_relative_to_current_scheme( $new_image[0] ) : '';
+
+			if ( ! $url ) return $defaults;
+
+			// No sanitization needed. PHP's getimagesize() returns the correct values.
+			$width  = $new_image[1];
+			$height = $new_image[2];
+		}
 
 		if ( $alt ) {
 			$alt = \wp_strip_all_tags( $alt );

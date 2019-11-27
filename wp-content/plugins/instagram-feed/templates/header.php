@@ -3,7 +3,7 @@
  * Custom Feeds for Instagram Header Template
  * Adds account information and an avatar to the top of the feed
  *
- * @version 2.0 Custom Feeds for Instagram Free by Smash Balloon
+ * @version 2.1 Instagram Feed by Smash Balloon
  *
  */
 

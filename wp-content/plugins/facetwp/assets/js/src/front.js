@@ -516,10 +516,10 @@ window.FWP = window.FWP || {};
                 var pos = selected_vals.indexOf(opts[facet_name]);
                 selected_vals.splice(pos, 1); // splice() is mutable!
                 FWP.facets[facet_name] = selected_vals;
+            }
 
-                if (selected_vals.length < 1) {
-                    delete FWP.frozen_facets[facet_name];
-                }
+            if (has_reset && (selected_vals.length < 1 || '' === opts[facet_name])) {
+                delete FWP.frozen_facets[facet_name];
             }
 
             if (reset_all || (has_reset && '' === opts[facet_name])) {
@@ -642,7 +642,7 @@ window.FWP = window.FWP || {};
         });
 
         // Pagination
-        $(document).on('click', '.facetwp-page', function() {
+        $(document).on('click', '.facetwp-page[data-page]', function() {
             $('.facetwp-page').removeClass('active');
             $(this).addClass('active');
 

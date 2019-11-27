@@ -3,7 +3,7 @@
  * Custom Feeds for Instagram Main Template
  * Creates the wrapping HTML and adds settings as attributes
  *
- * @version 2.0 Custom Feeds for Instagram Free by Smash Balloon
+ * @version 2.1 Instagram Feed by Smash Balloon
  *
  */
 // Don't load directly
@@ -39,6 +39,15 @@ if ( $settings['showheader'] && ! empty( $posts ) && $settings['headeroutside'] 
 
 	<?php if ( ! empty( $posts ) ) { include sbi_get_feed_template_part( 'footer', $settings ); } ?>
 
-	<?php do_action( 'sbi_before_feed_end', $this, $feed_id ); ?>
-
+	<?php
+	/**
+	 * Things to add before the closing "div" tag for the main feed element. Several
+	 * features rely on this hook such as local images and some error messages
+	 *
+	 * @param object SB_Instagram_Feed
+	 * @param string $feed_id
+	 *
+	 * @since 2.1/5.2
+	 */
+	do_action( 'sbi_before_feed_end', $this, $feed_id ); ?>
 </div>

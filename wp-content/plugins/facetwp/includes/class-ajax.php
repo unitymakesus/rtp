@@ -251,7 +251,8 @@ class FacetWP_Ajax
 
         // Check for valid JSON
         if ( isset( $json_test['settings'] ) ) {
-            update_option( 'facetwp_settings', $settings );
+            update_option( 'facetwp_settings', $settings, 'no' );
+
             $response = [
                 'code' => 'success',
                 'message' => __( 'Settings saved', 'fwp' ),
@@ -273,6 +274,7 @@ class FacetWP_Ajax
      * Rebuild the index table
      */
     function rebuild_index() {
+        update_option( 'facetwp_indexing_cancelled', 'no', 'no' );
         FWP()->indexer->index();
         exit;
     }
@@ -317,7 +319,7 @@ class FacetWP_Ajax
             ];
         }
         elseif ( 'cancel_reindex' == $type ) {
-            update_option( 'facetwp_indexing', '' );
+            update_option( 'facetwp_indexing_cancelled', 'yes' );
 
             $response = [
                 'code' => 'success',

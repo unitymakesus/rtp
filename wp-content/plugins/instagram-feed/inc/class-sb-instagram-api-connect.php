@@ -248,6 +248,14 @@ class SB_Instagram_API_Connect
 
 				$sb_instagram_posts_manager->add_frontend_error( 'hashtag_limit_reached', $error );
 
+			} elseif ( (int)$response['error']['code'] === 10 ) {
+				$user_name = $error_connected_account['username'];
+
+				$error = '<p><b>' . sprintf( __( 'Error: Connected account for the user %s does not have permission to use this feed type.', 'instagram-feed' ), $user_name ) .'</b>';
+				$error .= '<p>' . __( 'Try using the big blue button on the "Configure" tab to reconnect the account and update its permissions.', 'instagram-feed' );
+
+				$sb_instagram_posts_manager->add_frontend_error( 'hashtag_limit_reached', $error );
+
 			} else if ( $response['error']['type'] === 'OAuthException' ) {
 				if ( $response['error']['code'] === 24 ) {
 					$error = '<p><b>' . __( 'Error: Hashtag does not exist.', 'instagram-feed' ) .'</b>';
@@ -342,7 +350,7 @@ class SB_Instagram_API_Connect
 			if ( $endpoint_slug === 'header' ) {
 				$url = 'https://api.instagram.com/v1/users/' . $connected_account['user_id'] . '?access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} else {
-				$num = min( $num, 33 );
+				$num = $num > 20 ? min( $num, 33 ) : 20; // minimum set at 20 due to IG TV bug
 				$url = 'https://api.instagram.com/v1/users/' . $connected_account['user_id'] . '/media/recent?count='.$num.'&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			}
 		} else {

@@ -235,7 +235,11 @@ class FacetWP_Facet_fSelect extends FacetWP_Facet
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e( 'Multi-select?', 'fwp' ); ?>:
+                <?php _e( 'Multi-select', 'fwp' ); ?>:
+                <div class="facetwp-tooltip">
+                    <span class="icon-question">?</span>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Allow multiple selections?', 'fwp' ); ?></div>
+                </div>
             </div>
             <div>
                 <label class="facetwp-switch">

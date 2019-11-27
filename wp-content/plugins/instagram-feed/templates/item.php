@@ -3,7 +3,7 @@
  * Custom Feeds for Instagram Item Template
  * Adds an image, link, and other data for each post in the feed
  *
- * @version 2.0 Custom Feeds for Instagram Free by Smash Balloon
+ * @version 2.1 Instagram Feed by Smash Balloon
  *
  */
 
@@ -31,7 +31,7 @@ $img_alt = SB_Instagram_Parse::get_caption( $post, __( 'Image for post', 'instag
             <span class="sbi-screenreader"><?php echo sprintf( __( 'Instagram post %s', 'instagram-feed' ), $post_id ); ?></span>
             <?php echo $maybe_carousel_icon; ?>
 	        <?php echo $maybe_video_icon; ?>
-            <img src="<?php echo esc_url( $media_url ); ?>" alt="<?php echo esc_attr( $img_alt ); ?>" width="200" height="200">
+            <img src="<?php echo esc_url( $media_url ); ?>" alt="<?php echo esc_attr( $img_alt ); ?>">
         </a>
     </div>
 </div>

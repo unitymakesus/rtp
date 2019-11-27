@@ -286,6 +286,50 @@ class GFCommon {
 		return dirname( __FILE__ );
 	}
 
+	/**
+	 * Returns an array of files/directories which match the supplied pattern.
+	 *
+	 * @since 2.4.15
+	 *
+	 * @param string $pattern   The pattern to be appended to the base path when performing the search.
+	 * @param string $base_path The base path. Defaults to the plugin's root folder.
+	 *
+	 * @return array|false
+	 */
+	public static function glob( $pattern, $base_path = '' ) {
+		if ( empty( $base_path ) ) {
+			$base_path = self::get_base_path();
+		}
+
+		// Escape any brackets in the base path.
+		$base_path = str_replace( array( '[', ']' ), array( '\[', '\]' ), $base_path );
+		$base_path = str_replace( array( '\[', '\]' ), array( '[[]', '[]]' ), $base_path );
+
+		return glob( $base_path . $pattern );
+	}
+
+	/**
+	 * Requires and returns an array of files which match the supplied pattern.
+	 *
+	 * @since 2.4.15
+	 *
+	 * @param string $pattern   The pattern to be appended to the base path when performing the search.
+	 * @param string $base_path The base path. Defaults to the plugin's root folder.
+	 *
+	 * @return array|false
+	 */
+	public static function glob_require_once( $pattern, $base_path = '' ) {
+		$files = self::glob( $pattern, $base_path );
+
+		if ( is_array( $files ) ) {
+			foreach ( $files as $file ) {
+				require_once $file;
+			}
+		}
+
+		return $files;
+	}
+
 	public static function get_email_fields( $form ) {
 		$fields = array();
 		foreach ( $form['fields'] as $field ) {
@@ -1740,7 +1784,7 @@ class GFCommon {
 
 		$email_to = rgar( $notification, 'to' );
 		//do routing logic if "to" field doesn't have a value (to support legacy notifications that will run routing prior to this method)
-		if ( empty( $email_to ) && rgar( $notification, 'toType' ) == 'routing' ) {
+		if ( empty( $email_to ) && rgar( $notification, 'toType' ) == 'routing' && ! empty( $notification['routing'] ) ) {
 			$email_to = array();
 			foreach ( $notification['routing'] as $routing ) {
 				if ( rgempty( 'email', $routing ) ) {
@@ -1991,16 +2035,28 @@ class GFCommon {
 			$from = get_bloginfo( 'admin_email' );
 		}
 
+		// Array containing email details.
+		$email = compact( 'from', 'to', 'bcc', 'reply_to', 'subject', 'message', 'from_name', 'message_format', 'attachments', 'cc' );
+
 		$error = false;
 		if ( ! GFCommon::is_valid_email_list( $to ) ) {
+
+			$error_info = esc_html__( 'Cannot send email because the TO address is invalid.', 'gravityforms' );
+			GFFormsModel::add_notification_note( $entry_id, false, $notification, $error_info, $email );
 
 			$error = new WP_Error( 'invalid_to', 'Cannot send email because the TO address is invalid.' );
 
 		} elseif ( empty( $subject ) && empty( $message ) ) {
 
+			$error_info = esc_html__( 'Cannot send email because there is no SUBJECT and no MESSAGE.', 'gravityforms' );
+			GFFormsModel::add_notification_note( $entry_id, false, $notification, $error_info, $email );
+
 			$error = new WP_Error( 'missing_subject_and_message', 'Cannot send email because there is no SUBJECT and no MESSAGE.' );
 
 		} elseif ( ! GFCommon::is_valid_email( $from ) ) {
+
+			$error_info = esc_html__( 'Cannot send email because the FROM address is invalid.', 'gravityforms' );
+			GFFormsModel::add_notification_note( $entry_id, false, $notification, $error_info, $email );
 
 			$error = new WP_Error( 'invalid_from', 'Cannot send email because the FROM address is invalid.' );
 		}
@@ -2041,7 +2097,7 @@ class GFCommon {
 			 * @param array  $entry   The Entry object
 			 *
 			 */
-			do_action( 'gform_send_email_failed', $error, compact( 'from', 'to', 'bcc', 'reply_to', 'subject', 'message', 'from_name', 'message_format', 'attachments', 'cc' ), $entry );
+			do_action( 'gform_send_email_failed', $error, $email, $entry );
 
 			return;
 		}
@@ -2097,6 +2153,10 @@ class GFCommon {
 		extract( apply_filters( 'gform_pre_send_email', compact( 'to', 'subject', 'message', 'headers', 'attachments', 'abort_email' ), $message_format, $notification, $entry ) );
 
 		$is_success = false;
+
+		// Determine when to add entry id information to the logging message.
+		$entry_info = $entry_id ? ' for entry #' . $entry_id : '';
+
 		if ( ! $abort_email ) {
 
 			GFCommon::log_debug( __METHOD__ . '(): Sending email via wp_mail().' );
@@ -2115,12 +2175,15 @@ class GFCommon {
 
 			$result = is_wp_error( $is_success ) ? $is_success->get_error_message() : $is_success;
 
+			// Add note with sending result ?
+			GFFormsModel::add_notification_note( $entry_id, $result, $notification, $phpmailer->ErrorInfo, $email );
+
 			GFCommon::log_debug( __METHOD__ . "(): Result from wp_mail(): {$result}" );
 
 			if ( ! is_wp_error( $is_success ) && $is_success ) {
-				GFCommon::log_debug( __METHOD__ . "(): WordPress successfully passed the notification email (#{$notification['id']} - {$notification['name']}) for entry #{$entry_id} to the sending server." );
+				GFCommon::log_debug( sprintf( '%s(): WordPress successfully passed the notification email (#%s - %s)%s to the sending server.', __METHOD__, $notification['id'], $notification['name'], $entry_info ) );
 			} else {
-				GFCommon::log_error( __METHOD__ . "(): WordPress was unable to send the notification email (#{$notification['id']} - {$notification['name']}) for entry #{$entry_id}." );
+				GFCommon::log_error( sprintf( '%s(): WordPress was unable to send the notification email (#%s - %s)%s to the sending server.', __METHOD__, $notification['id'], $notification['name'], $entry_info ) );
 			}
 
 			if ( has_filter( 'phpmailer_init' ) ) {
@@ -2128,10 +2191,10 @@ class GFCommon {
 			}
 
 			if ( ! empty( $phpmailer->ErrorInfo ) ) {
-				GFCommon::log_debug( __METHOD__ . '(): PHPMailer class returned an error message: ' . print_r( $phpmailer->ErrorInfo, 1 ) );
+				GFCommon::log_debug( __METHOD__ . '(): PHPMailer class returned an error message: ' . $phpmailer->ErrorInfo );
 			}
 		} else {
-			GFCommon::log_debug( __METHOD__ . "(): Aborting notification (#{$notification['id']} - {$notification['name']}) for entry #{$entry_id}. The gform_pre_send_email hook was used to set the abort_email parameter to true." );
+			GFCommon::log_debug( sprintf( '%s(): Aborting notification (#%s - %s)%s. The gform_pre_send_email hook was used to set the abort_email parameter to true.', __METHOD__, $notification['id'], $notification['name'], $entry_info ) );
 		}
 
 		self::add_emails_sent();
@@ -4388,7 +4451,12 @@ Content-Type: text/html;
 
 		if ( preg_match( '/^[0-9 -\/*\(\)]+$/', $formula ) ) {
 			$prev_reporting_level = error_reporting( 0 );
-			$result               = eval( "return {$formula};" );
+			try {
+				$result = eval( "return {$formula};" );
+        		} catch ( ParseError $e ) {
+				GFCommon::log_debug( __METHOD__ . sprintf( '(): Formula could not be parsed: "%s".', $e->getMessage() ) );
+				$result = 0;
+			}
 			error_reporting( $prev_reporting_level );
 		}
 
@@ -5243,17 +5311,17 @@ Content-Type: text/html;
 		wp_localize_script(
 			'gform_gravityforms', 'gform_gravityforms', array(
 				'strings' => array(
-					'invalid_file_extension' => esc_html__( 'This type of file is not allowed. Must be one of the following: ', 'gravityforms' ),
-					'delete_file'            => esc_html__( 'Delete this file', 'gravityforms' ),
-					'in_progress'            => esc_html__( 'in progress', 'gravityforms' ),
-					'file_exceeds_limit'     => esc_html__( 'File exceeds size limit', 'gravityforms' ),
-					'illegal_extension'      => esc_html__( 'This type of file is not allowed.', 'gravityforms' ),
-					'max_reached'            => esc_html__( 'Maximum number of files reached', 'gravityforms' ),
-					'unknown_error'          => esc_html__( 'There was a problem while saving the file on the server', 'gravityforms' ),
-					'currently_uploading'    => esc_html__( 'Please wait for the uploading to complete', 'gravityforms' ),
-					'cancel'                 => esc_html__( 'Cancel', 'gravityforms' ),
-					'cancel_upload'          => esc_html__( 'Cancel this upload', 'gravityforms' ),
-					'cancelled'              => esc_html__( 'Cancelled', 'gravityforms' )
+					'invalid_file_extension' => wp_strip_all_tags( __( 'This type of file is not allowed. Must be one of the following: ', 'gravityforms' ) ),
+					'delete_file'            => wp_strip_all_tags( __( 'Delete this file', 'gravityforms' ) ),
+					'in_progress'            => wp_strip_all_tags( __( 'in progress', 'gravityforms' ) ),
+					'file_exceeds_limit'     => wp_strip_all_tags( __( 'File exceeds size limit', 'gravityforms' ) ),
+					'illegal_extension'      => wp_strip_all_tags( __( 'This type of file is not allowed.', 'gravityforms' ) ),
+					'max_reached'            => wp_strip_all_tags( __( 'Maximum number of files reached', 'gravityforms' ) ),
+					'unknown_error'          => wp_strip_all_tags( __( 'There was a problem while saving the file on the server', 'gravityforms' ) ),
+					'currently_uploading'    => wp_strip_all_tags( __( 'Please wait for the uploading to complete', 'gravityforms' ) ),
+					'cancel'                 => wp_strip_all_tags( __( 'Cancel', 'gravityforms' ) ),
+					'cancel_upload'          => wp_strip_all_tags( __( 'Cancel this upload', 'gravityforms' ) ),
+					'cancelled'              => wp_strip_all_tags( __( 'Cancelled', 'gravityforms' ) )
 				),
 				'vars'    => array(
 					'images_url' => GFCommon::get_base_url() . '/images'
@@ -6016,6 +6084,40 @@ Content-Type: text/html;
 
 		return $result;
 	}
+
+	/**
+	 * Checks if notification from email is using the site domain.
+	 *
+	 * @since  2.4.12
+	 *
+	 * @param string $email_address Email address to check.
+	 * @param string $domain        Domain to check.
+	 *
+	 * @return bool
+	 */
+	public static function email_domain_matches( $email_address, $domain = '' ) {
+
+		GFCommon::log_debug( __METHOD__ . '(): Email address: ' . $email_address );
+
+		if ( ! is_email( $email_address ) ) {
+			GFCommon::log_debug( __METHOD__ . '(): Email address failed is_email() validation.' );
+			return false;
+		}
+
+		if ( empty( $domain ) ) {
+			$domain = parse_url( get_bloginfo( 'url' ), PHP_URL_HOST );
+		}
+
+		GFCommon::log_debug( __METHOD__ . '(): Domain or URL: ' . $domain );
+
+		$email_domain = explode( '@', $email_address );
+
+		$domain_matches = ( strpos( $domain, array_pop( $email_domain ) ) !== false ) ? true : false;
+		GFCommon::log_debug( __METHOD__ . '(): Domain matches? '. var_export( $domain_matches, true ) );
+
+		return $domain_matches;
+  }
+
 }
 
 class GFCategoryWalker extends Walker {
