@@ -2126,7 +2126,7 @@ a.plyr__control::before {
   background-color: gray;
 }
 
-/* line 19, stdin */
+/* line 8, stdin */
 
 .video-content {
   display: -webkit-box;
@@ -2144,13 +2144,13 @@ a.plyr__control::before {
   padding-right: 75px;
 }
 
-/* line 31, stdin */
+/* line 19, stdin */
 
 .video-content h2 {
   font-size: 1.5rem;
 }
 
-/* line 36, stdin */
+/* line 24, stdin */
 
 .video-background .plyr__controls {
   background: none;
@@ -2162,7 +2162,7 @@ a.plyr__control::before {
           transform: none !important;
 }
 
-/* line 45, stdin */
+/* line 33, stdin */
 
 .video-background .plyr__controls > .plyr__control {
   margin-left: 0;
@@ -2170,7 +2170,7 @@ a.plyr__control::before {
 }
 
 @media (min-width: 768px) {
-  /* line 52, stdin */
+  /* line 40, stdin */
 
   .video-content {
     display: block;
@@ -2182,33 +2182,39 @@ a.plyr__control::before {
             transform: translateY(-50%);
   }
 
-  /* line 59, stdin */
+  /* line 47, stdin */
 
   .video-content h2 {
     font-size: 2rem;
   }
 
-  /* line 64, stdin */
+  /* line 52, stdin */
 
   .video-content-pad {
     padding: 3rem;
   }
 
-  /* line 68, stdin */
+  /* line 56, stdin */
 
   .video-foreground::before {
     background-color: transparent;
   }
 }
 
-/* line 75, stdin */
+/* line 63, stdin */
 
 .fl-module-content .plyr--video .plyr__controls {
   background: none;
   z-index: 10;
 }
 
-/* line 80, stdin */
+/* line 68, stdin */
+
+.fl-module-content .plyr--video .plyr__control {
+  background-color: #0094C9;
+}
+
+/* line 72, stdin */
 
 .fl-module-content .plyr__controls .plyr__controls__item:first-child {
   margin-right: 0;

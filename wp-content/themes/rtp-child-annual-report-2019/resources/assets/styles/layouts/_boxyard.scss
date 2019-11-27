@@ -26,7 +26,10 @@ $brand-primary: #DB342A;
       height: 100%;
       object-fit: contain;
       padding: 2rem;
-      opacity: 0;
+    }
+
+    &:focus {
+      outline: 0; // logo images will highlight as a focus state
     }
   }
 }
@@ -51,7 +54,6 @@ $brand-primary: #DB342A;
   bottom: 0;
   width: 100%;
   height: 100%;
-  // background-image: url(../images/boxyard-rtp-map.png);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -61,11 +63,10 @@ $brand-primary: #DB342A;
 }
 
 #boxyard {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  // min-height: 100vh;
   background-color: transparent;
   transition: background-color 0.75s ease;
   will-change: background-color;
@@ -86,6 +87,13 @@ $brand-primary: #DB342A;
 
   &.showtime .box {
     background-color: white;
+    filter: grayscale(1);
+    transition: filter 0.3s ease-in-out;
+
+    &:hover,
+    &:focus {
+      filter: grayscale(0);
+    }
   }
 
   &.showtime .box img {
