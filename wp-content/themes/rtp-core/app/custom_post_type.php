@@ -82,3 +82,8 @@ function change_capabilities( $args, $post_type ){
   return $args;
 }
 add_filter( 'register_post_type_args', __NAMESPACE__ . '\\change_capabilities' , 10, 2 );
+
+/**
+ * Custom capability for distributor plugin
+ */
+apply_filters( 'dt_push_capabilities', 'distribute_content' );
