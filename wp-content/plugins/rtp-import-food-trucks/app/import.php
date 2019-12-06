@@ -258,7 +258,7 @@ function cleanData($data, $idxMap, $notBefore, $notAfter) {
     }
 
     // Set row index to array for future reference
-    $sheetEvent['ridx'] = $rdix;
+    $sheetEvent['ridx'] = $ridx;
 
     // Set start time
     $date = new \DateTime($sheetEvent['date']);
@@ -288,6 +288,13 @@ function cleanData($data, $idxMap, $notBefore, $notAfter) {
       if ($rodex == false) {
         $rodex = $ridx;
         $rodate = $starttime;
+
+        // Add the first rodeo truck to its own array of trucks and clean up
+        $sheetEvent['trucks'][] = [
+          'title'   => $sheetEvent['title'],
+          'website' => $sheetEvent['website'],
+        ];
+        unset($sheetEvent['title'], $sheetEvent['website']);
       }
 
       // Check the date is the same as the previous rodeo row

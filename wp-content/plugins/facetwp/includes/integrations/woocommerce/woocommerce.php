@@ -65,6 +65,7 @@ class FacetWP_Integration_WooCommerce
                 'woo/average_rating'    => __( 'Average Rating' ),
                 'woo/stock_status'      => __( 'Stock Status' ),
                 'woo/on_sale'           => __( 'On Sale' ),
+                'woo/featured'          => __( 'Featured' ),
                 'woo/product_type'      => __( 'Product Type' ),
             ],
             'weight' => 5
@@ -448,6 +449,15 @@ class FacetWP_Integration_WooCommerce
                 if ( $product->is_on_sale() ) {
                     $defaults['facet_value'] = 1;
                     $defaults['facet_display_value'] = __( 'On Sale', 'fwp-front' );
+                    FWP()->indexer->index_row( $defaults );
+                }
+            }
+
+            // Featured
+            elseif ( 'featured' == $source ) {
+                if ( $product->is_featured() ) {
+                    $defaults['facet_value'] = 1;
+                    $defaults['facet_display_value'] = __( 'Featured', 'fwp-front' );
                     FWP()->indexer->index_row( $defaults );
                 }
             }

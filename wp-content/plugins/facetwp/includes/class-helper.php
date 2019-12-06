@@ -61,7 +61,8 @@ final class FacetWP_Helper
             'number_range'  => 'Facetwp_Facet_Number_Range',
             'proximity'     => 'Facetwp_Facet_Proximity_Core',
             'radio'         => 'Facetwp_Facet_Radio_Core',
-            'rating'        => 'FacetWP_Facet_Rating'
+            'rating'        => 'FacetWP_Facet_Rating',
+            'pager'         => 'FacetWP_Facet_Pager'
         ];
 
         $facet_types = [];

@@ -182,7 +182,8 @@ function sbi_connect_business_accounts() {
 			'last_checked' => time(),
 			'profile_picture' => $profile_picture,
 			'name' => $name,
-			'type' => $type
+			'type' => $type,
+			'use_tagged' => '1'
 		);
 
 		if ( !$options['sb_instagram_disable_resize'] ) {
@@ -254,11 +255,13 @@ function sbi_test_token() {
 				);
 			}
 
+			delete_transient( SBI_USE_BACKUP_PREFIX . 'sbi_'  . $json['id'] );
+
 		}
 
 		if ( isset( $test_connection_data['error_message'] ) ) {
 			echo $test_connection_data['error_message'];
-		} elseif ( $test_connection_data !== false ) {
+		} elseif ( $test_connection_data !== false && ! empty( $new_user_id ) ) {
 			$username = $test_connection_data['username'] ? $test_connection_data['username'] : $connected_accounts[ $new_user_id ]['username'];
 			$user_id = $test_connection_data['id'] ? $test_connection_data['id'] : $connected_accounts[ $new_user_id ]['user_id'];
 			$profile_picture = $test_connection_data['profile_picture'] ? $test_connection_data['profile_picture'] : $connected_accounts[ $new_user_id ]['profile_picture'];
@@ -268,7 +271,7 @@ function sbi_test_token() {
 				'user_id' => $user_id,
 				'username' => $username,
 				'type' => $type,
-				'is_valid' => $test_connection_data['is_valid'],
+				'is_valid' => true,
 				'last_checked' => $test_connection_data['last_checked'],
 				'profile_picture' => $profile_picture
 			);
@@ -280,6 +283,25 @@ function sbi_test_token() {
 			} else {
 				$connected_accounts[ $new_user_id ]['local_avatar'] = false;
 			}
+
+			if ( $type === 'business' ) {
+				$url = 'https://graph.facebook.com/'.$user_id.'/tags?user_id='.$user_id.'&fields=id&limit=1&access_token='.sbi_maybe_clean( $access_token );
+				$args = array(
+					'timeout' => 60,
+					'sslverify' => false
+				);
+				$response = wp_remote_get( $url, $args );
+
+				if ( ! is_wp_error( $response ) ) {
+					// certain ways of representing the html for double quotes causes errors so replaced here.
+					$response = json_decode( str_replace( '%22', '&rdquo;', $response['body'] ), true );
+					if ( isset( $response['data'] ) ) {
+						$connected_accounts[ $new_user_id ]['use_tagged'] = '1';
+					}
+				}
+			}
+
+			delete_transient( SBI_USE_BACKUP_PREFIX . 'sbi_'  . $user_id );
 
 			$options['connected_accounts'] = $connected_accounts;
 
@@ -306,29 +328,31 @@ function sbi_delete_account() {
 	$options = get_option( 'sb_instagram_settings', array() );
 	$connected_accounts =  isset( $options['connected_accounts'] ) ? $options['connected_accounts'] : array();
 
-	if ( $account_id ) {
-		wp_cache_delete ( 'alloptions', 'options' );
-		$username = $connected_accounts[ $account_id ]['username'];
+	wp_cache_delete ( 'alloptions', 'options' );
+	$username = $connected_accounts[ $account_id ]['username'];
 
-		$num_times_used = 0;
-		foreach ( $connected_accounts as $connected_account ) {
+	$num_times_used = 0;
 
-		    if ( $connected_account['username'] === $username ) {
-		        $num_times_used++;
-            }
-        }
+	$new_con_accounts = array();
+	foreach ( $connected_accounts as $connected_account ) {
 
-		if ( $num_times_used < 2 ) {
-			sbi_delete_local_avatar( $username );
-        }
+		if ( $connected_account['username'] === $username ) {
+			$num_times_used++;
+		}
 
-		unset( $connected_accounts[ $account_id ] );
-
-		$options['connected_accounts'] = $connected_accounts;
-
-		update_option( 'sb_instagram_settings', $options );
-
+		if ( $connected_account['username'] !== '' && $account_id !== $connected_account['user_id'] && ! empty( $connected_account['user_id'] ) ) {
+			$new_con_accounts[ $connected_account['user_id'] ] = $connected_account;
+		}
 	}
+
+	if ( $num_times_used < 2 ) {
+		sbi_delete_local_avatar( $username );
+	}
+
+	$options['connected_accounts'] = $new_con_accounts;
+
+	update_option( 'sb_instagram_settings', $options );
+
 
 	die();
 }
@@ -562,8 +586,7 @@ function sbi_notices_html() {
 	$is_plugins_page = isset( $current_screen->id ) && $current_screen->id === 'plugins';
 	$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 	//Only show to admins
-	if ( ! current_user_can( 'manage_options' )
-	     || ($page !== 'sb-instagram-feed'  && !$is_plugins_page) ) {
+	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
 
@@ -624,7 +647,6 @@ function sbi_notices_html() {
 		$user_id = $current_user->ID;
 		$ignore_new_user_sale_notice_meta = get_user_meta( $user_id, 'sbi_ignore_new_user_sale_notice' );
 		$ignore_new_user_sale_notice_meta = isset( $ignore_new_user_sale_notice_meta[0] ) ? $ignore_new_user_sale_notice_meta[0] : '';
-
 		if ( $ignore_new_user_sale_notice_meta !== 'always' ) {
 			$should_show_new_user_discount = true;
 		}
@@ -666,16 +688,14 @@ function sbi_notices_html() {
 
 		var_dump( $sbi_statuses_option );
 	}
-
-	$should_show_bfcm_discount = false; // temporary to not show notices on update
-	$should_show_new_user_discount = false; // temporary to not show notices on update
+	
 
 	if ( $should_show_rating_notice ) {
 		$other_notice_html = '';
 		$dismiss_url = add_query_arg( 'sbi_ignore_rating_notice_nag', '1' );
 		$later_url = add_query_arg( 'sbi_ignore_rating_notice_nag', 'later' );
 		if ( $should_show_bfcm_discount ) {
-			$other_notice_html = '<p class="sbi_other_notice">' .  __( 'PS. We currently have a Black Friday/Cyber Monday deal going on for <b>20% off</b> the Pro version of the plugin.', 'instagram-feed' ) . '<a href="https://smashballoon.com/instagram-feed/?utm_source=plugin-free&utm_campaign=sbi&discount='.$sbi_bfcm_discount_code.'" target="_blank" class="sbi_offer_btn">' .  __( 'Get this deal!', 'instagram-feed' ) . '</a></p>';
+			$other_notice_html = '<p class="sbi_other_notice">' .  __( 'PS. We currently have a <a href="https://smashballoon.com/instagram-feed/?utm_source=plugin-free&utm_campaign=sbi&discount='.$sbi_bfcm_discount_code.'" target="_blank"><b style="font-weight: 700;">Black Friday deal</b></a> for 20% off the Pro version!', 'instagram-feed' ) . '</a></p>';
 
 			$dismiss_url = add_query_arg( array(
 					'sbi_ignore_rating_notice_nag' => '1',
@@ -689,12 +709,14 @@ function sbi_notices_html() {
 			);
 		}
 
-		echo"
+		echo "
             <div class='sbi_notice sbi_review_notice'>
                 <img src='". SBI_PLUGIN_URL . 'img/sbi-icon.png' ."' alt='" . __( 'Instagram Feed', 'instagram-feed' ) . "'>
                 <div class='sbi-notice-text'>
-                    <p>" . __( "It's great to see that you've been using the <strong>Smash Balloon Instagram Feed</strong> plugin for a while now. Hopefully you're happy with it!&nbsp; If so, would you consider leaving a positive review? It really helps to support the plugin and helps others to discover it too!", 'instagram-feed' ) . "</p>
-                    <p class='links'>
+                    <p style='padding-top: 4px;'>" . __( "It's great to see that you've been using the <strong style='font-weight: 700;'>Instagram Feed</strong> plugin for a while now. Hopefully you're happy with it!&nbsp; If so, would you consider leaving a positive review? It really helps to support the plugin and helps others to discover it too!", 'instagram-feed' ) . "</p>
+                    <p class='links'";
+                    if( $should_show_bfcm_discount ) echo " style='margin-top: 0 !important;'";
+                    echo ">
                         <a class='sbi_notice_dismiss' href='https://wordpress.org/support/plugin/instagram-feed/reviews/' target='_blank'>" . __( 'Sure, I\'d love to!', 'instagram-feed' ) . "</a>
                         &middot;
                         <a class='sbi_notice_dismiss' href='" .esc_url( $dismiss_url ). "'>" . __( 'No thanks', 'instagram-feed' ) . "</a>
@@ -718,9 +740,9 @@ function sbi_notices_html() {
         <div class='sbi_notice sbi_review_notice sbi_new_user_sale_notice'>
             <img src='" . SBI_PLUGIN_URL . 'img/sbi-icon-offer.png' . "' alt='Instagram Feed'>
             <div class='sbi-notice-text'>
-                <p>" . __( '<b style="font-weight: 700;">Thank you!</b> We appreciate you using the Smash Balloon Instagram Feed plugin and wanted to say thank you by offering you a limited time <b>20% discount</b> on the Pro version.', 'instagram-feed' ) . "</p>
-                <p class='links'>
-                    <a class='sbi_notice_dismiss sbi_offer_btn' href='https://smashballoon.com/instagram-feed/?utm_source=plugin-free&utm_campaign=sbi&discount=instagramthankyou' target='_blank'>" . __( 'Yes please!', 'instagram-feed' ) . "</a>
+                <p>" . __( '<b style="font-weight: 700;">Exclusive offer!</b>  We don\'t run promotions very often, but for a limited time we\'re offering <b style="font-weight: 700;">20% off</b> our Pro version to all users of our free Instagram Feed plugin.', 'instagram-feed' ) . "</p>
+                <p class='sbi-links'>
+                    <a class='sbi_notice_dismiss sbi_offer_btn' href='https://smashballoon.com/instagram-feed/?utm_source=plugin-free&utm_campaign=sbi&discount=instagramthankyou' target='_blank'><b>" . __( 'Get this offer', 'instagram-feed' ) . "</b></a>
                     <a class='sbi_notice_dismiss' style='margin-left: 5px;' href='" . esc_url( add_query_arg( 'sbi_ignore_new_user_sale_notice', 'always' ) ) . "'>" . __( 'I\'m not interested', 'instagram-feed' ) . "</a>
 
                 </p>
@@ -736,8 +758,8 @@ function sbi_notices_html() {
         <div class='sbi_notice sbi_review_notice sbi_bfcm_sale_notice'>
             <img src='". SBI_PLUGIN_URL . 'img/sbi-icon-offer.png' ."' alt='Instagram Feed'>
             <div class='sbi-notice-text'>
-                <p>" . __( '<b style="font-weight: 700;">Black Friday/Cyber Monday Deal!</b> Thank you for using our free Instagram Feed plugin. For a limited time, we\'re offering <b>20% off</b> the Pro version for all of our users.', 'instagram-feed' ) . "</p>
-                <p class='links'>
+                <p>" . __( '<b style="font-weight: 700;">Black Friday/Cyber Monday Deal!</b> Thank you for using our free Instagram Feed plugin. For a limited time, we\'re offering <b style="font-weight: 700;">20% off</b> the Pro version for all of our users.', 'instagram-feed' ) . "</p>
+                <p class='sbi-links'>
                     <a class='sbi_notice_dismiss sbi_offer_btn' href='https://smashballoon.com/instagram-feed/?utm_source=plugin-free&utm_campaign=sbi&discount=".$sbi_bfcm_discount_code."' target='_blank'>" . __( 'Get this offer!', 'instagram-feed' ) . "</a>
                     <a class='sbi_notice_dismiss' style='margin-left: 5px;' href='" .esc_url( add_query_arg( 'sbi_ignore_bfcm_sale_notice', date( 'Y', $current_time ) ) ). "'>" . __( 'I\'m not interested', 'instagram-feed' ) . "</a>
                 </p>

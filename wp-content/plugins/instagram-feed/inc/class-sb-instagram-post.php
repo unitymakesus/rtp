@@ -211,7 +211,11 @@ class SB_Instagram_Post
 			$one_successful_image_resize = false;
 
 			foreach ( $image_sizes_to_make as $res_setting => $image_size ) {
-				$file_name = isset( $image_source_set[ $image_size ] ) ? $image_source_set[ $image_size ] : SB_Instagram_Parse::get_media_url( $this->instagram_api_data, 'lightbox' );
+				if ( $account_type === 'business' ) {
+					$file_name = SB_Instagram_Parse::get_media_url( $this->instagram_api_data, 'lightbox' );
+				} else {
+					$file_name = isset( $image_source_set[ $image_size ] ) ? $image_source_set[ $image_size ] : SB_Instagram_Parse::get_media_url( $this->instagram_api_data, 'lightbox' );
+				}
 				if ( ! empty( $file_name ) ) {
 
 					$sizes                   = array(

@@ -29,7 +29,7 @@ class SB_Instagram_Display_Elements
 		if ( !$settings['disable_js_image_loading'] ) {
 			return ' sbi_new sbi_transition';
 		} else {
-			return ' sbi_no_js';
+			return ' sbi_new sbi_no_js sbi_no_resraise sbi_js_load_disabled';
 		}
 	}
 
@@ -73,6 +73,34 @@ class SB_Instagram_Display_Elements
 		} elseif ( $settings['imageres'] === 'auto' ) {
 			$optimum_res = 'full';
 			$settings['imageres'] = 'full';
+		} else {
+			if ( $settings['imageres'] !== 'thumb' && ! empty( $resized_images ) ) {
+				$resolution = $settings['imageres'];
+				$post_id = SB_Instagram_Parse::get_post_id( $post );
+				if ( isset( $resized_images[ $post_id ] ) ) {
+					if ( $resolution === 'medium' ) {
+						if ( isset( $resized_images[ $post_id ]['sizes']['low'] ) ) {
+							$suffix = 'low';
+						} elseif ( isset( $resized_images[ $post_id ]['sizes']['full'] ) ) {
+							$suffix = 'full';
+						}
+					} elseif ( $resolution === 'full' ) {
+						if ( isset( $resized_images[ $post_id ]['sizes']['full'] ) ) {
+							$suffix = 'full';
+						} elseif ( isset( $resized_images[ $post_id ]['sizes']['low'] ) ) {
+							$suffix = 'low';
+						}
+					} elseif ( $resolution === 'lightbox' ) {
+						if ( isset( $resized_images[ $post_id ]['sizes']['full'] ) ) {
+							$suffix = 'full';
+						}
+					}
+					if ( isset( $suffix ) ) {
+						$media_url = sbi_get_resized_uploads_url() . $resized_images[ $post_id ]['id'] . $suffix . '.jpg';
+						return $media_url;
+					}
+				}
+			}
 		}
 
 		if ( $account_type === 'personal' ) {
@@ -91,7 +119,7 @@ class SB_Instagram_Display_Elements
 
 			// use resized images if exists
 			if ( $optimum_res === 'full' && isset( $resized_images[ $post_id ]['id'] ) && $resized_images[ $post_id ]['id'] !== 'pending' && $resized_images[ $post_id ]['id'] !== 'video' ) {
-				$media_url = 'uploads_dir' . $resized_images[ $post_id ]['id'] . 'full.jpg';
+				$media_url = sbi_get_resized_uploads_url() . $resized_images[ $post_id ]['id'] . 'full.jpg';
 			} else {
 				$permalink = SB_Instagram_Parse::get_permalink( $post );
 				if ( substr_count( $permalink, '/' ) > 5 ) {
@@ -128,16 +156,18 @@ class SB_Instagram_Display_Elements
 	 *
 	 * @param array $post
 	 * @param array $settings
+	 * @param array $resized_images
 	 *
 	 * @return string
 	 *
 	 * @since 2.0/5.0
+	 * @since 2.1.1/5.2.1 added support for resized images
 	 */
-	public static function get_sbi_photo_style_element( $post, $settings ) {
+	public static function get_sbi_photo_style_element( $post, $settings, $resized_images = array() ) {
 		if ( !$settings['disable_js_image_loading'] ) {
 			return '';
 		} else {
-			$full_res_image = SB_Instagram_Display_Elements::get_optimum_media_url( $post, $settings );
+			$full_res_image = SB_Instagram_Display_Elements::get_optimum_media_url( $post, $settings, $resized_images );
 			/*
 			 * By setting the height to "0" the bottom padding can be used
 			 * as a percent to square the images. Since it needs to be a percent

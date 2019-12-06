@@ -3,7 +3,7 @@
  * Custom Feeds for Instagram Footer Template
  * Adds pagination and html for errors and resized images
  *
- * @version 2.0 Custom Feeds for Instagram Free by Smash Balloon
+ * @version 2.1 Instagram Feed by Smash Balloon
  *
  */
 

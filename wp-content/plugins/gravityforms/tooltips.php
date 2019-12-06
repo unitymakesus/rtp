@@ -22,7 +22,7 @@ $__gf_tooltips = array(
 	'notification_send_to_email'                  => '<h6>' . __( 'Send To Email Address', 'gravityforms' ) . '</h6>' . __( 'Enter the email address you would like the notification email sent to.', 'gravityforms' ),
 	'notification_autoformat'                     => '<h6>' . __( 'Disable Auto-Formatting', 'gravityforms' ) . '</h6>' . __( 'When enabled, auto-formatting will insert paragraph breaks automatically. Disable auto-formatting when using HTML to create email notification content.', 'gravityforms' ),
 	'notification_send_to_routing'                => '<h6>' . __( 'Routing', 'gravityforms' ) . '</h6>' . __( 'Allows notification to be sent to different email addresses depending on values selected in the form.', 'gravityforms' ),
-	'notification_from_email'                     => '<h6>' . __( 'From Email Address', 'gravityforms' ) . '</h6>' . __( 'Enter the email address you would like the notification email sent from, or select the email from available email form fields.', 'gravityforms' ),
+	'notification_from_email'                     => '<h6>' . __( 'From Email Address', 'gravityforms' ) . '</h6>' . __( 'Enter an authorized email address you would like the notification email sent from. To avoid deliverability issues, always use your site domain in the from email.', 'gravityforms' ),
 	'notification_from_name'                      => '<h6>' . __( 'From Name', 'gravityforms' ) . '</h6>' . __( 'Enter the name you would like the notification email sent from, or select the name from available name fields.', 'gravityforms' ),
 	'notification_reply_to'                       => '<h6>' . __( 'Reply To', 'gravityforms' ) . '</h6>' . __( 'Enter the email address you would like to be used as the reply to address for the notification email.', 'gravityforms' ),
 	'notification_cc'                             => '<h6>' . __( 'Carbon Copy Addresses', 'gravityforms' ) . '</h6>' . __( 'Enter a comma separated list of email addresses you would like to receive a CC of the notification email.', 'gravityforms' ),
@@ -175,7 +175,7 @@ $__gf_tooltips = array(
 	'personal_data_field_settings'                => '<h6>' . __( 'Field Settings', 'gravityforms' ) . '</h6>' . __( 'Select the fields which will be included when exporting or erasing personal data.', 'gravityforms' ),
 	'personal_data_prevent_ip'                    => '<h6>' . __( 'IP Address', 'gravityforms' ) . '</h6>' . __( 'Check this box if you would like to prevent the IP address from being stored during form submission.', 'gravityforms' ),
 	'personal_data_retention_policy'              => '<h6>' . __( 'Retention Policy', 'gravityforms' ) . '</h6>' . __( 'Use these settings to keep entries only as long as they are needed. Trash or delete entries automatically older than the specified number of days. The minimum number of days allowed is one. This is to ensure that all entry processing is complete before deleting/trashing. The number of days setting is a minimum, not an exact period of time. The trashing/deleting occurs during the daily cron task so some entries may appear to remain up to a day longer than expected.', 'gravityforms' ),
-    
+    'form_field_password_visibility_enable'       => '<h6>' . __( 'Password Visibility Toggle', 'gravityforms' ) . '</h6>' . __( 'Check this box to add a toggle allowing the user to see the password they are entering in.', 'gravityforms' ),
 );
 
 /**

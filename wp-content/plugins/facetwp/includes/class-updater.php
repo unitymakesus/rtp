@@ -40,8 +40,8 @@ class FacetWP_Updater
                 $response = unserialize( $request['body'] );
             }
 
-            update_option( 'facetwp_updater_response', $response );
-            update_option( 'facetwp_updater_last_checked', $now );
+            update_option( 'facetwp_updater_response', $response, 'no' );
+            update_option( 'facetwp_updater_last_checked', $now, 'no' );
         }
 
         if ( ! empty( $response ) ) {

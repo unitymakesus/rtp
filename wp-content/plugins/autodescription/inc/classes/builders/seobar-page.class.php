@@ -148,7 +148,7 @@ final class SeoBar_Page extends SeoBar {
 				],
 				'assess'   => [
 					'empty'      => \__( 'No title could be fetched.', 'autodescription' ),
-					'untitled'   => \__( 'No title could be fetched, "Untitled" is used instead.', 'autodescription' ),
+					'untitled'   => \__( 'No title could be fetched, "Untitled" is used instead.', 'autodescription' ), // TODO use [params][untitled]?
 					'protected'  => \__( 'A page protection state is added which increases the length.', 'autodescription' ),
 					'branding'   => [
 						'not'       => \__( "It's not branded. Search engines may ignore your title.", 'autodescription' ),
@@ -362,7 +362,7 @@ final class SeoBar_Page extends SeoBar {
 					'foundmanydupe' => \__( 'Found too many duplicated words.', 'autodescription' ),
 				],
 				'defaults' => [
-					'generated' => [
+					'generated'   => [
 						'symbol' => \_x( 'DG', 'Description Generated', 'autodescription' ),
 						'title'  => \__( 'Description, generated', 'autodescription' ),
 						'status' => \The_SEO_Framework\Interpreters\SeoBar::STATE_GOOD,
@@ -371,7 +371,16 @@ final class SeoBar_Page extends SeoBar {
 							'base' => \__( "It's built using the page content.", 'autodescription' ),
 						],
 					],
-					'custom'    => [
+					'emptynoauto' => [
+						'symbol' => \_x( 'D', 'Description', 'autodescription' ),
+						'title'  => \__( 'Description', 'autodescription' ),
+						'status' => \The_SEO_Framework\Interpreters\SeoBar::STATE_UNKNOWN,
+						'reason' => \__( 'Empty.', 'autodescription' ),
+						'assess' => [
+							'noauto' => \__( 'No page description is set.', 'autodescription' ),
+						],
+					],
+					'custom'      => [
 						'symbol' => \_x( 'D', 'Description', 'autodescription' ),
 						'title'  => \__( 'Description', 'autodescription' ),
 						'status' => \The_SEO_Framework\Interpreters\SeoBar::STATE_GOOD,
@@ -403,6 +412,11 @@ final class SeoBar_Page extends SeoBar {
 					$item['assess']['homepage'] = \__( 'The description inputted at the Edit Page screen is used.', 'autodescription' );
 				}
 			}
+		} elseif ( ! static::$tsf->is_auto_description_enabled( $desc_args ) ) {
+			$item = $cache['defaults']['emptynoauto'];
+
+			// No description is found. There's no need to continue parsing.
+			return $item;
 		} else {
 			$item = $cache['defaults']['generated'];
 

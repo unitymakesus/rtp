@@ -14,11 +14,11 @@ class FacetWP_Settings_Admin
                 'label' => __( 'General', 'fwp' ),
                 'fields' => [
                     'license_key' => [
-                        'label' => __( 'License Key', 'fwp' ),
+                        'label' => __( 'License key', 'fwp' ),
                         'html' => $this->get_field_html( 'license_key' )
                     ],
                     'gmaps_api_key' => [
-                        'label' => __( 'Google Maps API Key', 'fwp' ),
+                        'label' => __( 'Google Maps API key', 'fwp' ),
                         'html' => $this->get_field_html( 'gmaps_api_key' )
                     ],
                     'separators' => [
@@ -26,19 +26,19 @@ class FacetWP_Settings_Admin
                         'html' => $this->get_field_html( 'separators' )
                     ],
                     'loading_animation' => [
-                        'label' => __( 'Loading Animation', 'fwp' ),
+                        'label' => __( 'Loading animation', 'fwp' ),
                         'html' => $this->get_field_html( 'loading_animation', 'dropdown', [
                             'choices' => [ 'fade' => __( 'Fade', 'fwp' ), '' => __( 'Spin', 'fwp' ), 'none' => __( 'None', 'fwp' ) ]
                         ] )
                     ],
                     'prefix' => [
-                        'label' => __( 'URL Prefix', 'fwp' ),
+                        'label' => __( 'URL prefix', 'fwp' ),
                         'html' => $this->get_field_html( 'prefix', 'dropdown', [
                             'choices' => [ 'fwp_' => 'fwp_', '_' => '_' ]
                         ] )
                     ],
                     'debug_mode' => [
-                        'label' => __( 'Debug Mode', 'fwp' ),
+                        'label' => __( 'Debug mode', 'fwp' ),
                         'html' => $this->get_field_html( 'debug_mode', 'toggle', [
                             'true_value' => 'on',
                             'false_value' => 'off'
@@ -93,31 +93,31 @@ class FacetWP_Settings_Admin
 
         if ( 'license_key' == $setting_name ) : ?>
 
-        <input type="text" class="facetwp-license" style="width:300px" value="<?php echo FWP()->helper->get_license_key(); ?>"<?php echo defined( 'FACETWP_LICENSE_KEY' ) ? ' disabled' : ''; ?> />
-        <div @click="activate" class="btn-normal btn-gray btn-small"><?php _e( 'Activate', 'fwp' ); ?></div>
+        <input type="text" class="facetwp-license" style="width:360px" value="<?php echo FWP()->helper->get_license_key(); ?>"<?php echo defined( 'FACETWP_LICENSE_KEY' ) ? ' disabled' : ''; ?> />
+        <div @click="activate" class="btn-normal"><?php _e( 'Activate', 'fwp' ); ?></div>
         <div class="facetwp-activation-status field-notes"><?php echo $this->get_activation_status(); ?></div>
 
 <?php elseif ( 'gmaps_api_key' == $setting_name ) : ?>
 
-        <input type="text" v-model="app.settings.gmaps_api_key" style="width:300px" />
+        <input type="text" v-model="app.settings.gmaps_api_key" style="width:360px" />
         <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank"><?php _e( 'Get an API key', 'fwp' ); ?></a>
 
 <?php elseif ( 'separators' == $setting_name ) : ?>
 
         34
-        <input type="text" v-model="app.settings.thousands_separator" style="width:20px" />
+        <input type="text" v-model="app.settings.thousands_separator" style="width:30px" />
         567
-        <input type="text" v-model="app.settings.decimal_separator" style="width:20px" />
+        <input type="text" v-model="app.settings.decimal_separator" style="width:30px" />
         89
 
 <?php elseif ( 'export' == $setting_name ) : ?>
 
-        <select class="export-items" multiple="multiple" style="width:250px; height:100px">
+        <select class="export-items" multiple="multiple">
             <?php foreach ( $this->get_export_choices() as $val => $label ) : ?>
             <option value="<?php echo $val; ?>"><?php echo $label; ?></option>
             <?php endforeach; ?>
         </select>
-        <div class="btn-normal btn-gray export-submit">
+        <div class="btn-normal export-submit">
             <?php _e( 'Export', 'fwp' ); ?>
         </div>
 
@@ -126,7 +126,7 @@ class FacetWP_Settings_Admin
         <div><textarea class="import-code" placeholder="<?php _e( 'Paste the import code here', 'fwp' ); ?>"></textarea></div>
         <div><input type="checkbox" class="import-overwrite" /> <?php _e( 'Overwrite existing items?', 'fwp' ); ?></div>
         <div style="margin-top:5px">
-            <div class="btn-normal btn-gray import-submit"><?php _e( 'Import', 'fwp' ); ?></div>
+            <div class="btn-normal import-submit"><?php _e( 'Import', 'fwp' ); ?></div>
         </div>
 
 <?php elseif ( 'dropdown' == $field_type ) : ?>

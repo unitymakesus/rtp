@@ -15,6 +15,8 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() a
  * Initializes WooCommerce compatibility.
  *
  * @since 3.1.0
+ * @since 4.0.3 Added primary term support to products.
+ * @access private
  * @uses \is_product()
  */
 function _init_wc_compat() {
@@ -22,13 +24,21 @@ function _init_wc_compat() {
 		'the_seo_framework_do_before_output',
 		function() {
 			/**
-			 * Removes TSF breadcrumbs.
+			 * Removes TSF breadcrumbs. WooCommerce outputs theirs.
 			 */
 			if ( function_exists( '\\is_product' ) && \is_product() ) {
 				\add_filter( 'the_seo_framework_json_breadcrumb_output', '__return_false' );
 			}
 		}
 	);
+
+	$tsf = \the_seo_framework();
+
+	// Adjust the product link acknowledging the primary category.
+	\add_filter( 'wc_product_post_type_link_product_cat', [ $tsf, '_adjust_post_link_category' ], 10, 3 );
+
+	// Adjust the structured-data breadcrumb primary term. Coincidentally(?), it uses the same filter structure; although, it misses the $post object.
+	\add_filter( 'woocommerce_breadcrumb_main_term', [ $tsf, '_adjust_post_link_category' ], 10, 2 );
 }
 
 \add_filter( 'the_seo_framework_image_generation_params', __NAMESPACE__ . '\\_adjust_image_generation_params', 10, 2 );
@@ -36,6 +46,7 @@ function _init_wc_compat() {
  * Adjusts image generation parameters.
  *
  * @since 4.0.0
+ * @access private
  *
  * @param array      $params : [
  *    string  size:     The image size to use.
@@ -54,7 +65,7 @@ function _adjust_image_generation_params( $params, $args ) {
 
 	if ( null === $args ) {
 		$is_product          = \the_seo_framework()->is_wc_product();
-		$is_product_category = function_exists( '\\is_product_category' ) && is_product_category();
+		$is_product_category = function_exists( '\\is_product_category' ) && \is_product_category();
 	} else {
 		if ( $args['taxonomy'] ) {
 			if ( function_exists( '\\is_product_category' ) ) {
@@ -81,6 +92,7 @@ function _adjust_image_generation_params( $params, $args ) {
  * Generates image URLs and IDs from the WooCommerce product gallary entries.
  *
  * @since 4.0.0
+ * @access private
  * @generator
  *
  * @param array|null $args The query arguments. Accepts 'id' and 'taxonomy'.
@@ -122,6 +134,7 @@ function _get_product_gallery_image_details( $args = null, $size = 'full' ) {
  * Generates image URL and ID from the WooCommerce product category thumbnail entries.
  *
  * @since 4.0.0
+ * @access private
  * @generator
  *
  * @param array|null $args The query arguments. Accepts 'id' and 'taxonomy'.

@@ -146,6 +146,21 @@ function display_instagram( $atts = array() ) {
 		$post_set->maybe_save_update_and_resize_images_for_posts();
     }
 
+	if ( $settings['disable_js_image_loading'] || $settings['imageres'] !== 'auto' ) {
+		global $sb_instagram_posts_manager;
+		$post_data = $instagram_feed->get_post_data();
+
+		if ( ! $sb_instagram_posts_manager->image_resizing_disabled() ) {
+			$image_ids = array();
+			foreach ( $post_data as $post ) {
+				$image_ids[] = SB_Instagram_Parse::get_post_id( $post );
+			}
+			$resized_images = SB_Instagram_Feed::get_resized_images_source_set( $image_ids, 0, $transient_name );
+
+			$instagram_feed->set_resized_images( $resized_images );
+		}
+	}
+
 	return $instagram_feed->get_the_feed_html( $settings, $atts, $instagram_feed_settings->get_feed_type_and_terms(), $instagram_feed_settings->get_connected_accounts_in_feed() );
 }
 
@@ -281,6 +296,21 @@ function sbi_get_next_post_set() {
 			$instagram_feed->cache_feed_data( $instagram_feed_settings->get_cache_time_in_seconds(), $settings['backup_cache_enabled'] );
 		}
 
+	}
+
+	if ( $settings['disable_js_image_loading'] || $settings['imageres'] !== 'auto' ) {
+		global $sb_instagram_posts_manager;
+		$post_data = array_slice( $instagram_feed->get_post_data(), $offset, $settings['minnum'] );
+
+		if ( ! $sb_instagram_posts_manager->image_resizing_disabled() ) {
+			$image_ids = array();
+			foreach ( $post_data as $post ) {
+				$image_ids[] = SB_Instagram_Parse::get_post_id( $post );
+			}
+			$resized_images = SB_Instagram_Feed::get_resized_images_source_set( $image_ids, 0, $feed_id );
+
+			$instagram_feed->set_resized_images( $resized_images );
+		}
 	}
 
 	$feed_status = array( 'shouldPaginate' => $instagram_feed->should_use_pagination( $settings, $offset ) );
@@ -552,20 +582,54 @@ function sbi_get_database_settings() {
 
 /**
  * May include support for templates in theme folders in the future
+ *
+ * @since 2.1 custom templates supported
  */
 function sbi_get_feed_template_part( $part, $settings = array() ) {
-    $file = '';
-    if ( $part === 'header' ) {
-        $file = trailingslashit( SBI_PLUGIN_DIR ) . 'templates/header.php';
-    } elseif ( $part === 'item' ) {
-	    $file = trailingslashit( SBI_PLUGIN_DIR ) . 'templates/item.php';
-    } elseif ( $part === 'footer' ) {
-	    $file = trailingslashit( SBI_PLUGIN_DIR ) . 'templates/footer.php';
-    } elseif ( $part === 'feed' ) {
-	    $file = trailingslashit( SBI_PLUGIN_DIR ) . 'templates/feed.php';
-    }
+	$file = '';
 
-    return $file;
+	$using_custom_templates_in_theme = apply_filters( 'sbi_use_theme_templates', $settings['customtemplates'] );
+	$generic_path = trailingslashit( SBI_PLUGIN_DIR ) . 'templates/';
+
+	if ( $using_custom_templates_in_theme ) {
+		$custom_header_template = locate_template( 'sbi/header.php', false, false );
+		$custom_item_template = locate_template( 'sbi/item.php', false, false );
+		$custom_footer_template = locate_template( 'sbi/footer.php', false, false );
+		$custom_feed_template = locate_template( 'sbi/feed.php', false, false );
+	} else {
+		$custom_header_template = false;
+		$custom_item_template = false;
+		$custom_footer_template = false;
+		$custom_feed_template = false;
+	}
+
+	if ( $part === 'header' ) {
+        if ( $custom_header_template ) {
+            $file = $custom_header_template;
+        } else {
+            $file = $generic_path . 'header.php';
+        }
+	} elseif ( $part === 'item' ) {
+		if ( $custom_item_template ) {
+			$file = $custom_item_template;
+		} else {
+			$file = $generic_path . 'item.php';
+		}
+	} elseif ( $part === 'footer' ) {
+		if ( $custom_footer_template ) {
+			$file = $custom_footer_template;
+		} else {
+			$file = $generic_path . 'footer.php';
+		}
+	} elseif ( $part === 'feed' ) {
+		if ( $custom_feed_template ) {
+			$file = $custom_feed_template;
+		} else {
+			$file = $generic_path . 'feed.php';
+		}
+	}
+
+	return $file;
 }
 
 /**
@@ -641,6 +705,17 @@ function sbi_date_sort( $a, $b ) {
  */
 function sbi_rand_sort( $a, $b ) {
     return rand ( -1, 1 );
+}
+
+/**
+ * @return string
+ *
+ * @since 2.1.1
+ */
+function sbi_get_resized_uploads_url() {
+	$upload = wp_upload_dir();
+
+	return trailingslashit( $upload['baseurl'] ) . trailingslashit( SBI_UPLOADS_NAME );
 }
 
 /**
@@ -762,7 +837,7 @@ function sb_instagram_scripts_enqueue() {
 	//Options to pass to JS file
 	$sb_instagram_settings = get_option( 'sb_instagram_settings' );
 
-	$js_file = 'js/sb-instagram-2-0-1.min.js';
+	$js_file = 'js/sb-instagram-2-1.min.js';
 	if ( isset( $_GET['sbi_debug'] ) ) {
 		$js_file = 'js/sb-instagram.js';
 	}
@@ -774,9 +849,9 @@ function sb_instagram_scripts_enqueue() {
 	}
 
 	if ( isset( $sb_instagram_settings['enqueue_css_in_shortcode'] ) && $sb_instagram_settings['enqueue_css_in_shortcode'] ) {
-		wp_register_style( 'sb_instagram_styles', trailingslashit( SBI_PLUGIN_URL ) . 'css/sb-instagram-2-0-2.min.css', array(), SBIVER );
+		wp_register_style( 'sb_instagram_styles', trailingslashit( SBI_PLUGIN_URL ) . 'css/sb-instagram-2-1.min.css', array(), SBIVER );
 	} else {
-		wp_enqueue_style( 'sb_instagram_styles', trailingslashit( SBI_PLUGIN_URL ) . 'css/sb-instagram-2-0-2.min.css', array(), SBIVER );
+		wp_enqueue_style( 'sb_instagram_styles', trailingslashit( SBI_PLUGIN_URL ) . 'css/sb-instagram-2-1.min.css', array(), SBIVER );
 	}
 
 	$font_method = isset( $sb_instagram_settings['sbi_font_method'] ) ? $sb_instagram_settings['sbi_font_method'] : 'svg';
@@ -790,12 +865,10 @@ function sb_instagram_scripts_enqueue() {
 	if ( $font_method === 'fontfile' && ! $disable_font_awesome ) {
 		wp_enqueue_style( 'sb-font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
 	}
-
-	$upload = wp_upload_dir();
-	$resized_url = trailingslashit( $upload['baseurl'] ) . trailingslashit( SBI_UPLOADS_NAME );
+	
 	$data = array(
 		'font_method' => $font_method,
-		'resized_url' => $resized_url,
+		'resized_url' => sbi_get_resized_uploads_url(),
 		'placeholder' => trailingslashit( SBI_PLUGIN_URL ) . 'img/placeholder.png'
     );
 	//Pass option to JS file

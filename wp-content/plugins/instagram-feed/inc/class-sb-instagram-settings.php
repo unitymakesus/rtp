@@ -75,6 +75,7 @@ class SB_Instagram_Settings {
 				'heightunit'       => isset( $db['sb_instagram_height_unit'] ) ? $db['sb_instagram_height_unit'] : '',
 				'sortby'           => isset( $db['sb_instagram_sort'] ) ? $db['sb_instagram_sort'] : '',
 				'num'              => isset( $db['sb_instagram_num'] ) ? $db['sb_instagram_num'] : '',
+				'apinum'           => isset( $db['sb_instagram_minnum'] ) ? $db['sb_instagram_minnum'] : '',
 				'nummobile'        => isset($db[ 'sb_instagram_nummobile' ]) ? $db[ 'sb_instagram_nummobile' ] : '',
 				'cols'             => isset( $db['sb_instagram_cols'] ) ? $db['sb_instagram_cols'] : '',
 				'disablemobile'    => isset( $db['sb_instagram_disable_mobile'] ) ? $db['sb_instagram_disable_mobile'] : '',
@@ -103,8 +104,14 @@ class SB_Instagram_Settings {
 				'user'             => isset( $db['sb_instagram_user'] ) ? $db['sb_instagram_user'] : false,
 				'feedid'           => isset( $db['sb_instagram_feed_id'] ) ? $db['sb_instagram_feed_id'] : false,
 				'resizeprocess'    => isset( $db['sb_instagram_resizeprocess'] ) ? $db['sb_instagram_resizeprocess'] : 'background',
+				'customtemplates'    => isset( $db['custom_template'] ) ? $db['custom_template'] : '',
+
 			), $atts );
 
+		$this->settings['customtemplates'] = $this->settings['customtemplates'] === 'true' || $this->settings['customtemplates'] === 'on';
+		if ( isset( $_GET['sbi_debug'] ) ) {
+			$this->settings['customtemplates'] = false;
+		}
 		$this->settings['minnum'] = max( (int)$this->settings['num'], (int)$this->settings['nummobile'] );
 		$this->settings['showbio'] = $this->settings['showbio'] === 'true' || $this->settings['showbio'] === 'on' || $this->settings['showbio'] === true;
 		if ( isset( $atts['showbio'] ) && $atts['showbio'] === 'false' ) {
@@ -132,6 +139,8 @@ class SB_Instagram_Settings {
 				$this->settings['sbi_cache_cron_interval'] = 60*60*12;
 		}
 
+		$this->settings['sb_instagram_cache_time'] = isset( $this->db['sb_instagram_cache_time'] ) ? $this->db['sb_instagram_cache_time'] : 1;
+		$this->settings['sb_instagram_cache_time_unit'] = isset( $this->db['sb_instagram_cache_time_unit'] ) ? $this->db['sb_instagram_cache_time_unit'] : 'hours';
 
 		global $sb_instagram_posts_manager;
 
@@ -152,6 +161,8 @@ class SB_Instagram_Settings {
 	/**
 	 * The plugin will output settings on the frontend for debugging purposes.
 	 * Safe settings to display are added here.
+	 *
+	 * Overwritten in the Pro version.
 	 *
 	 * @return array
 	 *
@@ -200,7 +211,9 @@ class SB_Instagram_Settings {
 			'disable_js_image_loading',
 			'enqueue_js_in_head',
 			'sbi_font_method',
-			'sb_instagram_disable_awesome'
+			'sb_instagram_disable_awesome',
+			'sb_ajax_initial',
+			'use_custom'
 		);
 
 		return $public;
@@ -467,13 +480,14 @@ class SB_Instagram_Settings {
 			return SBI_CRON_UPDATE_CACHE_TIME;
 		} else {
 			//If the caching time doesn't exist in the database then set it to be 1 hour
-			$cache_time = isset( $settings['sb_instagram_cache_time'] ) ? (int)$this->settings['sb_instagram_cache_time'] : 1;
-			$cache_time_unit = isset( $settings['sb_instagram_cache_time_unit'] ) ? $this->settings['sb_instagram_cache_time_unit'] : 'hours';
+			$cache_time = isset( $this->settings['sb_instagram_cache_time'] ) ? (int)$this->settings['sb_instagram_cache_time'] : 1;
+			$cache_time_unit = isset( $this->settings['sb_instagram_cache_time_unit'] ) ? $this->settings['sb_instagram_cache_time_unit'] : 'hours';
 
 			//Calculate the cache time in seconds
 			if ( $cache_time_unit == 'minutes' ) $cache_time_unit = 60;
 			if ( $cache_time_unit == 'hours' ) $cache_time_unit = 60*60;
 			if ( $cache_time_unit == 'days' ) $cache_time_unit = 60*60*24;
+
 			return $cache_time * $cache_time_unit;
 		}
 	}

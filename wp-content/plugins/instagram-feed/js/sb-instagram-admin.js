@@ -111,7 +111,7 @@ jQuery(document).ready(function($) {
         token = hash.substring(14),
         id = token.split('.')[0];
 
-    if (token.length > 40) {
+    if (token.length > 40 && $('.sbi_admin_btn').length) {
         $('.sbi_admin_btn').css('opacity','.5').after('<div class="spinner" style="visibility: visible; position: relative;float: left;margin-top: 15px;"></div>');
         jQuery.ajax({
             url: sbiA.ajax_url,

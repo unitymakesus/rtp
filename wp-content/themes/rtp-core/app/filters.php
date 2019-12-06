@@ -246,7 +246,7 @@ add_action( 'wpel_apply_settings', function () {
   }
 
   // Exclude directory pages that use FacetWP
-  if (is_page_template('templates/page-directory.php') || is_page('directory-map')) {
+  if (is_page_template('templates/page-directory.php') || is_page('directory-map') || is_singular('rtp-facility')) {
     return false;
   }
 

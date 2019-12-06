@@ -98,7 +98,7 @@ FWP.data.settings = FWP.hooks.applyFilters('facetwp/load_settings', FWP.data.set
 
         <span class="facetwp-actions">
             <div class="btn-split facetwp-rebuild">
-                <div class="btn-label" @click="rebuildAction" v-html="indexButtonLabel"></div>
+                <div class="btn-label" @click="rebuildAction" v-html="indexButtonLabel"><?php _e( 'Re-index', 'fwp' ); ?></div>
                 <div class="btn-caret" @click="is_rebuild_open = !is_rebuild_open"><i class="fas fa-caret-down"></i></div>
                 <div class="btn-dropdown" v-cloak v-show="is_rebuild_open">
                     <div class="dropdown-inner">
