@@ -12,7 +12,7 @@ add_shortcode('annual-report-boxyard', function($atts) {
     <div class="map" style="background-image:url('<?= asset_path('images/boxyard-rtp-map.png'); ?>');"></div>
     <div class="boxes">
       <div class="box box-1" tabindex="0">
-        <img src="https://placehold.it/300/" alt="" />
+        <img src="<?= asset_path('images/logos/logo-gameon.png'); ?>" alt="Game On Escapes & More" />
       </div>
       <div class="box box-2" tabindex="0">
         <img src="<?= asset_path('images/logos/logo-uncorked.png'); ?>" alt="RTP Uncorked" />
@@ -30,7 +30,7 @@ add_shortcode('annual-report-boxyard', function($atts) {
         <img src="<?= asset_path('images/logos/logo-pouredpressed.png'); ?>" alt="Poured & Pressed" />
       </div>
       <div class="box box-9" tabindex="0">
-        <img src="https://placehold.it/300/" alt="" />
+        <img src="<?= asset_path('images/logos/logo-comingsoon.png'); ?>" alt="Coming Soon" />
       </div>
     </div>
   </section>
