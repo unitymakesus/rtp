@@ -1,26 +1,34 @@
-// Grid Test
-.grid-test > div {
-  .fl-module-info-box,
-  .fl-module-info-box > .fl-module-content,
-  .fl-module-info-box > .fl-module-content > .uabb-infobox {
-    height: 100%;
-    text-transform: uppercase;
+// Frontier section grid.
+.grid-frontier {
+  > div {
+    .fl-module-info-box,
+    .fl-module-info-box > .fl-module-content,
+    .fl-module-info-box > .fl-module-content > .uabb-infobox {
+      height: 100%;
+      text-transform: uppercase;
 
-    .text-feat {
-      color: #434343;
+      .text-feat {
+        color: #434343;
+      }
     }
   }
-}
 
-.grid-test {
   .uabb-infobox {
     display: flex;
     align-items: center;
   }
 }
 
+// STEM section grid.
+.grid-stem {
+  .fl-module-rich-text {
+    color: white;
+    background-color: rgba(50, 48, 90, 0.8);
+  }
+}
+
 @media (min-width: 768px) {
-  .grid-test > div {
+  .grid-frontier > div {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: repeat(2, 1fr);
@@ -28,7 +36,7 @@
     grid-row-gap: 16px;
   }
 
-  .grid-test {
+  .grid-frontier {
     .div-1 {
       grid-area: 1 / 2 / 2 / 3;
     }
@@ -69,8 +77,7 @@
     }
   }
 
-  // Grid Test 2
-  .grid-test-2 .fl-col-group-nested {
+  .grid-stem .fl-col-group-nested {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -88,9 +95,7 @@
     }
   }
 
-  .grid-test-2 {
-    color: white;
-
+  .grid-stem {
     .fl-module-content {
       margin: 0;
       padding: 87px 40px;
@@ -101,7 +106,6 @@
     }
 
     .fl-module-rich-text {
-      background-color: rgba(50, 48, 90, 0.8);
       height: calc(50% - 0.5rem);
     }
 
