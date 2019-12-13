@@ -1,6 +1,10 @@
 // Frontier section grid.
 .grid-frontier {
   > div {
+    .fl-module-info-box {
+      margin-bottom: 1rem;
+    }
+
     .fl-module-info-box,
     .fl-module-info-box > .fl-module-content,
     .fl-module-info-box > .fl-module-content > .uabb-infobox {
@@ -16,6 +20,8 @@
   .uabb-infobox {
     display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 }
 
@@ -30,10 +36,35 @@
 @media (min-width: 768px) {
   .grid-frontier > div {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-column-gap: 16px;
     grid-row-gap: 16px;
+  }
+
+  .grid-frontier {
+    .div-1 {
+      grid-area: 1 / 1;
+    }
+
+    .div-2 {
+      grid-area: 1 / 2;
+    }
+
+    .div-3 {
+      grid-area: 2 / 1;
+    }
+
+    .div-4 {
+      grid-area: 2 / 2;
+    }
+  }
+}
+@media (min-width: 992px) {
+  .grid-frontier > div {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
   }
 
   .grid-frontier {
@@ -55,6 +86,10 @@
 
     .div-1,
     .div-4 {
+      .uabb-infobox {
+        text-align: left;
+      }
+
       .uabb-infobox-content {
         display: flex;
       }
