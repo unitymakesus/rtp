@@ -2119,16 +2119,16 @@ a.plyr__control::before {
   display: none !important;
 }
 
-/* line 3, stdin */
+/* line 4, stdin */
 
-.video-background {
+.cbb-plyr-video .video-background {
   position: relative;
   background-color: gray;
 }
 
-/* line 8, stdin */
+/* line 9, stdin */
 
-.video-content {
+.cbb-plyr-video .video-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2144,15 +2144,15 @@ a.plyr__control::before {
   padding-right: 75px;
 }
 
-/* line 19, stdin */
+/* line 20, stdin */
 
-.video-content h2 {
+.cbb-plyr-video .video-content h2 {
   font-size: 1.5rem;
 }
 
-/* line 24, stdin */
+/* line 25, stdin */
 
-.video-background .plyr__controls {
+.cbb-plyr-video .video-background .plyr__controls {
   background: none;
   z-index: 15;
   opacity: 1 !important;
@@ -2162,17 +2162,55 @@ a.plyr__control::before {
           transform: none !important;
 }
 
-/* line 33, stdin */
+/* line 34, stdin */
 
-.video-background .plyr__controls > .plyr__control {
+.cbb-plyr-video .video-background .plyr__controls > .plyr__control {
   margin-left: 0;
   margin-right: 0;
 }
 
-@media (min-width: 768px) {
-  /* line 40, stdin */
+/* line 41, stdin */
 
-  .video-content {
+.cbb-plyr-video .plyr__poster {
+  background-size: cover;
+}
+
+/* line 45, stdin */
+
+.cbb-plyr-video video {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* line 49, stdin */
+
+.cbb-plyr-video .plyr--video .plyr__controls {
+  background: none;
+  z-index: 10;
+}
+
+/* line 54, stdin */
+
+.cbb-plyr-video .plyr--video .plyr__video-wrapper {
+  margin: -2px;
+}
+
+/* line 58, stdin */
+
+.cbb-plyr-video .plyr--video .plyr__control {
+  background-color: #0094C9;
+}
+
+/* line 62, stdin */
+
+.cbb-plyr-video .plyr__controls .plyr__controls__item:first-child {
+  margin-right: 0;
+}
+
+@media (min-width: 768px) {
+  /* line 69, stdin */
+
+  .cbb-plyr-video .video-content {
     display: block;
     top: 50%;
     height: auto;
@@ -2182,42 +2220,23 @@ a.plyr__control::before {
             transform: translateY(-50%);
   }
 
-  /* line 47, stdin */
+  /* line 76, stdin */
 
-  .video-content h2 {
+  .cbb-plyr-video .video-content h2 {
     font-size: 2rem;
   }
 
-  /* line 52, stdin */
+  /* line 81, stdin */
 
-  .video-content-pad {
+  .cbb-plyr-video .video-content-pad {
     padding: 3rem;
   }
 
-  /* line 56, stdin */
+  /* line 85, stdin */
 
-  .video-foreground::before {
+  .cbb-plyr-video .video-foreground::before {
     background-color: transparent;
   }
-}
-
-/* line 63, stdin */
-
-.fl-module-content .plyr--video .plyr__controls {
-  background: none;
-  z-index: 10;
-}
-
-/* line 68, stdin */
-
-.fl-module-content .plyr--video .plyr__control {
-  background-color: #0094C9;
-}
-
-/* line 72, stdin */
-
-.fl-module-content .plyr__controls .plyr__controls__item:first-child {
-  margin-right: 0;
 }
 
 

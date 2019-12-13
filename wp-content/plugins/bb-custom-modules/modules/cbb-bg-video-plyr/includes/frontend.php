@@ -4,8 +4,8 @@
  */
 ?>
 
-<div class="video">
-  <div class="video-foreground">
+<div class="cbb-plyr-video">
+  <div class="cbb-plyr-video__foreground">
     <div
       class="js-player"
       data-plyr-provider="vimeo"

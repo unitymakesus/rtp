@@ -131,6 +131,9 @@ jQuery(document).ready(function() {
         active: true,
       },
       muted: true,
+      speed: {
+        selected: 0.5,
+      },
     }); }
   );
 });
