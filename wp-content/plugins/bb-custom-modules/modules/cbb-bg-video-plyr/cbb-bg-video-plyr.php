@@ -14,6 +14,7 @@ class CbbBackgroundVideoModule extends FLBuilderModule {
 
 		// Include custom CSS and JS
 		$this->add_css('cbb-bg-video-plyr', CBB_MODULES_URL . 'dist/styles/cbb-bg-video-plyr.css');
+		$this->add_js('cbb-bg-video-plyr-polyfills', 'https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,Array.prototype.includes,CustomEvent,Object.entries,Object.values,URL');
 		$this->add_js('cbb-bg-video-plyr', CBB_MODULES_URL . 'dist/scripts/cbb-bg-video-plyr.js');
 	}
 

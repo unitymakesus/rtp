@@ -2201,14 +2201,21 @@ a.plyr__control::before {
   background-color: #0094C9;
 }
 
-/* line 62, stdin */
+/* line 61, stdin */
+
+.cbb-plyr-video .plyr--video .plyr__control:hover,
+.cbb-plyr-video .plyr--video .plyr__control:focus {
+  background-color: #006e96;
+}
+
+/* line 67, stdin */
 
 .cbb-plyr-video .plyr__controls .plyr__controls__item:first-child {
   margin-right: 0;
 }
 
 @media (min-width: 768px) {
-  /* line 69, stdin */
+  /* line 74, stdin */
 
   .cbb-plyr-video .video-content {
     display: block;
@@ -2220,19 +2227,19 @@ a.plyr__control::before {
             transform: translateY(-50%);
   }
 
-  /* line 76, stdin */
+  /* line 81, stdin */
 
   .cbb-plyr-video .video-content h2 {
     font-size: 2rem;
   }
 
-  /* line 81, stdin */
+  /* line 86, stdin */
 
   .cbb-plyr-video .video-content-pad {
     padding: 3rem;
   }
 
-  /* line 85, stdin */
+  /* line 90, stdin */
 
   .cbb-plyr-video .video-foreground::before {
     background-color: transparent;

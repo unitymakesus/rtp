@@ -1,4 +1,5 @@
 import 'focus-within-polyfill';
+import 'intersection-observer';
 
 export default {
   init() {

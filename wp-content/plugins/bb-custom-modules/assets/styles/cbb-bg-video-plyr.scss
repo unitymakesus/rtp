@@ -57,6 +57,11 @@
 
   .plyr--video .plyr__control {
     background-color: #0094C9;
+
+    &:hover,
+    &:focus {
+      background-color: darken(#0094C9, 10);
+    }
   }
 
   .plyr__controls .plyr__controls__item:first-child {

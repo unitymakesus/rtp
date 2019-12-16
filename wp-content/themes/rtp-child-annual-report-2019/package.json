@@ -79,6 +79,7 @@
     "focus-within-polyfill": "^5.0.5",
     "gsap": "^2.1.2",
     "imports-loader": "^0.8.0",
+    "intersection-observer": "^0.7.0",
     "jquery": "^3.3.1",
     "macy": "^2.3.1",
     "materialize-css": "^1.0.0",
