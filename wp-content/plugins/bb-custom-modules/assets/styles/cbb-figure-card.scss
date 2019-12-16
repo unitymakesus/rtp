@@ -96,14 +96,15 @@
     margin: 0 16px;
 
     a {
+      display: flex;
       color: $color-black;
-      display: block;
       text-align: right;
       width: 100%;
-      height: 40px;
+      height: auto;
       font-weight: 400 !important;
       font-size: 0.9em;
-      line-height: 40px;
+      line-height: 1.5;
+      padding: 0.75rem 0;
       text-transform: uppercase;
       text-decoration: none !important;
       transition: color 0.3s ease;
@@ -113,11 +114,17 @@
         vertical-align: middle;
       }
 
+      .text {
+        flex-grow: 1;
+      }
+
       .arrow {
         display: inline-block;
-        padding: 4px 0 14px 14px;
-        width: 40px;
-        height: 40px;
+        width: 24px;
+        height: 24px;
+        margin-left: 0.5rem;
+        flex-shrink: 0;
+        align-self: center;
         transition: transform 0.3s ease;
 
         path {

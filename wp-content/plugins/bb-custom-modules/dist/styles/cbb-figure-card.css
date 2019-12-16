@@ -1170,14 +1170,17 @@
 /* line 98, stdin */
 
 .figure-card .card-cta a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   color: #000;
-  display: block;
   text-align: right;
   width: 100%;
-  height: 40px;
+  height: auto;
   font-weight: 400 !important;
   font-size: 0.9em;
-  line-height: 40px;
+  line-height: 1.5;
+  padding: 0.75rem 0;
   text-transform: uppercase;
   text-decoration: none !important;
   -webkit-transition: color 0.3s ease;
@@ -1186,19 +1189,31 @@
   vertical-align: middle;
 }
 
-/* line 112, stdin */
+/* line 113, stdin */
 
 .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 116, stdin */
+/* line 117, stdin */
+
+.figure-card .card-cta a .text {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+/* line 121, stdin */
 
 .figure-card .card-cta a .arrow {
   display: inline-block;
-  padding: 4px 0 14px 14px;
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
+  margin-left: 0.5rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -ms-flex-item-align: center;
+      align-self: center;
   -webkit-transition: -webkit-transform 0.3s ease;
   transition: -webkit-transform 0.3s ease;
   -o-transition: -o-transform 0.3s ease;
@@ -1206,7 +1221,7 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 123, stdin */
+/* line 130, stdin */
 
 .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -1215,7 +1230,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 130, stdin */
+/* line 137, stdin */
 
 .figure-card .card-cta a:hover .text,
 .figure-card .card-cta a:focus .text,
@@ -1223,7 +1238,7 @@
   text-decoration: underline !important;
 }
 
-/* line 134, stdin */
+/* line 141, stdin */
 
 .figure-card .card-cta a:hover .arrow,
 .figure-card .card-cta a:focus .arrow,
@@ -1232,7 +1247,7 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 141, stdin */
+/* line 148, stdin */
 
 .figure-card .pattern-background {
   position: absolute;
@@ -1243,14 +1258,14 @@
   right: 0;
 }
 
-/* line 149, stdin */
+/* line 156, stdin */
 
 .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 156, stdin */
+/* line 163, stdin */
 
 .figure-card.badge-rtp .card-badge,
 .figure-card.badge-rtp .card-cta {
@@ -1258,7 +1273,7 @@
   color: #333F48;
 }
 
-/* line 162, stdin */
+/* line 169, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover,
 .figure-card.badge-rtp .card-cta a:focus,
@@ -1266,7 +1281,7 @@
   color: #333F48;
 }
 
-/* line 165, stdin */
+/* line 172, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -1274,7 +1289,7 @@
   fill: #333F48;
 }
 
-/* line 173, stdin */
+/* line 180, stdin */
 
 .figure-card.badge-rtp a.mega-link:hover + .card .card-cta a,
 .figure-card.badge-rtp a.mega-link:focus + .card .card-cta a,
@@ -1282,7 +1297,7 @@
   color: #333F48;
 }
 
-/* line 181, stdin */
+/* line 188, stdin */
 
 .figure-card.badge-hub .card-badge,
 .figure-card.badge-hub .card-cta,
@@ -1292,7 +1307,7 @@
   color: #4B9CD3;
 }
 
-/* line 187, stdin */
+/* line 194, stdin */
 
 .figure-card.badge-hub .card-cta a:hover,
 .figure-card.badge-hub .card-cta a:focus,
@@ -1303,7 +1318,7 @@
   color: #4B9CD3;
 }
 
-/* line 190, stdin */
+/* line 197, stdin */
 
 .figure-card.badge-hub .card-cta a:hover .arrow path,
 .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -1314,7 +1329,7 @@
   fill: #4B9CD3;
 }
 
-/* line 198, stdin */
+/* line 205, stdin */
 
 .figure-card.badge-hub a.mega-link:hover + .card .card-cta a,
 .figure-card.badge-hub a.mega-link:focus + .card .card-cta a,
@@ -1325,7 +1340,7 @@
   color: #4B9CD3;
 }
 
-/* line 206, stdin */
+/* line 213, stdin */
 
 .figure-card.badge-boxyard .card-badge,
 .figure-card.badge-boxyard .card-cta,
@@ -1335,7 +1350,7 @@
   color: #E63C2F;
 }
 
-/* line 212, stdin */
+/* line 219, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover,
 .figure-card.badge-boxyard .card-cta a:focus,
@@ -1346,7 +1361,7 @@
   color: #E63C2F;
 }
 
-/* line 215, stdin */
+/* line 222, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -1357,7 +1372,7 @@
   fill: #E63C2F;
 }
 
-/* line 223, stdin */
+/* line 230, stdin */
 
 .figure-card.badge-boxyard a.mega-link:hover + .card .card-cta a,
 .figure-card.badge-boxyard a.mega-link:focus + .card .card-cta a,
@@ -1368,7 +1383,7 @@
   color: #E63C2F;
 }
 
-/* line 231, stdin */
+/* line 238, stdin */
 
 .figure-card.badge-frontier .card-badge,
 .figure-card.badge-frontier .card-cta,
@@ -1378,7 +1393,7 @@
   color: #47D7AC;
 }
 
-/* line 237, stdin */
+/* line 244, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover,
 .figure-card.badge-frontier .card-cta a:focus,
@@ -1389,7 +1404,7 @@
   color: #2FA787;
 }
 
-/* line 240, stdin */
+/* line 247, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -1400,7 +1415,7 @@
   fill: #47D7AC;
 }
 
-/* line 248, stdin */
+/* line 255, stdin */
 
 .figure-card.badge-frontier a.mega-link:hover + .card .card-cta a,
 .figure-card.badge-frontier a.mega-link:focus + .card .card-cta a,
@@ -1411,7 +1426,7 @@
   color: #2FA787;
 }
 
-/* line 256, stdin */
+/* line 263, stdin */
 
 .figure-card.badge-stem .card-badge,
 .figure-card.badge-stem .card-cta,
@@ -1421,7 +1436,7 @@
   color: #654EA3;
 }
 
-/* line 262, stdin */
+/* line 269, stdin */
 
 .figure-card.badge-stem .card-cta a:hover,
 .figure-card.badge-stem .card-cta a:focus,
@@ -1432,7 +1447,7 @@
   color: #654EA3;
 }
 
-/* line 265, stdin */
+/* line 272, stdin */
 
 .figure-card.badge-stem .card-cta a:hover .arrow path,
 .figure-card.badge-stem .card-cta a:focus .arrow path,
@@ -1443,7 +1458,7 @@
   fill: #654EA3;
 }
 
-/* line 273, stdin */
+/* line 280, stdin */
 
 .figure-card.badge-stem a.mega-link:hover + .card .card-cta a,
 .figure-card.badge-stem a.mega-link:focus + .card .card-cta a,
@@ -1454,14 +1469,14 @@
   color: #654EA3;
 }
 
-/* line 280, stdin */
+/* line 287, stdin */
 
 .figure-card.figure-card-vertical {
   position: relative;
   padding-bottom: 40px;
 }
 
-/* line 284, stdin */
+/* line 291, stdin */
 
 .figure-card.figure-card-vertical .figure-card-img img,
 .figure-card.figure-card-vertical .placeholder {
@@ -1475,7 +1490,7 @@
   background: #FFF;
 }
 
-/* line 294, stdin */
+/* line 301, stdin */
 
 .figure-card.figure-card-vertical .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -1486,26 +1501,26 @@
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 298, stdin */
+/* line 305, stdin */
 
 .figure-card.figure-card-vertical a.mega-link {
   top: 235px;
 }
 
-/* line 302, stdin */
+/* line 309, stdin */
 
 .figure-card.figure-card-vertical .card {
   margin: -65px 30px 0;
   z-index: 2;
 }
 
-/* line 307, stdin */
+/* line 314, stdin */
 
 .figure-card.figure-card-vertical .pattern-background {
   bottom: 0;
 }
 
-/* line 312, stdin */
+/* line 319, stdin */
 
 .figure-card.figure-card-horizontal {
   display: -webkit-box;
@@ -1513,7 +1528,7 @@
   display: flex;
 }
 
-/* line 315, stdin */
+/* line 322, stdin */
 
 .figure-card.figure-card-horizontal .figure-card-img {
   display: -webkit-box;
@@ -1522,7 +1537,7 @@
   width: 100%;
 }
 
-/* line 319, stdin */
+/* line 326, stdin */
 
 .figure-card.figure-card-horizontal .figure-card-img img {
   width: 66vw;
@@ -1535,7 +1550,7 @@
   z-index: 1;
 }
 
-/* line 330, stdin */
+/* line 337, stdin */
 
 .figure-card.figure-card-horizontal .card {
   position: absolute;
@@ -1547,7 +1562,7 @@
   z-index: 2;
 }
 
-/* line 339, stdin */
+/* line 346, stdin */
 
 .figure-card.figure-card-horizontal a.mega-link {
   right: 30px;
@@ -1556,7 +1571,7 @@
   z-index: 5;
 }
 
-/* line 347, stdin */
+/* line 354, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .figure-card-img img {
   left: auto;
@@ -1565,7 +1580,7 @@
   margin-right: -50vw;
 }
 
-/* line 354, stdin */
+/* line 361, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .card,
 .figure-card.figure-card-horizontal.figure-align-right a.mega-link {
