@@ -10,9 +10,12 @@ add_action('wp_enqueue_scripts', function () {
   wp_dequeue_style('sage/main.css');
   wp_dequeue_script('sage/main.js');
 
+  // Polyfills
+  wp_enqueue_script('sage/js-polyfill.js', 'https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,IntersectionObserver', [], null, true);
+
   // Enqueue files for child theme (which include the above as imports)
   wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
-  wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), ['jquery'], null, true);
+  wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), ['jquery', 'sage/js-polyfill.js'], null, true);
 }, 100);
 
 /**
@@ -116,14 +119,6 @@ add_action('widgets_init', function () {
     'name'          => __('Footer-Utility-Right', 'sage'),
     'id'            => 'footer-utility-right'
   ] + $config);
-});
-
-/**
- *
- */
-add_filter('upload_mimes', function($mimes) {
-  $mimes['svg'] = 'image/svg+xml';
-  return $mimes;
 });
 
 /**

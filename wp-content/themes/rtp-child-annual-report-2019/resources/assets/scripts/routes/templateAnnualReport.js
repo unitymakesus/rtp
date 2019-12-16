@@ -1,3 +1,5 @@
+import 'focus-within-polyfill';
+
 export default {
   init() {
   },
