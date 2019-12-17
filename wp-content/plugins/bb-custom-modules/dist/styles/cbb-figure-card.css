@@ -1487,11 +1487,7 @@
   background: #FFF;
 }
 
-<<<<<<< HEAD
-/* line 292, stdin */
-=======
-/* line 301, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+/* line 299, stdin */
 
 .figure-card.figure-card-vertical .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -1502,63 +1498,27 @@
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-<<<<<<< HEAD
-/* line 296, stdin */
-=======
-/* line 305, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+/* line 303, stdin */
 
 .figure-card.figure-card-vertical a.mega-link {
   top: 235px;
 }
 
-<<<<<<< HEAD
-/* line 300, stdin */
-=======
-/* line 309, stdin */
-
-.figure-card.figure-card-vertical .card {
-  margin: -65px 30px 0;
-  z-index: 2;
-}
-
-/* line 314, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+/* line 307, stdin */
 
 .figure-card.figure-card-vertical .pattern-background {
   bottom: 0;
 }
 
-<<<<<<< HEAD
 @media only screen and (min-width: 768px) {
-  /* line 305, stdin */
+  /* line 312, stdin */
 
   .figure-card.figure-card-vertical .card {
     margin: -65px 30px 0;
     z-index: 2;
   }
 
-  /* line 310, stdin */
-=======
-/* line 319, stdin */
-
-.figure-card.figure-card-horizontal {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-/* line 322, stdin */
-
-.figure-card.figure-card-horizontal .figure-card-img {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-}
-
-/* line 326, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+  /* line 317, stdin */
 
   .figure-card.figure-card-vertical .figure-card-img img,
   .figure-card.figure-card-vertical .placeholder {
@@ -1568,22 +1528,14 @@
   }
 }
 
-<<<<<<< HEAD
-/* line 318, stdin */
-=======
-/* line 337, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+/* line 325, stdin */
 
 .figure-card.figure-card-horizontal .figure-card-img {
   width: 100%;
   line-height: 0;
 }
 
-<<<<<<< HEAD
-/* line 323, stdin */
-=======
-/* line 346, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+/* line 330, stdin */
 
 .figure-card.figure-card-horizontal a.mega-link {
   right: 30px;
@@ -1592,11 +1544,7 @@
   z-index: 5;
 }
 
-<<<<<<< HEAD
-/* line 331, stdin */
-=======
-/* line 354, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
+/* line 338, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .figure-card-img img {
   left: auto;
@@ -1605,9 +1553,8 @@
   margin-right: -50vw;
 }
 
-<<<<<<< HEAD
 @media only screen and (min-width: 768px) {
-  /* line 317, stdin */
+  /* line 324, stdin */
 
   .figure-card.figure-card-horizontal {
     display: -webkit-box;
@@ -1615,7 +1562,7 @@
     display: flex;
   }
 
-  /* line 342, stdin */
+  /* line 349, stdin */
 
   .figure-card.figure-card-horizontal .card {
     position: absolute;
@@ -1626,11 +1573,8 @@
     width: 50%;
     z-index: 2;
   }
-=======
-/* line 361, stdin */
->>>>>>> b5df54a3... small a11y fixes and link improvements on figure cards
 
-  /* line 351, stdin */
+  /* line 358, stdin */
 
   .figure-card.figure-card-horizontal .figure-card-img {
     display: -webkit-box;
@@ -1638,7 +1582,7 @@
     display: flex;
   }
 
-  /* line 354, stdin */
+  /* line 361, stdin */
 
   .figure-card.figure-card-horizontal .figure-card-img img {
     width: 66vw;
@@ -1651,7 +1595,7 @@
     z-index: 1;
   }
 
-  /* line 366, stdin */
+  /* line 373, stdin */
 
   .figure-card.figure-card-horizontal.figure-align-right .card,
   .figure-card.figure-card-horizontal.figure-align-right a.mega-link {
