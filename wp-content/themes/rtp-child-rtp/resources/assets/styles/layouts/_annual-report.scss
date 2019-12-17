@@ -300,16 +300,22 @@
           text-align: left;
         }
 
-        .uabb-infobox-content {
+        .uabb-infobox-text {
           display: flex;
         }
 
-        .uabb-imgicon-wrap {
+        .icon {
           display: flex;
           align-items: center;
           justify-content: center;
           width: 100%;
           max-width: 200px;
+
+          // Only way to target custom lord-icon element.
+          > *:not(.text) {
+            width: 160px !important;
+            height: 160px !important;
+          }
         }
       }
 
