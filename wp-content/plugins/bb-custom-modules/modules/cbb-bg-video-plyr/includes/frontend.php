@@ -9,7 +9,7 @@
     <div
       class="js-player"
       data-plyr-provider="vimeo"
-      data-plyr-embed-id="375733288"
+      data-plyr-embed-id="<?= $settings->vimeo_link ?>"
     ></div>
   </div>
 </div>
