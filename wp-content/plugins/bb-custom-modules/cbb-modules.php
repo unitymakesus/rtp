@@ -71,6 +71,9 @@ function load_custom_modules() {
 
     // People Module
     require_once 'modules/cbb-rtp-people/cbb-rtp-people.php';
+
+    // Background Video
+    require_once 'modules/cbb-bg-video-plyr/cbb-bg-video-plyr.php';
   }
 }
 add_action( 'init', 'load_custom_modules' );
@@ -109,7 +112,7 @@ function cbb_disable_modules( $enabled, $instance ) {
     'list-icon',
     'uabb-separator',
     'team',
-    'uabb-video',
+    // 'uabb-video',
     'uabb-advanced-menu',
     'advanced-separator',
     'creative-link',

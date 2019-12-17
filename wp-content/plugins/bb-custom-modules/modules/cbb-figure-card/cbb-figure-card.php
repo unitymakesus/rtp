@@ -148,6 +148,7 @@ FLBuilder::register_module( 'CbbFigureCardModule', [
 					'cta_link' => [
 						'type' => 'link',
 						'label' => __('CTA Link', 'cbb'),
+						'show_target'	=> true,
 					],
 					'modaal_content' => [
 						'type' => 'editor',
