@@ -1111,7 +1111,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . $branding . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/off-canvas-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=off-canvas-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/design-off-canvas-menu-for-beaver-builder/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=off-canvas-module" target="_blank" rel="noopener"> How to Design an Off-Canvas menu for Beaver Builder? ( Learn in 3 Easy Steps! ) </a> </li>

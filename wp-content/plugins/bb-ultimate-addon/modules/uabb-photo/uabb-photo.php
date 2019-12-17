@@ -305,7 +305,19 @@ class UABBPhotoModule extends FLBuilderModule {
 			return htmlspecialchars( $photo->title );
 		}
 	}
-
+	/**
+	 * Function that gets the title value of the Image
+	 *
+	 * @since 1.23.0
+	 *
+	 * @method get_title
+	 */
+	public function get_title() {
+		$photo = $this->get_data();
+		if ( isset( $photo->title ) && ! empty( $photo->title ) ) {
+			return htmlspecialchars( $photo->title );
+		}
+	}
 	/**
 	 * Function to get the attributes
 	 *

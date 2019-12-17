@@ -284,7 +284,6 @@ class ImageIconModule extends FLBuilderModule {
 	 */
 	public function get_alt() {
 		$photo = $this->get_data();
-
 		if ( ! empty( $photo->alt ) ) {
 			return htmlspecialchars( $photo->alt );
 		} elseif ( ! empty( $photo->description ) ) {
@@ -295,7 +294,19 @@ class ImageIconModule extends FLBuilderModule {
 			return htmlspecialchars( $photo->title );
 		}
 	}
-
+	/**
+	 * Function that gets the title value of the Image
+	 *
+	 * @since 1.23.0
+	 *
+	 * @method get_title
+	 */
+	public function get_title() {
+		$photo = $this->get_data();
+		if ( isset( $photo->title ) && ! empty( $photo->title ) ) {
+			return htmlspecialchars( $photo->title );
+		}
+	}
 	/**
 	 * Function that checks for the source
 	 *

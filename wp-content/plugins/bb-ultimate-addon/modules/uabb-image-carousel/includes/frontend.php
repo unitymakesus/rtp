@@ -37,7 +37,7 @@
 																						}
 																						?>
 
-			<img class="uabb-gallery-img" <?php echo $img_src; ?> alt="<?php echo $photo->alt; ?>" />
+			<img class="uabb-gallery-img" <?php echo $img_src; ?> alt="<?php echo $photo->alt; ?>" title="<?php echo $photo->title; ?>"/>
 
 																				<?php if ( 'none' != $settings->hover_effects ) : ?>
 				<!-- Overlay Wrapper -->
@@ -61,7 +61,7 @@
 			<?php endif; ?>
 																				<?php if ( 'none' != $settings->click_action ) : ?>
 			</a>
-			<?php endif; ?>    
+			<?php endif; ?>
 																				<?php if ( $photo && ! empty( $photo->caption ) && 'hover' == $settings->show_captions && 'none' == $settings->hover_effects ) : ?>
 			<<?php echo $settings->tag_selection; ?> class="uabb-image-carousel-caption uabb-image-carousel-caption-hover" itemprop="caption"><?php echo $photo->caption; ?></<?php echo $settings->tag_selection; ?>>
 			<?php endif; ?>

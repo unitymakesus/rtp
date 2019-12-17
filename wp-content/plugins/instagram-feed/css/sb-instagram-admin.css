@@ -661,11 +661,11 @@
 #sbi_admin .sbi_ca_actions a.button-secondary,
 #sbi_admin .sbi_ca_accesstoken a.sbi_ca_token_shortcode {
 	font-size: 12px;
-	padding: 6px;
+	padding: 4px 6px;
 	height: auto;
-	line-height: 1;
+	line-height: 1.4;
 	margin: 7px 5px 0 0;
-	vertical-align: top;
+	min-height: 1px;
 }
 #sbi_admin .sbi_ca_at_is_valid {
 	margin-top: 10px;
@@ -734,7 +734,6 @@
 }
 #sbi_admin .sbi_ca_token{
 	position: relative;
-	top: 1px;
 	padding: 3px 10px;
 	border: 1px solid #d6d6d6;
 	border-left: none;
@@ -744,6 +743,8 @@
 	width: 510px;
 	display: inline-block;
 	margin-left: 0;
+	min-height: 1px;
+	line-height: 1.4;
 }
 #sbi_admin .sbi_ca_accesstoken a.sbi_ca_token_shortcode{
 	margin-top: 0;

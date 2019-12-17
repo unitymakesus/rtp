@@ -65,12 +65,14 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Primary Color', 'uabb' ),
 								'default'    => 'f7b91a',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 							'theme_text_color' => array(
 								'type'       => 'color',
 								'label'      => __( 'Primary Text Color', 'uabb' ),
 								'default'    => '808285',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 						),
 					),
@@ -82,6 +84,7 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Background Color', 'uabb' ),
 								'default'    => 'f7b91a',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 							'btn_bg_color_opc'       => array(
 								'type'        => 'text',
@@ -96,6 +99,7 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Background Hover Color', 'uabb' ),
 								'default'    => '000000',
 								'show_reset' => true,
+								'show_alpha' => true,
 								'preview'    => array(
 									'type' => 'none',
 								),
@@ -113,12 +117,14 @@ FLBuilder::register_settings_form(
 								'label'      => __( 'Text Color', 'uabb' ),
 								'default'    => 'ffffff',
 								'show_reset' => true,
+								'show_alpha' => true,
 							),
 							'btn_text_hover_color'   => array(
 								'type'       => 'color',
 								'label'      => __( 'Text Hover Color', 'uabb' ),
 								'default'    => 'ffffff',
 								'show_reset' => true,
+								'show_alpha' => true,
 								'preview'    => array(
 									'type' => 'none',
 								),

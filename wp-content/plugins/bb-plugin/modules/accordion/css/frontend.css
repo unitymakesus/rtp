@@ -2,7 +2,9 @@
 	cursor: pointer;
 	display: table;
 }
-.fl-accordion-button:focus {
+.fl-accordion-button:focus,
+.fl-accordion-button-icon:focus,
+.fl-accordion-button-icon:active {
 	outline: 0
 }
 

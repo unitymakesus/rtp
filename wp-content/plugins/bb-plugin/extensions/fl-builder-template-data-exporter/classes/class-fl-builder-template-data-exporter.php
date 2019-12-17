@@ -108,6 +108,7 @@ final class FLBuilderTemplateDataExporter {
 		$rows    = self::get_ui_data( 'row' );
 		$modules = self::get_ui_data( 'module' );
 		$columns = self::get_ui_data( 'column' );
+		$other   = apply_filters( 'fl_builder_exporter_ui_data', array() );
 
 		include FL_BUILDER_TEMPLATE_DATA_EXPORTER_DIR . 'includes/template-data-exporter.php';
 	}
@@ -143,10 +144,11 @@ final class FLBuilderTemplateDataExporter {
 		if ( isset( $_POST['fl-builder-export-module'] ) && is_array( $_POST['fl-builder-export-module'] ) ) {
 			$templates['module'] = self::get_template_export_data( $_POST['fl-builder-export-module'] );
 		}
-
 		if ( isset( $_POST['fl-builder-export-column'] ) && is_array( $_POST['fl-builder-export-column'] ) ) {
 			$templates['column'] = self::get_template_export_data( $_POST['fl-builder-export-column'] );
 		}
+
+		$templates = apply_filters( 'fl_builder_exporter_templates', $templates );
 
 		header( 'X-Robots-Tag: noindex, nofollow', true );
 		header( 'Content-Type: application/octet-stream' );

@@ -10,7 +10,6 @@ $version_bb_check = UABB_Compatibility::check_bb_version();
 $settings->page_overlay        = UABB_Helper::uabb_colorpicker( $settings, 'page_overlay', true );
 $settings->menu_color          = UABB_Helper::uabb_colorpicker( $settings, 'menu_color', true );
 $settings->menu_color_hover    = UABB_Helper::uabb_colorpicker( $settings, 'menu_color_hover', true );
-$settings->menu_bgcolor_hover  = UABB_Helper::uabb_colorpicker( $settings, 'menu_bgcolor_hover', true );
 $settings->offcanvas_bg_color  = UABB_Helper::uabb_colorpicker( $settings, 'offcanvas_bg_color', true );
 $settings->icon_color          = UABB_Helper::uabb_colorpicker( $settings, 'icon_color', true );
 $settings->close_icon_color    = UABB_Helper::uabb_colorpicker( $settings, 'close_icon_color', true );
@@ -142,13 +141,6 @@ if ( isset( $settings->menu_color_hover ) ) {
 	}
 	<?php
 }
-if ( isset( $settings->menu_bgcolor_hover ) ) {
-	?>
-	.fl-node-<?php echo $id; ?>   .uabb-offcanvas-menu .menu-item a:hover {
-	<?php echo ( '' !== $settings->menu_bgcolor_hover ) ? 'background-color:' . $settings->menu_bgcolor_hover . ';' : ''; ?>
-	}
-	<?php
-}
 if ( isset( $settings->offcanvas_bg_color ) ) {
 	?>
 	.fl-node-<?php echo $id; ?>   .uabb-offcanvas-<?php echo $id; ?> .uabb-offcanvas {
@@ -203,8 +195,6 @@ if ( 'button' === $settings->offcanvas_on ) {
 		/* Colors */
 		'bg_color'                   => $settings->btn_bg_color,
 		'bg_hover_color'             => $settings->btn_bg_hover_color,
-		'bg_color_opc'               => $settings->btn_bg_color_opc,
-		'bg_hover_color_opc'         => $settings->btn_bg_hover_color_opc,
 		'text_color'                 => $settings->btn_text_color,
 		'text_hover_color'           => $settings->btn_text_hover_color,
 

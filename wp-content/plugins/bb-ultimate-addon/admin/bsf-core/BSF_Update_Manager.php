@@ -255,16 +255,6 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 				}
 			}
 
-			// Bundled plugins are installed when the demo is imported on Ajax request and bundled products should be unchanged in the ajax.
-			if ( ! defined( 'DOING_AJAX' ) ) {
-
-				$key = array_search( 'astra-pro-sites', $product_parent );
-
-				if ( false !== $key ) {
-					unset( $product_parent[ $key ] );
-				}
-			}
-
 			$product_parent = apply_filters( 'bsf_is_product_bundled', array_unique( $product_parent ), $bsf_product, $search_by );
 
 			return $product_parent;

@@ -9,6 +9,7 @@
 				btn_style   = form.find('select[name=btn_style]'),
 				hover_attribute = form.find('select[name=hover_attribute]'),
 				btn_style_opt   = form.find('select[name=btn_flat_button_options]');
+                content_type = form.find('select[name=form_id]');
 
 			// Init validation events.
 			this._btn_styleChanged();
@@ -17,6 +18,8 @@
 			btn_style.on('change',  $.proxy( this._btn_styleChanged, this ) );
 			btn_style_opt.on('change',  $.proxy( this._btn_styleChanged, this ) );
 			hover_attribute.on( 'change', $.proxy( this._btn_styleChanged, this ) );
+            //content_type.on('change', $.proxy( this._contentTypeChange, this ) );
+            this._contentTypeChange();
 			
 		},
 
@@ -74,6 +77,53 @@
                         $( this ).hide();
                     } else {
                         $( this ).show();
+                    }
+                }
+            });
+        },
+        _getTemplates: function( callback ) {
+
+            $.post(
+                ajaxurl,
+                {
+                    action: 'uabb_get_saved_cf7',
+                },
+                function( response ) {
+                    callback(response);
+                }
+            );
+
+        },
+        _contentTypeChange: function() {
+
+            var form = $('.fl-builder-settings');
+            select = form.find( 'select[name="form_id"]' );
+            value = ''; self = this;
+
+            if ( 'undefined' !== typeof FLBuilderSettingsForms && 'undefined' !== typeof FLBuilderSettingsForms.config ) {
+                if ( "uabb-contact-form7" === FLBuilderSettingsForms.config.id ) {
+                    value = FLBuilderSettingsForms.config.settings['form_id'];
+                }
+            }
+
+            select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
+
+            this._getTemplates( function(data) {
+                var response = JSON.parse( data );
+
+                if ( response.success ) {
+
+                    select.html( response.data );
+
+                    if ( '' !== value ) {
+
+                        select.find( 'option[value="' + value + '"]').attr( 'selected', 'selected' );
+
+                    } else {
+
+                        option_val = select.find( 'option:first' ).val();
+
+                        select.find("option[value=" + option_val +"]").attr('selected', true);
                     }
                 }
             });

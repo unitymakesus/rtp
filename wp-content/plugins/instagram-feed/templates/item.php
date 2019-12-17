@@ -18,10 +18,10 @@ $media_type = SB_Instagram_Parse::get_media_type( $post );
 $permalink = SB_Instagram_Parse::get_permalink( $post );
 $maybe_carousel_icon = $media_type === 'carousel' ? SB_Instagram_Display_Elements::get_icon( 'carousel', $icon_type ) : '';
 $maybe_video_icon = $media_type === 'video' ? SB_Instagram_Display_Elements::get_icon( 'video', $icon_type ) : '';
-$media_url = SB_Instagram_Display_Elements::get_optimum_media_url( $post, $settings );
+$media_url = SB_Instagram_Display_Elements::get_optimum_media_url( $post, $settings, $resized_images );
 $media_full_res = SB_Instagram_Parse::get_media_url( $post );
 $sbi_photo_style_element = SB_Instagram_Display_Elements::get_sbi_photo_style_element( $post, $settings ); // has already been escaped
-$media_all_sizes_json = SB_Instagram_Parse::get_media_src_set( $post );
+$media_all_sizes_json = SB_Instagram_Parse::get_media_src_set( $post, $resized_images );
 $img_alt = SB_Instagram_Parse::get_caption( $post, __( 'Image for post', 'instagram-feed' ) . ' ' . $post_id );
 
 ?>

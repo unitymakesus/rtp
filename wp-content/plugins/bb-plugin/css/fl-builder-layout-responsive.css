@@ -62,7 +62,7 @@
   	  -webkit-flex: 0 0 100%;
   		  -ms-flex: 0 0 100%;
   			  flex: 0 0 100%;
-			  max-width: 100%;
+		 min-width: 0;
 }
 .fl-col-group-responsive-reversed .fl-col:nth-of-type(1) {
 	-webkit-box-ordinal-group: 12;   /* OLD - iOS 6-, Safari 3.1-6 */

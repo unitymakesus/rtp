@@ -21,6 +21,9 @@ if ( 'none' != $settings->image_type && '' != $settings->image_type ) { ?>
 			$classes = $module->get_classes();
 			$src     = $module->get_src();
 			$alt     = $module->get_alt();
+			$title   = $module->get_title();
+
+
 		?>
 		<div class="uabb-image
 		<?php
@@ -29,7 +32,7 @@ if ( 'none' != $settings->image_type && '' != $settings->image_type ) { ?>
 		?>
 		" itemscope itemtype="https://schema.org/ImageObject">
 			<div class="uabb-image-content">
-				<img class="<?php echo $classes; ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" itemprop="image"/>
+				<img class="<?php echo $classes; ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" title="<?php echo $title; ?>" itemprop="image"/>
 			</div>
 		</div>
 

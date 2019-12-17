@@ -70,6 +70,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_ajax_astra-notice-dismiss', array( $this, 'dismiss_notice' ) );
+			add_action( 'wp_ajax_uabb-batch-notice-dismiss', array( $this, 'uabb_batch_dismiss_notice' ) );
 			add_filter( 'wp_kses_allowed_html', array( $this, 'add_data_attributes' ), 10, 2 );
 		}
 		/**
@@ -101,15 +102,35 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function dismiss_notice() {
+
 			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
-			// Valid inputs?
+
+				// Valid inputs?
 			if ( ! empty( $notice_id ) ) {
 				if ( ! empty( $repeat_notice_after ) ) {
 					set_transient( $notice_id, true, $repeat_notice_after );
 				} else {
 					update_user_meta( get_current_user_id(), $notice_id, 'notice-dismissed' );
 				}
+				wp_send_json_success();
+			}
+			wp_send_json_error();
+		}
+		/**
+		 * Dismiss Notice for UABB Batch Process Notice.
+		 *
+		 * @since 1.23.0
+		 * @return void
+		 */
+		public function uabb_batch_dismiss_notice() {
+
+			$notice_id = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
+
+			if ( 'uabb-batch-process-start' == $notice_id ) {
+
+				update_option( 'uabb_batch_notice_dismissed', 'yes' );
+
 				wp_send_json_success();
 			}
 			wp_send_json_error();

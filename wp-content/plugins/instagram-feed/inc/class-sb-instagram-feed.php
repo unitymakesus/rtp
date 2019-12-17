@@ -93,6 +93,13 @@ class SB_Instagram_Feed
 	private $resized_images;
 
 	/**
+	 * @var array
+	 *
+	 * @since 2.1.3/5.2.3
+	 */
+	protected $one_post_found;
+
+	/**
 	 * SB_Instagram_Feed constructor.
 	 *
 	 * @param string $transient_name ID of this feed
@@ -122,6 +129,8 @@ class SB_Instagram_Feed
 		$this->report = array();
 
 		$this->resized_images = array();
+
+		$this->one_post_found = false;
 	}
 
 	/**
@@ -377,7 +386,7 @@ class SB_Instagram_Feed
 		if ( is_array( $num_or_array_of_ids ) ) {
 			$ids = $num_or_array_of_ids;
 
-			$id_string = '"' . implode( '","', $ids ) . '"';
+			$id_string = "'" . implode( "','", $ids ) . "'";
 			$results = $wpdb->get_results( $wpdb->prepare( "
 			SELECT p.media_id, p.instagram_id, p.aspect_ratio, p.sizes
 			FROM $posts_table_name AS p 
@@ -534,6 +543,7 @@ class SB_Instagram_Feed
 		);
 
 		$one_successful_connection = false;
+		$one_post_found = false;
 		$next_page_found = false;
 		$one_api_request_delayed = false;
 
@@ -571,6 +581,8 @@ class SB_Instagram_Feed
 						}
 
 						if ( isset( $data[0]['id'] ) ) {
+							$one_post_found = true;
+
 							$post_set = $this->filter_posts( $data, $settings );
 
 							$new_post_sets[] = $post_set;
@@ -613,6 +625,7 @@ class SB_Instagram_Feed
 										$one_successful_connection = true;
 										$data = $connection->get_data();
 										if ( isset( $data[0]['id'] ) ) {
+											$one_post_found = true;
 											$post_set = $this->filter_posts( $data, $settings );
 											$new_post_sets[] = $post_set;
 										}
@@ -658,8 +671,18 @@ class SB_Instagram_Feed
 
 					$this->add_report( 'delaying API request for ' . $term . ' - ' . $type );
 
-					$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed for this account.', 'instagram-feed' ), $connected_account_for_term['username'] ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b>';
-					$error .= '<p>' . __( 'There may be an issue with the Instagram Access Token that you are using. Your server might also be unable to connect to Instagram at this time.', 'instagram-feed' );
+					$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed for this account.', 'instagram-feed' ), $connected_account_for_term['username'] ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b></p>';
+					$errors = $sb_instagram_posts_manager->get_errors();
+					if ( ! empty( $errors )  && current_user_can( 'manage_options' ) ) {
+						if ( isset( $errors['api'] ) ) {
+							$error .= '<p>' . $errors['api'][1] . '</p>';
+						} elseif ( isset( $errors['connection'] ) ) {
+							$error .= '<p>' . $errors['connection'][1] . '</p>';
+						} // https://smashballoon.com/instagram-feed/docs/errors/
+						$error .= '<p><a href="https://smashballoon.com/instagram-feed/docs/errors/">' . __( 'Click here to troubleshoot', 'instagram-feed' ) . '</a></p>';
+					} else {
+						$error .= '<p>' . __( 'There may be an issue with the Instagram access token that you are using. Your server might also be unable to connect to Instagram at this time.', 'instagram-feed' ) . '</p>';
+					}
 
 					$sb_instagram_posts_manager->add_frontend_error( 'at_' . $connected_account_for_term['username'], $error );
 				}
@@ -676,6 +699,8 @@ class SB_Instagram_Feed
 
 		if ( ! empty( $this->post_data ) && is_array( $this->post_data ) ) {
 			$posts = array_merge( $this->post_data, $posts );
+		} elseif ( $one_post_found ) {
+			$this->one_post_found = true;
 		}
 
 		$this->post_data = $posts;
@@ -882,10 +907,7 @@ class SB_Instagram_Feed
 		global $sb_instagram_posts_manager;
 
 		if ( empty( $this->post_data ) && ! empty( $connected_accounts_for_feed ) ) {
-			$error = '<p><b>' . __( 'Error: No posts found.', 'instagram-feed' ) . '</b>';
-			$error .= '<p>' . __( 'Make sure this account has posts available on instagram.com.', 'instagram-feed' ) . '</p>';
-
-			$sb_instagram_posts_manager->add_frontend_error( 'noposts', $error );
+			$this->handle_no_posts_found( $settings, $feed_types_and_terms );
 		}
 		$posts = array_slice( $this->post_data, 0, $settings['minnum'] );
 		$header_data = ! empty( $this->header_data ) ? $this->header_data : false;
@@ -1127,6 +1149,17 @@ class SB_Instagram_Feed
 		// array_unique( $post_set, SORT_REGULAR);
 
 		return $post_set;
+	}
+
+	protected function handle_no_posts_found( $settings = array(), $feed_types_and_terms = array() ) {
+		global $sb_instagram_posts_manager;
+
+		$error = '<p><b>' . __( 'Error: No posts found.', 'instagram-feed' ) . '</b>';
+		$error .= '<p>' . __( 'Make sure this account has posts available on instagram.com.', 'instagram-feed' ) . '</p>';
+
+		$error .= '<p><a href="https://smashballoon.com/instagram-feed/docs/errors/">' . __( 'Click here to troubleshoot', 'instagram-feed' ) . '</a></p>';
+
+		$sb_instagram_posts_manager->add_frontend_error( 'noposts', $error );
 	}
 
 	protected function remove_duplicate_posts() {

@@ -930,8 +930,13 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'label'   => __( 'Content Length', 'fl-builder' ),
 						'default' => '',
 						'units'   => array( 'words' ),
-						'slider'  => true,
+						'slider'  => array(
+							'min'  => 0,
+							'max'  => 1000,
+							'step' => 1,
+						),
 					),
+
 					'show_more_link' => array(
 						'type'    => 'select',
 						'label'   => __( 'More Link', 'fl-builder' ),

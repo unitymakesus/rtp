@@ -6144,6 +6144,7 @@
 
 			FLBuilder.preview = null;
 			FLLightbox.closeParent(this);
+			FLBuilder.triggerHook( 'didCancelNodeSettings' );
 		},
 
 		/**
@@ -6648,6 +6649,8 @@
 				if ( showAlert && ! $( '.fl-builder-alert-lightbox:visible' ).length ) {
 					FLBuilder.alert( FLBuilderStrings.settingsHaveErrors );
 				}
+			} else {
+				FLBuilder.triggerHook( 'didTriggerSettingsSave' );
 			}
 
 			return valid;
@@ -7154,7 +7157,7 @@
 				fields    = null,
 				i         = 0,
 				cursorAt  = FLBuilderConfig.isRtl ? { left: 10 } : { right: 10 },
-				limit     = $('#fl-field-testimonials').attr( 'data-limit' ) || 0,
+				limit     = multiples.attr( 'data-limit' ) || 0,
 				count     = $('tbody.fl-builder-field-multiples').find('tr').length || 0
 
 			if( parseInt(limit) > 0 && count -1 >= parseInt( limit ) ) {
@@ -9319,6 +9322,10 @@
 				data.node_settings = FLBuilder._ajaxModSecFix( $.extend( true, {}, data.node_settings ) );
 			}
 
+			if ( 'undefined' != typeof data.node_preview ) {
+				data.node_preview = FLBuilder._ajaxModSecFix( $.extend( true, {}, data.node_preview ) );
+			}
+
 			data.settings      = FLBuilder._inputVarsCheck( data.settings );
 			data.node_settings = FLBuilder._inputVarsCheck( data.node_settings );
 
@@ -9743,7 +9750,17 @@
 
 
 				message  = product + " has detected a plugin conflict that is preventing the page from saving.<p>( In technical terms there’s probably a PHP error in Ajax. )</p>"
-				info     = "If you contact Beaver Builder Support, we need to know what the error is in the JavaScript console in your browser.<p>To open the JavaScript console:<br />Chrome: View > Developer > JavaScript Console<br />Firefox: Tools > Web Developer > Browser Console<br />Safari: Develop > Show JavaScript console</p>Copy the errors you find there and submit them with your Support ticket. It saves us having to ask you that as a second step.<br /><br />If you want to troubleshoot further, you can check our <a class='link' target='_blank' href='https://kb.wpbeaverbuilder.com/article/42-known-beaver-builder-incompatibilities'>Knowledge Base</a> for plugins we know to be incompatible. Then deactivate your plugins one by one while you try to save the page in the Beaver Builder editor. When the page saves normally, you have identified the plugin causing the conflict. <a class='link' target='_blank' href='https://www.wpbeaverbuilder.com/beaver-builder-support/'>Contact Support</a> if you need further help."
+				info     = "<p>If you contact Beaver Builder Support, we need to know what the error is in the JavaScript console in your browser.</p>"
+
+				info     +="<div><div style='width:49%;float:left;'>"
+				info     +="<p>MacOS Users:<br />Chrome: View > Developer > JavaScript Console<br />Firefox: Tools > Web Developer > Browser Console<br />Safari: Develop > Show JavaScript console</p>"
+				info     +="</div>"
+
+				info     +="<div style='width:49%;float:right;'>"
+				info     +="<p>Windows Users:<br />Chrome: Settings > More Tools > Developer > Console<br />Firefox: Menu/Settings > Web Developer > Web Console<br />Edge: Settings and More > More Tools > Console</p>"
+				info     +="</div></div>"
+
+				info     +="<p style='display:inline-block;'>Copy the errors you find there and submit them with your Support ticket. It saves us having to ask you that as a second step.<br /><br />If you want to troubleshoot further, you can check our <a class='link' target='_blank' href='https://kb.wpbeaverbuilder.com/article/42-known-beaver-builder-incompatibilities'>Knowledge Base</a> for plugins we know to be incompatible. Then deactivate your plugins one by one while you try to save the page in the Beaver Builder editor. When the page saves normally, you have identified the plugin causing the conflict. <a class='link' target='_blank' href='https://www.wpbeaverbuilder.com/beaver-builder-support/'>Contact Support</a> if you need further help.</p>"
 
 				if ( FLBuilderConfig.MaxInputVars <= 3000 ) {
 					info += '<br /><br />The PHP config value max_input_vars is only set to ' + FLBuilderConfig.MaxInputVars + '. If you are using 3rd party addons this could very likely be the cause of this error. [<a class="link" href="https://kb.wpbeaverbuilder.com/article/746-troubleshooting-number-of-settings-being-saved-exceeds-php-max-input-vars">doc link</a>].'

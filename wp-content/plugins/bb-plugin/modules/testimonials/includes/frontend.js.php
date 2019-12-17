@@ -19,8 +19,10 @@
 		nextText: '<i class="fas fa-chevron-circle-right"></i>',
 		prevText: '<i class="fas fa-chevron-circle-left"></i>',
 		controls : <?php echo ( 'compact' == $settings->layout ) ? $settings->arrows : 0; ?>,
-		onSliderLoad: function() {
+		onSliderLoad: function(currentIndex) {
 			$('.fl-node-<?php echo $id; ?> .fl-testimonials').addClass('fl-testimonials-loaded');
+			$('.fl-node-<?php echo $id; ?> .fl-slider-next a').attr('aria-label', '<?php _e( 'Next testimonial.', 'fl-builder' ); ?>' );
+			$('.fl-node-<?php echo $id; ?> .fl-slider-prev a').attr('aria-label', '<?php _e( 'Previous testimonial.', 'fl-builder' ); ?>' );
 		},
 		onSliderResize: function(currentIndex){
 			this.working = false;
@@ -32,10 +34,18 @@
 			$('.fl-node-<?php echo $id; ?> .bx-controls .bx-pager-link').addClass('disabled');
 		},
 		onSlideAfter: function( ele, oldIndex, newIndex ) {
-			$('.fl-node-<?php echo $id; ?> .fl-slider-next a').removeClass('disabled');
-			$('.fl-node-<?php echo $id; ?> .fl-slider-prev a').removeClass('disabled');
+			$('.fl-node-<?php echo $id; ?> .fl-slider-next a').removeClass('disabled'); 
+			$('.fl-node-<?php echo $id; ?> .fl-slider-prev a').removeClass('disabled'); 
 			$('.fl-node-<?php echo $id; ?> .bx-controls .bx-pager-link').removeClass('disabled');
 		},
+		onSlideNext: function(ele, oldIndex, newIndex) {
+			$('.fl-node-<?php echo $id; ?> .fl-slider-next').attr( 'aria-pressed', 'true' );
+			$('.fl-node-<?php echo $id; ?> .fl-slider-prev').attr( 'aria-pressed', 'false' );
+		},
+		onSlidePrev: function(ele, oldIndex, newIndex) {
+			$('.fl-node-<?php echo $id; ?> .fl-slider-next').attr( 'aria-pressed', 'false' );
+			$('.fl-node-<?php echo $id; ?> .fl-slider-prev').attr( 'aria-pressed', 'true' );
+		}
 	});
 
 })(jQuery);

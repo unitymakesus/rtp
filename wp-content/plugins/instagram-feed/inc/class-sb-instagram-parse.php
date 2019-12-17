@@ -135,9 +135,11 @@ class SB_Instagram_Parse
 	 * @return array
 	 *
 	 * @since 2.0/5.0
+	 * @since 2.1.3/5.2.3 added 'd' element as a default backup from the API
 	 */
 	public static function get_media_src_set( $post, $resized_images = array() ) {
 		$media_urls = array(
+			'd' => SB_Instagram_Parse::get_media_url( $post ),
 			'150' => '',
 			'320' => '',
 			'640' => ''

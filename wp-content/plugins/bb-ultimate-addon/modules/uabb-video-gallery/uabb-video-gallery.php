@@ -39,6 +39,7 @@ class UABBVideoGallery extends FLBuilderModule {
 		$this->add_css( 'jquery-magnificpopup' );
 		$this->add_css( 'font-awesome-5' );
 	}
+
 	/**
 	 * Ensure backwards compatibility with old settings.
 	 *

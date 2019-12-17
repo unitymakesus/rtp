@@ -163,6 +163,7 @@
 /* Videos */
 #sb_instagram svg:not(:root).svg-inline--fa {
     height: 1em;
+    display: inline-block;
 }
 
 #sb_instagram .sbi_type_video .sbi_playbtn,

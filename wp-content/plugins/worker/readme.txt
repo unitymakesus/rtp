@@ -56,6 +56,11 @@ https://vimeo.com/220647227
 
 == Changelog ==
 
+= 4.9.2 =
+
+- Added fallback for downloading/archiving files for the File Manager tool, when zip extension is not available
+- Fix: Worker plugin branding within WP 5.2 Admin Site Health page plugins list
+
 = 4.9.1 =
 
 - Fix: Handle updates on WP Engine hosted websites properly.

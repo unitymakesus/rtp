@@ -4656,6 +4656,9 @@ input[type=number].fl-field-popup-slider-focus {
 .fl-builder-edit .media-frame.hide-menu {
 	visibility: visible;
 }
+.fl-builder-edit .media-router button {
+	color:inherit;
+}
 span.select2-container.select2-container--open {
     z-index: 9999999;
 }

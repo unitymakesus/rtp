@@ -20,7 +20,7 @@ FLBuilder::register_module(
 							'type'        => 'select',
 							'label'       => __( 'Select Form', 'uabb' ),
 							'default'     => uabb_wpf_get_form_id(),
-							'options'     => uabb_wpforms_titles(),
+							'options'     => array(),
 							'connections' => array( 'string' ),
 							'help'        => __( 'Choose a form that you wish to style', 'uabb' ),
 						),

@@ -1,0 +1,45 @@
+.uabb-how-to-container .uabb-how-to-image {
+    width: 100%;
+}
+.uabb-how-to-step {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+}
+.uabb-how-to-step-content {
+    width: 70%;
+}
+.uabb-how-to-step-image {
+    width: 30%;
+}
+.uabb-how-to-container .uabb-how-to-step.uabb-no-img .uabb-how-to-step-content {
+	width: 100%;
+}
+.uabb-how-to-error-notices-container {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #f9f0c3;
+    padding: 15px;
+    position: relative;
+    text-align: left;
+    margin-bottom: 10px;
+}
+.uabb-settings-notice {
+	padding: 5px;
+	background-color: #fcf8e3;
+	text-align: left;
+	line-height: 10px;
+}
+.uabb-how-to-total-time {
+    font-weight: 500;
+}
+.uabb-how-to-estimated-cost {
+    font-weight: 500;
+}
+.uabb-how-to-step-title {
+    font-weight: 500;
+}

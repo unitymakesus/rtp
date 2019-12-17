@@ -391,7 +391,7 @@ final class FLBuilder {
 		$min     = ( self::is_debug() ) ? '' : '.min';
 
 		// Register additional CSS
-		wp_register_style( 'fl-slideshow', $css_url . 'fl-slideshow.css', array( 'yui3' ), $ver );
+		wp_register_style( 'fl-slideshow', $css_url . 'fl-slideshow' . $min . '.css', array( 'yui3' ), $ver );
 		wp_register_style( 'jquery-bxslider', $css_url . 'jquery.bxslider.css', array(), $ver );
 		wp_register_style( 'jquery-magnificpopup', $css_url . 'jquery.magnificpopup' . $min . '.css', array(), $ver );
 		wp_register_style( 'yui3', $css_url . 'yui3.css', array(), $ver );

@@ -8,15 +8,6 @@
  * @package UABB WP Forms Styler Module
  */
 
-$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
-$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
-$branding            = '';
-if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
-	$branding = 'no';
-} else {
-	$branding = 'yes';
-}
-
 FLBuilder::register_module(
 	'UABBWpFormStylerModule',
 	array(
@@ -30,7 +21,7 @@ FLBuilder::register_module(
 							'type'    => 'select',
 							'label'   => __( 'Select Form', 'uabb' ),
 							'default' => uabb_wpf_get_form_id(),
-							'options' => uabb_wpforms_titles(),
+							'options' => array(),
 							'help'    => __( 'Choose a form that you wish to style', 'uabb' ),
 						),
 					),
@@ -1109,7 +1100,7 @@ The default heading will inherit tag from WPForms plugin itself
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . $branding . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/wpforms-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=wp-form-styler" target="_blank" rel="noopener"> How to Set Fields in wpf Styler Module? </a> </li>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/unable-to-see-wpforms-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=wp-form-styler" target="_blank" rel="noopener"> Unable to see the WPForms Styler Module in UABB? </a> </li>

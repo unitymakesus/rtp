@@ -199,6 +199,7 @@ $row_settings = array(
 								),
 								'photo'     => array(
 									'sections' => array( 'bg_color', 'bg_photo', 'bg_overlay' ),
+									'fields'   => array( 'bg_x_position', 'bg_y_position' ),
 								),
 								'video'     => array(
 									'sections' => array( 'bg_color', 'bg_video', 'bg_overlay' ),
@@ -222,7 +223,38 @@ $row_settings = array(
 				'bg_photo'     => array(
 					'title'  => __( 'Background Photo', 'fl-builder' ),
 					'fields' => array(
-						'bg_image'      => array(
+						'bg_image_source' => array(
+							'type'    => 'select',
+							'label'   => __( 'Photo Source', 'fl-builder' ),
+							'default' => 'library',
+							'options' => array(
+								'library' => __( 'Media Library', 'fl-builder' ),
+								'url'     => __( 'URL', 'fl-builder' ),
+							),
+							'toggle'  => array(
+								'library' => array(
+									'fields' => array( 'bg_image' ),
+								),
+								'url'     => array(
+									'fields' => array( 'bg_image_url', 'caption' ),
+								),
+							),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
+						'bg_image_url'    => array(
+							'type'        => 'text',
+							'label'       => __( 'Photo URL', 'fl-builder' ),
+							'placeholder' => __( 'https://www.example.com/my-photo.jpg', 'fl-builder' ),
+							'connections' => array( 'photo' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '> .fl-row-content-wrap',
+								'property' => 'background-image',
+							),
+						),
+						'bg_image'        => array(
 							'type'        => 'photo',
 							'show_remove' => true,
 							'label'       => __( 'Photo', 'fl-builder' ),
@@ -234,7 +266,7 @@ $row_settings = array(
 								'property' => 'background-image',
 							),
 						),
-						'bg_repeat'     => array(
+						'bg_repeat'       => array(
 							'type'       => 'select',
 							'label'      => __( 'Repeat', 'fl-builder' ),
 							'default'    => 'none',
@@ -251,7 +283,7 @@ $row_settings = array(
 								'property' => 'background-repeat',
 							),
 						),
-						'bg_position'   => array(
+						'bg_position'     => array(
 							'type'       => 'select',
 							'label'      => __( 'Position', 'fl-builder' ),
 							'default'    => 'center center',
@@ -266,6 +298,12 @@ $row_settings = array(
 								'center top'    => __( 'Center Top', 'fl-builder' ),
 								'center center' => __( 'Center', 'fl-builder' ),
 								'center bottom' => __( 'Center Bottom', 'fl-builder' ),
+								'custom_pos'    => __( 'Custom Position', 'fl-builder' ),
+							),
+							'toggle'     => array(
+								'custom_pos' => array(
+									'fields' => array( 'bg_x_position', 'bg_y_position' ),
+								),
 							),
 							'preview'    => array(
 								'type'     => 'css',
@@ -273,7 +311,41 @@ $row_settings = array(
 								'property' => 'background-position',
 							),
 						),
-						'bg_attachment' => array(
+						'bg_x_position'   => array(
+							'type'         => 'unit',
+							'label'        => __( 'X Position', 'fl-builder' ),
+							'units'        => array( 'px', '%' ),
+							'default_unit' => '%',
+							'responsive'   => true,
+							'slider'       => array(
+								'min'  => 0,
+								'max'  => 1000,
+								'step' => 10,
+							),
+							'preview'      => array(
+								'type'     => 'css',
+								'selector' => '> .fl-row-content-wrap',
+								'property' => 'background-position-x',
+							),
+						),
+						'bg_y_position'   => array(
+							'type'         => 'unit',
+							'label'        => __( 'Y Position', 'fl-builder' ),
+							'units'        => array( 'px', '%' ),
+							'default_unit' => '%',
+							'responsive'   => true,
+							'slider'       => array(
+								'min'  => 0,
+								'max'  => 1000,
+								'step' => 10,
+							),
+							'preview'      => array(
+								'type'     => 'css',
+								'selector' => '> .fl-row-content-wrap',
+								'property' => 'background-position-y',
+							),
+						),
+						'bg_attachment'   => array(
 							'type'       => 'select',
 							'label'      => __( 'Attachment', 'fl-builder' ),
 							'default'    => 'scroll',
@@ -288,7 +360,7 @@ $row_settings = array(
 								'property' => 'background-attachment',
 							),
 						),
-						'bg_size'       => array(
+						'bg_size'         => array(
 							'type'       => 'select',
 							'label'      => __( 'Scale', 'fl-builder' ),
 							'default'    => 'cover',
@@ -551,10 +623,10 @@ $row_settings = array(
 							),
 							'toggle'  => array(
 								'color'    => array(
-									'fields' => array( 'bg_overlay_color' ),
+									'fields' => array( 'bg_overlay_color', 'bg_x_position', 'bg_y_position' ),
 								),
 								'gradient' => array(
-									'fields' => array( 'bg_overlay_gradient' ),
+									'fields' => array( 'bg_overlay_gradient', 'bg_x_position', 'bg_y_position' ),
 								),
 							),
 							'preview' => array(
