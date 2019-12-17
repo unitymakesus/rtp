@@ -87,6 +87,25 @@
 
 		</div>
 
+		<?php foreach ( $other as $section ) : ?>
+		<div class="fl-builder-template-data-section fl-builder-template-data-<?php echo $section['key']; ?>">
+
+			<h2><?php echo $section['title']; ?></h2>
+
+			<?php if ( 0 === count( $section['posts'] ) ) : ?>
+				<?php /* translators: %s: Data export section title. */ ?>
+			<p><?php echo sprintf( _x( 'No %s Found', 'Data export section title.', 'fl-builder' ), $section['title'] ); ?></p>
+			<?php else : ?>
+			<p><label><input type="checkbox" name="fl-builder-template-data-exporter-all" value="1" /><?php _e( 'Select All', 'fl-builder' ); ?></label></p>
+			<?php endif; ?>
+
+			<?php foreach ( $section['posts'] as $post ) : ?>
+			<p><label><input type="checkbox" class="fl-builder-template-data-checkbox" name="fl-builder-export-<?php echo $section['key']; ?>[]" value="<?php echo $post->ID; ?>" /> <?php echo $post->post_title; ?></label></p>
+			<?php endforeach; ?>
+
+		</div>
+		<?php endforeach; ?>
+
 		<p class="submit">
 			<input type="submit" name="update" class="button-primary" value="<?php _e( 'Export Template Data', 'fl-builder' ); ?>" />
 			<?php wp_nonce_field( 'fl-builder-template-data-exporter', 'fl-builder-template-data-exporter-nonce' ); ?>

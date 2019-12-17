@@ -1348,6 +1348,11 @@
                 this.facet = this.$root.editing;
             },
             methods: {
+                reservedName() {
+                    if ('pager' == this.facet.name) {
+                        this.facet.name += '_';
+                    }
+                },
                 unlock() {
                     Vue.delete(this.facet, '_code');
                 }
@@ -1373,6 +1378,7 @@
                                 type="text"
                                 class="item-name"
                                 v-model="facet.name"
+                                @change="reservedName"
                             />
                         </div>
                     </div>
@@ -1609,7 +1615,7 @@
             },
             watch: {
                 'facet.type': function(val) {
-                    if ('search' == val) {
+                    if ('search' == val || 'pager' == val) {
                         this.facet.source = '';
                     }
                 },
@@ -1935,6 +1941,7 @@
                         val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
                         val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
                         val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
+                        val = ('pager' == val) ? val + '_' : val; // reserved
                         item.name = val;
                     }
                 },

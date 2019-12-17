@@ -274,6 +274,16 @@
 	}
 <?php } ?>
 
+<?php
+if ( isset( $settings->rating_align ) && $version_bb_check ) {
+	FLBuilderCSS::responsive_rule( array(
+		'settings'     => $settings,
+		'setting_name' => 'rating_align',
+		'selector'     => ".fl-node-$id .uabb-testimonial .uabb-rating",
+		'prop'         => 'text-align',
+	) );
+}
+?>
 
 /* Box Layout starts Here */
 <?php if ( 'slider-no' == $settings->tetimonial_layout || 'box' == $settings->tetimonial_layout ) { ?>

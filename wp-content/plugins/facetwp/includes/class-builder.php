@@ -13,7 +13,7 @@ class FacetWP_Builder
      * @since 3.2.0
      */
     function render_layout( $layout ) {
-        global $wp_query;
+        global $wp_query, $post;
 
         $settings = $layout['settings'];
         $this->custom_css = $settings['custom_css'];
@@ -33,7 +33,11 @@ class FacetWP_Builder
             while ( have_posts() ) : the_post();
 
                 // Prevent short-tags from leaking onto other posts
-                $this->data = [];
+                $this->data = [
+                    'post:id'       => $post->ID,
+                    'post:name'     => $post->post_name,
+                    'post:url'      => get_permalink()
+                ];
 
                 $output .= '<div class="fwpl-result">';
 
@@ -530,6 +534,10 @@ class FacetWP_Builder
             if ( ! $in_clause ) {
                 $value = $exists_clause ? '' : $value[0];
             }
+
+            // Date placeholders
+            $value = str_replace( 'now', date('Y-m-d H:i:s' ), $value );
+            $value = str_replace( 'today', date( 'Y-m-d' ), $value );
 
             if ( 'ID' == $key ) {
                 if ( 'IN' == $compare ) {

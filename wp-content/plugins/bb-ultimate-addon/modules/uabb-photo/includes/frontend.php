@@ -11,6 +11,7 @@ $src     = $module->get_src();
 $link    = $module->get_link();
 $alt     = $module->get_alt();
 $attrs   = $module->get_attributes();
+$title   = $module->get_title();
 
 $grayscale_class = '';
 if ( 'simple' == $settings->hover_effect ) {
@@ -56,7 +57,7 @@ uabb-photo-align-<?php echo $settings->align; ?> uabb-photo-mob-align-<?php echo
 		<?php if ( ! empty( $link ) ) : ?>
 		<a href="<?php echo $link; ?>" target="<?php echo $link_url_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $link_url_target, $link_url_nofollow, 1 ); ?> itemprop="url">
 		<?php endif; ?>
-		<img class="<?php echo $classes; ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" itemprop="image" <?php echo $attrs; ?> />
+		<img class="<?php echo $classes; ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" title="<?php echo $title; ?>" itemprop="image" <?php echo $attrs; ?> />
 
 		<?php if ( $photo && ! empty( $photo->caption ) && 'hover' == $settings->show_caption ) : ?>
 		<div class="uabb-photo-caption uabb-photo-caption-hover" itemprop="caption"><?php echo $photo->caption; ?></div>

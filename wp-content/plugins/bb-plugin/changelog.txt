@@ -1,3 +1,65 @@
+<h4>2.2.6.3 - 11/27/2019</h4>
+<p><strong>Hot Fix</strong></p>
+<ul>
+	<li>Fixed Importer issues.</li>
+</ul>
+
+<h4>2.2.6.2 - 11/18/2019</h4>
+<p><strong>Hot Fix</strong></p>
+<ul>
+	<li>Fixed importer issue.</li>
+	<li>Fixed Accordian active/focus CSS issue.</li>
+	<li>Removed Wrapper.php from phpxmlrpc vendor package as it flagged up a false positive for malware and isnt actually used.</li>
+	<li>Fixed JS error with Yoast integration if Yoast meta box is disabled for post-type.</li>
+	<li>Fixed add media modal CSS issue introduced in WP 5.3</li>
+	<li>Fixed HTML being stripped in subscribe module success message.</li>
+	<li>Fixed typo in video background markup.</li>
+	<li>Fixed MODSEC issue with partial layout rendering.</li>
+</ul>
+
+<h4>2.2.6.1 - 11/04/2019</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>New filter <code>fl_builder_module_groups</code>.</li>
+	<li>New JS hooks <code>didCancelNodeSettings</code> and <code>didTriggerSettingsSave</code>.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed XML import issue where illegal characters pasted from MSWord will break the importer.</li>
+	<li>Fixed some CDNs breaking the builder UI when responsive preview is active.</li>
+	<li>Fixed issue with spaces in font families not having quotes added in css.</li>
+	<li>Fixed multisite issue with Cache Enabler plugin during publish.</li>
+</ul>
+
+<h4>2.2.6 - 10/18/2019</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added support for flushing Cloudflare if official plugin is installed.</li>
+	<li>Photo Module: Added option to show/hide title attribute.</li>
+	<li>Minified slideshow CSS file.</li>
+	<li>Added workflow support for Drip email service in subscribe form.</li>
+	<li>Row Background Images: Added support for custom positions.</li>
+	<li>New filter <code>fl_builder_photo_data</code> added.</li>
+	<li>Added URL as a Row Background Photo option with optional title.</li>
+	<li>Added reCAPTCHA v3 support to Contact and Subscribe modules.</li>
+	<li>Post Module excerpt length slider increased from 100 to 1000.</li>
+	<li>Added aria-label to Content Slider background links for accessibility.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed bxslider issues.</li>
+	<li>Fixed schema output in Video module even when schema disabled.</li>
+	<li>Fixed issue with multiple/repeater form limits.</li>
+	<li>Fixed various serialised data issues in template dat files.</li>
+	<li>Show message if user already subscribed to Mailchimp.</li>
+	<li>Fixed settings display issues when using Twenty Nineteen theme.</li>
+	<li>Fixed empty H3 in Testimonial module.</li>
+	<li>Content slider: If transition speed is not lower than delay show a warning.</li>
+	<li>Fixed BG Row Video still showing video even when already removed from the Settings UI.</li>
+	<li>Fixed reverse stacking columns going fullwidth on responsive layout.</li>
+	<li>Fixed issues with Cookiebot plugin.</li>
+</ul>
+
 <h4>2.2.5.3 - 09/25/2019</h4>
 <p><strong>Hot Fix</strong></p>
 <ul>

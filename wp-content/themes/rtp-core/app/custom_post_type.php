@@ -71,14 +71,21 @@ function change_capabilities( $args, $post_type ){
     $args['capabilities'] = array(
       'edit_post' => 'edit_mecevent',
       'edit_posts' => 'edit_mecevents',
-      'edit_others_posts' => 'edit_other_mecevents',
+      'edit_others_posts' => 'edit_others_mecevents',
       'publish_posts' => 'publish_mecevents',
       'read_post' => 'read_mecevent',
       'read_private_posts' => 'read_private_mecevents',
       'delete_post' => 'delete_mecevent'
     );
+
+    $args['map_meta_cap'] = true;
   }
 
   return $args;
 }
 add_filter( 'register_post_type_args', __NAMESPACE__ . '\\change_capabilities' , 10, 2 );
+
+/**
+ * Custom capability for distributor plugin
+ */
+apply_filters( 'dt_push_capabilities', 'distribute_content' );

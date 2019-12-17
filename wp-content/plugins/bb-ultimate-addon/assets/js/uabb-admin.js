@@ -7,6 +7,7 @@ UABB_Admin = {
 		jQuery('.uabb-global-enable').on('click', 	UABB_Admin._toggleGlobal );
 		jQuery('.uabb-module-all-cb').on('click', UABB_Admin._moduleAllCheckboxClicked);
 		jQuery('.uabb-module-cb').on('click', UABB_Admin._moduleCheckboxClicked);
+		jQuery('#uabb-social-form').on('submit', UABB_Admin._loginFromSubmitClicked);
 	},
 
 	_toggleGlobal: function() {
@@ -41,6 +42,42 @@ UABB_Admin = {
 		} else {
 			jQuery('.uabb-module-all-cb').prop('checked', false);
 		}
+	},
+	_loginFromSubmitClicked: function( e ) {
+		googleClientId = jQuery( '.uabb-social-google-client-id' ).val();
+		googleRedirectUrl = jQuery( '.uabb-social-google-redirect-url' ).val();
+		facebookAppId = jQuery( '.uabb-social-facebook-app-id' ).val();
+		facebookRedirectUrl = jQuery( '.uabb-social-facebook-redirect-url' ).val();
+
+		if ( 0 !== googleClientId.length ||  0 !== googleRedirectUrl.length ) {
+
+			if ( 0 === googleClientId.length && 0 !== googleRedirectUrl.length ) {
+
+				e.preventDefault();
+				jQuery( '.uabb-social-error.uabb-social-google-id-err' ).show();
+			}
+			if ( 0 === googleRedirectUrl.length && 0 !== googleClientId.length ) {
+				
+				e.preventDefault();
+				jQuery( '.uabb-social-error.uabb-social-google-url-err' ).show();
+			}
+
+		}
+		if ( 0 !== facebookAppId.length || 0 !== facebookRedirectUrl.length ) {
+
+			if ( 0 === facebookAppId.length && 0 !== facebookRedirectUrl.length ) {
+
+				e.preventDefault();
+				jQuery( '.uabb-social-error.uabb-social-facebook-id-err' ).show();
+			}
+			if ( 0 === facebookRedirectUrl.length && 0 !== facebookAppId.length ) {
+				
+				e.preventDefault();
+				jQuery( '.uabb-social-error.uabb-social-facebook-url-err' ).show();
+			}
+
+		}
+
 	},
 }
 

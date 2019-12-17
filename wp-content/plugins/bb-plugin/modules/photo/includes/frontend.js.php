@@ -23,6 +23,7 @@ jQuery(function($) {
 	}
 	<?php endif; ?>
 
+	<?php if ( ! isset( $settings->title_hover ) || ( isset( $settings->title_hover ) && 'no' === $settings->title_hover ) ) : ?>
 	$(function() {
 		$( '.fl-node-<?php echo $id; ?> .fl-photo-img' )
 			.on( 'mouseenter', function( e ) {
@@ -32,4 +33,5 @@ jQuery(function($) {
 				$( this ).attr( 'title', $( this ).data( 'title' ) ).data( 'title', null );
 			} );
 	});
+	<?php endif; ?>
 });

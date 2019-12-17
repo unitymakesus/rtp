@@ -154,9 +154,17 @@ final class FLBuilderServiceDrip extends FLBuilderService {
 			'account_id' => $account_data['api_account_id'],
 		) );
 
+		$workflows = $api->get_workflows( array(
+			'account_id' => $account_data['api_account_id'],
+		) );
+
+		$html  = $this->render_campaigns_field( $campaigns, $settings );
+		$html .= $this->render_tag_field( $settings );
+		$html .= $this->render_workflows_field( $workflows, $settings );
+
 		$response = array(
 			'error' => false,
-			'html'  => $this->render_campaigns_field( $campaigns, $settings ) . $this->render_tag_field( $settings ),
+			'html'  => $html,
 		);
 
 		return $response;
@@ -213,6 +221,42 @@ final class FLBuilderServiceDrip extends FLBuilderService {
 			'type'      => 'text',
 			'label'     => _x( 'Tags', 'A tag to add to contacts in Drip when they subscribe.', 'fl-builder' ),
 			'help'      => __( 'For multiple tags, separate with comma.', 'fl-builder' ),
+			'preview'   => array(
+				'type' => 'none',
+			),
+		), $settings);
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Render markup for the workflow field.
+	 *
+	 * @since 2.2.4
+	 * @param array $workflows Workflows data from the API.
+	 * @param object $settings Saved module settings.
+	 * @return string The markup for the workflow field.
+	 * @access private
+	 */
+	private function render_workflows_field( $workflows, $settings ) {
+		ob_start();
+
+		$options = array(
+			'' => __( 'Choose...', 'fl-builder' ),
+		);
+
+		if ( ! empty( $workflows ) ) {
+			foreach ( $workflows as $workflow ) {
+				$options[ $workflow['id'] ] = $workflow['name'];
+			}
+		}
+
+		FLBuilder::render_settings_field( 'workflow_id', array(
+			'row_class' => 'fl-builder-service-field-row',
+			'class'     => 'fl-builder-service-workflow-select',
+			'type'      => 'select',
+			'label'     => _x( 'Workflow', 'An email workflow from your GetDrip account.', 'fl-builder' ),
+			'options'   => $options,
 			'preview'   => array(
 				'type' => 'none',
 			),
@@ -288,6 +332,15 @@ final class FLBuilderServiceDrip extends FLBuilderService {
 					$args['campaign_id']  = $settings->campaign_id;
 					$args['double_optin'] = false;
 					$get_res              = $api->subscribe_subscriber( $args );
+				}
+
+				if ( isset( $result['id'] ) && isset( $settings->workflow_id ) && ! empty( $settings->workflow_id ) ) {
+					unset( $args['campaign_id'] );
+					unset( $args['double_optin'] );
+
+					$args['id']          = $result['id'];
+					$args['workflow_id'] = $settings->workflow_id;
+					$workflow_res        = $api->subscribe_workflow( $args );
 				}
 			} catch ( Exception $e ) {
 				$response['error'] = sprintf(

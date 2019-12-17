@@ -1,3 +1,8 @@
+.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_right"],
+.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_left"] {
+	display: none !important;
+}
+
 <?php if ( ! empty( $settings->text_color ) ) : // Text Color ?>
 .fl-node-<?php echo $id; ?> {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
@@ -113,45 +118,110 @@ FLBuilderCSS::rule( array(
 ) );
 
 // Background Photo - Desktop
-FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id > .fl-row-content-wrap",
-	'enabled'  => 'photo' === $settings->bg_type,
-	'props'    => array(
-		'background-image'      => $settings->bg_image_src,
-		'background-repeat'     => $settings->bg_repeat,
-		'background-position'   => $settings->bg_position,
-		'background-attachment' => $settings->bg_attachment,
-		'background-size'       => $settings->bg_size,
-	),
-) );
+if ( 'photo' == $row->settings->bg_type ) :
+	$row_bg_image_lg = '';
+
+	if ( 'library' == $row->settings->bg_image_source ) {
+		$row_bg_image_lg = $row->settings->bg_image_src;
+	} elseif ( 'url' == $row->settings->bg_image_source && ! empty( $row->settings->bg_image_url ) ) {
+		if ( 'array' == gettype( $row->settings->bg_image_url ) ) {
+			$row_bg_image_lg = $row->settings->bg_image_url['url'];
+		} else {
+			$row_bg_image_lg = (string) $row->settings->bg_image_url;
+		}
+	}
+	if ( 'custom_pos' == $row->settings->bg_position ) {
+		$row_bg_position_lg  = empty( $row->settings->bg_x_position ) ? '0' : $row->settings->bg_x_position;
+		$row_bg_position_lg .= $row->settings->bg_x_position_unit;
+		$row_bg_position_lg .= ' ';
+		$row_bg_position_lg .= empty( $row->settings->bg_y_position ) ? '0' : $row->settings->bg_y_position;
+		$row_bg_position_lg .= $row->settings->bg_y_position_unit;
+
+	} else {
+		$row_bg_position_lg = $row->settings->bg_position;
+	}
+
+	FLBuilderCSS::rule( array(
+		'selector' => ".fl-node-$id > .fl-row-content-wrap",
+		'enabled'  => 'photo' === $settings->bg_type,
+		'props'    => array(
+			'background-image'      => $row_bg_image_lg,
+			'background-repeat'     => $settings->bg_repeat,
+			'background-position'   => $row_bg_position_lg,
+			'background-attachment' => $settings->bg_attachment,
+			'background-size'       => $settings->bg_size,
+		),
+	) );
+endif;
 
 // Background Photo - Medium
-FLBuilderCSS::rule( array(
-	'media'    => 'medium',
-	'selector' => ".fl-node-$id > .fl-row-content-wrap",
-	'enabled'  => 'photo' === $settings->bg_type,
-	'props'    => array(
-		'background-image'      => $settings->bg_image_medium_src,
-		'background-repeat'     => $settings->bg_repeat_medium,
-		'background-position'   => $settings->bg_position_medium,
-		'background-attachment' => $settings->bg_attachment_medium,
-		'background-size'       => $settings->bg_size_medium,
-	),
-) );
+if ( 'photo' == $row->settings->bg_type ) :
+	$row_bg_image_md = '';
+
+	if ( 'library' == $row->settings->bg_image_source ) {
+		$row_bg_image_md = $row->settings->bg_image_medium_src;
+	} elseif ( 'url' == $row->settings->bg_image_source && ! empty( $row->settings->bg_image_url ) ) {
+		$row_bg_image_md = $row_bg_image_lg;
+	}
+	if ( 'custom_pos' == $row->settings->bg_position_medium ) {
+		$row_bg_position_md  = empty( $row->settings->bg_x_position_medium ) ? '0' : $row->settings->bg_x_position_medium;
+		$row_bg_position_md .= $row->settings->bg_x_position_medium_unit;
+		$row_bg_position_md .= ' ';
+		$row_bg_position_md .= empty( $row->settings->bg_y_position_medium ) ? '0' : $row->settings->bg_y_position_medium;
+		$row_bg_position_md .= $row->settings->bg_y_position_medium_unit;
+
+	} else {
+		$row_bg_position_md = $row->settings->bg_position_medium;
+	}
+
+	FLBuilderCSS::rule( array(
+		'media'    => 'medium',
+		'selector' => ".fl-node-$id > .fl-row-content-wrap",
+		'enabled'  => 'photo' === $settings->bg_type,
+		'props'    => array(
+			'background-image'      => $row_bg_image_md,
+			'background-repeat'     => $settings->bg_repeat_medium,
+			'background-position'   => $row_bg_position_md,
+			'background-attachment' => $settings->bg_attachment_medium,
+			'background-size'       => $settings->bg_size_medium,
+		),
+	) );
+endif;
 
 // Background Photo - Responsive
-FLBuilderCSS::rule( array(
-	'media'    => 'responsive',
-	'selector' => ".fl-node-$id > .fl-row-content-wrap",
-	'enabled'  => 'photo' === $settings->bg_type,
-	'props'    => array(
-		'background-image'      => $settings->bg_image_responsive_src,
-		'background-repeat'     => $settings->bg_repeat_responsive,
-		'background-position'   => $settings->bg_position_responsive,
-		'background-attachment' => $settings->bg_attachment_responsive,
-		'background-size'       => $settings->bg_size_responsive,
-	),
-) );
+if ( 'photo' == $row->settings->bg_type ) :
+	$row_bg_image_sm = '';
+
+	if ( 'library' == $row->settings->bg_image_source ) {
+		$row_bg_image_sm = $row->settings->bg_image_responsive_src;
+	} elseif ( 'url' == $row->settings->bg_image_source && ! empty( $row->settings->bg_image_url ) ) {
+		$row_bg_image_sm = $row_bg_image_lg;
+	}
+
+	if ( 'custom_pos' == $row->settings->bg_position_responsive ) {
+		$row_bg_position_sm  = empty( $row->settings->bg_x_position_responsive ) ? '0' : $row->settings->bg_x_position_responsive;
+		$row_bg_position_sm .= $row->settings->bg_x_position_responsive_unit;
+		$row_bg_position_sm .= ' ';
+		$row_bg_position_sm .= empty( $row->settings->bg_y_position_responsive ) ? '0' : $row->settings->bg_y_position_responsive;
+		$row_bg_position_sm .= $row->settings->bg_y_position_responsive_unit;
+
+	} else {
+		$row_bg_position_sm = $row->settings->bg_position_responsive;
+	}
+
+	FLBuilderCSS::rule( array(
+		'media'    => 'responsive',
+		'selector' => ".fl-node-$id > .fl-row-content-wrap",
+		'enabled'  => 'photo' === $settings->bg_type,
+		'props'    => array(
+			'background-image'      => $row_bg_image_sm,
+			'background-repeat'     => $settings->bg_repeat_responsive,
+			'background-position'   => $row_bg_position_sm,
+			'background-attachment' => $settings->bg_attachment_responsive,
+			'background-size'       => $settings->bg_size_responsive,
+		),
+	) );
+endif;
 
 // Background Parallax
 FLBuilderCSS::rule( array(

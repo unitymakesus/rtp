@@ -1,0 +1,148 @@
+.uabb-toc-container {
+  padding: 25px;
+  display: inline-block;
+}
+
+.uabb-toc-heading {
+  font-size: 22px;
+  vertical-align: middle;
+  line-height: 1em;
+}
+
+.uabb-parent-wrapper-toc.uabb-toc-hidden .uabb-heading-block,
+.uabb-parent-wrapper-toc.uabb-toc-hidden .uabb-toc-heading {
+  margin-bottom: 0;
+}
+
+.uabb-toc-content-heading {
+  width: 100%;
+  display: inline-block;
+  text-align: left;
+}
+
+.uabb-heading-block,
+.uabb-parent-wrapper-toc .uabb-module-content.uabb-separator-parent {
+  text-align: left;
+}
+
+#uabb-toc-toggle {
+  display: none;
+}
+
+.toc-lists li:not(:last-child) {
+  padding-bottom: 10px;
+}
+
+.toc-lists li ul {
+  padding-top: 10px;
+}
+
+.toc-lists li ol {
+  padding-top: 15px;
+}
+
+.uabb-toggle-toc {
+  float: right;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.uabb-toc-scroll-icon {
+  display: inline-block;
+  background-color: #282828;
+  cursor: pointer;
+  width: 2.1em;
+  height: 2.1em;
+  line-height: 2.1;
+  color: #fcfcfc;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  opacity: .5;
+  visibility: hidden;
+  z-index: 99;
+}
+
+.uabb-toc-scroll-icon:hover {
+  cursor: pointer;
+}
+
+.uabb-toc-scroll-icon.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*Set the number for sub ordered list*/
+.uabb-toc-content-heading li li {
+  list-style: circle;
+}
+
+.uabb-toc-content-heading .toc-ul {
+  padding-left: 1.2em;
+}
+.uabb-toc-content-heading .toc-ol {
+  padding-left: 2px;
+}
+
+.uabb-toc-content-heading ol {
+  counter-reset: item;
+}
+
+.uabb-toc-content-heading ol li {
+  display: block;
+}
+
+.uabb-toc-content-heading ol li:before {
+  content: counters(item, ".") ". ";
+  counter-increment: item
+}
+
+/*CSS for bullet none*/
+.toc-lists.toc_none_bullet li {
+  list-style-type: none;
+  padding-left: 2px;
+}
+
+.toc-lists {
+  margin: 0;
+}
+
+li:before {
+  content: "";
+}
+
+/* Empty TOC items message */
+.uabb-toc-empty-note {
+  display: none;
+}
+
+.uabb-toc-content-empty .uabb-toc-empty-note {
+  display: block;
+}
+
+.uabb-parent-wrapper-toc.uabb-toc-content-empty #uabb-toc-togglecontents {
+  display: none;
+}
+
+/* For Medium Device */
+@media only screen and (max-width: 992px) {
+
+  .uabb-responsive-medsmall .uabb-side-left,
+  .uabb-responsive-medsmall .uabb-side-right {
+    width: 20%;
+  }
+}
+
+/* For Small Device */
+@media only screen and (max-width: 768px) {
+
+  .uabb-responsive-mobile .uabb-side-left,
+  .uabb-responsive-mobile .uabb-side-right,
+  .uabb-responsive-medsmall .uabb-side-left,
+  .uabb-responsive-medsmall .uabb-side-right {
+    width: 10%;
+  }
+}

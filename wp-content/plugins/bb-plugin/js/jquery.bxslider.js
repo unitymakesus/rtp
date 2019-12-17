@@ -341,7 +341,7 @@
       // check for any updates to the controls (like hideControlOnEnd updates)
       if (slider.settings.controls) { updateDirectionControls(); }
       // if touchEnabled is true, setup the touch events
-      if (navigator.maxTouchPoints > 0) { initTouch(); }
+      if ('ontouchstart' in window) { initTouch(); }
       // if keyboardEnabled is true, setup the keyboard events
       if (slider.settings.keyboardEnabled && !slider.settings.ticker) {
         $(document).keydown(keyPress);
@@ -1084,7 +1084,7 @@
         start: {x: 0, y: 0},
         end: {x: 0, y: 0}
       };
-      slider.viewport.bind('touchstart MSPointerDown pointerdown', onTouchStart);
+      slider.viewport.bind('touchstart', onTouchStart);
 
       //for browsers that have implemented pointer events and fire a click after
       //every pointerup regardless of whether pointerup is on same screen location as pointerdown or not
@@ -1114,48 +1114,13 @@
         slider.touch.originalPos = el.position();
         var orig = e.originalEvent,
         touchPoints = (typeof orig.changedTouches !== 'undefined') ? orig.changedTouches : [orig];
-        // fix for https://github.com/stevenwanderski/bxslider-4/issues/1086
-        var chromePointerEvents = typeof PointerEvent === 'function';
-        if (chromePointerEvents && orig.pointerId === undefined) {
-          return;
-        }
-        // end fix
         // record the starting touch x, y coordinates
         slider.touch.start.x = touchPoints[0].pageX;
         slider.touch.start.y = touchPoints[0].pageY;
-
-        if (slider.viewport.get(0).setPointerCapture) {
-          slider.pointerId = orig.pointerId;
-					if(slider.pointerId === 1) {
-          	slider.viewport.get(0).setPointerCapture(slider.pointerId);
-					}
-        }
         // bind a "touchmove" event to the viewport
-        slider.viewport.bind('touchmove MSPointerMove pointermove', onTouchMove);
+        slider.viewport.bind('touchmove', onTouchMove);
         // bind a "touchend" event to the viewport
-        slider.viewport.bind('touchend MSPointerUp pointerup', onTouchEnd);
-        slider.viewport.bind('MSPointerCancel pointercancel', onPointerCancel);
-      }
-    };
-
-    /**
-     * Cancel Pointer for Windows Phone
-     *
-     * @param e (event)
-     *  - DOM event object
-     */
-    var onPointerCancel = function(e) {
-      /* onPointerCancel handler is needed to deal with situations when a touchend
-      doesn't fire after a touchstart (this happens on windows phones only) */
-      setPositionProperty(slider.touch.originalPos.left, 'reset', 0);
-
-      //remove handlers
-      slider.controls.el.removeClass('disabled');
-      slider.viewport.unbind('MSPointerCancel pointercancel', onPointerCancel);
-      slider.viewport.unbind('touchmove MSPointerMove pointermove', onTouchMove);
-      slider.viewport.unbind('touchend MSPointerUp pointerup', onTouchEnd);
-      if (slider.viewport.get(0).releasePointerCapture) {
-        slider.viewport.get(0).releasePointerCapture(slider.pointerId);
+        slider.viewport.bind('touchend', onTouchEnd);
       }
     };
 
@@ -1202,7 +1167,7 @@
      *  - DOM event object
      */
     var onTouchEnd = function(e) {
-      slider.viewport.unbind('touchmove MSPointerMove pointermove', onTouchMove);
+      slider.viewport.unbind('touchmove', onTouchMove);
       //enable slider controls as soon as user stops interacing with slides
       slider.controls.el.removeClass('disabled');
       var orig    = e.originalEvent,
@@ -1251,7 +1216,7 @@
           }
         }
       }
-      slider.viewport.unbind('touchend MSPointerUp pointerup', onTouchEnd);
+      slider.viewport.unbind('touchend', onTouchEnd);
       if (slider.viewport.get(0).releasePointerCapture) {
         slider.viewport.get(0).releasePointerCapture(slider.pointerId);
       }

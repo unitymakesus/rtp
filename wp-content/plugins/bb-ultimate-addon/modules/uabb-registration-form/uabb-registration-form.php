@@ -39,7 +39,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 				'icon'            => 'editor-table.svg',
 			)
 		);
-		wp_enqueue_script( 'password-strength-meter' );
+
 		add_action( 'wp_ajax_uabb_registration_form', array( $this, 'register_user' ) );
 		add_action( 'wp_ajax_nopriv_uabb_registration_form', array( $this, 'register_user' ) );
 		add_filter( 'wp_new_user_notification_email', array( $this, 'uabb_custom_wp_new_user_notification_email' ), 10, 3 );
@@ -65,6 +65,9 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 				'2.0',
 				true
 			);
+		}
+		if ( isset( $settings->check_password_strength ) && 'yes' === $settings->check_password_strength ) {
+			$this->add_js( 'password-strength-meter' );
 		}
 	}
 	/**

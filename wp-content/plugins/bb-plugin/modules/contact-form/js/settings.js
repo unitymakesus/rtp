@@ -1,12 +1,23 @@
 (function($){
+	$.validator.addMethod( "alphanumeric", function( value, element ) {
+		return this.optional( element ) || /^\w+$/i.test( value );
+	}, "Letters, numbers, and underscores only please" );
 
 	FLBuilder.registerModuleHelper('contact-form', {
+
+		rules: {
+			recaptcha_action: {
+				alphanumeric: true
+			}
+		},
 
 		init: function()
 		{
 			// Toggle reCAPTCHA display
 			this._toggleReCaptcha();
+			this._toggleAction();
 			$( 'select[name=recaptcha_toggle]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
+			$( 'select[name=recaptcha_toggle]' ).on( 'change', $.proxy( this._toggleAction, this ) );
 			$( 'input[name=recaptcha_site_key]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
 			$( 'select[name=recaptcha_validate_type]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
 			$( 'select[name=recaptcha_theme]' ).on( 'change', $.proxy( this._toggleReCaptcha, this ) );
@@ -97,6 +108,10 @@
 				captchaElement 	= $( '<div id="'+ reCaptchaId +'" class="fl-grecaptcha">' ),
 				widgetID;
 
+			if ( 'invisible_v3' == reCaptType ) {
+				reCaptType = 'invisible';
+			}
+
 			captchaElement.attr( 'data-sitekey', reCaptchaKey );
 			captchaElement.attr( 'data-validate', reCaptType );
 			captchaElement.attr( 'data-theme', theme );
@@ -112,6 +127,21 @@
 				theme	: theme
 			});
 			captchaElement.attr('data-widgetid', widgetID);
+		},
+
+		_toggleAction: function()
+		{
+			var form   = $( '.fl-builder-settings' ),
+				toggle = form.find( 'select[name=recaptcha_toggle]' ).val(),
+				captType = form.find( 'select[name=recaptcha_validate_type]' ).val(),
+				action = form.find('input[name=recaptcha_action]');
+
+				if ( 'show' == toggle && 'invisible_v3' == captType ) {
+					action.closest( 'tr' ).show();
+				}
+				else {
+					action.closest( 'tr' ).hide();
+				}
 		},
 
 		_previewButtonBackground: function( e ) {

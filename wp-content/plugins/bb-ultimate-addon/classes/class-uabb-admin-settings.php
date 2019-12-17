@@ -79,10 +79,12 @@ final class UABBBuilderAdminSettings {
 					array(
 						'key'     => $api_key,
 						'placeid' => $place_id,
-					), 'https://maps.googleapis.com/maps/api/place/details/json'
+					),
+					'https://maps.googleapis.com/maps/api/place/details/json'
 				);
 
-				$result = wp_remote_post( $url,
+				$result = wp_remote_post(
+					$url,
 					array(
 						'method'      => 'POST',
 						'timeout'     => 60,
@@ -370,6 +372,11 @@ final class UABBBuilderAdminSettings {
 				'priority' => 510,
 			);
 		}
+		$items['uabb-social'] = array(
+			'title'    => __( 'Social Login Settings', 'uabb' ),
+			'show'     => ! is_network_admin() || ! FLBuilderAdminSettings::multisite_support(),
+			'priority' => 511,
+		);
 
 		$item_data = apply_filters( 'uabb_builder_admin_settings_nav_items', $items );
 
@@ -408,6 +415,7 @@ final class UABBBuilderAdminSettings {
 		self::render_form( 'branding' );
 
 		self::render_form( 'template-cloud' );
+		self::render_form( 'social' );
 
 		// Let extensions hook into form rendering.
 		do_action( 'uabb_builder_admin_settings_render_forms' );
@@ -607,6 +615,26 @@ final class UABBBuilderAdminSettings {
 			}
 			FLBuilderModel::update_admin_settings_option( '_fl_builder_uabb', $uabb, false );
 			FLBuilderModel::update_admin_settings_option( '_fl_builder_uabb_modules', $modules, false );
+		}
+		if ( isset( $_POST['fl-uabb-social-nonce'] ) && wp_verify_nonce( $_POST['fl-uabb-social-nonce'], 'uabb' ) ) {
+
+			$uabb = UABB_Init::$uabb_options['fl_builder_uabb'];
+
+			if ( isset( $_POST['uabb-social-google-client-id'] ) ) {
+				$uabb['uabb-social-google-client-id'] = sanitize_text_field( $_POST['uabb-social-google-client-id'] );
+			}
+
+			if ( isset( $_POST['uabb-social-google-redirect-url'] ) ) {
+				$uabb['uabb-social-google-redirect-url'] = esc_url( $_POST['uabb-social-google-redirect-url'] );
+			}
+			if ( isset( $_POST['uabb-social-facebook-app-id'] ) ) {
+				$uabb['uabb-social-facebook-app-id'] = sanitize_text_field( $_POST['uabb-social-facebook-app-id'] );
+			}
+			if ( isset( $_POST['uabb-social-facebook-redirect-url'] ) ) {
+				$uabb['uabb-social-facebook-redirect-url'] = esc_url( $_POST['uabb-social-facebook-redirect-url'] );
+			}
+
+			FLBuilderModel::update_admin_settings_option( '_fl_builder_uabb', $uabb, false );
 		}
 
 		/**

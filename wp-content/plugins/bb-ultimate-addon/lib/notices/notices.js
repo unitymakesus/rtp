@@ -43,8 +43,12 @@
 
 			var repeat_notice_after = $( this ).parents('.astra-notice').data( 'repeat-notice-after' ) || '';
 			var notice_id = $( this ).parents('.astra-notice').attr( 'id' ) || '';
-
-			AstraNotices._ajax( notice_id, repeat_notice_after );
+			var dismiss_notice = 'yes';
+			if ( 'uabb-batch-process-start' === notice_id ) {
+				AstraNotices.dismissNotice_ajax( notice_id, dismiss_notice );
+			} else {
+				AstraNotices._ajax( notice_id, repeat_notice_after );
+			}
 		},
 
 		_dismissNoticeNew: function( event ) {
@@ -85,6 +89,22 @@
 				},
 			});
 
+		},
+		dismissNotice_ajax: function( notice_id, dismiss_notice ) {
+
+			if ( 'uabb-batch-process-start' !== notice_id ) {
+				return;
+			}
+
+			$.ajax({
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action         : 'uabb-batch-notice-dismiss',
+					notice_id      : notice_id,
+					dismiss_notice :  dismiss_notice,
+				},
+			});
 		}
 	};
 

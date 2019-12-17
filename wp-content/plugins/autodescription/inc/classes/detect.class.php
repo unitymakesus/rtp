@@ -533,6 +533,7 @@ class Detect extends Render {
 	 *
 	 * @since 4.0.0
 	 * @staticvar bool $detected
+	 * @TODO add filter?
 	 *
 	 * @return bool
 	 */
@@ -680,6 +681,7 @@ class Detect extends Render {
 	 * Detect if the current screen type is a page or taxonomy.
 	 *
 	 * @since 2.3.1
+	 * @TODO unused... deprecate me.
 	 * @staticvar array $is_page
 	 *
 	 * @param string $type the Screen type
@@ -707,6 +709,8 @@ class Detect extends Render {
 	 * Determines whether the main query supports custom SEO.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.2 Now tests for an existing post/term ID when on singular/term pages.
+	 * @since 4.0.3 Can now assert empty categories again by checking for taxonomy support.
 	 *
 	 * @return bool
 	 */
@@ -716,15 +720,30 @@ class Detect extends Render {
 
 		if ( isset( $cache ) ) return $cache;
 
-		if ( $this->is_feed() ) {
-			$supported = false;
-		} elseif ( $this->is_singular() || \is_post_type_archive() ) {
-			$supported = $this->is_post_type_supported();
-		} elseif ( $this->is_term_meta_capable() ) {
-			$supported = $this->is_taxonomy_supported();
-		} else {
-			$supported = true;
-		}
+		switch ( true ) :
+			case $this->is_feed():
+				$supported = false;
+				break;
+
+			case $this->is_singular():
+				$supported = $this->is_post_type_supported() && $this->get_the_real_ID();
+				break;
+
+			case \is_post_type_archive():
+				$supported = $this->is_post_type_supported();
+				break;
+
+			case $this->is_term_meta_capable():
+				// When a term has no posts attached, it'll not return a post type, and it returns a 404 late in the loop.
+				// This is because get_post_type() tries to assert the first post in the loop here.
+				// Thus, we test for is_taxonomy_supported() instead.
+				$supported = $this->is_taxonomy_supported() && $this->get_the_real_ID();
+				break;
+
+			default:
+				$supported = true;
+				break;
+		endswitch;
 
 		/**
 		 * @since 4.0.0
@@ -1006,6 +1025,7 @@ class Detect extends Render {
 	 * Only allows root domains.
 	 *
 	 * @since 2.9.2
+	 * @since 4.0.2 Now uses the preferred URL scheme.
 	 * @global \WP_Rewrite $wp_rewrite
 	 *
 	 * @return string URL location of robots.txt. Unescaped.
@@ -1014,10 +1034,10 @@ class Detect extends Render {
 		global $wp_rewrite;
 
 		if ( $wp_rewrite->using_permalinks() && ! $this->is_subdirectory_installation() ) {
-			$home = \trailingslashit( $this->set_url_scheme( $this->get_home_host() ) );
+			$home = \trailingslashit( $this->set_preferred_url_scheme( $this->get_home_host() ) );
 			$path = "{$home}robots.txt";
 		} elseif ( $this->has_robots_txt() ) {
-			$home = \trailingslashit( $this->set_url_scheme( \get_option( 'home' ) ) );
+			$home = \trailingslashit( $this->set_preferred_url_scheme( \get_option( 'home' ) ) );
 			$path = "{$home}robots.txt";
 		} else {
 			$path = '';

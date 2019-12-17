@@ -219,23 +219,15 @@ class Init extends Query {
 		//* Earlier removal of the generator tag. Doesn't require filter.
 		\remove_action( 'wp_head', 'wp_generator' );
 
-		/**
-		 * Outputs sitemap or stylesheet on request.
-		 *
-		 * Adding a higher priority will cause a trailing slash to be added.
-		 * We need to be in front of the queue to prevent this from happening.
-		 *
-		 * This brings other issues we had to fix. @see $this->validate_sitemap_scheme()
-		 */
+		//* Prepares sitemap or stylesheet output.
 		if ( $this->can_run_sitemap() )
 			\add_action( 'template_redirect', [ $this, '_init_sitemap' ], 1 );
 
 		//* Initialize 301 redirects.
 		\add_action( 'template_redirect', [ $this, '_init_custom_field_redirect' ] );
 
-		//* Sets robots headers.
-		\add_action( 'template_redirect', [ $this, '_init_robots_headers' ] );
-		\add_action( 'the_seo_framework_sitemap_header', [ $this, '_output_robots_noindex_headers' ] );
+		//* Prepares requisite robots headers to avoid low-quality content penalties.
+		$this->prepare_robots_headers();
 
 		//* Output meta tags.
 		\add_action( 'wp_head', [ $this, 'html_output' ], 1 );
@@ -349,6 +341,8 @@ class Init extends Query {
 	 * @since 3.1.0 1. Now no longer outputs anything on preview.
 	 *              2. Now no longer outputs anything on blocked post types.
 	 * @since 4.0.0 Now no longer outputs anything on Customizer.
+	 * @since 4.0.4 1. Now sets timezone to UTC to fix WP 5.3 bug <https://core.trac.wordpress.org/ticket/48623>
+	 *              2. Now always sets timezone regardless of settings, because, again, bug.
 	 * @access private
 	 */
 	public function html_output() {
@@ -388,6 +382,9 @@ class Init extends Query {
 
 			$before_legacy = $this->get_legacy_header_filters_output( 'before' );
 
+			/** @since 4.0.4 : WP 5.3 patch, added. TEMP */
+			$this->set_timezone( 'UTC' );
+
 			//* Limit processing and redundant tags on 404 and search.
 			if ( $this->is_search() ) :
 				$output = $this->og_locale()
@@ -408,8 +405,9 @@ class Init extends Query {
 						. $this->yandex_site_output()
 						. $this->pint_site_output();
 			else :
-				$set_timezone = $this->uses_time_in_timestamp_format() && ( $this->output_published_time() || $this->output_modified_time() );
-				$set_timezone and $this->set_timezone();
+				/** @since 4.0.4 : WP 5.3 patch, commented. TEMP */
+				// $set_timezone = $this->uses_time_in_timestamp_format() && ( $this->output_published_time() || $this->output_modified_time() );
+				// $set_timezone and $this->set_timezone();
 
 				$output = $this->the_description()
 						. $this->og_image()
@@ -439,8 +437,12 @@ class Init extends Query {
 						. $this->yandex_site_output()
 						. $this->pint_site_output();
 
-				$set_timezone and $this->reset_timezone();
+				/** @since 4.0.4 : WP 5.3 patch, commented. TEMP */
+				// $set_timezone and $this->reset_timezone();
 			endif;
+
+			/** @since 4.0.4 : WP 5.3 patch, added. TEMP */
+			$this->reset_timezone();
 
 			$after_legacy = $this->get_legacy_header_filters_output( 'after' );
 
@@ -484,7 +486,7 @@ class Init extends Query {
 		$url = '';
 
 		if ( $this->is_singular() ) {
-			// TODO excluse is_singular_archive()? Those can create issues...
+			// TODO exclude is_singular_archive()? Those can create issues...
 
 			$url = $this->get_post_meta_item( 'redirect' ) ?: '';
 		} elseif ( $this->is_term_meta_capable() ) {
@@ -534,6 +536,7 @@ class Init extends Query {
 			$path = $this->set_url_scheme( $url, 'relative' );
 			$url  = \trailingslashit( $this->get_home_host() ) . ltrim( $path, ' /' );
 
+			// Maintain current request's scheme.
 			$scheme = $this->is_ssl() ? 'https' : 'http';
 
 			\wp_safe_redirect( $this->set_url_scheme( $url, $scheme ), $redirect_type );
@@ -646,7 +649,22 @@ class Init extends Query {
 	}
 
 	/**
-	 * Adjusts the X-Robots tag headers.
+	 * Prepares the X-Robots-Tag headers for various endpoints.
+	 *
+	 * @since 4.0.2
+	 */
+	protected function prepare_robots_headers() {
+
+		\add_action( 'template_redirect', [ $this, '_init_robots_headers' ] );
+		\add_action( 'the_seo_framework_sitemap_header', [ $this, '_output_robots_noindex_headers' ] );
+
+		// This is not necessarily a WordPress query. Test it inline.
+		if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST )
+			$this->_output_robots_noindex_headers();
+	}
+
+	/**
+	 * Sets the X-Robots-Tag headers on various endpoints.
 	 *
 	 * @since 4.0.0
 	 * @access private

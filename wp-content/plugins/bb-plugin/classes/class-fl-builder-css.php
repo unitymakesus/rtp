@@ -288,7 +288,7 @@ final class FLBuilderCSS {
 		$pattern  = '%s, %s';
 		if ( isset( $setting['font_family'] ) && 'Default' !== $setting['font_family'] ) {
 			$fallback = FLBuilderFonts::get_font_fallback( $setting['font_family'] );
-			if ( preg_match( '#[0-9]#', $setting['font_family'] ) ) {
+			if ( preg_match( '#[0-9\s]#', $setting['font_family'] ) ) {
 				$pattern = '"%s", %s';
 			}
 			$props['font-family'] = sprintf( $pattern, $setting['font_family'], $fallback );
@@ -352,6 +352,8 @@ final class FLBuilderCSS {
 			$media              = self::media_value( $breakpoint );
 			$rendered[ $media ] = array();
 		}
+
+		$rules = apply_filters( 'fl_builder_pre_render_css_rules', self::$rules );
 
 		foreach ( self::$rules as $args ) {
 			$defaults = array(

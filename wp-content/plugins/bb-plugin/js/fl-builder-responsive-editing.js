@@ -90,6 +90,7 @@
 			// Don't simulate media queries for stylesheets that match these paths.
 			FLBuilderSimulateMediaQuery.ignore( [
 				FLBuilderConfig.pluginUrl,
+				FLBuilderConfig.relativePluginUrl,
 				'fl-builder-preview',
 				'fl-theme-builder',
 				'/wp-includes/',

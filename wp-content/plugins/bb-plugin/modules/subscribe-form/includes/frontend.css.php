@@ -63,3 +63,8 @@ FLBuilderCSS::border_field_rule( array(
 
 // Button CSS
 FLBuilder::render_module_css( 'button', $id, $module->get_button_settings() );
+
+?>
+.fl-node-<?php echo $id; ?> .fl-form-success-message {
+	display: none;
+}

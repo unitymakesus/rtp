@@ -23,6 +23,13 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 	private $api_instance = null;
 
 	/**
+	 * @since 2.2.6
+	 * @var object $status
+	 * @access private
+	 */
+	private $status = null;
+
+	/**
 	 * Get an instance of the API.
 	 *
 	 * @since 1.5.4
@@ -334,6 +341,12 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 					}
 				}
 
+				// Get email status if already subscribed.
+				$member = $api->get_member( $settings->list_id, $email );
+				if ( ! $api->getLastError() ) {
+					$this->status = $member['status'];
+				}
+
 				$api->subscribe( $settings->list_id, $data );
 
 				if ( $api->getLastError() ) {
@@ -349,5 +362,15 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Get the subscriber's email status.
+	 *
+	 * @since 2.2.6
+	 * @return array string
+	 */
+	public function subscriber_status() {
+		return $this->status;
 	}
 }

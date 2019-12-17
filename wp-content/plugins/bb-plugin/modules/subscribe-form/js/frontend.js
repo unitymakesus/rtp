@@ -66,24 +66,23 @@
 
 		_submitForm: function( e )
 		{
-			var submitButton    = $( e.currentTarget ),
-				currentForm     	= submitButton.closest( '.fl-subscribe-form' ),
-				postId      			= currentForm.closest( '.fl-builder-content' ).data( 'post-id' ),
-				templateId				= currentForm.data( 'template-id' ),
-				templateNodeId		= currentForm.data( 'template-node-id' ),
-				nodeId      			= currentForm.closest( '.fl-module' ).data( 'node' ),
-				buttonText  			= submitButton.find( '.fl-button-text' ).text(),
-				waitText    			= submitButton.closest( '.fl-form-button' ).data( 'wait-text' ),
-				name        			= currentForm.find( 'input[name=fl-subscribe-form-name]' ),
-				email       			= currentForm.find( 'input[name=fl-subscribe-form-email]' ),
-				successMessage		= currentForm.find( 'input[name=fl-success-message]' ),
-				successUrl				= currentForm.find( 'input[name=fl-success-url]' ),
-				termsCheckbox   	= currentForm.find( 'input[name=fl-terms-checkbox]'),
-				recaptcha 				= currentForm.find( '.fl-grecaptcha' ),
-				reCaptchaValue		= recaptcha.data( 'fl-grecaptcha-response' ),
-				re          			= /\S+@\S+\.\S+/,
-				valid       			= true,
-				ajaxData 					= null;
+			var submitButton   = $( e.currentTarget ),
+				currentForm    = submitButton.closest( '.fl-subscribe-form' ),
+				postId         = currentForm.closest( '.fl-builder-content' ).data( 'post-id' ),
+				templateId     = currentForm.data( 'template-id' ),
+				templateNodeId = currentForm.data( 'template-node-id' ),
+				nodeId         = currentForm.closest( '.fl-module' ).data( 'node' ),
+				buttonText     = submitButton.find( '.fl-button-text' ).text(),
+				waitText       = submitButton.closest( '.fl-form-button' ).data( 'wait-text' ),
+				name           = currentForm.find( 'input[name=fl-subscribe-form-name]' ),
+				email          = currentForm.find( 'input[name=fl-subscribe-form-email]' ),
+				successUrl     = this.settings.successUrl,
+				termsCheckbox  = currentForm.find( 'input[name=fl-terms-checkbox]'),
+				recaptcha      = currentForm.find( '.fl-grecaptcha' ),
+				reCaptchaValue = recaptcha.data( 'fl-grecaptcha-response' ),
+				re             = /\S+@\S+\.\S+/,
+				valid          = true,
+				ajaxData       = null;
 
 			e.preventDefault();
 
@@ -122,7 +121,14 @@
 					} else if ( 'invisible' == recaptcha.data( 'validate' ) ) {
 
 						// Invoke the reCAPTCHA check.
-						grecaptcha.execute( recaptcha.data( 'widgetid' ) );
+						if ( 'undefined' !== typeof recaptcha.data( 'action' ) ) {
+							// V3
+							grecaptcha.execute( recaptcha.data( 'widgetid' ), {action: recaptcha.data( 'action' )} );
+						}
+						else {
+							// V2
+							grecaptcha.execute( recaptcha.data( 'widgetid' ) );
+						}
 					}
 
 					valid = false;
@@ -140,16 +146,15 @@
 				submitButton.addClass( 'fl-form-button-disabled' );
 
 				ajaxData = {
-					action  					: 'fl_builder_subscribe_form_submit',
-					name    					: name.val(),
-					email   					: email.val(),
-					success_message		: successMessage.val(),
-					success_url				: successUrl.val(),
-					terms_checked      : termsCheckbox.is(':checked') ? '1' : '0',
-					post_id 			: postId,
-					template_id 		: templateId,
-					template_node_id 	: templateNodeId,
-					node_id 			: nodeId
+					action           : 'fl_builder_subscribe_form_submit',
+					name             : name.val(),
+					email            : email.val(), 
+					success_url      : successUrl,
+					terms_checked    : termsCheckbox.is(':checked') ? '1' : '0',
+					post_id          : postId,
+					template_id      : templateId,
+					template_node_id : templateNodeId,
+					node_id          : nodeId
 				};
 
 				if ( reCaptchaValue ) {
@@ -180,7 +185,7 @@
 			}
 			else if ( 'message' == data.action ) {
 				form.find( '> *' ).hide();
-				form.append( '<div class="fl-form-success-message">' + data.message + '</div>' );
+				$( this.nodeClass + ' .fl-form-success-message' ).show();
 			}
 			else if ( 'redirect' == data.action ) {
 				window.location.href = data.url;

@@ -80,7 +80,7 @@ class FLContentSliderModule extends FLBuilderModule {
 
 		// Background link
 		if ( ! empty( $slide->link ) && ( 'photo' == $slide->bg_layout || 'color' == $slide->bg_layout ) ) {
-			echo '<a class="fl-slide-bg-link" href="' . $slide->link . '" target="' . $slide->link_target . '"></a>';
+			echo '<a class="fl-slide-bg-link" href="' . esc_attr( $slide->link ) . '" target="' . $slide->link_target . '" aria-label="' . esc_attr( $slide->title ) . '"></a>';
 		}
 	}
 

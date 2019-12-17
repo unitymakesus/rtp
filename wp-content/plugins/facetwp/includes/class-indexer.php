@@ -229,7 +229,7 @@ class FacetWP_Indexer
 
             // Store post IDs
             if ( $this->index_all ) {
-                update_option( 'facetwp_indexing', json_encode( $post_ids ), false );
+                update_option( 'facetwp_indexing', json_encode( $post_ids ) );
             }
         }
 
@@ -253,6 +253,15 @@ class FacetWP_Indexer
 
                     // Exit if newer retries exist
                     if ( $attempt < $num_retries ) {
+                        exit;
+                    }
+
+                    // Exit if the indexer was cancelled
+                    wp_cache_delete( 'facetwp_indexing_cancelled', 'options' );
+
+                    if ( 'yes' === get_option( 'facetwp_indexing_cancelled', 'no' ) ) {
+                        update_option( 'facetwp_transients', '' );
+                        update_option( 'facetwp_indexing', '' );
                         exit;
                     }
 
@@ -328,9 +337,9 @@ class FacetWP_Indexer
 
         // Indexing complete
         if ( $this->index_all ) {
-            update_option( 'facetwp_last_indexed', time() );
-            update_option( 'facetwp_transients', '' );
-            update_option( 'facetwp_indexing', '' );
+            update_option( 'facetwp_last_indexed', time(), 'no' );
+            update_option( 'facetwp_transients', '', 'no' );
+            update_option( 'facetwp_indexing', '', 'no' );
         }
 
         do_action( 'facetwp_indexer_complete' );

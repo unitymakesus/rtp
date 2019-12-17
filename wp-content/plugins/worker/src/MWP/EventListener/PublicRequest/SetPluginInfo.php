@@ -36,6 +36,8 @@ class MWP_EventListener_PublicRequest_SetPluginInfo implements Symfony_EventDisp
     {
         $this->context->addFilter('all_plugins', array($this, 'pluginInfoFilter'));
         $this->context->addFilter('all_plugins', array($this, 'pluginListFilter'));
+        // This hook will re-brand plugin and MU plugin in WP 5.2 site health page.
+        $this->context->addFilter('debug_information', array($this, 'pluginGetHealthInfoFilter'));
         // This is a horrible hack, but it will allow us to hide a MU plugin in rebranded installations.
         $this->context->addFilter('show_advanced_plugins', array($this, 'muPluginListFilter'), 10, 2);
         $this->context->addFilter('plugin_row_meta', array($this, 'hidePluginDetails'), 10, 2);
@@ -193,5 +195,39 @@ class MWP_EventListener_PublicRequest_SetPluginInfo implements Symfony_EventDisp
         }
 
         return $meta;
+    }
+
+    /**
+     * @wp_filter debug_information
+     */
+    public function pluginGetHealthInfoFilter($info) {
+        if (!$this->brand->isActive()){
+            return $info;
+        }
+
+        if (!isset($info["wp-plugins-active"]) ||
+            !isset($info["wp-plugins-active"]["fields"]) ||
+            !isset($info["wp-plugins-active"]["fields"]["ManageWP - Worker"]) ||
+            !isset($info["wp-mu-plugins"]) ||
+            !isset($info["wp-mu-plugins"]["fields"]) ||
+            !isset($info["wp-mu-plugins"]["fields"]["ManageWP - Worker Loader"])) {
+            return $info;
+        }
+
+        if ($this->brand->isHide()) {
+            unset($info["wp-plugins-active"]["fields"]["ManageWP - Worker"]);
+            unset($info["wp-mu-plugins"]["fields"]["ManageWP - Worker Loader"]);
+        } else {
+            $this->reBrandWorkerForSiteHealth($info["wp-plugins-active"]["fields"]["ManageWP - Worker"]);
+            $this->reBrandWorkerForSiteHealth($info["wp-mu-plugins"]["fields"]["ManageWP - Worker Loader"]);
+        }
+
+        return $info;
+    }
+
+    private function reBrandWorkerForSiteHealth(&$workerEntry) {
+        $workerEntry["label"] = $this->brand->getName();
+        $workerEntry["value"] = str_replace("GoDaddy", $this->brand->getAuthor(), $workerEntry["value"]);
+        $workerEntry["debug"] = str_replace("GoDaddy", $this->brand->getAuthor(), $workerEntry["debug"]);
     }
 }

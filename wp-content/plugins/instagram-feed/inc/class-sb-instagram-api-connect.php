@@ -178,6 +178,8 @@ class SB_Instagram_API_Connect
 
 		$error_time = 300;
 		if ( isset( $response['meta']['error_type'] ) ) {
+			$sb_instagram_posts_manager->add_error( 'api', array( 'Error connecting', sprintf( __( 'API error %s:', 'instagram-feed'), $response['meta']['code'] ) . ' ' . $response['meta']['error_message'] ) );
+
 			if ( $response['meta']['error_type'] === 'OAuthAccessTokenException' ) {
 				$options = get_option( 'sb_instagram_settings', array() );
 
@@ -212,6 +214,8 @@ class SB_Instagram_API_Connect
 				$sb_instagram_posts_manager->add_frontend_error( $response['meta']['error_type'], $error );
 			}
 		} elseif ( isset( $response['error']['message'] ) ) {
+			$sb_instagram_posts_manager->add_error( 'api', array( 'Error connecting', sprintf( __( 'API error %s:', 'instagram-feed'), $response['error']['code'] ) . ' ' . $response['error']['message'] ) );
+
 			if ( (int)$response['error']['code'] === 18 ) {
 				$options = get_option( 'sb_instagram_settings', array() );
 
@@ -245,6 +249,14 @@ class SB_Instagram_API_Connect
 				}
 				$error = '<p><b>' . sprintf( __( 'Error: Hashtag limit of 30 unique hashtags per week has been reached.', 'instagram-feed' ), $user_name ) . ' ' . sprintf( __( 'Feed may not display until %s.', 'instagram-feed' ), date_i18n( $date_time_format, $hashtag_refresh_time ) ) . '</b>';
 				$error .= '<p>' . __( 'If you need to display more than 30 hashtag feeds on your site, consider connecting an additional business account from a separate Instagram and Facebook account.', 'instagram-feed' );
+
+				$sb_instagram_posts_manager->add_frontend_error( 'hashtag_limit_reached', $error );
+
+			} elseif ( (int)$response['error']['code'] === 10 ) {
+				$user_name = $error_connected_account['username'];
+
+				$error = '<p><b>' . sprintf( __( 'Error: Connected account for the user %s does not have permission to use this feed type.', 'instagram-feed' ), $user_name ) .'</b>';
+				$error .= '<p>' . __( 'Try using the big blue button on the "Configure" tab to reconnect the account and update its permissions.', 'instagram-feed' );
 
 				$sb_instagram_posts_manager->add_frontend_error( 'hashtag_limit_reached', $error );
 
@@ -342,7 +354,7 @@ class SB_Instagram_API_Connect
 			if ( $endpoint_slug === 'header' ) {
 				$url = 'https://api.instagram.com/v1/users/' . $connected_account['user_id'] . '?access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} else {
-				$num = min( $num, 33 );
+				$num = $num > 20 ? min( $num, 33 ) : 20; // minimum set at 20 due to IG TV bug
 				$url = 'https://api.instagram.com/v1/users/' . $connected_account['user_id'] . '/media/recent?count='.$num.'&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			}
 		} else {

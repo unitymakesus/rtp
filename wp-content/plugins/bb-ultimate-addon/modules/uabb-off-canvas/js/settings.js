@@ -17,6 +17,7 @@
             UABBButton.init();
 			this._contentTypeChange();
             this._showCanavsPreview();
+            this._hideDocs();
 
 			content_type.on('change', $.proxy( this._contentTypeChange, this ) );
             btn_style.on('change', this._btn_style_changed );
@@ -145,6 +146,23 @@
                 }
             });
         },
+        _hideDocs: function() {
+            var form            = $('.fl-builder-settings'),
+            branding_selector   = form.find('#fl-field-uabb_helpful_information .uabb-docs-list');
+            settings_tab        = form.find('.fl-builder-settings-tabs');
+            get_anchor          =  settings_tab.find('a');
+            $( get_anchor ).each(function() {
+
+                if ( '#fl-builder-settings-tab-uabb_docs' === $(this) .attr('href') ) {
+
+                    if ( 'yes' === branding_selector.data('branding') ) {
+                        $( this ).hide();
+                    } else {
+                        $( this ).show();
+                    }
+                }
+            });
+        }
 	});
 
 })(jQuery);

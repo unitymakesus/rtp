@@ -873,3 +873,14 @@ function fl_gute_links_fix( $query ) {
 		}
 	}
 }
+
+/**
+ * Cookie-bot js destroys the UI when set to auto mode.
+ * @since 2.2.6
+ */
+add_filter( 'option_cookiebot-nooutput', function( $arg ) {
+	if ( isset( $_GET['fl_builder'] ) ) {
+		return true;
+	}
+	return $arg;
+});

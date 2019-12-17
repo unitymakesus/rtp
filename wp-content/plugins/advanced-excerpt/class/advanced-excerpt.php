@@ -86,6 +86,9 @@ class Advanced_Excerpt {
 		 * and instead use the_content(). As such, we also need to hook into the_content().
 		 * To ensure we're not changing the content of single posts / pages we automatically exclude 'singular' page types.
 		 */
+
+        add_filter( 'wppsac_excerpt', array( $this, 'filter_content' ) );
+
 		$page_types = $this->get_current_page_types();
 		$skip_page_types = array_unique( array_merge( array( 'singular' ), $this->options['exclude_pages'] ) );
 		$skip_page_types = apply_filters( 'advanced_excerpt_skip_page_types', $skip_page_types ); 
@@ -96,6 +99,16 @@ class Advanced_Excerpt {
 		if ( in_array( 'woocommerce', $skip_page_types ) && get_post_type( get_the_ID() ) == 'product' ) {
 			return;
 		}
+
+        // conflict with WPTouch
+        if ( function_exists( 'wptouch_is_mobile_theme_showing' ) && wptouch_is_mobile_theme_showing() ) {
+            return;
+        }
+
+        // skip bbpress
+        if ( function_exists( 'is_bbpress' ) && is_bbpress() ) {
+            return;
+        }
 
 		if ( 1 == $this->options['the_excerpt'] ) {
 			remove_all_filters( 'get_the_excerpt' );
@@ -321,9 +334,9 @@ class Advanced_Excerpt {
 		foreach ( $tokens[0] as $t ) { // Parse each token
 			if ( $w >= $length && 'sentence' != $finish ) { // Limit reached
 				break;
-			}
+            }
 			if ( $t[0] != '<' ) { // Token is not a tag
-				if ( $w >= $length && 'sentence' == $finish && preg_match( '/[\?\.\!]\s*$/uS', $t ) == 1 ) { // Limit reached, continue until ? . or ! occur at the end
+				if ( $w >= $length && 'sentence' == $finish && preg_match( '/[\?\.\!].*$/uS', $t ) == 1 ) { // Limit reached, continue until ? . or ! occur at the end
 					$out .= trim( $t );
 					break;
 				}

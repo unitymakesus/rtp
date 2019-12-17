@@ -446,6 +446,33 @@ final class FL_Debug {
 		);
 		self::register( 'mysql_version', $args );
 
+		$results = (array) $wpdb->get_results( 'SHOW VARIABLES' );
+
+		foreach ( $results as $k => $result ) {
+			if ( 'max_allowed_packet' === $result->Variable_name ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				$args = array(
+					'name' => 'MySQL Max Allowed Packet',
+					'data' => number_format( $result->Value / 1048576 ) . 'MB', // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				);
+				self::register( 'mysql_packet', $args );
+			}
+		}
+
+		$db_bytes = $wpdb->get_var(
+			$wpdb->prepare(
+				'SELECT SUM(data_length + index_length) FROM information_schema.TABLES where table_schema = %s GROUP BY table_schema;',
+				DB_NAME
+			)
+		);
+
+		if ( is_numeric( $db_bytes ) ) {
+			$args = array(
+				'name' => 'MySQL Database Size',
+				'data' => number_format( $db_bytes / 1048576 ) . 'MB',
+			);
+			self::register( 'mysql_size', $args );
+		}
+
 		$args = array(
 			'name' => 'Server Info',
 			'data' => $_SERVER['SERVER_SOFTWARE'],
