@@ -160,7 +160,7 @@ if(!sbi_js_exists) {
         Sbi.prototype = {
             createPage: function (createFeeds, createFeedsArgs) {
                 if (typeof window.sbiajaxurl === 'undefined' || window.sbiajaxurl.indexOf(window.location.hostname) === -1) {
-                    window.sbiajaxurl = window.location.hostname + '/wp-admin/admin-ajax.php';
+                    window.sbiajaxurl = location.protocol + '//'+ window.location.hostname + '/wp-admin/admin-ajax.php';
                 }
 
                 $('.sbi_no_js_error_message').remove();
@@ -498,7 +498,7 @@ if(!sbi_js_exists) {
                     aspectRatio = currentUrl === window.sbi.options.placeholder ? 1 : imagEl.naturalWidth/imagEl.naturalHeight,
                     forceChange = typeof forceChange !== 'undefined' ? forceChange : false;
 
-                if ($item.hasClass('sbi_no_resraise')) {
+                if ($item.hasClass('sbi_no_resraise') || $item.hasClass('sbi_had_error') || ($item.find('.sbi_link_area').length && $item.find('.sbi_link_area').hasClass('sbi_had_error'))) {
                     return;
                 }
 
@@ -595,12 +595,14 @@ if(!sbi_js_exists) {
                         var sourceFromAPI = ($(this).attr('src').indexOf('media?size=') > -1 || $(this).attr('src').indexOf('cdninstagram') > -1 || $(this).attr('src').indexOf('fbcdn') > -1)
 
                         if (!sourceFromAPI) {
-                            if (typeof $(this).closest('.sbi_photo').attr('data-full-res') !== 'undefined') {
-                                $(this).attr('src', $(this).closest('.sbi_photo').attr('data-full-res'));
-                                $(this).closest('.sbi_photo').css('background-image', 'url(' + $(this).closest('.sbi_photo').attr('data-full-res') + ')');
-                            } else if ($(this).closest('.sbi_photo').attr('href') !== 'undefined') {
-                                $(this).attr('src', $(this).closest('.sbi_photo').attr('href') + 'media?size=l');
-                                $(this).closest('.sbi_photo').css('background-image', 'url(' + $(this).closest('.sbi_photo').attr('href') + 'media?size=l)');
+
+                            if ($(this).closest('.sbi_photo').attr('data-img-src-set') !== 'undefined') {
+                                var srcSet = JSON.parse($(this).closest('.sbi_photo').attr('data-img-src-set').replace(/\\\//g, '/'));
+                                if (typeof srcSet.d !== 'undefined') {
+                                    $(this).attr('src', srcSet.d);
+                                    $(this).closest('.sbi_photo').css('background-image', 'url(' + srcSet.d + ')');
+                                    $(this).closest('.sbi_item').addClass('sbi_had_error').find('.sbi_link_area').attr('href', srcSet[640]).addClass('sbi_had_error');
+                                }
                             }
                         } else {
                             feed.settings.favorLocal = true;
@@ -608,6 +610,7 @@ if(!sbi_js_exists) {
                             if (typeof srcSet[640] !== 'undefined') {
                                 $(this).attr('src', srcSet[640]);
                                 $(this).closest('.sbi_photo').css('background-image', 'url(' + srcSet[640] + ')');
+                                $(this).closest('.sbi_item').addClass('sbi_had_error').find('.sbi_link_area').attr('href', srcSet[640]).addClass('sbi_had_error');
                             }
                         }
                         setTimeout(function() {
@@ -724,18 +727,12 @@ if(!sbi_js_exists) {
                     if (typeof this.resizedImages[id]['sizes'] !== 'undefined') {
                         var foundSizes = [];
                         if (typeof this.resizedImages[id]['sizes']['full'] !== 'undefined') {
-                            foundSizes.push(640);
                             srcSet[640] = sb_instagram_js_options.resized_url + this.resizedImages[id].id + 'full.jpg';
-                            $item.find('.sbi_link_area').attr( 'href', sb_instagram_js_options.resized_url + this.resizedImages[id].id + 'full.jpg' );
-                            $item.find('.sbi_photo').attr( 'data-full-res', sb_instagram_js_options.resized_url + this.resizedImages[id].id + 'full.jpg' );
+                            foundSizes.push(640);
                         }
                         if (typeof this.resizedImages[id]['sizes']['low'] !== 'undefined') {
-                            foundSizes.push(320);
                             srcSet[320] = sb_instagram_js_options.resized_url + this.resizedImages[id].id + 'low.jpg';
-                            if (this.settings.favorLocal && typeof this.resizedImages[id]['sizes']['full'] === 'undefined') {
-                                $item.find('.sbi_link_area').attr( 'href', sb_instagram_js_options.resized_url + this.resizedImages[id].id + 'low.jpg' );
-                                $item.find('.sbi_photo').attr( 'data-full-res', sb_instagram_js_options.resized_url + this.resizedImages[id].id + 'low.jpg' );
-                            }
+                            foundSizes.push(320);
                         }
                         if (typeof this.resizedImages[id]['sizes']['thumb'] !== 'undefined') {
                             foundSizes.push(150);
@@ -863,6 +860,13 @@ if(!sbi_js_exists) {
     })(jQuery);
 
     jQuery(document).ready(function($) {
+        if (typeof window.sb_instagram_js_options === 'undefined') {
+            window.sb_instagram_js_options = {
+                font_method: "svg",
+                resized_url: location.protocol + '//' + window.location.hostname + "/wp-content/uploads/sb-instagram-feed-images/",
+                placeholder: location.protocol + '//' + window.location.hostname + "/wp-content/plugins/instagram-feed/img/placeholder.png"
+            };
+        }
         if (typeof window.sb_instagram_js_options.resized_url !== 'undefined' && window.sb_instagram_js_options.resized_url.indexOf(location.protocol) === -1) {
             if (location.protocol === 'http:') {
                 window.sb_instagram_js_options.resized_url = window.sb_instagram_js_options.resized_url.replace('http:','https:');

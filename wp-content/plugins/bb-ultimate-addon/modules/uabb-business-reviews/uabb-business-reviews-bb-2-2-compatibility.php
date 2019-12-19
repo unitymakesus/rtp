@@ -8,16 +8,11 @@
  * @package UABB Business Review Module
  */
 
-$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
-$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
-$branding            = '';
-$link                = '';
-if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
-	$branding = 'no';
-	$link     = '<a href="https://www.ultimatebeaver.com/docs/unable-to-display-more-google-and-yelp-reviews/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=business-reviews-module" target="_blank" rel="noopener"> <b> here </b> </a>';
+$link = '';
+if ( 'no' == BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() ) {
+	$link = '<a href="https://www.ultimatebeaver.com/docs/unable-to-display-more-google-and-yelp-reviews/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=business-reviews-module" target="_blank" rel="noopener"> <b> here </b> </a>';
 } else {
-	$branding = 'yes';
-	$link     = '';
+	$link = '';
 }
 $review_notice_google      = sprintf( /* translators: %1$s: search term */
 		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
@@ -1078,7 +1073,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . $branding . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/business-reviews-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=business-reviews-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 

@@ -40,8 +40,8 @@ if ($settings->structure == 'horizontal') {
 			<?php echo $settings->content; ?>
 		</div>
 
-		<?php if ($settings->enable_cta == 'block') { ?>
-    	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>"><span class="text"><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
+    <?php if ($settings->enable_cta == 'block') { ?>
+    	<div class="card-cta"><a href="<?php echo $settings->cta_link; ?>" target="<?php echo $settings->cta_link_target; ?>"><span class="text"><?php echo $settings->cta_text; ?></span> <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
 		<?php } ?>
 
     <?php if ($settings->enable_cta == 'modaal') { ?>

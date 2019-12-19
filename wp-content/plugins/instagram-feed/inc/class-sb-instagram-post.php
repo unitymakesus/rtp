@@ -434,15 +434,23 @@ class SB_Instagram_Post
 		$feed_id_array = explode( '#', $transient_name );
 		$feed_id = $feed_id_array[0];
 
-		$entry_data = array(
-			$this->db_id,
-			"'" . esc_sql( $this->instagram_api_data['id'] ) . "'",
-			"'" . esc_sql( $feed_id ) . "'"
-		);
-		$entry_string = implode( ',',$entry_data );
+		if ( ! empty( $this->db_id ) ) {
+			$entry_data = array(
+				$this->db_id,
+				"'" . esc_sql( $this->instagram_api_data['id'] ) . "'",
+				"'" . esc_sql( $feed_id ) . "'"
+			);
+			$entry_string = implode( ',',$entry_data );
 
-		$error = $wpdb->query( "INSERT INTO $table_name
+			$error = $wpdb->query( "INSERT INTO $table_name
       	(id,instagram_id,feed_id) VALUES ($entry_string);" );
+		} else {
+			global $sb_instagram_posts_manager;
+
+			$sb_instagram_posts_manager->add_error( 'database_insert_post', array( __( 'Error inserting post.', 'instagram-feed' ), __( 'No database ID.', 'instagram-feed' ) ) );
+			return false;
+		}
+
 
 		if ( $error !== false ) {
 			return $wpdb->insert_id;

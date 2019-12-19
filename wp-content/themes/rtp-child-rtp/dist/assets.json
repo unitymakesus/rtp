@@ -1,12 +1,19 @@
 {
   "images/404.jpg": "images/404_88bac83e.jpg",
   "images/arrow-right.svg": "images/arrow-right_48bd625e.svg",
+  "images/boxyard-rtp-map.png": "images/boxyard-rtp-map_c8a63222.png",
   "images/icon-contrast-inverse.svg": "images/icon-contrast-inverse_bd9a44c8.svg",
   "images/icon-contrast.svg": "images/icon-contrast_e8cb0e0d.svg",
   "images/icon-mail.svg": "images/icon-mail_e6f05929.svg",
   "images/icon-phone.svg": "images/icon-phone_dcf55bf9.svg",
   "images/icon-search-white.svg": "images/icon-search-white_bea31f83.svg",
   "images/icon-search.svg": "images/icon-search_366987c5.svg",
+  "images/logos/logo-comingsoon.png": "images/logos/logo-comingsoon_bc941877.png",
+  "images/logos/logo-fullsteam.png": "images/logos/logo-fullsteam_7a1328d0.png",
+  "images/logos/logo-gameon.png": "images/logos/logo-gameon_1f497cf8.png",
+  "images/logos/logo-medicinemamas.png": "images/logos/logo-medicinemamas_eab88541.png",
+  "images/logos/logo-pouredpressed.png": "images/logos/logo-pouredpressed_d2141c1b.png",
+  "images/logos/logo-uncorked.png": "images/logos/logo-uncorked_6995ab4b.png",
   "images/pattern-bracket.svg": "images/pattern-bracket_61ab807d.svg",
   "images/rtp-triangle.svg": "images/rtp-triangle_7d275e01.svg",
   "images/socialicons/facebook-light.svg": "images/socialicons/facebook-light_73768f07.svg",
@@ -22,6 +29,6 @@
   "images/socialicons/youtube-light.svg": "images/socialicons/youtube-light_4e282f49.svg",
   "images/socialicons/youtube.svg": "images/socialicons/youtube_50223a90.svg",
   "images/texture-single-header.png": "images/texture-single-header_4836270e.png",
-  "styles/main.css": "styles/main_7b3b3795.css",
-  "scripts/main.js": "scripts/main_7b3b3795.js"
+  "styles/main.css": "styles/main_cb080de6.css",
+  "scripts/main.js": "scripts/main_cb080de6.js"
 }

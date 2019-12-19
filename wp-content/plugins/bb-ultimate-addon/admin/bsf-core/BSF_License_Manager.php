@@ -361,7 +361,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 			$response = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '30',
+					'timeout' => '10',
 				)
 			);
 
@@ -371,7 +371,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 				$response = wp_remote_post(
 					$path, array(
 						'body'    => $data,
-						'timeout' => '30',
+						'timeout' => '10',
 					)
 				);
 			}
@@ -388,6 +388,7 @@ if ( ! class_exists( 'BSF_License_Manager' ) ) {
 
 			}
 
+			// Cache the license status for two hours in a transient.
 			wp_cache_set( $cache_key, $license_status );
 
 			return (bool) $license_status;

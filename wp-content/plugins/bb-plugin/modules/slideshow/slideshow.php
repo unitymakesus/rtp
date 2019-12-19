@@ -563,7 +563,7 @@ FLBuilder::register_module('FLSlideshowModule', array(
 								'fields' => array( 'overlay_hide', 'overlay_hide_delay' ),
 							),
 						),
-						'help'    => __( 'Control bar overlay specifies if the control bar buttons you choose overlay your slideshow images or site below the slideshow completely.', 'fl-builder' ),
+						'help'    => __( 'Enabling this setting displays the control bar in an overlay at the bottom or top of the slides.', 'fl-builder' ),
 					),
 					'overlay_hide'       => array(
 						'type'    => 'select',
@@ -573,7 +573,7 @@ FLBuilder::register_module('FLSlideshowModule', array(
 							'false' => __( 'No', 'fl-builder' ),
 							'true'  => __( 'Yes', 'fl-builder' ),
 						),
-						'help'    => __( 'Overlay hide will hide the control bar after however many seconds you specify below. They will reappear upon mouse over.', 'fl-builder' ),
+						'help'    => __( 'If set to Yes, hides the control bar overlay after the number of seconds you specify. Control bar overlay reappears upon mouseover.', 'fl-builder' ),
 					),
 					'overlay_hide_delay' => array(
 						'type'        => 'text',

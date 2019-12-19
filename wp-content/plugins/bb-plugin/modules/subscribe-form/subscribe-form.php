@@ -99,6 +99,25 @@ class FLSubscribeFormModule extends FLBuilderModule {
 	}
 
 	/**
+	 * Render reCaptcha attributes.
+	 * @return string
+	 */
+	public function recaptcha_data_attributes() {
+		$settings               = $this->settings;
+		$attrs['data-sitekey']  = $settings->recaptcha_site_key;
+		$attrs['data-validate'] = 'invisible_v3' == $settings->recaptcha_validate_type ? 'invisible' : $settings->recaptcha_validate_type;
+		$attrs['data-theme']    = $settings->recaptcha_theme;
+
+		if ( 'invisible_v3' == $settings->recaptcha_validate_type && ! empty( $settings->recaptcha_action ) ) {
+			$attrs['data-action'] = $settings->recaptcha_action;
+		}
+
+		foreach ( $attrs as $attr_key => $attr_val ) {
+			echo ' ' . $attr_key . '="' . $attr_val . '"';
+		}
+	}
+
+	/**
 	 * Called via AJAX to submit the subscribe form.
 	 *
 	 * @since 1.5.2
@@ -107,8 +126,7 @@ class FLSubscribeFormModule extends FLBuilderModule {
 	public function submit() {
 		$name             = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : false;
 		$email            = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : false;
-		$success_message  = isset( $_POST['success_message'] ) ? sanitize_text_field( $_POST['success_message'] ) : false;
-		$success_url      = isset( $_POST['success_url'] ) ? sanitize_text_field( $_POST['success_url'] ) : false;
+		$success_url      = isset( $_POST['success_url'] ) ? $_POST['success_url'] : '';
 		$terms_checked    = isset( $_POST['terms_checked'] ) && 1 == $_POST['terms_checked'] ? true : false;
 		$recaptcha        = isset( $_POST['recaptcha'] ) ? $_POST['recaptcha'] : false;
 		$post_id          = isset( $_POST['post_id'] ) ? $_POST['post_id'] : false;
@@ -168,8 +186,14 @@ class FLSubscribeFormModule extends FLBuilderModule {
 
 					$result['action'] = $settings->success_action;
 
+					// Success message.
 					if ( 'message' == $settings->success_action ) {
-						$result['message'] = $success_message;
+						// Existing email message.
+						if ( method_exists( $instance, 'subscriber_status' ) ) {
+							if ( in_array( $instance->subscriber_status(), array( 'subscribed', 'unsubscribed' ) ) ) {
+								$result['message'] = __( 'Subscription has been updated. Please check your email for further instructions.', 'fl-builder' );
+							}
+						}
 					}
 
 					if ( 'redirect' == $settings->success_action ) {
@@ -549,6 +573,34 @@ FLBuilder::register_module( 'FLSubscribeFormModule', array(
 						),
 						'help'    => __( 'If you want to show this field, please provide valid Site and Secret Keys.', 'fl-builder' ),
 					),
+					'recaptcha_validate_type' => array(
+						'type'    => 'select',
+						'label'   => __( 'Validate Type', 'fl-builder' ),
+						'default' => 'normal',
+						'options' => array(
+							'normal'       => __( '"I\'m not a robot" checkbox (V2)', 'fl-builder' ),
+							'invisible'    => __( 'Invisible (V2)', 'fl-builder' ),
+							'invisible_v3' => __( 'Invisible (V3)', 'fl-builder' ),
+						),
+						'toggle'  => array(
+							'invisible_v3' => array(
+								'fields' => array( 'recaptcha_action' ),
+							),
+						),
+						'help'    => __( 'Validate users with checkbox or in the background.', 'fl-builder' ),
+						'preview' => array(
+							'type' => 'none',
+						),
+					),
+					'recaptcha_action'        => array(
+						'type'        => 'text',
+						'label'       => __( 'Action', 'fl-builder' ),
+						'help'        => __( 'Optional advanced feature to make use of Google’s v3 analytical capabilities.', 'fl-builder' ),
+						'preview'     => array(
+							'type' => 'none',
+						),
+						'placeholder' => __( 'Optional', 'fl-builder' ),
+					),
 					'recaptcha_site_key'      => array(
 						'type'    => 'text',
 						'label'   => __( 'Site Key', 'fl-builder' ),
@@ -565,19 +617,7 @@ FLBuilder::register_module( 'FLSubscribeFormModule', array(
 							'type' => 'none',
 						),
 					),
-					'recaptcha_validate_type' => array(
-						'type'    => 'select',
-						'label'   => __( 'Validate Type', 'fl-builder' ),
-						'default' => 'normal',
-						'options' => array(
-							'normal'    => __( '"I\'m not a robot" checkbox', 'fl-builder' ),
-							'invisible' => __( 'Invisible', 'fl-builder' ),
-						),
-						'help'    => __( 'Validate users with checkbox or in the background.', 'fl-builder' ),
-						'preview' => array(
-							'type' => 'none',
-						),
-					),
+
 					'recaptcha_theme'         => array(
 						'type'    => 'select',
 						'label'   => __( 'Theme', 'fl-builder' ),
@@ -594,6 +634,6 @@ FLBuilder::register_module( 'FLSubscribeFormModule', array(
 			),
 		),
 		/* translators: %s: Google admin url */
-		'description' => sprintf( __( 'Please register keys for your website at the <a%s>Google Admin Console</a>', 'fl-builder' ), ' href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener"' ),
+		'description' => sprintf( __( 'Register keys for your website at the <a%1$s>Google Admin Console</a>. You need a different key pair for each reCAPTCHA validation type. <br /><br /><a%2$s>More info about v3 reCAPTCHA.</a>', 'fl-builder' ), ' href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener"', ' href="https://developers.google.com/recaptcha/docs/v3" target="_blank" rel="noopener"' ),
 	),
 ));

@@ -210,6 +210,8 @@ final class FLBuilderTemplatesOverride {
 				$data['templates'][ $i ] = $template;
 			}
 
+			ksort( $data['groups'] );
+
 			if ( is_multisite() ) {
 				restore_current_blog();
 			}

@@ -158,7 +158,14 @@
 					} else if ( 'invisible' == reCaptchaField.data( 'validate' ) ) {
 
 						// Invoke the reCAPTCHA check.
-						grecaptcha.execute( reCaptchaField.data( 'widgetid' ) );
+						if ( 'undefined' !== typeof reCaptchaField.data( 'action' ) ) {
+							// V3
+							grecaptcha.execute( reCaptchaField.data( 'widgetid' ), {action: reCaptchaField.data( 'action' )} );
+						}
+						else {
+							// V2
+							grecaptcha.execute( reCaptchaField.data( 'widgetid' ) );
+						}
 					}
 
  					isValid = false;

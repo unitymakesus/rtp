@@ -107,7 +107,6 @@ function sbi_auto_save_tokens() {
 add_action( 'wp_ajax_sbi_auto_save_tokens', 'sbi_auto_save_tokens' );
 
 function sbi_delete_local_avatar( $username ) {
-    var_dump( 'deleting' );
 	$upload = wp_upload_dir();
 
 	$image_files = glob( trailingslashit( $upload['basedir'] ) . trailingslashit( SBI_UPLOADS_NAME ) . $username . '.jpg'  ); // get all matching images

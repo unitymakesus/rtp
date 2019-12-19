@@ -5,7 +5,7 @@ $preload  = FLBuilderModel::is_builder_active() && ! empty( $vid_data->poster ) 
 $schema   = $module->get_structured_data( $module );
 
 ?>
-<div class="fl-video fl-<?php echo ( 'media_library' == $settings->video_type ) ? 'wp' : 'embed'; ?>-video"<?php FLBuilder::print_schema( ' itemscope itemtype="https://schema.org/VideoObject"' ); ?>>
+<div class="fl-video fl-<?php echo ( 'media_library' == $settings->video_type ) ? 'wp' : 'embed'; ?>-video"<?php $schema ? FLBuilder::print_schema( ' itemscope itemtype="https://schema.org/VideoObject"' ) : ''; ?>>
 	<?php
 
 	global $wp_embed;

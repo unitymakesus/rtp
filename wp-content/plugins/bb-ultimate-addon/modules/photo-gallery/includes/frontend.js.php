@@ -67,4 +67,14 @@ jQuery(document).ready(function( $ ) {
 
 	<?php endif; ?>
 
+	$(function() {
+		$( '.fl-node-<?php echo $id; ?> .uabb-gallery-img' )
+			.on( 'mouseenter', function( e ) {
+				$( this ).data( 'title', $( this ).attr( 'title' ) ).removeAttr( 'title' );
+			} )
+			.on( 'mouseleave', function( e ){
+				$( this ).attr( 'title', $( this ).data( 'title' ) ).data( 'title', null );
+			} );
+	});
+
 });

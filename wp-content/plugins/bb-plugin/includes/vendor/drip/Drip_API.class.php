@@ -115,6 +115,45 @@ Class Drip_Api {
         return $campaigns;
     }
 
+	/**
+     * Requests the workflows for the given account.
+     * @param array
+     * @return array
+     */
+    public function get_workflows($params) {
+        if (empty($params['account_id'])) {
+            throw new Exception("Account ID not specified");
+        }
+
+        $account_id = $params['account_id'];
+        unset($params['account_id']); // clear it from the params
+
+        if (isset($params['status'])) {
+            if (!in_array($params['status'], array('active', 'draft', 'paused', 'all'))) {
+                throw new Exception("Invalid workflow status.");
+            }
+        } elseif (0) {
+            $params['status'] = 'active'; // api defaults to all but we want active ones
+        }
+
+        $url = $this->api_end_point . "$account_id/workflows";
+        $res = $this->make_request($url, $params);
+
+        if (!empty($res['buffer'])) {
+            $raw_json = json_decode($res['buffer'], true);
+        }
+
+        // here we distinguish errors from no workflows.
+        // when there's no json that's an error
+        $workflows = empty($raw_json)
+                ? false
+                : empty($raw_json['workflows'])
+                    ? array()
+                    : $raw_json['workflows'];
+
+        return $workflows;
+    }
+
     /**
      * Requests the accounts for the given account.
      * Parses the response JSON and returns an array which contains: id, name, created_at etc
@@ -416,6 +455,52 @@ Class Drip_Api {
         }
 
         return $status;
+    }
+
+	/**
+     * Add subscriber to a given workflow for a given account.
+     *
+     * @param array $params
+     * @param array $accounts
+     */
+    public function subscribe_workflow($params) {
+        if (empty($params['account_id'])) {
+            throw new Exception("Account ID not specified");
+        }
+
+		$account_id = $params['account_id'];
+        unset($params['account_id']); // clear it from the params
+
+        if (empty($params['workflow_id'])) {
+            throw new Exception("Workflow ID not specified");
+        }
+
+        $workflow_id = $params['workflow_id'];
+        unset($params['workflow_id']); // clear it from the params
+
+        if (empty($params['email'])) {
+            throw new Exception("Email not specified");
+        }
+
+		$api_action = "$account_id/workflows/$workflow_id/subscribers";
+        $url = $this->api_end_point . $api_action;
+
+        // The API wants the params to be JSON encoded
+        $req_params = array('subscribers' => array($params));
+
+        $res = $this->make_request($url, $req_params, self::POST);
+
+        if (!empty($res['buffer'])) {
+            $raw_json = json_decode($res['buffer'], true);
+        }
+
+        $data = empty($raw_json)
+            ? false
+            : empty($raw_json['subscribers'])
+                ? array()
+                : $raw_json['subscribers'][0];
+
+        return $data;
     }
 
     /**

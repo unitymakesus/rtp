@@ -1,5 +1,20 @@
 (function($){
 
+	FLBuilder.registerModuleHelper('content-slider', {
+
+		submit: function() {
+			var form   = $('.fl-builder-settings'),
+			transition = parseInt( form.find('input[name=speed]').val() ),
+			delay      = parseInt( form.find('input[name=delay]').val() )
+
+			if ( transition > delay ) {
+				FLBuilder.alert( FLBuilderStrings.contentSliderTransitionWarn )
+				return false;
+			}
+			return true;
+		}
+	})
+
 	FLBuilder.registerModuleHelper('content_slider_slide', {
 
 		init: function()

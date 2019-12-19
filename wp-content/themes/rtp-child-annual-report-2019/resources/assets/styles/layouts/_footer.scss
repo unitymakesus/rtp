@@ -1,0 +1,12 @@
+.page-footer {
+  .footer-social {
+    background: rgba($color-blue-unc, 0.1);
+  }
+
+  h2 {
+    @include rtp-gradient;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

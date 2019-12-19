@@ -18,7 +18,7 @@ FLBuilder::register_module(
 							'type'    => 'select',
 							'label'   => __( 'Select Form', 'uabb' ),
 							'default' => uabb_gf_get_form_id(),
-							'options' => uabb_gf_function(),
+							'options' => array(),
 							'help'    => __( 'Choose the form that you want for this page for styling', 'uabb' ),
 						),
 						'form_title_option'     => array(

@@ -1,0 +1,453 @@
+.template-annual-report-2019 {
+  // Typography
+  h2 {
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 600;
+    color: $color-grey-dark;
+    -webkit-text-fill-color: initial;
+    max-width: 940px;
+  }
+
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 42px;
+    }
+  }
+
+  .text-feat {
+    display: block;
+    font-size: 72px !important;
+    letter-spacing: -1.5px;
+    color: inherit;
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  // Frontier section grid.
+  .grid-frontier {
+    > div {
+      .fl-module-info-box {
+        margin-bottom: 1rem;
+      }
+
+      .fl-module-info-box > .fl-module-content,
+      .fl-module-info-box > .fl-module-content > .uabb-infobox {
+        height: 100%;
+        text-transform: uppercase;
+
+        .text-feat {
+          color: $color-slate;
+        }
+      }
+    }
+
+    .uabb-infobox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  // STEM section grid.
+  .grid-stem {
+    .fl-module-rich-text {
+      color: $color-white;
+      background-color: rgba(darken($color-purple, 20%), 0.8);
+      width: 100%;
+    }
+  }
+
+  // Boxyard
+  .boxes {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 550px;
+    margin: 90px 2rem;
+    z-index: 10;
+
+    .box {
+      position: relative;
+      display: block;
+      background-color: $color-white;
+      width: 33.3333333%;
+      height: 0;
+      margin: -1px;
+      padding-bottom: 32.75%;
+      transition: background-color 0.75s ease-in-out;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 1.25rem;
+      }
+
+      &:focus {
+        outline: 0; // logo images will highlight as a focus state
+      }
+    }
+  }
+
+  @for $i from 1 to 9 {
+    .box-#{$i} img {
+      transition-delay: random() + 0.25s;
+    }
+  }
+
+  .box-3,
+  .box-5,
+  .box-7 {
+    opacity: 0 !important;
+  }
+
+  .map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: $color-red-boxyard;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: $color-red-boxyard;
+      width: 100%;
+      height: 100%;
+      content: '';
+      z-index: 5;
+    }
+  }
+
+  @supports (mix-blend-mode: multiply) {
+    .map {
+      filter: grayscale(1);
+      mix-blend-mode: multiply;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .box {
+      background-color: $color-red-boxyard;
+    }
+  }
+
+  #boxyard {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    transition: background-color 0.75s ease;
+    will-change: background-color;
+
+    .boxes {
+      transform: scale(0.15);
+      transition: transform 1.5s ease;
+      will-change: transform;
+    }
+
+    &.showtime {
+      background-color: $color-red-boxyard;
+    }
+
+    &.showtime .boxes {
+      transform: scale(1);
+    }
+
+    &.showtime .box {
+      background-color: $color-white;
+      filter: grayscale(1);
+      transition: filter 0.3s ease-in-out;
+
+      &:hover,
+      &:focus {
+        filter: grayscale(0);
+      }
+    }
+
+    &.showtime .box img {
+      opacity: 1;
+    }
+  }
+
+  .box img {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+  }
+
+  // Cant figure out how to get rid of BB shortcode paragraph...
+  #boxyard + p {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    // Frontier
+    .grid-frontier > .fl-col-content {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 0.5rem;
+
+      > div {
+        width: 50%;
+        padding: 0 0.5rem;
+      }
+    }
+
+    @supports (display: grid) {
+      .grid-frontier > .fl-col-content {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-column-gap: 16px;
+        grid-row-gap: 16px;
+        margin: 0;
+
+        > div {
+          width: auto;
+          padding: 0;
+        }
+
+        > .fl-module-info-box {
+          margin-bottom: 0;
+        }
+      }
+
+      .grid-frontier {
+        .div-1 {
+          grid-area: 1 / 1 / 2 / 2;
+        }
+
+        .div-2 {
+          grid-area: 1 / 2 / 2 / 3;
+        }
+
+        .div-3 {
+          grid-area: 2 / 1 / 3 / 2;
+        }
+
+        .div-4 {
+          grid-area: 2 / 2 / 3 / 3;
+        }
+
+        .div-5 {
+          grid-area: 3 / 1 / 4 / 2;
+        }
+      }
+    }
+
+    // STEM
+    .grid-stem .fl-col-group-nested {
+      > div {
+        width: 100% !important;
+      }
+
+      .fl-rich-text .content {
+        flex-grow: 1;
+      }
+    }
+  }
+  @media (min-width: 992px) {
+    @supports (display: grid) {
+      .grid-frontier > .fl-col-content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+      }
+
+      .grid-frontier {
+        .div-1 {
+          grid-area: 1 / 1 / 3 / 2;
+        }
+
+        .div-2 {
+          grid-area: 1 / 2 / 2 / 4;
+        }
+
+        .div-3 {
+          grid-area: 2 / 2 / 3 / 4;
+        }
+
+        .div-4 {
+          grid-area: 1 / 4 / 2 / 5;
+        }
+
+        .div-5 {
+          grid-area: 2 / 4 / 3 / 5;
+        }
+      }
+    }
+
+    .grid-frontier {
+      .div-2,
+      .div-3 {
+        .uabb-infobox {
+          text-align: left;
+        }
+
+        .uabb-infobox-content {
+          display: flex;
+        }
+
+        .uabb-imgicon-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 200px;
+        }
+      }
+
+      .div-1,
+      .div-4,
+      .div-5 {
+        .uabb-imgicon-wrap,
+        .text-feat {
+          text-align: center;
+        }
+      }
+    }
+
+    @supports (display: grid) {
+      .grid-stem .fl-col-group-nested {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        grid-column-gap: 1rem;
+        grid-row-gap: 1rem;
+        justify-items: stretch;
+        align-items: stretch;
+      }
+    }
+
+    .grid-stem .fl-col-group-nested {
+      > div {
+        width: 100% !important;
+      }
+    }
+
+    .grid-stem {
+      .fl-module-content {
+        margin: 0;
+        padding: 87px 40px;
+      }
+
+      .fl-rich-text {
+        display: flex;
+      }
+
+      .fl-module-rich-text {
+        height: calc(50% - 0.5rem);
+      }
+
+      .div-1 {
+        grid-area: 1 / 1 / 3 / 2;
+
+        > .fl-col-content {
+          display: flex;
+          align-items: flex-end;
+        }
+
+        .fl-node-content {
+          height: 100%;
+        }
+      }
+
+      .div-2 {
+        grid-area: 1 / 2 / 2 / 3;
+      }
+
+      .div-3 {
+        grid-area: 2 / 2 / 3 / 3;
+      }
+
+      .div-2,
+      .div-3 {
+        > .fl-col-content,
+        .fl-module-rich-text {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  // Flex wrapper for Rich Text modules.
+  .fl-rich-text-flex {
+    .fl-rich-text {
+      display: flex;
+
+      .icon {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 140px;
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  // Video
+  .section-bg-video {
+    h1 {
+      @include rtp-gradient;
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      font-size: 42px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  // Figure Cards
+  .fl-builder-edit .figure-card {
+    opacity: 1 !important;
+  }
+
+  @media (min-width: 768px) {
+    // "Hack" to only target non IE-11 browsers for this focus behavior.
+    @supports (display: grid) {
+      .figure-card-wrapper {
+        .figure-card {
+          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+        }
+
+        .fl-col:hover .figure-card,
+        .figure-card:focus-within {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  // Grid
+  @media (max-width: 768px) {
+    .fl-col-small:not(.fl-col-small-full-width) {
+      max-width: 100%;
+    }
+  }
+}

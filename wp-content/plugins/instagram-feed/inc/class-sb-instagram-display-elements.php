@@ -77,7 +77,10 @@ class SB_Instagram_Display_Elements
 			if ( $settings['imageres'] !== 'thumb' && ! empty( $resized_images ) ) {
 				$resolution = $settings['imageres'];
 				$post_id = SB_Instagram_Parse::get_post_id( $post );
-				if ( isset( $resized_images[ $post_id ] ) ) {
+				if ( isset( $resized_images[ $post_id ] )
+				     && $resized_images[ $post_id ]['id'] !== 'error'
+				     && $resized_images[ $post_id ]['id'] !== 'pending'
+				     && $resized_images[ $post_id ]['id'] !== 'video' ) {
 					if ( $resolution === 'medium' ) {
 						if ( isset( $resized_images[ $post_id ]['sizes']['low'] ) ) {
 							$suffix = 'low';
@@ -118,7 +121,10 @@ class SB_Instagram_Display_Elements
 			$post_id = SB_Instagram_Parse::get_post_id( $post );
 
 			// use resized images if exists
-			if ( $optimum_res === 'full' && isset( $resized_images[ $post_id ]['id'] ) && $resized_images[ $post_id ]['id'] !== 'pending' && $resized_images[ $post_id ]['id'] !== 'video' ) {
+			if ( $optimum_res === 'full' && isset( $resized_images[ $post_id ]['id'] )
+			     && $resized_images[ $post_id ]['id'] !== 'pending'
+			     && $resized_images[ $post_id ]['id'] !== 'video'
+			     && $resized_images[ $post_id ]['id'] !== 'error' ) {
 				$media_url = sbi_get_resized_uploads_url() . $resized_images[ $post_id ]['id'] . 'full.jpg';
 			} else {
 				$permalink = SB_Instagram_Parse::get_permalink( $post );

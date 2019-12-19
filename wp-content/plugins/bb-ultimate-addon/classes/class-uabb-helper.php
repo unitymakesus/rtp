@@ -48,7 +48,11 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 * @since 1.14.0
 		 */
 		static public $uabb_brand_short_name = '';
-
+		/**
+		 * @since 1.24.0
+		 * @var $is_branding_enabled
+		 */
+		static public $is_branding_enabled;
 		/**
 		 * Constructor function that initializes required actions and hooks
 		 *
@@ -267,15 +271,18 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				'adv-testimonials'         => 'Testimonials',
 				'uabb-content-toggle'      => 'Content Toggle',
 				'uabb-business-hours'	   => 'Business Hours',
-                'uabb-video'               => 'Video',
+				'uabb-video'               => 'Video',
 				'uabb-table'			   => 'Table',
-                'uabb-video-gallery'       => 'Video Gallery',
-                'uabb-price-list'	       => 'Price List',
-                'uabb-marketing-button'	   => 'Marketing Button',
-                'uabb-business-reviews'	   => 'Business Reviews',
-                'uabb-off-canvas'          => 'Off Canvas',
-                'uabb-retina-image'        => 'Retina Image',
-                'uabb-registration-form'   => 'User Registration Form',
+				'uabb-video-gallery'       => 'Video Gallery',
+				'uabb-price-list'	       => 'Price List',
+				'uabb-marketing-button'	   => 'Marketing Button',
+				'uabb-business-reviews'	   => 'Business Reviews',
+				'uabb-off-canvas'          => 'Off Canvas',
+				'uabb-retina-image'        => 'Retina Image',
+				'uabb-registration-form'   => 'User Registration Form',
+				'uabb-table-of-contents'   => 'Table Of Contents',
+				'uabb-login-form'          => 'Login Form',
+				'uabb-how-to'   		   => 'How To'
 			);
 
 			/* Include Contact form styler */
@@ -470,6 +477,24 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			}
 			return sanitize_title( $branding_name );
 
+		}
+		/**
+		 * Function that checks if UABB's branding is enabled
+		 *
+		 * @since 1.24.0
+		 */
+		static public function uabb_get_branding_for_docs() {
+
+			if ( null === self::$is_branding_enabled ) {
+				$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+				$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
+				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
+					self::$is_branding_enabled = 'no';
+				} else {
+					self::$is_branding_enabled = 'yes';
+				}
+			}
+			return self::$is_branding_enabled;
 		}
 		/**
 		 * Function that renders UABB's branding Plugin Author name

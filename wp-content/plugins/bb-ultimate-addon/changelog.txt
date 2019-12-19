@@ -1,3 +1,25 @@
+Version 1.24.1 - Wednesday, 11th December 2019
+- Security Fix: Login Form - Improved user data validation from Google and Facebook APIs before login.
+
+Version 1.24.0 - Tuesday, 19th November 2019
+- New: Introduced How-to Schema
+- New: Introduced Login Form
+- Improvement: Added filter to change the default Admin Email in Contact Form module.
+- Improvement: Testimonials - Added Alignment setting option for Rating with Responsive support
+- Fixed: Heading - Resolved Yoast SEO readability issue
+
+Version 1.23.1 - Thursday, 24th October 2019
+- Fixed: Off Canvas - Resolved PHP notice error in Off Canvas Module
+- Fixed: Forms can't be selected in CF7 Styler, Gravity Form Styler & WPForms Styler Modules if Beaver Builder version is less than 2.2
+- Fixed: Table of Contents - Resolved unable to get headings while using Beaver Builder theme.
+
+Version 1.23.0 - Tuesday, 22th October 2019
+- New: Introduced Table of Contents
+- Improvement: Optimized database calls while fetching CF7 Styler, Gravity Form Styler, WPForms Styler Forms
+- Improvement: Added opacity support to the UABB Global Settings
+- Fixed: Background Process Notice appears after sometime even after dismissing
+- Fixed: User Registration Form - Calls to Password Strength Meter Script even if Module is not enabled on the page
+
 Version 1.22.0 - Monday, 7th October 2019
 - New: Introduced User Registration Form
 - Improvement: Price Box - Added WPML support

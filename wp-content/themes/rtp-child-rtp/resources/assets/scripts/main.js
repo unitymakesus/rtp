@@ -7,6 +7,7 @@ import Router from './util/Router';
 import home from './routes/home';
 import directoryMap from './routes/directory';
 import singleRtpFacility from './routes/directory';
+import templateAnnualReport2019 from './routes/templateAnnualReport2019';
 // import aboutUs from './routes/about';
 // import archive from './routes/archive';
 
@@ -16,6 +17,7 @@ const routes = new Router({
   home,
   directoryMap,
   singleRtpFacility,
+  templateAnnualReport2019,
   // aboutUs,
   // archive,
 });

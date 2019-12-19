@@ -36,7 +36,7 @@ foreach ( $module->get_photos() as $photo ) :
 	$cat_slug = implode( ' ', $string );
 	?>
 		<div class="uabb-photo-gallery-item <?php echo ( isset( $cat_slug ) ) ? $cat_slug : ''; ?> uabb-photo-item-grid">
-			<div class="uabb-photo-gallery-content <?php echo ( ( 'none' != $settings->click_action ) && ! empty( $photo->link ) ) ? 'uabb-photo-gallery-link' : ''; ?>">	
+			<div class="uabb-photo-gallery-content <?php echo ( ( 'none' != $settings->click_action ) && ! empty( $photo->link ) ) ? 'uabb-photo-gallery-link' : ''; ?>">
 
 																						<?php if ( 'none' != $settings->click_action ) : ?>
 																							<?php
@@ -56,7 +56,7 @@ foreach ( $module->get_photos() as $photo ) :
 				<a href="<?php echo $click_action_link; ?>" target="<?php echo $click_action_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, 0, 1 ); ?> data-caption="<?php echo $photo->caption; ?>">
 				<?php endif; ?>
 
-				<img class="uabb-gallery-img" src="<?php echo $photo->src; ?>" alt="<?php echo $photo->alt; ?>" />
+				<img class="uabb-gallery-img" src="<?php echo $photo->src; ?>" alt="<?php echo $photo->alt; ?>" title="<?php echo $photo->title; ?>" />
 																							<?php if ( 'none' != $settings->hover_effects ) : ?>
 					<!-- Overlay Wrapper -->
 					<div class="uabb-background-mask <?php echo $settings->hover_effects; ?>">
@@ -80,7 +80,7 @@ foreach ( $module->get_photos() as $photo ) :
 
 																							<?php if ( 'none' != $settings->click_action ) : ?>
 				</a>
-				<?php endif; ?>    
+				<?php endif; ?>
 																							<?php if ( $photo && ! empty( $photo->caption ) && 'hover' == $settings->show_captions && 'none' == $settings->hover_effects ) : ?>
 				<<?php echo $settings->tag_selection; ?> class="uabb-photo-gallery-caption uabb-photo-gallery-caption-hover" itemprop="caption"><?php echo $photo->caption; ?></<?php echo $settings->tag_selection; ?>>
 				<?php endif; ?>
@@ -134,7 +134,7 @@ foreach ( $module->get_photos() as $photo ) :
 				<a href="<?php echo $click_action_link; ?>" target="<?php echo $click_action_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, 0, 1 ); ?> data-caption="<?php echo $photo->caption; ?>">
 				<?php endif; ?>
 
-				<img class="uabb-gallery-img" src="<?php echo $photo->src; ?>" alt="<?php echo $photo->alt; ?>" />
+				<img class="uabb-gallery-img" src="<?php echo $photo->src; ?>" alt="<?php echo $photo->alt; ?>" title="<?php echo $photo->title; ?>"/>
 				<?php if ( 'none' != $settings->hover_effects ) : ?>
 				<!-- Overlay Wrapper -->
 				<div class="uabb-background-mask <?php echo $settings->hover_effects; ?>">
@@ -157,7 +157,7 @@ foreach ( $module->get_photos() as $photo ) :
 			<?php endif; ?>
 				<?php if ( 'none' != $settings->click_action ) : ?>
 				</a>
-				<?php endif; ?>    
+				<?php endif; ?>
 				<?php if ( $photo && ! empty( $photo->caption ) && 'hover' == $settings->show_captions && 'none' == $settings->hover_effects ) : ?>
 				<<?php echo $settings->tag_selection; ?> class="uabb-photo-gallery-caption uabb-photo-gallery-caption-hover" itemprop="caption"><?php echo $photo->caption; ?></<?php echo $settings->tag_selection; ?>>
 				<?php endif; ?>

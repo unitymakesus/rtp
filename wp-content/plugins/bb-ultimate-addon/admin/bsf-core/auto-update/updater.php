@@ -7,9 +7,9 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 		$path = bsf_get_api_url() . '?referer=' . $ultimate_referer;
 
 		$data    = array(
-			'action'         => 'bsf_get_product_versions',
-			'ids'            => $products,
-			'linceses_check' => array(),
+			'action'   => 'bsf_get_product_versions',
+			'ids'      => $products,
+			'site_url' => get_site_url(),
 		);
 		$request = wp_remote_post(
 			$path,
@@ -33,11 +33,12 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 
 		if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 			$result = json_decode( wp_remote_retrieve_body( $request ) );
-
-			if ( ! $result->error ) {
-				return $result->updated_versions;
-			} else {
-				return $result->error;
+			if ( ! is_null( $result ) ) {
+				if ( ! $result->error ) {
+					return $result->updated_versions;
+				} else {
+					return $result->error;
+				}
 			}
 		}
 	}
@@ -84,6 +85,7 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 					$version_beta      = ( isset( $remote_data->version_beta ) ) ? $remote_data->version_beta : '';
 					$download_url      = ( isset( $remote_data->download_url ) ) ? $remote_data->download_url : '';
 					$download_url_beta = ( isset( $remote_data->download_url_beta ) ) ? $remote_data->download_url_beta : '';
+					$tested_upto       = ( isset( $remote_data->tested ) ) ? $remote_data->tested : '';
 					foreach ( $bsf_product_plugins as $key => $plugin ) {
 						if ( ! isset( $plugin['id'] ) ) {
 							continue;
@@ -100,6 +102,7 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 							$brainstrom_products['plugins'][ $key ]['version_beta']      = $version_beta;
 							$brainstrom_products['plugins'][ $key ]['download_url_beta'] = $download_url_beta;
 							$brainstrom_products['plugins'][ $key ]['download_url']      = $download_url;
+							$brainstrom_products['plugins'][ $key ]['tested']            = $tested_upto;
 							$is_update = true;
 						}
 					}

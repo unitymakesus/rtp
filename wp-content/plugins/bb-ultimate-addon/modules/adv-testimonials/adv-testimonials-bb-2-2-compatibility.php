@@ -907,6 +907,18 @@ FLBuilder::register_module(
 								'property' => 'color',
 							),
 						),
+						'rating_align'          => array(
+							'type'       => 'align',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'help'       => __( 'Use this setting if you want to manage alignment of rating separately.', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-rating',
+								'property'  => 'text-align',
+								'important' => true,
+							),
+						),
 					),
 				),
 				'testimonial_designation' => array(

@@ -360,6 +360,10 @@ class SB_Instagram_Posts_Manager
 		return $this->frontend_errors = array();
 	}
 
+	public function set_status() {
+
+	}
+
 	/**
 	 * @since 2.0/5.1.2
 	 */
@@ -378,8 +382,17 @@ class SB_Instagram_Posts_Manager
 		$is_delay = (get_transient( SBI_USE_BACKUP_PREFIX . 'sbi_delay_requests' ) !== false);
 
 		if ( $is_delay ) {
-			$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed.', 'instagram-feed' ) ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b>';
-			$error .= '<p>' . __( 'There may be an issue with the Instagram access token that you are using. Your server might also be unable to connect to Instagram at this time.', 'instagram-feed' );
+			$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed.', 'instagram-feed' ) ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b></p>';
+			$errors = $this->get_errors();
+			if ( ! empty( $errors )  && current_user_can( 'manage_options' ) ) {
+				if ( isset( $errors['api'] ) ) {
+					$error .= '<p>' . $errors['api'][1] . '</p>';
+				} elseif ( isset( $errors['connection'] ) ) {
+					$error .= '<p>' . $errors['connection'][1] . '</p>';
+				}
+			} else {
+				$error .= '<p>' . __( 'There may be an issue with the Instagram access token that you are using. Your server might also be unable to connect to Instagram at this time.', 'instagram-feed' ) . '</p>';
+			}
 
 			$this->add_frontend_error( 'api_delay', $error );
 

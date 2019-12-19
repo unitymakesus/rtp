@@ -8,7 +8,18 @@ if ( function_exists( 'curl_exec' ) ) {
 	$recaptcha_api = new \ReCaptcha\ReCaptcha( $settings->recaptcha_secret_key );
 }
 
-$re_response = $recaptcha_api->verify( $recaptcha, $_SERVER['REMOTE_ADDR'] );
+if ( isset( $settings->recaptcha_action ) && ! empty( $settings->recaptcha_action ) ) {
+	// @codingStandardsIgnoreStart
+	// V3
+	$re_response = $recaptcha_api->setExpectedHostname( $_SERVER['SERVER_NAME'] )
+					  ->setExpectedAction( $settings->recaptcha_action )
+					  ->setScoreThreshold( 0.5 )
+					  ->verify( $recaptcha, $_SERVER['REMOTE_ADDR'] );
+	// @codingStandardsIgnoreEnd
+} else {
+	// V2
+	$re_response = $recaptcha_api->verify( $recaptcha, $_SERVER['REMOTE_ADDR'] );
+}
 
 if ( $re_response->isSuccess() ) {
 	$result['error'] = false;
