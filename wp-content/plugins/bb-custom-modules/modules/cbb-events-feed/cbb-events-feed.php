@@ -117,6 +117,7 @@ class CbbEventsFeedModule extends FLBuilderModule {
 		global $wpdb;
 		$dates = array();
 
+		$site = get_current_blog_id();
 		$prefix = $wpdb->get_blog_prefix($site);
 
 		// Get matching dates for any events in the database
@@ -124,7 +125,7 @@ class CbbEventsFeedModule extends FLBuilderModule {
 						WHERE (`tstart`>=%d AND `tend`<=%d) OR (`tstart`<=%d AND `tend`>=%d) OR (`tstart`<=%d AND `tend`>=%d)
 						AND 1=1 ORDER BY `tstart` ASC";
 
-		$query = $wpdb->prepare($sql, $seconds_start, $seconds_end, $seconds_end, $seconds_end, $seconds_start, $seconds_start, $order);
+		$query = $wpdb->prepare($sql, $seconds_start, $seconds_end, $seconds_end, $seconds_end, $seconds_start, $seconds_start);
 		$mec_dates = $wpdb->get_results($query);
 
 		// Create array of dates with post IDs to query

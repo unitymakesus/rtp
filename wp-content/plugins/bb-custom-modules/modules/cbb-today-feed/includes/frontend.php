@@ -106,7 +106,9 @@ if ($count >= 3) {
               <div class="card-content">
                 <div class="time"><?php echo "$startH:$starti"; if ($starta !== $enda) echo " $starta"; ?> -
                   <?php echo "$endH:$endi $enda"; ?></div>
-                <div class="location"><?php echo $location->name; ?></div>
+                  <?php if ($location) : ?>
+                    <div class="location"><?php echo $location->name; ?></div>
+                  <?php endif; ?>
               </div>
 
               <div class="card-cta"><a tabindex="-1" href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>

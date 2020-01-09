@@ -1,7 +1,7 @@
 <!doctype html>
 @php
-  $text_size = $_COOKIE['data_text_size'];
-  $contrast = $_COOKIE['data_contrast'];
+  $text_size = $_COOKIE['data_text_size'] ?? '';
+  $contrast = $_COOKIE['data_contrast'] ?? '';
 @endphp
 <html {!! language_attributes() !!} data-text-size="{{ $text_size }}" data-contrast="{{ $contrast }}">
   @include('partials.head')
