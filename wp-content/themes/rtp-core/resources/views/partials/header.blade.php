@@ -14,8 +14,7 @@
               {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
             </div>
           </div>
-
-          @php get_search_form() @endphp
+          @include('partials.searchform')
         </div>
       @endif
     </div>
