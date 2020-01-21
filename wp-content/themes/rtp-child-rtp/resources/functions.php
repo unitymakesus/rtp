@@ -126,11 +126,11 @@ add_shortcode('directory-search-filter', function($atts) {
   ?>
   <form class="directory-search-filter" action="/directory-map/"  method="get">
     <div class="row">
-      <div class="col s6">
+      <div class="col s12 m6">
         <label for="fwp_search_directory">Search</label>
       	<input type="search" placeholder="Keywords" value="" name="fwp_search_directory" id="fwp_search_directory" aria-label="Keyword">
       </div>
-      <div class="col s6">
+      <div class="col s12 m6">
         <div class="filter-selects">
           <div class="label">Filter</div>
           <div class="dropdown">

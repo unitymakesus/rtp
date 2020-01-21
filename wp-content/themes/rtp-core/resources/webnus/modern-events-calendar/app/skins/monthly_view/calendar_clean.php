@@ -157,7 +157,7 @@ elseif($week_start == 5) // Friday
                       }
                     }
                     $events_str .= '<div class="mec-event-image"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event_thumb.'</a></div>';
-                    $events_str .= '<h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event->data->title.'</a>'.$event_color.'</h4>';
+                    $events_str .= '<h4 class="mec-event-title"><a class="mec-color-hover" data-event-id="'.$event->data->ID.'" href="'.$this->main->get_event_date_permalink($event->data->permalink, $event->date['start']['date']).'">'.$event->data->title.'</a></h4>';
                     if(trim($start_time)) $events_str .= '<div class="mec-event-time"><i class="mec-sl-clock-o"></i> '.$start_time.(trim($end_time) ? ' - '.$end_time : '').'</div>';
                     $events_str .= '<div class="mec-event-detail">'.(isset($location['name']) ? $location['name'] : '').'</div>';
                     $events_str .= '</article>';

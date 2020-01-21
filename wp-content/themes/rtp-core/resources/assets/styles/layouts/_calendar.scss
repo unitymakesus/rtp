@@ -176,8 +176,7 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
   .mec-calendar-side {
     border: none;
     box-shadow: none;
-    width: 50%;
-    padding: 0 20px 0 10px;
+    width: 100%;
 
     .mec-month-navigator {
       position: relative;
@@ -372,6 +371,15 @@ button, input, optgroup, select, textarea, .entry-content .mec-wrap h1, .entry-c
           box-shadow: none;
         }
       }
+    }
+  }
+}
+
+@media #{$medium-and-up} {
+  .mec-calendar {
+    .mec-calendar-side {
+      width: 50%;
+      padding: 0 20px 0 10px;
     }
   }
 }

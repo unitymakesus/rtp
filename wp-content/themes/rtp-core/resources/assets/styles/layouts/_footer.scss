@@ -1,5 +1,5 @@
 .page-footer {
-  background: transparent;
+  background: none;
   padding-top: 0;
 
   .footer-social {
@@ -20,6 +20,24 @@
 
     .widget {
       padding-right: 10px;
+    }
+
+    @media #{$large-and-up} {
+      .borders,
+      .footer-social-left,
+      .footer-social-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .borders {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .footer-social-right {
+        justify-content: flex-end;
+      }
     }
   }
 

@@ -18,12 +18,20 @@
         </div>
 
   			<div class="directory-listing row">
-					<div class="col xs12 s6">
-
+					<div class="col s12 l6">
             <div class="facet-search-wrapper">
               {!! do_shortcode('[facetwp facet="search_directory"]') !!}
-            </div>
-
+						</div>
+					</div>
+					<div class="col s12 l6">
+            <div class="label">Filter</div>
+            <div class="filter-selects">
+							{!! do_shortcode('[facetwp facet="company_types"]') !!}
+							{!! do_shortcode('[facetwp facet="facility_types"]') !!}
+							{!! do_shortcode('[facetwp facet="availability"]') !!}
+  					</div>
+					</div>
+					<div class="col s12 l6">
 		        <h3 class="label">Company Listing</h3>
             <div class="clearfix pagination">
               <div class="float-left">
@@ -134,15 +142,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col xs12 s6">
-
-            <div class="label">Filter</div>
-            <div class="filter-selects">
-							{!! do_shortcode('[facetwp facet="company_types"]') !!}
-							{!! do_shortcode('[facetwp facet="facility_types"]') !!}
-							{!! do_shortcode('[facetwp facet="availability"]') !!}
-  					</div>
-
+					<div class="col s12 l6">
             <div class="key">
               <div class="label">Map Key</div>
               <ul class="flex flex-grid m3x s1x">
