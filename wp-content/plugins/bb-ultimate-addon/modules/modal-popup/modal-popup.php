@@ -77,6 +77,9 @@ class ModalPopupModule extends FLBuilderModule {
 
 			'a_data'                     => 'data-modal=' . $module_id . ' ',
 			'a_class'                    => 'uabb-trigger',
+			'button_padding_dimension'   => ( isset( $this->settings->button_padding_dimension ) ) ? $this->settings->button_padding_dimension : '',
+			'button_border'              => ( isset( $this->settings->button_border ) ) ? $this->settings->button_border : '',
+			'border_hover_color'         => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 		);
 		FLBuilder::render_module_html( 'uabb-button', $btn_settings );
 	}
@@ -95,7 +98,9 @@ class ModalPopupModule extends FLBuilderModule {
 			break;
 			case 'photo':
 				if ( isset( $settings->ct_photo_src ) ) {
-					return '<img src="' . $settings->ct_photo_src . '" />';
+					$image_data = FLBuilderPhoto::get_attachment_data( $settings->ct_photo );
+					$image_alt  = isset( $image_data->alt ) ? $image_data->alt : '';
+					return '<img src="' . $settings->ct_photo_src . '" alt="' . $image_alt . '"/>';
 				}
 				return '<img src="" />';
 			break;

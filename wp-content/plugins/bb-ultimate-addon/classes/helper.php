@@ -249,7 +249,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 				}
 			}
 
-			echo $css;
+			return $css;
 		}
 	}
 }

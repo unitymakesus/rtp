@@ -47,6 +47,8 @@
                 } else {
             		form.find('#fl-field-btn_background_hover_color th label').text('Border Hover Color');
                 }
+            } else if( 'default' === btn_style ) {
+                form.find("#fl-field-btn_background_color").show();
             } else {
             	form.find("#fl-field-hover_attribute").hide();
 							form.find("#fl-field-btn_background_color").hide();

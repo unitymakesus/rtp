@@ -4,8 +4,7 @@
       @if (has_nav_menu('top_bar'))
         <div class="topbar-menu-wrapper flex flex-center space-between">
           <div class="topnav-wrapper flex flex-center space-between">
-            <img class="rtp-logo" src="@asset('images/rtp-triangle.svg')" alt="RTP Logo" />
-
+            <img class="rtp-logo" src="@asset('images/rtp-triangle.svg')" alt="Research Triangle Park" />
             <div class="menu-trigger-wrapper hide-on-large-only">
               <input type="checkbox" name="topbar-menu-trigger" id="topbar-menu-trigger" value="true" />
               <label for="topbar-menu-trigger"><i class="material-icons topbar-icon" aria-label="Show navigation menu">add</i></label>
@@ -14,8 +13,7 @@
               {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
             </div>
           </div>
-
-          @php get_search_form() @endphp
+          @include('partials.searchform')
         </div>
       @endif
     </div>

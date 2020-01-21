@@ -1123,8 +1123,11 @@ $default_template = sprintf(
 
 ----
 You have received a new submission from %1$s
-(%2$s)', 'uabb'
-	), get_bloginfo( 'name' ), $current_url
+(%2$s)',
+		'uabb'
+	),
+	get_bloginfo( 'name' ),
+	$current_url
 );
 
 /*

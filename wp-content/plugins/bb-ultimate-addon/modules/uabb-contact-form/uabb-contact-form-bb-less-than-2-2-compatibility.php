@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBContactFormModule', array(
+	'UABBContactFormModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(

@@ -29,6 +29,7 @@ var UABBBlogPosts;
         this.slidesToScroll         = settings.slidesToScroll;
         this.autoplay         = settings.autoplay;
         this.autoplaySpeed         = settings.autoplaySpeed;
+        this.dots = settings.dots;
         this.small_breakpoint         = settings.small_breakpoint;
         this.medium_breakpoint         = settings.medium_breakpoint;
         this.equal_height_box         = settings.equal_height_box;
@@ -121,7 +122,7 @@ var UABBBlogPosts;
             var grid = jQuery( this.nodeClass ).find( '.uabb-blog-posts-carousel' );
 
             jQuery( this.nodeClass ).find( '.uabb-blog-posts-carousel' ).uabbslick({
-                dots: false,
+                dots: this.dots,
                 infinite: this.infinite,
                 arrows: this.arrows,
                 lazyLoad: 'ondemand',

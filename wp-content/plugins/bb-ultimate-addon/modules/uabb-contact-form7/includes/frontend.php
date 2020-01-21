@@ -16,7 +16,7 @@
 		<p class="uabb-cf7-form-desc"><?php echo $settings->form_desc; ?></p>
 		<?php
 }
-?>
+	?>
 	<?php
 
 	if ( $settings->form_id ) {

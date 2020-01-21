@@ -435,3 +435,4 @@ function mecft_import_trucks() {
   add_settings_error('mecft_messages', 'mecft_log', $result, 'updated');
 
 }
+add_action( 'wp_mecft_import_trucks', 'mecft_import_trucks' );

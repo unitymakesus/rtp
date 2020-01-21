@@ -253,6 +253,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 	public function render_button() {
 		$custom_class    = '';
 		$animation_class = '';
+		$astra_class     = '';
 
 		if ( isset( $this->settings->custom_class ) ) {
 			$custom_class = $this->settings->custom_class;
@@ -260,9 +261,12 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 		if ( isset( $this->settings->hover_animation ) && '' !== $this->settings->hover_animation ) {
 			$animation_class = 'uabb-marketing-button-animation-' . $this->settings->hover_animation;
 		}
+		if ( 'default' === $this->settings->style ) {
+			$astra_class = 'ast-button';
+		}
 		?>
 		<div class="uabb-marketing-button uabb-module-content <?php echo $this->get_classname(); ?>">
-			<a href ="<?php echo $this->settings->link; ?>" target="<?php echo $this->settings->link_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 1 ); ?> class="uabb-button uabb-marketing-button  <?php echo $animation_class; ?> uabb-marketing-button-wrap-<?php echo $this->settings->icon_position; ?> <?php echo $custom_class; ?> uabb-marketing-btn__link">
+			<a href ="<?php echo $this->settings->link; ?>" target="<?php echo $this->settings->link_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 1 ); ?> class="uabb-button uabb-marketing-button  <?php echo $animation_class; ?> uabb-marketing-button-wrap-<?php echo $this->settings->icon_position; ?> <?php echo $custom_class; ?> uabb-marketing-btn__link <?php echo $astra_class; ?>">
 				<?php
 					echo $this->render_html();
 				?>

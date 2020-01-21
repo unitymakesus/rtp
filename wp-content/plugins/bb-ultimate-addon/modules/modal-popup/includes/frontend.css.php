@@ -77,6 +77,13 @@ if ( 'button' == $settings->modal_on ) {
 			'border_radius'              => $settings->btn_border_radius,
 			'align'                      => $settings->btn_align,
 			'mob_align'                  => $settings->btn_mob_align,
+			'button_padding_dimension'   => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+			'button_border_style'        => ( isset( $settings->button_border_style ) ) ? $settings->button_border_style : '',
+			'button_border_width'        => ( isset( $settings->button_border_width ) ) ? $settings->button_border_width : '',
+			'button_border_radius'       => ( isset( $settings->button_border_radius ) ) ? $settings->button_border_radius : '',
+			'button_border_color'        => ( isset( $settings->button_border_color ) ) ? $settings->button_border_color : '',
+
+			'border_hover_color'         => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 
 		);
 	} else {
@@ -116,6 +123,9 @@ if ( 'button' == $settings->modal_on ) {
 				'border_radius'              => $settings->btn_border_radius,
 				'align'                      => $settings->btn_align,
 				'mob_align'                  => $settings->btn_mob_align,
+				'button_padding_dimension'   => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+				'button_border'              => ( isset( $settings->button_border ) ) ? $settings->button_border : '',
+				'border_hover_color'         => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 			);
 	}
 	/* CSS Render Function */
@@ -156,17 +166,24 @@ if ( 'button' == $settings->modal_on ) {
 	}
 		<?php
 } else {
+	if ( 'default' === $settings->btn_style ) {
+		$btn_typo = uabb_theme_button_typography( $settings->btn_typo );
+
+		$settings->btn_typo            = ( array_key_exists( 'desktop', $btn_typo ) ) ? $btn_typo['desktop'] : $settings->btn_typo;
+		$settings->btn_typo_medium     = ( array_key_exists( 'tablet', $btn_typo ) ) ? $btn_typo['tablet'] : $settings->btn_typo_medium;
+		$settings->btn_typo_responsive = ( array_key_exists( 'mobile', $btn_typo ) ) ? $btn_typo['mobile'] : $settings->btn_typo_responsive;
+	}
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'btn_typo',
-				'selector'     => ".fl-node-$id .uabb-creative-button-wrap a,.fl-node-$id .uabb-creative-button-wrap a:visited",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'btn_typo',
+					'selector'     => ".fl-node-$id .uabb-creative-button-wrap a,.fl-node-$id .uabb-creative-button-wrap a:visited",
+				)
+			);
 	}
 }
-?>
+	?>
 
 <?php } elseif ( 'text' == $settings->modal_on ) { ?>
 
@@ -215,16 +232,16 @@ if ( 'button' == $settings->modal_on ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'text_typo',
-				'selector'     => ".fl-node-$id .uabb-modal-action",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'text_typo',
+					'selector'     => ".fl-node-$id .uabb-modal-action",
+				)
+			);
 	}
 }
-?>
+	?>
 
 <?php } elseif ( 'icon' == $settings->modal_on ) { ?>
 
@@ -445,16 +462,16 @@ if ( 'button' == $settings->modal_on ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'title_font_typo',
-				'selector'     => " .uamodal-$id .uabb-modal-title",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'title_font_typo',
+					'selector'     => " .uamodal-$id .uabb-modal-title",
+				)
+			);
 	}
 }
-?>
+	?>
 <?php } ?>
 /* End Title Typography */
 
@@ -502,16 +519,16 @@ if ( 'button' == $settings->modal_on ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'ct_content_font_typo',
-				'selector'     => ".uamodal-$id .uabb-modal-text",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'ct_content_font_typo',
+					'selector'     => ".uamodal-$id .uabb-modal-text",
+				)
+			);
 	}
 }
-?>
+	?>
 <?php } ?>
 
 /* End Modal Content Typography */
@@ -533,6 +550,7 @@ if ( 'button' == $settings->modal_on ) {
 		}
 		?>
 		}
+		.uamodal-<?php echo $id; ?> .uabb-modal-title-wrap {
 		<?php
 		if ( isset( $settings->title_spacing_dimension_top_medium ) ) {
 			echo ( '' != $settings->title_spacing_dimension_top_medium ) ? 'padding-top:' . $settings->title_spacing_dimension_top_medium . 'px;' : '';
@@ -547,6 +565,7 @@ if ( 'button' == $settings->modal_on ) {
 			echo ( '' != $settings->title_spacing_dimension_right_medium ) ? 'padding-right:' . $settings->title_spacing_dimension_right_medium . 'px;' : '';
 		}
 		?>
+		}
 	}
 	@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
 		.uamodal-<?php echo $id; ?> .uabb-modal-content-data {
@@ -565,6 +584,7 @@ if ( 'button' == $settings->modal_on ) {
 			}
 			?>
 		}
+		.uamodal-<?php echo $id; ?> .uabb-modal-title-wrap {
 		<?php
 		if ( isset( $settings->title_spacing_dimension_top_responsive ) ) {
 			echo ( '' != $settings->title_spacing_dimension_top_responsive ) ? 'padding-top:' . $settings->title_spacing_dimension_top_responsive . 'px;' : '';
@@ -579,6 +599,7 @@ if ( 'button' == $settings->modal_on ) {
 			echo ( '' != $settings->title_spacing_dimension_right_responsive ) ? 'padding-right:' . $settings->title_spacing_dimension_right_responsive . 'px;' : '';
 		}
 		?>
+		}
 	}
 <?php } ?>
 <?php if ( ! $version_bb_check ) { ?>

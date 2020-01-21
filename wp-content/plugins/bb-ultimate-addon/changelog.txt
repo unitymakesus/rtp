@@ -1,3 +1,34 @@
+Version 1.24.3 - Thursday, 9th January 2020
+- Improvement: Advanced Post - Added dots support for carousel layout
+- Improvement: Advanced Posts - Added Border settings option for Post Content
+- Improvement: Testimonials - Added filter for custom Next & Previous Arrows
+- Improvement: User Registration Form - Applied translation to Client side error messages
+- Improvement: Woo-Categories - Added new option 'Menu Order' for Order By Filter Setting
+- Fixed: Info Box: Fixed image layout with custom background for images
+- Fixed: Modal Popup - Overlay scroll not working when closed with Overlay option or ESC key
+- Fixed: Marketing-button: Background Hover color setting is not working when an external link is set
+- Fixed: Off-Canvas - Double Scroll in Firefox browser when Off-Canvas is triggered
+- Fixed: Photo - Resolve PHP notice when Photo Source is set to URL
+- Fixed: Retina Image - Added URL connections to Link URL Setting
+- Fixed: Render plugin shortname prefix when the Beaver Builder editor is enabled
+- Fixed: User Registration Form - Resolved PHP warning error in User Registration Form Module
+- Fixed: Woo-Categories - Order By Description option in Filter Settings is not working
+
+Version 1.24.2 - Thursday, 26th December 2019
+- Improvement: Added Astra Theme Button compatibility from v2.2.0 for Button module
+- Improvement: Added new style type Default for Button
+- Improvement: Advanced posts - Added New Filter option "Match all related except" for Categories and Tags
+- Improvement: Business Reviews - Added a Filter to display reviews in a language other than English
+- Improvement: Login Form - Improved authentication functionality.
+- Improvement: Modal Popup - Added alt tag for images
+- Fixed: Info Box - Minimum Height Setting not working correctly for Responsive Devices
+- Fixed: Modal Popup - Title Padding Setting not working correctly for Responsive Devices
+- Fixed: Off-Canvas - Off-Canvas is getting triggered in preview mode when it is saved as global and triggered using custom Class/Id
+- Fixed: Particle Backgrounds - Resolved z-index overlapping issue with all module content
+- Fixed: Particle Backgrounds - Resolved JavaScript undefined error for Wordpress 5.3
+- Fixed: Row Separator - Resolved z-index overlapping issue with all module content
+- Fixed: Table of Contents - Smooth Scroll not working on iOS devices having version less than 13
+
 Version 1.24.1 - Wednesday, 11th December 2019
 - Security Fix: Login Form - Improved user data validation from Google and Facebook APIs before login.
 

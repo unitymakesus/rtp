@@ -8,7 +8,7 @@ if ( ! function_exists( 'bsf_generate_rand_token' ) ) {
 		$length          = 32;
 		for ( $n = 1; $n < $length; $n++ ) {
 			$whichCharacter = rand( 0, strlen( $validCharacters ) - 1 );
-			$myKeeper      .= $validCharacters{$whichCharacter};
+			$myKeeper      .= $validCharacters[$whichCharacter];
 		}
 		return $myKeeper;
 	}
@@ -84,7 +84,7 @@ if ( ! function_exists( 'bsf_register_product_callback' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '30',
+				'timeout' => '5',
 			)
 		);
 
@@ -94,7 +94,7 @@ if ( ! function_exists( 'bsf_register_product_callback' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '30',
+					'timeout' => '5',
 				)
 			);
 		}
@@ -220,7 +220,7 @@ if ( ! function_exists( 'bsf_deregister_product_callback' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '30',
+				'timeout' => '5',
 			)
 		);
 
@@ -230,7 +230,7 @@ if ( ! function_exists( 'bsf_deregister_product_callback' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '30',
+					'timeout' => '5',
 				)
 			);
 		}
@@ -309,7 +309,7 @@ if ( ! function_exists( 'bsf_register_user_callback' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '60',
+				'timeout' => '5',
 			)
 		);
 
@@ -318,7 +318,7 @@ if ( ! function_exists( 'bsf_register_user_callback' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '60',
+					'timeout' => '5',
 				)
 			);
 		}
@@ -696,7 +696,7 @@ if ( ! function_exists( 'bsf_allow_developer_access' ) ) {
 					'site_url'  => get_site_url(),
 					'process'   => $process,
 				),
-				'timeout' => '30',
+				'timeout' => '5',
 			)
 		);
 		if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {

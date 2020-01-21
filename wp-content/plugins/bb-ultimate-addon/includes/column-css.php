@@ -45,16 +45,6 @@ function uabb_column_particle_css( $css, $nodes, $global_settings ) {
 			.fl-node-<?php echo $column->node; ?> .fl-module {
 				position: inherit;
 			}
-			<?php if ( ! FLBuilderModel::is_builder_active() ) { ?>
-				.fl-node-<?php echo $column->node; ?> .fl-module,
-				.fl-node-<?php echo $column->node; ?> .fl-module * {
-					z-index: 2;
-				}
-				.fl-col .uabb-col-particles-background {
-					z-index: 1;
-				}
-
-			<?php } ?>
 		<?php
 		}
 		$css .= ob_get_clean();

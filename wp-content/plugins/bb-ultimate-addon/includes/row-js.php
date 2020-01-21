@@ -246,23 +246,24 @@ function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
 	?>
 	;(function($) {
 				var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
+
 				window.particle_js_loaded = 0;
 
-				$.cachedScript = function( url, options ) {
+				jQuery.cachedScript = function( url, options ) {
 
 					// Allow user to set any option except for dataType, cache, and url.
-					options = $.extend( options || {}, {
+					options = jQuery.extend( options || {}, {
 						dataType: "script",
 						cache: true,
 						url: url
 					});
 					// Return the jqXHR object so we can chain callbacks.
-					return $.ajax( options );
+					return jQuery.ajax( options );
 				};
 
-				if ( $( '.uabb-row-particles-background' ).length ) {
+				if (  jQuery( '.uabb-row-particles-background' ).length ) {
 
-					$.cachedScript( url ).done( function( script, textStatus ) {					
+					jQuery.cachedScript( url ).done( function( script, textStatus ) {
 						window.particle_js_loaded = 1;
 						init_particles_row_background_script();
 

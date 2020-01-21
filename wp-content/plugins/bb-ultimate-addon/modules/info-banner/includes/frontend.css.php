@@ -185,7 +185,9 @@ if ( 'button' == $settings->cta_type ) {
 	/* Button Render Css */
 	if ( ! $version_bb_check ) {
 		FLBuilder::render_module_css(
-			'uabb-button', $id, array(
+			'uabb-button',
+			$id,
+			array(
 
 				/* General Section */
 				'text'                        => $settings->btn_text,
@@ -237,12 +239,20 @@ if ( 'button' == $settings->cta_type ) {
 				'line_height_unit'            => $settings->tbtn_line_height_unit,
 				'transform'                   => $settings->tbtn_content_transform,
 				'letter_spacing'              => $settings->tbtn_content_letter_spacing,
+				'button_padding_dimension'    => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+				'button_border_style'         => ( isset( $settings->button_border_style ) ) ? $settings->button_border_style : '',
+				'button_border_width'         => ( isset( $settings->button_border_width ) ) ? $settings->button_border_width : '',
+				'button_border_radius'        => ( isset( $settings->button_border_radius ) ) ? $settings->button_border_radius : '',
+				'button_border_color'         => ( isset( $settings->button_border_color ) ) ? $settings->button_border_color : '',
+				'border_hover_color'          => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 
 			)
 		);
 	} else {
 		FLBuilder::render_module_css(
-			'uabb-button', $id, array(
+			'uabb-button',
+			$id,
+			array(
 
 				/* General Section */
 				'text'                       => $settings->btn_text,
@@ -285,6 +295,9 @@ if ( 'button' == $settings->cta_type ) {
 				'button_typo'                => ( isset( $settings->btn_font_typo ) ) ? $settings->btn_font_typo : '',
 				'button_typo_medium'         => ( isset( $settings->btn_font_typo_medium ) ) ? $settings->btn_font_typo_medium : '',
 				'button_typo_responsive'     => ( isset( $settings->btn_font_typo_responsive ) ) ? $settings->btn_font_typo_responsive : '',
+				'button_padding_dimension'   => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+				'button_border'              => ( isset( $settings->button_border ) ) ? $settings->button_border : '',
+				'border_hover_color'         => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 
 			)
 		);

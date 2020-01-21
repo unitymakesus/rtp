@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBContactFormModule', array(
+	'UABBContactFormModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
@@ -866,8 +867,9 @@ FLBuilder::register_module(
 						'btn_style'        => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
@@ -875,7 +877,19 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'transparent' => array(
-									'fields' => array( 'btn_border_width', 'hover_attribute' ),
+									'fields' => array( 'btn_border_width', 'hover_attribute', 'btn_radius' ),
+								),
+								'flat'        => array(
+									'fields' => array( 'btn_radius' ),
+								),
+								'3d'          => array(
+									'fields' => array( 'btn_radius' ),
+								),
+								'gradient'    => array(
+									'fields' => array( 'btn_radius' ),
+								),
+								'default'     => array(
+									'fields' => array( 'button_border', 'border_hover_color' ),
 								),
 							),
 						),
@@ -978,6 +992,30 @@ FLBuilder::register_module(
 								'property'  => 'border-radius',
 								'unit'      => 'px',
 								'important' => true,
+							),
+						),
+						'button_border'          => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-contact-form .uabb-contact-form-submit',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'     => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'btn_vertical_padding'   => array(

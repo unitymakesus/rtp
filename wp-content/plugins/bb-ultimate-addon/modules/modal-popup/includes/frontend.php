@@ -42,7 +42,9 @@
 		if ( 'icon' == $settings->close_source ) {
 			echo '<i class="uabb-close-icon ' . $settings->close_icon . '"></i>';
 		} else {
-			echo '<img class="uabb-close-image" src="' . $close_photo_src . '"/>';
+			$image_data = FLBuilderPhoto::get_attachment_data( $settings->close_photo );
+			$image_alt  = isset( $image_data->alt ) ? $image_data->alt : '';
+			echo '<img class="uabb-close-image" src="' . $close_photo_src . '" alt="' . $image_alt . '"/>';
 		}
 		?>
 			</span>
@@ -61,9 +63,11 @@
 	<?php
 		$img_src = '';
 	if ( isset( $settings->photo_src ) && ! empty( $settings->photo_src ) ) {
-		$img_src = $settings->photo_src;
+		$image_data = FLBuilderPhoto::get_attachment_data( $settings->photo );
+		$image_alt  = isset( $image_data->alt ) ? $image_data->alt : '';
+		$img_src    = $settings->photo_src;
 		?>
-	<div class="uabb-modal-action uabb-trigger uabb-modal-photo-wrap" data-modal="<?php echo $id; ?>"><img class="uabb-modal-photo" src="<?php echo $img_src; ?>"></div>
+	<div class="uabb-modal-action uabb-trigger uabb-modal-photo-wrap" data-modal="<?php echo $id; ?>"><img class="uabb-modal-photo" src="<?php echo $img_src; ?>" alt="<?php echo $image_alt; ?>"></div>
 	<?php } ?>
 <?php }if ( ( 'custom' == $settings->modal_on || 'automatic' == $settings->modal_on ) && FLBuilderModel::is_builder_active() ) { ?>
 	<div class="uabb-builder-msg" style="text-align: center;">

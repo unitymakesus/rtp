@@ -51,6 +51,8 @@ class UABB_Init {
 
 			add_action( 'wp_ajax_dismissed_notice_handler', array( $this, 'load_uabb_ajax_notice_handler' ) );
 
+			add_action( 'wp_ajax_dismissed_login_notice_handler', array( $this, 'load_uabb_ajax_login_notice_handler' ) );
+
 		} else {
 
 			// disable UABB activation ntices in admin panel.
@@ -78,11 +80,27 @@ class UABB_Init {
 	 * @since 1.13.0
 	 */
 	function load_uabb_ajax_notice_handler() {
+
+		check_ajax_referer( 'uabb-admin-nonce', 'dismiss_nonce' );
 		// Request the dismissed value.
-		$dismissed = $_REQUEST['dismissed'];
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
 		// Store it in the options table.
 		update_option( 'dismiss-admin-notice', $dismissed );
 	}
+	/**
+	 * AJAX handler to store the state of dismissible notices.
+	 *
+	 * @since 1.24.2
+	 */
+	function load_uabb_ajax_login_notice_handler() {
+
+		check_ajax_referer( 'uabb-admin-nonce', 'dismiss_login_nonce' );
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+		// Store it in the options table.
+		update_option( 'dismiss-admin-login-notice', $dismissed );
+	}
+
 	/**
 	 * Function that includes necessary files
 	 *
@@ -348,14 +366,26 @@ class UABB_Init {
 	 */
 	function update_bb_notice() {
 
-		$name                = self::get_branding_name();
-		$bb_stable_version   = '2.0.7';
-		$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
-		$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
-		$is_dismissed        = get_option( 'dismiss-admin-notice', false );
+		$name                            = self::get_branding_name();
+		$bb_stable_version               = '2.0.7';
+		$branding_name                   = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+		$branding_short_name             = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
+		$is_dismissed                    = get_option( 'dismiss-admin-notice', false );
+		$is_dismissed_login              = get_option( 'dismiss-admin-login-notice', false );
+		$uabb_social_facebook_app_id     = '';
+		$uabb_social_facebook_app_secret = '';
+		$admin_link                      = admin_url( 'options-general.php?page=uabb-builder-settings#uabb-social' );
+
+		$uabb_setting_options = UABB_Init::$uabb_options['fl_builder_uabb'];
+
+		if ( is_array( $uabb_setting_options ) ) {
+
+			$uabb_social_facebook_app_id     = ( array_key_exists( 'uabb-social-facebook-app-id', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-id'] : '';
+			$uabb_social_facebook_app_secret = ( array_key_exists( 'uabb-social-facebook-app-secret', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-secret'] : '';
+		}
 
 		// Added in version 1.12.1 to enqueue admin notice scripts in admin area.
-		if ( version_compare( $bb_stable_version, FL_BUILDER_VERSION, '>' ) ) {
+		if ( version_compare( $bb_stable_version, FL_BUILDER_VERSION, '>' ) || ( isset( $uabb_social_facebook_app_id ) && ! empty( $uabb_social_facebook_app_id ) && empty( $uabb_social_facebook_app_secret ) ) ) {
 			wp_enqueue_script( 'uabb-admin-notice-js' );
 		}
 
@@ -364,16 +394,37 @@ class UABB_Init {
 			if ( version_compare( $bb_stable_version, FL_BUILDER_VERSION, '>' ) ) {
 				// Added in version 1.12.1 to verify if Branding name is added.
 				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
-					echo '<div class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
+					echo '<div data-nonce="' . wp_create_nonce( 'uabb-admin-nonce' ) . '" class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
 					echo sprintf( '<p> The <strong>%1$s</strong> plugin requires minimum %2$s version of the Beaver Builder plugin. Refer following <a href="https://www.ultimatebeaver.com/docs/fix-for-php-fatal-error-after-updating-uabb/" target="_blank"> link</a> on how to resolve this issue.</p>', $name, $bb_stable_version );
 					echo '</div>';
 				} else {
-					echo '<div class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
+					echo '<div data-nonce="' . wp_create_nonce( 'uabb-admin-nonce' ) . '" class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
 					echo sprintf( '<p> The <strong>%1$s</strong> plugin requires minimum %2$s version of the Beaver Builder plugin.</p>', $name, $bb_stable_version );
 					echo '</div>';
 				}
 			}
 		}
+		if ( false == $is_dismissed_login ) {
+			if ( isset( $uabb_social_facebook_app_id ) && ! empty( $uabb_social_facebook_app_id ) && empty( $uabb_social_facebook_app_secret ) ) {
+				// Added in version 1.12.1 to verify if Branding name is added.
+				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
+					echo '<div data-nonce="' . wp_create_nonce( 'uabb-admin-nonce' ) . '" class="notice notice-error notice-warn uabb-admin-login-dismiss-notice is-dismissible">';
+					echo sprintf(
+						'<p> With new <strong>%1$s </strong>version 1.24.2 it is mandatory to add a Facebook App Secret Key <a href="%2$s">here</a> for the Login Form widget. This is to ensure extra security for the widget. <br><br>
+In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ', $name, esc_url( $admin_link )
+					);
+					echo '</div>';
+				} else {
+					echo '<div data-nonce="' . wp_create_nonce( 'uabb-admin-nonce' ) . '" class="notice notice-error notice-warn uabb-admin-login-dismiss-notice is-dismissible">';
+					echo sprintf(
+						'<p> With new <strong>%1$s </strong>version 1.24.2 it is mandatory to add a Facebook App Secret Key <a href="%2$s">here</a> for the Login Form widget. This is to ensure extra security for the widget. <br><br>
+In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ', $branding_name, esc_url( $admin_link )
+					);
+					echo '</div>';
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -489,7 +540,7 @@ class UABB_Init {
 				form[class*="fl-builder-spacer-gap"] .fl-lightbox-header h1:before,
 				form[class*="fl-builder-team"] .fl-lightbox-header h1:before,
 				form[class*="fl-builder-uabb-"] .fl-lightbox-header h1:before {
-					content: "<?php echo $branding_name; ?> ";
+					content: "<?php echo $branding_name; ?> " !important;
 					position: relative;
 					display: inline-block;
 					margin-right: 5px;

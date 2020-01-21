@@ -643,6 +643,11 @@ textarea.materialize-textarea {
     }
   }
 
+  .button,
+  .clear {
+    width: auto !important;
+  }
+
   .button {
     border-radius: 0;
 

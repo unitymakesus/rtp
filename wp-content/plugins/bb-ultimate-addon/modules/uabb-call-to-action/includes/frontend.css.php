@@ -75,6 +75,9 @@ if ( $version_bb_check ) {
 		'button_typo'                => ( isset( $settings->btn_typo ) ) ? $settings->btn_typo : '',
 		'button_typo_medium'         => ( isset( $settings->btn_typo_medium ) ) ? $settings->btn_typo_medium : '',
 		'button_typo_responsive'     => ( isset( $settings->btn_typo_responsive ) ) ? $settings->btn_typo_responsive : '',
+		'button_padding_dimension'   => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+		'button_border'              => ( isset( $settings->button_border ) ) ? $settings->button_border : '',
+		'border_hover_color'         => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 	);
 
 } else {
@@ -128,6 +131,13 @@ if ( $version_bb_check ) {
 		'font_family'                 => $settings->btn_font_family,
 		'transform'                   => $settings->btn_transform,
 		'letter_spacing'              => $settings->btn_letter_spacing,
+		'button_padding_dimension'    => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+		'button_border_style'         => ( isset( $settings->button_border_style ) ) ? $settings->button_border_style : '',
+		'button_border_width'         => ( isset( $settings->button_border_width ) ) ? $settings->button_border_width : '',
+		'button_border_radius'        => ( isset( $settings->button_border_radius ) ) ? $settings->button_border_radius : '',
+		'button_border_color'         => ( isset( $settings->button_border_color ) ) ? $settings->button_border_color : '',
+
+		'border_hover_color'          => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 	);
 }
 

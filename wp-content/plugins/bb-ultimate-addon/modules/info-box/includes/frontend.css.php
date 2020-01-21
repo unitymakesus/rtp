@@ -98,6 +98,9 @@ if ( 'button' == $settings->cta_type ) {
 			'button_typo'                => ( isset( $settings->button_font_typo ) ) ? $settings->button_font_typo : '',
 			'button_typo_medium'         => ( isset( $settings->button_font_typo_medium ) ) ? $settings->button_font_typo_medium : '',
 			'button_typo_responsive'     => ( isset( $settings->button_font_typo_responsive ) ) ? $settings->button_font_typo_responsive : '',
+			'button_padding_dimension'   => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+			'button_border'              => ( isset( $settings->button_border ) ) ? $settings->button_border : '',
+			'border_hover_color'         => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 		);
 	} else {
 		$target   = '';
@@ -163,6 +166,13 @@ if ( 'button' == $settings->cta_type ) {
 			'font_family'                 => $settings->btn_font_family,
 			'transform'                   => $settings->btn_transform,
 			'letter_spacing'              => $settings->btn_letter_spacing,
+			'button_padding_dimension'    => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+			'button_border_style'         => ( isset( $settings->button_border_style ) ) ? $settings->button_border_style : '',
+			'button_border_width'         => ( isset( $settings->button_border_width ) ) ? $settings->button_border_width : '',
+			'button_border_radius'        => ( isset( $settings->button_border_radius ) ) ? $settings->button_border_radius : '',
+			'button_border_color'         => ( isset( $settings->button_border_color ) ) ? $settings->button_border_color : '',
+
+			'border_hover_color'          => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 		);
 	}
 	/* CSS Render Function */
@@ -171,7 +181,9 @@ if ( 'button' == $settings->cta_type ) {
 /* Render Separator */
 if ( 'block' == $settings->enable_separator ) {
 	FLBuilder::render_module_css(
-		'uabb-separator', $id, array(
+		'uabb-separator',
+		$id,
+		array(
 			'color'     => $settings->separator_color,
 			'height'    => ( '' !== trim( $settings->separator_height ) ) ? $settings->separator_height : '1',
 			'width'     => ( '' !== trim( $settings->separator_width ) ) ? $settings->separator_width : '100',
@@ -942,6 +954,9 @@ if ( 'icon' == $settings->image_type ) {
 			if ( isset( $settings->info_box_padding_dimension_right_medium ) ) {
 				echo ( '' != $settings->info_box_padding_dimension_right_medium ) ? 'padding-right:' . $settings->info_box_padding_dimension_right_medium . 'px;' : '';
 			}
+			if ( 'custom' == $settings->min_height_switch && '' != $settings->min_height_medium ) {
+				echo 'min-height:' . $settings->min_height_medium . 'px;';
+			}
 			?>
 		}
 	<?php if ( ! $version_bb_check ) { ?>
@@ -1044,7 +1059,7 @@ if ( 'icon' == $settings->image_type ) {
 			<?php
 }
 }
-?>
+	?>
 }
 
 	<?php echo '@media (max-width: ' . $global_settings->responsive_breakpoint . 'px) { '; ?>
@@ -1062,6 +1077,9 @@ if ( 'icon' == $settings->image_type ) {
 		}
 		if ( isset( $settings->info_box_padding_dimension_right_responsive ) ) {
 			echo ( '' != $settings->info_box_padding_dimension_right_responsive ) ? 'padding-right:' . $settings->info_box_padding_dimension_right_responsive . 'px;' : '';
+		}
+		if ( 'custom' == $settings->min_height_switch && '' != $settings->min_height_responsive ) {
+				echo 'min-height:' . $settings->min_height_responsive . 'px;';
 		}
 		?>
 	}
@@ -1207,7 +1225,7 @@ if ( 'icon' == $settings->image_type ) {
 			<?php
 }
 }
-?>
+	?>
 
 	<?php
 	if ( 'photo' == $settings->image_type && ! empty( $settings->responsive_img_size ) ) {

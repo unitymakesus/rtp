@@ -1162,6 +1162,9 @@ class UABBInfoBoxModule extends FLBuilderModule {
 					'button_typo'                => ( isset( $this->settings->button_font_typo ) ) ? $this->settings->button_font_typo : '',
 					'button_typo_medium'         => ( isset( $this->settings->button_font_typo_medium ) ) ? $this->settings->button_font_typo_medium : '',
 					'button_typo_responsive'     => ( isset( $this->settings->button_font_typo_responsive ) ) ? $this->settings->button_font_typo_responsive : '',
+					'button_padding_dimension'   => ( isset( $this->settings->button_padding_dimension ) ) ? $this->settings->button_padding_dimension : '',
+					'button_border'              => ( isset( $this->settings->button_border ) ) ? $this->settings->button_border : '',
+					'border_hover_color'         => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 				);
 			} else {
 				$target   = '';
@@ -1225,6 +1228,13 @@ class UABBInfoBoxModule extends FLBuilderModule {
 					'font_family'                 => $this->settings->btn_font_family,
 					'transform'                   => $this->settings->btn_transform,
 					'letter_spacing'              => $this->settings->btn_letter_spacing,
+					'button_padding_dimension'    => ( isset( $this->settings->button_padding_dimension ) ) ? $this->settings->button_padding_dimension : '',
+					'button_border_style'         => ( isset( $this->settings->button_border_style ) ) ? $this->settings->button_border_style : '',
+					'button_border_width'         => ( isset( $this->settings->button_border_width ) ) ? $this->settings->button_border_width : '',
+					'button_border_radius'        => ( isset( $this->settings->button_border_radius ) ) ? $this->settings->button_border_radius : '',
+					'button_border_color'         => ( isset( $this->settings->button_border_color ) ) ? $this->settings->button_border_color : '',
+
+					'border_hover_color'          => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 				);
 			}
 

@@ -60,7 +60,5 @@ jQuery(document).ready(function($){
 			});
 		<?php } ?>
 
-		//console.log( e );
-		//console.log( UABBModalPopup_<?php echo $id; ?> );
 	}
 });

@@ -630,6 +630,9 @@ final class UABBBuilderAdminSettings {
 			if ( isset( $_POST['uabb-social-facebook-app-id'] ) ) {
 				$uabb['uabb-social-facebook-app-id'] = sanitize_text_field( $_POST['uabb-social-facebook-app-id'] );
 			}
+			if ( isset( $_POST['uabb-social-facebook-app-secret'] ) ) {
+				$uabb['uabb-social-facebook-app-secret'] = sanitize_text_field( $_POST['uabb-social-facebook-app-secret'] );
+			}
 			if ( isset( $_POST['uabb-social-facebook-redirect-url'] ) ) {
 				$uabb['uabb-social-facebook-redirect-url'] = esc_url( $_POST['uabb-social-facebook-redirect-url'] );
 			}

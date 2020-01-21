@@ -193,13 +193,17 @@ FLBuilder::register_module(
 						'style'           => array(
 							'type'    => 'select',
 							'label'   => __( ' Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 							),
 							'toggle'  => array(
+								'default'     => array(
+									'fields' => array( 'bg_color', 'bg_hover_color' ),
+								),
 								'flat'        => array(
 									'fields' => array( 'bg_color', 'bg_hover_color' ),
 								),
@@ -223,7 +227,6 @@ FLBuilder::register_module(
 						'bg_color'        => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
-							'default'     => 'fafafa',
 							'show_reset'  => true,
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,

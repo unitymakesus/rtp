@@ -26,7 +26,7 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 	text-align: <?php echo $settings->content_alignment; ?>;
 	color: <?php echo ( false === strpos( $settings->content_color, 'rgb' ) ) ? '#' . $settings->content_color : $settings->content_color; ?>;
 	background: <?php echo ( false === strpos( $settings->content_bg_color, 'rgb' ) ) ? '#' . $settings->content_bg_color : $settings->content_bg_color; ?>;
-	<?php UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding' ); ?>;
+	<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding' ); ?>;
 }
 
 .fl-node-<?php echo $id; ?> .uabb-woo-categories li.product .woocommerce-loop-category__title,
@@ -83,7 +83,7 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 
 <?php if ( 'yes' === $settings->display_cat_desc ) { ?>
 .fl-node-<?php echo $id; ?> .uabb-woo-categories .uabb-product-cat-desc {
-	<?php UABB_Helper::uabb_dimention_css( $settings, 'desc_around_spacing', 'padding' ); ?>;
+	<?php echo UABB_Helper::uabb_dimention_css( $settings, 'desc_around_spacing', 'padding' ); ?>;
 	background: <?php echo ( false === strpos( $settings->desc_bg_color, 'rgb' ) ) ? '#' . $settings->desc_bg_color : $settings->desc_bg_color; ?>;
 }
 
@@ -217,7 +217,7 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 			}
 
 			.fl-node-<?php echo $id; ?> .uabb-woo-categories li.product .uabb-category__title-wrap {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'medium' ); ?>;
+				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'medium' ); ?>;
 			}
 
 			<?php if ( ! $version_bb_check ) { ?>
@@ -235,7 +235,7 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 
 			<?php if ( 'yes' === $settings->display_cat_desc ) { ?>
 			.fl-node-<?php echo $id; ?> .uabb-woo-categories .uabb-product-cat-desc {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'desc_around_spacing', 'padding', 'medium' ); ?>;
+				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'desc_around_spacing', 'padding', 'medium' ); ?>;
 			}
 			<?php } ?>
 		}
@@ -291,7 +291,7 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 			}
 
 			.fl-node-<?php echo $id; ?> .uabb-woo-categories li.product .uabb-category__title-wrap {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'responsive' ); ?>;
+				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'responsive' ); ?>;
 			}
 
 			<?php if ( ! $version_bb_check ) { ?>
@@ -309,7 +309,7 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 
 			<?php if ( 'yes' === $settings->display_cat_desc ) { ?>
 			.fl-node-<?php echo $id; ?> .uabb-woo-categories .uabb-product-cat-desc {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'desc_around_spacing', 'padding', 'responsive' ); ?>;
+				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'desc_around_spacing', 'padding', 'responsive' ); ?>;
 			}
 			<?php } ?>
 		}

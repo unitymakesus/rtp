@@ -32,14 +32,17 @@ if ( ! empty( $settings->bg_hover_color ) ) {
 	$bg_hover_color = ( false === strpos( $settings->bg_hover_color, 'rgb' ) ) ? '#' . $settings->bg_hover_color : $settings->bg_hover_color;
 } else {
 	$border_hover_color = $bg_color;
-
-	$bg_hover_color = $bg_color;
+	if ( 'default' !== $settings->style ) {
+		$bg_hover_color = $bg_color;
+	}
 }
 
 if ( ! empty( $settings->text_hover_color ) ) {
 	$text_hover_color = ( false === strpos( $settings->text_hover_color, 'rgb' ) ) ? '#' . $settings->text_hover_color : $settings->text_hover_color;
 } else {
-	$text_hover_color = '#ffffff';
+	if ( 'default' !== $settings->style ) {
+		$text_hover_color = '#ffffff';
+	}
 }
 
 ?>
@@ -66,8 +69,18 @@ if ( ! empty( $settings->text_hover_color ) ) {
 <?php } ?>
 
 .fl-node-<?php echo $id; ?> .uabb-woo-add-to-cart .button {
+	<?php
+	$is_padding_empty = UABB_Helper::uabb_dimention_css( $settings, 'btn_padding', 'padding' );
 
-	<?php UABB_Helper::uabb_dimention_css( $settings, 'btn_padding', 'padding' ); ?>;
+	if ( ! empty( $is_padding_empty ) ) {
+		echo $is_padding_empty;
+	} else {
+		if ( 'default' === $settings->style ) {
+			echo uabb_theme_padding_css_genreated( 'desktop' );
+		}
+	}
+
+	?>
 
 	color: <?php echo ( false === strpos( $settings->text_color, 'rgb' ) ) ? '#' . $settings->text_color : $settings->text_color; ?>;
 
@@ -105,6 +118,14 @@ if ( ! empty( $settings->text_hover_color ) ) {
 	}
 	<?php
 } else {
+	if ( 'default' === $settings->style ) {
+
+		$button_font_typo = uabb_theme_button_typography( $settings->button_font_typo );
+
+		$settings->button_font_typo            = ( array_key_exists( 'desktop', $button_font_typo ) ) ? $button_font_typo['desktop'] : $settings->button_font_typo;
+		$settings->button_font_typo_medium     = ( array_key_exists( 'tablet', $button_font_typo ) ) ? $button_font_typo['tablet'] : $settings->button_font_typo_medium;
+		$settings->button_font_typo_responsive = ( array_key_exists( 'mobile', $button_font_typo ) ) ? $button_font_typo['mobile'] : $settings->button_font_typo_responsive;
+	}
 	if ( class_exists( 'FLBuilderCSS' ) ) {
 		FLBuilderCSS::typography_field_rule(
 			array(
@@ -232,7 +253,32 @@ if ( 'transparent' == $settings->style ) {
 	<?php
 }
 ?>
+<?php
+if ( 'default' == $settings->style ) {
+	$settings->button_border = uabb_theme_border( $settings->button_border );
 
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		// Border - Settings.
+		FLBuilderCSS::border_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'button_border',
+				'selector'     => ".fl-node-$id .uabb-woo-add-to-cart .button",
+			)
+		);
+	}
+	?>
+	.fl-node-<?php echo $id; ?> .uabb-woo-add-to-cart .button:hover {
+		<?php echo ( '' != $settings->border_hover_color ) ? 'border-color:#' . $settings->border_hover_color . ';' : 'border-color:' . uabb_theme_border_hover_color( '' ) . ';'; ?>
+	}
+	.fl-node-<?php echo $id; ?> .uabb-woo-add-to-cart .button:hover {
+		background: <?php echo uabb_theme_default_button_bg_hover_color( $bg_hover_color ); ?>;
+		color: <?php echo uabb_theme_default_button_text_hover_color( $settings->text_hover_color ); ?>;
+	}
+	<?php
+
+}
+?>
 <?php /* Global Setting If started */ ?>
 <?php if ( $global_settings->responsive_enabled ) { ?> 
 
@@ -240,7 +286,17 @@ if ( 'transparent' == $settings->style ) {
 		@media ( max-width: <?php echo $global_settings->medium_breakpoint . 'px'; ?> ) {
 
 			.fl-node-<?php echo $id; ?> .uabb-woo-add-to-cart .button {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'btn_padding', 'padding', 'medium' ); ?>;
+				<?php
+				$is_padding_empty_medium = UABB_Helper::uabb_dimention_css( $settings, 'btn_padding', 'padding', 'medium' );
+
+				if ( ! empty( $is_padding_empty_medium ) ) {
+					echo $is_padding_empty_medium;
+				} else {
+					if ( 'default' === $settings->style ) {
+						echo uabb_theme_padding_css_genreated( 'tablet' );
+					}
+				}
+				?>
 			}
 
 			<?php if ( ! $version_bb_check ) { ?>
@@ -255,7 +311,17 @@ if ( 'transparent' == $settings->style ) {
 		@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
 
 			.fl-node-<?php echo $id; ?> .uabb-woo-add-to-cart .button {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'btn_padding', 'padding', 'responsive' ); ?>;
+				<?php
+				$is_padding_empty_responsive = UABB_Helper::uabb_dimention_css( $settings, 'btn_padding', 'padding', 'responsive' );
+
+				if ( ! empty( $is_padding_empty_responsive ) ) {
+					echo $is_padding_empty_responsive;
+				} else {
+					if ( 'default' === $settings->style ) {
+						echo uabb_theme_padding_css_genreated( 'mobile' );
+					}
+				}
+				?>
 			}
 
 			<?php if ( ! $version_bb_check ) { ?>

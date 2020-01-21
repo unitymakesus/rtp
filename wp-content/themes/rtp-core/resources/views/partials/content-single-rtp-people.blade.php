@@ -32,7 +32,10 @@
                   $phone_raw = preg_replace('/[\.-]/m', '', $phone);
                 @endphp
                 <div class="contact">
-                  <span class="icon">@svg('icon-phone')</span>
+                  <span class="icon">
+                    <span class="screen-reader-text">Phone Number:</span>
+                    @svg('icon-phone')
+                  </span>
                   <a itemprop="telephone" target="_blank" rel="noopener" href="tel:+1{{ $phone_raw }}">{{ $phone }}</a>
                 </div>
               @endif

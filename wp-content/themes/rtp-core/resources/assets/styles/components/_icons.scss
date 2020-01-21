@@ -7,12 +7,7 @@
     padding: 0;
     display: inline-block;
     float: none;
-    background: $color-grey-light;
     margin-right: 10px;
-
-    &:hover, &:focus, &:active {
-      background: $color-white;
-    }
 
     a {
       display: block;
@@ -23,8 +18,12 @@
       overflow: hidden;
       text-align: left;
       text-indent: -100em;
-      // background: $color-teal;
-      // border: 2px solid $color-teal;
+      background: $color-grey-light;
+      transition: 0.3s background-color ease-in-out;
+
+      &:hover, &:focus {
+        background: $color-white;
+      }
 
       &::before {
         content: '';
@@ -37,13 +36,6 @@
         background-size: contain;
         background-position: center;
         transition: all 0.3s;
-      }
-
-      &:hover, &:active, &:focus {
-        // background: lighten($color-teal, 10%);
-        // border-color: $color-teal;
-
-        @extend .z-depth-2;
       }
     }
 
@@ -75,10 +67,12 @@
 
 .footer-social-left .menu {
   li {
-    background: $color-grey-dark;
+    a {
+      background: $color-grey-dark;
 
-    &:hover, &:focus, &:active {
-      background: $color-slate;
+      &:hover, &:focus, &:active {
+        background: $color-slate;
+      }
     }
 
     &.icon-facebook a::before {

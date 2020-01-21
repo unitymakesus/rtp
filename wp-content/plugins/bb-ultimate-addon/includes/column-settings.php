@@ -550,20 +550,20 @@ function uabb_output_before_module( $modules, $col_id ) {
 
 			window.particle_js_loaded = 0;
 
-			$.cachedScript = function( url, options ) {
+			jQuery.cachedScript = function( url, options ) {
 				// Allow user to set any option except for dataType, cache, and url.
-				options = $.extend( options || {}, {
+				options = jQuery.extend( options || {}, {
 					dataType: "script",
 					cache: true,
 					url: url
 				});
 
 				// Return the jqXHR object so we can chain callbacks.
-				return $.ajax( options );
+				return jQuery.ajax( options );
 			};
-			if ( $( '.uabb-col-particles-background' ).length ) {
+			if ( jQuery( '.uabb-col-particles-background' ).length ) {
 
-				$.cachedScript( url ).done( function( script, textStatus ) {					
+				jQuery.cachedScript( url ).done( function( script, textStatus ) {
 					window.particle_js_loaded = 1;
 					particles_col_background_script();
 

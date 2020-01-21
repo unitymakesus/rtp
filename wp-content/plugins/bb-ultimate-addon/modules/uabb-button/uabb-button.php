@@ -262,9 +262,14 @@ class UABBButtonModule extends FLBuilderModule {
 	public function get_classname() {
 		$classname = 'uabb-button-wrap uabb-creative-button-wrap';
 
-		if ( ! empty( $this->settings->width ) ) {
+		if ( ! empty( $this->settings->width ) && 'default' !== $this->settings->style ) {
 			$classname .= ' uabb-button-width-' . $this->settings->width;
 			$classname .= ' uabb-creative-button-width-' . $this->settings->width;
+		} else {
+			if ( 'default' === $this->settings->style ) {
+				$classname .= ' uabb-button-width-auto';
+				$classname .= ' uabb-creative-button-width-auto';
+			}
 		}
 		if ( ! UABB_Compatibility::Check_BB_Version() ) {
 			if ( ! empty( $this->settings->align ) ) {

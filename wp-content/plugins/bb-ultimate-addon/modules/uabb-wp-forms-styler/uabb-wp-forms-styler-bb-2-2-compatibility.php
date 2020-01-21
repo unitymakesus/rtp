@@ -522,21 +522,25 @@ FLBuilder::register_module(
 						'btn_style'        => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
 							),
 							'toggle'  => array(
 								'flat'        => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'transparent' => array(
-									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'gradient'    => array(
-									'fields' => array( 'btn_gradient' ),
+									'fields' => array( 'btn_gradient', 'btn_width', 'btn_border_radius' ),
+								),
+								'default'     => array(
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_padding', 'button_border', 'border_hover_color', 'btn_background_color' ),
 								),
 							),
 						),
@@ -587,7 +591,7 @@ FLBuilder::register_module(
 						'btn_background_color'       => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -595,7 +599,7 @@ FLBuilder::register_module(
 						'btn_background_hover_color' => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Hover Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -641,6 +645,30 @@ FLBuilder::register_module(
 								'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
 								'property' => 'padding',
 								'unit'     => 'px',
+							),
+						),
+						'button_border'          => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'     => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'btn_custom_width'       => array(

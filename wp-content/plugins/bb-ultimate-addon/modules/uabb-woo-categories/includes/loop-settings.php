@@ -115,10 +115,11 @@ do_action( 'uabb_woo_categories_products_loop_settings_before_form', $settings )
 					'label'   => __( 'Order By', 'uabb' ),
 					'default' => 'name',
 					'options' => array(
-						'name'  => __( 'Name', 'uabb' ),
-						'slug'  => __( 'Slug', 'uabb' ),
-						'count' => __( 'Count', 'uabb' ),
-						'desc'  => __( 'Description', 'uabb' ),
+						'name'        => __( 'Name', 'uabb' ),
+						'slug'        => __( 'Slug', 'uabb' ),
+						'count'       => __( 'Count', 'uabb' ),
+						'description' => __( 'Description', 'uabb' ),
+						'menu_order'  => __( 'Menu Order', 'uabb' ),
 					),
 				), $settings
 			);

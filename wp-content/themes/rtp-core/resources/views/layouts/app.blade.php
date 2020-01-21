@@ -1,7 +1,7 @@
 <!doctype html>
 @php
-  $text_size = $_COOKIE['data_text_size'];
-  $contrast = $_COOKIE['data_contrast'];
+  $text_size = $_COOKIE['data_text_size'] ?? '';
+  $contrast = $_COOKIE['data_contrast'] ?? '';
 @endphp
 <html {!! language_attributes() !!} data-text-size="{{ $text_size }}" data-contrast="{{ $contrast }}">
   @include('partials.head')
@@ -9,7 +9,7 @@
     @if (!is_user_logged_in())
       @include('partials.gtm-body')
     @endif
-    <a href="#content" class="screen-reader-text">Skip to content</a>
+    <a href="#content" class="screen-reader-text btn">Skip to content</a>
     <!--[if IE]>
       <div class="alert alert-warning">
         {!! __('You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.', 'sage') !!}

@@ -456,8 +456,9 @@ FLBuilder::register_module(
 						'btn_style'        => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'	  => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
@@ -465,16 +466,19 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'flat'        => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'transparent' => array(
-									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'gradient'    => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'3d'          => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
+								),
+								'default'     => array(
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'button_padding_dimension', 'button_border', 'border_hover_color' ),
 								),
 							),
 						),
@@ -519,7 +523,7 @@ FLBuilder::register_module(
 						'btn_background_color'       => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -533,7 +537,7 @@ FLBuilder::register_module(
 						'btn_background_hover_color' => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Hover Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -590,6 +594,44 @@ FLBuilder::register_module(
 								'custom' => array(
 									'fields' => array( 'btn_align', 'btn_mob_align', 'btn_custom_width', 'btn_custom_height', 'btn_padding_top_bottom' ),
 								),
+							),
+						),
+						'button_padding_dimension' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-cf7-style input[type=submit]',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'button_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-cf7-style input[type=submit]',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'   => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'btn_custom_width'       => array(
