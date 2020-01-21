@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBWooAddToCartModule', array(
+	'UABBWooAddToCartModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(

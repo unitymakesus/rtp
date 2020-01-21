@@ -572,10 +572,10 @@ class UABBContactForm7Module extends FLBuilderModule {
 								'bottom' => $settings->input_border_width_dimension_bottom_medium,
 								'left'   => $settings->input_border_width_dimension_left_medium,
 							);
-						unset( $settings->input_border_width_dimension_top_medium );
-						unset( $settings->input_border_width_dimension_right_medium );
-						unset( $settings->input_border_width_dimension_bottom_medium );
-						unset( $settings->input_border_width_dimension_left_medium );
+							unset( $settings->input_border_width_dimension_top_medium );
+							unset( $settings->input_border_width_dimension_right_medium );
+							unset( $settings->input_border_width_dimension_bottom_medium );
+							unset( $settings->input_border_width_dimension_left_medium );
 					}
 
 					if ( isset( $settings->input_border_width_dimension_top_responsive ) && isset( $settings->input_border_width_dimension_right_responsive ) && isset( $settings->input_border_width_dimension_bottom_responsive ) && isset( $settings->input_border_width_dimension_left_responsive ) ) {
@@ -585,10 +585,10 @@ class UABBContactForm7Module extends FLBuilderModule {
 								'bottom' => $settings->input_border_width_dimension_bottom_responsive,
 								'left'   => $settings->input_border_width_dimension_left_responsive,
 							);
-						unset( $settings->input_border_width_dimension_top_responsive );
-						unset( $settings->input_border_width_dimension_right_responsive );
-						unset( $settings->input_border_width_dimension_bottom_responsive );
-						unset( $settings->input_border_width_dimension_left_responsive );
+							unset( $settings->input_border_width_dimension_top_responsive );
+							unset( $settings->input_border_width_dimension_right_responsive );
+							unset( $settings->input_border_width_dimension_bottom_responsive );
+							unset( $settings->input_border_width_dimension_left_responsive );
 					}
 
 					unset( $settings->input_border_color );

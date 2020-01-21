@@ -205,21 +205,23 @@ class UABBPhotoModule extends FLBuilderModule {
 	public function get_classes() {
 		$classes = array( 'uabb-photo-img' );
 
-		if ( ! empty( $this->settings->photo ) ) {
+		if ( 'library' === $this->settings->photo_source ) {
+			if ( ! empty( $this->settings->photo ) ) {
 
-			$data = self::get_data();
+				$data = self::get_data();
 
-			if ( is_object( $data ) ) {
+				if ( is_object( $data ) ) {
 
-				$classes[] = 'wp-image-' . $data->id;
+					$classes[] = 'wp-image-' . $data->id;
 
-				if ( isset( $data->sizes ) ) {
+					if ( isset( $data->sizes ) ) {
 
-					foreach ( $data->sizes as $key => $size ) {
+						foreach ( $data->sizes as $key => $size ) {
 
-						if ( $size->url == $this->settings->photo_src ) {
-							$classes[] = 'size-' . $key;
-							break;
+							if ( $size->url === $this->settings->photo_src ) {
+								$classes[] = 'size-' . $key;
+								break;
+							}
 						}
 					}
 				}

@@ -77,7 +77,7 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '30',
+				'timeout' => '5',
 			)
 		);
 
@@ -87,7 +87,7 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '30',
+					'timeout' => '5',
 				)
 			);
 		}

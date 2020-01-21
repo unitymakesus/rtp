@@ -296,7 +296,26 @@ if ( isset( $settings->btn_icon ) && isset( $settings->btn_icon_position ) ) {
 	<?php
 }
 ?>
+<?php
+if ( 'default' === $settings->btn_style ) {
 
+	$settings->button_border = uabb_theme_border( $settings->button_border );
+
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		// Border - Settings.
+		FLBuilderCSS::border_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'button_border',
+				'selector'     => ".fl-builder-content .fl-node-$id .uabb-module-content.uabb-contact-form .uabb-contact-form-submit",
+			)
+		);
+	}
+	?>
+	.fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit:hover {
+		<?php echo ( '' != $settings->border_hover_color ) ? 'border-color:#' . $settings->border_hover_color . ';' : 'border-color:' . uabb_theme_border_hover_color( '' ) . ';'; ?>
+	}
+<?php } ?>
 .fl-node-<?php echo $id; ?> .uabb-contact-form .uabb-contact-form-submit i,
 .fl-node-<?php echo $id; ?> .uabb-contact-form .uabb-contact-form-submit span {
 	display: inline-block;
@@ -314,8 +333,9 @@ if ( 'full' != $settings->btn_align ) {
 	color: <?php echo uabb_theme_text_color( $settings->btn_text_color ); ?>;
 }
 .fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit {
-	border-radius: <?php echo  ( '' != $settings->btn_radius ) ? $settings->btn_radius : '4'; ?>px;
-
+	<?php if ( 'default' !== $settings->btn_style ) { ?>
+		border-radius: <?php echo  ( '' != $settings->btn_radius ) ? $settings->btn_radius : '4'; ?>px;
+	<?php } ?>
 	<?php if ( 'flat' == $settings->btn_style ) { ?>
 		background: <?php echo uabb_theme_base_color( $settings->btn_background_color ); ?>;
 	<?php } elseif ( 'transparent' == $settings->btn_style ) { ?>
@@ -343,7 +363,9 @@ if ( 'full' != $settings->btn_align ) {
 	<?php if ( 'full' == $settings->btn_align ) { ?>
 		width:100%;
 	<?php } ?>
-	padding: <?php echo uabb_theme_button_padding( '' ); ?>;
+	<?php
+	echo uabb_theme_padding_css_genreated( 'desktop' );
+	?>
 	<?php
 	echo ( '' != $settings->btn_vertical_padding ) ? 'padding-top: ' . $settings->btn_vertical_padding . 'px;padding-bottom: ' . $settings->btn_vertical_padding . 'px;' : '';
 	echo ( '' != $settings->btn_horizontal_padding ) ? 'padding-left: ' . $settings->btn_horizontal_padding . 'px;padding-right: ' . $settings->btn_horizontal_padding . 'px;' : '';
@@ -484,10 +506,10 @@ if ( 'full' != $settings->btn_align ) {
 				<?php if ( uabb_theme_button_font_size( '' ) != '' ) { ?>
 					font-size: <?php echo uabb_theme_button_font_size( '' ); ?>;
 				<?php } ?>
-		<?php
+				<?php
 }
 } elseif ( isset( $settings->btn_font_size_unit ) && '' == $settings->btn_font_size_unit && isset( $settings->btn_font_size['desktop'] ) && '' != $settings->btn_font_size['desktop'] ) {
-	?>
+			?>
 			<?php if ( isset( $settings->btn_font_size_unit ) && '' != $settings->btn_font_size_unit ) { ?>
 				font-size: <?php echo $settings->btn_font_size['desktop']; ?>px;
 				line-height: <?php echo $settings->btn_font_size['desktop'] + 2; ?>px;
@@ -520,6 +542,14 @@ if ( 'full' != $settings->btn_align ) {
 	}
 	<?php
 } else {
+	if ( 'default' === $settings->btn_style ) {
+
+		$button_typo = uabb_theme_button_typography( $settings->button_typo );
+
+		$settings->button_typo            = ( array_key_exists( 'desktop', $button_typo ) ) ? $button_typo['desktop'] : $settings->button_typo;
+		$settings->button_typo_medium     = ( array_key_exists( 'tablet', $button_typo ) ) ? $button_typo['tablet'] : $settings->button_typo_medium;
+		$settings->button_typo_responsive = ( array_key_exists( 'mobile', $button_typo ) ) ? $button_typo['mobile'] : $settings->button_typo_responsive;
+	}
 	if ( class_exists( 'FLBuilderCSS' ) ) {
 		FLBuilderCSS::typography_field_rule(
 			array(
@@ -574,13 +604,13 @@ if ( 'full' != $settings->btn_align ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'label_typo',
-				'selector'     => ".fl-node-$id .uabb-contact-form label",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'label_typo',
+					'selector'     => ".fl-node-$id .uabb-contact-form label",
+				)
+			);
 	}
 }
 }
@@ -623,13 +653,13 @@ if ( 'full' != $settings->btn_align ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'checkbox_typo',
-				'selector'     => ".fl-node-$id .uabb-contact-form .uabb-terms-label",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'checkbox_typo',
+					'selector'     => ".fl-node-$id .uabb-contact-form .uabb-terms-label",
+				)
+			);
 	}
 }
 }
@@ -671,13 +701,13 @@ if ( 'full' != $settings->btn_align ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'terms_typo',
-				'selector'     => ".fl-node-$id .uabb-contact-form .uabb-terms-text",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'terms_typo',
+					'selector'     => ".fl-node-$id .uabb-contact-form .uabb-terms-text",
+				)
+			);
 	}
 }
 }
@@ -836,7 +866,7 @@ $checked_width = $font_size - intval( $settings->checkbox_border_width );
 				<?php
 }
 }
-?>
+		?>
 
 		.fl-node-<?php echo $id; ?> .uabb-contact-form {
 			<?php
@@ -860,6 +890,12 @@ $checked_width = $font_size - intval( $settings->checkbox_border_width );
 				;
 			<?php } ?>
 		}
+		<?php if ( empty( $settings->btn_vertical_padding ) && empty( $settings->btn_horizontal_padding ) && 'default' === $settings->btn_style ) { ?>
+			.fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit {
+				<?php echo uabb_theme_padding_css_genreated( 'tablet' ); ?>
+			}
+		<?php } ?>
+
 	}
 
 	@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
@@ -960,7 +996,7 @@ $checked_width = $font_size - intval( $settings->checkbox_border_width );
 				<?php
 }
 }
-?>
+		?>
 
 		.fl-node-<?php echo $id; ?> .uabb-contact-form {
 			<?php
@@ -978,6 +1014,11 @@ $checked_width = $font_size - intval( $settings->checkbox_border_width );
 			}
 			?>
 		}
+		<?php if ( empty( $settings->btn_vertical_padding ) && empty( $settings->btn_horizontal_padding ) && 'default' === $settings->btn_style ) { ?>
+			.fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit {
+				<?php echo uabb_theme_padding_css_genreated( 'mobile' ); ?>
+			}
+		<?php } ?>
 	}
 	<?php
 }

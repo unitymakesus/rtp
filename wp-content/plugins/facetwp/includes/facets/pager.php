@@ -28,9 +28,9 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
     function render_numbers( $facet ) {
         $inner_size = (int) $facet['inner_size'];
-        $dots_label = $facet['dots_label'];
-        $prev_label = $facet['prev_label'];
-        $next_label = $facet['next_label'];
+        $dots_label = facetwp_i18n( $facet['dots_label'] );
+        $prev_label = facetwp_i18n( $facet['prev_label'] );
+        $next_label = facetwp_i18n( $facet['next_label'] );
 
         $output = '';
         $page = $this->pager_args['page'];
@@ -95,15 +95,15 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
 
     function render_counts( $facet ) {
-        $text_singular = $facet['count_text_singular'];
-        $text_plural = $facet['count_text_plural'];
-        $text_none = $facet['count_text_none'];
+        $text_singular = facetwp_i18n( $facet['count_text_singular'] );
+        $text_plural = facetwp_i18n( $facet['count_text_plural'] );
+        $text_none = facetwp_i18n( $facet['count_text_none'] );
 
         $page = $this->pager_args['page'];
         $per_page = $this->pager_args['per_page'];
         $total_rows = $this->pager_args['total_rows'];
 
-        if ( $per_page < $total_rows ) {
+        if ( 1 < $total_rows ) {
             $lower = ( 1 + ( ( $page - 1 ) * $per_page ) );
             $upper = ( $page * $per_page );
             $upper = ( $total_rows < $upper ) ? $total_rows : $upper;
@@ -122,8 +122,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
 
     function render_load_more( $facet ) {
-        $text = $facet['load_more_text'];
-        $loading_text = $facet['loading_text'];
+        $text = facetwp_i18n( $facet['load_more_text'] );
+        $loading_text = facetwp_i18n( $facet['loading_text'] );
 
         $output = '<button class="facetwp-load-more" data-loading="' . esc_attr( $loading_text ) . '">' . esc_attr( $text ) . '</button>';
         return $output;

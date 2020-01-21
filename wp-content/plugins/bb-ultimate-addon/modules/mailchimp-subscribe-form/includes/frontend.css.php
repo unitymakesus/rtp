@@ -58,6 +58,13 @@ if ( ! $version_bb_check ) {
 		'line_height_unit'            => $settings->btn_line_height_unit,
 		'transform'                   => $settings->btn_transform,
 		'letter_spacing'              => $settings->btn_letter_spacing,
+		'button_padding_dimension'    => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+		'button_border_style'         => ( isset( $settings->button_border_style ) ) ? $settings->button_border_style : '',
+		'button_border_width'         => ( isset( $settings->button_border_width ) ) ? $settings->button_border_width : '',
+		'button_border_radius'        => ( isset( $settings->button_border_radius ) ) ? $settings->button_border_radius : '',
+		'button_border_color'         => ( isset( $settings->button_border_color ) ) ? $settings->button_border_color : '',
+
+		'border_hover_color'          => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 	);
 } else {
 	$button_typo_array = array(
@@ -87,6 +94,9 @@ if ( ! $version_bb_check ) {
 		'button_typo'                => ( isset( $settings->button_font_typo ) ) ? $settings->button_font_typo : '',
 		'button_typo_medium'         => ( isset( $settings->button_font_typo_medium ) ) ? $settings->button_font_typo_medium : '',
 		'button_typo_responsive'     => ( isset( $settings->button_font_typo_responsive ) ) ? $settings->button_font_typo_responsive : '',
+		'button_padding_dimension'   => ( isset( $settings->button_padding_dimension ) ) ? $settings->button_padding_dimension : '',
+		'button_border'              => ( isset( $settings->button_border ) ) ? $settings->button_border : '',
+		'border_hover_color'         => ( isset( $settings->border_hover_color ) ) ? $settings->border_hover_color : '',
 	);
 }
 
@@ -422,13 +432,13 @@ if ( '' != $settings->btn_margin_top ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'checkbox_font_typo',
-				'selector'     => ".fl-node-$id .uabb-subscribe-form .uabb-terms-label",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'checkbox_font_typo',
+					'selector'     => ".fl-node-$id .uabb-subscribe-form .uabb-terms-label",
+				)
+			);
 	}
 }
 }
@@ -468,13 +478,13 @@ if ( '' != $settings->btn_margin_top ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'terms_font_typo',
-				'selector'     => ".fl-node-$id .uabb-subscribe-form .uabb-terms-text",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'terms_font_typo',
+					'selector'     => ".fl-node-$id .uabb-subscribe-form .uabb-terms-text",
+				)
+			);
 	}
 }
 }
@@ -777,15 +787,15 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 } else {
 	if ( isset( $settings->input_font_typo_medium['font_size']['length'] ) && '' != $settings->input_font_typo_medium['font_size']['length'] ) :
 		if ( is_numeric( $settings->input_font_typo_medium['font_size']['length'] ) ) {
-			?>
+						?>
 						-webkit-transform: translateY(-<?php echo $settings->input_font_typo_medium['font_size']['length'] + 10; ?>px);
 						-ms-transform: translateY(-<?php echo $settings->input_font_typo_medium['font_size']['length'] + 10; ?>px);
 						transform: translateY(-<?php echo $settings->input_font_typo_medium['font_size']['length'] + 10; ?>px);
-					<?php
+						<?php
 		}
-	endif;
+				endif;
 }
-?>
+			?>
 		}
 
 		<?php if ( 'inline' == $settings->layout && 'small_medium' == $settings->responsive ) : ?>
@@ -982,15 +992,15 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 } else {
 	if ( isset( $settings->input_font_typo_responsive['font_size']['length'] ) && '' != $settings->input_font_typo_responsive['font_size']['length'] ) :
 		if ( is_numeric( $settings->input_font_typo_responsive['font_size']['length'] ) ) {
-			?>
+						?>
 						-webkit-transform: translateY(-<?php echo  $settings->input_font_typo_responsive['font_size']['length'] + 10; ?>px);
 						-ms-transform: translateY(-<?php echo  $settings->input_font_typo_responsive['font_size']['length'] + 10; ?>px);
 						transform: translateY(-<?php echo  $settings->input_font_typo_responsive['font_size']['length'] + 10; ?>px);
-					<?php
+						<?php
 		}
-	endif;
+				endif;
 }
-?>
+			?>
 		}
 
 		<?php if ( 'inline' == $settings->layout && 'small' == $settings->responsive ) : ?>

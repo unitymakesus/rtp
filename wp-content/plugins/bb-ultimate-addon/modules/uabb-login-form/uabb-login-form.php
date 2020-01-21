@@ -19,6 +19,7 @@ class UABBLoginForm extends FLBuilderModule {
 	 * @method __construct
 	 */
 	public function __construct() {
+
 		parent::__construct(
 			array(
 				'name'            => __( 'Login Form', 'uabb' ),
@@ -112,11 +113,11 @@ class UABBLoginForm extends FLBuilderModule {
 		$username        = $username[0];
 		$user_data       = get_user_by( 'email', $email );
 		$password_length = apply_filters( 'uabb_lf_password_length', 12 );
-		$access_token    = filter_input( INPUT_POST, 'access_token', FILTER_SANITIZE_STRING );
+		$id_token        = filter_input( INPUT_POST, 'security_string', FILTER_SANITIZE_STRING );
 
-		$rest_data = $this->get_user_profile_info_google( $access_token );
+		$rest_data = $this->get_user_profile_info_google( $id_token, $uabb_social_google_client_id );
 
-		if ( empty( $rest_data ) || $email !== $rest_data->email || ( $uabb_social_google_client_id !== $rest_data->aud ) ) {
+		if ( empty( $rest_data ) || $email !== $rest_data['email'] || ( $uabb_social_google_client_id !== $rest_data['aud'] ) ) {
 
 			wp_send_json_error(
 				array(
@@ -145,15 +146,22 @@ class UABBLoginForm extends FLBuilderModule {
 			$google_array = array(
 				'user_login' => $username,
 				'user_pass'  => $password,
-				'user_email' => $email,
+				'user_email' => $rest_data['email'],
 				'first_name' => isset( $first_name ) ? $first_name : $username,
 			);
 			wp_insert_user( $google_array );
-			$user_data = get_user_by( 'email', $email );
+			$user_data = get_user_by( 'email', $rest_data['email'] );
 
 			if ( $user_data ) {
-				$user_ID    = $user_data->ID;
-				$user_email = $user_data->user_email;
+				$user_ID         = $user_data->ID;
+				$user_email      = $user_data->user_email;
+				$user_meta_array = array(
+
+					'email'      => $user_email,
+					'login_from' => 'google',
+				);
+
+				update_user_meta( $user_ID, 'uabb_login_form', $user_meta_array );
 
 				if ( wp_check_password( $password, $user_data->user_pass, $user_data->ID ) ) {
 					wp_set_auth_cookie( $user_ID );
@@ -175,22 +183,33 @@ class UABBLoginForm extends FLBuilderModule {
 
 		check_ajax_referer( 'uabb-lf-nonce', 'nonce' );
 
-		$username        = sanitize_user( $_POST['name'] );
-		$email           = sanitize_email( $_POST['email'] );
-		$first_name      = sanitize_user( $_POST['first_name'] );
-		$last_name       = sanitize_user( $_POST['last_name'] );
-		$username        = explode( '@', $email, 2 );
-		$username        = $username[0];
-		$user_data       = get_user_by( 'email', $email );
-		$password_length = apply_filters( 'uabb_lf_password_length', 12 );
+		$uabb_social_facebook_app_id     = '';
+		$uabb_social_facebook_app_secret = '';
+
+		$uabb_setting_options = UABB_Init::$uabb_options['fl_builder_uabb'];
+
+		if ( is_array( $uabb_setting_options ) ) {
+
+			$uabb_social_facebook_app_id     = ( array_key_exists( 'uabb-social-facebook-app-id', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-id'] : '';
+			$uabb_social_facebook_app_secret = ( array_key_exists( 'uabb-social-facebook-app-secret', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-secret'] : '';
+		}
+
+		$username   = sanitize_user( $_POST['name'] );
+		$first_name = sanitize_user( $_POST['first_name'] );
+		$last_name  = sanitize_user( $_POST['last_name'] );
+		$email      = ! empty( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
 
 		$user_id_js = filter_input( INPUT_POST, 'userID', FILTER_SANITIZE_STRING );
 
-		$access_token = filter_input( INPUT_POST, 'access_token', FILTER_SANITIZE_STRING );
+		$password_length = apply_filters( 'uabb_lf_password_length', 12 );
 
-		$rest_data = $this->get_user_profile_info_facebook( $access_token );
+		$access_token = filter_input( INPUT_POST, 'security_string', FILTER_SANITIZE_STRING );
 
-		if ( empty( $user_id_js ) || empty( $rest_data ) || ( $user_id_js !== $rest_data->id ) ) {
+		$rest_data = $this->get_user_profile_info_facebook( $access_token, $uabb_social_facebook_app_id, $uabb_social_facebook_app_secret );
+
+		$fb_data = $rest_data['data'];
+
+		if ( empty( $user_id_js ) || empty( $rest_data ) || empty( $uabb_social_facebook_app_id ) || ( $user_id_js !== $fb_data['user_id'] ) || ( $fb_data['app_id'] !== $uabb_social_facebook_app_id ) || ( false === $fb_data['is_valid'] ) || ( ! empty( $email ) && ( $email !== $fb_data['email'] ) ) ) {
 
 			wp_send_json_error(
 				array(
@@ -198,6 +217,16 @@ class UABBLoginForm extends FLBuilderModule {
 				)
 			);
 		}
+		if ( empty( $email ) && empty( $fb_data['email'] ) ) {
+
+			$fb_data['email'] = $fb_data['user_id'] . '@facebook.com';
+		}
+
+		$username = explode( '@', $fb_data['email'], 2 );
+		$username = $username[0];
+
+		$user_data = get_user_by( 'email', $fb_data['email'] );
+
 		if ( ! empty( $user_data ) && false !== $user_data ) {
 
 			$user_ID    = $user_data->ID;
@@ -218,17 +247,26 @@ class UABBLoginForm extends FLBuilderModule {
 			$facebook_array = array(
 				'user_login' => $username,
 				'user_pass'  => $password,
-				'user_email' => $email,
+				'user_email' => $fb_data['email'],
 				'first_name' => isset( $first_name ) ? $first_name : $username,
 				'last_name'  => isset( $last_name ) ? $last_name : '',
 			);
 
 			wp_insert_user( $facebook_array );
-			$user_data = get_user_by( 'email', $email );
+			$user_data = get_user_by( 'email', $fb_data['email'] );
 
 			if ( $user_data ) {
+
 				$user_ID    = $user_data->ID;
 				$user_email = $user_data->user_email;
+
+				$user_meta_array = array(
+
+					'email'      => $js_email,
+					'login_from' => 'facebook',
+				);
+
+				update_user_meta( $user_ID, 'uabb_login_form', $user_meta_array );
 
 				if ( wp_check_password( $password, $user_data->user_pass, $user_data->ID ) ) {
 					wp_set_auth_cookie( $user_ID );
@@ -290,40 +328,88 @@ class UABBLoginForm extends FLBuilderModule {
 	 *
 	 * @since 1.24.1
 	 * @method get_user_profile_info_google
-	 * @param string $access_token Access Token.
+	 * @param string $id_token ID Token.
+	 * @param string $uabb_social_google_client_id CLient ID.
+	 * @return array $user_data User Data.
 	 */
-	public function get_user_profile_info_google( $access_token ) {
+	public function get_user_profile_info_google( $id_token, $uabb_social_google_client_id ) {
 
-		$url      = add_query_arg( 'access_token', $access_token, 'https://www.googleapis.com/oauth2/v3/tokeninfo' );
-		$response = wp_remote_get( $url );
-		if ( ! is_wp_error( $response ) ) {
+		require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-login-form/includes/vendor/autoload.php';
 
-			$rest_data = wp_remote_retrieve_body( $response );
-			$rest_data = json_decode( $rest_data );
-			return $rest_data;
+		// Get $id_token via HTTPS POST.
+		$client = new Google_Client( [ 'client_id' => $uabb_social_google_client_id ] );  //PHPCS:ignore:PHPCompatibility.PHP.ShortArray.Found
+
+		$user_data = $client->verifyIdToken( $id_token );
+
+		if ( $user_data ) {
+
+			return $user_data;
+		} else {
+
+			wp_send_json_error(
+				array(
+					'error' => __( 'Unauthorized access', 'uabb' ),
+				)
+			);
 		}
 
-		wp_send_json_error(
-			array(
-				'error' => __( 'Unauthorized access', 'uabb' ),
-			)
-		);
 	}
 	/**
 	 * Function that authenticates Facebook user.
 	 *
 	 * @since 1.24.1
 	 * @method get_user_profile_info_facebook
-	 * @param string $access_token Access Token.
+	 * @param string $input_token Access Token.
+	 * @param string $uabb_social_facebook_app_id App ID.
+	 * @param string $uabb_social_facebook_app_secret App Secret.
 	 */
-	public function get_user_profile_info_facebook( $access_token ) {
-		$url      = add_query_arg( 'access_token', $access_token, 'https://graph.facebook.com/me' );
+	public function get_user_profile_info_facebook( $input_token, $uabb_social_facebook_app_id, $uabb_social_facebook_app_secret ) {
+		$access_token = '';
+
+		$url = add_query_arg(
+			array(
+				'client_id'     => $uabb_social_facebook_app_id,
+				'client_secret' => $uabb_social_facebook_app_secret,
+				'grant_type'    => 'client_credentials',
+			), 'https://graph.facebook.com/oauth/access_token'
+		);
+
 		$response = wp_remote_get( $url );
+
 		if ( ! is_wp_error( $response ) ) {
 
-			$rest_data = wp_remote_retrieve_body( $response );
-			$rest_data = json_decode( $rest_data );
-			return $rest_data;
+			$rest_data    = wp_remote_retrieve_body( $response );
+			$rest_data    = json_decode( $rest_data );
+			$access_token = $rest_data->access_token;
+
+		}
+
+		$finalurl = add_query_arg(
+			array(
+				'input_token'  => $input_token,
+				'access_token' => $access_token,
+			), 'https://graph.facebook.com/debug_token'
+		);
+
+		$finalresponse = wp_remote_get( $finalurl );
+
+		if ( ! is_wp_error( $finalresponse ) && ! is_wp_error( $response ) ) {
+
+			$rest_datafinal                  = wp_remote_retrieve_body( $finalresponse );
+			$rest_datafinal                  = json_decode( $rest_datafinal, true );
+			$user_data_url                   = 'https://graph.facebook.com/' . $rest_datafinal['data']['user_id'];
+			$final_user_data_url             = add_query_arg(
+				array(
+					'fields'       => 'email',
+					'access_token' => $input_token,
+				), $user_data_url
+			);
+			$final_user_data_response        = wp_remote_get( $final_user_data_url );
+			$final_user_data_response        = wp_remote_retrieve_body( $final_user_data_response );
+			$final_user_data_response        = json_decode( $final_user_data_response );
+			$rest_datafinal['data']['email'] = $final_user_data_response->email;
+
+			return $rest_datafinal;
 		}
 
 		wp_send_json_error(
@@ -392,6 +478,7 @@ class UABBLoginForm extends FLBuilderModule {
 			$uabb_social_facebook_app_id       = ( array_key_exists( 'uabb-social-facebook-app-id', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-id'] : '';
 			$uabb_social_facebook_redirect_url = ( array_key_exists( 'uabb-social-facebook-redirect-url', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-redirect-url'] : '';
 			$uabb_social_google_client_id      = ( array_key_exists( 'uabb-social-google-client-id', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-google-client-id'] : '';
+			$uabb_social_facebook_app_secret   = ( array_key_exists( 'uabb-social-facebook-app-secret', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-secret'] : '';
 			$login_url                         = '';
 
 		}
@@ -456,7 +543,7 @@ class UABBLoginForm extends FLBuilderModule {
 							</label>				
 				<?php } ?>
 
-				<?php if ( 'yes' === $this->settings->facebook_login_select && isset( $uabb_social_facebook_app_id ) && ! empty( $uabb_social_facebook_app_id ) ) { ?>
+				<?php if ( 'yes' === $this->settings->facebook_login_select && isset( $uabb_social_facebook_app_id ) && ! empty( $uabb_social_facebook_app_id ) && isset( $uabb_social_facebook_app_secret ) && ! empty( $uabb_social_facebook_app_secret ) ) { ?>
 
 						<div class="uabb-lf-input-group uabb-lf-row uabb-lf-facebook-login uabb-lf-facebook-button-wrap">
 							<div class="uabb-lf-input-group uabb-lf-row">
@@ -474,11 +561,11 @@ class UABBLoginForm extends FLBuilderModule {
 								</div>
 							</div>
 						</div>
-				<?php } elseif ( 'yes' === $this->settings->facebook_login_select && empty( $uabb_social_facebook_app_id ) && FLBuilderModel::is_builder_active() ) { ?>
+				<?php } elseif ( 'yes' === $this->settings->facebook_login_select && ( empty( $uabb_social_facebook_app_id ) || empty( $uabb_social_facebook_app_secret ) ) && FLBuilderModel::is_builder_active() ) { ?>
 
 						<label class="uabb-social-error-message">
 							<?php
-									echo esc_attr_e( 'Please configure the Facebook App ID from', 'uabb' );
+									echo esc_attr_e( 'Please configure the Facebook App ID and Facebook App Secret from', 'uabb' );
 								?>
 								<b>
 									<?php

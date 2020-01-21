@@ -39,7 +39,9 @@
 		submit_button		         = $node_module.find('.uabb-registration-form-submit');
 		reCaptchaField               = $('#'+ this.settings.id + '-uabb-grecaptcha');
 		reCaptchaValue               = reCaptchaField.data( 'uabb-grecaptcha-response' );
-
+		this.password_match_err_msg		 = settings.password_match_err_msg;
+		this.email_invalid_err_msg		 = settings.email_invalid_err_msg;
+		this.required_field_err_msg		 = settings.required_field_err_msg;
 		submit_button.on('click', $.proxy( this._submitform, this ) );
 
 		if ( 'yes' == this.check_password_strength ) {
@@ -159,7 +161,7 @@
 					confirm_password.parent().addClass('uabb-registration-form-error');
 					confirm_password.addClass( 'uabb-form-error' );
 					if ( confirm_password.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-						confirm_password.siblings( '.uabb-registration_form-error-message' ).append('The specified password do not match!').show();
+						confirm_password.siblings('.uabb-registration_form-error-message').append(this.password_match_err_msg).show();
 					}
 				}					
 			}
@@ -170,7 +172,7 @@
 				user_pass.parent().addClass('uabb-registration-form-error');
 				user_pass.addClass( 'uabb-form-error' );
 				if ( user_pass.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					user_pass.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					user_pass.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			} else if ( '' == user_pass.val() && user_pass.length > 0 ) {
 					
@@ -179,7 +181,7 @@
 				user_pass.parent().addClass('uabb-registration-form-error');
 				user_pass.addClass( 'uabb-form-error' );
 				if ( user_pass.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					user_pass.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					user_pass.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			} 
 			if ( '' == confirm_password.val() && confirm_password.length > 0 && confirm_password.hasClass( 'uabb-registration-form-requried-yes' ) ) {
@@ -188,7 +190,7 @@
 				confirm_password.parent().addClass('uabb-registration-form-error');
 				confirm_password.addClass( 'uabb-form-error' );
 				if ( confirm_password.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					confirm_password.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					confirm_password.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
 			if ( first_name.length > 0  && '' !== first_name.val() ) {
@@ -201,7 +203,7 @@
 				first_name.parent().addClass('uabb-registration-form-error');
 				first_name.addClass( 'uabb-form-error' );
 				if ( first_name.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					first_name.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					first_name.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
 			if ( last_name.length > 0  && '' !== last_name.val() ) {
@@ -215,7 +217,7 @@
 				last_name.parent().addClass('uabb-registration-form-error');
 				last_name.addClass( 'uabb-form-error' );
 				if ( last_name.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					last_name.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					last_name.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
 			if ( user_login.length > 0  && '' !== user_login.val() ) {
@@ -229,7 +231,7 @@
 				user_login.addClass( 'uabb-form-error' );
 
 				if ( user_login.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					user_login.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					user_login.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
 			if ( user_url.length > 0  && '' !== user_url.val() ) {
@@ -242,7 +244,7 @@
 				user_url.addClass( 'uabb-form-error' );
 
 				if ( user_url.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					user_url.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					user_url.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
 			if ( user_email.length > 0  && '' !== user_email.val() ) {
@@ -264,7 +266,7 @@
 						user_email.parent().removeClass('uabb-form-error');
 
 						if ( user_email.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-							user_email.siblings( '.uabb-registration_form-error-message' ).append( 'Email Invalid' ).show();
+							user_email.siblings('.uabb-registration_form-error-message').append(this.email_invalid_err_msg ).show();
 						}
 					}
 				}					
@@ -275,7 +277,7 @@
 				user_email.parent().addClass('uabb-registration-form-error');
 				user_email.addClass( 'uabb-form-error' );
 				if ( user_email.siblings( '.uabb-registration_form-error-message' ).empty() ) {
-					user_email.siblings( '.uabb-registration_form-error-message' ).append('This Field is required!').show();
+					user_email.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
 			// validate if reCAPTCHA is enabled and checked

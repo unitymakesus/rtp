@@ -8,6 +8,17 @@
  * @package UABB Contact Form Module
  */
 
+$style1                          = '<div style="line-height: 1.5em;  padding-top:15px;">';
+$style2                          = '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;">';
+$user_role_desc                  = $style1 . __( 'The default option will assign the user role as per the WordPress backend setting.', 'uabb' ) . '</div>';
+$user_hide_form_desc             = $style1 . __( 'Enable this option if you wish to hide the form at the frontend from logged in users.', 'uabb' ) . '</div>';
+$login_link_desc                 = $style1 . __( 'Add the “Login” link below the register button.', 'uabb' ) . '</div>';
+$lost_pass_desc                  = $style1 . __( 'Add the “Lost Password” link below the register button.', 'uabb' ) . '</div>';
+$enable_email_desc               = $style1 . __( 'On enabling this option, visit the Email tab to send a customized email to the user.', 'uabb' ) . '</div>';
+$email_content_desc              = $style2 . __( 'Here you can design the Email Content user will receive.', 'uabb' ) . '</div>';
+$register_website_recaptcha_desc = $style2 . __( 'Please register keys for your website at', 'uabb' );
+$recaptcha_link                  = ' href="https://www.google.com/recaptcha/admin" target="_blank"';
+
 FLBuilder::register_module(
 	'UABBRegistrationFormModule',
 	array(
@@ -60,7 +71,7 @@ FLBuilder::register_module(
 							'label'       => __( 'New User Role', 'uabb' ),
 							'default'     => 'default',
 							'options'     => UABBRegistrationFormModule::get_user_roles(),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> The default option will assign the user role as per the WordPress backend setting. </div>', 'uabb' ) ),
+							'description' => $user_role_desc,
 						),
 						'hide_form_logged'        => array(
 							'type'        => 'select',
@@ -75,7 +86,7 @@ FLBuilder::register_module(
 									'fields' => array( 'logged_in_text' ),
 								),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> Enable this option if you wish to hide the form at the frontend from logged in users. </div>', 'uabb' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
+							'description' => $user_hide_form_desc,
 						),
 						'logged_in_text'          => array(
 							'type'  => 'text',
@@ -89,7 +100,7 @@ FLBuilder::register_module(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> Add the “Login” link below the register button. </div>', 'uabb' ) ),
+							'description' => $login_link_desc,
 							'toggle'      => array(
 								'yes' => array(
 									'fields'   => array( 'login_link_text', 'login_link_to' ),
@@ -132,7 +143,7 @@ FLBuilder::register_module(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> Add the “Lost Password” link below the register button. </div>', 'uabb' ) ),
+							'description' => $lost_pass_desc,
 							'toggle'      => array(
 								'yes' => array(
 									'fields'   => array( 'lost_link_text', 'lost_link_to' ),
@@ -232,7 +243,7 @@ FLBuilder::register_module(
 									'tabs' => array( 'template' ),
 								),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> On enabling this option, visit the Email tab to send a customized email to the user. </div>', 'uabb' ) ),
+							'description' => $enable_email_desc,
 						),
 						'auto_login'               => array(
 							'type'    => 'select',
@@ -757,7 +768,7 @@ FLBuilder::register_module(
 			'sections' => array(
 				'email-subject' => array(
 					'title'       => __( 'Email Subject & Message', 'uabb' ),
-					'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;"> Here you can design the Email Content user will receive. </div>', 'uabb' ) ),
+					'description' => $email_content_desc,
 					'fields'      => array(
 						'email_template'     => array(
 							'type'    => 'select',
@@ -909,7 +920,7 @@ FLBuilder::register_module(
 				),
 				'recaptcha_general' => array(
 					'title'       => __( 'reCAPTCHA', 'uabb' ),
-					'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;"> Please register keys for your website at <a%s> <b>Google Admin Console </b> </a>. </div>', 'uabb' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
+					'description' => sprintf( /* translators: a%s: search term */ ' %1$s <a%2$s> <b>Google Admin Console </b> </a>. </div>', $register_website_recaptcha_desc, $recaptcha_link ),
 					'fields'      => array(
 						'uabb_recaptcha_toggle'        => array(
 							'type'    => 'select',

@@ -188,6 +188,14 @@ foreach ( $settings->add_circle_item as $item ) {
 					'font_family'                 => $item->btn_font_family,
 					'transform'                   => $item->btn_transform,
 					'letter_spacing'              => $item->btn_letter_spacing,
+
+					'button_padding_dimension'    => ( isset( $item->button_padding_dimension ) ) ? $item->button_padding_dimension : '',
+					'button_border_style'         => ( isset( $item->button_border_style ) ) ? $item->button_border_style : '',
+					'button_border_width'         => ( isset( $item->button_border_width ) ) ? $item->button_border_width : '',
+					'button_border_radius'        => ( isset( $item->button_border_radius ) ) ? $item->button_border_radius : '',
+					'button_border_color'         => ( isset( $item->button_border_color ) ) ? $item->button_border_color : '',
+
+					'border_hover_color'          => ( isset( $item->border_hover_color ) ) ? $item->border_hover_color : '',
 				);
 			} else {
 				$btn_settings = array(
@@ -233,6 +241,9 @@ foreach ( $settings->add_circle_item as $item ) {
 					'button_typo'                => ( isset( $item->btn_font_typo ) ) ? $item->btn_font_typo : '',
 					'button_typo_medium'         => ( isset( $item->btn_font_typo_medium ) ) ? $item->btn_font_typo_medium : '',
 					'button_typo_responsive'     => ( isset( $item->btn_font_typo_responsive ) ) ? $item->btn_font_typo_responsive : '',
+					'button_padding_dimension'   => ( isset( $item->button_padding_dimension ) ) ? $item->button_padding_dimension : '',
+					'button_border'              => ( isset( $item->button_border ) ) ? $item->button_border : '',
+					'border_hover_color'         => ( isset( $item->border_hover_color ) ) ? $item->border_hover_color : '',
 				);
 			}
 			FLBuilder::render_module_css( 'uabb-button', $id . ' .uabb-info-circle-in-' . $circle_item_count, $btn_settings );
@@ -277,16 +288,16 @@ foreach ( $settings->add_circle_item as $item ) {
 				<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $item,
-				'setting_name' => 'btn_font_typo',
-				'selector'     => ".fl-node-$id .uabb-info-circle-cta-text .uabb-infoc-link",
-			)
-		);
+					FLBuilderCSS::typography_field_rule(
+						array(
+							'settings'     => $item,
+							'setting_name' => 'btn_font_typo',
+							'selector'     => ".fl-node-$id .uabb-info-circle-cta-text .uabb-infoc-link",
+						)
+					);
 	}
 }
-?>
+			?>
 			/* Responsive CSS for CTA Text */
 			<?php if ( $global_settings->responsive_enabled ) { ?>
 

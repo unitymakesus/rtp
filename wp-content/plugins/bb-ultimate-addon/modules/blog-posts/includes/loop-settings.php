@@ -314,6 +314,7 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 					'options' => array(
 						'1' => sprintf( /* translators: %s: search term */ __( 'Match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ),
 						'0' => sprintf( /* translators: %s: search term */ __( 'Do not match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ),
+						'related' => sprintf( /* translators: %s: search term */ __( 'Match all related %s except...', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ),
 
 					),
 					'help'    => sprintf( /* translators: %1$s: search term, translators: %2$s: search term */ __( 'Enter a comma separated list of %1$s. Only posts with these %2$s will be shown.', 'uabb' ), $tax->label, $tax->label ),

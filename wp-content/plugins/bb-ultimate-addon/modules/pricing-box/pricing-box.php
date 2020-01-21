@@ -96,6 +96,14 @@ class UABBPricingTableModule extends FLBuilderModule {
 				'line_height_unit_medium'     => $this->settings->pricing_columns[ $column ]->button_typography_line_height_unit_medium,
 				'font_size_unit_responsive'   => $this->settings->pricing_columns[ $column ]->button_typography_font_size_unit_responsive,
 				'line_height_unit_responsive' => $this->settings->pricing_columns[ $column ]->button_typography_line_height_unit_responsive,
+
+				'button_padding_dimension'    => ( isset( $this->settings->pricing_columns[ $column ]->button_padding_dimension ) ) ? $this->settings->pricing_columns[ $column ]->button_padding_dimension : '',
+				'button_border_style'         => ( isset( $this->settings->pricing_columns[ $column ]->button_border_style ) ) ? $this->settings->pricing_columns[ $column ]->button_border_style : '',
+				'button_border_width'         => ( isset( $this->settings->pricing_columns[ $column ]->button_border_width ) ) ? $this->settings->pricing_columns[ $column ]->button_border_width : '',
+				'button_border_radius'        => ( isset( $this->settings->pricing_columns[ $column ]->button_border_radius ) ) ? $this->settings->pricing_columns[ $column ]->button_border_radius : '',
+				'button_border_color'         => ( isset( $this->settings->pricing_columns[ $column ]->button_border_color ) ) ? $this->settings->pricing_columns[ $column ]->button_border_color : '',
+
+				'border_hover_color'          => ( isset( $this->settings->pricing_columns[ $column ]->border_hover_color ) ) ? $this->settings->pricing_columns[ $column ]->border_hover_color : '',
 			);
 		} else {
 
@@ -132,6 +140,10 @@ class UABBPricingTableModule extends FLBuilderModule {
 				'button_typo_medium'         => ( isset( $this->settings->pricing_columns[ $column ]->button_typo_medium ) ) ? $this->settings->pricing_columns[ $column ]->button_typo_medium : '',
 
 				'button_typo_responsive'     => ( isset( $this->settings->pricing_columns[ $column ]->button_typo_responsive ) ) ? $this->settings->pricing_columns[ $column ]->button_typo_responsive : '',
+
+				'button_padding_dimension'   => ( isset( $this->settings->pricing_columns[ $column ]->button_padding_dimension ) ) ? $this->settings->pricing_columns[ $column ]->button_padding_dimension : '',
+				'button_border'              => ( isset( $this->settings->pricing_columns[ $column ]->button_border ) ) ? $this->settings->pricing_columns[ $column ]->button_border : '',
+				'border_hover_color'         => ( isset( $this->settings->pricing_columns[ $column ]->border_hover_color ) ) ? $this->settings->pricing_columns[ $column ]->border_hover_color : '',
 			);
 		}
 		FLBuilder::render_module_html( 'uabb-button', $btn_settings );

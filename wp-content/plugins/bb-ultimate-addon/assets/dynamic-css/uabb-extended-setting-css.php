@@ -25,16 +25,7 @@ if ( $enable_row_separator ) {
 		$id  = $row_object->node;
 		$row = $row_object->settings;
 		if ( ( 'none' !== $row->separator_shape || 'none' !== $row->bot_separator_shape ) ) {
-			if ( ! FLBuilderModel::is_builder_active() ) {
 			?>
-				.fl-node-<?php echo $id; ?> .fl-row-content,
-				.fl-node-<?php echo $id; ?> .fl-row-content * {
-					z-index: 2;
-				}
-				.fl-node-<?php echo $id; ?> .uabb-row-separator {
-					z-index: 1;
-				}
-			<?php } ?>
 			.fl-node-<?php echo $id; ?> .fl-row-content {
 				position: inherit;
 			}

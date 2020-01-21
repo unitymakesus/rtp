@@ -333,7 +333,7 @@ FLBuilder::render_module_css( 'image-icon', $id, $imageicon_array );
 		.fl-node-<?php echo $id; ?> .info-table-wrap .info-table-button a {
 			color: <?php echo uabb_theme_button_text_color( $settings->btn_text_color ); ?>;
 			background: <?php echo uabb_theme_base_color( $settings->btn_bg_color ); ?>;
-			padding: <?php echo uabb_theme_button_padding( '' ); ?>
+			<?php echo uabb_theme_padding_css_genreated( 'desktop' ); ?>
 		}
 
 		<?php if ( 'design02' != $settings->box_design ) { ?>
@@ -567,7 +567,7 @@ FLBuilder::render_module_css( 'image-icon', $id, $imageicon_array );
 		.fl-node-<?php echo $id; ?> .info-table-wrap .info-table-button a {
 			color: <?php echo $settings->btn_text_color; ?>;
 			background: <?php echo uabb_theme_base_color( $settings->btn_bg_color ); ?>;
-			padding: <?php echo uabb_theme_button_padding( '' ); ?>;
+			<?php echo uabb_theme_padding_css_genreated( 'desktop' ); ?>;
 		}
 
 		<?php if ( 'design02' != $settings->box_design ) { ?>

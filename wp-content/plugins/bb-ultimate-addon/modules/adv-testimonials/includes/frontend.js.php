@@ -12,6 +12,9 @@
 var arrObj = new Array();
 
 <?php
+$next_arrow = apply_filters( 'uabb_testimonials_next_arrow_icon', 'fa fa-chevron-right' );
+$prev_arrow = apply_filters( 'uabb_testimonials_previous_arrow_icon', 'fa fa-chevron-left' );
+
 if ( 'slider' == $settings->tetimonial_layout ) {
 	$settings->pause = ( '' !== trim( $settings->pause ) ) ? $settings->pause : '10';
 	$settings->speed = ( '' !== trim( $settings->speed ) ) ? $settings->speed : '0.5';
@@ -34,8 +37,8 @@ if ( 'slider' == $settings->tetimonial_layout ) {
 		pager : <?php echo ( 'wide' == $settings->navigation || 'compact-wide' == $settings->navigation ) ? 1 : 0; ?>,
 		nextSelector : '.fl-node-<?php echo $id; ?> .uabb-slider-next',
 		prevSelector : '.fl-node-<?php echo $id; ?> .uabb-slider-prev',
-		nextText: '<i class="fa fa-chevron-right"></i>',
-		prevText: '<i class="fa fa-chevron-left"></i>',
+		nextText: '<i class=" <?php echo $next_arrow; ?> "></i>',
+		prevText: '<i class=" <?php echo $prev_arrow; ?> "></i>',
 		controls : <?php echo ( 'compact' == $settings->navigation || 'compact-wide' == $settings->navigation ) ? 1 : 0; ?>,
 		onSliderLoad: function() {
 			jQuery('.fl-node-<?php echo $id; ?> .uabb-testimonials').addClass('uabb-testimonials-loaded');

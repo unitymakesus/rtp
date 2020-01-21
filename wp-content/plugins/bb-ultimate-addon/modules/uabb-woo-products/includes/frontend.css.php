@@ -58,7 +58,7 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 
 .fl-node-<?php echo $id; ?> .uabb-woo-products-summary-wrap {
-	<?php UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding' ); ?>;
+	<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding' ); ?>;
 }
 
 .fl-node-<?php echo $id; ?> .uabb-sale-flash-wrap .uabb-onsale {
@@ -74,8 +74,8 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 	line-height: <?php echo $settings->sale_flash_size; ?>em;
 
 	<?php
-	UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_padding', 'padding' );
-	UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_margin', 'margin' );
+	echo UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_padding', 'padding' );
+	echo UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_margin', 'margin' );
 	?>
 }
 
@@ -125,8 +125,8 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 	line-height: <?php echo $settings->featured_flash_size; ?>em;
 
 	<?php
-	UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_padding', 'padding' );
-	UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_margin', 'margin' );
+	echo UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_padding', 'padding' );
+	echo UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_margin', 'margin' );
 	?>
 }
 
@@ -496,7 +496,7 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 			}
 
 			.fl-node-<?php echo $id; ?> .uabb-woo-products-summary-wrap {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'medium' ); ?>;
+				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'medium' ); ?>;
 			}
 		}
 
@@ -573,7 +573,7 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 			}
 
 			.fl-node-<?php echo $id; ?> .uabb-woo-products-summary-wrap {
-				<?php UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'responsive' ); ?>;
+				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'responsive' ); ?>;
 			}
 
 			.uabb-woocommerce .uabb-woo--align-mobile-right li.product {

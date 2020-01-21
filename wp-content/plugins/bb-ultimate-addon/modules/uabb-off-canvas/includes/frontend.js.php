@@ -5,6 +5,10 @@
  *  @package Off Canvas Module Module
  */
 
+$is_builder_active = '';
+if ( FLBuilderModel::is_builder_active() ) {
+	$is_builder_active = 'yes';
+}
 ?>
 jQuery(document).ready(function() {
 	new UABBOffCanvasModule({
@@ -15,6 +19,7 @@ jQuery(document).ready(function() {
 		offcanvas_on: '<?php echo $settings->offcanvas_on; ?>',
 		offcanvas_custom: '<?php echo $settings->off_canvas_custom; ?>',
 		close_on: '<?php echo $settings->close_on_link; ?>',
+		is_builder_active : '<?php echo $is_builder_active; ?>',
 	});
 
 });

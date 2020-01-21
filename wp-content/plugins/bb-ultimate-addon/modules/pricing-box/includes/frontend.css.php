@@ -257,7 +257,7 @@ for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 							echo ( '' != $settings->pricing_columns[ $i ]->featured_typo->letter_spacing->length ) ? 'letter-spacing: ' . (string) $settings->pricing_columns[ $i ]->featured_typo->letter_spacing->length . 'px;' : '';
 							echo ( '' != $settings->pricing_columns[ $i ]->featured_typo->text_transform ) ? 'text-transform: ' . (string) $settings->pricing_columns[ $i ]->featured_typo->text_transform . ';' : '';
 }
-?>
+					?>
 					}
 			<?php } ?>
 			<?php
@@ -315,7 +315,7 @@ for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 								<?php
 }
 } elseif ( isset( $settings->pricing_columns[ $i ]->featured_font_size_unit_responsive ) && '' == $settings->pricing_columns[ $i ]->featured_font_size_unit_responsive && isset( $settings->pricing_columns[ $i ]->featured_font_size->small ) && '' != $settings->pricing_columns[ $i ]->featured_font_size->small ) {
-	?>
+							?>
 							font-size: <?php echo $settings->pricing_columns[ $i ]->featured_font_size->small; ?>px;
 							line-height: <?php echo $settings->pricing_columns[ $i ]->featured_font_size->small + 2; ?>px;
 						<?php } ?>
@@ -596,6 +596,13 @@ for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 				'line_height_unit_responsive' => $settings->pricing_columns[ $i ]->button_typography_line_height_unit_responsive,
 				'transform'                   => $settings->pricing_columns[ $i ]->button_transform,
 				'letter_spacing'              => $settings->pricing_columns[ $i ]->button_letter_spacing,
+				'button_padding_dimension'    => ( isset( $settings->pricing_columns[ $i ]->button_padding_dimension ) ) ? $settings->pricing_columns[ $i ]->button_padding_dimension : '',
+				'button_border_style'         => ( isset( $settings->pricing_columns[ $i ]->button_border_style ) ) ? $settings->pricing_columns[ $i ]->button_border_style : '',
+				'button_border_width'         => ( isset( $settings->pricing_columns[ $i ]->button_border_width ) ) ? $settings->pricing_columns[ $i ]->button_border_width : '',
+				'button_border_radius'        => ( isset( $settings->pricing_columns[ $i ]->button_border_radius ) ) ? $settings->pricing_columns[ $i ]->button_border_radius : '',
+				'button_border_color'         => ( isset( $settings->pricing_columns[ $i ]->button_border_color ) ) ? $settings->pricing_columns[ $i ]->button_border_color : '',
+				'border_hover_color'          => ( isset( $settings->pricing_columns[ $i ]->border_hover_color ) ) ? $settings->pricing_columns[ $i ]->border_hover_color : '',
+
 			);
 		} else {
 			$button = array(
@@ -628,6 +635,9 @@ for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
 				'button_typo_medium'         => ( isset( $settings->pricing_columns[ $i ]->button_typo_medium ) ) ? $settings->pricing_columns[ $i ]->button_typo_medium : '',
 
 				'button_typo_responsive'     => ( isset( $settings->pricing_columns[ $i ]->button_typo_responsive ) ) ? $settings->pricing_columns[ $i ]->button_typo_responsive : '',
+				'button_padding_dimension'   => ( isset( $settings->pricing_columns[ $i ]->button_padding_dimension ) ) ? $settings->pricing_columns[ $i ]->button_padding_dimension : '',
+				'button_border'              => ( isset( $settings->pricing_columns[ $i ]->button_border ) ) ? $settings->pricing_columns[ $i ]->button_border : '',
+				'border_hover_color'         => ( isset( $settings->pricing_columns[ $i ]->border_hover_color ) ) ? $settings->pricing_columns[ $i ]->border_hover_color : '',
 			);
 		}
 		FLBuilder::render_module_css( 'uabb-button', $btn_id, $button );
@@ -874,16 +884,16 @@ if ( 'yes' == $settings->add_legend ) {
 		<?php
 } else {
 	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings->legend_column,
-				'setting_name' => 'legend_typo',
-				'selector'     => ".fl-node-$id .uabb-pricing-table .uabb-pricing-table-column-0 .uabb-pricing-table-features li,.fl-node-$id .uabb-pricing-table .uabb-pricing-table-column .uabb-pricing-table-features .uabb-pricing-ledgend",
-			)
-		);
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings->legend_column,
+					'setting_name' => 'legend_typo',
+					'selector'     => ".fl-node-$id .uabb-pricing-table .uabb-pricing-table-column-0 .uabb-pricing-table-features li,.fl-node-$id .uabb-pricing-table .uabb-pricing-table-column .uabb-pricing-table-features .uabb-pricing-ledgend",
+				)
+			);
 	}
 }
-?>
+	?>
 
 	.fl-node-<?php echo $id; ?> .uabb-pricing-table .uabb-pricing-table-column-0 .uabb-pricing-table-features li {
 		text-align: <?php echo $settings->legend_column->legend_align; ?>;

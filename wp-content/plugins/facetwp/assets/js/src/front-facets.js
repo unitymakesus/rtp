@@ -603,17 +603,12 @@
         delay_refresh: FWP.helper.debounce(function(facet_name) {
             FWP.frozen_facets[facet_name] = 'soft';
             FWP.autoload();
-        }, 250)
+        }, 500)
     };
 
     FWP.hooks.addAction('facetwp/refresh/search', function($this, facet_name) {
         var $input = $this.find('.facetwp-search');
         FWP.facets[facet_name] = $input.val() || '';
-        $input.prop('readonly', true);
-    });
-
-    FWP.hooks.addAction('facetwp/loaded', function() {
-        $('.facetwp-type-search .facetwp-search').prop('readonly', false);
     });
 
     $(document).on('keyup', '.facetwp-type-search .facetwp-search', function(e) {

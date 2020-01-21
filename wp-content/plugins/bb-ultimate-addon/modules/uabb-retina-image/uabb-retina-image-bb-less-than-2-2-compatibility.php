@@ -43,6 +43,7 @@ FLBuilder::register_module(
 							'type'        => 'text',
 							'label'       => __( 'Image URL', 'uabb' ),
 							'placeholder' => 'http://www.example.com/my-image.jpg',
+							'connections' => array( 'string' ),
 						),
 					),
 				),
@@ -76,6 +77,7 @@ FLBuilder::register_module(
 							'type'        => 'text',
 							'label'       => __( 'Image URL', 'uabb' ),
 							'placeholder' => 'http://www.example.com/my-image.jpg',
+							'connections' => array( 'string' ),
 						),
 					),
 				),
@@ -179,9 +181,10 @@ FLBuilder::register_module(
 							),
 						),
 						'link_url'      => array(
-							'type'    => 'link',
-							'label'   => __( 'Link URL', 'uabb' ),
-							'preview' => array(
+							'type'        => 'link',
+							'label'       => __( 'Link URL', 'uabb' ),
+							'connections' => array( 'string', 'url' ),
+							'preview'     => array(
 								'type' => 'none',
 							),
 						),

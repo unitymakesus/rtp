@@ -25,6 +25,7 @@ $branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uab
 
 				$uabb_social_google_client_id      = ( array_key_exists( 'uabb-social-google-client-id', $uabb ) ) ? $uabb['uabb-social-google-client-id'] : '';
 				$uabb_social_facebook_app_id       = ( array_key_exists( 'uabb-social-facebook-app-id', $uabb ) ) ? $uabb['uabb-social-facebook-app-id'] : '';
+				$uabb_social_facebook_app_secret   = ( array_key_exists( 'uabb-social-facebook-app-secret', $uabb ) ) ? $uabb['uabb-social-facebook-app-secret'] : '';
 				$uabb_social_google_redirect_url   = ( array_key_exists( 'uabb-social-google-redirect-url', $uabb ) ) ? $uabb['uabb-social-google-redirect-url'] : '';
 				$uabb_social_facebook_redirect_url = ( array_key_exists( 'uabb-social-facebook-redirect-url', $uabb ) ) ? $uabb['uabb-social-facebook-redirect-url'] : '';
 			}
@@ -76,6 +77,21 @@ $branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uab
 					<p class="uabb-admin-help"><?php _e( 'App ID', 'uabb' ); ?></p>	
 					<input type="text" class="regular-text uabb-social-facebook-app-id" name="uabb-social-facebook-app-id" value="<?php echo $uabb_social_facebook_app_id; ?>" /><br/>
 					<label class="uabb-social-error uabb-social-facebook-id-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
+					<p class="uabb-admin-help">
+						<?php
+						if ( empty( $branding_name ) && empty( $branding_short_name ) ) :
+							_e( 'Refer', 'uabb' );
+							?>
+							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-facebook-app-id-for-login-form-module/#step-3:-how-to-get-the-app-secret-id-/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php _e( 'article', 'uabb' ); ?></a>
+							<?php _e( 'to get APP Secret.', 'uabb' ); ?>
+							</p>
+							<?php
+						endif;
+						?>
+					</p>
+					<p class="uabb-admin-help"><?php _e( 'App Secret', 'uabb' ); ?></p>	
+					<input type="text" class="regular-text uabb-social-facebook-app-secret" name="uabb-social-facebook-app-secret" value="<?php echo $uabb_social_facebook_app_secret; ?>" /><br/>
+					<label class="uabb-social-error uabb-social-facebook-secret-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
 					<p class="uabb-admin-help">
 						<?php _e( 'Set a link to redirect the user after a successful login.', 'uabb' ); ?>
 					</p>

@@ -88,6 +88,7 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 				}
 
 				$plugin->tested = isset( $product['tested'] ) ? $product['tested'] : '';
+				$plugin->requires_php = isset( $product['php_version'] ) ? $product['php_version'] : '';
 
 				$plugin->icons = apply_filters( "bsf_product_icons_{$product['id']}", array(
 					'1x'      => ( isset( $product['product_image'] ) ) ? $product['product_image'] : '',

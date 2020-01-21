@@ -15,7 +15,7 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 			$path,
 			array(
 				'body'    => $data,
-				'timeout' => '30',
+				'timeout' => '5',
 			)
 		);
 
@@ -26,7 +26,7 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 				$path,
 				array(
 					'body'    => $data,
-					'timeout' => '30',
+					'timeout' => '5',
 				)
 			);
 		}

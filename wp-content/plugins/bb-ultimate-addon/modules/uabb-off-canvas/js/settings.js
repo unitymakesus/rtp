@@ -13,6 +13,7 @@
             preview_off_canvas = form.find('select[name=preview_off_canvas]');
             btn_style   = form.find('select[name=btn_style]');
             save_button = form.find('.fl-builder-settings-save');
+            cancel_button = form.find('.fl-builder-settings-cancel');
 
             UABBButton.init();
 			this._contentTypeChange();
@@ -22,6 +23,8 @@
 			content_type.on('change', $.proxy( this._contentTypeChange, this ) );
             btn_style.on('change', this._btn_style_changed );
             save_button.off( 'click' ).on( 'click', this._btn_style_changed);
+            save_button.off( 'click' ).on( 'click', this._closeCanavsPreview );
+            cancel_button.off( 'click' ).on( 'click', this._closeCanavsPreview );
 
             this._btn_style_changed();
             $( '.fl-builder-content' ).on( 'fl-builder.layout-rendered', $.proxy( this._showCanavsPreview, this ) );
@@ -69,6 +72,59 @@
 
                 modal_node.addClass( 'uabb-drag-fix' );
             }
+        },
+        _closeCanavsPreview: function() {
+            var form    = $('.fl-builder-settings');
+            node_id         = form.attr('data-node');
+            modal_node       = $( '#offcanvas-' + node_id );
+
+            var wrap_width = modal_node.width() + 'px';
+
+            if (  modal_node.hasClass( 'uabb-offcanvas-position-at-left' ) ) {
+
+                 modal_node.css( 'left', '-' + wrap_width );
+
+                /* If Push Transition  is enabled*/
+                if(  modal_node.hasClass( 'uabb-offcanvas-type-push' ) ) {
+
+                    $( 'body' ).css({ 
+                        position: '',
+                        'margin-left' : '',
+                        'margin-right' : '',
+                    });
+
+                    setTimeout( function() {
+                        $( 'body' ).removeClass( 'uabb-offcanvas-animating' ).css({ 
+                            width: '',
+                        });
+                    }, 300 );
+                }
+
+                 modal_node.removeClass( 'uabb-off-canvas-show' );
+
+            } else if (  modal_node.hasClass( 'uabb-offcanvas-position-at-right' ) ) {
+
+                 modal_node.css( 'right', '-' + wrap_width );
+
+                /* If Push Transition is enabled */
+                if(  modal_node.hasClass( 'uabb-offcanvas-type-push' ) ) {
+
+                    $( 'body' ).css({
+                        position: '',
+                        'margin-right' : '',
+                        'margin-left' : '',
+                    });
+
+                    setTimeout( function() {
+                        $( 'body' ).removeClass( 'uabb-offcanvas-animating' ).css({ 
+                            width: '',
+                        });
+                    }, 300 );
+                }
+
+                 modal_node.removeClass( 'uabb-off-canvas-show' );
+            }
+
         },
 		_contentTypeChange: function()
         {

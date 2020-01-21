@@ -27,6 +27,7 @@
 		nextArrow: '<?php echo ( isset( $settings->icon_right ) && '' != $settings->icon_right ) ? $settings->icon_right : 'fas fa-angle-right'; ?>',
 		autoplay: <?php echo ( 'yes' == $settings->autoplay ) ? 'true' : 'false'; ?>,
 		autoplaySpeed: <?php echo ( '' != $settings->animation_speed ) ? $settings->animation_speed : '1000'; ?>,
+		dots:<?php echo ( 'yes' === $settings->enable_dots ) ? 'true' : 'false'; ?>,
 		small_breakpoint: <?php echo $global_settings->responsive_breakpoint; ?>,
 		medium_breakpoint: <?php echo $global_settings->medium_breakpoint; ?>,
 		equal_height_box: '<?php echo $settings->equal_height_box; ?>',
