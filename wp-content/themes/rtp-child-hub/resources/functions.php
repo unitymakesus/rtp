@@ -117,3 +117,17 @@ add_action('widgets_init', function () {
     'id'            => 'footer-utility-right'
   ] + $config);
 });
+
+/**
+ * Register options page
+ */
+if( function_exists('acf_add_options_page') ) {
+  acf_add_options_page(array(
+    'page_title' => 'Site Announcements',
+    'menu_title' => 'Site Announcements',
+    'menu_slug'  => 'site-announcement-settings',
+    'capability' => 'manage_options',
+    'redirect'   => false,
+    'icon_url'   => 'dashicons-megaphone',
+  ));
+}

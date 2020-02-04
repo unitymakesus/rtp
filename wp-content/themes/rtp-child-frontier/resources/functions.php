@@ -128,9 +128,17 @@ add_action('widgets_init', function () {
  		'menu_slug' 	=> 'schedule-settings',
  		'capability'	=> 'manage_options',
  		'redirect'		=> false
- 	));
-}
+  ));
 
+  acf_add_options_page(array(
+    'page_title' => 'Site Announcements',
+    'menu_title' => 'Site Announcements',
+    'menu_slug'  => 'site-announcement-settings',
+    'capability' => 'manage_options',
+    'redirect'   => false,
+    'icon_url'   => 'dashicons-megaphone',
+  ));
+}
 
 /**
  * Frontier 800 schedule shortcode

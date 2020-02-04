@@ -1,4 +1,5 @@
 <header class="banner header-inline" role="banner">
+  @include ('partials.announcements.global-site-announcement')
   <section class="topbar-wrapper">
     <div class="topbar container-wide">
       @if (has_nav_menu('top_bar'))
@@ -47,6 +48,7 @@
       @endif
     </div>
   </nav>
+  @include ('partials.announcements.local-site-announcement')
 </header>
 {{-- @if ( !is_front_page() && function_exists( 'breadcrumb_trail' ) )
   <div class="breadcrumbs">

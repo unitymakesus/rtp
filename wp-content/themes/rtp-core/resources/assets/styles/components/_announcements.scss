@@ -1,0 +1,28 @@
+.announcement {
+  padding: 1rem;
+
+  &--alert {
+    background-color: $color-red-nccu;
+    color: $color-white;
+  }
+
+  &--notice {
+    background-color: $color-grey-dark;
+    color: $color-white;
+  }
+
+  p {
+    &:first-of-type() {
+      margin-top: 0;
+    }
+
+    &:last-of-type() {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
