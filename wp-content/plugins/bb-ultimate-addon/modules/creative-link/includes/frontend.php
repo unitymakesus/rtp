@@ -24,7 +24,7 @@ $current_url = home_url( add_query_arg( array(), $wp->request ) );
 
 			$target   = '';
 			$nofollow = '';
-			if ( UABB_Compatibility::check_bb_version() ) {
+			if ( UABB_Compatibility::$version_bb_check ) {
 
 				if ( isset( $screen->link ) ) {
 					if ( isset( $screen->link_target ) ) {

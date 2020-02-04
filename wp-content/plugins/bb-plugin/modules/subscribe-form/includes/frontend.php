@@ -11,7 +11,7 @@
 		<input type="email" name="fl-subscribe-form-email" placeholder="<?php echo esc_attr( $settings->email_field_text ); ?>" aria-label="email address" />
 		<div class="fl-form-error-message"><?php _e( 'Please enter a valid email address.', 'fl-builder' ); ?></div>
 	</div>
-	
+
 	<?php if ( 'stacked' == $settings->layout ) : ?>
 		<?php if ( 'show' == $settings->terms_checkbox ) : ?>
 			<div class="fl-form-field fl-terms-checkbox">
@@ -61,7 +61,7 @@
 	<?php endif; ?>
 
 	<div class="fl-form-success-message"><?php echo $settings->success_message; ?></div>
-	
+
 	<div class="fl-form-error-message"><?php _e( 'Something went wrong. Please check your entries and try again.', 'fl-builder' ); ?></div>
 
 </div>

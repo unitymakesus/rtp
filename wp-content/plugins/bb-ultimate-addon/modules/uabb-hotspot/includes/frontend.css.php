@@ -5,8 +5,8 @@
  *   @package UABB Hotspot Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 FLBuilder::render_module_css( 'uabb-button', $id, $settings->button );
 $photo_src = ( 'url' != $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' != $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' != $settings->photo_url ) ? $settings->photo_url : '' );
 

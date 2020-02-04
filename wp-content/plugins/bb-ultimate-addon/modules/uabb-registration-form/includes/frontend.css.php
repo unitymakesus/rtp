@@ -5,7 +5,7 @@
  *  @package Registration Module's Frontend.css.php file
  */
 
-$version_bb_check                     = UABB_Compatibility::check_bb_version();
+$version_bb_check                     = UABB_Compatibility::$version_bb_check;
 $settings->form_bg_color              = UABB_Helper::uabb_colorpicker( $settings, 'form_bg_color', true );
 $settings->input_background_color     = UABB_Helper::uabb_colorpicker( $settings, 'input_background_color', true );
 $settings->input_text_color           = UABB_Helper::uabb_colorpicker( $settings, 'input_text_color', true );

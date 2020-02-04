@@ -5,8 +5,8 @@
  * @package UABB Info Box Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 $settings->prefix_color  = UABB_Helper::uabb_colorpicker( $settings, 'prefix_color' );
 $settings->title_color   = UABB_Helper::uabb_colorpicker( $settings, 'title_color' );

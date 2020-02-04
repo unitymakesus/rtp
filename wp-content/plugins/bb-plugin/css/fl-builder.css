@@ -261,9 +261,12 @@ body button[class*="fl-builder"]:focus {
 	text-indent: 0;
 	text-shadow: none;
 	text-transform: none;
+	letter-spacing: normal;
 }
 
-.fl-builder-button {
+button.fl-builder-button,
+a.fl-builder-button,
+*.fl-builder-button {
 	-webkit-appearance: none;
 	align-items: center;
 	background: #e7ebef;
@@ -315,9 +318,6 @@ button.fl-builder-button:focus {
 	background: #E4E7EA;
 	border:2px solid #00A0D0 !important;
 }
-.fl-builder-bar .fl-builder-button {
-	height: auto;
-}
 .fl-builder-button-primary,
 body.fl-builder--layout-has-drafted-changes .fl-builder-done-button {
 	background: #00A0D2;
@@ -365,7 +365,7 @@ body.fl-builder--layout-has-drafted-changes .fl-builder-done-button:active {
 .fl-builder-content-panel-button:hover {
 	fill: #00A0D2 !important;
 	font-size: 30px !important;
-	padding-bottom: 4px;
+	padding: 2px 8px !important;
 }
 /* Silent buttons have the same dimensions but no background or "button" look. */
 .fl-builder-button-silent,
@@ -387,6 +387,14 @@ body.fl-builder--layout-has-drafted-changes .fl-builder-done-button:active {
 	padding: 11px 12px;
 	vertical-align: middle;
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+}
+
+.fl-builder-button svg {
+	max-width: none;
+}
+/* Prevent buttons in settings panels or media panel inside the UI from being affected */
+.fl-builder-settings-fields button, .fl-builder-edit .media-modal-content button {
+	letter-spacing: normal;
 }
 /* @endgroup Buttons */
 
@@ -676,6 +684,7 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	padding: 4px;
 }
 .fl-builder-bar .fl-builder-button {
+	height: auto;
 	margin: 0 0 0 4px;
 }
 /* Actually the first button, but it's the last because it's inside a row-reverse container */
@@ -721,9 +730,9 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 
 /* Buy/Upgrade button */
-.fl-builder-buy-button,
-.fl-builder-upgrade-button,
-.fl-builder-feedback-button {
+.fl-builder-button.fl-builder-buy-button,
+.fl-builder-button.fl-builder-upgrade-button,
+.fl-builder-button.fl-builder-feedback-button {
 	background: #F7A407;
 	color: #fff !important;
 	text-decoration: none;
@@ -821,6 +830,12 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	.fl-builder-bar-actions .fl-builder-button {
 		padding: 0 8px !important;
 	}
+}
+
+.fl-notifications-panel .fl-builder-ui-post .wp-block-image,
+.fl-notifications-panel .fl-builder-ui-post .wp-block-image figure {
+	margin-top: 10px!important;
+	margin-bottom: 10px!important;
 }
 
 .fl-builder--preview-actions {
@@ -1003,7 +1018,7 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	bottom: 2px;
 	padding: 5px;
 	border: 2px solid transparent;
-	background: transparent;
+	background: transparent !important;
 	width: 36px;
 	height: 36px;
 	border-radius: 4px;
@@ -1490,7 +1505,10 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 .fl-builder-block-saved-column.fl-builder-block-global .fl-builder-block-title,
 .fl-builder-block-saved-column:hover .fl-builder-block-title,
 .fl-builder-block-saved-row.fl-builder-block-global .fl-builder-block-title,
-.fl-builder-block-saved-row:hover .fl-builder-block-title {
+.fl-builder-block-saved-row:hover .fl-builder-block-title,
+.fl-builder-touch .fl-builder-block-saved-module .fl-builder-block-title,
+.fl-builder-touch .fl-builder-block-saved-column .fl-builder-block-title,
+.fl-builder-touch .fl-builder-block-saved-row .fl-builder-block-title  {
 	margin-right: 70px;
 }
 
@@ -1718,6 +1736,9 @@ span.fl-builder-block-no-node-templates:hover {
 	right: 0;
 	top: 0;
 }
+.fl-builder-blocks-section-content .fl-builder-node-template-actions a:hover {
+	text-decoration: none;
+}
 .fl-builder-blocks-section-content .fl-builder-node-template-edit,
 .fl-builder-blocks-section-content .fl-builder-node-template-delete {
 	display: inline;
@@ -1733,13 +1754,15 @@ span.fl-builder-block-no-node-templates:hover {
 }
 .fl-builder-blocks-section-content .fl-builder-node-template-edit i,
 .fl-builder-blocks-section-content .fl-builder-node-template-delete i {
+	color: #676F7A;
 	margin: 0;
 }
 .fl-builder-blocks-section-content .fl-builder-node-template-edit:hover i,
 .fl-builder-blocks-section-content .fl-builder-node-template-delete:hover i {
 	color: #444444;
 }
-.fl-builder-blocks-node-template .fl-builder-block:hover .fl-builder-node-template-actions {
+.fl-builder-blocks-node-template .fl-builder-block:hover .fl-builder-node-template-actions,
+.fl-builder-touch .fl-builder-blocks-section-content .fl-builder-node-template-actions {
 	display: block;
 }
 .ui-sortable-helper .fl-builder-node-template-edit,
@@ -1861,7 +1884,7 @@ span.fl-builder-block-no-node-templates:hover {
 	margin: 0 !important;
 	padding:0 !important;
 	color: #6D6D6D;
-    background: none;
+    background: none !important;
 	border: 2px solid transparent;
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.12) !important;
 	border-radius: 4px;
@@ -1871,7 +1894,7 @@ span.fl-builder-block-no-node-templates:hover {
 .fl-builder--selector-display-label:hover {
 	top:0;
 	color: inherit;
-	background: none;
+	background: none !important;
 	border: 2px solid transparent;
 	border-radius: 4px;
 }
@@ -1891,7 +1914,7 @@ span.fl-builder-block-no-node-templates:hover {
 }
 .fl-builder--group-label {
 	color: inherit;
-	flex: 0 0 0%;
+	flex: 0 0 auto;
 	padding: 4px 10px;
 	padding-right: 12px;
 	background: #e7ebef;
@@ -2032,6 +2055,12 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 .fl-builder--menu hr {
 	margin:4px 30px;
 }
+.fl-builder--menu hr::before,
+.fl-builder--menu hr::after {
+	display: none !important;
+	content: none !important;
+	height:auto;
+}
 .fl-builder--menu .fl-builder-video-wrap iframe {
 	display: block;
 	margin:4px 0;
@@ -2072,7 +2101,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 .fl-builder-bar .fl-builder-button-group > .fl-builder-button {
 	border-radius: 0;
 	margin-left: 0px;
-	flex-basis: 100%;
+	flex: 1 0 auto;
 	text-align: center;
 	justify-content: space-around;
 }
@@ -2137,7 +2166,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	line-height: 40px !important;
 	overflow: hidden;
 	padding: 0 20px;
-	position: fixed !important;
+	position: absolute !important;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 180px !important;
@@ -2487,11 +2516,14 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 }
 .fl-block-has-rules {
 	color: #00A0D2 !important;
-    cursor: pointer;
+	cursor: pointer;
 	padding: 7px;
-    position: absolute;
-    right: 0;
-    top: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.fl-block-has-rules.logic {
+	color: red !important;
 }
 .fl-block-overlay-title {
 	color: #fff !important;
@@ -2502,6 +2534,17 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	line-height: 29px;
 	margin-right: 2px;
 	padding: 0 12px 0 8px;
+}
+
+/* Larger overlays for touch. */
+.fl-builder-touch .fl-block-overlay-actions {
+	height: 32px;
+}
+.fl-builder-touch .fl-block-overlay-actions i {
+	font-size: 20px !important;
+	height: 32px !important;
+	line-height: 32px !important;
+	width: 38px !important;
 }
 
 /* Row Overlays */
@@ -3633,19 +3676,19 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 /* Settings Tables
 ------------------------------------------------------ */
 
-.fl-form-table  {
+.fl-lightbox .fl-form-table  {
 	background: none transparent;
 	border: none;
 	width: calc(100% - 35px); /* extra 25px for field connections toggle) */
 }
-.fl-form-table tbody {
+.fl-lightbox .fl-form-table tbody {
 	border: none;
 }
-.fl-form-table tr,
+.fl-lightbox .fl-form-table tr,
 .fl-form-table tr:nth-child(even) {
 	background: transparent;
 }
-.fl-form-table th {
+.fl-lightbox .fl-form-table th {
 	border: none !important;
 	font-weight: normal !important;
 	padding: 10px 15px 10px 10px !important;
@@ -3655,21 +3698,21 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 	width: 200px !important;
 	background:transparent !important;
 }
-.fl-form-table td:first-child {
+.fl-lightbox .fl-form-table td:first-child {
 	padding-left:30px !important;
 }
-.fl-form-table th label {
+.fl-lightbox .fl-form-table th label {
 	color: #333;
 	width: auto;
 	max-width: 100%;
 }
-.fl-form-table th label i {
+.fl-lightbox .fl-form-table th label i {
 	color: #808080;
 }
-.fl-form-table th label i:hover {
+.fl-lightbox .fl-form-table th label i:hover {
 	color: #555555;
 }
-.fl-form-table td {
+.fl-lightbox .fl-form-table td {
 	background: transparent !important;
 	border: none !important;
 	font-weight: normal !important;
@@ -4228,7 +4271,7 @@ select.fl-field-unit-select {
 div.fl-field-unit-select {
 	background-color: #E7EBEF !important;
 	padding: 9px 7px !important;
-	width: 100%;
+	flex: 1 0 auto;
 }
 
 /* Field Slider Popups */
@@ -4427,7 +4470,7 @@ input[type=number].fl-field-popup-slider-focus {
 	float: none;
 }
 .fl-typography-field-transform .fl-button-group-field-option {
-	width: 100%;
+	width: auto;
     padding: 0 7px;
 }
 .fl-typography-field .fl-shadow-field {
@@ -4457,12 +4500,13 @@ input[type=number].fl-field-popup-slider-focus {
 .fl-button-group-field-option {
 	cursor: pointer;
 	display: flex;
+	flex: 1 1 auto;
 	align-items: center;
 	justify-content: center;
 	padding: 0 5px;
 	border-radius:0px;
 	border: 2px solid transparent;
-	background: transparent;
+	background: transparent !important;
 }
 .fl-button-group-field-option:hover {
 	top:0;
@@ -4485,7 +4529,7 @@ input[type=number].fl-field-popup-slider-focus {
 	border-bottom-right-radius: 3px;
 }
 .fl-button-group-field-option[data-selected="1"] {
-	background-color: #fff;
+	background-color: #fff !important;
 	color: #000000;
 }
 .fl-button-group-field-option i {
@@ -5709,6 +5753,37 @@ body > .fl-builder-tour-dimmed {
 
 /* @endgroup Revisions */
 
+/* @group History
+------------------------------------------------------ */
+
+.fl-builder--main-menu-panel-view[data-name="history"] .fl-builder--menu-item,
+.fl-builder--main-menu-panel-view[data-name="history"] .fl-builder--menu-item:focus {
+	border: none !important;
+	padding: 0;
+    margin-bottom: 2px;
+}
+.fl-history-list-item {
+	border: 1px solid transparent;
+    border-radius: 4px;
+	padding: 10px 12px 12px;
+}
+.fl-history-list-item i.fa-check-circle {
+	display: none;
+}
+.fl-history-list-item[data-current="1"] {
+	border-color: #D3DADF;
+	display: flex;
+    align-items: center;
+}
+.fl-history-list-item[data-current="1"] .fl-history-list-item-label {
+	width: 100%;
+}
+.fl-history-list-item[data-current="1"] i.fa-check-circle {
+	display: block;
+}
+
+/* @endgroup History */
+
 /* @group Modules
 ------------------------------------------------------ */
 
@@ -5721,6 +5796,26 @@ body > .fl-builder-tour-dimmed {
 	white-space: nowrap;
 }
 /* @endgroup Modules */
+
+/* @group Module Export/Import
+------------------------------------------------------ */
+
+.module-import-wrap {
+	display: flex;
+}
+.module-import-input {
+	width: 100% !important;
+}
+.module-import-apply {
+	height: 35px;
+    margin: 1px 1px 1px 5px;
+}
+.module-import-error {
+	color: red !important;
+	display: none;
+    padding: 5px 12px;
+}
+/* @endgroup Module Export/Import */
 
 /* @group Misc
 ------------------------------------------------------ */
@@ -5989,4 +6084,33 @@ Rules to ensure compatibility with v2.0.
 	color: black;
 	background: #eef2f5;
 	border: 2px solid #eef2f5;
+}
+
+/* -- select2 -- */
+.fl-lightbox .select2-container--default .selection .select2-selection--single {
+	border-color: transparent !important;
+	border-style: solid !important;
+	border-width: 2px !important;
+	border-radius: 4px !important;
+	height: 36px !important;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+ 	font-size: 13px !important;
+ 	line-height: 15px !important;
+	outline: none;
+	/* width: 100% !important; */
+}
+
+.select2-dropdown {
+	border-color: transparent !important;
+	border-style: solid !important;
+	border-radius: 4px !important;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+}
+
+.fl-lightbox .select2-selection--single .select2-selection__rendered {
+	line-height: 32px !important;
+	font-size: 13px;
+}
+.fl-lightbox .select2-selection--single .select2-selection__arrow {
+	height: 32px;
 }

@@ -6,7 +6,7 @@
  */
 
 $i = 1;
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 foreach( $settings->businessHours as $business_hours_content ) {
     if ( 'no' != $business_hours_content->highlight_styling ) :

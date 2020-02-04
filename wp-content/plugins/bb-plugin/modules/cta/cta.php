@@ -108,7 +108,6 @@ class FLCtaModule extends FLBuilderModule {
 			'align' => '',
 			'width' => 'stacked' == $this->settings->layout ? 'auto' : 'full',
 		);
-
 		foreach ( $this->settings as $key => $value ) {
 			if ( strstr( $key, 'btn_' ) ) {
 				$key              = str_replace( 'btn_', '', $key );
@@ -351,6 +350,32 @@ FLBuilder::register_module('FLCtaModule', array(
 						'show_remove' => true,
 						'show'        => array(
 							'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+						),
+					),
+					'btn_duo_color1'     => array(
+						'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-button-icon.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'btn_duo_color2'     => array(
+						'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-button-icon.fad:after',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'btn_icon_position'  => array(

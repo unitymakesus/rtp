@@ -141,7 +141,7 @@ if ( '' != $google_api_key ) {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/google-map/google-map-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/google-map/google-map-bb-less-than-2-2-compatibility.php';

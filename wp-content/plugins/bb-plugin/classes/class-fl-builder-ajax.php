@@ -100,7 +100,7 @@ final class FLBuilderAJAX {
 		self::add_action( 'duplicate_wpml_layout', 'FLBuilderModel::duplicate_wpml_layout', array( 'original_post_id', 'post_id' ) );
 		self::add_action( 'apply_user_template', 'FLBuilderModel::apply_user_template', array( 'template_id', 'append' ) );
 		self::add_action( 'apply_template', 'FLBuilderModel::apply_template', array( 'template_id', 'append' ) );
-		self::add_action( 'save_layout', 'FLBuilderModel::save_layout' );
+		self::add_action( 'save_layout', 'FLBuilderModel::save_layout', array( 'publish', 'exit' ) );
 		self::add_action( 'save_draft', 'FLBuilderModel::save_draft' );
 		self::add_action( 'clear_draft_layout', 'FLBuilderModel::clear_draft_layout' );
 		self::add_action( 'disable_builder', 'FLBuilderModel::disable' );
@@ -128,6 +128,11 @@ final class FLBuilderAJAX {
 		self::add_action( 'render_revision_preview', 'FLBuilderRevisions::render_preview', array( 'revision_id' ) );
 		self::add_action( 'restore_revision', 'FLBuilderRevisions::restore', array( 'revision_id' ) );
 		self::add_action( 'refresh_revision_items', 'FLBuilderRevisions::get_config', array( 'post_id' ) );
+
+		// FLBuilderHistoryManager
+		self::add_action( 'save_history_state', 'FLBuilderHistoryManager::save_current_state', array( 'label', 'module_type' ) );
+		self::add_action( 'render_history_state', 'FLBuilderHistoryManager::render_state', array( 'position' ) );
+		self::add_action( 'clear_history_states', 'FLBuilderHistoryManager::delete_states', array( 'post_id' ) );
 
 		// FLBuilderServices
 		self::add_action( 'render_service_settings', 'FLBuilderServices::render_settings' );

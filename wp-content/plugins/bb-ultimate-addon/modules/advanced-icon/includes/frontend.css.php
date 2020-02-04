@@ -33,7 +33,7 @@
 }
 
 <?php
-	$version_bb_check  = UABB_Compatibility::check_bb_version();
+	$version_bb_check  = UABB_Compatibility::$version_bb_check;
 	$settings->size    = ( '' != $settings->size ) ? $settings->size : '40';
 	$settings->spacing = ( '' != $settings->spacing ) ? $settings->spacing : '10';
 ?>

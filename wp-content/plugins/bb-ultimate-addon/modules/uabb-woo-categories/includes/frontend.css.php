@@ -5,7 +5,7 @@
  *  @package UABB Woo-Categories Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 $new_arrow_color  = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' . $settings->arrow_color : $settings->arrow_color;
 
 if ( ! isset( $settings->display_cat_desc ) ) {

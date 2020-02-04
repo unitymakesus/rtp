@@ -5,7 +5,7 @@
  *  @package UABB Heading Module
  */
 
-	$version_bb_check = UABB_Compatibility::check_bb_version();
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 	$settings->color                   = UABB_Helper::uabb_colorpicker( $settings, 'color' );
 	$settings->toc_bg_color            = UABB_Helper::uabb_colorpicker( $settings, 'toc_bg_color', true );

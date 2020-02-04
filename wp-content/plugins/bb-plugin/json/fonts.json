@@ -59,6 +59,16 @@
   "fallback": "cursive"
  }
 }, {
+ "Alata": {
+  "variants": ["regular"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "Alatsi": {
+  "variants": ["regular"],
+  "fallback": "sans-serif"
+ }
+}, {
  "Aldrich": {
   "variants": ["regular"],
   "fallback": "sans-serif"
@@ -539,6 +549,11 @@
   "fallback": "sans-serif"
  }
 }, {
+ "Baskervville": {
+  "variants": ["regular", "italic"],
+  "fallback": "serif"
+ }
+}, {
  "Battambang": {
   "variants": ["regular", "700"],
   "fallback": "sans-serif"
@@ -556,6 +571,11 @@
 }, {
  "Be Vietnam": {
   "variants": ["100", "100italic", "300", "300italic", "regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic", "800", "800italic"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "Bebas Neue": {
+  "variants": ["regular"],
   "fallback": "sans-serif"
  }
 }, {
@@ -786,6 +806,11 @@
 }, {
  "Cairo": {
   "variants": ["200", "300", "regular", "600", "700", "900"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "Calistoga": {
+  "variants": ["regular"],
   "fallback": "sans-serif"
  }
 }, {
@@ -1099,6 +1124,11 @@
   "fallback": "cursive"
  }
 }, {
+ "Courier Prime": {
+  "variants": ["regular", "italic", "700", "700italic"],
+  "fallback": "monospace"
+ }
+}, {
  "Cousine": {
   "variants": ["regular", "italic", "700", "700italic"],
   "fallback": "monospace"
@@ -1190,7 +1220,7 @@
  }
 }, {
  "Dancing Script": {
-  "variants": ["regular", "700"],
+  "variants": ["regular", "500", "600", "700"],
   "fallback": "cursive"
  }
 }, {
@@ -1325,7 +1355,7 @@
  }
 }, {
  "EB Garamond": {
-  "variants": ["regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic", "800", "800italic"],
+  "variants": ["regular", "500", "600", "700", "800", "italic", "500italic", "600italic", "700italic", "800italic"],
   "fallback": "serif"
  }
 }, {
@@ -1505,7 +1535,7 @@
  }
 }, {
  "Faustina": {
-  "variants": ["regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic"],
+  "variants": ["regular", "500", "600", "700", "italic", "500italic", "600italic", "700italic"],
   "fallback": "serif"
  }
 }, {
@@ -1694,6 +1724,11 @@
   "fallback": "sans-serif"
  }
 }, {
+ "Gelasio": {
+  "variants": ["regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic"],
+  "fallback": "serif"
+ }
+}, {
  "Gentium Basic": {
   "variants": ["regular", "italic", "700", "700italic"],
   "fallback": "serif"
@@ -1732,6 +1767,11 @@
  "Gilda Display": {
   "variants": ["regular"],
   "fallback": "serif"
+ }
+}, {
+ "Girassol": {
+  "variants": ["regular"],
+  "fallback": "sans-serif"
  }
 }, {
  "Give You Glory": {
@@ -1822,6 +1862,11 @@
  "Gugi": {
   "variants": ["regular"],
   "fallback": "sans-serif"
+ }
+}, {
+ "Gupter": {
+  "variants": ["regular", "500", "700"],
+  "fallback": "serif"
  }
 }, {
  "Gurajada": {
@@ -2014,6 +2059,11 @@
   "fallback": "serif"
  }
 }, {
+ "Ibarra Real Nova": {
+  "variants": ["regular", "italic", "600", "600italic", "700", "700italic"],
+  "fallback": "serif"
+ }
+}, {
  "Iceberg": {
   "variants": ["regular"],
   "fallback": "sans-serif"
@@ -2051,6 +2101,11 @@
 }, {
  "Inknut Antiqua": {
   "variants": ["300", "regular", "500", "600", "700", "800", "900"],
+  "fallback": "serif"
+ }
+}, {
+ "Inria Serif": {
+  "variants": ["300", "300italic", "regular", "italic", "700", "700italic"],
   "fallback": "serif"
  }
 }, {
@@ -2339,6 +2394,11 @@
   "fallback": "sans-serif"
  }
 }, {
+ "Kulim Park": {
+  "variants": ["200", "200italic", "300", "300italic", "regular", "italic", "600", "600italic", "700", "700italic"],
+  "fallback": "sans-serif"
+ }
+}, {
  "Kumar One": {
   "variants": ["regular"],
   "fallback": "sans-serif"
@@ -2420,7 +2480,7 @@
  }
 }, {
  "Lemonada": {
-  "variants": ["300", "regular", "600", "700"],
+  "variants": ["300", "regular", "500", "600", "700"],
   "fallback": "sans-serif"
  }
 }, {
@@ -2700,7 +2760,7 @@
  }
 }, {
  "Manuale": {
-  "variants": ["regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic"],
+  "variants": ["regular", "500", "600", "700", "italic", "500italic", "600italic", "700italic"],
   "fallback": "serif"
  }
 }, {
@@ -2765,7 +2825,7 @@
  }
 }, {
  "Maven Pro": {
-  "variants": ["regular", "500", "700", "900"],
+  "variants": ["regular", "500", "600", "700", "800", "900"],
   "fallback": "sans-serif"
  }
 }, {
@@ -3030,7 +3090,7 @@
  }
 }, {
  "Muli": {
-  "variants": ["200", "200italic", "300", "300italic", "regular", "italic", "600", "600italic", "700", "700italic", "800", "800italic", "900", "900italic"],
+  "variants": ["200", "300", "regular", "500", "600", "700", "800", "900", "200italic", "300italic", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
   "fallback": "sans-serif"
  }
 }, {
@@ -3249,6 +3309,11 @@
   "fallback": "sans-serif"
  }
 }, {
+ "Odibee Sans": {
+  "variants": ["regular"],
+  "fallback": "sans-serif"
+ }
+}, {
  "Odor Mean Chey": {
   "variants": ["regular"],
   "fallback": "sans-serif"
@@ -3295,7 +3360,7 @@
  }
 }, {
  "Orbitron": {
-  "variants": ["regular", "500", "700", "900"],
+  "variants": ["regular", "500", "600", "700", "800", "900"],
   "fallback": "sans-serif"
  }
 }, {
@@ -3639,6 +3704,11 @@
   "fallback": "sans-serif"
  }
 }, {
+ "Public Sans": {
+  "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900", "100italic", "200italic", "300italic", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
+  "fallback": "sans-serif"
+ }
+}, {
  "Puritan": {
   "variants": ["regular", "italic", "700", "700italic"],
   "fallback": "sans-serif"
@@ -3840,7 +3910,7 @@
  }
 }, {
  "Roboto Slab": {
-  "variants": ["100", "300", "regular", "700"],
+  "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900"],
   "fallback": "serif"
  }
 }, {
@@ -4234,6 +4304,11 @@
   "fallback": "cursive"
  }
 }, {
+ "Solway": {
+  "variants": ["300", "regular", "500", "700", "800"],
+  "fallback": "serif"
+ }
+}, {
  "Song Myung": {
   "variants": ["regular"],
   "fallback": "serif"
@@ -4374,6 +4449,11 @@
   "fallback": "serif"
  }
 }, {
+ "Sulphur Point": {
+  "variants": ["300", "regular", "700"],
+  "fallback": "sans-serif"
+ }
+}, {
  "Sumana": {
   "variants": ["regular", "700"],
   "fallback": "serif"
@@ -4511,6 +4591,11 @@
 }, {
  "Titillium Web": {
   "variants": ["200", "200italic", "300", "300italic", "regular", "italic", "600", "600italic", "700", "700italic", "900"],
+  "fallback": "sans-serif"
+ }
+}, {
+ "Tomorrow": {
+  "variants": ["100", "100italic", "200", "200italic", "300", "300italic", "regular", "italic", "500", "500italic", "600", "600italic", "700", "700italic", "800", "800italic", "900", "900italic"],
   "fallback": "sans-serif"
  }
 }, {
@@ -4725,7 +4810,7 @@
  }
 }, {
  "Yanone Kaffeesatz": {
-  "variants": ["200", "300", "regular", "700"],
+  "variants": ["200", "300", "regular", "500", "600", "700"],
   "fallback": "sans-serif"
  }
 }, {

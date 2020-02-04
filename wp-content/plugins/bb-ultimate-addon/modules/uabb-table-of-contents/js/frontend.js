@@ -52,8 +52,7 @@
         wrapper.find( '#uabb-toc-wrapper a' ).on( 'click', function(e) {
           if ( '' !== this.hash ) {
             event.preventDefault();
-            var hash = this.hash;
-
+            var hash = this.hash;      
             var target = $(hash).offset();
 
             if ( '' !== scroll_offset ) {

@@ -19,6 +19,7 @@
 			subject_required: "<?php echo $settings->subject_required; ?>",
 			phone_required: "<?php echo $settings->phone_required; ?>",
 			msg_required: "<?php echo $settings->msg_required; ?>",
+			msg_toggle: "<?php echo $settings->msg_toggle; ?>",
 			button_text: "<?php echo $settings->btn_text; ?>"
 		});
 	});

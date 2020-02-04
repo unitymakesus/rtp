@@ -5,7 +5,7 @@
  * @package Off Canvas Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 $settings->page_overlay        = UABB_Helper::uabb_colorpicker( $settings, 'page_overlay', true );
 $settings->menu_color          = UABB_Helper::uabb_colorpicker( $settings, 'menu_color', true );
@@ -164,14 +164,14 @@ if ( isset( $settings->menu_bg_color_hover ) ) {
 }
 if ( isset( $settings->img_bg_color ) ) {
 	?>
-	.fl-node-<?php echo $id; ?>   .uabb-offcanvas-photo-wrap {
+	.fl-node-<?php echo $id; ?>   .uabb-offcanvas-photo-wrap .uabb-offcanvas-photo-content {
 	<?php echo ( '' !== $settings->img_bg_color ) ? 'background-color:' . $settings->img_bg_color . ';' : ''; ?>
 	}
 	<?php
 }
 if ( isset( $settings->img_bg_hover_color ) ) {
 	?>
-	.fl-node-<?php echo $id; ?>   .uabb-offcanvas-photo-wrap {
+	.fl-node-<?php echo $id; ?>   .uabb-offcanvas-photo-wrap .uabb-offcanvas-photo-content:hover {
 	<?php echo ( '' !== $settings->img_bg_hover_color ) ? 'background-color:' . $settings->img_bg_hover_color . ';' : ''; ?>
 	}
 	<?php
@@ -364,7 +364,7 @@ if ( ! $version_bb_check ) {
 	}
 }
 ?>
-.fl-node-<?php echo $id; ?> .uabb-offcanvas-photo-wrap {
+.fl-node-<?php echo $id; ?> .uabb-offcanvas-photo-wrap .uabb-offcanvas-photo-content {
 	<?php
 	if ( isset( $settings->img_padding ) ) {
 		echo ( '' !== $settings->img_padding ) ? 'padding:' . $settings->img_padding . 'px;' : '';

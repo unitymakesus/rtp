@@ -43,7 +43,6 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		add_action( 'wp_ajax_uabb_registration_form', array( $this, 'register_user' ) );
 		add_action( 'wp_ajax_nopriv_uabb_registration_form', array( $this, 'register_user' ) );
 		add_filter( 'wp_new_user_notification_email', array( $this, 'uabb_custom_wp_new_user_notification_email' ), 10, 3 );
-		add_filter( 'script_loader_tag', array( $this, 'uabb_rf_add_async_attribute' ), 10, 2 );
 	}
 	/**
 	 * Function that enqueue's the scripts
@@ -69,21 +68,6 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		if ( isset( $settings->check_password_strength ) && 'yes' === $settings->check_password_strength ) {
 			$this->add_js( 'password-strength-meter' );
 		}
-	}
-	/**
-	 * Function that adds async attribute
-	 *
-	 * @since 1.22.0
-	 * @method  uabb_add_async_attribute for the enqueued `uabb-g-recaptcha` script
-	 * @param string $tag    Script tag.
-	 * @param string $handle Registered script handle.
-	 */
-	public function uabb_rf_add_async_attribute( $tag, $handle ) {
-		if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
-			return $tag;
-		}
-
-		return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
 	}
 	/**
 	 * Function that adds async attribute
@@ -593,7 +577,7 @@ You have received a new submission from %1$s
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::Check_BB_Version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php';

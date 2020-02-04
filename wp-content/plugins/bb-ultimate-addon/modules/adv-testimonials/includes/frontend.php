@@ -74,12 +74,15 @@ if ( 'slider' == $settings->tetimonial_layout ) {
 							?>
 							<div class="uabb-testimonial-author testimonial-author<?php echo $id; ?>">
 								<?php
+								if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'top' === $settings->rating_position ) {
+									$module->render_ratings( $testimonial_item->slider_rating );
+								}
 								if ( '' != $testimonial_item->testimonial_author ) {
 									echo '<' . $settings->testimonial_heading_tag_selection . " class='uabb-testimonial-author-name testimonial-author-name" . $id . "'>";
 									echo $testimonial_item->testimonial_author;
 									echo '</' . $settings->testimonial_heading_tag_selection . '>';
 								}
-								if ( isset( $settings->enable_rating ) && 'yes' == $settings->enable_rating ) {
+								if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'center' === $settings->rating_position ) {
 									$module->render_ratings( $testimonial_item->slider_rating );
 								}
 								?>
@@ -90,6 +93,11 @@ if ( 'slider' == $settings->tetimonial_layout ) {
 									}
 									?>
 								</div>
+								<?php
+								if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'bottom' === $settings->rating_position ) {
+									$module->render_ratings( $testimonial_item->slider_rating );
+								}
+								?>
 							</div>
 							<?php
 						}
@@ -111,12 +119,15 @@ if ( 'slider' == $settings->tetimonial_layout ) {
 							?>
 							<div class="uabb-testimonial-author testimonial-author<?php echo $id; ?>">
 								<?php
+								if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'top' === $settings->rating_position ) {
+									$module->render_ratings( $testimonial_item->slider_rating );
+								}
 								if ( '' != $testimonial_item->testimonial_author ) {
 									echo '<' . $settings->testimonial_heading_tag_selection . " class='uabb-testimonial-author-name testimonial-author-name" . $id . "'>";
 									echo $testimonial_item->testimonial_author;
 									echo '</' . $settings->testimonial_heading_tag_selection . '>';
 								}
-								if ( isset( $settings->enable_rating ) && 'yes' == $settings->enable_rating ) {
+								if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'center' === $settings->rating_position ) {
 									$module->render_ratings( $testimonial_item->slider_rating );
 								}
 								?>
@@ -127,6 +138,11 @@ if ( 'slider' == $settings->tetimonial_layout ) {
 									}
 									?>
 								</div>
+								<?php
+								if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'bottom' === $settings->rating_position ) {
+									$module->render_ratings( $testimonial_item->slider_rating );
+								}
+								?>
 							</div>
 							<?php
 						}
@@ -204,13 +220,16 @@ if ( 'slider-no' == $settings->tetimonial_layout || 'box' == $settings->tetimoni
 						?>
 						<div class="uabb-testimonial-author testimonial-author<?php echo $id; ?>">
 							<?php
+							if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'top' === $settings->rating_position ) {
+								$module->render_ratings( $settings->box_rating );
+							}
 							if ( '' != $settings->testimonial_author_no_slider ) {
 								echo '<' . $settings->testimonial_heading_tag_selection . " class='uabb-testimonial-author-name testimonial-author-name" . $id . "'>";
 								echo $settings->testimonial_author_no_slider;
 								echo '</' . $settings->testimonial_heading_tag_selection . '>';
 							}
-							if ( isset( $settings->enable_rating ) && 'yes' == $settings->enable_rating ) {
-								$module->render_ratings( $settings->box_rating );
+							if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'center' === $settings->rating_position ) {
+									$module->render_ratings( $settings->box_rating );
 							}
 							?>
 							<div class="uabb-testimonial-author-designation testimonial-author-designation<?php echo $id; ?>">
@@ -220,6 +239,11 @@ if ( 'slider-no' == $settings->tetimonial_layout || 'box' == $settings->tetimoni
 								}
 								?>
 							</div>
+							<?php
+							if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'bottom' === $settings->rating_position ) {
+								$module->render_ratings( $settings->box_rating );
+							}
+							?>
 						</div>
 						<?php
 					}
@@ -237,13 +261,16 @@ if ( 'slider-no' == $settings->tetimonial_layout || 'box' == $settings->tetimoni
 						?>
 						<div class="uabb-testimonial-author testimonial-author<?php echo $id; ?>">
 							<?php
+							if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'top' === $settings->rating_position ) {
+								$module->render_ratings( $settings->box_rating );
+							}
 							if ( '' != $settings->testimonial_author_no_slider ) {
 								echo '<' . $settings->testimonial_heading_tag_selection . " class='uabb-testimonial-author-name testimonial-author-name" . $id . "'>";
 								echo $settings->testimonial_author_no_slider;
 								echo '</' . $settings->testimonial_heading_tag_selection . '>';
 							}
-							if ( isset( $settings->enable_rating ) && 'yes' == $settings->enable_rating ) {
-									$module->render_ratings( $settings->box_rating );
+							if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'center' === $settings->rating_position ) {
+								$module->render_ratings( $settings->box_rating );
 							}
 							?>
 							<div class="uabb-testimonial-author-designation testimonial-author-designation<?php echo $id; ?>">
@@ -253,6 +280,11 @@ if ( 'slider-no' == $settings->tetimonial_layout || 'box' == $settings->tetimoni
 								}
 								?>
 							</div>
+							<?php
+							if ( isset( $settings->enable_rating ) && 'yes' === $settings->enable_rating && 'bottom' === $settings->rating_position ) {
+								$module->render_ratings( $settings->box_rating );
+							}
+							?>
 						</div>
 						<?php
 					}

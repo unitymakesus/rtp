@@ -5,8 +5,8 @@
  *  @package UABB Advanced Tabs Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 $settings->title_color        = UABB_Helper::uabb_colorpicker( $settings, 'title_color' );
 $settings->title_hover_color  = UABB_Helper::uabb_colorpicker( $settings, 'title_hover_color' );
@@ -45,7 +45,7 @@ $settings->tab_spacing_size = ( '' != $settings->tab_spacing_size ) ? $settings-
 			<?php if ( ! $version_bb_check ) { ?>
 				<?php echo ( 'left' != $settings->tab_style_alignment ) ? ( ( 'center' != $settings->tab_style_alignment ) ? 'justify-content: flex-end;' : 'justify-content: center;' ) : 'justify-content: flex-start;'; ?>
 		<?php } else { ?>
-			<?php echo ( 'left' != $settings->tab_style_align ) ? ( ( 'center' != $settings->tab_style_align ) ? 'justify-content: flex-end;' : 'justify-content: center;' ) : 'justify-content: flex-start;'; ?>
+				<?php echo ( 'left' != $settings->tab_style_align ) ? ( ( 'center' != $settings->tab_style_align ) ? 'justify-content: flex-end;' : 'justify-content: center;' ) : 'justify-content: flex-start;'; ?>
 		<?php } ?>
 	}
 			<?php

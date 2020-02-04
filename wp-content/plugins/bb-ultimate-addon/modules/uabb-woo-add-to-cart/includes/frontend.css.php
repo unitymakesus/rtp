@@ -5,7 +5,7 @@
  *  @package UABB Woo Add To Cart Module
  */
 
-$version_bb_check   = UABB_Compatibility::check_bb_version();
+$version_bb_check   = UABB_Compatibility::$version_bb_check;
 $border_hover_color = '';
 $text_hover_color   = '';
 $border_size        = '';

@@ -5,8 +5,8 @@
  * @package UABB Info Table Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 $settings->btn_text_color       = UABB_Helper::uabb_colorpicker( $settings, 'btn_text_color' );
 $settings->btn_text_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'btn_text_hover_color' );

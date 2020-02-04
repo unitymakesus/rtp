@@ -8,7 +8,7 @@
 $first_heading_link_nofollow  = '';
 $second_heading_link_nofollow = '';
 $alignment                    = '';
-if ( ! UABB_Compatibility::check_bb_version() ) {
+if ( ! UABB_Compatibility::$version_bb_check ) {
 	$alignment = $settings->dual_color_alignment;
 
 } else {

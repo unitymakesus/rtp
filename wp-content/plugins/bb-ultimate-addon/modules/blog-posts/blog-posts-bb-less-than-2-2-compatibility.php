@@ -282,6 +282,26 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'uabb_message'    => array(
+					'title'  => __( 'Message', 'uabb' ),
+					'fields' => array(
+						'no_results_message' => array(
+							'type'    => 'text',
+							'label'   => __( 'No Results Message', 'uabb' ),
+							'default' => __( "Sorry, we couldn't find any posts. Please try a different search.", 'uabb' ),
+						),
+						'show_search'        => array(
+							'type'    => 'select',
+							'label'   => __( 'Show Search', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'1' => __( 'Show', 'uabb' ),
+								'0' => __( 'Hide', 'uabb' ),
+							),
+							'help'    => __( 'Shows the search form if no posts are found.', 'uabb' ),
+						),
+					),
+				),
 			),
 		),
 		'post_type_filter' => array(
@@ -1205,21 +1225,6 @@ FLBuilder::register_module(
 							'label'       => __( 'Posts Per Page', 'uabb' ),
 							'placeholder' => '10',
 							'size'        => '8',
-						),
-						'no_results_message'   => array(
-							'type'    => 'text',
-							'label'   => __( 'No Results Message', 'uabb' ),
-							'default' => __( "Sorry, we couldn't find any posts. Please try a different search.", 'uabb' ),
-						),
-						'show_search'          => array(
-							'type'    => 'select',
-							'label'   => __( 'Show Search', 'uabb' ),
-							'default' => '1',
-							'options' => array(
-								'1' => __( 'Show', 'uabb' ),
-								'0' => __( 'Hide', 'uabb' ),
-							),
-							'help'    => __( 'Shows the search form if no posts are found.', 'uabb' ),
 						),
 					),
 				),

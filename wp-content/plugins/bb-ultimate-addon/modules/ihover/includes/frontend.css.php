@@ -5,8 +5,8 @@
  *  @package UABB iHover Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 $settings->title_margin_top        = '' != trim( $settings->title_margin_top ) ? $settings->title_margin_top : '5';
 $settings->title_margin_bottom     = '' != trim( $settings->title_margin_bottom ) ? $settings->title_margin_bottom : '5';

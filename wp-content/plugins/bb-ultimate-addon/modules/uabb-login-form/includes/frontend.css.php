@@ -5,7 +5,7 @@
  *  @package UABB Login Form Module Frontend.css.php file.
  */
 
-$version_bb_check                              = UABB_Compatibility::check_bb_version();
+$version_bb_check                              = UABB_Compatibility::$version_bb_check;
 $settings->wp_login_btn_text_color             = UABB_Helper::uabb_colorpicker( $settings, 'wp_login_btn_text_color', true );
 $settings->wp_login_btn_text_hover_color       = UABB_Helper::uabb_colorpicker( $settings, 'wp_login_btn_text_hover_color', true );
 $settings->wp_login_btn_background_color       = UABB_Helper::uabb_colorpicker( $settings, 'wp_login_btn_background_color', true );

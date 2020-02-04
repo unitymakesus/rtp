@@ -9,6 +9,10 @@ class FL_Filesystem {
 
 	public static function instance() {
 		if ( is_null( self::$_instance ) ) {
+			/**
+			 * Make Filesystem Instance filterable.
+			 * @see fl_filesystem_instance
+			 */
 			$filtered        = apply_filters( 'fl_filesystem_instance', null );
 			self::$_instance = $filtered instanceof FL_Filesystem ? $filtered : new self();
 		}
@@ -133,6 +137,10 @@ class FL_Filesystem {
 		if ( ! $wp_filesystem || 'direct' != $wp_filesystem->method ) {
 			require_once ABSPATH . '/wp-admin/includes/file.php';
 
+			/**
+			 * Context for filesystem, default false.
+			 * @see request_filesystem_credentials_context
+			 */
 			$context = apply_filters( 'request_filesystem_credentials_context', false );
 
 			add_filter( 'filesystem_method', array( $this, 'filesystem_method' ) );

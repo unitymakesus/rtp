@@ -5,8 +5,8 @@
  * @package UABB Advanced Testimonials Module
  */
 
-	$version_bb_check = UABB_Compatibility::check_bb_version();
-	$converted        = UABB_Compatibility::check_old_page_migration();
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
+	$converted        = UABB_Compatibility::$uabb_migration;
 
 	$settings->dot_color          = uabb_theme_base_color( $settings->dot_color );
 	$settings->arrow_color        = uabb_theme_base_color( $settings->arrow_color );
@@ -214,7 +214,7 @@
 						$extra_padding = 0;
 					}
 }
-?>
+				?>
 
 				width: 100%;
 				<?php if ( 'center' == $settings->content_alignment ) : ?>
@@ -276,12 +276,14 @@
 
 <?php
 if ( isset( $settings->rating_align ) && $version_bb_check ) {
-	FLBuilderCSS::responsive_rule( array(
-		'settings'     => $settings,
-		'setting_name' => 'rating_align',
-		'selector'     => ".fl-node-$id .uabb-testimonial .uabb-rating",
-		'prop'         => 'text-align',
-	) );
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'rating_align',
+			'selector'     => ".fl-node-$id .uabb-testimonial .uabb-rating",
+			'prop'         => 'text-align',
+		)
+	);
 }
 ?>
 

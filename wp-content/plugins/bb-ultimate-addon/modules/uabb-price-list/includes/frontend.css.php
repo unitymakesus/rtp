@@ -5,7 +5,7 @@
  *  @package UABB Price List Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 $settings->list_item_background_color       = UABB_Helper::uabb_colorpicker( $settings, 'list_item_background_color' );
 $settings->list_item_background_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'list_item_background_hover_color' );

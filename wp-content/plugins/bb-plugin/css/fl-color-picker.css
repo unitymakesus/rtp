@@ -233,6 +233,7 @@
 }
 .fl-color-picker-color.fl-color-picker-empty {
 	border-color: transparent;
+	background-color: transparent;
 }
 .fl-color-picker-color.fl-color-picker-empty svg.fl-color-picker-icon {
 	display:block;
@@ -243,7 +244,7 @@
 .fl-color-picker-clear {
 	box-sizing: border-box;
 	position: relative;
-	display: flex;
+	display: flex !important;
 	flex: 0 0 36px;
 	justify-content: center;
 	padding: 0;
@@ -253,7 +254,7 @@
 	border-top-left-radius: 0px;
 	border-bottom-left-radius: 0px;
 	fill: #A2AABE;
-	background-color: #E7EBEF;
+	background-color: #E7EBEF !important;
 	border-color:transparent;
 	cursor: pointer;
 }

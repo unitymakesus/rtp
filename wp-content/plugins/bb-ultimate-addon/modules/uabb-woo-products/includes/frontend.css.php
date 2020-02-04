@@ -5,7 +5,7 @@
  *  @package UABB Woo Products Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 $pg_bg_hover_color = ( false === strpos( $settings->pg_bg_hover_color, 'rgb' ) ) ? '#' . $settings->pg_bg_hover_color : $settings->pg_bg_hover_color;
 

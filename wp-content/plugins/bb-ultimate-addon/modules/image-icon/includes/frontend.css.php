@@ -5,7 +5,7 @@
  *  @package UABB Image Icon Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 if ( 'none' != $settings->image_type ) : // Condition contain whole Style.
 

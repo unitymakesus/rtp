@@ -53,6 +53,12 @@ class UABB_Init {
 
 			add_action( 'wp_ajax_dismissed_login_notice_handler', array( $this, 'load_uabb_ajax_login_notice_handler' ) );
 
+			add_action( 'wp_ajax_uabb_batch_dismiss_notice', array( $this, 'uabb_batch_dismiss_notice_handler' ) );
+
+			add_action( 'wp_ajax_uabb_batch_dismiss_complete_notice', array( $this, 'uabb_batch_dismiss_complete_notice' ) );
+
+			add_filter( 'fl_builder_style_fields', array( $this, 'uabb_copy_style_fields' ) );
+
 		} else {
 
 			// disable UABB activation ntices in admin panel.
@@ -73,7 +79,53 @@ class UABB_Init {
 	function load_uabb_admin_notice_js() {
 		wp_register_script( 'uabb-admin-notice-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin-notice.js', false, BB_ULTIMATE_ADDON_VER );
 	}
+	/**
+	 * AJAX handler to store the state of dismissible notices.
+	 *
+	 * @since 1.25.0
+	 */
+	function uabb_batch_dismiss_complete_notice() {
 
+		check_ajax_referer( 'uabb-batch-complete-nonce', 'batch_complete_nonce' );
+
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+
+		// Store it in the options table.
+		update_option( 'uabb_batch_notice_complete_dismissed', $dismissed );
+
+		wp_send_json_success();
+	}
+	/**
+	 * AJAX handler to store the state of dismissible notices.
+	 *
+	 * @since 1.25.0
+	 */
+	function uabb_batch_dismiss_notice_handler() {
+
+		check_ajax_referer( 'uabb-batch-process-nonce', 'batch_process_nonce' );
+
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+
+		// Store it in the options table.
+		update_option( 'uabb_batch_notice_dismissed', $dismissed );
+
+		wp_send_json_success();
+	}
+	/**
+	 * Function that return the UABB Style Fields
+	 *
+	 * @param array $style_fields gets the array for the form defaults.
+	 *
+	 * @since 1.25.0
+	 */
+	public function uabb_copy_style_fields( $style_fields ) {
+
+		$uabb_style_fields = array( 'form', 'uabb-gradient' );
+
+		return array_merge( $style_fields, $uabb_style_fields );
+	}
 	/**
 	 * AJAX handler to store the state of dismissible notices.
 	 *
@@ -411,14 +463,18 @@ class UABB_Init {
 					echo '<div data-nonce="' . wp_create_nonce( 'uabb-admin-nonce' ) . '" class="notice notice-error notice-warn uabb-admin-login-dismiss-notice is-dismissible">';
 					echo sprintf(
 						'<p> With new <strong>%1$s </strong>version 1.24.2 it is mandatory to add a Facebook App Secret Key <a href="%2$s">here</a> for the Login Form widget. This is to ensure extra security for the widget. <br><br>
-In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ', $name, esc_url( $admin_link )
+In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ',
+						$name,
+						esc_url( $admin_link )
 					);
 					echo '</div>';
 				} else {
 					echo '<div data-nonce="' . wp_create_nonce( 'uabb-admin-nonce' ) . '" class="notice notice-error notice-warn uabb-admin-login-dismiss-notice is-dismissible">';
 					echo sprintf(
 						'<p> With new <strong>%1$s </strong>version 1.24.2 it is mandatory to add a Facebook App Secret Key <a href="%2$s">here</a> for the Login Form widget. This is to ensure extra security for the widget. <br><br>
-In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ', $branding_name, esc_url( $admin_link )
+In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ',
+						$branding_name,
+						esc_url( $admin_link )
 					);
 					echo '</div>';
 				}

@@ -842,7 +842,7 @@ $row_settings = array(
 								'aside'   => '&lt;aside&gt;',
 								'header'  => '&lt;header&gt;',
 								'footer'  => '&lt;footer&gt;',
-							) ),
+							)),
 							'help'    => __( 'Optional. Choose an appropriate HTML5 content sectioning element to use for this row to improve accessibility and machine-readability.', 'fl-builder' ),
 							'preview' => array(
 								'type' => 'none',

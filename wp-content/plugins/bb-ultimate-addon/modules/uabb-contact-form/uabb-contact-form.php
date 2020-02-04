@@ -33,7 +33,6 @@ class UABBContactFormModule extends FLBuilderModule {
 
 		add_action( 'wp_ajax_uabb_builder_email', array( $this, 'send_mail' ) );
 		add_action( 'wp_ajax_nopriv_uabb_builder_email', array( $this, 'send_mail' ) );
-		add_filter( 'script_loader_tag', array( $this, 'uabb_add_async_attribute' ), 10, 2 );
 	}
 	/**
 	 * Function that gets mailto email
@@ -64,21 +63,6 @@ class UABBContactFormModule extends FLBuilderModule {
 				true
 			);
 		}
-	}
-
-	/**
-	 * Function that adds async attribute
-	 *
-	 * @method  uabb_add_async_attribute for the enqueued `uabb-g-recaptcha` script
-	 * @param string $tag    Script tag.
-	 * @param string $handle Registered script handle.
-	 */
-	public function uabb_add_async_attribute( $tag, $handle ) {
-		if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
-			return $tag;
-		}
-
-		return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
 	}
 
 	/**
@@ -222,9 +206,9 @@ class UABBContactFormModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
@@ -1134,7 +1118,7 @@ You have received a new submission from %1$s
  * Condition to verify Beaver Builder version.
  * And accordingly render the required form settings file.
  */
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php';

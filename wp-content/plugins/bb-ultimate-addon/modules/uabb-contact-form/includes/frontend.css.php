@@ -8,8 +8,8 @@
 ?>
 <?php
 
-	$version_bb_check = UABB_Compatibility::check_bb_version();
-	$converted        = UABB_Compatibility::check_old_page_migration();
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
+	$converted        = UABB_Compatibility::$uabb_migration;
 
 	$settings->input_text_color           = UABB_Helper::uabb_colorpicker( $settings, 'input_text_color' );
 	$settings->input_background_color     = UABB_Helper::uabb_colorpicker( $settings, 'input_background_color', true );
@@ -332,6 +332,12 @@ if ( 'full' != $settings->btn_align ) {
 .fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit .uabb-contact-form-button-text {
 	color: <?php echo uabb_theme_text_color( $settings->btn_text_color ); ?>;
 }
+<?php if ( ! empty( $settings->btn_icon_color ) ) : ?>
+.fl-node-<?php echo $id; ?> .uabb-submit-btn .uabb-contact-form-button .uabb-contact-form-submit .uabb-contact-form-submit-button-icon {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->btn_icon_color ); ?>;
+}
+<?php endif; ?>
+
 .fl-builder-content .fl-node-<?php echo $id; ?> .uabb-module-content.uabb-contact-form .uabb-contact-form-submit {
 	<?php if ( 'default' !== $settings->btn_style ) { ?>
 		border-radius: <?php echo  ( '' != $settings->btn_radius ) ? $settings->btn_radius : '4'; ?>px;

@@ -96,7 +96,8 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 			);
 
 			FLBuilder::register_settings_form(
-				'uabb_custom_post_layout', array(
+				'uabb_custom_post_layout',
+				array(
 					'title' => __( 'Custom Post Layout', 'uabb' ),
 					'tabs'  => array(
 						'html' => array(

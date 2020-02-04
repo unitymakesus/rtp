@@ -1,7 +1,7 @@
 /**************************************************
  *
- * The _cacheMargins method of this version has 
- * been customized to fix an issue that was causing 
+ * The _cacheMargins method of this version has
+ * been customized to fix an issue that was causing
  * a helper position bug in the builder.
  *
  **************************************************/

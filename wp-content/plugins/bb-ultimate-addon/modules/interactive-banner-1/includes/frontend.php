@@ -5,7 +5,7 @@
  *  @package UABB Interactive Banner 1 Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 $nofollow         = '';
 if ( $version_bb_check ) {
 	if ( isset( $settings->cta_link_nofollow ) ) {

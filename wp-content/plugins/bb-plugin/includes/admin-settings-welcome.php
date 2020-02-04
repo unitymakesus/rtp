@@ -7,7 +7,7 @@ function fl_welcome_utm( $campaign ) {
 		'utm_campaign' => $campaign,
 	);
 }
-$blog_post_url   = FLBuilderModel::get_store_url( 'beaver-builder-2-2-falcon-new-prebuilt-rows-unit-selectors-and-much-more', fl_welcome_utm( 'settings-welcome-blog-post' ) );
+$blog_post_url   = FLBuilderModel::get_store_url( '?p=520854', fl_welcome_utm( 'settings-welcome-blog-post' ) );
 $change_logs_url = FLBuilderModel::get_store_url( 'change-logs', fl_welcome_utm( 'settings-welcome-change-logs' ) );
 $upgrade_url     = FLBuilderModel::get_upgrade_url( fl_welcome_utm( 'settings-welcome-upgrade' ) );
 $support_url     = FLBuilderModel::get_store_url( 'beaver-builder-support', fl_welcome_utm( 'settings-welcome-support' ) );
@@ -83,15 +83,15 @@ $fb_url          = 'https://www.facebook.com/groups/beaverbuilders/';
 			<div class="fl-welcome-col">
 
 				<?php /* translators: %s: builder version */ ?>
-				<h4><?php printf( __( 'What\'s New in Beaver Builder %s', 'fl-builder' ), '2.2 "Falcon"' ); ?></h4>
+				<h4><?php printf( __( 'What\'s New in Beaver Builder %s', 'fl-builder' ), '2.3 "Folsom"' ); ?></h4>
 
-				<p><?php _e( 'We\'re thrilled to announce Beaver Builder 2.2 "Falcon". Beaver Builder 2.2 brings a number of design-focused enhancements and quality-of-life improvements.', 'fl-builder' ); ?></p>
+				<p><?php _e( 'We\'re thrilled to announce Beaver Builder 2.3 "Folsom". Beaver Builder 2.3 brings a number of workflow enhancements.', 'fl-builder' ); ?></p>
 
 				<ul>
-					<li><?php _e( 'Leverage percent, em, and viewport-based units.', 'fl-builder' ); ?></li>
-					<li><?php _e( 'Mix and match over 80 new <a target="_blank" href="https://kb.wpbeaverbuilder.com/article/666-beaver-builder-2-2-release-features#prebuilt-rows">prebuilt row templates</a>.', 'fl-builder' ); ?></li>
-					<li><?php _e( 'Break out of the box with <a target="_blank" href="https://kb.wpbeaverbuilder.com/article/678-row-shape-overlays">row shapes</a> and <a target="_blank" href="https://kb.wpbeaverbuilder.com/article/669-color-gradients-for-row-and-column-backgrounds-and-overlays">gradients</a>, plus new border and text shadow effects.', 'fl-builder' ); ?></li>
-					<li><?php _e( '<a target="_blank" href="https://kb.wpbeaverbuilder.com/article/690-beaver-builder-2-2-changes-to-specific-modules">More module settings</a> and responsive capabilities give you more control with less code.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'Undo / Redo & History Manager.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'Editing with BB on mobile devices now has support.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'Copy and paste module settings across pages or even sites.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'The Beaver Builder UI will now remember which settings tab was last open when opening new settings windows.', 'fl-builder' ); ?></li>
 				</ul>
 				<?php /* translators: 1: blog post url: 2: changelog url */ ?>
 				<p><?php printf( __( 'There\'s a whole lot more, too! Read about everything else on our <a href="%1$s" target="_blank">update post</a> or <a href="%2$s" target="_blank">change logs</a>.', 'fl-builder' ), $blog_post_url, $change_logs_url ); ?></p>

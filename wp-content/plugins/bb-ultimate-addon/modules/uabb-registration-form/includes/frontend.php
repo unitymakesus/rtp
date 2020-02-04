@@ -5,6 +5,24 @@
  *  @package Registration Form Module
  */
 
+add_filter(
+	'script_loader_tag', 'uabb_rf_add_async_attribute', 10, 2
+);
+/**
+ * Function that adds async attribute
+ *
+ * @since 1.22.0
+ * @method  uabb_add_async_attribute for the enqueued `uabb-g-recaptcha` script
+ * @param string $tag    Script tag.
+ * @param string $handle Registered script handle.
+ */
+function uabb_rf_add_async_attribute( $tag, $handle ) {
+
+	if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
+			return $tag;
+	}
+	return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
+}
 ?>
 
 <?php

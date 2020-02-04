@@ -5,8 +5,8 @@
  *  @package UABB Countdown Module
  */
 
-$converted        = UABB_Compatibility::check_old_page_migration();
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$converted        = UABB_Compatibility::$uabb_migration;
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 if ( isset( $settings->count_animation ) && 'flash' == $settings->count_animation ) { ?>
 .fl-node-<?php echo $id; ?> .uabb-count-down-digit {

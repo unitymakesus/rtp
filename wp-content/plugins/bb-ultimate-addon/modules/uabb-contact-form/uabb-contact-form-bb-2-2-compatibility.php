@@ -842,6 +842,19 @@ FLBuilder::register_module(
 							'label'       => __( 'Icon', 'uabb' ),
 							'show_remove' => true,
 						),
+						'btn_icon_color'      => array(
+							'type'        => 'color',
+							'label'       => __( 'Icon Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-contact-form-button .uabb-contact-form-submit .uabb-contact-form-submit-button-icon',
+								'property' => 'color',
+							),
+						),
 						'btn_icon_position'   => array(
 							'type'    => 'select',
 							'label'   => __( 'Icon Position', 'uabb' ),
@@ -1424,7 +1437,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/design-email-template-to-receive-user-information-within-mail/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=contact-form-module" target="_blank" rel="noopener"> How to Design the Email Template to Receive User Information within the email? </a> </li>
 

@@ -46,14 +46,6 @@ if ( $updgrate_action === 'upgrade' ) {
 	}
 }
 
-if ( isset( $_POST['bsf-developer-access'] ) ) {
-	// echo $_POST['bsf-developer-access-action'];
-	if ( isset( $_POST['bsf-developer-access-action'] ) || $_POST['bsf-developer-access-action'] !== '' ) {
-		$dev_action = $_POST['bsf-developer-access-action'];
-		bsf_grant_developer_access( $dev_action );
-	}
-}
-
 $author = ( isset( $_GET['author'] ) ) ? true : false;
 if ( $author ) {
 	$tab = 'author';
@@ -653,10 +645,6 @@ $is_product_theme = false;
 									$action      = 'grant';
 								}
 								?>
-								<input type="hidden" name="bsf-developer-access-action" value="<?php echo $action; ?>"/>
-								<input type="submit" class="button-primary bsf-access-<?php echo $action; ?>-button"
-									   name="bsf-developer-access" value="<?php echo $button_text; ?>"
-									   title="<?php echo $title; ?>" <?php echo $disabled; ?>/>
 							</form>
 						</div>
 					</div>

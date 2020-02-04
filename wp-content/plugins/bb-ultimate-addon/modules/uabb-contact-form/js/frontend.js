@@ -38,6 +38,7 @@
 		this.subject_required = settings.subject_required;
 		this.phone_required = settings.phone_required;
 		this.msg_required = settings.msg_required;		
+		this.msg_toggle = settings.msg_toggle;
 		this.button_text = settings.button_text;
 		this.form 		= $( this.nodeClass + ' .uabb-contact-form' );
 		this.button		= this.form.find( '.uabb-contact-form-submit' );
@@ -193,7 +194,7 @@
 			}
 			
 			// validate the message..just make sure it's there
-			if( this.msg_required == 'yes' ) {
+			if ( (this.msg_required == 'yes') && ( this.msg_toggle == 'show' ) ) {
 				if ( message.val().trim() === '' ) {
 					isValid = false;
 					message.parent().addClass( 'uabb-error' );

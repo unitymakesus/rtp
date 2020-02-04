@@ -5,7 +5,7 @@
  * @package Button
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 if ( ! $version_bb_check ) {
 	FLBuilder::register_settings_form(

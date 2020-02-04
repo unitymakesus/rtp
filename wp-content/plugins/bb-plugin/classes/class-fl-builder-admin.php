@@ -99,6 +99,10 @@ final class FLBuilderAdmin {
 	 * @return string
 	 */
 	static public function admin_settings_capability() {
+		/**
+		 * Default admin settings capability ( manage_options )
+		 * @see fl_builder_admin_settings_capability
+		 */
 		return apply_filters( 'fl_builder_admin_settings_capability', 'manage_options' );
 	}
 
@@ -192,6 +196,10 @@ final class FLBuilderAdmin {
 			$message = __( 'Beaver Builder activated! <a%s>Click here</a> to get started.', 'fl-builder' );
 		}
 
+		/**
+		 * Url to redirect to on activation
+		 * @see fl_builder_activate_redirect_url
+		 */
 		$url = apply_filters( 'fl_builder_activate_redirect_url', admin_url( '/options-general.php?page=fl-builder-settings' . $hash ) );
 
 		echo '<div class="updated" style="background: #d3ebc1;">';

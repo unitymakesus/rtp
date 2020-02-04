@@ -193,8 +193,9 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 
 			// Send request for list ID validation
 			$get_api_response = $api->subscribe( array(
-				'name'  => $name,
-				'email' => $email,
+				'name'    => $name,
+				'email'   => $email,
+				'api_key' => $account_data['api_key'],
 			) );
 
 			if ( false === $get_api_response['status'] ) {

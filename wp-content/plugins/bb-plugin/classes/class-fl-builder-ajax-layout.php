@@ -68,6 +68,7 @@ final class FLBuilderAJAXLayout {
 			'partial'       => $partial_refresh_data['is_partial_refresh'],
 			'nodeId'        => $partial_refresh_data['node_id'],
 			'nodeType'      => $partial_refresh_data['node_type'],
+			'moduleType'    => $partial_refresh_data['module_type'],
 			'oldNodeId'     => $old_node_id,
 			'html'          => $html,
 			'scriptsStyles' => $scripts_styles,
@@ -355,6 +356,7 @@ final class FLBuilderAJAXLayout {
 			$post_data       = FLBuilderModel::get_post_data();
 			$partial_refresh = false;
 			$node_type       = null;
+			$module_type     = null;
 
 			// Check for partial refresh if we have a node ID.
 			if ( isset( $post_data['node_id'] ) ) {
@@ -368,6 +370,7 @@ final class FLBuilderAJAXLayout {
 				if ( $node && 'module' == $node->type ) {
 					$node            = FLBuilderModel::get_module( $node_id );
 					$node_type       = 'module';
+					$module_type     = $node->settings->type;
 					$partial_refresh = $node->partial_refresh;
 				} elseif ( $node ) {
 					$node_type       = $node->type;
@@ -385,6 +388,7 @@ final class FLBuilderAJAXLayout {
 				'node_id'            => $node_id,
 				'node'               => $node,
 				'node_type'          => $node_type,
+				'module_type'        => $module_type,
 			);
 		}
 
@@ -497,11 +501,15 @@ final class FLBuilderAJAXLayout {
 
 		/**
 		 * Use this filter to prevent the builder from rendering shortcodes.
-		 * It is useful if you don’t want shortcodes rendering while the builder UI is active.
+		 * It is useful if you don't want shortcodes rendering while the builder UI is active.
 		 * @see fl_builder_render_shortcodes
 		 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
 		 */
 		if ( apply_filters( 'fl_builder_render_shortcodes', true ) ) {
+			/**
+			 * Used with fl_builder_render_shortcodes shortcode.
+			 * @see fl_builder_before_render_shortcodes
+			 */
 			$html = apply_filters( 'fl_builder_before_render_shortcodes', $html );
 			ob_start();
 			echo do_shortcode( $html );

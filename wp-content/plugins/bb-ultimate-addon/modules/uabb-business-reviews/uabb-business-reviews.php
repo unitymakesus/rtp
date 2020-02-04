@@ -1092,7 +1092,7 @@ if ( ! empty( $google_api_key ) && ! empty( $uabb_yelp_api_key ) ) {
  * And accordingly render the required form settings file.
  */
 
-if ( uabb_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/uabb-business-reviews-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php';

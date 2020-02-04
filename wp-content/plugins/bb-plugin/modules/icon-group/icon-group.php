@@ -74,8 +74,11 @@ FLBuilder::register_module('FLIconGroupModule', array(
 						'type'    => 'align',
 						'label'   => __( 'Alignment', 'fl-builder' ),
 						'default' => 'center',
-						'preview' => array(
-							'type' => 'none',
+						'responsive' => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => '.fl-icon-group',
+							'property' => 'text-align',
 						),
 					),
 				),
@@ -173,6 +176,26 @@ FLBuilder::register_settings_form('icon_group_form', array(
 				'colors' => array( // Section
 					'title'  => __( 'Colors', 'fl-builder' ), // Section Title
 					'fields' => array( // Section Fields
+						'duo_color1'     => array(
+							'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_alpha' => true,
+							'show_reset' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'duo_color2'     => array(
+							'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_alpha' => true,
+							'show_reset' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
 						'color'          => array(
 							'type'        => 'color',
 							'connections' => array( 'color' ),

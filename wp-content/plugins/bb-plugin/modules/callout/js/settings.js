@@ -7,12 +7,42 @@
 			var form  = $('.fl-builder-settings'),
 				align = form.find('input[name=align]'),
 				iconSize = form.find( '#fl-field-icon_size input[type=number]' ),
-				buttonBgColor = form.find( 'input[name=btn_bg_color]' );
+				buttonBgColor = form.find( 'input[name=btn_bg_color]' ),
+				icon = form.find( 'input[name=icon]' ),
+				icon2 = form.find( 'input[name=btn_icon]' );
+
+				icon.on( 'change', this._flipSettings );
+				icon2.on( 'change', this._flipSettings );
+				this._flipSettings()
 
 			// Preview events.
 			align.on('change', this._previewAlign);
 			iconSize.on( 'input', this._previewIconSize );
 			buttonBgColor.on( 'change', this._previewButtonBackground );
+		},
+
+		_flipSettings: function() {
+			var form  = $( '.fl-builder-settings' ),
+					icon  = form.find( 'input[name=icon]' ),
+					icon2 = form.find( 'input[name=btn_icon]' );
+			if ( -1 !== icon.val().indexOf( 'fad fa') ) {
+				$('#fl-field-icon_duo_color1').show();
+				$('#fl-field-icon_duo_color2').show();
+				$('#fl-field-icon_color').hide();
+				$('#fl-field-icon_hover_color').hide();
+			} else {
+				$('#fl-field-icon_duo_color1').hide();
+				$('#fl-field-icon_duo_color2').hide();
+				$('#fl-field-icon_color').show();
+				$('#fl-field-icon_hover_color').show();
+			}
+			if ( -1 !== icon2.val().indexOf( 'fad fa') ) {
+				$('#fl-field-btn_duo_color1').show();
+				$('#fl-field-btn_duo_color2').show();
+			} else {
+				$('#fl-field-btn_duo_color1').hide();
+				$('#fl-field-btn_duo_color2').hide();
+			}
 		},
 
 		_previewAlign: function()

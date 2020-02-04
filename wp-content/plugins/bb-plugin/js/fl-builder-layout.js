@@ -283,6 +283,18 @@
 				body.addClass('fl-builder-mobile');
 			}
 
+			if ( $(window).width() < FLBuilderLayoutConfig.breakpoints.small ) {
+				body.addClass( 'fl-builder-breakpoint-small' );
+			}
+
+			if ( $(window).width() > FLBuilderLayoutConfig.breakpoints.small && $(window).width() < FLBuilderLayoutConfig.breakpoints.medium ) {
+				body.addClass( 'fl-builder-breakpoint-medium' );
+			}
+
+			if ( $(window).width() > FLBuilderLayoutConfig.breakpoints.medium ) {
+				body.addClass( 'fl-builder-breakpoint-large' );
+			}
+
 			// IE11 body class.
 			if ( ua.indexOf( 'Trident/7.0' ) > -1 && ua.indexOf( 'rv:11.0' ) > -1 ) {
 				body.addClass( 'fl-builder-ie-11' );
@@ -504,9 +516,20 @@
 				endTime     = 'undefined' !== typeof playerWrap.data('end') ? playerWrap.data('end') : 0,
 				loop        = 'undefined' !== typeof playerWrap.data('loop') ? playerWrap.data('loop') : 1,
 				stateCount  = 0,
-				player;
+				player,fallback_showing;
 
 			if ( videoId ) {
+				fallback = playerWrap.data('fallback') || false
+				if( fallback ) {
+					playerWrap.find('iframe').remove()
+					fallbackTag = $( '<div></div>' );
+					fallbackTag.addClass( 'fl-bg-video-fallback' );
+					fallbackTag.css( 'background-image', 'url(' + playerWrap.data('fallback') + ')' );
+					fallbackTag.css( 'background-size', 'cover' );
+					fallbackTag.css( 'transition', 'background-image 1s')
+					playerWrap.append( fallbackTag );
+					fallback_showing = true;
+				}
 				FLBuilderLayout._onYoutubeApiReady( function( YT ) {
 					setTimeout( function() {
 
@@ -533,6 +556,12 @@
 									}
 								},
 								onStateChange: function( event ) {
+
+									if ( event.data === 1 ) {
+										if ( fallback_showing ) {
+											$( '.fl-bg-video-fallback' ).css( 'background-image', 'url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)' )
+										}
+									}
 									// Manual check if video is not playable in some browsers.
 									// StateChange order: [-1, 3, -1]
 									if ( stateCount < 4 ) {

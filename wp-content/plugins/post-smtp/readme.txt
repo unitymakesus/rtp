@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=yehuda@m
 Tags: postman smtp, postman, smtp, email, mail, mailer, email log, oauth2, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 3.9
 Tested up to: 5.3.2
-Stable tag: 2.0.9
+Stable tag: 2.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -285,6 +285,13 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 
 
 == Changelog ==
+
+= 2.0.10 - 2020-01-21
+* Fixed: HTML content type
+* Fixed: Sendgrid crash when has duplicates recipients (bypass, Sendgrid issue).
+* Fixed: Few OAuth undefined notifications
+* Fixed: Duplicate Emails - When you have notify and confirm (Ninja forms, etc..)
+* Fixed: Logs wp_error convert
 
 = 2.0.9 - 2020-01-13
 * Fixed: Notify on error bug - crash site

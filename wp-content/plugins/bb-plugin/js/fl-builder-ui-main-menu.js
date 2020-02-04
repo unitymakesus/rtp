@@ -49,6 +49,7 @@
         */
         show: function() {
             this.$el.addClass('is-showing');
+			this.isShowing = true;
         },
 
         /**
@@ -58,6 +59,7 @@
         */
         hide: function() {
             this.$el.removeClass('is-showing');
+			this.isShowing = false;
         },
 
         /**
@@ -114,11 +116,6 @@
             // Render Views
             for (var key in FLBuilderConfig.mainMenu) {
                 this.renderPanel( key );
-                var hook = 'render' + key.charAt(0).toUpperCase() + key.slice(1) + 'Panel';
-
-                FLBuilder.addHook( hook, $.proxy( function(){
-		            this.renderPanel( key );
-	            }, this ) );
             }
 
             // Event Listeners
@@ -156,8 +153,8 @@
         */
         renderPanel: function( key ) {
 	        var data, view, $html;
+			var current = this.views[ key ];
 
-	        $( 'fl-builder--main-menu-panel-view[data-name="' + key + '"]' ).remove();
             data = FLBuilderConfig.mainMenu[ key ];
             data.handle = key;
             view = PanelView.create( data );
@@ -167,6 +164,14 @@
             $( '.fl-builder--main-menu-panel-views' ).append( $html );
             view.bindEvents();
             view.$el.find( '.fl-builder--menu-item' ).on( 'click', this.onItemClick.bind( this ) );
+
+			if ( 'undefined' !== typeof current ) {
+				current.$el.remove();
+				if ( current.isShowing ) {
+					this.currentView = view
+					view.show();
+				}
+			}
 
             if ( view.isRootView ) {
 	            this.rootView = view;
@@ -271,7 +276,6 @@
             currentView.transitionOut(true);
             newView.transitionIn(true);
             this.currentView = newView;
-            //var item = newView.$el.find('.fl-builder--menu-item:first-child').eq(0).trigger('focus');
             $('.fl-builder-bar-title-caret').focus();
         },
 

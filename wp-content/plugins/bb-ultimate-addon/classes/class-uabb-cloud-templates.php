@@ -55,7 +55,8 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 		function __construct() {
 
 			self::$cloud_url = apply_filters(
-				'uabb_template_cloud_api', array(
+				'uabb_template_cloud_api',
+				array(
 					'page-templates' => 'http://templates.ultimatebeaver.com/wp-json/uabb/v1/template/layouts/',
 					'sections'       => 'http://templates.ultimatebeaver.com/wp-json/uabb/v1/template/sections/',
 					'presets'        => 'http://templates.ultimatebeaver.com/wp-json/uabb/v1/template/presets/',
@@ -148,7 +149,8 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 				}
 
 				$response = wp_remote_get(
-					$https_url, array(
+					$https_url,
+					array(
 						'timeout' => 30,
 					)
 				);
@@ -156,7 +158,8 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 				if ( $ssl && is_wp_error( $response ) ) {
 
 					$response = wp_remote_get(
-						$url, array(
+						$url,
+						array(
 							'timeout' => 30,
 						)
 					);
@@ -247,7 +250,7 @@ if ( ! class_exists( 'UABB_Cloud_Templates' ) ) {
 					 *
 					 *  Then, keep downloaded.
 					 */
-				} elseif ( 0 == $type_templates && count( $downloaded_templates[ $type ] ) > 0 ) {
+				} elseif ( 0 == $type_templates && count( ( is_array( $downloaded_templates[ $type ] ) || is_object( $downloaded_templates[ $type ] ) ) ? $downloaded_templates[ $type ] : array() ) > 0 ) {
 
 					$cloud_templates[ $type ] = $downloaded_templates[ $type ];
 				}

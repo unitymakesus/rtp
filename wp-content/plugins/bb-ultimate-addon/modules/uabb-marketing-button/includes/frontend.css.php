@@ -5,8 +5,8 @@
  * @package UABB Button Module
  */
 
-$version_bb_check = UABB_Compatibility::Check_BB_Version();
-$converted        = UABB_Compatibility::Check_Old_Page_Migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 $settings->bg_color                  = UABB_Helper::uabb_colorpicker( $settings, 'bg_color', true );
 $settings->bg_hover_color            = UABB_Helper::uabb_colorpicker( $settings, 'bg_hover_color', true );

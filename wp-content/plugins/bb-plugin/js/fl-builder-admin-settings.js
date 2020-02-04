@@ -35,6 +35,7 @@
 			this._initUserAccessSelects();
 			this._initUserAccessNetworkOverrides();
 			this._templatesOverrideChange();
+			this._iconPro();
 		},
 
 		/**
@@ -481,7 +482,23 @@
 			}
 
 			return false;
+		},
+		_iconPro: function() {
+			form = $('#icons-form')
+			checkbox = form.find('input[name=fl-enable-fa-pro]').attr('checked')
+			light = form.find('input[value=font-awesome-5-light]').parent()
+			duo   = form.find('input[value=font-awesome-5-duotone]').parent()
+
+
+			if ( 'checked' === checkbox ) {
+				light.css('font-weight', '800')
+			//	light.css('color', '#0E5A71')
+				duo.css('font-weight', '800')
+			//	duo.css('color', '#0E5A71')
+			}
+
 		}
+
 	};
 
 	/* Initializes the builder's admin settings. */

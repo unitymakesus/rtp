@@ -18,7 +18,7 @@
 		?>
 	<div class="fl-pricing-table-col-<?php echo $columns; ?>">
 		<div class="fl-pricing-table-column fl-pricing-table-column-<?php echo $i; ?>">
-			<div class="fl-pricing-table-inner-wrap">
+			<div class="fl-pricing-table-inner-wrap fl-module-content">
 				<h2 class="fl-pricing-table-title"><?php echo $pricing_column->title; ?></h2>
 				<div class="fl-pricing-table-price">
 					<?php echo $pricing_column->price; ?>

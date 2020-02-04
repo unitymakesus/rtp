@@ -42,9 +42,9 @@ class UABBButtonModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::Check_BB_Version();
-		$page_migrated           = UABB_Compatibility::Check_Old_Page_Migration();
-		$stable_version_new_page = UABB_Compatibility::Check_Stable_Version_New_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
@@ -271,7 +271,7 @@ class UABBButtonModule extends FLBuilderModule {
 				$classname .= ' uabb-creative-button-width-auto';
 			}
 		}
-		if ( ! UABB_Compatibility::Check_BB_Version() ) {
+		if ( ! UABB_Compatibility::$version_bb_check ) {
 			if ( ! empty( $this->settings->align ) ) {
 				$classname .= ' uabb-button-' . $this->settings->align;
 				$classname .= ' uabb-creative-button-' . $this->settings->align;
@@ -336,7 +336,7 @@ class UABBButtonModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::Check_BB_Version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-button/uabb-button-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php';

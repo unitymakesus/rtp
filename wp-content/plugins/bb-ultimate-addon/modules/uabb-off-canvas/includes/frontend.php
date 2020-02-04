@@ -22,7 +22,7 @@ if ( 'button' === $settings->offcanvas_on ) {
 	if ( isset( $settings->photo_src ) && ! empty( $settings->photo_src ) ) {
 		$img_src = $settings->photo_src;
 		?>
-		<div class="uabb-offcanvas-action uabb-offcanvas-trigger uabb-offcanvas-photo-wrap" data-modal="<?php echo $id; ?>"><img class="uabb-offcanvas-photo" src="<?php echo $img_src; ?>"></div>
+		<div class="uabb-offcanvas-action uabb-offcanvas-trigger uabb-offcanvas-photo-wrap" data-modal="<?php echo $id; ?>"><div class="uabb-offcanvas-photo-content"><img class="uabb-offcanvas-photo" src="<?php echo $img_src; ?>"></div></div>
 		<?php
 	}
 }

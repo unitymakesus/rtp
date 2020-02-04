@@ -141,6 +141,19 @@
 			}
 		<?php endif; ?>
 
+		<?php if ( $settings->duo_color1 && false !== strpos( $settings->post_icon, 'fad fa' ) ) : ?>
+		.fl-node-<?php echo $id; ?> .fl-post-carousel-gallery .fl-carousel-icon i.fad:before {
+			color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color1 ); ?>;
+		}
+		<?php endif; ?>
+
+		<?php if ( $settings->duo_color2 && false !== strpos( $settings->post_icon, 'fad fa' ) ) : ?>
+		.fl-node-<?php echo $id; ?> .fl-post-carousel-gallery .fl-carousel-icon i.fad::after {
+			color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color2 ); ?>;
+			opacity: 1;
+		}
+		<?php endif; ?>
+
 	<?php endif; ?>
 
 <?php endif; ?>

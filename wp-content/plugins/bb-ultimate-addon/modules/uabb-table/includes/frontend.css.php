@@ -5,7 +5,7 @@
  *  @package UABB Table Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 $settings->table_foreground_outside = UABB_Helper::uabb_colorpicker( $settings, 'table_foreground_outside' );
 

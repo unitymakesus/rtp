@@ -171,6 +171,10 @@ class FLBuilderArt {
 	 * @return Array
 	 */
 	static public function get_art( $key = null ) {
+		/**
+		 * Array of all registered shapes
+		 * @see fl_shape_artwork
+		 */
 		$art = apply_filters( 'fl_shape_artwork', self::$artwork );
 
 		if ( $key && isset( $art[ $key ] ) ) {

@@ -223,7 +223,7 @@ final class FLBuilderCSS {
 		if ( isset( $setting['style'] ) && ! empty( $setting['style'] ) ) {
 			$props['border-style']    = $setting['style'];
 			$props['border-width']    = '0'; // Default to zero.
-			$props['background-clip'] = 'padding-box';
+			$props['background-clip'] = 'border-box';
 		}
 		if ( isset( $setting['color'] ) && ! empty( $setting['color'] ) ) {
 			$props['border-color'] = $setting['color'];
@@ -243,16 +243,16 @@ final class FLBuilderCSS {
 			}
 		}
 		if ( isset( $setting['radius'] ) && is_array( $setting['radius'] ) ) {
-			if ( '' !== $setting['radius']['top_left'] ) {
+			if ( isset( $setting['radius']['top_left'] ) && '' !== $setting['radius']['top_left'] ) {
 				$props['border-top-left-radius'] = $setting['radius']['top_left'] . 'px';
 			}
 			if ( '' !== $setting['radius']['top_right'] ) {
 				$props['border-top-right-radius'] = $setting['radius']['top_right'] . 'px';
 			}
-			if ( '' !== $setting['radius']['bottom_left'] ) {
+			if ( isset( $setting['radius']['bottom_left'] ) && '' !== $setting['radius']['bottom_left'] ) {
 				$props['border-bottom-left-radius'] = $setting['radius']['bottom_left'] . 'px';
 			}
-			if ( '' !== $setting['radius']['bottom_right'] ) {
+			if ( isset( $setting['radius']['bottom_right'] ) && '' !== $setting['radius']['bottom_right'] ) {
 				$props['border-bottom-right-radius'] = $setting['radius']['bottom_right'] . 'px';
 			}
 		}
@@ -353,9 +353,13 @@ final class FLBuilderCSS {
 			$rendered[ $media ] = array();
 		}
 
+		/**
+		 * Filter all responsive css rules before css is rendered
+		 * @see fl_builder_pre_render_css_rules
+		 */
 		$rules = apply_filters( 'fl_builder_pre_render_css_rules', self::$rules );
 
-		foreach ( self::$rules as $args ) {
+		foreach ( $rules as $args ) {
 			$defaults = array(
 				'media'    => '',
 				'selector' => '',

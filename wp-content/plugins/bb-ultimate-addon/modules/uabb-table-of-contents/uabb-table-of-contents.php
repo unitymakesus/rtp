@@ -67,7 +67,7 @@ class UABBTableofContents extends FLBuilderModule {
 	 */
 	public function render_separator( $pos ) {
 
-		$version_bb_check = UABB_Compatibility::check_bb_version();
+		$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 		if ( $version_bb_check ) {
 
@@ -125,7 +125,7 @@ class UABBTableofContents extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table-of-contents/uabb-table-of-contents-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table-of-contents/uabb-table-of-contents-bb-less-than-2-2-compatibility.php';

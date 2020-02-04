@@ -1,5 +1,31 @@
 ( function( $ ) {
 
+	FLBuilder.registerModuleHelper( 'icon_group_form', {
+		init: function() {
+			var form  = $( '.fl-builder-settings' ),
+			icon = form.find( 'input[name=icon]' );
+
+			icon.on( 'change', this._flipSettings );
+
+			this._flipSettings();
+		},
+		_flipSettings: function() {
+			var form  = $( '.fl-builder-settings' ),
+					icon = form.find( 'input[name=icon]' );
+			if ( -1 !== icon.val().indexOf( 'fad fa') ) {
+				form.find('#fl-field-duo_color1').show();
+				form.find('#fl-field-duo_color2').show();
+				form.find('#fl-field-color').hide();
+				form.find('#fl-field-hover_color').hide()
+			} else {
+				form.find('#fl-field-duo_color1').hide();
+				form.find('#fl-field-duo_color2').hide();
+				form.find('#fl-field-color').show();
+				form.find('#fl-field-hover_color').show()
+			}
+		}
+	});
+
 	FLBuilder.registerModuleHelper( 'icon-group', {
 
 		init: function() {
@@ -10,7 +36,6 @@
 
 			size.on( 'input', this._previewSize );
 			spacing.on( 'input', this._previewSpacing );
-			align.on( 'change', this._previewAlign );
 		},
 
 		_previewSize: function() {
@@ -68,20 +93,6 @@
 			}
 
 			icons.css( 'margin', margin );
-		},
-
-		_previewAlign: function() {
-			var node = FLBuilder.preview.elements.node.find( '.fl-icon-group' ),
-				form = $( '.fl-builder-settings' ),
-				spacing = form.find( 'input[name=spacing]' ),
-				align = form.find( 'input[name=align]' ).val();
-
-			node.removeClass( 'fl-icon-group-left' );
-			node.removeClass( 'fl-icon-group-center' );
-			node.removeClass( 'fl-icon-group-right' );
-			node.addClass( 'fl-icon-group-' + align );
-
-			spacing.trigger( 'input' );
 		},
 	});
 

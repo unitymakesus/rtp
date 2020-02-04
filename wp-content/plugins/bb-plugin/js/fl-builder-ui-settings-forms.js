@@ -71,6 +71,7 @@
 					title     : '',
 					badges	  : [],
 					tabs      : [],
+					activeTab : null,
 					buttons	  : [],
 					settings  : {},
 					legacy    : null,
@@ -148,9 +149,10 @@
 		 * @return {Boolean}
 		 */
 		renderLightbox: function( config ) {
-			var template = wp.template( 'fl-builder-settings' ),
-				form	 = FLBuilder._lightbox._node.find( 'form.fl-builder-settings' ),
-				nested   = $( '.fl-lightbox-wrap[data-parent]' );
+			var template 	= wp.template( 'fl-builder-settings' ),
+				form	 	= FLBuilder._lightbox._node.find( 'form.fl-builder-settings' ),
+				nested   	= $( '.fl-lightbox-wrap[data-parent]' ),
+				cachedTabId = localStorage.getItem( 'fl-builder-settings-tab' );
 
 			// Don't render a node form if it's already open.
 			if ( config.nodeId && config.nodeId === form.data( 'node' ) && ! config.lightbox ) {
@@ -160,6 +162,20 @@
 
 			if ( config.hide ) {
 				return true;
+			}
+
+			// Set the active tab from local storage.
+			if ( cachedTabId ) {
+				for ( var tabId in config.tabs ) {
+					if ( tabId === cachedTabId.replace( 'fl-builder-settings-tab-', '' ) ) {
+						config.activeTab = tabId;
+					}
+				}
+			}
+
+			// Make sure we have an active tab.
+			if ( ! config.activeTab ) {
+				config.activeTab = Object.keys( config.tabs ).shift();
 			}
 
 			// Render the lightbox and form.
@@ -575,9 +591,8 @@
 		 * @since 2.0
 		 * @method closeOnDeleteNode
 		 * @param {Object} e
-		 * @param {String} nodeId
 		 */
-		closeOnDeleteNode: function( e, nodeId )
+		closeOnDeleteNode: function( e )
 		{
 			var settings = $( '.fl-builder-settings[data-node]' ),
 				selector = FLBuilder._contentClass + ' .fl-node-' + settings.data( 'node' );
@@ -687,7 +702,10 @@
 			FLBuilder.addHook( 'didApplyRowTemplateComplete', this.updateOnApplyTemplate.bind( this ) );
 			FLBuilder.addHook( 'didApplyColTemplateComplete', this.updateOnApplyTemplate.bind( this ) );
 			FLBuilder.addHook( 'didSaveGlobalNodeTemplate', this.updateOnApplyTemplate.bind( this ) );
+
+			// Revisions and history
 			FLBuilder.addHook( 'didRestoreRevisionComplete', this.updateOnApplyTemplate.bind( this ) );
+			FLBuilder.addHook( 'didRestoreHistoryComplete', this.updateOnHistoryRestored.bind( this ) );
 		},
 
 		/**
@@ -713,6 +731,7 @@
 		 */
 		updateOnSaveGlobalSettings: function( e, settings ) {
 			this.settings.global = settings;
+			FLBuilderConfig.global = settings;
 		},
 
 		/**
@@ -738,11 +757,11 @@
 			var event = arguments[0];
 
 			if ( event.namespace.indexOf( 'didAdd' ) > -1 ) {
-				this.addNode( arguments[1] );
+				this.addNode( 'object' === typeof arguments[1] ? arguments[1].nodeId : arguments[1] );
 			} else if ( event.namespace.indexOf( 'didSaveNodeSettings' ) > -1 ) {
 				this.updateNode( arguments[1].nodeId, arguments[1].settings );
 			} else if ( event.namespace.indexOf( 'didDelete' ) > -1 ) {
-				this.deleteNodes();
+				this.deleteNodes( 'object' === typeof arguments[1] ? arguments[1].nodeId : arguments[1] );
 			} else if ( event.namespace.indexOf( 'didDuplicate' ) > -1 ) {
 				this.duplicateNode( arguments[1].oldNodeId, arguments[1].newNodeId );
 			}
@@ -817,6 +836,22 @@
 		updateOnApplyTemplate: function( e, config ) {
 			this.nodes = config.nodes;
 			this.attachments = config.attachments;
+		},
+
+		/**
+		 * Updates the node config when a history state is rendered.
+		 *
+		 * @since 2.0
+		 * @method updateOnHistoryRestored
+		 * @param {Object} e
+		 * @param {Object} data
+		 */
+		updateOnHistoryRestored: function( e, data ) {
+			this.nodes = data.config.nodes
+			this.attachments = data.config.attachments
+			this.settings.layout = data.settings.layout
+			this.settings.global = data.settings.global
+			FLBuilderConfig.global = data.settings.global
 		},
 
 		/**

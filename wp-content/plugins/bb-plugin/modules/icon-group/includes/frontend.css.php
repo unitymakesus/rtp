@@ -19,8 +19,13 @@ FLBuilder::render_module_css('icon', $id, array(
 	'three_d'              => $settings->three_d,
 ));
 
-?>
-<?php
+FLBuilderCSS::responsive_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'align',
+	'selector'     => ".fl-node-$id .fl-icon-group",
+	'prop'         => 'text-align',
+) );
+
 foreach ( $settings->icons as $i => $icon ) :
 	$index = $i + 1;
 
@@ -54,8 +59,8 @@ foreach ( $settings->icons as $i => $icon ) :
 			}
 		}
 	}
-
 	?>
+
 	<?php if ( isset( $icon->color ) && ! empty( $icon->color ) ) : ?>
 	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i,
 	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i:before {
@@ -85,20 +90,31 @@ foreach ( $settings->icons as $i => $icon ) :
 		background: <?php echo FLBuilderColor::hex_or_rgb( $icon->bg_hover_color ); ?>;
 	}
 	<?php endif; ?>
+
+	<?php if ( $icon->duo_color1 && false !== strpos( $icon->icon, 'fad fa' ) ) : ?>
+	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i:before {
+		color: <?php echo FLBuilderColor::hex_or_rgb( $icon->duo_color1 ); ?>;
+	}
+	<?php endif; ?>
+
+	<?php if ( $icon->duo_color2 && false !== strpos( $icon->icon, 'fad fa' ) ) : ?>
+	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i:after {
+		color: <?php echo FLBuilderColor::hex_or_rgb( $icon->duo_color2 ); ?>;
+		opacity: 1;
+	}
+	<?php endif; ?>
+
 <?php endforeach; ?>
 
-/* Left */
-.fl-node-<?php echo $id; ?> .fl-icon-group-left .fl-icon {
-	margin-right: <?php echo $settings->spacing; ?>px;
-}
+<?php
 
-/* Center */
-.fl-node-<?php echo $id; ?> .fl-icon-group-center .fl-icon {
-	margin-left: <?php echo $settings->spacing; ?>px;
-	margin-right: <?php echo $settings->spacing; ?>px;
-}
-
-/* Right */
-.fl-node-<?php echo $id; ?> .fl-icon-group-right .fl-icon {
-	margin-left: <?php echo $settings->spacing; ?>px;
+switch ( $settings->align ) {
+	case 'right':
+		printf( "\n.fl-node-%s .fl-icon {margin-left: %spx;}", $id, $settings->spacing );
+		break;
+	case 'left':
+		printf( "\n.fl-node-%s .fl-icon {margin-right: %spx;}", $id, $settings->spacing );
+		break;
+	default:
+		printf( "\n.fl-node-%s .fl-icon {margin-left: %spx;margin-right: %spx}", $id, $settings->spacing, $settings->spacing );
 }

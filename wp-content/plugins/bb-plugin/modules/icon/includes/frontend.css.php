@@ -104,12 +104,27 @@ if ( $settings->three_d && ! empty( $settings->bg_hover_color ) ) {
 }
 
 ?>
-<?php if ( $settings->color ) : ?>
+<?php if ( $settings->color && false === strpos( $settings->icon, 'fad fa' ) ) : ?>
 .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i,
 .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i:before {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->color ); ?>;
 }
 <?php endif; ?>
+
+<?php if ( $settings->duo_color1 && false !== strpos( $settings->icon, 'fad fa' ) ) : ?>
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i,
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i:before {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color1 ); ?>;
+}
+<?php endif; ?>
+
+<?php if ( $settings->duo_color2 && false !== strpos( $settings->icon, 'fad fa' ) ) : ?>
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i:after {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color2 ); ?>;
+	opacity: 1;
+}
+<?php endif; ?>
+
 <?php if ( $settings->bg_color ) : ?>
 .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i {
 	background: <?php echo FLBuilderColor::hex_or_rgb( $settings->bg_color ); ?>;
@@ -123,7 +138,7 @@ if ( $settings->three_d && ! empty( $settings->bg_hover_color ) ) {
 	<?php endif; ?>
 }
 <?php endif; ?>
-<?php if ( ! empty( $settings->hover_color ) ) : ?>
+<?php if ( ! empty( $settings->hover_color ) && false === strpos( $settings->icon, 'fad fa' ) ) : ?>
 .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i:hover,
 .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon i:hover:before,
 .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon a:hover i,

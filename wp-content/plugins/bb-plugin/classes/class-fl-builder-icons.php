@@ -129,7 +129,11 @@ final class FLBuilderIcons {
 	 */
 	static private function register_core_sets() {
 		$enabled_icons = FLBuilderModel::get_enabled_icons();
-		$core_sets     = apply_filters( 'fl_builder_core_icon_sets', array(
+		/**
+		 * Array of core icon sets
+		 * @see fl_builder_core_icon_sets
+		 */
+		$core_sets = apply_filters( 'fl_builder_core_icon_sets', array(
 			'font-awesome-5-solid'   => array(
 				'name'   => 'Font Awesome 5 Solid',
 				'prefix' => 'fas',
@@ -141,6 +145,10 @@ final class FLBuilderIcons {
 			'font-awesome-5-light'   => array(
 				'name'   => 'Font Awesome 5 Light (pro only)',
 				'prefix' => 'fal',
+			),
+			'font-awesome-5-duotone' => array(
+				'name'   => 'Font Awesome 5 DuoTone (pro only)',
+				'prefix' => 'fad',
 			),
 			'font-awesome-5-brands'  => array(
 				'name'   => 'Font Awesome 5 Brands',
@@ -156,8 +164,9 @@ final class FLBuilderIcons {
 			),
 		) );
 
-		if ( ! apply_filters( 'fl_enable_fa5_pro', false ) ) {
+		if ( ! FLBuilder::fa5_pro_enabled() ) {
 			unset( $core_sets['font-awesome-5-light'] );
+			unset( $core_sets['font-awesome-5-duotone'] );
 		}
 
 		// Add the core sets.
@@ -182,7 +191,7 @@ final class FLBuilderIcons {
 
 				$key = $set_key;
 
-				if ( apply_filters( 'fl_enable_fa5_pro', false ) ) {
+				if ( FLBuilder::fa5_pro_enabled() ) {
 					switch ( $set_key ) {
 						case 'font-awesome-5-light':
 							$key = 'font-awesome-5-light-pro';
@@ -194,6 +203,9 @@ final class FLBuilderIcons {
 
 						case 'font-awesome-5-solid':
 							$key = 'font-awesome-5-solid-pro';
+							break;
+						case 'font-awesome-5-duotone':
+							$key = 'font-awesome-5-duotone-pro';
 							break;
 					}
 				}
@@ -284,7 +296,7 @@ final class FLBuilderIcons {
 					$time        = str_replace( 'icon-', '', $key );
 					$date_format = get_option( 'date_format' );
 					$time_format = get_option( 'time_format' );
-					$date        = date( $date_format . ' ' . $time_format );
+					$date        = gmdate( $date_format . ' ' . $time_format );
 					$name       .= ' (' . $date . ')';
 				}
 
@@ -400,7 +412,7 @@ final class FLBuilderIcons {
 		// Is this a core icon?
 		if ( stristr( $icon, 'fa fa-' ) ) {
 			wp_enqueue_style( 'font-awesome' );
-		} elseif ( stristr( $icon, 'far fa-' ) || stristr( $icon, 'fas fa-' ) || stristr( $icon, 'fab fa-' ) || stristr( $icon, 'fal fa-' ) ) {
+		} elseif ( stristr( $icon, 'far fa-' ) || stristr( $icon, 'fas fa-' ) || stristr( $icon, 'fab fa-' ) || stristr( $icon, 'fal fa-' ) || stristr( $icon, 'fad fa-' ) ) {
 			wp_enqueue_style( 'font-awesome-5' );
 		} elseif ( stristr( $icon, 'fi-' ) ) {
 			wp_enqueue_style( 'foundation-icons' );

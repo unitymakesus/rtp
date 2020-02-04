@@ -5,8 +5,8 @@
  *  @package Photo Gallery Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 $settings->overlay_color                 = ( '' == $settings->overlay_color ) ? '000000' : $settings->overlay_color;
 $settings->overlay_color                 = UABB_Helper::uabb_colorpicker( $settings, 'overlay_color', true );

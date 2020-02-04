@@ -5,7 +5,8 @@
  *   @package UABB How To Module
  */
 
-	$version_bb_check                   = UABB_Compatibility::check_bb_version();
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
+
 	$settings->box_bg_color             = UABB_Helper::uabb_colorpicker( $settings, 'box_bg_color', true );
 	$settings->title_color              = UABB_Helper::uabb_colorpicker( $settings, 'title_color', true );
 	$settings->description_color        = UABB_Helper::uabb_colorpicker( $settings, 'description_color', true );

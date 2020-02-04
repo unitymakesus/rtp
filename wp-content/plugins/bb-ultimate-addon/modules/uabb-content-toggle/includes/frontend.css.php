@@ -8,7 +8,7 @@
 ?>
 
 <?php
-	$version_bb_check = UABB_Compatibility::check_bb_version();
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
 ?>
 
 .fl-node-<?php echo $id; ?> .uabb-rbs-slider {

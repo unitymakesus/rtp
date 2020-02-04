@@ -270,11 +270,12 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 			$notice_dismissed = get_option( 'uabb_batch_notice_dismissed', 'no' );
 
 			if ( ! $batch_started && ! $version_compare && 'no' === $notice_dismissed ) {
+				wp_enqueue_script( 'uabb-admin-notice-js' );
 				Astra_Notices::add_notice(
 					array(
 						'id'                         => 'uabb-batch-process-start',
 						'type'                       => 'info',
-						'message'                    => '<div class="notice-content" style="margin:0;"><p style="margin-top:0;">Hello! ' . $branding_name . ' version 1.20.2 includes a background process to change all the HotLink Image URLs. This will download images from the ' . $branding_short_name . ' Template Cloud and upload it to your media library. ' . $link . '</p><a href="#" class="uabb-replace-hotlink-images button button-primary">Import Images</a><a href="#" class="astra-notice-close astra-review-notice button" style="margin-left: 10px;">Remind Me Later</a> <p style="margin-bottom:0;"> <b>If ' . $branding_short_name . ' Cloud Template is not used on the website please ignore this notice.</b></p></div>',
+						'message'                    => '<div class="notice-content" style="margin:0;" data-batch-nonce=' . wp_create_nonce( 'uabb-batch-process-nonce' ) . '><p style="margin-top:0;">Hello! ' . $branding_name . ' version 1.20.2 includes a background process to change all the HotLink Image URLs. This will download images from the ' . $branding_short_name . ' Template Cloud and upload it to your media library. ' . $link . '</p><a href="#" class="uabb-replace-hotlink-images button button-primary">Import Images</a><a href="#" class="astra-notice-close astra-review-notice button" style="margin-left: 10px;">Remind Me Later</a> <p style="margin-bottom:0;"> <b>If ' . $branding_short_name . ' Cloud Template is not used on the website please ignore this notice.</b></p></div>',
 						'repeat-notice-after'        => MONTH_IN_SECONDS,
 						'priority'                   => 10,
 						'display-with-other-notices' => true,
@@ -284,13 +285,18 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 
 			$batch_complete = get_option( 'uabb_batch_process_complete', false );
 
-			if ( $batch_complete ) {
+			$batch_complete_dismisse = get_option( 'uabb_batch_notice_complete_dismissed', false );
+
+			if ( $batch_complete && 'yes' !== $batch_complete_dismisse ) {
+
+				wp_enqueue_script( 'uabb-admin-notice-js' );
+
 				Astra_Notices::add_notice(
 					array(
 						'id'                         => 'uabb-batch-process-complete',
 						'type'                       => 'info',
-						'message'                    => '<div class="notice-content">' . __( 'Process Completed.', 'uabb' ) . '</div>',
-						'display-with-other-notices' => false,
+						'message'                    => '<div class="notice-content" data-batch-complete-nonce=' . wp_create_nonce( 'uabb-batch-complete-nonce' ) . '>' . __( 'Process Completed.', 'uabb' ) . '</div>',
+						'display-with-other-notices' => true,
 					)
 				);
 			}

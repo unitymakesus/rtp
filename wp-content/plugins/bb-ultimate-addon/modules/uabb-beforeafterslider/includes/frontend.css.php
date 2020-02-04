@@ -5,8 +5,8 @@
  *  @package UABB Before After Slider Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 if ( isset( $settings->before_label_text ) && '' != $settings->before_label_text ) { ?>
 	.fl-node-<?php echo $id; ?> .baslider-<?php echo $module->node; ?> .twentytwenty-before-label:before

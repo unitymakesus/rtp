@@ -35,6 +35,10 @@ if ( isset( $widget_class ) && class_exists( $widget_class ) ) {
 		'widget_id' => 'fl_builder_widget_' . $module->node,
 	), $module );
 
+	/**
+	 * Is widget output disabled
+	 * @see fl_widget_module_output_disabled
+	 */
 	$disabled = apply_filters( 'fl_widget_module_output_disabled', false, $module, $widget_class );
 
 	if ( false !== $disabled ) {

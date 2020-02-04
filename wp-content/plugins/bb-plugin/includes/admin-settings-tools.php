@@ -28,7 +28,7 @@
 	if ( $debug ) {
 		$expire_opt = get_option( '_transient_timeout_fl_debug_mode' );
 		$datetime1  = new DateTime( 'now' );
-		$datetime2  = new DateTime( date( 'Y-m-d H:i:s', $expire_opt ) );
+		$datetime2  = new DateTime( gmdate( 'Y-m-d H:i:s', $expire_opt ) );
 		$interval   = $datetime1->diff( $datetime2 );
 	}
 	?>

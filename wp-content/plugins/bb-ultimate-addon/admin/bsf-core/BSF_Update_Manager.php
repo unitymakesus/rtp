@@ -350,39 +350,14 @@ if ( ! class_exists( 'BSF_Update_Manager' ) ) {
 		}
 
 		public function _maybe_force_check_bsf_product_updates() {
-			if ( $this->time_since_last_versioncheck( 2 ) ) {
+			if ( true === bsf_time_since_last_versioncheck( 2, 'bsf_local_transient' ) ) {
 				global $ultimate_referer;
 				$ultimate_referer = 'on-transient-delete-2-hours';
 				bsf_check_product_update();
 				update_option( 'bsf_local_transient', (string) current_time( 'timestamp' ) );
-				set_transient( 'bsf_check_product_updates', true, 2 * 24 * 60 * 60 );
+				set_transient( 'bsf_check_product_updates', true, 2 * DAY_IN_SECONDS );
 			}
 
-		}
-
-		public function time_since_last_versioncheck( $hours_completed ) {
-
-			$seconds = $hours_completed * 3600;
-			$status  = false;
-
-			$bsf_local_transient = (int) get_option( 'bsf_local_transient', false );
-
-			if ( $bsf_local_transient != false ) {
-
-				// Find seconds passed since the last timestamp update (i.e. last request made)
-				$elapsed_seconds = (int) current_time( 'timestamp' ) - $bsf_local_transient;
-
-				// IF time is more than the required seconds allow a new HTTP request.
-				if ( $elapsed_seconds > $seconds ) {
-					$status = true;
-				}
-			} else {
-
-				// If timestamp is not yet set - allow the HTTP request.
-				$status = true;
-			}
-
-			return $status;
 		}
 
 		public function use_beta_version( $product_id ) {

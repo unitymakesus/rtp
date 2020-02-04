@@ -87,7 +87,7 @@ class UABBRetinaImageModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check = UABB_Compatibility::check_bb_version();
+		$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 		if ( $version_bb_check ) {
 			// Compatibility for Caption typography settings.
@@ -198,7 +198,7 @@ class UABBRetinaImageModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-retina-image/uabb-retina-image-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-retina-image/uabb-retina-image-bb-less-than-2-2-compatibility.php';

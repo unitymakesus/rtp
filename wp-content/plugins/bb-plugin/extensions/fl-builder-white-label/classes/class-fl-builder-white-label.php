@@ -15,21 +15,23 @@ final class FLBuilderWhiteLabel {
 		add_filter( 'wp_prepare_themes_for_js', __CLASS__ . '::themes_page' );
 		add_filter( 'all_themes', __CLASS__ . '::network_themes_page' );
 		add_filter( 'update_right_now_text', __CLASS__ . '::admin_dashboard_page' );
-		add_filter( 'gettext', __CLASS__ . '::theme_gettext', 10, 3 );
-		add_filter( 'gettext', __CLASS__ . '::plugin_gettext', 10, 3 );
 		add_filter( 'fl_plugin_info_data', __CLASS__ . '::fl_plugin_info', 10, 2 );
 		add_action( 'customize_render_section', __CLASS__ . '::theme_customizer' );
 		add_action( 'admin_enqueue_scripts', __CLASS__ . '::updates_core' );
 		add_filter( 'fl_updater_icon', __CLASS__ . '::update_icon_branding', 11, 3 );
 
-		if ( is_admin() && isset( $_REQUEST['page'] ) && in_array( $_REQUEST['page'], array( 'fl-builder-settings', 'fl-builder-multisite-settings' ) ) ) {
-			add_action( 'admin_enqueue_scripts', __CLASS__ . '::enqueue_scripts' );
-			add_filter( 'fl_builder_admin_settings_nav_items', __CLASS__ . '::admin_settings_nav_items' );
-			add_action( 'fl_builder_admin_settings_render_forms', __CLASS__ . '::admin_settings_render_forms' );
-			add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_branding_settings' );
-			add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_help_button_settings' );
-		}
+		if ( is_admin() ) {
+			add_filter( 'gettext', __CLASS__ . '::theme_gettext', 10, 3 );
+			add_filter( 'gettext', __CLASS__ . '::plugin_gettext', 10, 3 );
 
+			if ( isset( $_REQUEST['page'] ) && in_array( $_REQUEST['page'], array( 'fl-builder-settings', 'fl-builder-multisite-settings' ) ) ) {
+				add_action( 'admin_enqueue_scripts', __CLASS__ . '::enqueue_scripts' );
+				add_filter( 'fl_builder_admin_settings_nav_items', __CLASS__ . '::admin_settings_nav_items' );
+				add_action( 'fl_builder_admin_settings_render_forms', __CLASS__ . '::admin_settings_render_forms' );
+				add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_branding_settings' );
+				add_action( 'fl_builder_admin_settings_save', __CLASS__ . '::save_help_button_settings' );
+			}
+		}
 	}
 
 	/**

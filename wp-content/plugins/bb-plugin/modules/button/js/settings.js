@@ -15,6 +15,22 @@
 			icon.on( 'change', this._previewIcon );
 			iconPosition.on( 'change', this._previewIcon );
 			iconAnimation.on( 'change', this._previewIcon );
+			icon.on( 'change', this._flipSettings );
+			this._flipSettings()
+		},
+
+		_flipSettings: function() {
+			var form  = $( '.fl-builder-settings' ),
+					icon = form.find( 'input[name=icon]' );
+			if ( -1 !== icon.val().indexOf( 'fad fa') ) {
+				$('#fl-field-duo_color1').show();
+				$('#fl-field-duo_color2').show();
+				$('#fl-builder-settings-section-icons').show()
+			} else {
+				$('#fl-field-duo_color1').hide();
+				$('#fl-field-duo_color2').hide();
+				$('#fl-builder-settings-section-icons').hide()
+			}
 		},
 
 		_previewBackground: function( e ) {

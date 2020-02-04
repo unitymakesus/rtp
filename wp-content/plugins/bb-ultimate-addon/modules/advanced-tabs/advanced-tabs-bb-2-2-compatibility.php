@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'AdvancedTabsModule', array(
+	'AdvancedTabsModule',
+	array(
 		'items'      => array(
 			'title'    => __( 'Tab Items', 'uabb' ),
 			'sections' => array(
@@ -629,7 +630,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_tab_items_form', array(
+	'uabb_tab_items_form',
+	array(
 		'title' => __( 'Add Item', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

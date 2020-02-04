@@ -763,6 +763,32 @@ FLBuilder::register_settings_form('content_slider_slide', array(
 								'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
 							),
 						),
+						'btn_duo_color1'     => array(
+							'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => 'i.fl-button-icon.fad:before',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+						'btn_duo_color2'     => array(
+							'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => 'i.fl-button-icon.fad:after',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
 						'btn_icon_position'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Button Icon Position', 'fl-builder' ),

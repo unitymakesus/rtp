@@ -9,8 +9,8 @@
 
 <?php
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
-$converted        = UABB_Compatibility::check_old_page_migration();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
+$converted        = UABB_Compatibility::$uabb_migration;
 
 if ( isset( $settings->creative_submenu_shadow_color_opc ) && '' == $settings->creative_submenu_shadow_color_opc ) {
 	$settings->creative_submenu_shadow_color_opc = '100';

@@ -54,6 +54,21 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 */
 		static public $is_branding_enabled;
 		/**
+		 * Member Variable
+		 *
+		 * @var object instance
+		 */
+		private static $instance;
+		/**
+		 *  Initiator
+		 */
+		public static function get_instance() {
+			if ( ! isset( self::$instance ) ) {
+				self::$instance = new self();
+			}
+			return self::$instance;
+		}
+		/**
 		 * Constructor function that initializes required actions and hooks
 		 *
 		 * @since 1.0
@@ -61,12 +76,22 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		function __construct() {
 
 			$this->set_constants();
-			add_filter( 'bsf_product_name_uabb', array( $this,'uabb_branding_name' ) );
-			add_filter( 'bsf_product_author_uabb', array( $this, 'uabb_branding_author_name' ) );
-			add_filter( 'bsf_product_description_uabb', array( $this, 'uabb_branding_desc' ) );
-			add_filter( 'bsf_product_homepage_uabb', array($this, 'uabb_branding_url' ) );
-			add_filter( 'bsf_product_icons_uabb', array($this, 'uabb_plugin_icon_url' ));
-			add_filter( 'gettext', array( $this,'get_plugin_branding_name' ), 20, 3 );
+
+			if ( is_admin() ) {
+
+				global $pagenow;
+
+				if ( false !== self::uabb_branding_name() && 'update-core.php' === $pagenow ) {
+					add_filter( 'gettext', array( $this,'get_plugin_branding_name' ), 20, 3 );
+				}
+				add_filter( 'bsf_product_name_uabb', array( $this,'uabb_branding_name' ) );
+				add_filter( 'bsf_product_author_uabb', array( $this, 'uabb_branding_author_name' ) );
+				add_filter( 'bsf_product_description_uabb', array( $this, 'uabb_branding_desc' ) );
+				add_filter( 'bsf_product_homepage_uabb', array($this, 'uabb_branding_url' ) );
+				add_filter( 'bsf_product_icons_uabb', array($this, 'uabb_plugin_icon_url' ));
+
+			}
+			add_action( 'init', __CLASS__ . '::uabb_get_branding_for_docs' );
 		}
 
 		/**
@@ -83,6 +108,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			self::$woo_modules		= __( 'Woo Modules', 'uabb' );
 
 			$branding         = BB_Ultimate_Addon_Helper::get_builder_uabb_branding();
+
 			$branding_name    = 'UABB';
 			$branding_modules = __( 'UABB Modules', 'uabb' );
 
@@ -282,7 +308,8 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				'uabb-registration-form'   => 'User Registration Form',
 				'uabb-table-of-contents'   => 'Table Of Contents',
 				'uabb-login-form'          => 'Login Form',
-				'uabb-how-to'   		   => 'How To'
+				'uabb-how-to'              => 'How To',
+				'uabb-faq'                 => 'FAQ'
 			);
 
 			/* Include Contact form styler */
@@ -451,32 +478,37 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since 1.14.0
 		 */
-		static public function get_uabb_branding() {
-
-			$uabb_brand_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
-
-			if ( empty( $uabb_brand_short_name ) ) {
-				$uabb_brand_short_name = __( 'UABB', 'uabb' );
-			}
-
-			return $uabb_brand_short_name;
+		static public function get_uabb_branding( $short_name = false ) {
+			return self::get_uabb_whitelabel_string( 'short-name', $short_name );
 		}
 		/**
 		 * Function that renders UABB's branding Plugin name
 		 *
 		 * @since 1.16.1
 		 */
-		function uabb_branding_name() {
+		function uabb_branding_name( $name = false ) {
+			return self::get_uabb_whitelabel_string( 'name', $name );
+		}
+		/**
+		 * Get individual whitelabel setting.
+		 *
+		 * @since 1.24.3
+		 * @param String $key whitelabel key to be received from the database.
+		 * @param mixed  $default default value to be retturned if the whitelabel value is not aset by user.
+		 *
+		 * @return mixed.
+		 */
+		public static function get_uabb_whitelabel_string( $key, $default = false ) {
 
-			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+			$label_key = 'uabb-plugin-' . $key;
 
-			if ( empty( $branding_name ) ) {
+			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( $label_key );
 
-				$branding_name = __( 'Ultimate Addons for Beaver Builder', 'uabb' );
-
+			if ( ! empty( $branding_name ) ) {
+				return $branding_name;
 			}
-			return sanitize_title( $branding_name );
 
+ 			return $default;
 		}
 		/**
 		 * Function that checks if UABB's branding is enabled
@@ -486,63 +518,38 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		static public function uabb_get_branding_for_docs() {
 
 			if ( null === self::$is_branding_enabled ) {
-				$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
-				$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
+				$branding_name       = self::get_uabb_whitelabel_string( 'name', false );
+				$branding_short_name = self::get_uabb_whitelabel_string( 'short-name', false );
 				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
 					self::$is_branding_enabled = 'no';
 				} else {
 					self::$is_branding_enabled = 'yes';
 				}
 			}
-			return self::$is_branding_enabled;
 		}
 		/**
 		 * Function that renders UABB's branding Plugin Author name
 		 *
 		 * @since 1.16.1
 		 */
-		function uabb_branding_author_name() {
-
-			$branding_author_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-author-name' );
-
-			if ( empty( $branding_author_name ) ) {
-				$branding_author_name = __( 'Brainstorm Force', 'uabb' );
-			}
-
-			return sanitize_title( $branding_author_name );
+		public function uabb_branding_author_name( $author_name = false ) {
+			return self::get_uabb_whitelabel_string( 'author-name', $author_name );
 		}
 		/**
 		 * Function that renders UABB's branding Plugin description
 		 *
 		 * @since 1.16.1
 		 */
-		function uabb_branding_desc() {
-
-			$branding_desc       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-desc' );
-
-			if ( empty( $branding_desc ) ) {
-
-				$branding_desc = __( 'Ultimate Addons is a premium extension for Beaver Builder that adds 55+ modules, 100+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro and Agency) You can use it with on any WordPress theme.', 'uabb' );
-
-			}
-
-			return sanitize_text_field( $branding_desc );
+		public function uabb_branding_desc( $desc = false ) {
+			return self::get_uabb_whitelabel_string( 'desc', $desc );
 		}
 		/**
 		 * Function that renders UABB's branding Plugin URL
 		 *
 		 * @since 1.16.1
 		 */
-		function uabb_branding_url() {
-
-			$branding_url       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-author-url' );
-
-			if ( empty( $branding_url ) ) {
-
-				$branding_url = 'http://www.brainstormforce.com';
-			}
-
-			return $branding_url;
+		public function uabb_branding_url( $url = false ) {
+			return self::get_uabb_whitelabel_string( 'url', $url );
 		}
 		/**
 		 *  Function that renders UABB's branding Plugin Name
@@ -555,44 +562,35 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 */
 		public function get_plugin_branding_name( $text, $original, $domain ) {
 
-			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
-
-			if ( is_admin() && 'Ultimate Addons for Beaver Builder' == $text ) {
-
-				if ( ! empty( $branding_name ) ) {
-					$text = $branding_name;
-				}
+			if ( 'Ultimate Addons for Beaver Builder' === $original ) {
+				$text = self::uabb_whitelabel_name();
 			}
 			return $text;
+		}
+		/**
+		 * Get UABB whitelabelled name.
+		 *
+		 * @since 1.24.3
+		 * @param String $name Original Product name from Graupi.
+		 *
+		 * @return String UABB whitelabelled name.
+		 */
+		public static function uabb_whitelabel_name( $name = false ) {
+			return self::get_uabb_whitelabel_string( 'name', $name );
 		}
 		/**
 		 * Function that renders UABB's branding Plugin Icon URL
 		 *
 		 * @since 1.16.1
 		 */
-		function uabb_plugin_icon_url() {
+		public function uabb_plugin_icon_url() {
 
-			$branding_url       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-icon-url' );
+			$icon_url = ( false !== self::get_uabb_whitelabel_string( 'icon-url' ) ) ? self::get_uabb_whitelabel_string( 'icon-url' ) : BB_ULTIMATE_ADDON_URL . 'assets/images/uabb.svg';
 
-			if ( ! empty( $branding_url ) ) {
-				$icons = array(
-					'1x'      => ( isset( $branding_url ) ) ? $branding_url : '',
-					'2x'      => ( isset( $branding_url ) ) ? $branding_url : '',
-					'default' => ( isset( $branding_url ) ) ? $branding_url : '',
-				);
-				return $icons;
-			} else {
-
-				$icon_path = BB_ULTIMATE_ADDON_URL . 'assets/images/uabb.svg';
-				$icons = array(
-					'1x'      => ( isset( $icon_path ) ) ? $icon_path : '',
-					'2x'      => ( isset( $icon_path ) ) ? $icon_path : '',
-					'default' => ( isset( $icon_path ) ) ? $icon_path : '',
-				);
-				return $icons;
-			}
+			return array(
+				'default' => $icon_url,
+			);
 		}
 	}
-
-	new BB_Ultimate_Addon_Helper();
 }
+BB_Ultimate_Addon_Helper::get_instance();

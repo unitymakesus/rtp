@@ -8,7 +8,8 @@
 global $wp_embed;
 $target           = '';
 $it_link_nofollow = '';
-if ( UABB_Compatibility::check_bb_version() ) {
+
+if ( UABB_Compatibility::$version_bb_check ) {
 
 	if ( isset( $settings->it_link_target ) ) {
 		$target = $settings->it_link_target;

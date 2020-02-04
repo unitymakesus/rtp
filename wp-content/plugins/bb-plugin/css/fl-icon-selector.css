@@ -74,14 +74,13 @@
 	padding: 0 0 10px 0 !important;
 	text-align: left;
 }
-.fl-icons-list i,
-.fl-icons-list i:before {
+.fl-icons-list i {
 	cursor: pointer;
 	display: inline-block;
 	font-size: 40px;
-	height: 100px;
-	line-height: 100px;
-	width: 100px;
+	height: 60px;
+	line-height: 60px;
+	width: 60px;
 	background: transparent;
 }
 .fl-icons-list i:hover {

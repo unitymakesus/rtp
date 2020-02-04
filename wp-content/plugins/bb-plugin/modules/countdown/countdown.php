@@ -51,8 +51,8 @@ class FLCountdownModule extends FLBuilderModule {
 		$hours      = isset( $this->settings->time['hours'] ) ? str_pad( $this->settings->time['hours'], 2, '0', STR_PAD_LEFT ) : '00';
 		$minutes    = isset( $this->settings->time['minutes'] ) ? str_pad( $this->settings->time['minutes'], 2, '0', STR_PAD_LEFT ) : '00';
 		$day_period = isset( $this->settings->time['day_period'] ) ? $this->settings->time['day_period'] : 'AM';
-		$zone       = isset( $this->settings->time_zone ) && '' != $this->settings->time_zone ? $this->settings->time_zone : date( 'e', current_time( 'timestamp', 1 ) );
-		$time       = date( 'H:i:s', strtotime( $hours . ':' . $minutes . ':00 ' . strtoupper( $day_period ) ) );
+		$zone       = isset( $this->settings->time_zone ) && '' != $this->settings->time_zone ? $this->settings->time_zone : date( 'e', current_time( 'timestamp', 1 ) ); //phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date,WordPress.DateTime.CurrentTimeTimestamp.RequestedUTC
+		$time       = date( 'H:i:s', strtotime( $hours . ':' . $minutes . ':00 ' . strtoupper( $day_period ) ) ); //phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
 		$timestamp = $date . ' ' . $time;
 		$timezone  = new DateTimeZone( $zone );
@@ -101,7 +101,7 @@ FLBuilder::register_module('FLCountdownModule', array(
 					'day'   => array(
 						'type'      => 'text',
 						'label'     => __( 'Day', 'fl-builder' ),
-						'default'   => date( 'j' ),
+						'default'   => gmdate( 'j' ),
 						'maxlength' => '2',
 						'size'      => '5',
 						'preview'   => array(
@@ -111,7 +111,7 @@ FLBuilder::register_module('FLCountdownModule', array(
 					'month' => array(
 						'type'      => 'text',
 						'label'     => __( 'Month', 'fl-builder' ),
-						'default'   => date( 'n' ),
+						'default'   => gmdate( 'n' ),
 						'maxlength' => '2',
 						'size'      => '5',
 						'preview'   => array(
@@ -121,7 +121,7 @@ FLBuilder::register_module('FLCountdownModule', array(
 					'year'  => array(
 						'type'      => 'text',
 						'label'     => __( 'Year', 'fl-builder' ),
-						'default'   => date( 'Y' ),
+						'default'   => gmdate( 'Y' ),
 						'maxlength' => '4',
 						'size'      => '5',
 						'preview'   => array(

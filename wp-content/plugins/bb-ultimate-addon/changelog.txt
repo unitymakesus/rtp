@@ -1,3 +1,16 @@
+Version 1.25.0 - Wednesday, 22th January 2020
+- Security Fix: Cross-site scripting (XSS) vulnerability.
+- New: Introduced FAQ with Schema Support
+- Improvement: Advanced Testimonials - Added position support for Star Rating
+- Improvement: Contact Form - Added Color setting option for Button Icon
+- Improvement: Improve Background Process Notice dismissing logic
+- Improvement: Re-structured and optimized the codebase to improve the security
+- Fixed: Advanced posts - Added New Message section in General Tab and shifted the No Result Message field in that section
+- Fixed: Contact Form - Resolved JavaScript undefined error when Message field is set to Hide but Required setting is set to the Yes
+- Fixed: Off-Canvas - Display On Image Alignment Settings option not working
+- Fixed: Resolved PHP error when copying the style from some specific module
+- Fixed: Table of Contents -  Contents not working with the unique special characters
+
 Version 1.24.3 - Thursday, 9th January 2020
 - Improvement: Advanced Post - Added dots support for carousel layout
 - Improvement: Advanced Posts - Added Border settings option for Post Content

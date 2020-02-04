@@ -88,7 +88,7 @@
 			if ( ( 'always' == this.mobileBreakpoint
 				|| ( this._isMobile() && 'mobile' == this.mobileBreakpoint )
 				|| ( this._isMedium() && 'medium-mobile' == this.mobileBreakpoint )
-			) && $( '.fl-menu-mobile-toggle' ).is(':visible') ) {
+			) && ( $( this.wrapperClass ).find( '.fl-menu-mobile-toggle' ).is(':visible') || 'expanded' == this.mobileToggle ) ) {
 				return true;
 			}
 

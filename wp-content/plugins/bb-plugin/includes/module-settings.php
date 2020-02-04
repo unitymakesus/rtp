@@ -138,5 +138,22 @@ FLBuilder::register_settings_form('module_advanced', array(
 				),
 			),
 		),
+		'export_import' => array(
+			'title'  => __( 'Export/Import', 'fl-builder' ),
+			'fields' => array(
+				'export' => array(
+					'type'    => 'raw',
+					'label'   => __( 'Export', 'fl-builder' ),
+					'preview' => 'none',
+					'content' => '<button style="margin-right:10px" class="fl-builder-button fl-builder-button-small module-export-all" title="Copy Settings">Copy Settings</button><button class="fl-builder-button fl-builder-button-small module-export-style" title="Copy Styles">Copy Styles</button>',
+				),
+				'import' => array(
+					'type'    => 'raw',
+					'label'   => __( 'Import', 'fl-builder' ),
+					'preview' => 'none',
+					'content' => '<div class="module-import-wrap"><input type="text" class="module-import-input" placeholder="Paste settings or styles here..." /><button class="fl-builder-button fl-builder-button-small module-import-apply">Import</button></div><div class="module-import-error"></div>',
+				),
+			),
+		),
 	),
 ));

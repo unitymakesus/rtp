@@ -1128,7 +1128,7 @@ The default heading will inherit tag from WPForms plugin itself
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/wpforms-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=wp-form-styler" target="_blank" rel="noopener"> How to Set Fields in wpf Styler Module? </a> </li>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/unable-to-see-wpforms-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=wp-form-styler" target="_blank" rel="noopener"> Unable to see the WPForms Styler Module in UABB? </a> </li>

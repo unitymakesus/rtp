@@ -785,9 +785,22 @@ var FLBuilderColorPicker;
 				.css({ height: ( self.element.innerHeight() + self._iris.innerHeight() + 14 ) + 'px' })
 				.hide();
 
+			presetsList.sortable();
+
 			presets
 				.off( 'click' )
 				.on( 'click', '.fl-color-picker-presets-toggle', function(){
+
+					if ( presetsCloseLabel.hasClass( 'fl-color-picker-active' ) ) {
+						list = presetsList.find('li').find('span.fl-color-picker-preset-label');
+						if ( list.length > 0 ) {
+							presets = [];
+							$.each(list,function(i,v){
+								presets.push( $(v).text() );
+							})
+							$(FLBuilder.colorPicker).trigger( 'presetSorted', { presets: presets } );
+						}
+					}
 					presetsOpenLabel.toggleClass('fl-color-picker-active');
 					presetsCloseLabel.toggleClass('fl-color-picker-active');
 					presetsList.slideToggle( 500 );
@@ -835,7 +848,6 @@ var FLBuilderColorPicker;
 						.slideUp( function(){
 							$( this ).remove();
 						});
-
 				}
 
 				if( FLBuilderColorPresets.length < 1 ){

@@ -68,7 +68,7 @@ final class FLBuilder {
 	 * @since 2.1
 	 */
 	static public $fa4_url     = '';
-	static public $fa5_pro_url = 'https://pro.fontawesome.com/releases/v5.9.0/css/all.css';
+	static public $fa5_pro_url = 'https://pro.fontawesome.com/releases/v5.12.0/css/all.css';
 
 	/**
 	 * Initializes hooks.
@@ -101,7 +101,117 @@ final class FLBuilder {
 		add_filter( 'the_content', __CLASS__ . '::render_content' );
 		add_filter( 'wp_handle_upload_prefilter', __CLASS__ . '::wp_handle_upload_prefilter_filter' );
 		add_filter( 'wp_link_query_args', __CLASS__ . '::wp_link_query_args_filter' );
+		add_filter( 'fl_builder_load_modules_paths', __CLASS__ . '::load_module_paths', 9999 );
 	}
+
+	/**
+	 * @since 2.3
+	 */
+	static public function load_module_paths( $paths ) {
+
+		$enabled      = array();
+		$dependencies = self::_module_dependencies();
+		$protected    = array();
+
+		if ( is_admin() ) {
+			return $paths;
+		}
+
+		if ( ! self::is_module_disable_enabled() ) {
+			return $paths;
+		}
+
+		$enabled_modules = FLBuilderModel::get_enabled_modules();
+
+		if ( is_array( $enabled_modules ) && empty( $enabled_modules ) ) {
+			return $paths;
+		}
+
+		if ( isset( $enabled_modules[0] ) && 'all' === $enabled_modules[0] ) {
+			return $paths;
+		}
+
+		// setup reverse dependencies
+		foreach ( $paths as $k => $path ) {
+			$module = basename( $path );
+			$deps   = isset( $dependencies[ $module ] ) ? $dependencies[ $module ] : array();
+			if ( count( $deps ) > 0 ) {
+				foreach ( $deps as $dep ) {
+					$protected[] = $dep;
+				}
+			}
+		}
+
+		foreach ( $paths as $k => $path ) {
+			$module = basename( $path );
+
+			if ( in_array( $module, $enabled_modules, true ) || in_array( $module, $protected, true ) ) {
+				$enabled[] = $path;
+			}
+		}
+		return ! empty( $enabled ) ? $enabled : $paths;
+	}
+
+	/**
+	 * @since 2.3
+	 */
+	public static function is_module_disable_enabled() {
+		/**
+		 * Enable Module enable/disable advanced mode.
+		 * @since 2.3
+		 * @see is_module_disable_enabled
+		 */
+		return apply_filters( 'is_module_disable_enabled', false );
+	}
+
+	/**
+	 * @since 2.3
+	 */
+	public static function _module_dependencies() {
+		$deps = array(
+			'post-carousel'  => array(
+				'post-grid',
+				'photo',
+			),
+			'post-gallery'   => array(
+				'post-grid',
+			),
+			'post-grid'      => array(
+				'button',
+			),
+			'post-slider'    => array(
+				'photo',
+			),
+			'subscribe-form' => array(
+				'button',
+			),
+			'callout'        => array(
+				'button',
+				'photo',
+				'icon',
+			),
+			'contact-form'   => array(
+				'button',
+			),
+			'content-slider' => array(
+				'button',
+			),
+			'cta'            => array(
+				'button',
+			),
+			'gallery'        => array(
+				'photo',
+			),
+			'icon-group'     => array(
+				'icon',
+			),
+			'pricing-table'  => array(
+				'button',
+			),
+		);
+		return apply_filters( 'fl_module_dependencies', $deps );
+	}
+
 
 	/**
 	 * Localization
@@ -221,7 +331,10 @@ final class FLBuilder {
 	 */
 	static public function get_wp_editor() {
 		ob_start();
-
+		/**
+		 * Args passed to wp_editor for text modules.
+		 * @see fl_get_wp_editor_args
+		 */
 		wp_editor( '{FL_EDITOR_CONTENT}', 'flbuildereditor', apply_filters( 'fl_get_wp_editor_args', array(
 			'media_buttons' => true,
 			'wpautop'       => true,
@@ -398,7 +511,7 @@ final class FLBuilder {
 
 		// Register icon CDN CSS
 		wp_register_style( 'font-awesome-5', self::get_fa5_url(), array(), $ver );
-		wp_register_style( 'font-awesome', plugins_url( '/fonts/fontawesome/css/v4-shims.min.css', FL_BUILDER_FILE ), array( 'font-awesome-5' ), $ver );
+		wp_register_style( 'font-awesome', plugins_url( '/fonts/fontawesome/' . self::get_fa5_version() . '/css/v4-shims.min.css', FL_BUILDER_FILE ), array( 'font-awesome-5' ), $ver );
 
 		wp_register_style( 'foundation-icons', 'https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css', array(), $ver );
 
@@ -674,6 +787,9 @@ final class FLBuilder {
 			wp_enqueue_style( 'jquery-autosuggest', $css_url . 'jquery.autoSuggest.min.css', array(), $ver );
 			wp_enqueue_style( 'jquery-tiptip', $css_url . 'jquery.tiptip.css', array(), $ver );
 			wp_enqueue_style( 'bootstrap-tour', $css_url . 'bootstrap-tour-standalone.min.css', array(), $ver );
+			if ( true === apply_filters( 'fl_select2_enabled', true ) ) {
+				wp_enqueue_style( 'select2', $css_url . 'select2.min.css', array(), $ver );
+			}
 
 			// Enqueue individual builder styles if WP_DEBUG is on.
 			if ( self::is_debug() ) {
@@ -699,8 +815,11 @@ final class FLBuilder {
 				wp_enqueue_style( 'fl-builder-rtl', $css_url . 'fl-builder-rtl.css', array(), $ver );
 			}
 
-			/* We have a custom version of sortable that fixes a bug. */
+			/* We have custom versions of these that fixes bugs. */
 			wp_deregister_script( 'jquery-ui-sortable' );
+			wp_dequeue_script( 'jquery-touch-punch' );
+			wp_deregister_script( 'jquery-touch-punch' );
+			wp_register_script( 'jquery-touch-punch', $js_url . 'jquery.touch-punch.min.js', array(), $ver );
 
 			/* Frontend builder scripts */
 			wp_enqueue_media();
@@ -716,6 +835,7 @@ final class FLBuilder {
 			wp_enqueue_script( 'jquery-ui-slider' );
 			wp_enqueue_script( 'jquery-ui-widget' );
 			wp_enqueue_script( 'jquery-ui-position' );
+			wp_enqueue_script( 'jquery-touch-punch' );
 
 			/**
 			 * Before jquery.ui.sortable.js is enqueued.
@@ -730,10 +850,14 @@ final class FLBuilder {
 			wp_enqueue_script( 'jquery-showhideevents', $js_url . 'jquery.showhideevents.js', array(), $ver );
 			wp_enqueue_script( 'jquery-simulate', $js_url . 'jquery.simulate.js', array(), $ver );
 			wp_enqueue_script( 'jquery-validate', $js_url . 'jquery.validate.min.js', array(), $ver );
+			wp_enqueue_script( 'clipboard', $js_url . 'clipboard.min.js', array(), $ver );
 			wp_enqueue_script( 'bootstrap-tour', $js_url . 'bootstrap-tour-standalone.min.js', array(), $ver );
 			wp_enqueue_script( 'ace', $js_url . 'ace/ace.js', array(), $ver );
 			wp_enqueue_script( 'ace-language-tools', $js_url . 'ace/ext-language_tools.js', array(), $ver );
 			wp_enqueue_script( 'mousetrap', $js_url . 'mousetrap-custom.js', array(), $ver );
+			if ( true === apply_filters( 'fl_select2_enabled', true ) ) {
+				wp_enqueue_script( 'select2', $js_url . 'select2.min.js', array(), $ver );
+			}
 
 			// Enqueue individual builder scripts if WP_DEBUG is on.
 			if ( self::is_debug() ) {
@@ -754,10 +878,12 @@ final class FLBuilder {
 				wp_enqueue_script( 'fl-builder-ui-main-menu', $js_url . 'fl-builder-ui-main-menu.js', array( 'fl-builder-ui' ), $ver );
 				wp_enqueue_script( 'fl-builder-ui-panel-content', $js_url . 'fl-builder-ui-panel-content-library.js', array( 'fl-builder-ui' ), $ver );
 				wp_enqueue_script( 'fl-builder-ui-settings-forms', $js_url . 'fl-builder-ui-settings-forms.js', array(), $ver );
+				wp_enqueue_script( 'fl-builder-ui-settings-copy-paste', $js_url . 'fl-builder-ui-settings-copy-paste.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-ui-pinned', $js_url . 'fl-builder-ui-pinned.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-revisions', $js_url . 'fl-builder-revisions.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-search', $js_url . 'fl-builder-search.js', array( 'jquery' ), $ver );
 				wp_enqueue_script( 'fl-builder-save-manager', $js_url . 'fl-builder-save-manager.js', array( 'jquery' ), $ver );
+				wp_enqueue_script( 'fl-builder-history-manager', $js_url . 'fl-builder-history-manager.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.js', array(), $ver, true );
 			} else {
 				wp_enqueue_script( 'fl-builder-min', $js_url . 'fl-builder.min.js', array( 'jquery', 'mousetrap' ), $ver );
@@ -1267,6 +1393,14 @@ final class FLBuilder {
 				'label'    => _x( 'Dismiss Active Panel', 'Keyboard action to dismiss the current task or panel', 'fl-builder' ),
 				'keyCode'  => 'esc',
 				'isGlobal' => true,
+			),
+			'undo'               => array(
+				'label'   => _x( 'Undo', 'Keyboard action to undo changes', 'fl-builder' ),
+				'keyCode' => 'mod+z',
+			),
+			'redo'               => array(
+				'label'   => _x( 'Redo', 'Keyboard action to redo changes', 'fl-builder' ),
+				'keyCode' => 'shift+mod+z',
 			),
 		);
 
@@ -1985,6 +2119,7 @@ final class FLBuilder {
 		$active       = FLBuilderModel::is_builder_active();
 		$visible      = FLBuilderModel::is_node_visible( $row );
 		$has_rules    = FLBuilderModel::node_has_visibility_rules( $row );
+		$rules        = FLBuilderModel::node_visibility_rules( $row );
 		$attrs        = array(
 			'id'        => $row->settings->id,
 			'class'     => array(
@@ -2045,7 +2180,9 @@ final class FLBuilder {
 			$attrs['class'][] = 'fl-node-hidden';
 		}
 		if ( $active && $has_rules ) {
-			$attrs['class'][] = 'fl-node-has-rules';
+			$attrs['class'][]         = 'fl-node-has-rules';
+			$attrs['data-rules-type'] = $rules['type'];
+			$attrs['data-rules-text'] = esc_attr( $rules['text'] );
 		}
 		if ( ! empty( $row->settings->top_edge_shape ) || ! empty( $row->settings->bottom_edge_shape ) ) {
 			$attrs['class'][] = 'fl-row-has-layers';
@@ -2237,6 +2374,7 @@ final class FLBuilder {
 		$active          = FLBuilderModel::is_builder_active();
 		$visible         = FLBuilderModel::is_node_visible( $col );
 		$has_rules       = FLBuilderModel::node_has_visibility_rules( $col );
+		$rules           = FLBuilderModel::node_visibility_rules( $col );
 		$attrs           = array(
 			'id'        => $col->settings->id,
 			'class'     => array(
@@ -2283,7 +2421,9 @@ final class FLBuilder {
 			$attrs['class'][] = 'fl-node-hidden';
 		}
 		if ( $active && $has_rules ) {
-			$attrs['class'][] = 'fl-node-has-rules';
+			$attrs['class'][]         = 'fl-node-has-rules';
+			$attrs['data-rules-type'] = $rules['type'];
+			$attrs['data-rules-text'] = esc_attr( $rules['text'] );
 		}
 
 		// Style
@@ -2445,6 +2585,7 @@ final class FLBuilder {
 		$active       = FLBuilderModel::is_builder_active();
 		$visible      = FLBuilderModel::is_node_visible( $module );
 		$has_rules    = FLBuilderModel::node_has_visibility_rules( $module );
+		$rules        = FLBuilderModel::node_visibility_rules( $module );
 		$attrs        = array(
 			'id'        => esc_attr( $module->settings->id ),
 			'class'     => array(
@@ -2473,7 +2614,9 @@ final class FLBuilder {
 			$attrs['class'][] = 'fl-node-hidden';
 		}
 		if ( $active && $has_rules ) {
-			$attrs['class'][] = 'fl-node-has-rules';
+			$attrs['class'][]         = 'fl-node-has-rules';
+			$attrs['data-rules-type'] = $rules['type'];
+			$attrs['data-rules-text'] = esc_attr( $rules['text'] );
 		}
 
 		// Data
@@ -2683,15 +2826,15 @@ final class FLBuilder {
 
 		// Custom Global CSS (included here for proper specificity)
 		if ( 'published' == $node_status && $include_global ) {
-			$css .= $global_settings->css;
+			$css .= self::js_comment( 'Global CSS', self::maybe_do_shortcode( $global_settings->css ) );
 		}
 
 		// Custom Global Nodes CSS
-		$css .= self::render_global_nodes_custom_code( 'css' );
+		$css .= self::js_comment( 'Global Nodes CSS', self::maybe_do_shortcode( self::render_global_nodes_custom_code( 'css' ) ) );
 
 		// Custom Layout CSS
 		if ( 'published' == $node_status || $post_id !== $wp_the_query->post->ID ) {
-			$css .= FLBuilderModel::get_layout_settings()->css;
+			$css .= self::js_comment( 'Layout CSS', self::maybe_do_shortcode( FLBuilderModel::get_layout_settings()->css ) );
 		}
 
 		/**
@@ -2834,6 +2977,17 @@ final class FLBuilder {
 		}
 
 		return $css;
+	}
+
+	/**
+	 * Maybe run do_shortcode on CSS/JS if enabled.
+	 * @since 2.3
+	 */
+	static public function maybe_do_shortcode( $code ) {
+		if ( true === apply_filters( 'fl_enable_shortcode_css_js', false ) ) {
+			$code = do_shortcode( $code );
+		}
+		return $code;
 	}
 
 	/**
@@ -3144,7 +3298,7 @@ final class FLBuilder {
 		$path            = $include_global ? $asset_info['js'] : $asset_info['js_partial'];
 
 		// Render the global js.
-		if ( $include_global && ! isset( $_GET['safemode'] ) ) {
+		if ( $include_global ) {
 			$js .= self::render_global_js();
 		}
 
@@ -3160,8 +3314,8 @@ final class FLBuilder {
 
 		// Add the layout settings JS.
 		if ( ! isset( $_GET['safemode'] ) ) {
-			$js .= self::js_comment( 'Global Node Custom JS', self::render_global_nodes_custom_code( 'js' ) );
-			$js .= ( is_array( $layout_settings->js ) || is_object( $layout_settings->js ) ) ? self::js_comment( 'Layout Custom JS', json_encode( $layout_settings->js ) ) : self::js_comment( 'Layout Custom JS', $layout_settings->js );
+			$js .= self::js_comment( 'Global Node Custom JS', self::maybe_do_shortcode( self::render_global_nodes_custom_code( 'js' ) ) );
+			$js .= ( is_array( $layout_settings->js ) || is_object( $layout_settings->js ) ) ? self::js_comment( 'Layout Custom JS', self::maybe_do_shortcode( json_encode( $layout_settings->js ) ) ) : self::js_comment( 'Layout Custom JS', self::maybe_do_shortcode( $layout_settings->js ) );
 		}
 
 		// Call the FLBuilder._renderLayoutComplete method if we're currently editing.
@@ -3234,8 +3388,9 @@ final class FLBuilder {
 		$js .= fl_builder_filesystem()->file_get_contents( FL_BUILDER_DIR . 'js/fl-builder-layout.js' );
 
 		// Add the global settings JS.
-		$js .= self::js_comment( 'Global JS', $global_settings->js );
-
+		if ( ! isset( $_GET['safemode'] ) ) {
+			$js .= self::js_comment( 'Global JS', self::maybe_do_shortcode( $global_settings->js ) );
+		}
 		return $js;
 	}
 
@@ -3511,7 +3666,7 @@ final class FLBuilder {
 		 * This will also enqueue the CSS from the CDN.
 		 * @see fl_enable_fa5_pro
 		 */
-		$url = ( apply_filters( 'fl_enable_fa5_pro', false ) ) ? self::$fa5_pro_url : plugins_url( '/fonts/fontawesome/css/all.min.css', FL_BUILDER_FILE );
+		$url = ( self::fa5_pro_enabled() ) ? self::$fa5_pro_url : plugins_url( '/fonts/fontawesome/' . self::get_fa5_version() . '/css/all.min.css', FL_BUILDER_FILE );
 
 		/**
 		 * Filter FA5 URL for enqueue.
@@ -3519,6 +3674,38 @@ final class FLBuilder {
 		 * @since 2.2.1
 		 */
 		return apply_filters( 'fl_get_fa5_url', $url );
+	}
+
+	static public function get_fa5_version() {
+		$data = glob( FL_BUILDER_DIR . 'fonts/fontawesome/*' );
+		return basename( $data[0] );
+	}
+
+	static public function fa5_pro_enabled() {
+		$enabled = apply_filters( 'fl_enable_fa5_pro', false );
+		// if filter was set to true return true anyway.
+		if ( $enabled ) {
+			return true;
+		}
+
+		if ( is_multisite() && FLBuilderAdminSettings::multisite_support() ) {
+			// if switched...
+			if ( $GLOBALS['switched'] ) {
+				if ( get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_enabled_templates' ) ) {
+					// overide enabled...
+					return get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_enable_fa_pro' );
+				} else {
+					return get_option( '_fl_builder_enable_fa_pro' );
+				}
+			}
+
+			// were not switched...
+			if ( ! get_option( '_fl_builder_enabled_icons' ) ) {
+				$id = defined( 'BLOG_ID_CURRENT_SITE' ) ? BLOG_ID_CURRENT_SITE : 1;
+				return get_blog_option( $id, '_fl_builder_enable_fa_pro' );
+			}
+		}
+		return FLBuilderModel::get_admin_settings_option( '_fl_builder_enable_fa_pro' );
 	}
 
 	/**

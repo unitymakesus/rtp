@@ -17,15 +17,49 @@ class FLBuilderUISettingsForms {
 	static private $form_templates = array();
 
 	/**
+	 * An array of core fields that are used for style settings.
+	 *
+	 * @since 2.3
+	 * @var int $style_fields
+	 */
+	static private $style_fields = array(
+		'align',
+		'animation',
+		'border',
+		'button-group',
+		'color',
+		'dimension',
+		'font',
+		'gradient',
+		'photo-sizes',
+		'select',
+		'shadow',
+		'shape-transform',
+		'typography',
+		'unit',
+	);
+
+	/**
 	 * @since 2.0
 	 * @return void
 	 */
 	static public function init() {
+		add_action( 'init', __CLASS__ . '::init_style_fields' );
 		add_action( 'wp', __CLASS__ . '::render_settings_config' );
 		add_action( 'wp_enqueue_scripts', __CLASS__ . '::enqueue_settings_config', 11 );
 		add_action( 'wp_footer', __CLASS__ . '::init_js_config', 1 );
 		add_action( 'wp_footer', __CLASS__ . '::render_js_templates', 11 );
 		add_filter( 'fl_builder_ui_js_config', __CLASS__ . '::layout_css_js' );
+	}
+
+	/**
+	 * Allow developers to filter style fields and add their own.
+	 *
+	 * @since 2.3
+	 * @return void
+	 */
+	static public function init_style_fields() {
+		self::$style_fields = apply_filters( 'fl_builder_style_fields', self::$style_fields );
 	}
 
 	/**
@@ -192,7 +226,6 @@ class FLBuilderUISettingsForms {
 		return $defaults;
 	}
 
-
 	/**
 	 * Prepares forms for the JS config.
 	 *
@@ -284,6 +317,11 @@ class FLBuilderUISettingsForms {
 			} else {
 				$field['options'] = (array) $field['options'];
 			}
+		}
+
+		// Mark fields as style fields.
+		if ( ! isset( $field['is_style'] ) ) {
+			$field['is_style'] = in_array( $field['type'], self::$style_fields );
 		}
 	}
 

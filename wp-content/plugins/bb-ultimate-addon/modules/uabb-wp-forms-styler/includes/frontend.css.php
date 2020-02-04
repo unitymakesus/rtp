@@ -5,7 +5,7 @@
  * @package UABB WP Forms Styler Module
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 $settings->form_bg_color = UABB_Helper::uabb_colorpicker( $settings, 'form_bg_color', true );
 

@@ -6,7 +6,7 @@
  */
 
 $align = '';
-if ( ! UABB_Compatibility::check_bb_version() ) {
+if ( ! UABB_Compatibility::$version_bb_check ) {
 	if ( isset( $settings->align ) ) {
 		$align = $settings->align;
 	}

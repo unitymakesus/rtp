@@ -74,6 +74,7 @@ FLBuilder::register_module('FLIconModule', array(
 							'type' => 'none',
 						),
 					),
+
 					'link' => array(
 						'type'          => 'link',
 						'label'         => __( 'Link', 'fl-builder' ),
@@ -157,6 +158,32 @@ FLBuilder::register_module('FLIconModule', array(
 						'preview'     => array(
 							'type'      => 'css',
 							'selector'  => '.fl-icon i:hover, .fl-icon i:hover::before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color1'     => array(
+						'label'      => __( 'DuoTone Icon Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color2'     => array(
+						'label'      => __( 'DuoTone Icon Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:after',
 							'property'  => 'color',
 							'important' => true,
 						),

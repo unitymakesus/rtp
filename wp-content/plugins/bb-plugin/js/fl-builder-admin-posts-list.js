@@ -22,7 +22,7 @@
 		_setupLink: function() {
 			var ul = $('ul.subsubsub')
 
-			var count = parseInt( window.fl_builder_enabled_count.count );
+			var count = window.fl_builder_enabled_count.count;
 			var brand = window.fl_builder_enabled_count.brand;
 			var clicked = window.fl_builder_enabled_count.clicked;
 			var type = window.fl_builder_enabled_count.type;

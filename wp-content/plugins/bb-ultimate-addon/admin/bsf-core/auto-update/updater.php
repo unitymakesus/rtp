@@ -6,16 +6,17 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 
 		$path = bsf_get_api_url() . '?referer=' . $ultimate_referer;
 
-		$data    = array(
+		$data = array(
 			'action'   => 'bsf_get_product_versions',
 			'ids'      => $products,
-			'site_url' => get_site_url(),
+			'site_url' => get_site_url()
 		);
+
 		$request = wp_remote_post(
 			$path,
 			array(
 				'body'    => $data,
-				'timeout' => '5',
+				'timeout' => '10',
 			)
 		);
 
@@ -26,15 +27,15 @@ if ( ! function_exists( 'bsf_get_remote_version' ) ) {
 				$path,
 				array(
 					'body'    => $data,
-					'timeout' => '5',
+					'timeout' => '8',
 				)
 			);
 		}
 
 		if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 			$result = json_decode( wp_remote_retrieve_body( $request ) );
-			if ( ! is_null( $result ) ) {
-				if ( ! $result->error ) {
+			if ( ! empty( $result ) ) {
+				if ( empty( $result->error ) ) {
 					return $result->updated_versions;
 				} else {
 					return $result->error;
@@ -74,7 +75,7 @@ if ( ! function_exists( 'bsf_check_product_update' ) ) {
 			if ( ! empty( $remote_versions ) ) {
 				$is_bundled_update = false;
 				foreach ( $remote_versions as $rkey => $remote_data ) {
-					$rid               = (string) $remote_data->id;
+					$rid               = ( isset( $remote_data->id ) ) ? (string) $remote_data->id : '';
 					$remote_version    = ( isset( $remote_data->remote_version ) ) ? $remote_data->remote_version : '';
 					$in_house          = ( isset( $remote_data->in_house ) ) ? $remote_data->in_house : '';
 					$on_market         = ( isset( $remote_data->on_market ) ) ? $remote_data->on_market : '';
@@ -173,31 +174,15 @@ if ( ! defined( 'BSF_CHECK_PRODUCT_UPDATES' ) ) {
 }
 
 if ( ( false === get_transient( 'bsf_check_product_updates' ) && ( $BSF_CHECK_PRODUCT_UPDATES === true || $BSF_CHECK_PRODUCT_UPDATES === 'true' ) ) ) {
-	$proceed = true;
 
-	if ( phpversion() > 5.2 ) {
-		$bsf_local_transient = get_option( 'bsf_local_transient' );
-		if ( $bsf_local_transient != false ) {
-			$datetime1   = new DateTime();
-			$date_string = gmdate( 'Y-m-d\TH:i:s\Z', $bsf_local_transient );
-			$datetime2   = new DateTime( $date_string );
-
-			$interval = $datetime1->diff( $datetime2 );
-			$elapsed  = $interval->format( '%h' );
-			$elapsed  = $elapsed + ( $interval->days * 24 );
-			if ( $elapsed <= 48 || $elapsed <= '48' ) {
-				$proceed = false;
-			}
-		}
-	}
-
-	if ( $proceed ) {
+	if ( true === bsf_time_since_last_versioncheck( 48, 'bsf_local_transient' ) ) {
 		global $ultimate_referer;
 		$ultimate_referer = 'on-transient-delete';
 		bsf_check_product_update();
 		update_option( 'bsf_local_transient', current_time( 'timestamp' ) );
-		set_transient( 'bsf_check_product_updates', true, 2 * 24 * 60 * 60 );
+		set_transient( 'bsf_check_product_updates', true, 2 * DAY_IN_SECONDS );
 	}
+
 }
 
 if ( ! function_exists( 'get_bsf_product_upgrade_link' ) ) {

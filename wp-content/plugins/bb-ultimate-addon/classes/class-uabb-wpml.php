@@ -52,6 +52,7 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-pricing-box.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-slide-box.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-how-to.php';
+				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-faq.php';
 			}
 
 		}
@@ -1250,6 +1251,13 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'conditions'        => array( 'type' => 'uabb-how-to' ),
 				'fields'            => array(),
 				'integration-class' => 'WPML_UABB_How_To',
+			);
+
+			// UABB FAQ.
+			$form['uabb-faq'] = array(
+				'conditions'        => array( 'type' => 'uabb-faq' ),
+				'fields'            => array(),
+				'integration-class' => 'WPML_UABB_FAQ',
 			);
 
 			return $form;

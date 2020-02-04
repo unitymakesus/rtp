@@ -120,6 +120,7 @@
 			if ( 'save_lightbox_position' == action ) return false;
             if ( 'save_pinned_ui_position' == action ) return false;
             if ( 'fl_builder_notifications' == action ) return false;
+            if ( action.indexOf( 'history' ) > -1 ) return false; // HistoryManager
 
             return true;
         },

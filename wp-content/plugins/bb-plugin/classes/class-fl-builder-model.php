@@ -254,8 +254,7 @@ final class FLBuilderModel {
 	 * @return string
 	 */
 	static public function get_store_url( $path = '', $params = array() ) {
-		$url = trailingslashit( FL_BUILDER_STORE_URL . $path ) . '?' . http_build_query( $params, '', '&' );
-
+		$url = add_query_arg( $params, FL_BUILDER_STORE_URL . $path );
 		return apply_filters( 'fl_builder_store_url', $url, $path );
 	}
 
@@ -410,10 +409,10 @@ final class FLBuilderModel {
 		global $wp_the_query;
 		global $post;
 
-		if ( in_the_loop() && is_main_query() && isset( $wp_the_query->post ) ) {
+		if ( in_the_loop() && is_main_query() && isset( $wp_the_query->post ) && $wp_the_query->post instanceof WP_Post ) {
 			// Get a post ID from the main query.
 			return $wp_the_query->post->ID;
-		} elseif ( isset( $post ) ) {
+		} elseif ( $post instanceof WP_Post ) {
 			// Get a post ID in a query outside of the main loop.
 			return $post->ID;
 		}
@@ -474,7 +473,11 @@ final class FLBuilderModel {
 				$editable = true;
 			}
 		}
-
+		/**
+		 * Checks to see if the builder can be enabled for
+		 * the current post in the main query.
+		 * @see fl_builder_is_post_editable
+		 */
 		return (bool) apply_filters( 'fl_builder_is_post_editable', $editable );
 	}
 
@@ -599,6 +602,9 @@ final class FLBuilderModel {
 	 */
 	static public function get_node_status() {
 		$status = self::is_builder_active() ? 'draft' : 'published';
+		/**
+		 * @see fl_builder_node_status
+		 */
 		return apply_filters( 'fl_builder_node_status', $status );
 	}
 
@@ -636,7 +642,11 @@ final class FLBuilderModel {
 			$post      = $wp_the_query->post;
 			$published = self::get_layout_data( 'published' );
 			$draft     = self::get_layout_data( 'draft' );
-			$content   = apply_filters( 'fl_builder_migrated_post_content', $post->post_content );
+			/**
+			 * Original post content from database
+			 * @see fl_builder_migrated_post_content
+			 */
+			$content = apply_filters( 'fl_builder_migrated_post_content', $post->post_content );
 
 			// Migrate existing post content to the builder?
 			if ( empty( $published ) && empty( $draft ) && ! empty( $content ) ) {
@@ -827,6 +837,11 @@ final class FLBuilderModel {
 	 * @return string
 	 */
 	static public function get_asset_enqueue_method() {
+		/**
+		 * Should assets be rendered inline
+		 * @since 2.1.5
+		 * @see fl_builder_render_assets_inline
+		 */
 		return apply_filters( 'fl_builder_render_assets_inline', false ) ? 'inline' : 'file';
 	}
 
@@ -1250,12 +1265,17 @@ final class FLBuilderModel {
 	 * @return array
 	 */
 	static public function get_categorized_nodes() {
+		//      global $get_categorized_nodes;
 		$nodes = array(
 			'rows'    => array(),
 			'groups'  => array(),
 			'columns' => array(),
 			'modules' => array(),
 		);
+
+		// if ( ! empty( $get_categorized_nodes ) ) {
+		// 	return $get_categorized_nodes;
+		// }
 
 		if ( self::is_post_user_template( 'module' ) ) {
 			$nodes['modules'] = self::get_all_modules();
@@ -1337,7 +1357,7 @@ final class FLBuilderModel {
 				}
 			}
 		}
-
+		//      $get_categorized_nodes = $nodes;
 		return $nodes;
 	}
 
@@ -1648,6 +1668,12 @@ final class FLBuilderModel {
 
 		// Update the layout data.
 		self::update_layout_data( $data );
+
+		return array(
+			'nodeId'     => $node_id,
+			'nodeType'   => $data[ $node_id ]->type,
+			'moduleType' => 'module' === $data[ $node_id ]->type ? $data[ $node_id ]->settings->type : null,
+		);
 	}
 
 	/**
@@ -1683,6 +1709,12 @@ final class FLBuilderModel {
 
 		// Set the node's new order.
 		self::reorder_node( $node_id, $position );
+
+		return array(
+			'nodeId'     => $node_id,
+			'nodeType'   => $node->type,
+			'moduleType' => 'module' === $node->type ? $node->settings->type : null,
+		);
 	}
 
 	/**
@@ -1913,7 +1945,7 @@ final class FLBuilderModel {
 		}
 
 		// Cache background slideshow data.
-		if ( 'slideshow' == $new_settings->bg_type && 'wordpress' == $new_settings->ss_source ) {
+		if ( 'slideshow' == $new_settings->bg_type && 'wordpress' == $new_settings->ss_source && class_exists( 'FLSlideshowModule' ) ) {
 
 			// Make sure we have a photo data object.
 			if ( ! isset( $row->settings->ss_photo_data ) ) {
@@ -1930,6 +1962,7 @@ final class FLBuilderModel {
 
 		return $new_settings;
 	}
+
 
 	/**
 	 * Returns background data for a row.
@@ -2911,7 +2944,10 @@ final class FLBuilderModel {
 				unset( $setting[ $key ] );
 			}
 		}
-
+		/**
+		 * Array of enabled modules.
+		 * @see fl_builder_enabled_modules
+		 */
 		return apply_filters( 'fl_builder_enabled_modules', $setting );
 	}
 
@@ -3271,6 +3307,10 @@ final class FLBuilderModel {
 		$parent         = self::get_node( $parent_id );
 		$module_node_id = self::generate_node_id();
 		$settings->type = $type;
+
+		if ( ! self::$modules[ $type ] ) {
+			return false;
+		}
 
 		// Run module update method.
 		$class              = get_class( self::$modules[ $type ] );
@@ -3819,7 +3859,7 @@ final class FLBuilderModel {
 			$responsive        = isset( $field['responsive'] ) && $field['responsive'] ? $field['responsive'] : false;
 
 			// Get the default unit if this field has more than one unit.
-			if ( isset( $field['units'] ) && count( $field['units'] ) > 1 ) {
+			if ( isset( $field['units'] ) && is_array( $field['units'] ) && count( $field['units'] ) > 1 ) {
 				$default_unit = isset( $field['default_unit'] ) ? $field['default_unit'] : $field['units'][0];
 			} else {
 				$default_unit = null;
@@ -4387,6 +4427,19 @@ final class FLBuilderModel {
 		$raw_data = get_metadata( 'post', $post_id, $key );
 		$data     = self::slash_settings( self::clean_layout_data( $data ) );
 
+		// TODO this is the performance patch for settings, needs to be fixed though...
+		// $data     = self::clean_layout_data( $data );
+		//
+		// if ( 'published' === $status ) {
+		// 	foreach ( $data as $node_id => $node ) {
+		// 		if ( isset( $node->settings ) ) {
+		// 			$data[ $node_id ]->settings = (object) self::array_remove_by_values( (array) $node->settings, array( '', null, array() ) );
+		// 		}
+		// 	}
+		// }
+		//
+		// $data = self::slash_settings( $data );
+
 		// Update the data.
 		if ( 0 === count( $raw_data ) ) {
 			add_metadata( 'post', $post_id, $key, $data );
@@ -4463,9 +4516,32 @@ final class FLBuilderModel {
 				}
 			}
 		}
-
 		return $cleaned;
 	}
+
+	/**
+	* Remove all empty values from the settings object recursivly to save ~60% db size
+	* @since 2.3
+	* @param array $haystack
+	* @param array $values
+	* @param array $whitelist
+	*
+	* @return array
+	*/
+	static public function array_remove_by_values( $haystack, $values, $whitelist = array( 'animation', 'style' ) ) {
+		foreach ( $haystack as $key => $value ) {
+			if ( is_array( $value ) ) {
+				$haystack[ $key ] = self::array_remove_by_values( $haystack[ $key ], $values );
+			}
+
+			if ( in_array( $haystack[ $key ], $values, true ) && ! in_array( $key, $whitelist ) ) {
+				unset( $haystack[ $key ] );
+			}
+		}
+
+		return $haystack;
+	}
+
 
 	/**
 	 * Detect if the current layout has previously drafted changes.
@@ -4982,7 +5058,7 @@ final class FLBuilderModel {
 
 			$terms = wp_get_post_terms( $post->ID, 'fl-builder-template-type' );
 
-			$type = ( 0 === count( $terms ) ) ? 'layout' : $terms[0]->slug;
+			$type = ( is_wp_error( $terms ) || 0 === count( $terms ) ) ? 'layout' : $terms[0]->slug;
 
 			self::$node_template_types[ $template_id ] = $type;
 
@@ -5201,6 +5277,38 @@ final class FLBuilderModel {
 	 */
 	static public function node_has_visibility_rules( $node ) {
 		return isset( $node->settings->visibility_display ) && ( '' !== $node->settings->visibility_display );
+	}
+
+	/**
+	 * Returns visibility rule.
+	 *
+	 * @param object $node
+	 * @return bool
+	 */
+	static public function node_visibility_rules( $node ) {
+
+		$rule = isset( $node->settings->visibility_display ) ? $node->settings->visibility_display : '';
+		$text = '';
+
+		switch ( $rule ) {
+
+			case 'logged_in':
+				$text = __( 'Logged In', 'fl-builder' );
+				break;
+
+			case 'logged_out':
+				$text = __( 'Logged Out', 'fl-builder' );
+				break;
+
+			case 'logic':
+				$text = __( 'Logic', 'fl-builder' );
+				break;
+		}
+
+		return array(
+			'text' => $text,
+			'type' => $rule,
+		);
 	}
 
 	/**
@@ -6063,6 +6171,9 @@ final class FLBuilderModel {
 
 		$templates = isset( self::$template_data[ $type ] ) ? self::$template_data[ $type ] : array();
 
+		/**
+		 * @see fl_builder_get_templates
+		 */
 		return apply_filters( 'fl_builder_get_templates', $templates, $type );
 	}
 
@@ -6299,7 +6410,21 @@ final class FLBuilderModel {
 	 * @return bool
 	 */
 	static public function is_codechecking_enabled() {
-		return apply_filters( 'fl_code_checking_enabled', true );
+
+		/**
+		 * Is code checking enabled?
+		 * @see fl_code_checking_enabled
+		 */
+		$enabled = apply_filters( 'fl_code_checking_enabled', true );
+		/**
+		 * Enable shortcodes in css/js
+		 * @see fl_enable_shortcode_css_js
+		 * @since 2.3
+		 */
+		if ( true === apply_filters( 'fl_enable_shortcode_css_js', false ) ) {
+			$enabled = false;
+		}
+		return $enabled;
 	}
 
 	/**
@@ -6317,6 +6442,11 @@ final class FLBuilderModel {
 			'showLineNumbers'           => false,
 			'showFoldWidgets'           => false,
 		);
+		/**
+		 * Default Ace editor settings
+		 * @see fl_ace_editor_settings
+		 * @since 2.1
+		 */
 		return apply_filters( 'fl_ace_editor_settings', $defaults );
 	}
 

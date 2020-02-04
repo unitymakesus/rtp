@@ -114,6 +114,21 @@ FLBuilderCSS::border_field_rule( array(
 }
 <?php endif; ?>
 
+
+<?php if ( $settings->duo_color1 && false !== strpos( $settings->icon, 'fad fa' ) ) : ?>
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-button-icon:before {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color1 ); ?>;
+}
+<?php endif; ?>
+
+<?php if ( $settings->duo_color2 && false !== strpos( $settings->icon, 'fad fa' ) ) : ?>
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-button-icon:after {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color2 ); ?>;
+	opacity: 1;
+}
+<?php endif; ?>
+
+
 <?php if ( ! empty( $settings->bg_hover_color ) ) : ?>
 .fl-builder-content .fl-node-<?php echo $id; ?> a.fl-button:hover,
 .fl-builder-content .fl-node-<?php echo $id; ?> a.fl-button:focus {
@@ -133,7 +148,11 @@ FLBuilderCSS::border_field_rule( array(
 .fl-builder-content .fl-node-<?php echo $id; ?> a.fl-button:focus * {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_hover_color ); ?>;
 }
+
 <?php endif; ?>
+
+
+
 
 <?php
 // Transition

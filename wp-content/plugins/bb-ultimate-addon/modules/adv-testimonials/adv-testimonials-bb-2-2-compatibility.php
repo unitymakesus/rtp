@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBAdvancedTestimonialsModule', array(
+	'UABBAdvancedTestimonialsModule',
+	array(
 		'general'                    => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -43,7 +44,7 @@ FLBuilder::register_module(
 				'rating'                    => array(
 					'title'  => __( 'Rating', 'uabb' ), // Section Title.
 					'fields' => array(
-						'enable_rating' => array(
+						'enable_rating'   => array(
 							'type'    => 'select',
 							'label'   => __( 'Enable Rating', 'uabb' ),
 							'default' => 'no',
@@ -54,10 +55,21 @@ FLBuilder::register_module(
 							'toggle'  => array(
 								'yes' => array(
 									'sections' => array( 'rating_typography' ),
+									'fields'   => array( 'rating_position' ),
 								),
 							),
 						),
-						'box_rating'    => array(
+						'rating_position' => array(
+							'type'    => 'select',
+							'label'   => __( 'Rating Position', 'uabb' ),
+							'default' => 'center',
+							'options' => array(
+								'center' => __( 'Between Name & Designation', 'uabb' ),
+								'top'    => __( 'Top', 'uabb' ),
+								'bottom' => __( 'Bottom', 'uabb' ),
+							),
+						),
+						'box_rating'      => array(
 							'label'   => __( 'Testimonial Rating', 'uabb' ),
 							'type'    => 'select',
 							'default' => '5',
@@ -1070,7 +1082,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_testimonials_form', array(
+	'uabb_testimonials_form',
+	array(
 		'title' => __( 'Add Testimonial', 'uabb' ),
 		'tabs'  => array(
 			'general'   => array( // Tab.

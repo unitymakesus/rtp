@@ -35,11 +35,11 @@ function uabb_row_particle_css( $css, $nodes, $global_settings ) {
 	foreach ( $nodes['rows'] as $row ) {
 		ob_start();
 		if ( 'yes' === $row->settings->enable_particles && ! FLBuilderModel::is_builder_active() ) {
-		?>
+			?>
 			.fl-node-<?php echo $row->node; ?> .fl-row-content {
 				position: inherit;
 			}
-		<?php
+			<?php
 		}
 		$css .= ob_get_clean();
 	}

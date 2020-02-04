@@ -41,6 +41,7 @@ final class FLBuilderWPBlocks {
 	 * @return void
 	 */
 	static public function enqueue_block_editor_assets() {
+		global $wp_version;
 		global $post;
 
 		if ( ! is_object( $post ) ) {
@@ -74,6 +75,7 @@ final class FLBuilderWPBlocks {
 				'enabled'      => FLBuilderModel::is_builder_enabled( $post->ID ),
 				'nonce'        => wp_create_nonce( 'fl_ajax_update' ),
 				'unrestricted' => FLBuilderUserAccess::current_user_can( 'unrestricted_editing' ),
+				'showui'       => apply_filters( 'fl_builder_render_admin_edit_ui', true ),
 			),
 			'post'    => array(
 				'id' => $post->ID,
@@ -96,6 +98,9 @@ final class FLBuilderWPBlocks {
 			'urls'    => array(
 				'edit' => FLBuilderModel::get_edit_url( $post->ID ),
 				'view' => get_permalink( $post->ID ),
+			),
+			'wp'      => array(
+				'version' => $wp_version,
 			),
 		) );
 	}

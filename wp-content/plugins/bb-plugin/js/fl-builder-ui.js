@@ -367,7 +367,7 @@
             this.$doneBtn.on('click', this.onDoneTriggered.bind(this));
 
             this.$actions = this.$el.find('.fl-builder-button');
-            this.$actions.on('click', this.onActionClicked.bind(this));
+            this.$actions.on('click touchend', this.onActionClicked.bind(this));
 
             FLBuilder.addHook('triggerDone', this.onDoneTriggered.bind(this));
 
@@ -882,8 +882,8 @@
             if ( this.userCanResize() ) {
                 var $layoutContent = $( FLBuilder._contentClass );
 
-                $layoutContent.delegate('.fl-block-row-resize', 'mouseenter', this.onDragHandleHover.bind(this) );
-                $layoutContent.delegate('.fl-block-row-resize', 'mousedown', this.onDragHandleDown.bind(this) );
+				$layoutContent.delegate('.fl-row', 'mouseenter touchstart', this.onDragHandleHover.bind(this) );
+                $layoutContent.delegate('.fl-block-row-resize', 'mousedown touchstart', this.onDragHandleDown.bind(this) );
             }
         },
 
@@ -1098,8 +1098,6 @@
             $( '.fl-block-overlay' ).each( function() {
 	            FLBuilder._buildOverlayOverflowMenu( $( this ) );
             } );
-
-            $('body').removeClass( 'fl-builder-row-resizing' );
 
             // Set the resizing flag to false with a timeout so other events get the right value.
 			setTimeout( function() { FLBuilder._colResizing = false; }, 50 );

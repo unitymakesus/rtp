@@ -30,7 +30,7 @@
 			<div class="fl-builder-settings-tabs">
 				<# var i = 0; for ( var tabId in data.tabs ) { #>
 				<# var tab = data.tabs[ tabId ]; #>
-				<a href="#fl-builder-settings-tab-{{tabId}}"<# if ( 0 === i ) { #> class="fl-active"<# } #>>{{{tab.title}}}</a>
+				<a href="#fl-builder-settings-tab-{{tabId}}"<# if ( tabId === data.activeTab ) { #> class="fl-active"<# } #>>{{{tab.title}}}</a>
 				<# i++; } #>
 				<button class="fl-builder-settings-tabs-more">
 					<svg viewBox="0 0 18 4" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -53,7 +53,7 @@
 					<# if ( data.tabs && Object.keys( data.tabs ).length > 0 ) { #>
 						<# var i = 0; for ( var tabId in data.tabs ) { #>
 						<# var tab = data.tabs[ tabId ]; #>
-						<div id="fl-builder-settings-tab-{{tabId}}" class="fl-builder-settings-tab<# if ( 0 === i ) { #> fl-active<# } #>">
+						<div id="fl-builder-settings-tab-{{tabId}}" class="fl-builder-settings-tab<# if ( tabId === data.activeTab ) { #> fl-active<# } #>">
 
 							<# if ( tab.file ) { #>
 								<div class="fl-legacy-settings-tab" data-tab="{{tabId}}" />

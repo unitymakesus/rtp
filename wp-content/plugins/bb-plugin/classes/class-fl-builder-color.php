@@ -159,13 +159,13 @@ final class FLBuilderColor {
 
 		if ( isset( $setting['color'] ) && '' !== $setting['color'] ) {
 
-			if ( '' === $setting['horizontal'] ) {
+			if ( ! isset( $setting['horizontal'] ) || '' === $setting['horizontal'] ) {
 				$setting['horizontal'] = 0;
 			}
-			if ( '' === $setting['vertical'] ) {
+			if ( ! isset( $setting['vertical'] ) || '' === $setting['vertical'] ) {
 				$setting['vertical'] = 0;
 			}
-			if ( '' === $setting['blur'] ) {
+			if ( ! isset( $setting['blur'] ) || '' === $setting['blur'] ) {
 				$setting['blur'] = 0;
 			}
 			if ( isset( $setting['spread'] ) && '' === $setting['spread'] ) {

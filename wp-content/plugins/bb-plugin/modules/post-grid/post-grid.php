@@ -824,14 +824,14 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'default' => 'default',
 						'options' => array(
 							'default' => __( 'Default', 'fl-builder' ),
-							'M j, Y'  => date( 'M j, Y' ),
-							'F j, Y'  => date( 'F j, Y' ),
-							'm/d/Y'   => date( 'm/d/Y' ),
-							'm-d-Y'   => date( 'm-d-Y' ),
-							'd M Y'   => date( 'd M Y' ),
-							'd F Y'   => date( 'd F Y' ),
-							'Y-m-d'   => date( 'Y-m-d' ),
-							'Y/m/d'   => date( 'Y/m/d' ),
+							'M j, Y'  => gmdate( 'M j, Y' ),
+							'F j, Y'  => gmdate( 'F j, Y' ),
+							'm/d/Y'   => gmdate( 'm/d/Y' ),
+							'm-d-Y'   => gmdate( 'm-d-Y' ),
+							'd M Y'   => gmdate( 'd M Y' ),
+							'd F Y'   => gmdate( 'd F Y' ),
+							'Y-m-d'   => gmdate( 'Y-m-d' ),
+							'Y/m/d'   => gmdate( 'Y/m/d' ),
 						),
 					),
 					'show_comments'      => array(
@@ -1163,6 +1163,30 @@ FLBuilder::register_module('FLPostGridModule', array(
 					'icon'          => array(
 						'type'  => 'icon',
 						'label' => __( 'Post Icon', 'fl-builder' ),
+					),
+					'duo_color1'    => array(
+						'label'      => __( 'DuoTone Icon Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-accordion-button-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color2'    => array(
+						'label'      => __( 'DuoTone Icon Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-accordion-button-icon i.fad:after',
+							'property'  => 'color',
+							'important' => true,
+						),
 					),
 					'icon_position' => array(
 						'type'    => 'select',

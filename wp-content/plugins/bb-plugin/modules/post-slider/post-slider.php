@@ -109,7 +109,7 @@ class FLPostSliderModule extends FLBuilderModule {
 			$this->post_slides = array();
 
 			// check if we have selected posts
-			if ( empty( $this->settings->posts_post ) ) {
+			if ( ! isset( $this->settings->posts_post_matching ) || 1 !== $this->settings->posts_post_matching ) {
 
 				// get the current query object
 				$query = $this->get_query();
@@ -574,14 +574,14 @@ FLBuilder::register_module('FLPostSliderModule', array(
 						'default' => 'default',
 						'options' => array(
 							'default' => __( 'Default', 'fl-builder' ),
-							'M j, Y'  => date( 'M j, Y' ),
-							'F j, Y'  => date( 'F j, Y' ),
-							'm/d/Y'   => date( 'm/d/Y' ),
-							'm-d-Y'   => date( 'm-d-Y' ),
-							'd M Y'   => date( 'd M Y' ),
-							'd F Y'   => date( 'd F Y' ),
-							'Y-m-d'   => date( 'Y-m-d' ),
-							'Y/m/d'   => date( 'Y/m/d' ),
+							'M j, Y'  => gmdate( 'M j, Y' ),
+							'F j, Y'  => gmdate( 'F j, Y' ),
+							'm/d/Y'   => gmdate( 'm/d/Y' ),
+							'm-d-Y'   => gmdate( 'm-d-Y' ),
+							'd M Y'   => gmdate( 'd M Y' ),
+							'd F Y'   => gmdate( 'd F Y' ),
+							'Y-m-d'   => gmdate( 'Y-m-d' ),
+							'Y/m/d'   => gmdate( 'Y/m/d' ),
 						),
 					),
 					'show_comments' => array(

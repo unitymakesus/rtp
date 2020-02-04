@@ -84,7 +84,8 @@
             var baseId = text.replace(/\s+?/g, "_"),
               suffix = "",
               count = 1;
-            baseId = baseId.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "");
+              baseId = baseId.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "");
+              baseId = baseId.replace(/[^\w\s]/gi, '');           
 
             while (document.getElementById(baseId + suffix) !== null) {
               suffix = "_" + count++;

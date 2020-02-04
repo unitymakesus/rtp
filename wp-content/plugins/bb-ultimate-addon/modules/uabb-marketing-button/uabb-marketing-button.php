@@ -67,9 +67,9 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::Check_BB_Version();
-		$page_migrated           = UABB_Compatibility::Check_Old_Page_Migration();
-		$stable_version_new_page = UABB_Compatibility::Check_Stable_Version_New_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
 		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
 
@@ -341,7 +341,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 		if ( ! empty( $this->settings->width ) ) {
 			$classname .= ' uabb-marketing-button-width-' . $this->settings->width;
 		}
-		if ( ! UABB_Compatibility::Check_BB_Version() ) {
+		if ( ! UABB_Compatibility::$version_bb_check ) {
 			if ( ! empty( $this->settings->align ) ) {
 				$classname .= ' uabb-marketing-button-' . $this->settings->align;
 			}
@@ -365,7 +365,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::Check_BB_Version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/uabb-marketing-button-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/uabb-marketing-button-bb-less-than-2-2-compatibility.php';

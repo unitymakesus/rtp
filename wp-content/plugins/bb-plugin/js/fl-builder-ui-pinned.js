@@ -476,7 +476,9 @@
 				panel 	  = $( '.fl-builder--content-library-panel' ),
 				width     = panel.outerWidth();
 
-			if ( panel.hasClass( 'fl-builder-ui-pinned-left' ) ) {
+			if ( ! panel.is( ':visible' ) ) {
+				body.css( 'margin', '' );
+			} else if ( panel.hasClass( 'fl-builder-ui-pinned-left' ) ) {
 				body.css( 'margin-left', width + 'px' );
 				preview.css( 'margin-left', width + 'px' );
 			} else if ( panel.hasClass( 'fl-builder-ui-pinned-right' ) ) {

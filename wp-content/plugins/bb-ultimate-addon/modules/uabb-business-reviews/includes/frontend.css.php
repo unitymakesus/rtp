@@ -5,7 +5,7 @@
  *  @package UABB Business Review Module's Frontend.css.php file.
  */
 
-$version_bb_check = UABB_Compatibility::check_bb_version();
+$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 $settings->reviewer_name_color = UABB_Helper::uabb_colorpicker( $settings, 'reviewer_name_color', true );
 

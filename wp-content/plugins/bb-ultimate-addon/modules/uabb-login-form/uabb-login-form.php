@@ -587,7 +587,7 @@ class UABBLoginForm extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php';
 } else {

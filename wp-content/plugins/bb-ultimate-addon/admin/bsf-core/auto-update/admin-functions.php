@@ -84,7 +84,7 @@ if ( ! function_exists( 'bsf_register_product_callback' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '5',
+				'timeout' => '10',
 			)
 		);
 
@@ -94,7 +94,7 @@ if ( ! function_exists( 'bsf_register_product_callback' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '5',
+					'timeout' => '8',
 				)
 			);
 		}
@@ -220,7 +220,7 @@ if ( ! function_exists( 'bsf_deregister_product_callback' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '5',
+				'timeout' => '10',
 			)
 		);
 
@@ -230,7 +230,7 @@ if ( ! function_exists( 'bsf_deregister_product_callback' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '5',
+					'timeout' => '8',
 				)
 			);
 		}
@@ -309,7 +309,7 @@ if ( ! function_exists( 'bsf_register_user_callback' ) ) {
 		$request = wp_remote_post(
 			$path, array(
 				'body'    => $data,
-				'timeout' => '5',
+				'timeout' => '10',
 			)
 		);
 
@@ -318,7 +318,7 @@ if ( ! function_exists( 'bsf_register_user_callback' ) ) {
 			$request = wp_remote_post(
 				$path, array(
 					'body'    => $data,
-					'timeout' => '5',
+					'timeout' => '8',
 				)
 			);
 		}
@@ -633,109 +633,6 @@ if ( ! function_exists( 'bsf_notices' ) ) {
 		}
 	}
 }
-
-if ( ! function_exists( 'bsf_grant_developer_access' ) ) {
-	function bsf_grant_developer_access( $action ) {
-		$brainstrom_users = ( get_option( 'brainstrom_users' ) ) ? get_option( 'brainstrom_users' ) : array();
-
-		if ( empty( $brainstrom_users ) ) {
-			return false;
-		}
-
-		global $current_user;
-		$user  = $current_user->user_login;
-		$email = $current_user->user_email;
-
-		// $token = bin2hex(openssl_random_pseudo_bytes(32));
-		$token = bsf_generate_rand_token();
-		$url   = wp_nonce_url( get_site_url() . '/wp-login.php?developer_access=true&access_id=' . $user . '&access_token=' . $token );
-
-		$subject = $message = $vc_version = '';
-
-		$username = ( isset( $brainstrom_users[0]['name'] ) ) ? $brainstrom_users[0]['name'] : $user;
-
-		$response = bsf_allow_developer_access( $username, $url, $action );
-		if ( $response ) {
-			if ( $action === 'grant' ) {
-				update_option( 'developer_access', true );
-				$interval = time() + ( 15 * 24 * 60 * 60 );
-				update_option( 'access_time', $interval );
-				update_option( 'access_token', $token );
-				// echo '<div class="updated"><p>'.$response.'</p></div>';
-			} else {
-				$interval = time() - ( 10000 );
-				update_option( 'access_time', $interval );
-				if ( update_option( 'developer_access', false ) ) {
-					// echo __("Access Revoked!",'bsf');
-				} else {
-					?>
-					<div class="error"><p><?php echo __( 'Something went wrong. Please try again!', 'bsf' ); ?></p></div>
-					<?php
-				}
-			}
-		} else {
-			echo '<div class="error"><p>Something went wrong. Please try again.</p></div>';
-			update_option( 'developer_access', false );
-			$interval = time();
-			update_option( 'access_time', $interval );
-		}
-	}
-}
-if ( ! function_exists( 'bsf_allow_developer_access' ) ) {
-	function bsf_allow_developer_access( $username, $url, $process ) {
-
-		$path    = bsf_get_api_url() . '?referer=allow-developer-access';
-		$new_url = $url;
-		$user    = $username;
-		$request = wp_remote_post(
-			$path, array(
-				'body'    => array(
-					'action'    => 'give_developer_access',
-					'userid'    => $user,
-					'login_url' => $new_url,
-					'site_url'  => get_site_url(),
-					'process'   => $process,
-				),
-				'timeout' => '5',
-			)
-		);
-		if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
-			return ( $request['body'] );
-		}
-	}
-}
-if ( ! function_exists( 'bsf_process_developer_login' ) ) {
-	function bsf_process_developer_login() {
-		$basename = basename( $_SERVER['SCRIPT_NAME'] );
-		if ( $basename == 'wp-login.php' ) {
-			$interval = get_option( 'access_time' );
-			$now      = time();
-			if ( $interval <= $now ) {
-				update_option( 'developer_access', false );
-			}
-			require_once ABSPATH . 'wp-includes/pluggable.php';
-
-			if ( isset( $_GET['access_token'] ) ) {
-				$access       = get_option( 'developer_access' );
-				$access_token = get_option( 'access_token' );
-				$verify_token = $_GET['access_token'];
-				$verified     = ( $access_token === $verify_token ) ? true : false;
-				if ( isset( $_GET['developer_access'] ) && $access && $verified ) {
-					$user_login = $_GET['access_id'];
-					$user       = get_user_by( 'login', $user_login );
-					$user_id    = $user->ID;
-					wp_set_current_user( $user_id, $user_login );
-					wp_set_auth_cookie( $user_id );
-					$redirect_to = user_admin_url();
-					setcookie( 'DeveloperAccess', 'active', time() + 86400 );
-					wp_safe_redirect( $redirect_to );
-					exit();
-				}
-			}
-		}
-	}
-}
-bsf_process_developer_login();
 
 if ( ! function_exists( 'bsf_get_free_products' ) ) {
 	function bsf_get_free_products() {

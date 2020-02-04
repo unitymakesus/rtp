@@ -2333,7 +2333,7 @@
 				val = ''
 
 			// If the selected font is a Google Font, build the font stylesheet
-			if( fontGroup == 'Google' ){
+			if( fontGroup == 'Google' || fontGroup == 'Recently Used' ){
 				this._buildFontStylesheet( uniqueID, font.val(), weight.val() );
 			}
 

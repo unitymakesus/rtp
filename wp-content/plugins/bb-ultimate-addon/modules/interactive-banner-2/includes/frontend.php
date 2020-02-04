@@ -7,7 +7,7 @@
 
 $target            = '';
 $link_url_nofollow = '';
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	if ( isset( $settings->link_url_target ) ) {
 		$target = $settings->link_url_target;
 	}

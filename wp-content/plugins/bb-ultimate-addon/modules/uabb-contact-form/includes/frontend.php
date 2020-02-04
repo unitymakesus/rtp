@@ -5,6 +5,26 @@
  *  @package UABB Contact Form Module
  */
 
+/**
+ * Function that adds async attribute
+ *
+ * @since 1.22.0
+ * @method  uabb_add_async_attribute for the enqueued `uabb-g-recaptcha` script
+ * @param string $tag    Script tag.
+ * @param string $handle Registered script handle.
+ */
+add_filter(
+	'script_loader_tag',
+	function( $tag, $handle ) {
+		if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
+			return $tag;
+		}
+		return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
+	},
+	10,
+	2
+);
+
 ?>
 
 <?php
@@ -188,12 +208,12 @@ if ( 'show' == $settings->msg_toggle && '50' == $settings->msg_width ) {
 			<button type="submit" class="uabb-contact-form-submit">
 			<?php
 			if ( isset( $settings->btn_icon ) && isset( $settings->btn_icon_position ) ) {
-				echo ( '' != $settings->btn_icon && 'before' == $settings->btn_icon_position ) ? '<i class="' . $settings->btn_icon . '"></i>' : ''; }
+				echo ( '' != $settings->btn_icon && 'before' == $settings->btn_icon_position ) ? '<i class="' . $settings->btn_icon . ' uabb-contact-form-submit-button-icon"></i>' : ''; }
 			?>
 			<span class="uabb-contact-form-button-text"><?php echo $settings->btn_text; ?></span>
 			<?php
 			if ( isset( $settings->btn_icon ) && isset( $settings->btn_icon_position ) ) {
-				echo ( '' != $settings->btn_icon && 'after' == $settings->btn_icon_position ) ? '<i class="' . $settings->btn_icon . '"></i>' : ''; }
+				echo ( '' != $settings->btn_icon && 'after' == $settings->btn_icon_position ) ? '<i class="' . $settings->btn_icon . ' uabb-contact-form-submit-button-icon"></i>' : ''; }
 			?>
 </button>
 		</div>

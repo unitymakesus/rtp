@@ -5,7 +5,7 @@
  *  @package UABB Retina Image Module
  */
 
-	$version_bb_check = UABB_Compatibility::check_bb_version();
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 	$settings->color          = UABB_Helper::uabb_colorpicker( $settings, 'color' );
 	$settings->bg_color       = UABB_Helper::uabb_colorpicker( $settings, 'bg_color' );

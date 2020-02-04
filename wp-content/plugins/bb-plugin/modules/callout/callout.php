@@ -201,6 +201,7 @@ class FLCalloutModule extends FLBuilderModule {
 	 */
 	public function get_icon_settings() {
 		$settings = array(
+			'id'              => $this->node,
 			'align'           => '',
 			'exclude_wrapper' => true,
 			'icon'            => $this->settings->icon,
@@ -552,6 +553,7 @@ FLBuilder::register_module('FLCalloutModule', array(
 						'type'  => 'icon',
 						'label' => __( 'Icon', 'fl-builder' ),
 					),
+
 					'icon_position' => array(
 						'type'    => 'select',
 						'label'   => __( 'Position', 'fl-builder' ),
@@ -570,6 +572,32 @@ FLBuilder::register_module('FLCalloutModule', array(
 			'icon_colors'    => array(
 				'title'  => __( 'Icon Colors', 'fl-builder' ),
 				'fields' => array(
+					'icon_duo_color1'     => array(
+						'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'icon_duo_color2'     => array(
+						'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:after',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
 					'icon_color'          => array(
 						'type'        => 'color',
 						'connections' => array( 'color' ),
@@ -745,6 +773,32 @@ FLBuilder::register_module('FLCalloutModule', array(
 						'show_remove' => true,
 						'show'        => array(
 							'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+						),
+					),
+					'btn_duo_color1'     => array(
+						'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-button i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'btn_duo_color2'     => array(
+						'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-button i.fad:after',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'btn_icon_position'  => array(

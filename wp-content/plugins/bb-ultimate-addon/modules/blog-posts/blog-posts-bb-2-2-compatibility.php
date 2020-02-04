@@ -301,6 +301,26 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'uabb_message'    => array(
+					'title'  => __( 'Message', 'uabb' ),
+					'fields' => array(
+						'no_results_message' => array(
+							'type'    => 'text',
+							'label'   => __( 'No Results Message', 'uabb' ),
+							'default' => __( "Sorry, we couldn't find any posts. Please try a different search.", 'uabb' ),
+						),
+						'show_search'        => array(
+							'type'    => 'select',
+							'label'   => __( 'Show Search', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'1' => __( 'Show', 'uabb' ),
+								'0' => __( 'Hide', 'uabb' ),
+							),
+							'help'    => __( 'Shows the search form if no posts are found.', 'uabb' ),
+						),
+					),
+				),
 			),
 		),
 		'post_type_filter' => array(
@@ -1230,21 +1250,6 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'no_results_message'   => array(
-							'type'    => 'text',
-							'label'   => __( 'No Results Message', 'uabb' ),
-							'default' => __( "Sorry, we couldn't find any posts. Please try a different search.", 'uabb' ),
-						),
-						'show_search'          => array(
-							'type'    => 'select',
-							'label'   => __( 'Show Search', 'uabb' ),
-							'default' => '1',
-							'options' => array(
-								'1' => __( 'Show', 'uabb' ),
-								'0' => __( 'Hide', 'uabb' ),
-							),
-							'help'    => __( 'Shows the search form if no posts are found.', 'uabb' ),
-						),
 					),
 				),
 				'pagination_style'      => array(
@@ -2007,7 +2012,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/filter-query-parameters-advanced-posts/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=advanced-posts-module" target="_blank" rel="noopener"> How to filter Query Parameters in Advanced Posts? </a> </li>
 

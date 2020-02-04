@@ -5,7 +5,7 @@
  *  @package UABB Social share Module
  */
 
-$version_bb_check      = UABB_Compatibility::check_bb_version(); ?>
+$version_bb_check      = UABB_Compatibility::$version_bb_check; ?>
 
 .uabb-social-share-horizontal .uabb-social-share-link-wrap {
 	vertical-align: top;

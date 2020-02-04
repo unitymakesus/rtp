@@ -5,7 +5,7 @@
  *  @package UABB Heading Module
  */
 
-if ( isset( $settings->link_nofollow ) && UABB_Compatibility::check_bb_version() ) {
+if ( isset( $settings->link_nofollow ) && UABB_Compatibility::$version_bb_check ) {
 	$link_nofollow = $settings->link_nofollow;
 } else {
 	$link_nofollow = 0;

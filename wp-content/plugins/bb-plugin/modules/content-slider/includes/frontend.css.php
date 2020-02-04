@@ -324,5 +324,22 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 				'color' => $slide->btn_text_color,
 			),
 		) );
+
+		if ( $slide->btn_duo_color1 && false !== strpos( $slide->btn_icon, 'fad fa' ) ) :
+			?>
+			.fl-slide-<?php echo $i; ?> .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon.fad:before {
+				color: <?php echo FLBuilderColor::hex_or_rgb( $slide->btn_duo_color1 ); ?>;
+			}
+			<?php
+			endif;
+
+		if ( $slide->btn_duo_color2 && false !== strpos( $slide->btn_icon, 'fad fa' ) ) :
+			?>
+			.fl-slide-<?php echo $i; ?> .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon.fad:after {
+				color: <?php echo FLBuilderColor::hex_or_rgb( $slide->btn_duo_color2 ); ?>;
+				opacity: 1;
+			}
+			<?php
+			endif;
 	}
 }

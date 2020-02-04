@@ -85,7 +85,8 @@ class UABB_Global_Styling {
 				'title'     => $form['title'],
 				'tabs'      => $form['tabs'],
 				'resizable' => true,
-			), $settings
+			),
+			$settings
 		);
 	}
 

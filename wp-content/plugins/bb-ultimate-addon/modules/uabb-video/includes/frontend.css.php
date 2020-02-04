@@ -5,7 +5,7 @@
  *  @package Video Module's Frontend.css.php file.
  */
 
-$version_bb_check                     = UABB_Compatibility::check_bb_version();
+$version_bb_check                     = UABB_Compatibility::$version_bb_check;
 $settings->play_icon_color            = UABB_Helper::uabb_colorpicker( $settings, 'play_icon_color', true );
 $settings->play_icon_hover_color      = UABB_Helper::uabb_colorpicker( $settings, 'play_icon_hover_color', true );
 $settings->image_overlay_color        = UABB_Helper::uabb_colorpicker( $settings, 'image_overlay_color', true );

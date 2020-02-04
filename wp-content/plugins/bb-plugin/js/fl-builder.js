@@ -426,11 +426,14 @@
 		 */
 		_initClassNames: function()
 		{
-			$('html').addClass('fl-builder-edit');
-			$('body').addClass('fl-builder');
+			var html = $( 'html' ),
+				body = $( 'body' );
 
-			if(FLBuilderConfig.simpleUi) {
-				$('body').addClass('fl-builder-simple');
+			html.addClass('fl-builder-edit');
+			body.addClass( 'fl-builder' );
+
+			if ( FLBuilderConfig.simpleUi ) {
+				body.addClass( 'fl-builder-simple' );
 			}
 
 			FLBuilder._contentClass = '.fl-builder-content-' + FLBuilderConfig.postId;
@@ -507,7 +510,7 @@
 		_initSortables: function()
 		{
 			var defaults = {
-				appendTo: 'body',
+				appendTo: FLBuilder._contentClass,
 				cursor: 'move',
 				cursorAt: {
 					left: 85,
@@ -640,7 +643,7 @@
 			// Modules
 			$(FLBuilder._contentClass + ' .fl-col-content').sortable($.extend({}, defaults, {
 				connectWith: moduleConnections,
-				handle: '.fl-module-overlay .fl-block-overlay-actions .fl-block-move',
+				handle: '.fl-module-sortable-proxy',
 				helper: FLBuilder._moduleDragHelper,
 				items: '.fl-module, .fl-col-group',
 				start: FLBuilder._moduleDragStart,
@@ -687,6 +690,8 @@
 		 */
 		_bindEvents: function()
 		{
+			var isTouch = FLBuilderLayout._isTouch();
+
 			/* Links */
 			$excludedLinks = $('.fl-builder-bar a, .fl-builder--content-library-panel a, .fl-page-nav .nav a'); // links in ui shouldn't be disabled.
 			$('a').not($excludedLinks).on('click', FLBuilder._preventDefault);
@@ -701,8 +706,8 @@
 			$(window).on('beforeunload', FLBuilder._warnBeforeUnload);
 
 			/* Submenus */
-			$('body').delegate('.fl-builder-has-submenu', 'click', FLBuilder._submenuParentClicked);
-			$('body').delegate('.fl-builder-has-submenu a', 'click', FLBuilder._submenuChildClicked);
+			$('body').delegate('.fl-builder-has-submenu', 'click touchend', FLBuilder._submenuParentClicked);
+			$('body').delegate('.fl-builder-has-submenu a', 'click touchend', FLBuilder._submenuChildClicked);
 			$('body').delegate('.fl-builder-submenu', 'mouseenter', FLBuilder._submenuMouseenter);
 			$('body').delegate('.fl-builder-submenu', 'mouseleave', FLBuilder._submenuMouseleave);
 			$('body').delegate('.fl-builder-submenu .fl-builder-has-submenu', 'mouseenter', FLBuilder._submenuNestedParentMouseenter);
@@ -758,44 +763,60 @@
 			$('body').delegate('.fl-block-overlay', 'contextmenu', FLBuilder._onContextmenu);
 
 			/* Rows */
-			$('body').delegate('.fl-row-overlay .fl-block-remove', 'click', FLBuilder._deleteRowClicked);
-			$('body').delegate('.fl-row-overlay .fl-block-copy', 'click', FLBuilder._rowCopyClicked);
+			$('body').delegate('.fl-row-overlay .fl-block-remove', 'click touchend', FLBuilder._deleteRowClicked);
+			$('body').delegate('.fl-row-overlay .fl-block-copy', 'click touchend', FLBuilder._rowCopyClicked);
 			$('body').delegate('.fl-row-overlay .fl-block-move', 'mousedown', FLBuilder._rowDragInit);
-			$('body').delegate('.fl-row-overlay .fl-block-settings', 'click', FLBuilder._rowSettingsClicked);
-			$('body').delegate('.fl-row-overlay', 'click', FLBuilder._rowSettingsClicked);
+			$('body').delegate('.fl-row-overlay .fl-block-move', 'touchstart', FLBuilder._rowDragInitTouch);
+			$('body').delegate('.fl-row-overlay .fl-block-settings', 'click touchend', FLBuilder._rowSettingsClicked);
 			$('body').delegate('.fl-builder-row-settings .fl-builder-settings-save', 'click', FLBuilder._saveSettings);
 
 			/* Rows Submenu */
-			$('body').delegate('.fl-block-col-submenu .fl-block-row-reset', 'click', FLBuilder._resetRowWidthClicked);
+			$('body').delegate('.fl-block-col-submenu .fl-block-row-reset', 'click touchend', FLBuilder._resetRowWidthClicked);
 
 			/* Columns */
 			$('body').delegate('.fl-col-overlay .fl-block-move', 'mousedown', FLBuilder._colDragInit);
-			$('body').delegate('.fl-block-col-copy', 'click', FLBuilder._copyColClicked);
-			$('body').delegate('.fl-col-overlay .fl-block-remove', 'click', FLBuilder._deleteColClicked);
-			$('body').delegate('.fl-col-overlay .fl-block-settings', 'click', FLBuilder._colSettingsClicked);
-			$('body').delegate('.fl-col-overlay', 'click', FLBuilder._colSettingsClicked);
+			$('body').delegate('.fl-col-overlay .fl-block-move', 'touchstart', FLBuilder._colDragInitTouch);
+			$('body').delegate('.fl-block-col-copy', 'click touchend', FLBuilder._copyColClicked);
+			$('body').delegate('.fl-col-overlay .fl-block-remove', 'click touchend', FLBuilder._deleteColClicked);
+			$('body').delegate('.fl-col-overlay .fl-block-settings', 'click touchend', FLBuilder._colSettingsClicked);
 			$('body').delegate('.fl-builder-col-settings .fl-builder-settings-save', 'click', FLBuilder._saveSettings);
+
+			// Column touch or mouse specific events.
+			if ( isTouch ) {
+				$('body').delegate('.fl-col-overlay', 'touchend', FLBuilder._colSettingsClicked);
+			} else {
+				$('body').delegate('.fl-col-overlay', 'click', FLBuilder._colSettingsClicked);
+			}
 
 			/* Columns Submenu */
 			$('body').delegate('.fl-block-col-submenu .fl-block-col-move', 'mousedown', FLBuilder._colDragInit);
-			$('body').delegate('.fl-block-col-submenu .fl-block-col-edit', 'click', FLBuilder._colSettingsClicked);
-			$('body').delegate('.fl-block-col-submenu .fl-block-col-delete', 'click', FLBuilder._deleteColClicked);
-			$('body').delegate('.fl-block-col-submenu .fl-block-col-reset', 'click', FLBuilder._resetColumnWidthsClicked);
+			$('body').delegate('.fl-block-col-submenu .fl-block-col-move', 'touchstart', FLBuilder._colDragInitTouch);
+			$('body').delegate('.fl-block-col-submenu .fl-block-col-edit', 'click touchend', FLBuilder._colSettingsClicked);
+			$('body').delegate('.fl-block-col-submenu .fl-block-col-delete', 'click touchend', FLBuilder._deleteColClicked);
+			$('body').delegate('.fl-block-col-submenu .fl-block-col-reset', 'click touchend', FLBuilder._resetColumnWidthsClicked);
 			$('body').delegate('.fl-block-col-submenu li', 'mouseenter', FLBuilder._showColHighlightGuide);
 			$('body').delegate('.fl-block-col-submenu li', 'mouseleave', FLBuilder._removeColHighlightGuides);
 
 			/* Columns Submenu (Parent Column) */
 			$('body').delegate('.fl-block-col-submenu .fl-block-col-move-parent', 'mousedown', FLBuilder._colDragInit);
-			$('body').delegate('.fl-block-col-submenu .fl-block-col-edit-parent', 'click', FLBuilder._colSettingsClicked);
+			$('body').delegate('.fl-block-col-submenu .fl-block-col-move-parent', 'touchstart', FLBuilder._colDragInitTouch);
+			$('body').delegate('.fl-block-col-submenu .fl-block-col-edit-parent', 'click touchend', FLBuilder._colSettingsClicked);
 
 			/* Modules */
-			$('body').delegate('.fl-module-overlay .fl-block-remove', 'click', FLBuilder._deleteModuleClicked);
-			$('body').delegate('.fl-module-overlay .fl-block-copy', 'click', FLBuilder._moduleCopyClicked);
-			$('body').delegate('.fl-module-overlay .fl-block-move', 'mousedown', FLBuilder._blockDragInit);
-			$('body').delegate('.fl-module-overlay .fl-block-settings', 'click', FLBuilder._moduleSettingsClicked);
-			$('body').delegate('.fl-module-overlay', 'click', FLBuilder._moduleSettingsClicked);
+			$('body').delegate('.fl-module-overlay .fl-block-remove', 'click touchend', FLBuilder._deleteModuleClicked);
+			$('body').delegate('.fl-module-overlay .fl-block-copy', 'click touchend', FLBuilder._moduleCopyClicked);
+			$('body').delegate('.fl-module-overlay .fl-block-move', 'mousedown', FLBuilder._moduleDragInit);
+			$('body').delegate('.fl-module-overlay .fl-block-move', 'touchstart', FLBuilder._moduleDragInitTouch);
+			$('body').delegate('.fl-module-overlay .fl-block-settings', 'click touchend', FLBuilder._moduleSettingsClicked);
 			$('body').delegate('.fl-builder-module-settings .fl-builder-settings-save', 'click', FLBuilder._saveModuleClicked);
-			$('body').delegate('.fl-module-overlay .fl-block-col-settings', 'click', FLBuilder._colSettingsClicked);
+			$('body').delegate('.fl-module-overlay .fl-block-col-settings', 'click touchend', FLBuilder._colSettingsClicked);
+
+			// Module touch or mouse specific events.
+			if ( isTouch ) {
+				$('body').delegate('.fl-module-overlay', 'touchend', FLBuilder._moduleSettingsClicked);
+			} else {
+				$('body').delegate('.fl-module-overlay', 'click', FLBuilder._moduleSettingsClicked);
+			}
 
 			/* Node Templates */
 			$('body').delegate('.fl-builder-settings-save-as', 'click', FLBuilder._showNodeTemplateSettings);
@@ -908,12 +929,12 @@
 		{
 			var content = $(FLBuilder._contentClass);
 
-			content.delegate('.fl-row', 'mouseenter', FLBuilder._rowMouseenter);
+			content.delegate('.fl-row', 'mouseenter touchstart', FLBuilder._rowMouseenter);
 			content.delegate('.fl-row', 'mouseleave', FLBuilder._rowMouseleave);
 			content.delegate('.fl-row-overlay', 'mouseleave', FLBuilder._rowMouseleave);
-			content.delegate('.fl-col', 'mouseenter', FLBuilder._colMouseenter);
+			content.delegate('.fl-col', 'mouseenter touchstart', FLBuilder._colMouseenter);
 			content.delegate('.fl-col', 'mouseleave', FLBuilder._colMouseleave);
-			content.delegate('.fl-module', 'mouseenter', FLBuilder._moduleMouseenter);
+			content.delegate('.fl-module', 'mouseenter touchstart', FLBuilder._moduleMouseenter);
 			content.delegate('.fl-module', 'mouseleave', FLBuilder._moduleMouseleave);
 		},
 
@@ -929,12 +950,12 @@
 		{
 			var content = $(FLBuilder._contentClass);
 
-			content.undelegate('.fl-row', 'mouseenter', FLBuilder._rowMouseenter);
+			content.undelegate('.fl-row', 'mouseenter touchstart', FLBuilder._rowMouseenter);
 			content.undelegate('.fl-row', 'mouseleave', FLBuilder._rowMouseleave);
 			content.undelegate('.fl-row-overlay', 'mouseleave', FLBuilder._rowMouseleave);
-			content.undelegate('.fl-col', 'mouseenter', FLBuilder._colMouseenter);
+			content.undelegate('.fl-col', 'mouseenter touchstart', FLBuilder._colMouseenter);
 			content.undelegate('.fl-col', 'mouseleave', FLBuilder._colMouseleave);
-			content.undelegate('.fl-module', 'mouseenter', FLBuilder._moduleMouseenter);
+			content.undelegate('.fl-module', 'mouseenter touchstart', FLBuilder._moduleMouseenter);
 			content.undelegate('.fl-module', 'mouseleave', FLBuilder._moduleMouseleave);
 		},
 
@@ -1041,16 +1062,23 @@
 		 */
 		_initTipTips: function()
 		{
-			$('.fl-tip:not(.fl-has-tip)').each( function(){
+			var tips = $('.fl-tip:not(.fl-has-tip)');
+
+			tips.each( function(){
 				var ele = $( this );
 				ele.addClass( 'fl-has-tip' );
 				if ( undefined == ele.attr( 'data-title' ) ) {
 					ele.attr( 'data-title', ele.attr( 'title' ) );
 				}
-			} ).tipTip( {
+			} )
+
+			if ( ! FLBuilderLayout._isTouch() ) {
+				tips.tipTip( {
 				defaultPosition : 'top',
-				delay           : 1000
-			} );
+				delay           : 300,
+				maxWidth        : 'auto'
+				} );
+			}
 		},
 
 		/**
@@ -1310,7 +1338,9 @@
 			}
 
 			FLBuilder.ajax( {
-				action: 'save_layout'
+				action: 'save_layout',
+				publish: true,
+				exit: shouldExit ? 1 : 0,
 			}, this._onPublishComplete.bind( this, shouldExit ) );
 		},
 
@@ -1347,7 +1377,9 @@
 			// Change the admin bar status dot to green if it isn't already
 			$('#wp-admin-bar-fl-builder-frontend-edit-link .fl-builder-admin-bar-status-dot').css('color', '#6bc373');
 
-			FLBuilder.triggerHook( 'didPublishLayout' );
+			FLBuilder.triggerHook( 'didPublishLayout', {
+				shouldExit: shouldExit,
+			} );
 		},
 
 		/**
@@ -1384,7 +1416,10 @@
 
 				FLBuilder.ajax({
 					action: 'clear_draft_layout'
-				}, FLBuilder._exit);
+				}, function() {
+					FLBuilder.triggerHook('didDiscardChanges');
+					FLBuilder._exit();
+				});
 			} else {
 				FLBuilder.triggerHook('didCancelDiscard');
 			}
@@ -1711,10 +1746,7 @@
 		 */
 		_saveGlobalSettingsComplete: function( response )
 		{
-			FLBuilderConfig.global = FLBuilder._jsonParse( response );
-
-			FLBuilder.triggerHook( 'didSaveGlobalSettingsComplete', FLBuilderConfig.global );
-
+			FLBuilder.triggerHook( 'didSaveGlobalSettingsComplete', FLBuilder._jsonParse( response ) );
 			FLBuilder._updateLayout();
 		},
 
@@ -2519,11 +2551,15 @@
 			FLBuilder._disableGlobalRows();
 			FLBuilder._disableGlobalCols();
 			FLBuilder._destroyOverlayEvents();
-			FLBuilder._removeAllOverlays();
 			FLBuilder._initSortables();
 			$( 'body' ).addClass( 'fl-builder-dragging' );
 			$( '.fl-builder-empty-message' ).hide();
 			$( '.fl-sortable-disabled' ).removeClass( 'fl-sortable-disabled' );
+
+			// Remove all action overlays if this isn't a touch for a proxy item.
+			if ( 'touchstart' !== e.type && ! $( e.target ).hasClass( 'fl-sortable-proxy-item ' ) ) {
+				FLBuilder._removeAllOverlays();
+			}
 
 			// Scroll to the node that is dragging.
 			if ( initialPos > 0 ) {
@@ -2802,6 +2838,11 @@
 				action: 'reorder_node',
 				node_id: nodeId,
 				position: position
+			}, function( response ) {
+				var data = JSON.parse( response );
+				var hook = 'didMove' + data.nodeType.charAt(0).toUpperCase() + data.nodeType.slice(1);
+				FLBuilder.triggerHook( 'didMoveNode', data );
+				FLBuilder.triggerHook( hook, data );
 			} );
 		},
 
@@ -2817,12 +2858,17 @@
 		 */
 		_moveNode: function( newParent, nodeId, position )
 		{
-			FLBuilder.ajax({
+			FLBuilder.ajax( {
 				action: 'move_node',
 				new_parent: newParent,
 				node_id: nodeId,
 				position: position
-			});
+			}, function( response ) {
+				var data = JSON.parse( response );
+				var hook = 'didMove' + data.nodeType.charAt(0).toUpperCase() + data.nodeType.slice(1);
+				FLBuilder.triggerHook( 'didMoveNode', data );
+				FLBuilder.triggerHook( hook, data );
+			} );
 		},
 
 		/**
@@ -2913,6 +2959,7 @@
 				overflowItems = [],
 				menuData      = [],
 				template	  = wp.template( 'fl-overlay-overflow-menu' );
+
 
 			// Use the original copy if we have one.
 			if ( undefined != original ) {
@@ -3085,11 +3132,16 @@
 			}
             else if ( ! row.hasClass( 'fl-block-overlay-active' ) ) {
 
+				// Remove existing overlays.
+				FLBuilder._removeRowOverlays();
+
                 // Append the overlay.
                 overlay = FLBuilder._appendOverlay( row, template( {
                     node : row.attr('data-node'),
 	                global : row.hasClass( 'fl-node-global' ),
 					hasRules : row.hasClass( 'fl-node-has-rules' ),
+					rulesTextRow : row.attr('data-rules-text'),
+					rulesTypeRow : row.attr('data-rules-type'),
                 } ) );
 
                 // Adjust the overlay position if covered by negative margin content.
@@ -3130,12 +3182,16 @@
 		 */
 		_rowMouseleave: function(e)
 		{
-			var toElement       = $(e.toElement) || $(e.relatedTarget),
+			var target			= $( e.target ),
+				toElement       = $(e.toElement) || $(e.relatedTarget),
 				isOverlay       = toElement.hasClass('fl-row-overlay'),
 				isOverlayChild  = toElement.closest('.fl-row-overlay').length > 0,
 				isTipTip        = toElement.is('#tiptip_holder'),
 				isTipTipChild   = toElement.closest('#tiptip_holder').length > 0;
 
+			if ( target.closest( '.fl-block-col-resize' ).length ) {
+				return;
+			}
 			if(isOverlay || isOverlayChild || isTipTip || isTipTipChild) {
 				return;
 			}
@@ -3181,6 +3237,31 @@
 			e.target = helper[ 0 ];
 
 			helper.trigger( e );
+		},
+
+		/**
+		 * @method _rowDragInitTouch
+		 * @param {Object} e The event object.
+		 */
+		_rowDragInitTouch: function( startEvent )
+		{
+			var handle = $( startEvent.target ),
+				helper = $( '.fl-row-sortable-proxy-item' ),
+				row    = handle.closest( '.fl-row' ),
+				moved  = false;
+
+			handle.on( 'touchmove', function( moveEvent ) {
+				if ( ! moved ) {
+					startEvent.currentTarget = row[0];
+					FLBuilder._rowDragInit( startEvent );
+					moved = true;
+				}
+				helper.trigger( moveEvent );
+			} );
+
+			handle.on( 'touchend', function( endEvent ) {
+				helper.trigger( endEvent );
+			} );
 		},
 
 		/**
@@ -3862,6 +3943,7 @@
 		_colMouseleave: function(e)
 		{
 			var col             = $(this),
+				target			= $( e.target ),
 				toElement       = $(e.toElement) || $(e.relatedTarget),
 				hasModules      = col.find('.fl-module').length > 0,
 				global			= col.hasClass( 'fl-node-global' ),
@@ -3869,6 +3951,9 @@
 				isTipTip        = toElement.is('#tiptip_holder'),
 				isTipTipChild   = toElement.closest('#tiptip_holder').length > 0;
 
+			if ( target.closest( '.fl-block-col-resize' ).length ) {
+				return;
+			}
 			if( isTipTip || isTipTipChild ) {
 				return;
 			}
@@ -3941,6 +4026,32 @@
 			e.target = helper[ 0 ];
 
 			helper.trigger( e );
+		},
+
+		/**
+		 * @method _colDragInitTouch
+		 * @param {Object} e The event object.
+		 */
+		_colDragInitTouch: function( startEvent )
+		{
+			var handle = $( startEvent.target ),
+				helper = $( '.fl-col-sortable-proxy-item' ),
+				col    = handle.closest( '.fl-col' ),
+				module = handle.closest( '.fl-module' ),
+				moved  = false;
+
+			handle.on( 'touchmove', function( moveEvent ) {
+				if ( ! moved ) {
+					startEvent.currentTarget = col[0];
+					FLBuilder._colDragInit( startEvent );
+					moved = true;
+				}
+				helper.trigger( moveEvent );
+			} );
+
+			handle.on( 'touchend', function( endEvent ) {
+				helper.trigger( endEvent );
+			} );
 		},
 
 		/**
@@ -4034,6 +4145,8 @@
 						action: 'reorder_col',
 						node_id: colId,
 						position: col.index()
+					}, function() {
+						FLBuilder.triggerHook( 'didMoveColumn' );
 					} );
 				}
 				else {
@@ -4043,6 +4156,8 @@
 						new_parent: newGroupId,
 						position: col.index(),
 						resize: [ oldGroupId, newGroupId ]
+					}, function() {
+						FLBuilder.triggerHook( 'didMoveColumn' );
 					} );
 				}
 
@@ -4750,6 +4865,8 @@
 			FLBuilder.ajax({
 				action		: 'reset_col_widths',
 				group_id	: groupIds
+			}, function() {
+				FLBuilder.triggerHook( 'didResetColumnWidthsComplete' );
 			});
 
 			FLBuilder.triggerHook( 'col-reset-widths' );
@@ -4821,13 +4938,13 @@
 				rowIsFixedWidth = !! row.find('.fl-row-fixed-width').addBack('.fl-row-fixed-width').length,
 				userCanResizeRows = FLBuilderConfig.rowResize.userCanResizeRows,
 				hasRules	  = module.hasClass( 'fl-node-has-rules' ),
+				rulesTextModule     = module.attr('data-rules-text'),
+				rulesTypeModule     = module.attr('data-rules-type'),
+				rulesTextCol    = col.attr('data-rules-text'),
+				rulesTypeCol    = col.attr('data-rules-type'),
 				colHasRules	  = col.hasClass( 'fl-node-has-rules' ),
 				template	  = wp.template( 'fl-module-overlay' ),
 				overlay       = null;
-
-			// Remove existing overlays.
-			FLBuilder._removeColOverlays();
-			FLBuilder._removeModuleOverlays();
 
 			if ( global && parentGlobal && 'row' != FLBuilderConfig.userTemplateType && isGlobalRow ) {
 				return;
@@ -4843,6 +4960,10 @@
 			}
 			else if ( ! module.hasClass( 'fl-block-overlay-active' ) ) {
 
+				// Remove existing overlays.
+				FLBuilder._removeColOverlays();
+				FLBuilder._removeModuleOverlays();
+
 				// Append the template.
 				overlay = FLBuilder._appendOverlay( module, template( {
 					global 		  		: global,
@@ -4857,9 +4978,13 @@
 					parentFirst   		: parentFirst,
 					parentLast    		: parentLast,
 					rowIsFixedWidth 	: rowIsFixedWidth,
-					userCanResizeRows 	: userCanResizeRows,
-					hasRules			: hasRules,
-					colHasRules			: colHasRules,
+					userCanResizeRows : userCanResizeRows,
+					hasRules          : hasRules,
+					rulesTextModule   : rulesTextModule,
+					rulesTypeModule   : rulesTypeModule,
+					rulesTextCol      : rulesTextCol,
+					rulesTypeCol      : rulesTypeCol,
+					colHasRules       : colHasRules,
 				} ) );
 
 				// Build the overlay overflow menu if necessary.
@@ -4883,10 +5008,14 @@
 		_moduleMouseleave: function(e)
 		{
 			var module          = $(this),
+				target			= $( e.target ),
 				toElement       = $(e.toElement) || $(e.relatedTarget),
 				isTipTip        = toElement.is('#tiptip_holder'),
 				isTipTipChild   = toElement.closest('#tiptip_holder').length > 0;
 
+			if ( target.closest( '.fl-block-col-resize' ).length ) {
+				return;
+			}
 			if(isTipTip || isTipTipChild) {
 				return;
 			}
@@ -4928,6 +5057,52 @@
 		},
 
 		/**
+		 * @method _moduleDragInit
+		 * @param {Object} e The event object.
+		 */
+		_moduleDragInit: function( e )
+		{
+			var handle = $( e.target ),
+				module = handle.closest( '.fl-module' );
+
+			FLBuilder._blockDragInit( e );
+
+			module.append( '<div class="fl-module-sortable-proxy"></div>' );
+
+			e.target = module.find( '.fl-module-sortable-proxy' )[0];
+
+			module.trigger( e );
+		},
+
+		/**
+		 * @method _moduleDragInitTouch
+		 * @param {Object} e The event object.
+		 */
+		_moduleDragInitTouch: function( startEvent )
+		{
+			var handle = $( startEvent.target ),
+				module = handle.closest( '.fl-module' ),
+				moved  = false;
+
+			handle.on( 'touchmove', function( moveEvent ) {
+				if ( ! moved ) {
+					startEvent.currentTarget = module[0];
+					FLBuilder._moduleDragInit( startEvent );
+					moved = true;
+				}
+				moveEvent.target = module.find( '.fl-module-sortable-proxy' )[0];
+				$( moveEvent.target ).trigger( moveEvent );
+			} );
+
+			handle.on( 'touchend', function( endEvent ) {
+				endEvent.target = module.find( '.fl-module-sortable-proxy' )[0];
+				$( endEvent.target ).trigger( endEvent );
+				endEvent.stopPropagation();
+				module.find( '.fl-module-sortable-proxy' ).remove();
+			} );
+		},
+
+		/**
 		 * Callback that fires when dragging starts for a module.
 		 *
 		 * @since 1.9
@@ -4940,6 +5115,7 @@
 		{
 			$( ui.item ).data( 'original-position', ui.item.index() );
 
+			FLBuilder._removeRowOverlays();
 			FLBuilder._blockDragStart( e, ui );
 		},
 
@@ -4961,6 +5137,9 @@
 				node     = null,
 				position = 0,
 				parentId = 0;
+
+			// Remove temporary sortable proxies used for custom handles.
+			$( '.fl-module-sortable-proxy' ).remove();
 
 			// A module was dropped back into the module list.
 			if ( parent.hasClass( 'fl-builder-modules' ) || parent.hasClass( 'fl-builder-widgets' ) ) {
@@ -5120,7 +5299,10 @@
 			row.removeClass('fl-block-overlay-muted');
 			FLBuilder._highlightEmptyCols();
 			FLBuilder._removeAllOverlays();
-			FLBuilder.triggerHook( 'didDeleteModule', nodeId );
+			FLBuilder.triggerHook( 'didDeleteModule', {
+				nodeId: nodeId,
+				moduleType: module.attr( 'data-type' ),
+			} );
 		},
 
 		/**
@@ -5185,8 +5367,9 @@
 		{
 			FLBuilder._renderLayout( data, function(){
 				FLBuilder.triggerHook( 'didDuplicateModule', {
-					newNodeId : data.nodeId,
-					oldNodeId : data.duplicatedModule
+					newNodeId  : data.nodeId,
+					oldNodeId  : data.duplicatedModule,
+					moduleType : data.moduleType,
 				} );
 			} );
 		},
@@ -5276,12 +5459,14 @@
 					type     : 'module',
 					layout   : data.layout,
 					callback : function() {
-						FLBuilder.triggerHook( 'didAddModule', data.nodeId );
+						FLBuilder.triggerHook( 'didAddModule', {
+							nodeId: data.nodeId,
+							moduleType: settings.type,
+						} );
 					}
 				}
 			}, callback );
 		},
-
 		/**
 		 * Validates the module settings and saves them if
 		 * the form is valid.
@@ -5832,7 +6017,7 @@
 		 */
 		_initSettingsForms: function()
 		{
-			FLBuilder._initSections();
+			FLBuilder._initSettingsSections();
 			FLBuilder._initButtonGroupFields();
 			FLBuilder._initCompoundFields();
 			FLBuilder._CodeFieldSSLCheck();
@@ -5913,6 +6098,12 @@
 			form.find( '#' + id ).addClass( 'fl-active' );
 			form.find( '.fl-builder-settings-tabs .fl-active' ).removeClass( 'fl-active' );
 			form.find( 'a[href*=' + id + ']' ).addClass( 'fl-active' );
+
+			if ( FLBuilderConfig.rememberTab ) {
+				localStorage.setItem( 'fl-builder-settings-tab', id );
+			} else {
+				localStorage.setItem( 'fl-builder-settings-tab', '' );
+			}
 
 			FLBuilder._focusFirstSettingsControl();
 
@@ -6096,6 +6287,18 @@
 				FLBuilder._showTabsOverflowMenu();
 			}
 			e.stopPropagation();
+		},
+
+		/**
+		 * Setup section toggling for all sections
+		 *
+		 * @since 2.2
+		 * @access private
+		 * @method _initSettingsSections
+		 * @return void
+		 */
+		_initSettingsSections: function() {
+			$( '.fl-builder-settings:visible' ).find( '.fl-builder-settings-section' ).each( FLBuilder._initSection );
 		},
 
 		/**
@@ -6536,8 +6739,11 @@
 		 */
 		_saveSettingsComplete: function( render, preview, response )
 		{
-			var data 	 = FLBuilder._jsonParse( response ),
-				callback = function() {
+			var data 	 	= FLBuilder._jsonParse( response ),
+				type	 	= data.layout.nodeType,
+				moduleType	= data.layout.moduleType,
+				hook	 	= 'didSave' + type.charAt(0).toUpperCase() + type.slice(1) + 'SettingsComplete',
+				callback 	= function() {
 					if( preview && data.layout.partial && data.layout.nodeId === preview.nodeId ) {
 						preview.clear();
 						preview = null;
@@ -6551,8 +6757,17 @@
 			}
 
 			FLBuilder.triggerHook( 'didSaveNodeSettingsComplete', {
-				nodeId   : data.node_id,
-				settings : data.settings
+				nodeId   	: data.node_id,
+				nodeType 	: type,
+				moduleType	: moduleType,
+				settings 	: data.settings
+			} );
+
+			FLBuilder.triggerHook( hook, {
+				nodeId   	: data.node_id,
+				nodeType 	: type,
+				moduleType	: moduleType,
+				settings 	: data.settings
 			} );
 		},
 
@@ -6728,6 +6943,10 @@
 				parentBoxForm = parentBoxWrap.find('form'),
 				parentBoxObj  = FLLightbox._instances[ parentBoxId ];
 
+			if ( ! nestedBoxObj ) {
+				return
+			}
+
 			nestedBoxObj.on( 'close', function() {
 				parentBox.attr( 'style', nestedBox.attr( 'style' ) );
 				parentBoxWrap.show();
@@ -6765,18 +6984,6 @@
 		_hideHelpTooltip: function()
 		{
 			$(this).siblings('.fl-help-tooltip-text').fadeOut();
-		},
-
-		/**
-		 * Setup section toggling for all sections
-		 *
-		 * @since 2.2
-		 * @access private
-		 * @method _initSections
-		 * @return void
-		 */
-		_initSections: function() {
-			$( '.fl-builder-settings:visible' ).find( '.fl-builder-settings-section' ).each( FLBuilder._initSection );
 		},
 
 		/**
@@ -7470,7 +7677,7 @@
 			FLBuilder.colorPicker  = new FLBuilderColorPicker({
 				mode: 'hsv',
 				elements: '.fl-color-picker .fl-color-picker-value',
-		    	presets: colorPresets,
+				presets: colorPresets,
 				labels: {
 					colorPresets 		: FLBuilderStrings.colorPresets,
 					colorPicker 		: FLBuilderStrings.colorPicker,
@@ -7481,15 +7688,14 @@
 					noPresets			: FLBuilderStrings.noPresets,
 					presetAdded			: FLBuilderStrings.presetAdded,
 				}
-		    });
+			});
 
-			$( FLBuilder.colorPicker ).on( 'presetRemoved presetAdded', function( event, data ) {
-	    		FLBuilder.ajax({
+			$( FLBuilder.colorPicker ).on( 'presetRemoved presetAdded presetSorted', function( event, data ) {
+				FLBuilder.ajax({
 					action: 'save_color_presets',
 					presets: data.presets
 				});
-
-	    	});
+			});
 
 		},
 
@@ -8449,6 +8655,13 @@
 				value  = wrap.attr( 'data-value' ),
 				font   = wrap.find( '.fl-font-field-font' ),
 				weight = wrap.find( '.fl-font-field-weight' );
+
+			if ( FLBuilderConfig.select2Enabled ) {
+				font.select2({width:'100%'})
+					.on('select2:open', function(e){
+						$('.select2-search__field').attr('placeholder', FLBuilderStrings.placeholderSelect2);
+					})
+			}
 
 			font.on( 'change', function(){
 				FLBuilder._getFontWeights( font );
