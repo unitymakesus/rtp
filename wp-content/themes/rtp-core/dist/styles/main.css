@@ -10991,11 +10991,17 @@ input[type=range]::-ms-thumb {
 
 /* line 1, resources/assets/styles/common/_a11y.scss */
 
+[hidden] {
+  display: none;
+}
+
+/* line 5, resources/assets/styles/common/_a11y.scss */
+
 :focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 5, resources/assets/styles/common/_a11y.scss */
+/* line 9, resources/assets/styles/common/_a11y.scss */
 
 .screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
@@ -11008,7 +11014,7 @@ input[type=range]::-ms-thumb {
   overflow: hidden;
 }
 
-/* line 14, resources/assets/styles/common/_a11y.scss */
+/* line 18, resources/assets/styles/common/_a11y.scss */
 
 .screen-reader-text:focus {
   clip: auto;
@@ -11023,7 +11029,7 @@ input[type=range]::-ms-thumb {
   /* Above WP toolbar. */
 }
 
-/* line 26, resources/assets/styles/common/_a11y.scss */
+/* line 30, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper {
   position: absolute;
@@ -11035,20 +11041,20 @@ input[type=range]::-ms-thumb {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 33, resources/assets/styles/common/_a11y.scss */
+  /* line 37, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools-active .a11y-tools-trigger-wrapper {
     top: 125px;
   }
 }
 
-/* line 38, resources/assets/styles/common/_a11y.scss */
+/* line 42, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper input:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 42, resources/assets/styles/common/_a11y.scss */
+/* line 46, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper label {
   display: block;
@@ -11063,7 +11069,7 @@ input[type=range]::-ms-thumb {
   transition: background 0.3s ease;
 }
 
-/* line 52, resources/assets/styles/common/_a11y.scss */
+/* line 56, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper label i {
   position: absolute;
@@ -11076,31 +11082,31 @@ input[type=range]::-ms-thumb {
   color: #FFF;
 }
 
-/* line 61, resources/assets/styles/common/_a11y.scss */
+/* line 65, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper label span {
   display: none;
 }
 
-/* line 69, resources/assets/styles/common/_a11y.scss */
+/* line 73, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools-trigger-wrapper label {
   border: 3px solid #FFF;
 }
 
-/* line 72, resources/assets/styles/common/_a11y.scss */
+/* line 76, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools-trigger-wrapper label:hover {
   background: #FFF;
 }
 
-/* line 75, resources/assets/styles/common/_a11y.scss */
+/* line 79, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools-trigger-wrapper label:hover i {
   color: #000;
 }
 
-/* line 83, resources/assets/styles/common/_a11y.scss */
+/* line 87, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools {
   height: 50px;
@@ -11112,27 +11118,27 @@ html[data-contrast="true"] .a11y-tools-trigger-wrapper label:hover i {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 83, resources/assets/styles/common/_a11y.scss */
+  /* line 87, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools {
     height: 0;
   }
 
-  /* line 92, resources/assets/styles/common/_a11y.scss */
+  /* line 96, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools-active .a11y-tools {
     height: 110px;
   }
 }
 
-/* line 97, resources/assets/styles/common/_a11y.scss */
+/* line 101, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools {
   border-bottom: 1px solid #FFF;
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 101, resources/assets/styles/common/_a11y.scss */
+  /* line 105, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .container,
   .a11y-tools .container-wide {
@@ -11140,7 +11146,7 @@ html[data-contrast="true"] .a11y-tools {
   }
 }
 
-/* line 107, resources/assets/styles/common/_a11y.scss */
+/* line 111, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset {
   border: none;
@@ -11149,14 +11155,14 @@ html[data-contrast="true"] .a11y-tools {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 107, resources/assets/styles/common/_a11y.scss */
+  /* line 111, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools fieldset {
     padding-bottom: 10px;
   }
 }
 
-/* line 116, resources/assets/styles/common/_a11y.scss */
+/* line 120, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset legend,
 .a11y-tools fieldset > div {
@@ -11165,7 +11171,7 @@ html[data-contrast="true"] .a11y-tools {
   padding: 0 3px;
 }
 
-/* line 122, resources/assets/styles/common/_a11y.scss */
+/* line 126, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset legend {
   width: 65px;
@@ -11174,14 +11180,14 @@ html[data-contrast="true"] .a11y-tools {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 122, resources/assets/styles/common/_a11y.scss */
+  /* line 126, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools fieldset legend {
     display: none;
   }
 }
 
-/* line 132, resources/assets/styles/common/_a11y.scss */
+/* line 136, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label {
   display: block;
@@ -11197,7 +11203,7 @@ html[data-contrast="true"] .a11y-tools {
   cursor: pointer;
 }
 
-/* line 143, resources/assets/styles/common/_a11y.scss */
+/* line 147, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label::after {
   position: absolute;
@@ -11206,101 +11212,101 @@ html[data-contrast="true"] .a11y-tools {
   color: #000;
 }
 
-/* line 150, resources/assets/styles/common/_a11y.scss */
+/* line 154, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label:hover {
   background: #A2A9AE;
 }
 
-/* line 153, resources/assets/styles/common/_a11y.scss */
+/* line 157, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label:hover::after {
   color: #FFF;
 }
 
-/* line 158, resources/assets/styles/common/_a11y.scss */
+/* line 162, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label {
   background: #000;
   border: 1px solid #FFF;
 }
 
-/* line 162, resources/assets/styles/common/_a11y.scss */
+/* line 166, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label::after {
   color: #FFF;
 }
 
-/* line 166, resources/assets/styles/common/_a11y.scss */
+/* line 170, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label:hover,
 html[data-contrast="true"] .a11y-tools fieldset label:focus {
   background: #FFF;
 }
 
-/* line 169, resources/assets/styles/common/_a11y.scss */
+/* line 173, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label:hover::after,
 html[data-contrast="true"] .a11y-tools fieldset label:focus::after {
   color: #000;
 }
 
-/* line 181, resources/assets/styles/common/_a11y.scss */
+/* line 185, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="radio"]:checked + label::after {
   color: #FFF;
 }
 
-/* line 185, resources/assets/styles/common/_a11y.scss */
+/* line 189, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="radio"]:checked + label {
   background: #7A868C;
 }
 
-/* line 190, resources/assets/styles/common/_a11y.scss */
+/* line 194, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="radio"]:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 193, resources/assets/styles/common/_a11y.scss */
+/* line 197, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="radio"]:focus + label {
   outline: #FFF auto 5px;
 }
 
-/* line 203, resources/assets/styles/common/_a11y.scss */
+/* line 207, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="checkbox"]:checked + label::after {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cmVjdCBpZD0iYSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIi8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8Y2lyY2xlIGN4PSIxNyIgY3k9IjE3IiByPSIxNiIgZmlsbD0iI0ZGRkZGRiIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3IDEpIj4KICAgICAgPG1hc2sgaWQ9ImIiIGZpbGw9IndoaXRlIj4KICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGNpcmNsZSBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMiIgbWFzaz0idXJsKCNiKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==);
 }
 
-/* line 207, resources/assets/styles/common/_a11y.scss */
+/* line 211, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:checked + label {
   background: #7A868C;
 }
 
-/* line 210, resources/assets/styles/common/_a11y.scss */
+/* line 214, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:checked + label:hover,
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:checked + label:focus {
   background: #A2A9AE;
 }
 
-/* line 216, resources/assets/styles/common/_a11y.scss */
+/* line 220, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="checkbox"]:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 219, resources/assets/styles/common/_a11y.scss */
+/* line 223, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + label {
   outline: #FFF auto 5px;
 }
 
-/* line 228, resources/assets/styles/common/_a11y.scss */
+/* line 232, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.toggle-contrast label::after {
   content: '';
@@ -11309,7 +11315,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cmVjdCBpZD0iYSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIi8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8Y2lyY2xlIGN4PSIxNyIgY3k9IjE3IiByPSIxNiIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3IDEpIj4KICAgICAgPG1hc2sgaWQ9ImIiIGZpbGw9IndoaXRlIj4KICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGNpcmNsZSBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjRkZGRkZGIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgbWFzaz0idXJsKCNiKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==) no-repeat 50% 50%;
 }
 
-/* line 239, resources/assets/styles/common/_a11y.scss */
+/* line 243, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size label::after {
   content: 'A';
@@ -11325,25 +11331,25 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   speak: none;
 }
 
-/* line 250, resources/assets/styles/common/_a11y.scss */
+/* line 254, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size div[class*="default-"] label::after {
   font-size: 18px;
 }
 
-/* line 254, resources/assets/styles/common/_a11y.scss */
+/* line 258, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size div[class*="medium-"] label::after {
   font-size: 24px;
 }
 
-/* line 258, resources/assets/styles/common/_a11y.scss */
+/* line 262, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size div[class*="large-"] label::after {
   font-size: 27px;
 }
 
-/* line 264, resources/assets/styles/common/_a11y.scss */
+/* line 268, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form {
   margin-left: 6px;
@@ -11352,7 +11358,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
       align-self: flex-start;
 }
 
-/* line 269, resources/assets/styles/common/_a11y.scss */
+/* line 273, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form .label {
   float: left;
@@ -11364,7 +11370,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   font-weight: normal;
 }
 
-/* line 280, resources/assets/styles/common/_a11y.scss */
+/* line 284, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form .search-field {
   float: left;
@@ -11376,7 +11382,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   padding: 0;
 }
 
-/* line 289, resources/assets/styles/common/_a11y.scss */
+/* line 293, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form.active .search-field {
   width: 200px;
@@ -11384,7 +11390,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 296, resources/assets/styles/common/_a11y.scss */
+  /* line 300, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form .search-field {
     width: 250px;
@@ -11393,39 +11399,39 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 264, resources/assets/styles/common/_a11y.scss */
+  /* line 268, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form {
     margin-left: 0;
   }
 
-  /* line 304, resources/assets/styles/common/_a11y.scss */
+  /* line 308, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form .label {
     display: none;
   }
 
-  /* line 308, resources/assets/styles/common/_a11y.scss */
+  /* line 312, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form .search-field {
     width: 225px;
   }
 }
 
-/* line 314, resources/assets/styles/common/_a11y.scss */
+/* line 318, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools .search-form .label {
   color: #FFF;
 }
 
-/* line 321, resources/assets/styles/common/_a11y.scss */
+/* line 325, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] {
   background: #000;
   color: #FFF;
 }
 
-/* line 325, resources/assets/styles/common/_a11y.scss */
+/* line 329, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .banner .navbar,
 html[data-contrast="true"] .page-footer .footer-copyright {
@@ -11434,7 +11440,7 @@ html[data-contrast="true"] .page-footer .footer-copyright {
   border-bottom: 1px solid #FFF;
 }
 
-/* line 331, resources/assets/styles/common/_a11y.scss */
+/* line 335, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .navbar-menu li.current-page-ancestor,
 html[data-contrast="true"] .navbar-menu li.current-menu-item,
@@ -11446,7 +11452,7 @@ html[data-contrast="true"] .navbar-menu li.hover {
   border-left: 1px solid #FFF;
 }
 
-/* line 338, resources/assets/styles/common/_a11y.scss */
+/* line 342, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .btn,
 html[data-contrast="true"] .btn-large,
@@ -11466,7 +11472,7 @@ html[data-contrast="true"] .page-footer .widget_nav_menu .menu li a {
   border-color: #FFF;
 }
 
-/* line 342, resources/assets/styles/common/_a11y.scss */
+/* line 346, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .btn:hover,
 html[data-contrast="true"] .btn-large:hover,
@@ -11500,7 +11506,7 @@ html[data-contrast="true"] .page-footer .widget_nav_menu .menu li a:focus {
   color: #000;
 }
 
-/* line 348, resources/assets/styles/common/_a11y.scss */
+/* line 352, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] select,
 html[data-contrast="true"] input[type="text"] {
@@ -11509,7 +11515,7 @@ html[data-contrast="true"] input[type="text"] {
   color: #FFF;
 }
 
-/* line 354, resources/assets/styles/common/_a11y.scss */
+/* line 358, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] h1,
 html[data-contrast="true"] h2,
@@ -12042,11 +12048,62 @@ abbr[title] {
   border-bottom: 0;
 }
 
+/* line 151, resources/assets/styles/common/_typography.scss */
+
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+
+/* line 155, resources/assets/styles/common/_typography.scss */
+
+.text-center {
+  text-align: center !important;
+}
+
 /* line 1, resources/assets/styles/components/_accordions.scss */
 
 .fl-accordion-button-label {
   font-weight: 600;
   font-size: 1.2em;
+}
+
+/* line 1, resources/assets/styles/components/_announcements.scss */
+
+.announcement {
+  padding: 1rem;
+}
+
+/* line 4, resources/assets/styles/components/_announcements.scss */
+
+.announcement--alert {
+  background-color: #82052A;
+  color: #FFF;
+}
+
+/* line 9, resources/assets/styles/components/_announcements.scss */
+
+.announcement--notice {
+  background-color: #7A868C;
+  color: #FFF;
+}
+
+/* line 15, resources/assets/styles/components/_announcements.scss */
+
+.announcement p:first-of-type {
+  margin-top: 0;
+}
+
+/* line 19, resources/assets/styles/components/_announcements.scss */
+
+.announcement p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* line 24, resources/assets/styles/components/_announcements.scss */
+
+.announcement a {
+  color: inherit;
+  text-decoration: underline;
 }
 
 /* line 2, resources/assets/styles/components/_beaverbuilder.scss */
@@ -13965,11 +14022,12 @@ body.error404 .entry-content {
 /* line 1, resources/assets/styles/layouts/_header.scss */
 
 .banner {
+  position: relative;
   background: #FFF;
   z-index: 100;
 }
 
-/* line 5, resources/assets/styles/layouts/_header.scss */
+/* line 6, resources/assets/styles/layouts/_header.scss */
 
 .banner nav {
   background: none;
@@ -13978,7 +14036,7 @@ body.error404 .entry-content {
           box-shadow: none;
 }
 
-/* line 11, resources/assets/styles/layouts/_header.scss */
+/* line 12, resources/assets/styles/layouts/_header.scss */
 
 .banner nav > .container > .row::after,
 .banner nav > .container-wide > .row::after {
@@ -13986,7 +14044,7 @@ body.error404 .entry-content {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 10, resources/assets/styles/layouts/_header.scss */
+  /* line 11, resources/assets/styles/layouts/_header.scss */
 
   .banner nav > .container > .row,
   .banner nav > .container-wide > .row {
@@ -13996,7 +14054,7 @@ body.error404 .entry-content {
   }
 }
 
-/* line 22, resources/assets/styles/layouts/_header.scss */
+/* line 23, resources/assets/styles/layouts/_header.scss */
 
 .banner .logo {
   max-width: 120px;
@@ -14005,7 +14063,7 @@ body.error404 .entry-content {
   vertical-align: middle;
 }
 
-/* line 28, resources/assets/styles/layouts/_header.scss */
+/* line 29, resources/assets/styles/layouts/_header.scss */
 
 .banner .logo img {
   width: 100%;
@@ -14015,7 +14073,7 @@ body.error404 .entry-content {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 22, resources/assets/styles/layouts/_header.scss */
+  /* line 23, resources/assets/styles/layouts/_header.scss */
 
   .banner .logo {
     padding-left: 0;
@@ -14025,7 +14083,7 @@ body.error404 .entry-content {
     display: flex;
   }
 
-  /* line 40, resources/assets/styles/layouts/_header.scss */
+  /* line 41, resources/assets/styles/layouts/_header.scss */
 
   .banner .logo img {
     -ms-flex-item-align: center;
@@ -14037,21 +14095,21 @@ body.error404 .entry-content {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 22, resources/assets/styles/layouts/_header.scss */
+  /* line 23, resources/assets/styles/layouts/_header.scss */
 
   .banner .logo {
     padding-left: 10px;
   }
 }
 
-/* line 50, resources/assets/styles/layouts/_header.scss */
+/* line 51, resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link {
   padding: 10px 20px;
   text-align: right;
 }
 
-/* line 54, resources/assets/styles/layouts/_header.scss */
+/* line 55, resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .btn,
 .banner .cta-link .btn-large,
@@ -14069,7 +14127,7 @@ body.error404 .entry-content {
   padding: 5px 2rem;
 }
 
-/* line 59, resources/assets/styles/layouts/_header.scss */
+/* line 60, resources/assets/styles/layouts/_header.scss */
 
 .banner .cta-link .cta-headline {
   font-size: 0.9em;
@@ -14078,19 +14136,19 @@ body.error404 .entry-content {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 50, resources/assets/styles/layouts/_header.scss */
+  /* line 51, resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link {
     padding: 10px 0;
   }
 
-  /* line 68, resources/assets/styles/layouts/_header.scss */
+  /* line 69, resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .cta-headline {
     padding: 0 1rem;
   }
 
-  /* line 72, resources/assets/styles/layouts/_header.scss */
+  /* line 73, resources/assets/styles/layouts/_header.scss */
 
   .banner .cta-link .btn,
   .banner .cta-link .btn-large,
@@ -14108,13 +14166,13 @@ body.error404 .entry-content {
   }
 }
 
-/* line 78, resources/assets/styles/layouts/_header.scss */
+/* line 79, resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar {
   margin-bottom: 0;
 }
 
-/* line 82, resources/assets/styles/layouts/_header.scss */
+/* line 83, resources/assets/styles/layouts/_header.scss */
 
 .banner .navbar[data-text-color="light"] .navbar-menu > ul > li > a,
 .banner .navbar[data-text-color="light"] .menu-trigger-wrapper label {
@@ -14122,7 +14180,7 @@ body.error404 .entry-content {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 78, resources/assets/styles/layouts/_header.scss */
+  /* line 79, resources/assets/styles/layouts/_header.scss */
 
   .banner .navbar {
     -ms-flex-wrap: wrap;
@@ -14130,13 +14188,13 @@ body.error404 .entry-content {
   }
 }
 
-/* line 92, resources/assets/styles/layouts/_header.scss */
+/* line 93, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper {
   position: relative;
 }
 
-/* line 95, resources/assets/styles/layouts/_header.scss */
+/* line 96, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper [type="checkbox"] {
   position: absolute;
@@ -14144,13 +14202,13 @@ body.error404 .entry-content {
   pointer-events: none;
 }
 
-/* line 101, resources/assets/styles/layouts/_header.scss */
+/* line 102, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper input:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 105, resources/assets/styles/layouts/_header.scss */
+/* line 106, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label {
   display: block;
@@ -14164,27 +14222,39 @@ body.error404 .entry-content {
   float: right;
 }
 
-/* line 116, resources/assets/styles/layouts/_header.scss */
+/* line 117, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label::before,
 .banner .menu-trigger-wrapper label::after {
   display: none;
 }
 
-/* line 120, resources/assets/styles/layouts/_header.scss */
+/* line 121, resources/assets/styles/layouts/_header.scss */
 
 .banner .menu-trigger-wrapper label i {
   font-size: 2em;
   line-height: 1.5em;
 }
 
-/* line 125, resources/assets/styles/layouts/_header.scss */
+/* line 126, resources/assets/styles/layouts/_header.scss */
 
 html[data-contrast="true"] .banner .menu-trigger-wrapper label {
   color: #FFF;
 }
 
-/* line 134, resources/assets/styles/layouts/_header.scss */
+@media only screen and (min-width: 769px) {
+  /* line 133, resources/assets/styles/layouts/_header.scss */
+
+  .banner .announcement--notice {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    max-width: 500px;
+    text-align: right;
+  }
+}
+
+/* line 145, resources/assets/styles/layouts/_header.scss */
 
 nav ul a {
   text-decoration: none;
@@ -14194,19 +14264,19 @@ nav ul a {
   font-size: 17px;
 }
 
-/* line 141, resources/assets/styles/layouts/_header.scss */
+/* line 152, resources/assets/styles/layouts/_header.scss */
 
 [data-font="3"] nav ul a {
   font-size: 1.2rem;
 }
 
-/* line 145, resources/assets/styles/layouts/_header.scss */
+/* line 156, resources/assets/styles/layouts/_header.scss */
 
 .header-inline nav ul a {
   padding: 1rem 15px;
 }
 
-/* line 152, resources/assets/styles/layouts/_header.scss */
+/* line 163, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu {
   border: none;
@@ -14216,7 +14286,7 @@ nav ul a {
   padding: 0 15px;
 }
 
-/* line 158, resources/assets/styles/layouts/_header.scss */
+/* line 169, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu > ul {
   -webkit-box-flex: 1;
@@ -14224,20 +14294,20 @@ nav ul a {
           flex: 1 1 auto;
 }
 
-/* line 162, resources/assets/styles/layouts/_header.scss */
+/* line 173, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li {
   padding: 10px 0;
   height: 100%;
 }
 
-/* line 166, resources/assets/styles/layouts/_header.scss */
+/* line 177, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li::before {
   display: none;
 }
 
-/* line 170, resources/assets/styles/layouts/_header.scss */
+/* line 181, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover,
 .navbar-menu li:focus,
@@ -14246,7 +14316,7 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 173, resources/assets/styles/layouts/_header.scss */
+/* line 184, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li:hover > a,
 .navbar-menu li:focus > a,
@@ -14255,13 +14325,13 @@ nav ul a {
   background-color: #F3F3F3;
 }
 
-/* line 179, resources/assets/styles/layouts/_header.scss */
+/* line 190, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children > a {
   position: relative;
 }
 
-/* line 182, resources/assets/styles/layouts/_header.scss */
+/* line 193, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children > a::after {
   display: inline-block;
@@ -14275,20 +14345,20 @@ nav ul a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 194, resources/assets/styles/layouts/_header.scss */
+  /* line 205, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children > a::after {
     display: none;
   }
 }
 
-/* line 200, resources/assets/styles/layouts/_header.scss */
+/* line 211, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
-/* line 204, resources/assets/styles/layouts/_header.scss */
+/* line 215, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
   max-height: 0;
@@ -14299,28 +14369,28 @@ nav ul a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 204, resources/assets/styles/layouts/_header.scss */
+  /* line 215, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     margin-top: 10px;
   }
 }
 
-/* line 213, resources/assets/styles/layouts/_header.scss */
+/* line 224, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
   line-height: 0;
 }
 
-/* line 217, resources/assets/styles/layouts/_header.scss */
+/* line 228, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li:hover,
 .navbar-menu li.menu-item-has-children .sub-menu li:focus {
   background: #F5F5F5;
 }
 
-/* line 222, resources/assets/styles/layouts/_header.scss */
+/* line 233, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
@@ -14328,7 +14398,7 @@ nav ul a {
   padding-right: 40px;
 }
 
-/* line 227, resources/assets/styles/layouts/_header.scss */
+/* line 238, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -14347,7 +14417,7 @@ nav ul a {
   transition: all 0.2s;
 }
 
-/* line 242, resources/assets/styles/layouts/_header.scss */
+/* line 253, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus,
@@ -14355,7 +14425,7 @@ nav ul a {
   background: transparent;
 }
 
-/* line 245, resources/assets/styles/layouts/_header.scss */
+/* line 256, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
 .navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
@@ -14365,7 +14435,7 @@ nav ul a {
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 204, resources/assets/styles/layouts/_header.scss */
+  /* line 215, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     max-height: 300em;
@@ -14387,7 +14457,7 @@ nav ul a {
   }
 }
 
-/* line 269, resources/assets/styles/layouts/_header.scss */
+/* line 280, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
@@ -14395,20 +14465,20 @@ nav ul a {
   height: auto;
 }
 
-/* line 275, resources/assets/styles/layouts/_header.scss */
+/* line 286, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
 }
 
 @media only screen and (min-width: 769px) and (max-width: 992px) {
-  /* line 152, resources/assets/styles/layouts/_header.scss */
+  /* line 163, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     height: 4.66667em;
   }
 
-  /* line 283, resources/assets/styles/layouts/_header.scss */
+  /* line 294, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14420,7 +14490,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 288, resources/assets/styles/layouts/_header.scss */
+  /* line 299, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14428,7 +14498,7 @@ nav ul a {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 152, resources/assets/styles/layouts/_header.scss */
+  /* line 163, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
     -webkit-box-orient: vertical;
@@ -14447,7 +14517,7 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 303, resources/assets/styles/layouts/_header.scss */
+  /* line 314, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu ul {
     -webkit-box-orient: vertical;
@@ -14457,7 +14527,7 @@ nav ul a {
     width: 100%;
   }
 
-  /* line 308, resources/assets/styles/layouts/_header.scss */
+  /* line 319, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
@@ -14467,26 +14537,26 @@ nav ul a {
             flex-direction: column;
   }
 
-  /* line 312, resources/assets/styles/layouts/_header.scss */
+  /* line 323, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     width: 100%;
   }
 
-  /* line 317, resources/assets/styles/layouts/_header.scss */
+  /* line 328, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 323, resources/assets/styles/layouts/_header.scss */
+  /* line 334, resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 328, resources/assets/styles/layouts/_header.scss */
+/* line 339, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
