@@ -74,8 +74,6 @@ if ($count >= 3) {
       ?>
       <div class="flex-item">
         <article class="figure-card figure-card-vertical <?php echo implode(' ', $classes); ?>">
-          <a tabindex="-1" aria-hidden="true" class="mega-link" href="<?php echo get_permalink(); ?>"></a>
-
           <div class="figure-card-img">
             <?php
               $siteID = get_post_meta($id, 'dt_original_blog_id', true);
@@ -111,7 +109,7 @@ if ($count >= 3) {
                   <?php endif; ?>
               </div>
 
-              <div class="card-cta"><a tabindex="-1" href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
+              <div class="card-cta"><a class="a11y-link-wrap" tabindex="-1" href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
             </div>
           </div>
 

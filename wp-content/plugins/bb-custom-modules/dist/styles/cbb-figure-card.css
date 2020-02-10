@@ -1036,36 +1036,26 @@
   position: relative;
 }
 
-/* line 7, stdin */
+/* line 8, stdin */
 
-.figure-card a.mega-link:hover ~ .card,
-.figure-card:focus-within .card {
-  -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
-          box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+.figure-card:focus-within .card a {
+  outline: 0;
 }
 
-/* line 12, stdin */
+/* line 13, stdin */
 
-.figure-card a.mega-link:hover ~ .card .card-cta a .text,
-.figure-card:focus-within .card .card-cta a .text {
+.figure-card:focus-within .card .card-cta .text {
   text-decoration: underline !important;
 }
 
-/* line 16, stdin */
+/* line 17, stdin */
 
-.figure-card a.mega-link:hover ~ .card .card-cta a .arrow,
-.figure-card:focus-within .card .card-cta a .arrow {
+.figure-card:focus-within .card .card-cta .arrow {
   -webkit-transform: translate3d(10px, 0, 0);
           transform: translate3d(10px, 0, 0);
 }
 
 /* line 23, stdin */
-
-.figure-card a.mega-link:focus {
-  outline: none !important;
-}
-
-/* line 27, stdin */
 
 .figure-card .card {
   background: #FFF;
@@ -1081,16 +1071,16 @@
   z-index: 2;
 }
 
-/* line 35, stdin */
+/* line 31, stdin */
 
 .figure-card .card:hover,
-.figure-card .card:focus,
+.figure-card .card:focus-within,
 .figure-card .card:active {
   -webkit-box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
           box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
 }
 
-/* line 39, stdin */
+/* line 35, stdin */
 
 .figure-card .card .meta {
   position: absolute;
@@ -1100,7 +1090,7 @@
   text-transform: uppercase;
 }
 
-/* line 48, stdin */
+/* line 44, stdin */
 
 .figure-card .card-badge {
   border-style: solid;
@@ -1116,7 +1106,7 @@
   text-transform: uppercase;
 }
 
-/* line 61, stdin */
+/* line 57, stdin */
 
 .figure-card .card-badge span {
   position: absolute;
@@ -1128,13 +1118,13 @@
   white-space: nowrap;
 }
 
-/* line 72, stdin */
+/* line 68, stdin */
 
 .figure-card .card-title {
   margin: 40px 16px 20px;
 }
 
-/* line 75, stdin */
+/* line 71, stdin */
 
 .figure-card .card-title a {
   font-weight: 600 !important;
@@ -1142,7 +1132,7 @@
   color: #000;
 }
 
-/* line 80, stdin */
+/* line 76, stdin */
 
 .figure-card .card-title a:hover,
 .figure-card .card-title a:focus,
@@ -1150,14 +1140,14 @@
   text-decoration: underline !important;
 }
 
-/* line 86, stdin */
+/* line 82, stdin */
 
 .figure-card .card-content {
   margin: 0 16px 20px;
   font-weight: 300;
 }
 
-/* line 91, stdin */
+/* line 87, stdin */
 
 .figure-card .card-cta {
   border-style: solid;
@@ -1167,7 +1157,7 @@
   margin: 0 16px;
 }
 
-/* line 98, stdin */
+/* line 94, stdin */
 
 .figure-card .card-cta a {
   display: -webkit-box;
@@ -1189,13 +1179,13 @@
   vertical-align: middle;
 }
 
-/* line 113, stdin */
+/* line 109, stdin */
 
 .figure-card .card-cta a span {
   vertical-align: middle;
 }
 
-/* line 117, stdin */
+/* line 113, stdin */
 
 .figure-card .card-cta a .text {
   -webkit-box-flex: 1;
@@ -1203,7 +1193,7 @@
           flex-grow: 1;
 }
 
-/* line 121, stdin */
+/* line 117, stdin */
 
 .figure-card .card-cta a .arrow {
   display: inline-block;
@@ -1221,7 +1211,14 @@
   transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
 }
 
-/* line 130, stdin */
+/* line 126, stdin */
+
+.figure-card .card-cta a .arrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* line 131, stdin */
 
 .figure-card .card-cta a .arrow path {
   fill: #000;
@@ -1230,7 +1227,7 @@
   transition: fill 0.3s ease;
 }
 
-/* line 137, stdin */
+/* line 138, stdin */
 
 .figure-card .card-cta a:hover .text,
 .figure-card .card-cta a:focus .text,
@@ -1238,7 +1235,7 @@
   text-decoration: underline !important;
 }
 
-/* line 141, stdin */
+/* line 142, stdin */
 
 .figure-card .card-cta a:hover .arrow,
 .figure-card .card-cta a:focus .arrow,
@@ -1247,7 +1244,7 @@
           transform: translate3d(10px, 0, 0);
 }
 
-/* line 148, stdin */
+/* line 149, stdin */
 
 .figure-card .pattern-background {
   position: absolute;
@@ -1258,14 +1255,14 @@
   right: 0;
 }
 
-/* line 156, stdin */
+/* line 157, stdin */
 
 .figure-card .pattern-background svg {
   width: 100%;
   height: 100%;
 }
 
-/* line 163, stdin */
+/* line 164, stdin */
 
 .figure-card.badge-rtp .card-badge,
 .figure-card.badge-rtp .card-cta {
@@ -1273,7 +1270,7 @@
   color: #333F48;
 }
 
-/* line 169, stdin */
+/* line 170, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover,
 .figure-card.badge-rtp .card-cta a:focus,
@@ -1281,7 +1278,7 @@
   color: #333F48;
 }
 
-/* line 172, stdin */
+/* line 173, stdin */
 
 .figure-card.badge-rtp .card-cta a:hover .arrow path,
 .figure-card.badge-rtp .card-cta a:focus .arrow path,
@@ -1289,15 +1286,7 @@
   fill: #333F48;
 }
 
-/* line 180, stdin */
-
-.figure-card.badge-rtp a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-rtp a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-rtp a.mega-link:active + .card .card-cta a {
-  color: #333F48;
-}
-
-/* line 188, stdin */
+/* line 181, stdin */
 
 .figure-card.badge-hub .card-badge,
 .figure-card.badge-hub .card-cta,
@@ -1307,7 +1296,7 @@
   color: #4B9CD3;
 }
 
-/* line 194, stdin */
+/* line 187, stdin */
 
 .figure-card.badge-hub .card-cta a:hover,
 .figure-card.badge-hub .card-cta a:focus,
@@ -1318,7 +1307,7 @@
   color: #4B9CD3;
 }
 
-/* line 197, stdin */
+/* line 190, stdin */
 
 .figure-card.badge-hub .card-cta a:hover .arrow path,
 .figure-card.badge-hub .card-cta a:focus .arrow path,
@@ -1329,18 +1318,7 @@
   fill: #4B9CD3;
 }
 
-/* line 205, stdin */
-
-.figure-card.badge-hub a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-hub a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-hub a.mega-link:active + .card .card-cta a,
-.figure-card.badge-hub-rtp a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-hub-rtp a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-hub-rtp a.mega-link:active + .card .card-cta a {
-  color: #4B9CD3;
-}
-
-/* line 213, stdin */
+/* line 198, stdin */
 
 .figure-card.badge-boxyard .card-badge,
 .figure-card.badge-boxyard .card-cta,
@@ -1350,7 +1328,7 @@
   color: #E63C2F;
 }
 
-/* line 219, stdin */
+/* line 204, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover,
 .figure-card.badge-boxyard .card-cta a:focus,
@@ -1361,7 +1339,7 @@
   color: #E63C2F;
 }
 
-/* line 222, stdin */
+/* line 207, stdin */
 
 .figure-card.badge-boxyard .card-cta a:hover .arrow path,
 .figure-card.badge-boxyard .card-cta a:focus .arrow path,
@@ -1372,18 +1350,7 @@
   fill: #E63C2F;
 }
 
-/* line 230, stdin */
-
-.figure-card.badge-boxyard a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-boxyard a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-boxyard a.mega-link:active + .card .card-cta a,
-.figure-card.badge-boxyard-rtp a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-boxyard-rtp a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-boxyard-rtp a.mega-link:active + .card .card-cta a {
-  color: #E63C2F;
-}
-
-/* line 238, stdin */
+/* line 215, stdin */
 
 .figure-card.badge-frontier .card-badge,
 .figure-card.badge-frontier .card-cta,
@@ -1393,7 +1360,7 @@
   color: #47D7AC;
 }
 
-/* line 244, stdin */
+/* line 221, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover,
 .figure-card.badge-frontier .card-cta a:focus,
@@ -1404,7 +1371,7 @@
   color: #2FA787;
 }
 
-/* line 247, stdin */
+/* line 224, stdin */
 
 .figure-card.badge-frontier .card-cta a:hover .arrow path,
 .figure-card.badge-frontier .card-cta a:focus .arrow path,
@@ -1415,18 +1382,7 @@
   fill: #47D7AC;
 }
 
-/* line 255, stdin */
-
-.figure-card.badge-frontier a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-frontier a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-frontier a.mega-link:active + .card .card-cta a,
-.figure-card.badge-frontier-rtp a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-frontier-rtp a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-frontier-rtp a.mega-link:active + .card .card-cta a {
-  color: #2FA787;
-}
-
-/* line 263, stdin */
+/* line 232, stdin */
 
 .figure-card.badge-stem .card-badge,
 .figure-card.badge-stem .card-cta,
@@ -1436,7 +1392,7 @@
   color: #654EA3;
 }
 
-/* line 269, stdin */
+/* line 238, stdin */
 
 .figure-card.badge-stem .card-cta a:hover,
 .figure-card.badge-stem .card-cta a:focus,
@@ -1447,7 +1403,7 @@
   color: #654EA3;
 }
 
-/* line 272, stdin */
+/* line 241, stdin */
 
 .figure-card.badge-stem .card-cta a:hover .arrow path,
 .figure-card.badge-stem .card-cta a:focus .arrow path,
@@ -1458,25 +1414,14 @@
   fill: #654EA3;
 }
 
-/* line 280, stdin */
-
-.figure-card.badge-stem a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-stem a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-stem a.mega-link:active + .card .card-cta a,
-.figure-card.badge-stem-rtp a.mega-link:hover + .card .card-cta a,
-.figure-card.badge-stem-rtp a.mega-link:focus + .card .card-cta a,
-.figure-card.badge-stem-rtp a.mega-link:active + .card .card-cta a {
-  color: #654EA3;
-}
-
-/* line 287, stdin */
+/* line 248, stdin */
 
 .figure-card.figure-card-vertical {
   position: relative;
   padding-bottom: 40px;
 }
 
-/* line 291, stdin */
+/* line 252, stdin */
 
 .figure-card.figure-card-vertical .figure-card-img img,
 .figure-card.figure-card-vertical .placeholder {
@@ -1487,7 +1432,7 @@
   background: #FFF;
 }
 
-/* line 299, stdin */
+/* line 260, stdin */
 
 .figure-card.figure-card-vertical .placeholder {
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF4B9CD3', endColorstr='#FFCC0000');
@@ -1498,27 +1443,21 @@
   background-image: linear-gradient(90deg, #4B9CD3 0%, #012169 33%, #82052A 66%, #C00 99%);
 }
 
-/* line 303, stdin */
-
-.figure-card.figure-card-vertical a.mega-link {
-  top: 235px;
-}
-
-/* line 307, stdin */
+/* line 264, stdin */
 
 .figure-card.figure-card-vertical .pattern-background {
   bottom: 0;
 }
 
 @media only screen and (min-width: 768px) {
-  /* line 312, stdin */
+  /* line 269, stdin */
 
   .figure-card.figure-card-vertical .card {
     margin: -65px 15px 0;
     z-index: 2;
   }
 
-  /* line 317, stdin */
+  /* line 274, stdin */
 
   .figure-card.figure-card-vertical .figure-card-img img,
   .figure-card.figure-card-vertical .placeholder {
@@ -1528,23 +1467,14 @@
   }
 }
 
-/* line 325, stdin */
+/* line 282, stdin */
 
 .figure-card.figure-card-horizontal .figure-card-img {
   width: 100%;
   line-height: 0;
 }
 
-/* line 330, stdin */
-
-.figure-card.figure-card-horizontal a.mega-link {
-  right: 30px;
-  left: auto;
-  width: 50%;
-  z-index: 5;
-}
-
-/* line 338, stdin */
+/* line 288, stdin */
 
 .figure-card.figure-card-horizontal.figure-align-right .figure-card-img img {
   left: auto;
@@ -1554,7 +1484,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  /* line 324, stdin */
+  /* line 281, stdin */
 
   .figure-card.figure-card-horizontal {
     display: -webkit-box;
@@ -1562,7 +1492,7 @@
     display: flex;
   }
 
-  /* line 349, stdin */
+  /* line 299, stdin */
 
   .figure-card.figure-card-horizontal .card {
     position: absolute;
@@ -1574,7 +1504,7 @@
     z-index: 2;
   }
 
-  /* line 358, stdin */
+  /* line 308, stdin */
 
   .figure-card.figure-card-horizontal .figure-card-img {
     display: -webkit-box;
@@ -1582,7 +1512,7 @@
     display: flex;
   }
 
-  /* line 361, stdin */
+  /* line 311, stdin */
 
   .figure-card.figure-card-horizontal .figure-card-img img {
     width: 66vw;
@@ -1595,10 +1525,9 @@
     z-index: 1;
   }
 
-  /* line 373, stdin */
+  /* line 323, stdin */
 
-  .figure-card.figure-card-horizontal.figure-align-right .card,
-  .figure-card.figure-card-horizontal.figure-align-right a.mega-link {
+  .figure-card.figure-card-horizontal.figure-align-right .card {
     left: 30px;
     right: auto;
   }

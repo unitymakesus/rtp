@@ -9,7 +9,6 @@
 
 /* line 9, stdin */
 
-.flex-grid .flex-item .figure-card.figure-card-people a.mega-link:hover ~ .figure-card-img img,
 .flex-grid .flex-item .figure-card.figure-card-people:focus-within .figure-card-img img {
   -webkit-transform: scale(1.03);
        -o-transform: scale(1.03);

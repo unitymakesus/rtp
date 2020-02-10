@@ -40,8 +40,6 @@ if ($count >= 3) {
     ?>
     <div class="flex-item">
       <article class="figure-card <?php echo (($settings->show_thumb) ? 'figure-card-vertical' : 'no-image'); ?> <?php echo implode(' ', $classes); ?>">
-        <a tabindex="-1" aria-hidden="true" class="mega-link" href="<?php echo get_permalink(); ?>"></a>
-
         <div class="figure-card-img">
           <?php if ($settings->show_thumb) {
             $siteID = get_post_meta($id, 'dt_original_blog_id', true);
@@ -67,7 +65,9 @@ if ($count >= 3) {
           <div class="card-inner">
             <div class="card-badge"><span><?php echo $badge; ?></span></div>
 
-            <h3 class="card-title" itemprop="name"><a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
+            <h3 class="card-title" itemprop="name">
+              <a class="a11y-link-wrap" href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a>
+            </h3>
 
             <div class="card-content">
               <div class="time"><?php echo "$startH:$starti"; if ($starta !== $enda) echo " $starta"; ?> -
@@ -77,7 +77,7 @@ if ($count >= 3) {
                 <?php endif; ?>
             </div>
 
-            <div class="card-cta"><a tabindex="-1" href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
+            <div class="card-cta" aria-hidden="true"><a tabindex="-1" href="<?php echo get_permalink(); ?>">Read More <span class="arrow"><?php echo file_get_contents(CBB_MODULES_DIR . 'assets/images/arrow-right.svg'); ?></span></a></div>
           </div>
         </div>
 

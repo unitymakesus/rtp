@@ -10995,13 +10995,24 @@ input[type=range]::-ms-thumb {
   display: none;
 }
 
-/* line 5, resources/assets/styles/common/_a11y.scss */
+/* line 6, resources/assets/styles/common/_a11y.scss */
+
+.a11y-link-wrap::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  content: '';
+}
+
+/* line 15, resources/assets/styles/common/_a11y.scss */
 
 :focus {
   outline: #4B9CD3 auto 5px;
 }
 
-/* line 9, resources/assets/styles/common/_a11y.scss */
+/* line 19, resources/assets/styles/common/_a11y.scss */
 
 .screen-reader-text {
   clip: rect(1px, 1px, 1px, 1px);
@@ -11014,7 +11025,7 @@ input[type=range]::-ms-thumb {
   overflow: hidden;
 }
 
-/* line 18, resources/assets/styles/common/_a11y.scss */
+/* line 28, resources/assets/styles/common/_a11y.scss */
 
 .screen-reader-text:focus {
   clip: auto;
@@ -11029,7 +11040,7 @@ input[type=range]::-ms-thumb {
   /* Above WP toolbar. */
 }
 
-/* line 30, resources/assets/styles/common/_a11y.scss */
+/* line 40, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper {
   position: absolute;
@@ -11041,20 +11052,20 @@ input[type=range]::-ms-thumb {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 37, resources/assets/styles/common/_a11y.scss */
+  /* line 47, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools-active .a11y-tools-trigger-wrapper {
     top: 125px;
   }
 }
 
-/* line 42, resources/assets/styles/common/_a11y.scss */
+/* line 52, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper input:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 46, resources/assets/styles/common/_a11y.scss */
+/* line 56, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper label {
   display: block;
@@ -11069,7 +11080,7 @@ input[type=range]::-ms-thumb {
   transition: background 0.3s ease;
 }
 
-/* line 56, resources/assets/styles/common/_a11y.scss */
+/* line 66, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper label i {
   position: absolute;
@@ -11082,31 +11093,31 @@ input[type=range]::-ms-thumb {
   color: #FFF;
 }
 
-/* line 65, resources/assets/styles/common/_a11y.scss */
+/* line 75, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools-trigger-wrapper label span {
   display: none;
 }
 
-/* line 73, resources/assets/styles/common/_a11y.scss */
+/* line 83, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools-trigger-wrapper label {
   border: 3px solid #FFF;
 }
 
-/* line 76, resources/assets/styles/common/_a11y.scss */
+/* line 86, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools-trigger-wrapper label:hover {
   background: #FFF;
 }
 
-/* line 79, resources/assets/styles/common/_a11y.scss */
+/* line 89, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools-trigger-wrapper label:hover i {
   color: #000;
 }
 
-/* line 87, resources/assets/styles/common/_a11y.scss */
+/* line 97, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools {
   height: 50px;
@@ -11118,27 +11129,27 @@ html[data-contrast="true"] .a11y-tools-trigger-wrapper label:hover i {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 87, resources/assets/styles/common/_a11y.scss */
+  /* line 97, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools {
     height: 0;
   }
 
-  /* line 96, resources/assets/styles/common/_a11y.scss */
+  /* line 106, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools-active .a11y-tools {
     height: 110px;
   }
 }
 
-/* line 101, resources/assets/styles/common/_a11y.scss */
+/* line 111, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools {
   border-bottom: 1px solid #FFF;
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 105, resources/assets/styles/common/_a11y.scss */
+  /* line 115, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .container,
   .a11y-tools .container-wide {
@@ -11146,7 +11157,7 @@ html[data-contrast="true"] .a11y-tools {
   }
 }
 
-/* line 111, resources/assets/styles/common/_a11y.scss */
+/* line 121, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset {
   border: none;
@@ -11155,14 +11166,14 @@ html[data-contrast="true"] .a11y-tools {
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 111, resources/assets/styles/common/_a11y.scss */
+  /* line 121, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools fieldset {
     padding-bottom: 10px;
   }
 }
 
-/* line 120, resources/assets/styles/common/_a11y.scss */
+/* line 130, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset legend,
 .a11y-tools fieldset > div {
@@ -11171,7 +11182,7 @@ html[data-contrast="true"] .a11y-tools {
   padding: 0 3px;
 }
 
-/* line 126, resources/assets/styles/common/_a11y.scss */
+/* line 136, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset legend {
   width: 65px;
@@ -11180,14 +11191,14 @@ html[data-contrast="true"] .a11y-tools {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 126, resources/assets/styles/common/_a11y.scss */
+  /* line 136, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools fieldset legend {
     display: none;
   }
 }
 
-/* line 136, resources/assets/styles/common/_a11y.scss */
+/* line 146, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label {
   display: block;
@@ -11203,7 +11214,7 @@ html[data-contrast="true"] .a11y-tools {
   cursor: pointer;
 }
 
-/* line 147, resources/assets/styles/common/_a11y.scss */
+/* line 157, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label::after {
   position: absolute;
@@ -11212,101 +11223,101 @@ html[data-contrast="true"] .a11y-tools {
   color: #000;
 }
 
-/* line 154, resources/assets/styles/common/_a11y.scss */
+/* line 164, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label:hover {
   background: #A2A9AE;
 }
 
-/* line 157, resources/assets/styles/common/_a11y.scss */
+/* line 167, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset label:hover::after {
   color: #FFF;
 }
 
-/* line 162, resources/assets/styles/common/_a11y.scss */
+/* line 172, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label {
   background: #000;
   border: 1px solid #FFF;
 }
 
-/* line 166, resources/assets/styles/common/_a11y.scss */
+/* line 176, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label::after {
   color: #FFF;
 }
 
-/* line 170, resources/assets/styles/common/_a11y.scss */
+/* line 180, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label:hover,
 html[data-contrast="true"] .a11y-tools fieldset label:focus {
   background: #FFF;
 }
 
-/* line 173, resources/assets/styles/common/_a11y.scss */
+/* line 183, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset label:hover::after,
 html[data-contrast="true"] .a11y-tools fieldset label:focus::after {
   color: #000;
 }
 
-/* line 185, resources/assets/styles/common/_a11y.scss */
+/* line 195, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="radio"]:checked + label::after {
   color: #FFF;
 }
 
-/* line 189, resources/assets/styles/common/_a11y.scss */
+/* line 199, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="radio"]:checked + label {
   background: #7A868C;
 }
 
-/* line 194, resources/assets/styles/common/_a11y.scss */
+/* line 204, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="radio"]:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 197, resources/assets/styles/common/_a11y.scss */
+/* line 207, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="radio"]:focus + label {
   outline: #FFF auto 5px;
 }
 
-/* line 207, resources/assets/styles/common/_a11y.scss */
+/* line 217, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="checkbox"]:checked + label::after {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cmVjdCBpZD0iYSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIi8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8Y2lyY2xlIGN4PSIxNyIgY3k9IjE3IiByPSIxNiIgZmlsbD0iI0ZGRkZGRiIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3IDEpIj4KICAgICAgPG1hc2sgaWQ9ImIiIGZpbGw9IndoaXRlIj4KICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGNpcmNsZSBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMiIgbWFzaz0idXJsKCNiKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==);
 }
 
-/* line 211, resources/assets/styles/common/_a11y.scss */
+/* line 221, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:checked + label {
   background: #7A868C;
 }
 
-/* line 214, resources/assets/styles/common/_a11y.scss */
+/* line 224, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:checked + label:hover,
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:checked + label:focus {
   background: #A2A9AE;
 }
 
-/* line 220, resources/assets/styles/common/_a11y.scss */
+/* line 230, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset input[type="checkbox"]:focus + label {
   outline: #7A868C auto 5px;
 }
 
-/* line 223, resources/assets/styles/common/_a11y.scss */
+/* line 233, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + label {
   outline: #FFF auto 5px;
 }
 
-/* line 232, resources/assets/styles/common/_a11y.scss */
+/* line 242, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.toggle-contrast label::after {
   content: '';
@@ -11315,7 +11326,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSIzNCIgdmlld0JveD0iMCAwIDM0IDM0IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cmVjdCBpZD0iYSIgd2lkdGg9IjE2IiBoZWlnaHQ9IjMyIi8+CiAgPC9kZWZzPgogIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICA8Y2lyY2xlIGN4PSIxNyIgY3k9IjE3IiByPSIxNiIgZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSIjMDAwMDAwIiBzdHJva2Utd2lkdGg9IjIiLz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE3IDEpIj4KICAgICAgPG1hc2sgaWQ9ImIiIGZpbGw9IndoaXRlIj4KICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNhIi8+CiAgICAgIDwvbWFzaz4KICAgICAgPGNpcmNsZSBjeT0iMTYiIHI9IjE2IiBmaWxsPSIjRkZGRkZGIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMiIgbWFzaz0idXJsKCNiKSIvPgogICAgPC9nPgogIDwvZz4KPC9zdmc+Cg==) no-repeat 50% 50%;
 }
 
-/* line 243, resources/assets/styles/common/_a11y.scss */
+/* line 253, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size label::after {
   content: 'A';
@@ -11331,25 +11342,25 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   speak: none;
 }
 
-/* line 254, resources/assets/styles/common/_a11y.scss */
+/* line 264, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size div[class*="default-"] label::after {
   font-size: 18px;
 }
 
-/* line 258, resources/assets/styles/common/_a11y.scss */
+/* line 268, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size div[class*="medium-"] label::after {
   font-size: 24px;
 }
 
-/* line 262, resources/assets/styles/common/_a11y.scss */
+/* line 272, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools fieldset.text-size div[class*="large-"] label::after {
   font-size: 27px;
 }
 
-/* line 268, resources/assets/styles/common/_a11y.scss */
+/* line 278, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form {
   margin-left: 6px;
@@ -11358,7 +11369,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
       align-self: flex-start;
 }
 
-/* line 273, resources/assets/styles/common/_a11y.scss */
+/* line 283, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form .label {
   float: left;
@@ -11370,7 +11381,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   font-weight: normal;
 }
 
-/* line 284, resources/assets/styles/common/_a11y.scss */
+/* line 294, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form .search-field {
   float: left;
@@ -11382,7 +11393,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
   padding: 0;
 }
 
-/* line 293, resources/assets/styles/common/_a11y.scss */
+/* line 303, resources/assets/styles/common/_a11y.scss */
 
 .a11y-tools .search-form.active .search-field {
   width: 200px;
@@ -11390,7 +11401,7 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
 }
 
 @media only screen and (max-width: 768px) {
-  /* line 300, resources/assets/styles/common/_a11y.scss */
+  /* line 310, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form .search-field {
     width: 250px;
@@ -11399,39 +11410,39 @@ html[data-contrast="true"] .a11y-tools fieldset input[type="checkbox"]:focus + l
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 268, resources/assets/styles/common/_a11y.scss */
+  /* line 278, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form {
     margin-left: 0;
   }
 
-  /* line 308, resources/assets/styles/common/_a11y.scss */
+  /* line 318, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form .label {
     display: none;
   }
 
-  /* line 312, resources/assets/styles/common/_a11y.scss */
+  /* line 322, resources/assets/styles/common/_a11y.scss */
 
   .a11y-tools .search-form .search-field {
     width: 225px;
   }
 }
 
-/* line 318, resources/assets/styles/common/_a11y.scss */
+/* line 328, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .a11y-tools .search-form .label {
   color: #FFF;
 }
 
-/* line 325, resources/assets/styles/common/_a11y.scss */
+/* line 335, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] {
   background: #000;
   color: #FFF;
 }
 
-/* line 329, resources/assets/styles/common/_a11y.scss */
+/* line 339, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .banner .navbar,
 html[data-contrast="true"] .page-footer .footer-copyright {
@@ -11440,7 +11451,7 @@ html[data-contrast="true"] .page-footer .footer-copyright {
   border-bottom: 1px solid #FFF;
 }
 
-/* line 335, resources/assets/styles/common/_a11y.scss */
+/* line 345, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .navbar-menu li.current-page-ancestor,
 html[data-contrast="true"] .navbar-menu li.current-menu-item,
@@ -11452,7 +11463,7 @@ html[data-contrast="true"] .navbar-menu li.hover {
   border-left: 1px solid #FFF;
 }
 
-/* line 342, resources/assets/styles/common/_a11y.scss */
+/* line 352, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .btn,
 html[data-contrast="true"] .btn-large,
@@ -11472,7 +11483,7 @@ html[data-contrast="true"] .page-footer .widget_nav_menu .menu li a {
   border-color: #FFF;
 }
 
-/* line 346, resources/assets/styles/common/_a11y.scss */
+/* line 356, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] .btn:hover,
 html[data-contrast="true"] .btn-large:hover,
@@ -11506,7 +11517,7 @@ html[data-contrast="true"] .page-footer .widget_nav_menu .menu li a:focus {
   color: #000;
 }
 
-/* line 352, resources/assets/styles/common/_a11y.scss */
+/* line 362, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] select,
 html[data-contrast="true"] input[type="text"] {
@@ -11515,7 +11526,7 @@ html[data-contrast="true"] input[type="text"] {
   color: #FFF;
 }
 
-/* line 358, resources/assets/styles/common/_a11y.scss */
+/* line 368, resources/assets/styles/common/_a11y.scss */
 
 html[data-contrast="true"] h1,
 html[data-contrast="true"] h2,
@@ -14457,15 +14468,15 @@ nav ul a {
   }
 }
 
-/* line 280, resources/assets/styles/layouts/_header.scss */
+/* line 278, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children:hover .sub-menu,
 .navbar-menu li.menu-item-has-children:focus .sub-menu,
-.navbar-menu li.menu-item-has-children.hover a .sub-menu {
+.navbar-menu li.menu-item-has-children.hover .sub-menu {
   height: auto;
 }
 
-/* line 286, resources/assets/styles/layouts/_header.scss */
+/* line 284, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
@@ -14478,7 +14489,7 @@ nav ul a {
     height: 4.66667em;
   }
 
-  /* line 294, resources/assets/styles/layouts/_header.scss */
+  /* line 292, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14490,7 +14501,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 299, resources/assets/styles/layouts/_header.scss */
+  /* line 297, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14517,7 +14528,7 @@ nav ul a {
     overflow: hidden;
   }
 
-  /* line 314, resources/assets/styles/layouts/_header.scss */
+  /* line 312, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu ul {
     -webkit-box-orient: vertical;
@@ -14527,7 +14538,7 @@ nav ul a {
     width: 100%;
   }
 
-  /* line 319, resources/assets/styles/layouts/_header.scss */
+  /* line 317, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
@@ -14537,26 +14548,26 @@ nav ul a {
             flex-direction: column;
   }
 
-  /* line 323, resources/assets/styles/layouts/_header.scss */
+  /* line 321, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     width: 100%;
   }
 
-  /* line 328, resources/assets/styles/layouts/_header.scss */
+  /* line 326, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.hover .sub-menu {
     max-height: 100em;
   }
 
-  /* line 334, resources/assets/styles/layouts/_header.scss */
+  /* line 332, resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
     max-height: 100em;
   }
 }
 
-/* line 339, resources/assets/styles/layouts/_header.scss */
+/* line 337, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;

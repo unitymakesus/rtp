@@ -274,9 +274,7 @@ nav {
         }
       }
 
-      &:hover, &:focus, &.hover a {
-        // background: $color-grey-light;
-
+      &:hover, &:focus, &.hover {
         .sub-menu {
           height: auto;
         }
