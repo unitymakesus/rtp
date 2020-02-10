@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_settings_form(
-	'flip_box_icon_form_field', array(
+	'flip_box_icon_form_field',
+	array(
 		'title' => __( 'Icon', 'uabb' ),
 		'tabs'  => array(
 			array(
@@ -195,7 +196,8 @@ FLBuilder::register_settings_form(
 );
 
 FLBuilder::register_settings_form(
-	'flip_box_photo_form_field', array(
+	'flip_box_photo_form_field',
+	array(
 		'title' => __( 'Photo', 'uabb' ),
 		'tabs'  => array(
 			array(
@@ -267,7 +269,8 @@ FLBuilder::register_settings_form(
  * Register the module and its form settings.
  */
 FLBuilder::register_module(
-	'FlipBoxModule', array(
+	'FlipBoxModule',
+	array(
 		'flip_front' => array( // Tab.
 			'title'    => __( 'Flip Box Front', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

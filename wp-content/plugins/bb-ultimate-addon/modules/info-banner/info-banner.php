@@ -52,10 +52,10 @@ class InfoBannerModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( isset( $settings->link_nofollow ) ) {
-				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+				if ( '1' === $settings->link_nofollow || 'yes' === $settings->link_nofollow ) {
 					$settings->link_nofollow = 'yes';
 				}
 			}
@@ -69,7 +69,7 @@ class InfoBannerModule extends FLBuilderModule {
 			if ( isset( $settings->font_family ) ) {
 
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -148,7 +148,7 @@ class InfoBannerModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->desc_font_family ) ) {
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->desc_font_family['weight'] ) {
 						$settings->desc_font_family['weight'] = 'normal';
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_font_family['weight'];
@@ -228,7 +228,7 @@ class InfoBannerModule extends FLBuilderModule {
 			if ( isset( $settings->tbtn_font_family ) ) {
 
 				if ( isset( $settings->tbtn_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->tbtn_font_family['weight'] ) {
+					if ( 'regular' === $settings->tbtn_font_family['weight'] ) {
 						$settings->btn_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->btn_font_typo['font_weight'] = $settings->tbtn_font_family['weight'];
@@ -308,7 +308,7 @@ class InfoBannerModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->link_font_family ) ) {
 				if ( isset( $settings->link_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->link_font_family['weight'] ) {
+					if ( 'regular' === $settings->link_font_family['weight'] ) {
 						$settings->link_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->link_font_typo['font_weight'] = $settings->link_font_family['weight'];
@@ -385,14 +385,14 @@ class InfoBannerModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'btn_bg_hover_color_opc', 'btn_bg_hover_color' );
 
 			if ( isset( $settings->btn_link_nofollow ) ) {
-				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+				if ( '1' === $settings->btn_link_nofollow || 'yes' === $settings->btn_link_nofollow ) {
 					$settings->btn_link_nofollow = 'yes';
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( isset( $settings->link_nofollow ) ) {
-				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+				if ( '1' === $settings->link_nofollow || 'yes' === $settings->link_nofollow ) {
 					$settings->link_nofollow = 'yes';
 				}
 			}
@@ -412,7 +412,7 @@ class InfoBannerModule extends FLBuilderModule {
 			if ( isset( $settings->font_family ) ) {
 
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -443,7 +443,7 @@ class InfoBannerModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->title_font_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -451,7 +451,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->title_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -459,7 +459,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->title_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -476,7 +476,7 @@ class InfoBannerModule extends FLBuilderModule {
 			if ( isset( $settings->desc_font_family ) ) {
 
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->desc_font_family['weight'] ) {
 						$settings->desc_font_family['weight'] = 'normal';
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_font_family['weight'];
@@ -506,7 +506,7 @@ class InfoBannerModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->desc_line_height['desktop'] ) && isset( $settings->desc_font_size['desktop'] ) && 0 != $settings->desc_font_size['desktop'] ) {
+			if ( isset( $settings->desc_line_height['desktop'] ) && isset( $settings->desc_font_size['desktop'] ) && 0 !== $settings->desc_font_size['desktop'] ) {
 				if ( is_numeric( $settings->desc_line_height['desktop'] ) && is_numeric( $settings->desc_font_size['desktop'] ) ) {
 					$settings->desc_font_typo['line_height'] = array(
 						'length' => round( $settings->desc_line_height['desktop'] / $settings->desc_font_size['desktop'], 2 ),
@@ -514,7 +514,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desc_line_height['medium'] ) && isset( $settings->desc_font_size['medium'] ) && 0 != $settings->desc_font_size['medium'] ) {
+			if ( isset( $settings->desc_line_height['medium'] ) && isset( $settings->desc_font_size['medium'] ) && 0 !== $settings->desc_font_size['medium'] ) {
 				if ( is_numeric( $settings->desc_line_height['medium'] ) && is_numeric( $settings->desc_font_size['medium'] ) ) {
 					$settings->desc_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->desc_line_height['medium'] / $settings->desc_font_size['medium'], 2 ),
@@ -522,7 +522,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desc_line_height['small'] ) && isset( $settings->desc_font_size['small'] ) && 0 != $settings->desc_font_size['small'] ) {
+			if ( isset( $settings->desc_line_height['small'] ) && isset( $settings->desc_font_size['small'] ) && 0 !== $settings->desc_font_size['small'] ) {
 				if ( is_numeric( $settings->desc_line_height['small'] ) && is_numeric( $settings->desc_font_size['small'] ) ) {
 					$settings->desc_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->desc_line_height['small'] / $settings->desc_font_size['small'], 2 ),
@@ -539,7 +539,7 @@ class InfoBannerModule extends FLBuilderModule {
 			if ( isset( $settings->tbtn_font_family ) ) {
 
 				if ( isset( $settings->tbtn_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->tbtn_font_family['weight'] ) {
+					if ( 'regular' === $settings->tbtn_font_family['weight'] ) {
 						$settings->btn_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->btn_font_typo['font_weight'] = $settings->tbtn_font_family['weight'];
@@ -568,7 +568,7 @@ class InfoBannerModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->tbtn_line_height['desktop'] ) && isset( $settings->tbtn_font_size['desktop'] ) && 0 != $settings->tbtn_font_size['desktop'] ) {
+			if ( isset( $settings->tbtn_line_height['desktop'] ) && isset( $settings->tbtn_font_size['desktop'] ) && 0 !== $settings->tbtn_font_size['desktop'] ) {
 				if ( is_numeric( $settings->tbtn_line_height['desktop'] ) && is_numeric( $settings->tbtn_font_size['desktop'] ) ) {
 					$settings->btn_font_typo['line_height'] = array(
 						'length' => round( $settings->tbtn_line_height['desktop'] / $settings->tbtn_font_size['desktop'], 2 ),
@@ -576,7 +576,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->tbtn_line_height['medium'] ) && isset( $settings->tbtn_font_size['medium'] ) && 0 != $settings->tbtn_font_size['medium'] ) {
+			if ( isset( $settings->tbtn_line_height['medium'] ) && isset( $settings->tbtn_font_size['medium'] ) && 0 !== $settings->tbtn_font_size['medium'] ) {
 				if ( is_numeric( $settings->tbtn_line_height['medium'] ) && is_numeric( $settings->tbtn_font_size['medium'] ) ) {
 					$settings->btn_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->tbtn_line_height['medium'] / $settings->tbtn_font_size['medium'], 2 ),
@@ -584,7 +584,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->tbtn_line_height['small'] ) && isset( $settings->tbtn_font_size['small'] ) && 0 != $settings->tbtn_font_size['small'] ) {
+			if ( isset( $settings->tbtn_line_height['small'] ) && isset( $settings->tbtn_font_size['small'] ) && 0 !== $settings->tbtn_font_size['small'] ) {
 				if ( is_numeric( $settings->tbtn_line_height['small'] ) && is_numeric( $settings->tbtn_font_size['small'] ) ) {
 					$settings->btn_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->tbtn_line_height['small'] / $settings->tbtn_font_size['small'], 2 ),
@@ -601,7 +601,7 @@ class InfoBannerModule extends FLBuilderModule {
 			if ( isset( $settings->link_font_family ) ) {
 
 				if ( isset( $settings->link_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->link_font_family['weight'] ) {
+					if ( 'regular' === $settings->link_font_family['weight'] ) {
 						$settings->link_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->link_font_typo['font_weight'] = $settings->link_font_family['weight'];
@@ -631,7 +631,7 @@ class InfoBannerModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->link_line_height['desktop'] ) && isset( $settings->link_font_size['desktop'] ) && 0 != $settings->link_font_size['desktop'] ) {
+			if ( isset( $settings->link_line_height['desktop'] ) && isset( $settings->link_font_size['desktop'] ) && 0 !== $settings->link_font_size['desktop'] ) {
 				if ( is_numeric( $settings->link_line_height['small'] ) && is_numeric( $settings->link_font_size['small'] ) ) {
 					$settings->link_font_typo['line_height'] = array(
 						'length' => round( $settings->link_line_height['desktop'] / $settings->link_font_size['desktop'], 2 ),
@@ -639,7 +639,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->link_line_height['medium'] ) && isset( $settings->link_font_size['medium'] ) && 0 != $settings->link_font_size['medium'] ) {
+			if ( isset( $settings->link_line_height['medium'] ) && isset( $settings->link_font_size['medium'] ) && 0 !== $settings->link_font_size['medium'] ) {
 				if ( is_numeric( $settings->link_line_height['medium'] ) && is_numeric( $settings->link_font_size['medium'] ) ) {
 					$settings->link_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->link_line_height['medium'] / $settings->link_font_size['medium'], 2 ),
@@ -647,7 +647,7 @@ class InfoBannerModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->link_line_height['desktop'] ) && isset( $settings->link_font_size['desktop'] ) && 0 != $settings->link_font_size['desktop'] ) {
+			if ( isset( $settings->link_line_height['desktop'] ) && isset( $settings->link_font_size['desktop'] ) && 0 !== $settings->link_font_size['desktop'] ) {
 				if ( is_numeric( $settings->link_line_height['desktop'] ) && is_numeric( $settings->link_font_size['desktop'] ) ) {
 					$settings->link_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->link_line_height['desktop'] / $settings->link_font_size['desktop'], 2 ),
@@ -657,7 +657,7 @@ class InfoBannerModule extends FLBuilderModule {
 			}
 
 			if ( isset( $settings->btn_link_nofollow ) ) {
-				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+				if ( '1' === $settings->btn_link_nofollow || 'yes' === $settings->btn_link_nofollow ) {
 					$settings->btn_link_nofollow = 'yes';
 				}
 			}
@@ -732,21 +732,10 @@ class InfoBannerModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon ) ) {
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -799,7 +788,7 @@ class InfoBannerModule extends FLBuilderModule {
 		$photo = $this->get_data();
 
 		if ( ! empty( $photo->alt ) ) {
-			return htmlspecialchars( $photo->alt );
+			return esc_html( $photo->alt );
 		} else {
 			return '';
 		}
@@ -811,8 +800,8 @@ class InfoBannerModule extends FLBuilderModule {
 	 * @method render_link
 	 */
 	public function render_link() {
-		if ( 'link' == $this->settings->cta_type ) {
-			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 0 ) . ' class="uabb-infobanner-cta-link">' . $this->settings->cta_text . '</a>';
+		if ( 'link' === $this->settings->cta_type ) {
+			echo '<a href="' . esc_url( $this->settings->link ) . '" target="' . esc_attr( $this->settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 0 ) ) . ' class="uabb-infobanner-cta-link">' . esc_attr( $this->settings->cta_text ) . '</a>';
 		}
 	}
 
@@ -822,7 +811,7 @@ class InfoBannerModule extends FLBuilderModule {
 	 * @method render_button
 	 */
 	public function render_button() {
-		if ( 'button' == $this->settings->cta_type ) {
+		if ( 'button' === $this->settings->cta_type ) {
 			if ( ! UABB_Compatibility::$version_bb_check ) {
 				$btn_settings = array(
 

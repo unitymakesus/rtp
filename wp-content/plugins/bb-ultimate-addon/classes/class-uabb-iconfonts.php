@@ -34,7 +34,7 @@ class UABB_IconFonts {
 	 *
 	 * @since x.x.x
 	 */
-	function reload_icons() {
+	public function reload_icons() {
 		delete_option( '_uabb_enabled_icons' );
 		echo 'success';
 		die();
@@ -45,12 +45,12 @@ class UABB_IconFonts {
 	 *
 	 * @since x.x.x
 	 */
-	function register_icons() {
+	public function register_icons() {
 
 		// Update initially.
 		$uabb_icons = get_option( '_uabb_enabled_icons', 0 );
 
-		if ( 0 == $uabb_icons ) {
+		if ( 0 === $uabb_icons ) {
 
 			// Copy IconFonts from UABB to BB.
 			$dir = FLBuilderModel::get_cache_dir( 'icons' );
@@ -60,11 +60,11 @@ class UABB_IconFonts {
 
 			$enabled_icons = FLBuilderModel::get_enabled_icons();
 
-			$folders = glob( BB_ULTIMATE_ADDON_DIR . 'includes/icons/' . '*' );
+			$folders = glob( BB_ULTIMATE_ADDON_DIR . 'includes/icons/' . '*' ); //phpcs:ignore Generic.Strings.UnnecessaryStringConcat.Found
 			foreach ( $folders as $folder ) {
 				$folder = trailingslashit( $folder );
 				$key    = basename( $folder );
-				if ( is_array( $enabled_icons ) && ! in_array( $key, $enabled_icons ) ) {
+				if ( is_array( $enabled_icons ) && ! in_array( $key, $enabled_icons ) ) { //phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 					$enabled_icons[] = $key;
 				}
 			}
@@ -82,16 +82,16 @@ class UABB_IconFonts {
 	 * @param array $src an array to get the src.
 	 * @param array $dst an object to get destination of the file.
 	 */
-	function recurse_copy( $src, $dst ) {
+	public function recurse_copy( $src, $dst ) {
 		$dir = opendir( $src );
 
 		// Create directory if not exist. Removed @mkdir( $dst );.
 		if ( ! is_dir( $dst ) ) {
 			mkdir( $dst );
 		}
-		
-		while ( false !== ( $file = readdir( $dir ) ) ) {
-			if ( ( '.' != $file ) && ( '..' != $file ) ) {
+
+		while ( false !== ( $file = readdir( $dir ) ) ) { // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
+			if ( ( '.' !== $file ) && ( '..' !== $file ) ) {
 				if ( is_dir( $src . '/' . $file ) ) {
 					$this->recurse_copy( $src . '/' . $file, $dst . '/' . $file );
 				} else {

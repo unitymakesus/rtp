@@ -42,20 +42,11 @@ class UABBFAQModule extends FLBuilderModule {
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
-		// check if $icon is referencing an included icon.
+
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-faq/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-faq/icon/' . $icon;
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-faq/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );// @codingStandardsIgnoreLine.
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -103,22 +94,22 @@ class UABBFAQModule extends FLBuilderModule {
 				'@type'    => 'FAQPage',
 			);
 
-		foreach ( $this->settings->faq_items as $items ) {
-			$new_data = array(
-				'@type'          => 'Question',
-				'name'           => $items->faq_question,
-				'acceptedAnswer' =>
-				array(
-					'@type' => 'Answer',
-					'text'  => $items->faq_answer,
-				),
-			);
-			array_push( $object_data, $new_data );
-		}
+			foreach ( $this->settings->faq_items as $items ) {
+				$new_data = array(
+					'@type'          => 'Question',
+					'name'           => $items->faq_question,
+					'acceptedAnswer' =>
+					array(
+						'@type' => 'Answer',
+						'text'  => $items->faq_answer,
+					),
+				);
+				array_push( $object_data, $new_data );
+			}
 
 			$json_data['mainEntity'] = $object_data;
 
-			$encoded_data = json_encode( $json_data );
+			$encoded_data = wp_json_encode( $json_data );
 
 			return $encoded_data;
 	}

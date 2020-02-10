@@ -41,20 +41,11 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon;
+
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon ) ) {
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -71,7 +62,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle color opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
@@ -91,7 +82,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->button_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_typo['font_weight'] = $settings->font_family['weight'];
@@ -159,7 +150,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 				unset( $settings->align );
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+				if ( '1' === $settings->link_nofollow || 'yes' === $settings->link_nofollow ) {
 					$settings->link_nofollow = 'yes';
 				}
 			}
@@ -177,7 +168,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->subtitle_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->subtitle_font_family['weight'] ) {
+					if ( 'regular' === $settings->subtitle_font_family['weight'] ) {
 						$settings->button_typo_subtitle['font_weight'] = 'normal';
 					} else {
 						$settings->button_typo_subtitle['font_weight'] = $settings->subtitle_font_family['weight'];
@@ -265,11 +256,9 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 			$astra_class = 'ast-button';
 		}
 		?>
-		<div class="uabb-marketing-button uabb-module-content <?php echo $this->get_classname(); ?>">
-			<a href ="<?php echo $this->settings->link; ?>" target="<?php echo $this->settings->link_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 1 ); ?> class="uabb-button uabb-marketing-button  <?php echo $animation_class; ?> uabb-marketing-button-wrap-<?php echo $this->settings->icon_position; ?> <?php echo $custom_class; ?> uabb-marketing-btn__link <?php echo $astra_class; ?>">
-				<?php
-					echo $this->render_html();
-				?>
+		<div class="uabb-marketing-button uabb-module-content <?php echo esc_attr( $this->get_classname() ); ?>">
+			<a href ="<?php echo esc_url( $this->settings->link ); ?>" target="<?php echo esc_attr( $this->settings->link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 1 ); ?> class="uabb-button uabb-marketing-button  <?php echo esc_attr( $animation_class ); ?> uabb-marketing-button-wrap-<?php echo esc_attr( $this->settings->icon_position ); ?> <?php echo esc_attr( $custom_class ); ?> uabb-marketing-btn__link <?php echo esc_attr( $astra_class ); ?>">
+				<?php echo wp_kses_post( $this->render_html() ); ?>
 			</a>
 		</div>
 		<?php
@@ -285,19 +274,19 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 		if ( 'all_before' === $this->settings->icon_position || 'all_after' === $this->settings->icon_position ) {
 			?>
 			<?php if ( isset( $this->settings->icon ) && '' !== $this->settings->icon ) { ?>
-				<div class="uabb-marketing-button-icon uabb-align-icon-<?php echo $this->settings->icon_position; ?> uabb-marketing-button-icon-<?php echo $this->settings->icon_position; ?>" >
-						<i class="uabb-button-icon uabb-marketing-button-icon <?php echo $this->settings->icon_position; ?> <?php echo $this->settings->icon; ?>"></i>
+				<div class="uabb-marketing-button-icon uabb-align-icon-<?php echo esc_attr( $this->settings->icon_position ); ?> uabb-marketing-button-icon-<?php echo esc_attr( $this->settings->icon_position ); ?>" >
+						<i class="uabb-button-icon uabb-marketing-button-icon <?php echo esc_attr( $this->settings->icon_position ); ?> <?php echo esc_attr( $this->settings->icon ); ?>"></i>
 				</div>
 			<?php } ?>
 			<div class="uabb-marketing-buttons-wrap">
 				<?php if ( isset( $this->settings->title ) && '' !== $this->settings->title ) { ?>
-					<div class="uabb-button-content-wrapper uabb-marketing-title uabb-buttons-icon-<?php echo $this->settings->icon_position; ?>">
-						<?php echo $this->settings->title; ?>
+					<div class="uabb-button-content-wrapper uabb-marketing-title uabb-buttons-icon-<?php echo esc_attr( $this->settings->icon_position ); ?>">
+						<?php echo esc_attr( $this->settings->title ); ?>
 					</div>
 				<?php } ?>
 				<?php if ( isset( $this->settings->sub_title ) && '' !== $this->settings->sub_title ) { ?>
 					<div class="uabb-marketing-subheading uabb-marketing-button-text">
-						<?php echo $this->settings->sub_title; ?>
+						<?php echo esc_attr( $this->settings->sub_title ); ?>
 					</div>
 				<?php } ?>
 			</div>
@@ -305,22 +294,22 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 		} elseif ( 'before' === $this->settings->icon_position || 'after' === $this->settings->icon_position ) {
 			?>
 				<div class="uabb-marketing-buttons-wrap">
-					<div class="uabb-marketing-buttons-contentwrap uabb-marketing-button-icon-<?php echo $this->settings->icon_position; ?>">
+					<div class="uabb-marketing-buttons-contentwrap uabb-marketing-button-icon-<?php echo esc_attr( $this->settings->icon_position ); ?>">
 							<?php if ( isset( $this->settings->icon ) && '' !== $this->settings->icon ) { ?>
-								<span class="uabb-marketing-buttons-icon-innerwrap uabb-marketing-button-icon-<?php echo $this->settings->icon_position; ?>">
-									<i class="uabb-button-icon uabb-marketing-button-icon-<?php echo $this->settings->icon_position; ?> <?php echo $this->settings->icon; ?>"></i>
+								<span class="uabb-marketing-buttons-icon-innerwrap uabb-marketing-button-icon-<?php echo esc_attr( $this->settings->icon_position ); ?>">
+									<i class="uabb-button-icon uabb-marketing-button-icon-<?php echo esc_attr( $this->settings->icon_position ); ?> <?php echo esc_attr( $this->settings->icon ); ?>"></i>
 								</span>
 							<?php } ?>
 						<?php if ( isset( $this->settings->title ) && '' !== $this->settings->title ) { ?>
 							<span class="uabb-marketing-buttons-title-innerwrap uabb-marketing-title uabb-button-text uabb-marketing-title ">
-								<?php echo $this->settings->title; ?>
+								<?php echo esc_attr( $this->settings->title ); ?>
 							</span>
 						<?php } ?>
 					</div>
 					<div class="uabb-marketing-buttons-desc-innerwrap">
 						<?php if ( isset( $this->settings->sub_title ) && '' !== $this->settings->sub_title ) { ?>
 							<span class="uabb-marketing-subheading uabb-marketing-button-text">
-								<?php echo $this->settings->sub_title; ?>
+								<?php echo esc_attr( $this->settings->sub_title ); ?>
 							</span>
 						<?php } ?>
 					</div>

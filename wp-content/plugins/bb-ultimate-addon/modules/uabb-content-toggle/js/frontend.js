@@ -21,12 +21,12 @@
 		{	
 			this._contentToggleHandler();
 
-			var hashval = window.location.hash,
-				id = hashval.split( '#' ).pop();
+
+			id = window.location.hash.substring(1);
 
 			if ( id === 'content-1' || id === 'content-2' ) {
 
-				this._openOnLink();
+				this._openOnLink( id );
 			}
 		},
 
@@ -128,17 +128,16 @@
 	        	$(window).resize();
 		    });
 		},
-		_openOnLink: function(){
+		_openOnLink: function( id ) {
 
 			var nodeClass  		= jQuery(this.nodeClass);
 			var node_id 		= nodeClass.data( 'node' );
 			var node          	= '.fl-node-' + node_id;
 			var node_toggle     = '#uabb-toggle-init' + ' ' + node;
-			var hashval = window.location.hash,
-				id = hashval.split( '#' ).pop();
+
 
 			$( 'html, body' ).animate( {
-		        scrollTop: $( '#uabb-toggle-init' ).find( ' .fl-module-uabb-content-toggle' ).offset().top
+		        scrollTop: $( '#uabb-toggle-init' ).find( '.fl-module-uabb-content-toggle' ).offset().top
 		    }, 500 );
 
 			if( id === 'content-1' ) {
@@ -156,6 +155,7 @@
 				$( node_toggle +' .uabb-rbs-section-1' ).hide();
 				$( node_toggle + ' .uabb-checkbox-clickable' ).attr( 'checked', 'checked' );
 			}
+
 		},	
 	};
 	

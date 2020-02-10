@@ -7,12 +7,12 @@
 
 ?>
 
-.fl-node-<?php echo $id; ?> {
+.fl-node-<?php echo esc_attr( $id ); ?> {
 	width: 100%;
 }
 
-.fl-node-<?php echo $id; ?> .uabb-google-map-wrapper {
-	width: <?php echo ( '' !== $settings->map_width ) ? $settings->map_width : '100'; ?>%;
-	height: <?php echo ( '' !== $settings->map_height ) ? $settings->map_height : '300'; ?>px;
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-google-map-wrapper {
+	width: <?php echo ( '' !== $settings->map_width ) ? esc_attr( $settings->map_width ) : '100'; ?>%;
+	height: <?php echo ( '' !== $settings->map_height ) ? esc_attr( $settings->map_height ) : '300'; ?>px;
 	background-color: #CCC;
 }

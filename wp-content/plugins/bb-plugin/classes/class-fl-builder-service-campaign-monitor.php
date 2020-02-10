@@ -197,7 +197,7 @@ final class FLBuilderServiceCampaignMonitor extends FLBuilderService {
 
 		foreach ( $lists->response as $list ) {
 			// @codingStandardsIgnoreLine
-			$options[ $list->ListID ] = $list->Name;
+			$options[ $list->ListID ] = esc_attr( $list->Name );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

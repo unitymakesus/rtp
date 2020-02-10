@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'SlideBoxModule', array(
+	'SlideBoxModule',
+	array(
 		'slide_front' => array( // Tab.
 			'title'    => __( 'Slide Box Front', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

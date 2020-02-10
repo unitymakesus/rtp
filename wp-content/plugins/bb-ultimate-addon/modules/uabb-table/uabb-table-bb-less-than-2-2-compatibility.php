@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBTable', array(
+	'UABBTable',
+	array(
 		'headrow'        => array(
 			'title'    => __( 'Table Header', 'uabb' ),
 			'sections' => array(
@@ -891,7 +892,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'thead_row_form', array(
+	'thead_row_form',
+	array(
 		'title' => __( 'Heading Cell', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(
@@ -1087,7 +1089,8 @@ FLBuilder::register_settings_form(
 );
 
 FLBuilder::register_settings_form(
-	'tbody_row_form', array(
+	'tbody_row_form',
+	array(
 		'title' => __( 'Body Row / Cell', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

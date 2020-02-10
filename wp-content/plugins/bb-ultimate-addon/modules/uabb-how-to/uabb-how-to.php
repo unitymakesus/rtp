@@ -43,20 +43,11 @@ class UABBHowTo extends FLBuilderModule {
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
-		// check if $icon is referencing an included icon.
+
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-how-to/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-how-to/icon/' . $icon;
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-how-to/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path ); //PHPCS:ignore:WordPress.WP.AlternativeFunctions
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 }
 

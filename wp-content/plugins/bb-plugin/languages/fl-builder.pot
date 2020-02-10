@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bb-plugin\n"
 "Report-Msgid-Bugs-To: hello@wpbeaverbuilder.com\n"
-"POT-Creation-Date: 2020-01-21 19:07:29+00:00\n"
+"POT-Creation-Date: 2020-02-06 18:49:40+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -360,11 +360,11 @@ msgstr ""
 msgid "Clip Contents"
 msgstr ""
 
-#: classes/class-fl-builder-compatibility.php:545
+#: classes/class-fl-builder-compatibility.php:553
 msgid "SAFEMODE"
 msgstr ""
 
-#: classes/class-fl-builder-compatibility.php:545
+#: classes/class-fl-builder-compatibility.php:553
 msgid "module"
 msgstr ""
 
@@ -429,7 +429,7 @@ msgstr ""
 
 #: classes/class-fl-builder-fonts.php:166
 #: classes/class-fl-builder-ui-settings-forms.php:539
-#: includes/ui-js-config.php:131 modules/pricing-table/pricing-table.php:173
+#: includes/ui-js-config.php:132 modules/pricing-table/pricing-table.php:173
 msgid "Medium"
 msgstr ""
 
@@ -661,7 +661,7 @@ msgstr ""
 #: classes/class-fl-builder-model.php:3194
 #: classes/class-fl-builder-model.php:3621
 #: extensions/fl-builder-user-templates/includes/admin-add-new-form.php:43
-#: includes/admin-settings-modules.php:78 includes/ui-js-config.php:216
+#: includes/admin-settings-modules.php:78 includes/ui-js-config.php:217
 #: modules/widget/widget.php:15 modules/widget/widget.php:16
 msgid "WordPress Widgets"
 msgstr ""
@@ -705,7 +705,7 @@ msgstr ""
 #: classes/class-fl-builder-model.php:4893
 #: classes/class-fl-builder-model.php:4934
 #: classes/class-fl-builder-model.php:5004
-#: classes/class-fl-builder-model.php:6251 includes/ui-js-config.php:217
+#: classes/class-fl-builder-model.php:6251 includes/ui-js-config.php:218
 msgid "Uncategorized"
 msgstr ""
 
@@ -750,14 +750,14 @@ msgstr ""
 #: classes/class-fl-builder-model.php:6208
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:43
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:70
-#: includes/ui-js-config.php:244
+#: includes/ui-js-config.php:245
 msgid "Landing Pages"
 msgstr ""
 
 #: classes/class-fl-builder-model.php:6209
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:44
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:71
-#: includes/ui-js-config.php:247
+#: includes/ui-js-config.php:248
 msgid "Content Pages"
 msgstr ""
 
@@ -1783,17 +1783,17 @@ msgid "Columns"
 msgstr ""
 
 #: classes/class-fl-builder-ui-settings-forms.php:538
-#: includes/ui-js-config.php:186 modules/post-slider/post-slider.php:514
+#: includes/ui-js-config.php:187 modules/post-slider/post-slider.php:514
 msgid "Thumbnail"
 msgstr ""
 
 #: classes/class-fl-builder-ui-settings-forms.php:540
-#: includes/ui-js-config.php:129 modules/pricing-table/pricing-table.php:172
+#: includes/ui-js-config.php:130 modules/pricing-table/pricing-table.php:172
 msgid "Large"
 msgstr ""
 
 #: classes/class-fl-builder-ui-settings-forms.php:541
-#: includes/ui-field-photo-sizes.php:8 includes/ui-js-config.php:124
+#: includes/ui-field-photo-sizes.php:8 includes/ui-js-config.php:125
 msgid "Full Size"
 msgstr ""
 
@@ -1974,7 +1974,7 @@ msgstr ""
 
 #: classes/class-fl-builder.php:1138
 #: extensions/fl-builder-user-templates/includes/user-template-settings.php:4
-#: includes/ui-js-config.php:171
+#: includes/ui-js-config.php:172
 msgid "Save Template"
 msgstr ""
 
@@ -1995,7 +1995,7 @@ msgid "Layout CSS & Javascript"
 msgstr ""
 
 #: classes/class-fl-builder.php:1177 includes/global-settings.php:4
-#: includes/ui-js-config.php:116
+#: includes/ui-js-config.php:117
 msgid "Global Settings"
 msgstr ""
 
@@ -2015,7 +2015,7 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: classes/class-fl-builder.php:1247 includes/ui-js-config.php:130
+#: classes/class-fl-builder.php:1247 includes/ui-js-config.php:131
 msgid "Manage Templates"
 msgstr ""
 
@@ -2033,7 +2033,7 @@ msgstr ""
 
 #: classes/class-fl-builder.php:1307
 #: extensions/fl-builder-white-label/includes/admin-settings-help-button.php:59
-#: includes/ui-js-config.php:212
+#: includes/ui-js-config.php:213
 msgid "Contact Support"
 msgstr ""
 
@@ -2057,7 +2057,7 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: classes/class-fl-builder.php:1541 includes/ui-js-config.php:110
+#: classes/class-fl-builder.php:1541 includes/ui-js-config.php:111
 #: includes/ui-js-templates.php:306
 msgid "Done"
 msgstr ""
@@ -2106,7 +2106,7 @@ msgid "Save Cache Clearing Tool Settings"
 msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/classes/class-fl-builder-core-templates-admin.php:73
-#: includes/ui-js-config.php:165
+#: includes/ui-js-config.php:166
 msgid "Save Core Template"
 msgstr ""
 
@@ -2278,18 +2278,18 @@ msgid "Type"
 msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:9
-#: includes/ui-js-config.php:162 includes/ui-js-config.php:238
+#: includes/ui-js-config.php:163 includes/ui-js-config.php:239
 msgid "Row"
 msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:10
-#: includes/ui-js-config.php:96
+#: includes/ui-js-config.php:97
 msgid "Column"
 msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:11
 #: extensions/fl-builder-user-templates/includes/admin-add-new-form.php:36
-#: includes/ui-js-config.php:132 includes/ui-js-config.php:237
+#: includes/ui-js-config.php:133 includes/ui-js-config.php:238
 msgid "Module"
 msgstr ""
 
@@ -2320,7 +2320,7 @@ msgid "Delete"
 msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:100
-#: includes/ui-js-config.php:106
+#: includes/ui-js-config.php:107
 msgid "Do you really want to delete this template?"
 msgstr ""
 
@@ -2460,7 +2460,7 @@ msgid "Add"
 msgstr ""
 
 #: extensions/fl-builder-user-templates/classes/class-fl-builder-user-templates-admin-add.php:73
-#: includes/ui-js-config.php:236
+#: includes/ui-js-config.php:237
 msgid "Template"
 msgstr ""
 
@@ -2554,7 +2554,7 @@ msgstr ""
 
 #: extensions/fl-builder-user-templates/classes/class-fl-builder-user-templates.php:362
 #: extensions/fl-builder-user-templates/classes/class-fl-builder-user-templates.php:366
-#: includes/ui-js-config.php:222
+#: includes/ui-js-config.php:223
 msgid "Saved"
 msgstr ""
 
@@ -2617,7 +2617,7 @@ msgstr ""
 
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:47
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:275
-#: includes/ui-js-config.php:140
+#: includes/ui-js-config.php:141
 msgid "No saved rows found."
 msgstr ""
 
@@ -2628,7 +2628,7 @@ msgstr ""
 
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:136
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:183
-#: includes/ui-js-config.php:141
+#: includes/ui-js-config.php:142
 msgid "No saved modules found."
 msgstr ""
 
@@ -2637,7 +2637,7 @@ msgid "Save New Template"
 msgstr ""
 
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:373
-#: includes/ui-js-config.php:166
+#: includes/ui-js-config.php:167
 msgid "Save"
 msgstr ""
 
@@ -3667,7 +3667,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: includes/layout-settings.php:4 includes/ui-js-config.php:117
+#: includes/layout-settings.php:4 includes/ui-js-config.php:118
 msgid "Layout CSS / Javascript"
 msgstr ""
 
@@ -3713,7 +3713,7 @@ msgstr ""
 msgid "Import"
 msgstr ""
 
-#: includes/row-settings.php:6 includes/ui-js-config.php:163
+#: includes/row-settings.php:6 includes/ui-js-config.php:164
 #: includes/ui-js-templates.php:11
 msgid "Row Settings"
 msgstr ""
@@ -4036,7 +4036,7 @@ msgstr ""
 msgid "Keep changes drafted and exit"
 msgstr ""
 
-#: includes/ui-bar.php:9 includes/ui-js-config.php:177
+#: includes/ui-bar.php:9 includes/ui-js-config.php:178
 msgid "Submit for Review"
 msgstr ""
 
@@ -4144,7 +4144,7 @@ msgid "Replace"
 msgstr ""
 
 #: includes/ui-field-icon.php:26 includes/ui-field-photo.php:79
-#: includes/ui-js-config.php:156 includes/ui-js-templates.php:27
+#: includes/ui-js-config.php:157 includes/ui-js-templates.php:27
 #: includes/ui-js-templates.php:80 includes/ui-js-templates.php:176
 msgid "Remove"
 msgstr ""
@@ -4169,7 +4169,7 @@ msgstr ""
 msgid "Start typing..."
 msgstr ""
 
-#: includes/ui-field-multiple-audios.php:34 includes/ui-js-config.php:172
+#: includes/ui-field-multiple-audios.php:34 includes/ui-js-config.php:173
 msgid "Select Audio"
 msgstr ""
 
@@ -4193,7 +4193,7 @@ msgstr ""
 msgid "Add Photos"
 msgstr ""
 
-#: includes/ui-field-photo.php:60 includes/ui-js-config.php:173
+#: includes/ui-field-photo.php:60 includes/ui-js-config.php:174
 msgid "Select Photo"
 msgstr ""
 
@@ -4278,7 +4278,7 @@ msgstr ""
 msgid "Text Shadow"
 msgstr ""
 
-#: includes/ui-field-video.php:23 includes/ui-js-config.php:175
+#: includes/ui-field-video.php:23 includes/ui-js-config.php:176
 msgid "Select Video"
 msgstr ""
 
@@ -4339,95 +4339,99 @@ msgid "This code has errors. We recommend you fix them before saving."
 msgstr ""
 
 #: includes/ui-js-config.php:94
-msgid "Fix Errors"
+msgid "You cannot add <script> or <iframe> tag here."
 msgstr ""
 
 #: includes/ui-js-config.php:95
+msgid "Fix Errors"
+msgstr ""
+
+#: includes/ui-js-config.php:96
 msgid "Save With Errors"
 msgstr ""
 
-#: includes/ui-js-config.php:97
+#: includes/ui-js-config.php:98
 msgid ""
 "Please select either a background layout or content layout before "
 "submitting."
 msgstr ""
 
-#: includes/ui-js-config.php:98
+#: includes/ui-js-config.php:99
 msgid "Transition value should be lower than Delay value."
 msgstr ""
 
-#: includes/ui-js-config.php:99
+#: includes/ui-js-config.php:100
 msgid "Error! Please enter a date that is in the future."
 msgstr ""
 
-#: includes/ui-js-config.php:100
+#: includes/ui-js-config.php:101
 msgid "Remove Account"
 msgstr ""
 
-#: includes/ui-js-config.php:101
+#: includes/ui-js-config.php:102
 msgid ""
 "Are you sure you want to remove this account? Other modules that are "
 "connected to it will be affected."
 msgstr ""
 
-#: includes/ui-js-config.php:102
+#: includes/ui-js-config.php:103
 msgid "Do you really want to delete this column?"
 msgstr ""
 
-#: includes/ui-js-config.php:103
+#: includes/ui-js-config.php:104
 msgid "Do you really want to delete this item?"
 msgstr ""
 
-#: includes/ui-js-config.php:104
+#: includes/ui-js-config.php:105
 msgid "Do you really want to delete this module?"
 msgstr ""
 
-#: includes/ui-js-config.php:105
+#: includes/ui-js-config.php:106
 msgid "Do you really want to delete this row?"
 msgstr ""
 
-#: includes/ui-js-config.php:107
+#: includes/ui-js-config.php:108
 msgid ""
 "WARNING! You are about to delete a global template that may be linked to "
 "other pages. Do you really want to delete this template and unlink it?"
 msgstr ""
 
-#: includes/ui-js-config.php:108
+#: includes/ui-js-config.php:109
 msgid "Discard Changes and Exit"
 msgstr ""
 
-#: includes/ui-js-config.php:109
+#: includes/ui-js-config.php:110
 msgid ""
 "Do you really want to discard these changes? All of your changes that are "
 "not published will be lost."
 msgstr ""
 
-#: includes/ui-js-config.php:111
+#: includes/ui-js-config.php:112
 msgid "Save Changes and Exit"
 msgstr ""
 
-#: includes/ui-js-config.php:112 includes/ui-js-templates.php:13
+#: includes/ui-js-config.php:113 includes/ui-js-templates.php:13
 #: includes/ui-js-templates.php:51 includes/ui-js-templates.php:149
 msgid "Duplicate"
 msgstr ""
 
-#: includes/ui-js-config.php:118
+#: includes/ui-js-config.php:119
 msgid "Drop a row layout or module to get started!"
 msgstr ""
 
-#: includes/ui-js-config.php:119
+#: includes/ui-js-config.php:120
 msgid "Error! Please enter a valid day."
 msgstr ""
 
-#: includes/ui-js-config.php:120
+#: includes/ui-js-config.php:121
 msgid "Error! Please enter a valid month."
 msgstr ""
 
-#: includes/ui-js-config.php:121
+#: includes/ui-js-config.php:122
 msgid "Error! Please enter a valid year."
 msgstr ""
 
-#: includes/ui-js-config.php:122
+#: includes/ui-js-config.php:123
 msgid ""
 "Beaver Builder caught the following JavaScript error. If Beaver Builder is "
 "not functioning as expected the cause is most likely this error. Please "
@@ -4436,377 +4440,377 @@ msgid ""
 "plugin."
 msgstr ""
 
-#: includes/ui-js-config.php:123
+#: includes/ui-js-config.php:124
 msgid "Field Loading..."
 msgstr ""
 
-#: includes/ui-js-config.php:125
+#: includes/ui-js-config.php:126
 msgid "Get Help"
 msgstr ""
 
-#: includes/ui-js-config.php:127
+#: includes/ui-js-config.php:128
 msgid "\"{message}\" on line {line} of {file}."
 msgstr ""
 
-#: includes/ui-js-config.php:128
+#: includes/ui-js-config.php:129
 msgid "Insert"
 msgstr ""
 
-#: includes/ui-js-config.php:133
+#: includes/ui-js-config.php:134
 msgid "Module Saved!"
 msgstr ""
 
-#: includes/ui-js-config.php:134 includes/ui-js-templates.php:9
+#: includes/ui-js-config.php:135 includes/ui-js-templates.php:9
 #: includes/ui-js-templates.php:49 includes/ui-js-templates.php:144
 msgid "Move"
 msgstr ""
 
-#: includes/ui-js-config.php:135
+#: includes/ui-js-config.php:136
 msgid "New Column"
 msgstr ""
 
-#: includes/ui-js-config.php:136
+#: includes/ui-js-config.php:137
 msgid "New Row"
 msgstr ""
 
-#: includes/ui-js-config.php:137
+#: includes/ui-js-config.php:138
 msgid "Please enter a color first."
 msgstr ""
 
-#: includes/ui-js-config.php:138
+#: includes/ui-js-config.php:139
 msgid "Add a color preset first."
 msgstr ""
 
-#: includes/ui-js-config.php:139
+#: includes/ui-js-config.php:140
 msgid "No results found."
 msgstr ""
 
-#: includes/ui-js-config.php:142 includes/ui-js-templates.php:265
+#: includes/ui-js-config.php:143 includes/ui-js-templates.php:265
 #: includes/ui-js-templates.php:277
 msgid "OK"
 msgstr ""
 
-#: includes/ui-js-config.php:143 modules/photo/photo.php:575
+#: includes/ui-js-config.php:144 modules/photo/photo.php:575
 msgid "Photo Page"
 msgstr ""
 
-#: includes/ui-js-config.php:144
+#: includes/ui-js-config.php:145
 msgid "Photo Selected"
 msgstr ""
 
-#: includes/ui-js-config.php:146
+#: includes/ui-js-config.php:147
 #. translators: %d: number of selected
 msgid "%d Photo Selected"
 msgstr ""
 
-#: includes/ui-js-config.php:147
+#: includes/ui-js-config.php:148
 msgid "Photos Selected"
 msgstr ""
 
-#: includes/ui-js-config.php:149
+#: includes/ui-js-config.php:150
 #. translators: %d: number of selected (plural)
 msgid "%d Photos Selected"
 msgstr ""
 
-#: includes/ui-js-config.php:150
+#: includes/ui-js-config.php:151
 msgid "Paste color here..."
 msgstr ""
 
-#: includes/ui-js-config.php:151
+#: includes/ui-js-config.php:152
 msgid "Pick a font..."
 msgstr ""
 
-#: includes/ui-js-config.php:152
+#: includes/ui-js-config.php:153
 #: modules/subscribe-form/includes/frontend.php:37
 msgid "Please Wait..."
 msgstr ""
 
-#: includes/ui-js-config.php:155
+#: includes/ui-js-config.php:156
 msgid "Publish Changes"
 msgstr ""
 
-#: includes/ui-js-config.php:157
+#: includes/ui-js-config.php:158
 msgid "Are you sure?"
 msgstr ""
 
-#: includes/ui-js-config.php:164
+#: includes/ui-js-config.php:165
 msgid "Row Saved!"
 msgstr ""
 
-#: includes/ui-js-config.php:167
+#: includes/ui-js-config.php:168
 msgid "Save As..."
 msgstr ""
 
-#: includes/ui-js-config.php:168
+#: includes/ui-js-config.php:169
 msgid "Save Column"
 msgstr ""
 
-#: includes/ui-js-config.php:169
+#: includes/ui-js-config.php:170
 msgid "Save Module"
 msgstr ""
 
-#: includes/ui-js-config.php:170
+#: includes/ui-js-config.php:171
 msgid "Save Row"
 msgstr ""
 
-#: includes/ui-js-config.php:174
+#: includes/ui-js-config.php:175
 msgid "Select Photos"
 msgstr ""
 
-#: includes/ui-js-config.php:176
+#: includes/ui-js-config.php:177
 msgid "These settings have errors. Please correct them before continuing."
 msgstr ""
 
-#: includes/ui-js-config.php:178
+#: includes/ui-js-config.php:179
 msgid "Please select an account before saving."
 msgstr ""
 
-#: includes/ui-js-config.php:179
+#: includes/ui-js-config.php:180
 msgid "Please connect an account before saving."
 msgstr ""
 
-#: includes/ui-js-config.php:180
+#: includes/ui-js-config.php:181
 msgid "Please select a list before saving."
 msgstr ""
 
-#: includes/ui-js-config.php:181
+#: includes/ui-js-config.php:182
 msgid "Please enter at least one tag before saving."
 msgstr ""
 
-#: includes/ui-js-config.php:182
+#: includes/ui-js-config.php:183
 msgid "Take a Tour"
 msgstr ""
 
-#: includes/ui-js-config.php:183
+#: includes/ui-js-config.php:184
 msgid "Append New Layout"
 msgstr ""
 
-#: includes/ui-js-config.php:184
+#: includes/ui-js-config.php:185
 msgid "Replace Existing Layout"
 msgstr ""
 
-#: includes/ui-js-config.php:185
+#: includes/ui-js-config.php:186
 msgid "Template Saved!"
 msgstr ""
 
-#: includes/ui-js-config.php:187
+#: includes/ui-js-config.php:188
 msgid "Next"
 msgstr ""
 
-#: includes/ui-js-config.php:188 modules/pricing-table/pricing-table.php:266
+#: includes/ui-js-config.php:189 modules/pricing-table/pricing-table.php:266
 msgid "Get Started"
 msgstr ""
 
-#: includes/ui-js-config.php:189
+#: includes/ui-js-config.php:190
 msgid "Choose a Template"
 msgstr ""
 
-#: includes/ui-js-config.php:190
+#: includes/ui-js-config.php:191
 msgid ""
 "Get started by choosing a layout template to customize, or build a page "
 "from scratch by selecting the blank layout template."
 msgstr ""
 
-#: includes/ui-js-config.php:191
+#: includes/ui-js-config.php:192
 msgid "Add Rows"
 msgstr ""
 
-#: includes/ui-js-config.php:192
+#: includes/ui-js-config.php:193
 msgid ""
 "Add multi-column rows, adjust spacing, add backgrounds and more by dragging "
 "and dropping row layouts onto the page."
 msgstr ""
 
-#: includes/ui-js-config.php:193
+#: includes/ui-js-config.php:194
 msgid "Add Content"
 msgstr ""
 
-#: includes/ui-js-config.php:194
+#: includes/ui-js-config.php:195
 msgid ""
 "Add new content by dragging and dropping modules or widgets into your row "
 "layouts or to create a new row layout."
 msgstr ""
 
-#: includes/ui-js-config.php:195
+#: includes/ui-js-config.php:196
 msgid "Edit Content"
 msgstr ""
 
-#: includes/ui-js-config.php:196
+#: includes/ui-js-config.php:197
 msgid ""
 "Move your mouse over rows, columns or modules to edit and interact with "
 "them."
 msgstr ""
 
-#: includes/ui-js-config.php:197
+#: includes/ui-js-config.php:198
 msgid ""
 "Use the action buttons to perform actions such as moving, editing, "
 "duplicating or deleting rows, columns and modules."
 msgstr ""
 
-#: includes/ui-js-config.php:198
+#: includes/ui-js-config.php:199
 msgid "Add More Content"
 msgstr ""
 
-#: includes/ui-js-config.php:199
+#: includes/ui-js-config.php:200
 msgid ""
 "Use the Add Content button to open the content panel and add new row "
 "layouts, modules or widgets."
 msgstr ""
 
-#: includes/ui-js-config.php:200
+#: includes/ui-js-config.php:201
 msgid "Change Templates"
 msgstr ""
 
-#: includes/ui-js-config.php:201
+#: includes/ui-js-config.php:202
 msgid ""
 "Use the Templates button to pick a new template or append one to your "
 "layout. Appending will insert a new template at the end of your existing "
 "page content."
 msgstr ""
 
-#: includes/ui-js-config.php:202
+#: includes/ui-js-config.php:203
 msgid "Helpful Tools"
 msgstr ""
 
-#: includes/ui-js-config.php:203
+#: includes/ui-js-config.php:204
 msgid ""
 "The Tools button lets you save a template, duplicate a layout, edit the "
 "settings for a layout or edit the global settings."
 msgstr ""
 
-#: includes/ui-js-config.php:204
+#: includes/ui-js-config.php:205
 msgid "Publish Your Changes"
 msgstr ""
 
-#: includes/ui-js-config.php:205
+#: includes/ui-js-config.php:206
 msgid ""
 "Once you're finished, click the Done button to publish your changes, save a "
 "draft or revert back to the last published state."
 msgstr ""
 
-#: includes/ui-js-config.php:206
+#: includes/ui-js-config.php:207
 msgid "Let's Get Building!"
 msgstr ""
 
-#: includes/ui-js-config.php:207
+#: includes/ui-js-config.php:208
 msgid ""
 "Now that you know the basics, you're ready to start building! If at any "
 "time you need help, click the help icon in the upper right corner to access "
 "the help menu. Happy building!"
 msgstr ""
 
-#: includes/ui-js-config.php:208
+#: includes/ui-js-config.php:209
 msgid ""
 "The settings you are currently editing will not be saved if you navigate "
 "away from this page."
 msgstr ""
 
-#: includes/ui-js-config.php:209
+#: includes/ui-js-config.php:210
 msgid "View the Knowledge Base"
 msgstr ""
 
-#: includes/ui-js-config.php:210
+#: includes/ui-js-config.php:211
 msgid "This field is required."
 msgstr ""
 
-#: includes/ui-js-config.php:211
+#: includes/ui-js-config.php:212
 msgid "All Structured Data fields are required."
 msgstr ""
 
-#: includes/ui-js-config.php:213
+#: includes/ui-js-config.php:214
 msgid "Watch the Video"
 msgstr ""
 
-#: includes/ui-js-config.php:214 includes/ui-js-templates.php:293
+#: includes/ui-js-config.php:215 includes/ui-js-templates.php:293
 msgid ""
 "Welcome! It looks like this might be your first time using the builder. "
 "Would you like to take a tour?"
 msgstr ""
 
-#: includes/ui-js-config.php:215 includes/ui-js-config.php:240
+#: includes/ui-js-config.php:216 includes/ui-js-config.php:241
 #: modules/widget/includes/settings-general.php:38 modules/widget/widget.php:13
 msgid "Widget"
 msgstr ""
 
-#: includes/ui-js-config.php:218 includes/ui-js-templates.php:295
+#: includes/ui-js-config.php:219 includes/ui-js-templates.php:295
 msgid "Yes Please!"
 msgstr ""
 
-#: includes/ui-js-config.php:220
+#: includes/ui-js-config.php:221
 msgid "Saving..."
 msgstr ""
 
-#: includes/ui-js-config.php:221
+#: includes/ui-js-config.php:222
 msgid "The layout is currently being saved"
 msgstr ""
 
-#: includes/ui-js-config.php:223
+#: includes/ui-js-config.php:224
 msgid "The layout is saved"
 msgstr ""
 
-#: includes/ui-js-config.php:224
+#: includes/ui-js-config.php:225
 msgid "Edited"
 msgstr ""
 
-#: includes/ui-js-config.php:225
+#: includes/ui-js-config.php:226
 msgid "This layout has unpublished changes"
 msgstr ""
 
-#: includes/ui-js-config.php:226
+#: includes/ui-js-config.php:227
 msgid ""
 "This layout has unpublished changes. If you discard this draft all of your "
 "previously unpublished changes will be lost."
 msgstr ""
 
-#: includes/ui-js-config.php:227
+#: includes/ui-js-config.php:228
 msgid "Ok, got it!"
 msgstr ""
 
-#: includes/ui-js-config.php:228
+#: includes/ui-js-config.php:229
 msgid "Nothing new to publish"
 msgstr ""
 
-#: includes/ui-js-config.php:229
+#: includes/ui-js-config.php:230
 msgid "Publishing Changes"
 msgstr ""
 
-#: includes/ui-js-config.php:230
+#: includes/ui-js-config.php:231
 msgid "Changes being published"
 msgstr ""
 
-#: includes/ui-js-config.php:231
+#: includes/ui-js-config.php:232
 msgid "No new changes to save"
 msgstr ""
 
-#: includes/ui-js-config.php:232
+#: includes/ui-js-config.php:233
 msgid "Your changes are saved"
 msgstr ""
 
-#: includes/ui-js-config.php:239
+#: includes/ui-js-config.php:240
 msgid "Column Group"
 msgstr ""
 
-#: includes/ui-js-config.php:251
+#: includes/ui-js-config.php:252
 msgid "Notifications"
 msgstr ""
 
-#: includes/ui-js-config.php:252
+#: includes/ui-js-config.php:253
 msgid "Loading..."
 msgstr ""
 
-#: includes/ui-js-config.php:253
+#: includes/ui-js-config.php:254
 msgid "No Notifications."
 msgstr ""
 
-#: includes/ui-js-config.php:256
+#: includes/ui-js-config.php:257
 msgid "Copied!"
 msgstr ""
 
-#: includes/ui-js-config.php:257
+#: includes/ui-js-config.php:258
 msgid "Import Error!"
 msgstr ""
 
-#: includes/ui-js-config.php:258
+#: includes/ui-js-config.php:259
 msgid "Missing header or wrong module type!"
 msgstr ""
 
@@ -5124,11 +5128,22 @@ msgstr ""
 msgid "Save License Key"
 msgstr ""
 
-#: includes/updater/includes/subscriptions.php:2
+#: includes/updater/includes/subscriptions.php:9
+msgid "Beaver Builder updates issue!!"
+msgstr ""
+
+#: includes/updater/includes/subscriptions.php:11
+#. translators: %s: Product name
+msgid ""
+"Updates for Beaver Builder will not work as you appear to have %s activated "
+"but it is not in your available downloads."
+msgstr ""
+
+#: includes/updater/includes/subscriptions.php:19
 msgid "Available Downloads"
 msgstr ""
 
-#: includes/updater/includes/subscriptions.php:3
+#: includes/updater/includes/subscriptions.php:20
 msgid ""
 "The following downloads are currently available for remote update with the "
 "subscription(s) associated with this license."
@@ -8628,7 +8643,7 @@ msgstr ""
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:202
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:248
 #: extensions/fl-builder-user-templates/includes/ui-js-templates.php:293
-#: includes/ui-js-config.php:126
+#: includes/ui-js-config.php:127
 msgctxt "Indicator for global node templates."
 msgid "Global"
 msgstr ""
@@ -9043,30 +9058,30 @@ msgctxt "%s is the preset hex color code."
 msgid "%s is already a saved preset."
 msgstr ""
 
-#: includes/ui-js-config.php:154
+#: includes/ui-js-config.php:155
 #. translators: %s: preset color code
 msgctxt "%s is the preset hex color code."
 msgid "%s added to presets!"
 msgstr ""
 
-#: includes/ui-js-config.php:113
+#: includes/ui-js-config.php:114
 msgctxt "Duplicate page/post action label."
 msgid "Duplicate Layout"
 msgstr ""
 
-#: includes/ui-js-config.php:115
+#: includes/ui-js-config.php:116
 #. translators: %s: form field label
 msgctxt "%s stands for form field label."
 msgid "Edit %s"
 msgstr ""
 
-#: includes/ui-js-config.php:159
+#: includes/ui-js-config.php:160
 #. translators: %s: time diff - 1 day/2 weeks
 msgctxt "%s is a time diff such as 1 day or 2 weeks."
 msgid "%s ago"
 msgstr ""
 
-#: includes/ui-js-config.php:161
+#: includes/ui-js-config.php:162
 #. translators: %s: author name
 msgctxt "%s is the author name."
 msgid "By %s"

@@ -12,16 +12,15 @@
 	$(function() {
 
 		new UABBContactForm({
-			id: "<?php echo $id; ?>",
-			uabb_ajaxurl: "<?php echo admin_url( 'admin-ajax.php' ); ?>",
-			name_required: "<?php echo $settings->name_required; ?>",
-			email_required: "<?php echo $settings->email_required; ?>",
-			subject_required: "<?php echo $settings->subject_required; ?>",
-			phone_required: "<?php echo $settings->phone_required; ?>",
-			msg_required: "<?php echo $settings->msg_required; ?>",
-			msg_toggle: "<?php echo $settings->msg_toggle; ?>",
-			button_text: "<?php echo $settings->btn_text; ?>"
+
+			id: "<?php echo esc_attr( $id ); ?>",
+			uabb_ajaxurl: "<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>",
+			name_required: "<?php echo esc_attr( $settings->name_required ); ?>",
+			email_required: "<?php echo esc_attr( $settings->email_required ); ?>",
+			subject_required: "<?php echo esc_attr( $settings->subject_required ); ?>",
+			phone_required: "<?php echo esc_attr( $settings->phone_required ); ?>",
+			msg_required: "<?php echo esc_attr( $settings->msg_required ); ?>",
+			button_text: "<?php echo esc_attr( $settings->btn_text ); ?>"
 		});
 	});
-
 })(jQuery);

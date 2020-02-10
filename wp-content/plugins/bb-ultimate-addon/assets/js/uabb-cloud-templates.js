@@ -254,6 +254,7 @@ jQuery( function( $ ) {
 			errorMessage        = UABBCloudTemplates.errorMessage,
 			successMessage      = UABBCloudTemplates.successMessage,
 			processAJAX         = true;
+			form_nonce = jQuery( '#uabb-cloud-templates-form' ).data( 'uabb-cloud-nonce' );
 
 		//	add processing class
 		if( meta_id != 'undefined' ) {
@@ -275,6 +276,7 @@ jQuery( function( $ ) {
 									btn.parents('.uabb-cloud-templates-not-found').find('.uabb-cloud-process i').show();
 									var dataAJAX 		=  	{
 																action: 'uabb_cloud_dat_file_fetch',
+																form_nonce:form_nonce,
 															};
 
 					break;
@@ -290,6 +292,7 @@ jQuery( function( $ ) {
 															// dat_file_image: meta_image,
 															dat_file_type: meta_type,
 															// dat_file_dat_url: meta_dat_url,
+															form_nonce:form_nonce,
 														};
 
 										if( meta_dat_url === '' ) {
@@ -305,6 +308,7 @@ jQuery( function( $ ) {
 														dat_file_id: meta_id,
 														dat_file_type: meta_type,
 														dat_file_url_local: meta_url_local,
+														form_nonce:form_nonce,
 													};
 
 									if( meta_id === '' ) {
@@ -324,15 +328,12 @@ jQuery( function( $ ) {
 						/**
 						 * Parse response
 						 */
-						data = JSON.parse( data );
-						// console.log('data: ' + JSON.stringify( data ) );
-
-						var status                 = ( data.hasOwnProperty('status') ) ? data['status'] : '';
-						var msg                    = ( data.hasOwnProperty('msg') ) ? data['msg'] : '';
-						var template_id            = ( data.hasOwnProperty('id') ) ? data['id'] : '';
-						var template_type          = ( data.hasOwnProperty('type') ) ? data['type'] : '';
-						var template_dat_url       = ( data.hasOwnProperty('dat_url') ) ? decodeURIComponent( data['dat_url'] ) : '';
-						var template_dat_url_local = ( data.hasOwnProperty('dat_url_local') ) ? decodeURIComponent( data['dat_url_local'] ) : '';
+						var status                 = ( data.hasOwnProperty('status') ) ? data.status : '';
+						var msg                    = ( data.hasOwnProperty('msg') ) ? data.msg : '';
+						var template_id            = ( data.hasOwnProperty('id') ) ? data.id : '';
+						var template_type          = ( data.hasOwnProperty('type') ) ? data.type : '';
+						var template_dat_url       = ( data.hasOwnProperty('dat_url') ) ? decodeURIComponent( data.dat_url ) : '';
+						var template_dat_url_local = ( data.hasOwnProperty('dat_url_local') ) ? decodeURIComponent( data.dat_url_local ) : '';
 
 						if( status == 'success' ) {
 

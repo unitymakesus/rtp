@@ -14,7 +14,7 @@ $branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uab
 ?>
 <div id="fl-uabb-social-form" class="fl-settings-form uabb-social-fl-settings-form">
 
-	<h3 class="fl-settings-form-header"><?php _e( 'Social Login', 'uabb' ); ?></h3>
+	<h3 class="fl-settings-form-header"><?php esc_attr_e( 'Social Login', 'uabb' ); ?></h3>
 
 	<form id="uabb-social-form" action="<?php UABBBuilderAdminSettings::render_form_action( 'uabb-social' ); ?>" method="post">
 		<div class="fl-settings-form-content">
@@ -31,76 +31,76 @@ $branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uab
 			}
 			?>
 			<div class="uabb-form-setting">
-				<h4><?php _e( 'Google', 'uabb' ); ?></h4>
+				<h4><?php esc_attr_e( 'Google', 'uabb' ); ?></h4>
 					<p class="uabb-admin-help">
-						<?php _e( 'If you wish to enable Google login option with Login Form Module, enter your client ID below.', 'uabb' ); ?>
+						<?php esc_attr_e( 'If you wish to enable Google login option with Login Form Module, enter your client ID below.', 'uabb' ); ?>
 						<?php
 						if ( empty( $branding_name ) && empty( $branding_short_name ) ) :
-							_e( 'Refer', 'uabb' );
+							esc_attr_e( 'Refer', 'uabb' );
 							?>
-							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-google-client-id-for-login-form-module/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php _e( 'article', 'uabb' ); ?></a>
-							<?php _e( 'to get client ID.', 'uabb' ); ?>
+							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-google-client-id-for-login-form-module/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php esc_attr_e( 'article', 'uabb' ); ?></a>
+							<?php esc_attr_e( 'to get client ID.', 'uabb' ); ?>
 							</p>
 							<?php
 						endif;
 						?>
 					</p>
-					<p class="uabb-admin-help"><?php _e( 'Client ID', 'uabb' ); ?></p>		
-					<input type="text" class="regular-text uabb-social-google-client-id" name="uabb-social-google-client-id" value="<?php echo $uabb_social_google_client_id; ?>" /><br/>
-					<label class="uabb-social-error uabb-social-google-id-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
+					<p class="uabb-admin-help"><?php esc_attr_e( 'Client ID', 'uabb' ); ?></p>
+					<input type="text" class="regular-text uabb-social-google-client-id" name="uabb-social-google-client-id" value="<?php echo esc_attr( $uabb_social_google_client_id ); ?>" /><br/>
+					<label class="uabb-social-error uabb-social-google-id-err"><?php esc_attr_e( 'This field is required.', 'uabb' ); ?></label><br/>
 					<p class="uabb-admin-help">
-						<?php _e( 'Set a link to redirect the user after a successful login.', 'uabb' ); ?>
+						<?php esc_attr_e( 'Set a link to redirect the user after a successful login.', 'uabb' ); ?>
 					</p>
 					<p class="uabb-admin-help">
-						<?php _e( 'Note: Because of security reasons, you can ONLY use your current domain here.', 'uabb' ); ?>	
+						<?php esc_attr_e( 'Note: Because of security reasons, you can ONLY use your current domain here.', 'uabb' ); ?>	
 					</p>
-					<p class="uabb-admin-help"><?php _e( 'Redirect URL', 'uabb' ); ?></p>		
-					<input type="text" class="regular-text uabb-social-google-redirect-url" name="uabb-social-google-redirect-url" value="<?php echo $uabb_social_google_redirect_url; ?>" /><br/>
-					<label class="uabb-social-error uabb-social-google-url-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
+					<p class="uabb-admin-help"><?php esc_attr_e( 'Redirect URL', 'uabb' ); ?></p>
+					<input type="text" class="regular-text uabb-social-google-redirect-url" name="uabb-social-google-redirect-url" value="<?php echo esc_url( $uabb_social_google_redirect_url ); ?>" /><br/>
+					<label class="uabb-social-error uabb-social-google-url-err"><?php esc_attr_e( 'This field is required.', 'uabb' ); ?></label><br/>
 			</div>
 			<br/><hr/>
 			<div class="uabb-form-setting">
-				<h4><?php _e( 'Facebook', 'uabb' ); ?></h4>
+				<h4><?php esc_attr_e( 'Facebook', 'uabb' ); ?></h4>
 					<p class="uabb-admin-help">
-						<?php _e( 'If you wish to enable Facebook login option with Login Form Module, enter your APP ID below.', 'uabb' ); ?>
+						<?php esc_attr_e( 'If you wish to enable Facebook login option with Login Form Module, enter your APP ID below.', 'uabb' ); ?>
 						<?php
 						if ( empty( $branding_name ) && empty( $branding_short_name ) ) :
-							_e( 'Refer', 'uabb' );
+							esc_attr_e( 'Refer', 'uabb' );
 							?>
-							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-facebook-app-id-for-login-form-module/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php _e( 'article', 'uabb' ); ?></a>
-							<?php _e( 'to get APP ID.', 'uabb' ); ?>
+							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-facebook-app-id-for-login-form-module/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php esc_attr_e( 'article', 'uabb' ); ?></a>
+							<?php esc_attr_e( 'to get APP ID.', 'uabb' ); ?>
 							</p>
 							<?php
 						endif;
 						?>
 					</p>
-					<p class="uabb-admin-help"><?php _e( 'App ID', 'uabb' ); ?></p>	
-					<input type="text" class="regular-text uabb-social-facebook-app-id" name="uabb-social-facebook-app-id" value="<?php echo $uabb_social_facebook_app_id; ?>" /><br/>
-					<label class="uabb-social-error uabb-social-facebook-id-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
+					<p class="uabb-admin-help"><?php esc_attr_e( 'App ID', 'uabb' ); ?></p>	
+					<input type="text" class="regular-text uabb-social-facebook-app-id" name="uabb-social-facebook-app-id" value="<?php echo esc_attr( $uabb_social_facebook_app_id ); ?>" /><br/>
+					<label class="uabb-social-error uabb-social-facebook-id-err"><?php esc_attr_e( 'This field is required.', 'uabb' ); ?></label><br/>
 					<p class="uabb-admin-help">
 						<?php
 						if ( empty( $branding_name ) && empty( $branding_short_name ) ) :
-							_e( 'Refer', 'uabb' );
+							esc_attr_e( 'Refer', 'uabb' );
 							?>
-							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-facebook-app-id-for-login-form-module/#step-3:-how-to-get-the-app-secret-id-/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php _e( 'article', 'uabb' ); ?></a>
-							<?php _e( 'to get APP Secret.', 'uabb' ); ?>
+							<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/create-facebook-app-id-for-login-form-module/#step-3:-how-to-get-the-app-secret-id-/?utm_source=uabb-pro-dashboard&utm_medium=social-settings-screen&utm_campaign=login-form"><?php esc_attr_e( 'article', 'uabb' ); ?></a>
+							<?php esc_attr_e( 'to get APP Secret.', 'uabb' ); ?>
 							</p>
 							<?php
 						endif;
 						?>
 					</p>
-					<p class="uabb-admin-help"><?php _e( 'App Secret', 'uabb' ); ?></p>	
-					<input type="text" class="regular-text uabb-social-facebook-app-secret" name="uabb-social-facebook-app-secret" value="<?php echo $uabb_social_facebook_app_secret; ?>" /><br/>
-					<label class="uabb-social-error uabb-social-facebook-secret-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
+					<p class="uabb-admin-help"><?php esc_attr_e( 'App Secret', 'uabb' ); ?></p>	
+					<input type="text" class="regular-text uabb-social-facebook-app-secret" name="uabb-social-facebook-app-secret" value="<?php echo esc_attr( $uabb_social_facebook_app_secret ); ?>" /><br/>
+					<label class="uabb-social-error uabb-social-facebook-secret-err"><?php esc_attr_e( 'This field is required.', 'uabb' ); ?></label><br/>
 					<p class="uabb-admin-help">
-						<?php _e( 'Set a link to redirect the user after a successful login.', 'uabb' ); ?>
+						<?php esc_attr_e( 'Set a link to redirect the user after a successful login.', 'uabb' ); ?>
 					</p>
 					<p class="uabb-admin-help">
-						<?php _e( 'Note: Because of security reasons, you can ONLY use your current domain here.', 'uabb' ); ?>	
+						<?php esc_attr_e( 'Note: Because of security reasons, you can ONLY use your current domain here.', 'uabb' ); ?>	
 					</p>
-					<p class="uabb-admin-help"><?php _e( 'Redirect URL', 'uabb' ); ?></p>		
-					<input type="text" class="regular-text uabb-social-facebook-redirect-url" name="uabb-social-facebook-redirect-url" value="<?php echo $uabb_social_facebook_redirect_url; ?>" /><br/>
-					<label class="uabb-social-error uabb-social-facebook-url-err"><?php _e( 'This field is required.', 'uabb' ); ?></label><br/>
+					<p class="uabb-admin-help"><?php esc_attr_e( 'Redirect URL', 'uabb' ); ?></p>
+					<input type="text" class="regular-text uabb-social-facebook-redirect-url" name="uabb-social-facebook-redirect-url" value="<?php echo esc_url( $uabb_social_facebook_redirect_url ); ?>" /><br/>
+					<label class="uabb-social-error uabb-social-facebook-url-err"><?php esc_attr_e( 'This field is required.', 'uabb' ); ?></label><br/>
 			</div>
 			<p class="submit">
 				<input type="submit" id="uabb-lf-settings-submit" name="fl-save-uabb" class="button-primary" value="<?php esc_attr_e( 'Save Settings', 'uabb' ); ?>" />

@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBContentToggleModule', array(
+	'UABBContentToggleModule',
+	array(
 		'general_content1' => array(
 			'title'    => __( 'Content 1', 'uabb' ),
 			'sections' => array(

@@ -31,7 +31,7 @@ if ( 'custom' === $settings->sale_flash ) {
 ?>
 <?php if ( $product->is_on_sale() ) : ?>
 
-	<?php echo apply_filters( 'uabb_woo_products_sale_flash', '<div class="uabb-sale-flash-wrap"><span class="uabb-onsale">' . esc_html( $sale_text ) . '</span></div>', $post, $product ); ?>
+	<?php echo wp_kses_post( apply_filters( 'uabb_woo_products_sale_flash', '<div class="uabb-sale-flash-wrap"><span class="uabb-onsale">' . esc_html( $sale_text ) . '</span></div>', $post, $product ) ); ?>
 
 	<?php
 endif;

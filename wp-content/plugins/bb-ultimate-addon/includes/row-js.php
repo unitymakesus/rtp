@@ -33,6 +33,7 @@ function uabb_row_particle_render_js() {
  * @param object $global_settings an object to get various settings.
  */
 function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings ) {
+
 	$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
 	$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 	$branding            = '';
@@ -62,7 +63,7 @@ function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings
 
 			var form = $('.fl-builder-settings');
 
-			var branding = '<?php echo $branding; ?>';
+			var branding = '<?php echo esc_attr( $branding ); ?>';
 
 			if ( form.length > 0 ) {
 
@@ -180,6 +181,24 @@ function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings
  * @param object $global_settings an object to get various settings.
  */
 function uabb_row_dependency_js( $js, $nodes, $global_settings ) {
+
+	$flag = false;
+
+	foreach ( $nodes['rows'] as $row ) {
+
+		if ( 'uabb_gradient' === $row->settings->bg_type ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $js;
+	}
+
 	ob_start();
 	?>
 		;(function($){
@@ -242,11 +261,29 @@ function uabb_row_dependency_js( $js, $nodes, $global_settings ) {
  * @param object $global_settings an object to get various settings.
  */
 function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
+
+	$flag = false;
+
+	foreach ( $nodes['rows'] as $row ) {
+
+		if ( 'yes' === $row->settings->enable_particles ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $js;
+	}
+
 	ob_start();
 	?>
 	;(function($) {
-				var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
 
+				var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
 				window.particle_js_loaded = 0;
 
 				jQuery.cachedScript = function( url, options ) {
@@ -273,9 +310,15 @@ function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
 
 				<?php
 				foreach ( $nodes['rows'] as $row ) {
+
+					if ( 'no' === $row->settings->enable_particles ) {
+
+						continue;
+					}
+
 					$json_particles_custom = wp_strip_all_tags( $row->settings->uabb_particles_custom_code );
 					?>
-					row_id = '<?php echo $row->node; ?>';
+					row_id = '<?php echo esc_attr( $row->node ); ?>';
 
 					nodeclass = '.fl-node-' + row_id;
 
@@ -302,7 +345,7 @@ function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
 							<?php
 							if ( '' !== $json_particles_custom ) {
 								?>
-								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; ?> );
+								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
 								<?php
 							}
 							?>

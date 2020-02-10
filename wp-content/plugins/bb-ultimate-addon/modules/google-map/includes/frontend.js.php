@@ -1,32 +1,37 @@
 <?php
+/**
+ *  UABB Google Map Module front-end Js php file
+ *
+ *  @package UABB Google Map Module
+ */
 
 if ( isset( $settings->map_lattitude ) && isset( $settings->map_longitude ) ) {
 
-	if ( $settings->uabb_gmap_addresses[0]->map_lattitude == '' && $settings->uabb_gmap_addresses[0]->map_longitude == '' ) {
+	if ( '' === $settings->uabb_gmap_addresses[0]->map_lattitude && '' === $settings->uabb_gmap_addresses[0]->map_longitude ) {
 		if ( isset( $settings->marker_point ) ) {
-			$settings->uabb_gmap_addresses[0]->marker_point = ( $settings->marker_point != '' ) ? $settings->marker_point : 'default';
+			$settings->uabb_gmap_addresses[0]->marker_point = ( '' !== $settings->marker_point ) ? $settings->marker_point : 'default';
 		}
 
 		if ( isset( $settings->open_marker ) ) {
-			$settings->uabb_gmap_addresses[0]->open_marker = ( $settings->open_marker != '' ) ? $settings->open_marker : 'no';
+			$settings->uabb_gmap_addresses[0]->open_marker = ( '' !== $settings->open_marker ) ? $settings->open_marker : 'no';
 		}
 		if ( isset( $settings->marker_img_src ) ) {
-			$settings->uabb_gmap_addresses[0]->marker_img_src = ( $settings->marker_img_src != '' ) ? $settings->marker_img_src : '';
+			$settings->uabb_gmap_addresses[0]->marker_img_src = ( '' !== $settings->marker_img_src ) ? $settings->marker_img_src : '';
 		}
 	}
 
-	if ( isset( $settings->uabb_gmap_addresses[0]->map_lattitude ) && $settings->uabb_gmap_addresses[0]->map_lattitude == '' ) {
-		$settings->uabb_gmap_addresses[0]->map_lattitude = ( $settings->map_lattitude != '' ) ? $settings->map_lattitude : 40.76142;
+	if ( isset( $settings->uabb_gmap_addresses[0]->map_lattitude ) && '' === $settings->uabb_gmap_addresses[0]->map_lattitude ) {
+		$settings->uabb_gmap_addresses[0]->map_lattitude = ( '' !== $settings->map_lattitude ) ? $settings->map_lattitude : 40.76142;
 	}
 
-	if ( isset( $settings->uabb_gmap_addresses[0]->map_longitude ) && $settings->uabb_gmap_addresses[0]->map_longitude == '' ) {
-		$settings->uabb_gmap_addresses[0]->map_longitude = ( $settings->map_longitude != '' ) ? $settings->map_longitude : -73.97712;
+	if ( isset( $settings->uabb_gmap_addresses[0]->map_longitude ) && '' === $settings->uabb_gmap_addresses[0]->map_longitude ) {
+		$settings->uabb_gmap_addresses[0]->map_longitude = ( '' !== $settings->map_longitude ) ? $settings->map_longitude : -73.97712;
 	}
 }
 
 if ( isset( $settings->info_window_text ) ) {
-	if ( isset( $settings->uabb_gmap_addresses[0]->info_window_text ) && $settings->uabb_gmap_addresses[0]->info_window_text == '' ) {
-		$settings->uabb_gmap_addresses[0]->info_window_text = ( $settings->info_window_text != '' ) ? $settings->info_window_text : '';
+	if ( isset( $settings->uabb_gmap_addresses[0]->info_window_text ) && '' === $settings->uabb_gmap_addresses[0]->info_window_text ) {
+		$settings->uabb_gmap_addresses[0]->info_window_text = ( '' !== $settings->info_window_text ) ? $settings->info_window_text : '';
 	}
 }
 
@@ -34,6 +39,7 @@ if ( isset( $settings->info_window_text ) ) {
 
 (function($) {
 	<?php
+	// @codingStandardsIgnoreStart.
 	$uabb_setting_options = UABB_Init::$uabb_options['fl_builder_uabb'];
 		$google_api_key   = '';
 
@@ -75,7 +81,7 @@ if ( isset( $settings->info_window_text ) ) {
 		?>
 	
 	var args = {
-			id: '<?php echo $id; ?>',
+			id: '<?php echo esc_attr( $id ); ?>',
 			markers: markers,
 			dragging: '<?php echo $settings->dragging; ?>',
 			map_zoom: '<?php echo $settings->map_zoom; ?>',
@@ -124,6 +130,7 @@ if ( isset( $settings->info_window_text ) ) {
 	new UABBGoogleMaps( args );
 		<?php
 	}
+	// @codingStandardsIgnoreEnd.
 	?>
 
 })(jQuery);

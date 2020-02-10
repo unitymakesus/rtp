@@ -47,13 +47,13 @@ class UABBSeparatorModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// For overall alignment and responsive alignment settings.
 			if ( isset( $settings->alignment ) ) {
 				$settings->alignment = $settings->alignment;
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// For overall alignment and responsive alignment settings.
 			if ( isset( $settings->alignment ) ) {

@@ -9,14 +9,14 @@
 <?php
 
 $grayscale_class = '';
-if ( 'simple' == $settings->photo_style ) {
-	if ( 'yes' != $settings->img_grayscale_simple ) {
+if ( 'simple' === $settings->photo_style ) {
+	if ( 'yes' !== $settings->img_grayscale_simple ) {
 		$grayscale_class = 'uabb-img-color-gray';
 	} else {
 		$grayscale_class = '';
 	}
-} elseif ( 'grayscale' == $settings->photo_style ) {
-	if ( 'yes' != $settings->img_grayscale_grayscale ) {
+} elseif ( 'grayscale' === $settings->photo_style ) {
+	if ( 'yes' !== $settings->img_grayscale_grayscale ) {
 		$grayscale_class = 'uabb-img-grayscale uabb-img-gray-color';
 	} else {
 		$grayscale_class = 'uabb-img-grayscale';
@@ -27,7 +27,7 @@ if ( 'simple' == $settings->photo_style ) {
 
 <div class="uabb-module-content uabb-team-wrap">
 	<div class="uabb-team-member-wrap">
-		<div class="uabb-team-image <?php echo $grayscale_class; ?>">
+		<div class="uabb-team-image <?php echo esc_attr( $grayscale_class ); ?>">
 		<?php
 			// Render Team Image.
 			$module->render_image();
@@ -46,7 +46,7 @@ if ( 'simple' == $settings->photo_style ) {
 			$module->render_desc();
 			$module->render_separator( 'below_desc' );
 		?>
-			<?php if ( 'yes' == $settings->enable_social_icons ) { ?>
+			<?php if ( 'yes' === $settings->enable_social_icons ) { ?>
 				<div class="uabb-team-social">
 				<?php
 					$module->render_social_icons();

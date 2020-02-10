@@ -54,7 +54,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder_Batch' ) && class_exists( 'WP
 
 			parent::complete();
 
-			error_log( 'Batch process is complete.._____________' );
+			error_log( 'Batch process is complete.._____________' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 			do_action( 'uabb_import_complete' );
 

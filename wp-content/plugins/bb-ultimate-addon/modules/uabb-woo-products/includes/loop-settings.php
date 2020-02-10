@@ -6,7 +6,8 @@
  */
 
 FLBuilderModel::default_settings(
-	$settings, array(
+	$settings,
+	array(
 		'data_source' => 'custom_query',
 		'post_type'   => 'product',
 		'order_by'    => 'date',
@@ -24,12 +25,12 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 <div class="fl-custom-query fl-loop-data-source" data-source="custom_query">
 	<div id="fl-builder-settings-section-filter" class="fl-builder-settings-section">
 		<h3 class="fl-builder-settings-title">
-			<span class="fl-builder-settings-title-text-wrap"><?php _e( 'Custom Query', 'uabb' ); ?></span>
+			<span class="fl-builder-settings-title-text-wrap"><?php esc_attr_e( 'Custom Query', 'uabb' ); ?></span>
 		</h3>
-		<?php foreach ( FLBuilderLoop::post_types() as $slug => $type ) : ?>
-			<table class="fl-form-table fl-custom-query-filter fl-custom-query-<?php echo $slug; ?>-filter"
+		<?php foreach ( FLBuilderLoop::post_types() as $slug => $type ) : // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
+			<table class="fl-form-table fl-custom-query-filter fl-custom-query-<?php echo esc_attr( $slug ); ?>-filter"
 																						<?php
-																						if ( $slug == $settings->post_type ) {
+																						if ( $slug === $settings->post_type ) {
 																							echo 'style="display:table;"';}
 																						?>
 			>
@@ -37,30 +38,34 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 
 			// Posts.
 			FLBuilder::render_settings_field(
-				'posts_' . $slug, array(
+				'posts_' . $slug,
+				array(
 					'type'     => 'suggest',
 					'action'   => 'fl_as_posts',
 					'data'     => $slug,
 					'label'    => $type->label,
 					'help'     => sprintf( /* translators: %s: search term */ __( 'Enter a list of %1$s.', 'uabb' ), $type->label ),
 					'matching' => true,
-				), $settings
+				),
+				$settings
 			);
 
 			// Taxonomies.
 			$taxonomies = FLBuilderLoop::taxonomies( $slug );
 
-			foreach ( $taxonomies as $tax_slug => $tax ) {
+			foreach ( $taxonomies as $tax_slug => $tax ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 				FLBuilder::render_settings_field(
-					'tax_' . $slug . '_' . $tax_slug, array(
+					'tax_' . $slug . '_' . $tax_slug,
+					array(
 						'type'     => 'suggest',
 						'action'   => 'fl_as_terms',
 						'data'     => $tax_slug,
 						'label'    => $tax->label,
 						'help'     => sprintf( /* translators: %s: search term */ __( 'Enter a list of %1$s.', 'uabb' ), $tax->label ),
 						'matching' => true,
-					), $settings
+					),
+					$settings
 				);
 			}
 
@@ -72,13 +77,15 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 
 		// Author.
 		FLBuilder::render_settings_field(
-			'users', array(
+			'users',
+			array(
 				'type'     => 'suggest',
 				'action'   => 'fl_as_users',
 				'label'    => __( 'Authors', 'uabb' ),
 				'help'     => __( 'Enter a list of authors usernames.', 'uabb' ),
 				'matching' => true,
-			), $settings
+			),
+			$settings
 		);
 
 		?>
@@ -86,14 +93,15 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 	</div>
 	<div id="fl-builder-settings-section-general" class="fl-builder-settings-section">
 		<h3 class="fl-builder-settings-title">
-			<span class="fl-builder-settings-title-text-wrap"><?php _e( 'Filter', 'uabb' ); ?></span>
+			<span class="fl-builder-settings-title-text-wrap"><?php esc_attr_e( 'Filter', 'uabb' ); ?></span>
 		</h3>
 		<table class="fl-form-table">
 		<?php
 
 		// Order.
 		FLBuilder::render_settings_field(
-			'filter_by', array(
+			'filter_by',
+			array(
 				'type'    => 'select',
 				'label'   => __( 'Filter By', 'uabb' ),
 				'options' => array(
@@ -101,24 +109,28 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 					'sale'     => __( 'Sale', 'uabb' ),
 					'featured' => __( 'Featured', 'uabb' ),
 				),
-			), $settings
+			),
+			$settings
 		);
 
 		// Order.
 		FLBuilder::render_settings_field(
-			'order', array(
+			'order',
+			array(
 				'type'    => 'select',
 				'label'   => __( 'Order', 'uabb' ),
 				'options' => array(
 					'DESC' => __( 'Descending', 'uabb' ),
 					'ASC'  => __( 'Ascending', 'uabb' ),
 				),
-			), $settings
+			),
+			$settings
 		);
 
 		// Order by.
 		FLBuilder::render_settings_field(
-			'order_by', array(
+			'order_by',
+			array(
 				'type'    => 'select',
 				'label'   => __( 'Order By', 'uabb' ),
 				'options' => array(
@@ -141,30 +153,36 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 						'fields' => array( 'order_by_meta_key' ),
 					),
 				),
-			), $settings
+			),
+			$settings
 		);
 
 		// Meta Key.
 		FLBuilder::render_settings_field(
-			'order_by_meta_key', array(
+			'order_by_meta_key',
+			array(
 				'type'  => 'text',
 				'label' => __( 'Meta Key', 'uabb' ),
-			), $settings
+			),
+			$settings
 		);
 
 		// Offset.
 		FLBuilder::render_settings_field(
-			'offset', array(
+			'offset',
+			array(
 				'type'    => 'unit',
 				'label'   => _x( 'Offset', 'How many products to skip.', 'uabb' ),
 				'default' => '0',
 				'size'    => '4',
 				'help'    => __( 'Skip this many products that match the specified criteria.', 'uabb' ),
-			), $settings
+			),
+			$settings
 		);
 
 		FLBuilder::render_settings_field(
-			'exclude_self', array(
+			'exclude_self',
+			array(
 				'type'    => 'select',
 				'label'   => __( 'Exclude Current Product', 'uabb' ),
 				'default' => 'no',
@@ -173,7 +191,8 @@ do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Ad
 					'yes' => __( 'Yes', 'uabb' ),
 					'no'  => __( 'No', 'uabb' ),
 				),
-			), $settings
+			),
+			$settings
 		);
 
 		?>

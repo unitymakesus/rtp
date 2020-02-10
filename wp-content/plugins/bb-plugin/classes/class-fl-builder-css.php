@@ -389,7 +389,7 @@ final class FLBuilderCSS {
 
 		foreach ( $rendered as $media => $selectors ) {
 
-			if ( ! empty( $media ) ) {
+			if ( ! empty( $media ) && ! empty( $selectors ) ) {
 				$css .= "@media($media) {\n";
 				$tab  = "\t";
 			} else {
@@ -404,7 +404,7 @@ final class FLBuilderCSS {
 				$css .= "$tab}\n";
 			}
 
-			if ( ! empty( $media ) ) {
+			if ( ! empty( $media ) && ! empty( $selectors ) ) {
 				$css .= "}\n";
 			}
 		}

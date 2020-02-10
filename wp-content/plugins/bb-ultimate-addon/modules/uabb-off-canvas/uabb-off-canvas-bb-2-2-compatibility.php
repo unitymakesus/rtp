@@ -74,6 +74,10 @@ FLBuilder::register_module(
 							'default'     => 'Dignissim molestiae ipsam minima sunt, reiciendis aliqua consectetur! Qui euismod, ipsa. Illum cumque? Dis. Nisl erat temporibus? Nascetur arcu rerum donec, nonummy proin eveniet exercitationem! Nam, senectus, nihil! Interdum? Quasi ut quidem, urna suscipit tristique nunc, iaculis fermentum deleniti. Amet consectetuer nulla. Ducimus hic. Turpis dolores occaecat necessitatibus aute aliquam? Eveniet ultricies dictumst aliquet accusamus, officiis morbi sapien occaecati cras, aperiam vestibulum, officiis qui quidem minim scelerisque explicabo, mi inceptos pulvinar quo diamlorem phasellus ut fugit perferendis dui nesciunt nobis, venenatis egestas aliquet cubilia! Fringilla, a aliqua veritatis aliquid cubilia sed, natus? Venenatis asperiores, sapiente error erat do auctor mollitia.',
 							'connections' => array( 'string', 'html' ),
 						),
+						'ct_raw'             => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . wp_create_nonce( 'uabb-module-nonce' ) . '></div>',
+						),
 						'ct_saved_rows'      => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Row', 'uabb' ),

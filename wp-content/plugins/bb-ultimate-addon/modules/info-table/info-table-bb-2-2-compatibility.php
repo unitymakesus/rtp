@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBInfoTableModule', array(
+	'UABBInfoTableModule',
+	array(
 		'general'       => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(

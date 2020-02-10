@@ -20,7 +20,7 @@ class Creative_Menu_Walker extends Walker_Nav_Menu {
 	 * @since x.x.x
 	 * @param array $settings gets the param settings.
 	 */
-	function __construct( $settings ) {
+	public function __construct( $settings ) {
 		$this->param = $settings;
 	}
 
@@ -34,7 +34,7 @@ class Creative_Menu_Walker extends Walker_Nav_Menu {
 	 * @param array  $args an array to get the args.
 	 * @param int    $id gets the id.
 	 */
-	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
 		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
 		$args   = (object) $args;
@@ -51,10 +51,10 @@ class Creative_Menu_Walker extends Walker_Nav_Menu {
 
 		$output .= $indent . '<li id="menu-item-' . $item->ID . '"' . $value . $class_names . '>';
 
-		if ( isset( $item->target ) && '_blank' == $item->target && isset( $item->xfn ) && strpos( $item->xfn, 'noopener' ) === false ) {
+		if ( isset( $item->target ) && '_blank' === $item->target && isset( $item->xfn ) && strpos( $item->xfn, 'noopener' ) === false ) {
 			$rel_xfn = ' noopener';
 		}
-		if ( isset( $item->target ) && '_blank' == $item->target && isset( $item->xfn ) && empty( $item->xfn ) ) {
+		if ( isset( $item->target ) && '_blank' === $item->target && isset( $item->xfn ) && empty( $item->xfn ) ) {
 			$rel_blank = 'rel="noopener"';
 		}
 
@@ -90,7 +90,7 @@ class Creative_Menu_Walker extends Walker_Nav_Menu {
 	 * @param var   $args gets the arguments for the elements.
 	 * @param var   $output gets the output for the element.
 	 */
-	function display_element( $element, &$children_elements, $max_depth, $depth = 0, $args, &$output ) {
+	public function display_element( $element, &$children_elements, $max_depth, $depth = 0, $args, &$output ) {
 		$id_field = $this->db_fields['id'];
 		if ( is_object( $args[0] ) ) {
 			$args[0]->has_children = ! empty( $children_elements[ $element->$id_field ] );
@@ -98,4 +98,3 @@ class Creative_Menu_Walker extends Walker_Nav_Menu {
 		return parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
 	}
 }
-

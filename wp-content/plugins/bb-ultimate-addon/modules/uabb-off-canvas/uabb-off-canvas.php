@@ -42,21 +42,10 @@ class UABBOffCanvasModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/icon/' . $icon;
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 	/**
 	 * Function that renders the menus
@@ -106,20 +95,16 @@ class UABBOffCanvasModule extends FLBuilderModule {
 			case 'content':
 				global $wp_embed;
 				return '<div class="uabb-text-editor uabb-offcanvas-text-content" >' . wpautop( $wp_embed->autoembed( $settings->ct_content ) ) . '</div>';
-			break;
 			case 'saved_rows':
 				return '[fl_builder_insert_layout id="' . $settings->ct_saved_rows . '" type="fl-builder-template"]';
 			case 'saved_modules':
 				return '[fl_builder_insert_layout id="' . $settings->ct_saved_modules . '" type="fl-builder-template"]';
 			case 'saved_page_templates':
 				return '[fl_builder_insert_layout id="' . $settings->ct_page_templates . '" type="fl-builder-template"]';
-			break;
 			case 'menu':
 				return $this->get_menu( $settings );
-			break;
 			default:
 				return;
-			break;
 		}
 	}
 	/**
@@ -206,14 +191,14 @@ class UABBOffCanvasModule extends FLBuilderModule {
 
 		$offcanvas_position = isset( $this->settings->offcanvas_position ) ? 'at-' . $this->settings->offcanvas_position : '';
 		?>
-			<div class="uabb-offcanvas-<?php echo $node; ?> uabb-offcanvas-parent-wrapper">
-				<div id="offcanvas-<?php echo $node; ?>" class="uabb-offcanvas uabb-custom-offcanvas uabb-offcanvas-position-<?php echo $offcanvas_position; ?> uabb-offcanvas-type-<?php echo $this->settings->offcanvas_type; ?>">
+			<div class="uabb-offcanvas-<?php echo esc_attr( $node ); ?> uabb-offcanvas-parent-wrapper">
+				<div id="offcanvas-<?php echo esc_attr( $node ); ?>" class="uabb-offcanvas uabb-custom-offcanvas uabb-offcanvas-position-<?php echo esc_attr( $offcanvas_position ); ?> uabb-offcanvas-type-<?php echo esc_attr( $this->settings->offcanvas_type ); ?>">
 					<div class="uabb-offcanvas-content">
 						<div class="uabb-offcanvas-action-wrap">
-							<?php echo $this->render_close_icon(); ?>
+							<?php echo wp_kses_post( $this->render_close_icon() ); ?>
 						</div>
 						<div class="uabb-offcanvas-text uabb-offcanvas-content-data">
-							<?php echo $this->get_modal_content( $this->settings ); ?>
+							<?php echo wp_kses_post( $this->get_modal_content( $this->settings ) ); ?>
 						</div>
 					</div>
 				</div>
@@ -232,11 +217,11 @@ class UABBOffCanvasModule extends FLBuilderModule {
 
 		$close_position = 'uabb-offcanvas-close-icon-position-' . $this->settings->close_inside_icon_position;
 		?>
-		<div class="uabb-offcanvas-close-icon-wrapper <?php echo $close_position; ?>">
+		<div class="uabb-offcanvas-close-icon-wrapper <?php echo esc_attr( $close_position ); ?>">
 			<span class="uabb-offcanvas-close">
 				<?php
 				if ( '' !== $this->settings->close_icon ) {
-					echo '<i class="uabb-offcanvas-close-icon ' . $this->settings->close_icon . '"></i>';
+					echo '<i class="uabb-offcanvas-close-icon ' . esc_attr( $this->settings->close_icon ) . '"></i>';
 				} else {
 					?>
 					<svg class="uabb-offcanvas-close-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">

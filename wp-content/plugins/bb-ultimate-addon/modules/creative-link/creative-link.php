@@ -41,21 +41,10 @@ class CreativeLink extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon ) ) {
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -80,7 +69,7 @@ class CreativeLink extends FLBuilderModule {
 			case 'style15':
 			case 'style16':
 			case 'style20':
-				echo trim( $title, '' );
+				echo esc_attr( trim( $title, '' ) );
 				break;
 
 			case 'style2':
@@ -88,13 +77,14 @@ class CreativeLink extends FLBuilderModule {
 			case 'style17':
 			case 'style18':
 			case 'style19':
-				echo '<span data-hover="' . trim( $title, '' ) . '">' . trim( $title, '' ) . '</span>';
+				echo '<span data-hover="' . esc_attr( trim( $title, '' ) ) . '">' . esc_attr( trim( $title, '' ) ) . '</span>';
 				break;
 
 			case 'style9':
 			case 'style11':
-				echo '<span>' . trim( $title, '' ) . '</span>';
+				echo '<span>' . esc_attr( trim( $title, '' ) ) . '</span>';
 				break;
+
 		}
 	}
 
@@ -112,7 +102,7 @@ class CreativeLink extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( ! isset( $settings->font_typo ) || ! is_array( $settings->font_typo ) ) {
 
@@ -122,7 +112,7 @@ class CreativeLink extends FLBuilderModule {
 			}
 			if ( isset( $settings->link_typography_font_family ) ) {
 				if ( isset( $settings->link_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->link_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->link_typography_font_family['weight'] ) {
 						$settings->font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->font_typo['font_weight'] = $settings->link_typography_font_family['weight'];
@@ -194,11 +184,11 @@ class CreativeLink extends FLBuilderModule {
 					unset( $screen->target );
 				}
 				if ( isset( $screen->nofollow ) ) {
-					$screen->link_nofollow = ( '1' == $screen->nofollow ) ? 'yes' : '';
+					$screen->link_nofollow = ( '1' === $screen->nofollow ) ? 'yes' : '';
 					unset( $screen->nofollow );
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( ! isset( $settings->font_typo ) || ! is_array( $settings->font_typo ) ) {
 
@@ -208,7 +198,7 @@ class CreativeLink extends FLBuilderModule {
 			}
 			if ( isset( $settings->link_typography_font_family ) ) {
 				if ( isset( $settings->link_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->link_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->link_typography_font_family['weight'] ) {
 						$settings->font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->font_typo['font_weight'] = $settings->link_typography_font_family['weight'];
@@ -241,7 +231,7 @@ class CreativeLink extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->link_typography_line_height['desktop'] ) && isset( $settings->link_typography_font_size['desktop'] ) && 0 != $settings->link_typography_font_size['desktop'] && ! isset( $settings->font_typo['line_height'] ) ) {
+			if ( isset( $settings->link_typography_line_height['desktop'] ) && isset( $settings->link_typography_font_size['desktop'] ) && 0 !== $settings->link_typography_font_size['desktop'] && ! isset( $settings->font_typo['line_height'] ) ) {
 				if ( is_numeric( $settings->link_typography_line_height['desktop'] ) && is_numeric( $settings->link_typography_font_size['desktop'] ) ) {
 					$settings->font_typo['line_height'] = array(
 						'length' => round( $settings->link_typography_line_height['desktop'] / $settings->link_typography_font_size['desktop'], 2 ),
@@ -249,7 +239,7 @@ class CreativeLink extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->link_typography_line_height['medium'] ) && isset( $settings->link_typography_font_size['medium'] ) && 0 != $settings->link_typography_font_size['medium'] && ! isset( $settings->font_typo_medium['line_height'] ) ) {
+			if ( isset( $settings->link_typography_line_height['medium'] ) && isset( $settings->link_typography_font_size['medium'] ) && 0 !== $settings->link_typography_font_size['medium'] && ! isset( $settings->font_typo_medium['line_height'] ) ) {
 				if ( is_numeric( $settings->link_typography_line_height['medium'] ) && is_numeric( $settings->link_typography_font_size['medium'] ) ) {
 					$settings->font_typo_medium['line_height'] = array(
 						'length' => round( $settings->link_typography_line_height['medium'] / $settings->link_typography_font_size['medium'], 2 ),
@@ -257,7 +247,7 @@ class CreativeLink extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->link_typography_line_height['small'] ) && isset( $settings->link_typography_font_size['small'] ) && 0 != $settings->link_typography_font_size['small'] && ! isset( $settings->font_typo_responsive['line_height'] ) ) {
+			if ( isset( $settings->link_typography_line_height['small'] ) && isset( $settings->link_typography_font_size['small'] ) && 0 !== $settings->link_typography_font_size['small'] && ! isset( $settings->font_typo_responsive['line_height'] ) ) {
 				if ( is_numeric( $settings->link_typography_line_height['small'] ) && is_numeric( $settings->link_typography_font_size['small'] ) ) {
 					$settings->font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->link_typography_line_height['small'] / $settings->link_typography_font_size['small'], 2 ),

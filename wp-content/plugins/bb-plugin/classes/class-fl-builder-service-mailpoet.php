@@ -111,7 +111,7 @@ final class FLBuilderServiceMailPoet extends FLBuilderService {
 		);
 
 		foreach ( $lists as $list ) {
-			$options[ $list['list_id'] ] = $list['name'];
+			$options[ $list['list_id'] ] = esc_attr( $list['name'] );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

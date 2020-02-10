@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBTeamModule', array(
+	'UABBTeamModule',
+	array(
 		'imageicon'            => array(
 			'title'    => __( 'Image', 'uabb' ),
 			'sections' => array(
@@ -828,7 +829,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_social_icon_form', array(
+	'uabb_social_icon_form',
+	array(
 		'title' => __( 'Add Icon', 'uabb' ),
 		'tabs'  => array(
 			'general' => array( // Tab.

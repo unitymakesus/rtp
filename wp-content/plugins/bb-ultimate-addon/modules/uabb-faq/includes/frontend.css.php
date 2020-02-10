@@ -103,17 +103,17 @@ if ( ! $version_bb_check ) {
 			?>
 		}
 		<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'faq_border_param',
-				'selector'     => ".fl-node-$id .uabb-faq-questions,.fl-node-$id .uabb-faq__layout-grid .uabb-faq-questions",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'faq_border_param',
+					'selector'     => ".fl-node-$id .uabb-faq-questions,.fl-node-$id .uabb-faq__layout-grid .uabb-faq-questions",
+				)
+			);
+		}
 	}
-}
 }
 ?>
 <?php if ( 'box_style' === $settings->layout_style ) { ?>
@@ -136,17 +136,17 @@ if ( ! $version_bb_check ) {
 			?>
 		}
 		<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'style_border_param',
-				'selector'     => ".fl-node-$id .uabb__faq-layout-grid.uabb-faq-layout-box_style .uabb-module-content.uabb-faq-module .uabb-faq-item-wrap,.fl-node-$id .uabb__faq-layout-accordion.uabb-faq-layout-box_style .uabb-module-content.uabb-faq-module .uabb-faq-item",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'style_border_param',
+					'selector'     => ".fl-node-$id .uabb__faq-layout-grid.uabb-faq-layout-box_style .uabb-module-content.uabb-faq-module .uabb-faq-item-wrap,.fl-node-$id .uabb__faq-layout-accordion.uabb-faq-layout-box_style .uabb-module-content.uabb-faq-module .uabb-faq-item",
+				)
+			);
+		}
 	}
-}
 }
 ?>
 
@@ -217,17 +217,17 @@ if ( isset( $settings->faq_title_color ) && ! empty( $settings->faq_title_color 
 			?>
 		}
 		<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'answers_border',
-				'selector'     => ".fl-node-$id .uabb-faq-content$id,.fl-node-$id .uabb-faq-content",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'answers_border',
+					'selector'     => ".fl-node-$id .uabb-faq-content$id,.fl-node-$id .uabb-faq-content",
+				)
+			);
+		}
 	}
-}
 }
 if ( isset( $settings->answers_color ) && ! empty( $settings->answers_color ) ) {
 	?>
@@ -422,8 +422,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 					line-height: <?php echo esc_attr( $settings->content_line_height_unit_medium ); ?>em;
 				<?php } ?>
 			}
-		<?php
-}
+			<?php
+		}
 		?>
 	}
 	@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
@@ -507,8 +507,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 					line-height: <?php echo esc_attr( $settings->content_line_height_unit_responsive ); ?>em;
 				<?php } ?>
 			}
-		<?php
-}
+			<?php
+		}
 		?>
 	}
 <?php } ?>

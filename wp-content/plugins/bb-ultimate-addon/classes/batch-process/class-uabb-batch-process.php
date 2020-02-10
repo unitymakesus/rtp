@@ -62,7 +62,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -103,9 +103,9 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 * @since 1.20.2
 		 * @param Hook $hook get the hooks for the styles.
 		 */
-		function batch_process_scripts( $hook ) {
+		public function batch_process_scripts( $hook ) {
 
-			wp_enqueue_script( 'uabb-batch-process', BB_ULTIMATE_ADDON_URL . 'assets/js/batch-process.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( 'uabb-batch-process', BB_ULTIMATE_ADDON_URL . 'assets/js/batch-process.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
 			$vars = array(
 				'_nonce'         => wp_create_nonce( 'uabb-template-cloud-nonce' ),
 				'started_notice' => '<div class="notice-content">' . __( 'We will notify you once the process is complete.', 'uabb' ) . '</div>',
@@ -118,10 +118,10 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 * @since 1.20.2
 		 * @return Void
 		 */
-		function update_hotlink_images() {
+		public function update_hotlink_images() {
 
 			check_ajax_referer( 'uabb-template-cloud-nonce', 'security' );
-			error_log( 'Batch Started' );
+			error_log( 'UABB Batch Started' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 			$batch_started = get_option( 'uabb_batch_process_started', false );
 
@@ -163,7 +163,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 							$data = get_post_meta( $post_id, '_fl_builder_data', true );
 							// Backup first!
 							// Save the backup.
-							$check_file_created = fl_builder_filesystem()->file_put_contents( $dir_info['path'] . '/' . $post_id . '.dat', serialize( get_post_meta( $post_id, '_fl_builder_data', true ) ) );
+							$check_file_created = fl_builder_filesystem()->file_put_contents( $dir_info['path'] . '/' . $post_id . '.dat', serialize( get_post_meta( $post_id, '_fl_builder_data', true ) ) );// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_serialize
 
 							if ( true !== $check_file_created || empty( $dir_info ) ) {
 								update_post_meta( $post_id, '_uabb_batch_backup_fl_builder_data', $data );
@@ -185,7 +185,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 *
 		 * @since 1.20.2
 		 */
-		function retry_update_hotlink_images() {
+		public function retry_update_hotlink_images() {
 
 			$faild_links = get_option( 'uabb_batch_processing_faild_posts_id', false );
 
@@ -195,9 +195,9 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 
 			$batch_complete = get_option( 'uabb_batch_process_complete', false );
 
-			if ( ! empty( $faild_links ) && 3 >= $try_count && 'uabb_batch_process_complete' !== $show_notice && true == $batch_complete ) {
+			if ( ! empty( $faild_links ) && 3 >= $try_count && 'uabb_batch_process_complete' !== $show_notice && true === $batch_complete ) {
 
-				error_log( 'Batch Retry Started......' . $try_count );
+				error_log( 'Batch Retry Started......' . $try_count ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 				delete_option( 'uabb_batch_process_complete', false );
 				delete_transient( 'uabb-batch-process-start' );
@@ -209,7 +209,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 				$batch_started = get_option( 'uabb_batch_process_started', false );
 
 				// Set try 3 Times.
-				$try_count = $try_count + 1;
+				$try_count++;
 				update_option( 'uabb-batch-process-try-hotlinks', $try_count );
 
 				if ( $batch_started ) {
@@ -239,7 +239,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 *
 		 * @since 1.20.2
 		 */
-		function register_notices() {
+		public function register_notices() {
 
 			$batch_started       = get_option( 'uabb_batch_process_started', false );
 			$link                = '';
@@ -252,7 +252,11 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 			if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
 
 				$link = sprintf( /* translators: %1$s: search term */
-				__( '%1$s <a href=" https://www.ultimatebeaver.com/docs/background-process-in-uabb/?utm_source=uabb-pro-backend&utm_medium=wordpress-screen&utm_campaign=batch-process-notice">%2$s</a> %3$s.', 'uabb' ), 'Read about', 'background process', 'in detail' );
+					__( '%1$s <a href=" https://www.ultimatebeaver.com/docs/background-process-in-uabb/?utm_source=uabb-pro-backend&utm_medium=wordpress-screen&utm_campaign=batch-process-notice">%2$s</a> %3$s.', 'uabb' ),
+					'Read about',
+					'background process',
+					'in detail'
+				);
 			}
 			if ( empty( $branding_name ) ) {
 				$branding_name = __( 'Ultimate Addons for Beaver Builder', 'uabb' );
@@ -311,7 +315,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 * @param array $args An array of args from the filter.
 		 * @return bool
 		 */
-		function process_render_module_dat_file( $override, $args = array() ) {
+		public function process_render_module_dat_file( $override, $args = array() ) {
 
 			if ( $override ) {
 				return $override;
@@ -361,7 +365,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 * @param array $args An array of args from the filter.
 		 * @return bool
 		 */
-		function process_render_template_dat_file( $override, $args = array() ) {
+		public function process_render_template_dat_file( $override, $args = array() ) {
 
 			if ( $override ) {
 				return $override;
@@ -394,7 +398,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 * @param array $attachment An array of Image.
 		 * @return bool
 		 */
-		function included_domains( $default, $attachment ) {
+		public function included_domains( $default, $attachment ) {
 
 			$included_domains = array(
 				'sharkz.in',
@@ -442,7 +446,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 * @param object $attachment Attachment object.
 		 * @param array  $meta        Attachment meta data.
 		 */
-		function add_svg_image_support( $response, $attachment, $meta ) {
+		public function add_svg_image_support( $response, $attachment, $meta ) {
 			if ( ! function_exists( 'simplexml_load_file' ) ) {
 				return $response;
 			}
@@ -505,7 +509,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 */
 		public function complete_batch_import() {
 
-			error_log( 'Complete' );
+			error_log( 'Complete' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 			update_option( 'uabb_batch_process_complete', true );
 
@@ -519,7 +523,7 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 			// Clear all cache.
 			FLBuilderModel::delete_asset_cache_for_all_posts();
 
-			error_log( '(✓) BATCH Process Complete!' );
+			error_log( '(✓) BATCH Process Complete!' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		}
 	}
 

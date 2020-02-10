@@ -77,6 +77,7 @@
 				reCaptchaValue	= reCaptchaField.data( 'uabb-grecaptcha-response' ),
 				mailto	  	= $( this.nodeClass + ' .uabb-mailto' ),
 				ajaxurl	  	= this.ajaxurl, //FLBuilderLayoutConfig.paths.wpAjaxUrl,
+				_nonce      = theForm.data('nonce'),
 				email_regex = /\S+@\S+\.\S+/,
 				phone_regex = /^[ 0-9.()\[\]+-]*$/,
 				isValid	  	= true;
@@ -239,6 +240,7 @@
 				// post the form data
 				$.post(ajaxurl, {
 					action	: 'uabb_builder_email',
+					security : _nonce,
 					name	: name.val(),
 					subject	: subject.val(),
 					email	: email.val(),

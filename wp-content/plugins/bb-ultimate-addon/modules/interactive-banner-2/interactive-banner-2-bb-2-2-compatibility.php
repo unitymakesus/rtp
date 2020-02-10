@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'InteractiveBanner2Module', array(
+	'InteractiveBanner2Module',
+	array(
 		'style'       => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

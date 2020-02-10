@@ -50,7 +50,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 			if ( ! isset( $settings->img_typo ) || ! is_array( $settings->img_typo ) ) {
 
 				$settings->img_typo            = array();
@@ -66,7 +66,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->img_typo['font_weight'] = 'normal';
 					} else {
 						$settings->img_typo['font_weight'] = $settings->font_family['weight'];
@@ -129,7 +129,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 				);
 				unset( $settings->letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 			if ( ! isset( $settings->img_typo ) || ! is_array( $settings->img_typo ) ) {
 
 				$settings->img_typo            = array();
@@ -145,7 +145,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->img_typo['font_weight'] = 'normal';
 					} else {
 						$settings->img_typo['font_weight'] = $settings->font_family['weight'];
@@ -171,7 +171,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->img_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -179,7 +179,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->img_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -187,7 +187,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->img_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -288,7 +288,7 @@ class UABBImageCarouselModule extends FLBuilderModule {
 				// Collage photo src.
 				$photo_size = $this->settings->photo_size;
 
-				if ( -1 != $id && '' != $id ) {
+				if ( -1 !== $id && '' !== $id ) {
 					if ( isset( $photo_size ) ) {
 						$temp      = wp_get_attachment_image_src( $id, $photo_size );
 						$data->src = $temp[0];

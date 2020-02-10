@@ -351,7 +351,7 @@ class Advanced_Excerpt {
 					$c = mb_strlen( $chars );
 					if ( $c + $w > $length && 'sentence' != $finish ) { // Token is too long
 						$c = ( 'word' == $finish ) ? $c : $length - $w; // Keep token to finish word
-						$t = substr( $t, 0, $c );
+						$t = mb_substr( $t, 0, $c );
 					}
 					$w += $c;
 				}

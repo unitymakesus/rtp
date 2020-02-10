@@ -41,21 +41,10 @@ class UABBPriceList extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon ) ) {
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -72,14 +61,14 @@ class UABBPriceList extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// List link settings.
 			foreach ( $settings->add_price_list_item as $price_list_item ) {
 
 				if ( isset( $price_list_item->price_list_item_url ) ) {
 					if ( isset( $price_list_item->price_list_item_url_nofollow ) ) {
-						$price_list_item->price_list_item_url_nofollow = ( '1' == $price_list_item->price_list_item_url_nofollow ) ? 'yes' : '';
+						$price_list_item->price_list_item_url_nofollow = ( '1' === $price_list_item->price_list_item_url_nofollow ) ? 'yes' : '';
 					}
 				}
 			}
@@ -130,7 +119,7 @@ class UABBPriceList extends FLBuilderModule {
 				}
 				if ( isset( $settings->heading_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->heading_font_family['weight'] ) {
+					if ( 'regular' === $settings->heading_font_family['weight'] ) {
 						$settings->heading_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->heading_font_typo['font_weight'] = $settings->heading_font_family['weight'];
@@ -212,7 +201,7 @@ class UABBPriceList extends FLBuilderModule {
 				}
 				if ( isset( $settings->description_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->description_font_family['weight'] ) {
+					if ( 'regular' === $settings->description_font_family['weight'] ) {
 						$settings->description_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->description_font_typo['font_weight'] = $settings->description_font_family['weight'];
@@ -294,7 +283,7 @@ class UABBPriceList extends FLBuilderModule {
 				}
 				if ( isset( $settings->price_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->price_font_family['weight'] ) {
+					if ( 'regular' === $settings->price_font_family['weight'] ) {
 						$settings->price_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->price_font_typo['font_weight'] = $settings->price_font_family['weight'];
@@ -367,41 +356,41 @@ class UABBPriceList extends FLBuilderModule {
 	public function render() {
 		?>
 
-		<div class="uabb-price-list uabb-price-list-<?php echo $this->settings->image_position; ?> uabb-pl-price-position-<?php echo ( 'top' !== $this->settings->image_position ) ? $this->settings->price_position : ''; ?>">
+		<div class="uabb-price-list uabb-price-list-<?php echo esc_attr( $this->settings->image_position ); ?> uabb-pl-price-position-<?php echo ( 'top' !== $this->settings->image_position ) ? esc_attr( $this->settings->price_position ) : ''; ?>">
 			<?php
 			foreach ( $this->settings->add_price_list_item  as $index => $item ) {
 				?>
-					<div class="uabb-price-list-item uabb-price-list-animation-<?php echo $this->settings->price_list_hover_animation; ?>">
+					<div class="uabb-price-list-item uabb-price-list-animation-<?php echo esc_attr( $this->settings->price_list_hover_animation ); ?>">
 						<div class="uabb-price-list-image">
-							<?php if ( 'library' == $item->image_type && isset( $item->photo ) && ! empty( $item->photo_src ) ) { ?>
-								<img src=" <?php echo $item->photo_src; ?>">
+							<?php if ( 'library' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_src ) ) { ?>
+								<img src=" <?php echo esc_url( $item->photo_src ); ?>">
 							<?php } ?>
-							<?php if ( 'url' == $item->image_type && isset( $item->photo ) && ! empty( $item->photo_url ) ) { ?>
-								<img src=" <?php echo $item->photo_url; ?>">
+							<?php if ( 'url' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_url ) ) { ?>
+								<img src=" <?php echo esc_url( $item->photo_url ); ?>">
 							<?php } ?>
 						</div>
 						<div class="uabb-price-list-text">
 							<div class="uabb-price-list-header">
-								<?php echo $this->render_item_header( $item ); ?>
+								<?php echo wp_kses_post( $this->render_item_header( $item ) ); ?>
 									<span>
-										<?php echo $item->price_list_item_title; ?>
+										<?php echo wp_kses_post( $item->price_list_item_title ); ?>
 									</span>
 								<?php
-								echo $this->render_item_footer( $item );
+								echo wp_kses_post( $this->render_item_footer( $item ) );
 								if ( 'top' !== $this->settings->image_position && 'below' !== $this->settings->price_position ) {
 									?>
 									<span class="uabb-price-list-separator"></span>
 									<?php
 								}
-								if ( 'below' != $this->settings->price_position && 'top' != $this->settings->image_position ) {
+								if ( 'below' !== $this->settings->price_position && 'top' !== $this->settings->image_position ) {
 										$this->get_price( $item, 'inner' );
 								}
 								?>
 							</div>
-							<?php if ( '' != $item->price_list_item_description ) { ?>
+							<?php if ( '' !== $item->price_list_item_description ) { ?>
 								<div class="uabb-price-list-description" >
-								<?php echo $item->price_list_item_description; ?>
-								</div> 
+								<?php echo wp_kses_post( $item->price_list_item_description ); ?>
+								</div>
 							<?php } ?>
 							<?php
 							$this->get_price( $item, 'outer' );
@@ -426,12 +415,12 @@ class UABBPriceList extends FLBuilderModule {
 		if ( '' !== $item->price_list_item_url ) {
 			?>
 
-			<a href ="<?php echo $item->price_list_item_url; ?>" target="<?php echo $item->price_list_item_url_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->price_list_item_url_target, $item->price_list_item_url_nofollow, 1 ); ?> class="uabb-price-list-title">
+			<a href ="<?php echo esc_url( $item->price_list_item_url ); ?>" target="<?php echo esc_attr( $item->price_list_item_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->price_list_item_url_target, $item->price_list_item_url_nofollow, 1 ); ?> class="uabb-price-list-title">
 
 		<?php } else { ?>
 			<div class="uabb-price-list-title">
 			<?php
-}
+		}
 	}
 	/**
 	 *  Render footer for link HTML.
@@ -458,7 +447,7 @@ class UABBPriceList extends FLBuilderModule {
 
 		$price_pos = 'uabb-pl-price-' . $pos;
 
-		if ( 'yes' == $item->discount_offer ) {
+		if ( 'yes' === $item->discount_offer ) {
 			$price_item_cls = 'has-discount';
 			$original_price = $item->original_price;
 		} else {
@@ -466,12 +455,12 @@ class UABBPriceList extends FLBuilderModule {
 			$original_price = $item->price;
 		}
 		?>
-		<span class="uabb-price-wrapper  <?php echo $price_pos; ?>">
-			<span class="uabb-price-list-price <?php echo $price_item_cls; ?>"><?php echo $original_price; ?></span>
-			<?php if ( 'yes' == $item->discount_offer ) { ?>
-				<span class="uabb-price-list-price"><?php echo $item->price; ?></span>
+		<span class="uabb-price-wrapper  <?php echo esc_attr( $price_pos ); ?>">
+			<span class="uabb-price-list-price <?php echo esc_attr( $price_item_cls ); ?>"><?php echo wp_kses_post( $original_price ); ?></span>
+			<?php if ( 'yes' === $item->discount_offer ) { ?>
+				<span class="uabb-price-list-price"><?php echo wp_kses_post( $item->price ); ?></span>
 			<?php } ?>
-		</span>	
+		</span>
 		<?php
 	}
 }

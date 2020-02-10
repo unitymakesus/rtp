@@ -358,7 +358,7 @@ if ( ! class_exists( 'UABB_Plugin_Backward' ) ) {
 				unset( $layout_draft );
 			}
 		}
-
+// @codingStandardsIgnoreStart.
 		/**
 		 * Implement UABB update logic.
 		 *
@@ -5116,4 +5116,5 @@ if ( ! class_exists( 'UABB_Plugin_Backward' ) ) {
 
 	}
 }
+// @codingStandardsIgnoreEnd.
 UABB_Plugin_Backward::get_instance();

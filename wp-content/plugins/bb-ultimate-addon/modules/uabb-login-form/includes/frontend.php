@@ -122,11 +122,11 @@ if ( ! is_user_logged_in() || FLBuilderModel::is_builder_active() ) {
 		<p> 
 		<?php
 		echo esc_attr( apply_filters( 'uabb_lf_succesfully_login_text', $uabb_lf_succesfully_login_text ) );
-					?>
+		?>
 					<b> 
 					<?php
 					echo esc_attr( $current_user->display_name ) . '.';
-			?>
+					?>
 			</b><a href="
 			<?php
 			if ( 'default' === $settings->wp_logout_redirect_select ) {

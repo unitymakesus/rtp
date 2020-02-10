@@ -109,7 +109,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 
 						$error_string = rtrim( $error_string, ', ' );
 
-						echo 'It seems the' . '<b> ' . $error_string . '</b> fields are empty.<br>It may generate Schema errors / warnings for your Page, we recommend you to fill those fields.';
+						echo 'It seems the<b> ' . esc_attr( $error_string ) . '</b> fields are empty.<br>It may generate Schema errors / warnings for your Page, we recommend you to fill those fields.';
 
 					?>
 				</div>
@@ -126,12 +126,12 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 					{
 					"@context": "http://schema.org",
 					"@type": "HowTo",
-					"name": "<?php echo ! empty( $settings->uabb_how_to_title ) ? $settings->uabb_how_to_title : ''; ?>",
-					"description": "<?php echo ! empty( $settings->description ) ? $settings->description : ''; ?>",
+					"name": "<?php echo ! empty( $settings->uabb_how_to_title ) ? wp_kses_post( $settings->uabb_how_to_title ) : ''; ?>",
+					"description": "<?php echo ! empty( $settings->description ) ? wp_kses_post( $settings->description ) : ''; ?>",
 					<?php if ( ! empty( $settings->image_src ) ) { ?>
 						"image": {
 								"@type": "ImageObject",
-								"url": "<?php echo ! empty( $settings->image_src ) ? $settings->image_src : ''; ?>",
+								"url": "<?php echo ! empty( $settings->image_src ) ? esc_url( $settings->image_src ) : ''; ?>",
 								"height": "406",
 								"width": "305"
 							},
@@ -139,54 +139,54 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 					<?php if ( ! empty( $settings->estimated_cost ) ) { ?>
 						"estimatedCost": {
 							"@type": "MonetaryAmount",
-							"currency": "<?php echo ! empty( $settings->currency_iso_code ) ? $settings->currency_iso_code : ''; ?>",
-							"value": "<?php echo ! empty( $settings->estimated_cost ) ? $settings->estimated_cost : ''; ?>"
+							"currency": "<?php echo ! empty( $settings->currency_iso_code ) ? wp_kses_post( $settings->currency_iso_code ) : ''; ?>",
+							"value": "<?php echo ! empty( $settings->estimated_cost ) ? wp_kses_post( $settings->estimated_cost ) : ''; ?>"
 						},
 					<?php } ?>
 					<?php if ( ! empty( $settings->uabb_supply[0] ) && 'yes' === $settings->show_advanced && 'yes' === $settings->add_supply ) { ?>
 					"supply": 
-					<?php
-					if ( isset( $supply ) && ! empty( $supply ) ) {
-						echo $supply;
-					}
+						<?php
+						if ( isset( $supply ) && ! empty( $supply ) ) {
+							echo wp_kses_post( $supply );
+						}
 						?>
 						,
 					<?php } ?>
 					<?php if ( ! empty( $settings->uabb_tool[0] ) && 'yes' === $settings->show_advanced && 'yes' === $settings->add_tool ) { ?>
 					"tool": 
-					<?php
-					if ( isset( $tool ) && ! empty( $tool ) ) {
-						echo $tool;
-					}
+						<?php
+						if ( isset( $tool ) && ! empty( $tool ) ) {
+							echo wp_kses_post( $tool );
+						}
 						?>
 						,
 					<?php } ?>
 					<?php if ( ! empty( $settings->step_data[0] ) ) { ?>
 					"step": 
-					<?php
-					if ( isset( $steps ) && ! empty( $steps ) ) {
-						echo $steps;
+						<?php
+						if ( isset( $steps ) && ! empty( $steps ) ) {
+							echo wp_kses_post( $steps );
+						}
 					}
-}
 					?>
 					<?php if ( ! empty( $settings->total_time ) ) { ?>	
 						, "totalTime": 
 						<?php
 						if ( isset( $settings->total_time ) && ! empty( $settings->total_time ) ) {
-						?>
+							?>
 
-								"PT<?php echo $settings->total_time; ?>M"
+								"PT<?php echo esc_attr( $settings->total_time ); ?>M"
 							<?php } ?>
 					<?php } ?>
 					}
 			</script>
 			<div class="uabb-how-to-container uabb-clearfix">
-				<<?php echo esc_attr( $settings->title_tag ); ?> class="uabb-how-to-title" ><?php echo esc_attr( $settings->uabb_how_to_title ); ?></<?php echo esc_attr( $settings->title_tag ); ?>>
+				<<?php echo esc_attr( $settings->title_tag ); ?> class="uabb-how-to-title" ><?php echo wp_kses_post( $settings->uabb_how_to_title ); ?></<?php echo esc_attr( $settings->title_tag ); ?>>
 				<div class="uabb-how-to-description">
 					<?php
 					if ( isset( $settings->description ) && ! empty( $settings->description ) ) {
 
-						echo wpautop( $wp_embed->autoembed( $settings->description ) );
+						echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->description ) ) );
 					}
 					?>
 				</div>
@@ -275,7 +275,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 
 									<?php if ( isset( $step->step_description ) && ! empty( $step->step_description ) ) { ?>
 										<div class="uabb-how-to-step-description" >
-											<?php echo wpautop( $wp_embed->autoembed( $step->step_description ) ); ?>
+											<?php echo wp_kses_post( wpautop( $wp_embed->autoembed( $step->step_description ) ) ); ?>
 										</div>
 									<?php } ?>
 
@@ -285,7 +285,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 									<?php } ?>
 										<?php if ( isset( $step->step_description ) && ! empty( $step->step_description ) ) { ?>
 											<div class="uabb-how-to-step-description">
-												<?php echo wpautop( $wp_embed->autoembed( $step->step_description ) ); ?>
+												<?php echo wp_kses_post( wpautop( $wp_embed->autoembed( $step->step_description ) ) ); ?>
 											</div>
 										<?php } ?>
 

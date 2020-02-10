@@ -8,7 +8,7 @@
 ?>
 jQuery(function($) {
 	$(function() {
-		$( '.fl-node-<?php echo $id; ?> .uabb-photo-img' )
+		$( '.fl-node-<?php echo esc_attr( $id ); ?> .uabb-photo-img' )
 			.on( 'mouseenter', function( e ) {
 				$( this ).data( 'title', $( this ).attr( 'title' ) ).removeAttr( 'title' );
 			} )

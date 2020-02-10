@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBWooProductsModule', array(
+	'UABBWooProductsModule',
+	array(
 		'general'       => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(

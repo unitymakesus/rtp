@@ -9,19 +9,19 @@ $settings->image_size_compatibility = ( isset( $settings->image_size_compatibili
 
 (function ( $, window, undefined ) {
 	$(window).on( 'load', function(a){
-		jQuery('.fl-node-<?php echo $id; ?> .uabb-ib1-block').each(function(index, value){
+		jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ib1-block').each(function(index, value){
 			<?php
-			if ( 'custom' == $settings->banner_height_options && 'none' != $settings->image_size_compatibility ) {
-				if ( 'small' == $settings->image_size_compatibility ) {
+			if ( 'custom' === $settings->banner_height_options && 'none' !== $settings->image_size_compatibility ) {
+				if ( 'small' === $settings->image_size_compatibility ) {
 					?>
-			if( jQuery( document ).width() <= parseInt( '<?php echo $global_settings->responsive_breakpoint; ?>' ) ) {
+			if( jQuery( document ).width() <= parseInt( '<?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>' ) ) {
 				jQuery( this ).removeClass( "uabb-banner-block-custom-height" );
 			}
 					<?php
 				}
-				if ( 'medium' == $settings->image_size_compatibility ) {
+				if ( 'medium' === $settings->image_size_compatibility ) {
 					?>
-			if( jQuery( document ).width() <= parseInt( '<?php echo $global_settings->medium_breakpoint; ?>' ) ) {
+			if( jQuery( document ).width() <= parseInt( '<?php echo esc_attr( $global_settings->medium_breakpoint ); ?>' ) ) {
 				jQuery( this ).removeClass( "uabb-banner-block-custom-height" );
 			}
 					<?php
@@ -43,10 +43,10 @@ $settings->image_size_compatibility = ( isset( $settings->image_size_compatibili
 			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 				$(this).click(function(){
 					//event.stopPropagation();
-					if( jQuery('.fl-node-<?php echo $id; ?> .uabb-ib1-block').hasClass( 'uabb-ib1-hover' ) ){
-						jQuery('.fl-node-<?php echo $id; ?> .uabb-ib1-block').removeClass('uabb-ib1-hover');
+					if( jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ib1-block').hasClass( 'uabb-ib1-hover' ) ){
+						jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ib1-block').removeClass('uabb-ib1-hover');
 					} else {
-						jQuery('.fl-node-<?php echo $id; ?> .uabb-ib1-block').addClass('uabb-ib1-hover');
+						jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ib1-block').addClass('uabb-ib1-hover');
 					}
 				});
 			}
@@ -69,30 +69,30 @@ $settings->image_size_compatibility = ( isset( $settings->image_size_compatibili
 	}
 
 	$(window).on( 'resize', function(a){
-		jQuery('.fl-node-<?php echo $id; ?> .uabb-ib1-block').each(function(index, value){
+		jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ib1-block').each(function(index, value){
 			<?php
-			if ( 'custom' == $settings->banner_height_options && 'none' != $settings->image_size_compatibility ) {
-				if ( 'small' == $settings->image_size_compatibility ) {
+			if ( 'custom' === $settings->banner_height_options && 'none' !== $settings->image_size_compatibility ) {
+				if ( 'small' === $settings->image_size_compatibility ) {
 					?>
-			if( jQuery( document ).width() <= parseInt( '<?php echo $global_settings->responsive_breakpoint; ?>' ) ) {
+			if( jQuery( document ).width() <= parseInt( '<?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>' ) ) {
 				jQuery( this ).removeClass( "uabb-banner-block-custom-height" );
 				jQuery( this ).find('.uabb-image-wrap img').css( 'width', '' );
 				jQuery( this ).find('.uabb-image-wrap img').css( 'height', '' );
 			} else {
-				if( jQuery( this ).data('style') == 'custom' ) {
+				if( jQuery( this ).data('style') === 'custom' ) {
 					jQuery( this ).addClass( "uabb-banner-block-custom-height" );
 				}
 			}
 					<?php
 				}
-				if ( 'medium' == $settings->image_size_compatibility ) {
+				if ( 'medium' === $settings->image_size_compatibility ) {
 					?>
-			if( jQuery( document ).width() <= parseInt( '<?php echo $global_settings->medium_breakpoint; ?>' ) ) {
+			if( jQuery( document ).width() <= parseInt( '<?php echo esc_attr( $global_settings->medium_breakpoint ); ?>' ) ) {
 				jQuery( this ).removeClass( "uabb-banner-block-custom-height" );
 				jQuery( this ).find('.uabb-image-wrap img').css( 'width', '' );
 				jQuery( this ).find('.uabb-image-wrap img').css( 'height', '' );
 			} else {
-				if( jQuery( this ).data('style') == 'custom' ) {
+				if( jQuery( this ).data('style') === 'custom' ) {
 					jQuery( this ).addClass( "uabb-banner-block-custom-height" );
 				}
 			}

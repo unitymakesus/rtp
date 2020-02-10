@@ -72,20 +72,11 @@ class UABBLoginForm extends FLBuilderModule {
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
-		// check if $icon is referencing an included icon.
+
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-login-form/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-login-form/icon/' . $icon;
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-login-form/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path ); //PHPCS:ignore:WordPress.WP.AlternativeFunctions
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 	/**
 	 * Google button ajax function.
@@ -337,7 +328,7 @@ class UABBLoginForm extends FLBuilderModule {
 		require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-login-form/includes/vendor/autoload.php';
 
 		// Get $id_token via HTTPS POST.
-		$client = new Google_Client( [ 'client_id' => $uabb_social_google_client_id ] );  //PHPCS:ignore:PHPCompatibility.PHP.ShortArray.Found
+		$client = new Google_Client( array( 'client_id' => $uabb_social_google_client_id ) );  //PHPCS:ignore:PHPCompatibility.PHP.ShortArray.Found
 
 		$user_data = $client->verifyIdToken( $id_token );
 
@@ -371,7 +362,8 @@ class UABBLoginForm extends FLBuilderModule {
 				'client_id'     => $uabb_social_facebook_app_id,
 				'client_secret' => $uabb_social_facebook_app_secret,
 				'grant_type'    => 'client_credentials',
-			), 'https://graph.facebook.com/oauth/access_token'
+			),
+			'https://graph.facebook.com/oauth/access_token'
 		);
 
 		$response = wp_remote_get( $url );
@@ -388,7 +380,8 @@ class UABBLoginForm extends FLBuilderModule {
 			array(
 				'input_token'  => $input_token,
 				'access_token' => $access_token,
-			), 'https://graph.facebook.com/debug_token'
+			),
+			'https://graph.facebook.com/debug_token'
 		);
 
 		$finalresponse = wp_remote_get( $finalurl );
@@ -402,7 +395,8 @@ class UABBLoginForm extends FLBuilderModule {
 				array(
 					'fields'       => 'email',
 					'access_token' => $input_token,
-				), $user_data_url
+				),
+				$user_data_url
 			);
 			$final_user_data_response        = wp_remote_get( $final_user_data_url );
 			$final_user_data_response        = wp_remote_retrieve_body( $final_user_data_response );
@@ -534,10 +528,10 @@ class UABBLoginForm extends FLBuilderModule {
 				<?php } elseif ( 'yes' === $this->settings->google_login_select && empty( $uabb_social_google_client_id ) && FLBuilderModel::is_builder_active() ) { ?>
 
 							<label class="uabb-social-error-message">
-								<?php echo esc_attr_e( 'Please configure the Google Client ID from', 'uabb' ); ?>								 
+								<?php esc_attr_e( 'Please configure the Google Client ID from', 'uabb' ); ?>	 
 								<b>
 									<?php
-										echo esc_attr_e( 'Dashboard > Settings > UABB > Social Login Settings', 'uabb' );
+										esc_attr_e( 'Dashboard > Settings > UABB > Social Login Settings', 'uabb' );
 									?>
 								</b>
 							</label>				
@@ -565,11 +559,11 @@ class UABBLoginForm extends FLBuilderModule {
 
 						<label class="uabb-social-error-message">
 							<?php
-									echo esc_attr_e( 'Please configure the Facebook App ID and Facebook App Secret from', 'uabb' );
-								?>
+								esc_attr_e( 'Please configure the Facebook App ID and Facebook App Secret from', 'uabb' );
+							?>
 								<b>
 									<?php
-										echo esc_attr_e( 'Dashboard > Settings > UABB > Social Login Settings', 'uabb' );
+										esc_attr_e( 'Dashboard > Settings > UABB > Social Login Settings', 'uabb' );
 									?>
 								</b>
 						</label>
@@ -577,7 +571,7 @@ class UABBLoginForm extends FLBuilderModule {
 			</div>
 	<?php	} ?>
 
-	<?php
+		<?php
 	}
 }
 

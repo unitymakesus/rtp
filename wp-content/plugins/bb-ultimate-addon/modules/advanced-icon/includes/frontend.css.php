@@ -34,40 +34,40 @@
 
 <?php
 	$version_bb_check  = UABB_Compatibility::$version_bb_check;
-	$settings->size    = ( '' != $settings->size ) ? $settings->size : '40';
-	$settings->spacing = ( '' != $settings->spacing ) ? $settings->spacing : '10';
+	$settings->size    = ( '' !== $settings->size ) ? $settings->size : '40';
+	$settings->spacing = ( '' !== $settings->spacing ) ? $settings->spacing : '10';
 ?>
 
-<?php if ( 'horizontal' == $settings->icon_struc_align ) { ?>
+<?php if ( 'horizontal' === $settings->icon_struc_align ) { ?>
 
-.fl-node-<?php echo $id; ?> .adv-icon-horizontal .adv-icon-link {
-	margin-bottom: <?php echo $settings->spacing; ?>px;
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-horizontal .adv-icon-link {
+	margin-bottom: <?php echo esc_attr( $settings->spacing ); ?>px;
 	display: inline-block;
 }
 
 /* Left */
-.fl-node-<?php echo $id; ?> .adv-icon-left .adv-icon-link {
-	margin-right: <?php echo $settings->spacing; ?>px;
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-left .adv-icon-link {
+	margin-right: <?php echo esc_attr( $settings->spacing ); ?>px;
 }
 
 /* Center */
-.fl-node-<?php echo $id; ?> .adv-icon-center .adv-icon-link {
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-center .adv-icon-link {
 	margin-left: <?php echo intval( $settings->spacing ) / 2; ?>px;
 	margin-right: <?php echo intval( $settings->spacing ) / 2; ?>px;
 }
 
 /* Right */
-.fl-node-<?php echo $id; ?> .adv-icon-right .adv-icon-link {
-	margin-left: <?php echo $settings->spacing; ?>px;
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-right .adv-icon-link {
+	margin-left: <?php echo esc_attr( $settings->spacing ); ?>px;
 }
 
 <?php } ?>
 
-<?php if ( 'vertical' == $settings->icon_struc_align ) { ?>
+<?php if ( 'vertical' === $settings->icon_struc_align ) { ?>
 
 
-.fl-node-<?php echo $id; ?> .adv-icon-vertical .adv-icon-link {
-	margin-bottom: <?php echo $settings->spacing; ?>px;
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-vertical .adv-icon-link {
+	margin-bottom: <?php echo esc_attr( $settings->spacing ); ?>px;
 }
 
 <?php } ?>
@@ -75,7 +75,7 @@
 <?php
 $icon_count                 = 1;
 $settings->bg_border_radius = ( '' !== $settings->bg_border_radius ) ? $settings->bg_border_radius : '0';
-$settings->bg_size          = ( '' != $settings->bg_size ) ? (int) trim( $settings->bg_size ) : 0;
+$settings->bg_size          = ( '' !== $settings->bg_size ) ? (int) trim( $settings->bg_size ) : 0;
 
 foreach ( $settings->icons as $i => $icon ) :
 	if ( ! $version_bb_check ) {
@@ -93,7 +93,7 @@ foreach ( $settings->icons as $i => $icon ) :
 			'photo_source'            => 'library',
 			'photo'                   => $icon->photo,
 			'photo_url'               => '',
-			'img_size'                => ( 'custom' == $settings->icoimage_style || 'simple' == $settings->icoimage_style ) ? $settings->size : ( $settings->size * 2 ),
+			'img_size'                => ( 'custom' === $settings->icoimage_style || 'simple' === $settings->icoimage_style ) ? $settings->size : ( $settings->size * 2 ),
 			'img_align'               => $settings->align,
 			'photo_src'               => ( isset( $icon->photo_src ) ) ? $icon->photo_src : '',
 
@@ -148,7 +148,7 @@ foreach ( $settings->icons as $i => $icon ) :
 			'photo_source'            => 'library',
 			'photo'                   => $icon->photo,
 			'photo_url'               => '',
-			'img_size'                => ( 'custom' == $settings->icoimage_style || 'simple' == $settings->icoimage_style ) ? $settings->size : ( $settings->size * 2 ),
+			'img_size'                => ( 'custom' === $settings->icoimage_style || 'simple' === $settings->icoimage_style ) ? $settings->size : ( $settings->size * 2 ),
 			'img_align'               => $settings->align,
 			'photo_src'               => ( isset( $icon->photo_src ) ) ? $icon->photo_src : '',
 
@@ -190,42 +190,42 @@ foreach ( $settings->icons as $i => $icon ) :
 	FLBuilder::render_module_css( 'image-icon', $id . ' .adv-icon-' . $icon_count, $imageicon_array );
 
 	if ( isset( $settings->responsive_align ) ) {
-		if ( '' != $settings->responsive_align && 'default' != $settings->responsive_align ) {
+		if ( '' !== $settings->responsive_align && 'default' !== $settings->responsive_align ) {
 			?>
-	@media ( max-width: <?php echo $global_settings->responsive_breakpoint; ?>px ) {
-		.fl-node-<?php echo $id; ?> .adv-icon-<?php echo $icon_count; ?> .uabb-imgicon-wrap {
-			text-align: <?php echo $settings->responsive_align; ?>;
+	@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px ) {
+		.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-<?php echo esc_attr( $icon_count ); ?> .uabb-imgicon-wrap {
+			text-align: <?php echo esc_attr( $settings->responsive_align ); ?>;
 		}
 	}
 			<?php
 		}
 	}
-	$icon_count = $icon_count + 1;
+	$icon_count++;
 endforeach;
 ?>
 
 <?php
 if ( isset( $settings->responsive_align ) ) {
-	if ( '' != $settings->responsive_align && 'default' != $settings->responsive_align ) {
+	if ( '' !== $settings->responsive_align && 'default' !== $settings->responsive_align ) {
 		?>
-@media ( max-width: <?php echo $global_settings->responsive_breakpoint; ?>px ) {
-	.fl-node-<?php echo $id; ?> .adv-icon-wrap {
-		text-align: <?php echo $settings->responsive_align; ?>;
+@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px ) {
+	.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-wrap {
+		text-align: <?php echo esc_attr( $settings->responsive_align ); ?>;
 	}
 
 		<?php
-		if ( 'center' != $settings->responsive_align ) {
+		if ( 'center' !== $settings->responsive_align ) {
 			?>
-	.fl-node-<?php echo $id; ?> .adv-icon-<?php echo $settings->align; ?> .adv-icon-link {
+	.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-<?php echo esc_attr( $settings->align ); ?> .adv-icon-link {
 			<?php
-			if ( 'left' == $settings->responsive_align ) {
+			if ( 'left' === $settings->responsive_align ) {
 				?>
-		margin-right: <?php echo $settings->spacing; ?>px;
+		margin-right: <?php echo esc_attr( $settings->spacing ); ?>px;
 		margin-left: 0;
 				<?php
-			} elseif ( 'right' == $settings->responsive_align ) {
+			} elseif ( 'right' === $settings->responsive_align ) {
 				?>
-		margin-left: <?php echo $settings->spacing; ?>px;
+		margin-left: <?php echo esc_attr( $settings->spacing ); ?>px;
 		margin-right: 0;
 				<?php
 			} else {

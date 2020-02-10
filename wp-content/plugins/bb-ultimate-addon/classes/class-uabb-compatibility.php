@@ -29,7 +29,7 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 		 * @since 1.14.0
 		 * @var $version_bb_check
 		 */
-		static public $version_bb_check;
+		public static $version_bb_check;
 
 		/**
 		 * Holds uabb migration status.
@@ -37,7 +37,7 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 		 * @since 1.14.0
 		 * @var $uabb_migration
 		 */
-		static public $uabb_migration;
+		public static $uabb_migration;
 
 		/**
 		 * Holds BB new page status.
@@ -45,12 +45,12 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 		 * @since 1.14.0
 		 * @var $stable_version_new_page
 		 */
-		static public $stable_version_new_page;
+		public static $stable_version_new_page;
 
 		/**
 		 * Initiator
 		 */
-		static public function get_instance() {
+		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
 				self::$instance = new self();
 			}

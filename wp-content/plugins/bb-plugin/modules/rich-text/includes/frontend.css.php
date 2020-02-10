@@ -14,10 +14,3 @@ FLBuilderCSS::typography_field_rule( array(
 	'setting_name' => 'typography',
 	'selector'     => ".fl-node-$id .fl-rich-text, .fl-node-$id .fl-rich-text *",
 ) );
-
-FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-rich-text strong",
-	'props'    => array(
-		'font-weight' => 'bold',
-	),
-) );

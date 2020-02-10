@@ -14,7 +14,7 @@
 		// Get the service type.
 		$service_type = null;
 
-		if ( isset( $section['services'] ) && 'all' != $section['services'] ) {
+		if ( isset( $section['services'] ) && 'all' !== $section['services'] ) {
 			$service_type = $section['services'];
 		}
 

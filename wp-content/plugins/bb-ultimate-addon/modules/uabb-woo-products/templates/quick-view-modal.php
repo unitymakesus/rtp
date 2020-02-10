@@ -6,7 +6,7 @@
  */
 
 ?>
-<div class="uabb-quick-view-<?php echo $widget_id; ?>">
+<div class="uabb-quick-view-<?php echo esc_attr( $widget_id ); ?>">
 	<div class="uabb-quick-view-bg"><div class="uabb-quick-view-loader"></div></div>
 	<div id="uabb-quick-view-modal">
 		<div class="uabb-content-main-wrapper"><?php /*Don't remove this html comment*/ ?><!--

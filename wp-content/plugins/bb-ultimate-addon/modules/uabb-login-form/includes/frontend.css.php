@@ -98,46 +98,46 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_text_color ) ) ? 'color:' . esc_attr( $settings->wp_login_btn_text_color ) . ';' : '';
 
-}
+	}
 	?>
 	<?php if ( 'color' === esc_attr( $settings->wp_login_btn_background_type ) ) { ?>
 		<?php if ( isset( $settings->wp_login_btn_background_color ) ) { ?>
 			<?php
 			echo ( ! empty( $settings->wp_login_btn_background_color ) ) ? 'background:' . esc_attr( $settings->wp_login_btn_background_color ) . ';' : '';
 
-}
+		}
 		?>
 <?php } elseif ( 'gradient' === esc_attr( $settings->wp_login_btn_background_type ) ) { ?>
 		<?php if ( isset( $settings->wp_login_btn_background_gradient ) ) { ?>
 			<?php
-			echo ( ! empty( $settings->wp_login_btn_background_gradient ) ) ? 'background:' . FLBuilderColor::gradient( $settings->wp_login_btn_background_gradient ) . ';' : '';
+			echo ( ! empty( $settings->wp_login_btn_background_gradient ) ) ? 'background:' . esc_attr( FLBuilderColor::gradient( $settings->wp_login_btn_background_gradient ) ) . ';' : '';
 
-}
+		}
 		?>
 <?php } ?>
 	<?php if ( isset( $settings->wp_login_btn_padding_top ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_padding_top ) ) ? 'padding-top:' . esc_attr( $settings->wp_login_btn_padding_top ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->wp_login_btn_padding_right ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_padding_right ) ) ? 'padding-right:' . esc_attr( $settings->wp_login_btn_padding_right ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->wp_login_btn_padding_bottom ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_padding_bottom ) ) ? 'padding-bottom:' . esc_attr( $settings->wp_login_btn_padding_bottom ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->wp_login_btn_padding_left ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_padding_left ) ) ? 'padding-left:' . esc_attr( $settings->wp_login_btn_padding_left ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( ! $version_bb_check ) { ?>
 			<?php
@@ -153,30 +153,30 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 			if ( isset( $settings->wp_login_border_radius ) ) {
 				echo ( '' !== esc_attr( $settings->wp_login_border_radius ) ) ? 'border-radius:' . esc_attr( $settings->wp_login_border_radius ) . 'px;' : '';
 			}
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->wp_login_button_border ) ) {
-		// Border - Settings.
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'wp_login_button_border',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-submit-button",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->wp_login_button_border ) ) {
+			// Border - Settings.
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'wp_login_button_border',
+					'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-submit-button",
+				)
+			);
+		}
 	}
-}
 	?>
 	<?php if ( isset( $settings->wp_login_btn_top_margin ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_top_margin ) ) ? 'margin-top:' . esc_attr( $settings->wp_login_btn_top_margin ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->wp_login_btn_bottom_margin ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->wp_login_btn_bottom_margin ) ) ? 'margin-bottom:' . esc_attr( $settings->wp_login_btn_bottom_margin ) . 'px;' : '';
 
-}
+	}
 	?>
 
 }
@@ -186,13 +186,13 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 			<?php
 			echo ( ! empty( $settings->wp_login_btn_text_hover_color ) ) ? 'color:' . esc_attr( $settings->wp_login_btn_text_hover_color ) . ';' : '';
 
-}
+		}
 		?>
 		<?php if ( isset( $settings->wp_login_btn_background_hover_color ) ) { ?>
 			<?php
 			echo ( ! empty( $settings->wp_login_btn_background_hover_color ) ) ? 'background:' . esc_attr( $settings->wp_login_btn_background_hover_color ) . ';' : '';
 
-}
+		}
 		?>
 
 
@@ -203,39 +203,39 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 			<?php
 			echo ( ! empty( $settings->form_bg_color ) ) ? 'background:' . esc_attr( $settings->form_bg_color ) . ';' : '';
 
-}
+		}
 		?>
 <?php } elseif ( 'gradient' === esc_attr( $settings->form_bg_type ) ) { ?>
 		<?php if ( isset( $settings->form_bg_gradient ) ) { ?>
 			<?php
-			echo ( ! empty( $settings->form_bg_gradient ) ) ? 'background:' . FLBuilderColor::gradient( $settings->form_bg_gradient ) . ';' : '';
+			echo ( ! empty( $settings->form_bg_gradient ) ) ? 'background:' . esc_attr( FLBuilderColor::gradient( $settings->form_bg_gradient ) ) . ';' : '';
 
-}
+		}
 		?>
 <?php } ?>
 	<?php if ( isset( $settings->form_spacing_dimension_top ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->form_spacing_dimension_top ) ) ? 'padding-top:' . esc_attr( $settings->form_spacing_dimension_top ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->form_spacing_dimension_right ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->form_spacing_dimension_right ) ) ? 'padding-right:' . esc_attr( $settings->form_spacing_dimension_right ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->form_spacing_dimension_bottom ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->form_spacing_dimension_bottom ) ) ? 'padding-bottom:' . esc_attr( $settings->form_spacing_dimension_bottom ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->form_spacing_dimension_left ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->form_spacing_dimension_left ) ) ? 'padding-left:' . esc_attr( $settings->form_spacing_dimension_left ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( ! $version_bb_check ) { ?>
 			<?php
@@ -251,18 +251,18 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 			if ( isset( $settings->form_border_radius ) ) {
 				echo ( '' !== esc_attr( $settings->form_border_radius ) ) ? 'border-radius:' . esc_attr( $settings->form_border_radius ) . 'px;' : '';
 			}
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->form_border ) ) {
-		// Border - Settings.
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'form_border',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->form_border ) ) {
+			// Border - Settings.
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'form_border',
+					'selector'     => ".fl-node-$id .uabb-lf-form-wrap",
+				)
+			);
+		}
 	}
-}
 	?>
 
 
@@ -305,23 +305,23 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 				}
 				?>
 			<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'label_typo',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-label , .fl-node-$id .uabb-lf-form-wrap .uabb-lf-checkbox-label",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'label_typo',
+					'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-label , .fl-node-$id .uabb-lf-form-wrap .uabb-lf-checkbox-label",
+				)
+			);
+		}
 	}
-}
 	?>
 	<?php if ( isset( $settings->label_color ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->label_color ) ) ? 'color:' . esc_attr( $settings->label_color ) . ';' : '';
 
-}
+	}
 	?>
 }
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-form-input {
@@ -330,37 +330,37 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 		<?php
 		echo ( ! empty( $settings->input_padding_top ) ) ? 'padding-top:' . esc_attr( $settings->input_padding_top ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->input_padding_right ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->input_padding_right ) ) ? 'padding-right:' . esc_attr( $settings->input_padding_right ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->input_padding_bottom ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->input_padding_bottom ) ) ? 'padding-bottom:' . esc_attr( $settings->input_padding_bottom ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->input_padding_left ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->input_padding_left ) ) ? 'padding-left:' . esc_attr( $settings->input_padding_left ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->input_text_color ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->input_text_color ) ) ? 'color:' . esc_attr( $settings->input_text_color ) . ';' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->input_background_color ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->input_background_color ) ) ? 'background:' . esc_attr( $settings->input_background_color ) . ';' : '';
 
-}
+	}
 	?>
 	<?php if ( ! $version_bb_check ) { ?>
 			<?php
@@ -376,18 +376,18 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 			if ( isset( $settings->input_border_radius ) ) {
 				echo ( '' !== esc_attr( $settings->input_border_radius ) ) ? 'border-radius:' . esc_attr( $settings->input_border_radius ) . 'px;' : '';
 			}
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->input_border ) ) {
-		// Border - Settings.
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'input_border',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-form-input",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->input_border ) ) {
+			// Border - Settings.
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'input_border',
+					'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-form-input",
+				)
+			);
+		}
 	}
-}
 	?>
 }
 	<?php if ( isset( $settings->input_border_active_color ) ) { ?>
@@ -397,8 +397,8 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 				border-color: <?php echo esc_attr( $settings->input_border_active_color ); ?>;
 			}
 			<?php
-}
-}
+		}
+	}
 	?>
 
 
@@ -504,23 +504,23 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 				if ( isset( $settings->lost_your_pass_text_transform ) ) {
 					echo ( '' !== esc_attr( $settings->lost_your_pass_text_transform ) ) ? 'text-transform:' . esc_attr( $settings->lost_your_pass_text_transform ) . ';' : '';
 				}
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'lost_your_pass_typo',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-lost-your-pass-label",
-			)
-		);
-	}
-}
+		} else {
+			if ( class_exists( 'FLBuilderCSS' ) ) {
+				FLBuilderCSS::typography_field_rule(
+					array(
+						'settings'     => $settings,
+						'setting_name' => 'lost_your_pass_typo',
+						'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-lost-your-pass-label",
+					)
+				);
+			}
+		}
 		?>
 		<?php if ( isset( $settings->lost_your_pass_color ) ) { ?>	
 			<?php
 			echo ( ! empty( $settings->lost_your_pass_color ) ) ? 'color:' . esc_attr( $settings->lost_your_pass_color ) . ';' : '';
 
-}
+		}
 		?>
 }
 
@@ -544,17 +544,17 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 				}
 				?>
 			<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'button_typo',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-input-group .uabb-lf-submit-button",
-			)
-		);
-	}
-}
+		} else {
+			if ( class_exists( 'FLBuilderCSS' ) ) {
+				FLBuilderCSS::typography_field_rule(
+					array(
+						'settings'     => $settings,
+						'setting_name' => 'button_typo',
+						'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-input-group .uabb-lf-submit-button",
+					)
+				);
+			}
+		}
 		?>
 }
 
@@ -578,23 +578,23 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 				}
 				?>
 			<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'input_typo',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-input-group .uabb-lf-form-input,.uabb-lf-form-wrap .uabb-lf-input-group .uabb-lf-form-input::placeholder",
-			)
-		);
-	}
-}
+		} else {
+			if ( class_exists( 'FLBuilderCSS' ) ) {
+				FLBuilderCSS::typography_field_rule(
+					array(
+						'settings'     => $settings,
+						'setting_name' => 'input_typo',
+						'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-input-group .uabb-lf-form-input,.uabb-lf-form-wrap .uabb-lf-input-group .uabb-lf-form-input::placeholder",
+					)
+				);
+			}
+		}
 		?>
 		<?php if ( isset( $settings->input_text_color ) ) { ?>	
 			<?php
 			echo ( ! empty( $settings->input_text_color ) ) ? 'color:' . esc_attr( $settings->input_text_color ) . ';' : '';
 
-}
+		}
 		?>
 }
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-end-text-wrap {		
@@ -648,54 +648,54 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 				if ( isset( $settings->errormsg_border_radius ) ) {
 					echo ( '' !== esc_attr( $settings->errormsg_border_radius ) ) ? 'border-radius:' . esc_attr( $settings->errormsg_border_radius ) . 'px;' : '';
 				}
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->errormsg_border ) ) {
-		// Border - Settings.
-		FLBuilderCSS::border_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'errormsg_border',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-error-message-wrap",
-			)
-		);
-	}
-}
+		} else {
+			if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->errormsg_border ) ) {
+				// Border - Settings.
+				FLBuilderCSS::border_field_rule(
+					array(
+						'settings'     => $settings,
+						'setting_name' => 'errormsg_border',
+						'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-error-message-wrap",
+					)
+				);
+			}
+		}
 		?>
 	<?php if ( isset( $settings->errormsg_bgcolor ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->errormsg_bgcolor ) ) ? 'background:' . esc_attr( $settings->errormsg_bgcolor ) . ';' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->errormsg_text_color ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->errormsg_text_color ) ) ? 'color:' . esc_attr( $settings->errormsg_text_color ) . ';' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->errormsg_padding_top ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->errormsg_padding_top ) ) ? 'padding-top:' . esc_attr( $settings->errormsg_padding_top ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->errormsg_padding_right ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->errormsg_padding_right ) ) ? 'padding-right:' . esc_attr( $settings->errormsg_padding_right ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->errormsg_padding_bottom ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->errormsg_padding_bottom ) ) ? 'padding-bottom:' . esc_attr( $settings->errormsg_padding_bottom ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( isset( $settings->errormsg_padding_left ) ) { ?>
 		<?php
 		echo ( ! empty( $settings->errormsg_padding_left ) ) ? 'padding-left:' . esc_attr( $settings->errormsg_padding_left ) . 'px;' : '';
 
-}
+	}
 	?>
 	<?php if ( ! $version_bb_check ) { ?>
 			<?php if ( 'default' !== esc_attr( $settings->errormsg_font_family['family'] ) && 'default' !== esc_attr( $settings->errormsg_font_family['weight'] ) ) : ?>
@@ -716,17 +716,17 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 			}
 			?>
 		<?php
-} else {
-	if ( class_exists( 'FLBuilderCSS' ) ) {
-		FLBuilderCSS::typography_field_rule(
-			array(
-				'settings'     => $settings,
-				'setting_name' => 'errormsg_typo',
-				'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-error-message-wrap",
-			)
-		);
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'errormsg_typo',
+					'selector'     => ".fl-node-$id .uabb-lf-form-wrap .uabb-lf-error-message-wrap",
+				)
+			);
+		}
 	}
-}
 	?>
 }
 
@@ -759,7 +759,7 @@ $checked_width = $font_size - intval( esc_attr( $settings->checkbox_border['widt
 	?>
 }
 <?php if ( $global_settings->responsive_enabled ) { ?>
-	@media ( max-width: <?php echo $global_settings->medium_breakpoint; ?>px ) {
+	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px ) {
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap {
 			<?php
 			if ( isset( $settings->form_spacing_dimension_top_medium ) ) {
@@ -770,99 +770,99 @@ $checked_width = $font_size - intval( esc_attr( $settings->checkbox_border['widt
 				<?php
 				echo ( ! empty( $settings->form_spacing_dimension_right_medium ) ) ? 'padding-right:' . esc_attr( $settings->form_spacing_dimension_right_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->form_spacing_dimension_bottom_medium ) ) { ?>
-			<?php
-			echo ( ! empty( $settings->form_spacing_dimension_bottom_medium ) ) ? 'padding-bottom:' . esc_attr( $settings->form_spacing_dimension_bottom_medium ) . 'px;' : '';
+				<?php
+				echo ( ! empty( $settings->form_spacing_dimension_bottom_medium ) ) ? 'padding-bottom:' . esc_attr( $settings->form_spacing_dimension_bottom_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->form_spacing_dimension_left_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->form_spacing_dimension_left_medium ) ) ? 'padding-left:' . esc_attr( $settings->form_spacing_dimension_left_medium ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-error-message-wrap {
 			<?php if ( isset( $settings->errormsg_padding_top_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->errormsg_padding_top_medium ) ) ? 'padding-top:' . esc_attr( $settings->errormsg_padding_top_medium ) . 'px;' : '';
-}
+			}
 			?>
 			<?php if ( isset( $settings->errormsg_padding_right_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->errormsg_padding_right_medium ) ) ? 'padding-right:' . esc_attr( $settings->errormsg_padding_right_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->errormsg_padding_bottom_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->errormsg_padding_bottom_medium ) ) ? 'padding-bottom:' . esc_attr( $settings->errormsg_padding_bottom_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->errormsg_padding_left_medium ) ) { ?>
-			<?php
+				<?php
 				echo ( ! empty( $settings->errormsg_padding_left_medium ) ) ? 'padding-left:' . esc_attr( $settings->errormsg_padding_left_medium ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-submit-button {
 
 			<?php if ( isset( $settings->wp_login_btn_padding_top_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_top_medium ) ) ? 'padding-top:' . esc_attr( $settings->wp_login_btn_padding_top_medium ) . 'px;' : '';
-}
+			}
 			?>
 			<?php if ( isset( $settings->wp_login_btn_padding_right_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_right_medium ) ) ? 'padding-right:' . esc_attr( $settings->wp_login_btn_padding_right_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->wp_login_btn_padding_bottom_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_bottom_medium ) ) ? 'padding-bottom:' . esc_attr( $settings->wp_login_btn_padding_bottom_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->wp_login_btn_padding_left_medium ) ) { ?>
-			<?php
+				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_left_medium ) ) ? 'padding-left:' . esc_attr( $settings->wp_login_btn_padding_left_medium ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-form-input {
 			<?php if ( isset( $settings->input_padding_top_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->input_padding_top_medium ) ) ? 'padding-top:' . esc_attr( $settings->input_padding_top_medium ) . 'px;' : '';
-}
+			}
 			?>
 			<?php if ( isset( $settings->input_padding_right_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->input_padding_right_medium ) ) ? 'padding-right:' . esc_attr( $settings->input_padding_right_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->input_padding_bottom_medium ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->input_padding_bottom_medium ) ) ? 'padding-bottom:' . esc_attr( $settings->input_padding_bottom_medium ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->input_padding_left_medium ) ) { ?>
-			<?php
+				<?php
 				echo ( ! empty( $settings->input_padding_left_medium ) ) ? 'padding-left:' . esc_attr( $settings->input_padding_left_medium ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 	}
-	@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
+	@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap {
 			<?php
 			if ( isset( $settings->form_spacing_dimension_top_responsive ) ) {
@@ -873,96 +873,96 @@ $checked_width = $font_size - intval( esc_attr( $settings->checkbox_border['widt
 				<?php
 				echo ( ! empty( $settings->form_spacing_dimension_right_responsive ) ) ? 'padding-right:' . esc_attr( $settings->form_spacing_dimension_right_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->form_spacing_dimension_bottom_responsive ) ) { ?>
-			<?php
-			echo ( ! empty( $settings->form_spacing_dimension_bottom_responsive ) ) ? 'padding-bottom:' . esc_attr( $settings->form_spacing_dimension_bottom_responsive ) . 'px;' : '';
+				<?php
+				echo ( ! empty( $settings->form_spacing_dimension_bottom_responsive ) ) ? 'padding-bottom:' . esc_attr( $settings->form_spacing_dimension_bottom_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->form_spacing_dimension_left_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->form_spacing_dimension_left_responsive ) ) ? 'padding-left:' . esc_attr( $settings->form_spacing_dimension_left_responsive ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-error-message-wrap {
 			<?php if ( isset( $settings->errormsg_padding_top_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->errormsg_padding_top_responsive ) ) ? 'padding-top:' . esc_attr( $settings->errormsg_padding_top_responsive ) . 'px;' : '';
-}
+			}
 			?>
 			<?php if ( isset( $settings->errormsg_padding_right_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->errormsg_padding_right_responsive ) ) ? 'padding-right:' . esc_attr( $settings->errormsg_padding_right_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->errormsg_padding_bottom_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->errormsg_padding_bottom_responsive ) ) ? 'padding-bottom:' . esc_attr( $settings->errormsg_padding_bottom_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->errormsg_padding_left_responsive ) ) { ?>
-			<?php
+				<?php
 				echo ( ! empty( $settings->errormsg_padding_left_responsive ) ) ? 'padding-left:' . esc_attr( $settings->errormsg_padding_left_responsive ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-submit-button {
 
 			<?php if ( isset( $settings->wp_login_btn_padding_top_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_top_responsive ) ) ? 'padding-top:' . esc_attr( $settings->wp_login_btn_padding_top_responsive ) . 'px;' : '';
-}
+			}
 			?>
 			<?php if ( isset( $settings->wp_login_btn_padding_right_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_right_responsive ) ) ? 'padding-right:' . esc_attr( $settings->wp_login_btn_padding_right_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->wp_login_btn_padding_bottom_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_bottom_responsive ) ) ? 'padding-bottom:' . esc_attr( $settings->wp_login_btn_padding_bottom_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->wp_login_btn_padding_left_responsive ) ) { ?>
-			<?php
+				<?php
 				echo ( ! empty( $settings->wp_login_btn_padding_left_responsive ) ) ? 'padding-left:' . esc_attr( $settings->wp_login_btn_padding_left_responsive ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-form-input {
 			<?php if ( isset( $settings->input_padding_top_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->input_padding_top_responsive ) ) ? 'padding-top:' . esc_attr( $settings->input_padding_top_responsive ) . 'px;' : '';
-}
+			}
 			?>
 			<?php if ( isset( $settings->input_padding_right_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->input_padding_right_responsive ) ) ? 'padding-right:' . esc_attr( $settings->input_padding_right_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->input_padding_bottom_responsive ) ) { ?>
 				<?php
 				echo ( ! empty( $settings->input_padding_bottom_responsive ) ) ? 'padding-bottom:' . esc_attr( $settings->input_padding_bottom_responsive ) . 'px;' : '';
 
-}
+			}
 			?>
 			<?php if ( isset( $settings->input_padding_left_responsive ) ) { ?>
-			<?php
+				<?php
 				echo ( ! empty( $settings->input_padding_left_responsive ) ) ? 'padding-left:' . esc_attr( $settings->input_padding_left_responsive ) . 'px;' : '';
 
-}
-?>
+			}
+			?>
 		}
 	}
 <?php } ?>

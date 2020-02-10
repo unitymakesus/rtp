@@ -13,10 +13,10 @@
 	document_width  = $( document ).width();
 	document_height = $( document ).height();
 		<?php
-		$photo_src = ( 'url' != $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' != $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' != $settings->photo_url ) ? $settings->photo_url : '' );
+		$photo_src = ( 'url' !== $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' !== $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' !== $settings->photo_url ) ? $settings->photo_url : '' );
 
 		if ( isset( $photo_src ) ) {
-			if ( '' != $photo_src ) {
+			if ( '' !== $photo_src ) {
 				if ( 'yes' === $settings->hotspot_tour ) {
 
 					$interval = $settings->tour_interval;
@@ -27,36 +27,37 @@
 					}
 					?>
 					new UABB_Hotspot({
-						node            : '<?php echo $id; ?>',
-						hotspot_tour	: '<?php echo $settings->hotspot_tour; ?>',
-						repeat			: '<?php echo $settings->hotspot_tour_repeat; ?>',
-						action_autoplay : '<?php echo $settings->autoplay_options; ?>', 
-						autoplay        : '<?php echo $settings->hotspot_tour_autoplay; ?>',  
+						node            : '<?php echo esc_attr( $id ); ?>',
+						hotspot_tour	: '<?php echo esc_attr( $settings->hotspot_tour ); ?>',
+						repeat			: '<?php echo esc_attr( $settings->hotspot_tour_repeat ); ?>',
+						action_autoplay : '<?php echo esc_attr( $settings->autoplay_options ); ?>', 
+						autoplay        : '<?php echo esc_attr( $settings->hotspot_tour_autoplay ); ?>',  
 						length          : '<?php echo count( $settings->hotspot_marker ); ?>',
-						isElEditMode    : '<?php echo FLBuilderModel::is_builder_active(); ?>',
-						tour_interval	: '<?php echo $tour_interval; ?>',
-						overlay     	: '<?php echo ( 'click' == $settings->autoplay_options ) ? 'yes' : 'no'; ?>',
+						isElEditMode    : '<?php echo esc_attr( FLBuilderModel::is_builder_active() ); ?>',
+						tour_interval	: '<?php echo esc_attr( $tour_interval ); ?>',
+						overlay     	: '<?php echo ( 'click' === $settings->autoplay_options ) ? 'yes' : 'no'; ?>',
 					});
 					<?PHP
 
 				} elseif ( count( $settings->hotspot_marker ) > 0 ) {
-					for ( $i = 0; $i < count( $settings->hotspot_marker ); $i++ ) {
+					$count = count( $settings->hotspot_marker );
+					for ( $i = 0; $i < $count; $i++ ) {
 
-						if ( 'hover' == $settings->hotspot_marker[ $i ]->tooltip_trigger_on ) {
+						if ( 'hover' === $settings->hotspot_marker[ $i ]->tooltip_trigger_on ) {
 
-							if ( 'text' != $settings->hotspot_marker[ $i ]->hotspot_marker_type ) {
+							if ( 'text' !== $settings->hotspot_marker[ $i ]->hotspot_marker_type ) {
 								?>
-								jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-wrap .uabb-imgicon-wrap').hover(function(event){
+								jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?> .uabb-hotspot-wrap .uabb-imgicon-wrap').hover(function(event){
 									event.stopPropagation();
 
-									var selector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>');
-								   
+									var selector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>');
+
 									selector.addClass('uabb-hotspot-hover');		
 
 								}, function(event) {
 									event.stopPropagation();
 
-									var selector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>');
+									var selector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>');
 
 									selector.removeClass('uabb-hotspot-hover');				
 								});
@@ -64,16 +65,16 @@
 							} else {
 								?>
 
-								jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-wrap').hover(function(event){
+								jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?> .uabb-hotspot-wrap').hover(function(event){
 									event.stopPropagation();
 
-									var selector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>');
+									var selector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>');
 									selector.addClass('uabb-hotspot-hover');
 
 								}, function(event) {
 									event.stopPropagation();
 
-									var selector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>');
+									var selector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>');
 
 									selector.removeClass('uabb-hotspot-hover');
 
@@ -82,21 +83,21 @@
 							}
 						} elseif ( 'always' === $settings->hotspot_marker[ $i ]->tooltip_trigger_on ) {
 							?>
-							var selector = jQuery( '.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>' );
+							var selector = jQuery( '.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>' );
 							if ( selector.hasClass( 'uabb-hotspot-hover' ) ) {
 								selector.removeClass('uabb-hotspot-hover');
 							} else {
 								selector.addClass('uabb-hotspot-hover');
 							}
-						<?php
+							<?php
 						} elseif ( 'click' === $settings->hotspot_marker[ $i ]->tooltip_trigger_on ) {
 
-							if ( 'text' != $settings->hotspot_marker[ $i ]->hotspot_marker_type ) {
+							if ( 'text' !== $settings->hotspot_marker[ $i ]->hotspot_marker_type ) {
 								?>
-								jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-wrap .uabb-imgicon-wrap').click(function(event){
+								jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?> .uabb-hotspot-wrap .uabb-imgicon-wrap').click(function(event){
 									event.stopPropagation();
 
-									var selector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>');
+									var selector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>');
 
 									if( selector.hasClass( 'uabb-hotspot-hover' ) ){
 										selector.removeClass('uabb-hotspot-hover');
@@ -108,10 +109,10 @@
 								<?php
 							} else {
 								?>
-							jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-wrap').click(function(event){
+							jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?> .uabb-hotspot-wrap').click(function(event){
 								event.stopPropagation();
 
-								var selector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>');
+								var selector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>');
 
 								if( selector.hasClass( 'uabb-hotspot-hover' ) ){
 									selector.removeClass('uabb-hotspot-hover');
@@ -129,11 +130,11 @@
 						<?php
 
 						if ( 'always' !== $settings->hotspot_marker[ $i ]->tooltip_trigger_on ) {
-						?>
+							?>
 						jQuery( 'body' ).click( function( event ) {
-							if(  !jQuery(event.target).is('.fl-node-<?php echo $id; ?> .uabb-hotspot-item') && !jQuery(event.target).closest('.fl-node-<?php echo $id; ?> .uabb-hotspot-item').length ) {
+							if(  !jQuery(event.target).is('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item') && !jQuery(event.target).closest('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item').length ) {
 
-								var bselector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item');
+								var bselector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item');
 
 								if( bselector.hasClass( 'uabb-hotspot-hover' ) ){
 									bselector.removeClass('uabb-hotspot-hover');
@@ -141,15 +142,15 @@
 							}
 						} );
 
-						jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-wrap <?php echo ( 'text' != $settings->hotspot_marker[ $i ]->hotspot_marker_type ) ? '.uabb-imgicon-wrap' : ''; ?>').click(function(event){
+						jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?> .uabb-hotspot-wrap <?php echo ( 'text' !== $settings->hotspot_marker[ $i ]->hotspot_marker_type ) ? '.uabb-imgicon-wrap' : ''; ?>').click(function(event){
 							event.stopPropagation();
 
-							var removeSelector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item').not(".fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>");
+							var removeSelector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item').not(".fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>");
 
 							removeSelector.removeClass('uabb-hotspot-hover');
 
 						});
-						<?php
+							<?php
 						}
 					}
 				}
@@ -167,7 +168,7 @@
 	});
 
 	jQuery(window).resize( function() {
-		if( document_width != $( document ).width() || document_height != $( document ).height() ) {
+		if( document_width !== $( document ).width() || document_height !== $( document ).height() ) {
 			document_width = $( document ).width();
 			document_height = $( document ).height();
 			responsiveTooltipShift();
@@ -176,24 +177,25 @@
 
 	function responsiveTooltipShift() {
 		<?php
-		$photo_src = ( 'url' != $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' != $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' != $settings->photo_url ) ? $settings->photo_url : '' );
+		$photo_src = ( 'url' !== $settings->photo_source ) ? ( ( isset( $settings->photo_src ) && '' !== $settings->photo_src ) ? $settings->photo_src : '' ) : ( ( '' !== $settings->photo_url ) ? $settings->photo_url : '' );
 
 		if ( isset( $photo_src ) ) {
-			if ( '' != $photo_src ) {
+			if ( '' !== $photo_src ) {
 				if ( count( $settings->hotspot_marker ) > 0 ) {
-					for ( $i = 0; $i < count( $settings->hotspot_marker ); $i++ ) {
+					$count = count( $settings->hotspot_marker );
+					for ( $i = 0; $i < $count; $i++ ) {
 						?>
-						var tooltip_style = '<?php echo $settings->hotspot_marker[ $i ]->tooltip_style; ?>',
-							itemSelector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?>'),
-							tooltip_content_position = '<?php echo $settings->hotspot_marker[ $i ]->tooltip_content_position; ?>',
+						var tooltip_style = '<?php echo esc_attr( $settings->hotspot_marker[ $i ]->tooltip_style ); ?>',
+							itemSelector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?>'),
+							tooltip_content_position = '<?php echo esc_attr( $settings->hotspot_marker[ $i ]->tooltip_content_position ); ?>',
 							itemPosition = itemSelector.offset(),
 							outerContainerWidth = window.innerWidth,
-							tooltipSelector = jQuery('.fl-node-<?php echo $id; ?> .uabb-hotspot-item-<?php echo $i; ?> .uabb-hotspot-tooltip-content');
+							tooltipSelector = jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-hotspot-item-<?php echo esc_attr( $i ); ?> .uabb-hotspot-tooltip-content');
 
 						var tooltipWidth = tooltipSelector.outerWidth(true);
 
-						if( tooltip_style != 'round' ) {
-							if( 'left' == tooltip_content_position ) {
+						if( tooltip_style !== 'round' ) {
+							if( 'left' === tooltip_content_position ) {
 								//console.log('left - '+itemPosition.left);
 								if( itemPosition.left <= ( tooltipWidth + 5 ) ) {
 									itemSelector.find('.uabb-hotspot-tooltip').removeClass('uabb-tooltip-left');
@@ -203,11 +205,11 @@
 									itemSelector.find('.uabb-hotspot-tooltip').addClass('uabb-tooltip-left');
 								}
 							}
-							if( tooltip_style == 'curved' ) {
+							if( tooltip_style === 'curved' ) {
 								tooltipWidth += 42;
 							}
 
-							if( 'right' == tooltip_content_position ) {
+							if( 'right' === tooltip_content_position ) {
 								//console.log(tooltipWidth + 45);
 								//console.log('right - '+( outerContainerWidth - itemPosition.left ));
 								if( ( outerContainerWidth - itemPosition.left ) <= ( tooltipWidth + 45 ) ) {

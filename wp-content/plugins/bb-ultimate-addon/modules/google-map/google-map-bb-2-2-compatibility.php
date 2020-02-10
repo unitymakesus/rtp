@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'GoogleMapModule', array(
+	'GoogleMapModule',
+	array(
 		'multiple_addresses' => array( // Tab.
 			'title'       => __( 'Addresses', 'uabb' ), // Tab title.
 			'description' => $notice,
@@ -274,7 +275,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'uabb_google_map_addresses', array(
+	'uabb_google_map_addresses',
+	array(
 		'title' => __( 'Add Address', 'uabb' ),
 		'tabs'  => array(
 			'general'     => array(

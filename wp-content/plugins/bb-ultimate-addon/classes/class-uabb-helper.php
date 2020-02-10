@@ -4,6 +4,7 @@
  *
  * @package UABB Helper
  */
+
 if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 
 	/**
@@ -19,40 +20,50 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 * @since 1.3.0
 		 * @var $creative_modules Category Strings
 		 */
-		static public $creative_modules = '';
+		public static $creative_modules = '';
 		/**
 		 * Holds any category strings of modules.
 		 *
 		 * @since 1.3.0
 		 * @var $content_modules Category Strings
 		 */
-		static public $content_modules = '';
+		public static $content_modules = '';
 		/**
 		 * Holds any category strings of modules.
 		 *
 		 * @since 1.3.0
 		 * @var $lead_generation Category Strings
 		 */
-		static public $lead_generation = '';
+		public static $lead_generation = '';
 		/**
 		 * Holds any category strings of modules.
 		 *
 		 * @since 1.3.0
 		 * @var $extra_additions Category Strings
 		 */
-		static public $extra_additions = '';
-		static public $woo_modules = '';
+		public static $extra_additions = '';
+		/**
+		 * Holds any category strings of modules.
+		 *
+		 * @since 1.3.0
+		 * @var $woo_modules Category Strings
+		 */
+		public static $woo_modules = '';
 		/**
 		 * Holds UABB branding short-name.
 		 *
 		 * @since 1.14.0
+		 * @var $uabb_brand_short_name Category Strings
 		 */
-		static public $uabb_brand_short_name = '';
+		public static $uabb_brand_short_name = '';
 		/**
+		 * Checks UABB branding is enabled or not
+		 *
 		 * @since 1.24.0
 		 * @var $is_branding_enabled
 		 */
-		static public $is_branding_enabled;
+		public static $is_branding_enabled;
+
 		/**
 		 * Member Variable
 		 *
@@ -73,7 +84,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since 1.0
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$this->set_constants();
 
@@ -82,14 +93,13 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				global $pagenow;
 
 				if ( false !== self::uabb_branding_name() && 'update-core.php' === $pagenow ) {
-					add_filter( 'gettext', array( $this,'get_plugin_branding_name' ), 20, 3 );
+					add_filter( 'gettext', array( $this, 'get_plugin_branding_name' ), 20, 3 );
 				}
-				add_filter( 'bsf_product_name_uabb', array( $this,'uabb_branding_name' ) );
+				add_filter( 'bsf_product_name_uabb', array( $this, 'uabb_branding_name' ) );
 				add_filter( 'bsf_product_author_uabb', array( $this, 'uabb_branding_author_name' ) );
 				add_filter( 'bsf_product_description_uabb', array( $this, 'uabb_branding_desc' ) );
-				add_filter( 'bsf_product_homepage_uabb', array($this, 'uabb_branding_url' ) );
-				add_filter( 'bsf_product_icons_uabb', array($this, 'uabb_plugin_icon_url' ));
-
+				add_filter( 'bsf_product_homepage_uabb', array( $this, 'uabb_branding_url' ) );
+				add_filter( 'bsf_product_icons_uabb', array( $this, 'uabb_plugin_icon_url' ) );
 			}
 			add_action( 'init', __CLASS__ . '::uabb_get_branding_for_docs' );
 		}
@@ -99,29 +109,28 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		function set_constants() {
+		public function set_constants() {
 
-			self::$creative_modules	= __( 'Creative Modules', 'uabb' );
-			self::$content_modules	= __( 'Content Modules', 'uabb' );
-			self::$lead_generation	= __( 'Lead Generation', 'uabb' );
-			self::$extra_additions	= __( 'Extra Additions', 'uabb' );
-			self::$woo_modules		= __( 'Woo Modules', 'uabb' );
+			self::$creative_modules = __( 'Creative Modules', 'uabb' );
+			self::$content_modules  = __( 'Content Modules', 'uabb' );
+			self::$lead_generation  = __( 'Lead Generation', 'uabb' );
+			self::$extra_additions  = __( 'Extra Additions', 'uabb' );
+			self::$woo_modules      = __( 'Woo Modules', 'uabb' );
 
-			$branding         = BB_Ultimate_Addon_Helper::get_builder_uabb_branding();
-
+			$branding         = self::get_builder_uabb_branding();
 			$branding_name    = 'UABB';
 			$branding_modules = __( 'UABB Modules', 'uabb' );
 
 			// Branding - %s.
 			if (
 				is_array( $branding ) &&
-				array_key_exists( 'uabb-plugin-short-name', $branding ) && '' != $branding['uabb-plugin-short-name'] ) {
+				array_key_exists( 'uabb-plugin-short-name', $branding ) && '' !== $branding['uabb-plugin-short-name'] ) {
 				$branding_name = $branding['uabb-plugin-short-name'];
 			}
 
 			// Branding - %s Modules.
-			if ( 'UABB' != $branding_name ) { /* translators: %s: search term */
-				$branding_modules = sprintf( __( '%s', 'uabb' ), $branding_name );
+			if ( 'UABB' !== $branding_name ) { /* translators: %s: search term */
+				$branding_modules = sprintf( __( '%s', 'uabb' ), $branding_name ); //phpcs:ignore WordPress.WP.I18n.NoEmptyStrings
 			}
 
 			if ( isset( $branding['uabb-global-module-listing'] ) && $branding['uabb-global-module-listing'] ) {
@@ -142,7 +151,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 * @since x.x.x
 		 * @param array $cat gets the BB's UI ControlPanel Category.
 		 */
-		static public function module_cat( $cat ) {
+		public static function module_cat( $cat ) {
 			return class_exists( 'FLBuilderUIContentPanel' ) ? $cat : UABB_CAT;
 		}
 		/**
@@ -150,7 +159,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since 1.18.0
 		 */
-		static public function api_key_status() {
+		public static function api_key_status() {
 
 			$status = array();
 
@@ -171,7 +180,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		static public function get_builder_uabb() {
+		public static function get_builder_uabb() {
 			$uabb = UABB_Init::$uabb_options['fl_builder_uabb'];
 
 			$defaults = array(
@@ -207,7 +216,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 * @since x.x.x
 		 * @param string $request_key gets the request key's value.
 		 */
-		static public function get_builder_uabb_branding( $request_key = '' ) {
+		public static function get_builder_uabb_branding( $request_key = '' ) {
 			$uabb = UABB_Init::$uabb_options['fl_builder_uabb_branding'];
 
 			$defaults = array(
@@ -248,7 +257,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		static public function get_all_modules() {
+		public static function get_all_modules() {
 			$modules_array = array(
 				'advanced-accordion'       => 'Advanced Accordion',
 				'advanced-icon'            => 'Advanced Icons',
@@ -296,20 +305,20 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				'team'                     => 'Team',
 				'adv-testimonials'         => 'Testimonials',
 				'uabb-content-toggle'      => 'Content Toggle',
-				'uabb-business-hours'	   => 'Business Hours',
+				'uabb-business-hours'      => 'Business Hours',
 				'uabb-video'               => 'Video',
-				'uabb-table'			   => 'Table',
+				'uabb-table'               => 'Table',
 				'uabb-video-gallery'       => 'Video Gallery',
-				'uabb-price-list'	       => 'Price List',
-				'uabb-marketing-button'	   => 'Marketing Button',
-				'uabb-business-reviews'	   => 'Business Reviews',
+				'uabb-price-list'          => 'Price List',
+				'uabb-marketing-button'    => 'Marketing Button',
+				'uabb-business-reviews'    => 'Business Reviews',
 				'uabb-off-canvas'          => 'Off Canvas',
 				'uabb-retina-image'        => 'Retina Image',
 				'uabb-registration-form'   => 'User Registration Form',
 				'uabb-table-of-contents'   => 'Table Of Contents',
 				'uabb-login-form'          => 'Login Form',
 				'uabb-how-to'              => 'How To',
-				'uabb-faq'                 => 'FAQ'
+				'uabb-faq'                 => 'FAQ',
 			);
 
 			/* Include Contact form styler */
@@ -322,12 +331,12 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			}
 			/* Include WP form styler */
 			if ( class_exists( 'WPForms_Pro' ) || class_exists( 'WPForms_Lite' ) ) {
-			    $modules_array['uabb-wp-forms-styler'] = 'WPForms Styler';
-		    }
+				$modules_array['uabb-wp-forms-styler'] = 'WPForms Styler';
+			}
 			/* Include WooCommerce modules*/
 			if ( class_exists( 'WooCommerce' ) ) {
-				$modules_array['uabb-woo-products'] = 'Woo - Products';
-				$modules_array['uabb-woo-categories'] = 'Woo - Categories';
+				$modules_array['uabb-woo-products']    = 'Woo - Products';
+				$modules_array['uabb-woo-categories']  = 'Woo - Categories';
 				$modules_array['uabb-woo-add-to-cart'] = 'Woo - Add To Cart';
 			}
 			natcasesort( $modules_array );
@@ -339,14 +348,14 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		static public function get_all_extenstions() {
+		public static function get_all_extenstions() {
 			$extenstions_array = array(
 				'uabb-row-separator' => 'Row Separator',
 				'uabb-row-gradient'  => 'Row Gradient Background',
 				'uabb-col-gradient'  => 'Column Gradient Background',
 				'uabb-col-shadow'    => 'Column Shadow',
-				'uabb-col-particle' =>  'Column Particle Backgrounds',
-				'uabb-row-particle' => 	'Row Particle Backgrounds',
+				'uabb-col-particle'  => 'Column Particle Backgrounds',
+				'uabb-row-particle'  => 'Row Particle Backgrounds',
 			);
 			return $extenstions_array;
 		}
@@ -356,7 +365,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		static public function get_builder_uabb_modules() {
+		public static function get_builder_uabb_modules() {
 			$uabb           = UABB_Init::$uabb_options['fl_builder_uabb_modules'];
 			$all_modules    = self::get_all_modules();
 			$is_all_modules = true;
@@ -375,7 +384,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				}
 			}
 
-			if ( false == $is_all_modules && isset( $uabb['all'] ) ) {
+			if ( false === $is_all_modules && isset( $uabb['all'] ) ) {
 				unset( $uabb['all'] );
 			}
 
@@ -411,7 +420,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 					if ( $type_templates ) {
 						foreach ( $type_templates as $template_id => $template_data ) {
 
-							if ( isset( $template_data['status'] ) && true == $template_data['status'] && isset( $template_data['dat_url_local'] ) && ! empty( $template_data['dat_url_local'] ) ) {
+							if ( isset( $template_data['status'] ) && true == $template_data['status'] && isset( $template_data['dat_url_local'] ) && ! empty( $template_data['dat_url_local'] ) ) { // phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 
 								$exist_templates[ $type ] = ( count( ( is_array( $exist_templates[ $type ] ) || is_object( $exist_templates[ $type ] ) ) ? $exist_templates[ $type ] : array() ) + 1 );
 							}
@@ -451,18 +460,18 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *  @param string $echo gets an string for echo.
 		 *  @return string
 		 */
-		static public function get_link_rel( $target, $is_nofollow = 0, $echo = 0 ) {
+		public static function get_link_rel( $target, $is_nofollow = 0, $echo = 0 ) {
 
 			$attr = '';
-			if ( '_blank' == $target ) {
+			if ( '_blank' === $target ) {
 				$attr .= 'noopener';
 			}
 
-			if ( 1 == $is_nofollow || 'yes' == $is_nofollow ) {
+			if ( 1 === $is_nofollow || 'yes' === $is_nofollow ) {
 				$attr .= ' nofollow';
 			}
 
-			if ( '' == $attr ) {
+			if ( '' === $attr ) {
 				return;
 			}
 
@@ -470,23 +479,25 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			if ( ! $echo ) {
 				return 'rel="' . $attr . '"';
 			}
-			echo 'rel="' . $attr . '"';
+			echo esc_attr( 'rel="' ) . esc_attr( $attr ) . esc_attr( '"' );
 		}
 
 		/**
 		 * Function that renders UABB's branding short-name
 		 *
+		 * @param String $short_name whitelabel key to be received from the database.
 		 * @since 1.14.0
 		 */
-		static public function get_uabb_branding( $short_name = false ) {
+		public static function get_uabb_branding( $short_name = false ) {
 			return self::get_uabb_whitelabel_string( 'short-name', $short_name );
 		}
 		/**
 		 * Function that renders UABB's branding Plugin name
 		 *
+		 * @param String $name whitelabel key to be received from the database.
 		 * @since 1.16.1
 		 */
-		function uabb_branding_name( $name = false ) {
+		public function uabb_branding_name( $name = false ) {
 			return self::get_uabb_whitelabel_string( 'name', $name );
 		}
 		/**
@@ -502,24 +513,26 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 
 			$label_key = 'uabb-plugin-' . $key;
 
-			$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( $label_key );
+			$branding_name = self::get_builder_uabb_branding( $label_key );
 
 			if ( ! empty( $branding_name ) ) {
 				return $branding_name;
 			}
 
- 			return $default;
+			return $default;
 		}
 		/**
 		 * Function that checks if UABB's branding is enabled
 		 *
 		 * @since 1.24.0
 		 */
-		static public function uabb_get_branding_for_docs() {
+		public static function uabb_get_branding_for_docs() {
 
 			if ( null === self::$is_branding_enabled ) {
+
 				$branding_name       = self::get_uabb_whitelabel_string( 'name', false );
 				$branding_short_name = self::get_uabb_whitelabel_string( 'short-name', false );
+
 				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
 					self::$is_branding_enabled = 'no';
 				} else {
@@ -530,6 +543,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		/**
 		 * Function that renders UABB's branding Plugin Author name
 		 *
+		 * @param String $author_name whitelabel key to be received from the database.
 		 * @since 1.16.1
 		 */
 		public function uabb_branding_author_name( $author_name = false ) {
@@ -538,6 +552,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		/**
 		 * Function that renders UABB's branding Plugin description
 		 *
+		 * @param String $desc whitelabel key to be received from the database.
 		 * @since 1.16.1
 		 */
 		public function uabb_branding_desc( $desc = false ) {
@@ -546,6 +561,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		/**
 		 * Function that renders UABB's branding Plugin URL
 		 *
+		 * @param String $url whitelabel key to be received from the database.
 		 * @since 1.16.1
 		 */
 		public function uabb_branding_url( $url = false ) {
@@ -555,8 +571,8 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		 *  Function that renders UABB's branding Plugin Name
 		 *
 		 *  @since 1.16.1
-		 *  @param string $translated_text an string for the translatable.
 		 *  @param string $text gets an string for is plugin name.
+		 *  @param string $original an string for the translatable.
 		 *  @param string $domain gets an plugin domain.
 		 *  @return string
 		 */
@@ -586,7 +602,6 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 		public function uabb_plugin_icon_url() {
 
 			$icon_url = ( false !== self::get_uabb_whitelabel_string( 'icon-url' ) ) ? self::get_uabb_whitelabel_string( 'icon-url' ) : BB_ULTIMATE_ADDON_URL . 'assets/images/uabb.svg';
-
 			return array(
 				'default' => $icon_url,
 			);

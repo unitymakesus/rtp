@@ -24,7 +24,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$this->uabb_setting_options = UABB_Global_Styling::get_uabb_global_settings();
 
@@ -59,10 +59,10 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		 * @param var    $color gets the color.
 		 * @param var    $opc gets the opacity for the colorpicker.
 		 */
-		function uabb_get_global_option( $option, $color = false, $opc = false ) {
+		public function uabb_get_global_option( $option, $color = false, $opc = false ) {
 			$uabb_setting_options = $this->uabb_setting_options;
 
-			if ( isset( $uabb_setting_options->enable_global ) && ( 'no' == $uabb_setting_options->enable_global ) ) {
+			if ( isset( $uabb_setting_options->enable_global ) && ( 'no' === $uabb_setting_options->enable_global ) ) {
 				return '';
 			} elseif ( isset( $uabb_setting_options->$option ) && ! empty( $uabb_setting_options->$option ) ) {
 
@@ -77,7 +77,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Theme Color -
 		 */
-		function uabb_global_theme_color() {
+		public function uabb_global_theme_color() {
 			$color = $this->uabb_get_global_option( 'theme_color', true );
 
 			return $color;
@@ -88,7 +88,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Text Color -
 		 */
-		function uabb_global_text_color() {
+		public function uabb_global_text_color() {
 			$color = $this->uabb_get_global_option( 'theme_text_color', true );
 
 			return $color;
@@ -99,7 +99,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Link Color -
 		 */
-		function uabb_global_link_color() {
+		public function uabb_global_link_color() {
 			$color = $this->uabb_get_global_option( 'theme_link_color', true );
 
 			return $color;
@@ -110,7 +110,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Link Hover Color -
 		 */
-		function uabb_global_link_hover_color() {
+		public function uabb_global_link_hover_color() {
 			$color = $this->uabb_get_global_option( 'theme_link_hover_color', true );
 
 			return $color;
@@ -120,14 +120,14 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Font Family
 		 */
-		function uabb_global_button_font_family() {
+		public function uabb_global_button_font_family() {
 			return $btn_font_family;
 		}
 
 		/**
 		 * Button Font Size -
 		 */
-		function uabb_global_button_font_size() {
+		public function uabb_global_button_font_size() {
 			$font_size = $this->uabb_get_global_option( 'btn_font_size' );
 
 			return $font_size;
@@ -136,7 +136,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Line Height -
 		 */
-		function uabb_global_button_line_height() {
+		public function uabb_global_button_line_height() {
 			$line_height = $this->uabb_get_global_option( 'btn_line_height' );
 
 			return $line_height;
@@ -146,7 +146,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Letter Spacing -
 		 */
-		function uabb_global_button_letter_spacing() {
+		public function uabb_global_button_letter_spacing() {
 			$letter_spacing = $this->uabb_get_global_option( 'btn_letter_spacing' );
 
 			return $letter_spacing;
@@ -156,7 +156,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Text Transform -
 		 */
-		function uabb_global_button_text_transform() {
+		public function uabb_global_button_text_transform() {
 			$text_transform = $this->uabb_get_global_option( 'btn_text_transform' );
 
 			return $text_transform;
@@ -166,7 +166,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Text Color -
 		 */
-		function uabb_global_button_text_color() {
+		public function uabb_global_button_text_color() {
 			$color = $this->uabb_get_global_option( 'btn_text_color', true );
 
 			return $color;
@@ -176,7 +176,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Text Hover Color -
 		 */
-		function uabb_global_button_text_hover_color() {
+		public function uabb_global_button_text_hover_color() {
 			$color = $this->uabb_get_global_option( 'btn_text_hover_color', true );
 
 			return $color;
@@ -186,7 +186,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Background Color -
 		 */
-		function uabb_global_button_bg_color() {
+		public function uabb_global_button_bg_color() {
 			$color = $this->uabb_get_global_option( 'btn_bg_color', true, true );
 
 			return $color;
@@ -196,7 +196,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Background Hover Color -
 		 */
-		function uabb_global_button_bg_hover_color() {
+		public function uabb_global_button_bg_hover_color() {
 			$color = $this->uabb_get_global_option( 'btn_bg_hover_color', true, true );
 
 			return $color;
@@ -206,7 +206,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Border Radius -
 		 */
-		function uabb_global_button_border_radius() {
+		public function uabb_global_button_border_radius() {
 			$border_radius = $this->uabb_get_global_option( 'btn_border_radius' );
 
 			return $border_radius;
@@ -217,13 +217,13 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Button Padding -
 		 */
-		function uabb_global_button_padding() {
+		public function uabb_global_button_padding() {
 			$padding = '';
 
 			$v_padding = $this->uabb_get_global_option( 'btn_vertical_padding' );
 			$h_padding = $this->uabb_get_global_option( 'btn_horizontal_padding' );
 
-			if ( '' != $v_padding && '' != $h_padding ) {
+			if ( '' !== $v_padding && '' !== $h_padding ) {
 				$padding = $v_padding . 'px ' . $h_padding . 'px';
 			}
 
@@ -233,7 +233,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Vertical Padding -
 		 */
-		function uabb_global_button_vertical_padding() {
+		public function uabb_global_button_vertical_padding() {
 			$v_padding = '';
 
 			$v_padding = $this->uabb_get_global_option( 'btn_vertical_padding' );
@@ -244,7 +244,7 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 		/**
 		 * Horizontal Padding -
 		 */
-		function uabb_global_button_horizontal_padding() {
+		public function uabb_global_button_horizontal_padding() {
 			$h_padding = '';
 
 			$h_padding = $this->uabb_get_global_option( 'btn_horizontal_padding' );
@@ -256,5 +256,3 @@ if ( ! class_exists( 'UABBGlobalSettingsOptions' ) ) {
 
 	new UABBGlobalSettingsOptions();
 }
-
-

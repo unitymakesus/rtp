@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBDualColorModule', array(
+	'UABBDualColorModule',
+	array(
 		'dual_color'      => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

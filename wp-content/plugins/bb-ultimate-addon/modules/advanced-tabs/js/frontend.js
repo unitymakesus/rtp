@@ -1,35 +1,47 @@
 jQuery(document).ready(function() {
+	
+	// Regexp for validating user input as ID : https://regex101.com/r/KGj6I6/1
+	var pattern = new RegExp('^[\\w\\-]+$');
 
-	var hashval = window.location.hash,
-		hashvalarr = hashval.split( "-" ),
-		dataindex = hashvalarr[hashvalarr.length-1],
-		tab_id = hashval.replace( '-' + dataindex, '' );
+	var hashval = window.location.hash.substring(1);
 
-	if( tab_id != '' ) {
-		if( jQuery( tab_id ).length > 0 ) {
+	if ( pattern.test( hashval ) ) {
 
-			if( jQuery( tab_id ).find('.uabb-tabs').find( ' > .uabb-tabs-nav > ul > li[data-index="' + dataindex + '"]' ) ) {
-				var current_li = jQuery( tab_id ).find('.uabb-tabs').find( ' > .uabb-tabs-nav > ul > li[data-index="' + dataindex + '"]' ).first(),
-					current_li_index = current_li.index(),
-					adv_node = current_li.closest('.fl-module').attr('data-node'),
-					parent_uabb_tabs = current_li.closest('.uabb-tabs');
+		var hashval_last_index = hashval.lastIndexOf('-');
 
-				current_li.siblings().removeClass('uabb-tab-current');
-				current_li.addClass('uabb-tab-current');
+		var tab_id = hashval.slice(0,hashval_last_index);
 
-				parent_uabb_tabs.find(' > .uabb-content-wrap > .section').removeClass('uabb-content-current').first();
-				parent_uabb_tabs.find(' > .uabb-content-wrap > .section:eq('+ current_li_index +')').addClass('uabb-content-current').first();
+		var dataindex = hashval.slice(hashval_last_index+1 , hashval.length);
 
-				parent_uabb_tabs.find(' > .uabb-content-wrap > .uabb-content-current > .uabb-tab-acc-title.uabb-acc-'+ current_li_index ).trigger('click');
-				
-				var trigger_args = '.fl-node-'+ adv_node + ' .uabb-content-current';
-				// Trigger the Adv Tab Click trigger.
-				UABBTrigger.triggerHook( 'uabb-tab-click', trigger_args );
+		if( tab_id != '' ) {
 
-				
-				jQuery('html, body').animate({
-					scrollTop: jQuery( tab_id ).offset().top - 250
-				}, 250);
+			var tab_id = "#" + tab_id;
+
+			if( jQuery( tab_id ).length > 0 ) {
+
+				if( jQuery( tab_id ).find('.uabb-tabs').find( ' > .uabb-tabs-nav > ul > li[data-index="' + dataindex + '"]' ) ) {
+					var current_li = jQuery( tab_id ).find('.uabb-tabs').find( ' > .uabb-tabs-nav > ul > li[data-index="' + dataindex + '"]' ).first(),
+						current_li_index = current_li.index(),
+						adv_node = current_li.closest('.fl-module').attr('data-node'),
+						parent_uabb_tabs = current_li.closest('.uabb-tabs');
+
+					current_li.siblings().removeClass('uabb-tab-current');
+					current_li.addClass('uabb-tab-current');
+
+					parent_uabb_tabs.find(' > .uabb-content-wrap > .section').removeClass('uabb-content-current').first();
+					parent_uabb_tabs.find(' > .uabb-content-wrap > .section:eq('+ current_li_index +')').addClass('uabb-content-current').first();
+
+					parent_uabb_tabs.find(' > .uabb-content-wrap > .uabb-content-current > .uabb-tab-acc-title.uabb-acc-'+ current_li_index ).trigger('click');
+					
+					var trigger_args = '.fl-node-'+ adv_node + ' .uabb-content-current';
+					// Trigger the Adv Tab Click trigger.
+					UABBTrigger.triggerHook( 'uabb-tab-click', trigger_args );
+
+					
+					jQuery('html, body').animate({
+						scrollTop: jQuery( tab_id ).offset().top - 250
+					}, 250);
+				}
 			}
 		}
 	}
@@ -200,6 +212,7 @@ jQuery(document).ready(function() {
 							current_li_index = current_li.index(),
 							adv_node = current_li.closest('.fl-module').attr('data-node'),
 							parent_uabb_tabs = current_li.closest('.uabb-tabs');
+
 
 						current_li.siblings().removeClass('uabb-tab-current');
 						current_li.addClass('uabb-tab-current');

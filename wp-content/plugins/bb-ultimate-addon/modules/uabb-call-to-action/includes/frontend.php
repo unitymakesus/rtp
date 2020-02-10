@@ -7,12 +7,12 @@
 
 ?>
 
-<div class="uabb-module-content <?php echo $module->get_classname(); ?>">
+<div class="uabb-module-content <?php echo wp_kses_post( $module->get_classname() ); ?>">
 	<div class="uabb-cta-text">
-		<<?php echo $settings->title_tag_selection; ?> class="uabb-cta-title"><?php echo $settings->title; ?></<?php echo $settings->title_tag_selection; ?>>
+		<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-cta-title"><?php echo wp_kses_post( $settings->title ); ?></<?php echo esc_attr( $settings->title_tag_selection ); ?>>
 
-		<?php if ( '' != $settings->text ) { ?>
-		<span class="uabb-cta-text-content uabb-text-editor"><?php echo $settings->text; ?></span>
+		<?php if ( '' !== $settings->text ) { ?>
+		<span class="uabb-cta-text-content uabb-text-editor"><?php echo wp_kses_post( $settings->text ); ?></span>
 		<?php } ?>
 
 	</div>

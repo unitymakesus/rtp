@@ -49,16 +49,10 @@ if ( class_exists( 'WooCommerce' ) ) {
 		 */
 		public function get_icon( $icon = '' ) {
 
-			// check if $icon is referencing an included icon.
-			if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-add-to-cart/icon/' . $icon ) ) {
-				$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-add-to-cart/icon/' . $icon;
+			if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-add-to-cart/icon/' . $icon ) ) {
+				return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-add-to-cart/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 			}
-
-			if ( file_exists( $path ) ) {
-				return file_get_contents( $path );
-			} else {
-				return '';
-			}
+			return '';
 		}
 
 		/**
@@ -75,7 +69,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 			$page_migrated           = UABB_Compatibility::$uabb_migration;
 			$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-			if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+			if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 				// compatibility for Button.
 				if ( ! isset( $settings->button_font_typo ) || ! is_array( $settings->button_font_typo ) ) {
@@ -93,7 +87,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 					}
 					if ( isset( $settings->font_family['weight'] ) ) {
 
-						if ( 'regular' == $settings->font_family['weight'] ) {
+						if ( 'regular' === $settings->font_family['weight'] ) {
 							$settings->button_font_typo['font_weight'] = 'normal';
 						} else {
 							$settings->button_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -231,7 +225,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 				$product_data = get_post( $settings->product_id );
 			}
 
-			$product = ! empty( $product_data ) && in_array( $product_data->post_type, array( 'product', 'product_variation' ) ) ? wc_setup_product_data( $product_data ) : false;
+			$product = ! empty( $product_data ) && in_array( $product_data->post_type, array( 'product', 'product_variation' ) ) ? wc_setup_product_data( $product_data ) : false; // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 
 			if ( $product ) {
 
@@ -246,7 +240,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 					$product->supports( 'ajax_add_to_cart' ) ? 'ajax_add_to_cart' : '',
 				);
 
-				if ( 'transparent' == $settings->style ) {
+				if ( 'transparent' === $settings->style ) {
 					$class[] = 'uabb-creative-button uabb-creative-transparent-btn';
 					if ( isset( $settings->transparent_button_options ) && ! empty( $settings->transparent_button_options ) ) {
 						$class[] .= ' uabb-' . $settings->transparent_button_options . '-btn';
@@ -285,10 +279,10 @@ if ( class_exists( 'WooCommerce' ) ) {
 					$atc_html     .= '</span>';
 				$atc_html         .= '</a>';
 
-				echo $atc_html;
+				echo $atc_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			} elseif ( current_user_can( 'manage_options' ) ) {
 
-				if ( 'transparent' == $settings->style ) {
+				if ( 'transparent' === $settings->style ) {
 					$new_class = ' uabb-creative-button uabb-creative-transparent-btn';
 					if ( isset( $settings->transparent_button_options ) && ! empty( $settings->transparent_button_options ) ) {
 						$new_class .= 'uabb-' . $settings->transparent_button_options . '-btn';
@@ -302,7 +296,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 					$atc_html     .= '</span>';
 				$atc_html         .= '</a>';
 
-				echo $atc_html;
+				echo $atc_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 	}

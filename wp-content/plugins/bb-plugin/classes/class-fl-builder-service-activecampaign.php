@@ -241,7 +241,7 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 
 		foreach ( (array) $lists as $list ) {
 			if ( is_object( $list ) && isset( $list->id ) ) {
-				$options[ $list->id ] = $list->name;
+				$options[ $list->id ] = esc_attr( $list->name );
 			}
 		}
 

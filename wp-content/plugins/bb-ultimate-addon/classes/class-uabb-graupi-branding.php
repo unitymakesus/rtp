@@ -55,22 +55,22 @@ final class UABBGraupiBranding {
 	 *
 	 * @since x.x.x
 	 */
-	static public function init() {
+	public static function init() {
 
 		self::set_variables();
-		if ( '' != self::$author_name ) {
+		if ( '' !== self::$author_name ) {
 			add_filter( 'agency_updater_fullname', __CLASS__ . '::author_name' );
 		}
 
-		if ( '' != self::$plugin_short_name ) {
+		if ( '' !== self::$plugin_short_name ) {
 			add_filter( 'agency_updater_shortname', __CLASS__ . '::plugin_short_name' );
 		}
 
-		if ( '' != self::$plugin_name ) {
+		if ( '' !== self::$plugin_name ) {
 			add_filter( 'agency_updater_productname_uabb', __CLASS__ . '::plugin_name' );
 		}
 
-		if ( '' != self::$support_url ) {
+		if ( '' !== self::$support_url ) {
 			add_filter( 'agency_updater_request_support', __CLASS__ . '::support_url' );
 		}
 	}
@@ -80,7 +80,7 @@ final class UABBGraupiBranding {
 	 *
 	 * @since x.x.x
 	 */
-	static public function set_variables() {
+	public static function set_variables() {
 		self::$author_name       = '';
 		self::$plugin_short_name = '';
 		self::$plugin_name       = '';
@@ -93,7 +93,7 @@ final class UABBGraupiBranding {
 			self::$plugin_name = ( array_key_exists( 'uabb-plugin-name', self::$branding ) ) ? self::$branding['uabb-plugin-name'] : '';
 			self::$support_url = ( array_key_exists( 'uabb-contact-support-url', self::$branding ) ) ? self::$branding['uabb-contact-support-url'] : '';
 
-			if ( UABB_PREFIX != 'UABB' ) {
+			if ( UABB_PREFIX !== 'UABB' ) {
 				self::$plugin_short_name = UABB_PREFIX;
 			}
 		}
@@ -102,7 +102,7 @@ final class UABBGraupiBranding {
 	/**
 	 * Replace : Brainstorm Force
 	 */
-	static public function author_name() {
+	public static function author_name() {
 
 		return self::$author_name;
 	}
@@ -110,7 +110,7 @@ final class UABBGraupiBranding {
 	/**
 	 * Replace : Brainstorm
 	 */
-	static public function plugin_short_name() {
+	public static function plugin_short_name() {
 
 		return self::$plugin_short_name;
 	}
@@ -118,7 +118,7 @@ final class UABBGraupiBranding {
 	/**
 	 * Replace : Ultimate addons for Beaver Builder
 	 */
-	static public function plugin_name() {
+	public static function plugin_name() {
 
 		return self::$plugin_name;
 	}
@@ -126,7 +126,7 @@ final class UABBGraupiBranding {
 	/**
 	 * Replace : Support Url
 	 */
-	static public function support_url() {
+	public static function support_url() {
 
 		return self::$support_url;
 	}

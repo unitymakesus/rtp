@@ -154,6 +154,10 @@ FLBuilder::register_module(
 								'selector' => '.uabb-modal-content-data',
 							),
 						),
+						'ct_raw'            => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . wp_create_nonce( 'uabb-module-nonce' ) . '></div>',
+						),
 						'ct_photo'          => array(
 							'type'        => 'photo',
 							'label'       => __( 'Select Photo', 'uabb' ),

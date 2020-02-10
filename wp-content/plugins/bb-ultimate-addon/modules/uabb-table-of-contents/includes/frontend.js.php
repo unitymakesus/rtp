@@ -38,16 +38,15 @@ $select_heading = implode( ',', $headings );
 
 jQuery(document).ready(function() {
 	new UABBTableofContents({
-			id: '<?php echo $id; ?>',
-			heading_title:'<?php echo $settings->heading_title; ?>',
-			head_data: '<?php echo $select_heading; ?>',
-			list_select: '<?php echo $settings->bullet_icon; ?>',
-			scroll_animation: '<?php echo $settings->scroll_animation; ?>',
-			scroll_effect: '<?php echo $settings->scroll_effect; ?>',
-			scroll_offset: '<?php echo $settings->scroll_offset; ?>',
-			scroll_top: '<?php echo $settings->scroll_top; ?>',
-			toc_toggle:'<?php echo $settings->show_button; ?>',
-			auto_collapsible:'<?php echo $settings->toc_collpseable; ?>',
+			id: '<?php echo esc_attr( $id ); ?>',
+			heading_title:'<?php echo esc_attr( $settings->heading_title ); ?>',
+			head_data: '<?php echo esc_attr( $select_heading ); ?>',
+			scroll_animation: '<?php echo esc_attr( $settings->scroll_animation ); ?>',
+			scroll_effect: '<?php echo esc_attr( $settings->scroll_effect ); ?>',
+			scroll_offset: '<?php echo esc_attr( $settings->scroll_offset ); ?>',
+			scroll_top: '<?php echo esc_attr( $settings->scroll_top ); ?>',
+			toc_toggle:'<?php echo esc_attr( $settings->show_button ); ?>',
+			auto_collapsible:'<?php echo esc_attr( $settings->toc_collpseable ); ?>',
 
 		});
 

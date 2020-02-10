@@ -3595,7 +3595,7 @@
  }
 }, {
  "Playfair Display": {
-  "variants": ["regular", "italic", "700", "700italic", "900", "900italic"],
+  "variants": ["regular", "500", "600", "700", "800", "900", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
   "fallback": "serif"
  }
 }, {

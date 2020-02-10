@@ -19,7 +19,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 
 <?php
 
-$post_id    = $product->get_id();
+$post_id    = $product->get_id(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $class      = array();
 $classes    = array();
 $classes[]  = 'post-' . $post_id;
@@ -34,7 +34,7 @@ $out_of_stock        = get_post_meta( $post_id, '_stock_status', true );
 $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out of stock', 'uabb' ) );
 
 ?>
-<li class=" <?php echo $wc_classes; ?>">
+<li class=" <?php echo esc_attr( $wc_classes ); ?>">
 	<div class="uabb-woo-product-wrapper">
 		<?php
 
@@ -51,7 +51,7 @@ $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out o
 				}
 			}
 
-			echo '<div class="uabb-flash-container ' . $double_flash . '">';
+			echo '<div class="uabb-flash-container ' . esc_attr( $double_flash ) . '">';
 
 
 			if ( 'none' !== $sale_flash ) {
@@ -76,15 +76,15 @@ $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out o
 
 		/* Out of stock */
 		if ( 'outofstock' === $out_of_stock ) {
-			echo '<span class="uabb-out-of-stock">' . esc_html( $out_of_stock_string ) . '</span>';
+			echo '<span class="uabb-out-of-stock">' . esc_attr( $out_of_stock_string ) . '</span>';
 		}
 
 		/* Quick View */
 		if ( 'show' === $quick_view_type ) {
 
-			echo '<div class="uabb-quick-view-btn" data-product_id="' . $post_id . '">';
+			echo '<div class="uabb-quick-view-btn" data-product_id="' . esc_attr( $post_id ) . '">';
 				echo '<span class="uabb-qv-icon fa fa-eye"></span>';
-				echo '<span class="uabb-qv-text">' . __( 'Quick View', 'uabb' ) . '</span>';
+				echo '<span class="uabb-qv-text">' . esc_attr_e( 'Quick View', 'uabb' ) . '</span>';
 			echo '</div>';
 		}
 

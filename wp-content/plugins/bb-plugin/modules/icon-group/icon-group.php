@@ -71,9 +71,9 @@ FLBuilder::register_module('FLIconGroupModule', array(
 						),
 					),
 					'align'   => array(
-						'type'    => 'align',
-						'label'   => __( 'Alignment', 'fl-builder' ),
-						'default' => 'center',
+						'type'       => 'align',
+						'label'      => __( 'Alignment', 'fl-builder' ),
+						'default'    => 'center',
 						'responsive' => true,
 						'preview'    => array(
 							'type'     => 'css',

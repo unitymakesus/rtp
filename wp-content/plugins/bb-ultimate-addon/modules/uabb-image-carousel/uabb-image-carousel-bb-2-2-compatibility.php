@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBImageCarouselModule', array(
+	'UABBImageCarouselModule',
+	array(
 		'general'         => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
@@ -26,7 +27,8 @@ FLBuilder::register_module(
 							'label'   => __( 'Photo Size', 'uabb' ),
 							'default' => 'medium',
 							'options' => apply_filters(
-								'uabb_image_carousel_sizes', array(
+								'uabb_image_carousel_sizes',
+								array(
 									'thumbnail' => __( 'Thumbnail', 'uabb' ),
 									'medium'    => __( 'Medium', 'uabb' ),
 									'full'      => __( 'Full', 'uabb' ),

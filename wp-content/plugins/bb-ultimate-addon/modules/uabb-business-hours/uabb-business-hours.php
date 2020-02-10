@@ -48,7 +48,7 @@ class UABBBusinessHours extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle old border settings.
 			if ( isset( $settings->border_color ) ) {
@@ -104,7 +104,7 @@ class UABBBusinessHours extends FLBuilderModule {
 				}
 				if ( isset( $settings->days_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->days_font['weight'] ) {
+					if ( 'regular' === $settings->days_font['weight'] ) {
 						$settings->day_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->day_font_typo['font_weight'] = $settings->days_font['weight'];
@@ -194,7 +194,7 @@ class UABBBusinessHours extends FLBuilderModule {
 				}
 				if ( isset( $settings->hours_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->hours_font['weight'] ) {
+					if ( 'regular' === $settings->hours_font['weight'] ) {
 						$settings->hour_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->hour_font_typo['font_weight'] = $settings->hours_font['weight'];

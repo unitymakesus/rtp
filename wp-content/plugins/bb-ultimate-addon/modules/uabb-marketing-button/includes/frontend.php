@@ -5,4 +5,4 @@
  *  @package UABB Button Module
  */
 
-echo $module->render_button();
+echo wp_kses_post( $module->render_button() );

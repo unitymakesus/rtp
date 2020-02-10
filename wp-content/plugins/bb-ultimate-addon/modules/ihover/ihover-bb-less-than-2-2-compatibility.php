@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'iHoverModule', array(
+	'iHoverModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array(
@@ -433,7 +434,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'ihover_item_form', array(
+	'ihover_item_form',
+	array(
 		'title' => __( 'Add iHover Item', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

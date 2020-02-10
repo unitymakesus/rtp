@@ -1,3 +1,15 @@
+<h4>2.3.1.2 - 02/05/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Prevent script and iframe code being added to layout and global css/js settings.</li>
+	<li>Added warning to admin license page if wrong version is installed for license which prevents updates.</li>
+	<li>Fixed global row settings not opening in new window to edit row.</li>
+	<li>Fixed per-node CSS rendering when it doesn't need to.</li>
+	<li>Fixed subscribe module tags/lists when tags contain invalid characters.</li>
+	<li>Allow shortcodes in row background image setting when set to url.</li>
+	<li>Fixed issue with Smush Pro iframe lazyload.</li>
+</ul>
+
 <h4>2.3.1.1 - 01/21/2020</h4>
 <strong>Hot Fix</strong>
 <ul>

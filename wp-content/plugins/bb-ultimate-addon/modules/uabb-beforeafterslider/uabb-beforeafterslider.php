@@ -50,7 +50,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle opacity color field.
 			$helper->handle_opacity_inputs( $settings, 'handle_back_overlay_opc', 'handle_back_overlay' );
@@ -70,7 +70,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->slider_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->slider_font_family['weight'] ) {
+					if ( 'regular' === $settings->slider_font_family['weight'] ) {
 						$settings->slider_typo['font_weight'] = 'normal';
 					} else {
 						$settings->slider_typo['font_weight'] = $settings->slider_font_family['weight'];
@@ -132,7 +132,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 				);
 				unset( $settings->slider_label_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle opacity color field.
 			$helper->handle_opacity_inputs( $settings, 'handle_back_overlay_opc', 'handle_back_overlay' );
@@ -153,7 +153,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->slider_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->slider_font_family['weight'] ) {
+					if ( 'regular' === $settings->slider_font_family['weight'] ) {
 						$settings->slider_typo['font_weight'] = 'normal';
 					} else {
 						$settings->slider_typo['font_weight'] = $settings->slider_font_family['weight'];
@@ -182,7 +182,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 				}
 			}
 			if ( isset( $settings->slider_line_height_unit ) ) {
-				if ( isset( $settings->slider_line_height['small'] ) && isset( $settings->slider_font_size['small'] ) && 0 != $settings->slider_font_size['small'] ) {
+				if ( isset( $settings->slider_line_height['small'] ) && isset( $settings->slider_font_size['small'] ) && 0 !== $settings->slider_font_size['small'] ) {
 					if ( is_numeric( $settings->slider_line_height['small'] ) && is_numeric( $settings->slider_font_size['small'] ) ) {
 						$settings->slider_typo['line_height'] = array(
 							'length' => round( $settings->slider_line_height['small'] / $settings->slider_font_size['small'], 2 ),
@@ -190,7 +190,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->slider_line_height['medium'] ) && isset( $settings->slider_font_size['medium'] ) && 0 != $settings->slider_font_size['medium'] ) {
+				if ( isset( $settings->slider_line_height['medium'] ) && isset( $settings->slider_font_size['medium'] ) && 0 !== $settings->slider_font_size['medium'] ) {
 					if ( is_numeric( $settings->slider_line_height['medium'] ) && is_numeric( $settings->slider_font_size['medium'] ) ) {
 						$settings->slider_typo_medium['line_height'] = array(
 							'length' => round( $settings->slider_line_height['medium'] / $settings->slider_font_size['medium'], 2 ),
@@ -198,7 +198,7 @@ class UABBBeforeaftersliderModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->slider_line_height['desktop'] ) && isset( $settings->slider_font_size['desktop'] ) && 0 != $settings->slider_font_size['desktop'] ) {
+				if ( isset( $settings->slider_line_height['desktop'] ) && isset( $settings->slider_font_size['desktop'] ) && 0 !== $settings->slider_font_size['desktop'] ) {
 					if ( is_numeric( $settings->slider_line_height['desktop'] ) && is_numeric( $settings->slider_font_size['desktop'] ) ) {
 						$settings->slider_typo['line_height'] = array(
 							'length' => round( $settings->slider_line_height['desktop'] / $settings->slider_font_size['desktop'], 2 ),

@@ -712,7 +712,7 @@ if ( ! $version_bb_check ) {
 <?php if ( $global_settings->responsive_enabled ) { ?>
 
 		<?php /* Medium Breakpoint media query */ ?>
-		@media ( max-width: <?php echo $global_settings->medium_breakpoint . 'px'; ?> ) {
+		@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
 
 			/* For Medium Device */
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-how-to-container .uabb-how-to-title {
@@ -814,8 +814,8 @@ if ( ! $version_bb_check ) {
 			<?php } ?>
 			}
 }
-<?php /* Small Breakpoint media query */ ?>
-@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
+	<?php /* Small Breakpoint media query */ ?>
+@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
 
 	/* For Small Device */
 

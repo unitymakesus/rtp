@@ -167,11 +167,15 @@
             }
             var self = this;
 
+            var form = $('.fl-builder-settings');
+			nonce = form.find( '.uabb-module-raw' ).data( 'uabb-module-nonce' );
+
             $.post(
                 ajaxurl,
                 {
                     action: 'uabb_get_saved_templates',
-                    type: type
+                    type: type,
+                    nonce: nonce,
                 },
                 function( response ) {
                     callback(response);
@@ -197,7 +201,7 @@
             }
 
             this._getTemplates(type, function(data) {
-                var response = JSON.parse( data );
+                var response = data;
 
                 if ( response.success ) {
                     self._templates[type] = response.data;

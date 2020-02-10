@@ -5,4 +5,4 @@
  *  @package Video Module's Frontend.php file
  */
 
-echo $module->render();
+echo $module->render(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

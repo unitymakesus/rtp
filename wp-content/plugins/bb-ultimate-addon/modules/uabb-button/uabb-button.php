@@ -46,7 +46,7 @@ class UABBButtonModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle color opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
@@ -66,7 +66,7 @@ class UABBButtonModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->button_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_typo['font_weight'] = $settings->font_family['weight'];
@@ -134,11 +134,11 @@ class UABBButtonModule extends FLBuilderModule {
 				unset( $settings->align );
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+				if ( '1' === $settings->link_nofollow || 'yes' === $settings->link_nofollow ) {
 					$settings->link_nofollow = 'yes';
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle color opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
@@ -158,7 +158,7 @@ class UABBButtonModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->button_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_typo['font_weight'] = $settings->font_family['weight'];
@@ -185,7 +185,7 @@ class UABBButtonModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->button_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -193,7 +193,7 @@ class UABBButtonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->button_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -201,7 +201,7 @@ class UABBButtonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->button_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -214,7 +214,7 @@ class UABBButtonModule extends FLBuilderModule {
 				unset( $settings->align );
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+				if ( '1' === $settings->link_nofollow || 'yes' === $settings->link_nofollow ) {
 					$settings->link_nofollow = 'yes';
 				}
 			}
@@ -309,19 +309,19 @@ class UABBButtonModule extends FLBuilderModule {
 	public function get_button_style() {
 		$btn_style = '';
 
-		if ( ! empty( $this->settings->style ) && 'transparent' == $this->settings->style ) {
+		if ( ! empty( $this->settings->style ) && 'transparent' === $this->settings->style ) {
 			if ( isset( $this->settings->transparent_button_options ) && ! empty( $this->settings->transparent_button_options ) ) {
 				$btn_style .= ' uabb-' . $this->settings->transparent_button_options . '-btn';
 			}
 		}
 
-		if ( ! empty( $this->settings->style ) && 'threed' == $this->settings->style ) {
+		if ( ! empty( $this->settings->style ) && 'threed' === $this->settings->style ) {
 			if ( isset( $this->settings->threed_button_options ) && ! empty( $this->settings->threed_button_options ) ) {
 				$btn_style .= ' uabb-' . $this->settings->threed_button_options . '-btn';
 			}
 		}
 
-		if ( ! empty( $this->settings->style ) && 'flat' == $this->settings->style ) {
+		if ( ! empty( $this->settings->style ) && 'flat' === $this->settings->style ) {
 			if ( isset( $this->settings->flat_button_options ) && ! empty( $this->settings->flat_button_options ) ) {
 				$btn_style .= ' uabb-' . $this->settings->flat_button_options . '-btn';
 			}

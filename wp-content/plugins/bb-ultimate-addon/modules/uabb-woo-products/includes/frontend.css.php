@@ -29,67 +29,67 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product {
-	padding-right: calc( <?php echo $settings->columns_gap; ?>px/2 );
-	padding-left: calc( <?php echo $settings->columns_gap; ?>px/2 );
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product {
+	padding-right: calc( <?php echo esc_attr( $settings->columns_gap ); ?>px/2 );
+	padding-left: calc( <?php echo esc_attr( $settings->columns_gap ); ?>px/2 );
 
 	<?php if ( 'grid' === $settings->layout ) { ?>
-		margin-bottom: <?php echo $settings->rows_gap; ?>px;
+		margin-bottom: <?php echo esc_attr( $settings->rows_gap ); ?>px;
 	<?php } ?>
 }
 
 /* Pagination */
-.fl-node-<?php echo $id; ?> nav.uabb-woocommerce-pagination {
-	text-align: <?php echo $settings->pg_alignment; ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> nav.uabb-woocommerce-pagination {
+	text-align: <?php echo esc_attr( $settings->pg_alignment ); ?>;
 }
 
-.fl-node-<?php echo $id; ?> nav.uabb-woocommerce-pagination ul li > .page-numbers {
-	color: <?php echo ( false === strpos( $settings->pg_color, 'rgb' ) ) ? '#' . $settings->pg_color : $settings->pg_color; ?>;
-	background: <?php echo ( false === strpos( $settings->pg_bg_color, 'rgb' ) ) ? '#' . $settings->pg_bg_color : $settings->pg_bg_color; ?>;
-	border-color: <?php echo uabb_theme_base_color( $pg_border_color ); ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> nav.uabb-woocommerce-pagination ul li > .page-numbers {
+	color: <?php echo esc_attr( ( false === strpos( $settings->pg_color, 'rgb' ) ) ? '#' . $settings->pg_color : $settings->pg_color ); ?>;
+	background: <?php echo esc_attr( ( false === strpos( $settings->pg_bg_color, 'rgb' ) ) ? '#' . $settings->pg_bg_color : $settings->pg_bg_color ); ?>;
+	border-color: <?php echo esc_attr( uabb_theme_base_color( $pg_border_color ) ); ?>;
 }
 
-.fl-node-<?php echo $id; ?> nav.uabb-woocommerce-pagination ul li .page-numbers:focus,
-.fl-node-<?php echo $id; ?> nav.uabb-woocommerce-pagination ul li .page-numbers:hover,
-.fl-node-<?php echo $id; ?> nav.uabb-woocommerce-pagination ul li span.current {
-	color: <?php echo ( false === strpos( $settings->pg_hover_color, 'rgb' ) ) ? '#' . $settings->pg_hover_color : $settings->pg_hover_color; ?>;
-	background: <?php echo uabb_theme_base_color( $pg_bg_hover_color ); ?>;
-	border-color: <?php echo uabb_theme_base_color( $pg_border_hover_color ); ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> nav.uabb-woocommerce-pagination ul li .page-numbers:focus,
+.fl-node-<?php echo esc_attr( $id ); ?> nav.uabb-woocommerce-pagination ul li .page-numbers:hover,
+.fl-node-<?php echo esc_attr( $id ); ?> nav.uabb-woocommerce-pagination ul li span.current {
+	color: <?php echo esc_attr( ( false === strpos( $settings->pg_hover_color, 'rgb' ) ) ? '#' . $settings->pg_hover_color : $settings->pg_hover_color ); ?>;
+	background: <?php echo esc_attr( uabb_theme_base_color( $pg_bg_hover_color ) ); ?>;
+	border-color: <?php echo esc_attr( uabb_theme_base_color( $pg_border_hover_color ) ); ?>;
 }
 
-.fl-node-<?php echo $id; ?> .uabb-woo-products-summary-wrap {
-	<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding' ); ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-products-summary-wrap {
+	<?php echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding' ) ); ?>;
 }
 
-.fl-node-<?php echo $id; ?> .uabb-sale-flash-wrap .uabb-onsale {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-sale-flash-wrap .uabb-onsale {
 
-	color: <?php echo ( false === strpos( $settings->sale_flash_color, 'rgb' ) ) ? '#' . $settings->sale_flash_color : $settings->sale_flash_color; ?>;
+	color: <?php echo esc_attr( ( false === strpos( $settings->sale_flash_color, 'rgb' ) ) ? '#' . $settings->sale_flash_color : $settings->sale_flash_color ); ?>;
 
-	background: <?php echo uabb_theme_base_color( $sale_flash_bg_color ); ?>;
+	background: <?php echo esc_attr( uabb_theme_base_color( $sale_flash_bg_color ) ); ?>;
 
-	min-width: <?php echo $settings->sale_flash_size; ?>em;
+	min-width: <?php echo esc_attr( $settings->sale_flash_size ); ?>em;
 
-	min-height: <?php echo $settings->sale_flash_size; ?>em;
+	min-height: <?php echo esc_attr( $settings->sale_flash_size ); ?>em;
 
-	line-height: <?php echo $settings->sale_flash_size; ?>em;
+	line-height: <?php echo esc_attr( $settings->sale_flash_size ); ?>em;
 
 	<?php
-	echo UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_padding', 'padding' );
-	echo UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_margin', 'margin' );
+	echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_padding', 'padding' ) );
+	echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'sale_flash_margin', 'margin' ) );
 	?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-sale-flash-wrap .uabb-onsale {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-sale-flash-wrap .uabb-onsale {
 
-		font-size: <?php echo $settings->sale_flash_font_size; ?>px;
+		font-size: <?php echo esc_attr( $settings->sale_flash_font_size ); ?>px;
 
-		<?php if ( '' != $settings->sale_flash_transform ) { ?>
-			text-transform: <?php echo $settings->sale_flash_transform; ?>;
+		<?php if ( '' !== $settings->sale_flash_transform ) { ?>
+			text-transform: <?php echo esc_attr( $settings->sale_flash_transform ); ?>;
 		<?php } ?>
 
-		<?php if ( '' != $settings->sale_flash_letter_spacing ) { ?>
-			letter-spacing: <?php echo $settings->sale_flash_letter_spacing; ?>px;
+		<?php if ( '' !== $settings->sale_flash_letter_spacing ) { ?>
+			letter-spacing: <?php echo esc_attr( $settings->sale_flash_letter_spacing ); ?>px;
 		<?php } ?>
 
 		<?php
@@ -112,35 +112,35 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-featured {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-featured {
 
-	color: <?php echo ( false === strpos( $settings->featured_flash_color, 'rgb' ) ) ? '#' . $settings->featured_flash_color : $settings->featured_flash_color; ?>;
+	color: <?php echo esc_attr( ( false === strpos( $settings->featured_flash_color, 'rgb' ) ) ? '#' . $settings->featured_flash_color : $settings->featured_flash_color ); ?>;
 
-	background: <?php echo ( false === strpos( $settings->featured_flash_bg_color, 'rgb' ) ) ? '#' . $settings->featured_flash_bg_color : $settings->featured_flash_bg_color; ?>;
+	background: <?php echo esc_attr( ( false === strpos( $settings->featured_flash_bg_color, 'rgb' ) ) ? '#' . $settings->featured_flash_bg_color : $settings->featured_flash_bg_color ); ?>;
 
-	min-width: <?php echo $settings->featured_flash_size; ?>em;
+	min-width: <?php echo esc_attr( $settings->featured_flash_size ); ?>em;
 
-	min-height: <?php echo $settings->featured_flash_size; ?>em;
+	min-height: <?php echo esc_attr( $settings->featured_flash_size ); ?>em;
 
-	line-height: <?php echo $settings->featured_flash_size; ?>em;
+	line-height: <?php echo esc_attr( $settings->featured_flash_size ); ?>em;
 
 	<?php
-	echo UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_padding', 'padding' );
-	echo UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_margin', 'margin' );
+	echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_padding', 'padding' ) );
+	echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'featured_flash_margin', 'margin' ) );
 	?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-featured {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-featured {
 
-		font-size: <?php echo $settings->featured_flash_font_size; ?>px;
+		font-size: <?php echo esc_attr( $settings->featured_flash_font_size ); ?>px;
 
-		<?php if ( '' != $settings->featured_flash_transform ) { ?>
-			text-transform: <?php echo $settings->featured_flash_transform; ?>;
+		<?php if ( '' !== $settings->featured_flash_transform ) { ?>
+			text-transform: <?php echo esc_attr( $settings->featured_flash_transform ); ?>;
 		<?php } ?>
 
-		<?php if ( '' != $settings->featured_flash_letter_spacing ) { ?>
-			letter-spacing: <?php echo $settings->featured_flash_letter_spacing; ?>px;
+		<?php if ( '' !== $settings->featured_flash_letter_spacing ) { ?>
+			letter-spacing: <?php echo esc_attr( $settings->featured_flash_letter_spacing ); ?>px;
 		<?php } ?>
 
 		<?php
@@ -163,26 +163,26 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-product-category {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-product-category {
 
-	color: <?php echo ( false === strpos( $settings->cat_color, 'rgb' ) ) ? '#' . $settings->cat_color : $settings->cat_color; ?>;
+	color: <?php echo esc_attr( ( false === strpos( $settings->cat_color, 'rgb' ) ) ? '#' . $settings->cat_color : $settings->cat_color ); ?>;
 
-	<?php echo ( '' != $settings->cat_margin_bottom ) ? 'margin-bottom: ' . $settings->cat_margin_bottom . 'px;' : ''; ?>
+	<?php echo ( '' !== $settings->cat_margin_bottom ) ? 'margin-bottom: ' . esc_attr( $settings->cat_margin_bottom ) . 'px;' : ''; ?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-product-category {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-product-category {
 
-		font-size: <?php echo $settings->cat_font_size; ?>px;
+		font-size: <?php echo esc_attr( $settings->cat_font_size ); ?>px;
 
-		line-height: <?php echo $settings->cat_line_height; ?>em;
+		line-height: <?php echo esc_attr( $settings->cat_line_height ); ?>em;
 
-		<?php if ( '' != $settings->cat_transform ) { ?>
-			text-transform: <?php echo $settings->cat_transform; ?>;
+		<?php if ( '' !== $settings->cat_transform ) { ?>
+			text-transform: <?php echo esc_attr( $settings->cat_transform ); ?>;
 		<?php } ?>
 
-		<?php if ( '' != $settings->cat_letter_spacing ) { ?>
-			letter-spacing: <?php echo $settings->cat_letter_spacing; ?>px;
+		<?php if ( '' !== $settings->cat_letter_spacing ) { ?>
+			letter-spacing: <?php echo esc_attr( $settings->cat_letter_spacing ); ?>px;
 		<?php } ?>
 
 		<?php
@@ -205,26 +205,26 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .woocommerce-loop-product__title {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .woocommerce-loop-product__title {
 
-	color: <?php echo ( false === strpos( $settings->title_color, 'rgb' ) ) ? '#' . $settings->title_color : $settings->title_color; ?>;
+	color: <?php echo esc_attr( ( false === strpos( $settings->title_color, 'rgb' ) ) ? '#' . $settings->title_color : $settings->title_color ); ?>;
 
-	<?php echo ( '' != $settings->title_margin_bottom ) ? 'margin-bottom: ' . $settings->title_margin_bottom . 'px;' : ''; ?>
+	<?php echo ( '' !== $settings->title_margin_bottom ) ? 'margin-bottom: ' . esc_attr( $settings->title_margin_bottom ) . 'px;' : ''; ?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-woocommerce .woocommerce-loop-product__title {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .woocommerce-loop-product__title {
 
-		font-size: <?php echo $settings->title_font_size; ?>px;
+		font-size: <?php echo esc_attr( $settings->title_font_size ); ?>px;
 
-		line-height: <?php echo $settings->title_line_height; ?>em;
+		line-height: <?php echo esc_attr( $settings->title_line_height ); ?>em;
 
-		<?php if ( '' != $settings->title_transform ) { ?>
-			text-transform: <?php echo $settings->title_transform; ?>;
+		<?php if ( '' !== $settings->title_transform ) { ?>
+			text-transform: <?php echo esc_attr( $settings->title_transform ); ?>;
 		<?php } ?>
 
-		<?php if ( '' != $settings->title_letter_spacing ) { ?>
-			letter-spacing: <?php echo $settings->title_letter_spacing; ?>px;
+		<?php if ( '' !== $settings->title_letter_spacing ) { ?>
+			letter-spacing: <?php echo esc_attr( $settings->title_letter_spacing ); ?>px;
 		<?php } ?>
 
 		<?php
@@ -247,39 +247,39 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-loop-product__link:hover .woocommerce-loop-product__title {
-	color: <?php echo ( false === strpos( $settings->title_color, 'rgb' ) ) ? '#' . $settings->title_color : $settings->title_color; ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-loop-product__link:hover .woocommerce-loop-product__title {
+	color: <?php echo esc_attr( ( false === strpos( $settings->title_color, 'rgb' ) ) ? '#' . $settings->title_color : $settings->title_color ); ?>;
 }
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .star-rating,
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .star-rating::before {
-	color: <?php echo uabb_theme_base_color( $rating_color ); ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .star-rating,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .star-rating::before {
+	color: <?php echo esc_attr( uabb_theme_base_color( $rating_color ) ); ?>;
 }
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .star-rating {
-	<?php echo ( '' != $settings->rating_margin_bottom ) ? 'margin-bottom: ' . $settings->rating_margin_bottom . 'px;' : ''; ?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .star-rating {
+	<?php echo ( '' !== $settings->rating_margin_bottom ) ? 'margin-bottom: ' . esc_attr( $settings->rating_margin_bottom ) . 'px;' : ''; ?>
 }
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product .price {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product .price {
 
-	color: <?php echo ( false === strpos( $settings->price_color, 'rgb' ) ) ? '#' . $settings->price_color : $settings->price_color; ?>;
+	color: <?php echo esc_attr( ( false === strpos( $settings->price_color, 'rgb' ) ) ? '#' . $settings->price_color : $settings->price_color ); ?>;
 
-	<?php echo ( '' != $settings->price_margin_bottom ) ? 'margin-bottom: ' . $settings->price_margin_bottom . 'px;' : ''; ?>
+	<?php echo ( '' !== $settings->price_margin_bottom ) ? 'margin-bottom: ' . esc_attr( $settings->price_margin_bottom ) . 'px;' : ''; ?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product .price {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product .price {
 
-		font-size: <?php echo $settings->price_font_size; ?>px;
+		font-size: <?php echo esc_attr( $settings->price_font_size ); ?>px;
 
-		line-height: <?php echo $settings->price_line_height; ?>em;
+		line-height: <?php echo esc_attr( $settings->price_line_height ); ?>em;
 
-		<?php if ( '' != $settings->price_transform ) { ?>
-			text-transform: <?php echo $settings->price_transform; ?>;
+		<?php if ( '' !== $settings->price_transform ) { ?>
+			text-transform: <?php echo esc_attr( $settings->price_transform ); ?>;
 		<?php } ?>
 
-		<?php if ( '' != $settings->price_letter_spacing ) { ?>
-			letter-spacing: <?php echo $settings->price_letter_spacing; ?>px;
+		<?php if ( '' !== $settings->price_letter_spacing ) { ?>
+			letter-spacing: <?php echo esc_attr( $settings->price_letter_spacing ); ?>px;
 		<?php } ?>
 
 		<?php
@@ -302,26 +302,26 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-description {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-description {
 
-	color: <?php echo ( false === strpos( $settings->desc_color, 'rgb' ) ) ? '#' . $settings->desc_color : $settings->desc_color; ?>;
+	color: <?php echo esc_attr( ( false === strpos( $settings->desc_color, 'rgb' ) ) ? '#' . $settings->desc_color : $settings->desc_color ); ?>;
 
-	<?php echo ( '' != $settings->desc_margin_bottom ) ? 'margin-bottom: ' . $settings->desc_margin_bottom . 'px;' : ''; ?>
+	<?php echo ( '' !== $settings->desc_margin_bottom ) ? 'margin-bottom: ' . esc_attr( $settings->desc_margin_bottom ) . 'px;' : ''; ?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-description {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-description {
 
-		font-size: <?php echo $settings->desc_font_size; ?>px;
+		font-size: <?php echo esc_attr( $settings->desc_font_size ); ?>px;
 
-		line-height: <?php echo $settings->desc_line_height; ?>em;
+		line-height: <?php echo esc_attr( $settings->desc_line_height ); ?>em;
 
-		<?php if ( '' != $settings->desc_transform ) { ?>
-			text-transform: <?php echo $settings->desc_transform; ?>;
+		<?php if ( '' !== $settings->desc_transform ) { ?>
+			text-transform: <?php echo esc_attr( $settings->desc_transform ); ?>;
 		<?php } ?>
 
-		<?php if ( '' != $settings->desc_letter_spacing ) { ?>
-			letter-spacing: <?php echo $settings->desc_letter_spacing; ?>px;
+		<?php if ( '' !== $settings->desc_letter_spacing ) { ?>
+			letter-spacing: <?php echo esc_attr( $settings->desc_letter_spacing ); ?>px;
 		<?php } ?>
 
 		<?php
@@ -344,27 +344,27 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
 
-	color: <?php echo uabb_theme_button_text_color( $add_cart_color ); ?>;
+	color: <?php echo esc_attr( uabb_theme_button_text_color( $add_cart_color ) ); ?>;
 
-	background: <?php echo uabb_theme_button_bg_color( $add_cart_bg_color ); ?>;
+	background: <?php echo esc_attr( uabb_theme_button_bg_color( $add_cart_bg_color ) ); ?>;
 
-	padding-top: <?php echo uabb_theme_button_vertical_padding( $settings->add_cart_padding_top_bottom ); ?>px;
-	padding-bottom: <?php echo uabb_theme_button_vertical_padding( $settings->add_cart_padding_top_bottom ); ?>px;
-	padding-right: <?php echo uabb_theme_button_horizontal_padding( $settings->add_cart_padding_left_right ); ?>px;
-	padding-left: <?php echo uabb_theme_button_horizontal_padding( $settings->add_cart_padding_left_right ); ?>px;
+	padding-top: <?php echo esc_attr( uabb_theme_button_vertical_padding( $settings->add_cart_padding_top_bottom ) ); ?>px;
+	padding-bottom: <?php echo esc_attr( uabb_theme_button_vertical_padding( $settings->add_cart_padding_top_bottom ) ); ?>px;
+	padding-right: <?php echo esc_attr( uabb_theme_button_horizontal_padding( $settings->add_cart_padding_left_right ) ); ?>px;
+	padding-left: <?php echo esc_attr( uabb_theme_button_horizontal_padding( $settings->add_cart_padding_left_right ) ); ?>px;
 
-	<?php echo ( '' != $settings->add_cart_margin_bottom ) ? 'margin-bottom: ' . $settings->add_cart_margin_bottom . 'px;' : ''; ?>
+	<?php echo ( '' !== $settings->add_cart_margin_bottom ) ? 'margin-bottom: ' . esc_attr( $settings->add_cart_margin_bottom ) . 'px;' : ''; ?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
 
-		font-size: <?php echo uabb_theme_button_font_size( $settings->add_cart_font_size ); ?>px;
-		line-height: <?php echo uabb_theme_button_line_height( $settings->add_cart_line_height ); ?>em;
-		text-transform: <?php echo uabb_theme_button_text_transform( $settings->add_cart_transform ); ?>;
-		letter-spacing: <?php echo uabb_theme_button_letter_spacing( $settings->add_cart_letter_spacing ); ?>px;
+		font-size: <?php echo esc_attr( uabb_theme_button_font_size( $settings->add_cart_font_size ) ); ?>px;
+		line-height: <?php echo esc_attr( uabb_theme_button_line_height( $settings->add_cart_line_height ) ); ?>em;
+		text-transform: <?php echo esc_attr( uabb_theme_button_text_transform( $settings->add_cart_transform ) ); ?>;
+		letter-spacing: <?php echo esc_attr( uabb_theme_button_letter_spacing( $settings->add_cart_letter_spacing ) ); ?>px;
 		<?php
 		if ( 'Default' !== $settings->add_cart_font['family'] ) {
 			UABB_Helper::uabb_font_css( $settings->add_cart_font );
@@ -385,32 +385,32 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button:hover {
-	color: <?php echo uabb_theme_button_text_hover_color( $add_cart_hover_color ); ?>;
-	background: <?php echo uabb_theme_button_bg_hover_color( $add_cart_bg_hover_color ); ?>;
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button:hover {
+	color: <?php echo esc_attr( uabb_theme_button_text_hover_color( $add_cart_hover_color ) ); ?>;
+	background: <?php echo esc_attr( uabb_theme_button_bg_hover_color( $add_cart_bg_hover_color ) ); ?>;
 }
 
 /* Slider */
 <?php if ( 'carousel' === $settings->layout ) { ?>
-.fl-node-<?php echo $id; ?> .uabb-woo-products-carousel .slick-arrow i {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-products-carousel .slick-arrow i {
 	<?php
 	$color       = uabb_theme_base_color( $new_arrow_color );
-	$arrow_color = ( '' != $color ) ? $color : '#fff';
+	$arrow_color = ( '' !== $color ) ? $color : '#fff';
 	?>
-	color: <?php echo $arrow_color; ?>;
+	color: <?php echo esc_attr( $arrow_color ); ?>;
 	<?php
 	switch ( $settings->arrow_style ) {
 		case 'square':
 		case 'circle':
 			?>
-	background: <?php echo ( false === strpos( $settings->arrow_background_color, 'rgb' ) ) ? '#' . $settings->arrow_background_color : $settings->arrow_background_color; ?>;
+	background: <?php echo esc_attr( ( false === strpos( $settings->arrow_background_color, 'rgb' ) ) ? '#' . $settings->arrow_background_color : $settings->arrow_background_color ); ?>;
 			<?php
 			break;
 		case 'square-border':
 		case 'circle-border':
 			?>
-	border: <?php echo $settings->arrow_border_size; ?>px solid;
-	border-color: <?php echo ( false === strpos( $settings->arrow_color_border, 'rgb' ) ) ? '#' . $settings->arrow_color_border : $settings->arrow_color_border; ?>;
+	border: <?php echo esc_attr( $settings->arrow_border_size ); ?>px solid;
+	border-color: <?php echo esc_attr( ( false === strpos( $settings->arrow_color_border, 'rgb' ) ) ? '#' . $settings->arrow_color_border : $settings->arrow_color_border ); ?>;
 			<?php
 			break;
 	}
@@ -423,32 +423,32 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 <?php if ( $global_settings->responsive_enabled ) { ?> 
 
 		<?php /* Medium Breakpoint media query */ ?>
-		@media ( max-width: <?php echo $global_settings->medium_breakpoint . 'px'; ?> ) {
+		@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
 
 			<?php if ( ! $version_bb_check ) { ?>
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-product-category {
-					font-size: <?php echo $settings->cat_font_size_medium; ?>px;
-					line-height: <?php echo $settings->cat_line_height_medium; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-product-category {
+					font-size: <?php echo esc_attr( $settings->cat_font_size_medium ); ?>px;
+					line-height: <?php echo esc_attr( $settings->cat_line_height_medium ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .woocommerce-loop-product__title {
-					font-size: <?php echo $settings->title_font_size_medium; ?>px;
-					line-height: <?php echo $settings->title_line_height_medium; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .woocommerce-loop-product__title {
+					font-size: <?php echoesc_attr( $settings->title_font_size_medium ); ?>px;
+					line-height: <?php echo esc_attr( $settings->title_line_height_medium ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product .price {
-					font-size: <?php echo $settings->price_font_size_medium; ?>px;
-					line-height: <?php echo $settings->price_line_height_medium; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product .price {
+					font-size: <?php echo esc_attr( $settings->price_font_size_medium ); ?>px;
+					line-height: <?php echo esc_attr( $settings->price_line_height_medium ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-description {
-					font-size: <?php echo $settings->desc_font_size_medium; ?>px;
-					line-height: <?php echo $settings->desc_line_height_medium; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-description {
+					font-size: <?php echo esc_attr( $settings->desc_font_size_medium ); ?>px;
+					line-height: <?php echo esc_attr( $settings->desc_line_height_medium ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
-					font-size: <?php echo $settings->add_cart_font_size_medium; ?>px;
-					line-height: <?php echo $settings->add_cart_line_height_medium; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
+					font-size: <?php echo esc_attr( $settings->add_cart_font_size_medium ); ?>px;
+					line-height: <?php echo esc_attr( $settings->add_cart_line_height_medium ); ?>em;
 				}
 			<?php } ?>
 
@@ -489,44 +489,44 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 				clear: right;
 			}
 
-			.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product {
-				padding-right: calc( <?php echo $settings->columns_gap_medium; ?>px/2 );
-				padding-left: calc( <?php echo $settings->columns_gap_medium; ?>px/2 );
-				margin-bottom: <?php echo $settings->rows_gap_medium; ?>px;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product {
+				padding-right: calc( <?php echo esc_attr( $settings->columns_gap_medium ); ?>px/2 );
+				padding-left: calc( <?php echo esc_attr( $settings->columns_gap_medium ); ?>px/2 );
+				margin-bottom: <?php echo esc_attr( $settings->rows_gap_medium ); ?>px;
 			}
 
-			.fl-node-<?php echo $id; ?> .uabb-woo-products-summary-wrap {
-				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'medium' ); ?>;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-products-summary-wrap {
+				<?php echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'medium' ) ); ?>;
 			}
 		}
 
 		<?php /* Small Breakpoint media query */ ?>
-		@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
+		@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
 
 			<?php if ( ! $version_bb_check ) { ?>
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-product-category {
-					font-size: <?php echo $settings->cat_font_size_responsive; ?>px;
-					line-height: <?php echo $settings->cat_line_height_responsive; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-product-category {
+					font-size: <?php echo esc_attr( $settings->cat_font_size_responsive ); ?>px;
+					line-height: <?php echo esc_attr( $settings->cat_line_height_responsive ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .woocommerce-loop-product__title {
-					font-size: <?php echo $settings->title_font_size_responsive; ?>px;
-					line-height: <?php echo $settings->title_line_height_responsive; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .woocommerce-loop-product__title {
+					font-size: <?php echo esc_attr( $settings->title_font_size_responsive ); ?>px;
+					line-height: <?php echo esc_attr( $settings->title_line_height_responsive ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product .price {
-					font-size: <?php echo $settings->price_font_size_responsive; ?>px;
-					line-height: <?php echo $settings->price_line_height_responsive; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product .price {
+					font-size: <?php echo esc_attr( $settings->price_font_size_responsive ); ?>px;
+					line-height: <?php echo esc_attr( $settings->price_line_height_responsive ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-description {
-					font-size: <?php echo $settings->desc_font_size_responsive; ?>px;
-					line-height: <?php echo $settings->desc_line_height_responsive; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-description {
+					font-size: <?php echo esc_attr( $settings->desc_font_size_responsive ); ?>px;
+					line-height: <?php echo esc_attr( $settings->desc_line_height_responsive ); ?>em;
 				}
 
-				.fl-node-<?php echo $id; ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
-					font-size: <?php echo $settings->add_cart_font_size_responsive; ?>px;
-					line-height: <?php echo $settings->add_cart_line_height_responsive; ?>em;
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce .uabb-woo-products-summary-wrap .button {
+					font-size: <?php echo esc_attr( $settings->add_cart_font_size_responsive ); ?>px;
+					line-height: <?php echo esc_attr( $settings->add_cart_line_height_responsive ); ?>em;
 				}
 			<?php } ?>
 
@@ -566,14 +566,14 @@ $new_arrow_color = ( false === strpos( $settings->arrow_color, 'rgb' ) ) ? '#' .
 			.uabb-woo-products-grid .uabb-woo-product__column-mobile-6 ul.products li.product:nth-child(6n) {
 				clear: right;
 			}
-			.fl-node-<?php echo $id; ?> .uabb-woocommerce li.product {
-				padding-right: calc( <?php echo $settings->columns_gap_responsive; ?>px/2 );
-				padding-left: calc( <?php echo $settings->columns_gap_responsive; ?>px/2 );
-				margin-bottom: <?php echo $settings->rows_gap_responsive; ?>px;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woocommerce li.product {
+				padding-right: calc( <?php echo esc_attr( $settings->columns_gap_responsive ); ?>px/2 );
+				padding-left: calc( <?php echo esc_attr( $settings->columns_gap_responsive ); ?>px/2 );
+				margin-bottom: <?php echo esc_attr( $settings->rows_gap_responsive ); ?>px;
 			}
 
-			.fl-node-<?php echo $id; ?> .uabb-woo-products-summary-wrap {
-				<?php echo UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'responsive' ); ?>;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-products-summary-wrap {
+				<?php echo esc_attr( UABB_Helper::uabb_dimention_css( $settings, 'content_around_spacing', 'padding', 'responsive' ) ); ?>;
 			}
 
 			.uabb-woocommerce .uabb-woo--align-mobile-right li.product {

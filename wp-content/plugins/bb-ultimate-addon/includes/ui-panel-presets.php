@@ -37,20 +37,21 @@
 					$uabb_module_templates = UABB_UI_Panels::uabb_templates_data( $module_templates, 'includes' );
 
 					if ( count( $uabb_module_templates ) > 0 ) :
-						foreach ( $uabb_module_templates['categorized'] as $cat ) :
+
+						foreach ( $uabb_module_templates['categorized'] as $template_cat ) :
 
 							// avoid 'Uncategorized'.
-							if ( trim( $cat['name'] ) != 'Uncategorized' ) :
+							if ( trim( $template_cat['name'] ) !== 'Uncategorized' ) :
 								?>
 								<div class="fl-builder-blocks-section">
 									<span class="fl-builder-blocks-section-title">
-										<?php echo __( $cat['name'], 'uabb' ); ?>
+										<?php echo esc_attr( __( $template_cat['name'], 'uabb' ) ); //phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?>
 										<i class="fa fa-chevron-down"></i>
 									</span>
 									<div class="fl-builder-blocks-section-content fl-builder-module-templates">
 
 										<?php
-										foreach ( $cat['templates'] as $template ) :
+										foreach ( $template_cat['templates'] as $template ) :
 
 											// Get tags.
 											$tags = '';
@@ -59,11 +60,11 @@
 											}
 											?>
 
-											<span class="fl-builder-block fl-builder-block-template fl-builder-block-module-template" data-id="<?php echo $template['id']; ?>" data-type="<?php echo $template['type']; ?>">
+											<span class="fl-builder-block fl-builder-block-template fl-builder-block-module-template" data-id="<?php echo esc_attr( $template['id'] ); ?>" data-type="<?php echo esc_attr( $template['type'] ); ?>">
 												<?php if ( ! stristr( $template['image'], 'blank.jpg' ) ) : ?>
-												<img class="fl-builder-block-template-image" src="<?php echo $template['image']; ?>" />
+												<img class="fl-builder-block-template-image" src="<?php echo esc_attr( $template['image'] ); ?>" />
 												<?php endif; ?>
-												<span class="fl-builder-block-title" data-tags="<?php echo $tags; ?>" data-cat-name="<?php echo $cat['name']; ?>"><?php echo $template['name']; ?></span>
+												<span class="fl-builder-block-title" data-tags="<?php echo esc_attr( $tags ); ?>" data-cat-name="<?php echo esc_attr( $template_cat['name'] ); ?>"><?php echo esc_attr( $template['name'] ); ?></span>
 											</span>
 										<?php endforeach; ?>
 									</div>
@@ -78,10 +79,10 @@
 				<?php do_action( 'uabb_fl_builder_ui_panel_after_presets' ); ?>
 
 				<div class="fl-builder-modules-cta">
-					<a href="#" onclick="window.open('<?php echo admin_url(); ?>options-general.php?page=fl-builder-settings#uabb-template-manager');" target="_blank" rel="noopener"><i class="fa fa-external-link-square"></i> 
+					<a href="#" onclick="window.open('<?php echo esc_url( admin_url() ); ?>options-general.php?page=fl-builder-settings#uabb-template-manager');" target="_blank" rel="noopener"><i class="fa fa-external-link-square"></i>
 						<?php
 						/* translators: %s: search term */
-						echo sprintf( __( 'Note - You can enable, disable and manage %s presets here.', 'uabb' ), UABB_PREFIX );
+						echo sprintf( esc_attr__( 'Note - You can enable, disable and manage %s presets here.', 'uabb' ), esc_attr( UABB_PREFIX ) );
 						?>
 						</a>
 				</div>

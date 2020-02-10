@@ -13,12 +13,12 @@ var field   = data.field,
 	preview = data.preview,
 	selected = '',
 	sel = '',
-	yr = parseInt( '<?php echo date( 'Y' ); ?>' );
+	yr = parseInt( '<?php echo date( 'Y' ); // @codingStandardsIgnoreLine.  ( WordPress.DateTime.RestrictedFunctions.date_date , WordPress.Security.EscapeOutput.OutputNotEscaped )?>' );
 #>
 
 <div class="fl-field uabb-evergreen-wrap" data-type="select" data-preview="{{preview}}"><div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_days" >
-	<option value="0"><?php _e( 'Days', 'uabb' ); ?></option>
+	<option value="0"><?php esc_attr_e( 'Days', 'uabb' ); ?></option>
 	<#
 	for ( var i=0; i <= 31; i++ ) {
 		if ( '' != settings.evergreen_date_days ) {
@@ -43,12 +43,12 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Days', 'uabb' ); ?></label>
+	<label><?php esc_attr_e( 'Days', 'uabb' ); ?></label>
 </div>
 
 <div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_hour" >
-	<option value="0"><?php _e( 'Hours', 'uabb' ); ?></option>
+	<option value="0"><?php esc_html_e( 'Hours', 'uabb' ); ?></option>
 	<#
 	for ( i = 0; i < 24; i++ ) {
 		if ( '' != settings.evergreen_date_hour ) {
@@ -73,12 +73,12 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Hours', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Hours', 'uabb' ); ?></label>
 </div>
 
 <div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_minutes" >
-	<option value="0"><?php _e( 'Minutes', 'uabb' ); ?></option>
+	<option value="0"><?php esc_html_e( 'Minutes', 'uabb' ); ?></option>
 	<#
 	for ( i = 0; i < 60; i++ ) {
 		if ( '' != settings.evergreen_date_minutes ) {
@@ -104,12 +104,12 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Minutes', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Minutes', 'uabb' ); ?></label>
 </div>
 
 <div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_seconds" >
-	<option value="0"><?php _e( 'Seconds', 'uabb' ); ?></option>
+	<option value="0"><?php esc_html_e( 'Seconds', 'uabb' ); ?></option>
 	<#
 	for ( i = 0; i < 60; i++ ) {
 		if ( '' != settings.evergreen_date_seconds ) {
@@ -134,5 +134,5 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Seconds', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Seconds', 'uabb' ); ?></label>
 </div>

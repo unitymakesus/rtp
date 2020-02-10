@@ -187,7 +187,7 @@ final class FLBuilderServiceDrip extends FLBuilderService {
 		);
 
 		foreach ( $campaigns as $campaign ) {
-			$options[ $campaign['id'] ] = $campaign['name'];
+			$options[ $campaign['id'] ] = esc_attr( $campaign['name'] );
 		}
 
 		FLBuilder::render_settings_field( 'campaign_id', array(

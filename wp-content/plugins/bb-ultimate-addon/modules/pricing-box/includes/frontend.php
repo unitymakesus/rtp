@@ -5,7 +5,7 @@
  *  @package UABB Pricing Table Module
  */
 
-if ( 'yes' == $settings->add_legend ) {
+if ( 'yes' === $settings->add_legend ) {
 	$columns = count( $settings->pricing_columns ) + 1;
 } else {
 	$columns = count( $settings->pricing_columns );
@@ -16,24 +16,24 @@ if ( 'yes' == $settings->add_legend ) {
 <div class="uabb-module-content uabb-pricing-table">
 
 	<?php
-	if ( 'yes' == $settings->add_legend ) {
+	if ( 'yes' === $settings->add_legend ) {
 		?>
 
-	<div class="uabb-pricing-table-col-<?php echo $columns; ?> uabb-pricing-table-outter-0 uabb-pricing-legend-box">
+	<div class="uabb-pricing-table-col-<?php echo esc_attr( $columns ); ?> uabb-pricing-table-outter-0 uabb-pricing-legend-box">
 		<div class="uabb-pricing-table-column uabb-pricing-table-column-0">
 			<div class="uabb-pricing-table-inner-wrap">
-				<<?php echo $settings->title_typography_tag_selection; ?> class="uabb-pricing-table-title">&nbsp;</<?php echo $settings->title_typography_tag_selection; ?>>
-				<<?php echo $settings->price_typography_tag_selection; ?> class="uabb-pricing-table-price">
+				<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-pricing-table-title">&nbsp;</<?php echo esc_attr( $settings->title_typography_tag_selection ); ?>>
+				<<?php echo esc_attr( $settings->price_typography_tag_selection ); ?> class="uabb-pricing-table-price">
 					&nbsp;
 					<span class="uabb-pricing-table-duration">&nbsp;</span>
-				</<?php echo $settings->price_typography_tag_selection; ?>>
+				</<?php echo esc_attr( $settings->price_typography_tag_selection ); ?>>
 				<ul class="uabb-pricing-table-features">
 					<?php
 					if ( ! empty( $settings->legend_column->features ) ) {
 						foreach ( $settings->legend_column->features as $feature ) :
 							?>
-													<?php if ( '' != trim( $feature ) ) : ?>
-						<li><?php echo trim( $feature ); ?></li>
+													<?php if ( '' !== trim( $feature ) ) : ?>
+						<li><?php echo wp_kses_post( trim( $feature ) ); ?></li>
 					<?php endif; ?>
 											<?php
 					endforeach;
@@ -46,63 +46,63 @@ if ( 'yes' == $settings->add_legend ) {
 
 		<?php
 	}
-
-	for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) :
+	$cnt = count( $settings->pricing_columns );
+	for ( $i = 0; $i < $cnt; $i++ ) :
 
 		if ( ! is_object( $settings->pricing_columns[ $i ] ) ) {
 			continue;
 		}
-
-		$pricingColumn = $settings->pricing_columns[ $i ];
+		$pricingColumn = $settings->pricing_columns[ $i ]; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 
 		?>
-	<div class="uabb-pricing-table-col-<?php echo $columns; ?> uabb-pricing-table-outter-<?php echo $i + 1; ?> uabb-pricing-element-box">
-		<div class="uabb-pricing-table-column uabb-pricing-table-column-<?php echo $i + 1; ?>">
+	<div class="uabb-pricing-table-col-<?php echo esc_attr( $columns ); ?> uabb-pricing-table-outter-<?php echo esc_attr( $i + 1 ); ?> uabb-pricing-element-box">
+		<div class="uabb-pricing-table-column uabb-pricing-table-column-<?php echo esc_attr( $i + 1 ); ?>">
 			<?php
-			if ( 'yes' == $settings->pricing_columns[ $i ]->set_featured ) {
+			if ( 'yes' === $settings->pricing_columns[ $i ]->set_featured ) {
 				?>
-			<<?php echo $settings->pricing_columns[ $i ]->featured_tag_selection; ?> class="uabb-featured-pricing-box"><?php echo $settings->pricing_columns[ $i ]->featured_text; ?></<?php echo $settings->pricing_columns[ $i ]->featured_tag_selection; ?>>
+			<<?php echo esc_attr( $settings->pricing_columns[ $i ]->featured_tag_selection ); ?> class="uabb-featured-pricing-box"><?php echo wp_kses_post( $settings->pricing_columns[ $i ]->featured_text ); ?></<?php echo esc_attr( $settings->pricing_columns[ $i ]->featured_tag_selection ); ?>>
 				<?php
 			}
 			?>
 			<div class="uabb-pricing-table-inner-wrap">
-				<<?php echo $settings->title_typography_tag_selection; ?> class="uabb-pricing-table-title"><?php echo $pricingColumn->title; ?></<?php echo $settings->title_typography_tag_selection; ?>>
-				<<?php echo $settings->price_typography_tag_selection; ?> class="uabb-pricing-table-price">
-					<?php echo $pricingColumn->price; ?>
+				<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-pricing-table-title"><?php echo wp_kses_post( $pricingColumn->title ); ?></<?php echo esc_attr( $settings->title_typography_tag_selection ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase ?>>
+				<<?php echo esc_attr( $settings->price_typography_tag_selection ); ?> class="uabb-pricing-table-price">
+					<?php echo wp_kses_post( $pricingColumn->price ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase ?>
 					<?php
-					if ( '' != $pricingColumn->duration ) {
+					if ( '' !== $pricingColumn->duration ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 						?>
-					<span class="uabb-pricing-table-duration"><?php echo $pricingColumn->duration; ?></span>
+					<span class="uabb-pricing-table-duration"><?php echo wp_kses_post( $pricingColumn->duration ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase ?></span>
 						<?php
 					}
 					?>
-				</<?php echo $settings->price_typography_tag_selection; ?>>
+				</<?php echo esc_attr( $settings->price_typography_tag_selection ); ?>>
 				<ul class="uabb-pricing-table-features">
 					<?php
-					if ( ! empty( $pricingColumn->features ) ) :
-						for ( $j = 0; $j < count( $pricingColumn->features ); $j++ ) :
+					if ( ! empty( $pricingColumn->features ) ) : // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+						$count = count( $pricingColumn->features ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+						for ( $j = 0; $j < $count; $j++ ) :
 							?>
-							<?php if ( '' != trim( $pricingColumn->features[ $j ] ) ) : ?>
+							<?php if ( '' !== trim( $pricingColumn->features[ $j ] ) ) : // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase ?>
 						<li>
 								<?php
-								if ( 'yes' == $settings->add_legend && 'yes' == $settings->responsive_size ) :
-									if ( isset( $settings->legend_column->features[ $j ] ) ) :
+								if ( 'yes' === $settings->add_legend && 'yes' === $settings->responsive_size ) :
+									if ( isset( $settings->legend_column->features[ $j ] ) ) : // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
 										?>
 										<span class="uabb-pricing-ledgend">
-											<?php echo $settings->legend_column->features[ $j ]; ?>
+											<?php echo wp_kses_post( $settings->legend_column->features[ $j ] ); ?>
 										</span>
 										<?php
 										endif;
 							endif;
 								?>
 
-								<?php echo $pricingColumn->features[ $j ]; ?>
+								<?php echo wp_kses_post( $pricingColumn->features[ $j ] ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase ?>
 						</li>
 						<?php endif; ?>
 						<?php endfor; ?>
 					<?php endif; ?> 
 				</ul>
-				<?php ( 'yes' == $settings->pricing_columns[ $i ]->show_button ) ? $module->render_button( $i ) : ''; ?>
+				<?php ( 'yes' === $settings->pricing_columns[ $i ]->show_button ) ? $module->render_button( $i ) : ''; ?>
 				<?php do_action( 'uabb_price_box_button', $i ); ?>
 			</div>
 		</div>

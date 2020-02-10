@@ -63,7 +63,7 @@ function uabb_particle_col_settings_dependency_js( $js, $nodes, $global_settings
 
 			var form = $('.fl-builder-settings');
 
-			var branding = '<?php echo $branding; ?>';
+			var branding = '<?php echo esc_attr( $branding ); ?>';
 
 			if ( form.length > 0 ) {
 
@@ -181,13 +181,31 @@ function uabb_particle_col_settings_dependency_js( $js, $nodes, $global_settings
  * @param object $global_settings an object to get various settings.
  */
 function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
+
+	$flag = false;
+
+	foreach ( $nodes['columns'] as $column ) {
+
+		if ( 'yes' === $column->settings->enable_particles_col ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $js;
+	}
+
 	ob_start();
 	?>
 	;(function($) {
-			var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
+
+			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
 
 				window.particle_js_loaded = 0;
-
 
 				jQuery.cachedScript = function( url, options ) {
 
@@ -213,9 +231,15 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 
 				<?php
 				foreach ( $nodes['columns'] as $columns ) {
+
+					if ( 'no' === $columns->settings->enable_particles_col ) {
+
+						continue;
+					}
+
 					$json_particles_custom = wp_strip_all_tags( $columns->settings->uabb_particles_custom_code_col );
 					?>
-					row_id = '<?php echo $columns->node; ?>';
+					row_id = '<?php echo esc_attr( $columns->node ); ?>';
 
 					nodeclass = '.fl-node-' + row_id;
 
@@ -243,7 +267,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 								<?php
 								if ( '' !== $json_particles_custom ) {
 									?>
-									particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; ?> );
+									particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
 									<?php
 								}
 								?>
@@ -448,6 +472,23 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
  * @param object $global_settings an object to get various settings.
  */
 function uabb_col_dependency_js( $js, $nodes, $global_settings ) {
+
+	$flag = false;
+
+	foreach ( $nodes['columns'] as $column ) {
+
+		if ( 'uabb_gradient' === $column->settings->bg_type ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $js;
+	}
 	ob_start();
 
 	?>

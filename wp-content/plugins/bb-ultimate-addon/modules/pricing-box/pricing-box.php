@@ -41,9 +41,9 @@ class UABBPricingTableModule extends FLBuilderModule {
 	 * @param array  $name an array to get the names.
 	 * @param object $settings an object to get various settings.
 	 */
-	function uabb_price_box_settings_field( $field, $name, $settings ) {
+	public function uabb_price_box_settings_field( $field, $name, $settings ) {
 		if ( isset( $settings->legend_column->legend_feature_color ) ) {
-			if ( '' != $settings->legend_column->legend_feature_color && '' == $settings->legend_column->legend_color ) {
+			if ( '' !== $settings->legend_column->legend_feature_color && '' === $settings->legend_column->legend_color ) {
 				$settings->legend_column->legend_color = $settings->legend_column->legend_feature_color;
 			}
 		}
@@ -163,7 +163,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// For Title typo.
 			if ( ! isset( $settings->title_typo ) || ! is_array( $settings->title_typo ) ) {
@@ -178,7 +178,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->title_typography_font_family['family'] );
 				}
 				if ( isset( $settings->title_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->title_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_typography_font_family['weight'] ) {
 						$settings->title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_typography_font_family['weight'];
@@ -258,7 +258,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->feature_typography_font_family['family'] );
 				}
 				if ( isset( $settings->feature_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->feature_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->feature_typography_font_family['weight'] ) {
 						$settings->feature_typo['font_weight'] = 'normal';
 					} else {
 						$settings->feature_typo['font_weight'] = $settings->feature_typography_font_family['weight'];
@@ -342,7 +342,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->price_typography_font_family['family'] );
 				}
 				if ( isset( $settings->price_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->price_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->price_typography_font_family['weight'] ) {
 						$settings->price_typo['font_weight'] = 'normal';
 					} else {
 						$settings->price_typo['font_weight'] = $settings->price_typography_font_family['weight'];
@@ -422,7 +422,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->duration_typography_font_family['family'] );
 				}
 				if ( isset( $settings->duration_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->duration_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->duration_typography_font_family['weight'] ) {
 						$settings->duration_typo['font_weight'] = 'normal';
 					} else {
 						$settings->duration_typo['font_weight'] = $settings->duration_typography_font_family['weight'];
@@ -490,7 +490,8 @@ class UABBPricingTableModule extends FLBuilderModule {
 				);
 				unset( $settings->duration_typography_letter_spacing );
 			}
-			for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) {
+			$count = count( $settings->pricing_columns );
+			for ( $i = 0; $i < $count; $i++ ) {
 
 				if ( ! isset( $settings->pricing_columns[ $i ]->button_typo ) || ! is_object( $settings->pricing_columns[ $i ]->button_typo ) ) {
 
@@ -504,7 +505,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						$settings->pricing_columns[ $i ]->button_typo->font_family = $settings->pricing_columns[ $i ]->button_typography_font_family->family;
 					}
 					if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_family->weight ) ) {
-						if ( 'regular' == $settings->pricing_columns[ $i ]->button_typography_font_family->weight ) {
+						if ( 'regular' === $settings->pricing_columns[ $i ]->button_typography_font_family->weight ) {
 							$settings->pricing_columns[ $i ]->button_typo->font_weight = 'normal';
 						} else {
 							$settings->pricing_columns[ $i ]->button_typo->font_weight = $settings->pricing_columns[ $i ]->button_typography_font_family->weight;
@@ -573,7 +574,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->pricing_columns[ $i ]->button_letter_spacing );
 				}
 				if ( isset( $settings->pricing_columns[ $i ]->btn_link_nofollow ) ) {
-					if ( '1' == $settings->pricing_columns[ $i ]->btn_link_nofollow || 'yes' == $settings->pricing_columns[ $i ]->btn_link_nofollow ) {
+					if ( '1' === $settings->pricing_columns[ $i ]->btn_link_nofollow || 'yes' === $settings->pricing_columns[ $i ]->btn_link_nofollow ) {
 						$settings->pricing_columns[ $i ]->btn_link_nofollow = 'yes';
 					}
 				}
@@ -590,7 +591,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						unset( $settings->pricing_columns[ $i ]->featured_font_family->family );
 					}
 					if ( isset( $settings->pricing_columns[ $i ]->featured_font_family->weight ) ) {
-						if ( 'regular' == $settings->pricing_columns[ $i ]->featured_font_family->weight ) {
+						if ( 'regular' === $settings->pricing_columns[ $i ]->featured_font_family->weight ) {
 							$settings->pricing_columns[ $i ]->featured_typo->font_weight = 'normal';
 						} else {
 							$settings->pricing_columns[ $i ]->featured_typo->font_weight = $settings->pricing_columns[ $i ]->featured_font_family->weight;
@@ -668,7 +669,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						unset( $settings->legend_column->legend_font_family->family );
 					}
 					if ( isset( $settings->legend_column->legend_font_family->weight ) ) {
-						if ( 'regular' == $settings->legend_column->legend_font_family->weight ) {
+						if ( 'regular' === $settings->legend_column->legend_font_family->weight ) {
 							$settings->legend_column->legend_typo->font_weight = 'normal';
 						} else {
 							$settings->legend_column->legend_typo->font_weight = $settings->legend_column->legend_font_family->weight;
@@ -736,7 +737,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->legend_column->legend_letter_spacing );
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// For Title typo.
 			if ( ! isset( $settings->title_typo ) || ! is_array( $settings->title_typo ) ) {
@@ -752,7 +753,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->title_typography_font_family['family'] );
 				}
 				if ( isset( $settings->title_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->title_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_typography_font_family['weight'] ) {
 						$settings->title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_typography_font_family['weight'];
@@ -780,7 +781,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->title_typography_line_height['small'] ) && isset( $settings->title_typography_font_size['small'] ) && 0 != $settings->title_typography_font_size['small'] ) {
+			if ( isset( $settings->title_typography_line_height['small'] ) && isset( $settings->title_typography_font_size['small'] ) && 0 !== $settings->title_typography_font_size['small'] ) {
 				if ( is_numeric( $settings->title_typography_line_height['small'] ) && is_numeric( $settings->title_typography_font_size['small'] ) ) {
 					$settings->title_typo_responsive['line_height'] = array(
 						'length' => round( $settings->title_typography_line_height['small'] / $settings->title_typography_font_size['small'], 2 ),
@@ -788,7 +789,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_typography_line_height['medium'] ) && isset( $settings->title_typography_font_size['medium'] ) && 0 != $settings->title_typography_font_size['medium'] ) {
+			if ( isset( $settings->title_typography_line_height['medium'] ) && isset( $settings->title_typography_font_size['medium'] ) && 0 !== $settings->title_typography_font_size['medium'] ) {
 				if ( is_numeric( $settings->title_typography_line_height['medium'] ) && is_numeric( $settings->title_typography_font_size['medium'] ) ) {
 					$settings->title_typo_medium['line_height'] = array(
 						'length' => round( $settings->title_typography_line_height['medium'] / $settings->title_typography_font_size['medium'], 2 ),
@@ -796,7 +797,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_typography_line_height['desktop'] ) && isset( $settings->title_typography_font_size['desktop'] ) && 0 != $settings->title_typography_font_size['desktop'] ) {
+			if ( isset( $settings->title_typography_line_height['desktop'] ) && isset( $settings->title_typography_font_size['desktop'] ) && 0 !== $settings->title_typography_font_size['desktop'] ) {
 				if ( is_numeric( $settings->title_typography_line_height['desktop'] ) && is_numeric( $settings->title_typography_font_size['desktop'] ) ) {
 					$settings->title_typo['line_height'] = array(
 						'length' => round( $settings->title_typography_line_height['desktop'] / $settings->title_typography_font_size['desktop'], 2 ),
@@ -819,7 +820,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->feature_typography_font_family['family'] );
 				}
 				if ( isset( $settings->feature_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->feature_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->feature_typography_font_family['weight'] ) {
 						$settings->feature_typo['font_weight'] = 'normal';
 					} else {
 						$settings->feature_typo['font_weight'] = $settings->feature_typography_font_family['weight'];
@@ -847,7 +848,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->feature_typography_line_height['small'] ) && isset( $settings->feature_typography_font_size['small'] ) && 0 != $settings->feature_typography_font_size['small'] ) {
+			if ( isset( $settings->feature_typography_line_height['small'] ) && isset( $settings->feature_typography_font_size['small'] ) && 0 !== $settings->feature_typography_font_size['small'] ) {
 				if ( is_numeric( $settings->feature_typography_line_height['small'] ) && is_numeric( $settings->feature_typography_font_size['small'] ) ) {
 					$settings->feature_typo_responsive['line_height'] = array(
 						'length' => round( $settings->feature_typography_line_height['small'] / $settings->feature_typography_font_size['small'], 2 ),
@@ -855,7 +856,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->feature_typography_line_height['medium'] ) && isset( $settings->feature_typography_font_size['medium'] ) && 0 != $settings->feature_typography_font_size['medium'] ) {
+			if ( isset( $settings->feature_typography_line_height['medium'] ) && isset( $settings->feature_typography_font_size['medium'] ) && 0 !== $settings->feature_typography_font_size['medium'] ) {
 				if ( is_numeric( $settings->feature_typography_line_height['medium'] ) && is_numeric( $settings->feature_typography_font_size['medium'] ) ) {
 					$settings->feature_typo_medium['line_height'] = array(
 						'length' => round( $settings->feature_typography_line_height['medium'] / $settings->feature_typography_font_size['medium'], 2 ),
@@ -863,7 +864,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->feature_typography_line_height['desktop'] ) && isset( $settings->feature_typography_font_size['desktop'] ) && 0 != $settings->feature_typography_font_size['desktop'] ) {
+			if ( isset( $settings->feature_typography_line_height['desktop'] ) && isset( $settings->feature_typography_font_size['desktop'] ) && 0 !== $settings->feature_typography_font_size['desktop'] ) {
 				if ( is_numeric( $settings->feature_typography_line_height['desktop'] ) && is_numeric( $settings->feature_typography_font_size['desktop'] ) ) {
 					$settings->feature_typo['line_height'] = array(
 						'length' => round( $settings->feature_typography_line_height['desktop'] / $settings->feature_typography_font_size['desktop'], 2 ),
@@ -890,7 +891,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->price_typography_font_family['family'] );
 				}
 				if ( isset( $settings->price_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->price_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->price_typography_font_family['weight'] ) {
 						$settings->price_typo['font_weight'] = 'normal';
 					} else {
 						$settings->price_typo['font_weight'] = $settings->price_typography_font_family['weight'];
@@ -917,7 +918,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->price_typography_line_height['small'] ) && isset( $settings->price_typography_font_size['small'] ) && 0 != $settings->price_typography_font_size['small'] ) {
+			if ( isset( $settings->price_typography_line_height['small'] ) && isset( $settings->price_typography_font_size['small'] ) && 0 !== $settings->price_typography_font_size['small'] ) {
 				if ( is_numeric( $settings->price_typography_line_height['small'] ) && is_numeric( $settings->price_typography_font_size['small'] ) ) {
 					$settings->price_typo_responsive['line_height'] = array(
 						'length' => round( $settings->price_typography_line_height['small'] / $settings->price_typography_font_size['small'], 2 ),
@@ -925,7 +926,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->price_typography_line_height['medium'] ) && isset( $settings->price_typography_font_size['medium'] ) && 0 != $settings->price_typography_font_size['medium'] ) {
+			if ( isset( $settings->price_typography_line_height['medium'] ) && isset( $settings->price_typography_font_size['medium'] ) && 0 !== $settings->price_typography_font_size['medium'] ) {
 				if ( is_numeric( $settings->price_typography_line_height['medium'] ) && is_numeric( $settings->price_typography_font_size['medium'] ) ) {
 					$settings->price_typo_medium['line_height'] = array(
 						'length' => round( $settings->price_typography_line_height['medium'] / $settings->price_typography_font_size['medium'], 2 ),
@@ -933,7 +934,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->price_typography_line_height['desktop'] ) && isset( $settings->price_typography_font_size['desktop'] ) && 0 != $settings->price_typography_font_size['desktop'] ) {
+			if ( isset( $settings->price_typography_line_height['desktop'] ) && isset( $settings->price_typography_font_size['desktop'] ) && 0 !== $settings->price_typography_font_size['desktop'] ) {
 				if ( is_numeric( $settings->price_typography_line_height['desktop'] ) && is_numeric( $settings->price_typography_font_size['desktop'] ) ) {
 					$settings->price_typo['line_height'] = array(
 						'length' => round( $settings->price_typography_line_height['desktop'] / $settings->price_typography_font_size['desktop'], 2 ),
@@ -956,7 +957,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					unset( $settings->duration_typography_font_family['family'] );
 				}
 				if ( isset( $settings->duration_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->duration_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->duration_typography_font_family['weight'] ) {
 						$settings->duration_typo['font_weight'] = 'normal';
 					} else {
 						$settings->duration_typo['font_weight'] = $settings->duration_typography_font_family['weight'];
@@ -983,7 +984,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->duration_typography_line_height['small'] ) && isset( $settings->duration_typography_font_size['small'] ) && 0 != $settings->duration_typography_font_size['small'] ) {
+			if ( isset( $settings->duration_typography_line_height['small'] ) && isset( $settings->duration_typography_font_size['small'] ) && 0 !== $settings->duration_typography_font_size['small'] ) {
 				if ( is_numeric( $settings->duration_typography_line_height['small'] ) && is_numeric( $settings->duration_typography_font_size['small'] ) ) {
 					$settings->duration_typo_responsive['line_height'] = array(
 						'length' => round( $settings->duration_typography_line_height['small'] / $settings->duration_typography_font_size['small'], 2 ),
@@ -991,7 +992,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->duration_typography_line_height['medium'] ) && isset( $settings->duration_typography_font_size['medium'] ) && 0 != $settings->duration_typography_font_size['medium'] ) {
+			if ( isset( $settings->duration_typography_line_height['medium'] ) && isset( $settings->duration_typography_font_size['medium'] ) && 0 !== $settings->duration_typography_font_size['medium'] ) {
 				if ( is_numeric( $settings->duration_typography_line_height['medium'] ) && is_numeric( $settings->duration_typography_font_size['medium'] ) ) {
 					$settings->duration_typo_medium['line_height'] = array(
 						'length' => round( $settings->duration_typography_line_height['medium'] / $settings->duration_typography_font_size['medium'], 2 ),
@@ -999,7 +1000,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->duration_typography_line_height['desktop'] ) && isset( $settings->duration_typography_font_size['desktop'] ) && 0 != $settings->duration_typography_font_size['desktop'] ) {
+			if ( isset( $settings->duration_typography_line_height['desktop'] ) && isset( $settings->duration_typography_font_size['desktop'] ) && 0 !== $settings->duration_typography_font_size['desktop'] ) {
 				if ( is_numeric( $settings->duration_typography_line_height['desktop'] ) && is_numeric( $settings->duration_typography_font_size['desktop'] ) ) {
 					$settings->duration_typo['line_height'] = array(
 						'length' => round( $settings->duration_typography_line_height['desktop'] / $settings->duration_typography_font_size['desktop'], 2 ),
@@ -1007,8 +1008,8 @@ class UABBPricingTableModule extends FLBuilderModule {
 					);
 				}
 			}
-
-			for ( $i = 0; $i < count( $settings->pricing_columns ); $i++ ) {
+			$count = count( $settings->pricing_columns );
+			for ( $i = 0; $i < $count; $i++ ) {
 
 				if ( ! isset( $settings->pricing_columns[ $i ]->button_typo ) || ! is_object( $settings->pricing_columns[ $i ]->button_typo ) ) {
 
@@ -1022,7 +1023,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						$settings->pricing_columns[ $i ]->button_typo->font_family = $settings->pricing_columns[ $i ]->button_typography_font_family->family;
 					}
 					if ( isset( $settings->pricing_columns[ $i ]->button_typography_font_family->weight ) ) {
-						if ( 'regular' == $settings->pricing_columns[ $i ]->button_typography_font_family->weight ) {
+						if ( 'regular' === $settings->pricing_columns[ $i ]->button_typography_font_family->weight ) {
 							$settings->pricing_columns[ $i ]->button_typo->font_weight = 'normal';
 						} else {
 							$settings->pricing_columns[ $i ]->button_typo->font_weight = $settings->pricing_columns[ $i ]->button_typography_font_family->weight;
@@ -1049,7 +1050,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'unit'   => 'px',
 					);
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height->desktop ) && isset( $settings->pricing_columns[ $i ]->button_typography_font_size->desktop ) && 0 != $settings->pricing_columns[ $i ]->button_typography_font_size->desktop ) {
+				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height->desktop ) && isset( $settings->pricing_columns[ $i ]->button_typography_font_size->desktop ) && 0 !== $settings->pricing_columns[ $i ]->button_typography_font_size->desktop ) {
 					if ( is_numeric( $settings->pricing_columns[ $i ]->button_typography_line_height->desktop ) && is_numeric( $settings->pricing_columns[ $i ]->button_typography_font_size->desktop ) ) {
 
 						$settings->pricing_columns[ $i ]->button_typo->line_height = (object) array(
@@ -1058,7 +1059,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height->medium ) && isset( $settings->pricing_columns[ $i ]->button_typography_font_size->medium ) && 0 != $settings->pricing_columns[ $i ]->button_typography_font_size->medium ) {
+				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height->medium ) && isset( $settings->pricing_columns[ $i ]->button_typography_font_size->medium ) && 0 !== $settings->pricing_columns[ $i ]->button_typography_font_size->medium ) {
 					if ( is_numeric( $settings->pricing_columns[ $i ]->button_typography_line_height->medium ) && is_numeric( $settings->pricing_columns[ $i ]->button_typography_font_size->medium ) ) {
 						$settings->pricing_columns[ $i ]->button_typo_medium->line_height = (object) array(
 							'length' => round( $settings->pricing_columns[ $i ]->button_typography_line_height->medium / $settings->pricing_columns[ $i ]->button_typography_font_size->medium, 2 ),
@@ -1066,7 +1067,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height->small ) && isset( $settings->pricing_columns[ $i ]->button_typography_font_size->small ) && 0 != $settings->pricing_columns[ $i ]->button_typography_font_size->small ) {
+				if ( isset( $settings->pricing_columns[ $i ]->button_typography_line_height->small ) && isset( $settings->pricing_columns[ $i ]->button_typography_font_size->small ) && 0 !== $settings->pricing_columns[ $i ]->button_typography_font_size->small ) {
 					if ( is_numeric( $settings->pricing_columns[ $i ]->button_typography_line_height->small ) && is_numeric( $settings->pricing_columns[ $i ]->button_typography_font_size->small ) ) {
 						$settings->pricing_columns[ $i ]->button_typo_responsive->line_height = (object) array(
 							'length' => round( $settings->pricing_columns[ $i ]->button_typography_line_height->small / $settings->pricing_columns[ $i ]->button_typography_font_size->small, 2 ),
@@ -1094,7 +1095,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						unset( $settings->pricing_columns[ $i ]->featured_font_family->family );
 					}
 					if ( isset( $settings->pricing_columns[ $i ]->featured_font_family->weight ) ) {
-						if ( 'regular' == $settings->pricing_columns[ $i ]->featured_font_family->weight ) {
+						if ( 'regular' === $settings->pricing_columns[ $i ]->featured_font_family->weight ) {
 							$settings->pricing_columns[ $i ]->featured_typo->font_weight = 'normal';
 						} else {
 							$settings->pricing_columns[ $i ]->featured_typo->font_weight = $settings->pricing_columns[ $i ]->featured_font_family->weight;
@@ -1121,7 +1122,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'unit'   => 'px',
 					);
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->desktop ) && isset( $settings->pricing_columns[ $i ]->featured_font_size->desktop ) && 0 != $settings->pricing_columns[ $i ]->featured_font_size->desktop ) {
+				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->desktop ) && isset( $settings->pricing_columns[ $i ]->featured_font_size->desktop ) && 0 !== $settings->pricing_columns[ $i ]->featured_font_size->desktop ) {
 
 					if ( is_numeric( $settings->pricing_columns[ $i ]->featured_line_height->desktop ) && is_numeric( $settings->pricing_columns[ $i ]->featured_font_size->desktop ) ) {
 
@@ -1131,7 +1132,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->medium ) && isset( $settings->pricing_columns[ $i ]->featured_font_size->medium ) && 0 != $settings->pricing_columns[ $i ]->featured_font_size->medium ) {
+				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->medium ) && isset( $settings->pricing_columns[ $i ]->featured_font_size->medium ) && 0 !== $settings->pricing_columns[ $i ]->featured_font_size->medium ) {
 
 					if ( is_numeric( $settings->pricing_columns[ $i ]->featured_line_height->medium ) && is_numeric( $settings->pricing_columns[ $i ]->featured_font_size->medium ) ) {
 						$settings->pricing_columns[ $i ]->featured_typo_medium->line_height = (object) array(
@@ -1140,7 +1141,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->small ) && isset( $settings->pricing_columns[ $i ]->featured_font_size->small ) && 0 != $settings->pricing_columns[ $i ]->featured_font_size->small ) {
+				if ( isset( $settings->pricing_columns[ $i ]->featured_line_height->small ) && isset( $settings->pricing_columns[ $i ]->featured_font_size->small ) && 0 !== $settings->pricing_columns[ $i ]->featured_font_size->small ) {
 					if ( is_numeric( $settings->pricing_columns[ $i ]->featured_line_height->small ) && is_numeric( $settings->pricing_columns[ $i ]->featured_font_size->small ) ) {
 						$settings->pricing_columns[ $i ]->featured_typo_responsive->line_height = (object) array(
 							'length' => round( $settings->pricing_columns[ $i ]->featured_line_height->small / $settings->pricing_columns[ $i ]->featured_font_size->small, 2 ),
@@ -1179,7 +1180,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						unset( $settings->legend_column->legend_font_family->family );
 					}
 					if ( isset( $settings->legend_column->legend_font_family->weight ) ) {
-						if ( 'regular' == $settings->legend_column->legend_font_family->weight ) {
+						if ( 'regular' === $settings->legend_column->legend_font_family->weight ) {
 							$settings->legend_column->legend_typo->font_weight = 'normal';
 						} else {
 							$settings->legend_column->legend_typo->font_weight = $settings->legend_column->legend_font_family->weight;
@@ -1206,7 +1207,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						'unit'   => 'px',
 					);
 				}
-				if ( isset( $settings->legend_column->legend_line_height->desktop ) && isset( $settings->legend_column->legend_font_size->desktop ) && 0 != $settings->legend_column->legend_font_size->desktop ) {
+				if ( isset( $settings->legend_column->legend_line_height->desktop ) && isset( $settings->legend_column->legend_font_size->desktop ) && 0 !== $settings->legend_column->legend_font_size->desktop ) {
 
 					if ( is_numeric( $settings->legend_column->legend_line_height->desktop ) && is_numeric( $settings->legend_column->legend_font_size->desktop ) ) {
 
@@ -1216,7 +1217,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->legend_column->legend_line_height->medium ) && isset( $settings->legend_column->legend_font_size->medium ) && 0 != $settings->legend_column->legend_font_size->medium ) {
+				if ( isset( $settings->legend_column->legend_line_height->medium ) && isset( $settings->legend_column->legend_font_size->medium ) && 0 !== $settings->legend_column->legend_font_size->medium ) {
 					if ( is_numeric( $settings->legend_column->legend_line_height->medium ) && is_numeric( $settings->legend_column->legend_font_size->medium ) ) {
 						$settings->legend_column->legend_typo_medium->line_height = (object) array(
 							'length' => round( $settings->legend_column->legend_line_height->medium / $settings->legend_column->legend_font_size->medium, 2 ),
@@ -1224,7 +1225,7 @@ class UABBPricingTableModule extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->legend_column->legend_line_height->small ) && isset( $settings->legend_column->legend_font_size->small ) && 0 != $settings->legend_column->legend_font_size->small ) {
+				if ( isset( $settings->legend_column->legend_line_height->small ) && isset( $settings->legend_column->legend_font_size->small ) && 0 !== $settings->legend_column->legend_font_size->small ) {
 					if ( is_numeric( $settings->legend_column->legend_line_height->small ) && is_numeric( $settings->legend_column->legend_font_size->small ) ) {
 						$settings->legend_column->legend_typo_responsive->line_height = (object) array(
 							'length' => round( $settings->legend_column->legend_line_height->small / $settings->legend_column->legend_font_size->small, 2 ),

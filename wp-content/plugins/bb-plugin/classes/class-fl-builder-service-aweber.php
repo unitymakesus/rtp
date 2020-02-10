@@ -174,7 +174,7 @@ final class FLBuilderServiceAWeber extends FLBuilderService {
 		);
 
 		foreach ( $lists->data['entries'] as $list ) {
-			$options[ $list['id'] ] = $list['name'];
+			$options[ $list['id'] ] = esc_attr( $list['name'] );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

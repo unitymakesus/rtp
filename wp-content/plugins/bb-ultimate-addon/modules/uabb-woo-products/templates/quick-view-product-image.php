@@ -19,16 +19,19 @@ global $post, $product, $woocommerce;
 		$attachment_ids = $product->get_gallery_image_ids();
 		$props          = wc_get_product_attachment_props( get_post_thumbnail_id(), $post );
 		$image          = get_the_post_thumbnail(
-			$post->ID, 'shop_single', array(
+			$post->ID,
+			'shop_single',
+			array(
 				'title' => $props['title'],
 				'alt'   => $props['alt'],
 			)
 		);
-		echo
+		echo wp_kses_post(
 			sprintf(
 				'<li>%s</li>',
 				$image
-			);
+			)
+		);
 
 		if ( $attachment_ids ) {
 			$loop = 0;
@@ -41,17 +44,16 @@ global $post, $product, $woocommerce;
 					continue;
 				}
 
-				echo
-					sprintf(
-						'<li>%s</li>',
-						wp_get_attachment_image( $attachment_id, 'shop_single', 0, $props )
-					);
+				echo sprintf(
+					'<li>%s</li>',
+					wp_get_attachment_image( $attachment_id, 'shop_single', 0, $props )
+				);
 
 				$loop++;
 			}
 		}
 	} else {
-		echo sprintf( '<li><img src="%s" alt="%s" /></li>', wc_placeholder_img_src(), __( 'Placeholder', 'uabb' ) );
+		echo sprintf( '<li><img src="%s" alt="%s" /></li>', wp_kses_post( wc_placeholder_img_src() ), esc_attr_e( 'Placeholder', 'uabb' ) );
 	}
 	?>
 	</div>

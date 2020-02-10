@@ -17,18 +17,18 @@
 
 /* Global Alignment CSS */
 <?php if ( isset( $settings->align ) ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-wrap, .fl-node-<?php echo $id; ?> .uabb-retina-img-caption {
-		<?php echo ( '' !== $settings->align ) ? 'text-align:' . $settings->align . ';' : ''; ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-wrap, .fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption {
+		<?php echo ( '' !== $settings->align ) ? 'text-align:' . esc_attr( $settings->align ) . ';' : ''; ?>
 	}
 	<?php
 }
 ?>
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img {
 		<?php
 		if ( isset( $settings->photo_size ) ) {
-			echo ( '' !== $settings->photo_size ) ? 'width:' . $settings->photo_size . 'px;' : '';
+			echo ( '' !== $settings->photo_size ) ? 'width:' . esc_attr( $settings->photo_size ) . 'px;' : '';
 		}
 		?>
 	}
@@ -45,21 +45,21 @@
 }
 ?>
 
-.fl-node-<?php echo $id; ?> .uabb-retina-img-content {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content {
 	<?php
 	if ( isset( $settings->style_bg_color ) ) {
-		echo ( '' !== $settings->style_bg_color ) ? 'background-color:' . $settings->style_bg_color . ';' : '';
+		echo ( '' !== $settings->style_bg_color ) ? 'background-color:' . esc_attr( $settings->style_bg_color ) . ';' : '';
 	}
 	if ( isset( $settings->bg_border_radius ) ) {
-		echo ( '' !== $settings->bg_border_radius ) ? 'border-radius:' . $settings->bg_border_radius . 'px;' : '';
+		echo ( '' !== $settings->bg_border_radius ) ? 'border-radius:' . esc_attr( $settings->bg_border_radius ) . 'px;' : '';
 	}
 	if ( isset( $settings->bg_size ) ) {
-		echo ( '' !== $settings->bg_size ) ? 'padding:' . $settings->bg_size . 'px;' : '';
+		echo ( '' !== $settings->bg_size ) ? 'padding:' . esc_attr( $settings->bg_size ) . 'px;' : '';
 	}
 	?>
 }
 
-.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img {
 	<?php
 	if ( isset( $settings->bg_border_radius ) ) {
 		?>
@@ -69,68 +69,68 @@
 	?>
 }
 
-.fl-node-<?php echo $id; ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
 	<?php
 	if ( isset( $settings->caption_padding_top ) ) {
-		echo ( '' !== $settings->caption_padding_top ) ? 'padding-top:' . $settings->caption_padding_top . 'px;' : '';
+		echo ( '' !== $settings->caption_padding_top ) ? 'padding-top:' . esc_attr( $settings->caption_padding_top ) . 'px;' : '';
 	}
 	if ( isset( $settings->caption_padding_right ) ) {
-		echo ( '' !== $settings->caption_padding_right ) ? 'padding-right:' . $settings->caption_padding_right . 'px;' : '';
+		echo ( '' !== $settings->caption_padding_right ) ? 'padding-right:' . esc_attr( $settings->caption_padding_right ) . 'px;' : '';
 	}
 	if ( isset( $settings->caption_padding_bottom ) ) {
-		echo ( '' !== $settings->caption_padding_bottom ) ? 'padding-bottom:' . $settings->caption_padding_bottom . 'px;' : '';
+		echo ( '' !== $settings->caption_padding_bottom ) ? 'padding-bottom:' . esc_attr( $settings->caption_padding_bottom ) . 'px;' : '';
 	}
 	if ( isset( $settings->caption_padding_left ) ) {
-		echo ( '' !== $settings->caption_padding_left ) ? 'padding-left:' . $settings->caption_padding_left . 'px;' : '';
+		echo ( '' !== $settings->caption_padding_left ) ? 'padding-left:' . esc_attr( $settings->caption_padding_left ) . 'px;' : '';
 	}
 	?>
 }
 
 <?php if ( isset( $settings->bg_color ) ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
-		<?php echo ( '' !== $settings->bg_color ) ? 'background:' . $settings->bg_color : ''; ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
+		<?php echo ( '' !== $settings->bg_color ) ? 'background:' . esc_attr( $settings->bg_color ) : ''; ?>
 	}
 <?php } ?>
 
-.fl-node-<?php echo $id; ?> .uabb-retina-img-caption {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption {
 	<?php
 	if ( isset( $settings->caption_margin_top ) ) {
-		echo ( '' !== $settings->caption_margin_top ) ? 'margin-top:' . $settings->caption_margin_top . 'px;' : '';
+		echo ( '' !== $settings->caption_margin_top ) ? 'margin-top:' . esc_attr( $settings->caption_margin_top ) . 'px;' : '';
 	}
 	if ( isset( $settings->caption_margin_bottom ) ) {
-		echo ( '' !== $settings->caption_margin_bottom ) ? 'margin-bottom:' . $settings->caption_margin_bottom . 'px;' : '';
+		echo ( '' !== $settings->caption_margin_bottom ) ? 'margin-bottom:' . esc_attr( $settings->caption_margin_bottom ) . 'px;' : '';
 	}
 	?>
 }
 
 /* Caption Color */
-.fl-node-<?php echo $id; ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
 	<?php
 	if ( isset( $settings->color ) ) {
-		echo ( '' !== $settings->color ) ? 'color:' . $settings->color . ';' : '';
+		echo ( '' !== $settings->color ) ? 'color:' . esc_attr( $settings->color ) . ';' : '';
 	}
 	?>
 }
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-caption,
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
 
 		<?php if ( 'default' !== $settings->font_family['family'] && 'default' !== $settings->font_family['weight'] ) : ?>
 			<?php FLBuilderFonts::font_css( $settings->font_family ); ?>
 		<?php endif; ?>
 		<?php
 		if ( isset( $settings->font_size_unit ) ) {
-			echo ( '' !== $settings->font_size_unit ) ? 'font-size:' . $settings->font_size_unit . 'px;' : '';
+			echo ( '' !== $settings->font_size_unit ) ? 'font-size:' . esc_attr( $settings->font_size_unit ) . 'px;' : '';
 		}
 		if ( isset( $settings->line_height_unit ) ) {
-				echo ( '' !== $settings->line_height_unit ) ? 'line-height:' . $settings->line_height_unit . 'em;' : '';
+				echo ( '' !== $settings->line_height_unit ) ? 'line-height:' . esc_attr( $settings->line_height_unit ) . 'em;' : '';
 		}
 		if ( isset( $settings->letter_spacing ) ) {
-			echo ( '' !== $settings->letter_spacing ) ? 'letter-spacing:' . $settings->letter_spacing . 'px;' : '';
+			echo ( '' !== $settings->letter_spacing ) ? 'letter-spacing:' . esc_attr( $settings->letter_spacing ) . 'px;' : '';
 		}
 		if ( isset( $settings->transform ) ) {
-			echo ( '' !== $settings->transform ) ? 'text-transform:' . $settings->transform . ';' : '';
+			echo ( '' !== $settings->transform ) ? 'text-transform:' . esc_attr( $settings->transform ) . ';' : '';
 		}
 		?>
 	}
@@ -149,43 +149,43 @@
 ?>
 
 <?php if ( 'opacity' === $settings->hover_effect ) { ?>
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img {
 		<?php if ( isset( $settings->opacity ) ) { ?>
-			opacity: <?php echo ( '' !== $settings->opacity ) ? $settings->opacity / 100 : 100; ?>; 
+			opacity: <?php echo esc_attr( ( '' !== $settings->opacity ) ? $settings->opacity / 100 : 100 ); ?>; 
 		<?php } ?>
 	}
-	.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img:hover {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img:hover {
 		<?php if ( isset( $settings->hover_opacity ) ) { ?>
-			opacity: <?php echo ( '' !== $settings->hover_opacity ) ? $settings->hover_opacity / 100 : 100; ?>; 
+			opacity: <?php echo esc_attr( ( '' !== $settings->hover_opacity ) ? $settings->hover_opacity / 100 : 100 ); ?>; 
 		<?php } ?>
 	}
 	<?php
 } elseif ( 'hue_rotate' === $settings->hover_effect ) {
 	?>
-		.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img {
 			<?php
 			if ( isset( $settings->hue_deg ) ) {
 				?>
-				-webkit-filter: hue-rotate(<?php echo $settings->hue_deg; ?>deg);
+				-webkit-filter: hue-rotate(<?php echo esc_attr( $settings->hue_deg ); ?>deg);
 				<?php
 			}
 			if ( isset( $settings->hue_deg ) ) {
 				?>
-				filter: hue-rotate(<?php echo $settings->hue_deg; ?>deg);
+				filter: hue-rotate(<?php echo esc_attr( $settings->hue_deg ); ?>deg);
 				<?php
 			}
 			?>
 		}
-		.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img:hover {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img:hover {
 			<?php
 			if ( isset( $settings->hover_hue_deg ) ) {
 				?>
-				-webkit-filter: hue-rotate(<?php echo $settings->hover_hue_deg; ?>deg);
+				-webkit-filter: hue-rotate(<?php echo esc_attr( $settings->hover_hue_deg ); ?>deg);
 				<?php
 			}
 			if ( isset( $settings->hover_hue_deg ) ) {
 				?>
-				filter: hue-rotate(<?php echo $settings->hover_hue_deg; ?>deg);
+				filter: hue-rotate(<?php echo esc_attr( $settings->hover_hue_deg ); ?>deg);
 				<?php
 			}
 			?>
@@ -196,7 +196,7 @@
 if ( 'simple' === $settings->hover_effect ) {
 	if ( 'color_gray' === $settings->img_grayscale_simple ) {
 		?>
-		.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img:hover {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img:hover {
 			-webkit-filter: grayscale(100%);
 			-webkit-filter: gray;
 			filter: grayscale(100%);
@@ -205,16 +205,16 @@ if ( 'simple' === $settings->hover_effect ) {
 		<?php
 	} elseif ( 'color_hue' === $settings->img_grayscale_simple ) {
 		?>
-		.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img:hover {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img:hover {
 			<?php
 			if ( isset( $settings->hover_hue_deg ) ) {
 				?>
-				-webkit-filter: hue-rotate(<?php echo $settings->hover_hue_deg; ?>deg);
+				-webkit-filter: hue-rotate(<?php echo esc_attr( $settings->hover_hue_deg ); ?>deg);
 				<?php
 			}
 			if ( isset( $settings->hover_hue_deg ) ) {
 				?>
-				filter: hue-rotate(<?php echo $settings->hover_hue_deg; ?>deg);
+				filter: hue-rotate(<?php echo esc_attr( $settings->hover_hue_deg ); ?>deg);
 				<?php
 			}
 			?>
@@ -224,7 +224,7 @@ if ( 'simple' === $settings->hover_effect ) {
 } elseif ( 'grayscale' === $settings->hover_effect ) {
 	if ( 'yes' !== $settings->img_grayscale_grayscale ) {
 		?>
-		.fl-node-<?php echo $id; ?> .uabb-retina-img-content .uabb-retina-img:hover {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img:hover {
 			-webkit-filter: grayscale(1%);
 			filter: grayscale(1%);
 		}
@@ -235,52 +235,52 @@ if ( 'simple' === $settings->hover_effect ) {
 
 <?php if ( $global_settings->responsive_enabled ) { ?>
 	<?php if ( $version_bb_check ) { ?>
-		@media ( max-width: <?php echo $global_settings->medium_breakpoint . 'px'; ?> ) {
-			.fl-node-<?php echo $id; ?> .uabb-retina-img-wrap, .fl-node-<?php echo $id; ?> .uabb-retina-img-caption {
+		@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-wrap, .fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption {
 			<?php
 			if ( isset( $settings->align_medium ) ) {
-				echo ( '' !== $settings->align_medium ) ? 'text-align:' . $settings->align_medium . ';' : '';
+				echo ( '' !== $settings->align_medium ) ? 'text-align:' . esc_attr( $settings->align_medium ) . ';' : '';
 			}
 			?>
 			}
-			.fl-node-<?php echo $id; ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
 				<?php
 				if ( isset( $settings->caption_padding_top_medium ) ) {
-					echo ( '' !== $settings->caption_padding_top_medium ) ? 'padding-top:' . $settings->caption_padding_top_medium . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_top_medium ) ? 'padding-top:' . esc_attr( $settings->caption_padding_top_medium ) . 'px;' : '';
 				}
 				if ( isset( $settings->caption_padding_right_medium ) ) {
-					echo ( '' !== $settings->caption_padding_right_medium ) ? 'padding-right:' . $settings->caption_padding_right_medium . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_right_medium ) ? 'padding-right:' . esc_attr( $settings->caption_padding_right_medium ) . 'px;' : '';
 				}
 				if ( isset( $settings->caption_padding_bottom_medium ) ) {
-					echo ( '' !== $settings->caption_padding_bottom_medium ) ? 'padding-bottom:' . $settings->caption_padding_bottom_medium . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_bottom_medium ) ? 'padding-bottom:' . esc_attr( $settings->caption_padding_bottom_medium ) . 'px;' : '';
 				}
 				if ( isset( $settings->caption_padding_left_medium ) ) {
-					echo ( '' !== $settings->caption_padding_left_medium ) ? 'padding-left:' . $settings->caption_padding_left_medium . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_left_medium ) ? 'padding-left:' . esc_attr( $settings->caption_padding_left_medium ) . 'px;' : '';
 				}
 				?>
 			}
 		}
-		@media ( max-width: <?php echo $global_settings->responsive_breakpoint . 'px'; ?> ) {
-			.fl-node-<?php echo $id; ?> .uabb-retina-img-wrap, .fl-node-<?php echo $id; ?> .uabb-retina-img-caption {
+		@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-wrap, .fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption {
 			<?php
 			if ( isset( $settings->align_responsive ) ) {
-				echo ( '' !== $settings->align_responsive ) ? 'text-align:' . $settings->align_responsive . ';' : '';
+				echo ( '' !== $settings->align_responsive ) ? 'text-align:' . esc_attr( $settings->align_responsive ) . ';' : '';
 			}
 			?>
 			}
-			.fl-node-<?php echo $id; ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-caption .uabb-retina-img-caption-text {
 				<?php
 				if ( isset( $settings->caption_padding_top_responsive ) ) {
-					echo ( '' !== $settings->caption_padding_top_responsive ) ? 'padding-top:' . $settings->caption_padding_top_responsive . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_top_responsive ) ? 'padding-top:' . esc_attr( $settings->caption_padding_top_responsive ) . 'px;' : '';
 				}
 				if ( isset( $settings->caption_padding_right_responsive ) ) {
-					echo ( '' !== $settings->caption_padding_right_responsive ) ? 'padding-right:' . $settings->caption_padding_right_responsive . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_right_responsive ) ? 'padding-right:' . esc_attr( $settings->caption_padding_right_responsive ) . 'px;' : '';
 				}
 				if ( isset( $settings->caption_padding_bottom_responsive ) ) {
-					echo ( '' !== $settings->caption_padding_bottom_responsive ) ? 'padding-bottom:' . $settings->caption_padding_bottom_responsive . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_bottom_responsive ) ? 'padding-bottom:' . esc_attr( $settings->caption_padding_bottom_responsive ) . 'px;' : '';
 				}
 				if ( isset( $settings->caption_padding_left_responsive ) ) {
-					echo ( '' !== $settings->caption_padding_left_responsive ) ? 'padding-left:' . $settings->caption_padding_left_responsive . 'px;' : '';
+					echo ( '' !== $settings->caption_padding_left_responsive ) ? 'padding-left:' . esc_attr( $settings->caption_padding_left_responsive ) . 'px;' : '';
 				}
 				?>
 			}

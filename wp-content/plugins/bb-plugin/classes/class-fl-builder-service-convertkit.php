@@ -150,7 +150,7 @@ final class FLBuilderServiceConvertKit extends FLBuilderService {
 
 		if ( isset( $forms['forms'] ) ) {
 			foreach ( $forms['forms'] as $form ) {
-				$options[ $form['id'] ] = $form['name'];
+				$options[ $form['id'] ] = esc_attr( $form['name'] );
 			}
 		}
 

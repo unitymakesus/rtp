@@ -185,7 +185,7 @@ final class FLBuilderServiceOntraport extends FLBuilderService {
 
 		if ( $campaigns > 0 ) {
 			foreach ( $campaigns as $campaign ) {
-				$options[ $campaign->id ] = $campaign->name;
+				$options[ $campaign->id ] = esc_attr( $campaign->name );
 			}
 		}
 

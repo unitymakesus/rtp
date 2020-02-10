@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBFancyTextModule', array(
+	'UABBFancyTextModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(

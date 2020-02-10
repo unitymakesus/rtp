@@ -1,85 +1,87 @@
-<?php 
+<?php
 /**
  *  UABB Fancy Text Module front-end JS php file
  *
  *  @package UABB Fancy Text Module
  */
 
-if ( $settings->effect_type == 'type' ) { 
-      $strings = $typeSpeed = $startDelay = $backSpeed = $backDelay = $loop = $loopCount = $showCursor = $cursorChar = '';
-      // Order of replacement.
-      $order   = array("\r\n", "\n", "\r", "<br/>", "<br>");
-      $replace = '|';
-	  $str         = str_replace( $order, $replace, $settings->fancy_text );
-	  $lines       = explode( '|', $str );
-	  $count_lines = count( $lines );
+if ( 'type' === $settings->effect_type ) {
 
-	  $strings = '[';
+	$strings = $type_speed = $start_delay = $back_speed = $back_delay = $loop = $loop_count = $show_cursor = $cursor_char = ''; // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
+	// Order of replacement.
+	$txt_order   = array( "\r\n", "\n", "\r", '<br/>', '<br>' );
+	$replace     = '|';
+	$str         = str_replace( $txt_order, $replace, $settings->fancy_text );
+	$lines       = explode( '|', $str );
+	$count_lines = count( $lines );
+
+	$strings = '[';
 	foreach ( $lines as $key => $line ) {
-		$strings .= '"' . __( trim( htmlspecialchars_decode( strip_tags( $line ) ) ), 'uabb' ) . '"';
-		if ( $key != ( $count_lines - 1 ) ) {
+		$strings .= '"' . __( trim( htmlspecialchars_decode( wp_strip_all_tags( $line ) ) ), 'uabb' ) . '"'; // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
+		if ( ( $count_lines - 1 ) !== $key ) {
 			$strings .= ',';
 		}
 	}
 		$strings .= ']';
-      $typeSpeed  = ( !empty($settings->typing_speed) ) ? $settings->typing_speed : 35;
-      $startDelay = ( !empty($settings->start_delay) ) ? $settings->start_delay : 200;
-      $backSpeed  = ( !empty($settings->back_speed) ) ? $settings->back_speed : 0;
-      $backDelay  = ( !empty($settings->back_delay) ) ? $settings->back_delay : 1500;
-      $loop       = ( $settings->enable_loop == 'no' ) ? 'false' : 'true';
-      
-      if( $settings->show_cursor == 'yes' ) {
-        $showCursor = 'true';
-        $cursorChar = ( !empty($settings->cursor_text) ) ? $settings->cursor_text : "|";
-      }else{
-        $showCursor = 'false';
-      }
-  ?>
+	$type_speed   = ( ! empty( $settings->typing_speed ) ) ? $settings->typing_speed : 35;
+	$start_delay  = ( ! empty( $settings->start_delay ) ) ? $settings->start_delay : 200;
+	$back_speed   = ( ! empty( $settings->back_speed ) ) ? $settings->back_speed : 0;
+	$back_delay   = ( ! empty( $settings->back_delay ) ) ? $settings->back_delay : 1500;
+	$loop         = ( 'no' === $settings->enable_loop ) ? 'false' : 'true';
 
-  jQuery( document ).ready(function($) {
-      new UABBFancyText({
-        id:                 '<?php echo $id ?>',
-        viewport_position:  90,
-        animation:          '<?php echo $settings->effect_type; ?>',
-        strings:            <?php echo $strings; ?>,
-        typeSpeed:          <?php echo $typeSpeed; ?>,
-        startDelay:         <?php echo $startDelay; ?>,
-        backSpeed:          <?php echo $backSpeed; ?>,
-        backDelay:          <?php echo $backDelay; ?>,
-        loop:               <?php echo $loop; ?>,
-        showCursor:         <?php echo $showCursor; ?>,
-        cursorChar:         '<?php echo $cursorChar; ?>'
-      });
-  });
+	if ( 'yes' === $settings->show_cursor ) {
+		$show_cursor = 'true';
+		$cursor_char = ( ! empty( $settings->cursor_text ) ) ? $settings->cursor_text : '|';
+	} else {
+		$show_cursor = 'false';
+	}
+	?>
 
-<?php }elseif ( $settings->effect_type == 'slide_up' ) {
-      $speed = $pause = $mousePause = '';
-      
-      $speed = ( !empty($settings->animation_speed) ) ? $settings->animation_speed : 200; 
-      $pause = ( !empty($settings->pause_time) ) ? $settings->pause_time : 3000;
-      $mousePause = ( $settings->pause_hover == 'yes') ? true : false;
-    ?>
-    jQuery( document ).ready(function($) {
-      var wrapper = $('.fl-node-<?php echo $id; ?>'),
-          slide_block = wrapper.find('.uabb-slide-main'),
-          slide_block_height = slide_block.find('.uabb-slide_text').height();
-          slide_block.height(slide_block_height);
+jQuery( document ).ready(function($) {
+	new UABBFancyText({
+		id:                 '<?php echo esc_attr( $id ); ?>',
+		viewport_position:  90,
+		animation:          '<?php echo esc_attr( $settings->effect_type ); ?>',
+		strings:            <?php echo $strings; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		typeSpeed:          <?php echo $type_speed; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		startDelay:         <?php echo $start_delay; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		backSpeed:          <?php echo $back_speed; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		backDelay:          <?php echo $back_delay; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		loop:               <?php echo $loop; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		showCursor:         <?php echo $show_cursor; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		cursorChar:         '<?php echo $cursor_char; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>'
+	});
+});
 
-      var UABBFancy_<?php echo $id; ?> = new UABBFancyText({
-        id:                 '<?php echo $id ?>',
-        viewport_position:  90,
-        animation:          '<?php echo $settings->effect_type; ?>',
-        speed:              <?php echo $speed; ?>,
-        pause:              <?php echo $pause; ?>,
-        mousePause:         Boolean( '<?php echo $mousePause; ?>' ),
-        suffix:             "<?php echo addslashes($settings->suffix); ?>",
-        prefix:             "<?php echo addslashes($settings->prefix); ?>",
-        alignment:          '<?php echo $settings->alignment; ?>',
-      });
+	<?php
+} elseif ( 'slide_up' === $settings->effect_type ) {
+	$speed = $pause = $mouse_pause = ''; // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
 
-	  $( window ).resize(function() {
-		  UABBFancy_<?php echo $id; ?>._initFancyText();
-	  });
+	$speed       = ( ! empty( $settings->animation_speed ) ) ? $settings->animation_speed : 200;
+	$pause       = ( ! empty( $settings->pause_time ) ) ? $settings->pause_time : 3000;
+	$mouse_pause = ( 'yes' === $settings->pause_hover ) ? true : false;
+	?>
+	jQuery( document ).ready(function($) {
+	var wrapper = $('.fl-node-<?php echo esc_attr( $id ); ?>'),
+	slide_block = wrapper.find('.uabb-slide-main'),
+	slide_block_height = slide_block.find('.uabb-slide_text').height();
+	slide_block.height(slide_block_height);
+
+	var UABBFancy_<?php echo esc_attr( $id ); ?> = new UABBFancyText({
+		id:                 '<?php echo esc_attr( $id ); ?>',
+		viewport_position:  90,
+		animation:          '<?php echo esc_attr( $settings->effect_type ); ?>',
+		speed:              <?php echo $speed; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		pause:              <?php echo $pause; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		mousePause:         Boolean( '<?php echo $mouse_pause; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>' ),
+		suffix:             "<?php echo addslashes( $settings->suffix ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>",
+		prefix:             "<?php echo addslashes( $settings->prefix ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>",
+		alignment:          '<?php echo $settings->alignment; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+	});
+
+	$( window ).resize(function() {
+	UABBFancy_<?php echo esc_attr( $id ); ?>._initFancyText();
+	});
 	});
 
 	<?php

@@ -769,6 +769,12 @@
 			$('body').delegate('.fl-row-overlay .fl-block-move', 'touchstart', FLBuilder._rowDragInitTouch);
 			$('body').delegate('.fl-row-overlay .fl-block-settings', 'click touchend', FLBuilder._rowSettingsClicked);
 			$('body').delegate('.fl-builder-row-settings .fl-builder-settings-save', 'click', FLBuilder._saveSettings);
+			// Row touch or mouse specific events.
+			if ( isTouch ) {
+				$('body').delegate('.fl-row-overlay', 'touchend', FLBuilder._rowSettingsClicked);
+			} else {
+				$('body').delegate('.fl-row-overlay', 'click', FLBuilder._rowSettingsClicked);
+			}
 
 			/* Rows Submenu */
 			$('body').delegate('.fl-block-col-submenu .fl-block-row-reset', 'click touchend', FLBuilder._resetRowWidthClicked);
@@ -7263,7 +7269,8 @@
 					position:   'absolute',
 					height:     parseInt( textarea.attr( 'rows' ), 10 ) * 20
 				} ),
-				editor = null;
+				editor = null,
+				global_layout = ( settings.hasClass('fl-builder-global-settings') || settings.hasClass('fl-builder-layout-settings' ) ) ? true : false;
 
 			editDiv.insertBefore( textarea );
 			textarea.css( 'display', 'none' );
@@ -7310,15 +7317,22 @@
 					}
 				}
 
-				if ( hasError && ! errorBtn.length && FLBuilderConfig.CheckCodeErrors ) {
+				val = editor.getSession().getValue();
+
+				if( global_layout && hasError && null !== val.match( /<\/iframe>|<\/script>/gm ) ) {
+					saveBtn.addClass( 'fl-builder-settings-error' );
+					saveBtn.on( 'click', FLBuilder._showCodeFieldCriticalError );
+				}
+				if ( hasError && ! saveBtn.hasClass( 'fl-builder-settings-error' ) && errorBtn.length && FLBuilderConfig.CheckCodeErrors ) {
 					saveBtn.addClass( 'fl-builder-settings-error' );
 					saveBtn.on( 'click', FLBuilder._showCodeFieldError );
-				} else if ( ! hasError && errorBtn.length ) {
+				}
+				if ( ! hasError ) {
 					errorBtn.removeClass( 'fl-builder-settings-error' );
 					errorBtn.off( 'click', FLBuilder._showCodeFieldError );
+					errorBtn.off( 'click', FLBuilder._showCodeFieldCriticalError );
 				}
 			});
-
 			textarea.closest( '.fl-field' ).data( 'editor', editor );
 		},
 
@@ -7345,6 +7359,11 @@
 			        cancel: FLBuilderStrings.codeErrorIgnore
 			    }
 			} );
+		},
+
+		_showCodeFieldCriticalError: function( e ) {
+			e.stopImmediatePropagation();
+			FLBuilder.alert( FLBuilderStrings.codeerrorhtml );
 		},
 
 		/* Multiple Fields

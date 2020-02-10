@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBPriceList', array(
+	'UABBPriceList',
+	array(
 		'price_list_item'           => array(
 			'title'    => __( 'List Item', 'uabb' ),
 			'sections' => array(
@@ -760,7 +761,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'price_list_item_form', array(
+	'price_list_item_form',
+	array(
 		'title' => __( 'Add List Item', 'uabb' ),
 		'tabs'  => array(
 			'price_list_item_general' => array(

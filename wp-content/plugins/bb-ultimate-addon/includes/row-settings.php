@@ -32,7 +32,7 @@ function uabb_row_particle_register_settings() {
  */
 function uabb_row_particle( $form, $id ) {
 
-	if ( 'row' != $id ) {
+	if ( 'row' !== $id ) {
 		return $form;
 	}
 
@@ -151,7 +151,7 @@ function uabb_row_particle( $form, $id ) {
  */
 function uabb_row_gradient( $form, $id ) {
 
-	if ( 'row' != $id ) {
+	if ( 'row' !== $id ) {
 		return $form;
 	}
 

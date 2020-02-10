@@ -3272,7 +3272,7 @@ form.fl-builder-settings {
 	margin: 10px 12px 10px 10px !important;
 	width: calc(100% - 40px);
 }
-.fl-lightbox-width-slim .fl-form-table th {
+.fl-lightbox-width-slim.fl-lightbox .fl-form-table th {
 	display: block;
 	position: relative;
 	padding: 10px 0 0 12px !important;
@@ -5316,6 +5316,15 @@ li.as-result-item em {
 	box-shadow: none;
 }
 /* @endgroup Settings Lightboxes */
+
+/* @group Row Settings
+------------------------------------------------------ */
+
+.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_right"],
+.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_left"] {
+	display: none !important;
+}
+/* @endgroup Row Settings */
 
 /* @group Help */
 /* Getting Started Video

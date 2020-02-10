@@ -168,7 +168,7 @@ final class FLBuilderServiceGoDaddyEmailMarketing extends FLBuilderService {
 
 		if ( ! empty( $forms->signups ) ) {
 			foreach ( $forms->signups as $form ) {
-				$options[ $form->id ] = $form->name;
+				$options[ $form->id ] = esc_attr( $form->name );
 			}
 		}
 

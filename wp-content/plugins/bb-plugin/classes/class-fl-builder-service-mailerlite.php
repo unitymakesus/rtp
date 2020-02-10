@@ -162,7 +162,7 @@ final class FLBuilderServiceMailerLite extends FLBuilderService {
 		);
 		if ( $lists ) {
 			foreach ( $lists as $list ) {
-				$options[ $list->id ] = $list->name;
+				$options[ $list->id ] = esc_attr( $list->name );
 			}
 		}
 

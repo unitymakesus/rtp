@@ -47,7 +47,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 		$version_bb_check        = UABB_Compatibility::$version_bb_check;
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
 				$settings->title_font_typo            = array();
@@ -56,7 +56,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -138,7 +138,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->content_font_family ) ) {
 				if ( isset( $settings->content_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->content_font_family['weight'] ) {
+					if ( 'regular' === $settings->content_font_family['weight'] ) {
 						$settings->content_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
@@ -292,7 +292,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 			if ( isset( $settings->content_border_right ) ) {
 				unset( $settings->content_border_right );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
 				$settings->title_font_typo            = array();
@@ -301,7 +301,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -331,7 +331,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->title_font_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -339,7 +339,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->title_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -347,7 +347,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->title_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -367,7 +367,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->content_font_family ) ) {
 				if ( isset( $settings->content_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->content_font_family['weight'] ) {
+					if ( 'regular' === $settings->content_font_family['weight'] ) {
 						$settings->content_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
@@ -397,7 +397,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->content_line_height['desktop'] ) && isset( $settings->content_font_size['desktop'] ) && 0 != $settings->content_font_size['desktop'] ) {
+			if ( isset( $settings->content_line_height['desktop'] ) && isset( $settings->content_font_size['desktop'] ) && 0 !== $settings->content_font_size['desktop'] ) {
 				if ( is_numeric( $settings->content_line_height['desktop'] ) && is_numeric( $settings->content_font_size['desktop'] ) ) {
 					$settings->content_font_typo['line_height'] = array(
 						'length' => round( $settings->content_line_height['desktop'] / $settings->content_font_size['desktop'], 2 ),
@@ -405,7 +405,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->content_line_height['medium'] ) && isset( $settings->content_font_size['medium'] ) && 0 != $settings->content_font_size['medium'] ) {
+			if ( isset( $settings->content_line_height['medium'] ) && isset( $settings->content_font_size['medium'] ) && 0 !== $settings->content_font_size['medium'] ) {
 				if ( is_numeric( $settings->content_line_height['medium'] ) && is_numeric( $settings->content_font_size['medium'] ) ) {
 					$settings->content_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->content_line_height['medium'] / $settings->content_font_size['medium'], 2 ),
@@ -413,7 +413,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->content_line_height['small'] ) && isset( $settings->content_font_size['small'] ) && 0 != $settings->content_font_size['small'] && ! isset( $settings->content_line_height_unit_responsive ) ) {
+			if ( isset( $settings->content_line_height['small'] ) && isset( $settings->content_font_size['small'] ) && 0 !== $settings->content_font_size['small'] && ! isset( $settings->content_line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->content_line_height['small'] ) && is_numeric( $settings->content_font_size['small'] ) ) {
 					$settings->content_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->content_line_height['small'] / $settings->content_font_size['small'], 2 ),
@@ -442,7 +442,8 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$output = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->title_spacing_dimension_top = (int) $output[ $i ][1];
@@ -483,7 +484,8 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->content_spacing_dimension_top = (int) $output[ $i ][1];
@@ -638,13 +640,13 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 	 * @param string $name gets an string for the module.
 	 * @param object $settings gets an object for the settings.
 	 */
-	function uabb_accordion_render_settings_field( $field, $name, $settings ) {
+	public function uabb_accordion_render_settings_field( $field, $name, $settings ) {
 
-		if ( isset( $field['form'] ) && 'uabb_advAccordion_items_form' == $field['form'] ) {
+		if ( isset( $field['form'] ) && 'uabb_advAccordion_items_form' === $field['form'] ) {
 
 			foreach ( $settings->acc_items as $acc_item ) {
 
-				if ( is_object( $acc_item ) && isset( $acc_item->acc_content ) && '' == $acc_item->ct_content ) {
+				if ( is_object( $acc_item ) && isset( $acc_item->acc_content ) && '' === $acc_item->ct_content ) {
 					$acc_item->ct_content = $acc_item->acc_content;
 				}
 			}
@@ -659,39 +661,35 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 	 * @since x.x.x
 	 * @param object $settings gets an object for the settings.
 	 */
-	function get_accordion_content( $settings ) {
+	public function get_accordion_content( $settings ) {
 		$content_type = $settings->content_type;
+
 		switch ( $content_type ) {
 			case 'content':
 				global $wp_embed;
 				return wpautop( $wp_embed->autoembed( $settings->ct_content ) );
-			break;
 			case 'photo':
 				if ( isset( $settings->ct_photo_src ) ) {
 					return '<img src="' . $settings->ct_photo_src . '" />';
 				}
 				return '<img src="" />';
-			break;
 			case 'video':
 				global $wp_embed;
 				return $wp_embed->autoembed( $settings->ct_video );
-			break;
 			case 'saved_rows':
 				ob_start();
-				echo '[fl_builder_insert_layout id="' . $settings->ct_saved_rows . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->ct_saved_rows ) . '" type="fl-builder-template"]';
 				return ob_get_clean();
 			case 'saved_modules':
 				ob_start();
-				echo '[fl_builder_insert_layout id="' . $settings->ct_saved_modules . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->ct_saved_modules ) . '" type="fl-builder-template"]';
 				return ob_get_clean();
 			case 'saved_page_templates':
 				ob_start();
-				echo '[fl_builder_insert_layout id="' . $settings->ct_page_templates . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->ct_page_templates ) . '" type="fl-builder-template"]';
 				return ob_get_clean();
-			break;
 			default:
 				return;
-			break;
 		}
 	}
 
@@ -701,10 +699,10 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 	 * @since x.x.x
 	 * @param object $pos gets an object for the icon's settings.
 	 */
-	function render_icon( $pos ) {
-		if ( $pos == $this->settings->icon_position && ( '' != $this->settings->open_icon || '' != $this->settings->close_icon ) ) {
+	public function render_icon( $pos ) {
+		if ( $pos === $this->settings->icon_position && ( '' !== $this->settings->open_icon || '' !== $this->settings->close_icon ) ) {
 
-			if ( 'none' == $this->settings->icon_animation ) {
+			if ( 'none' === $this->settings->icon_animation ) {
 				$output  = '<div class="uabb-adv-accordion-icon-wrap">';
 				$output .= '<i class="uabb-adv-accordion-button-icon ' . $this->settings->close_icon . '"></i>';
 				$output .= '</div>';
@@ -712,10 +710,10 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 				$output  = '<div class="uabb-adv-accordion-icon-wrap uabb-adv-' . $this->settings->icon_animation . '">';
 				$output .= '<div class="uabb-adv-accordion-icon-animation">';
 
-				if ( 'push-out-top' == $this->settings->icon_animation || 'push-out-left' == $this->settings->icon_animation ) {
+				if ( 'push-out-top' === $this->settings->icon_animation || 'push-out-left' === $this->settings->icon_animation ) {
 					$output .= '<i class="uabb-adv-accordion-button-icon uabb-adv-accordion-open-icon ' . $this->settings->open_icon . '"></i>';
 					$output .= '<i class="uabb-adv-accordion-button-icon uabb-adv-accordion-close-icon ' . $this->settings->close_icon . '"></i>';
-				} elseif ( 'push-out-bottom' == $this->settings->icon_animation || 'push-out-right' == $this->settings->icon_animation ) {
+				} elseif ( 'push-out-bottom' === $this->settings->icon_animation || 'push-out-right' === $this->settings->icon_animation ) {
 					$output .= '<i class="uabb-adv-accordion-button-icon uabb-adv-accordion-close-icon ' . $this->settings->close_icon . '"></i>';
 					$output .= '<i class="uabb-adv-accordion-button-icon uabb-adv-accordion-open-icon ' . $this->settings->open_icon . '"></i>';
 				}
@@ -736,6 +734,7 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
  */
 
 if ( UABB_Compatibility::$version_bb_check ) {
+
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/advanced-accordion/advanced-accordion-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/advanced-accordion/advanced-accordion-bb-less-than-2-2-compatibility.php';

@@ -30,8 +30,7 @@ if ( '' !== $default_img_src && '' !== $retina_img_src ) {
 		$retina_img_src  = $retina_img_src . '?' . $timestam;
 	}
 }
-
-$link = $module->get_link();
+$img_link = $module->get_link();
 
 $grayscale_class = '';
 if ( 'simple' === $settings->hover_effect ) {
@@ -67,18 +66,18 @@ if ( UABB_Compatibility::$version_bb_check ) {
 
 ?>
 <div class="uabb-module-content uabb-retina-img-wrap" itemscope itemtype="https://schema.org/ImageObject">
-	<div class="uabb-retina-img-content <?php echo $grayscale_class; ?>">
-		<?php if ( ! empty( $link ) ) : ?>
-		<a href="<?php echo $link; ?>" target="<?php echo $link_url_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $link_url_target, $link_url_nofollow, 1 ); ?> itemprop="url">
+	<div class="uabb-retina-img-content <?php echo esc_attr( $grayscale_class ); ?>">
+		<?php if ( ! empty( $img_link ) ) : ?>
+		<a href="<?php echo esc_url( $img_link ); ?>" target="<?php echo esc_attr( $link_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $link_url_target, $link_url_nofollow, 1 ); ?> itemprop="url">
 		<?php endif; ?>
-		<img class="uabb-retina-img" src="<?php echo $default_img_src; ?>" itemprop="image" srcset="<?php echo $default_img_src . ' 1x' . ',' . $retina_img_src . ' 2x'; ?>"/>
-		<?php if ( ! empty( $link ) ) : ?>
+		<img class="uabb-retina-img" src="<?php echo esc_url( $default_img_src ); ?>" itemprop="image" srcset="<?php echo esc_url( $default_img_src ) . ' 1x,' . esc_url( $retina_img_src ) . ' 2x'; ?>"/>
+		<?php if ( ! empty( $img_link ) ) : ?>
 		</a>
 		<?php endif; ?>
 	</div>
 	<?php if ( ! empty( $settings->custom_caption ) && 'custom_caption' === $settings->show_caption ) : ?>
-	<<?php echo $settings->tag; ?> class="uabb-retina-img-caption" itemprop="caption">
-	<span class="uabb-retina-img-caption-text"><?php echo $settings->custom_caption; ?></span>
-	</<?php echo $settings->tag; ?>>
+	<<?php echo esc_attr( $settings->tag ); ?> class="uabb-retina-img-caption" itemprop="caption">
+	<span class="uabb-retina-img-caption-text"><?php echo wp_kses_post( $settings->custom_caption ); ?></span>
+	</<?php echo esc_attr( $settings->tag ); ?>>
 	<?php endif; ?>
 </div>

@@ -222,54 +222,56 @@
 		},
 		_openOnLink : function() {
 			var nodeClass  		= jQuery(this.nodeClass);
-			var hashval = window.location.hash,
-				id = hashval.split( '#' ).pop();
+			
+			// Regexp for validating user input as ID : https://regex101.com/r/KGj6I6/1
+			var pattern = new RegExp('^[\\w\\-]+$');
 
-			if( ! id ) {
-				return;
-			}
+				var id = window.location.hash.substring(1);
 
-			$( this.nodeClass + ' .uabb-video-gallery-wrap' ).each( function() {
+			if ( pattern.test( id ) ) {
+
+				$( this.nodeClass + ' .uabb-video-gallery-wrap' ).each( function() {
 				var selector 	= $(this);
 
-				if ( ! selector.hasClass( 'uabb-video-gallery-filter' ) ) {
-						return;
-				}
+					if ( ! selector.hasClass( 'uabb-video-gallery-filter' ) ) {
+							return;
+					}
 
-				var filters = nodeClass.find( '.uabb-video__gallery-filters' );
+					var filters = nodeClass.find( '.uabb-video__gallery-filters' );
 
-				if ( filters.length > 0 ) {
+					if ( filters.length > 0 ) {
 
-					if ( '' !== id ) {
+						if ( '' !== id ) {
 
-						id = '.' + id.toLowerCase();
-						def_cat = id;
+							id = '.' + id.toLowerCase();
+							def_cat = id;
 
-						def_cat_sel = filters.find( '[data-filter="' + id + '"]' );
+							def_cat_sel = filters.find( '[data-filter="' + id + '"]' );
 
-						if ( def_cat_sel.length > 0 ) {
+							if ( def_cat_sel.length > 0 ) {
 
-							def_cat_sel.siblings().removeClass( 'uabb-filter__current' );
+								def_cat_sel.siblings().removeClass( 'uabb-filter__current' );
 
-							def_cat_sel.addClass( 'uabb-filter__current' );
+								def_cat_sel.addClass( 'uabb-filter__current' );
+							}
 						}
 					}
-				}
-				var $obj = {};
+					var $obj = {};
 
-				selector.imagesLoaded( function( e ) {
+					selector.imagesLoaded( function( e ) {
 
-					$obj = selector.isotope({
-						filter: def_cat,
-						layoutMode: 'masonry',
-						itemSelector: '.uabb-video__gallery-item',
-					});
+						$obj = selector.isotope({
+							filter: def_cat,
+							layoutMode: 'masonry',
+							itemSelector: '.uabb-video__gallery-item',
+						});
 
-					selector.find( '.uabb-video__gallery-item' ).resize( function() {
-						$obj.isotope( 'layout' );
+						selector.find( '.uabb-video__gallery-item' ).resize( function() {
+							$obj.isotope( 'layout' );
+						});
 					});
 				});
-			});
+			}
 		}
 	};
 })(jQuery);

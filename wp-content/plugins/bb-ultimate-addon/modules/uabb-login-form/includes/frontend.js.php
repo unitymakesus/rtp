@@ -31,11 +31,11 @@ if ( is_array( $uabb_setting_options ) ) {
 		uabb_social_google_client_id: "<?php echo ! empty( $uabb_social_google_client_id ) ? esc_attr( $uabb_social_google_client_id ) : ''; ?>",
 		google_login_select: "<?php echo ! empty( $settings->google_login_select ) ? esc_attr( $settings->google_login_select ) : ''; ?>",
 		facebook_login_select: "<?php echo ! empty( $settings->facebook_login_select ) ? esc_attr( $settings->facebook_login_select ) : ''; ?>",	
-		uabb_lf_username_empty_err_msg: "<?php _e( 'Error: The Username field should not be Empty.', 'uabb' ); ?>",
-		uabb_lf_password_empty_err_msg: "<?php _e( 'Error: The Password field should not be Empty.', 'uabb' ); ?>",
-		uabb_lf_both_empty_err_msg: "<?php _e( 'Error: The Username and Password fields should not be Empty.', 'uabb' ); ?>",
-		uabb_lf_username_invalid_err_msg: "<?php _e( 'Error: The Username you have entered is Invalid', 'uabb' ); ?>",
-		uabb_lf_password_invalid_err_msg: "<?php _e( 'Error: The Password you have entered is Invalid.', 'uabb' ); ?>"
+		uabb_lf_username_empty_err_msg: "<?php esc_attr_e( 'Error: The Username field should not be Empty.', 'uabb' ); ?>",
+		uabb_lf_password_empty_err_msg: "<?php esc_attr_e( 'Error: The Password field should not be Empty.', 'uabb' ); ?>",
+		uabb_lf_both_empty_err_msg: "<?php esc_attr_e( 'Error: The Username and Password fields should not be Empty.', 'uabb' ); ?>",
+		uabb_lf_username_invalid_err_msg: "<?php esc_attr_e( 'Error: The Username you have entered is Invalid', 'uabb' ); ?>",
+		uabb_lf_password_invalid_err_msg: "<?php esc_attr_e( 'Error: The Password you have entered is Invalid.', 'uabb' ); ?>"
 		});
 	});
 

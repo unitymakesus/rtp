@@ -19,7 +19,7 @@ if ( empty( $product ) || ! $product->is_visible() ) {
 
 <?php
 
-$post_id    = $product->get_id();
+$post_id    = $product->get_id(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 $class      = array();
 $classes    = array();
 $classes[]  = 'post-' . $post_id;
@@ -33,7 +33,7 @@ $out_of_stock        = get_post_meta( $post_id, '_stock_status', true );
 $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out of stock', 'uabb' ) );
 
 ?>
-<li class=" <?php echo $wc_classes; ?>">
+<li class=" <?php echo esc_attr( $wc_classes ); ?>">
 	<div class="uabb-woo-product-wrapper">
 		<?php
 
@@ -50,7 +50,7 @@ $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out o
 				}
 			}
 
-			echo '<div class="uabb-flash-container ' . $double_flash . '">';
+			echo '<div class="uabb-flash-container ' . esc_attr( $double_flash ) . '">';
 
 			if ( 'none' !== $sale_flash ) {
 				include BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/templates/loop/sale-flash.php';
@@ -74,7 +74,7 @@ $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out o
 
 		/* Out of stock */
 		if ( 'outofstock' === $out_of_stock ) {
-			echo '<span class="uabb-out-of-stock">' . esc_html( $out_of_stock_string ) . '</span>';
+			echo '<span class="uabb-out-of-stock">' . esc_attr( $out_of_stock_string ) . '</span>';
 		}
 
 
@@ -82,10 +82,10 @@ $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out o
 		echo '<div class="uabb-product-actions">';
 		if ( 'show' === $quick_view_type ) {
 
-			echo '<div class="uabb-action-item-wrap uabb-quick-view-btn" data-product_id="' . $post_id . '">';
+			echo '<div class="uabb-action-item-wrap uabb-quick-view-btn" data-product_id="' . esc_attr( $post_id ) . '">';
 
 				echo '<span class="uabb-action-item fa fa-eye"></span>';
-				echo '<span class="uabb-action-tooltip">' . __( 'Quick View', 'uabb' ) . '</span>';
+				echo '<span class="uabb-action-tooltip">' . esc_attr__( 'Quick View', 'uabb' ) . '</span>';
 			echo '</div>';
 		}
 
@@ -94,9 +94,9 @@ $out_of_stock_string = apply_filters( 'uabb_woo_out_of_stock_string', __( 'Out o
 			$cart_class = $product->is_purchasable() && $product->is_in_stock() ? 'uabb-add-to-cart-btn' : '';
 
 
-			echo '<a href=' . $product->add_to_cart_url() . ' class="uabb-action-item-wrap uabb-cart-section ' . $cart_class . ' product_type_' . $product->get_type() . '" data-product_id="' . $post_id . '">';
+			echo '<a href=' . wp_kses_post( $product->add_to_cart_url() ) . ' class="uabb-action-item-wrap uabb-cart-section ' . esc_attr( $cart_class ) . ' product_type_' . wp_kses_post( $product->get_type() ) . '" data-product_id="' . esc_attr( $post_id ) . '">';
 				echo '<span class="uabb-action-item uabb-ajax-add-cart-icon fa fa-shopping-cart"></span>';
-				echo '<span class="uabb-action-tooltip">' . $product->add_to_cart_text() . '</span>';
+				echo '<span class="uabb-action-tooltip">' . wp_kses_post( $product->add_to_cart_text() ) . '</span>';
 			echo '</a>';
 		}
 		echo '</div>';

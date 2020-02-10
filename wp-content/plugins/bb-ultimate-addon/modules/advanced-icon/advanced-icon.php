@@ -47,13 +47,12 @@ class UABBAdvancedIconModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
-
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 			// Handling each icon's list.
 			foreach ( $settings->icons as $icon ) {
 
 				if ( isset( $icon->link_nofollow ) ) {
-					if ( '1' == $icon->link_nofollow || 'yes' == $icon->link_nofollow ) {
+					if ( '1' === $icon->link_nofollow || 'yes' === $icon->link_nofollow ) {
 						$icon->link_nofollow = 'yes';
 					}
 				}
@@ -64,13 +63,13 @@ class UABBAdvancedIconModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
 
 			// Handle opacity fields.
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handling each icon's list.
 			foreach ( $settings->icons as $icon ) {
 
 				if ( isset( $icon->link_nofollow ) ) {
-					if ( '1' == $icon->link_nofollow || 'yes' == $icon->link_nofollow ) {
+					if ( '1' === $icon->link_nofollow || 'yes' === $icon->link_nofollow ) {
 						$icon->link_nofollow = 'yes';
 					}
 				}

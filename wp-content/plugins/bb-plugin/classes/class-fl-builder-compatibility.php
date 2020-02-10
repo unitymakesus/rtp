@@ -61,6 +61,14 @@ final class FLBuilderCompatibility {
 		add_filter( 'fl_builder_admin_edit_sort_blocklist', array( __CLASS__, 'admin_edit_sort_blocklist_edd' ) );
 		add_filter( 'option_cookiebot-nooutput', array( __CLASS__, 'fix_cookiebot' ) );
 		add_filter( 'fl_select2_enabled', array( __CLASS__, 'fix_memberium' ) );
+		add_filter( 'option_wp-smush-lazy_load', array( __CLASS__, 'fix_smush' ) );
+	}
+
+	public static function fix_smush( $option ) {
+		if ( isset( $_GET['fl_builder'] ) ) {
+			$option['format']['iframe'] = false;
+		}
+		return $option;
 	}
 
 	public static function fix_memberium( $enabled ) {

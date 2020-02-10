@@ -13,13 +13,13 @@ var field   = data.field,
 	preview = data.preview,
 	selected = '',
 	sel = '',
-	yr = parseInt( '<?php echo date( 'Y' ); ?>' );
+	yr = parseInt( '<?php echo date( 'Y' ); // @codingStandardsIgnoreLine. ( WordPress.DateTime.RestrictedFunctions.date_date , WordPress.Security.EscapeOutput.OutputNotEscaped ) ?>' );
 #>
 
 <div class="uabb-date-wrap fl-field" data-type="select" data-preview="{{field.preview}}">
 	<div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_days" >
-		<option value="0"><?php _e( 'Date', 'uabb' ); ?></option>
+		<option value="0"><?php esc_html_e( 'Date', 'uabb' ); ?></option>
 			<#
 			for ( var i=1; i <= 31; i++ ) {
 				selected = "";
@@ -45,11 +45,11 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Date', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Date', 'uabb' ); ?></label>
 	</div>
 	<div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_month" >
-		<option value="0"><?php _e( 'Month', 'uabb' ); ?></option>
+		<option value="0"><?php esc_html_e( 'Month', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '01' ) {
 			sel = "selected";
@@ -57,7 +57,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="01" {{sel}} ><?php _e( 'Jan', 'uabb' ); ?></option>
+		<option value="01" {{sel}} ><?php esc_html_e( 'Jan', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '02' ) {
 			sel = "selected";
@@ -65,7 +65,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="02" {{sel}} ><?php _e( 'Feb', 'uabb' ); ?></option>
+		<option value="02" {{sel}} ><?php esc_html_e( 'Feb', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '03' ) {
 			sel = "selected";
@@ -73,7 +73,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="03" {{sel}} ><?php _e( 'Mar', 'uabb' ); ?></option>
+		<option value="03" {{sel}} ><?php esc_html_e( 'Mar', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '04' ) {
 			sel = "selected";
@@ -81,7 +81,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="04" {{sel}} ><?php _e( 'Apr', 'uabb' ); ?></option>
+		<option value="04" {{sel}} ><?php esc_html_e( 'Apr', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '05' ) {
 			sel = "selected";
@@ -89,7 +89,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="05" {{sel}} ><?php _e( 'May', 'uabb' ); ?></option>
+		<option value="05" {{sel}} ><?php esc_html_e( 'May', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '06' ) {
 			sel = "selected";
@@ -97,7 +97,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="06" {{sel}} ><?php _e( 'Jun', 'uabb' ); ?></option>
+		<option value="06" {{sel}} ><?php esc_html_e( 'Jun', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '07' ) {
 			sel = "selected";
@@ -105,7 +105,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="07" {{sel}} ><?php _e( 'Jul', 'uabb' ); ?></option>
+		<option value="07" {{sel}} ><?php esc_html_e( 'Jul', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '08' ) {
 			sel = "selected";
@@ -113,7 +113,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="08" {{sel}} ><?php _e( 'Aug', 'uabb' ); ?></option>
+		<option value="08" {{sel}} ><?php esc_html_e( 'Aug', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '09' ) {
 			sel = "selected";
@@ -121,7 +121,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="09" {{sel}} ><?php _e( 'Sep', 'uabb' ); ?></option>
+		<option value="09" {{sel}} ><?php esc_html_e( 'Sep', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '10' ) {
 			sel = "selected";
@@ -129,7 +129,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="10" {{sel}} ><?php _e( 'Oct', 'uabb' ); ?></option>
+		<option value="10" {{sel}} ><?php esc_html_e( 'Oct', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '11' ) {
 			sel = "selected";
@@ -137,7 +137,7 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="11" {{sel}} ><?php _e( 'Nov', 'uabb' ); ?></option>
+		<option value="11" {{sel}} ><?php esc_html_e( 'Nov', 'uabb' ); ?></option>
 		<#
 		if( 'undefined' != typeof settings.fixed_date_month && settings.fixed_date_month == '12' ) {
 			sel = "selected";
@@ -145,15 +145,15 @@ var field   = data.field,
 			sel = "";
 		}
 		#>
-		<option value="12" {{sel}} ><?php _e( 'Dec', 'uabb' ); ?></option>
+		<option value="12" {{sel}} ><?php esc_html_e( 'Dec', 'uabb' ); ?></option>
 	</select>
 	</br>
-	<label><?php _e( 'Months', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Months', 'uabb' ); ?></label>
 </div>
 
 <div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_year" >
-		<option value="0"><?php _e( 'Year', 'uabb' ); ?></option>
+		<option value="0"><?php esc_html_e( 'Year', 'uabb' ); ?></option>
 		<#
 		for ( i = yr; i < yr + 6; i++ ) {
 		selected = "";
@@ -173,12 +173,12 @@ var field   = data.field,
 		#>
 	</select>
 	</br>
-	<label><?php _e( 'Years', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Years', 'uabb' ); ?></label>
 </div>
 
 <div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_hour" >
-	<option value="0"><?php _e( 'Hour', 'uabb' ); ?></option>
+	<option value="0"><?php esc_html_e( 'Hour', 'uabb' ); ?></option>
 	<#
 	for ( i = 0; i < 24; i++ ) {
 		selected = "";
@@ -204,11 +204,11 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Hours', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Hours', 'uabb' ); ?></label>
 </div>
 <div class="uabb-countdown-custom-fields">
 	<select class="text text-full" name="{{name}}_minutes" >
-	<option value="0"><?php _e( 'Minutes', 'uabb' ); ?></option>
+	<option value="0"><?php esc_html_e( 'Minutes', 'uabb' ); ?></option>
 	<#
 	for ( i = 0; i < 60; i++ ) {
 		selected = "";
@@ -234,5 +234,5 @@ var field   = data.field,
 	#>
 	</select>
 	</br>
-	<label><?php _e( 'Minutes', 'uabb' ); ?></label>
+	<label><?php esc_html_e( 'Minutes', 'uabb' ); ?></label>
 </div>

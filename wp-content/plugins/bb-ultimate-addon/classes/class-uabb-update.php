@@ -49,7 +49,7 @@ if ( ! class_exists( 'UABB_Plugin_Update' ) ) {
 		 * @since 1.5.0
 		 * @return void
 		 */
-		static public function init() {
+		public static function init() {
 
 			// Get saved version number.
 			$saved_version = get_option( '_uabb_saved_version', '0' );
@@ -64,7 +64,7 @@ if ( ! class_exists( 'UABB_Plugin_Update' ) ) {
 
 			$old_jrn_details = get_option( '_journey_details', '0' );
 
-			if ( '0' == $old_jrn_details ) {
+			if ( '0' === $old_jrn_details ) {
 				$old_jrn_details = array();
 			}
 

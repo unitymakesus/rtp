@@ -51,7 +51,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'overlay_color_opc', 'overlay_color' );
@@ -69,7 +69,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->caption_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->caption_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -139,7 +139,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				);
 				unset( $settings->letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'overlay_color_opc', 'overlay_color' );
@@ -158,7 +158,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->caption_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->caption_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -184,7 +184,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->caption_font_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -192,7 +192,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->caption_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -200,7 +200,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->caption_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -253,7 +253,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 		$default_order = $this->get_wordpress_photos();
 		$photos_id     = array();
 		// WordPress.
-		if ( 'random' == $this->settings->photo_order && is_array( $default_order ) ) {
+		if ( 'random' === $this->settings->photo_order && is_array( $default_order ) ) {
 
 			$keys = array_keys( $default_order );
 			shuffle( $keys );
@@ -331,7 +331,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 				$photo->sizes = (array) ( $photo->sizes );
 
-				if ( -1 != $id && '' != $id ) {
+				if ( -1 !== $id && '' !== $id ) {
 					if ( isset( $photo_size ) ) {
 						$temp      = wp_get_attachment_image_src( $id, $photo_size );
 						$data->src = $temp[0];
@@ -377,28 +377,28 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 		}
 		?>
-		<div class="uabb-photo-gallery-filters-wrap uabb-photo-gallery-stack-<?php echo $this->settings->filters_tab_heading_stack; ?>">
+		<div class="uabb-photo-gallery-filters-wrap uabb-photo-gallery-stack-<?php echo esc_attr( $this->settings->filters_tab_heading_stack ); ?>">
 			<?php if ( 'yes' === $this->settings->show_filter_title ) { ?>
 				<div class="uabb-photo-gallery-title-filters">
 					<div class="uabb-photo-gallery-title">
-						<<?php echo $this->settings->filter_title_tag; ?> class="uabb-photo-gallery-title-text"><?php echo $this->settings->filters_heading_text; ?></<?php echo $this->settings->filter_title_tag; ?>>
+						<<?php echo esc_attr( $this->settings->filter_title_tag ); ?> class="uabb-photo-gallery-title-text"><?php echo esc_attr( $this->settings->filters_heading_text ); ?></<?php echo esc_attr( $this->settings->filter_title_tag ); ?>>
 					</div>
 			<?php } ?>
 				<ul class="uabb-photo__gallery-filters" data-default="
 				<?php
-					echo ( isset( $default ) ) ? $default : '';
+					echo ( isset( $default ) ) ? esc_attr( $default ) : '';
 				?>
 				">
 					<li class="uabb-photo__gallery-filter uabb-filter__current" data-filter="*">
 					<?php
-					echo ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' );
+					echo wp_kses_post( ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' ) );
 					?>
 					</li>
 					<?php
 					foreach ( $cat_filter as $key => $value ) {
 						?>
-						<li class="uabb-photo__gallery-filter" data-filter="<?php echo '.' . $key; ?>">
-							<?php echo $value; ?>
+						<li class="uabb-photo__gallery-filter" data-filter="<?php echo '.' . esc_attr( $key ); ?>">
+							<?php echo esc_attr( $value ); ?>
 						</li>
 					<?php } ?>
 				</ul>
@@ -439,7 +439,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				$cat_slug    = strtolower( str_replace( ' ', '-', $cat ) );
 				$image_cat[] = $cat_slug;
 				if ( ! empty( $cat ) ) {
-					$cat_filter[  $this->clean( $cat_slug ) ] = $cat;
+					$cat_filter[ $this->clean( $cat_slug ) ] = $cat;
 				}
 			}
 		}

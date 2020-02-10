@@ -157,7 +157,7 @@ final class FLBuilderServiceEnormail extends FLBuilderService {
 
 		foreach ( $lists as $list ) {
 			if ( isset( $list->listid ) ) {
-				$options[ $list->listid ] = $list->title;
+				$options[ $list->listid ] = esc_attr( $list->title );
 			}
 		}
 

@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBCountdownModule', array(
+	'UABBCountdownModule',
+	array(
 		'general'         => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

@@ -43,21 +43,10 @@ class ProgressBarModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/progress-bar/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/progress-bar/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/progress-bar/icon/' . esc_attr( $icon ) ) ) {
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/progress-bar/icon/' . esc_attr( $icon ) );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -74,7 +63,7 @@ class ProgressBarModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle old border settings.
 			if ( isset( $settings->border_color ) ) {
@@ -128,7 +117,7 @@ class ProgressBarModule extends FLBuilderModule {
 					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->text_font_family['weight'] ) {
+					if ( 'regular' === $settings->text_font_family['weight'] ) {
 						$settings->text_typo['font_weight'] = 'normal';
 					} else {
 						$settings->text_typo['font_weight'] = $settings->text_font_family['weight'];
@@ -207,7 +196,7 @@ class ProgressBarModule extends FLBuilderModule {
 					unset( $settings->before_after_font_family['family'] );
 				}
 				if ( isset( $settings->before_after_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->before_after_font_family['weight'] ) {
+					if ( 'regular' === $settings->before_after_font_family['weight'] ) {
 						$settings->before_after_typo['font_weight'] = 'normal';
 					} else {
 						$settings->before_after_typo['font_weight'] = $settings->before_after_font_family['weight'];
@@ -293,7 +282,7 @@ class ProgressBarModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->number_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->number_font_family['weight'] ) {
+					if ( 'regular' === $settings->number_font_family['weight'] ) {
 						$settings->number_typo['font_weight'] = 'normal';
 					} else {
 						$settings->number_typo['font_weight'] = $settings->number_font_family['weight'];
@@ -357,7 +346,7 @@ class ProgressBarModule extends FLBuilderModule {
 				);
 				unset( $settings->number_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle old border settings.
 			if ( isset( $settings->border_color ) ) {
@@ -412,7 +401,7 @@ class ProgressBarModule extends FLBuilderModule {
 					unset( $settings->text_font_family['family'] );
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->text_font_family['weight'] ) {
+					if ( 'regular' === $settings->text_font_family['weight'] ) {
 						$settings->text_typo['font_weight'] = 'normal';
 					} else {
 						$settings->text_typo['font_weight'] = $settings->text_font_family['weight'];
@@ -439,7 +428,7 @@ class ProgressBarModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->text_line_height['small'] ) && isset( $settings->text_font_size['small'] ) && 0 != $settings->text_font_size['small'] ) {
+			if ( isset( $settings->text_line_height['small'] ) && isset( $settings->text_font_size['small'] ) && 0 !== $settings->text_font_size['small'] ) {
 				if ( is_numeric( $settings->text_line_height['small'] ) && is_numeric( $settings->text_font_size['small'] ) ) {
 					$settings->text_typo_responsive['line_height'] = array(
 						'length' => round( $settings->text_line_height['small'] / $settings->text_font_size['small'], 2 ),
@@ -447,7 +436,7 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->text_line_height['medium'] ) && isset( $settings->text_font_size['medium'] ) && 0 != $settings->text_font_size['medium'] ) {
+			if ( isset( $settings->text_line_height['medium'] ) && isset( $settings->text_font_size['medium'] ) && 0 !== $settings->text_font_size['medium'] ) {
 				if ( is_numeric( $settings->text_line_height['medium'] ) && is_numeric( $settings->text_font_size['medium'] ) ) {
 					$settings->text_typo_medium['line_height'] = array(
 						'length' => round( $settings->text_line_height['medium'] / $settings->text_font_size['medium'], 2 ),
@@ -455,7 +444,7 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->text_line_height['desktop'] ) && isset( $settings->text_font_size['desktop'] ) && 0 != $settings->text_font_size['desktop'] ) {
+			if ( isset( $settings->text_line_height['desktop'] ) && isset( $settings->text_font_size['desktop'] ) && 0 !== $settings->text_font_size['desktop'] ) {
 				if ( is_numeric( $settings->text_line_height['desktop'] ) && is_numeric( $settings->text_font_size['desktop'] ) ) {
 					$settings->text_typo['line_height'] = array(
 						'length' => round( $settings->text_line_height['desktop'] / $settings->text_font_size['desktop'], 2 ),
@@ -478,7 +467,7 @@ class ProgressBarModule extends FLBuilderModule {
 					unset( $settings->before_after_font_family['family'] );
 				}
 				if ( isset( $settings->before_after_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->before_after_font_family['weight'] ) {
+					if ( 'regular' === $settings->before_after_font_family['weight'] ) {
 						$settings->before_after_typo['font_weight'] = 'normal';
 					} else {
 						$settings->before_after_typo['font_weight'] = $settings->before_after_font_family['weight'];
@@ -506,7 +495,7 @@ class ProgressBarModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->before_after_line_height['small'] ) && isset( $settings->before_after_font_size['small'] ) && 0 != $settings->before_after_font_size['small'] ) {
+			if ( isset( $settings->before_after_line_height['small'] ) && isset( $settings->before_after_font_size['small'] ) && 0 !== $settings->before_after_font_size['small'] ) {
 				if ( is_numeric( $settings->before_after_line_height['small'] ) && is_numeric( $settings->before_after_font_size['small'] ) ) {
 					$settings->before_after_typo_responsive['line_height'] = array(
 						'length' => round( $settings->before_after_line_height['small'] / $settings->before_after_font_size['small'], 2 ),
@@ -514,7 +503,7 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->before_after_line_height['medium'] ) && isset( $settings->before_after_font_size['medium'] ) && 0 != $settings->before_after_font_size['medium'] ) {
+			if ( isset( $settings->before_after_line_height['medium'] ) && isset( $settings->before_after_font_size['medium'] ) && 0 !== $settings->before_after_font_size['medium'] ) {
 				if ( is_numeric( $settings->before_after_line_height['medium'] ) && is_numeric( $settings->before_after_font_size['medium'] ) ) {
 					$settings->before_after_typo_medium['line_height'] = array(
 						'length' => round( $settings->before_after_line_height['medium'] / $settings->before_after_font_size['medium'], 2 ),
@@ -522,7 +511,7 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->before_after_line_height['desktop'] ) && isset( $settings->before_after_font_size['desktop'] ) && 0 != $settings->before_after_font_size['desktop'] ) {
+			if ( isset( $settings->before_after_line_height['desktop'] ) && isset( $settings->before_after_font_size['desktop'] ) && 0 !== $settings->before_after_font_size['desktop'] ) {
 				if ( is_numeric( $settings->before_after_line_height['desktop'] ) && is_numeric( $settings->before_after_font_size['desktop'] ) ) {
 					$settings->before_after_typo['line_height'] = array(
 						'length' => round( $settings->before_after_line_height['desktop'] / $settings->before_after_font_size['desktop'], 2 ),
@@ -545,7 +534,7 @@ class ProgressBarModule extends FLBuilderModule {
 					unset( $settings->number_font_family['family'] );
 				}
 				if ( isset( $settings->number_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->number_font_family['weight'] ) {
+					if ( 'regular' === $settings->number_font_family['weight'] ) {
 						$settings->number_typo['font_weight'] = 'normal';
 					} else {
 						$settings->number_typo['font_weight'] = $settings->number_font_family['weight'];
@@ -572,7 +561,7 @@ class ProgressBarModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->number_line_height['small'] ) && isset( $settings->number_font_size['small'] ) && 0 != $settings->number_font_size['small'] ) {
+			if ( isset( $settings->number_line_height['small'] ) && isset( $settings->number_font_size['small'] ) && 0 !== $settings->number_font_size['small'] ) {
 				if ( is_numeric( $settings->number_line_height['small'] ) && is_numeric( $settings->number_font_size['small'] ) ) {
 					$settings->number_typo_responsive['line_height'] = array(
 						'length' => round( $settings->number_line_height['small'] / $settings->number_font_size['small'], 2 ),
@@ -580,7 +569,7 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->number_line_height['medium'] ) && isset( $settings->number_font_size['medium'] ) && 0 != $settings->number_font_size['medium'] ) {
+			if ( isset( $settings->number_line_height['medium'] ) && isset( $settings->number_font_size['medium'] ) && 0 !== $settings->number_font_size['medium'] ) {
 				if ( is_numeric( $settings->number_line_height['medium'] ) && is_numeric( $settings->number_font_size['medium'] ) ) {
 					$settings->number_typo_medium['line_height'] = array(
 						'length' => round( $settings->number_line_height['medium'] / $settings->number_font_size['medium'], 2 ),
@@ -588,7 +577,7 @@ class ProgressBarModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->number_line_height['desktop'] ) && isset( $settings->number_font_size['desktop'] ) && 0 != $settings->number_font_size['desktop'] ) {
+			if ( isset( $settings->number_line_height['desktop'] ) && isset( $settings->number_font_size['desktop'] ) && 0 !== $settings->number_font_size['desktop'] ) {
 				if ( is_numeric( $settings->number_line_height['desktop'] ) && is_numeric( $settings->number_font_size['desktop'] ) ) {
 					$settings->number_typo['line_height'] = array(
 						'length' => round( $settings->number_line_height['desktop'] / $settings->number_font_size['desktop'], 2 ),
@@ -669,18 +658,18 @@ class ProgressBarModule extends FLBuilderModule {
 	 */
 	public function render_horizontal_content( $obj, $style = '', $position = '', $i ) {
 
-		if ( $this->settings->horizontal_style == $style ) {
-			if ( 'style4' == $style ) {
-				if ( $this->settings->text_position == $position ) {
+		if ( $this->settings->horizontal_style === $style ) {
+			if ( 'style4' === $style ) {
+				if ( $this->settings->text_position === $position ) {
 
-					echo '<div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
-                        <' . $this->settings->text_tag_selection . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . $this->settings->text_tag_selection . '>
+					echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
                     </div>';
 				}
-			} elseif ( 'style3' != $style ) {
+			} elseif ( 'style3' !== $style ) {
 
-				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
-                        <' . $this->settings->text_tag_selection . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . $this->settings->text_tag_selection . '>
+				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
                         <div class="uabb-progress-value">0%</div>
                     </div>';
 			}
@@ -695,21 +684,21 @@ class ProgressBarModule extends FLBuilderModule {
 	 * @param var    $i gets the value for the content.
 	 */
 	public function render_horizontal_progress_bar( $obj, $i ) {
-		if ( 'style3' == $this->settings->horizontal_style ) {
+		if ( 'style3' === $this->settings->horizontal_style ) {
 			echo '<div class="uabb-progress-wrap">
                     <div class="uabb-progress-box">
                         <div class="uabb-progress-bar"></div>
-                        <div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
-                            <' . $this->settings->text_tag_selection . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . $this->settings->text_tag_selection . '>
+                        <div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
+                            <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
                             <div class="uabb-progress-value">0%</div>
                         </div>
                     </div>
                 </div>';
-		} elseif ( 'style4' == $this->settings->horizontal_style ) {
+		} elseif ( 'style4' === $this->settings->horizontal_style ) {
 			echo '<div class="uabb-progress-wrap">
                     <div class="uabb-progress-box">
                         <div class="uabb-progress-bar"></div>
-                        <div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
+                        <div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
                             <div class="uabb-progress-value"><span>0%</span></div>
                         </div>
                     </div>
@@ -733,15 +722,15 @@ class ProgressBarModule extends FLBuilderModule {
 	 */
 	public function render_vertical_content( $obj, $style = '', $i ) {
 
-		if ( $this->settings->vertical_style == $style ) {
-			if ( 'style3' != $style ) {
-				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
-                        <' . $this->settings->text_tag_selection . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . $this->settings->text_tag_selection . '>
+		if ( $this->settings->vertical_style === $style ) {
+			if ( 'style3' !== $style ) {
+				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
                         <div class="uabb-progress-value">0%</div>
                     </div>';
 			} else {
-				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
-                        <' . $this->settings->text_tag_selection . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . $this->settings->text_tag_selection . '>
+				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
                     </div>';
 			}
 		}
@@ -755,11 +744,11 @@ class ProgressBarModule extends FLBuilderModule {
 	 * @param var    $i gets the value for the content.
 	 */
 	public function render_vertical_progress_bar( $obj, $i ) {
-		if ( 'style3' == $this->settings->vertical_style ) {
+		if ( 'style3' === $this->settings->vertical_style ) {
 			echo '<div class="uabb-progress-wrap">
                     <div class="uabb-progress-box">
                         <div class="uabb-progress-bar"></div>
-                        <div class="uabb-progress-info uabb-progress-bar-info-' . $i . '">
+                        <div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
                             <div class="uabb-progress-value">0%</div>
                         </div>
                     </div>
@@ -784,7 +773,7 @@ class ProgressBarModule extends FLBuilderModule {
 		$obj->background_color = UABB_Helper::uabb_colorpicker( $obj, 'background_color', true );
 		$obj->gradient_color   = UABB_Helper::uabb_colorpicker( $obj, 'gradient_color', true );
 
-		$stroke_thickness = ( '' != $this->settings->stroke_thickness ) ? $this->settings->stroke_thickness : '10';
+		$stroke_thickness = ( '' !== $this->settings->stroke_thickness ) ? $this->settings->stroke_thickness : '10';
 		$width            = ! empty( $this->settings->circular_thickness ) ? $this->settings->circular_thickness : 300;
 		$pos              = ( $width / 2 );
 		$radius           = $pos - 10;
@@ -799,7 +788,7 @@ class ProgressBarModule extends FLBuilderModule {
             <circle class="uabb-bar" r="' . $radius . '" cx="' . $pos . '" cy="' . $pos . '" fill="transparent" stroke-dasharray="' . $dash . '" stroke-dashoffset="' . $dash . '"></circle>
         </svg>';
 
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -813,7 +802,7 @@ class ProgressBarModule extends FLBuilderModule {
 		$obj->background_color = UABB_Helper::uabb_colorpicker( $obj, 'background_color', true );
 		$obj->gradient_color   = UABB_Helper::uabb_colorpicker( $obj, 'gradient_color', true );
 
-		$stroke_thickness = ( '' != $this->settings->stroke_thickness ) ? $this->settings->stroke_thickness : '10';
+		$stroke_thickness = ( '' !== $this->settings->stroke_thickness ) ? $this->settings->stroke_thickness : '10';
 		$width            = ! empty( $this->settings->circular_thickness ) ? $this->settings->circular_thickness : 300;
 		$pos              = ( $width / 2 );
 		$radius           = $pos - ( $stroke_thickness / 2 );
@@ -823,7 +812,7 @@ class ProgressBarModule extends FLBuilderModule {
             <circle class="uabb-bar-bg" r="' . $radius . '" cx="' . $pos . '" cy="' . $pos . '" fill=" ' . $obj->background_color . ' " stroke-dasharray="' . $dash . '" stroke-dashoffset="0"></circle>
             <circle class="uabb-bar" r="' . $radius . '" cx="' . $pos . '" cy="' . $pos . '" fill="transparent" stroke-dasharray="' . $dash . '" stroke-dashoffset="' . $dash . '" transform="rotate(-180 ' . $pos . ' ' . $pos . ')"></circle>
         </svg>';
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }
 

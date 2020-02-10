@@ -71,6 +71,8 @@
 		},
 		_showOffCanvas: function() {
 
+			event.preventDefault();
+
 			nodeClass = $( '.fl-node-' + this.node );
 
 			current_this = this;

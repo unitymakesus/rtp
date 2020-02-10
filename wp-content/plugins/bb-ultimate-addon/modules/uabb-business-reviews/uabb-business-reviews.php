@@ -45,21 +45,10 @@ class UabbBusinessReview extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon ) ) {
+			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 	/**
 	 * Get Reviews array with the same key for Google & Yelp.
@@ -74,17 +63,17 @@ class UabbBusinessReview extends FLBuilderModule {
 		$reviews        = array();
 		$custom_reviews = array();
 
-		if ( 'google' == $settings->review_source ) {
+		if ( 'google' === $settings->review_source ) {
 
 			$reviews = $this->get_google_reviews( $settings );
 			$reviews = $this->get_merged_reviews_array( 'google', $reviews, $settings );
 
-		} elseif ( 'yelp' == $settings->review_source ) {
+		} elseif ( 'yelp' === $settings->review_source ) {
 
 			$reviews = $this->get_yelp_reviews( $settings );
 			$reviews = $this->get_merged_reviews_array( 'yelp', $reviews, $settings );
 
-		} elseif ( 'all' == $settings->review_source ) {
+		} elseif ( 'all' === $settings->review_source ) {
 
 			$google_reviews = $this->get_google_reviews( $settings );
 			$yelp_reviews   = $this->get_yelp_reviews( $settings );
@@ -97,7 +86,8 @@ class UabbBusinessReview extends FLBuilderModule {
 			}
 			/* Merge reviews array elements inalternative order */
 			if ( ! empty( $google_reviews ) ) {
-				for ( $i = 0; $i < count( $google_reviews ); $i++ ) {
+				$count = count( $google_reviews );
+				for ( $i = 0; $i < $count; $i++ ) {
 					$reviews[] = $google_reviews[ $i ];
 					if ( isset( $yelp_reviews[ $i ] ) ) {
 
@@ -193,9 +183,9 @@ class UabbBusinessReview extends FLBuilderModule {
 			<div class="uabb-module-content" id="uabb-google-api-key">
 				<?php if ( current_user_can( 'delete_users' ) ) { ?>
 				<div>
-					<span > <?php _e( 'It seems that you have not yet configured Google Place API key. To display Google Reviews, please set up API key in', 'uabb' ); ?>
-						<a href="<?php echo admin_url( 'options-general.php?page=uabb-builder-settings#uabb' ); ?>" class="uabb-google-map-notice" target="_blank" rel="noopener">
-							<span class="uabb-google-key-ref-link"><?php _e( 'General Settings', 'uabb' ); ?></span>
+					<span > <?php esc_attr_e( 'It seems that you have not yet configured Google Place API key. To display Google Reviews, please set up API key in', 'uabb' ); ?>
+						<a href="<?php echo esc_url( admin_url( 'options-general.php?page=uabb-builder-settings#uabb' ) ); ?>" class="uabb-google-map-notice" target="_blank" rel="noopener">
+							<span class="uabb-google-key-ref-link"><?php esc_attr_e( 'General Settings', 'uabb' ); ?></span>
 						</a>
 					</span>
 				</div>
@@ -226,12 +216,16 @@ class UabbBusinessReview extends FLBuilderModule {
 		if ( '' === $api_key || null === $api_key || false === $api_key ) {
 			return;
 		}
-		$add_query_arg = apply_filters( 'uabb_reviews_google_url_filter', array(
-			'key'     => $api_key,
-			'placeid' => $place_id,
-		) );
+		$add_query_arg = apply_filters(
+			'uabb_reviews_google_url_filter',
+			array(
+				'key'     => $api_key,
+				'placeid' => $place_id,
+			)
+		);
 
-		$url = add_query_arg( $add_query_arg,
+		$url = add_query_arg(
+			$add_query_arg,
 			'https://maps.googleapis.com/maps/api/place/details/json'
 		);
 
@@ -310,7 +304,7 @@ class UabbBusinessReview extends FLBuilderModule {
 
 			if ( $is_editor ) {
 				/* translators: %1$s doc link */
-				echo sprintf( '<span class="uabb-reviews-notice-message">' . __( 'Something went wrong while fetching Google reviews:', 'uabb' ) . '%1$s </span>', $error_message );
+				echo sprintf( '<span class="uabb-reviews-notice-message">' . esc_attr_e( 'Something went wrong while fetching Google reviews:', 'uabb' ) . '%1$s </span>', wp_kses_post( $error_message ) );
 			}
 			delete_transient( $transient_name );
 			return;
@@ -321,45 +315,40 @@ class UabbBusinessReview extends FLBuilderModule {
 		if ( $is_editor ) {
 
 			switch ( $result_status ) {
-
 				case 'OK':
 					if ( ! property_exists( $result->result, 'reviews' ) ) {
-						echo '<span>' . __( 'Something went wrong: Seems like the Google place you have selected does not have any reviews.', 'uabb' ) . '</span>';
+						echo '<span>' . esc_attr_e( 'Something went wrong: Seems like the Google place you have selected does not have any reviews.', 'uabb' ) . '</span>';
 						delete_transient( $transient_name );
 						return false;
 					}
 					break;
 
 				case 'OVER_QUERY_LIMIT':
-					echo '<span>' . __( 'Something went wrong: You have exceeded the usage limits.', 'uabb' ) . '</span>';
+					echo '<span>' . esc_attr_e( 'Something went wrong: You have exceeded the usage limits.', 'uabb' ) . '</span>';
 					delete_transient( $transient_name );
 					return false;
-					break;
+					break; // phpcs:ignore Squiz.PHP.NonExecutableCode.Unreachable
 
 				case 'REQUEST_DENIED':
 					/* translators: %s: search term */
-					echo sprintf( '<span class="uabb-google-api-key-error">' . __( 'Something went wrong: The invalid API key is entered. Please configure the API key from', 'uabb' ) . '<a href="%s" target="_blank" rel="noopener"> here </a>.</span>', $admin_link );
+					echo sprintf( '<span class="uabb-google-api-key-error">' . esc_attr_e( 'Something went wrong: The invalid API key is entered. Please configure the API key from', 'uabb' ) . '<a href="%s" target="_blank" rel="noopener"> here </a>.</span>', esc_url( $admin_link ) );
 						delete_transient( $transient_name );
 					return false;
-					break;
 
 				case 'UNKNOWN_ERROR':
-					echo '<span>' . __( 'Something went wrong: Seems like a server-side error; Please try again later.', 'uabb' ) . '</span>';
+					echo '<span>' . esc_attr_e( 'Something went wrong: Seems like a server-side error; Please try again later.', 'uabb' ) . '</span>';
 					delete_transient( $transient_name );
 					return false;
-					break;
 
 				case 'ZERO_RESULTS':
 				case 'INVALID_REQUEST':
-					echo '<span>' . __( 'Something went wrong: The invalid Place ID is entered.', 'uabb' ) . '</span>';
+					echo '<span>' . esc_attr_e( 'Something went wrong: The invalid Place ID is entered.', 'uabb' ) . '</span>';
 					delete_transient( $transient_name );
 					return false;
-					break;
 
 				default:
 					delete_transient( $transient_name );
 					return false;
-					break;
 			}
 		}
 		if ( 'OK' === $result_status ) {
@@ -447,10 +436,10 @@ class UabbBusinessReview extends FLBuilderModule {
 
 					if ( 'VALIDATION_ERROR' === $error_code ) {
 
-						echo '<span class="uabb-reviews-notice-message"><span class="uabb-reviews-error-message">' . __( 'Yelp Error Message:', 'uabb' ) . '</span>' . __( 'Incorrect Yelp API key. Please set up the API key from UABB settings', 'uabb' ) . '</span>';
+						echo '<span class="uabb-reviews-notice-message"><span class="uabb-reviews-error-message">' . esc_attr_e( 'Yelp Error Message:', 'uabb' ) . '</span>' . esc_attr_e( 'Incorrect Yelp API key. Please set up the API key from UABB settings', 'uabb' ) . '</span>';
 					} elseif ( 'BUSINESS_NOT_FOUND' === $error_code ) {
 
-						echo '<span class="uabb-reviews-notice-message"><span class="uabb-reviews-error-message">' . __( 'Yelp Error Message :', 'uabb' ) . '</span>' . __( ' Incorrect Business ID.', 'uabb' ) . '</span>';
+						echo '<span class="uabb-reviews-notice-message"><span class="uabb-reviews-error-message">' . esc_attr_e( 'Yelp Error Message :', 'uabb' ) . '</span>' . esc_attr_e( ' Incorrect Business ID.', 'uabb' ) . '</span>';
 					}
 				}
 				delete_transient( $transient_name );
@@ -458,7 +447,7 @@ class UabbBusinessReview extends FLBuilderModule {
 			} elseif ( 200 !== $response_code ) {
 				if ( $is_editor ) {
 					/* translators: %1$s doc link */
-					echo sprintf( '<span class="uabb-reviews-notice-message"> %1$s' . __( 'Unknown error occurred.', 'uabb' ) . '</span>', $response_code );
+					echo sprintf( '<span class="uabb-reviews-notice-message"> %1$s' . esc_attr_e( 'Unknown error occurred.', 'uabb' ) . '</span>', wp_kses_post( $response_code ) );
 				}
 				delete_transient( $transient_name );
 				return;
@@ -484,7 +473,7 @@ class UabbBusinessReview extends FLBuilderModule {
 	 * @param string $review2 represents review2 to compare.
 	 * @return string of compared reviews.
 	 */
-	function filter_by_rating( $review1, $review2 ) {
+	public function filter_by_rating( $review1, $review2 ) {
 		return strcmp( $review2['rating'], $review1['rating'] );
 	}
 
@@ -497,7 +486,7 @@ class UabbBusinessReview extends FLBuilderModule {
 	 * @param string $review2 represents review2 to compare.
 	 * @return string of compared reviews.
 	 */
-	function filter_by_date( $review1, $review2 ) {
+	public function filter_by_date( $review1, $review2 ) {
 		return strcmp( $review2['time'], $review1['time'] );
 	}
 
@@ -520,9 +509,9 @@ class UabbBusinessReview extends FLBuilderModule {
 			<div class="uabb-module-content uabb-yelp-api-key-wrapper" id="uabb-yelp-api-key">
 				<?php if ( current_user_can( 'delete_users' ) ) { ?>
 				<div>
-					<span > <?php _e( 'It seems that you have not yet configured Yelp API key. To display Yelp Reviews, please set up API key in', 'uabb' ); ?>
-						<a href="<?php echo admin_url( 'options-general.php?page=uabb-builder-settings#uabb' ); ?>" class="uabb-yelp-notice" target="_blank" rel="noopener">
-							<span class="uabb-yelp-key-ref-link"><?php _e( 'General Settings', 'uabb' ); ?></span>
+					<span > <?php esc_html_e( 'It seems that you have not yet configured Yelp API key. To display Yelp Reviews, please set up API key in', 'uabb' ); ?>
+						<a href="<?php echo wp_kses_post( admin_url( 'options-general.php?page=uabb-builder-settings#uabb' ) ); ?>" class="uabb-yelp-notice" target="_blank" rel="noopener">
+							<span class="uabb-yelp-key-ref-link"><?php esc_html_e( 'General Settings', 'uabb' ); ?></span>
 						</a>
 					</span>
 				</div>
@@ -628,7 +617,7 @@ class UabbBusinessReview extends FLBuilderModule {
 			return;
 		}
 
-		$layout_class = ( 'carousel' == $this->settings->review_layout ) ? 'uabb-review-layout-carousel' : 'uabb-reviews-layout-grid';
+		$layout_class = ( 'carousel' === $this->settings->review_layout ) ? 'uabb-review-layout-carousel' : 'uabb-reviews-layout-grid';
 
 		if ( 'card' === $this->settings->_skin || 'default' === $this->settings->_skin ) {
 
@@ -643,23 +632,23 @@ class UabbBusinessReview extends FLBuilderModule {
 			}
 		}
 		?>
-		<div class="uabb-reviews-grid__column-<?php echo $this->settings->gallery_columns; ?> uabb-reviews-grid-tablet__column-<?php echo $this->settings->gallery_columns_medium; ?> uabb-reviews-grid-mobile__column-<?php echo $this->settings->gallery_columns_responsive; ?> <?php echo $layout_class; ?> uabb-reviews-align-<?php echo $overall_align; ?> <?php echo $image_align; ?> uabb-reviews-skin-<?php echo $skin; ?>">
+		<div class="uabb-reviews-grid__column-<?php echo esc_attr( $this->settings->gallery_columns ); ?> uabb-reviews-grid-tablet__column-<?php echo esc_attr( $this->settings->gallery_columns_medium ); ?> uabb-reviews-grid-mobile__column-<?php echo esc_attr( $this->settings->gallery_columns_responsive ); ?> <?php echo esc_attr( $layout_class ); ?> uabb-reviews-align-<?php echo esc_attr( $overall_align ); ?> <?php echo esc_attr( $image_align ); ?> uabb-reviews-skin-<?php echo esc_attr( $skin ); ?>">
 			<div class="uabb-reviews-module-wrap" >
 
 				<?php
-				if ( 'rating' == $this->settings->reviews_filter_by ) {
+				if ( 'rating' === $this->settings->reviews_filter_by ) {
 					usort( $reviews, array( $this, 'filter_by_rating' ) );
-				} elseif ( 'date' == $this->settings->reviews_filter_by ) {
+				} elseif ( 'date' === $this->settings->reviews_filter_by ) {
 					usort( $reviews, array( $this, 'filter_by_date' ) );
 				}
 
-				if ( 'google' == $this->settings->review_source ) {
+				if ( 'google' === $this->settings->review_source ) {
 					$reviews_max        = 5;
 					$disply_num_reviews = $this->settings->google_reviews_count;
-				} elseif ( 'yelp' == $this->settings->review_source ) {
+				} elseif ( 'yelp' === $this->settings->review_source ) {
 					$reviews_max        = 3;
 					$disply_num_reviews = $this->settings->yelp_reviews_number;
-				} elseif ( 'all' == $this->settings->review_source ) {
+				} elseif ( 'all' === $this->settings->review_source ) {
 					$reviews_max        = 8;
 					$disply_num_reviews = $this->settings->total_reviews_number;
 				}
@@ -729,27 +718,27 @@ class UabbBusinessReview extends FLBuilderModule {
 			?>
 			<?php if ( 'yes' === $this->settings->reviewer_name_link ) { ?>
 				<span class="uabb-reviewer-name-wrapper">
-					<span class="uabb-reviewer-name"><?php echo "<a class='uabb-reviewer-link' href={$review['author_url']} target='_blank'>{$review['author_name']}</a>"; ?></span>
-					<?php if ( 'default' === $this->settings->_skin && ( 'all_left' == $this->settings->image_align || 'left' == $this->settings->image_align ) ) { ?>
-						<?php if ( 'yelp' == $review['source'] ) { ?>
-							<i class="<?php echo $yelp_icon; ?>" aria-hidden="true"></i>
+					<span class="uabb-reviewer-name"><?php echo wp_kses_post( "<a class='uabb-reviewer-link' href={$review['author_url']} target='_blank'>{$review['author_name']}</a>" ); ?></span>
+					<?php if ( 'default' === $this->settings->_skin && ( 'all_left' === $this->settings->image_align || 'left' === $this->settings->image_align ) ) { ?>
+						<?php if ( 'yelp' === $review['source'] ) { ?>
+							<i class="<?php echo wp_kses_post( $yelp_icon ); ?>" aria-hidden="true"></i>
 							<?php
-} else {
-							echo $google_icon;
-}
+						} else {
+							echo $google_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						}
 						?>
 					<?php } ?>
 				</span>
 			<?php } else { ?>
 				<span class="uabb-reviewer-name-wrapper">
-					<span class="uabb-reviewer-name"><?php echo "{$review['author_name']}"; ?></span>
-					<?php if ( 'default' === $this->settings->_skin && ( 'all_left' == $this->settings->image_align || 'left' == $this->settings->image_align ) ) { ?>
-						<?php if ( 'yelp' == $review['source'] ) { ?>
-							<i class="<?php echo $yelp_icon; ?>" aria-hidden="true"></i>
+					<span class="uabb-reviewer-name"><?php echo wp_kses_post( "{$review['author_name']}" ); ?></span>
+					<?php if ( 'default' === $this->settings->_skin && ( 'all_left' === $this->settings->image_align || 'left' === $this->settings->image_align ) ) { ?>
+						<?php if ( 'yelp' === $review['source'] ) { ?>
+							<i class="<?php echo wp_kses_post( $yelp_icon ); ?>" aria-hidden="true"></i>
 							<?php
-} else {
-							echo $google_icon;
-}
+						} else {
+							echo $google_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						}
 						?>
 					<?php } ?>
 				</span>
@@ -785,20 +774,20 @@ class UabbBusinessReview extends FLBuilderModule {
 
 		}
 
-		$timestamp = ( 'google' == $review['source'] ) ? $review['time'] : strtotime( $review['time'] );
+		$timestamp = ( 'google' === $review['source'] ) ? $review['time'] : strtotime( $review['time'] );
 
-		$date = date( 'd-m-Y', $timestamp );
+		$date = gmdate( 'd-m-Y', $timestamp );
 
 		if ( ( isset( $settings->review_source_icon ) && 'no' === $settings->review_source_icon ) || 'top' === $settings->image_align ) {
 
 			$review_sorce_date = ' via ' . ucwords( $review['source'] );
 
 		}
-		if ( 'yes' == $settings->review_date ) {
+		if ( 'yes' === $settings->review_date ) {
 
-			if ( 'google' == $settings->review_source ) {
+			if ( 'google' === $settings->review_source ) {
 
-				$date_value = ( 'default' == $settings->review_date_type ) ? $date : $review['relative_time_description'];
+				$date_value = ( 'default' === $settings->review_date_type ) ? $date : $review['relative_time_description'];
 
 			} else {
 				$date_value = $date;
@@ -808,7 +797,7 @@ class UabbBusinessReview extends FLBuilderModule {
 		<div class="uabb-review-header">
 
 			<?php if ( 'yes' === $settings->reviewer_image && ( 'all_left' !== $settings->image_align || 'bubble' === $settings->_skin ) ) { ?>
-				<div class="uabb-review-image" style="background-image:url( <?php echo $photolink; ?> ); ">
+				<div class="uabb-review-image" style="background-image:url( <?php echo esc_url( $photolink ); ?> ); ">
 				</div>
 			<?php } ?>
 			<div class="uabb-review-details">
@@ -819,11 +808,11 @@ class UabbBusinessReview extends FLBuilderModule {
 				?>
 				<?php if ( 'yes' === $settings->review_rating ) { ?>
 					<span class="uabb-star-rating__wrapper">
-						<span class="uabb-star-rating"><?php echo $this->render_stars( $total_rating, $review, $settings ); ?></span>
+						<span class="uabb-star-rating"><?php echo wp_kses_post( $this->render_stars( $total_rating, $review, $settings ) ); ?></span>
 					</span>
 				<?php } ?>
 				<?php if ( 'yes' === $settings->review_date ) { ?>
-					<div class="uabb-review-time"> <?php echo $date_value . $review_sorce_date; ?> </div>
+					<div class="uabb-review-time"> <?php echo esc_attr( $date_value ) . esc_attr( $review_sorce_date ); ?> </div>
 				<?php } ?>
 				<?php
 				if ( 'bubble' === $settings->_skin || 'card' === $settings->_skin ) {
@@ -833,12 +822,12 @@ class UabbBusinessReview extends FLBuilderModule {
 			</div>
 			<?php if ( 'card' === $settings->_skin && ( 'left' === $settings->image_align || 'all_left' === $settings->image_align ) ) { ?>
 				<div class="uabb-review-icon-wrap">
-					<?php if ( 'yelp' == $review['source'] ) { ?>
-						<i class="<?php echo $yelp_icon; ?>" aria-hidden="true"></i>
+					<?php if ( 'yelp' === $review['source'] ) { ?>
+						<i class="<?php echo wp_kses_post( $yelp_icon ); ?>" aria-hidden="true"></i>
 						<?php
-} elseif ( 'google' == $review['source'] ) {
-							echo $google_icon;
-}
+					} elseif ( 'google' === $review['source'] ) {
+							echo $google_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
 					?>
 				</div>
 			<?php } ?>
@@ -857,16 +846,16 @@ class UabbBusinessReview extends FLBuilderModule {
 	public function get_reviews( $review, $settings ) {
 		$photolink = ( null !== $review['profile_photo_url'] ) ? $review['profile_photo_url'] : '';
 
-		$date         = date( 'd/m/Y', strtotime( $review['time'] ) );
+		$date         = gmdate( 'd/m/Y', strtotime( $review['time'] ) );
 		$total_rating = $review['rating'];
 		$content      = '';
 		if ( 'default' === $settings->_skin ) {
 			?>
 			<div class="uabb-review-wrap">
-				<div class="uabb-review uabb-review-type-<?php echo $review['source']; ?>">
+				<div class="uabb-review uabb-review-type-<?php echo esc_attr( $review['source'] ); ?>">
 					<?php if ( 'yes' === $settings->reviewer_image && 'all_left' === $settings->image_align ) { ?>
 						<div class="uabb-review-image">
-							<img src="<?php echo $photolink; ?>" alt="profile image">
+							<img src="<?php echo esc_url( $photolink ); ?>" alt="profile image">
 						</div>
 					<?php } ?>
 					<div class="uabb-review-inner-wrap">
@@ -875,7 +864,7 @@ class UabbBusinessReview extends FLBuilderModule {
 							<?php
 							$the_content = $review['text'];
 							if ( '' !== $settings->review_content_length ) {
-								$the_content    = strip_tags( $review['text'] ); // Strips tags.
+								$the_content    = wp_strip_all_tags( $review['text'] ); // Strips tags.
 								$content_length = $settings->review_content_length; // Sets content length by word count.
 								$words          = explode( ' ', $the_content, $content_length + 1 );
 								if ( count( $words ) > $content_length ) {
@@ -888,8 +877,8 @@ class UabbBusinessReview extends FLBuilderModule {
 								}
 							}
 							?>
-							<div class="uabb-review-content"><?php echo $the_content; ?></div>
-							<div class="uabb-reviews-read-more_wrap"> <?php echo $content; ?></div>
+							<div class="uabb-review-content"><?php echo wp_kses_post( $the_content ); ?></div>
+							<div class="uabb-reviews-read-more_wrap"> <?php echo wp_kses_post( $content ); ?></div>
 						<?php } ?>
 					</div>
 				</div>
@@ -899,10 +888,10 @@ class UabbBusinessReview extends FLBuilderModule {
 		} elseif ( 'card' === $settings->_skin ) {
 			?>
 			<div class="uabb-review-wrap">
-				<div class="uabb-review uabb-review-type-<?php echo $review['source']; ?>">
+				<div class="uabb-review uabb-review-type-<?php echo esc_attr( $review['source'] ); ?>">
 						<?php if ( 'yes' === $settings->reviewer_image && 'all_left' === $settings->image_align ) { ?>
 						<div class="uabb-review-image">
-							<img src="<?php echo $photolink; ?>" alt="profile image">
+							<img src="<?php echo esc_url( $photolink ); ?>" alt="profile image">
 						</div>
 					<?php } ?>
 					<div class="uabb-review-inner-wrap">
@@ -910,7 +899,7 @@ class UabbBusinessReview extends FLBuilderModule {
 							<?php
 							$the_content = $review['text'];
 							if ( '' !== $settings->review_content_length ) {
-								$the_content    = strip_tags( $review['text'] ); // Strips tags.
+								$the_content    = wp_strip_all_tags( $review['text'] ); // Strips tags.
 								$content_length = $settings->review_content_length; // Sets content length by word count.
 								$words          = explode( ' ', $the_content, $content_length + 1 );
 								if ( count( $words ) > $content_length ) {
@@ -923,8 +912,8 @@ class UabbBusinessReview extends FLBuilderModule {
 								}
 							}
 							?>
-							<div class="uabb-review-content"><?php echo $the_content; ?></div>
-							<div class="uabb-reviews-read-more_wrap"> <?php echo $content; ?></div>
+							<div class="uabb-review-content"><?php echo esc_attr( $the_content ); ?></div>
+							<div class="uabb-reviews-read-more_wrap"> <?php echo wp_kses_post( $content ); ?></div>
 							<?php $this->get_reviews_header( $review, $photolink, $settings ); ?>
 						<?php } ?>
 					</div>
@@ -945,13 +934,13 @@ class UabbBusinessReview extends FLBuilderModule {
 			}
 			?>
 			<div class="uabb-review-wrap">
-				<div class="uabb-review uabb-review-type-<?php echo $review['source']; ?>">
+				<div class="uabb-review uabb-review-type-<?php echo esc_attr( $review['source'] ); ?>">
 					<div class="uabb-review-inner-wrap">
 						<?php if ( 'yes' === $settings->review_content ) { ?>
 							<?php
 							$the_content = $review['text'];
 							if ( '' !== $settings->review_content_length ) {
-								$the_content    = strip_tags( $review['text'] ); // Strips tags.
+								$the_content    = wp_strip_all_tags( $review['text'] ); // Strips tags.
 								$content_length = $settings->review_content_length; // Sets content length by word count.
 								$words          = explode( ' ', $the_content, $content_length + 1 );
 								if ( count( $words ) > $content_length ) {
@@ -965,20 +954,20 @@ class UabbBusinessReview extends FLBuilderModule {
 							}
 							?>
 							<div class="uabb-review-content-wrap">
-								<div class="uabb-review-content"><?php echo $the_content; ?>
+								<div class="uabb-review-content"><?php echo esc_attr( $the_content ); ?>
 									<div class="uabb-review-content-arrow-wrap">
 										<div class="uabb-review-arrow-border"></div>
 										<div class="uabb-review-arrow"></div>
 									</div>
-									<div class="uabb-reviews-read-more_wrap"> <?php echo $content; ?></div>
-									<?php if ( 'yelp' == $review['source'] || 'google' == $review['source'] ) { ?>
+									<div class="uabb-reviews-read-more_wrap"> <?php echo wp_kses_post( $content ); ?></div>
+									<?php if ( 'yelp' === $review['source'] || 'google' === $review['source'] ) { ?>
 										<div class="uabb-review-icon-wrap">
-											<?php if ( 'yelp' == $review['source'] ) { ?>
-												<i class="<?php echo $yelp_icon; ?>" aria-hidden="true"></i>
+											<?php if ( 'yelp' === $review['source'] ) { ?>
+												<i class="<?php echo wp_kses_post( $yelp_icon ); ?>" aria-hidden="true"></i>
 												<?php
-} elseif ( 'google' == $review['source'] ) {
-												echo $google_icon;
-}
+											} elseif ( 'google' === $review['source'] ) {
+												echo $google_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+											}
 											?>
 										</div>
 									<?php } ?>
@@ -993,10 +982,10 @@ class UabbBusinessReview extends FLBuilderModule {
 		} elseif ( 'business' === $settings->_skin ) {
 			?>
 			<div class="uabb-review-wrap">
-				<div class="uabb-review uabb-review-type-<?php echo $review['source']; ?>">
+				<div class="uabb-review uabb-review-type-<?php echo esc_attr( $review['source'] ); ?>">
 						<?php if ( 'yes' === $settings->reviewer_image && 'all_left' === $settings->image_align ) { ?>
 						<div class="uabb-review-image">
-							<img src="<?php echo $photolink; ?>" alt="profile image">
+							<img src="<?php echo esc_attr( $photolink ); ?>" alt="profile image">
 						</div>
 					<?php } ?>
 					<div class="uabb-review-inner-wrap">
@@ -1005,7 +994,7 @@ class UabbBusinessReview extends FLBuilderModule {
 							<?php
 							$the_content = $review['text'];
 							if ( '' !== $settings->review_content_length ) {
-								$the_content    = strip_tags( $review['text'] ); // Strips tags.
+								$the_content    = wp_strip_all_tags( $review['text'] ); // Strips tags.
 								$content_length = $settings->review_content_length; // Sets content length by word count.
 								$words          = explode( ' ', $the_content, $content_length + 1 );
 								if ( count( $words ) > $content_length ) {
@@ -1018,7 +1007,7 @@ class UabbBusinessReview extends FLBuilderModule {
 								}
 							}
 							?>
-							<div class="uabb-review-content"><?php echo $the_content; ?></div>
+							<div class="uabb-review-content"><?php echo esc_attr( $the_content ); ?></div>
 						<?php } ?>
 					</div>
 				</div>

@@ -15,7 +15,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 		$target = $settings->it_link_target;
 	}
 	if ( isset( $settings->it_link_nofollow ) ) {
-		$it_link_nofollow = ( 'yes' == $settings->it_link_nofollow ) ? '1' : '';
+		$it_link_nofollow = ( 'yes' === $settings->it_link_nofollow ) ? '1' : '';
 	}
 } else {
 	if ( isset( $settings->it_link_target ) ) {
@@ -26,22 +26,22 @@ if ( UABB_Compatibility::$version_bb_check ) {
 	}
 }
 ?>
-<?php if ( 'complete_link' == $settings->it_link_type ) { ?>
-<a href="<?php echo $settings->it_link; ?>" target="<?php echo $target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>>
+<?php if ( 'complete_link' === $settings->it_link_type ) { ?>
+<a href="<?php echo esc_url( $settings->it_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>>
 <?php } ?>
-<div class="uabb-module-content info-table-wrap info-table-<?php echo $settings->box_design; ?> info-table-cs-<?php echo $settings->color_scheme; ?>">
+<div class="uabb-module-content info-table-wrap info-table-<?php echo esc_attr( $settings->box_design ); ?> info-table-cs-<?php echo esc_attr( $settings->color_scheme ); ?>">
 	<div class="info-table">
 		<div class="info-table-heading">
-			<?php echo '<' . $settings->heading_tag_selection . " class='info-table-main-heading'>"; ?>
-			<?php echo $settings->it_title; ?>
-			<?php echo '</' . $settings->heading_tag_selection . '>'; ?>
+			<?php echo '<' . esc_attr( $settings->heading_tag_selection ) . " class='info-table-main-heading'>"; ?>
+			<?php echo wp_kses_post( $settings->it_title ); ?>
+			<?php echo '</' . esc_attr( $settings->heading_tag_selection ) . '>'; ?>
 
-			<?php echo '<' . $settings->sub_heading_tag_selection . " class='info-table-sub-heading'>"; ?>
-			<?php echo $settings->sub_heading; ?>
-			<?php echo '</' . $settings->sub_heading_tag_selection . '>'; ?>
-			<?php if ( 'cta' == $settings->it_link_type && 'design02' == $settings->box_design ) { ?>
+			<?php echo '<' . esc_attr( $settings->sub_heading_tag_selection ) . " class='info-table-sub-heading'>"; ?>
+			<?php echo wp_kses_post( $settings->sub_heading ); ?>
+			<?php echo '</' . esc_attr( $settings->sub_heading_tag_selection ) . '>'; ?>
+			<?php if ( 'cta' === $settings->it_link_type && 'design02' === $settings->box_design ) { ?>
 			<div class="info-table-button">
-				<a href="<?php echo $settings->it_link; ?>" target="<?php echo $target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo $settings->button_text; ?></a>
+				<a href="<?php echo esc_url( $settings->it_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo wp_kses_post( $settings->button_text ); ?></a>
 			</div>
 			<?php } ?>
 		</div>
@@ -84,15 +84,15 @@ if ( UABB_Compatibility::$version_bb_check ) {
 			?>
 		</div>
 		<div class="info-table-description uabb-text-editor">
-			<?php echo wpautop( $wp_embed->autoembed( $settings->it_long_desc ) ); ?>
+			<?php echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->it_long_desc ) ) ); ?>
 		</div>
-		<?php if ( 'cta' == $settings->it_link_type && 'design02' != $settings->box_design ) { ?>
+		<?php if ( 'cta' === $settings->it_link_type && 'design02' !== $settings->box_design ) { ?>
 		<div class="info-table-button">
-			<a href="<?php echo $settings->it_link; ?>" target="<?php echo $target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo $settings->button_text; ?></a>
+			<a href="<?php echo esc_url( $settings->it_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo wp_kses_post( $settings->button_text ); ?></a>
 		</div>
 		<?php } ?>
 	</div>
 </div>
-<?php if ( 'complete_link' == $settings->it_link_type ) { ?>
+<?php if ( 'complete_link' === $settings->it_link_type ) { ?>
 </a>
 <?php } ?>

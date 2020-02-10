@@ -6,7 +6,7 @@
  */
 
 ?>
-<div class="uabb-social-share-wrap uabb-social-share-<?php echo $settings->icon_struc_align; ?>">
+<div class="uabb-social-share-wrap uabb-social-share-<?php echo esc_attr( $settings->icon_struc_align ); ?>">
 <?php
 $icon_count = 1;
 if ( count( $settings->social_icons ) > 0 ) {
@@ -18,10 +18,10 @@ if ( count( $settings->social_icons ) > 0 ) {
 		}
 		$url = 'javascript:void(0);';
 
-		if ( ( isset( $_SERVER['HTTPS'] ) && ! empty( $_SERVER['HTTPS'] ) && 'off' !== strtolower( $_SERVER['HTTPS'] ) ) || 443 == $_SERVER['SERVER_PORT'] ) {
-			$current_page = urlencode( 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+		if ( ( isset( $_SERVER['HTTPS'] ) && ! empty( $_SERVER['HTTPS'] ) && 'off' !== strtolower( $_SERVER['HTTPS'] ) ) || 443 === $_SERVER['SERVER_PORT'] ) {
+			$current_page = rawurlencode( 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 		} else {
-			$current_page = urlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+			$current_page = rawurlencode( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
 		}
 
 		switch ( $icon->social_share_type ) {
@@ -74,10 +74,10 @@ if ( count( $settings->social_icons ) > 0 ) {
 
 		}
 
-		if ( 'email' == $icon->social_share_type ) {
-			echo '<div class="uabb-social-share-link-wrap"><a class="uabb-social-share-link uabb-social-share-' . $icon_count . '" href="' . $url . '" target="_self" >';
+		if ( 'email' === $icon->social_share_type ) {
+			echo '<div class="uabb-social-share-link-wrap"><a class="uabb-social-share-link uabb-social-share-' . esc_attr( $icon_count ) . '" href="' . esc_url( $url ) . '" target="_self" >';
 		} else {
-			echo '<div class="uabb-social-share-link-wrap"><a class="uabb-social-share-link uabb-social-share-' . $icon_count . '" href="' . $url . '" target="_blank" onclick="window.open(this.href,\'social-share\',\'left=20,top=20,width=500,height=500,toolbar=1,resizable=0\');return false;">';
+			echo '<div class="uabb-social-share-link-wrap"><a class="uabb-social-share-link uabb-social-share-' . esc_attr( $icon_count ) . '" href="' . esc_url( $url ) . '" target="_blank" onclick="window.open(this.href,\'social-share\',\'left=20,top=20,width=500,height=500,toolbar=1,resizable=0\');return false;">';
 		}
 
 		$imageicon_array = array(
@@ -118,7 +118,7 @@ if ( count( $settings->social_icons ) > 0 ) {
 
 		FLBuilder::render_module_html( 'image-icon', $imageicon_array );
 		echo '</a></div>';
-		$icon_count = $icon_count + 1;
+		$icon_count++;
 	}
 }
 

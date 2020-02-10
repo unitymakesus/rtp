@@ -43,13 +43,13 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 
 		$base = recurse( $base, $replacements );
 		// handle the arguments, merge one by one.
-		$args = func_get_args();
+		$args = func_get_args(); //phpcs:ignore PHPCompatibility.FunctionUse.ArgumentFunctionsReportCurrentValue.Changed
 		$base = $args[0];
 		if ( ! is_array( $base ) ) {
 			return $base;
 		}
-
-		for ( $i = 1; $i < count( $args ); $i++ ) {
+		$count = count( $args );
+		for ( $i = 1; $i < $count; $i++ ) {
 			if ( is_array( $args[ $i ] ) ) {
 				$base = recurse( $base, $args[ $i ] );
 			}
@@ -88,22 +88,22 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 	 * filtered value.
 	 * @return string - hex value for the color
 	 */
-	function uabb_theme_base_color( $default ) {
-		$color = '';
+function uabb_theme_base_color( $default ) {
+	$color = '';
 
-		if ( '' == $default || '#' === $default ) {
+	if ( '' === $default || '#' === $default ) {
 
-			$color = apply_filters( 'uabb/global/theme_color', $default );
+		$color = apply_filters( 'uabb/global/theme_color', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-			if ( '' == $color ) {
-				$color = apply_filters( 'uabb_theme_theme_color', $default );
-			}
-		} else {
-			$color = $default;
+		if ( '' === $color ) {
+			$color = apply_filters( 'uabb_theme_theme_color', $default );
 		}
-
-		return $color;
+	} else {
+		$color = $default;
 	}
+
+	return $color;
+}
 
 /**
  * Provide option to override the element defaults from theme options.
@@ -115,11 +115,11 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 function uabb_theme_text_color( $default ) {
 	$color = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/text_color', $default );
+		$color = apply_filters( 'uabb/global/text_color', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_text_color', $default );
 		}
 	} else {
@@ -139,11 +139,11 @@ function uabb_theme_text_color( $default ) {
 function uabb_theme_link_color( $default ) {
 	$color = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/link_color', $default );
+		$color = apply_filters( 'uabb/global/link_color', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_link_color', $default );
 		}
 	} else {
@@ -162,11 +162,11 @@ function uabb_theme_link_color( $default ) {
 function uabb_theme_link_hover_color( $default ) {
 	$color = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/link_hover_color', $default );
+		$color = apply_filters( 'uabb/global/link_hover_color', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_link_hover_color', $default );
 		}
 	} else {
@@ -187,7 +187,7 @@ function uabb_theme_button_font_family( $default ) {
 
 	$btn_font_family = array();
 
-	if ( '' == $default['family'] || 'Default' == $default['family'] ) {
+	if ( '' === $default['family'] || 'Default' === $default['family'] ) {
 
 		$btn_font_family = apply_filters( 'uabb_theme_button_font_family', $default );
 
@@ -200,6 +200,7 @@ function uabb_theme_button_font_family( $default ) {
 
 /**
  * Provide option to override the element defaults from theme options.
+ *
  * @since 1.24.2
  * @param var $default Checks if user has set the font family, if yes, returns users value else checks
  * for filtered value.
@@ -228,7 +229,7 @@ function uabb_theme_button_font_size( $default ) {
 
 	if ( '' === $default ) {
 
-		$font_size = apply_filters( 'uabb/global/button_font_size', $default );
+		$font_size = apply_filters( 'uabb/global/button_font_size', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $font_size ) {
 			$font_size = apply_filters( 'uabb_theme_button_font_size', $default );
@@ -252,7 +253,7 @@ function uabb_theme_default_button_font_size( $default ) {
 
 	if ( '' === $default ) {
 
-		$font_size = apply_filters( 'uabb/global/button_font_size', $default );// @codingStandardsIgnoreLine.
+		$font_size = apply_filters( 'uabb/global/button_font_size', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $font_size ) {
 			$font_size = apply_filters( 'uabb_theme_default_button_font_size', $default );
@@ -267,17 +268,17 @@ function uabb_theme_default_button_font_size( $default ) {
 }
 /**
  * Button Line Height
- * 
+ *
  * @param var $default Checks if the user has set text transform values.
  */
 function uabb_theme_button_line_height( $default ) {
 	$line_height = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$line_height = apply_filters( 'uabb/global/button_line_height', $default );
+		$line_height = apply_filters( 'uabb/global/button_line_height', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $line_height ) {
+		if ( '' === $line_height ) {
 			$line_height = apply_filters( 'uabb_theme_button_line_height', $default );
 		} else {
 			$line_height = $line_height . 'px';
@@ -299,7 +300,7 @@ function uabb_theme_default_button_line_height( $default ) {
 
 	if ( '' === $default ) {
 
-		$line_height = apply_filters( 'uabb/global/button_line_height', $default );// @codingStandardsIgnoreLine.
+		$line_height = apply_filters( 'uabb/global/button_line_height', $default ); //phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $line_height ) {
 			$line_height = apply_filters( 'uabb_theme_default_button_line_height', $default );
@@ -320,11 +321,11 @@ function uabb_theme_default_button_line_height( $default ) {
 function uabb_theme_button_letter_spacing( $default ) {
 	$letter_spacing = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$letter_spacing = apply_filters( 'uabb/global/button_letter_spacing', $default );
+		$letter_spacing = apply_filters( 'uabb/global/button_letter_spacing', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $letter_spacing ) {
+		if ( '' === $letter_spacing ) {
 			$letter_spacing = apply_filters( 'uabb_theme_button_letter_spacing', $default );
 		} else {
 			$letter_spacing = $letter_spacing . 'px';
@@ -346,7 +347,7 @@ function uabb_theme_default_button_letter_spacing( $default ) {
 
 	if ( '' === $default ) {
 
-		$letter_spacing = apply_filters( 'uabb/global/button_letter_spacing', $default );// @codingStandardsIgnoreLine.
+		$letter_spacing = apply_filters( 'uabb/global/button_letter_spacing', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $letter_spacing ) {
 			$letter_spacing = apply_filters( 'uabb_theme_default_button_letter_spacing', $default );
@@ -367,11 +368,11 @@ function uabb_theme_default_button_letter_spacing( $default ) {
 function uabb_theme_button_text_transform( $default ) {
 	$text_transform = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$text_transform = apply_filters( 'uabb/global/button_text_transform', $default );
+		$text_transform = apply_filters( 'uabb/global/button_text_transform', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $text_transform ) {
+		if ( '' === $text_transform ) {
 			$text_transform = apply_filters( 'uabb_theme_button_text_transform', $default );
 		}
 	} else {
@@ -391,7 +392,7 @@ function uabb_theme_default_button_text_transform( $default ) {
 
 	if ( '' === $default ) {
 
-		$text_transform = apply_filters( 'uabb/global/button_text_transform', $default );// @codingStandardsIgnoreLine.
+		$text_transform = apply_filters( 'uabb/global/button_text_transform', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $text_transform ) {
 			$text_transform = apply_filters( 'uabb_theme_default_button_text_transform', $default );
@@ -410,11 +411,11 @@ function uabb_theme_default_button_text_transform( $default ) {
 function uabb_theme_button_bg_color( $default ) {
 	$color = '';
 
-	if ( '' == $default || '#' === $default ) {
+	if ( '' === $default || '#' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_bg_color', $default );
+		$color = apply_filters( 'uabb/global/button_bg_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_button_bg_color', $default );
 		}
 	} else {
@@ -435,7 +436,7 @@ function uabb_theme_default_button_bg_color( $default ) {
 
 	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_bg_color', $default );// @codingStandardsIgnoreLine.
+		$color = apply_filters( 'uabb/global/button_bg_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_default_button_bg_color', $default );
@@ -456,11 +457,11 @@ function uabb_theme_default_button_bg_color( $default ) {
 function uabb_theme_button_bg_hover_color( $default ) {
 	$color = '';
 
-	if ( '' == $default || '#' === $default ) {
+	if ( '' === $default || '#' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_bg_hover_color', $default );
+		$color = apply_filters( 'uabb/global/button_bg_hover_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_button_bg_hover_color', $default );
 		}
 	} else {
@@ -482,7 +483,7 @@ function uabb_theme_default_button_bg_hover_color( $default ) {
 
 	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_bg_hover_color', $default );// @codingStandardsIgnoreLine.
+		$color = apply_filters( 'uabb/global/button_bg_hover_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_default_button_bg_hover_color', $default );
@@ -495,7 +496,7 @@ function uabb_theme_default_button_bg_hover_color( $default ) {
 }
 /**
  * Provide option to override the element defaults from theme options.
- * 
+ *
  * @param var $default Checks if user has set the color, if yes, returns users value else checks
  * for filtered value.
  * @return string - hex value for the color
@@ -503,11 +504,11 @@ function uabb_theme_default_button_bg_hover_color( $default ) {
 function uabb_theme_button_text_color( $default ) {
 	$color = '';
 
-	if ( '' == $default || '#' === $default ) {
+	if ( '' === $default || '#' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_text_color', $default );
+		$color = apply_filters( 'uabb/global/button_text_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_button_text_color', $default );
 		}
 	} else {
@@ -529,7 +530,7 @@ function uabb_theme_default_button_text_color( $default ) {
 
 	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_text_color', $default );// @codingStandardsIgnoreLine.
+		$color = apply_filters( 'uabb/global/button_text_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_default_button_text_color', $default );
@@ -551,11 +552,11 @@ function uabb_theme_default_button_text_color( $default ) {
 function uabb_theme_button_text_hover_color( $default ) {
 	$color = '';
 
-	if ( '' == $default || '#' === $default ) {
+	if ( '' === $default || '#' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_text_hover_color', $default );
+		$color = apply_filters( 'uabb/global/button_text_hover_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $color ) {
+		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_button_text_hover_color', $default );
 		}
 	} else {
@@ -578,7 +579,7 @@ function uabb_theme_default_button_text_hover_color( $default ) {
 
 	if ( '' === $default ) {
 
-		$color = apply_filters( 'uabb/global/button_text_hover_color', $default );// @codingStandardsIgnoreLine.
+		$color = apply_filters( 'uabb/global/button_text_hover_color', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $color ) {
 			$color = apply_filters( 'uabb_theme_default_button_text_hover_color', $default );
@@ -599,16 +600,16 @@ function uabb_theme_default_button_text_hover_color( $default ) {
 function uabb_theme_button_padding( $default = '' ) {
 	$padding = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$padding = apply_filters( 'uabb/global/button_padding', $default );
+		$padding = apply_filters( 'uabb/global/button_padding', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $padding ) {
-			if( has_filter( 'uabb_theme_default_button_padding' ) ) {
+		if ( '' === $padding ) {
+			if ( has_filter( 'uabb_theme_default_button_padding' ) ) {
 				$padding = apply_filters( 'uabb_theme_default_button_padding', $default );
 			} else {
 				$padding = apply_filters( 'uabb_theme_button_padding', $default );
-				if ( '' == $padding ) {
+				if ( '' === $padding ) {
 					$padding = '12px 24px';
 				}
 			}
@@ -630,13 +631,13 @@ function uabb_theme_button_padding( $default = '' ) {
 function uabb_theme_button_vertical_padding( $default ) {
 	$padding = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$padding = apply_filters( 'uabb/global/button_vertical_padding', $default );
+		$padding = apply_filters( 'uabb/global/button_vertical_padding', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $padding ) {
+		if ( '' === $padding ) {
 			$padding = apply_filters( 'uabb_theme_button_vertical_padding', $default );
-			if ( '' == $padding ) {
+			if ( '' === $padding ) {
 				$padding = '12';
 			}
 		}
@@ -657,13 +658,13 @@ function uabb_theme_button_vertical_padding( $default ) {
 function uabb_theme_button_horizontal_padding( $default ) {
 	$padding = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$padding = apply_filters( 'uabb/global/button_horizontal_padding', $default );
+		$padding = apply_filters( 'uabb/global/button_horizontal_padding', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
-		if ( '' == $padding ) {
+		if ( '' === $padding ) {
 			$padding = apply_filters( 'uabb_theme_button_horizontal_padding', $default );
-			if ( '' == $padding ) {
+			if ( '' === $padding ) {
 				$padding = '24';
 			}
 		}
@@ -684,9 +685,9 @@ function uabb_theme_button_horizontal_padding( $default ) {
 function uabb_theme_button_border_radius( $default ) {
 	$radius = '';
 
-	if ( '' == $default ) {
+	if ( '' === $default ) {
 
-		$radius = apply_filters( 'uabb/global/button_border_radius', $default );
+		$radius = apply_filters( 'uabb/global/button_border_radius', $default );//phpcs:ignore WordPress.NamingConventions.ValidHookName.UseUnderscores
 
 		if ( '' === $radius ) {
 			$radius = apply_filters( 'uabb_theme_button_border_radius', $default );
@@ -780,7 +781,7 @@ function uabb_theme_border_hover_color( $default ) {
 function uabb_parse_color_to_hex( $code = '' ) {
 	$color = '';
 	$hex   = '';
-	if ( '' != $code ) {
+	if ( '' !== $code ) {
 		if ( strpos( $code, 'rgba' ) !== false ) {
 			$code  = ltrim( $code, 'rgba(' );
 			$code  = rtrim( $code, ')' );
@@ -808,12 +809,12 @@ function uabb_theme_border( $default ) {
 	$border_width  = uabb_theme_button_border_width( '' );
 	$border_color  = uabb_theme_border_color( '' );
 	$border_radius = uabb_theme_button_border_radius( '' );
-	$border = array();
+	$border        = array();
 
 	if ( is_array( $default ) && ( ! empty( $default['style'] ) || ! empty( $default['color'] ) || ! empty( $default['width']['top'] ) || ! empty( $default['width']['bottom'] ) || ! empty( $default['width']['left'] ) || ! empty( $default['width']['right'] ) || ! empty( $default['radius']['top_left'] ) || ! empty( $default['radius']['top_right'] ) || ! empty( $default['radius']['bottom_left'] ) || ! empty( $default['radius']['bottom_right'] ) ) ) {
 
 		$border = $default;
-	} elseif ( is_object( $default ) &&  ( ! empty( $default->style ) || ! empty( $default->color ) || ! empty( $default->width->top ) || ! empty( $default->width->bottom ) || ! empty( $default->width->left ) || ! empty( $default->width->right ) || ! empty( $default->radius->top_left ) || ! empty( $default->radius->top_right ) || ! empty( $default->radius->bottom_left ) || ! empty( $default->radius->bottom_right ) ) ) {
+	} elseif ( is_object( $default ) && ( ! empty( $default->style ) || ! empty( $default->color ) || ! empty( $default->width->top ) || ! empty( $default->width->bottom ) || ! empty( $default->width->left ) || ! empty( $default->width->right ) || ! empty( $default->radius->top_left ) || ! empty( $default->radius->top_right ) || ! empty( $default->radius->bottom_left ) || ! empty( $default->radius->bottom_right ) ) ) {
 
 		$border = $default;
 
@@ -829,7 +830,7 @@ function uabb_theme_border( $default ) {
 			);
 		}
 
-		$border['color'] = ( ! empty( $border_color ) ) ? substr( $border_color, 1 )  : '';
+		$border['color'] = ( ! empty( $border_color ) ) ? substr( $border_color, 1 ) : '';
 
 		$border['style'] = 'solid';
 
@@ -842,7 +843,7 @@ function uabb_theme_border( $default ) {
 				'bottom_right' => $border_radius,
 			);
 		}
-	} 
+	}
 	return $border;
 }
 /**
@@ -855,9 +856,9 @@ function uabb_theme_border( $default ) {
  */
 function uabb_theme_button_typography( $default ) {
 
-	$typography = array();
-	$font_family = array(
-		'family' => '',
+	$typography     = array();
+	$font_family    = array(
+		'family'      => '',
 		'font_weight' => '',
 	);
 	$font_size      = uabb_theme_default_button_font_size( '' );
@@ -866,16 +867,15 @@ function uabb_theme_button_typography( $default ) {
 	$font_family    = uabb_theme_button_font_family( $font_family );
 	$letter_spacing = uabb_theme_default_button_letter_spacing( '' );
 
-	$typography['desktop-font_size'] = array();
-	$typography['desktop_font_family'] = array();
+	$typography['desktop-font_size']      = array();
+	$typography['desktop_font_family']    = array();
 	$typography['desktop_line_transform'] = array();
 
-
-	if ( is_array( $default ) && ( ( array_key_exists( 'font_family', $default ) && 'Default' !== $default['font_family'] ) || (array_key_exists( 'default', $default ) && 'default' !== $default['font_weight'] ) || ! empty( $default['font_size']['length'] ) || ! empty( $default['line_height']['length'] ) || ! empty( $default['text_transform'] ) ) ) {
+	if ( is_array( $default ) && ( ( array_key_exists( 'font_family', $default ) && 'Default' !== $default['font_family'] ) || ( array_key_exists( 'default', $default ) && 'default' !== $default['font_weight'] ) || ! empty( $default['font_size']['length'] ) || ! empty( $default['line_height']['length'] ) || ! empty( $default['text_transform'] ) ) ) {
 
 		$typography['desktop'] = $default;
 
-	} elseif ( ''!== $default && is_object( $default ) && ( property_exists( $default, 'font_family' ) && ( 'Default' !== $default->font_family ) ||( property_exists( $default, 'font_weight' ) && 'default' !== $default->font_weight ) || ! empty( $default->font_size->length ) || ! empty( $default->line_height->length ) || ! empty( $default->text_transform ) ) ) {
+	} elseif ( '' !== $default && is_object( $default ) && ( property_exists( $default, 'font_family' ) && ( 'Default' !== $default->font_family ) || ( property_exists( $default, 'font_weight' ) && 'default' !== $default->font_weight ) || ! empty( $default->font_size->length ) || ! empty( $default->line_height->length ) || ! empty( $default->text_transform ) ) ) {
 
 		$typography['desktop'] = $default;
 
@@ -886,21 +886,21 @@ function uabb_theme_button_typography( $default ) {
 			$typography['desktop-font_size'] = array(
 				'font_size' => array(
 					'length' => ( array_key_exists( 'desktop', $font_size ) && ! empty( $font_size['desktop'] ) ) ? $font_size['desktop'] : '',
-					'unit'	 => ( array_key_exists( 'desktop-unit', $font_size ) && ! empty( $font_size['desktop-unit'] ) ) ? $font_size['desktop-unit'] : '',
+					'unit'   => ( array_key_exists( 'desktop-unit', $font_size ) && ! empty( $font_size['desktop-unit'] ) ) ? $font_size['desktop-unit'] : '',
 				),
 			);
 
 			$typography['tablet'] = array(
 				'font_size' => array(
 					'length' => ( array_key_exists( 'tablet', $font_size ) && ! empty( $font_size['tablet'] ) ) ? $font_size['tablet'] : '',
-					'unit'	 => ( array_key_exists( 'tablet-unit', $font_size ) && ! empty( $font_size['tablet-unit'] ) ) ? $font_size['tablet-unit'] : '',
+					'unit'   => ( array_key_exists( 'tablet-unit', $font_size ) && ! empty( $font_size['tablet-unit'] ) ) ? $font_size['tablet-unit'] : '',
 				),
 			);
 
 			$typography['mobile'] = array(
 				'font_size' => array(
 					'length' => ( array_key_exists( 'mobile', $font_size ) && ! empty( $font_size['mobile'] ) ) ? $font_size['mobile'] : '',
-					'unit'	 => ( array_key_exists( 'mobile-unit', $font_size ) && ! empty( $font_size['mobile-unit'] ) ) ? $font_size['mobile-unit'] : '',
+					'unit'   => ( array_key_exists( 'mobile-unit', $font_size ) && ! empty( $font_size['mobile-unit'] ) ) ? $font_size['mobile-unit'] : '',
 				),
 			);
 		}
@@ -914,9 +914,9 @@ function uabb_theme_button_typography( $default ) {
 
 		$typography['desktop_line_transform'] = array(
 
-			'line_height' => array(
+			'line_height'    => array(
 				'length' => ( ! empty( $line_height ) ) ? $line_height : '',
-				'unit'	 => '',
+				'unit'   => '',
 			),
 			'text_transform' => ( ! empty( $text_transform ) ) ? $text_transform : '',
 			'letter_spacing' => array(
@@ -937,6 +937,7 @@ function uabb_theme_button_typography( $default ) {
  * Provide option to override the element defaults from theme options.
  *
  * @since 1.24.2
+ * @param var $mode check device.
  * @param var $value Checks if user has set the Padding, if yes, returns users value else checks
  * for filtered value.
  * @return array - Padding value
@@ -949,13 +950,13 @@ function uabb_theme_padding_button( $mode, $value ) {
 
 	$unit = $mode . '-unit';
 
-	if ( is_array( $padding ) && array_key_exists( $mode, $padding ) && array_key_exists( $value, $padding[$mode] ) ) {
+	if ( is_array( $padding ) && array_key_exists( $mode, $padding ) && array_key_exists( $value, $padding[ $mode ] ) ) {
 
-		$padding_unit = array_key_exists( $unit, $padding ) ? $padding[$unit] : 'px;';
+		$padding_unit = array_key_exists( $unit, $padding ) ? $padding[ $unit ] : 'px;';
 
-		$new_padding = $padding[$mode][$value] . $padding[$unit]; 
+		$new_padding = $padding[ $mode ][ $value ] . $padding[ $unit ];
 	}
-	
+
 	return $new_padding;
 }
 /**
@@ -969,7 +970,7 @@ function uabb_theme_padding_css_genreated( $mode ) {
 
 	if ( is_array( uabb_theme_button_padding() ) ) {
 
-		$css = 'padding-top:' . uabb_theme_padding_button( $mode, 'top' ) . ';';
+		$css  = 'padding-top:' . uabb_theme_padding_button( $mode, 'top' ) . ';';
 		$css .= 'padding-left:' . uabb_theme_padding_button( $mode, 'left' ) . ';';
 		$css .= 'padding-bottom:' . uabb_theme_padding_button( $mode, 'bottom' ) . ';';
 		$css .= 'padding-right:' . uabb_theme_padding_button( $mode, 'right' ) . ';';

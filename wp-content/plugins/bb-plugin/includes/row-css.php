@@ -1,8 +1,3 @@
-.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_right"],
-.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_left"] {
-	display: none !important;
-}
-
 <?php if ( ! empty( $settings->text_color ) ) : // Text Color ?>
 .fl-node-<?php echo $id; ?> {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
@@ -64,7 +59,7 @@
 }
 <?php endif; ?>
 
-<?php if ( $row->settings->bg_video_audio ) : ?>
+<?php if ( 'yes' === $row->settings->bg_video_audio ) : ?>
 .fl-node-<?php echo $row->node; ?> .fl-bg-video-audio {
 	display: none;
 	cursor: pointer;
@@ -125,9 +120,9 @@ if ( 'photo' == $row->settings->bg_type ) :
 		$row_bg_image_lg = $row->settings->bg_image_src;
 	} elseif ( 'url' == $row->settings->bg_image_source && ! empty( $row->settings->bg_image_url ) ) {
 		if ( 'array' == gettype( $row->settings->bg_image_url ) ) {
-			$row_bg_image_lg = $row->settings->bg_image_url['url'];
+			$row_bg_image_lg = do_shortcode( $row->settings->bg_image_url['url'] );
 		} else {
-			$row_bg_image_lg = (string) $row->settings->bg_image_url;
+			$row_bg_image_lg = (string) do_shortcode( $row->settings->bg_image_url );
 		}
 	}
 	if ( 'custom_pos' == $row->settings->bg_position ) {

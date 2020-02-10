@@ -27,7 +27,7 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @protected
 	 * @var $_editor
 	 */
-	protected $_editor = null;
+	protected $_editor = null; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
 
 	/**
 	 * Constructor function that constructs default values for the Photo module
@@ -57,7 +57,7 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @method enqueue_scripts
 	 */
 	public function enqueue_scripts() {
-		if ( $this->settings && 'lightbox' == $this->settings->link_type ) {
+		if ( $this->settings && 'lightbox' === $this->settings->link_type ) {
 			$this->add_js( 'jquery-magnificpopup' );
 			$this->add_css( 'jquery-magnificpopup' );
 		}
@@ -111,7 +111,7 @@ class UABBPhotoModule extends FLBuilderModule {
 		$this->delete();
 
 		// Do a crop.
-		if ( ! empty( $this->settings->style ) && 'simple' != $this->settings->style && 'custom' != $this->settings->style ) {
+		if ( ! empty( $this->settings->style ) && 'simple' !== $this->settings->style && 'custom' !== $this->settings->style ) {
 
 			$editor = $this->_get_editor();
 
@@ -125,19 +125,19 @@ class UABBPhotoModule extends FLBuilderModule {
 			$new_height   = $size['height'];
 
 			// Get the crop ratios.
-			if ( 'landscape' == $this->settings->style ) {
+			if ( 'landscape' === $this->settings->style ) {
 				$ratio_1 = 1.43;
 				$ratio_2 = .7;
-			} elseif ( 'panorama' == $this->settings->style ) {
+			} elseif ( 'panorama' === $this->settings->style ) {
 				$ratio_1 = 2;
 				$ratio_2 = .5;
-			} elseif ( 'portrait' == $this->settings->style ) {
+			} elseif ( 'portrait' === $this->settings->style ) {
 				$ratio_1 = .7;
 				$ratio_2 = 1.43;
-			} elseif ( 'square' == $this->settings->style ) {
+			} elseif ( 'square' === $this->settings->style ) {
 				$ratio_1 = 1;
 				$ratio_2 = 1;
-			} elseif ( 'circle' == $this->settings->style ) {
+			} elseif ( 'circle' === $this->settings->style ) {
 				$ratio_1 = 1;
 				$ratio_2 = 1;
 			}
@@ -150,7 +150,7 @@ class UABBPhotoModule extends FLBuilderModule {
 			}
 
 			// Make sure we have enough memory to crop, removed @ini_set( 'memory_limit', '300M' );.
-			ini_set( 'memory_limit', '300M' );
+			wp_raise_memory_limit( 'memory_limit', '300M' );
 
 			// Crop the photo.
 			$editor->resize( $new_width, $new_height, true );
@@ -174,7 +174,7 @@ class UABBPhotoModule extends FLBuilderModule {
 		if ( empty( $this->data ) ) {
 
 			// Photo source is set to "url".
-			if ( 'url' == $this->settings->photo_source ) {
+			if ( 'url' === $this->settings->photo_source ) {
 				$this->data                = new stdClass();
 				$this->data->alt           = $this->settings->caption;
 				$this->data->caption       = $this->settings->caption;
@@ -274,13 +274,13 @@ class UABBPhotoModule extends FLBuilderModule {
 	public function get_link() {
 		$photo = $this->get_data();
 
-		if ( 'url' == $this->settings->link_type ) {
+		if ( 'url' === $this->settings->link_type ) {
 			$link = $this->settings->link_url;
-		} elseif ( 'lightbox' == $this->settings->link_type ) {
+		} elseif ( 'lightbox' === $this->settings->link_type ) {
 			$link = $photo->url;
-		} elseif ( 'file' == $this->settings->link_type ) {
+		} elseif ( 'file' === $this->settings->link_type ) {
 			$link = $photo->url;
-		} elseif ( 'page' == $this->settings->link_type ) {
+		} elseif ( 'page' === $this->settings->link_type ) {
 			$link = $photo->link;
 		} else {
 			$link = '';
@@ -298,13 +298,13 @@ class UABBPhotoModule extends FLBuilderModule {
 		$photo = $this->get_data();
 
 		if ( ! empty( $photo->alt ) ) {
-			return htmlspecialchars( $photo->alt );
+			return esc_html( $photo->alt );
 		} elseif ( ! empty( $photo->description ) ) {
-			return htmlspecialchars( $photo->description );
+			return esc_html( $photo->description );
 		} elseif ( ! empty( $photo->caption ) ) {
-			return htmlspecialchars( $photo->caption );
+			return esc_html( $photo->caption );
 		} elseif ( ! empty( $photo->title ) ) {
-			return htmlspecialchars( $photo->title );
+			return esc_html( $photo->title );
 		}
 	}
 	/**
@@ -317,7 +317,7 @@ class UABBPhotoModule extends FLBuilderModule {
 	public function get_title() {
 		$photo = $this->get_data();
 		if ( isset( $photo->title ) && ! empty( $photo->title ) ) {
-			return htmlspecialchars( $photo->title );
+			return esc_html( $photo->title );
 		}
 	}
 	/**
@@ -343,10 +343,10 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @method _has_source
 	 * @protected
 	 */
-	protected function _has_source() {
-		if ( 'url' == $this->settings->photo_source && ! empty( $this->settings->photo_url ) ) {
+	protected function _has_source() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
+		if ( 'url' === $this->settings->photo_source && ! empty( $this->settings->photo_url ) ) {
 			return true;
-		} elseif ( 'library' == $this->settings->photo_source && ! empty( $this->settings->photo_src ) ) {
+		} elseif ( 'library' === $this->settings->photo_source && ! empty( $this->settings->photo_src ) ) {
 			return true;
 		}
 
@@ -359,7 +359,7 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @method _get_editor
 	 * @protected
 	 */
-	protected function _get_editor() {
+	protected function _get_editor() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		if ( $this->_has_source() && null === $this->_editor ) {
 
 			$url_path  = $this->_get_uncropped_url();
@@ -381,7 +381,7 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @method _get_cropped_path
 	 * @protected
 	 */
-	protected function _get_cropped_path() {
+	protected function _get_cropped_path() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		$crop      = empty( $this->settings->style ) ? 'none' : $this->settings->style;
 		$url       = $this->_get_uncropped_url();
 		$cache_dir = FLBuilderModel::get_cache_dir();
@@ -416,8 +416,8 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @method _get_uncropped_url
 	 * @protected
 	 */
-	protected function _get_uncropped_url() {
-		if ( 'url' == $this->settings->photo_source ) {
+	protected function _get_uncropped_url() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
+		if ( 'url' === $this->settings->photo_source ) {
 			$url = $this->settings->photo_url;
 		} elseif ( ! empty( $this->settings->photo_src ) ) {
 			$url = $this->settings->photo_src;
@@ -434,7 +434,7 @@ class UABBPhotoModule extends FLBuilderModule {
 	 * @method _get_cropped_demo_url
 	 * @protected
 	 */
-	protected function _get_cropped_demo_url() {
+	protected function _get_cropped_demo_url() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		$info = $this->_get_cropped_path();
 
 		return FL_BUILDER_DEMO_CACHE_URL . $info['filename'];
@@ -454,14 +454,14 @@ class UABBPhotoModule extends FLBuilderModule {
 		$page_migrated           = UABB_Compatibility::$uabb_migration;
 		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 			// Link handling.
 			if ( isset( $settings->link_target ) ) {
 				$settings->link_url_target = $settings->link_target;
 				unset( $settings->link_target );
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				$settings->link_url_nofollow = ( '1' == $settings->link_nofollow ) ? 'yes' : '';
+				$settings->link_url_nofollow = ( '1' === $settings->link_nofollow ) ? 'yes' : '';
 				unset( $settings->link_nofollow );
 			}
 
@@ -475,14 +475,14 @@ class UABBPhotoModule extends FLBuilderModule {
 			if ( isset( $settings->responsive_align ) ) {
 				$settings->responsive_align = $settings->responsive_align;
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( isset( $settings->link_target ) ) {
 				$settings->link_url_target = $settings->link_target;
 				unset( $settings->link_target );
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				$settings->link_url_nofollow = ( '1' == $settings->link_nofollow ) ? 'yes' : '';
+				$settings->link_url_nofollow = ( '1' === $settings->link_nofollow ) ? 'yes' : '';
 				unset( $settings->link_nofollow );
 			}
 			// Opacity.

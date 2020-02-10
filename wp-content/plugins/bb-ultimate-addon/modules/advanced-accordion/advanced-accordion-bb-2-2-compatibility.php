@@ -521,6 +521,10 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
+							'ct_raw'            => array(
+								'type'    => 'raw',
+								'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . esc_attr( wp_create_nonce( 'uabb-module-nonce' ) ) . '></div>',
+							),
 							'ct_content'        => array(
 								'type'        => 'editor',
 								'label'       => '',

@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBInfoList', array(
+	'UABBInfoList',
+	array(
 		'info_list_item'    => array( // Tab.
 			'title'    => __( 'List Item', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -404,7 +405,8 @@ FLBuilder::register_module(
 
 // Add List Items.
 FLBuilder::register_settings_form(
-	'info_list_item_form', array(
+	'info_list_item_form',
+	array(
 		'title' => __( 'Add List Item', 'uabb' ),
 		'tabs'  => array(
 			'list_item_general' => array(

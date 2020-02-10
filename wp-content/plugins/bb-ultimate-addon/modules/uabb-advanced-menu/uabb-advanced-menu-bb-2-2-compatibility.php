@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBCreativeMenu', array(
+	'UABBCreativeMenu',
+	array(
 		'general'    => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -354,14 +355,14 @@ FLBuilder::register_module(
 							'type'       => 'border',
 							'label'      => __( 'Border', 'uabb' ),
 							'responsive' => true,
-							'default'	 => array(
-								'style'		=> 'solid',
-								'color'		=> '000000',
-								'width'		=> array(
-									'top'	 => '1',
-									'right'	 => '1',
+							'default'    => array(
+								'style' => 'solid',
+								'color' => '000000',
+								'width' => array(
+									'top'    => '1',
+									'right'  => '1',
 									'bottom' => '1',
-									'left'	 => '1',
+									'left'   => '1',
 								),
 							),
 							'preview'    => array(
@@ -495,11 +496,11 @@ FLBuilder::register_module(
 							),
 						),
 						'creative_menu_navigation_alignment' => array(
-							'type'    => 'align',
-							'label'   => __( 'Navigation Alignment', 'uabb' ),
-							'default' => 'center',
+							'type'       => 'align',
+							'label'      => __( 'Navigation Alignment', 'uabb' ),
+							'default'    => 'center',
 							'responsive' => true,
-							'preview' => array(
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-creative-menu-mobile-toggle-container, .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text',
 								'property'  => 'text-align',

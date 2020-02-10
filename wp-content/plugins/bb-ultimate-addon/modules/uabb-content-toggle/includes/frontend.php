@@ -44,13 +44,13 @@ $label_off = ( isset( $settings->label_box_off ) ) ? $settings->label_box_off : 
 $label_on  = ( isset( $settings->label_box_on ) ) ? $settings->label_box_on : 'ON';
 
 ?>
-<div class="<?php echo $rbs_wrapper; ?>">
+<div class="<?php echo esc_attr( $rbs_wrapper ); ?>">
 	<div class="uabb-rbs-toggle">
 		<div class="uabb-sec-1">
-			<<?php echo $settings->html_tag; ?> class="uabb-rbs-head-1"><?php echo $settings->cont1_heading; ?>
-			</<?php echo $settings->html_tag; ?>>
+			<<?php echo esc_attr( $settings->html_tag ); ?> class="uabb-rbs-head-1"><?php echo wp_kses_post( $settings->cont1_heading ); ?>
+			</<?php echo esc_attr( $settings->html_tag ); ?>>
 		</div>
-		<div class="uabb-main-btn" data-switch-type="<?php echo $settings->select_switch_style; ?>">
+		<div class="uabb-main-btn" data-switch-type="<?php echo esc_attr( $settings->select_switch_style ); ?>">
 
 			<?php
 
@@ -80,32 +80,32 @@ $label_on  = ( isset( $settings->label_box_on ) ) ? $settings->label_box_on : 'O
 			?>
 
 			<!-- Display Switch -->
-			<?php echo $switch_html; ?>
+			<?php echo $switch_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 		</div>
 		<div class="uabb-sec-2">
-			<<?php echo $settings->html_tag; ?> class="uabb-rbs-head-2"><?php echo $settings->cont2_heading; ?></<?php echo $settings->html_tag; ?>>
+			<<?php echo esc_attr( $settings->html_tag ); ?> class="uabb-rbs-head-2"><?php echo wp_kses_post( $settings->cont2_heading ); ?></<?php echo esc_attr( $settings->html_tag ); ?>>
 		</div>
 	</div>
 	<div class="uabb-rbs-toggle-sections">
-		<div <?php echo $rbs_section_1; ?> >
+		<div <?php echo wp_kses_post( $rbs_section_1 ); ?> >
 			<?php
-			if ( 'content' == $settings->cont1_section ) {
+			if ( 'content' === $settings->cont1_section ) {
 				global $wp_embed;
-				echo wpautop( $wp_embed->autoembed( $settings->content_editor ) );
+				echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->content_editor ) ) );
 			} else {
-				echo $module->get_toggle_content1( $settings );
+				echo wp_kses_post( $module->get_toggle_content1( $settings ) );
 			}
 			?>
 
 		</div>
-		<div <?php echo $rbs_section_2; ?> >
+		<div <?php echo wp_kses_post( $rbs_section_2 ); ?> >
 			<?php
-			if ( 'content_head2' == $settings->cont2_section ) {
+			if ( 'content_head2' === $settings->cont2_section ) {
 				global $wp_embed;
-				echo wpautop( $wp_embed->autoembed( $settings->content2_editor ) );
+				echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->content2_editor ) ) );
 			} else {
-				echo $module->get_toggle_content2( $settings );
+				echo wp_kses_post( $module->get_toggle_content2( $settings ) );
 			}
 			?>
 		</div>

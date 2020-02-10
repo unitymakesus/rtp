@@ -19,7 +19,7 @@
 
 				<!-- Search Section -->
 				<div id="fl-builder-blocks-rows" class="fl-builder-blocks-section">
-					<input type="text" id="section_search" placeholder="<?php _e( 'Search Section...', 'uabb' ); ?>" style="width: 100%;">
+					<input type="text" id="section_search" placeholder="<?php esc_attr_e( 'Search Section...', 'uabb' ); ?>" style="width: 100%;">
 					<div class="filter-count"></div>
 				</div><!-- Search Section -->
 
@@ -37,20 +37,19 @@
 					$uabb_row_templates = UABB_UI_Panels::uabb_templates_data( $row_templates, 'includes' );
 
 					if ( count( $uabb_row_templates ) > 0 ) :
-
-						foreach ( $uabb_row_templates['categorized'] as $cat ) :
+						foreach ( $uabb_row_templates['categorized'] as $sections_cat ) :
 
 							// avoid 'Uncategorized'.
-							if ( trim( $cat['name'] ) != 'Uncategorized' ) :
+							if ( trim( $sections_cat['name'] ) !== 'Uncategorized' ) :
 								?>
 								<div class="fl-builder-blocks-section">
 									<span class="fl-builder-blocks-section-title">
-										<?php echo __( $cat['name'], 'uabb' ); ?>
+										<?php echo esc_attr__( $sections_cat['name'], 'uabb' ); //phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?>
 										<i class="fa fa-chevron-down"></i>
 									</span>
 									<div class="fl-builder-blocks-section-content fl-builder-row-templates">
 										<?php
-										foreach ( $cat['templates'] as $template ) :
+										foreach ( $sections_cat['templates'] as $template ) :
 
 											// Get tags.
 											$tags = '';
@@ -59,11 +58,11 @@
 											}
 											?>
 
-											<span class="fl-builder-block fl-builder-block-template fl-builder-block-row-template" data-id="<?php echo $template['id']; ?>" data-type="<?php echo $template['type']; ?>">
+											<span class="fl-builder-block fl-builder-block-template fl-builder-block-row-template" data-id="<?php echo esc_attr( $template['id'] ); ?>" data-type="<?php echo esc_attr( $template['type'] ); ?>">
 												<?php if ( ! stristr( $template['image'], 'blank.jpg' ) ) : ?>
-												<img class="fl-builder-block-template-image" src="<?php echo $template['image']; ?>" />
+												<img class="fl-builder-block-template-image" src="<?php echo esc_attr( $template['image'] ); ?>" />
 												<?php endif; ?>
-												<span class="fl-builder-block-title" data-tags="<?php echo $tags; ?>" data-cat-name="<?php echo $cat['name']; ?>"><?php echo $template['name']; ?></span>
+												<span class="fl-builder-block-title" data-tags="<?php echo esc_attr( $tags ); ?>" data-cat-name="<?php echo esc_attr( $sections_cat['name'] ); ?>"><?php echo esc_attr( $template['name'] ); ?></span>
 											</span>
 
 										<?php endforeach; ?>
@@ -80,10 +79,10 @@
 
 				<?php if ( BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-enable-template-cloud' ) ) { ?>
 				<div class="fl-builder-modules-cta">
-					<a href="#" onclick="window.open('<?php echo admin_url(); ?>options-general.php?page=uabb-builder-settings#uabb-cloud-templates');" target="_blank" rel="noopener"><i class="fa fa-external-link-square"></i>
+					<a href="#" onclick="window.open('<?php echo esc_url( admin_url() ); ?>options-general.php?page=uabb-builder-settings#uabb-cloud-templates');" target="_blank" rel="noopener"><i class="fa fa-external-link-square"></i>
 						<?php
 						/* translators: %s: search term */
-						echo sprintf( __( 'Note - You can enable, disable and manage %s sections here.', 'uabb' ), UABB_PREFIX );
+						echo sprintf( esc_attr__( 'Note - You can enable, disable and manage %s sections here.', 'uabb' ), esc_attr( UABB_PREFIX ) );
 						?>
 					</a>
 				</div>

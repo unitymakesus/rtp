@@ -20,7 +20,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @var array $errors
 	 */
-	static public $errors = array();
+	public static $errors = array();
 
 	/**
 	 * Initializes the admin settings.
@@ -28,7 +28,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function init() {
+	public static function init() {
 		add_action( 'after_setup_theme', __CLASS__ . '::init_hooks' );
 	}
 
@@ -39,15 +39,24 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function init_hooks() {
+	public static function init_hooks() {
 		if ( ! is_admin() ) {
 			return;
 		}
 
 		add_action( 'network_admin_menu', __CLASS__ . '::menu' );
 		add_action( 'admin_menu', __CLASS__ . '::menu' );
-
-		if ( isset( $_REQUEST['page'] ) && 'uabb-builder-settings' == $_REQUEST['page'] ) {
+		add_action( 'admin_init', __CLASS__ . '::render_styles' );
+	}
+	/**
+	 * Adds the admin menu and enqueues CSS/JS if we are on
+	 * the builder admin settings page.
+	 *
+	 * @since 1.25.1
+	 * @return void
+	 */
+	public static function render_styles() {
+		if ( isset( $_GET['page'] ) && isset( $_REQUEST['uabb_setting_nonce'] ) && wp_verify_nonce( $_REQUEST['uabb_setting_nonce'], 'uabb_setting_nonce' ) && 'uabb-builder-settings' === $_GET['page'] ) {
 			add_action( 'admin_enqueue_scripts', __CLASS__ . '::styles_scripts' );
 			self::save();
 			self::api_key_authenticate();
@@ -190,7 +199,7 @@ final class UABBBuilderAdminSettings {
 	public static function show_branding() {
 		$show_branding = true;
 
-		if ( true == get_option( 'uabb_hide_branding' ) ) {
+		if ( true === (bool) get_option( 'uabb_hide_branding' ) ) {
 			$show_branding = false;
 		}
 
@@ -205,13 +214,13 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function menu() {
+	public static function menu() {
 		if ( current_user_can( 'manage_options' ) ) {
-
-			$title = UABB_PREFIX;
-			$cap   = 'manage_options';
-			$slug  = 'uabb-builder-settings';
-			$func  = __CLASS__ . '::render';
+			$_REQUEST['uabb_setting_nonce'] = wp_create_nonce( 'uabb_setting_nonce' );
+			$title                          = UABB_PREFIX;
+			$cap                            = 'manage_options';
+			$slug                           = 'uabb-builder-settings';
+			$func                           = __CLASS__ . '::render';
 			add_submenu_page( 'options-general.php', $title, $title, $cap, $slug, $func );
 		}
 	}
@@ -225,16 +234,17 @@ final class UABBBuilderAdminSettings {
 	 */
 	public static function styles_scripts( $hook ) {
 
-		wp_register_style( 'uabb-admin-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-admin.css', array() );
-		wp_register_script( 'uabb-admin-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin.js', array( 'jquery' ), '', true );
+		wp_register_style( 'uabb-admin-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-admin.css', array(), BB_ULTIMATE_ADDON_VER );
+		wp_register_script( 'uabb-admin-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
 		wp_localize_script( 'uabb-admin-js', 'uabb', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
 		// Load AJAX script only on Builder UI Panel.
-		wp_register_script( 'uabb-lazyload', BB_ULTIMATE_ADDON_URL . 'assets/js/jquery.lazyload.min.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tabs' ), null, true );
-		wp_register_script( 'uabb-cloud-templates-shuffle', BB_ULTIMATE_ADDON_URL . 'assets/js/jquery.shuffle.min.js', array( 'jquery' ), null, true );
-		wp_register_script( 'uabb-cloud-templates', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-cloud-templates.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tabs', 'uabb-lazyload', 'uabb-cloud-templates-shuffle' ), null, true );
-		wp_enqueue_script( 'uabb-admin-menu-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin-menu.js' );
-		wp_register_style( 'uabb-admin-menu-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-admin-menu.css' );
+
+		wp_register_script( 'uabb-lazyload', BB_ULTIMATE_ADDON_URL . 'assets/js/jquery.lazyload.min.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tabs' ), BB_ULTIMATE_ADDON_VER, true );
+		wp_register_script( 'uabb-cloud-templates-shuffle', BB_ULTIMATE_ADDON_URL . 'assets/js/jquery.shuffle.min.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
+		wp_register_script( 'uabb-cloud-templates', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-cloud-templates.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-tabs', 'uabb-lazyload', 'uabb-cloud-templates-shuffle' ), BB_ULTIMATE_ADDON_VER, true );
+		wp_enqueue_script( 'uabb-admin-menu-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin-menu.js', array(), BB_ULTIMATE_ADDON_VER, true );
+		wp_register_style( 'uabb-admin-menu-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-admin-menu.css', array(), BB_ULTIMATE_ADDON_VER );
 
 		$uabbcloudtemplates = array(
 			'ajaxurl'                => admin_url( 'admin-ajax.php' ),
@@ -250,7 +260,7 @@ final class UABBBuilderAdminSettings {
 		);
 		wp_localize_script( 'uabb-cloud-templates', 'UABBCloudTemplates', $uabbcloudtemplates );
 
-		if ( 'settings_page_uabb-builder-settings' == $hook || 'settings_page_uabb-builder-multisite-settings' == $hook ) {
+		if ( 'settings_page_uabb-builder-settings' === $hook || 'settings_page_uabb-builder-multisite-settings' === $hook ) {
 
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script( 'wp-color-picker' );
@@ -278,7 +288,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function render() {
+	public static function render() {
 		include BB_ULTIMATE_ADDON_DIR . 'includes/admin-settings.php';
 	}
 
@@ -288,7 +298,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function render_page_class() {
+	public static function render_page_class() {
 		if ( self::multisite_support() ) {
 			echo 'fl-settings-network-admin';
 		} else {
@@ -302,12 +312,11 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function render_page_heading() {
+	public static function render_page_heading() {
 		if ( ! empty( $icon ) ) {
-			echo '<img src="' . $icon . '" />';
+			echo '<img src="' . esc_attr( $icon ) . '" />';
 		}
-
-		echo '<span>' . sprintf( /* translators: %s: search term */ _x( '%s Settings', '%s stands for custom branded "UABB" name.', 'uabb' ), UABB_PREFIX ) . '</span>';
+		echo wp_kses_post( '<span>' . sprintf( /* translators: %s: search term */ _x( '%s Settings', '%s stands for custom branded "UABB" name.', 'uabb' ), UABB_PREFIX ) . '</span>' );
 	}
 
 	/**
@@ -316,13 +325,14 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function render_update_message() {
+	public static function render_update_message() {
+
 		if ( ! empty( self::$errors ) ) {
 			foreach ( self::$errors as $message ) {
-				echo '<div class="error"><p>' . $message . '</p></div>';
+				echo '<div class="error"><p>' . esc_attr( $message ) . '</p></div>';
 			}
-		} elseif ( ! empty( $_POST ) && ! isset( $_POST['email'] ) ) {
-			echo '<div class="updated"><p>' . __( 'Settings updated!', 'uabb' ) . '</p></div>';
+		} elseif ( isset( $_REQUEST['uabb_setting_nonce'] ) && wp_verify_nonce( $_REQUEST['uabb_setting_nonce'], 'uabb_setting_nonce' ) && ! empty( $_POST ) && ! isset( $_POST['email'] ) ) {
+			echo wp_kses_post( '<div class="updated"><p>' ) . esc_attr( __( 'Settings updated!', 'uabb' ) ) . wp_kses_post( '</p></div>' );
 		}
 	}
 
@@ -332,7 +342,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function render_nav_items() {
+	public static function render_nav_items() {
 		$items['uabb-license'] = array(
 			'title'    => __( 'License', 'uabb' ),
 			'show'     => is_network_admin() || ! FLBuilderAdminSettings::multisite_support(),
@@ -391,7 +401,7 @@ final class UABBBuilderAdminSettings {
 
 		foreach ( $sorted_data as $data ) {
 			if ( $data['show'] ) {
-				echo '<li><a href="#' . $data['key'] . '">' . $data['title'] . '</a></li>';
+				echo '<li><a href="#' . esc_attr( $data['key'] ) . '">' . esc_attr( $data['title'] ) . '</a></li>';
 			}
 		}
 
@@ -403,7 +413,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function render_forms() {
+	public static function render_forms() {
 		// License.
 		if ( is_network_admin() || ! self::multisite_support() ) {
 			self::render_form( 'license' );
@@ -428,7 +438,7 @@ final class UABBBuilderAdminSettings {
 	 * @param string $type The type of form to render.
 	 * @return void
 	 */
-	static public function render_form( $type ) {
+	public static function render_form( $type ) {
 		if ( self::has_support( $type ) ) {
 			include BB_ULTIMATE_ADDON_DIR . 'includes/admin-settings-' . $type . '.php';
 		}
@@ -441,11 +451,11 @@ final class UABBBuilderAdminSettings {
 	 * @param string $type The type of form being rendered.
 	 * @return void
 	 */
-	static public function render_form_action( $type = '' ) {
+	public static function render_form_action( $type = '' ) {
 		if ( is_network_admin() ) {
-			echo network_admin_url( '/settings.php?page=uabb-builder-multisite-settings#' . $type );
+			echo esc_url( network_admin_url( '/settings.php?page=uabb-builder-multisite-settings#' . $type ) );
 		} else {
-			echo admin_url( '/options-general.php?page=uabb-builder-settings#' . $type );
+			echo esc_url( admin_url( '/options-general.php?page=uabb-builder-settings#' . $type ) );
 		}
 	}
 
@@ -456,7 +466,7 @@ final class UABBBuilderAdminSettings {
 	 * @param string $type The type of form being rendered.
 	 * @return string The URL for the form action.
 	 */
-	static public function get_form_action( $type = '' ) {
+	public static function get_form_action( $type = '' ) {
 		if ( is_network_admin() ) {
 			return network_admin_url( '/settings.php?page=uabb-builder-multisite-settings#' . $type );
 		} else {
@@ -471,7 +481,7 @@ final class UABBBuilderAdminSettings {
 	 * @param string $type The type of form to check.
 	 * @return bool
 	 */
-	static public function has_support( $type ) {
+	public static function has_support( $type ) {
 		return file_exists( BB_ULTIMATE_ADDON_DIR . 'includes/admin-settings-' . $type . '.php' );
 	}
 
@@ -481,7 +491,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return bool
 	 */
-	static public function multisite_support() {
+	public static function multisite_support() {
 		return is_multisite() && class_exists( 'FLBuilderMultisiteSettings' );
 	}
 
@@ -492,7 +502,7 @@ final class UABBBuilderAdminSettings {
 	 * @param string $message The error message to add.
 	 * @return void
 	 */
-	static public function add_error( $message ) {
+	public static function add_error( $message ) {
 		self::$errors[] = $message;
 	}
 
@@ -502,7 +512,7 @@ final class UABBBuilderAdminSettings {
 	 * @since 1.3.0
 	 * @return void
 	 */
-	static public function save() {
+	public static function save() {
 		// Only admins can save settings.
 		if ( ! current_user_can( 'delete_users' ) ) {
 			return;

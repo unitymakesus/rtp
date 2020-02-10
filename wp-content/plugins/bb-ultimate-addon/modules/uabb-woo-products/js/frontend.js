@@ -61,6 +61,7 @@ var key_array = new Array();
 				}
 			}
 			var curr = parseInt( $scope.find( '.uabb-woocommerce-pagination .page-numbers.current' ).html() );
+			var _nonce = $( '.fl-node-' + settings.id ).find('.uabb-woo-products').data( 'nonce' );
 
 			if ( $( this ).hasClass( 'next' ) ) {
 				page_number = curr + 1;
@@ -76,7 +77,8 @@ var key_array = new Array();
 					action: 'uabb_get_products',
 					settings: module_settings,
 					node_id : settings.id,
-					page_number : page_number
+					page_number : page_number,
+					security: _nonce
 				},
 				dataType: 'json',
 				type: 'POST',
@@ -218,12 +220,14 @@ var key_array = new Array();
 			var uabb_qv_ajax_call = function( t, product_id ) {
 
 				uabb_qv_modal.css( 'opacity', 0 );
+				_nonce = $scope.find('.uabb-woo-products').data( 'nonce' );
 
 				$.ajax({
 		            url: self.ajaxurl,
 					data: {
 						action: 'uabb_woo_quick_view',
-						product_id: product_id
+						product_id: product_id,
+						security: _nonce
 					},
 					dataType: 'html',
 					type: 'POST',
@@ -416,7 +420,7 @@ var key_array = new Array();
 						jQuery.ajax ({
 							url: self.ajaxurl,
 							type:'POST',
-							data:'action=uabb_add_cart_single_product&product_id=' + product_id + '&variation_id=' + variation_id + '&quantity=' + quantity,
+							data:'action=uabb_add_cart_single_product&product_id=' + product_id + '&variation_id=' + variation_id + '&quantity=' + quantity + '&security=' + _nonce, 
 
 							success:function(results) {
 								// Trigger event so themes can refresh other areas.

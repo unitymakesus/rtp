@@ -19,7 +19,7 @@ class WPML_UABB_Business_Hours extends WPML_Beaver_Builder_Module_With_Items {
 	 * @param object $settings an object to get values of Business Hours.
 	 */
 	public function &get_items( $settings ) {
-		return $settings->businessHours; // @codingStandardsIgnoreLine.
+		return $settings->businessHours; //phpcs:ignore  WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 	}
 
 	/**

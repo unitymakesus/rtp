@@ -69,11 +69,11 @@ function uabb_output_before_row_bg( $row ) {
 		'particles_direction'  => isset( $row->settings->uabb_particles_direction ) ? $row->settings->uabb_particles_direction : '',
 		'id'                   => isset( $row->node ) ? $row->node : '',
 	);
-	$data = json_encode( $data );
+	$data = wp_json_encode( $data );
 
 	if ( isset( $row->settings->enable_particles ) && 'yes' === $row->settings->enable_particles ) { ?>
 
-		<div class="uabb-row-particles-background" id="uabb-particle-<?php echo $row->node; ?>" data-particle=<?php echo $data; ?>></div>
+		<div class="uabb-row-particles-background" id="uabb-particle-<?php echo esc_attr( $row->node ); ?>" data-particle=<?php echo esc_attr( $data ); ?>></div>
 
 	<?php } ?>
 	<?php
@@ -81,7 +81,7 @@ function uabb_output_before_row_bg( $row ) {
 
 		?>
 		<script>
-			var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
+			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
 
 			window.particle_js_loaded = 0;	
 
@@ -107,7 +107,7 @@ function uabb_output_before_row_bg( $row ) {
 			}
 			function particles_row_background_script() {
 
-				var row_id ='<?php echo $row->node; ?>';
+				var row_id ='<?php echo esc_attr( $row->node ); ?>';
 				var nodeClass  	= jQuery( '.fl-node-' + row_id );
 				<?php $json_custom_particles = wp_strip_all_tags( $row->settings->uabb_particles_custom_code ); ?>
 
@@ -133,7 +133,7 @@ function uabb_output_before_row_bg( $row ) {
 							<?php
 							if ( isset( $json_particles_custom ) && '' !== $json_particles_custom ) {
 								?>
-								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; ?> );
+								particlesJS( 'uabb-particle-' + row_id, <?php echo wp_kses_post( $json_particles_custom ); ?> );
 								<?php
 							}
 							?>
