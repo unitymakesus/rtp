@@ -281,42 +281,9 @@ function cleanData($data, $idxMap, $notBefore, $notAfter) {
       continue;
     }
 
-    // Wrangle rodeo trucks into single event
+    // Ignore rodeos
     if (!empty($sheetEvent['rodeo'])) {
-
-      // Only set these variables for the first rodeo row in a series
-      if ($rodex == false) {
-        $rodex = $ridx;
-        $rodate = $starttime;
-
-        // Add the first rodeo truck to its own array of trucks and clean up
-        $sheetEvent['trucks'][] = [
-          'title'   => $sheetEvent['title'],
-          'website' => $sheetEvent['website'],
-        ];
-        unset($sheetEvent['title'], $sheetEvent['website']);
-      }
-
-      // Check the date is the same as the previous rodeo row
-      if ($rodate == $starttime) {
-        // Add truck from this row to the first rodeo row in group
-        $cleanEvents[$rodex]['trucks'][] = [
-          'title' => $sheetEvent['title'],
-          'website' => $sheetEvent['website']
-        ];
-      }
-
-      // If this is a subsequent rodeo row
-      if ($rodex !== $ridx) {
-        // Remove this row
-        // unset($data[$ridx]);
-        continue;
-      }
-
-    } else {
-      // Reset rodeo variables to catch the next ones
-      $rodex = false;
-      $rodate = false;
+      continue;
     }
 
     // Create master array with clean data to import
@@ -378,18 +345,22 @@ function deleteExistingEvents() {
 
     $prefix = $wpdb->get_blog_prefix($site);
     $category = get_term_by('slug', 'food-trucks', 'mec_category');
+    $rodeo_cat = get_term_by('slug', 'rodeo', 'mec_category');
 
     $sql = "SELECT {$prefix}posts.ID FROM {$prefix}posts
             LEFT JOIN {$prefix}term_relationships ON ({$prefix}posts.ID = {$prefix}term_relationships.object_id)
-            INNER JOIN {$prefix}term_taxonomy ON ({$prefix}term_relationships.term_taxonomy_id = {$prefix}term_taxonomy.term_taxonomy_id)
             INNER JOIN {$prefix}mec_dates ON ({$prefix}posts.ID = {$prefix}mec_dates.post_id)
             WHERE 1=1
-            AND ({$prefix}term_taxonomy.term_id IN (%d))
+            AND ({$prefix}term_relationships.term_taxonomy_id IN (%d))
+            AND {$prefix}posts.ID NOT IN (
+              SELECT object_id FROM {$prefix}term_relationships
+              WHERE term_taxonomy_id IN (%d)
+            )
             AND {$prefix}posts.post_type = %s
             AND {$prefix}posts.post_status = %s
             AND {$prefix}mec_dates.tstart > %d
             ORDER BY {$prefix}mec_dates.tstart";
-    $query = $wpdb->prepare($sql, $category->term_id, 'mec-events', 'publish', $notBefore);
+    $query = $wpdb->prepare($sql, $category->term_id, $rodeo_cat->term_id, 'mec-events', 'publish', $notBefore);
     // error_log($query);
     $results = $wpdb->get_results($query);
 
