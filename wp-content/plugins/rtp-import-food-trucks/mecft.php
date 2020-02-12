@@ -117,12 +117,6 @@ function mecft_settings_init() {
     'mecft_daily'
   );
   add_settings_section(
-    'mecft_section_rodeo_event',
-    __( 'Rodeo Event Settings', 'mecft' ),
-    'mecft_section_description_cb',
-    'mecft_rodeo'
-  );
-  add_settings_section(
     'mecft_section_connect',
     __( 'Connection Settings', 'mecft' ),
     'mecft_section_description_cb',
@@ -166,39 +160,6 @@ function mecft_settings_init() {
   );
 
   add_settings_field(
-    'mecft_default_rodeo_title',
-    __('Food Truck Rodeo Event Title Prefix', 'mecft'),
-    'mecft_text_field',
-    'mecft_rodeo',
-    'mecft_section_rodeo_event',
-    [
-      'label_for' => 'mecft_default_rodeo_title',
-    ]
-  );
-
-  add_settings_field(
-    'mecft_default_rodeo_desc',
-    __('Event Description', 'mecft'),
-    'mecft_textarea_field',
-    'mecft_rodeo',
-    'mecft_section_rodeo_event',
-    [
-      'label_for' => 'mecft_default_rodeo_desc',
-    ]
-  );
-
-  add_settings_field(
-    'mecft_default_rodeo_img',
-    __('Featured Image', 'mecft'),
-    'mecft_media_field',
-    'mecft_rodeo',
-    'mecft_section_rodeo_event',
-    [
-      'label_for' => 'mecft_default_rodeo_img',
-    ]
-  );
-
-  add_settings_field(
     'mecft_connect_api_key',
     __( 'Google API Key', 'mecft' ),
     'mecft_text_field',
@@ -217,17 +178,6 @@ function mecft_settings_init() {
     'mecft_section_connect',
     [
      'label_for' => 'mecft_connect_sheet_id',
-    ]
-  );
-
-  add_settings_field(
-    'mecft_connect_enable_cron',
-    __('Enable Cron?', 'mecft'),
-    'mecft_checkbox_field',
-    'mecft_connect',
-    'mecft_section_connect',
-    [
-     'label_for' => 'mecft_connect_enable_cron',
     ]
   );
 
@@ -256,8 +206,6 @@ function mecft_section_description_cb( $args ) {
 function mecft_text_field( $args ) {
   if ( strpos( $args['label_for'], 'daily' ) !== false ) {
     $setting = 'mecft_daily';
-  } elseif ( strpos( $args['label_for'], 'rodeo' ) !== false ) {
-    $setting = 'mecft_rodeo';
   } elseif ( strpos( $args['label_for'], 'connect' ) !== false ) {
     $setting = 'mecft_connect';
   }
@@ -265,27 +213,6 @@ function mecft_text_field( $args ) {
   $options = get_option( $setting );
   ?>
   <input type="text" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="<?php echo $setting; ?>[<?php echo esc_attr( $args['label_for'] ); ?>]" value="<?php echo esc_attr( $options[$args['label_for']] ); ?>" />
-  <?php
-}
-
-
-/**
- * Display checkbox field
- * @param  array  $args Parameters for this field
- */
-function mecft_checkbox_field( $args ) {
-  if ( strpos( $args['label_for'], 'daily' ) !== false ) {
-    $setting = 'mecft_daily';
-  } elseif ( strpos( $args['label_for'], 'rodeo' ) !== false ) {
-    $setting = 'mecft_rodeo';
-  } elseif ( strpos( $args['label_for'], 'connect' ) !== false ) {
-    $setting = 'mecft_connect';
-  }
-
-  $options = get_option( $setting );
-  ?>
-  <input type="checkbox" id="<?php echo esc_attr( $args['label_for'] ); ?>" name="<?php echo $setting; ?>[<?php echo esc_attr( $args['label_for'] ); ?>]" value="1" <?php echo checked(1, $options[$args['label_for']], false); ?> />
-  <p class="description">Important Note: You'll need to set a cronjob through cPanel to call <code>/usr/bin/php <?php echo MECFT_PLUGIN_DIR; ?>app/cron.php</code> file at least once per day, otherwise it won't import these delicious food trucks.</p>
   <?php
 }
 
@@ -325,8 +252,6 @@ function mecft_textarea_field( $args ) {
 function mecft_media_field( $args ) {
   if ( strpos( $args['label_for'], 'daily' ) !== false ) {
     $setting = 'mecft_daily';
-  } elseif ( strpos( $args['label_for'], 'rodeo' ) !== false ) {
-    $setting = 'mecft_rodeo';
   } elseif ( strpos( $args['label_for'], 'connect' ) !== false ) {
     $setting = 'mecft_connect';
   }
@@ -385,7 +310,6 @@ function mecft_options_page_html() {
 
     <h2 class="nav-tab-wrapper">
       <a href="<?php echo esc_url(add_query_arg('tab', 'daily')); ?>" class="nav-tab <?php if($active_tab == 'daily'){echo 'nav-tab-active';} ?>"><?php _e('Daily Truck Settings', 'mecft'); ?></a>
-      <a href="<?php echo esc_url(add_query_arg('tab', 'rodeo')); ?>" class="nav-tab <?php if($active_tab == 'rodeo'){echo 'nav-tab-active';} ?>"><?php _e('Rodeo Settings', 'mecft'); ?></a>
       <a href="<?php echo esc_url(add_query_arg('tab', 'connection')); ?>" class="nav-tab <?php if($active_tab == 'connection'){echo 'nav-tab-active';} ?> "><?php _e('Connection Settings', 'mecft'); ?></a>
     </h2>
 
@@ -393,8 +317,6 @@ function mecft_options_page_html() {
       <?php
       if ($active_tab == "daily"){
         $tab = "mecft_daily";
-      } elseif ($active_tab == "rodeo"){
-        $tab = "mecft_rodeo";
       } elseif ($active_tab == "connection") {
         $tab = "mecft_connect";
       }
