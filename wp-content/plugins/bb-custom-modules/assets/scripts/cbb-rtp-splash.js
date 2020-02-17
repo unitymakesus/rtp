@@ -17,6 +17,10 @@ jQuery(document).ready(function($) {
   function updateDuration () { durationValueCache = ($(window).height() * 0.50); }
   updateDuration(); // set to initial value
 
+  if (!$('#landing-graphic').length) {
+    return;
+  }
+
    // Tween
    var wordTween = new TimelineMax();
    wordTween.to(['#svg-where', '#svg-converge', '#svg-plus'], 2, {autoAlpha:0}, 0)
@@ -46,4 +50,4 @@ jQuery(document).ready(function($) {
     .setTween(imgTween)
     // .addIndicators({name: '2 (location: 50% height of screen)'})
     .addTo(controller);
-})
+});
