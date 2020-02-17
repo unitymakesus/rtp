@@ -229,9 +229,12 @@ class SB_Instagram_Parse
 	 * @return string
 	 *
 	 * @since 2.0/5.0
+	 * @since 2.2/5.3 added support for a custom avatar in settings
 	 */
 	public static function get_avatar( $header_data, $settings = array( 'favor_local' => false ) ) {
-		if ( $settings['favor_local'] && ! empty( $header_data['local_avatar'] ) ) {
+		if ( ! empty( $settings['customavatar'] ) ) {
+			return $settings['customavatar'];
+		} elseif ( ! empty( $header_data['local_avatar'] ) ) {
 			return $header_data['local_avatar'];
 		} else {
 			if ( isset( $header_data['profile_picture'] ) ) {
@@ -274,9 +277,12 @@ class SB_Instagram_Parse
 	 * @return string
 	 *
 	 * @since 2.0.1/5.0
+	 * @since 2.2/5.3 added support for a custom bio in settings
 	 */
-	public static function get_bio( $header_data ) {
-		if ( isset( $header_data['data']['bio'] ) ) {
+	public static function get_bio( $header_data, $settings = array() ) {
+		if ( ! empty( $settings['custombio'] ) ) {
+			return $settings['custombio'];
+		} elseif ( isset( $header_data['data']['bio'] ) ) {
 			return $header_data['data']['bio'];
 		} elseif ( isset( $header_data['bio'] ) ){
 			return $header_data['bio'];

@@ -189,6 +189,9 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 							'defaultType' => PPW_Constants::DEFAULT_SHORTCODE_CLASS_NAME,
 						)
 					),
+					'label'               => array(
+						'LOADING' => _x( 'Loading...', PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+					),
 				)
 			);
 		}
@@ -276,19 +279,21 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			);
 			$form_template = ob_get_contents();
 			ob_end_clean();
-
+			// phpcs:disable
 			$form_params = array(
-				PPW_Constants::SHORT_CODE_FORM_HEADLINE      => $this->massage_attributes( $attrs['headline'] ),
-				PPW_Constants::SHORT_CODE_FORM_INSTRUCT      => $this->massage_attributes( $attrs['description'] ),
-				PPW_Constants::SHORT_CODE_FORM_PLACEHOLDER   => $this->massage_attributes( $attrs['placeholder'] ),
+				PPW_Constants::SHORT_CODE_FORM_HEADLINE      => _x( $this->massage_attributes( $attrs['headline'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_INSTRUCT      => _x( $this->massage_attributes( $attrs['description'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_FORM_PLACEHOLDER   => _x( $this->massage_attributes( $attrs['placeholder'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 				PPW_Constants::SHORT_CODE_FORM_AUTH          => get_the_ID(),
-				PPW_Constants::SHORT_CODE_BUTTON             => wp_kses_post( $attrs['button'] ),
+				PPW_Constants::SHORT_CODE_BUTTON             => _x( wp_kses_post( $attrs['button'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 				PPW_Constants::SHORT_CODE_FORM_CURRENT_URL   => $this->get_the_permalink_without_cache( wp_rand( 0, 100 ) ),
 				PPW_Constants::SHORT_CODE_FORM_ID            => '' === $attrs['id'] ? get_the_ID() . wp_rand( 0, 1000 ) : wp_kses_post( $attrs['id'] ),
 				PPW_Constants::SHORT_CODE_FORM_CLASS         => '' === $attrs['class'] ? $this->get_main_class_name( $attrs ) : $this->get_main_class_name( $attrs ) . ' ' . wp_kses_post( $attrs['class'] ),
+				PPW_Constants::SHORT_CODE_PASSWORD_LABEL      => __( 'Password:', 'password-protect-page'),
 				PPW_Constants::SHORT_CODE_FORM_ERROR_MESSAGE => '',
 				'[PPW_PAGE]'                                 => $number,
 			);
+			// phpcs:enable
 
 			foreach ( $form_params as $key => $value ) {
 				$form_template = str_replace( $key, $value, $form_template );

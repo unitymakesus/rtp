@@ -162,6 +162,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const SHORT_CODE_FORM_ID = '[PPW_FORM_ID]';
 
 		const SHORT_CODE_FORM_CLASS = '[PPW_FORM_CLASS]';
+
+		const SHORT_CODE_PASSWORD_LABEL = '[PPWP_FORM_PASSWORD_LABEL]';
 		//phpcs:ignore #endregion
 
 		//phpcs:ignore
@@ -392,5 +394,10 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const XML_YOAST_SEO_SITEMAPS = 'ppw_xml_yoast_seo_sitemaps';
 		//phpcs:ignore #endregion
 
+		const CONTEXT_PASSWORD_FORM = 'PPF';
+
+		const CONTEXT_PCP_PASSWORD_FORM = 'PCP';
+
+		const CONTEXT_SITEWIDE_PASSWORD_FORM = 'SWP Lite';
 	}
 }

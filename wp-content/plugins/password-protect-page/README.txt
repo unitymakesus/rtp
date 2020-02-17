@@ -8,7 +8,7 @@ Stable tag: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Password protect WordPress pages and posts by user roles or with multiple passwords; protect your entire website with a single password
+Password protect WordPress pages and posts by user roles or with multiple passwords; protect your entire website with a single password.
 
 == Description ==
 
@@ -43,10 +43,10 @@ Partial Content Protection feature allows you to [password protect certain secti
 
 = Integrate with Page Builders =
 Instead of using shortcode to protect part of content, you can use our built-in module on the most popular page builders including:
->* Elementor
->* Beaver Builder
->* Divi Builder (WIP)
->* Visual Composer (WIP)
+* Elementor
+* Beaver Builder
+* Divi Builder (WIP)
+* Visual Composer (WIP)
 
 These built-in modules allow you to set passwords, whitelisted roles, customize password forms and so on via our friendly User Interface. You no longer have to deal with the complex shortcode attributes.
 
@@ -62,20 +62,20 @@ The master passwords feature also comes with an easy-to-use interface allowing y
 = Customize Password Form & Messages with WordPress Customizer =
 Customize the password form text and design to match the look and feel of your website.
 
-You will be able to change the WordPress default password protected error message as well as password form instruction, namely headline, description, password input placeholder and button text.
+You will be able to change the WordPress default password protected error message as well as password form instruction, namely headline, description, password input placeholder, and button text.
 
 The button and text’s font-size, color and background can also be customized through a friendly WYSIWYG HTML Editor.
 
 = Hide Password Protected Content =
-By default, your password protected content will still show up on various pages such as home and category page onced published.
+By default, your password protected content will still show up on various pages such as home and category page once published.
 
-This features allows you to control the visibility of your protected post types in various different views:
->* Hide posts from Recent Posts widgets
->* Hide posts from Next & Previous link on single post
->* Hide posts on search results
->* Hide posts from Yoast SEO Google XML Sitemaps, and RSS
->* Hide posts on Front page, Author, and Archive pages including tag and category page
->* Protected pages hidden from search results, home page & everywhere they're listed
+This feature allows you to control the visibility of your protected post types in various different views:
+* Hide posts from Recent Posts widgets
+* Hide posts from Next & Previous link on the single post
+* Hide posts on search results
+* Hide posts from Yoast SEO Google XML Sitemaps, and RSS
+* Hide posts on Front page, Author, and Archive pages including tag and category page
+* Protected pages hidden from search results, home page & everywhere they're listed
 
 Even though the posts are hidden, those who know the URL will still have access to the pages (but not the protected content).
 
@@ -98,10 +98,15 @@ Even though the posts are hidden, those who know the URL will still have access 
 >* Integrate with Prevent Direct Access Gold to protect files embedded in content
 >
 > Check out [Password Protect WordPress Pro](https://passwordprotectwp.com/pricing/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=premium-after-pro-features) now!
->
-> If you need any help with the plugin or want to request new features, feel free to contact us through [this form](https://passwordprotectwp.com/contact/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=ppwp_lite&utm_content=contact-after-pro-features) or drop us an email at [hello@preventdirectaccess.com](mailto:hello@preventdirectaccess.com)
 
-Please check out these guides on [how to password protect WordPress page](https://passwordprotectwp.com/docs/getting-started/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite).
+= Multilingual supported =
+Our plugin works out of the box with the top leading multilingual WordPress plugins such as WPML, Polylang, and Loco Translate. In other words, you can [translate our password forms](https://passwordprotectwp.com/docs/translate-password-forms-wpml-plugin/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), including headline, description, error message as well as placeholder and button text into the different languages.
+
+= Documentation and support =
+*For documentation and tutorials go to our [Documentation](https://passwordprotectwp.com/docs/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite).
+*If you have any more questions or want to request new features, contact us through [this form](https://passwordprotectwp.com/contact/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=ppwp_lite&utm_content=contact-after-pro-features) or drop us an email at [hello@preventdirectaccess.com](mailto:hello@preventdirectaccess.com)
+
+Please check out these guides on [how to password protect WordPress page](https://passwordprotectwp.com/docs/getting-started/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) right way.
 
 == Installation ==
 
@@ -128,11 +133,7 @@ From your WordPress dashboard
 
 == Frequently Asked Questions ==
 
-= I’ve installed Password Protect WordPress plugin. What should I do next? =
-
-Once our plugin is activated, you can start [password protecting your WordPress pages and posts](https://passwordprotectwp.com/docs/password-protect-wordpress-lite/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite) right way.
-
-= I’ve entered the correct password, but still can't view the protected content? =
+= Why do I still see the password form after entering the correct password? =
 
 Below are 4 common reasons why the issue happens:
 
@@ -142,10 +143,6 @@ Below are 4 common reasons why the issue happens:
 * You're using an unsupported caching method and/or plugin
 
 Please follow this guide on how to quickly [troubleshoot these common issues](https://passwordprotectwp.com/docs/basic-troubleshooting/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite).
-
-= Which user roles can I password protect against? =
-
-Our plugin allows you to password protect your pages or posts against all roles created under WordPress users.
 
 = Does the plugin password protect WooCommerce products? =
 
@@ -159,13 +156,17 @@ No, your content won’t appear on Google and other search engine results once p
 
 Yes, you can [secure parts of your post and page content](https://passwordprotectwp.com/docs/password-protect-wordpress-content-sections/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite) with a password using our [ppwp] shortcode.
 
-= Why do I still see the password form after entering the correct password? =
+= Could I create and manage all shortcode passwords at one place? =
 
-It looks like your content is cached. You'll need to [configure your caching plugin or cache server](https://passwordprotectwp.com/docs/caching-plugins-cache-servers-integration/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite) in order for our plugin to work properly.
+Yes, you will be able to generate passwords under our plugin's settings page and then add them to [ppwp] shortcode in order to protect your content sections with Pro version. All these passwords will be [tracked and controlled in one place](https://passwordprotectwp.com/docs/manage-shortcode-global-passwords/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite).
 
-= Can I protect child pages automatically? =
+= Could users see which passwords they're typing?
 
-Our Pro version of Password Protect WordPress enables you to [automatically password protect child pages](https://passwordprotectwp.com/docs/password-protect-sub-pages-and-categories/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite) once the parent page is locked up.
+Yes, you can add a "show password" button allowing users to see what they're typing. This button can be added either via [WordPress Customizer](https://passwordprotectwp.com/docs/customize-password-form-wordpress-customizer/#pwd-reveal-btn?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite) or [manual template modification](https://passwordprotectwp.com/docs/customize-password-protected-form/#show-hide-pwd/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite).
+
+= Could I password protect a parent and all its child pages at once? =
+
+Yes, the Pro version enables you to [automatically password protect child pages](https://passwordprotectwp.com/docs/password-protect-sub-pages-and-categories/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite) once the parent page is locked up.
 
 == Screenshots ==
 
@@ -202,6 +203,10 @@ Our Pro version of Password Protect WordPress enables you to [automatically pass
 N/A
 
 == Changelog ==
+= 1.4.1 =
+
+* Enable to translate password forms with WPML plugin
+
 = 1.4.0 =
 
 * Add option to hide password protected content
@@ -236,7 +241,7 @@ N/A
 * Change Whitelist Roles -> Whitelisted Roles
 * Write unit test for part of content and password core service classes
 * Apply unit test in building and development process
-* Handle password form WooCommerce product when remove "woocommerce_before_single_product"
+* Handle password form WooCommerce product when removing "woocommerce_before_single_product"
 * Run automation test of Pro version in building and deployment process
 * Show error and UI displays wrong
 * Unprotected post becomes protected when activating PPWP Pro
@@ -269,7 +274,7 @@ N/A
 * Password Protect Entire Site doesn't work if Cookies Expiration Time is more than 9999 days
 * WP logo is missing on sub pages
 * Can't submit after error notification display in Chrome
-* Auto login a protected page without entering password
+* Auto login a protected page without entering a password
 * The page reloads after entering the correct password
 * Integrate with WP Fastest Cache
 * Integrate with W3 Total Cache
@@ -284,9 +289,10 @@ N/A
 * Resolve the data conflict between gold and free version
 
 = 1.1.1 =
-* Add new features that user can set the post's visibility with multiple passwords.
+* Add new features that users can set the post's visibility with multiple passwords.
 * Change cookies lifetime to 1 day.
 * Enhance the css for the metabox.
 
 = 1.0.0 =
-* Add UI in the pages/posts that allow users to set a password for each user roles.
+* Add UI in the pages/posts that allow users to set a password for each user role.
+

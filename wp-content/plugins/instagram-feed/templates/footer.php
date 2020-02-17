@@ -1,9 +1,9 @@
 <?php
 /**
- * Custom Feeds for Instagram Footer Template
+ * Smash Balloon Instagram Feed Footer Template
  * Adds pagination and html for errors and resized images
  *
- * @version 2.1 Instagram Feed by Smash Balloon
+ * @version 2.2 Instagram Feed by Smash Balloon
  *
  */
 

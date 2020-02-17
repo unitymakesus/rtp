@@ -240,17 +240,9 @@ class SB_Instagram_API_Connect
 				$options['connected_accounts'] = $connected_accounts;
 
 				update_option( 'sb_instagram_settings', $options );
-				$date_format = get_option( 'date_format' );
-				$time_format = get_option( 'time_format' );
-				if ( $date_format && $time_format ) {
-					$date_time_format = $date_format . ' ' . $time_format;
-				} else {
-					$date_time_format = 'F j, Y g:i a';
-				}
-				$error = '<p><b>' . sprintf( __( 'Error: Hashtag limit of 30 unique hashtags per week has been reached.', 'instagram-feed' ), $user_name ) . ' ' . sprintf( __( 'Feed may not display until %s.', 'instagram-feed' ), date_i18n( $date_time_format, $hashtag_refresh_time ) ) . '</b>';
-				$error .= '<p>' . __( 'If you need to display more than 30 hashtag feeds on your site, consider connecting an additional business account from a separate Instagram and Facebook account.', 'instagram-feed' );
 
-				$sb_instagram_posts_manager->add_frontend_error( 'hashtag_limit_reached', $error );
+				global $sb_instagram_posts_manager;
+				$sb_instagram_posts_manager->add_error( 'error_18', array( 'Too many hashtags', $response['error']['error_user_msg'] ) );
 
 			} elseif ( (int)$response['error']['code'] === 10 ) {
 				$user_name = $error_connected_account['username'];
@@ -262,8 +254,8 @@ class SB_Instagram_API_Connect
 
 			} else if ( $response['error']['type'] === 'OAuthException' ) {
 				if ( $response['error']['code'] === 24 ) {
-					$error = '<p><b>' . __( 'Error: Hashtag does not exist.', 'instagram-feed' ) .'</b>';
-					$error .= '<p>' . __( 'Please make a post that uses this hashtag to display this feed.', 'instagram-feed' );
+					$error = '<p><b>' . __( 'Error: Cannot retrieve posts for this hashtag.', 'instagram-feed' ) .'</b>';
+					$error .= '<p>' . $response['error']['error_user_msg'];
 
 					$sb_instagram_posts_manager->add_frontend_error( 'hashtag_error', $error );
 				} else {
@@ -345,12 +337,22 @@ class SB_Instagram_API_Connect
 	 * @param array $params additional params related to the request
 	 *
 	 * @since 2.0/5.0
+	 * @since 2.2/5.3 added endpoints for the basic display API
 	 */
 	protected function set_url( $connected_account, $endpoint_slug, $params ) {
 		$account_type = isset( $connected_account['type'] ) ? $connected_account['type'] : 'personal';
 		$num = ! empty( $params['num'] ) ? (int)$params['num'] : 33;
 
-		if ( $account_type === 'personal' ) {
+		if ( $account_type === 'basic' ) {
+			if ( $endpoint_slug === 'access_token' ) {
+				$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
+			} elseif ( $endpoint_slug === 'header' ) {
+				$url = 'https://graph.instagram.com/me?fields=id,username,media_count,account_type&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
+			} else {
+				$num = min( $num, 200 );
+				$url = 'https://graph.instagram.com/' . $connected_account['user_id'] . '/media?fields=media_url,thumbnail_url,caption,id,media_type,timestamp,username,comments_count,like_count,permalink,children{media_url,id,media_type,timestamp,permalink,thumbnail_url}&limit='.$num.'&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
+			}
+		} elseif ( $account_type === 'personal' ) {
 			if ( $endpoint_slug === 'header' ) {
 				$url = 'https://api.instagram.com/v1/users/' . $connected_account['user_id'] . '?access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} else {

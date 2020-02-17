@@ -173,24 +173,39 @@ function ppw_core_render_login_form() {
 	$default_wrong_error_message = apply_filters( PPW_Constants::HOOK_MESSAGE_ENTERING_WRONG_PASSWORD, PPW_Constants::DEFAULT_WRONG_PASSWORD_MESSAGE );
 	$instruction_text            = apply_filters( PPW_Constants::HOOK_MESSAGE_PASSWORD_FORM, PPW_Constants::DEFAULT_FORM_MESSAGE );
 	$label                       = 'pwbox-' . ( empty( $post_id ) ? rand() : $post_id );
-	$submit_label                = wp_kses_post( get_theme_mod( 'ppwp_form_button_label', PPW_Constants::DEFAULT_SUBMIT_LABEL ) );
-	$password_label              = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_password_label', PPW_Constants::DEFAULT_PASSWORD_LABEL ) );
-	$place_holder                = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_placeholder', PPW_Constants::DEFAULT_PLACEHOLDER ) );
-	$headline_text               = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_headline', PPW_Constants::DEFAULT_HEADLINE_TEXT ) );
-	$form_message                = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_text', $instruction_text ) );
-	$show_password               = get_theme_mod( 'ppwp_form_instructions_is_show_password', PPW_Constants::DEFAULT_IS_SHOW_PASSWORD ) ? '<input id="ppw_' . $post_id . '" onclick="ppwShowPassword(' . $post_id . ')" type="checkbox"> Show password' : '';
+
+	// phpcs:disable
+	$submit_label        = wp_kses_post( get_theme_mod( 'ppwp_form_button_label', PPW_Constants::DEFAULT_SUBMIT_LABEL ) );
+	$password_label      = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_password_label', PPW_Constants::DEFAULT_PASSWORD_LABEL ) );
+	$place_holder        = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_placeholder', PPW_Constants::DEFAULT_PLACEHOLDER ) );
+	$headline_text       = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_headline', PPW_Constants::DEFAULT_HEADLINE_TEXT ) );
+	$form_message        = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_text', $instruction_text ) );
+	$wrong_password_text = wp_kses_post( get_theme_mod( 'ppwp_form_error_message_text', $default_wrong_error_message ) );
+
+	/**
+	 * I18N
+	 *
+	 */
+	$submit_label        = _x( $submit_label, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
+	$password_label      = _x( $password_label, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
+	$place_holder        = _x( $place_holder, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
+	$headline_text       = _x( $headline_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
+	$form_message        = _x( $form_message, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
+	$wrong_password_text = _x( $wrong_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
+	// phpcs:enable
+	$show_password = get_theme_mod( 'ppwp_form_instructions_is_show_password', PPW_Constants::DEFAULT_IS_SHOW_PASSWORD ) ? '<input id="ppw_' . $post_id . '" onclick="ppwShowPassword(' . $post_id . ')" type="checkbox"> ' . _x( 'Show password', PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ) : '';
 
 	/**
 	 * Generate Password Form.
 	 */
 	$wrong_password_message = sprintf(
 		'<div class="ppwp-wrong-pw-error ppw-ppf-error-msg">%1$s</div>',
-		wp_kses_post( get_theme_mod( 'ppwp_form_error_message_text', $default_wrong_error_message ) )
+		$wrong_password_text
 	);
 	$wrong_message          = $wrong_password ? $wrong_password_message : '';
 	$default_element        = '<div class="ppw-ppf-input-container">
 						<h3 class="ppw-ppf-headline">' . $headline_text . '</h3>
-						<div class="ppw-ppf-desc">' . __( $form_message ) . '</div>
+						<div class="ppw-ppf-desc">' . $form_message . '</div>
 						<p>
 							<label for="' . $label . '">' . $password_label . ' <input placeholder="' . $place_holder . '" name="post_password" id="' . $label . '" type="password" size="20" /></label> <input type="submit" name="Submit" value="' . $submit_label . '" />
 						</p>' . $show_password . '</div>' .

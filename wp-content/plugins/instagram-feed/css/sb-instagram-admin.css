@@ -97,9 +97,12 @@
 #sbi_admin .sbi-customize-tab-opt .sbi-success {
 	top: 5px;
 }
-#sbi_admin .sbi_note{
+#sbi_admin .sbi_note,
+#sbi_admin .sbi_aside{
 	font-size: 12px;
 	font-style: italic;
+}
+#sbi_admin .sbi_note{
 	margin-left: 10px;
 }
 #sbi_admin table.sbi_shortcode_table{
@@ -528,6 +531,7 @@
     margin-right: 10px;
 }
 /* Moderation settings */
+#sbi_admin .sb_instagram_box,
 #sbi_admin .sbi_mod_manual_settings{
 	float: left;
  	clear: both;
@@ -731,8 +735,20 @@
 	height: 16px;
 	line-height: 15px;
 	border-radius: 4px 0 0 4px;
+	min-width: 80px;
+	margin-bottom: 2px;
 }
-#sbi_admin .sbi_ca_token{
+#sbi_admin .sbi_permissions_desc,
+#sbi_admin .sbi_ca_token,
+#sbi_admin .sbi_ca_user_id {
+	padding: 3px 10px;
+}
+#sbi_admin .sbi_permissions_desc{
+	font-size: 13px;
+}
+
+#sbi_admin .sbi_ca_token,
+#sbi_admin .sbi_ca_user_id{
 	position: relative;
 	padding: 3px 10px;
 	border: 1px solid #d6d6d6;
@@ -740,15 +756,15 @@
 	font-size: 12px;
 	border-radius: 0 4px 4px 0;
 	background: rgba(255,255,255,0.8);
-	width: 510px;
+	min-width: 400px;
+	width: 75%;
 	display: inline-block;
 	margin-left: 0;
 	min-height: 1px;
 	line-height: 1.4;
 }
 #sbi_admin .sbi_ca_accesstoken a.sbi_ca_token_shortcode{
-	margin-top: 0;
-	margin: 8px;
+	margin: 0 8px 8px;
 	padding: 6px;
 	height: auto;
 	line-height: 1;
@@ -791,17 +807,21 @@
 #sbi_admin .sbi_manually_connect_wrap{
 	padding-top: 5px;
 }
-#sbi_admin .sbi_user_feed_account_wrap:first-child{
+#sbi_admin .sbi_user_feed_account_wrap:first-child,
+#sbi_admin .sbi_tagged_feed_account_wrap:first-child{
 	padding-top: 5px;
 }
-#sbi_admin .sbi_user_feed_account_wrap:last-child{
+#sbi_admin .sbi_user_feed_account_wrap:last-child,
+#sbi_admin .sbi_tagged_feed_account_wrap:last-child{
 	padding-bottom: 6px;
 }
-#sbi_admin .sbi_user_feed_account_wrap{
+#sbi_admin .sbi_user_feed_account_wrap,
+#sbi_admin .sbi_tagged_feed_account_wrap{
 	padding-bottom: 5px;
 	padding-left: 2px;
 }
-#sbi_admin .sbi_user_feed_account_wrap span{
+#sbi_admin .sbi_user_feed_account_wrap span,
+#sbi_admin .sbi_tagged_feed_account_wrap span{
 	font-size: 13px;
 }
 #sbi_admin .sbi_manual_account_id_toggle label{
@@ -823,6 +843,9 @@
 #sbi_admin .sbi_ca_info{
 	overflow: hidden;
 }
+#sbi_admin .sbi_ca_show_token .fa {
+	margin-right: 0;
+}
 #sbi_admin .sbi_ca_show_token{
 	display: inline-block;
 	padding: 10px 5px 0px 5px;
@@ -860,10 +883,8 @@
 	#sbi_admin .sbi_delete_account .sbi_remove_text{
 		display: none;
 	}
-	#sbi_admin .sbi_ca_token_label{
-		display: none;
-	}
-	#sbi_admin .sbi_ca_token{
+	#sbi_admin .sbi_ca_token,
+	#sbi_admin .sbi_ca_user_id{
 		border-left: 1px solid #d6d6d6;
 		border-radius: 4px;
 	}
@@ -876,46 +897,6 @@
 	#sbi_admin .sbi_col.sbi_two{
 		width: 70%;
 	}
-}
-/*#sbi_admin .sbi_remove_from_user_feed{
-	background: #71ad26;
-    color: #fff;
-    border: none;
-    box-shadow: none;
-}*/
-#sbi_admin .sbi_ca_info{
-	overflow: hidden;
-}
-#sbi_admin .sbi_ca_show_token{
-	display: inline-block;
-	padding: 10px 5px 0px 5px;
-	margin: 0;
-	font-size: 12px;
-	vertical-align: top;
-}
-#sbi_admin .sbi_ca_shortcode{
-	display: none;
-	padding: 0;
-	width: 100%;
-	float: left;
-	clear: both;
-	margin: 10px 0 0 0;
-}
-#sbi_admin .sbi_ca_shortcode p{
-	padding-bottom: 10px;
-	font-size: 13px;
-}
-#sbi_admin .sbi_ca_shortcode code{
-	margin-top: 5px;
-	display: inline-block;
-}
-#sbi_admin .sbi_user_feed_ids_wrap .sbi_ca_avatar{
-	width: 20px;
-	height: 20px;
-	position: relative;
-	top: 5px;
-	margin-right: 8px;
-	border-radius: 4px;
 }
 
 #sbi_admin .sbi_col {
@@ -936,19 +917,6 @@
 	margin: 5px 2px 0 0;
 }
 
-
-@media all and (max-width: 1200px){
-	#sbi_admin .sbi_delete_account .sbi_remove_text{
-		display: none;
-	}
-	#sbi_admin .sbi_ca_token_label{
-		display: none;
-	}
-	#sbi_admin .sbi_ca_token{
-		border-left: 1px solid #d6d6d6;
-		border-radius: 4px;
-	}
-}
 @media all and (max-width: 800px){
 	#sbi_admin .sbi_col.sbi_one {
 		width: 25%;
@@ -1061,7 +1029,6 @@
 	padding: 3px 0;
 	width: 90%;
 	margin: 0 auto;
-	text-align: center;
 }
 #sbi_admin .sbi_login_button_row label{
 	top: -2px;
@@ -1170,18 +1137,31 @@
 .form-table .sb_layout_type:first-child {
 	margin-left: 0;
 }
-.sb_instagram_layout_setting {
+
+.sb_instagram_layout_setting,
+.sb_instagram_box_setting{
 	margin-bottom: 20px;
 }
-.sb_instagram_layout_setting:last-child {
+.sb_instagram_layout_setting:last-child,
+.sb_instagram_box_setting:last-child {
 	margin-bottom: 0;
 }
-.sb_instagram_layout_setting label {
+.sb_instagram_layout_setting label,
+.sb_instagram_box_setting label {
 	display: inline-block;
 	font-weight: bold;
 	font-size: 14px;
 	padding-bottom: 5px;
 	padding-right: 5px;
+}
+.sb_instagram_box_setting textarea {
+	width: 100%;
+}
+#sbi_admin .sb_layout_options_wrap .sbi_shortcode,
+#sbi_admin .sb_instagram_box_setting .sbi_shortcode{
+	position: relative;
+	float: none;
+	top: -4px
 }
 
 /* Layout settings */
@@ -1415,4 +1395,77 @@
 }
 #sbi_admin #twitter-widget-0 {
     width: 65px !important;
+}
+
+/* Placeholder styles */
+#sbi_admin .sbi_ca_new_or_updated .sbi_ca_info:before {
+	content: 'Successfully connected';
+	padding: 5px 10px;
+	margin: 0px 0 12px 0;
+	background: #d3dec1;
+	display: inline-block;
+	border-radius: 5px;
+	font-size: 13px;
+	color: #2e4506;
+	border: 1px solid #a9b594;
+}
+
+#sbi_admin .sbi_deprecated {
+	padding: 2px 2px 2px 10px;
+	margin: 0px 0 12px 0;
+	background: #f3dcda;
+	display: inline-block;
+	border-radius: 5px;
+	font-size: 13px;
+	color: #ad4040;
+	border: 1px solid #e9c5c2;
+}
+
+#sbi_admin .sbi_deprecated .fa{
+	margin-right: 5px;
+	font-size: 14px;
+}
+#sbi_admin .sbi_reconnect {
+	font-size: 12px;
+	background: #d65b5c;
+	color: #fff;
+	padding: 0px 8px;
+	min-height: 23px;
+	border: none;
+	margin-left: 5px;
+	height: 23px;
+	line-height: 19px;
+	text-shadow: none;
+	box-shadow: none;
+}
+#sbi_admin .sbi_reconnect:hover{
+	background: #c44b4c;
+}
+
+.sbi-welcome .sbi-notice {
+	clear: both;
+	width: 96%;
+	margin: 10px 0 20px 0;
+	background: #F7E6E6;
+	padding: 0 1.5%;
+	border: 1px solid #BA7B7B;
+	color: #592626;
+
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+/* Basic Display Update */
+#sbi_admin .sbi_tooltip_link.sbi_tooltip_under {
+	margin-left: 0;
+}
+.sbi_tooltip_under_text {
+	padding: 10px 15px !important;
+}
+.sb_instagram_box_setting textarea {
+	width: 100%;
+}
+#sbi_admin .sbi_ca_show_token .fa {
+	margin-right: 0;
 }

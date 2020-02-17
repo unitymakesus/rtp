@@ -334,7 +334,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 
 			$result = array(
 				'isValid' => false,
-				'message' => apply_filters( PPW_Constants::HOOK_RESTRICT_CONTENT_ERROR_MESSAGE, PPW_Constants::DEFAULT_WRONG_PASSWORD_MESSAGE ),
+				'message' => _x( apply_filters( PPW_Constants::HOOK_RESTRICT_CONTENT_ERROR_MESSAGE, PPW_Constants::DEFAULT_WRONG_PASSWORD_MESSAGE ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 			);
 
 			$is_valid_data = apply_filters( PPW_Constants::HOOK_SHORT_CODE_VALID_POST_DATA, $this->is_valid_data_content_password( $data ) );

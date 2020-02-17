@@ -342,12 +342,21 @@ class SB_Instagram_Posts_Manager
 		$this->frontend_errors[ $type ] = $message;
 	}
 
+	public function remove_frontend_error( $type ) {
+		if ( isset( $this->frontend_errors[ $type ] ) ) {
+			unset( $this->frontend_errors[ $type ] );
+		}
+	}
+
 	/**
 	 * @return array
 	 *
 	 * @since 2.0/5.0
 	 */
 	public function get_frontend_errors() {
+		if ( isset( $this->frontend_errors['api_delay'] ) ) {
+			return array( 'api_delay' => $this->frontend_errors['api_delay'] );
+		}
 		return $this->frontend_errors;
 	}
 
@@ -362,6 +371,16 @@ class SB_Instagram_Posts_Manager
 
 	public function set_status() {
 
+	}
+
+	public function clear_hashtag_errors() {
+		$errors = $this->get_errors();
+
+		foreach ( $errors as $error_key => $message ) {
+			if ( strpos( $error_key, 'ig_no_posts_for_' ) !== false || strpos( $error_key, 'error_18' ) !== false ) {
+				$this->remove_error( $error_key );
+			}
+		}
 	}
 
 	/**
@@ -382,7 +401,8 @@ class SB_Instagram_Posts_Manager
 		$is_delay = (get_transient( SBI_USE_BACKUP_PREFIX . 'sbi_delay_requests' ) !== false);
 
 		if ( $is_delay ) {
-			$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed.', 'instagram-feed' ) ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b></p>';
+			$this->reset_frontend_errors();
+			$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed.', 'instagram-feed' ) ) . ' ' . __( 'New posts will not be retrieved for at least 5 minutes.', 'instagram-feed' ) . '</b></p>';
 			$errors = $this->get_errors();
 			if ( ! empty( $errors )  && current_user_can( 'manage_options' ) ) {
 				if ( isset( $errors['api'] ) ) {
@@ -393,6 +413,24 @@ class SB_Instagram_Posts_Manager
 			} else {
 				$error .= '<p>' . __( 'There may be an issue with the Instagram access token that you are using. Your server might also be unable to connect to Instagram at this time.', 'instagram-feed' ) . '</p>';
 			}
+
+			foreach ( $errors as $error_key => $message ) {
+				if ( strpos( $error_key, 'ig_no_posts_for_' ) !== false ) {
+					if ( (int)$message[0] < (time() - 12 * 60 * 60) ) {
+						$this->remove_error( $error_key );
+					} else {
+						$error .= '<p>' . $message[1] . '</p>';
+					}
+				} elseif ( strpos( $error_key, 'error_18' ) !== false ) {
+					if ( (int)$message[0] < (time() - 24 * 60 * 60) ) {
+						$this->remove_error( $error_key );
+					} else {
+						$error .= '<p>' . $message[1] . '</p>';
+					}
+				}
+			}
+
+			$error .= '<p>' . __( 'Click <a href="https://smashballoon.com/instagram-feed/docs/errors/">here</a> to troubleshoot.', 'instagram-feed' )  . '</p>';
 
 			$this->add_frontend_error( 'api_delay', $error );
 

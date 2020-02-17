@@ -3,7 +3,7 @@
 		<h3 class="ppw-headline ppw-pcp-pf-headline">[PPWP_FORM_HEADLINE]</h3>
 		<div class="ppw-description ppw-pcp-pf-desc">[PPWP_FORM_INSTRUCTIONS]</div>
 		<p class="ppw-input">
-			<label>Password: <input placeholder="[PPW_PLACEHOLDER]" type="password" tabindex="1" name="[PPW_AUTH]" class="ppw-password-input ppw-pcp-pf-password-input" autocomplete="new-password">
+			<label>[PPWP_FORM_PASSWORD_LABEL] <input placeholder="[PPW_PLACEHOLDER]" type="password" tabindex="1" name="[PPW_AUTH]" class="ppw-password-input ppw-pcp-pf-password-input" autocomplete="new-password">
 			</label>
 			<input class="ppw-page" type="hidden" value="[PPW_PAGE]" />
 			<input name="submit" type="submit" class="ppw-submit ppw-pcp-pf-submit-btn" value="[PPW_BUTTON_LABEL]"/>

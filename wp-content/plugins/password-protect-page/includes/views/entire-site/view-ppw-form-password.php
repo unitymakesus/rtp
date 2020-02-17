@@ -1,5 +1,8 @@
 <?php
 $page_title = ppw_get_page_title();
+
+$password_label = _x( 'Password', PPW_Constants::CONTEXT_SITEWIDE_PASSWORD_FORM, 'password-protect-page' );
+$btn_label      = _x( 'Login', PPW_Constants::CONTEXT_SITEWIDE_PASSWORD_FORM, 'password-protect-page' );
 ?>
 <head>
 	<meta charset="utf-8"/>
@@ -15,9 +18,9 @@ $page_title = ppw_get_page_title();
 		<a class="ppw-swp-logo">Password Protect WordPress plugin</a>
 	</h1>
 	<form class="ppw-swp-form" action="?action=ppw_postpass" method="post">
-		<label for="">Password</label>
+		<label for=""><?php echo $password_label ?></label>
 		<input class="input_wp_protect_password" type="password" id="input_wp_protect_password"
 		       name="input_wp_protect_password">
-		<input type="submit" class="button button-primary button-login" value="Login">
+		<input type="submit" class="button button-primary button-login" value="<?php echo $btn_label ?>">
 	</form>
 </div>

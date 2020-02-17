@@ -3,7 +3,7 @@
 Plugin Name: Smash Balloon Instagram Feed
 Plugin URI: https://smashballoon.com/instagram-feed
 Description: Display beautifully clean, customizable, and responsive Instagram feeds.
-Version: 2.1.5
+Version: 2.2
 Author: Smash Balloon
 Author URI: https://smashballoon.com/
 License: GPLv2 or later
@@ -23,11 +23,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if ( ! defined( 'SBIVER' ) ) {
-	define( 'SBIVER', '2.1.5' );
+	define( 'SBIVER', '2.2' );
 }
 // Db version.
 if ( ! defined( 'SBI_DBVERSION' ) ) {
-	define( 'SBI_DBVERSION', '1.3' );
+	define( 'SBI_DBVERSION', '1.4' );
 }
 
 // Upload folder name for local image files for posts
@@ -41,6 +41,12 @@ if ( ! defined( 'SBI_INSTAGRAM_POSTS_TYPE' ) ) {
 // Name of the database table that contains feed ids and the ids of posts
 if ( ! defined( 'SBI_INSTAGRAM_FEEDS_POSTS' ) ) {
 	define( 'SBI_INSTAGRAM_FEEDS_POSTS', 'sbi_instagram_feeds_posts' );
+}
+if ( ! defined( 'SBI_REFRESH_THRESHOLD_OFFSET' ) ) {
+	define( 'SBI_REFRESH_THRESHOLD_OFFSET', 40 * 86400 );
+}
+if ( ! defined( 'SBI_MINIMUM_INTERVAL' ) ) {
+	define( 'SBI_MINIMUM_INTERVAL', 600 );
 }
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -96,6 +102,7 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post-set.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-posts-manager.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-settings.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-token-refresher.php';
 
 		if ( is_admin() ) {
 			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/actions.php';
@@ -145,6 +152,9 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		//Run cron twice daily when plugin is first activated for new users
 		if ( ! wp_next_scheduled( 'sb_instagram_cron_job' ) ) {
 			wp_schedule_event( time(), 'twicedaily', 'sb_instagram_cron_job' );
+		}
+		if ( ! wp_next_scheduled( 'sb_instagram_twicedaily' ) ) {
+			wp_schedule_event( time(), 'twicedaily', 'sb_instagram_twicedaily' );
 		}
 
 		$sbi_settings = get_option( 'sb_instagram_settings', array() );
@@ -219,6 +229,7 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 	 */
 	function sb_instagram_deactivate() {
 		wp_clear_scheduled_hook( 'sb_instagram_cron_job' );
+		wp_clear_scheduled_hook( 'sb_instagram_twicedaily' );
 		wp_clear_scheduled_hook( 'sbi_feed_update' );
 	}
 
@@ -435,6 +446,14 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			update_option( 'sbi_db_version', SBI_DBVERSION );
 		}
 
+		if ( (float) $db_ver < 1.4 ) {
+			if ( ! wp_next_scheduled( 'sb_instagram_twicedaily' ) ) {
+				wp_schedule_event( time(), 'twicedaily', 'sb_instagram_twicedaily' );
+			}
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
 	}
 
 	add_action( 'wp_loaded', 'sbi_check_for_db_updates' );
@@ -584,4 +603,35 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 	}
 
 	add_action( 'plugins_loaded', 'sbi_text_domain' );
+
+	function sbi_do_token_refreshes() {
+		$options                        = get_option( 'sb_instagram_settings', array() );
+		$connected_accounts = isset( $options['connected_accounts'] ) ? $options['connected_accounts'] : array();
+
+		if ( is_array( $connected_accounts ) && ! empty( $connected_accounts ) ) {
+			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-token-refresher.php';
+
+			$report = array(
+				'notes' => array(
+					'time_ran' => date( 'Y-m-d H:i:s' )
+				)
+			);
+			foreach ( $connected_accounts as $connected_account ) {
+				$is_basic = (isset( $connected_account['type'] ) && $connected_account['type'] === 'basic');
+
+				if ( $is_basic ) {
+					$refresher = new SB_Instagram_Token_Refresher( $connected_account );
+					if ( $refresher->should_attempt_refresh() ) {
+						$refresher->attempt_token_refresh();
+					}
+
+					$report[ $connected_account['user_id'] ] = $refresher->get_report();
+				}
+			}
+
+			update_option( 'sbi_refresh_report', $report, false );
+		}
+
+	}
+	add_action( 'sb_instagram_twicedaily', 'sbi_do_token_refreshes' );
 }
