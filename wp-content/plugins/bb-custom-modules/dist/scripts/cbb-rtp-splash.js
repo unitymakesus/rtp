@@ -6301,10 +6301,9 @@ jQuery(document).ready(function($) {
   function updateDuration () { durationValueCache = ($(window).height() * 0.50); }
   updateDuration(); // set to initial value
 
-  // if (!$('#landing-graphic').length) {
-  //   console.log('No element to init on.');
-  //   return;
-  // }
+  if (!$('#landing-graphic').length) {
+    return;
+  }
 
    // Tween
    var wordTween = new __WEBPACK_IMPORTED_MODULE_0_TimelineMax___default.a();
@@ -6335,9 +6334,6 @@ jQuery(document).ready(function($) {
     .setTween(imgTween)
     // .addIndicators({name: '2 (location: 50% height of screen)'})
     .addTo(controller);
-
-
-  console.log('We got this far!');
 });
 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
