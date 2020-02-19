@@ -496,7 +496,7 @@ class UABBHotspot extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon );
 		}
 		return '';
 	}
@@ -588,7 +588,7 @@ class UABBHotspot extends FLBuilderModule {
 			echo ( 'always' === $this->settings->hotspot_marker[ $i ]->show_animation ) ? wp_kses_post( $this->render_animation( $this->settings->hotspot_marker[ $i ] ) ) : '';
 			echo '</div>';
 		} else {
-			echo '<div class="uabb-hotspot-text uabb-hotspot-wrap uabb-text-editor">' . wp_kses_post( $this->settings->hotspot_marker[ $i ]->marker_text ) . '</div>';
+			echo '<div class="uabb-hotspot-text uabb-hotspot-wrap uabb-text-editor">' . $this->settings->hotspot_marker[ $i ]->marker_text . '</div>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 	}

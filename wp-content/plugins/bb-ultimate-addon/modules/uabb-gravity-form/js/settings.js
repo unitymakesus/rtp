@@ -27,6 +27,8 @@
 			
 			$( this._useCustomStyle, this );
             this._contentTypeChange();
+
+            form.find("#fl-field-gf_form_raw_nonce").hide();
 		},
 
 		_useCustomStyle: function()
@@ -104,6 +106,10 @@
         _getTemplates: function( callback ) {
             var form = $('.fl-builder-settings');
             nonce = form.find( '#fl-field-gf_form_raw .uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=gf_form_raw_nonce]').val();
+            }
 
             $.post(
                 ajaxurl,

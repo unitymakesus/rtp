@@ -12,7 +12,7 @@
 		<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-cta-title"><?php echo wp_kses_post( $settings->title ); ?></<?php echo esc_attr( $settings->title_tag_selection ); ?>>
 
 		<?php if ( '' !== $settings->text ) { ?>
-		<span class="uabb-cta-text-content uabb-text-editor"><?php echo wp_kses_post( $settings->text ); ?></span>
+		<span class="uabb-cta-text-content uabb-text-editor"><?php echo $settings->text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		<?php } ?>
 
 	</div>

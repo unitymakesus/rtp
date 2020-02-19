@@ -138,7 +138,7 @@ $fixed_singular_second = ( isset( $settings->second_singular_label ) && '' !== $
 		timer_layout: default_layout,
 		redirect_link_target: "<?php echo ( '' !== $settings->redirect_link_target ) ? esc_attr( $settings->redirect_link_target ) : ''; ?>",
 		redirect_link: "<?php echo ( '' !== $settings->redirect_link ) ? esc_url( $settings->redirect_link ) : ''; ?>",
-		expire_message: "<?php echo ( '' !== $settings->expire_message ) ? wp_kses_post( preg_replace( '/\s+/', ' ', $settings->expire_message ) ) : ''; ?>",
+		expire_message: "<?php echo ( '' !== $settings->expire_message ) ? preg_replace( '/\s+/', ' ', $settings->expire_message ) : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>",
 		timer_labels: "<?php echo wp_kses_post( $fixed_plural_year ); ?>,<?php echo wp_kses_post( $fixed_plural_month ); ?>,,<?php echo wp_kses_post( $fixed_plural_day ); ?>,<?php echo wp_kses_post( $fixed_plural_hour ); ?>,<?php echo wp_kses_post( $fixed_plural_minute ); ?>,<?php echo wp_kses_post( $fixed_plural_second ); ?>",
 		timer_labels_singular: 	"<?php echo wp_kses_post( $fixed_singular_year ); ?>,<?php echo wp_kses_post( $fixed_singular_month ); ?>,,<?php echo wp_kses_post( $fixed_singular_day ); ?>,<?php echo wp_kses_post( $fixed_singular_hour ); ?>,<?php echo wp_kses_post( $fixed_singular_minute ); ?>,<?php echo wp_kses_post( $fixed_singular_second ); ?>",
 		evergreen_date_days: "<?php echo isset( $settings->evergreen_date_days ) ? wp_kses_post( $settings->evergreen_date_days ) : ''; ?>",

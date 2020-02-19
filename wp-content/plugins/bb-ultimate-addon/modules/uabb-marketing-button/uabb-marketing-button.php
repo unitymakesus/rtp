@@ -43,7 +43,7 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-marketing-button/icon/' . $icon );
 		}
 		return '';
 	}
@@ -281,12 +281,12 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 			<div class="uabb-marketing-buttons-wrap">
 				<?php if ( isset( $this->settings->title ) && '' !== $this->settings->title ) { ?>
 					<div class="uabb-button-content-wrapper uabb-marketing-title uabb-buttons-icon-<?php echo esc_attr( $this->settings->icon_position ); ?>">
-						<?php echo esc_attr( $this->settings->title ); ?>
+						<?php echo wp_kses_post( $this->settings->title ); ?>
 					</div>
 				<?php } ?>
 				<?php if ( isset( $this->settings->sub_title ) && '' !== $this->settings->sub_title ) { ?>
 					<div class="uabb-marketing-subheading uabb-marketing-button-text">
-						<?php echo esc_attr( $this->settings->sub_title ); ?>
+						<?php echo wp_kses_post( $this->settings->sub_title ); ?>
 					</div>
 				<?php } ?>
 			</div>
@@ -302,14 +302,14 @@ class UABBMarketingButtonModule extends FLBuilderModule {
 							<?php } ?>
 						<?php if ( isset( $this->settings->title ) && '' !== $this->settings->title ) { ?>
 							<span class="uabb-marketing-buttons-title-innerwrap uabb-marketing-title uabb-button-text uabb-marketing-title ">
-								<?php echo esc_attr( $this->settings->title ); ?>
+								<?php echo wp_kses_post( $this->settings->title ); ?>
 							</span>
 						<?php } ?>
 					</div>
 					<div class="uabb-marketing-buttons-desc-innerwrap">
 						<?php if ( isset( $this->settings->sub_title ) && '' !== $this->settings->sub_title ) { ?>
 							<span class="uabb-marketing-subheading uabb-marketing-button-text">
-								<?php echo esc_attr( $this->settings->sub_title ); ?>
+								<?php echo wp_kses_post( $this->settings->sub_title ); ?>
 							</span>
 						<?php } ?>
 					</div>

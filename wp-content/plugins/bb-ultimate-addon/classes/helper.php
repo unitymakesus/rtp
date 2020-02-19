@@ -233,19 +233,19 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 			if ( 'padding' === $property || 'margin' === $property ) {
 
 				if ( '' !== $settings->{ $name . '_top' } ) {
-					$css .= $property . '-top:' . $settings->{ $name . '_top' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_top' . $device } ) ? $property . '-top:' . $settings->{ $name . '_top' . $device } . 'px;' : '';
 				}
 
 				if ( '' !== $settings->{ $name . '_right' } ) {
-					$css .= $property . '-right:' . $settings->{ $name . '_right' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_right' . $device } ) ? $property . '-right:' . $settings->{ $name . '_right' . $device } . 'px;' : '';
 				}
 
 				if ( '' !== $settings->{ $name . '_bottom' } ) {
-					$css .= $property . '-bottom:' . $settings->{ $name . '_bottom' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_bottom' . $device } ) ? $property . '-bottom:' . $settings->{ $name . '_bottom' . $device } . 'px;' : '';
 				}
 
 				if ( '' !== $settings->{ $name . '_left' } ) {
-					$css .= $property . '-left:' . $settings->{ $name . '_left' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_left' . $device } ) ? $property . '-left:' . $settings->{ $name . '_left' . $device } . 'px;' : '';
 				}
 			}
 			return $css;

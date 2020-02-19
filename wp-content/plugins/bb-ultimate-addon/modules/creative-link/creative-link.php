@@ -42,7 +42,7 @@ class CreativeLink extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/creative-link/icon/' . $icon );
 		}
 		return '';
 	}
@@ -69,7 +69,7 @@ class CreativeLink extends FLBuilderModule {
 			case 'style15':
 			case 'style16':
 			case 'style20':
-				echo esc_attr( trim( $title, '' ) );
+				echo trim( $title, '' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				break;
 
 			case 'style2':
@@ -77,12 +77,12 @@ class CreativeLink extends FLBuilderModule {
 			case 'style17':
 			case 'style18':
 			case 'style19':
-				echo '<span data-hover="' . esc_attr( trim( $title, '' ) ) . '">' . esc_attr( trim( $title, '' ) ) . '</span>';
+				echo '<span data-hover="' . trim( $title, '' ) . '">' . trim( $title, '' ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				break;
 
 			case 'style9':
 			case 'style11':
-				echo '<span>' . esc_attr( trim( $title, '' ) ) . '</span>';
+				echo '<span>' . trim( $title, '' ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				break;
 
 		}

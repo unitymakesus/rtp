@@ -109,7 +109,7 @@ if ( 'slider' === $settings->tetimonial_layout ) {
 								if ( strpos( $testimonial_item->testimonial, '</p>' ) > 0 ) {
 									echo wp_kses_post( $testimonial_item->testimonial );
 								} else {
-									echo '<p>' . wp_kses_post( $testimonial_item->testimonial ) . '</p>';
+									echo '<p>' . $testimonial_item->testimonial . '</p>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								}
 							}
 							?>
@@ -252,7 +252,7 @@ if ( 'slider-no' === $settings->tetimonial_layout || 'box' === $settings->tetimo
 					<div class="uabb-testimonial-author-description uabb-text-editor testimonial-author-description<?php echo esc_attr( $id ); ?>">
 						<?php
 						if ( '' !== $settings->testimonial_description ) {
-							echo wp_kses_post( $settings->testimonial_description );
+							echo $settings->testimonial_description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						}
 						?>
 					</div>

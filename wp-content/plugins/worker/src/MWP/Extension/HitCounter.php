@@ -41,7 +41,7 @@ class MWP_Extension_HitCounter
         }
         $date = $dateTime->format('Y-m-d');
 
-        $hitCount = $this->getHitCount();
+        $hitCount = (array)$this->getHitCount();
 
         if (!isset($hitCount[$date])) {
             $hitCount[$date] = 0;

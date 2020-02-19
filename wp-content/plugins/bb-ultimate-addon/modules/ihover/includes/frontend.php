@@ -92,7 +92,7 @@ if ( ! UABB_Compatibility::$version_bb_check ) {
 							</div>
 							<div class="uabb-ih-description-block">
 								<div class="uabb-ih-description uabb-text-editor">
-											<?php echo wp_kses_post( $settings->ihover_item[ $i ]->description ); ?></div>
+											<?php echo $settings->ihover_item[ $i ]->description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 							</div>
 						</div>
 					</div>

@@ -16,13 +16,17 @@ FLBuilder::register_module(
 				'select_form'  => array( // Section.
 					'title'  => '', // Section Title.
 					'fields' => array( // Section Fields.
-						'wp_form_id' => array(
+						'wp_form_id'        => array(
 							'type'        => 'select',
 							'label'       => __( 'Select Form', 'uabb' ),
 							'default'     => uabb_wpf_get_form_id(),
 							'options'     => array(),
 							'connections' => array( 'string' ),
 							'help'        => __( 'Choose a form that you wish to style', 'uabb' ),
+						),
+						'wp_form_raw_nonce' => array(
+							'type'    => 'text',
+							'default' => wp_create_nonce( 'uabb-wpf-nonce' ),
 						),
 					),
 				),

@@ -13,7 +13,6 @@
 				style 	= form.find('select[name=style]'),
 				tab_style = form.find('select[name=tab_style]');
 
-
 			this._styleChanged();
 			this._equalWidthOption();
 			style.on('change', $.proxy( this._styleChanged, this ) ) ;
@@ -156,6 +155,10 @@
 		{
 			var type = $(e.target).val();
 
+			var form = $('.fl-builder-settings');
+
+			form.find("#fl-field-ct_raw_nonce").hide();
+
 			if ( 'saved_modules' === type ) {
 				this._setTemplates('saved_modules');
 			}
@@ -185,6 +188,10 @@
 			var self = this;
 			var form = $('.fl-builder-settings');
 			nonce = form.find( '.uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+			if ( 'undefined' === typeof nonce ) {
+				nonce     = form.find('input[name=ct_raw_nonce]').val();
+			}
 
 			$.post(
 				ajaxurl,

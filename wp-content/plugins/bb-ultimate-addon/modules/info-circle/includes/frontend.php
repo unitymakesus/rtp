@@ -52,7 +52,7 @@ $settings->autoplay_time = ( '' !== $settings->autoplay_time ) ? $settings->auto
 						<?php endif; ?>
 
 						<div class="uabb-info-circle-desc uabb-text-editor">
-						<?php echo wp_kses_post( $item->circle_item_description ); ?></div>
+						<?php echo $item->circle_item_description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 
 						<!-- CTA -->
 						<?php if ( 'desc' === $item->cta || 'both' === $item->cta ) : ?>

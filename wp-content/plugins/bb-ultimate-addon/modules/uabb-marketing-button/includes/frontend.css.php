@@ -394,7 +394,7 @@ $settings->icon_color                = UABB_Helper::uabb_colorpicker( $settings,
 					}
 				}
 			} else {
-				$is_padding_empty_medium = UABB_Helper::uabb_dimention_css( $settings, 'padding', 'medium' );
+				$is_padding_empty_medium = UABB_Helper::uabb_dimention_css( $settings, 'padding', 'padding', 'medium' );
 
 				if ( ! empty( $is_padding_empty_medium ) ) {
 					echo esc_attr( $is_padding_empty_medium );
@@ -452,7 +452,7 @@ $settings->icon_color                = UABB_Helper::uabb_colorpicker( $settings,
 					}
 				}
 			} else {
-				$is_padding_empty_responsive = UABB_Helper::uabb_dimention_css( $settings, 'padding', 'responsive' );
+				$is_padding_empty_responsive = UABB_Helper::uabb_dimention_css( $settings, 'padding', 'padding', 'responsive' );
 
 				if ( ! empty( $is_padding_empty_responsive ) ) {
 					echo esc_attr( $is_padding_empty_responsive );

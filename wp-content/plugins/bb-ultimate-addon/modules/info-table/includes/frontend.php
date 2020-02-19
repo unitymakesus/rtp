@@ -84,7 +84,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 			?>
 		</div>
 		<div class="info-table-description uabb-text-editor">
-			<?php echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->it_long_desc ) ) ); ?>
+			<?php echo wpautop( $wp_embed->autoembed( $settings->it_long_desc ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 		<?php if ( 'cta' === $settings->it_link_type && 'design02' !== $settings->box_design ) { ?>
 		<div class="info-table-button">

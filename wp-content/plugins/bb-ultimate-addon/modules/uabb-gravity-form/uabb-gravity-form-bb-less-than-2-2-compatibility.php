@@ -22,6 +22,10 @@ FLBuilder::register_module(
 							'options' => array(),
 							'help'    => __( 'Choose the form that you want for this page for styling', 'uabb' ),
 						),
+						'gf_form_raw_nonce'     => array(
+							'type'    => 'text',
+							'default' => wp_create_nonce( 'uabb-gf-nonce' ),
+						),
 						'form_title_option'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Form Title & Description', 'uabb' ),

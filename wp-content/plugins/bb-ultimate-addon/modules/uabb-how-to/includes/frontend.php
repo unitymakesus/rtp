@@ -186,7 +186,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 					<?php
 					if ( isset( $settings->description ) && ! empty( $settings->description ) ) {
 
-						echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->description ) ) );
+						echo wpautop( $wp_embed->autoembed( $settings->description ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					?>
 				</div>
@@ -275,7 +275,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 
 									<?php if ( isset( $step->step_description ) && ! empty( $step->step_description ) ) { ?>
 										<div class="uabb-how-to-step-description" >
-											<?php echo wp_kses_post( wpautop( $wp_embed->autoembed( $step->step_description ) ) ); ?>
+											<?php echo wpautop( $wp_embed->autoembed( $step->step_description ) );  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 										</div>
 									<?php } ?>
 
@@ -285,7 +285,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 									<?php } ?>
 										<?php if ( isset( $step->step_description ) && ! empty( $step->step_description ) ) { ?>
 											<div class="uabb-how-to-step-description">
-												<?php echo wp_kses_post( wpautop( $wp_embed->autoembed( $step->step_description ) ) ); ?>
+												<?php echo wpautop( $wp_embed->autoembed( $step->step_description ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 											</div>
 										<?php } ?>
 

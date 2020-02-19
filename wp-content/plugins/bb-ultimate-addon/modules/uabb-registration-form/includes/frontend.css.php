@@ -511,7 +511,7 @@ if ( isset( $settings->invalid_border_color ) ) {
 }
 ?>
 <?php if ( ! $version_bb_check ) { ?>
-		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button .uabb-registration-form-button-text {
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button-text {
 			<?php if ( 'default' !== $settings->btn_font_family['family'] && 'default' !== $settings->btn_font_family['weight'] ) : ?>
 				<?php FLBuilderFonts::font_css( $settings->btn_font_family ); ?>
 			<?php endif; ?>
@@ -537,7 +537,7 @@ if ( isset( $settings->invalid_border_color ) ) {
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'button_typo',
-				'selector'     => ".fl-node-$id .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button .uabb-registration-form-button-text",
+				'selector'     => ".fl-node-$id .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button-text",
 			)
 		);
 	}
@@ -617,7 +617,7 @@ if ( isset( $settings->invalid_border_color ) ) {
 
 	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
 		<?php if ( ! $version_bb_check ) { ?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button .uabb-registration-form-button-text {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button-text {
 				<?php
 				if ( isset( $settings->btn_font_size_unit_medium ) ) {
 					echo ( '' !== $settings->btn_font_size_unit_medium ) ? 'font-size:' . esc_attr( $settings->btn_font_size_unit_medium ) . 'px;' : '';
@@ -726,7 +726,7 @@ if ( isset( $settings->invalid_border_color ) ) {
 	}
 	@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
 		<?php if ( ! $version_bb_check ) { ?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button .uabb-registration-form-button-text {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn .uabb-registration-form-button-text {
 				<?php
 				if ( isset( $settings->btn_font_size_unit_responsive ) ) {
 					echo ( '' !== $settings->btn_font_size_unit_responsive ) ? 'font-size:' . esc_attr( $settings->btn_font_size_unit_responsive ) . 'px;' : '';

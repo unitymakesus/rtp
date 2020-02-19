@@ -733,7 +733,7 @@ class InfoBannerModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-banner/icon/' . $icon );
 		}
 		return '';
 	}
@@ -816,107 +816,129 @@ class InfoBannerModule extends FLBuilderModule {
 				$btn_settings = array(
 
 					/* General Section */
-					'text'                        => $this->settings->btn_text,
+					'text'                                 => $this->settings->btn_text,
 
 					/* Link Section */
-					'link'                        => $this->settings->btn_link,
-					'link_target'                 => $this->settings->btn_link_target,
-					'link_nofollow'               => $this->settings->btn_link_nofollow,
+					'link'                                 => $this->settings->btn_link,
+					'link_target'                          => $this->settings->btn_link_target,
+					'link_nofollow'                        => $this->settings->btn_link_nofollow,
 
 					/* Style Section */
-					'style'                       => $this->settings->btn_style,
-					'border_size'                 => $this->settings->btn_border_size,
-					'transparent_button_options'  => $this->settings->btn_transparent_button_options,
-					'threed_button_options'       => $this->settings->btn_threed_button_options,
-					'flat_button_options'         => $this->settings->btn_flat_button_options,
+					'style'                                => $this->settings->btn_style,
+					'border_size'                          => $this->settings->btn_border_size,
+					'transparent_button_options'           => $this->settings->btn_transparent_button_options,
+					'threed_button_options'                => $this->settings->btn_threed_button_options,
+					'flat_button_options'                  => $this->settings->btn_flat_button_options,
 
 					/* Colors */
-					'bg_color'                    => $this->settings->btn_bg_color,
-					'bg_hover_color'              => $this->settings->btn_bg_hover_color,
-					'text_color'                  => $this->settings->btn_text_color,
-					'text_hover_color'            => $this->settings->btn_text_hover_color,
-					'hover_attribute'             => $this->settings->hover_attribute,
+					'bg_color'                             => $this->settings->btn_bg_color,
+					'bg_hover_color'                       => $this->settings->btn_bg_hover_color,
+					'text_color'                           => $this->settings->btn_text_color,
+					'text_hover_color'                     => $this->settings->btn_text_hover_color,
+					'hover_attribute'                      => $this->settings->hover_attribute,
 
 					/* Icon */
-					'icon'                        => $this->settings->btn_icon,
-					'icon_position'               => $this->settings->btn_icon_position,
+					'icon'                                 => $this->settings->btn_icon,
+					'icon_position'                        => $this->settings->btn_icon_position,
 
 					/* Structure */
-					'width'                       => $this->settings->btn_width,
-					'custom_width'                => $this->settings->btn_custom_width,
-					'custom_height'               => $this->settings->btn_custom_height,
-					'padding_top_bottom'          => $this->settings->btn_padding_top_bottom,
-					'padding_left_right'          => $this->settings->btn_padding_left_right,
-					'border_radius'               => $this->settings->btn_border_radius,
-					'align'                       => $this->settings->banner_alignemnt,
-					'mob_align'                   => '',
+					'width'                                => $this->settings->btn_width,
+					'custom_width'                         => $this->settings->btn_custom_width,
+					'custom_height'                        => $this->settings->btn_custom_height,
+					'padding_top_bottom'                   => $this->settings->btn_padding_top_bottom,
+					'padding_left_right'                   => $this->settings->btn_padding_left_right,
+					'border_radius'                        => $this->settings->btn_border_radius,
+					'align'                                => $this->settings->banner_alignemnt,
+					'mob_align'                            => '',
 
-					'font_family'                 => $this->settings->tbtn_font_family,
-					'font_size'                   => ( isset( $this->settings->tbtn_font_size ) ) ? $this->settings->tbtn_font_size : '',
-					'line_height'                 => ( isset( $this->settings->tbtn_line_height ) ) ? $this->settings->tbtn_line_height : '',
-					'font_size_unit'              => $this->settings->tbtn_font_size_unit,
-					'line_height_unit'            => $this->settings->tbtn_line_height_unit,
-					'font_size_unit_medium'       => $this->settings->tbtn_font_size_unit_medium,
-					'line_height_unit_medium'     => $this->settings->tbtn_line_height_unit_medium,
-					'font_size_unit_responsive'   => $this->settings->tbtn_font_size_unit_responsive,
-					'line_height_unit_responsive' => $this->settings->tbtn_line_height_unit_responsive,
-					'transform'                   => $this->settings->tbtn_content_transform,
-					'letter_spacing'              => $this->settings->tbtn_content_letter_spacing,
-					'button_padding_dimension'    => ( isset( $this->settings->button_padding_dimension ) ) ? $this->settings->button_padding_dimension : '',
-					'button_border_style'         => ( isset( $this->settings->button_border_style ) ) ? $this->settings->button_border_style : '',
-					'button_border_width'         => ( isset( $this->settings->button_border_width ) ) ? $this->settings->button_border_width : '',
-					'button_border_radius'        => ( isset( $this->settings->button_border_radius ) ) ? $this->settings->button_border_radius : '',
-					'button_border_color'         => ( isset( $this->settings->button_border_color ) ) ? $this->settings->button_border_color : '',
+					'font_family'                          => $this->settings->tbtn_font_family,
+					'font_size'                            => ( isset( $this->settings->tbtn_font_size ) ) ? $this->settings->tbtn_font_size : '',
+					'line_height'                          => ( isset( $this->settings->tbtn_line_height ) ) ? $this->settings->tbtn_line_height : '',
+					'font_size_unit'                       => $this->settings->tbtn_font_size_unit,
+					'line_height_unit'                     => $this->settings->tbtn_line_height_unit,
+					'font_size_unit_medium'                => $this->settings->tbtn_font_size_unit_medium,
+					'line_height_unit_medium'              => $this->settings->tbtn_line_height_unit_medium,
+					'font_size_unit_responsive'            => $this->settings->tbtn_font_size_unit_responsive,
+					'line_height_unit_responsive'          => $this->settings->tbtn_line_height_unit_responsive,
+					'transform'                            => $this->settings->tbtn_content_transform,
+					'letter_spacing'                       => $this->settings->tbtn_content_letter_spacing,
+					'button_padding_dimension_top'         => ( isset( $this->settings->button_padding_dimension_top ) ) ? $this->settings->button_padding_dimension_top : '',
+					'button_padding_dimension_left'        => ( isset( $this->settings->button_padding_dimension_left ) ) ? $this->settings->button_padding_dimension_left : '',
+					'button_padding_dimension_bottom'      => ( isset( $this->settings->button_padding_dimension_bottom ) ) ? $this->settings->button_padding_dimension_bottom : '',
+					'button_padding_dimension_right'       => ( isset( $this->settings->button_padding_dimension_right ) ) ? $this->settings->button_padding_dimension_right : '',
+					'button_padding_dimension_top_medium'  => ( isset( $this->settings->button_padding_dimension_top_medium ) ) ? $this->settings->button_padding_dimension_top_medium : '',
+					'button_padding_dimension_left_medium' => ( isset( $this->settings->button_padding_dimension_left_medium ) ) ? $this->settings->button_padding_dimension_left_medium : '',
+					'button_padding_dimension_bottom_medium' => ( isset( $this->settings->button_padding_dimension_bottom_medium ) ) ? $this->settings->button_padding_dimension_bottom_medium : '',
+					'button_padding_dimension_right_medium' => ( isset( $this->settings->button_padding_dimension_right_medium ) ) ? $this->settings->button_padding_dimension_right_medium : '',
+					'button_padding_dimension_top_responsive' => ( isset( $this->settings->button_padding_dimension_top_responsive ) ) ? $this->settings->button_padding_dimension_top_responsive : '',
+					'button_padding_dimension_left_responsive' => ( isset( $this->settings->button_padding_dimension_left_responsive ) ) ? $this->settings->button_padding_dimension_left_responsive : '',
+					'button_padding_dimension_bottom_responsive' => ( isset( $this->settings->button_padding_dimension_bottom_responsive ) ) ? $this->settings->button_padding_dimension_bottom_responsive : '',
+					'button_padding_dimension_right_responsive' => ( isset( $this->settings->button_padding_dimension_right_responsive ) ) ? $this->settings->button_padding_dimension_right_responsive : '',
+					'button_border_style'                  => ( isset( $this->settings->button_border_style ) ) ? $this->settings->button_border_style : '',
+					'button_border_width'                  => ( isset( $this->settings->button_border_width ) ) ? $this->settings->button_border_width : '',
+					'button_border_radius'                 => ( isset( $this->settings->button_border_radius ) ) ? $this->settings->button_border_radius : '',
+					'button_border_color'                  => ( isset( $this->settings->button_border_color ) ) ? $this->settings->button_border_color : '',
 
-					'border_hover_color'          => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
+					'border_hover_color'                   => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 				);
 			} else {
 				$btn_settings = array(
 
 					/* General Section */
-					'text'                       => $this->settings->btn_text,
+					'text'                                 => $this->settings->btn_text,
 
 					/* Link Section */
-					'link'                       => $this->settings->btn_link,
-					'link_target'                => $this->settings->btn_link_target,
-					'link_nofollow'              => $this->settings->btn_link_nofollow,
+					'link'                                 => $this->settings->btn_link,
+					'link_target'                          => $this->settings->btn_link_target,
+					'link_nofollow'                        => $this->settings->btn_link_nofollow,
 
 					/* Style Section */
-					'style'                      => $this->settings->btn_style,
-					'border_size'                => $this->settings->btn_border_size,
-					'transparent_button_options' => $this->settings->btn_transparent_button_options,
-					'threed_button_options'      => $this->settings->btn_threed_button_options,
-					'flat_button_options'        => $this->settings->btn_flat_button_options,
+					'style'                                => $this->settings->btn_style,
+					'border_size'                          => $this->settings->btn_border_size,
+					'transparent_button_options'           => $this->settings->btn_transparent_button_options,
+					'threed_button_options'                => $this->settings->btn_threed_button_options,
+					'flat_button_options'                  => $this->settings->btn_flat_button_options,
 
 					/* Colors */
-					'bg_color'                   => $this->settings->btn_bg_color,
-					'bg_hover_color'             => $this->settings->btn_bg_hover_color,
-					'text_color'                 => $this->settings->btn_text_color,
-					'text_hover_color'           => $this->settings->btn_text_hover_color,
-					'hover_attribute'            => $this->settings->hover_attribute,
+					'bg_color'                             => $this->settings->btn_bg_color,
+					'bg_hover_color'                       => $this->settings->btn_bg_hover_color,
+					'text_color'                           => $this->settings->btn_text_color,
+					'text_hover_color'                     => $this->settings->btn_text_hover_color,
+					'hover_attribute'                      => $this->settings->hover_attribute,
 
 					/* Icon */
-					'icon'                       => $this->settings->btn_icon,
-					'icon_position'              => $this->settings->btn_icon_position,
+					'icon'                                 => $this->settings->btn_icon,
+					'icon_position'                        => $this->settings->btn_icon_position,
 
 					/* Structure */
-					'width'                      => $this->settings->btn_width,
-					'custom_width'               => $this->settings->btn_custom_width,
-					'custom_height'              => $this->settings->btn_custom_height,
-					'padding_top_bottom'         => $this->settings->btn_padding_top_bottom,
-					'padding_left_right'         => $this->settings->btn_padding_left_right,
-					'border_radius'              => $this->settings->btn_border_radius,
-					'align'                      => $this->settings->banner_alignemnt,
-					'mob_align'                  => '',
-					'font_size'                  => ( isset( $this->settings->tbtn_font_size ) ) ? $this->settings->tbtn_font_size : '',
-					'line_height'                => ( isset( $this->settings->tbtn_line_height ) ) ? $this->settings->tbtn_line_height : '',
+					'width'                                => $this->settings->btn_width,
+					'custom_width'                         => $this->settings->btn_custom_width,
+					'custom_height'                        => $this->settings->btn_custom_height,
+					'padding_top_bottom'                   => $this->settings->btn_padding_top_bottom,
+					'padding_left_right'                   => $this->settings->btn_padding_left_right,
+					'border_radius'                        => $this->settings->btn_border_radius,
+					'align'                                => $this->settings->banner_alignemnt,
+					'mob_align'                            => '',
+					'font_size'                            => ( isset( $this->settings->tbtn_font_size ) ) ? $this->settings->tbtn_font_size : '',
+					'line_height'                          => ( isset( $this->settings->tbtn_line_height ) ) ? $this->settings->tbtn_line_height : '',
 
-					'button_typo'                => ( isset( $this->settings->btn_font_typo ) ) ? $this->settings->btn_font_typo : '',
-					'button_typo_medium'         => ( isset( $this->settings->btn_font_typo_medium ) ) ? $this->settings->btn_font_typo_medium : '',
-					'button_typo_responsive'     => ( isset( $this->settings->btn_font_typo_responsive ) ) ? $this->settings->btn_font_typo_responsive : '',
-					'button_padding_dimension'   => ( isset( $this->settings->button_padding_dimension ) ) ? $this->settings->button_padding_dimension : '',
-					'button_border'              => ( isset( $this->settings->button_border ) ) ? $this->settings->button_border : '',
-					'border_hover_color'         => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
+					'button_typo'                          => ( isset( $this->settings->btn_font_typo ) ) ? $this->settings->btn_font_typo : '',
+					'button_typo_medium'                   => ( isset( $this->settings->btn_font_typo_medium ) ) ? $this->settings->btn_font_typo_medium : '',
+					'button_typo_responsive'               => ( isset( $this->settings->btn_font_typo_responsive ) ) ? $this->settings->btn_font_typo_responsive : '',
+					'button_padding_dimension_top'         => ( isset( $this->settings->button_padding_dimension_top ) ) ? $this->settings->button_padding_dimension_top : '',
+					'button_padding_dimension_left'        => ( isset( $this->settings->button_padding_dimension_left ) ) ? $this->settings->button_padding_dimension_left : '',
+					'button_padding_dimension_bottom'      => ( isset( $this->settings->button_padding_dimension_bottom ) ) ? $this->settings->button_padding_dimension_bottom : '',
+					'button_padding_dimension_right'       => ( isset( $this->settings->button_padding_dimension_right ) ) ? $this->settings->button_padding_dimension_right : '',
+					'button_padding_dimension_top_medium'  => ( isset( $this->settings->button_padding_dimension_top_medium ) ) ? $this->settings->button_padding_dimension_top_medium : '',
+					'button_padding_dimension_left_medium' => ( isset( $this->settings->button_padding_dimension_left_medium ) ) ? $this->settings->button_padding_dimension_left_medium : '',
+					'button_padding_dimension_bottom_medium' => ( isset( $this->settings->button_padding_dimension_bottom_medium ) ) ? $this->settings->button_padding_dimension_bottom_medium : '',
+					'button_padding_dimension_right_medium' => ( isset( $this->settings->button_padding_dimension_right_medium ) ) ? $this->settings->button_padding_dimension_right_medium : '',
+					'button_padding_dimension_top_responsive' => ( isset( $this->settings->button_padding_dimension_top_responsive ) ) ? $this->settings->button_padding_dimension_top_responsive : '',
+					'button_padding_dimension_left_responsive' => ( isset( $this->settings->button_padding_dimension_left_responsive ) ) ? $this->settings->button_padding_dimension_left_responsive : '',
+					'button_padding_dimension_bottom_responsive' => ( isset( $this->settings->button_padding_dimension_bottom_responsive ) ) ? $this->settings->button_padding_dimension_bottom_responsive : '',
+					'button_padding_dimension_right_responsive' => ( isset( $this->settings->button_padding_dimension_right_responsive ) ) ? $this->settings->button_padding_dimension_right_responsive : '',
+					'button_border'                        => ( isset( $this->settings->button_border ) ) ? $this->settings->button_border : '',
+					'border_hover_color'                   => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 				);
 			}
 			FLBuilder::render_module_html( 'uabb-button', $btn_settings );

@@ -40,6 +40,9 @@
 
             this._hideDocs();
 
+            form.find("#fl-field-ct_raw_nonce").hide();
+            form.find("#fl-field-ct2_raw_nonce").hide();
+
             var toggle_settings = $('.fl-builder-uabb-content-toggle-settings').find('.fl-builder-settings-tabs a');
             toggle_settings.on('click', this._contentTabsClick);
 
@@ -262,6 +265,10 @@
             var form = $('.fl-builder-settings');
             nonce = form.find( '#fl-field-ct_raw .uabb-module-raw' ).data( 'uabb-module-nonce' );
 
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=ct_raw_nonce]').val();
+            }
+
             $.post(
                 ajaxurl,
                 {
@@ -339,6 +346,11 @@
             var self = this;
             var form = $('.fl-builder-settings');
             nonce = form.find( '#fl-field-ct_raw_one .uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=ct2_raw_nonce]').val();
+            }
+
             $.post(
                 ajaxurl,
                 {

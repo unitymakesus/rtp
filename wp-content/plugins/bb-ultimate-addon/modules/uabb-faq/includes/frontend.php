@@ -11,7 +11,7 @@
 	if ( 'yes' === esc_attr( $settings->enable_schema ) ) {
 		?>
 			<script type="application/ld+json">
-					<?php echo wp_kses_post( $module->render_schema() ); ?>
+					<?php echo $module->render_schema(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</script>
 
 		<?php
@@ -39,11 +39,11 @@
 				>
 				<div class="uabb-faq-questions-button uabb-faq-questions uabb-faq-questions<?php echo esc_attr( $id ); ?> uabb-faq-<?php echo esc_attr( $settings->icon_position ); ?>-text">
 					<?php echo wp_kses_post( $module->render_icon( 'before' ) ); ?>
-					<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-faq-question-label"><?php echo esc_attr( $settings->faq_items[ $i ]->faq_question ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
+					<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-faq-question-label"><?php echo wp_kses_post( $settings->faq_items[ $i ]->faq_question ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
 					<?php echo wp_kses_post( $module->render_icon( 'after' ) ); ?>
 				</div>
 				<div class="uabb-faq-content uabb-faq-content<?php echo esc_attr( $id ); ?> fl-clearfix">
-					<?php echo wp_kses_post( $module->get_faq_content( $settings->faq_items[ $i ] ) ); ?>
+					<?php echo $module->get_faq_content( $settings->faq_items[ $i ] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			</div>
 			<?php endfor; ?>
@@ -66,10 +66,10 @@
 					>
 			<div class="uabb-faq-item-wrap">
 				<div class="uabb-faq-questions-button uabb-faq-questions uabb-faq-questions<?php echo esc_attr( $id ); ?> uabb-faq-<?php echo esc_attr( $settings->icon_position ); ?>-text">
-					<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-faq-question-label"><?php echo esc_attr( $settings->faq_items[ $i ]->faq_question ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
+					<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-faq-question-label"><?php echo wp_kses_post( $settings->faq_items[ $i ]->faq_question ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
 				</div>
 				<div class="uabb-faq-content uabb-faq-content<?php echo esc_attr( $id ); ?> fl-clearfix">
-					<?php echo wp_kses_post( $module->get_faq_content( $settings->faq_items[ $i ] ) ); ?>
+					<?php echo $module->get_faq_content( $settings->faq_items[ $i ] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			</div>
 			</div>

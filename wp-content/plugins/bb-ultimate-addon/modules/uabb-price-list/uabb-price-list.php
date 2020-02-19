@@ -42,7 +42,7 @@ class UABBPriceList extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-price-list/icon/' . $icon );
 		}
 		return '';
 	}
@@ -389,7 +389,7 @@ class UABBPriceList extends FLBuilderModule {
 							</div>
 							<?php if ( '' !== $item->price_list_item_description ) { ?>
 								<div class="uabb-price-list-description" >
-								<?php echo wp_kses_post( $item->price_list_item_description ); ?>
+								<?php echo $item->price_list_item_description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</div>
 							<?php } ?>
 							<?php

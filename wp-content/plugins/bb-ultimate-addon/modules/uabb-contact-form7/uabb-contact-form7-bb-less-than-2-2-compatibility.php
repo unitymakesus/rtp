@@ -15,14 +15,18 @@ FLBuilder::register_module(
 			'sections' => array(
 				'form_section' => array(
 					'fields' => array(
-						'form_id'    => array(
+						'form_id'           => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Form', 'uabb' ),
 							'default' => uabb_cf7_get_form_id(),
 							'options' => array(),
 							'help'    => __( 'Choose the form that you want for this page for styling', 'uabb' ),
 						),
-						'form_title' => array(
+						'cf_form_raw_nonce' => array(
+							'type'    => 'text',
+							'default' => wp_create_nonce( 'uabb-cf7-nonce' ),
+						),
+						'form_title'        => array(
 							'type'    => 'text',
 							'label'   => __( 'Form Title', 'uabb' ),
 							'default' => '',
@@ -31,7 +35,7 @@ FLBuilder::register_module(
 								'selector' => '.uabb-cf7-form-title',
 							),
 						),
-						'form_desc'  => array(
+						'form_desc'         => array(
 							'type'    => 'textarea',
 							'label'   => __( 'Form Description', 'uabb' ),
 							'default' => '',
