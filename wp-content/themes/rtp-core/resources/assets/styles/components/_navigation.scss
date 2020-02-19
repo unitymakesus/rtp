@@ -12,15 +12,16 @@
     }
   }
 
-  .topbar {
-    height: 40px;
-  }
-
   .topbar-menu-wrapper {
     height: 100%;
     width: 100%;
   }
 
+  @media #{$large-and-up} {
+    .topbar {
+      height: 40px;
+    }
+  }
   @media #{$medium-and-down} {
     .rtp-logo {
       height: 20px;
@@ -74,15 +75,16 @@
       width: 100%;
 
       ul {
+        display: none;
         flex-direction: column;
         flex-wrap: nowrap;
         margin: 0;
         width: 100%;
-        transition: max-height 0.3s ease;
         max-height: 0;
         overflow: hidden;
 
         .topbarnav-active & {
+          display: block;
           max-height: 100em;
         }
       }
@@ -142,7 +144,7 @@
       width: 45px;
       height: 45px;
       border: 1px solid transparent;
-      background-color: transparent;
+      background-color: $link-color;
       background-image: url(../images/icon-search-white.svg);
       background-size: 18px 18px;
       background-position: center;
@@ -151,9 +153,8 @@
       z-index: 10;
       transition: 0.3s background-color ease-in-out;
 
-      &:hover,
       &:focus {
-        background-color: $link-color;
+        box-shadow: 0 0 0 3px rgba($color-white, 0.75);
       }
     }
 
@@ -163,18 +164,25 @@
       .search-submit {
         width: 26px;
         height: 26px;
+        background-color: transparent;
+
+        &:hover,
+        &:focus {
+          background-color: $link-color;
+        }
       }
     }
     @media #{$medium-and-down} {
+      display: none;
       flex-direction: column;
       flex-wrap: nowrap;
       margin: 0;
       width: 100%;
-      transition: max-height 0.3s ease;
       max-height: 0;
       overflow: hidden;
 
       .topbarnav-active & {
+        display: block;
         max-height: 100em;
       }
 

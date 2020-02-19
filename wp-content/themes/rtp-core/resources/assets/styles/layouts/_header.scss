@@ -200,12 +200,6 @@ nav {
           border-left: 0.3em solid transparent;
           content: '';
         }
-
-        @media #{$large-and-up} {
-          &::after {
-            display: none;
-          }
-        }
       }
 
       a {
@@ -213,9 +207,7 @@ nav {
       }
 
       .sub-menu {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
+        display: none;
 
         @media #{$large-and-up} {
           margin-top: 10px;
@@ -247,36 +239,36 @@ nav {
             height: 20px;
             background-size: contain;
             background-repeat: no-repeat;
-            transition: all 0.2s;
+            transition: all 0.2s ease-in-out;
           }
 
-          &:hover, &:focus, &:hover {
+          &:hover, &:focus {
             background: transparent;
 
             &::after {
               right: 10px;
-              opacity: 100;
+              opacity: 1;
             }
           }
         }
 
         @media #{$large-and-up} {
-          max-height: 300em;
           flex-direction: column;
           position: absolute;
           z-index: 10;
           background: $color-white;
-          transition: max-height 0.3s ease;
-          height: 0;
-          overflow: hidden;
           min-width: 200px;
           box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
         }
       }
 
-      &:hover, &:focus, &.hover {
+      &.open {
+        > a::after {
+          transform: rotate(180deg);
+        }
+
         .sub-menu {
-          height: auto;
+          display: block;
         }
       }
     }
@@ -300,14 +292,11 @@ nav {
     }
   }
   @media #{$medium-and-down} {
+    display: none;
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
     width: 100%;
-    transition: max-height 0.3s ease;
-    height: auto;
-    max-height: 0;
-    overflow: hidden;
 
     ul {
       flex-direction: column;
@@ -322,15 +311,15 @@ nav {
         width: 100%;
       }
 
-      &.hover {
+      &.open {
         .sub-menu {
-          max-height: 100em;
+          display: block;
         }
       }
     }
 
     .mobilenav-active & {
-      max-height: 100em;
+      display: block;
     }
   }
 

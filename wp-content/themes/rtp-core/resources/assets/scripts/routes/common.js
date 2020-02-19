@@ -1,5 +1,10 @@
 export default {
   init() {
+    // missing forEach on NodeList for IE11
+    if (window.NodeList && !NodeList.prototype.forEach) {
+      NodeList.prototype.forEach = Array.prototype.forEach;
+    }
+
     /**
      * Set aria labels for current navigation items
      */
@@ -87,131 +92,71 @@ export default {
       document.cookie = 'data_contrast=' + contrast + ';max-age=31536000;path=/';
     });
 
-    // Show mobile nav
-    function showMobileNav() {
-      $('body').addClass('mobilenav-active');
-      $('#menu-trigger + label i').attr('aria-label', 'Hide navigation menu');
-
-      // Enable focus of nav items using tabindex
-      $('.navbar-menu').each(function() {
-        var el = $(this);
-        $('a', el).attr('tabindex', '0');
-      });
-    }
-
-    // Hide mobile nav
-    function hideMobileNav() {
-      $('body').removeClass('mobilenav-active');
-      $('#menu-trigger + label i').attr('aria-label', 'Show navigation menu');
-
-      // Disable focus of nav items using tabindex
-      $('.navbar-menu').each(function() {
-        var el = $(this);
-        $('a', el).attr('tabindex', '-1');
-      });
-    }
-
     // Toggle mobile nav
-    $('#menu-trigger').on('change focusout', function() {
-      if ($(this).prop('checked')) {
-        showMobileNav();
-      } else {
-        hideMobileNav();
-      }
-    });
+    $('#menu-trigger').on('click', function() {
+      $('body').toggleClass('mobilenav-active');
 
-    // Only show mobile nav if an element inside is receiving focus
-    $('.navbar-menu').each(function () {
-      var el = $(this);
+      // Toggle aria-expanded value.
+      $(this).attr('aria-expanded', (index, attr) => {
+        return attr == 'false' ? 'true' : 'false';
+      });
 
-      $('a', el).on('focus', function() {
-        $(this).parents('li').addClass('hover');
-      }).on('focusout', function() {
-        $(this).parents('li').removeClass('hover');
+      // Toggle icon.
+      $(this).find('i').text((i, text) => {
+        return text == 'menu' ? 'close' : 'menu';
+      });
 
-        if (smDown.matches) {
-          setTimeout(function () {
-            if ($(':focus').closest('#menu-main-menu').length == 0) {
-              $('#menu-trigger').prop('checked', false);
-              hideMobileNav();
-            }
-          }, 200);
-        }
+      // Toggle aria-label text.
+      $(this).attr('aria-label', (index, attr) => {
+        return attr == 'Show navigation menu' ? 'Hide navigation menu' : 'Show navigation menu';
       });
     });
-
-    // Show topbar nav
-    function showTopbarNav() {
-      $('body').addClass('topbarnav-active');
-      $('#topbar-menu-trigger + label i').attr('aria-label', 'Hide navigation menu');
-
-      // Enable focus of nav items using tabindex
-      $('.topbar-menu').each(function() {
-        var el = $(this);
-        $('a', el).attr('tabindex', '0');
-      });
-
-      // Enable focus of search box using tabindex
-      $('.topbar-wrapper .search-form input').attr('tabindex', '0');
-    }
-
-    // Hide topbar nav
-    function hideTopbarNav() {
-      $('body').removeClass('topbarnav-active');
-      $('#topbar-menu-trigger + label i').attr('aria-label', 'Show navigation menu');
-
-      // Disable focus of nav items using tabindex
-      $('.topbar-menu').each(function() {
-        var el = $(this);
-        $('a', el).attr('tabindex', '-1');
-      });
-
-      // Disable focus of search box using tabindex
-      $('.topbar-wrapper .search-form input').attr('tabindex', '-1');
-    }
 
     // Toggle topbar nav
-    $('#topbar-menu-trigger').on('change focusout', function() {
-      if ($(this).prop('checked')) {
-        showTopbarNav();
-      } else {
-        hideTopbarNav();
-      }
-    });
+    $('#topbar-menu-trigger').on('click', function() {
+      $('body').toggleClass('topbarnav-active');
 
-    // Only show topbar nav if an element inside is receiving focus
-    $('.topbar-menu').each(function () {
-      var el = $(this);
+      // Toggle aria-expanded value.
+      $(this).attr('aria-expanded', (index, attr) => {
+        return attr == 'false' ? 'true' : 'false';
+      });
 
-      $('a', el).on('focus', function() {
-        $(this).parents('li').addClass('hover');
-      }).on('focusout', function() {
-        $(this).parents('li').removeClass('hover');
+      // Toggle icon.
+      $(this).find('i').text((i, text) => {
+        return text == 'add' ? 'close' : 'add';
+      });
 
-        if (smDown.matches) {
-          setTimeout(function () {
-            if ($(':focus').closest('#menu-global').length == 0) {
-
-              // Only hide if we didn't just navigate to the search box
-              if ($(':focus').closest('.search-form').length == 0) {
-                $('#topbar-menu-trigger').prop('checked', false);
-                hideTopbarNav();
-              }
-            }
-          }, 200);
-        }
+      // Toggle aria-label text.
+      $(this).attr('aria-label', (index, attr) => {
+        return attr == 'Show RTP subsite menu' ? 'Hide RTP subsite menu' : 'Show RTP subsite menu';
       });
     });
 
-    $('.topbar-wrapper .search-form input').on('focusout', function() {
-      if (smDown.matches) {
-        setTimeout(function () {
-          if ($(':focus').closest('#menu-global').length == 0) {
-            $('#topbar-menu-trigger').prop('checked', false);
-            hideTopbarNav();
-          }
-        }, 200);
-      }
+    /**
+     * Flyout menus (hover behavior).
+     */
+    let menuItems = document.querySelectorAll('li.menu-item-has-children');
+    menuItems.forEach((menuItem) => {
+      $(menuItem).on('mouseenter', function() {
+        $(this).addClass('open');
+      });
+      $(menuItem).on('mouseleave', function() {
+        $(menuItems).removeClass('open');
+      });
+    });
+
+    /**
+     * Flyout menus (keyboard behavior).
+     */
+    menuItems.forEach((menuItem) => {
+      $(menuItem).find('a').on('click', function(event) {
+        $(menuItem).closest('li.menu-item-has-children').toggleClass('open');
+        $(menuItem).attr('aria-expanded', (index, attr) => {
+          return attr == 'false' ? 'true' : 'false';
+        });
+        event.preventDefault();
+        return false;
+      });
     });
 
     /**
