@@ -149,9 +149,9 @@ export default {
      * Flyout menus (keyboard behavior).
      */
     menuItems.forEach((menuItem) => {
-      $(menuItem).find('a').on('click', function(event) {
-        $(menuItem).closest('li.menu-item-has-children').toggleClass('open');
-        $(menuItem).attr('aria-expanded', (index, attr) => {
+      $(menuItem).find('.menu-toggle').on('click', function(event) {
+        $(this).closest('li.menu-item-has-children').toggleClass('open');
+        $(this).attr('aria-expanded', (index, attr) => {
           return attr == 'false' ? 'true' : 'false';
         });
         event.preventDefault();

@@ -11,6 +11,7 @@ namespace App;
 add_filter('nav_menu_link_attributes', function( $atts, $item, $args, $depth ) {
   if ( in_array( 'menu-item-has-children', $item->classes ) && $depth === 0 ) {
     $atts['href'] = '#';
+    $atts['class'] = 'menu-link menu-toggle';
     $atts['aria-expanded'] = 'false';
     $atts['aria-haspopup'] = 'true';
   }
