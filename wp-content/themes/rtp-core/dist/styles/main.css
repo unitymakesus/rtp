@@ -11910,7 +11910,16 @@ h2,
   line-height: 1.2em;
 }
 
-/* line 51, resources/assets/styles/common/_typography.scss */
+@media only screen and (max-width: 992px) {
+  /* line 43, resources/assets/styles/common/_typography.scss */
+
+  h2,
+  .h2 {
+    font-size: 1.33333rem;
+  }
+}
+
+/* line 55, resources/assets/styles/common/_typography.scss */
 
 h3,
 .single-mec-events .mec-single-event-location.mec-frontbox h3,
@@ -11922,7 +11931,18 @@ h3,
   letter-spacing: 1px;
 }
 
-/* line 58, resources/assets/styles/common/_typography.scss */
+@media only screen and (max-width: 992px) {
+  /* line 55, resources/assets/styles/common/_typography.scss */
+
+  h3,
+  .single-mec-events .mec-single-event-location.mec-frontbox h3,
+  .h3,
+  .single-mec-events .mec-events-content h2 {
+    font-size: 1.11111rem;
+  }
+}
+
+/* line 66, resources/assets/styles/common/_typography.scss */
 
 h4,
 .h4 {
@@ -11930,7 +11950,16 @@ h4,
   line-height: 1.2em;
 }
 
-/* line 63, resources/assets/styles/common/_typography.scss */
+@media only screen and (max-width: 992px) {
+  /* line 66, resources/assets/styles/common/_typography.scss */
+
+  h4,
+  .h4 {
+    font-size: 1.11111rem;
+  }
+}
+
+/* line 75, resources/assets/styles/common/_typography.scss */
 
 h5,
 .h5 {
@@ -11939,7 +11968,7 @@ h5,
   text-transform: uppercase;
 }
 
-/* line 70, resources/assets/styles/common/_typography.scss */
+/* line 82, resources/assets/styles/common/_typography.scss */
 
 .entry-content a,
 .fl-module-content.fl-module-content a {
@@ -11950,7 +11979,7 @@ h5,
   transition: all 0.3s;
 }
 
-/* line 75, resources/assets/styles/common/_typography.scss */
+/* line 87, resources/assets/styles/common/_typography.scss */
 
 .entry-content a:hover,
 .entry-content a:active,
@@ -11960,7 +11989,7 @@ h5,
           text-decoration-style: double;
 }
 
-/* line 79, resources/assets/styles/common/_typography.scss */
+/* line 91, resources/assets/styles/common/_typography.scss */
 
 html[data-contrast="true"] .entry-content a:hover,
 html[data-contrast="true"] .entry-content a:active,
@@ -11969,7 +11998,7 @@ html[data-contrast="true"] .fl-module-content.fl-module-content a:active {
   color: #FFF;
 }
 
-/* line 86, resources/assets/styles/common/_typography.scss */
+/* line 98, resources/assets/styles/common/_typography.scss */
 
 p,
 li,
@@ -11979,14 +12008,14 @@ dd {
   font-weight: 300;
 }
 
-/* line 91, resources/assets/styles/common/_typography.scss */
+/* line 103, resources/assets/styles/common/_typography.scss */
 
 dt {
   font-weight: bold;
   clear: both;
 }
 
-/* line 96, resources/assets/styles/common/_typography.scss */
+/* line 108, resources/assets/styles/common/_typography.scss */
 
 dd {
   margin-bottom: 1em;
@@ -11994,14 +12023,14 @@ dd {
 }
 
 @media only screen and (max-width: 600px) {
-  /* line 96, resources/assets/styles/common/_typography.scss */
+  /* line 108, resources/assets/styles/common/_typography.scss */
 
   dd {
     margin-left: 1em;
   }
 }
 
-/* line 107, resources/assets/styles/common/_typography.scss */
+/* line 119, resources/assets/styles/common/_typography.scss */
 
 .entry-content ul:not(.select-dropdown) li {
   list-style: none;
@@ -12009,7 +12038,7 @@ dd {
   padding-left: 30px;
 }
 
-/* line 112, resources/assets/styles/common/_typography.scss */
+/* line 124, resources/assets/styles/common/_typography.scss */
 
 .entry-content ul:not(.select-dropdown) li::before {
   content: '\2022';
@@ -12020,19 +12049,19 @@ dd {
   color: #333F48;
 }
 
-/* line 120, resources/assets/styles/common/_typography.scss */
+/* line 132, resources/assets/styles/common/_typography.scss */
 
 html[data-contrast="true"] .entry-content ul:not(.select-dropdown) li::before {
   color: #FFF;
 }
 
-/* line 128, resources/assets/styles/common/_typography.scss */
+/* line 140, resources/assets/styles/common/_typography.scss */
 
 blockquote {
   border-left: 0;
 }
 
-/* line 131, resources/assets/styles/common/_typography.scss */
+/* line 143, resources/assets/styles/common/_typography.scss */
 
 blockquote.wp-block-pullquote {
   clear: both;
@@ -12040,32 +12069,32 @@ blockquote.wp-block-pullquote {
   padding-right: 3em;
 }
 
-/* line 138, resources/assets/styles/common/_typography.scss */
+/* line 150, resources/assets/styles/common/_typography.scss */
 
 .label {
   text-transform: uppercase;
   font-weight: 600;
 }
 
-/* line 143, resources/assets/styles/common/_typography.scss */
+/* line 155, resources/assets/styles/common/_typography.scss */
 
 strong {
   font-weight: 600;
 }
 
-/* line 147, resources/assets/styles/common/_typography.scss */
+/* line 159, resources/assets/styles/common/_typography.scss */
 
 abbr[title] {
   border-bottom: 0;
 }
 
-/* line 151, resources/assets/styles/common/_typography.scss */
+/* line 163, resources/assets/styles/common/_typography.scss */
 
 .text-uppercase {
   text-transform: uppercase !important;
 }
 
-/* line 155, resources/assets/styles/common/_typography.scss */
+/* line 167, resources/assets/styles/common/_typography.scss */
 
 .text-center {
   text-align: center !important;
@@ -12288,6 +12317,59 @@ a.cta:focus::after,
 a.cta:active::after {
   -webkit-transform: translate3d(10px, 0, 0);
           transform: translate3d(10px, 0, 0);
+}
+
+/* line 66, resources/assets/styles/components/_buttons.scss */
+
+.btn-menu-toggle,
+.btn-topnav-toggle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+}
+
+/* line 77, resources/assets/styles/components/_buttons.scss */
+
+.btn-menu-toggle > i,
+.btn-topnav-toggle > i {
+  font-size: inherit;
+}
+
+/* line 81, resources/assets/styles/components/_buttons.scss */
+
+.btn-menu-toggle:focus,
+.btn-topnav-toggle:focus {
+  background-color: transparent;
+  -webkit-box-shadow: 0 0 0 3px rgba(75, 156, 211, 0.75);
+          box-shadow: 0 0 0 3px rgba(75, 156, 211, 0.75);
+}
+
+/* line 87, resources/assets/styles/components/_buttons.scss */
+
+.btn-menu-toggle {
+  padding: 0.6rem 0.75rem;
+  color: black;
+  border-color: rgba(0, 0, 0, 0.75);
+}
+
+/* line 93, resources/assets/styles/components/_buttons.scss */
+
+.btn-topnav-toggle {
+  padding: 0.6rem 0.75rem;
+  margin: 6px 0.5rem 6px 0;
+  color: #FFF;
+  border-color: rgba(255, 255, 255, 0.75);
 }
 
 /* line 2, resources/assets/styles/components/_forms.scss */
@@ -13494,44 +13576,46 @@ figure.post-thumbnail {
 
 /* line 15, resources/assets/styles/components/_navigation.scss */
 
-.topbar-wrapper .topbar {
-  height: 40px;
-}
-
-/* line 19, resources/assets/styles/components/_navigation.scss */
-
 .topbar-wrapper .topbar-menu-wrapper {
   height: 100%;
   width: 100%;
 }
 
+@media only screen and (min-width: 993px) {
+  /* line 21, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .topbar {
+    height: 40px;
+  }
+}
+
 @media only screen and (max-width: 992px) {
-  /* line 25, resources/assets/styles/components/_navigation.scss */
+  /* line 26, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .rtp-logo {
     height: 20px;
     margin-left: 10px;
   }
 
-  /* line 30, resources/assets/styles/components/_navigation.scss */
+  /* line 31, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topbar {
     overflow: hidden;
   }
 
-  /* line 33, resources/assets/styles/components/_navigation.scss */
+  /* line 34, resources/assets/styles/components/_navigation.scss */
 
   .topbarnav-active .topbar-wrapper .topbar {
     height: auto;
   }
 
-  /* line 38, resources/assets/styles/components/_navigation.scss */
+  /* line 39, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topnav-wrapper {
     width: 100%;
   }
 
-  /* line 42, resources/assets/styles/components/_navigation.scss */
+  /* line 43, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topbar-menu-wrapper,
   .topbar-wrapper .topnav-wrapper {
@@ -13540,26 +13624,26 @@ figure.post-thumbnail {
   }
 }
 
-/* line 47, resources/assets/styles/components/_navigation.scss */
+/* line 48, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu {
   height: 100%;
 }
 
-/* line 50, resources/assets/styles/components/_navigation.scss */
+/* line 51, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu ul {
   height: 100%;
 }
 
-/* line 54, resources/assets/styles/components/_navigation.scss */
+/* line 55, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu li {
   height: 100%;
   line-height: 38px;
 }
 
-/* line 58, resources/assets/styles/components/_navigation.scss */
+/* line 59, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu li a {
   color: #FFF;
@@ -13571,7 +13655,7 @@ figure.post-thumbnail {
   padding: 11px 15px;
 }
 
-/* line 67, resources/assets/styles/components/_navigation.scss */
+/* line 68, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .topbar-menu li a:hover,
 .topbar-wrapper .topbar-menu li a:focus,
@@ -13580,15 +13664,16 @@ figure.post-thumbnail {
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 47, resources/assets/styles/components/_navigation.scss */
+  /* line 48, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topbar-menu {
     width: 100%;
   }
 
-  /* line 76, resources/assets/styles/components/_navigation.scss */
+  /* line 77, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topbar-menu ul {
+    display: none;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -13597,39 +13682,37 @@ figure.post-thumbnail {
         flex-wrap: nowrap;
     margin: 0;
     width: 100%;
-    -webkit-transition: max-height 0.3s ease;
-    -o-transition: max-height 0.3s ease;
-    transition: max-height 0.3s ease;
     max-height: 0;
     overflow: hidden;
   }
 
-  /* line 85, resources/assets/styles/components/_navigation.scss */
+  /* line 86, resources/assets/styles/components/_navigation.scss */
 
   .topbarnav-active .topbar-wrapper .topbar-menu ul {
+    display: block;
     max-height: 100em;
   }
 
-  /* line 90, resources/assets/styles/components/_navigation.scss */
+  /* line 92, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .topbar-menu li {
     width: 100%;
   }
 }
 
-/* line 97, resources/assets/styles/components/_navigation.scss */
+/* line 99, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .current-site {
   background: #FFF;
 }
 
-/* line 100, resources/assets/styles/components/_navigation.scss */
+/* line 102, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .current-site a {
   color: #333F48 !important;
 }
 
-/* line 103, resources/assets/styles/components/_navigation.scss */
+/* line 105, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .current-site a:hover,
 .topbar-wrapper .current-site a:focus,
@@ -13637,7 +13720,7 @@ figure.post-thumbnail {
   background: #FFF !important;
 }
 
-/* line 110, resources/assets/styles/components/_navigation.scss */
+/* line 112, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .search-form {
   position: relative;
@@ -13645,7 +13728,7 @@ figure.post-thumbnail {
   border-radius: 0;
 }
 
-/* line 115, resources/assets/styles/components/_navigation.scss */
+/* line 117, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .search-form input.search-field {
   margin: auto;
@@ -13660,7 +13743,7 @@ figure.post-thumbnail {
   font-size: 0.72222rem;
 }
 
-/* line 126, resources/assets/styles/components/_navigation.scss */
+/* line 128, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .search-form input.search-field::-webkit-input-placeholder {
   color: #CBC8C7;
@@ -13678,14 +13761,14 @@ figure.post-thumbnail {
   color: #CBC8C7;
 }
 
-/* line 131, resources/assets/styles/components/_navigation.scss */
+/* line 133, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .search-form label {
   width: 100%;
   height: 100%;
 }
 
-/* line 136, resources/assets/styles/components/_navigation.scss */
+/* line 138, resources/assets/styles/components/_navigation.scss */
 
 .topbar-wrapper .search-form .search-submit {
   position: absolute;
@@ -13700,7 +13783,7 @@ figure.post-thumbnail {
   width: 45px;
   height: 45px;
   border: 1px solid transparent;
-  background-color: transparent;
+  background-color: #4B9CD3;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNyIgaGVpZ2h0PSIyNiIgdmlld0JveD0iMCAwIDI3IDI2IiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgPGRlZnM+CiAgICA8cGF0aCBpZD0iYSIgZD0iTTE4LjI5ODgyODEsMTIuNTUwNzgxMiBDMTguMjk4ODI4MSwxMC42NTIzMzQzIDE3LjY0ODQ0NCw5LjA1Mjc0MDg4IDE2LjM0NzY1NjIsNy43NTE5NTMxMiBDMTUuMDQ2ODY4NSw2LjQ1MTE2NTM3IDEzLjQ0NzI3NTEsNS44MDA3ODEyNSAxMS41NDg4MjgxLDUuODAwNzgxMjUgQzkuNjg1NTM3NTYsNS44MDA3ODEyNSA4LjEwMzUyMjEzLDYuNDUxMTY1MzcgNi44MDI3MzQzOCw3Ljc1MTk1MzEyIEM1LjQ2Njc5MDIsOS4wODc4OTczIDQuNzk4ODI4MTIsMTAuNjg3NDkwNyA0Ljc5ODgyODEyLDEyLjU1MDc4MTIgQzQuNzk4ODI4MTIsMTQuMzc4OTE1NCA1LjQ2Njc5MDIsMTUuOTYwOTMwOCA2LjgwMjczNDM4LDE3LjI5Njg3NSBDOC4xMzg2Nzg1NSwxOC42MzI4MTkyIDkuNzIwNjkzOTgsMTkuMzAwNzgxMiAxMS41NDg4MjgxLDE5LjMwMDc4MTIgQzEzLjQxMjExODcsMTkuMzAwNzgxMiAxNS4wMTE3MTIxLDE4LjYzMjgxOTIgMTYuMzQ3NjU2MiwxNy4yOTY4NzUgQzE3LjY0ODQ0NCwxNS45OTYwODcyIDE4LjI5ODgyODEsMTQuNDE0MDcxOCAxOC4yOTg4MjgxLDEyLjU1MDc4MTIgWiBNMjYuMDUwNzgxMiwyNS4wNDg4MjgxIEMyNi4wNTA3ODEyLDI1LjU3NjE3NDUgMjUuODU3NDIzOCwyNi4wMzMyMDEyIDI1LjQ3MDcwMzEsMjYuNDE5OTIxOSBDMjUuMDgzOTgyNCwyNi44MDY2NDI2IDI0LjYyNjk1NTgsMjcgMjQuMDk5NjA5NCwyNyBDMjMuNTcyMjYzLDI3IDIzLjExNTIzNjMsMjYuODA2NjQyNiAyMi43Mjg1MTU2LDI2LjQxOTkyMTkgTDE3LjU2MDU0NjksMjEuMjUxOTUzMSBDMTUuNzY3NTY5MiwyMi41MTc1ODQ1IDEzLjc2MzY4MjksMjMuMTUwMzkwNiAxMS41NDg4MjgxLDIzLjE1MDM5MDYgQzEwLjA3MjI1ODIsMjMuMTUwMzkwNiA4LjcwMTE3ODIsMjIuODY5MTQzNCA3LjQzNTU0Njg4LDIyLjMwNjY0MDYgQzYuMDk5NjAyNywyMS43NDQxMzc4IDQuOTc0NjEzOTUsMjAuOTg4Mjg2IDQuMDYwNTQ2ODgsMjAuMDM5MDYyNSBDMy4xMTEzMjMzOCwxOS4xMjQ5OTU0IDIuMzU1NDcxNTYsMTguMDAwMDA2NyAxLjc5Mjk2ODc1LDE2LjY2NDA2MjUgQzEuMjMwNDY1OTQsMTUuMjU3ODA1NSAwLjk0OTIxODc1LDEzLjg4NjcyNTQgMC45NDkyMTg3NSwxMi41NTA3ODEyIEMwLjk0OTIxODc1LDExLjE0NDUyNDIgMS4yMzA0NjU5NCw5Ljc3MzQ0NDE4IDEuNzkyOTY4NzUsOC40Mzc1IEMyLjM5MDYyNzk5LDcuMDY2Mzk5MzkgMy4xNDY0Nzk4LDUuOTIzODMyNyA0LjA2MDU0Njg4LDUuMDA5NzY1NjIgQzUuMDA5NzcwMzcsNC4wNjA1NDIxMyA2LjEzNDc1OTEyLDMuMzA0NjkwMzEgNy40MzU1NDY4OCwyLjc0MjE4NzUgQzguNzM2MzM0NjMsMi4yMTQ4NDExMSAxMC4xMDc0MTQ3LDEuOTUxMTcxODggMTEuNTQ4ODI4MSwxLjk1MTE3MTg4IEMxMi45OTAyNDE2LDEuOTUxMTcxODggMTQuMzc4ODk5NiwyLjIxNDg0MTExIDE1LjcxNDg0MzgsMi43NDIxODc1IEMxNy4wODU5NDQ0LDMuMzc1MDAzMTYgMTguMjEwOTMzMSw0LjEzMDg1NDk4IDE5LjA4OTg0MzgsNS4wMDk3NjU2MiBDMjAuMDAzOTEwOCw1LjkyMzgzMjcgMjAuNzU5NzYyNiw3LjA2NjM5OTM5IDIxLjM1NzQyMTksOC40Mzc1IEMyMS45MTk5MjQ3LDkuNzczNDQ0MTggMjIuMjAxMTcxOSwxMS4xNDQ1MjQyIDIyLjIwMTE3MTksMTIuNTUwNzgxMiBDMjIuMjAxMTcxOSwxNC43NjU2MzYxIDIxLjU2ODM2NTcsMTYuNzY5NTIyMyAyMC4zMDI3MzQ0LDE4LjU2MjUgTDI1LjQ3MDcwMzEsMjMuNzMwNDY4OCBDMjUuODU3NDIzOCwyNC4xMTcxODk0IDI2LjA1MDc4MTIsMjQuNTU2NjM4MiAyNi4wNTA3ODEyLDI1LjA0ODgyODEgWiIvPgogIDwvZGVmcz4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgLTEpIj4KICAgIDx1c2UgZmlsbD0iIzAwMDAwMCIgeGxpbms6aHJlZj0iI2EiLz4KICAgIDx1c2UgZmlsbD0iI0EyQUFBRCIgeGxpbms6aHJlZj0iI2EiLz4KICA8L2c+Cjwvc3ZnPgo=);
   background-size: 18px 18px;
   background-position: center;
@@ -13712,32 +13795,41 @@ figure.post-thumbnail {
   transition: 0.3s background-color ease-in-out;
 }
 
-/* line 154, resources/assets/styles/components/_navigation.scss */
+/* line 156, resources/assets/styles/components/_navigation.scss */
 
-.topbar-wrapper .search-form .search-submit:hover,
 .topbar-wrapper .search-form .search-submit:focus {
-  background-color: #4B9CD3;
+  -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.75);
+          box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.75);
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 110, resources/assets/styles/components/_navigation.scss */
+  /* line 112, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .search-form {
     margin: 0;
   }
 
-  /* line 163, resources/assets/styles/components/_navigation.scss */
+  /* line 164, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .search-form .search-submit {
     width: 26px;
     height: 26px;
+    background-color: transparent;
+  }
+
+  /* line 169, resources/assets/styles/components/_navigation.scss */
+
+  .topbar-wrapper .search-form .search-submit:hover,
+  .topbar-wrapper .search-form .search-submit:focus {
+    background-color: #4B9CD3;
   }
 }
 
 @media only screen and (max-width: 992px) {
-  /* line 110, resources/assets/styles/components/_navigation.scss */
+  /* line 112, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .search-form {
+    display: none;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -13746,20 +13838,18 @@ figure.post-thumbnail {
         flex-wrap: nowrap;
     margin: 0;
     width: 100%;
-    -webkit-transition: max-height 0.3s ease;
-    -o-transition: max-height 0.3s ease;
-    transition: max-height 0.3s ease;
     max-height: 0;
     overflow: hidden;
   }
 
-  /* line 177, resources/assets/styles/components/_navigation.scss */
+  /* line 184, resources/assets/styles/components/_navigation.scss */
 
   .topbarnav-active .topbar-wrapper .search-form {
+    display: block;
     max-height: 100em;
   }
 
-  /* line 181, resources/assets/styles/components/_navigation.scss */
+  /* line 189, resources/assets/styles/components/_navigation.scss */
 
   .topbar-wrapper .search-form input.search-field {
     height: 3rem;
@@ -14348,60 +14438,56 @@ nav ul a {
   display: inline-block;
   margin-left: 0.5em;
   vertical-align: 0.255em;
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
+  border-style: solid;
+  border-width: 0;
+  border-top-width: 2px;
+  border-left-width: 2px;
+  height: 7px;
+  width: 7px;
+  -webkit-transform: rotate(225deg);
+       -o-transform: rotate(225deg);
+          transform: rotate(225deg);
+  -webkit-transform-origin: center;
+       -o-transform-origin: center;
+          transform-origin: center;
   content: '';
 }
 
-@media only screen and (min-width: 993px) {
-  /* line 205, resources/assets/styles/layouts/_header.scss */
-
-  .navbar-menu li.menu-item-has-children > a::after {
-    display: none;
-  }
-}
-
-/* line 211, resources/assets/styles/layouts/_header.scss */
+/* line 209, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children a {
   cursor: default;
 }
 
-/* line 215, resources/assets/styles/layouts/_header.scss */
+/* line 213, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu {
-  max-height: 0;
-  overflow: hidden;
-  -webkit-transition: max-height 0.3s ease;
-  -o-transition: max-height 0.3s ease;
-  transition: max-height 0.3s ease;
+  display: none;
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 215, resources/assets/styles/layouts/_header.scss */
+  /* line 213, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
     margin-top: 10px;
   }
 }
 
-/* line 224, resources/assets/styles/layouts/_header.scss */
+/* line 220, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li {
   float: none;
   line-height: 0;
 }
 
-/* line 228, resources/assets/styles/layouts/_header.scss */
+/* line 224, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu li:hover,
 .navbar-menu li.menu-item-has-children .sub-menu li:focus {
   background: #F5F5F5;
 }
 
-/* line 233, resources/assets/styles/layouts/_header.scss */
+/* line 229, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a {
   cursor: pointer;
@@ -14409,7 +14495,7 @@ nav ul a {
   padding-right: 40px;
 }
 
-/* line 238, resources/assets/styles/layouts/_header.scss */
+/* line 234, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a::after {
   content: '';
@@ -14423,33 +14509,30 @@ nav ul a {
   height: 20px;
   background-size: contain;
   background-repeat: no-repeat;
-  -webkit-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
-/* line 253, resources/assets/styles/layouts/_header.scss */
+/* line 249, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover,
-.navbar-menu li.menu-item-has-children .sub-menu a:focus,
-.navbar-menu li.menu-item-has-children .sub-menu a:hover {
+.navbar-menu li.menu-item-has-children .sub-menu a:focus {
   background: transparent;
 }
 
-/* line 256, resources/assets/styles/layouts/_header.scss */
+/* line 252, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li.menu-item-has-children .sub-menu a:hover::after,
-.navbar-menu li.menu-item-has-children .sub-menu a:focus::after,
-.navbar-menu li.menu-item-has-children .sub-menu a:hover::after {
+.navbar-menu li.menu-item-has-children .sub-menu a:focus::after {
   right: 10px;
-  opacity: 100;
+  opacity: 1;
 }
 
 @media only screen and (min-width: 993px) {
-  /* line 215, resources/assets/styles/layouts/_header.scss */
+  /* line 213, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li.menu-item-has-children .sub-menu {
-    max-height: 300em;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -14457,26 +14540,27 @@ nav ul a {
     position: absolute;
     z-index: 10;
     background: #FFF;
-    -webkit-transition: max-height 0.3s ease;
-    -o-transition: max-height 0.3s ease;
-    transition: max-height 0.3s ease;
-    height: 0;
-    overflow: hidden;
     min-width: 200px;
     -webkit-box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
             box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
   }
 }
 
-/* line 278, resources/assets/styles/layouts/_header.scss */
+/* line 270, resources/assets/styles/layouts/_header.scss */
 
-.navbar-menu li.menu-item-has-children:hover .sub-menu,
-.navbar-menu li.menu-item-has-children:focus .sub-menu,
-.navbar-menu li.menu-item-has-children.hover .sub-menu {
-  height: auto;
+.navbar-menu li.menu-item-has-children.open > a::after {
+  -webkit-transform: rotate(45deg);
+       -o-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
-/* line 284, resources/assets/styles/layouts/_header.scss */
+/* line 274, resources/assets/styles/layouts/_header.scss */
+
+.navbar-menu li.menu-item-has-children.open .sub-menu {
+  display: block;
+}
+
+/* line 280, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu li a {
   background: none;
@@ -14489,7 +14573,7 @@ nav ul a {
     height: 4.66667em;
   }
 
-  /* line 292, resources/assets/styles/layouts/_header.scss */
+  /* line 288, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     height: 100%;
@@ -14501,7 +14585,7 @@ nav ul a {
             align-items: center;
   }
 
-  /* line 297, resources/assets/styles/layouts/_header.scss */
+  /* line 293, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     font-size: 0.9em;
@@ -14512,6 +14596,7 @@ nav ul a {
   /* line 163, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu {
+    display: none;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -14520,15 +14605,9 @@ nav ul a {
         flex-wrap: nowrap;
     margin: 0;
     width: 100%;
-    -webkit-transition: max-height 0.3s ease;
-    -o-transition: max-height 0.3s ease;
-    transition: max-height 0.3s ease;
-    height: auto;
-    max-height: 0;
-    overflow: hidden;
   }
 
-  /* line 312, resources/assets/styles/layouts/_header.scss */
+  /* line 305, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu ul {
     -webkit-box-orient: vertical;
@@ -14538,7 +14617,7 @@ nav ul a {
     width: 100%;
   }
 
-  /* line 317, resources/assets/styles/layouts/_header.scss */
+  /* line 310, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li {
     width: 100%;
@@ -14548,26 +14627,26 @@ nav ul a {
             flex-direction: column;
   }
 
-  /* line 321, resources/assets/styles/layouts/_header.scss */
+  /* line 314, resources/assets/styles/layouts/_header.scss */
 
   .navbar-menu li a {
     width: 100%;
   }
 
-  /* line 326, resources/assets/styles/layouts/_header.scss */
+  /* line 319, resources/assets/styles/layouts/_header.scss */
 
-  .navbar-menu li.hover .sub-menu {
-    max-height: 100em;
+  .navbar-menu li.open .sub-menu {
+    display: block;
   }
 
-  /* line 332, resources/assets/styles/layouts/_header.scss */
+  /* line 325, resources/assets/styles/layouts/_header.scss */
 
   .mobilenav-active .navbar-menu {
-    max-height: 100em;
+    display: block;
   }
 }
 
-/* line 337, resources/assets/styles/layouts/_header.scss */
+/* line 330, resources/assets/styles/layouts/_header.scss */
 
 .navbar-menu .cta-link {
   padding: 0 15px;
