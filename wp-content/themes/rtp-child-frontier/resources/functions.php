@@ -178,6 +178,9 @@ function get_day_status($test) {
   $exceptions = get_field('closed_days', 'option');
   $closed = false;
 
+  $today = strtotime(current_time('Y-m-d'));
+  $dayofweek = date('N', $today);
+
   // Is it a holiday?
   foreach($exceptions as $exception) {
     $date = strtotime($exception['date']);

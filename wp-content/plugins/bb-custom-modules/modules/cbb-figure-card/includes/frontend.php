@@ -27,8 +27,8 @@ if ($settings->structure == 'horizontal') {
   </div>
 
   <div class="card" itemprop="description">
-    <div class="card-badge"><span><?php echo $badge; ?></span></div>
     <?php if (!empty($settings->title)) : ?>
+      <div class="card-badge"><span><?php echo $badge; ?></span></div>
       <h3 class="card-title" itemprop="name"><?php echo $settings->title; ?></h3>
     <?php endif; ?>
 		<div class="card-content">

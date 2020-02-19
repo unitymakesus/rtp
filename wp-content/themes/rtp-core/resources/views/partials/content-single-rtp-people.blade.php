@@ -4,7 +4,7 @@
     <div class="container">
       <div class="entry-title-container">
         <h1 class="entry-title" itemprop="name">{!! get_the_title() !!}</h1>
-        <h2 class="job-title" itemprop="jobTitle">{{ get_field('job_title') }}</h2>
+        <h2 class="job-title heading-reset" itemprop="jobTitle">{{ get_field('job_title') }}</h2>
       </div>
     </div>
   </header>

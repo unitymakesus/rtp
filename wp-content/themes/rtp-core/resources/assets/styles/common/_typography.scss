@@ -46,6 +46,10 @@ h2, .h2 {
   margin: 0;
   padding: 10px 0;
   line-height: 1.2em;
+
+  @media #{$medium-and-down} {
+    font-size: rem-calc(24px);
+  }
 }
 
 h3, .h3 {
@@ -53,11 +57,19 @@ h3, .h3 {
   font-weight: 400;
   line-height: 1.2em;
   letter-spacing: 1px;
+
+  @media #{$medium-and-down} {
+    font-size: rem-calc(20px);
+  }
 }
 
 h4, .h4 {
   font-size: rem-calc(24px);
   line-height: 1.2em;
+
+  @media #{$medium-and-down} {
+    font-size: rem-calc(20px);
+  }
 }
 
 h5, .h5 {
