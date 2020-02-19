@@ -195,8 +195,8 @@ function syncToCalendar($data, $notBefore, $notAfter) {
     // Increase count of # added
     $numAdded ++;
 
-    error_log('Original');
-    error_log(print_r($args, true));
+    // error_log('Original');
+    // error_log(print_r($args, true));
 
     syndicateToMain($post_id, $args);
   }
@@ -352,19 +352,21 @@ function deleteExistingEvents() {
 
     $sql = "SELECT {$prefix}posts.ID FROM {$prefix}posts
             LEFT JOIN {$prefix}term_relationships ON ({$prefix}posts.ID = {$prefix}term_relationships.object_id)
+            INNER JOIN {$prefix}term_taxonomy ON ({$prefix}term_relationships.term_taxonomy_id = {$prefix}term_taxonomy.term_taxonomy_id)
             INNER JOIN {$prefix}mec_dates ON ({$prefix}posts.ID = {$prefix}mec_dates.post_id)
             WHERE 1=1
-            AND ({$prefix}term_relationships.term_taxonomy_id IN (%d))
+            AND ({$prefix}term_taxonomy.term_id IN (%d))
             AND {$prefix}posts.ID NOT IN (
               SELECT object_id FROM {$prefix}term_relationships
-              WHERE term_taxonomy_id IN (%d)
+              INNER JOIN {$prefix}term_taxonomy ON ({$prefix}term_relationships.term_taxonomy_id = {$prefix}term_taxonomy.term_taxonomy_id)
+              WHERE term_id IN (%d)
             )
             AND {$prefix}posts.post_type = %s
             AND {$prefix}posts.post_status = %s
             AND {$prefix}mec_dates.tstart > %d
             ORDER BY {$prefix}mec_dates.tstart";
     $query = $wpdb->prepare($sql, $category->term_id, $rodeo_cat->term_id, 'mec-events', 'publish', $notBefore);
-    error_log($query);
+    // error_log($query);
     $results = $wpdb->get_results($query);
 
     // Permanently delete (bypass trash) all these events
@@ -415,8 +417,8 @@ function syndicateToMain($post_id, $args) {
     $args['location_id'] = 1215;   // Frontier 700 | Parking Lot
   }
 
-  error_log('Syndicated');
-  error_log(print_r($args, true));
+  // error_log('Syndicated');
+  // error_log(print_r($args, true));
 
   // Do not sync media
   add_filter('dt_push_post_media', function() {
