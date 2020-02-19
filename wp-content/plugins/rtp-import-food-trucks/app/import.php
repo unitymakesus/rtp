@@ -195,6 +195,9 @@ function syncToCalendar($data, $notBefore, $notAfter) {
     // Increase count of # added
     $numAdded ++;
 
+    error_log('Original');
+    error_log(print_r($args, true));
+
     syndicateToMain($post_id, $args);
   }
 
@@ -361,7 +364,7 @@ function deleteExistingEvents() {
             AND {$prefix}mec_dates.tstart > %d
             ORDER BY {$prefix}mec_dates.tstart";
     $query = $wpdb->prepare($sql, $category->term_id, $rodeo_cat->term_id, 'mec-events', 'publish', $notBefore);
-    // error_log($query);
+    error_log($query);
     $results = $wpdb->get_results($query);
 
     // Permanently delete (bypass trash) all these events
@@ -411,6 +414,9 @@ function syndicateToMain($post_id, $args) {
   } elseif ($args['location_id'] == 23) {
     $args['location_id'] = 1215;   // Frontier 700 | Parking Lot
   }
+
+  error_log('Syndicated');
+  error_log(print_r($args, true));
 
   // Do not sync media
   add_filter('dt_push_post_media', function() {
