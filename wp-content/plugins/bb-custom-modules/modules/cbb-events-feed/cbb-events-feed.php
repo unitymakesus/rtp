@@ -160,11 +160,21 @@ class CbbEventsFeedModule extends FLBuilderModule {
 		$events = array();
 
 		$query_args = array(
-			'post_type' => 'mec-events',
-			'orderby' => 'meta_value',
-			'order' => 'ASC',
-			'posts_per_page' => '-1',
-			'meta_key' => 'mec_start_date',
+			'post_type'      => 'mec-events',
+			'posts_per_page' => '3',
+			'meta_query'     => [
+				'relation'   => 'AND',
+				'query_date' => [
+					'key' => 'mec_start_date',
+				],
+				'query_seconds' => [
+					'key' => 'mec_start_day_seconds',
+				]
+			],
+			'orderby' => [
+				'query_date'    => 'ASC',
+				'query_seconds' => 'ASC',
+			],
 		);
 
 		foreach ($dates as $date=>$IDs) {
