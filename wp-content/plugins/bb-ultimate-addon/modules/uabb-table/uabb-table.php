@@ -72,7 +72,7 @@ class UABBTable extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon );
 		}
 		return '';
 	}
@@ -473,7 +473,7 @@ class UABBTable extends FLBuilderModule {
 					<select class="select-filter">
 						<option class="filter-entry"><?php echo esc_attr( $this->settings->show_entries_all_label ); ?></option>
 						<?php for ( $cnt = 1; $cnt < $total_rows; $cnt++ ) { ?>
-							<option class="filter-entry"> <?php echo esc_attr( $cnt ); ?> </option>
+							<option class="filter-entry"> <?php echo $cnt; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </option>
 						<?php } ?>
 					</select>
 				</div>
@@ -499,7 +499,7 @@ class UABBTable extends FLBuilderModule {
 									foreach ( $header_val as $hkey => $head ) {
 										?>
 										<th class="table-header-th table-heading-<?php echo esc_attr( $hkey ); ?>">
-											<label class="th-style"> <?php echo esc_attr( $head ); ?> </label>
+											<label class="th-style"> <?php echo $head; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </label>
 											<?php if ( 'yes' === $this->settings->show_sort ) { ?>
 													<i class="uabb-sort-icon fa fa-sort"> </i>
 												<?php } ?>
@@ -519,7 +519,7 @@ class UABBTable extends FLBuilderModule {
 									<tr class="tbody-row">
 										<?php foreach ( $row as $bkey => $col ) { ?>
 											<td class="table-body-td">
-												<span class="content-text"> <?php echo esc_attr( $col ); ?> </span>
+												<span class="content-text"> <?php echo $col; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 											</td>
 											<?php
 												$cell_counter++;

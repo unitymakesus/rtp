@@ -48,7 +48,7 @@ if ( $version_bb_check ) {
 					}
 					?>
 					<div class="uabb-ib1-description uabb-text-editor">
-					<?php echo wp_kses_post( $settings->banner_desc ); ?>
+					<?php echo $settings->banner_desc; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 					<?php
 					if ( '' !== $settings->button ) {

@@ -415,11 +415,12 @@ FLBuilder::register_module(
 							'help'    => __( 'This alignment will apply on Mobile', 'uabb' ),
 						),
 						'content_around_spacing' => array(
-							'type'    => 'dimension',
-							'label'   => __( 'Spacing Around Content', 'uabb' ),
-							'slider'  => true,
-							'units'   => array( 'px' ),
-							'preview' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Spacing Around Content', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-woo-products-summary-wrap',
 								'property'  => 'padding',

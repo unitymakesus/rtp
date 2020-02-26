@@ -30,7 +30,7 @@ if ( isset( $settings->link_nofollow ) && UABB_Compatibility::$version_bb_check 
 
 	<?php if ( '' !== $settings->description ) : ?>
 	<div class="uabb-subheading uabb-text-editor">
-		<?php echo wp_kses_post( $settings->description ); ?>
+		<?php echo $settings->description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
 	<?php endif; ?>
 	<?php $module->render_separator( 'bottom' ); ?>

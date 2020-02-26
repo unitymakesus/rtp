@@ -41,7 +41,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 		<?php
 	}
 	?>
-		<div class="uabb-new-ib-content uabb-text-editor uabb-simplify"><?php echo wp_kses_post( $settings->banner_desc ); ?></div>
+		<div class="uabb-new-ib-content uabb-text-editor uabb-simplify"><?php echo $settings->banner_desc; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 	</div>
 	<?php
 	if ( '' !== $settings->link_url ) {

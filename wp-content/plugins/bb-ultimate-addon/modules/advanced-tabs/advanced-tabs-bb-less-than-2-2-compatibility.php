@@ -802,6 +802,10 @@ FLBuilder::register_settings_form(
 								'label' => __( 'Embed Code / URL', 'uabb' ),
 								'rows'  => 6,
 							),
+							'ct_raw_nonce'      => array(
+								'type'    => 'text',
+								'default' => wp_create_nonce( 'uabb-module-nonce' ),
+							),
 							'ct_saved_rows'     => array(
 								'type'    => 'select',
 								'label'   => __( 'Select Row', 'uabb' ),

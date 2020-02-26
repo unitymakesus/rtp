@@ -132,7 +132,7 @@ FLBuilder::register_module(
 					'title'  => '', // Section Title.
 					'fields' => array( // Section Fields.
 						'counter_alignment'  => array(
-							'type'    => 'Align',
+							'type'    => 'align',
 							'label'   => __( 'Overall Alignment', 'uabb' ),
 							'default' => 'center',
 							'preview' => array(

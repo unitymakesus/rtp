@@ -90,19 +90,36 @@ var UABBBlogPosts;
 
         _infiniteScroll: function(settings)
         {
-            $(this.wrapperClass).infinitescroll({
-                navSelector     : this.nodeClass + ' .uabb-blogs-pagination',
-                nextSelector    : this.nodeClass + ' .uabb-blogs-pagination a.next',
-                itemSelector    : this.postClass,
-                prefill         : true,
-                bufferPx        : 200,
-                loading         : {
-                    msgText         : 'Loading',
-                    finishedMsg     : '',
-                    img             : this.moduleUrl + '/img/ajax-loader-grey.gif',
-                    speed           : 10,
+            var path        = $(this.nodeClass + ' .uabb-blogs-pagination a.next').attr('href');
+                pagePattern = /(.*?(\/|\&|\?)paged-[0-9]{1,}(\/|=))([0-9]{1,})+(.*)/;
+                wpPattern   = /^(.*?\/?page\/?)(?:\d+)(.*?$)/;
+                pageMatched = null;
+
+                scrollData = {
+                    navSelector     : this.nodeClass + ' .uabb-blogs-pagination',
+                    nextSelector    : this.nodeClass + ' .uabb-blogs-pagination a.next',
+                    itemSelector    : this.postClass,
+                    prefill         : true,
+                    bufferPx        : 200,
+                    loading         : {
+                        msgText         : 'Loading',
+                        finishedMsg     : '',
+                        img             : this.moduleUrl + '/img/ajax-loader-grey.gif',
+                        speed           : 10,
+                    }
+                };
+            if ( pagePattern.test( path ) ) {
+                scrollData.path = function( currPage ){
+                    pageMatched = path.match( pagePattern );
+                    path = pageMatched[1] + currPage + pageMatched[5];
+                    return path;
                 }
-            }, $.proxy(this._infiniteScrollComplete, this));
+            }
+            else if ( wpPattern.test( path ) ) {
+                scrollData.path = path.match( wpPattern ).slice( 1 );
+            }
+
+            $(this.wrapperClass).infinitescroll( scrollData, $.proxy(this._infiniteScrollComplete, this) );
         },
 
         _infiniteScrollComplete: function(elements)
@@ -110,7 +127,7 @@ var UABBBlogPosts;
             var wrap = $(this.wrapperClass);
             elements = $(elements);
             if( this.is_carousel == 'masonary' ) {
-                wrap.masonry('appended', elements);
+                wrap.isotope('appended', elements);
             }
         },
 

@@ -45,7 +45,7 @@ $info_banner_id = wp_rand( 1000, 9999 );
 		<div class="uabb-ultb3-desc uabb-text-editor">
 			<?php
 				global $wp_embed;
-				echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->banner_desc ) ) );
+				echo wpautop( $wp_embed->autoembed( $settings->banner_desc ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
 		</div>
 

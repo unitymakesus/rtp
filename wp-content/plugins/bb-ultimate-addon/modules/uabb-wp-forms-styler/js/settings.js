@@ -20,7 +20,8 @@
 			hover_attribute.on( 'change', $.proxy( this._btn_styleChanged, this ) );
 
             this._contentTypeChange();
-
+            
+            form.find("#fl-field-wp_form_raw_nonce").hide();
 		},
 
 		_btn_styleChanged: function()
@@ -84,6 +85,9 @@
             var form = $('.fl-builder-settings');
             nonce = form.find( '#fl-field-wp_form_raw .uabb-module-raw' ).data( 'uabb-module-nonce' );
 
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=wp_form_raw_nonce]').val();
+            }
             $.post(
                 ajaxurl,
                 {

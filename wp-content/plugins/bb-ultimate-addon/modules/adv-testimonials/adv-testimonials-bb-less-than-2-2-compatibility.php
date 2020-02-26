@@ -400,6 +400,7 @@ FLBuilder::register_module(
 							'type'        => 'photo',
 							'label'       => __( 'Photo', 'uabb' ),
 							'show_remove' => true,
+							'connections' => array( 'photo' ),
 						),
 						'photo_url_noslider'    => array(
 							'type'        => 'text',
@@ -1226,6 +1227,7 @@ FLBuilder::register_settings_form(
 								'type'        => 'photo',
 								'label'       => __( 'Photo', 'uabb' ),
 								'show_remove' => true,
+								'connections' => array( 'photo' ),
 							),
 							'photo_url'    => array(
 								'type'        => 'text',

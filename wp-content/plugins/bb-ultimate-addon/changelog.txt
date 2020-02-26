@@ -1,3 +1,15 @@
+Version 1.25.2 - Wednesday, 19th February 2020
+- Improvement: Testimonials - Added photo connection to photo field setting
+- Improvement: Simple Separator - Added responsive support for alignment setting option
+- Fixed: Advanced Posts - Scroll pagination conflict with multiple Advanced Posts on the Single page
+- Fixed: Button padding settings not working when button style set as default in some specific module
+- Fixed: Countdown - Added missing overall alignment setting field
+- Fixed: FAQ -  Resolved parsing error in the schema markup
+- Fixed: HTML rendering issue in settings field in some modules
+- Fixed: Info List - Division by zero PHP warning for image size
+- Fixed: User Registration Form - Register button typography setting not working
+- Fixed: Woo Products -  Resolved PHP notice error in Woo Products module
+
 Version 1.25.1 - Monday, 10th February 2020
 - Improvement: Hardened the security of plugin
 - Improvement: Compatibility with latest WordPress PHP_CodeSniffer rules

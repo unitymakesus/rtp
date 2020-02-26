@@ -62,6 +62,10 @@ class MWP_EventListener_MasterRequest_AuthenticateServiceRequest implements Symf
         $communicationKey = $this->configuration->getCommunicationStringByKeyName($keyName);
         $messageToCheck   = '';
 
+        if (empty($communicationKey)) {
+            return;
+        }
+
         if (empty($noHostSignature)) {
             $messageToCheck = $request->server['HTTP_HOST'];
         }

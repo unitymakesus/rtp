@@ -105,11 +105,13 @@ if ( 'block' === $settings->enable_separator ) {
 		'uabb-separator',
 		$id,
 		array(
-			'color'     => $settings->separator_color,
-			'height'    => $settings->separator_height,
-			'width'     => $settings->separator_width,
-			'alignment' => $settings->separator_alignment,
-			'style'     => $settings->separator_style,
+			'color'                => $settings->separator_color,
+			'height'               => $settings->separator_height,
+			'width'                => $settings->separator_width,
+			'alignment'            => ( isset( $settings->separator_alignment ) ) ? $settings->separator_alignment : '',
+			'alignment_medium'     => ( isset( $settings->separator_alignment_medium ) ) ? $settings->separator_alignment_medium : '',
+			'alignment_responsive' => ( isset( $settings->separator_alignment_responsive ) ) ? $settings->separator_alignment_responsive : '',
+			'style'                => $settings->separator_style,
 		)
 	);
 	?>

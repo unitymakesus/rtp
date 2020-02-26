@@ -357,16 +357,17 @@ FLBuilder::register_module(
 							'units'       => array( '%' ),
 						),
 						'separator_alignment'     => array(
-							'type'    => 'select',
-							'label'   => __( 'Alignment', 'uabb' ),
-							'default' => 'inherit',
-							'options' => array(
+							'type'       => 'select',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'default'    => 'inherit',
+							'responsive' => 'true',
+							'options'    => array(
 								'inherit' => __( 'Default', 'uabb' ),
 								'center'  => __( 'Center', 'uabb' ),
 								'left'    => __( 'Left', 'uabb' ),
 								'right'   => __( 'Right', 'uabb' ),
 							),
-							'preview' => array(
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-separator-parent',
 								'property'  => 'text-align',

@@ -47,7 +47,7 @@ $pos = $settings->front_img_icon_position;
 						<?php endif; ?>
 						<?php if ( '' !== $settings->desc_front ) { ?>
 							--><div class="uabb-slide-box-section-content uabb-text-editor">
-								<?php echo wp_kses_post( trim( $settings->desc_front ) ); ?>
+								<?php echo trim( $settings->desc_front ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 							</div><!-- Inline Block Space Fix
 						<?php } ?>
 					--></div><!-- Inline Block Space Fix
@@ -77,7 +77,7 @@ $pos = $settings->front_img_icon_position;
 				if ( '' !== $settings->desc_back ) {
 					?>
 					<div class="uabb-slide-down-box-section-content uabb-text-editor">
-						<?php echo wp_kses_post( trim( $settings->desc_back ) ); ?>
+						<?php echo trim( $settings->desc_back ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 					<?php
 				}

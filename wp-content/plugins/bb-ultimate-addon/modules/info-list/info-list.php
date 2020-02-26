@@ -45,7 +45,7 @@ class UABBInfoList extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/info-list/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-list/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-list/icon/' . $icon );
 		}
 		return '';
 	}
@@ -540,9 +540,9 @@ class UABBInfoList extends FLBuilderModule {
 		if ( isset( $item->list_item_description ) && '' !== $item->list_item_description ) {
 			echo '<div class="uabb-info-list-description uabb-text-editor info-list-description-dynamic' . esc_attr( $list_item_counter ) . '">';
 			if ( strpos( $item->list_item_description, '</p>' ) > 0 ) {
-				echo wp_kses_post( $item->list_item_description );
+				echo $item->list_item_description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			} else {
-				echo '<p>' . wp_kses_post( $item->list_item_description ) . '</p>';
+				echo '<p>' . $item->list_item_description . '</p>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			echo '</div>';

@@ -46,7 +46,7 @@ class UabbBusinessReview extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-business-reviews/icon/' . $icon );
 		}
 		return '';
 	}

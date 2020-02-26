@@ -22,6 +22,19 @@
 	<?php } ?>
 	display: inline-block;
 }
+<?php if ( ! $version_bb_check ) { ?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-separator-parent {
 	text-align: <?php echo esc_attr( $settings->alignment ); ?>;
 }
+	<?php
+} else {
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'alignment',
+			'selector'     => ".fl-node-$id .uabb-separator-parent",
+			'prop'         => 'text-align',
+		)
+	);
+}
+?>

@@ -560,7 +560,7 @@ class UABBInfoCircleModule extends FLBuilderModule {
 	public function get_icon( $icon = '' ) {
 
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/info-circle/icon/' . $icon ) ) {
-			return file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-circle/icon/' . $icon );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/info-circle/icon/' . $icon );
 		}
 		return '';
 	}
@@ -618,108 +618,130 @@ class UABBInfoCircleModule extends FLBuilderModule {
 				$btn_settings = array(
 
 					/* General Section */
-					'text'                        => $item->cta_text,
+					'text'                                 => $item->cta_text,
 
 					/* Link Section */
-					'link'                        => $item->cta_link,
-					'link_target'                 => $item->cta_link_target,
-					'link_nofollow'               => ( isset( $item->cta_link_nofollow ) ) ? $item->cta_link_nofollow : '',
+					'link'                                 => $item->cta_link,
+					'link_target'                          => $item->cta_link_target,
+					'link_nofollow'                        => ( isset( $item->cta_link_nofollow ) ) ? $item->cta_link_nofollow : '',
 					/* Style Section */
-					'style'                       => $item->btn_style,
-					'border_size'                 => $item->btn_border_size,
-					'transparent_button_options'  => $item->btn_transparent_button_options,
-					'threed_button_options'       => $item->btn_threed_button_options,
-					'flat_button_options'         => $item->btn_flat_button_options,
+					'style'                                => $item->btn_style,
+					'border_size'                          => $item->btn_border_size,
+					'transparent_button_options'           => $item->btn_transparent_button_options,
+					'threed_button_options'                => $item->btn_threed_button_options,
+					'flat_button_options'                  => $item->btn_flat_button_options,
 
 					/* Colors */
-					'bg_color'                    => $item->btn_bg_color,
-					'bg_hover_color'              => $item->btn_bg_hover_color,
-					'text_color'                  => $item->btn_text_color,
-					'text_hover_color'            => $item->btn_text_hover_color,
-					'hover_attribute'             => $item->hover_attribute,
+					'bg_color'                             => $item->btn_bg_color,
+					'bg_hover_color'                       => $item->btn_bg_hover_color,
+					'text_color'                           => $item->btn_text_color,
+					'text_hover_color'                     => $item->btn_text_hover_color,
+					'hover_attribute'                      => $item->hover_attribute,
 
 					/* Icon */
-					'icon'                        => $item->btn_icon,
-					'icon_position'               => $item->btn_icon_position,
+					'icon'                                 => $item->btn_icon,
+					'icon_position'                        => $item->btn_icon_position,
 
 					/* Structure */
-					'width'                       => $item->btn_width,
-					'custom_width'                => $item->btn_custom_width,
-					'custom_height'               => $item->btn_custom_height,
-					'padding_top_bottom'          => $item->btn_padding_top_bottom,
-					'padding_left_right'          => $item->btn_padding_left_right,
-					'border_radius'               => $item->btn_border_radius,
-					'align'                       => 'center',
-					'mob_align'                   => 'center',
+					'width'                                => $item->btn_width,
+					'custom_width'                         => $item->btn_custom_width,
+					'custom_height'                        => $item->btn_custom_height,
+					'padding_top_bottom'                   => $item->btn_padding_top_bottom,
+					'padding_left_right'                   => $item->btn_padding_left_right,
+					'border_radius'                        => $item->btn_border_radius,
+					'align'                                => 'center',
+					'mob_align'                            => 'center',
 
 					/* Typography */
-					'font_size'                   => ( isset( $item->btn_font_size ) ) ? $item->btn_font_size : '',
-					'line_height'                 => ( isset( $item->btn_line_height ) ) ? $item->btn_line_height : '',
-					'font_size_unit'              => $item->btn_font_size_unit,
-					'line_height_unit'            => $item->btn_line_height_unit,
-					'font_size_unit_medium'       => $item->btn_font_size_unit_medium,
-					'line_height_unit_medium'     => $item->btn_line_height_unit_medium,
-					'font_size_unit_responsive'   => $item->btn_font_size_unit_responsive,
-					'line_height_unit_responsive' => $item->btn_line_height_unit_responsive,
-					'font_family'                 => $item->btn_font_family,
-					'transform'                   => $item->btn_transform,
-					'letter-spacing'              => $item->btn_letter_spacing,
-					'button_padding_dimension'    => ( isset( $item->button_padding_dimension ) ) ? $item->button_padding_dimension : '',
-					'button_border_style'         => ( isset( $item->button_border_style ) ) ? $item->button_border_style : '',
-					'button_border_width'         => ( isset( $item->button_border_width ) ) ? $item->button_border_width : '',
-					'button_border_radius'        => ( isset( $item->button_border_radius ) ) ? $item->button_border_radius : '',
-					'button_border_color'         => ( isset( $item->button_border_color ) ) ? $item->button_border_color : '',
+					'font_size'                            => ( isset( $item->btn_font_size ) ) ? $item->btn_font_size : '',
+					'line_height'                          => ( isset( $item->btn_line_height ) ) ? $item->btn_line_height : '',
+					'font_size_unit'                       => $item->btn_font_size_unit,
+					'line_height_unit'                     => $item->btn_line_height_unit,
+					'font_size_unit_medium'                => $item->btn_font_size_unit_medium,
+					'line_height_unit_medium'              => $item->btn_line_height_unit_medium,
+					'font_size_unit_responsive'            => $item->btn_font_size_unit_responsive,
+					'line_height_unit_responsive'          => $item->btn_line_height_unit_responsive,
+					'font_family'                          => $item->btn_font_family,
+					'transform'                            => $item->btn_transform,
+					'letter-spacing'                       => $item->btn_letter_spacing,
+					'button_padding_dimension_top'         => ( isset( $item->button_padding_dimension_top ) ) ? $item->button_padding_dimension_top : '',
+					'button_padding_dimension_left'        => ( isset( $item->button_padding_dimension_left ) ) ? $item->button_padding_dimension_left : '',
+					'button_padding_dimension_bottom'      => ( isset( $item->button_padding_dimension_bottom ) ) ? $item->button_padding_dimension_bottom : '',
+					'button_padding_dimension_right'       => ( isset( $item->button_padding_dimension_right ) ) ? $item->button_padding_dimension_right : '',
+					'button_padding_dimension_top_medium'  => ( isset( $item->button_padding_dimension_top_medium ) ) ? $item->button_padding_dimension_top_medium : '',
+					'button_padding_dimension_left_medium' => ( isset( $item->button_padding_dimension_left_medium ) ) ? $item->button_padding_dimension_left_medium : '',
+					'button_padding_dimension_bottom_medium' => ( isset( $item->button_padding_dimension_bottom_medium ) ) ? $item->button_padding_dimension_bottom_medium : '',
+					'button_padding_dimension_right_medium' => ( isset( $item->button_padding_dimension_right_medium ) ) ? $item->button_padding_dimension_right_medium : '',
+					'button_padding_dimension_top_responsive' => ( isset( $item->button_padding_dimension_top_responsive ) ) ? $item->button_padding_dimension_top_responsive : '',
+					'button_padding_dimension_left_responsive' => ( isset( $item->button_padding_dimension_left_responsive ) ) ? $item->button_padding_dimension_left_responsive : '',
+					'button_padding_dimension_bottom_responsive' => ( isset( $item->button_padding_dimension_bottom_responsive ) ) ? $item->button_padding_dimension_bottom_responsive : '',
+					'button_padding_dimension_right_responsive' => ( isset( $item->button_padding_dimension_right_responsive ) ) ? $item->button_padding_dimension_right_responsive : '',
+					'button_border_style'                  => ( isset( $item->button_border_style ) ) ? $item->button_border_style : '',
+					'button_border_width'                  => ( isset( $item->button_border_width ) ) ? $item->button_border_width : '',
+					'button_border_radius'                 => ( isset( $item->button_border_radius ) ) ? $item->button_border_radius : '',
+					'button_border_color'                  => ( isset( $item->button_border_color ) ) ? $item->button_border_color : '',
 
-					'border_hover_color'          => ( isset( $item->border_hover_color ) ) ? $item->border_hover_color : '',
+					'border_hover_color'                   => ( isset( $item->border_hover_color ) ) ? $item->border_hover_color : '',
 				);
 			} else {
 				$btn_settings = array(
 
 					/* General Section */
-					'text'                       => $item->cta_text,
+					'text'                                 => $item->cta_text,
 
 					/* Link Section */
-					'link'                       => $item->cta_link,
-					'link_target'                => $item->cta_link_target,
-					'link_nofollow'              => ( isset( $item->cta_link_nofollow ) ) ? $item->cta_link_nofollow : '',
+					'link'                                 => $item->cta_link,
+					'link_target'                          => $item->cta_link_target,
+					'link_nofollow'                        => ( isset( $item->cta_link_nofollow ) ) ? $item->cta_link_nofollow : '',
 					/* Style Section */
-					'style'                      => $item->btn_style,
-					'border_size'                => $item->btn_border_size,
-					'transparent_button_options' => $item->btn_transparent_button_options,
-					'threed_button_options'      => $item->btn_threed_button_options,
-					'flat_button_options'        => $item->btn_flat_button_options,
+					'style'                                => $item->btn_style,
+					'border_size'                          => $item->btn_border_size,
+					'transparent_button_options'           => $item->btn_transparent_button_options,
+					'threed_button_options'                => $item->btn_threed_button_options,
+					'flat_button_options'                  => $item->btn_flat_button_options,
 
 					/* Colors */
-					'bg_color'                   => $item->btn_bg_color,
-					'bg_hover_color'             => $item->btn_bg_hover_color,
-					'text_color'                 => $item->btn_text_color,
-					'text_hover_color'           => $item->btn_text_hover_color,
-					'hover_attribute'            => $item->hover_attribute,
+					'bg_color'                             => $item->btn_bg_color,
+					'bg_hover_color'                       => $item->btn_bg_hover_color,
+					'text_color'                           => $item->btn_text_color,
+					'text_hover_color'                     => $item->btn_text_hover_color,
+					'hover_attribute'                      => $item->hover_attribute,
 
 					/* Icon */
-					'icon'                       => $item->btn_icon,
-					'icon_position'              => $item->btn_icon_position,
+					'icon'                                 => $item->btn_icon,
+					'icon_position'                        => $item->btn_icon_position,
 
 					/* Structure */
-					'width'                      => $item->btn_width,
-					'custom_width'               => $item->btn_custom_width,
-					'custom_height'              => $item->btn_custom_height,
-					'padding_top_bottom'         => $item->btn_padding_top_bottom,
-					'padding_left_right'         => $item->btn_padding_left_right,
-					'border_radius'              => $item->btn_border_radius,
-					'align'                      => 'center',
-					'mob_align'                  => 'center',
+					'width'                                => $item->btn_width,
+					'custom_width'                         => $item->btn_custom_width,
+					'custom_height'                        => $item->btn_custom_height,
+					'padding_top_bottom'                   => $item->btn_padding_top_bottom,
+					'padding_left_right'                   => $item->btn_padding_left_right,
+					'border_radius'                        => $item->btn_border_radius,
+					'align'                                => 'center',
+					'mob_align'                            => 'center',
 
 					/* Typography */
-					'font_size'                  => ( isset( $item->btn_font_size ) ) ? $item->btn_font_size : '',
-					'line_height'                => ( isset( $item->btn_line_height ) ) ? $item->btn_line_height : '',
-					'button_typo'                => ( isset( $item->btn_font_typo ) ) ? $item->btn_font_typo : '',
-					'button_typo_medium'         => ( isset( $item->btn_font_typo_medium ) ) ? $item->btn_font_typo_medium : '',
-					'button_typo_responsive'     => ( isset( $item->btn_font_typo_responsive ) ) ? $item->btn_font_typo_responsive : '',
+					'font_size'                            => ( isset( $item->btn_font_size ) ) ? $item->btn_font_size : '',
+					'line_height'                          => ( isset( $item->btn_line_height ) ) ? $item->btn_line_height : '',
+					'button_typo'                          => ( isset( $item->btn_font_typo ) ) ? $item->btn_font_typo : '',
+					'button_typo_medium'                   => ( isset( $item->btn_font_typo_medium ) ) ? $item->btn_font_typo_medium : '',
+					'button_typo_responsive'               => ( isset( $item->btn_font_typo_responsive ) ) ? $item->btn_font_typo_responsive : '',
 
-					'button_padding_dimension'   => ( isset( $item->button_padding_dimension ) ) ? $item->button_padding_dimension : '',
-					'button_border'              => ( isset( $item->button_border ) ) ? $item->button_border : '',
-					'border_hover_color'         => ( isset( $item->border_hover_color ) ) ? $item->border_hover_color : '',
+					'button_padding_dimension_top'         => ( isset( $item->button_padding_dimension_top ) ) ? $item->button_padding_dimension_top : '',
+					'button_padding_dimension_left'        => ( isset( $item->button_padding_dimension_left ) ) ? $item->button_padding_dimension_left : '',
+					'button_padding_dimension_bottom'      => ( isset( $item->button_padding_dimension_bottom ) ) ? $item->button_padding_dimension_bottom : '',
+					'button_padding_dimension_right'       => ( isset( $item->button_padding_dimension_right ) ) ? $item->button_padding_dimension_right : '',
+					'button_padding_dimension_top_medium'  => ( isset( $item->button_padding_dimension_top_medium ) ) ? $item->button_padding_dimension_top_medium : '',
+					'button_padding_dimension_left_medium' => ( isset( $item->button_padding_dimension_left_medium ) ) ? $item->button_padding_dimension_left_medium : '',
+					'button_padding_dimension_bottom_medium' => ( isset( $item->button_padding_dimension_bottom_medium ) ) ? $item->button_padding_dimension_bottom_medium : '',
+					'button_padding_dimension_right_medium' => ( isset( $item->button_padding_dimension_right_medium ) ) ? $item->button_padding_dimension_right_medium : '',
+					'button_padding_dimension_top_responsive' => ( isset( $item->button_padding_dimension_top_medium ) ) ? $item->button_padding_dimension_top_responsive : '',
+					'button_padding_dimension_left_responsive' => ( isset( $item->button_padding_dimension_left_responsive ) ) ? $item->button_padding_dimension_left_responsive : '',
+					'button_padding_dimension_bottom_responsive' => ( isset( $item->button_padding_dimension_bottom_responsive ) ) ? $item->button_padding_dimension_bottom_responsive : '',
+					'button_padding_dimension_right_responsive' => ( isset( $item->button_padding_dimension_right_responsive ) ) ? $item->button_padding_dimension_right_responsive : '',
+					'button_border'                        => ( isset( $item->button_border ) ) ? $item->button_border : '',
+					'border_hover_color'                   => ( isset( $item->border_hover_color ) ) ? $item->border_hover_color : '',
 				);
 			}
 			FLBuilder::render_module_html( 'uabb-button', $btn_settings );

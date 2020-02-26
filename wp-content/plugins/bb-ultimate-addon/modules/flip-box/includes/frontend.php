@@ -22,7 +22,7 @@
 					if ( '' !== $settings->desc_front ) {
 						?>
 					<div class="uabb-flip-box-section-content uabb-text-editor" >
-						<?php echo wp_kses_post( $settings->desc_front ); ?>
+						<?php echo $settings->desc_front; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 						<?php
 					}
@@ -40,7 +40,7 @@
 					if ( '' !== $settings->desc_back ) {
 						?>
 					<div class="uabb-back-flip-box-section-content uabb-text-editor">
-						<?php echo wp_kses_post( $settings->desc_back ); ?>
+						<?php echo $settings->desc_back; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</div>
 						<?php
 					}

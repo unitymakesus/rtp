@@ -138,10 +138,11 @@ FLBuilder::register_module(
 							),
 						),
 						'separator_alignment' => array(
-							'type'    => 'align',
-							'label'   => __( 'Alignment', 'uabb' ),
-							'default' => 'left',
-							'preview' => array(
+							'type'       => 'align',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'default'    => 'left',
+							'responsive' => 'true',
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-separator-parent',
 								'property'  => 'text-align',

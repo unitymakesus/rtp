@@ -25,6 +25,8 @@
 			this._contentTypeChange();
 			$( '.fl-builder-content' ).on( 'fl-builder.layout-rendered', $.proxy( this._showModalPreview, this ) );
 
+			form.find("#fl-field-ct_raw_nonce").hide();
+
 			// Validation events
 			preview_modal.on('change', $.proxy( this._showModalPreview, this ) );
 			modal_effect.on('change', $.proxy( this._showModalPreview, this ) );
@@ -169,6 +171,10 @@
 
             var form = $('.fl-builder-settings');
 			nonce = form.find( '.uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+			if ( 'undefined' === typeof nonce ) {
+				nonce     = form.find('input[name=ct_raw_nonce]').val();
+			}
 
             $.post(
                 ajaxurl,
