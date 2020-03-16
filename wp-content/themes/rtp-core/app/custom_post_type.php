@@ -50,7 +50,7 @@ function create_taxonomies() {
 			'name' => __( 'Teams' ),
 			'singular_name' => __( 'Team' )
 		),
-		'publicly_queryable' => true,
+		'publicly_queryable' => false,
 		'show_ui' => true,
     'show_admin_column' => true,
 		'show_in_nav_menus' => false,
