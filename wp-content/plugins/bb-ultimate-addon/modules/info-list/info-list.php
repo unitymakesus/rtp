@@ -501,19 +501,19 @@ class UABBInfoList extends FLBuilderModule {
 
 		if ( ! empty( $item->list_item_link ) && 'complete' === $item->list_item_link && ! empty( $item->list_item_url ) ) {
 
-			echo '<a href="' . esc_url( $item->list_item_url ) . '" class="uabb-info-list-link" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . '></a>';
+			echo '<a href="' . $item->list_item_url . '" class="uabb-info-list-link" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . '></a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		if ( isset( $item->image_type ) && 'none' !== $item->image_type ) {
 			echo '<div class="uabb-info-list-icon info-list-icon-dynamic' . esc_attr( $list_item_counter ) . '">';
 
 			if ( ! empty( $item->list_item_link ) && 'icon' === $item->list_item_link ) {
-				echo '<a href="' . esc_url( $item->list_item_url ) . '" class="uabb-info-list-link" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . '></a>';
+				echo '<a href="' . $item->list_item_url . '" class="uabb-info-list-link" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . '></a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			$this->render_image( $item, $this->settings );
 
 			if ( ! empty( $item->image_type ) && 'custom_char' === $item->image_type ) {
-				echo '<div class="custom-character' . esc_attr( $list_item_counter ) . '">' . esc_attr( $item->custom_text ) . '</div>';
+				echo '<div class="custom-character' . esc_attr( $list_item_counter ) . '">' . $item->custom_text . '</div>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			echo '</div>';
 		}
@@ -523,12 +523,12 @@ class UABBInfoList extends FLBuilderModule {
 		echo '<' . esc_attr( $this->settings->heading_tag_selection ) . ' class="uabb-info-list-title">';
 		if ( ! empty( $item->list_item_link ) && 'list-title' === $item->list_item_link && ! empty( $item->list_item_url ) ) {
 
-			echo '<a href="' . esc_url( $item->list_item_url ) . '" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . '>';
+			echo '<a href="' . $item->list_item_url . '" target="' . esc_attr( $target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 0 ) ) . '>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		}
 		if ( isset( $item->list_item_title ) ) {
 
-			echo wp_kses_post( $item->list_item_title );
+			echo $item->list_item_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		if ( ! empty( $item->list_item_link ) && 'list-title' === $item->list_item_link && ! empty( $item->list_item_url ) ) {
 

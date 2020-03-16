@@ -9,7 +9,7 @@
 
         Vue.config.devtools = true;
 
-        Vue.component('multiselect', VueMultiselect.default);
+        Vue.component('v-select', VueSelect.VueSelect);
 
         Vue.filter('i18n', str => FWP.__(str));
 
@@ -411,17 +411,15 @@
 
                 <div>
                     {{ 'Fetch' | i18n }}
-                    <multiselect
+                    <v-select
                         v-model="query_obj.post_type"
+                        :options="$root.query_data.post_types"
                         :multiple="true"
                         :searchable="false"
-                        :options="$root.query_data.post_types"
                         :close-on-select="false"
-                        :show-labels="false"
-                        label="label"
-                        track-by="value"
                         placeholder="All post types">
-                    </multiselect>
+                    </v-select>
+
                     {{ 'and show' | i18n }}
                     <input type="number" v-model.number="query_obj.posts_per_page" class="qb-posts-per-page" />
                     {{ 'per page' | i18n }}
@@ -476,6 +474,7 @@
                     <select v-model="row.type" v-show="row.key.substr(0, 3) == 'cf/'" class="qb-type">
                         <option value="CHAR">TEXT</option>
                         <option value="NUMERIC">NUMERIC</option>
+                        <option value="DATE">DATE</option>
                     </select>
 
                     <select v-model="row.compare" class="qb-compare">
@@ -491,18 +490,16 @@
                         <option v-if="showCompare('NOT EXISTS', row)" value="NOT EXISTS">NOT EXISTS</option>
                     </select>
 
-                    <multiselect
+                    <v-select
                         v-model="row.value"
                         v-show="row.compare != 'EXISTS' && row.compare != 'NOT EXISTS'"
-                        v-on:tag="addTag($event, row.value)"
+                        :options="[]"
                         :multiple="true"
                         :taggable="true"
-                        :show-labels="false"
-                        :options="[]"
-                        :closeOnSelect="false"
-                        :placeholder="getPlaceholder(row)"
-                        tag-placeholder="Hit Enter">
-                    </multiselect>
+                        :close-on-select="false"
+                        :placeholder="getPlaceholder(row)">
+                    </v-select>
+
                     <span @click="deleteFilterCriteria(index)" class="qb-remove">
                         <i class="fas fa-minus-circle"></i>
                     </span>
@@ -521,19 +518,24 @@
                 getPlaceholder({key}) {
                     return ('tax/' == key.substr(0, 4)) ? FWP.__('Enter term slugs') : FWP.__('Enter values');
                 },
-                showCompare(option, {key}) {
+                showCompare(option, {key, type}) {
                     if ('tax/' == key.substr(0, 4)) {
                         if (!['IN', 'NOT IN', 'EXISTS', 'NOT EXISTS'].includes(option)) {
                             return false;
                         }
                     }
-                    if (['ID', 'post_author', 'post_status', 'post_name'].includes(key)) {
+                    else if (['ID', 'post_author', 'post_status', 'post_name'].includes(key)) {
                         if (option != 'IN' && option != 'NOT IN') {
                             return false;
                         }
                     }
-                    if ('post_date' == key || 'post_modified' == key) {
+                    else if ('DATE' == type || 'post_date' == key || 'post_modified' == key) {
                         if (!['>', '>=', '<', '<='].includes(option)) {
+                            return false;
+                        }
+                    }
+                    else if ('CHAR' == type) {
+                        if (['>', '>=', '<', '<='].includes(option)) {
                             return false;
                         }
                     }
@@ -717,7 +719,7 @@
                     <span class="color-preview"></span>
                     <input type="text" class="color-input" v-model="settings[name]" />
                 </div>
-                <button class="color-clear">{{ 'Clear' | i18n }}</button>
+                <span class="color-clear">X</span>
             </div>`,
             mounted() {
                 let self = this;
@@ -1348,10 +1350,8 @@
                 this.facet = this.$root.editing;
             },
             methods: {
-                reservedName() {
-                    if ('pager' == this.facet.name) {
-                        this.facet.name += '_';
-                    }
+                setName(e) {
+                    this.facet.name = this.$root.sanitizeName(e.target.innerHTML);
                 },
                 unlock() {
                     Vue.delete(this.facet, '_code');
@@ -1373,13 +1373,10 @@
                                 @focus="$root.isNameEditable(facet)"
                                 @keyup="$root.maybeEditName(facet)"
                             />
-                            &nbsp; &nbsp; {{ 'Name' | i18n }}:
-                            <input
-                                type="text"
-                                class="item-name"
-                                v-model="facet.name"
-                                @change="reservedName"
-                            />
+                            <code class="item-name" contenteditable v-text="facet.name" @blur="setName" @keydown.enter.prevent autocorrect="off"></code>
+                            <span class="facetwp-btn" @click="$root.copyToClipboard(facet.name, 'facet', $event)">
+                                {{ 'Copy shortcode' | i18n }}
+                            </span>
                         </div>
                     </div>
                     <div class="facetwp-row">
@@ -1390,10 +1387,6 @@
                                 :selected="facet.type"
                                 :types="$root.facet_types">
                             </facet-types>
-                            &nbsp; &nbsp;
-                            <span class="facetwp-btn" @click="$root.copyToClipboard(facet.name, $event)">
-                                {{ 'Copy shortcode' | i18n }}
-                            </span>
                         </div>
                     </div>
                     <div class="facetwp-row field-data-source">
@@ -1448,6 +1441,9 @@
                 }
             },
             methods: {
+                setName(e) {
+                    this.template.name = this.$root.sanitizeName(e.target.innerHTML);
+                },
                 isMode(mode) {
                     return this.template.modes[this.tab] === mode;
                 },
@@ -1473,12 +1469,10 @@
                             @focus="$root.isNameEditable(template)"
                             @keyup="$root.maybeEditName(template)"
                         />
-                        &nbsp; &nbsp; Name:
-                        <input
-                            type="text"
-                            class="item-name"
-                            v-model="template.name"
-                        />
+                        <code class="item-name" contenteditable v-text="template.name" @blur="setName" @keydown.enter.prevent autocorrect="off"></code>
+                        <span class="facetwp-btn" @click="$root.copyToClipboard(template.name, 'template', $event)">
+                            {{ 'Copy shortcode' | i18n }}
+                        </span>
                     </div>
 
                     <div @click="switchMode()" v-show="isMode('visual')" class="side-link">{{ 'Switch to advanced mode' | i18n }}</div>
@@ -1731,6 +1725,7 @@
                 editItem(type, data) {
                     this['editing_' + type] = true;
                     this.editing = data;
+                    window.scrollTo(0, 0);
                 },
                 doneEditing() {
                     this.editing_template = false;
@@ -1888,7 +1883,7 @@
                         json = "<?php\nreturn " + json + ';';
                         json = json.replace(/[\{]/g, '[');
                         json = json.replace(/[\}]/g, ']');
-                        json = json.replace(/:/g, ' =>');
+                        json = json.replace(/":/g, '" =>');
                         template.query = json;
                     }, 'json');
                 },
@@ -1901,14 +1896,14 @@
                 purgeIndexTable() {
                     this.getInfo('purge_index_table', 'Purging');
                 },
-                copyToClipboard(name, {target}) {
+                copyToClipboard(name, type, {target}) {
                     const $this = $(target);
                     const $el = $('.facetwp-clipboard');
                     const orig_text = $this.text();
 
                     try {
                         $el.removeClass('hidden');
-                        $el.val('[facetwp facet="' + name + '"]');
+                        $el.val('[facetwp ' + type + '="' + name + '"]');
                         $el.select();
                         document.execCommand('copy');
                         $el.addClass('hidden');
@@ -1937,13 +1932,16 @@
                 },
                 maybeEditName(item) {
                     if (this.is_name_editable) {
-                        let val = $.trim(item.label).toLowerCase();
-                        val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
-                        val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
-                        val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
-                        val = ('pager' == val) ? val + '_' : val; // reserved
-                        item.name = val;
+                        item.name = this.sanitizeName(item.label);
                     }
+                },
+                sanitizeName(name) {
+                    let val = $.trim(name).toLowerCase();
+                    val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
+                    val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
+                    val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
+                    val = ('pager' == val) ? val + '_' : val; // reserved
+                    return val;
                 },
                 documentClick({target}) {
                     let el = target;

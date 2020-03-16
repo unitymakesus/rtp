@@ -685,7 +685,11 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 * @param string $password Password which user enter.
 		 */
 		public function handle_after_enter_password_in_password_form( $post_id, $password ) {
+			$is_valid = $this->is_valid_password_from_request( $post_id, $password);
+			do_action( 'ppw_redirect_after_enter_password', $is_valid );
+		}
 
+		public function is_valid_password_from_request($post_id, $password) {
 			// Get current role of current user.
 			$current_roles   = ppw_core_get_current_role();
 			$is_pro_activate = apply_filters( PPW_Constants::HOOK_IS_PRO_ACTIVATE, false );
@@ -703,7 +707,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 				$is_valid = $this->handle_master_passwords( $password, $is_valid, $current_roles, $post_id );
 			}
 
-			do_action( 'ppw_redirect_after_enter_password', $is_valid );
+			return $is_valid;
 		}
 
 		/**

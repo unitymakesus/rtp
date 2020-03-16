@@ -788,7 +788,7 @@ class SB_Instagram_Feed
 				if ( empty( $this->header_data['bio'] )
 				     && isset( $connected_accounts_for_feed[ $first_user ]['bio'] ) ) {
 
-					$this->header_data['bio'] = $connected_accounts_for_feed[ $first_user ]['bio'];
+					$this->header_data['bio'] = sbi_decode_emoji( $connected_accounts_for_feed[ $first_user ]['bio'] );
 				}
 			} else {
 				if ( $connection->is_wp_error() ) {

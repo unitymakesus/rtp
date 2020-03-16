@@ -22,7 +22,7 @@ if ( 'default' === $settings->dual_button_style ) {
 <div class="uabb-module-content uabb-dual-button <?php echo 'uabb-align-' . esc_attr( $settings->dual_button_align ); ?>">
 	<div class="uabb-dual-button-wrapper <?php echo 'uabb-' . esc_attr( $settings->dual_button_type ); ?> <?php echo 'uabb-' . esc_attr( $settings->dual_button_type ) . '-' . esc_attr( $settings->dual_button_width_type ); ?>">
 		<div class="uabb-dual-button-one <?php echo 'uabb-btn-' . esc_attr( $settings->dual_button_type ); ?> <?php echo esc_attr( $settings->button_one_class ); ?>">
-			<a class="uabb-btn uabb-btn-one<?php echo esc_attr( $btn_style_class ); ?>" href="<?php echo esc_attr( $settings->button_one_link ); ?>" target="<?php echo esc_attr( $settings->button_one_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->button_one_link_target, $settings->button_one_link_nofollow, 1 ); ?>>
+			<a class="uabb-btn uabb-btn-one<?php echo esc_attr( $btn_style_class ); ?>" href="<?php echo $settings->button_one_link; ?>" target="<?php echo esc_attr( $settings->button_one_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->button_one_link_target, $settings->button_one_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php if ( 'before' === $settings->icon_position_btn_one && 'none' !== $settings->image_type_btn_one ) { ?>
 				<div class="uabb-btn-img-icon before uabb-btn-one-img-icon">
 					<?php
@@ -40,7 +40,7 @@ if ( 'default' === $settings->dual_button_style ) {
 					?>
 				</div>
 				<?php } ?>
-				<span class="uabb-btn-one-text"><?php echo wp_kses_post( $settings->button_one_title ); ?></span>
+				<span class="uabb-btn-one-text"><?php echo $settings->button_one_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 				<?php if ( 'after' === $settings->icon_position_btn_one && 'none' !== $settings->image_type_btn_one ) { ?>
 				<div class="uabb-btn-img-icon after uabb-btn-one-img-icon">
 					<?php
@@ -66,7 +66,7 @@ if ( 'default' === $settings->dual_button_style ) {
 				<span class="uabb-middle-text">
 					<?php
 					if ( 'text' === $settings->divider_options ) {
-						echo wp_kses_post( $settings->divider_text );
+						echo $settings->divider_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					}
 					if ( 'icon' === $settings->divider_options || 'photo' === $settings->divider_options ) {
 						$divider_img_icon = array(
@@ -89,7 +89,7 @@ if ( 'default' === $settings->dual_button_style ) {
 			?>
 		</div>
 		<div class="uabb-dual-button-two <?php echo 'uabb-btn-' . esc_attr( $settings->dual_button_type ); ?> <?php echo esc_attr( $settings->button_two_class ); ?>">
-			<a class="uabb-btn uabb-btn-two<?php echo esc_attr( $btn_style_class ); ?>" href="<?php echo esc_attr( $settings->button_two_link ); ?>" target="<?php echo esc_attr( $settings->button_two_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->button_two_link_target, $settings->button_two_link_nofollow, 1 ); ?>>
+			<a class="uabb-btn uabb-btn-two<?php echo esc_attr( $btn_style_class ); ?>" href="<?php echo $settings->button_two_link; ?>" target="<?php echo esc_attr( $settings->button_two_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->button_two_link_target, $settings->button_two_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php if ( 'before' === $settings->icon_position_btn_two && 'none' !== $settings->image_type_btn_two ) { ?>
 				<div class="uabb-btn-img-icon before uabb-btn-two-img-icon">
 					<?php
@@ -107,7 +107,7 @@ if ( 'default' === $settings->dual_button_style ) {
 					?>
 				</div>
 				<?php } ?>
-				<span class="uabb-btn-two-text"><?php echo wp_kses_post( $settings->button_two_title ); ?></span>
+				<span class="uabb-btn-two-text"><?php echo $settings->button_two_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 				<?php if ( 'after' === $settings->icon_position_btn_two && 'none' !== $settings->image_type_btn_two ) { ?>
 				<div class="uabb-btn-img-icon after uabb-btn-two-img-icon">
 					<?php

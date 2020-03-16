@@ -46,6 +46,11 @@ window.FWP = window.FWP || {};
                     FWP.is_popstate = false;
                 }
             });
+
+            // Prevent hash clicks from changing the URL
+            $(document).on('click', 'a[href^="#"]', function(e) {
+                e.preventDefault();
+            });
         }, 0);
     });
 
@@ -186,20 +191,11 @@ window.FWP = window.FWP || {};
             FWP.hooks.doAction('facetwp/refresh/' + facet_type, $this, facet_name);
 
             // Support custom loader
-            var do_loader = true;
-            if (FWP.loaded) {
-                if (FWP.soft_refresh || isset(FWP.frozen_facets[facet_name])) {
-                    do_loader = false;
-                }
-            }
-
-            if (do_loader) {
-                FWP.loading_handler({
-                    'element': $this,
-                    'facet_name': facet_name,
-                    'facet_type': facet_type
-                });
-            }
+            FWP.loading_handler({
+                'element': $this,
+                'facet_name': facet_name,
+                'facet_type': facet_type
+            });
         });
 
         // Add pagination to the URL hash
@@ -220,24 +216,22 @@ window.FWP = window.FWP || {};
 
 
     FWP.loading_handler = function(args) {
-        if ('fade' == FWP_JSON.loading_animation) {
-            if (! FWP.loaded) {
-                var $el = args.element;
-                $(document).on('facetwp-refresh', function() {
-                    $el.prepend('<div class="facetwp-overlay">');
-                    $el.find('.facetwp-overlay').css({
-                        width: $el.width(),
-                        height: $el.height()
-                    });
-                });
+        if (! FWP.loaded) {
+            var $el = args.element;
+            $(document).on('facetwp-refresh', function() {
 
-                $(document).on('facetwp-loaded', function() {
-                    $el.find('.facetwp-overlay').remove();
+                $el.addClass('is-loading');
+                $el.prepend('<div class="facetwp-overlay">');
+                $el.find('.facetwp-overlay').css({
+                    width: $el.width(),
+                    height: $el.height()
                 });
-            }
-        }
-        else if ('' == FWP_JSON.loading_animation) {
-            args.element.html('<div class="facetwp-loading"></div>');
+            });
+
+            $(document).on('facetwp-loaded', function() {
+                $el.removeClass('is-loading');
+                $el.find('.facetwp-overlay').remove();
+            });
         }
     }
 

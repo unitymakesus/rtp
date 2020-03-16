@@ -34,9 +34,9 @@ if ( '' === $settings->show_entries_all_label ) {
 	<div class="table-data">
 		<?php if ( 'yes' === $settings->show_entries ) : ?>
 			<div class="entries-wrapper">
-				<label class="lbl-entries"><?php echo wp_kses_post( $settings->show_entries_label ); ?></label>
+				<label class="lbl-entries"><?php echo $settings->show_entries_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 				<select class="select-filter">	
-					<option class="filter-entry"><?php echo wp_kses_post( $settings->show_entries_all_label ); ?></option>
+					<option class="filter-entry"><?php echo $settings->show_entries_all_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
 					<?php for ( $cnt = 1; $cnt < $row_filter_count; $cnt++ ) { ?>
 						<option class="filter-entry"> <?php echo wp_kses_post( $cnt ); ?> </option>
 					<?php } ?>									
@@ -46,7 +46,7 @@ if ( '' === $settings->show_entries_all_label ) {
 
 		<?php if ( 'yes' === $settings->show_search ) : ?>
 			<div class="search-wrapper">
-				<input class="search-input" type="text" placeholder="<?php echo esc_attr( $settings->search_label ); ?>" name="toSearch" id="searchHere"/>
+				<input class="search-input" type="text" placeholder="<?php echo $settings->search_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="toSearch" id="searchHere"/>
 			</div>
 		<?php endif ?>	
 	</div>
@@ -75,14 +75,14 @@ if ( '' === $settings->show_entries_all_label ) {
 									if ( 'yes' === $settings->show_sort ) {
 										?>
 									<label class="head-style-<?php echo esc_attr( $table_header ); ?> th-style">
-										<label class="head-inner-text"> <?php echo wp_kses_post( $settings->thead_row[ $table_header ]->heading ); ?> </label>
+										<label class="head-inner-text"> <?php echo $settings->thead_row[ $table_header ]->heading; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </label>
 									</label>
 									<i class="uabb-sort-icon fa fa-sort"> </i>
 										<?php
 									} else {
 										?>
 									<label class="head-style-<?php echo esc_attr( $table_header ); ?> th-style"> 
-										<label class="head-inner-text"> <?php echo wp_kses_post( $settings->thead_row[ $table_header ]->heading ); ?> </label> 
+										<label class="head-inner-text"> <?php echo $settings->thead_row[ $table_header ]->heading; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </label> 
 									</label>
 										<?php
 									}
@@ -96,7 +96,7 @@ if ( '' === $settings->show_entries_all_label ) {
 									if ( ! empty( $settings->thead_row[ $table_header ]->head_link ) ) {
 										?>
 
-									<a href="<?php echo esc_url( $settings->thead_row[ $table_header ]->head_link ); ?>" target="<?php echo esc_attr( $settings->thead_row[ $table_header ]->head_link_target ); ?>" class="th-style head-style-<?php echo esc_attr( $table_header ); ?>"<?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->thead_row[ $table_header ]->head_link_target, $settings->thead_row[ $table_header ]->head_link_nofollow, 1 ); ?> >
+									<a href="<?php echo $settings->thead_row[ $table_header ]->head_link; ?>" target="<?php echo esc_attr( $settings->thead_row[ $table_header ]->head_link_target ); ?>" class="th-style head-style-<?php echo esc_attr( $table_header ); ?>"<?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->thead_row[ $table_header ]->head_link_target, $settings->thead_row[ $table_header ]->head_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
 
 										<?php
 										if ( 'before' === $settings->thead_row[ $table_header ]->head_icon_position ) {
@@ -113,7 +113,7 @@ if ( '' === $settings->show_entries_all_label ) {
 										}
 										?>
 
-										<span class="thead-th-context"> <?php echo wp_kses_post( $settings->thead_row[ $table_header ]->heading ); ?> </span>									
+										<span class="thead-th-context"> <?php echo $settings->thead_row[ $table_header ]->heading; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>									
 										<?php
 										if ( 'after' === $settings->thead_row[ $table_header ]->head_icon_position ) {
 
@@ -156,7 +156,7 @@ if ( '' === $settings->show_entries_all_label ) {
 										}
 										?>
 
-										<span> <?php echo wp_kses_post( $settings->thead_row[ $table_header ]->heading ); ?> </span>
+										<span> <?php echo $settings->thead_row[ $table_header ]->heading; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 
 										<?php
 										if ( 'after' === $settings->thead_row[ $table_header ]->head_icon_position ) {
@@ -198,7 +198,7 @@ if ( '' === $settings->show_entries_all_label ) {
 										<?php } ?>
 										<td class="table-body-td <?php echo esc_attr( $body_text_color ); ?> <?php echo esc_attr( $body_bg_color ); ?> table-body-<?php echo esc_attr( $table_body ); ?>" colspan="<?php echo esc_attr( $settings->tbody_row[ $table_body ]->body_col_span ); ?>" rowspan="<?php echo esc_attr( $settings->tbody_row[ $table_body ]->body_row_span ); ?>"> 
 											<?php if ( 'no' === $settings->tbody_row[ $table_body ]->body_advanced_opt ) { ?>
-												<span class="content-text"> <?php echo wp_kses_post( $settings->tbody_row[ $table_body ]->features ); ?> </span>
+												<span class="content-text"> <?php echo $settings->tbody_row[ $table_body ]->features; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 													<?php
 											} else {
 												if ( 'yes' === $settings->tbody_row[ $table_body ]->body_advanced_opt ) {
@@ -211,7 +211,7 @@ if ( '' === $settings->show_entries_all_label ) {
 													if ( ! empty( $settings->tbody_row[ $table_body ]->body_link ) ) {
 														?>
 
-													<a class="td-style" href="<?php echo esc_url( $settings->tbody_row[ $table_body ]->body_link ); ?>" target="<?php echo esc_attr( $settings->tbody_row[ $table_body ]->body_link_target ); ?>"<?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->tbody_row[ $table_body ]->body_link_target, $settings->tbody_row[ $table_body ]->body_link_nofollow, 1 ); ?> >
+													<a class="td-style" href="<?php echo $settings->tbody_row[ $table_body ]->body_link; ?>" target="<?php echo esc_attr( $settings->tbody_row[ $table_body ]->body_link_target ); ?>"<?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->tbody_row[ $table_body ]->body_link_target, $settings->tbody_row[ $table_body ]->body_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
 
 														<?php if ( 'photo' === $settings->tbody_row[ $table_body ]->body_icon_type && ! empty( $settings->tbody_row[ $table_body ]->body_photo ) && 'before' === $settings->tbody_row[ $table_body ]->body_icon_position ) { ?>
 															<img class="body-content-img <?php echo esc_attr( $before_icon ); ?>" src="<?php echo esc_url( $settings->tbody_row[ $table_body ]->body_photo_src ); ?>"/>
@@ -221,7 +221,7 @@ if ( '' === $settings->show_entries_all_label ) {
 															<i class="<?php echo esc_attr( $before_icon ); ?> <?php echo esc_attr( $settings->tbody_row[ $table_body ]->body_icon ); ?>"></i>
 														<?php } ?>
 
-														<span class="content-text"> <?php echo wp_kses_post( $settings->tbody_row[ $table_body ]->features ); ?> </span>
+														<span class="content-text"> <?php echo $settings->tbody_row[ $table_body ]->features; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 
 														<?php if ( 'photo' === $settings->tbody_row[ $table_body ]->body_icon_type && ( ! empty( $settings->tbody_row[ $table_body ]->body_photo ) && 'after' === $settings->tbody_row[ $table_body ]->body_icon_position ) ) { ?>
 																<img class="body-content-img <?php echo esc_attr( $after_icon ); ?>" src="<?php echo esc_url( $settings->tbody_row[ $table_body ]->body_photo_src ); ?>"/>
@@ -243,7 +243,7 @@ if ( '' === $settings->show_entries_all_label ) {
 																<i class="<?php echo esc_attr( $before_icon ); ?> <?php echo esc_attr( $settings->tbody_row[ $table_body ]->body_icon ); ?>"></i>
 															<?php } ?>
 
-															<span class="content-text"> <?php echo wp_kses_post( $settings->tbody_row[ $table_body ]->features ); ?> </span>
+															<span class="content-text"> <?php echo $settings->tbody_row[ $table_body ]->features; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 
 															<?php if ( 'photo' === $settings->tbody_row[ $table_body ]->body_icon_type && ( ! empty( $settings->tbody_row[ $table_body ]->body_photo ) && 'after' === $settings->tbody_row[ $table_body ]->body_icon_position ) ) { ?>
 																<img class="body-content-img <?php echo esc_attr( $after_icon ); ?>" src="<?php echo esc_url( $settings->tbody_row[ $table_body ]->body_photo_src ); ?>"/>
@@ -268,6 +268,6 @@ if ( '' === $settings->show_entries_all_label ) {
 	</div>	
 	<?php
 } else {
-	echo wp_kses_post( $module->render() );
+	echo $module->render(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 ?>

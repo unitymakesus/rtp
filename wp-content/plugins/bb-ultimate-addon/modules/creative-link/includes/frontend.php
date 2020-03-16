@@ -48,7 +48,7 @@ $current_url = home_url( add_query_arg( array(), $wp->request ) );
 			?>
 		<li class="uabb-creative-link uabb-cl-<?php echo esc_attr( $settings->link_style ); ?> <?php echo esc_attr( $current_class ); ?>">
 			<<?php echo esc_attr( $settings->link_typography_tag_selection ); ?> class="uabb-cl-heading">
-				<a href="<?php echo esc_url( $screen_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 1 ); ?> data-hover="<?php echo esc_attr( $screen->title ); ?>"><?php $module->render_text( $screen->title ); ?></a>
+				<a href="<?php echo $screen_link; ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $nofollow, 1 ); ?> data-hover="<?php echo $screen->title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php $module->render_text( $screen->title ); ?></a>
 			</<?php echo esc_attr( $settings->link_typography_tag_selection ); ?>>
 		</li>
 			<?php

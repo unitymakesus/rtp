@@ -1,3 +1,14 @@
+Version 1.26.0 - Wednesday, 11th March 2020
+- New: Introduced Caldera Form Styler
+- Improvement: Business Reviews - Added a filter to change the review date format
+- Improvement: Video - Added structured data support
+- Fixed: Dual Button - Button border-radius setting not working when button style set as default
+- Fixed: Dual Button - Button text-color setting not working when button-type setting set as vertical in case of the default style
+- Fixed: Dual Button - Button icon spacing not working when join button setting set as no in case of the default style
+- Fixed: HTML rendering issue in settings field in some modules
+- Fixed: Woo - Add To Cart - Resolved CSS rendering issue when button style is transparent
+- Fixed: WPForms Styler - Fixed font size not working for input fields
+
 Version 1.25.2 - Wednesday, 19th February 2020
 - Improvement: Testimonials - Added photo connection to photo field setting
 - Improvement: Simple Separator - Added responsive support for alignment setting option

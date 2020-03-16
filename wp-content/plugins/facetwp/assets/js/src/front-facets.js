@@ -153,7 +153,10 @@
     FWP.hooks.addAction('facetwp/refresh/radio', function($this, facet_name) {
         var selected_values = [];
         $this.find('.facetwp-radio.checked').each(function() {
-            selected_values.push($(this).attr('data-value'));
+            var val = $(this).attr('data-value');
+            if ('' !== val) {
+                selected_values.push(val);
+            }
         });
         FWP.facets[facet_name] = selected_values;
     });

@@ -43,14 +43,14 @@ if ( isset( $photo_src ) ) {
 							$hotspot_tag  = 'span';
 						}
 						?>
-					<<?php echo esc_attr( $hotspot_tag ); ?> class="uabb-hotspot-tooltip uabb-tooltip-style-<?php echo esc_attr( $settings->hotspot_marker[ $i ]->tooltip_style ); ?> uabb-tooltip-<?php echo esc_attr( $settings->hotspot_marker[ $i ]->tooltip_content_position ); ?> " <?php echo wp_kses_post( $hotspot_link ); ?> <?php echo wp_kses_post( $target ); ?>>
+					<<?php echo esc_attr( $hotspot_tag ); ?> class="uabb-hotspot-tooltip uabb-tooltip-style-<?php echo esc_attr( $settings->hotspot_marker[ $i ]->tooltip_style ); ?> uabb-tooltip-<?php echo esc_attr( $settings->hotspot_marker[ $i ]->tooltip_content_position ); ?> " <?php echo $hotspot_link; ?> <?php echo wp_kses_post( $target ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 						<?php $module->render_image_icon( $i ); ?>
 						<?php
 						if ( 'tooltip' === $settings->hotspot_marker[ $i ]->on_click_action ) {
 							?>
 						<span class="uabb-hotspot-tooltip-content uabb-text-editor">
 							<?php
-							echo wp_kses_post( $settings->hotspot_marker[ $i ]->tooltip_content );
+							echo $settings->hotspot_marker[ $i ]->tooltip_content; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 							if ( 'yes' === $settings->hotspot_tour ) {
 								?>

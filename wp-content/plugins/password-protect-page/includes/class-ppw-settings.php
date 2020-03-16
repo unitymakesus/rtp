@@ -42,6 +42,10 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 						'tab_name' => 'General',
 					),
 					array(
+						'tab'      => 'misc',
+						'tab_name' => 'Misc',
+					),
+					array(
 						'tab'      => 'entire_site',
 						'tab_name' => 'Sitewide',
 					),
@@ -84,7 +88,7 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 		 * @param string $active_tab Active tab.
 		 */
 		private function render_content( $active_tab ) {
-			$tabs = apply_filters( PPW_Constants::HOOK_CUSTOM_TAB, array( 'general', 'entire_site', 'shortcodes', 'master_passwords' ) );
+			$tabs = apply_filters( PPW_Constants::HOOK_CUSTOM_TAB, array( 'general', 'misc', 'entire_site', 'shortcodes', 'master_passwords' ) );
 			foreach ( $tabs as $tab ) {
 				if ( $active_tab === $tab ) {
 					do_action( PPW_Constants::HOOK_RENDER_CONTENT_FOR_TAB . $tab );

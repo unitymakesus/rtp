@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Ultimate Addons for Beaver Builder 1.25.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/bb-ultimate-addon\n"
-"POT-Creation-Date: 2020-02-19 04:43:32+00:00\n"
+"POT-Creation-Date: 2020-03-11 05:22:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -147,359 +147,259 @@ msgstr ""
 msgid "20"
 msgstr ""
 
-#: admin/bsf-core/BSF_Envato_Activate.php:178
+#: admin/bsf-core/auto-update/admin-functions.php:313
+msgid "Please"
+msgstr ""
+
+#: admin/bsf-core/auto-update/admin-functions.php:313
+msgid "activate"
+msgstr ""
+
+#: admin/bsf-core/auto-update/admin-functions.php:313
+msgid "your copy of the"
+msgstr ""
+
+#: admin/bsf-core/auto-update/admin-functions.php:313
+msgid "to get update notifications, access to support features & other resources!"
+msgstr ""
+
+#: admin/bsf-core/auto-update/admin-functions.php:520
+msgid "Invalid Request"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-envato-activate.php:137
+msgid "Sign Up & Activate"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-envato-activate.php:138
+#: admin/bsf-core/class-bsf-license-manager.php:523
+#: admin/bsf-core/class-bsf-license-manager.php:747
+msgid "Deactivate License"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-envato-activate.php:199
 msgid ""
 "Updates & Support Registration - <span class=\"not-active\">Not "
 "Active!</span>"
 msgstr ""
 
-#: admin/bsf-core/BSF_Envato_Activate.php:179
+#: admin/bsf-core/class-bsf-envato-activate.php:200
 msgid ""
 "Click on the button below to activate your license and subscribe to our "
 "newsletter."
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:427
+#: admin/bsf-core/class-bsf-license-manager.php:508
 msgid "Product id is missing."
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:505
+#: admin/bsf-core/class-bsf-license-manager.php:522
+#: admin/bsf-core/class-bsf-license-manager.php:731
+#: admin/bsf-core/class-bsf-license-manager.php:746
+msgid "Activate License"
+msgstr ""
+
+#: admin/bsf-core/class-bsf-license-manager.php:587
 msgid ""
 "<p>Click on the button below to activate your license and subscribe to our "
 "newsletter.</p>"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:507
+#: admin/bsf-core/class-bsf-license-manager.php:589
 msgid "<p>Enter your purchase key and activate automatic updates.</p>"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:534
+#: admin/bsf-core/class-bsf-license-manager.php:618
 msgid "Your license is active."
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:644
-#: admin/bsf-core/BSF_License_Manager.php:659
-msgid "Activate License"
-msgstr ""
-
-#: admin/bsf-core/BSF_License_Manager.php:647
+#: admin/bsf-core/class-bsf-license-manager.php:734
 #: classes/class-uabb-admin-settings.php:347
 #: includes/admin-settings-license.php:10
 msgid "License"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:660
-msgid "Deactivate License"
-msgstr ""
-
-#: admin/bsf-core/BSF_License_Manager.php:662
+#: admin/bsf-core/class-bsf-license-manager.php:749
 msgid "Your license is not active!"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:663
+#: admin/bsf-core/class-bsf-license-manager.php:750
 msgid "Your license is activated!"
 msgstr ""
 
-#: admin/bsf-core/BSF_License_Manager.php:709
+#: admin/bsf-core/class-bsf-license-manager.php:796
 msgid "Close"
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:488
+#: admin/bsf-core/class-bsf-update-manager.php:568
+#. translators: %1$s: $parent_name %2%s: $registration_page
 msgid ""
 " <br>This plugin is came bundled with the <i>%1$s</i>. For receiving "
 "updates, you need to register license of <i>%2$s</i> <a "
 "href=\"%3$s\">here</a>."
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:490
+#: admin/bsf-core/class-bsf-update-manager.php:571
+#. translators: %1$s: $registration_page %2%s: search term
 msgid ""
 " <i>Please <a href=\"%1$s\">activate your license</a> to update the "
 "plugin.</i>"
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:554
-#: admin/bsf-core/BSF_Update_Manager.php:581
+#: admin/bsf-core/class-bsf-update-manager.php:653
+#: admin/bsf-core/class-bsf-update-manager.php:683
+#. translators: %1$s: $registration_page_url %2%s: $plugin_name
+#. translators: %1$s: $registration_page_url %2%s: $theme_name
 msgid ""
 "Click <a target=\"_blank\" href=\"%1$1s\">here</a> to activate license of "
 "<i>%2$2s</i> to receive automatic updates."
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:560
+#: admin/bsf-core/class-bsf-update-manager.php:660
+#. translators: %1$s: $plugin_name %2%s: search term
 msgid "Activate license of <i>%2s</i> to receive automatic updates."
 msgstr ""
 
-#: admin/bsf-core/BSF_Update_Manager.php:566
+#: admin/bsf-core/class-bsf-update-manager.php:667
+#. translators: %1$s: $plugin_name %2%s: $plugin_name %3%s:
+#. $registration_page_url
 msgid ""
 "This plugin is came bundled with the <i>%1$1s</i>. For receiving updates, "
 "you need to register license of <i>%2$2s</i> <a target=\"_blank\" "
 "href=\"%3$3s\">here</a>."
 msgstr ""
 
-#: admin/bsf-core/auto-update/admin-functions.php:621
-msgid "Please"
-msgstr ""
-
-#: admin/bsf-core/auto-update/admin-functions.php:621
-msgid "activate"
-msgstr ""
-
-#: admin/bsf-core/auto-update/admin-functions.php:621
-msgid "your copy of the"
-msgstr ""
-
-#: admin/bsf-core/auto-update/admin-functions.php:621
-msgid "to get update notifications, access to support features & other resources!"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:17
-msgid "Upgrading Extension"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:34
-msgid "Back to Registration"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:219
-msgid "Let's Get Started!"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:222
-msgid ""
-"Please register using the form below and get instant access to our support "
-"portal, updates, extensions and more!"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:233
-#: modules/mailchimp-subscribe-form/includes/frontend.php:45
-#: modules/mailchimp-subscribe-form/includes/frontend.php:49
-#: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:78
-#: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:78
-#: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:55
-#: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:53
-msgid "Your Name"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:238
-msgid "Your Email Address"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:244
-msgid "Verify Email Address"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:251
-msgid "Receive important news, updates & freebies on email."
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:258
-msgid "Register and Proceed"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:265
-msgid "We respect your privacy & of course you can unsubscribe at any time."
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:313
-msgid "Welcome to %s"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:316
-msgid ""
-"Validate your purchase keys and get eligible for receiving one click "
-"updates, extensions and freebies."
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:376
-msgid "Licenses"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:379
-msgid "Help"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:383
-msgid "Debug"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:385
-msgid "System Info"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:615
-msgid "Enable Developer access"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:616
-msgid "Read more about developer access "
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:618
-msgid "here"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:627
-msgid "Activate your license to enable!"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:648
-msgid "Check if there are updates available of plugins by %s."
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:653
-msgid "Check Updates Now"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:663
-msgid ""
-"Having any trouble using our products? Head to our support center to get "
-"your issues resolved."
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:666
-msgid "Request Support"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:687
-msgid "Reset %s Registration"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:700
-msgid "Check Bundled Products"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:709
-msgid "%s Menu in Settings?"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:711
-msgid "Move the %s menu to WordPress settings?"
-msgstr ""
-
-#: admin/bsf-core/auto-update/index.php:714
-msgid "Update"
-msgstr ""
-
-#: admin/bsf-core/includes/helpers.php:200
+#: admin/bsf-core/includes/helpers.php:239
 msgid " requires following plugins to be active : "
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:210
+#: admin/bsf-core/includes/helpers.php:249
 msgid " requires following plugins to be installed and activated : "
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:219
+#: admin/bsf-core/includes/helpers.php:258
 msgid "Begin activating plugins"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:223
+#: admin/bsf-core/includes/helpers.php:262
 msgid "Begin installing plugins"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:226
+#: admin/bsf-core/includes/helpers.php:265
 msgid "Dismiss This Notice"
 msgstr ""
 
-#: admin/bsf-core/includes/helpers.php:253
+#: admin/bsf-core/includes/helpers.php:296
+#. translators: %1$s: strong tag %2%s: strong tag  %3%s: anchor tag %4%s:
+#. closing anchor tag
 msgid ""
 "Looks like you are on a WordPress Multisite, you will need to install and "
 "network activate %1$s Brainstorm Updater for Multisite %2$s plugin. "
 "Download it from %3$s here %4$s"
 msgstr ""
 
-#: admin/bsf-core/includes/system-info.php:10
+#: admin/bsf-core/includes/system-info.php:19
 msgid "WordPress Environment"
 msgstr ""
 
-#: admin/bsf-core/includes/system-info.php:114
+#: admin/bsf-core/includes/system-info.php:124
 msgid "Server Environment"
 msgstr ""
 
-#: admin/bsf-core/includes/system-info.php:218
+#: admin/bsf-core/includes/system-info.php:228
 msgid "Theme Information"
 msgstr ""
 
-#: admin/bsf-core/includes/system-info.php:238
+#: admin/bsf-core/includes/system-info.php:250
 msgid "Installed Plugins"
 msgstr ""
 
-#: admin/bsf-core/index.php:152 admin/bsf-core/index.php:153
+#: admin/bsf-core/index.php:114 admin/bsf-core/index.php:115
 msgid "Extensions"
 msgstr ""
 
-#: admin/bsf-core/index.php:285
+#: admin/bsf-core/index.php:249
 msgid "iMedica Extensions"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:150
+#: admin/bsf-core/plugin-installer/admin-functions.php:153
 msgid "You do not have sufficient permissions to install plugins for this site."
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:212
+#: admin/bsf-core/plugin-installer/admin-functions.php:207
 msgid "Error! Can't connect to filesystem"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:223
+#: admin/bsf-core/plugin-installer/admin-functions.php:218
 msgid "Downloading package from Server"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/admin-functions.php:224
+#: admin/bsf-core/plugin-installer/admin-functions.php:219
 msgid "Removing old plugin, if exists"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:9
-msgid "Installing Extension"
+#: admin/bsf-core/plugin-installer/admin-functions.php:279
+msgid "Invalid request"
 msgstr ""
 
 #: admin/bsf-core/plugin-installer/index.php:16
+msgid "Installing Extension"
+msgstr ""
+
+#: admin/bsf-core/plugin-installer/index.php:26
 msgid "Manage plugin here"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:60
+#: admin/bsf-core/plugin-installer/index.php:71
 msgid "Extensions "
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:66
+#: admin/bsf-core/plugin-installer/index.php:77
 msgid "Available Extensions"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:141
-#: admin/bsf-core/plugin-installer/index.php:260
+#: admin/bsf-core/plugin-installer/index.php:153
+#: admin/bsf-core/plugin-installer/index.php:256
 msgid "Downloading"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:182
-#: admin/bsf-core/plugin-installer/index.php:300
+#: admin/bsf-core/plugin-installer/index.php:178
+#: admin/bsf-core/plugin-installer/index.php:280
 #: classes/class-uabb-admin-settings.php:257
 #: classes/class-uabb-cloud-templates.php:700
 msgid "Install"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:187
-#: admin/bsf-core/plugin-installer/index.php:304
+#: admin/bsf-core/plugin-installer/index.php:183
+#: admin/bsf-core/plugin-installer/index.php:284
 msgid "Validate Purchase"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:198
-#: admin/bsf-core/plugin-installer/index.php:315
+#: admin/bsf-core/plugin-installer/index.php:194
+#: admin/bsf-core/plugin-installer/index.php:295
 #: classes/class-uabb-admin-settings.php:258
 #: classes/class-uabb-cloud-templates.php:684
 msgid "Installed"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:211
+#: admin/bsf-core/plugin-installer/index.php:207
 msgid "All available extensions have been installed!"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:219
+#: admin/bsf-core/plugin-installer/index.php:215
 msgid "Installed Extensions"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:328
+#: admin/bsf-core/plugin-installer/index.php:308
 msgid "No extensions installed yet!"
 msgstr ""
 
-#: admin/bsf-core/plugin-installer/index.php:337
+#: admin/bsf-core/plugin-installer/index.php:317
 msgid "No extensions available yet!"
+msgstr ""
+
+#: admin/bsf-core/plugin-installer/index.php:320
+msgid "Refresh Bundled Products"
 msgstr ""
 
 #: bb-ultimate-addon.php:59
@@ -731,6 +631,7 @@ msgstr ""
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:149
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:166
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:345
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:142
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:212
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:241
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:212
@@ -1619,6 +1520,9 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:223
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:274
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:64
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:84
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:339
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:515
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:177
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:405
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:414
@@ -1767,6 +1671,7 @@ msgstr ""
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:343
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:722
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:788
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:884
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:105
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:143
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:152
@@ -2097,6 +2002,9 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:410
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:466
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:65
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:83
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:340
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:516
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:178
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:406
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:415
@@ -2255,6 +2163,7 @@ msgstr ""
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:639
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:723
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:787
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:885
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:106
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:144
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:153
@@ -2413,6 +2322,9 @@ msgstr ""
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:284
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:331
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:296
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:189
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:312
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:483
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:333
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:380
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:341
@@ -2603,6 +2515,7 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:1146
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:77
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:97
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:692
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:168
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:192
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:885
@@ -2876,22 +2789,26 @@ msgstr ""
 msgid " plugin installed & activated."
 msgstr ""
 
-#: classes/class-uabb-template-ajax.php:82
+#: classes/class-uabb-template-ajax.php:84
 msgid "No templates found!"
 msgstr ""
 
-#: classes/class-uabb-template-ajax.php:120
+#: classes/class-uabb-template-ajax.php:122
 msgid "You have not added any Contact Form 7 yet."
 msgstr ""
 
-#: classes/class-uabb-template-ajax.php:163
+#: classes/class-uabb-template-ajax.php:165
 #: modules/uabb-gravity-form/includes/gf-function.php:33
 msgid "You have not added any Gravity Forms yet."
 msgstr ""
 
-#: classes/class-uabb-template-ajax.php:203
+#: classes/class-uabb-template-ajax.php:205
 #: modules/uabb-wp-forms-styler/includes/wp-form-function.php:37
 msgid "You have not added any WPForms yet."
+msgstr ""
+
+#: classes/class-uabb-template-ajax.php:247
+msgid "You have not added any Caldera Forms yet."
 msgstr ""
 
 #: classes/class-uabb-wpml.php:74
@@ -3261,492 +3178,500 @@ msgid "Gravity Form Description"
 msgstr ""
 
 #: classes/class-uabb-wpml.php:343
-msgid "Contact Form : Name Label"
+msgid "Caldera Form Title"
 msgstr ""
 
 #: classes/class-uabb-wpml.php:348
+msgid "Caldera Form Description"
+msgstr ""
+
+#: classes/class-uabb-wpml.php:360
+msgid "Contact Form : Name Label"
+msgstr ""
+
+#: classes/class-uabb-wpml.php:365
 msgid "Contact Form : Name Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:353
+#: classes/class-uabb-wpml.php:370
 msgid "Contact Form : Email Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:358
+#: classes/class-uabb-wpml.php:375
 msgid "Contact Form : Email Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:363
+#: classes/class-uabb-wpml.php:380
 msgid "Contact Form : Subject Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:368
+#: classes/class-uabb-wpml.php:385
 msgid "Contact Form : Subject Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:373
+#: classes/class-uabb-wpml.php:390
 msgid "Contact Form : Phone Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:378
+#: classes/class-uabb-wpml.php:395
 msgid "Contact Form : Phone Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:383
+#: classes/class-uabb-wpml.php:400
 msgid "Contact Form : Message Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:388
+#: classes/class-uabb-wpml.php:405
 msgid "Contact Form : Message Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:393
+#: classes/class-uabb-wpml.php:410
 msgid "Contact Form : Success Message"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:398
+#: classes/class-uabb-wpml.php:415
 msgid "Contact Form : Success URL"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:403
+#: classes/class-uabb-wpml.php:420
 msgid "Contact Form : Button Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:408
+#: classes/class-uabb-wpml.php:425
 msgid "Contact Form : Checkbox Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:413
+#: classes/class-uabb-wpml.php:430
 msgid "Contact Form : Terms Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:432
+#: classes/class-uabb-wpml.php:449
 msgid "Countdown : Expire Message"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:437
+#: classes/class-uabb-wpml.php:454
 msgid "Countdown : Redirect Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:442
+#: classes/class-uabb-wpml.php:459
 msgid "Countdown : Years Label ( Plural )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:447
+#: classes/class-uabb-wpml.php:464
 msgid "Countdown : Year Label ( Singular )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:452
+#: classes/class-uabb-wpml.php:469
 msgid "Countdown : Months Label ( Plural )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:457
+#: classes/class-uabb-wpml.php:474
 msgid "Countdown : Month Label ( Singular )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:462
+#: classes/class-uabb-wpml.php:479
 msgid "Countdown : Days Label ( Plural )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:467
+#: classes/class-uabb-wpml.php:484
 msgid "Countdown : Day Label ( Singular )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:472
+#: classes/class-uabb-wpml.php:489
 msgid "Countdown : Hours Label ( Plural )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:477
+#: classes/class-uabb-wpml.php:494
 msgid "Countdown : Hour Label ( Singular )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:482
+#: classes/class-uabb-wpml.php:499
 msgid "Countdown : Minutes Label ( Plural )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:487
+#: classes/class-uabb-wpml.php:504
 msgid "Countdown : Minute Label ( Singular )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:492
+#: classes/class-uabb-wpml.php:509
 msgid "Countdown : Seconds Label ( Plural )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:497
+#: classes/class-uabb-wpml.php:514
 msgid "Countdown : Second Label ( Singular )"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:509
+#: classes/class-uabb-wpml.php:526
 msgid "Before After Slider : Before text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:514
+#: classes/class-uabb-wpml.php:531
 msgid "Before After Slider : After text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:526
+#: classes/class-uabb-wpml.php:543
 #: classes/wpml/class-wpml-uabb-testimonials.php:43
 msgid "Testimonials : Author Name"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:531
+#: classes/class-uabb-wpml.php:548
 #: classes/wpml/class-wpml-uabb-testimonials.php:46
 msgid "Testimonials : Designation"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:536
+#: classes/class-uabb-wpml.php:553
 msgid "Testimonials : Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:549
+#: classes/class-uabb-wpml.php:566
 msgid "Team : Name"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:554
+#: classes/class-uabb-wpml.php:571
 msgid "Team : Designation"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:559
+#: classes/class-uabb-wpml.php:576
 msgid "Team : Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:564
+#: classes/class-uabb-wpml.php:581
 msgid "Team : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:576
+#: classes/class-uabb-wpml.php:593
 msgid "Counter : Text Above Number"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:581
+#: classes/class-uabb-wpml.php:598
 msgid "Counter : Text Before Counter"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:586
+#: classes/class-uabb-wpml.php:603
 msgid "Counter : Text Below Number"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:591
+#: classes/class-uabb-wpml.php:608
 msgid "Counter : Text After Counter"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:596
+#: classes/class-uabb-wpml.php:613
 msgid "Counter :  Number Prefix"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:601
+#: classes/class-uabb-wpml.php:618
 msgid "Counter :  Number Suffix"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:613
+#: classes/class-uabb-wpml.php:630
 msgid "Dual Button : Button One Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:618
+#: classes/class-uabb-wpml.php:635
 msgid "Dual Button : Button One Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:623
+#: classes/class-uabb-wpml.php:640
 msgid "Dual Button : Button Two Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:628
+#: classes/class-uabb-wpml.php:645
 msgid "Dual Button : Button Two Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:633
+#: classes/class-uabb-wpml.php:650
 msgid "Dual Button : Divider Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:645
+#: classes/class-uabb-wpml.php:662
 msgid "Dual Color Heading : First Heading"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:650
+#: classes/class-uabb-wpml.php:667
 msgid "Dual Color Heading : First Heading Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:655
+#: classes/class-uabb-wpml.php:672
 msgid "Dual Color Heading : Second Heading"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:660
+#: classes/class-uabb-wpml.php:677
 msgid "Dual Color Heading : Second Heading Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:672
+#: classes/class-uabb-wpml.php:689
 msgid "Fancy Text : Prefix"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:677
+#: classes/class-uabb-wpml.php:694
 msgid "Fancy Text : Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:682
+#: classes/class-uabb-wpml.php:699
 msgid "Fancy Text : Suffix"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:687
+#: classes/class-uabb-wpml.php:704
 msgid "Fancy Text : Cursor Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:699
+#: classes/class-uabb-wpml.php:716
 msgid "Flip Box : Title on Front"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:704
+#: classes/class-uabb-wpml.php:721
 msgid "Flip Box : Description on Front"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:709
+#: classes/class-uabb-wpml.php:726
 msgid "Flip Box : Title on Back"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:714
+#: classes/class-uabb-wpml.php:731
 msgid "Flip Box : Description on Back"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:726
+#: classes/class-uabb-wpml.php:743
 msgid "Image Separator : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:738
+#: classes/class-uabb-wpml.php:755
 msgid "Interactive Banner 2 : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:743
+#: classes/class-uabb-wpml.php:760
 msgid "Interactive Banner 2 : Title"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:748
+#: classes/class-uabb-wpml.php:765
 msgid "Interactive Banner 2 : Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:760
+#: classes/class-uabb-wpml.php:777
 msgid "Slide Box : Title on Front"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:765
+#: classes/class-uabb-wpml.php:782
 msgid "Slide Box : Description on Front"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:770
+#: classes/class-uabb-wpml.php:787
 msgid "Slide Box : Title on Back"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:775
+#: classes/class-uabb-wpml.php:792
 msgid "Slide Box : Description on Back"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:780
+#: classes/class-uabb-wpml.php:797
 msgid "Slide Box : CTA Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:785
+#: classes/class-uabb-wpml.php:802
 msgid "Slide Box : CTA Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:798
+#: classes/class-uabb-wpml.php:815
 msgid "Advanced Separator : Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:845
+#: classes/class-uabb-wpml.php:862
 msgid "Info Banner: Title"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:850
+#: classes/class-uabb-wpml.php:867
 msgid "Info Banner: Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:855
+#: classes/class-uabb-wpml.php:872
 msgid "Info Banner: Call to action text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:860
+#: classes/class-uabb-wpml.php:877
 msgid "Info Banner: Button text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:865
+#: classes/class-uabb-wpml.php:882
 msgid "Info Banner : Call to action button link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:870
+#: classes/class-uabb-wpml.php:887
 msgid "Info Banner: Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:889
+#: classes/class-uabb-wpml.php:906
 msgid "Photo : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:908
+#: classes/class-uabb-wpml.php:925
 msgid "Advanced Posts : Call to action text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:913
+#: classes/class-uabb-wpml.php:930
 msgid "Advanced Posts : Button Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:918
+#: classes/class-uabb-wpml.php:935
 msgid "Advanced Posts : No Results Message"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:930
+#: classes/class-uabb-wpml.php:947
 msgid "Info Table : Heading"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:935
+#: classes/class-uabb-wpml.php:952
 msgid "Info Table : Sub Heading"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:940
+#: classes/class-uabb-wpml.php:957
 msgid "Info Table : Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:945
+#: classes/class-uabb-wpml.php:962
 msgid "Info Table : Call to action button text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:950
+#: classes/class-uabb-wpml.php:967
 msgid "Info Table : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:962
+#: classes/class-uabb-wpml.php:979
 msgid "Interactive Banner : Title"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:967
+#: classes/class-uabb-wpml.php:984
 msgid "Interactive Banner : Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:972
+#: classes/class-uabb-wpml.php:989
 msgid "Interactive Banner : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:991
+#: classes/class-uabb-wpml.php:1008
 msgid "Content Toggle : Heading 1"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:996
+#: classes/class-uabb-wpml.php:1013
 msgid "Content Toggle : Content 1"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1001
+#: classes/class-uabb-wpml.php:1018
 msgid "Content Toggle : Heading 2"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1006
+#: classes/class-uabb-wpml.php:1023
 msgid "Content Toggle : Content 2"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1026
+#: classes/class-uabb-wpml.php:1043
 msgid "Button: Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1038
+#: classes/class-uabb-wpml.php:1055
 msgid "Sale Flash: Flash Content"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1043
+#: classes/class-uabb-wpml.php:1060
 msgid "Featured Flash: Flash Content"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1056
+#: classes/class-uabb-wpml.php:1073
 msgid "Video : YouTube Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1061
+#: classes/class-uabb-wpml.php:1078
 msgid "Video : Vimeo Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1066
+#: classes/class-uabb-wpml.php:1083
 msgid "Video : Subscribe to channel text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1071
+#: classes/class-uabb-wpml.php:1088
 msgid "Video : This is info bar"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1096
+#: classes/class-uabb-wpml.php:1113
 msgid "Marketing Button : Title"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1101
+#: classes/class-uabb-wpml.php:1118
 msgid "Marketing Button : Description"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1106
+#: classes/class-uabb-wpml.php:1123
 msgid "Marketing Button : Link"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1118
+#: classes/class-uabb-wpml.php:1135
 msgid "Photo Gallery : \"All\" Tab Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1123
+#: classes/class-uabb-wpml.php:1140
 msgid "Photo Gallery : Enter Default Category Name"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1128
+#: classes/class-uabb-wpml.php:1145
 msgid "Photo Gallery : Title Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1140
+#: classes/class-uabb-wpml.php:1157
 msgid "Business Reviews : Read More Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1152
+#: classes/class-uabb-wpml.php:1169
 msgid "Off Canvas : Content"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1157
+#: classes/class-uabb-wpml.php:1174
 msgid "Off Canvas : Button Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1169
+#: classes/class-uabb-wpml.php:1186
 msgid "Retina Image : Custom Caption"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1188
+#: classes/class-uabb-wpml.php:1205
 msgid "UABB Login : Username Field Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1193
+#: classes/class-uabb-wpml.php:1210
 msgid "UABB Login : Username Field Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1198
+#: classes/class-uabb-wpml.php:1215
 msgid "UABB Login : Password Field Label"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1203
+#: classes/class-uabb-wpml.php:1220
 msgid "UABB Login : Password Field Placeholder"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1208
+#: classes/class-uabb-wpml.php:1225
 msgid "UABB Login : Lost your Password Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1213
+#: classes/class-uabb-wpml.php:1230
 msgid "UABB Login : Lost Your Password URL"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1218
+#: classes/class-uabb-wpml.php:1235
 msgid "UABB Login : Custom Link Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1223
+#: classes/class-uabb-wpml.php:1240
 msgid "UABB Login : Custom Link URL"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1228
+#: classes/class-uabb-wpml.php:1245
 msgid "UABB Login : Remember me Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1233
+#: classes/class-uabb-wpml.php:1250
 msgid "UABB Login : WP Login Button Text"
 msgstr ""
 
-#: classes/class-uabb-wpml.php:1238 classes/class-uabb-wpml.php:1243
+#: classes/class-uabb-wpml.php:1255 classes/class-uabb-wpml.php:1260
 msgid "UABB Login : Custom Redirect URL"
 msgstr ""
 
@@ -3903,6 +3828,7 @@ msgstr ""
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:86
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:89
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:93
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:132
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:52
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:160
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:164
@@ -4098,6 +4024,7 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:18
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:15
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:14
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:57
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:15
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:129
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:14
@@ -4313,6 +4240,9 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:664
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:238
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:249
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:162
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:430
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:551
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:110
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:298
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:107
@@ -4509,6 +4439,7 @@ msgstr ""
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-less-than-2-2-compatibility.php:316
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:259
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:276
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:448
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:319
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:321
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:962
@@ -4588,6 +4519,7 @@ msgstr ""
 #: modules/pricing-box/pricing-box-bb-less-than-2-2-compatibility.php:957
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:204
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:219
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:459
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:274
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:274
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:426
@@ -4668,6 +4600,7 @@ msgstr ""
 #: modules/pricing-box/pricing-box-bb-less-than-2-2-compatibility.php:963
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:217
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:230
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:473
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:287
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:285
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:937
@@ -6756,6 +6689,9 @@ msgstr ""
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:228
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:99
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:239
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:144
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:157
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:416
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:170
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:194
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:577
@@ -8284,6 +8220,9 @@ msgstr ""
 #: modules/team/team-bb-2-2-compatibility.php:446
 #: modules/team/team-bb-less-than-2-2-compatibility.php:50
 #: modules/team/team-bb-less-than-2-2-compatibility.php:482
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:386
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:526
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:642
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:735
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:744
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:341
@@ -8990,6 +8929,14 @@ msgstr ""
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:485
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:492
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:541
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:791
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:813
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:854
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:895
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:910
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:925
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:940
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:955
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:518
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:541
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:570
@@ -9193,6 +9140,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1020
 #: modules/team/team-bb-2-2-compatibility.php:647
 #: modules/team/team-bb-less-than-2-2-compatibility.php:691
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:798
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:867
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:1060
 #: modules/uabb-faq/uabb-faq-bb-2-2-compatibility.php:422
@@ -9280,6 +9228,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1023
 #: modules/team/team-bb-2-2-compatibility.php:650
 #: modules/team/team-bb-less-than-2-2-compatibility.php:694
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:801
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:528
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:537
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:870
@@ -9383,6 +9332,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1024
 #: modules/team/team-bb-2-2-compatibility.php:651
 #: modules/team/team-bb-less-than-2-2-compatibility.php:695
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:802
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:529
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:538
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:871
@@ -9486,6 +9436,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1025
 #: modules/team/team-bb-2-2-compatibility.php:652
 #: modules/team/team-bb-less-than-2-2-compatibility.php:696
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:803
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:530
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:539
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:872
@@ -9589,6 +9540,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1026
 #: modules/team/team-bb-2-2-compatibility.php:653
 #: modules/team/team-bb-less-than-2-2-compatibility.php:697
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:804
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:531
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:540
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:873
@@ -9692,6 +9644,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1027
 #: modules/team/team-bb-2-2-compatibility.php:654
 #: modules/team/team-bb-less-than-2-2-compatibility.php:698
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:805
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:532
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:541
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:874
@@ -9795,6 +9748,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1028
 #: modules/team/team-bb-2-2-compatibility.php:655
 #: modules/team/team-bb-less-than-2-2-compatibility.php:699
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:806
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:533
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:542
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:875
@@ -9894,6 +9848,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1029
 #: modules/team/team-bb-2-2-compatibility.php:656
 #: modules/team/team-bb-less-than-2-2-compatibility.php:700
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:807
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:534
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:543
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:876
@@ -9989,6 +9944,7 @@ msgstr ""
 #: modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php:1030
 #: modules/team/team-bb-2-2-compatibility.php:657
 #: modules/team/team-bb-less-than-2-2-compatibility.php:701
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:808
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:535
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:544
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:877
@@ -10234,6 +10190,10 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:346
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:387
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:476
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:143
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:415
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:822
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:863
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:551
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:598
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:576
@@ -10547,6 +10507,8 @@ msgstr ""
 #: modules/team/team-bb-less-than-2-2-compatibility.php:396
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:464
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:510
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:345
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:380
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:77
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:76
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:709
@@ -11007,6 +10969,7 @@ msgstr ""
 
 #: modules/advanced-accordion/advanced-accordion-bb-2-2-compatibility.php:32
 #: modules/advanced-accordion/advanced-accordion-bb-less-than-2-2-compatibility.php:31
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:76
 #: modules/uabb-faq/uabb-faq-bb-2-2-compatibility.php:58
 #: modules/uabb-faq/uabb-faq-bb-less-than-2-2-compatibility.php:57
 #: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:770
@@ -11090,6 +11053,7 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:677
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:317
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:329
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:398
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:366
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:374
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:606
@@ -12850,6 +12814,7 @@ msgstr ""
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-less-than-2-2-compatibility.php:719
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:387
 #: modules/uabb-button/uabb-button-bb-less-than-2-2-compatibility.php:398
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:657
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:433
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php:445
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:796
@@ -12952,6 +12917,7 @@ msgstr ""
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-2-2-compatibility.php:181
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-less-than-2-2-compatibility.php:233
 #: modules/uabb-button/uabb-button-bb-2-2-compatibility.php:270
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:496
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:393
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:1025
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:633
@@ -14524,6 +14490,7 @@ msgstr ""
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:298
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:132
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:131
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:117
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:25
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:81
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:136
@@ -14573,6 +14540,7 @@ msgstr ""
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:299
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:133
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:132
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:118
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:26
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:82
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:137
@@ -14670,6 +14638,8 @@ msgstr ""
 
 #: modules/blog-posts/blog-posts-bb-2-2-compatibility.php:355
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:336
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:222
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:392
 msgid "Large"
 msgstr ""
 
@@ -14677,6 +14647,8 @@ msgstr ""
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:337
 #: modules/photo-gallery/photo-gallery-bb-2-2-compatibility.php:42
 #: modules/photo-gallery/photo-gallery-bb-less-than-2-2-compatibility.php:41
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:221
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:391
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-2-2-compatibility.php:33
 #: modules/uabb-image-carousel/uabb-image-carousel-bb-less-than-2-2-compatibility.php:32
 msgid "Medium"
@@ -16147,6 +16119,7 @@ msgstr ""
 #: modules/blog-posts/blog-posts-bb-less-than-2-2-compatibility.php:1545
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:379
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:398
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:325
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:479
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:478
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:309
@@ -16341,6 +16314,7 @@ msgstr ""
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-2-2-compatibility.php:825
 #: modules/uabb-business-hours/uabb-business-hours-bb-2-2-compatibility.php:287
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-2-2-compatibility.php:1074
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:968
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:1433
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:1084
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-2-2-compatibility.php:650
@@ -16356,7 +16330,7 @@ msgstr ""
 #: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:1006
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:791
 #: modules/uabb-table-of-contents/uabb-table-of-contents-bb-2-2-compatibility.php:649
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:874
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:933
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:930
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:344
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php:448
@@ -16374,6 +16348,7 @@ msgstr ""
 #: modules/uabb-advanced-menu/uabb-advanced-menu-bb-2-2-compatibility.php:828
 #: modules/uabb-business-hours/uabb-business-hours-bb-2-2-compatibility.php:290
 #: modules/uabb-business-reviews/uabb-business-reviews-bb-2-2-compatibility.php:1077
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:971
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:1436
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:1087
 #: modules/uabb-content-toggle/uabb-content-toggle-bb-2-2-compatibility.php:653
@@ -16389,7 +16364,7 @@ msgstr ""
 #: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:1009
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:794
 #: modules/uabb-table-of-contents/uabb-table-of-contents-bb-2-2-compatibility.php:652
-#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:877
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:936
 #: modules/uabb-video-gallery/uabb-video-gallery-bb-2-2-compatibility.php:933
 #: modules/uabb-woo-add-to-cart/uabb-woo-add-to-cart-bb-2-2-compatibility.php:347
 #: modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php:451
@@ -17640,6 +17615,8 @@ msgstr ""
 #: modules/info-circle/info-circle-bb-2-2-compatibility.php:1055
 #: modules/info-circle/info-circle-bb-less-than-2-2-compatibility.php:594
 #: modules/info-circle/info-circle-bb-less-than-2-2-compatibility.php:1069
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:139
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:412
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:572
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:573
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:63
@@ -20758,6 +20735,8 @@ msgstr ""
 
 #: modules/info-table/info-table-bb-2-2-compatibility.php:320
 #: modules/info-table/info-table-bb-less-than-2-2-compatibility.php:286
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:835
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:876
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:1248
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:1362
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:907
@@ -21049,6 +21028,15 @@ msgid ""
 "use latest Beaver Builder to view best results."
 msgstr ""
 
+#: modules/mailchimp-subscribe-form/includes/frontend.php:45
+#: modules/mailchimp-subscribe-form/includes/frontend.php:49
+#: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:78
+#: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:78
+#: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:55
+#: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:53
+msgid "Your Name"
+msgstr ""
+
 #: modules/mailchimp-subscribe-form/includes/frontend.php:61
 #: modules/mailchimp-subscribe-form/includes/frontend.php:65
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:97
@@ -21282,6 +21270,7 @@ msgstr ""
 
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-2-2-compatibility.php:477
 #: modules/mailchimp-subscribe-form/mailchimp-subscribe-form-bb-less-than-2-2-compatibility.php:488
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:564
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:773
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:777
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:380
@@ -23735,6 +23724,8 @@ msgstr ""
 
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-2-2-compatibility.php:315
 #: modules/uabb-beforeafterslider/uabb-beforeafterslider-bb-less-than-2-2-compatibility.php:311
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:257
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:574
 #: modules/uabb-table/uabb-table-bb-2-2-compatibility.php:604
 #: modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php:544
 msgid "Label Color"
@@ -24434,7 +24425,7 @@ msgid ""
 "Reviews, please set up API key in"
 msgstr ""
 
-#: modules/uabb-business-reviews/uabb-business-reviews.php:1040
+#: modules/uabb-business-reviews/uabb-business-reviews.php:1041
 #. translators: %1$s: search term
 msgid ""
 "<span class=\"google__notice\" style=\"%1$s\"> If you are facing issues "
@@ -24442,7 +24433,7 @@ msgid ""
 "Places API key and Google Place ID. </span>"
 msgstr ""
 
-#: modules/uabb-business-reviews/uabb-business-reviews.php:1045
+#: modules/uabb-business-reviews/uabb-business-reviews.php:1046
 #. translators: %1$s: search term, %2$s: search term, %3$s: search term
 msgid ""
 "<span class=\"google__notice\" style=\"%1$s\">To display Google Places "
@@ -24451,7 +24442,7 @@ msgid ""
 "target=\"_blank\" rel=\"noopener\"> here. </a> </span> "
 msgstr ""
 
-#: modules/uabb-business-reviews/uabb-business-reviews.php:1053
+#: modules/uabb-business-reviews/uabb-business-reviews.php:1054
 #. translators: %1$s: search term
 msgid ""
 "<span class=\"yelp__notice\" style=\"%1$s\">If you are facing issues while "
@@ -24459,7 +24450,7 @@ msgid ""
 "and Yelp Business ID. </span>"
 msgstr ""
 
-#: modules/uabb-business-reviews/uabb-business-reviews.php:1058
+#: modules/uabb-business-reviews/uabb-business-reviews.php:1059
 #. translators: %1$s: search term, %2$s: search term, %3$s: search term
 msgid ""
 "<span class=\"yelp__notice\" style=\"%1$s\"> To display Yelp reviews, you "
@@ -24468,7 +24459,7 @@ msgid ""
 "rel=\"noopener\"> here. </a></span>"
 msgstr ""
 
-#: modules/uabb-business-reviews/uabb-business-reviews.php:1067
+#: modules/uabb-business-reviews/uabb-business-reviews.php:1068
 #. translators: %1$s: search term
 msgid ""
 "<span class=\"all__notice\" style=\"%1$s\"> If you are facing issues while "
@@ -24476,7 +24467,7 @@ msgid ""
 "API key, Yelp API key, Goggle Place ID and Yelp Business ID. </span>"
 msgstr ""
 
-#: modules/uabb-business-reviews/uabb-business-reviews.php:1072
+#: modules/uabb-business-reviews/uabb-business-reviews.php:1073
 #. translators: %1$s: search term, %2$s: search term, %3$s: search term
 msgid ""
 "<span class=\"all__notice\" style=\"%1$s\"> To display Google Places "
@@ -24505,6 +24496,258 @@ msgstr ""
 #: modules/uabb-button/uabb-button.php:23
 #: modules/uabb-marketing-button/uabb-marketing-button.php:23
 msgid "A simple call to action button."
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/includes/frontend.php:104
+msgid "Please select a Caldera Form."
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:24
+msgid "Caldera Forms Styler"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:25
+msgid "Caldera Forms Styler Module"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:44
+#. translators: %1$s: search term, %2$s: search term, %3$s: search term
+msgid ""
+"<span style=\"%1$s\">This module is not compatible with Beaver Builder "
+"version less than 2.2. To use the module, please install Beaver Builder "
+"version 2.2 or greater.</span>"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:65
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:21
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:20
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:21
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:20
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:22
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:21
+msgid "Select Form"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:67
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:25
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:25
+msgid "Choose a form that you wish to style"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:80
+msgid "Add Title & Description"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:95
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:794
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:32
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:863
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:31
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:1056
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:57
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1010
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:56
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1199
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:58
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:878
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:58
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:1095
+msgid "Form Title"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:96
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:59
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:59
+msgid "Enter the Form Title here ..."
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:104
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:850
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:42
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:922
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:40
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:1180
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:66
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1084
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:65
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1337
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:67
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:939
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:68
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:1224
+msgid "Form Description"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:105
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:68
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:69
+msgid "Enter the Description here ..."
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:114
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:77
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:80
+msgid "Labels"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:125
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:88
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:91
+msgid " It works if labels are not hidden in the back-end"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:175
+#: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:661
+#: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:667
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:153
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:156
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:210
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:214
+#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:333
+#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:332
+#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:322
+#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:309
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:222
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:208
+msgid "Form Padding"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:202
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:181
+#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:183
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:238
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:241
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:240
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:235
+msgid "Title & Description Alignment"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:216
+msgid "Field Size"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:219
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:389
+msgid "Extra Small"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:220
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:390
+msgid "Small"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:223
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:393
+msgid "Extra Large"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:228
+msgid "Field Padding"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:243
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:865
+#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:998
+msgid "Field Background Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:271
+msgid "Input Text / Placeholder Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:285
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:295
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:304
+msgid "Field Description Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:299
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:308
+#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:317
+msgid "Required Asterisk Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:336
+msgid "Disable Field Shadow Effect"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:351
+msgid "Spacing Between Two Fields"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:359
+#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:377
+#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:417
+#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:363
+#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:377
+msgid "Label Bottom Spacing"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:367
+msgid "Description Top Spacing"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:443
+#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:731
+#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:868
+#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:679
+#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:723
+msgid "Background Gradient"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:512
+msgid "Override Current Style"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:587
+msgid "Checkbox Border"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:612
+msgid "Radio Border"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:671
+msgid "Selected Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:689
+#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:155
+#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:154
+msgid "Error Message Position"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:693
+msgid "Bottom Right Side of Field"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:707
+#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:476
+msgid "Error Message Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:721
+msgid "Error Message Background Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:732
+msgid "Error Label Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:745
+msgid "Highlight Border Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:761
+#: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:707
+#: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:714
+#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:466
+#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:524
+msgid "Success Message Color"
+msgstr ""
+
+#: modules/uabb-caldera-form-styler/uabb-caldera-form-styler.php:775
+msgid "Success Message Background Color"
 msgstr ""
 
 #: modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php:23
@@ -24751,21 +24994,6 @@ msgstr ""
 msgid "Textarea Height"
 msgstr ""
 
-#: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:661
-#: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:667
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:153
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:156
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:210
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:214
-#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:333
-#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:332
-#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:322
-#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:309
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:222
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:208
-msgid "Form Padding"
-msgstr ""
-
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:668
 #: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:679
 msgid "Round Corner"
@@ -24803,13 +25031,6 @@ msgstr ""
 msgid ""
 "If the validation is not right then this color would be applied to input "
 "border"
-msgstr ""
-
-#: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:707
-#: modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php:714
-#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:466
-#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:524
-msgid "Success Message Color"
 msgstr ""
 
 #: modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php:716
@@ -25066,50 +25287,11 @@ msgid ""
 "(%2$s)"
 msgstr ""
 
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:21
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:20
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:21
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:20
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:22
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:21
-msgid "Select Form"
-msgstr ""
-
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:24
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:23
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:24
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:23
 msgid "Choose the form that you want for this page for styling"
-msgstr ""
-
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:32
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:863
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:31
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:1056
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:57
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1010
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:56
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1199
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:58
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:878
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:58
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:1095
-msgid "Form Title"
-msgstr ""
-
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:42
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:922
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:40
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:1180
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:66
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:1084
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:65
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:1337
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:67
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:939
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:68
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:1224
-msgid "Form Description"
 msgstr ""
 
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:82
@@ -25122,15 +25304,6 @@ msgid ""
 "You can select one of the three background types:<br />Color: simple one "
 "color background, <br />Gradient: two color background or <br />Image: "
 "single image or pattern."
-msgstr ""
-
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:181
-#: modules/uabb-contact-form7/uabb-contact-form7-bb-less-than-2-2-compatibility.php:183
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:238
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:241
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:240
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:235
-msgid "Title & Description Alignment"
 msgstr ""
 
 #: modules/uabb-contact-form7/uabb-contact-form7-bb-2-2-compatibility.php:202
@@ -25914,11 +26087,6 @@ msgstr ""
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:857
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:992
 msgid "Field Label Color"
-msgstr ""
-
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:865
-#: modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php:998
-msgid "Field Background Color"
 msgstr ""
 
 #: modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php:873
@@ -26744,11 +26912,6 @@ msgstr ""
 msgid "Remember Me Text"
 msgstr ""
 
-#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:155
-#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:154
-msgid "Error Message Position"
-msgstr ""
-
 #: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:158
 #: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:157
 msgid "Top of the Form"
@@ -26813,13 +26976,6 @@ msgstr ""
 #: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:360
 #: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:401
 msgid "Form Alignment"
-msgstr ""
-
-#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:377
-#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:417
-#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:363
-#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:377
-msgid "Label Bottom Spacing"
 msgstr ""
 
 #: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:390
@@ -26891,13 +27047,6 @@ msgstr ""
 #: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:658
 #: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:795
 msgid "WP Login Button Styling"
-msgstr ""
-
-#: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:731
-#: modules/uabb-login-form/uabb-login-bb-less-than-2-2-compatibility.php:868
-#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:679
-#: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:723
-msgid "Background Gradient"
 msgstr ""
 
 #: modules/uabb-login-form/uabb-login-bb-2-2-compatibility.php:793
@@ -27866,10 +28015,6 @@ msgstr ""
 #: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:260
 #: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:249
 msgid "Success / Error Messages"
-msgstr ""
-
-#: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:476
-msgid "Error Message Color"
 msgstr ""
 
 #: modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php:485
@@ -29339,6 +29484,30 @@ msgstr ""
 msgid "Show Subscribers Count"
 msgstr ""
 
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:874
+msgid "Structured Data"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:881
+msgid "Enable Structured Data?"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:895
+msgid "Video Title"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:904
+msgid "Video Description"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:913
+msgid "Video Thumbnail"
+msgstr ""
+
+#: modules/uabb-video/uabb-video-bb-2-2-compatibility.php:922
+msgid "Upload Date"
+msgstr ""
+
 #: modules/uabb-video/uabb-video-bb-less-than-2-2-compatibility.php:488
 msgid " Top Left"
 msgstr ""
@@ -29356,7 +29525,7 @@ msgstr ""
 msgid "from "
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:653
+#: modules/uabb-video/uabb-video.php:690
 #. translators: %s: search term
 msgid ""
 "<div style=\"%2$s\"> Make sure you add the actual URL of the video and not "
@@ -29367,7 +29536,7 @@ msgid ""
 "https://youtu.be/HJRzUQMhJMQ</div>"
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:668
+#: modules/uabb-video/uabb-video.php:705
 #. translators: %s: search term
 msgid ""
 "<div style=\"%1$s\">Make sure you add the actual URL of the video and not "
@@ -29378,7 +29547,7 @@ msgid ""
 "https://vimeo.com/channels/staffpicks/274860274</div>"
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:681
+#: modules/uabb-video/uabb-video.php:718
 #: modules/uabb-video-gallery/uabb-video-gallery.php:848
 #. translators: %s: search term
 msgid ""
@@ -29386,7 +29555,7 @@ msgid ""
 "Thumbnail\" and paste here.</div>"
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:698
+#: modules/uabb-video/uabb-video.php:735
 msgid ""
 "Click <a "
 "href=\"https://www.ultimatebeaver.com/docs/how-to-find-youtube-channel-name-"
@@ -29395,14 +29564,14 @@ msgid ""
 "here</strong> </a> to know how to find your YouTube Channel ID."
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:704
+#: modules/uabb-video/uabb-video.php:741
 msgid ""
 "Click <a href=\"https://support.google.com/youtube/answer/3250431?hl=en\" "
 "target=\"_blank\" rel=\"noopener\"> <strong> here</strong> </a> to know how "
 "to find your YouTube Channel ID."
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:713
+#: modules/uabb-video/uabb-video.php:750
 msgid ""
 "Click <a "
 "href=\"https://www.ultimatebeaver.com/docs/how-to-find-youtube-channel-name-"
@@ -29411,7 +29580,7 @@ msgid ""
 "here</strong> </a> to know how to find your YouTube Channel Name."
 msgstr ""
 
-#: modules/uabb-video/uabb-video.php:719
+#: modules/uabb-video/uabb-video.php:756
 msgid ""
 "Click <a href=\"https://support.google.com/youtube/answer/3250431?hl=en\" "
 "target=\"_blank\" rel=\"noopener\"> <strong> here</strong> </a> to know how "
@@ -29988,34 +30157,9 @@ msgstr ""
 msgid "Saved"
 msgstr ""
 
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:25
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:25
-msgid "Choose a form that you wish to style"
-msgstr ""
-
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:38
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:38
 msgid "Title & Description"
-msgstr ""
-
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:59
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:59
-msgid "Enter the Form Title here ..."
-msgstr ""
-
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:68
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:69
-msgid "Enter the Description here ..."
-msgstr ""
-
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:77
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:80
-msgid "Labels"
-msgstr ""
-
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:88
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:91
-msgid " It works if labels are not hidden in the back-end"
 msgstr ""
 
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:92
@@ -30038,16 +30182,6 @@ msgstr ""
 
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:268
 msgid "Input Background type"
-msgstr ""
-
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:295
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:304
-msgid "Field Description Color"
-msgstr ""
-
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:308
-#: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:317
-msgid "Required Asterisk Color"
 msgstr ""
 
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:394

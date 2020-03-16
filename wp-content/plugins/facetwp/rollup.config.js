@@ -1,6 +1,6 @@
 import { terser } from 'rollup-plugin-terser';
-import multiEntry from 'rollup-plugin-multi-entry';
-import buble from 'rollup-plugin-buble';
+import multiEntry from '@rollup/plugin-multi-entry';
+import buble from '@rollup/plugin-buble';
 
 export default [{
     input: [

@@ -209,7 +209,7 @@ class UABBOffCanvasModule extends FLBuilderModule {
 							<?php echo wp_kses_post( $this->render_close_icon() ); ?>
 						</div>
 						<div class="uabb-offcanvas-text uabb-offcanvas-content-data">
-							<?php echo wp_kses_post( $this->get_modal_content( $this->settings ) ); ?>
+							<?php echo $this->get_modal_content( $this->settings ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 					</div>
 				</div>

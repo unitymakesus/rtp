@@ -184,7 +184,7 @@ if ( 'carousel' !== $settings->is_carousel && 'yes' === $show_pagination ) {
 if ( empty( $the_query->posts ) ) :
 	?>
 <div class="fl-post-grid-empty">
-	<p><?php echo wp_kses_post( $settings->no_results_message ); ?></p>
+	<p><?php echo $settings->no_results_message; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 	<?php if ( $settings->show_search ) : ?>
 		<?php get_search_form(); ?>
 	<?php endif; ?>

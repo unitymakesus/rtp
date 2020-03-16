@@ -334,6 +334,23 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				),
 			);
 
+			// Caldera Form Styler.
+			$form['uabb-caldera-form-styler'] = array(
+				'conditions' => array( 'type' => 'uabb-caldera-form-styler' ),
+				'fields'     => array(
+					array(
+						'field'       => 'caf_form_title',
+						'type'        => __( 'Caldera Form Title', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'caf_form_desc',
+						'type'        => __( 'Caldera Form Description', 'uabb' ),
+						'editor_type' => 'VISUAL',
+					),
+				),
+			);
+
 			// Contact Form.
 			$form['uabb-contact-form'] = array(
 				'conditions' => array( 'type' => 'uabb-contact-form' ),

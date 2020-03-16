@@ -131,10 +131,11 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
 
     function render_per_page( $facet ) {
-        $options = $facet['per_page_options'];
-        $options = explode( ',', str_replace( ' ', '', $options ) );
+        $label = facetwp_i18n( $facet['default_label'] );
+        $options = explode( ',', str_replace( ' ', '', $facet['per_page_options'] ) );
 
         $output = '<select class="facetwp-per-page-select">';
+        $output .= '<option value="">' . $label . '</option>';
 
         foreach ( $options as $option ) {
             $output .= '<option value="' . $option . '">' . $option . '</option>';
@@ -142,6 +143,14 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
         $output .= '</select>';
         return $output;
+    }
+
+
+    /**
+     * Filter the query based on selected values
+     */
+    function filter_posts( $params ) {
+        return 'continue';
     }
 
 
@@ -238,6 +247,10 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         <div class="facetwp-row" v-show="facet.pager_type == 'load_more'">
             <div><?php _e('Loading text', 'fwp'); ?>:</div>
             <div><input type="text" class="facet-loading-text" value="Loading..." /></div>
+        </div>
+        <div class="facetwp-row" v-show="facet.pager_type == 'per_page'">
+            <div><?php _e('Default label', 'fwp'); ?>:</div>
+            <div><input type="text" class="facet-default-label" value="Per page" /></div>
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'per_page'">
             <div>

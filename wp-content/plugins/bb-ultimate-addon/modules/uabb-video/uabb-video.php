@@ -450,9 +450,14 @@ class UABBVideo extends FLBuilderModule {
 			$thumb = $this->settings->play_img_src;
 			$html  = '<img src="' . $thumb . '" />';
 		}
-
+		$schema = $this->get_structured_data();
 		?>
-		<div class="uabb-video uabb-aspect-ratio-<?php echo esc_attr( $this->settings->aspect_ratio ); ?>  uabb-subscribe-responsive-<?php echo esc_attr( $this->settings->subscribe_bar_responsive ); ?> uabb-video-sticky-<?php echo esc_attr( $this->settings->sticky_alignment ); ?>">
+		<div class="uabb-video uabb-aspect-ratio-<?php echo esc_attr( $this->settings->aspect_ratio ); ?>  uabb-subscribe-responsive-<?php echo esc_attr( $this->settings->subscribe_bar_responsive ); ?> uabb-video-sticky-<?php echo esc_attr( $this->settings->sticky_alignment ); ?>" <?php echo $schema ? ' itemscope itemtype="https://schema.org/VideoObject"' : ''; ?>>
+			<?php
+			if ( $schema ) {
+				echo $schema; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+			?>
 			<div class="uabb-video__outer-wrap <?php echo ( 'yes' === $this->settings->sticky_info_bar_enable ) ? 'uabb-sticky-infobar-wrap' : ''; ?>" data-autoplay="<?php echo esc_attr( $autoplay ); ?>" data-device="<?php echo esc_attr( $device ); ?> ">
 				<?php $this->get_header_wrap( $id ); ?>
 				<div class="uabb-video-inner-wrap">
@@ -475,7 +480,7 @@ class UABBVideo extends FLBuilderModule {
 					</div>
 					<?php } ?>
 					<?php if ( 'yes' === $this->settings->sticky_info_bar_enable && '' !== $this->settings->sticky_info_bar_text ) { ?>
-						<div class="uabb-video-sticky-infobar"><?php echo wp_kses_post( $this->settings->sticky_info_bar_text ); ?></div>
+						<div class="uabb-video-sticky-infobar"><?php echo $this->settings->sticky_info_bar_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 					<?php } ?>
 
 				</div>
@@ -491,7 +496,7 @@ class UABBVideo extends FLBuilderModule {
 				$subscriber_count = ( 'yes' === $this->settings->show_count ) ? 'default' : 'hidden';
 				?>
 			<div class="uabb-subscribe-bar">
-				<div class="uabb-subscribe-bar-prefix"><?php echo wp_kses_post( $youtube_text ); ?></div>
+				<div class="uabb-subscribe-bar-prefix"><?php echo $youtube_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 				<div class="uabb-subscribe-content">
 					<script src="https://apis.google.com/js/platform.js"></script> <!-- Need to be enqueued from someplace else --> <?php // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript ?>
 
@@ -528,7 +533,39 @@ class UABBVideo extends FLBuilderModule {
 		}
 		$this->get_video_embed();
 	}
+	/**
+	 * Get structured data - https://schema.org/VideoObject
+	 *
+	 * @since 1.26.0
+	 * @return string
+	 */
+	public function get_structured_data() {
 
+		$settings = $this->settings;
+
+		if ( ! isset( $settings->schema_enabled ) || 'no' === $settings->schema_enabled ) {
+			return false;
+		}
+		$video_type = $this->settings->video_type;
+		$markup     = '';
+		$url        = $settings->{$video_type . '_link'};
+
+		if ( empty( $settings->video_title ) || empty( $settings->video_desc ) || empty( $settings->video_thumbnail ) || empty( $settings->video_upload_date ) ) {
+			return false;
+		}
+
+		$markup .= sprintf( '<meta itemprop="name" content="%s" />', esc_attr( $settings->video_title ) );
+		$markup .= sprintf( '<meta itemprop="description" content="%s" />', esc_attr( $settings->video_desc ) );
+		$markup .= sprintf( '<meta itemprop="uploadDate" content="%s" />', esc_attr( $settings->video_upload_date ) );
+		$markup .= sprintf( '<meta itemprop="thumbnailUrl" content="%s" />', $settings->video_thumbnail_src );
+
+		if ( ! empty( $url ) ) {
+			$markup .= sprintf( '<meta itemprop="contentUrl" content="%s" />', $url );
+			$markup .= sprintf( '<meta itemprop="embedUrl" content="%s" />', $url );
+		}
+
+		return $markup;
+	}
 
 	/**
 	 * Get embed params.

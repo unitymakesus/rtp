@@ -98,7 +98,7 @@ class FacetWP_Renderer
         // Get the template from $helper->settings
         if ( 'wp' == $params['template'] ) {
             $this->template = [ 'name' => 'wp' ];
-            $query_args = isset( FWP()->ajax->query_vars ) ? FWP()->ajax->query_vars : [];
+            $query_args = isset( FWP()->request->query_vars ) ? FWP()->request->query_vars : [];
         }
         else {
             $this->template = FWP()->helper->get_template_by_name( $params['template'] );
@@ -261,7 +261,9 @@ class FacetWP_Renderer
             }
 
             // Get facet labels
-            $output['settings']['labels'][ $facet_name ] = facetwp_i18n( $the_facet['label'] );
+            if ( 0 == $params['soft_refresh'] ) {
+                $output['settings']['labels'][ $facet_name ] = facetwp_i18n( $the_facet['label'] );
+            }
 
             // Load all facets on back / forward button press (first_load = true)
             if ( ! $first_load ) {
@@ -637,62 +639,17 @@ class FacetWP_Renderer
      * @return string
      */
     function paginate( $params = [] ) {
-        $defaults = [
-            'page' => 1,
-            'per_page' => 10,
-            'total_rows' => 1,
-        ];
-        $params = array_merge( $defaults, $params );
+        $pager_class = FWP()->helper->facet_types['pager'];
+        $pager_class->pager_args = $params;
 
-        $output = '';
-        $page = (int) $params['page'];
-        $per_page = (int) $params['per_page'];
-        $total_rows = (int) $params['total_rows'];
-        $total_pages = (int) $params['total_pages'];
+        $output = $pager_class->render_numbers([
+            'inner_size' => 2,
+            'dots_label' => '…',
+            'prev_label' => '&lt;&lt;',
+            'next_label' => '&gt;&gt;',
+        ]);
 
-        // Only show pagination when > 1 page
-        if ( 1 < $total_pages ) {
-
-            $text_page      = __( 'Page', 'fwp-front' );
-            $text_of        = __( 'of', 'fwp-front' );
-
-            // "Page 5 of 150"
-            $output .= '<span class="facetwp-pager-label">' . "$text_page $page $text_of $total_pages</span>";
-
-            if ( 3 < $page ) {
-                $output .= '<a class="facetwp-page first-page" data-page="1">&lt;&lt;</a>';
-            }
-            if ( 1 < ( $page - 10 ) ) {
-                $output .= '<a class="facetwp-page" data-page="' . ($page - 10) . '">' . ($page - 10) . '</a>';
-            }
-            for ( $i = 2; $i > 0; $i-- ) {
-                if ( 0 < ( $page - $i ) ) {
-                    $output .= '<a class="facetwp-page" data-page="' . ($page - $i) . '">' . ($page - $i) . '</a>';
-                }
-            }
-
-            // Current page
-            $output .= '<a class="facetwp-page active" data-page="' . $page . '">' . $page . '</a>';
-
-            for ( $i = 1; $i <= 2; $i++ ) {
-                if ( $total_pages >= ( $page + $i ) ) {
-                    $output .= '<a class="facetwp-page" data-page="' . ($page + $i) . '">' . ($page + $i) . '</a>';
-                }
-            }
-            if ( $total_pages > ( $page + 10 ) ) {
-                $output .= '<a class="facetwp-page" data-page="' . ($page + 10) . '">' . ($page + 10) . '</a>';
-            }
-            if ( $total_pages > ( $page + 2 ) ) {
-                $output .= '<a class="facetwp-page last-page" data-page="' . $total_pages . '">&gt;&gt;</a>';
-            }
-        }
-
-        return apply_filters( 'facetwp_pager_html', $output, [
-            'page' => $page,
-            'per_page' => $per_page,
-            'total_rows' => $total_rows,
-            'total_pages' => $total_pages,
-        ] );
+        return apply_filters( 'facetwp_pager_html', $output, $params );
     }
 
 
@@ -701,17 +658,17 @@ class FacetWP_Renderer
      * @return string
      */
     function get_per_page_box() {
+        $pager_class = FWP()->helper->facet_types['pager'];
+
         $options = apply_filters( 'facetwp_per_page_options', [ 10, 25, 50, 100 ] );
 
-        $output = '<select class="facetwp-per-page-select">';
-        $output .= '<option value="">' . __( 'Per page', 'fwp-front' ) . '</option>';
-        foreach ( $options as $option ) {
-            $output .= '<option value="' . $option . '">' . $option . '</option>';
-        }
-        $output .= '</select>';
+        $output = $pager_class->render_per_page([
+            'default_label' => __( 'Per page', 'fwp-front' ),
+            'per_page_options' => implode( ',', $options )
+        ]);
 
         return apply_filters( 'facetwp_per_page_html', $output, [
-            'options' => $options,
+            'options' => $options
         ] );
     }
 }

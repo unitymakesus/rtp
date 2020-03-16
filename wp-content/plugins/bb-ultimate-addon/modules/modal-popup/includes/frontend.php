@@ -25,7 +25,7 @@
 
 			<?php if ( $settings->enable_title && '' !== $settings->modal_width ) { ?>
 			<div class="uabb-modal-title-wrap">
-			<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-modal-title"><?php echo ( '' !== $settings->title ) ? wp_kses_post( $settings->title ) : 'This is modal title'; ?></<?php echo esc_attr( $settings->title_tag_selection ); ?>>
+			<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-modal-title"><?php echo ( '' !== $settings->title ) ? $settings->title : 'This is modal title'; ?></<?php echo esc_attr( $settings->title_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			</div>
 			<?php } ?>
 			<div class="uabb-modal-text uabb-modal-content-data <?php echo ( 'content' === $settings->content_type ) ? 'uabb-text-editor' : ''; ?> fl-clearfix">
@@ -56,7 +56,7 @@
 <?php if ( 'button' === $settings->modal_on ) { ?>
 	<?php $module->render_button( $id ); ?>
 <?php } elseif ( 'text' === $settings->modal_on ) { ?>
-	<div class="uabb-modal-action uabb-trigger" data-modal="<?php echo esc_attr( $id ); ?>"><?php echo wp_kses_post( $settings->modal_text ); ?></div>
+	<div class="uabb-modal-action uabb-trigger" data-modal="<?php echo esc_attr( $id ); ?>"><?php echo $settings->modal_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 <?php } elseif ( 'icon' === $settings->modal_on ) { ?>
 <div class="uabb-modal-action uabb-trigger uabb-modal-icon-wrap" data-modal="<?php echo esc_attr( $id ); ?>"><i class="uabb-modal-icon <?php echo wp_kses_post( $settings->icon ); ?>"></i></div>
 <?php } elseif ( 'photo' === $settings->modal_on ) { ?>

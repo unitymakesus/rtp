@@ -1086,7 +1086,7 @@ class SlideBoxModule extends FLBuilderModule {
 	 */
 	public function render_link() {
 		if ( 'link' === $this->settings->cta_type ) {
-			echo '<a href="' . esc_url( $this->settings->link ) . '" target="' . esc_attr( $this->settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, 0, 0 ) ) . ' class="uabb-callout-cta-link">' . esc_attr( $this->settings->cta_text ) . '</a>';
+			echo '<a href="' . $this->settings->link . '" target="' . esc_attr( $this->settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, 0, 0 ) ) . ' class="uabb-callout-cta-link">' . $this->settings->cta_text . '</a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

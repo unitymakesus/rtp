@@ -2,6 +2,14 @@
     margin-bottom: 40px;
 }
 
+.facetwp-facet.is-loading {
+    opacity: 0.6;
+}
+
+.facetwp-overlay {
+    position: absolute;
+}
+
 .facetwp-pager-label {
     display: inline-block;
     margin-right: 12px;
@@ -21,20 +29,6 @@
 .facetwp-page.active {
     font-weight: bold;
     cursor: default;
-}
-
-.facetwp-loading {
-    width: 20px;
-    height: 20px;
-    background: url('../images/loading.png') no-repeat;
-    background-size: 20px 20px;
-    animation: spin 700ms infinite linear;
-}
-
-.facetwp-overlay {
-    position: absolute;
-    background-color: #fff;
-    opacity: 0.6;
 }
 
 /* Checkboxes */

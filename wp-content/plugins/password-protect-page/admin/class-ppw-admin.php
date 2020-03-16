@@ -105,6 +105,7 @@ class PPW_Admin {
 			$assert_services->load_assets_for_shortcodes();
 			$assert_services->load_css_hide_feature_set_password_wp();
 			$assert_services->load_js_show_notice_deactivate_plugin();
+			$assert_services->load_assets_for_misc_tab();
 		}
 	}
 
@@ -259,7 +260,7 @@ class PPW_Admin {
 	}
 
 	/**
-	 * Render entire site tab
+	 * Render Master Passwords tab
 	 */
 	public function ppw_free_render_content_master_passwords() {
 		wp_enqueue_script( 'ppw-master-passwords-js', PPW_DIR_URL . 'includes/views/master-passwords/assets/ppw-master-passwords.js', array( 'jquery' ), PPW_VERSION, true );
@@ -276,6 +277,19 @@ class PPW_Admin {
 			)
 		);
 		include PPW_DIR_PATH . 'includes/views/master-passwords/view-ppw-master-passwords.php';
+	}
+
+	/**
+	 * Render Advanced tab
+	 */
+	public function ppw_free_render_content_misc() {
+		?>
+		<div class="ppw_setting_page">
+			<?php
+			include PPW_DIR_PATH . 'includes/views/misc/view-ppw-misc.php';
+			?>
+		</div>
+		<?php
 	}
 
 	/**
@@ -299,6 +313,35 @@ class PPW_Admin {
 
 		$data_settings = wp_unslash( $_REQUEST['settings'] );
 		update_option( PPW_Constants::GENERAL_OPTIONS, wp_json_encode( $data_settings ), 'no' );
+		wp_die( true );
+	}
+
+	/**
+	 * Update settings
+	 */
+	public function ppw_free_update_misc_settings() {
+		$setting_keys = apply_filters(
+			PPW_Constants::HOOK_ADVANCED_VALID_INPUT_DATA,
+			array(
+				PPW_Constants::PROTECT_EXCERPT,
+			)
+		);
+		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
+			wp_send_json(
+				array(
+					'is_error' => true,
+					'message'  => PPW_Constants::BAD_REQUEST_MESSAGE,
+				),
+				400
+			);
+
+			wp_die();
+		}
+
+		$data_settings = wp_unslash( $_REQUEST['settings'] );
+
+		update_option( PPW_Constants::MISC_OPTIONS, wp_json_encode( $data_settings ), 'no' );
+
 		wp_die( true );
 	}
 

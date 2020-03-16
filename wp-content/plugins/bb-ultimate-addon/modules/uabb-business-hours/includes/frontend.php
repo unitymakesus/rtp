@@ -15,9 +15,9 @@
 		$hour_color = ( isset( $business_hours_content->hour_color ) && '' !== $business_hours_content->hour_color && 'yes' === $business_hours_content->highlight_styling ) ? 'uabb-business-hours-highlight' : '';
 		?>
 			<div class="uabb-business-hours-wrap uabb-business-hours-wrap-<?php echo esc_attr( $i ); ?> ">
-				<div class="uabb-business-day <?php echo esc_attr( $day_color ); ?> uabb-business-day-<?php echo esc_attr( $i ); ?> "> <?php echo wp_kses_post( $business_hours_content->days ); ?>
+				<div class="uabb-business-day <?php echo esc_attr( $day_color ); ?> uabb-business-day-<?php echo esc_attr( $i ); ?> "> <?php echo $business_hours_content->days; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
-				<div class="uabb-business-hours <?php echo esc_attr( $hour_color ); ?> uabb-business-hours-<?php echo esc_attr( $i ); ?> "> <?php echo wp_kses_post( $business_hours_content->hours ); ?>
+				<div class="uabb-business-hours <?php echo esc_attr( $hour_color ); ?> uabb-business-hours-<?php echo esc_attr( $i ); ?> "> <?php echo $business_hours_content->hours; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 			</div>
 		<?php

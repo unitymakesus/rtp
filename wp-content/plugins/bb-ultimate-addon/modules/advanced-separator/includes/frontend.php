@@ -19,7 +19,7 @@
 				<?php $module->render_image(); ?>
 				<?php
 				if ( 'line_text' === $settings->separator ) {
-						echo '<' . esc_attr( $settings->text_tag_selection ) . ' class="uabb-divider-text">' . wp_kses_post( $settings->text_inline ) . '</' . esc_attr( $settings->text_tag_selection ) . '>';
+						echo '<' . esc_attr( $settings->text_tag_selection ) . ' class="uabb-divider-text">' . $settings->text_inline . '</' . esc_attr( $settings->text_tag_selection ) . '>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 				?>
 			</div>

@@ -766,6 +766,32 @@ function sbi_hextorgb( $hex ) {
 	return implode( ',', $rgb ); // returns the rgb values separated by commas
 }
 
+
+/**
+ * Added to workaround MySQL tables that don't use utf8mb4 character sets
+ *
+ * @since 2.2.1/5.3.1
+ */
+function sbi_sanitize_emoji( $string ) {
+	$encoded = array(
+		'jsonencoded' => $string
+	);
+	return wp_json_encode( $encoded );
+}
+
+/**
+ * Added to workaround MySQL tables that don't use utf8mb4 character sets
+ *
+ * @since 2.2.1/5.3.1
+ */
+function sbi_decode_emoji( $string ) {
+	if ( strpos( $string, '{"' ) !== false ) {
+		$decoded = json_decode( $string, true );
+		return $decoded['jsonencoded'];
+	}
+	return $string;
+}
+
 /**
  * @return int
  */

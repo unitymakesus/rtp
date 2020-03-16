@@ -9,12 +9,13 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
 /**
  * Check data before update setting
  *
- * @param $request
- * @param $setting_keys
+ * @param array $request         Request data.
+ * @param array $setting_keys    Keys need to check.
+ * @param bool  $is_check_cookie Is check cookie.
  *
  * @return bool
  */
-function ppw_free_is_setting_data_invalid( $request, $setting_keys ) {
+function ppw_free_is_setting_data_invalid( $request, $setting_keys, $is_check_cookie = true ) {
 	if ( ppw_free_is_setting_keys_and_nonce_invalid( $request, PPW_Constants::GENERAL_FORM_NONCE ) ) {
 		return true;
 	}
@@ -26,7 +27,11 @@ function ppw_free_is_setting_data_invalid( $request, $setting_keys ) {
 		}
 	}
 
-	// Check regular expression
+	if ( ! $is_check_cookie ) {
+		return false;
+	}
+
+	// Check regular expression.
 	return ppw_core_validate_cookie_expiry( $settings[ PPW_Constants::COOKIE_EXPIRED ] );
 }
 
@@ -220,14 +225,10 @@ function ppw_free_fix_serialize_data( $raw_data, $is_un_slashed = true ) {
  * @return bool
  */
 function ppw_free_bypass_cache_with_cookie_for_pro_version( $cookie, $expiration ) {
-	if ( ! is_pro_active_and_valid_license() ) {
-		return false;
+	if ( defined( 'COOKIEHASH' ) ) {
+		$cookie_hash = preg_quote( constant( 'COOKIEHASH' ) );
 	}
-	$cookie_hash = '';
-	if ( defined( 'COOKIEHASH' ) && function_exists( 'is_plugin_active' ) && is_plugin_active( 'wp-super-cache/wp-cache.php' ) ) {
-		$cookie_hash = preg_quote( constant( 'COOKIEHASH' ) ); // This function to bypass WP Super Cache
-	}
-	setcookie( PPW_Pro_Constants::WP_POST_PASS . $cookie_hash, $cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN );
+	setcookie( PPW_Constants::WP_POST_PASS . $cookie_hash, $cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN );
 
 	return true;
 }
@@ -313,4 +314,26 @@ function ppw_get_page_title() {
 	return is_home() || is_front_page()
 		? sprintf( '%1$s%2$s%3$s', $site_title, $dash_score_site, $site_description )
 		: sprintf( '%1$s%2$s%3$s', $post_title, $dash_score_post, $site_title );
+}
+
+/**
+ * Get post excerpt if post is protected via Settings.
+ *
+ * @param WP_Post $post            Post WordPress Object.
+ * @param string  $content         Content of post.
+ * @param bool    $is_show_excerpt Is show excerpt.
+ * @return string
+ */
+function ppw_handle_protected_content( $post, $content, $is_show_excerpt ) {
+	if ( $is_show_excerpt && $post->post_excerpt ) {
+		$content = $post->post_excerpt . $content;
+	}
+
+	if ( ! preg_match( '/name=.+post_id/mi', $content ) ) {
+		$content = '<em>[This is password-protected.]</em>';
+
+		return apply_filters( 'the_ppw_password_message', $content );
+	}
+
+	return $content;
 }

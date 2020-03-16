@@ -339,6 +339,10 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				$modules_array['uabb-woo-categories']  = 'Woo - Categories';
 				$modules_array['uabb-woo-add-to-cart'] = 'Woo - Add To Cart';
 			}
+			/* Include Caldera Forms Styler */
+			if ( class_exists( 'Caldera_Forms' ) || class_exists( 'Caldera_Forms_Forms' ) ) {
+				$modules_array['uabb-caldera-form-styler'] = 'Caldera Forms Styler';
+			}
 			natcasesort( $modules_array );
 			return $modules_array;
 		}
@@ -479,7 +483,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 			if ( ! $echo ) {
 				return 'rel="' . $attr . '"';
 			}
-			echo esc_attr( 'rel="' ) . esc_attr( $attr ) . esc_attr( '"' );
+			echo 'rel="' . $attr . '"'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		/**

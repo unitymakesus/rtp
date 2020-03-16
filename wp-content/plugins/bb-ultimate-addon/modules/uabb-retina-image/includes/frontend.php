@@ -68,16 +68,16 @@ if ( UABB_Compatibility::$version_bb_check ) {
 <div class="uabb-module-content uabb-retina-img-wrap" itemscope itemtype="https://schema.org/ImageObject">
 	<div class="uabb-retina-img-content <?php echo esc_attr( $grayscale_class ); ?>">
 		<?php if ( ! empty( $img_link ) ) : ?>
-		<a href="<?php echo esc_url( $img_link ); ?>" target="<?php echo esc_attr( $link_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $link_url_target, $link_url_nofollow, 1 ); ?> itemprop="url">
+		<a href="<?php echo $img_link; ?>" target="<?php echo esc_attr( $link_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $link_url_target, $link_url_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> itemprop="url">
 		<?php endif; ?>
-		<img class="uabb-retina-img" src="<?php echo esc_url( $default_img_src ); ?>" itemprop="image" srcset="<?php echo esc_url( $default_img_src ) . ' 1x,' . esc_url( $retina_img_src ) . ' 2x'; ?>"/>
+		<img class="uabb-retina-img" src="<?php echo $default_img_src; ?>" itemprop="image" srcset="<?php echo $default_img_src . ' 1x,' . $retina_img_src . ' 2x'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 		<?php if ( ! empty( $img_link ) ) : ?>
 		</a>
 		<?php endif; ?>
 	</div>
 	<?php if ( ! empty( $settings->custom_caption ) && 'custom_caption' === $settings->show_caption ) : ?>
 	<<?php echo esc_attr( $settings->tag ); ?> class="uabb-retina-img-caption" itemprop="caption">
-	<span class="uabb-retina-img-caption-text"><?php echo wp_kses_post( $settings->custom_caption ); ?></span>
+	<span class="uabb-retina-img-caption-text"><?php echo $settings->custom_caption; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	</<?php echo esc_attr( $settings->tag ); ?>>
 	<?php endif; ?>
 </div>

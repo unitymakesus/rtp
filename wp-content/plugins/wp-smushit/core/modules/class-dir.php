@@ -17,8 +17,8 @@ use RecursiveIteratorIterator;
 use Smush\Core\Core;
 use Smush\Core\Installer;
 use Smush\Core\Settings;
-use Smush\WP_Smush;
 use WP_Error;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -166,7 +166,7 @@ class Dir extends Abstract_Module {
 		$this->scanner->update_current_step( $current_step );
 
 		if ( isset( $urls[ $current_step ] ) ) {
-			$this->optimise_image( $urls[ $current_step ]['id'] );
+			$this->optimise_image( (int) $urls[ $current_step ]['id'] );
 		}
 
 		wp_send_json_success();
@@ -178,12 +178,19 @@ class Dir extends Abstract_Module {
 	 * @since 2.8.1
 	 */
 	public function directory_smush_finish() {
-		$items  = isset( $_POST['items'] ) ? absint( $_POST['items'] ) : 0; // Input var ok.
-		$failed = isset( $_POST['failed'] ) ? absint( $_POST['failed'] ) : 0; // Input var ok.
+		$items   = isset( $_POST['items'] ) ? absint( $_POST['items'] ) : 0; // Input var ok.
+		$failed  = isset( $_POST['failed'] ) ? absint( $_POST['failed'] ) : 0; // Input var ok.
+		$skipped = isset( $_POST['skipped'] ) ? absint( $_POST['skipped'] ) : 0; // Input var ok.
+
 		// If any images failed to smush, store count.
 		if ( $failed > 0 ) {
 			set_transient( 'wp-smush-dir-scan-failed-items', $failed, 60 * 5 ); // 5 minutes max.
 		}
+
+		if ( $skipped > 0 ) {
+			set_transient( 'wp-smush-dir-scan-skipped-items', $skipped, 60 * 5 ); // 5 minutes max.
+		}
+
 		// Store optimized items count.
 		set_transient( 'wp-smush-show-dir-scan-notice', $items, 60 * 5 ); // 5 minutes max.
 		$this->scanner->reset_scan();
@@ -203,15 +210,15 @@ class Dir extends Abstract_Module {
 	/**
 	 * Handles the ajax request for image optimisation in a folder
 	 *
-	 * @param int $image_id  Image ID.
+	 * @param int $id  Image ID.
 	 */
-	private function optimise_image( $image_id ) {
+	private function optimise_image( $id ) {
 		global $wpdb;
 
 		$error_msg = '';
 
 		// No image ID.
-		if ( ! isset( $image_id ) ) {
+		if ( $id < 1 ) {
 			$error_msg = esc_html__( 'Incorrect image id', 'wp-smushit' );
 			wp_send_json_error( $error_msg );
 		}
@@ -232,17 +239,11 @@ class Dir extends Abstract_Module {
 			}
 		}
 
-		$id = intval( $image_id );
-		if ( ! $scanned_images = wp_cache_get( 'wp_smush_scanned_images' ) ) {
-			$scanned_images = $this->get_scanned_images();
-		}
-
-		$image = $this->get_image( $id, '', $scanned_images );
+		$scanned_images = $this->get_unsmushed_images();
+		$image          = $this->get_image( $id, '', $scanned_images );
 
 		if ( empty( $image ) ) {
-			// If there are no stats.
-			$error_msg = esc_html__( 'Could not find image id in last scanned images', 'wp-smushit' );
-			wp_send_json_error( $error_msg );
+			wp_send_json_success( array( 'skipped' => true ) );
 		}
 
 		$path = $image['path'];
@@ -259,16 +260,16 @@ class Dir extends Abstract_Module {
 		}
 
 		// We have the image path, optimise.
-		$smush_results = WP_Smush::get_instance()->core()->mod->smush->do_smushit( $path );
+		$results = WP_Smush::get_instance()->core()->mod->smush->do_smushit( $path );
 
-		if ( is_wp_error( $smush_results ) ) {
+		if ( is_wp_error( $results ) ) {
 			/**
 			 * Smush results.
 			 *
-			 * @var WP_Error $smush_results
+			 * @var WP_Error $results
 			 */
-			$error_msg = $smush_results->get_error_message();
-		} elseif ( empty( $smush_results['data'] ) ) {
+			$error_msg = $results->get_error_message();
+		} elseif ( empty( $results['data'] ) ) {
 			// If there are no stats.
 			$error_msg = esc_html__( "Image couldn't be optimized", 'wp-smushit' );
 		}
@@ -293,23 +294,18 @@ class Dir extends Abstract_Module {
 			);
 		}
 
-		// Get file time.
-		$file_time = @filectime( $path );
-
 		if ( ! $this->settings ) {
 			$this->settings = Settings::get_instance();
 		}
 
-		// If Super-Smush enabled, update supersmushed meta value also.
-		$lossy = WP_Smush::is_pro() && $this->settings->get( 'lossy' ) ? 1 : 0;
-
 		// All good, Update the stats.
 		$wpdb->query(
 			$wpdb->prepare(
-				"UPDATE {$wpdb->prefix}smush_dir_images SET error=NULL, image_size=%d, file_time=%d, lossy=%s WHERE id=%d LIMIT 1",
-				$smush_results['data']->after_size,
-				$file_time,
-				$lossy,
+				"UPDATE {$wpdb->prefix}smush_dir_images SET error=NULL, image_size=%d, file_time=%d, lossy=%d, meta=%d WHERE id=%d LIMIT 1",
+				$results['data']->after_size,
+				@filectime( $path ), // Get file time.
+				WP_Smush::is_pro() && $this->settings->get( 'lossy' ),
+				$this->settings->get( 'strip_exif' ),
 				$id
 			)
 		); // Db call ok; no-cache ok.
@@ -359,7 +355,6 @@ class Dir extends Abstract_Module {
 		) $charset_collate;";
 
 		// Include the upgrade library to initialize a table.
-		/* @noinspection PhpIncludeInspection */
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
 
@@ -387,6 +382,36 @@ class Dir extends Abstract_Module {
 	}
 
 	/**
+	 * Get only images that need compressing.
+	 *
+	 * @since 3.6.1
+	 *
+	 * @return array Array of images that require compression.
+	 */
+	public function get_unsmushed_images() {
+		global $wpdb;
+
+		$condition = 'image_size IS NULL';
+		if ( WP_Smush::is_pro() && $this->settings->get( 'lossy' ) ) {
+			$condition .= ' OR lossy <> 1';
+		}
+
+		if ( $this->settings->get( 'strip_exif' ) ) {
+			$condition .= ' OR meta <> 1';
+		}
+
+		$results = $wpdb->get_results( "SELECT id, path, orig_size FROM {$wpdb->prefix}smush_dir_images WHERE {$condition} && last_scan = (SELECT MAX(last_scan) FROM {$wpdb->prefix}smush_dir_images )  GROUP BY id ORDER BY id", ARRAY_A ); // Db call ok; no-cache ok.
+
+		// Return image ids.
+		if ( is_wp_error( $results ) ) {
+			error_log( sprintf( 'WP Smush Query Error in %s at %s: %s', __FILE__, __LINE__, $results->get_error_message() ) );
+			$results = array();
+		}
+
+		return $results;
+	}
+
+	/**
 	 * Get the paths and errors from last scan.
 	 *
 	 * @since 3.0
@@ -396,7 +421,7 @@ class Dir extends Abstract_Module {
 	public function get_image_errors() {
 		global $wpdb;
 
-		$results = $wpdb->get_results(
+		return $wpdb->get_results(
 			"SELECT id, path, error
 					FROM {$wpdb->prefix}smush_dir_images
 					WHERE error IS NOT NULL
@@ -404,8 +429,6 @@ class Dir extends Abstract_Module {
 					LIMIT 20",
 			ARRAY_A
 		); // Db call ok; no-cache ok.
-
-		return $results;
 	}
 
 	/**
@@ -418,13 +441,11 @@ class Dir extends Abstract_Module {
 	public function get_image_errors_count() {
 		global $wpdb;
 
-		$count = $wpdb->get_var(
+		return (int) $wpdb->get_var(
 			"SELECT COUNT(id)
 					FROM {$wpdb->prefix}smush_dir_images
 					WHERE error IS NOT NULL AND last_scan = ( SELECT MAX(last_scan) FROM {$wpdb->prefix}smush_dir_images )"
 		); // Db call ok.
-
-		return (int) $count;
 	}
 
 	/**
@@ -729,7 +750,7 @@ class Dir extends Abstract_Module {
 		$values = implode( ',', $values );
 
 		// Replace with image path and respective parameters.
-		$query = "INSERT INTO {$wpdb->prefix}smush_dir_images (path, path_hash, orig_size,file_time,last_scan) VALUES $values ON DUPLICATE KEY UPDATE image_size = IF( file_time < VALUES(file_time), NULL, image_size ), file_time = IF( file_time < VALUES(file_time), VALUES(file_time), file_time ), last_scan = VALUES( last_scan )";
+		$query = "INSERT INTO {$wpdb->prefix}smush_dir_images (path, path_hash, orig_size, file_time, last_scan) VALUES $values ON DUPLICATE KEY UPDATE image_size = IF( file_time < VALUES(file_time), NULL, image_size ), file_time = IF( file_time < VALUES(file_time), VALUES(file_time), file_time ), last_scan = VALUES( last_scan )";
 		$query = $wpdb->prepare( $query, $images ); // Db call ok; no-cache ok.
 
 		return $query;
@@ -1063,7 +1084,7 @@ class Dir extends Abstract_Module {
 		$percent     = $size_before > 0 ? ( $savings / $size_before ) * 100 : 0;
 
 		// Store the stats in array.
-		$result = array(
+		return array(
 			'total_count'   => $total_attachments,
 			'smushed_count' => $smushed,
 			'savings'       => size_format( $savings ),
@@ -1073,8 +1094,6 @@ class Dir extends Abstract_Module {
 			/* translators: %s: total number of images */
 			'tooltip_text'  => ! empty( $total_images ) ? sprintf( __( "You've smushed %d images in total.", 'wp-smushit' ), $total_images ) : '',
 		);
-
-		return $result;
 	}
 
 	/**

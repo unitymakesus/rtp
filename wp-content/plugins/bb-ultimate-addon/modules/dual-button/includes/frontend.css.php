@@ -89,16 +89,28 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn.uabb-btn-two:hover {
 		border-color:<?php echo esc_attr( uabb_theme_border_hover_color( $settings->border_hover_color ) ); ?>;
 	}
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one .uabb-btn-one-text:hover,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one:hover .uabb-imgicon-wrap .uabb-icon i,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one:hover .uabb-btn-one-text,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one:hover,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one:hover {
 		color: <?php echo esc_attr( uabb_theme_default_button_text_hover_color( $settings->_btn_one_text_hover_color ) ); ?>;
 	}
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two .uabb-btn-two-text:hover,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two:hover .uabb-imgicon-wrap .uabb-icon i,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two:hover .uabb-btn-two-text,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two:hover,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two:hover {
 		color: <?php echo esc_attr( uabb_theme_default_button_text_hover_color( $settings->_btn_two_text_hover_color ) ); ?>;
 	}
+
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one .uabb-btn-one-text,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-one .uabb-imgicon-wrap .uabb-icon i {
+		color: <?php echo esc_attr( uabb_theme_default_button_text_color( $settings->_btn_one_text_color ) ); ?>;
+	}
+
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two .uabb-btn-two-text,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two .uabb-imgicon-wrap .uabb-icon i {
+		color: <?php echo esc_attr( uabb_theme_default_button_text_color( $settings->_btn_two_text_color ) ); ?>;
+	}	
 <?php } ?>
 <?php if ( ! $version_bb_check ) { ?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-middle-text {
@@ -434,16 +446,16 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 
 /* Vertical Style */
 <?php if ( 'vertical' === $settings->dual_button_type ) { ?>
-
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-vertical .uabb-btn.uabb-btn-one {
-		border-top-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
-		border-top-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
-	}
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-vertical .uabb-btn.uabb-btn-two {
-		border-bottom-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
-		border-bottom-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
-	}
-
+	<?php if ( 'default' !== $settings->dual_button_style ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-vertical .uabb-btn.uabb-btn-one {
+			border-top-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+			border-top-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-vertical .uabb-btn.uabb-btn-two {
+			border-bottom-left-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+			border-bottom-right-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+		}
+	<?php } ?>
 	<?php if ( 'full' === $settings->dual_button_width_type ) { ?>
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button .uabb-btn-vertical {
 			width: 100%;
@@ -975,7 +987,7 @@ if ( ( '' !== $settings->image_type_btn_one || '' !== $settings->image_type_btn_
 
 	<?php
 	if ( ( 'flat' === $settings->dual_button_style && 'none' === $settings->flat_button_options ) ||
-	( 'gradient' === $settings->dual_button_style ) || ( 'transparent' === $settings->dual_button_style ) ) {
+	( 'gradient' === $settings->dual_button_style ) || ( 'transparent' === $settings->dual_button_style ) || ( 'default' === $settings->dual_button_style ) ) {
 		?>
 
 .fl-node-<?php echo esc_attr( $id ); ?> .before.uabb-btn-one-img-icon,
@@ -1003,12 +1015,12 @@ if ( 'horizontal' === $settings->dual_button_type && 'no' === $settings->join_bu
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-dual-button-one {
 	margin-right: <?php echo esc_attr( $settings->spacing_between_buttons ); ?>px;
 }
-
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one,
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two {
-	border-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
-}
-
+	<?php if ( 'default' !== $settings->dual_button_style ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-two {
+		border-radius: <?php echo esc_attr( $settings->dual_button_radius ); ?>px;
+	}
+	<?php } ?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-horizontal .uabb-btn.uabb-btn-one {
 	color: <?php echo esc_attr( uabb_theme_button_text_color( $settings->_btn_one_text_color ) ); ?>;
 }

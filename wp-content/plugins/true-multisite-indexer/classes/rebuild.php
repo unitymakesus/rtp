@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Rebuild Engine
+ * Works on WordPress WP_Cron and based on former Post Indexer plugin by wpmudev
+ */
 if(!class_exists('multisiteindexerRebuild')) {
 
 	class multisiteindexerRebuild {

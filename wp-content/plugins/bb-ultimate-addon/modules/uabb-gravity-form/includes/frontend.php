@@ -26,11 +26,11 @@
 	}
 	if ( '' !== $form_title ) {
 		?>
-		<<?php echo esc_attr( $settings->form_title_tag_selection ); ?> class="uabb-gf-form-title"><?php echo wp_kses_post( $form_title ); ?></<?php echo esc_attr( $settings->form_title_tag_selection ); ?>>
+		<<?php echo esc_attr( $settings->form_title_tag_selection ); ?> class="uabb-gf-form-title"><?php echo $form_title; ?></<?php echo esc_attr( $settings->form_title_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php } ?>
 
 	<?php if ( '' !== $description ) { ?>
-		<p class="uabb-gf-form-desc"><?php echo wp_kses_post( $description ); ?></p>
+		<p class="uabb-gf-form-desc"><?php echo $description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 	<?php } ?>
 
 	<?php

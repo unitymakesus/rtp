@@ -16,6 +16,10 @@
                 $(this).attr('tabindex', 0);
             });
 
+            $('.facetwp-search').each(function() {
+                $(this).attr('aria-label', $(this).attr('placeholder'));
+            });
+
             if ( null != last_checked ) {
                 $('.facetwp-facet [data-value="' + last_checked + '"]').focus();
                 last_checked = null;

@@ -40,18 +40,32 @@ function ppw_core_get_current_role() {
  * @return mixed
  */
 function ppw_core_get_settings( $name_settings, $blog_id = false ) {
-	$settings       = ! $blog_id ? get_option( PPW_Constants::GENERAL_OPTIONS, false ) : get_blog_option( $blog_id, PPW_Constants::GENERAL_OPTIONS, false );
+	return ppw_core_get_settings_by_option_name( $name_settings, PPW_Constants::GENERAL_OPTIONS, $blog_id );
+}
+
+/**
+ * Get settings
+ *
+ * @param string    $setting_name Setting name.
+ * @param string    $option_name  Option name.
+ * @param int|false $blog_id      Blog ID.
+ *
+ * @return mixed
+ * @since 1.4.2
+ */
+function ppw_core_get_settings_by_option_name( $setting_name, $option_name, $blog_id = false ) {
+	$settings       = ! $blog_id ? get_option( $option_name, false ) : get_blog_option( $blog_id, $option_name, false );
 	$default_result = null;
 	if ( ! $settings ) {
 		return $default_result;
 	}
 
 	$options = json_decode( $settings );
-	if ( ! isset( $options->$name_settings ) ) {
+	if ( ! isset( $options->$setting_name ) ) {
 		return $default_result;
 	}
 
-	return $options->$name_settings;
+	return $options->$setting_name;
 }
 
 /**
@@ -75,15 +89,62 @@ function ppw_core_get_settings_entire_site( $name_settings ) {
 /**
  * Get setting type is bool
  *
- * @param $name_settings
- * @param $blog_id
+ * @param string    $setting_name Setting name.
+ * @param int|false $blog_id      Blog ID.
  *
  * @return bool
  */
-function ppw_core_get_setting_type_bool( $name_settings, $blog_id = false ) {
-	$setting = ppw_core_get_settings( $name_settings, $blog_id );
+function ppw_core_get_setting_type_bool( $setting_name, $blog_id = false ) {
+	$setting = ppw_core_get_settings( $setting_name, $blog_id );
 
 	return 'true' === $setting || '1' === $setting;
+}
+
+/**
+ * Get setting type is bool
+ *
+ * @param string    $setting_name Setting name.
+ * @param string    $option_name  Option name.
+ * @param int|false $blog_id      Blog ID.
+ *
+ * @return bool
+ * @since 1.4.2
+ *
+ */
+function ppw_core_get_setting_type_bool_by_option_name( $setting_name, $option_name, $blog_id = false ) {
+	$setting = ppw_core_get_settings_by_option_name( $setting_name, $option_name, $blog_id );
+
+	return 'true' === $setting || '1' === $setting;
+}
+
+/**
+ * Get setting type is string
+ *
+ * @param string $setting_name The setting name.
+ * @param string $option_name  Option name.
+ *
+ * @return string
+ * @since 1.4.2
+ */
+function ppw_core_get_setting_type_string_by_option_name( $setting_name, $option_name ) {
+	$setting = ppw_core_get_settings_by_option_name( $setting_name, $option_name );
+
+	return is_string( $setting ) ? $setting : '';
+}
+
+/**
+ * Get setting type is array
+ *
+ * @param string $setting_name Setting name.
+ * @param string $option_name  Option name.
+ *
+ * @return array
+ * @since 1.4.2
+ */
+function ppw_core_get_setting_type_array_by_option_name( $setting_name, $option_name ) {
+	$setting = ppw_core_get_settings_by_option_name( $setting_name, $option_name );
+
+	return ! is_array( $setting ) ? array() : $setting;
 }
 
 /**

@@ -663,14 +663,14 @@ class ProgressBarModule extends FLBuilderModule {
 				if ( $this->settings->text_position === $position ) {
 
 					echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
-                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
-                    </div>';
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . esc_attr( $this->settings->text_tag_selection ) . '>' . //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					'</div>';
 				}
 			} elseif ( 'style3' !== $style ) {
 
 				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
-                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
-                        <div class="uabb-progress-value">0%</div>
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . esc_attr( $this->settings->text_tag_selection ) . '>' . //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						'<div class="uabb-progress-value">0%</div>
                     </div>';
 			}
 		}
@@ -689,8 +689,8 @@ class ProgressBarModule extends FLBuilderModule {
                     <div class="uabb-progress-box">
                         <div class="uabb-progress-bar"></div>
                         <div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
-                            <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
-                            <div class="uabb-progress-value">0%</div>
+                            <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . esc_attr( $this->settings->text_tag_selection ) . '>' . //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							'<div class="uabb-progress-value">0%</div>
                         </div>
                     </div>
                 </div>';
@@ -725,13 +725,13 @@ class ProgressBarModule extends FLBuilderModule {
 		if ( $this->settings->vertical_style === $style ) {
 			if ( 'style3' !== $style ) {
 				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
-                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
-                        <div class="uabb-progress-value">0%</div>
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . esc_attr( $this->settings->text_tag_selection ) . '>' . //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						'<div class="uabb-progress-value">0%</div>
                     </div>';
 			} else {
 				echo '<div class="uabb-progress-info uabb-progress-bar-info-' . esc_attr( $i ) . '">
-                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . esc_attr( $obj->horizontal_before_number ) . '</' . esc_attr( $this->settings->text_tag_selection ) . '>
-                    </div>';
+                        <' . esc_attr( $this->settings->text_tag_selection ) . ' class="uabb-progress-title">' . $obj->horizontal_before_number . '</' . esc_attr( $this->settings->text_tag_selection ) . '>' . //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					'</div>';
 			}
 		}
 	}

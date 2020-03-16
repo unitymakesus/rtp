@@ -1,3 +1,33 @@
+<h4>2.3.2.2 - 02/20/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Revert Border field fix.</li>
+</ul>
+
+<h4>2.3.2.1 - 02/20/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Revert Callout fix.</li>
+</ul>
+
+<h4>2.3.2 - 02/20/2020</h4>
+<strong>Enhancements</strong>
+<ul>
+	<li>New filter <code>fl_builder_register_module_settings_form</code>, this filter is run after the advanced tab is added.</li>
+	<li>Updated Font Awesome to 5.12.1</li>
+	<li>New filter <code>fl_varnish_url</code>.</li>
+	<li>Add Background Color to Column Settings when the BG Type is set to 'photo'.</li>
+	<li>Use simplexml importer if available.</li>
+	<li>Show custom media path in debug info.</li>
+</ul>
+<strong>Bug Fixes</strong>
+<ul>
+	<li>Fixed various PHP 7.4 warnings.</li>
+	<li>Callout: Set overflow to hidden when Border Field is used.</li>
+	<li>Fixed Callout Link Alignment.</li>
+	<li>Aweber: Use pagination for fetch all lists.</li>
+</ul>
+
 <h4>2.3.1.2 - 02/05/2020</h4>
 <strong>Hot Fix</strong>
 <ul>

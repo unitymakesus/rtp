@@ -20,7 +20,7 @@ if ( $version_bb_check ) {
 
 <div class="uabb-module-content uabb-ib1-outter">
 	<?php if ( 'complete' === $settings->show_button ) : ?>
-	<a href="<?php echo esc_url( $settings->cta_link ); ?>" target="<?php echo esc_attr( $settings->cta_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->cta_link_target, $nofollow, 1 ); ?>>
+	<a href="<?php echo $settings->cta_link; ?>" target="<?php echo esc_attr( $settings->cta_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->cta_link_target, $nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php endif; ?>
 	<div class="uabb-banner-<?php echo esc_attr( $settings->banner_style ); ?> <?php echo ( 'custom' === $settings->banner_height_options ) ? ( ( '' !== $settings->banner_height ) ? 'uabb-banner-block-custom-height' : '' ) : ''; ?> uabb-adjust-bottom-margin uabb-bb-box uabb-ib1-block <?php echo ( 'custom' === $settings->banner_height_options && 'yes' === $settings->image_size_compatibility ) ? 'uabb-ib1-img-compatibility' : ''; ?>" data-style="<?php echo esc_attr( $settings->banner_height_options ); ?>">
 		<div class="uabb-image-wrap">
@@ -72,7 +72,7 @@ if ( $version_bb_check ) {
 				?>
 				<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-ib1-title title-<?php echo esc_attr( $tag_class ); ?>">
 			<?php } ?>
-			<?php echo wp_kses_post( $settings->banner_title ); ?>
+			<?php echo $settings->banner_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</<?php echo esc_attr( $settings->title_typography_tag_selection ); ?>>
 			<?php
 		}

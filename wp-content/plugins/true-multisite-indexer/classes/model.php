@@ -1,7 +1,8 @@
 <?php
-
-// A class that contains the database functions used within the post indexer plugin
-
+/**
+ * A class that contains the database functions used within the plugin
+ * Based on former Post Indexer plugin by wpmudev
+ */
 if(!class_exists('multisiteIndexer')) {
 
 	class multisiteIndexer {

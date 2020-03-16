@@ -778,7 +778,7 @@ if ( 'transparent' === $settings->btn_style ) {
 		<?php endif; ?>
 
 		<?php if ( isset( $settings->font_size_unit ) && '' !== $settings->font_size_unit ) { ?>
-			font-size: <?php echo esc_attr( $settings->font_size_unit ); ?>px;esc_attr( 
+			font-size: <?php echo esc_attr( $settings->font_size_unit ); ?>px;
 		<?php } ?>
 
 		<?php if ( isset( $settings->line_height_unit ) && '' !== $settings->line_height_unit ) { ?>

@@ -10,7 +10,7 @@
 <div class="uabb-module-content uabb-fancy-text-node">
 <?php if ( ! empty( $settings->effect_type ) ) { ?>
 	<?php echo '<' . esc_attr( $settings->text_tag_selection ); ?> class="uabb-fancy-text-wrap uabb-fancy-text-<?php echo esc_attr( $settings->effect_type ); ?>"><!--
-	--><span class="uabb-fancy-text-prefix"><?php echo wp_kses_post( $settings->prefix ); ?></span><?php echo '<!--'; ?>
+	--><span class="uabb-fancy-text-prefix"><?php echo $settings->prefix; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php echo '<!--'; ?>
 	<?php
 		$output = '';
 
@@ -50,7 +50,7 @@
 	}
 	?>
 
-	<?php echo '-->'; ?><span class="uabb-fancy-text-suffix"><?php echo wp_kses_post( $settings->suffix ); ?></span>
+	<?php echo '-->'; ?><span class="uabb-fancy-text-suffix"><?php echo $settings->suffix; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<?php echo '</' . esc_attr( $settings->text_tag_selection ) . '>'; ?>
 <?php } ?>
 </div>

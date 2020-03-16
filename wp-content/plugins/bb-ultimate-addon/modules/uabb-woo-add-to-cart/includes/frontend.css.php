@@ -220,7 +220,7 @@ if ( 'transparent' === $settings->style ) {
 	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-center-btn:hover:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $bg_hover_color ) ); ?>;
 		height: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );
-		width: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );esc_attr( 
+		width: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );
 	}
 
 	/* transparent-fill-diagonal */

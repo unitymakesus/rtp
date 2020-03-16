@@ -1,30 +1,17 @@
 <?php
+/**
+ * Admin functions for bsf core.
+ *
+ * @package BSF core
+ */
 
-if ( ! function_exists( 'get_bsf_product_id' ) ) {
-	function get_bsf_product_id( $template ) {
-		$brainstrom_products = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-		$bsf_product_themes  = ( isset( $brainstrom_products['themes'] ) ) ? $brainstrom_products['themes'] : array();
-
-		if ( empty( $brainstrom_products ) ) {
-			return false;
-		}
-
-		$id = '';
-		foreach ( $bsf_product_themes as $theme ) {
-			if ( $theme['template'] === $template ) {
-				$id = $theme['id'];
-				break;
-			}
-		}
-
-		if ( $id != '' ) {
-			return $id;
-		} else {
-			return false;
-		}
-	}
-}
 if ( ! function_exists( 'check_bsf_product_status' ) ) {
+	/**
+	 * Get status of product.
+	 *
+	 * @param  int $id product id.
+	 * @return bool
+	 */
 	function check_bsf_product_status( $id ) {
 		$brainstrom_products = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
 		$bsf_product_themes  = ( isset( $brainstrom_products['themes'] ) ) ? $brainstrom_products['themes'] : array();
@@ -49,6 +36,13 @@ if ( ! function_exists( 'check_bsf_product_status' ) ) {
 
 if ( ! function_exists( 'get_bundled_plugins' ) ) {
 
+
+	/**
+	 * Retrieves bundled plugin data.
+	 *
+	 * @param  string $template product template.
+	 * @return void
+	 */
 	function get_bundled_plugins( $template = '' ) {
 
 		global $ultimate_referer;
@@ -57,7 +51,7 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 
 		$prd_ids = array();
 
-		if ( $brainstrom_products == array() ) {
+		if ( is_array( $brainstrom_products ) ) {
 			init_bsf_core();
 		}
 
@@ -75,7 +69,8 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 		);
 
 		$request = wp_remote_post(
-			$path, array(
+			$path,
+			array(
 				'body'    => $data,
 				'timeout' => '10',
 			)
@@ -85,7 +80,8 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 		if ( is_wp_error( $request ) && wp_remote_retrieve_response_code( $request ) !== 200 ) {
 			$path    = bsf_get_api_url( true ) . '?referer=' . $ultimate_referer;
 			$request = wp_remote_post(
-				$path, array(
+				$path,
+				array(
 					'body'    => $data,
 					'timeout' => '8',
 				)
@@ -109,8 +105,8 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 			$brainstrom_bundled_products = (array) $bundled;
 			update_option( 'brainstrom_bundled_products', $brainstrom_bundled_products );
 
-			// update 'brainstorm_products'
-			$simple = json_decode( json_encode( $result->simple ), 1 );
+			// update 'brainstorm_products'.
+			$simple = json_decode( wp_json_encode( $result->simple ), 1 );
 
 			foreach ( $brainstrom_products as $type => $products ) {
 
@@ -134,7 +130,7 @@ if ( ! function_exists( 'get_bundled_plugins' ) ) {
 
 if ( false === get_site_transient( 'bsf_get_bundled_products' ) ) {
 	if ( true === bsf_time_since_last_versioncheck( 168, 'bsf_local_transient_bundled' ) ) {
-		global $ultimate_referer;
+		global $ultimate_referer, $bsf_theme_template;
 		$ultimate_referer = 'on-bundled-products-transient-delete';
 		$template         = ( is_multisite() ) ? $bsf_theme_template : get_template();
 		get_bundled_plugins( $template );
@@ -144,10 +140,17 @@ if ( false === get_site_transient( 'bsf_get_bundled_products' ) ) {
 }
 
 if ( ! function_exists( 'install_bsf_product' ) ) {
-	function install_bsf_product( $install_id ) {
+	/**
+	 * Install product.
+	 *
+	 * @param  int   $install_id product id to install.
+	 * @param array $data request data.
+	 * @return array|bool
+	 */
+	function install_bsf_product( $install_id, $data ) {
 
 		if ( ! current_user_can( 'install_plugins' ) ) {
-			wp_die( __( 'You do not have sufficient permissions to install plugins for this site.', 'bsf' ) );
+			wp_die( esc_html_e( 'You do not have sufficient permissions to install plugins for this site.', 'bsf' ) );
 		}
 		$brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? get_option( 'brainstrom_bundled_products' ) : array();
 		$install_product_data        = array();
@@ -173,27 +176,19 @@ if ( ! function_exists( 'install_bsf_product' ) ) {
 		if ( empty( $install_product_data ) ) {
 			return false;
 		}
-		if ( $install_product_data->type !== 'plugin' ) {
+		if ( 'plugin' !== $install_product_data->type ) {
 			return false;
 		}
 
-		/*
-		 temp */
-		/*
-		$install_product_data->in_house = 'wp';
-		$install_product_data->download_url = 'https://downloads.wordpress.org/plugin/redux-framework.3.5.9.zip';*/
-
-		$is_wp = ( isset( $install_product_data->in_house ) && $install_product_data->in_house === 'wp' ) ? true : false;
+		$is_wp = ( isset( $install_product_data->in_house ) && 'wp' === $install_product_data->in_house ) ? true : false;
 
 		if ( $is_wp ) {
 			$download_path = $install_product_data->download_url;
 		} else {
-			$path     = bsf_get_api_url() . '?referer=download-bundled-extension';
-			$timezone = date_default_timezone_get();
-			$call     = 'file=' . $install_product_data->download_url . '&hashtime=' . strtotime( date( 'd-m-Y h:i:s a' ) ) . '&timezone=' . $timezone;
-			$hash     = $call;
-			// $parse = parse_url($path);
-			// $download = $parse['scheme'].'://'.$parse['host'];
+			$path          = bsf_get_api_url() . '?referer=download-bundled-extension';
+			$timezone      = date_default_timezone_get();
+			$call          = 'file=' . $install_product_data->download_url . '&hashtime=' . strtotime( gmdate( 'd-m-Y h:i:s a' ) ) . '&timezone=' . $timezone;
+			$hash          = $call;
 			$get_path      = 'http://downloads.brainstormforce.com/';
 			$download_path = rtrim( $get_path, '/' ) . '/download.php?' . $hash . '&base=ignore';
 		}
@@ -202,29 +197,29 @@ if ( ! function_exists( 'install_bsf_product' ) ) {
 		WP_Filesystem();
 		global $wp_filesystem;
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-		$WP_Upgrader = new WP_Upgrader();
-		$res         = $WP_Upgrader->fs_connect(
+		$wp_upgrader = new WP_Upgrader();
+		$res         = $wp_upgrader->fs_connect(
 			array(
 				WP_CONTENT_DIR,
 			)
 		);
 		if ( ! $res ) {
-			wp_die( new WP_Error( 'Server error', __( "Error! Can't connect to filesystem", 'bsf' ) ) );
+			wp_die( new WP_Error( 'Server error', esc_html__( "Error! Can't connect to filesystem", 'bsf' ) ) ); // PHPCS:ignore:WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
-		$Plugin_Upgrader = new Plugin_Upgrader();
+		$plugin_upgrader = new Plugin_Upgrader();
 		$defaults        = array(
 			'clear_update_cache' => true,
 		);
 		$args            = array();
 		$parsed_args     = wp_parse_args( $args, $defaults );
 
-		$Plugin_Upgrader->init();
-		$Plugin_Upgrader->install_strings();
-		$Plugin_Upgrader->strings['downloading_package'] = __( 'Downloading package from Server', 'bsf' );
-		$Plugin_Upgrader->strings['remove_old']          = __( 'Removing old plugin, if exists', 'bsf' );
+		$plugin_upgrader->init();
+		$plugin_upgrader->install_strings();
+		$plugin_upgrader->strings['downloading_package'] = __( 'Downloading package from Server', 'bsf' );
+		$plugin_upgrader->strings['remove_old']          = __( 'Removing old plugin, if exists', 'bsf' );
 
-		add_filter( 'upgrader_source_selection', array( $Plugin_Upgrader, 'check_package' ) );
-		$Plugin_Upgrader->run(
+		add_filter( 'upgrader_source_selection', array( $plugin_upgrader, 'check_package' ) );
+		$plugin_upgrader->run(
 			array(
 				'package'           => $download_path,
 				'destination'       => WP_PLUGIN_DIR,
@@ -236,13 +231,13 @@ if ( ! function_exists( 'install_bsf_product' ) ) {
 				),
 			)
 		);
-		remove_filter( 'upgrader_source_selection', array( $Plugin_Upgrader, 'check_package' ) );
-		if ( ! $Plugin_Upgrader->result || is_wp_error( $Plugin_Upgrader->result ) ) {
-			return $Plugin_Upgrader->result;
+		remove_filter( 'upgrader_source_selection', array( $plugin_upgrader, 'check_package' ) );
+		if ( ! $plugin_upgrader->result || is_wp_error( $plugin_upgrader->result ) ) {
+			return $plugin_upgrader->result;
 		}
-		// Force refresh of plugin update information
+		// Force refresh of plugin update information.
 		wp_clean_plugins_cache( $parsed_args['clear_update_cache'] );
-		// return true;
+
 		$response        = array(
 			'status' => true,
 			'type'   => 'plugin',
@@ -251,19 +246,19 @@ if ( ! function_exists( 'install_bsf_product' ) ) {
 		);
 		$plugin_abs_path = WP_PLUGIN_DIR . '/' . $install_product_data->init;
 		if ( is_file( $plugin_abs_path ) ) {
-			if ( ! isset( $_GET['action'] ) && ! isset( $_GET['id'] ) ) {
+			if ( ! isset( $data['action'] ) && ! isset( $data['id'] ) ) {
 				echo '|bsf-plugin-installed|';
 			}
 			$is_plugin_installed = true;
 			if ( ! is_plugin_active( $install_product_data->init ) ) {
 				activate_plugin( $install_product_data->init );
 				if ( is_plugin_active( $install_product_data->init ) ) {
-					if ( ! isset( $_GET['action'] ) && ! isset( $_GET['id'] ) ) {
+					if ( ! isset( $data['action'] ) && ! isset( $data['id'] ) ) {
 						echo '|bsf-plugin-activated|';
 					}
 				}
 			} else {
-				if ( ! isset( $_GET['action'] ) && ! isset( $_GET['id'] ) ) {
+				if ( ! isset( $data['action'] ) && ! isset( $data['id'] ) ) {
 					echo '|bsf-plugin-activated|';
 				}
 			}
@@ -273,11 +268,26 @@ if ( ! function_exists( 'install_bsf_product' ) ) {
 }
 
 if ( ! function_exists( 'bsf_install_callback' ) ) {
+	/**
+	 * Product install callback function.
+	 *
+	 * @return void
+	 */
 	function bsf_install_callback() {
+
+		if ( ! wp_verify_nonce( $_REQUEST['security'], 'bsf_install_extension_nonce' ) || ! current_user_can( 'install_plugins' ) ) {
+			wp_die( esc_html_e( 'Invalid request', 'bsf' ) );
+		}
+
 		$product_id = esc_attr( $_POST['product_id'] );
 		$bundled    = esc_attr( $_POST['bundled'] );
 
-		$response = install_bsf_product( $product_id );
+		$data = array(
+			'action' => $_GET['action'],
+			'id'     => $_GET['id'],
+		);
+
+		$response = install_bsf_product( $product_id, $data );
 
 		$redirect_url         = apply_filters( 'redirect_after_extension_install', $redirect_url = '', $product_id );
 		$response['redirect'] = $redirect_url;

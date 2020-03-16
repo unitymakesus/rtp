@@ -22,6 +22,8 @@ final class FLBuilderServiceAWeber extends FLBuilderService {
 	 */
 	private $api_instance = null;
 
+	private $lists = false;
+
 	/**
 	 * Get an instance of the API.
 	 *
@@ -146,15 +148,43 @@ final class FLBuilderServiceAWeber extends FLBuilderService {
 		);
 
 		try {
-			$account           = $api->getAccount( $account_data['access_token'], $account_data['access_secret'] );
-			$lists             = $account->loadFromUrl( '/accounts/' . $account->id . '/lists' );
-			$response['html']  = $this->render_list_field( $lists, $settings );
-			$response['html'] .= $this->render_tags_field( $settings );
+			$account = $api->getAccount( $account_data['access_token'], $account_data['access_secret'] );
+			$this->fetch_lists( $account );
+			if ( is_object( $this->lists ) && is_array( $this->lists->data['entries'] ) ) {
+				$response['html']  = $this->render_list_field( $this->lists, $settings );
+				$response['html'] .= $this->render_tags_field( $settings );
+			} else {
+				$response['error'] = 'Unable to fetch lists';
+			}
 		} catch ( AWeberException $e ) {
 			$response['error'] = $e->getMessage();
 		}
 
 		return $response;
+	}
+
+	private function fetch_lists( $account, $offset = false ) {
+
+		$offset_txt = '';
+		try {
+			if ( $offset ) {
+				$offset_txt = '?ws.start=' . $offset;
+			}
+			$list = $account->loadFromUrl( '/accounts/' . $account->id . '/lists' . $offset_txt );
+		} catch ( AWeberException $e ) {
+			return false;
+		}
+
+		if ( ! $this->lists ) {
+			$this->lists = $list;
+		} else {
+			$this->lists->data['entries'] = array_merge( $this->lists->data['entries'], $list->data['entries'] );
+		}
+
+		if ( count( $list->data['entries'] ) === 100 ) {
+			$offset = count( $this->lists->data['entries'] ) + 1;
+			$this->fetch_lists( $account, $offset );
+		}
 	}
 
 	/**

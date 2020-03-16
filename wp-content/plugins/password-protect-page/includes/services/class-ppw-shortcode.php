@@ -406,6 +406,11 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		 * @return bool
 		 */
 		private function is_supported_post_types( $type ) {
+			$is_bypass = apply_filters( PPW_Constants::HOOK_SHORTCODE_ALLOW_BYPASS_VALID_POST_TYPE, defined( 'PPW_PRO_VERSION' ) );
+			if ( $is_bypass ) {
+				return true;
+			}
+
 			return in_array( $type, $this->supported_post_types, true );
 		}
 

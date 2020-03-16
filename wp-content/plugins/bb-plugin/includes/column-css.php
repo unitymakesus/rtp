@@ -113,7 +113,7 @@ FLBuilderCSS::rule( array(
 // Background Color
 FLBuilderCSS::rule( array(
 	'selector' => ".fl-node-$id > .fl-col-content",
-	'enabled'  => 'color' == $settings->bg_type,
+	'enabled'  => ( ( 'color' == $settings->bg_type ) || ( 'photo' == $settings->bg_type ) ),
 	'props'    => array(
 		'background-color' => $settings->bg_color,
 	),

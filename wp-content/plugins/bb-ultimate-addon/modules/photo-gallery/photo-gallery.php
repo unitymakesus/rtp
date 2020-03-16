@@ -381,24 +381,24 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 			<?php if ( 'yes' === $this->settings->show_filter_title ) { ?>
 				<div class="uabb-photo-gallery-title-filters">
 					<div class="uabb-photo-gallery-title">
-						<<?php echo esc_attr( $this->settings->filter_title_tag ); ?> class="uabb-photo-gallery-title-text"><?php echo esc_attr( $this->settings->filters_heading_text ); ?></<?php echo esc_attr( $this->settings->filter_title_tag ); ?>>
+						<<?php echo esc_attr( $this->settings->filter_title_tag ); ?> class="uabb-photo-gallery-title-text"><?php echo $this->settings->filters_heading_text; ?></<?php echo esc_attr( $this->settings->filter_title_tag ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					</div>
 			<?php } ?>
 				<ul class="uabb-photo__gallery-filters" data-default="
 				<?php
-					echo ( isset( $default ) ) ? esc_attr( $default ) : '';
+					echo ( isset( $default ) ) ? $default : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				">
 					<li class="uabb-photo__gallery-filter uabb-filter__current" data-filter="*">
 					<?php
-					echo wp_kses_post( ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' ) );
+					echo ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 					</li>
 					<?php
 					foreach ( $cat_filter as $key => $value ) {
 						?>
 						<li class="uabb-photo__gallery-filter" data-filter="<?php echo '.' . esc_attr( $key ); ?>">
-							<?php echo esc_attr( $value ); ?>
+							<?php echo $value; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</li>
 					<?php } ?>
 				</ul>

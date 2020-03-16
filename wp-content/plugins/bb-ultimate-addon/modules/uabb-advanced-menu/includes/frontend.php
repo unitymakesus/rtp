@@ -22,7 +22,7 @@ if ( 'always' === $settings->creative_menu_mobile_breakpoint ) {
 		</div>
 	<?php } else { ?>
 		<?php
-		echo wp_kses_post( $module->get_responsive_media( $settings, $module ) );
+		echo $module->get_responsive_media( $settings, $module ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 } else {
 	?>
@@ -38,5 +38,5 @@ if ( 'always' === $settings->creative_menu_mobile_breakpoint ) {
 	</div>
 
 	<?php
-	echo wp_kses_post( $module->get_responsive_media( $settings, $module ) );
+	echo $module->get_responsive_media( $settings, $module ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

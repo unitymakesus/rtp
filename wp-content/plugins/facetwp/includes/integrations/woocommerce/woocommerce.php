@@ -520,7 +520,7 @@ class FacetWP_Integration_WooCommerce
      * @since 3.3.7
      */
     function redirect_single_search_result( $bool ) {
-        if ( FWP()->ajax->is_refresh || ! empty( FWP()->ajax->url_vars ) ) {
+        if ( FWP()->request->is_refresh || ! empty( FWP()->request->url_vars ) ) {
             $bool = false;
         }
 

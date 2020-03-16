@@ -672,7 +672,7 @@ class UABBVideoGallery extends FLBuilderModule {
 			return '';
 		}
 		?>
-		<h4 class="uabb-video__caption"><?php echo wp_kses_post( $item->title ); ?></h4>
+		<h4 class="uabb-video__caption"><?php echo $item->title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h4>
 		<?php
 	}
 	/**
@@ -691,7 +691,7 @@ class UABBVideoGallery extends FLBuilderModule {
 			return '';
 		}
 		?>
-		<span class="uabb-video__tags"><?php echo wp_kses_post( $item->tags ); ?></span>
+		<span class="uabb-video__tags"><?php echo $item->tags; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		<?php
 	}
 	/**
@@ -747,17 +747,17 @@ class UABBVideoGallery extends FLBuilderModule {
 			<?php if ( 'yes' === $this->settings->show_filter_title ) { ?>
 				<div class="uabb-video-gallery-title-filters">
 					<div class="uabb-video-gallery-title">
-						<<?php echo esc_attr( $this->settings->filter_title_tag ); ?> class="uabb-video-gallery-title-text"><?php echo wp_kses_post( $this->settings->filters_heading_text ); ?></<?php echo esc_attr( $this->settings->filter_title_tag ); ?>>
+						<<?php echo esc_attr( $this->settings->filter_title_tag ); ?> class="uabb-video-gallery-title-text"><?php echo $this->settings->filters_heading_text; ?></<?php echo esc_attr( $this->settings->filter_title_tag ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					</div>
 			<?php } ?>
 					<ul class="uabb-video__gallery-filters" data-default="
 					<?php
-					echo ( isset( $default ) ) ? wp_kses_post( $default ) : '';
+					echo ( isset( $default ) ) ? $default : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 					">
 						<li class="uabb-video__gallery-filter uabb-filter__current" data-filter="*">
 						<?php
-						echo wp_kses_post( ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' ) );
+						echo ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
 						</li>
 						<?php foreach ( $filters as $key => $value ) { ?>

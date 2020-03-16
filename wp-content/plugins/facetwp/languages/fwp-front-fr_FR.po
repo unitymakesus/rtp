@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FacetWP (front)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-30 19:01+0000\n"
-"PO-Revision-Date: 2019-01-30 14:15-0500\n"
+"POT-Creation-Date: 2020-02-21 14:01+0000\n"
+"PO-Revision-Date: 2020-02-21 14:03+0000\n"
 "Last-Translator: Matt Gibbs <hello@facetwp.com>\n"
 "Language-Team: French (France)\n"
 "Language: fr_FR\n"
@@ -11,39 +11,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.2.1\n"
-"X-Loco-Version: 2.2.0; wp-5.0.3\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.3.1; wp-5.3.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
-#: includes/class-renderer.php:519 includes/class-renderer.php:636
+#: includes/class-renderer.php:542
 msgid "of"
 msgstr "de"
 
-#: includes/class-renderer.php:553
+#: includes/class-renderer.php:576
 msgid "Sort by"
 msgstr "Trier par"
 
-#: includes/class-renderer.php:557
+#: includes/class-renderer.php:580
 msgid "Title (A-Z)"
 msgstr "Titre (A-Z)"
 
-#: includes/class-renderer.php:564
+#: includes/class-renderer.php:587
 msgid "Title (Z-A)"
 msgstr "Titre (Z-A)"
 
-#: includes/class-renderer.php:571
+#: includes/class-renderer.php:594
 msgid "Date (Newest)"
 msgstr "Date (plus récent)"
 
-#: includes/class-renderer.php:578
+#: includes/class-renderer.php:601
 msgid "Date (Oldest)"
 msgstr "Date (la plus ancienne)"
 
-#: includes/class-renderer.php:635
-msgid "Page"
-msgstr "Page"
-
-#: includes/class-renderer.php:686
+#: includes/class-renderer.php:666
 msgid "Per page"
 msgstr "Par page"
 
@@ -88,7 +84,7 @@ msgstr "Min"
 msgid "Max"
 msgstr "Max"
 
-#: includes/facets/number_range.php:31 includes/facets/autocomplete.php:64
+#: includes/facets/number_range.php:31 includes/facets/autocomplete.php:60
 msgid "Go"
 msgstr "Aller"
 
@@ -136,11 +132,11 @@ msgstr "Distance"
 msgid "See more"
 msgstr "Voir plus"
 
-#: includes/facets/autocomplete.php:61
+#: includes/facets/autocomplete.php:57
 msgid "Start typing"
 msgstr "Commencer à taper"
 
-#: includes/facets/autocomplete.php:97
+#: includes/facets/autocomplete.php:93
 msgid "No results"
 msgstr "Aucun résultat"
 
@@ -152,22 +148,26 @@ msgstr "& up"
 msgid "Undo"
 msgstr "Annuler"
 
-#: includes/integrations/woocommerce/woocommerce.php:407
+#: includes/integrations/woocommerce/woocommerce.php:443
 msgid "In Stock"
 msgstr "En stock"
 
-#: includes/integrations/woocommerce/woocommerce.php:407
+#: includes/integrations/woocommerce/woocommerce.php:443
 msgid "Out of Stock"
 msgstr "Rupture de stock"
 
-#: includes/integrations/woocommerce/woocommerce.php:415
+#: includes/integrations/woocommerce/woocommerce.php:451
 msgid "On Sale"
 msgstr "Promo"
 
-#: includes/integrations/acf/acf.php:262
+#: includes/integrations/woocommerce/woocommerce.php:460
+msgid "Featured"
+msgstr ""
+
+#: includes/integrations/acf/acf.php:267
 msgid "Yes"
 msgstr "Oui"
 
-#: includes/integrations/acf/acf.php:262
+#: includes/integrations/acf/acf.php:267
 msgid "No"
 msgstr "Non"

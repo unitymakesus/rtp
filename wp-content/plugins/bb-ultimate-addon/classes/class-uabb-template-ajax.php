@@ -31,6 +31,8 @@ class UABB_Template_Ajax {
 
 		add_action( 'wp_ajax_uabb_get_saved_wpform', __CLASS__ . '::uabb_get_saved_wpform' );
 		add_action( 'wp_ajax_nopriv_uabb_get_saved_wpform', __CLASS__ . '::uabb_get_saved_wpform' );
+
+		add_action( 'wp_ajax_uabb_get_saved_caf', __CLASS__ . '::uabb_get_saved_caf' );
 	}
 	/**
 	 * Get saved templates.
@@ -206,5 +208,48 @@ class UABB_Template_Ajax {
 			wp_send_json( $response );
 		}
 	}
+	/**
+	 * Get saved Caldera Form.
+	 *
+	 * @since 1.26.0
+	 */
+	public static function uabb_get_saved_caf() {
+
+		check_ajax_referer( 'uabb-caf-nonce', 'nonce' );
+		$options = array();
+
+		if ( class_exists( 'Caldera_Forms_Forms' ) ) {
+
+			$forms         = \Caldera_Forms_Forms::get_forms( true );
+			$options['0']  = 'Select';
+			$field_options = '';
+			if ( ! empty( $forms ) ) {
+				foreach ( $forms as $form ) {
+					if ( is_array( $form ) && ! empty( $form['ID'] ) && ! empty( $form['name'] ) ) {
+						$options[ $form['ID'] ] = $form['name'];
+					}
+				}
+			}
+			if ( count( $options ) ) {
+
+				foreach ( $options as $form_id => $form_name ) {
+
+					$field_options .= '<option value="' . $form_id . '">' . $form_name . '</option>';
+				}
+				$response = array(
+					'success' => true,
+					'data'    => $field_options,
+				);
+			} else {
+
+				$response = array(
+					'success' => true,
+					'data'    => '<option value="" disabled>' . __( 'You have not added any Caldera Forms yet.', 'uabb' ) . '</option>',
+				);
+			}
+			wp_send_json( $response );
+		}
+	}
+
 }
 UABB_Template_Ajax::init();

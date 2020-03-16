@@ -21,7 +21,7 @@ $settings->autoplay_time = ( '' !== $settings->autoplay_time ) ? $settings->auto
 			<div class="uabb-info-circle-icon-content uabb-ic-<?php echo esc_attr( $circle_item_count ); ?> <?php echo ( 1 === $circle_item_count ) ? 'active' : ''; ?>">
 
 			<?php if ( 'hover' === $settings->info_trigger_type && ( 'icon' === $item->cta || 'both' === $item->cta ) ) : ?>
-					<a href='<?php echo esc_url( $item->cta_link ); ?>' target='<?php echo esc_attr( $item->cta_link_target ); ?>' <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->cta_link_target, $item->cta_link_nofollow, 1 ); ?>> <!-- Link on Icon -->
+					<a href='<?php echo $item->cta_link; ?>' target='<?php echo esc_attr( $item->cta_link_target ); ?>' <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->cta_link_target, $item->cta_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>> <!-- Link on Icon -->
 				<?php endif; ?>
 
 					<div class="uabb-info-circle uabb-info-circle-small uabb-circle-<?php echo esc_attr( $circle_item_count ); ?> <?php echo esc_attr( $img_active_effect ); ?>" data-circle-id="<?php echo esc_attr( $circle_item_count ); ?>">
@@ -45,7 +45,7 @@ $settings->autoplay_time = ( '' !== $settings->autoplay_time ) ? $settings->auto
 							<?php $module->render_icon_image( $item ); ?>
 						<?php endif; ?>
 
-						<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-info-circle-title"><?php echo wp_kses_post( $item->circle_item_title ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
+						<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-info-circle-title"><?php echo $item->circle_item_title; ?></<?php echo esc_attr( $settings->tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 
 						<?php if ( 'none' !== $settings->info_separator_style ) : ?>
 							<span class="uabb-ic-separator"></span>

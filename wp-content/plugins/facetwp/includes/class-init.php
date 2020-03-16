@@ -25,6 +25,7 @@ class FacetWP_Init
             'api/refresh',
             'class-helper',
             'class-ajax',
+            'class-request',
             'class-renderer',
             'class-diff',
             'class-indexer',
@@ -50,6 +51,7 @@ class FacetWP_Init
         FWP()->indexer      = new FacetWP_Indexer();
         FWP()->display      = new FacetWP_Display();
         FWP()->builder      = new FacetWP_Builder();
+        FWP()->request      = new FacetWP_Request();
         FWP()->ajax         = new FacetWP_Ajax();
 
         // integrations

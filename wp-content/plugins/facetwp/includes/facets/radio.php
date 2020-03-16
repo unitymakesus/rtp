@@ -100,11 +100,16 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
      */
     function render( $params ) {
 
-        $facet = $params['facet'];
-
         $output = '';
+        $facet = $params['facet'];
         $values = (array) $params['values'];
         $selected_values = (array) $params['selected_values'];
+        $label_any = empty( $facet['label_any'] ) ? false : facetwp_i18n( $facet['label_any'] );
+
+        if ( $label_any ) {
+            $selected = empty( $selected_values ) ? ' checked' : '';
+            $output .= '<div class="facetwp-radio' . $selected . '" data-value="">' . esc_attr( $label_any ) . '</div>';
+        }
 
         $key = 0;
         foreach ( $values as $key => $result ) {
@@ -141,6 +146,20 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
      */
     function settings_html() {
 ?>
+        <div class="facetwp-row">
+            <div>
+                <?php _e( 'Default label', 'fwp' ); ?>:
+                <div class="facetwp-tooltip">
+                    <span class="icon-question">?</span>
+                    <div class="facetwp-tooltip-content">
+                        Customize the "Any" label (leave blank to hide)
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="text" class="facet-label-any" />
+            </div>
+        </div>
         <div class="facetwp-row" v-show="facet.source.substr(0, 3) == 'tax'">
             <div>
                 <?php _e('Parent term', 'fwp'); ?>:

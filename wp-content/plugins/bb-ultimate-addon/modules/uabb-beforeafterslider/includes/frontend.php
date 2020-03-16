@@ -17,21 +17,21 @@
 		>
 			<?php if ( 'url' === $settings->before_image ) { ?>
 				<?php if ( isset( $settings->before_photo_url ) && '' !== $settings->before_photo_url ) { ?>
-					<img class="uabb-before-img" src="<?php echo esc_url( $settings->before_photo_url ); ?>" alt="<?php echo esc_attr( $settings->before_label_text ); ?>"/>
+					<img class="uabb-before-img" src="<?php echo $settings->before_photo_url; ?>" alt="<?php echo $settings->before_label_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 				<?php } ?>
 			<?php } else { ?>
 				<?php if ( isset( $settings->before_photo_src ) && '' !== $settings->before_photo_src ) { ?>
-					<img class="uabb-before-img" src="<?php echo esc_url( $settings->before_photo_src ); ?>" alt="<?php echo esc_attr( $settings->before_label_text ); ?>"/>
+					<img class="uabb-before-img" src="<?php echo $settings->before_photo_src; ?>" alt="<?php echo $settings->before_label_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 				<?php } ?>
 			<?php } ?>
 
 			<?php if ( 'url' === $settings->after_image ) { ?>
 				<?php if ( isset( $settings->after_photo_url ) && '' !== $settings->after_photo_url ) { ?>
-					<img class="uabb-before-img" src="<?php echo esc_url( $settings->after_photo_url ); ?>" alt="<?php echo esc_attr( $settings->after_label_text ); ?>"/>
+					<img class="uabb-before-img" src="<?php echo $settings->after_photo_url; ?>" alt="<?php echo $settings->after_label_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 				<?php } ?>
 			<?php } else { ?>
 				<?php if ( isset( $settings->after_photo_src ) && '' !== $settings->after_photo_src ) { ?>
-					<img class="uabb-before-img" src="<?php echo esc_url( $settings->after_photo_src ); ?>" alt="<?php echo esc_attr( $settings->after_label_text ); ?>"/>
+					<img class="uabb-before-img" src="<?php echo $settings->after_photo_src; ?>" alt="<?php echo $settings->after_label_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 				<?php } ?>
 			<?php } ?>
 		</div>

@@ -367,7 +367,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		?>
 		<div class="uabb-input-group uabb-<?php echo esc_attr( $field_name ); ?> uabb-rf-column-desktop_<?php echo esc_attr( $field_width['desktop'] ); ?> uabb-rf-column-medium_<?php echo esc_attr( $field_width['medium'] ); ?> uabb-rf-column-responsive_<?php echo esc_attr( $field_width['responsive'] ); ?> <?php echo esc_attr( $required_class ); ?>" >
 			<?php if ( '' !== $label ) { ?>
-				<label for="uabb-name" class="uabb-label-mark"> <?php echo esc_attr( $label ); ?></label>
+				<label for="uabb-name" class="uabb-label-mark"> <?php echo $label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 			<?php } ?>
 			<div class="uabb-form-outter">
 				<input type="<?php echo esc_attr( $type ); ?>" name="uabb_<?php echo esc_attr( $field_name ); ?>" value="" class="uabb-registration-form-requried-<?php echo esc_attr( $error_class ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">

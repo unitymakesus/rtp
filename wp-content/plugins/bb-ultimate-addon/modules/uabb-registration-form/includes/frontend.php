@@ -46,7 +46,7 @@ if ( 'yes' === $settings->hide_form_logged && is_user_logged_in() && ! FLBuilder
 		<div class="uabb-registration-loggedin-message">
 			<?php
 			if ( '' !== $settings->logged_in_text ) {
-				echo '<span>' . wp_kses_post( $settings->logged_in_text ) . '</span>';
+				echo '<span>' . $settings->logged_in_text . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
 		</div>
@@ -120,7 +120,7 @@ if ( 'yes' === $settings->hide_form_logged && is_user_logged_in() && ! FLBuilder
 			<?php } else { ?>
 				<form class="uabb-module-content uabb-registration-form" method="post" data-nonce=<?php echo wp_kses_post( wp_create_nonce( 'uabb-rf-nonce' ) ); ?> >
 					<div class="uabb-input-group-wrap">
-						<?php echo wp_kses_post( $module->form_field_data() ); ?>
+						<?php echo $module->form_field_data(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php
 						if ( 'show' === $settings->uabb_recaptcha_toggle ) {
 							?>
@@ -139,26 +139,26 @@ if ( 'yes' === $settings->hide_form_logged && is_user_logged_in() && ! FLBuilder
 							<input size="1" type="text" style="display:none;" name="input_text">
 						</div>
 					<?php } ?>
-								<button type="submit" class="uabb-submit-btn uabb-registration-form-submit uabb-submit-btn-align-<?php echo esc_attr( $settings->btn_align ); ?> uabb-rf-btn-col_<?php echo esc_attr( $settings->btn_col_width ); ?> uabb-rf-btn-medium-col_<?php echo esc_attr( $settings->btn_col_width_medium ); ?> uabb-rf-btn-responsive-col_<?php echo esc_attr( $settings->btn_col_width_responsive ); ?>" ><span class="uabb-registration-form-button-text"><?php echo ( $settings->btn_text ) ? wp_kses_post( $settings->btn_text ) : 'Submit'; ?></span></button>
+								<button type="submit" class="uabb-submit-btn uabb-registration-form-submit uabb-submit-btn-align-<?php echo esc_attr( $settings->btn_align ); ?> uabb-rf-btn-col_<?php echo esc_attr( $settings->btn_col_width ); ?> uabb-rf-btn-medium-col_<?php echo esc_attr( $settings->btn_col_width_medium ); ?> uabb-rf-btn-responsive-col_<?php echo esc_attr( $settings->btn_col_width_responsive ); ?>" ><span class="uabb-registration-form-button-text"><?php echo ( $settings->btn_text ) ? $settings->btn_text : 'Submit'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></button>
 						<?php if ( 'yes' === $settings->login_link || 'yes' === $settings->lost_your_pass ) { ?>
 							<div class=" uabb-input-group uabb-rform-exteral-link-wrap" >
 								<?php if ( 'yes' === $settings->login_link ) { ?>
-									<a class="uabb-rform-exteral-link" href="<?php echo esc_url( $login_link ); ?>">
-										<span> <?php echo wp_kses_post( $settings->login_link_text ); ?> </span>
+									<a class="uabb-rform-exteral-link" href="<?php echo $login_link; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+										<span> <?php echo $settings->login_link_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 									</a>
 								<?php } ?>
 								<?php if ( 'yes' === $settings->lost_your_pass ) { ?>
-									<a class="uabb-rform-exteral-link" href="<?php echo esc_url( $lost_link ); ?>">
-										<span> <?php echo wp_kses_post( $settings->lost_link_text ); ?> </span>
+									<a class="uabb-rform-exteral-link" href="<?php echo $lost_link; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+										<span> <?php echo $settings->lost_link_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 									</a>
 								<?php } ?>
 							</div>
 						<?php } ?>
 						<div class=" uabb-input-group uabb-rf-success-message-wrap">
-							<div class="uabb-rf-success-message"><?php echo wp_kses_post( $settings->success_message ); ?></div>
+							<div class="uabb-rf-success-message"><?php echo $settings->success_message; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						</div>
 						<div class=" uabb-input-group uabb-registration_form-error-message-required">
-							<div class="uabb-rf-honeypot"><?php echo wp_kses_post( $settings->error_message ); ?></div>
+							<div class="uabb-rf-honeypot"><?php echo $settings->error_message; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 						</div>
 					</div>
 				</form>

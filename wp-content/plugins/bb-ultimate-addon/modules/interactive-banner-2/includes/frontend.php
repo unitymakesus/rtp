@@ -37,7 +37,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 	<?php
 	if ( '' !== $settings->banner_title ) {
 		?>
-		<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-new-ib-title uabb-simplify"><?php echo wp_kses_post( $settings->banner_title ); ?></<?php echo esc_attr( $settings->title_typography_tag_selection ); ?>>
+		<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-new-ib-title uabb-simplify"><?php echo $settings->banner_title; ?></<?php echo esc_attr( $settings->title_typography_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php
 	}
 	?>
@@ -46,7 +46,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 	<?php
 	if ( '' !== $settings->link_url ) {
 		?>
-	<a class="uabb-new-ib-link" href="<?php echo esc_url( $settings->link_url ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $link_url_nofollow, 1 ); ?>></a>
+	<a class="uabb-new-ib-link" href="<?php echo $settings->link_url; ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $link_url_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></a>
 		<?php
 	}
 	?>

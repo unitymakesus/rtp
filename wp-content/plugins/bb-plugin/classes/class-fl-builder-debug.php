@@ -160,6 +160,14 @@ final class FL_Debug {
 		);
 		self::register( 'wp_max_mem', $args );
 
+		if ( get_option( 'upload_path' ) != 'wp-content/uploads' && get_option( 'upload_path' ) ) {
+			$args = array(
+				'name' => 'Possible Issue: upload_path is set, can lead to cache dir issues and css not loading. Check Settings -> Media for custom path.',
+				'data' => get_option( 'upload_path' ),
+			);
+			self::register( 'wp_media_upload_path', $args );
+		}
+
 		$args = array(
 			'name' => 'Post Counts',
 			'data' => self::divider(),

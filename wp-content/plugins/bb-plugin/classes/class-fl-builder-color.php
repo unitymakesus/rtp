@@ -12,10 +12,21 @@ final class FLBuilderColor {
 	 *
 	 * @since 1.0
 	 * @since 2.2 Added support for rgba values.
-	 * @param string $hex A hex color value without the # sign.
+	 * @since 2.3 Added php7.4 fixes
+	 * @param string $hex A hex color value with or without the # sign.
 	 * @return array An array of RGB values.
 	 */
 	static public function hex_to_rgb( $hex ) {
+
+		// if $hex is empty or false return basic rgb data.
+		if ( ! $hex ) {
+			return array(
+				'r' => 0,
+				'g' => 0,
+				'b' => 0,
+			);
+		}
+
 		if ( strstr( $hex, 'rgb' ) ) {
 			$rgb = explode( ',', preg_replace( '/[a-z\(\)]/', '', $hex ) );
 			return array(
@@ -24,10 +35,14 @@ final class FLBuilderColor {
 				'b' => $rgb[2],
 			);
 		}
+
+		list($r, $g, $b) = array_map( function( $hex ) {
+			return hexdec( str_pad( $hex, 2, $hex ) );
+		}, str_split( ltrim( $hex, '#' ), strlen( $hex ) > 4 ? 2 : 1 ) );
 		return array(
-			'r' => hexdec( substr( $hex, 0, 2 ) ),
-			'g' => hexdec( substr( $hex, 2, 2 ) ),
-			'b' => hexdec( substr( $hex, 4, 2 ) ),
+			'r' => $r,
+			'g' => $g,
+			'b' => $b,
 		);
 	}
 

@@ -3,19 +3,6 @@
 class FacetWP_Ajax
 {
 
-    /* (array) FacetWP-related GET variables */
-    public $url_vars = [];
-
-    /* (boolean) FWP template shortcode? */
-    public $is_shortcode = false;
-
-    /* (boolean) Is a FacetWP refresh? */
-    public $is_refresh = false;
-
-    /* (boolean) Initial load? */
-    public $is_preload;
-
-
     function __construct() {
 
         // Authenticated
@@ -35,210 +22,9 @@ class FacetWP_Ajax
         add_action( 'facetwp_refresh', [ $this, 'refresh' ] );
         add_action( 'wp_ajax_nopriv_facetwp_resume_index', [ $this, 'resume_index' ] );
 
-        // Deprecated
-        add_action( 'wp_ajax_facetwp_refresh', [ $this, 'refresh' ] );
-        add_action( 'wp_ajax_nopriv_facetwp_refresh', [ $this, 'refresh' ] );
-
-        // Intercept the template if needed
-        $this->intercept_request();
-    }
-
-
-    /**
-     * If AJAX and the template is "wp", return the buffered HTML
-     * Otherwise, store the GET variables for later use
-     */
-    function intercept_request() {
-        $action = isset( $_POST['action'] ) ? $_POST['action'] : '';
-
-        $valid_actions = [
-            'facetwp_refresh',
-            'facetwp_autocomplete_load'
-        ];
-
-        $this->is_refresh = ( 'facetwp_refresh' == $action );
-        $this->is_preload = ! in_array( $action, $valid_actions );
-        $prefix = FWP()->helper->get_setting( 'prefix' );
-        $tpl = isset( $_POST['data']['template'] ) ? $_POST['data']['template'] : '';
-
-        // Pageload
-        if ( $this->is_preload ) {
-
-            // Store GET variables
-            foreach ( $_GET as $key => $val ) {
-                if ( 0 === strpos( $key, $prefix ) ) {
-                    $new_key = substr( $key, strlen( $prefix ) );
-                    $new_val = stripslashes( $val );
-
-                    if ( '' !== $new_val ) {
-                        if ( ! in_array( $new_key, [ 'paged', 'per_page', 'sort' ] ) ) {
-                            $new_val = explode( ',', $new_val );
-                        }
-
-                        $this->url_vars[ $new_key ] = $new_val;
-                    }
-                }
-            }
-
-            $this->url_vars = apply_filters( 'facetwp_preload_url_vars', $this->url_vars );
-        }
-
-        if ( $this->is_preload || 'wp' == $tpl ) {
-            add_action( 'pre_get_posts', [ $this, 'sacrificial_lamb' ], 998 );
-            add_action( 'pre_get_posts', [ $this, 'update_query_vars' ], 999 );
-        }
-
-        if ( ! $this->is_preload && 'wp' == $tpl && 'facetwp_autocomplete_load' != $action ) {
-            add_action( 'shutdown', [ $this, 'inject_template' ], 0 );
-            ob_start();
-        }
-    }
-
-
-    function sacrificial_lamb( $query ) {
-        // Fix for WP core issue #40393
-    }
-
-
-    /**
-     * Force FacetWP to use the default WP query
-     */
-    function update_query_vars( $query ) {
-
-        // Only run once
-        if ( isset( $this->query_vars ) ) {
-            return;
-        }
-
-        // Skip shortcode template
-        if ( $this->is_shortcode ) {
-            return;
-        }
-
-        // Skip admin
-        if ( is_admin() && ! wp_doing_ajax() ) {
-            return;
-        }
-
-        $is_main_query = ( $query->is_archive || $query->is_search || ( $query->is_main_query() && ! $query->is_singular ) );
-        $is_main_query = ( true === $query->get( 'suppress_filters', false ) ) ? false : $is_main_query; // skip get_posts()
-        $is_main_query = ( wp_doing_ajax() && ! $this->is_refresh ) ? false : $is_main_query; // skip other ajax
-        $is_main_query = ( $query->is_feed ) ? false : $is_main_query; // skip feeds
-        $is_main_query = ( '' !== $query->get( 'facetwp' ) ) ? (bool) $query->get( 'facetwp' ) : $is_main_query; // flag
-        $is_main_query = apply_filters( 'facetwp_is_main_query', $is_main_query, $query );
-
-        if ( $is_main_query ) {
-
-            // Set the flag
-            $query->set( 'facetwp', true );
-
-            // Store the default WP query vars
-            $this->query_vars = $query->query_vars;
-
-            // Notify
-            do_action( 'facetwp_found_main_query' );
-
-            // No URL variables
-            if ( $this->is_preload && empty( $this->url_vars ) ) {
-                return;
-            }
-
-            // Generate the FWP output
-            if ( $this->is_preload ) {
-                $this->get_preload_data( 'wp' );
-            }
-            else {
-                $this->output = FWP()->facet->render(
-                    $this->process_post_data()
-                );
-            }
-
-            // Set up the updated query_vars
-            $query->query_vars = FWP()->facet->query_args;
-        }
-    }
-
-
-    /**
-     * Preload the AJAX response so search engines can see it
-     * @since 2.0
-     */
-    function get_preload_data( $template_name, $overrides = [] ) {
-
-        if ( false === $template_name ) {
-            $template_name = isset( $this->template_name ) ? $this->template_name : 'wp';
-        }
-
-        $this->template_name = $template_name;
-
-        // Is this a template shortcode?
-        $this->is_shortcode = ( 'wp' != $template_name );
-
-        $params = [
-            'facets'            => [],
-            'template'          => $template_name,
-            'http_params'       => [
-                'get'       => $_GET,
-                'uri'       => FWP()->helper->get_uri(),
-                'url_vars'  => FWP()->ajax->url_vars,
-            ],
-            'frozen_facets'     => [],
-            'soft_refresh'      => 0,
-            'is_preload'        => 1,
-            'is_bfcache'        => 0,
-            'first_load'        => 0, // force load template
-            'extras'            => [],
-            'paged'             => 1,
-        ];
-
-        foreach ( $this->url_vars as $key => $val ) {
-            if ( 'paged' == $key ) {
-                $params['paged'] = $val;
-            }
-            elseif ( 'per_page' == $key ) {
-                $params['extras']['per_page'] = $val;
-            }
-            elseif ( 'sort' == $key ) {
-                $params['extras']['sort'] = $val;
-            }
-            else {
-                $params['facets'][] = [
-                    'facet_name' => $key,
-                    'selected_values' => $val,
-                ];
-            }
-        }
-
-        // Override the defaults
-        $params = array_merge( $params, $overrides );
-
-        return FWP()->facet->render( $params );
-    }
-
-
-    /**
-     * Inject the page HTML into the JSON response
-     * We'll cherry-pick the content from the HTML using front.js
-     */
-    function inject_template() {
-        $html = ob_get_clean();
-
-        // Throw an error
-        if ( empty( $this->output['settings'] ) ) {
-            $html = __( 'FacetWP was unable to auto-detect the post listing', 'fwp' );
-        }
-        // Grab the <body> contents
-        else {
-            preg_match( "/<body(.*?)>(.*?)<\/body>/s", $html, $matches );
-
-            if ( ! empty( $matches ) ) {
-                $html = trim( $matches[2] );
-            }
-        }
-
-        $this->output['template'] = $html;
-        do_action( 'facetwp_inject_template', $this->output );
-        wp_send_json( $this->output );
+        // Backwards compatibility
+        $this->url_vars = FWP()->request->url_vars;
+        $this->is_preload = FWP()->request->is_preload;
     }
 
 
@@ -357,45 +143,13 @@ class FacetWP_Ajax
 
 
     /**
-     * Generate a $params array that can be passed directly into FWP()->facet->render()
-     */
-    function process_post_data() {
-        $data = stripslashes_deep( $_POST['data'] );
-        $facets = json_decode( $data['facets'], true );
-        $extras = isset( $data['extras'] ) ? $data['extras'] : [];
-        $frozen_facets = isset( $data['frozen_facets'] ) ? $data['frozen_facets'] : [];
-
-        $params = [
-            'facets'            => [],
-            'template'          => $data['template'],
-            'frozen_facets'     => $frozen_facets,
-            'http_params'       => $data['http_params'],
-            'extras'            => $extras,
-            'soft_refresh'      => (int) $data['soft_refresh'],
-            'is_bfcache'        => (int) $data['is_bfcache'],
-            'first_load'        => (int) $data['first_load'],
-            'paged'             => (int) $data['paged'],
-        ];
-
-        foreach ( $facets as $facet_name => $selected_values ) {
-            $params['facets'][] = [
-                'facet_name'        => $facet_name,
-                'selected_values'   => $selected_values,
-            ];
-        }
-
-        return $params;
-    }
-
-
-    /**
      * The AJAX facet refresh handler
      */
     function refresh() {
 
         global $wpdb;
 
-        $params = $this->process_post_data();
+        $params = FWP()->request->process_post_data();
         $output = FWP()->facet->render( $params );
         $data = stripslashes_deep( $_POST['data'] );
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FacetWP (front)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-30 19:01+0000\n"
+"POT-Creation-Date: 2020-02-21 14:01+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Matt Gibbs <hello@facetwp.com>\n"
@@ -16,35 +16,31 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Language: "
 
-#: includes/class-renderer.php:519 includes/class-renderer.php:636
+#: includes/class-renderer.php:542
 msgid "of"
 msgstr ""
 
-#: includes/class-renderer.php:553
+#: includes/class-renderer.php:576
 msgid "Sort by"
 msgstr ""
 
-#: includes/class-renderer.php:557
+#: includes/class-renderer.php:580
 msgid "Title (A-Z)"
 msgstr ""
 
-#: includes/class-renderer.php:564
+#: includes/class-renderer.php:587
 msgid "Title (Z-A)"
 msgstr ""
 
-#: includes/class-renderer.php:571
+#: includes/class-renderer.php:594
 msgid "Date (Newest)"
 msgstr ""
 
-#: includes/class-renderer.php:578
+#: includes/class-renderer.php:601
 msgid "Date (Oldest)"
 msgstr ""
 
-#: includes/class-renderer.php:635
-msgid "Page"
-msgstr ""
-
-#: includes/class-renderer.php:686
+#: includes/class-renderer.php:666
 msgid "Per page"
 msgstr ""
 
@@ -89,7 +85,7 @@ msgstr ""
 msgid "Max"
 msgstr ""
 
-#: includes/facets/number_range.php:31 includes/facets/autocomplete.php:64
+#: includes/facets/number_range.php:31 includes/facets/autocomplete.php:60
 msgid "Go"
 msgstr ""
 
@@ -137,11 +133,11 @@ msgstr ""
 msgid "See more"
 msgstr ""
 
-#: includes/facets/autocomplete.php:61
+#: includes/facets/autocomplete.php:57
 msgid "Start typing"
 msgstr ""
 
-#: includes/facets/autocomplete.php:97
+#: includes/facets/autocomplete.php:93
 msgid "No results"
 msgstr ""
 
@@ -153,22 +149,26 @@ msgstr ""
 msgid "Undo"
 msgstr ""
 
-#: includes/integrations/woocommerce/woocommerce.php:407
+#: includes/integrations/woocommerce/woocommerce.php:443
 msgid "In Stock"
 msgstr ""
 
-#: includes/integrations/woocommerce/woocommerce.php:407
+#: includes/integrations/woocommerce/woocommerce.php:443
 msgid "Out of Stock"
 msgstr ""
 
-#: includes/integrations/woocommerce/woocommerce.php:415
+#: includes/integrations/woocommerce/woocommerce.php:451
 msgid "On Sale"
 msgstr ""
 
-#: includes/integrations/acf/acf.php:262
+#: includes/integrations/woocommerce/woocommerce.php:460
+msgid "Featured"
+msgstr ""
+
+#: includes/integrations/acf/acf.php:267
 msgid "Yes"
 msgstr ""
 
-#: includes/integrations/acf/acf.php:262
+#: includes/integrations/acf/acf.php:267
 msgid "No"
 msgstr ""

@@ -16,7 +16,7 @@
 	<div class="uabb-toc-container">
 	<?php $module->render_separator( 'top' ); ?>
 	<div class ="uabb-heading-block">
-		<span class="uabb-toc-heading"><?php echo wp_kses_post( $settings->heading_title ); ?></span>
+		<span class="uabb-toc-heading"><?php echo $settings->heading_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<div id="uabb-toc-toggle" class="uabb-toggle-toc" >
 		<span class="uabb-icon">
 			<i class="<?php echo esc_attr( $settings->icon ); ?>"></i>

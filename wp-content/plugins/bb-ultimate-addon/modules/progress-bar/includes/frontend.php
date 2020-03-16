@@ -35,9 +35,9 @@
 					} elseif ( 'circular' === $settings->layout ) {
 						?>
 				<div class="uabb-percent-wrap">
-					<span class="uabb-percent-before-text uabb-ba-text"><?php echo wp_kses_post( $tmp[ $i ]->circular_before_number ); ?></span>
+					<span class="uabb-percent-before-text uabb-ba-text"><?php echo $tmp[ $i ]->circular_before_number; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 					<div class="uabb-percent-counter">0%</div>
-					<span class="uabb-percent-after-text uabb-ba-text"><?php echo wp_kses_post( $tmp[ $i ]->circular_after_number ); ?></span>
+					<span class="uabb-percent-after-text uabb-ba-text"><?php echo $tmp[ $i ]->circular_after_number; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 				</div>
 				<div class="uabb-svg-wrap" data-number="<?php echo esc_attr( $tmp[ $i ]->horizontal_number ); ?>">
 						<?php $module->render_circle_progress_bar( $tmp[ $i ], $i ); ?>
@@ -53,8 +53,8 @@
 						<?php $module->render_semi_circle_progress_bar( $tmp[ $i ], $i ); ?>
 
 				</div>
-				<span class="uabb-semi-progress-before uabb-ba-text"><?php echo wp_kses_post( $tmp[ $i ]->circular_before_number ); ?></span>
-				<span class="uabb-semi-progress-after uabb-ba-text"><?php echo wp_kses_post( $tmp[ $i ]->circular_after_number ); ?></span>
+				<span class="uabb-semi-progress-before uabb-ba-text"><?php echo $tmp[ $i ]->circular_before_number; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<span class="uabb-semi-progress-after uabb-ba-text"><?php echo $tmp[ $i ]->circular_after_number; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						<?php
 					}
 					?>

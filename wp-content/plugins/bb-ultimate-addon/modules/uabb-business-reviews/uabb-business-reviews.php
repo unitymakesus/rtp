@@ -776,7 +776,9 @@ class UabbBusinessReview extends FLBuilderModule {
 
 		$timestamp = ( 'google' === $review['source'] ) ? $review['time'] : strtotime( $review['time'] );
 
-		$date = gmdate( 'd-m-Y', $timestamp );
+		$date_format = apply_filters( 'uabb_reviews_date_format_filter', 'd-m-Y' );
+
+		$date = gmdate( $date_format, $timestamp );
 
 		if ( ( isset( $settings->review_source_icon ) && 'no' === $settings->review_source_icon ) || 'top' === $settings->image_align ) {
 
@@ -846,7 +848,6 @@ class UabbBusinessReview extends FLBuilderModule {
 	public function get_reviews( $review, $settings ) {
 		$photolink = ( null !== $review['profile_photo_url'] ) ? $review['profile_photo_url'] : '';
 
-		$date         = gmdate( 'd/m/Y', strtotime( $review['time'] ) );
 		$total_rating = $review['rating'];
 		$content      = '';
 		if ( 'default' === $settings->_skin ) {

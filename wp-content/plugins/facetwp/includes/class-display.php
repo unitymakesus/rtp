@@ -9,6 +9,9 @@ class FacetWP_Display
     /* (array) Facets being used on the page */
     public $active_facets = [];
 
+    /* (array) Extra features used on the page */
+    public $active_extras = [];
+
     /* (array) Saved shortcode attributes */
     public $shortcode_atts = [];
 
@@ -68,7 +71,8 @@ class FacetWP_Display
 
                 // Preload the template (search engine visible)
                 $temp_query = $wp_query;
-                $preload_data = FWP()->ajax->get_preload_data( $template['name'] );
+                $args = FWP()->request->process_preload_data( $template['name'] );
+                $preload_data = FWP()->facet->render( $args );
                 $wp_query = $temp_query;
 
                 $output = '<div class="facetwp-template" data-name="' . $atts['template'] . '">';
@@ -125,17 +129,11 @@ class FacetWP_Display
                 $this->assets['accessibility.js'] = FACETWP_URL . '/assets/js/src/accessibility.js';
             }
 
-            // Use the REST API?
-            $ajaxurl = admin_url( 'admin-ajax.php' );
-            if ( function_exists( 'get_rest_url' ) && apply_filters( 'facetwp_use_rest_api', true ) ) {
-                $ajaxurl = get_rest_url() . 'facetwp/v1/refresh';
-            }
-
             // Pass GET and URI params
             $http_params = [
                 'get' => $_GET,
                 'uri' => FWP()->helper->get_uri(),
-                'url_vars' => FWP()->ajax->url_vars,
+                'url_vars' => FWP()->request->url_vars,
             ];
 
             // See FWP()->facet->get_query_args()
@@ -144,14 +142,18 @@ class FacetWP_Display
             }
 
             // Populate the FWP_JSON object
-            $this->json['loading_animation'] = FWP()->helper->get_setting( 'loading_animation' );
             $this->json['prefix'] = FWP()->helper->get_setting( 'prefix' );
             $this->json['no_results_text'] = __( 'No results found', 'fwp' );
-            $this->json['ajaxurl'] = $ajaxurl;
+            $this->json['ajaxurl'] = get_rest_url() . 'facetwp/v1/refresh';
             $this->json['nonce'] = wp_create_nonce( 'wp_rest' );
 
             if ( apply_filters( 'facetwp_use_preloader', true ) ) {
-                $this->json['preload_data'] = $this->prepare_preload_data();
+                $overrides = FWP()->request->process_preload_overrides([
+                    'facets' => $this->active_facets,
+                    'extras' => $this->active_extras,
+                ]);
+                $args = FWP()->request->process_preload_data( false, $overrides );
+                $this->json['preload_data'] = FWP()->facet->render( $args );
             }
 
             ob_start();
@@ -190,43 +192,5 @@ window.FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
 </script>
 <?php
         }
-    }
-
-
-    /**
-     * On initial pageload, preload the facet data
-     * and pass it client-side through the FWP_JSON object
-     */
-    function prepare_preload_data() {
-        $overrides = [];
-        $url_vars = FWP()->ajax->url_vars;
-
-        foreach ( $this->active_facets as $name ) {
-            $selected_values = isset( $url_vars[ $name ] ) ? $url_vars[ $name ] : [];
-
-            $overrides['facets'][] = [
-                'facet_name' => $name,
-                'selected_values' => $selected_values,
-            ];
-        }
-
-        if ( isset( $this->active_extras['counts'] ) ) {
-            $overrides['extras']['counts'] = true;
-        }
-        if ( isset( $this->active_extras['pager'] ) ) {
-            $overrides['extras']['pager'] = true;
-        }
-        if ( isset( $this->active_extras['per_page'] ) ) {
-            $per_page = isset( $url_vars['per_page'] ) ? $url_vars['per_page'] : 'default';
-            $overrides['extras']['per_page'] = $per_page;
-        }
-        if ( isset( $this->active_extras['sort'] ) ) {
-            $sort = isset( $url_vars['sort'] ) ? $url_vars['sort'] : 'default';
-            $overrides['extras']['sort'] = $sort;
-        }
-
-        $overrides['first_load'] = 1; // skip the template
-        $output = FWP()->ajax->get_preload_data( false, $overrides );
-        return $output;
     }
 }

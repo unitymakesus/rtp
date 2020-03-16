@@ -469,9 +469,9 @@ class UABBTable extends FLBuilderModule {
 		<div class="table-data">
 			<?php if ( 'yes' === $this->settings->show_entries ) : ?>
 				<div class="entries-wrapper">
-					<label class="lbl-entries"><?php echo esc_attr( $this->settings->show_entries_label ); ?> </label>
+					<label class="lbl-entries"><?php echo $this->settings->show_entries_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </label>
 					<select class="select-filter">
-						<option class="filter-entry"><?php echo esc_attr( $this->settings->show_entries_all_label ); ?></option>
+						<option class="filter-entry"><?php echo $this->settings->show_entries_all_label;  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
 						<?php for ( $cnt = 1; $cnt < $total_rows; $cnt++ ) { ?>
 							<option class="filter-entry"> <?php echo $cnt; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </option>
 						<?php } ?>
@@ -481,7 +481,7 @@ class UABBTable extends FLBuilderModule {
 
 			<?php if ( 'yes' === $this->settings->show_search ) : ?>
 				<div class="search-wrapper">
-					<input class="search-input" type="text" placeholder="<?php echo esc_attr( $this->settings->search_label ); ?>" name="toSearch" id="searchHere"/>
+					<input class="search-input" type="text" placeholder="<?php echo $this->settings->search_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="toSearch" id="searchHere"/>
 				</div>
 			<?php endif ?>
 		</div>

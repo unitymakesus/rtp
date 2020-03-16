@@ -81,6 +81,30 @@ if ( ! class_exists( 'PPW_Asset_Services' ) ) {
 		}
 
 		/**
+		 * Render css and js for general tab
+		 */
+		public function load_assets_for_misc_tab() {
+			$module = PPW_Constants::MISC_SETTINGS_MODULE;
+			if ( PPW_Constants::MENU_NAME === $this->page && ( $module === $this->tab || null === $this->tab ) ) {
+				$this->load_bundle_css( PPW_VERSION );
+				$this->load_js( $module, PPW_VERSION );
+				wp_localize_script(
+					"ppw-$module-js",
+					'ppw_misc_data',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'home_url' => ppw_core_get_home_url_with_ssl(),
+						'nonce'    => wp_create_nonce( 'wp_rest' ),
+					)
+				);
+				$this->load_select2_lib();
+				$this->load_toastr_lib();
+
+				do_action( PPW_Constants::HOOK_ADVANCED_TAB_LOAD_ASSETS );
+			}
+		}
+
+		/**
 		 * Load asserts for meta-box.
 		 */
 		public function load_assets_for_meta_box() {

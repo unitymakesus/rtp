@@ -89,7 +89,6 @@ final class FacetWP_Helper
             'settings' => [
                 'thousands_separator' => ',',
                 'decimal_separator' => '.',
-                'loading_animation' => 'fade',
                 'prefix' => 'fwp_'
             ]
         ];
@@ -337,14 +336,8 @@ final class FacetWP_Helper
             }
         }
         else {
-            if ( $wpdb->dbh ) {
-                if ( $wpdb->use_mysqli ) {
-                    $output = mysqli_real_escape_string( $wpdb->dbh, $input );
-                }
-                else {
-                    // Fallback for old PHP versions
-                    $output = mysql_real_escape_string( $input, $wpdb->dbh );
-                }
+            if ( $wpdb->dbh && $wpdb->use_mysqli ) {
+                $output = mysqli_real_escape_string( $wpdb->dbh, $input );
             }
             else {
                 $output = addslashes( $input );

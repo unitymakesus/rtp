@@ -27,21 +27,21 @@ if ( UABB_Compatibility::$version_bb_check ) {
 }
 ?>
 <?php if ( 'complete_link' === $settings->it_link_type ) { ?>
-<a href="<?php echo esc_url( $settings->it_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>>
+<a href="<?php echo $settings->it_link; ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 <?php } ?>
 <div class="uabb-module-content info-table-wrap info-table-<?php echo esc_attr( $settings->box_design ); ?> info-table-cs-<?php echo esc_attr( $settings->color_scheme ); ?>">
 	<div class="info-table">
 		<div class="info-table-heading">
 			<?php echo '<' . esc_attr( $settings->heading_tag_selection ) . " class='info-table-main-heading'>"; ?>
-			<?php echo wp_kses_post( $settings->it_title ); ?>
+			<?php echo $settings->it_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php echo '</' . esc_attr( $settings->heading_tag_selection ) . '>'; ?>
 
 			<?php echo '<' . esc_attr( $settings->sub_heading_tag_selection ) . " class='info-table-sub-heading'>"; ?>
-			<?php echo wp_kses_post( $settings->sub_heading ); ?>
+			<?php echo $settings->sub_heading; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php echo '</' . esc_attr( $settings->sub_heading_tag_selection ) . '>'; ?>
 			<?php if ( 'cta' === $settings->it_link_type && 'design02' === $settings->box_design ) { ?>
 			<div class="info-table-button">
-				<a href="<?php echo esc_url( $settings->it_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo wp_kses_post( $settings->button_text ); ?></a>
+				<a href="<?php echo $settings->it_link; ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo $settings->button_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>
 			<?php } ?>
 		</div>
@@ -88,7 +88,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 		</div>
 		<?php if ( 'cta' === $settings->it_link_type && 'design02' !== $settings->box_design ) { ?>
 		<div class="info-table-button">
-			<a href="<?php echo esc_url( $settings->it_link ); ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo wp_kses_post( $settings->button_text ); ?></a>
+			<a href="<?php echo $settings->it_link; ?>" target="<?php echo esc_attr( $target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $target, $it_link_nofollow, 1 ); ?>><?php echo $settings->button_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<?php } ?>
 	</div>

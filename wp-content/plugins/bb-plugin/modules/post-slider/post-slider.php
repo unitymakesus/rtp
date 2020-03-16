@@ -69,7 +69,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		$thumb_id = get_post_thumbnail_id( $id );
 		$size     = isset( $this->settings->thumb_size ) ? $this->settings->thumb_size : 'medium';
 		$img      = wp_get_attachment_image_src( $thumb_id, $size );
-		return $img[0];
+		return is_array( $img ) ? $img[0] : '';
 	}
 
 	/**

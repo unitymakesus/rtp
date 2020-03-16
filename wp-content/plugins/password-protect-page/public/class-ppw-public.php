@@ -189,23 +189,26 @@ class PPW_Public {
 	 * @return string
 	 */
 	public function ppw_the_content( $content ) {
-		if ( is_singular() ) {
+		// Do not handle on admin page.
+		if ( is_admin() ) {
 			return $content;
 		}
 
-		$post_type = get_post_type();
+		$is_show_excerpt = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::PROTECT_EXCERPT, PPW_Constants::MISC_OPTIONS );
+		if ( is_singular() && ! $is_show_excerpt ) {
+			return $content;
+		}
+
+		$post = get_post();
 		// Check post type is selected.
-		if ( false === $post_type || ! ppw_is_post_type_selected_in_setting( $post_type ) ) {
+		if ( ! $post || ! ppw_is_post_type_selected_in_setting( $post->post_type ) ) {
 			return $content;
 		}
 
 		// Check it is password form.
-		if ( preg_match( '/<form.+(wp-login\.php\?action=ppw_postpass)/mi', $content )
-		     && preg_match( '/name=.+post_password/mi', $content )
-		     && ! preg_match( '/name=.+post_id/mi', $content ) ) {
-			$content = '<em>[This is password-protected.]</em>';
+		if ( false !== strpos( $content, 'ppw_postpass' ) && preg_match( '/<form.+(wp-login\.php\?action=ppw_postpass)/mi', $content ) && preg_match( '/name=.+post_password/mi', $content ) ) {
 
-			return apply_filters( 'the_ppw_password_message', $content );
+			return ppw_handle_protected_content( $post, $content, $is_show_excerpt );
 		}
 
 		return $content;

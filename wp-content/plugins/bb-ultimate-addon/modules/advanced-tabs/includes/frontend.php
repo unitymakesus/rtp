@@ -27,7 +27,7 @@ if ( 'underline' === $settings->style ) {
 					?>
 				<li class="<?php echo ( 0 === $i ) ? 'uabb-tab-current' : ''; ?>" data-index="<?php echo esc_attr( $i ); ?>">
 					<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-tag-selected">
-						<a class="uabb-tab-link" href="javascript:void(0);" class=""><?php echo wp_kses_post( $class ); ?><span class="uabb-tab-title"><?php echo wp_kses_post( $settings->items[ $i ]->label ); ?></span></a>
+						<a class="uabb-tab-link" href="javascript:void(0);" class=""><?php echo wp_kses_post( $class ); ?><span class="uabb-tab-title"><?php echo $settings->items[ $i ]->label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></a>
 					</<?php echo esc_attr( $settings->title_tag_selection ); ?>>
 				</li>
 				<?php endfor; ?>
@@ -48,7 +48,7 @@ if ( 'underline' === $settings->style ) {
 				<div class="uabb-tab-acc-title uabb-acc-<?php echo esc_attr( $i ); ?>">
 					<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-title-tag">
 						<?php echo ( 'right' !== $settings->icon_position ) ? wp_kses_post( $class ) : ''; ?>
-						<span class="uabb-tab-title"><?php echo wp_kses_post( $settings->items[ $i ]->label ); ?></span>
+						<span class="uabb-tab-title"><?php echo $settings->items[ $i ]->label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 						<?php echo ( 'right' === $settings->icon_position ) ? wp_kses_post( $class ) : ''; ?>
 					</<?php echo esc_attr( $settings->title_tag_selection ); ?>>
 					<span class="uabb-acc-icon"><i class="ua-icon ua-icon-chevron-down2"></i></span>

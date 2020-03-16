@@ -17,7 +17,7 @@ $info_banner_id = wp_rand( 1000, 9999 );
 <div class="uabb-module-content uabb-ultb3-box <?php echo esc_attr( $settings->banner_image_effect ); ?>">
 	<?php
 	if ( 'module' === $settings->cta_type && ! empty( $settings->link ) ) {
-		echo '<a href="' . esc_url( $settings->link ) . '" target="' . esc_attr( $settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, $settings->link_nofollow, 0 ) ) . ' class="uabb-infobanner-module-link"></a>';
+		echo '<a href="' . $settings->link . '" target="' . esc_attr( $settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, $settings->link_nofollow, 0 ) ) . ' class="uabb-infobanner-module-link"></a>';//phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped 
 	}
 
 	if ( isset( $settings->banner_image_src ) ) {
@@ -37,7 +37,7 @@ $info_banner_id = wp_rand( 1000, 9999 );
 		<?php
 
 		echo '<' . esc_attr( $settings->tag_selection ) . ' class="uabb-ultb3-title">';
-		echo wp_kses_post( $settings->banner_title );
+		echo $settings->banner_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</' . esc_attr( $settings->tag_selection ) . '>';
 
 		?>

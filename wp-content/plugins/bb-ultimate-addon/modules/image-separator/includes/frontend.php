@@ -11,7 +11,7 @@
 ?>
 <div class="uabb-module-content uabb-imgseparator-wrap">
 	<?php if ( 'yes' === $settings->enable_link ) : ?>
-	<a class="imgseparator-link" href="<?php echo esc_url( $settings->link ); ?>" target="<?php echo esc_url( $settings->link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, 0, 1 ); ?>></a>
+	<a class="imgseparator-link" href="<?php echo $settings->link; ?>" target="<?php echo esc_attr( $settings->link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, 0, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>></a>
 	<?php endif; ?>
 	<div class="uabb-image-separator uabb-image
 	<?php

@@ -19,7 +19,7 @@
 			if ( 'yes' === $settings->stitching ) {
 				?>
 				<div class="uabb-ribbon-stitches-top"></div> <?php } ?>
-				<span class="uabb-ribbon-text-title"><?php echo wp_kses_post( $settings->title ); ?></span>
+				<span class="uabb-ribbon-text-title"><?php echo $settings->title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<?php
 			if ( 'yes' === $settings->stitching ) {
 				?>

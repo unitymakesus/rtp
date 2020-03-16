@@ -715,7 +715,7 @@ class UABBTeamModule extends FLBuilderModule {
 			);
 
 			/* Render HTML Function */
-			echo ( isset( $this->settings->enable_custom_link ) && 'no' !== $this->settings->enable_custom_link ) ? '<a href="' . esc_url( $this->settings->custom_link ) . '" target ="' . esc_attr( $this->settings->custom_link_target ) . '">' : '';
+			echo ( isset( $this->settings->enable_custom_link ) && 'no' !== $this->settings->enable_custom_link ) ? '<a href="' . $this->settings->custom_link . '" target ="' . esc_attr( $this->settings->custom_link_target ) . '">' : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			FLBuilder::render_module_html( 'image-icon', $imageicon_array );
 			echo ( isset( $this->settings->enable_custom_link ) && '' !== $this->settings->enable_custom_link ) ? '</a>' : '';
 		}
@@ -730,10 +730,10 @@ class UABBTeamModule extends FLBuilderModule {
 		if ( ! empty( $this->settings->name ) ) {
 			$output  = '<div class="uabb-team-name" >';
 			$output .= '<' . $this->settings->tag_selection . ' class="uabb-team-name-text">';
-			$output .= ( isset( $this->settings->enable_custom_link ) && 'no' !== $this->settings->enable_custom_link ) ? '<a href="' . esc_url( $this->settings->custom_link ) . '" target ="' . $this->settings->custom_link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->custom_link_target, $this->settings->custom_link_nofollow, 0 ) . '>' . $this->settings->name . '</a>' : $this->settings->name;
+			$output .= ( isset( $this->settings->enable_custom_link ) && 'no' !== $this->settings->enable_custom_link ) ? '<a href="' . $this->settings->custom_link . '" target ="' . $this->settings->custom_link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->custom_link_target, $this->settings->custom_link_nofollow, 0 ) . '>' . $this->settings->name . '</a>' : $this->settings->name;
 			$output .= '</' . $this->settings->tag_selection . '>';
 			$output .= '</div>';
-			echo wp_kses_post( $output );
+			echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -747,7 +747,7 @@ class UABBTeamModule extends FLBuilderModule {
 			$output  = '<div class="uabb-team-desgn">';
 			$output .= '<span class="uabb-team-desgn-text">' . $this->settings->designation . '</span>';
 			$output .= '</div>';
-			echo wp_kses_post( $output );
+			echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -761,7 +761,7 @@ class UABBTeamModule extends FLBuilderModule {
 			$output  = '<div class="uabb-team-desc">';
 			$output .= '<span class="uabb-team-desc-text">' . $this->settings->description . '</span>';
 			$output .= '</div>';
-			echo wp_kses_post( $output );
+			echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -791,7 +791,7 @@ class UABBTeamModule extends FLBuilderModule {
 					continue;
 				}
 				$icon->link_target = ( isset( $icon->link_target ) ) ? $icon->link_target : '_blank';
-				echo '<a class="uabb-team-icon-link uabb-team-icon-' . esc_attr( $icon_count ) . '" href="' . esc_url( $icon->link ) . '" target="' . esc_attr( $icon->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $icon->link_target, $icon->link_nofollow, 0 ) ) . '>';
+				echo '<a class="uabb-team-icon-link uabb-team-icon-' . esc_attr( $icon_count ) . '" href="' . $icon->link . '" target="' . esc_attr( $icon->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $icon->link_target, $icon->link_nofollow, 0 ) ) . '>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$imageicon_array = array(
 
 					/* General Section */

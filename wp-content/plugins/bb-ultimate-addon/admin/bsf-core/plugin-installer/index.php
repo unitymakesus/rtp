@@ -1,19 +1,29 @@
 <?php
-	$action = isset( $_GET['action'] ) ? sanitize_text_field($_GET['action']) : '';
-if ( $action === 'install' ) {
-	$request_product_id = ( isset( $_GET['id'] ) ) ? intval($_GET['id']) : '';
-	if ( $request_product_id !== '' ) {
+/**
+ * Admin functions for bsf core.
+ *
+ * @package BSF core
+ */
+
+$plugin_action = isset( $_GET['action'] ) ? sanitize_text_field( $_GET['action'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+if ( 'install' === $plugin_action ) {
+	$request_product_id = ( isset( $_GET['id'] ) ) ? intval( $_GET['id'] ) : '';// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( '' !== $request_product_id ) {
 		?>
 				<div class="clear"></div>
 				<div class="wrap">
-				<h2><?php echo __( 'Installing Extension', 'bsf' ); ?></h2>
+				<h2><?php esc_html_e( 'Installing Extension', 'bsf' ); ?></h2>
 			<?php
 				$installed = install_bsf_product( $request_product_id );
 			?>
-			<?php if ( isset( $installed['status'] ) && $installed['status'] === true ) : ?>
+			<?php if ( isset( $installed['status'] ) && true === $installed['status'] ) : ?>
 					<?php $current_name = strtolower( bsf_get_current_name( $installed['init'], $installed['type'] ) ); ?>
-					<?php $current_name = preg_replace( '![^a-z0-9]+!i', '-', $current_name ); ?>
-					<a href="<?php echo ( is_multisite() ) ? network_admin_url( 'plugins.php#' . $current_name ) : admin_url( 'plugins.php#' . $current_name ); ?>"><?php echo __( 'Manage plugin here', 'bsf' ); ?></a>
+					<?php
+					$current_name      = preg_replace( '![^a-z0-9]+!i', '-', $current_name );
+					$manage_plugin_url = is_multisite() ? network_admin_url( 'plugins.php#' . $current_name ) : admin_url( 'plugins.php#' . $current_name );
+					?>
+					<a href="<?php echo esc_url( $manage_plugin_url ); ?>"><?php esc_html_e( 'Manage plugin here', 'bsf' ); ?></a>
 				<?php endif; ?>
 				</div>
 			<?php
@@ -21,103 +31,105 @@ if ( $action === 'install' ) {
 			exit;
 	}
 }
-	global $bsf_theme_template;
+
+global $bsf_theme_template;
+
 if ( is_multisite() ) {
 	$template = $bsf_theme_template;
 } else {
 	$template = get_template();
 }
 
-	$current_page = '';
+$current_page = '';
 
-if ( isset( $_GET['page'] ) ) {
-	$current_page = esc_attr( $_GET['page'] );
+if ( isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$current_page = esc_attr( $_GET['page'] );  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 	$arr        = explode( 'bsf-extensions-', $current_page );
 	$product_id = $arr[1];
 }
 
-	$redirect_url = network_admin_url( 'admin.php?page=' . $current_page );
+$redirect_url = network_admin_url( 'admin.php?page=' . $current_page );
 
-	$extensions_installer_heading = apply_filters( "bsf_extinstaller_heading_{$product_id}", 'iMedica Extensions' );
+$extensions_installer_heading = apply_filters( "bsf_extinstaller_heading_{$product_id}", 'iMedica Extensions' );
 
-	$extensions_installer_subheading = apply_filters( "bsf_extinstaller_subheading_{$product_id}", 'iMedica is already very flexible & feature rich theme. It further aims to be all-in-one solution for your WordPress needs. Install any necessary extensions you like from below and take it on the steroids.' );
+$extensions_installer_subheading = apply_filters( "bsf_extinstaller_subheading_{$product_id}", 'iMedica is already very flexible & feature rich theme. It further aims to be all-in-one solution for your WordPress needs. Install any necessary extensions you like from below and take it on the steroids.' );
 
-	$status            = check_bsf_product_status( $product_id );
-	$reset_bundled_url = bsf_exension_installer_url( $product_id . '&remove-bundled-products&redirect=' . $redirect_url );
+$product_status    = check_bsf_product_status( $product_id );
+$reset_bundled_url = bsf_exension_installer_url( $product_id . '&remove-bundled-products&redirect=' . $redirect_url );
 
 ?>
 <div class="clear"></div>
-<div class="wrap about-wrap bsf-sp-screen bend <?php echo( htmlentities('extension-installer-' . $product_id , ENT_QUOTES,  "utf-8")); ?>">
+<div class="wrap about-wrap bsf-sp-screen bend <?php echo 'extension-installer-' . esc_attr( $product_id ); ?>">
 
 	<div class="bend-heading-section extension-about-header">
 
-		<h1><?php _e( $extensions_installer_heading, 'bsf' ); ?></h1>
-		<h3><?php _e( $extensions_installer_subheading, 'bsf' ); ?></h3>
+		<h1><?php echo esc_html( $extensions_installer_heading ); ?></h1>
+		<h3><?php echo esc_html( $extensions_installer_subheading ); ?></h3>
 
 		<div class="bend-head-logo">
-			<?php /*<img src="<?php echo get_template_directory_uri().'/css/img/brainstorm-logo.png' ?>" /> */ ?>
-			<div class="bend-product-ver"><?php _e( 'Extensions ', 'bsf' ); ?></div>
+			<div class="bend-product-ver"><?php esc_html_e( 'Extensions ', 'bsf' ); ?></div>
 		</div>
 	</div>  <!--heading section-->
 
 	<div class="bend-content-wrap">
 	<hr class="bsf-extensions-lists-separator">
-	<h3 class="bf-ext-sub-title"><?php echo __( 'Available Extensions', 'bsf' ); ?></h3>
+	<h3 class="bf-ext-sub-title"><?php esc_html_e( 'Available Extensions', 'bsf' ); ?></h3>
 
 	<?php
 
-		// update_option( 'brainstrom_bundled_products', '' );
-	   $brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? (array) get_option( 'brainstrom_bundled_products' ) : array();
+	$nonce                       = wp_create_nonce( 'bsf_install_extension_nonce' );
+	$brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? (array) get_option( 'brainstrom_bundled_products' ) : array();
 
 	if ( isset( $brainstrom_bundled_products[ $product_id ] ) ) {
 		$brainstrom_bundled_products = $brainstrom_bundled_products[ $product_id ];
 	}
 
-		usort( $brainstrom_bundled_products, 'bsf_sort' );
+	usort( $brainstrom_bundled_products, 'bsf_sort' );
 
 	if ( ! empty( $brainstrom_bundled_products ) ) :
-		$global_plugin_installed = $global_plugin_activated = 0;
+		$global_plugin_installed = 0;
+		$global_plugin_activated = 0;
 		$total_bundled_plugins   = count( $brainstrom_bundled_products );
-		foreach ( $brainstrom_bundled_products as $key => $plugin ) {
-			if ( ! isset( $plugin->id ) || $plugin->id == '' ) {
+		foreach ( $brainstrom_bundled_products as $key => $product ) {
+			if ( ! isset( $product->id ) || empty( $product->id ) ) {
 				continue;
 			}
-			if ( isset( $request_product_id ) && $request_product_id !== $plugin->id ) {
+			if ( isset( $request_product_id ) && $request_product_id !== $product->id ) {
 				continue;
 			}
-			$plugin_abs_path = WP_PLUGIN_DIR . '/' . $plugin->init;
+			$plugin_abs_path = WP_PLUGIN_DIR . '/' . $product->init;
 			if ( is_file( $plugin_abs_path ) ) {
 				$global_plugin_installed++;
 
-				if ( is_plugin_active( $plugin->init ) ) {
+				if ( is_plugin_active( $product->init ) ) {
 					$global_plugin_activated++;
 				}
 			}
 		}
 		?>
-
+		<input type="hidden" name="bsf_install_nonce" id="bsf_install_nonce_input" value="<?php echo esc_attr( $nonce ); ?>" >
 		<ul class="bsf-extensions-list">
 		<?php
-			// if($global_plugin_activated != 0) :
-		foreach ( $brainstrom_bundled_products as $key => $plugin ) :
 
-			if ( ! isset( $plugin->id ) || $plugin->id == '' ) {
+		foreach ( $brainstrom_bundled_products as $key => $product ) :
+
+			if ( ! isset( $product->id ) || empty( $product->id ) ) {
 					continue;
 			}
 
-			if ( isset( $request_product_id ) && $request_product_id !== $plugin->id ) {
+			if ( isset( $request_product_id ) && $request_product_id !== $product->id ) {
 				continue;
 			}
 
-					$is_plugin_installed = false;
-					$is_plugin_activated = false;
+			$is_plugin_installed = false;
+			$is_plugin_activated = false;
 
-					$plugin_abs_path = WP_PLUGIN_DIR . '/' . $plugin->init;
+			$plugin_abs_path = WP_PLUGIN_DIR . '/' . $product->init;
 			if ( is_file( $plugin_abs_path ) ) {
 				$is_plugin_installed = true;
 
-				if ( is_plugin_active( $plugin->init ) ) {
+				if ( is_plugin_active( $product->init ) ) {
 					$is_plugin_activated = true;
 				}
 			}
@@ -134,72 +146,56 @@ if ( isset( $_GET['page'] ) ) {
 				$class = 'plugin-not-installed';
 			}
 			?>
-						<li id="ext-<?php echo $key; ?>" class="bsf-extension <?php echo $class; ?>">
+			<li id="ext-<?php echo esc_attr( $key ); ?>" class="bsf-extension <?php echo esc_attr( $class ); ?>">
 					<?php if ( ! $is_plugin_installed ) : ?>
 								<div class="bsf-extension-start-install">
 									<div class="bsf-extension-start-install-content">
-										<h2><?php echo __( 'Downloading', 'bsf' ); ?><div class="bsf-css-loader"></div></h2>
+										<h2><?php esc_html_e( 'Downloading', 'bsf' ); ?><div class="bsf-css-loader"></div></h2>
 									</div>
 								</div>
 							<?php endif; ?>
 							<div class="top-section">
-				<?php if ( ! empty( $plugin->product_image ) ) : ?>
+				<?php if ( ! empty( $product->product_image ) ) : ?>
 									<div class="bsf-extension-product-image">
 										<div class="bsf-extension-product-image-stick">
-											<img src="<?php echo $plugin->product_image; ?>" class="img" alt="image"/>
+											<img src="<?php echo esc_url( $product->product_image ); ?>" class="img" alt="image"/>
 										</div>
 									</div>
 								<?php endif; ?>
 								<div class="bsf-extension-info">
-					<?php $name = ( isset( $plugin->short_name ) ) ? $plugin->short_name : $plugin->name; ?>
-									<h4 class="title"><?php echo $name; ?></h4>
-					<?php
-							/*
-					<span class="status">
-						<?php if($is_plugin_installed) : ?>
-							<?php //$is_plugin_installed = true; ?>
-							<?php if($is_plugin_activated) : ?>
-								<?php echo __('Active','bsf'); ?>
-							<?php else : ?>
-								<?php echo __('Not Active','bsf'); ?>
-							<?php endif; ?>
-						<?php else : ?>
-							<?php echo __('Not Installed','bsf'); ?>
-						<?php endif; ?>
-					</span>
-					*/
-					?>
-									<p class="desc"><?php echo $plugin->description; ?><span class="author"><cite>By <?php echo $plugin->author; ?></cite></span></p>
+									<?php $name = ( isset( $product->short_name ) ) ? $product->short_name : $product->name; ?>
+									<h4 class="title"><?php echo esc_html( $name ); ?></h4>
+									<p class="desc"><?php echo esc_html( $product->description ); ?><span class="author"><cite>By <?php echo esc_html( $product->author ); ?></cite></span></p>
 								</div>
 							</div>
 							<div class="bottom-section">
 						<?php
 						$button_class = '';
 						if ( ! $is_plugin_installed ) {
-							if ( ( ! $plugin->licence_require || $plugin->licence_require === 'false' ) || $status === 'registered' ) {
+							if ( ( ! $product->licence_require || 'false' === $product->licence_require ) || 'registered' === $product_status ) {
 
-								$link         = bsf_exension_installer_url( $product_id );
-								$button       = __( 'Install', 'bsf' );
-								$button_class = 'bsf-install-button';
-							} elseif ( ( $plugin->licence_require || $plugin->licence_require === 'true' ) && $status !== 'registered' ) {
+								$installer_url = bsf_exension_installer_url( $product_id );
+								$button        = __( 'Install', 'bsf' );
+								$button_class  = 'bsf-install-button';
+							} elseif ( ( $product->licence_require || 'true' === $product->licence_require ) && 'registered' !== $product_status ) {
 
-								$link         = bsf_registration_page_url( '&id=' . $product_id, $product_id );
-								$button       = __( 'Validate Purchase', 'bsf' );
-								$button_class = 'bsf-validate-licence-button';
+								$installer_url = bsf_registration_page_url( '&id=' . $product_id, $product_id );
+								$button        = __( 'Validate Purchase', 'bsf' );
+								$button_class  = 'bsf-validate-licence-button';
 							}
 						} else {
-							$current_name = strtolower( bsf_get_current_name( $plugin->init, $plugin->type ) );
+							$current_name = strtolower( bsf_get_current_name( $product->init, $product->type ) );
 							$current_name = preg_replace( '![^a-z0-9]+!i', '-', $current_name );
 							if ( is_multisite() ) {
-								$link = network_admin_url( 'plugins.php#' . $current_name );
+								$installer_url = network_admin_url( 'plugins.php#' . $current_name );
 							} else {
-								$link = admin_url( 'plugins.php#' . $current_name );
+								$installer_url = admin_url( 'plugins.php#' . $current_name );
 							}
 							$button = __( 'Installed', 'bsf' );
 						}
 
 						?>
-								<a class="button button-primary extension-button <?php echo $button_class; ?>" href="<?php echo $link; ?>" data-ext="<?php echo $key; ?>" data-pid="<?php echo $plugin->id; ?>" data-bundled="true" data-action="install"><?php echo $button; ?></a>
+								<a class="button button-primary extension-button <?php echo esc_attr( $button_class ); ?>" href="<?php echo esc_url( $installer_url ); ?>" data-ext="<?php echo esc_attr( $key ); ?>" data-pid="<?php echo esc_attr( $product->id ); ?>" data-bundled="true" data-action="install"><?php echo esc_html( $button ); ?></a>
 							</div>
 						</li>
 				<?php endforeach; ?>
@@ -208,7 +204,7 @@ if ( isset( $_GET['page'] ) ) {
 					?>
 					<div class="bsf-extensions-no-active">
 						<div class="bsf-extensions-title-icon"><span class="dashicons dashicons-smiley"></span></div>
-						<p class="bsf-text-light"><em><?php echo __( 'All available extensions have been installed!', 'bsf' ); ?></em></p>
+						<p class="bsf-text-light"><em><?php esc_html_e( 'All available extensions have been installed!', 'bsf' ); ?></em></p>
 					</div>
 				<?php endif; ?>
 		</ul>
@@ -216,27 +212,27 @@ if ( isset( $_GET['page'] ) ) {
 
 		<!-- Stat - Just Design Purpose -->
 		<hr class="bsf-extensions-lists-separator">
-		<h3 class="bf-ext-sub-title"><?php echo __( 'Installed Extensions', 'bsf' ); ?></h3>
+		<h3 class="bf-ext-sub-title"><?php esc_html_e( 'Installed Extensions', 'bsf' ); ?></h3>
 		<ul class="bsf-extensions-list">
 			<?php
-			if ( $global_plugin_installed != 0 ) :
-				foreach ( $brainstrom_bundled_products as $key => $plugin ) :
-					if ( ! isset( $plugin->id ) || $plugin->id == '' ) {
+			if ( 0 !== $global_plugin_installed ) :
+				foreach ( $brainstrom_bundled_products as $key => $product ) :
+					if ( ! isset( $product->id ) || empty( $product->id ) ) {
 						continue;
 					}
 
-					if ( isset( $request_product_id ) && $request_product_id !== $plugin->id ) {
+					if ( isset( $request_product_id ) && $request_product_id !== $product->id ) {
 						continue;
 					}
 
-						$is_plugin_installed = false;
-						$is_plugin_activated = false;
+					$is_plugin_installed = false;
+					$is_plugin_activated = false;
 
-						$plugin_abs_path = WP_PLUGIN_DIR . '/' . $plugin->init;
+					$plugin_abs_path = WP_PLUGIN_DIR . '/' . $product->init;
 					if ( is_file( $plugin_abs_path ) ) {
 						$is_plugin_installed = true;
 
-						if ( is_plugin_active( $plugin->init ) ) {
+						if ( is_plugin_active( $product->init ) ) {
 							$is_plugin_activated = true;
 						}
 					}
@@ -253,70 +249,54 @@ if ( isset( $_GET['page'] ) ) {
 						$class = 'plugin-not-installed';
 					}
 					?>
-						<li id="ext-<?php echo $key; ?>" class="bsf-extension <?php echo $class; ?>">
+						<li id="ext-<?php echo esc_attr( $key ); ?>" class="bsf-extension <?php echo esc_attr( $class ); ?>">
 							<?php if ( ! $is_plugin_installed ) : ?>
 								<div class="bsf-extension-start-install">
 									<div class="bsf-extension-start-install-content">
-										<h2><?php echo __( 'Downloading', 'bsf' ); ?><div class="bsf-css-loader"></div></h2>
+										<h2><?php esc_html_e( 'Downloading', 'bsf' ); ?><div class="bsf-css-loader"></div></h2>
 									</div>
 								</div>
 							<?php endif; ?>
 							<div class="top-section">
-								<?php if ( ! empty( $plugin->product_image ) ) : ?>
+								<?php if ( ! empty( $product->product_image ) ) : ?>
 									<div class="bsf-extension-product-image">
 										<div class="bsf-extension-product-image-stick">
-											<img src="<?php echo $plugin->product_image; ?>" class="img" alt="image"/>
+											<img src="<?php echo esc_url( $product->product_image ); ?>" class="img" alt="image"/>
 										</div>
 									</div>
 								<?php endif; ?>
 								<div class="bsf-extension-info">
-									<?php $name = ( isset( $plugin->short_name ) ) ? $plugin->short_name : $plugin->name; ?>
-									<h4 class="title"><?php echo $name; ?></h4>
-									<?php
-									/*
-									<span class="status">
-										<?php if($is_plugin_installed) : ?>
-											<?php //$is_plugin_installed = true; ?>
-											<?php if($is_plugin_activated) : ?>
-												<?php echo __('Active','bsf'); ?>
-											<?php else : ?>
-												<?php echo __('Not Active','bsf'); ?>
-											<?php endif; ?>
-										<?php else : ?>
-											<?php echo __('Not Installed','bsf'); ?>
-										<?php endif; ?>
-									</span>
-									*/
-									?>
-									<p class="desc"><?php echo $plugin->description; ?><span class="author"><cite>By <?php echo $plugin->author; ?></cite></span></p>
+									<?php $name = ( isset( $product->short_name ) ) ? $product->short_name : $product->name; ?>
+									<h4 class="title"><?php echo esc_html( $name ); ?></h4>
+									<p class="desc"><?php echo esc_html( $product->description ); ?><span class="author"><cite>By <?php echo esc_html( $product->author ); ?></cite></span></p>
 								</div>
 							</div>
 							<div class="bottom-section">
 								<?php
 									$button_class = '';
 								if ( ! $is_plugin_installed ) {
-									if ( ( ! $plugin->licence_require || $plugin->licence_require === 'false' ) || $status === 'registered' ) {
-										$link         = bsf_exension_installer_url( $product_id );
-										$button       = __( 'Install', 'bsf' );
-										$button_class = 'bsf-install-button';
-									} elseif ( ( $plugin->licence_require || $plugin->licence_require === 'true' ) && $status !== 'registered' ) {
-										$link         = bsf_registration_page_url( '&id=' . $product_id );
-										$button       = __( 'Validate Purchase', 'bsf' );
-										$button_class = 'bsf-validate-licence-button';
+									if ( ( ! $product->licence_require || 'false' === $product->licence_require ) || 'registered' === $product_status ) {
+										$installer_url = bsf_exension_installer_url( $product_id );
+										$button        = __( 'Install', 'bsf' );
+										$button_class  = 'bsf-install-button';
+									} elseif ( ( $product->licence_require || 'true' === $product->licence_require ) && 'registered' !== $product_status ) {
+										$installer_url = bsf_registration_page_url( '&id=' . $product_id );
+										$button        = __( 'Validate Purchase', 'bsf' );
+										$button_class  = 'bsf-validate-licence-button';
 									}
 								} else {
-									$current_name = strtolower( bsf_get_current_name( $plugin->init, $plugin->type ) );
+									$current_name = strtolower( bsf_get_current_name( $product->init, $product->type ) );
 									$current_name = preg_replace( '![^a-z0-9]+!i', '-', $current_name );
 									if ( is_multisite() ) {
-										$link = network_admin_url( 'plugins.php#' . $current_name );
+										$installer_url = network_admin_url( 'plugins.php#' . $current_name );
 									} else {
-										$link = admin_url( 'plugins.php#' . $current_name );
+										$installer_url = admin_url( 'plugins.php#' . $current_name );
 									}
 									$button = __( 'Installed', 'bsf' );
 								}
 
 								?>
-								<a class="button button-primary extension-button <?php echo $button_class; ?>" href="<?php echo $link; ?>" data-ext="<?php echo $key; ?>"><?php echo $button; ?></a>
+								<a class="button button-primary extension-button <?php echo esc_attr( $button_class ); ?>" href="<?php echo esc_url( $installer_url ); ?>" data-ext="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $button ); ?></a>
 							</div>
 						</li>
 					<?php
@@ -325,7 +305,7 @@ if ( isset( $_GET['page'] ) ) {
 					?>
 					<div class="bsf-extensions-no-active">
 						<div class="bsf-extensions-title-icon"><span class="dashicons dashicons-download"></span></div>
-						<p class="bsf-text-light"><em><?php echo __( 'No extensions installed yet!', 'bsf' ); ?></em></p>
+						<p class="bsf-text-light"><em><?php esc_html_e( 'No extensions installed yet!', 'bsf' ); ?></em></p>
 					</div>
 				<?php endif; ?>
 		</ul>
@@ -334,21 +314,19 @@ if ( isset( $_GET['page'] ) ) {
 	<?php else : ?>
 		<div class="bsf-extensions-no-active">
 			<div class="bsf-extensions-title-icon"><span class="dashicons dashicons-download"></span></div>
-			<p class="bsf-text-light"><em><?php echo __( 'No extensions available yet!', 'bsf' ); ?></em></p>
+			<p class="bsf-text-light"><em><?php esc_html_e( 'No extensions available yet!', 'bsf' ); ?></em></p>
 
 			<div class="bsf-cp-rem-bundle" style="margin-top: 30px;">
-				<a class="button-primary" href="<?php echo( htmlentities($reset_bundled_url, ENT_QUOTES,  "utf-8" )); ?>">Refresh Bundled Products</a>
+				<a class="button-primary" href="<?php echo esc_url( $reset_bundled_url ); ?>"><?php esc_html_e( 'Refresh Bundled Products', 'bsf' ); ?></a>
 			</div>
 		</div>
 
 	<?php endif; ?>
-
-
 </div>
 
 </div>
 
-<?php if ( isset( $_GET['noajax'] ) ) : ?>
+<?php if ( isset( $_GET['noajax'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
 	<script type="text/javascript">
 	(function($){
 		$(document).ready(function(){
@@ -379,12 +357,14 @@ if ( isset( $_GET['page'] ) ) {
 				var product_id = $(this).attr('data-pid');
 				var action = 'bsf_'+$(this).attr('data-action');
 				var bundled = $(this).attr('data-bundled');
+				var security = $( "#bsf_install_nonce_input" ).val();
 				var $ext = $('#ext-'+ext);
 				$ext.find('.bsf-extension-start-install').addClass('show-install');
 				var data = {
 					'action': action,
 					'product_id': product_id,
-					'bundled' : bundled
+					'bundled' : bundled,
+					'security' : security
 				};
 
 				var $link = $(this).attr('href');
@@ -395,8 +375,7 @@ if ( isset( $_GET['page'] ) ) {
 
 					var redirect = /({.+})/img;
 					var matches = redirect.exec(response);
-
-					 if ( typeof matches[1] != "undefined" ) {
+					if ( typeof matches[1] != "undefined" ) {
 						var responseObj = jQuery.parseJSON( matches[1] );
 
 						if ( responseObj.redirect != "" ) {

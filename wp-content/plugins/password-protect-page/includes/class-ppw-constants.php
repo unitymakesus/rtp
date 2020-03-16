@@ -141,6 +141,13 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const HOOK_CUSTOM_DEFAULT_OPTIONS_HIDE_PROTECTED_POST = 'ppw_custom_default_options_for_hide_protected_post';
 
 		const HOOK_CUSTOM_POSITIONS_HIDE_PROTECTED_POST = 'ppw_custom_positions_for_hide_protected_post';
+
+		const HOOK_SHORTCODE_ALLOW_BYPASS_VALID_POST_TYPE = 'ppw_shortcode_allow_bypass_valid_post_type';
+
+		const HOOK_ADVANCED_TAB_LOAD_ASSETS = 'ppw_misc_tab_load_assets';
+
+		const HOOK_ADVANCED_VALID_INPUT_DATA = 'ppw_misc_valid_input_data';
+
 		//phpcs:ignore #endregion
 
 		//phpcs:ignore
@@ -238,6 +245,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const GENERAL_SETTINGS_MODULE = 'general';
 
+		const MISC_SETTINGS_MODULE = 'misc';
+
 		const SHORTCODES_SETTINGS_MODULE = 'shortcodes';
 		//phpcs:ignore #endregion
 
@@ -251,6 +260,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const GENERAL_OPTIONS = 'wp_protect_password_setting_options';
 
+		const MISC_OPTIONS = 'wp_protect_password_misc_options';
+
 		const POST_PROTECTION_ROLES = 'post_protection_roles';
 
 		const ENTIRE_SITE_COOKIE_NAME = 'pda_protect_password';
@@ -260,6 +271,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const COOKIE_EXPIRED = 'wpp_password_cookie_expired';
 
 		const REMOVE_DATA = 'wpp_remove_data';
+
+		const PROTECT_EXCERPT = 'wpp_protect_excerpt';
 
 		const MAX_COOKIE_EXPIRED = 8760;
 

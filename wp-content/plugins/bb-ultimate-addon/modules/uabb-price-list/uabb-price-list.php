@@ -366,17 +366,17 @@ class UABBPriceList extends FLBuilderModule {
 								<img src=" <?php echo esc_url( $item->photo_src ); ?>">
 							<?php } ?>
 							<?php if ( 'url' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_url ) ) { ?>
-								<img src=" <?php echo esc_url( $item->photo_url ); ?>">
+								<img src=" <?php echo $item->photo_url; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 							<?php } ?>
 						</div>
 						<div class="uabb-price-list-text">
 							<div class="uabb-price-list-header">
-								<?php echo wp_kses_post( $this->render_item_header( $item ) ); ?>
+								<?php echo $this->render_item_header( $item ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 									<span>
-										<?php echo wp_kses_post( $item->price_list_item_title ); ?>
+										<?php echo $item->price_list_item_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 									</span>
 								<?php
-								echo wp_kses_post( $this->render_item_footer( $item ) );
+								echo $this->render_item_footer( $item ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								if ( 'top' !== $this->settings->image_position && 'below' !== $this->settings->price_position ) {
 									?>
 									<span class="uabb-price-list-separator"></span>
@@ -415,7 +415,7 @@ class UABBPriceList extends FLBuilderModule {
 		if ( '' !== $item->price_list_item_url ) {
 			?>
 
-			<a href ="<?php echo esc_url( $item->price_list_item_url ); ?>" target="<?php echo esc_attr( $item->price_list_item_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->price_list_item_url_target, $item->price_list_item_url_nofollow, 1 ); ?> class="uabb-price-list-title">
+			<a href ="<?php echo $item->price_list_item_url; ?>" target="<?php echo esc_attr( $item->price_list_item_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $item->price_list_item_url_target, $item->price_list_item_url_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> class="uabb-price-list-title">
 
 		<?php } else { ?>
 			<div class="uabb-price-list-title">
@@ -456,9 +456,9 @@ class UABBPriceList extends FLBuilderModule {
 		}
 		?>
 		<span class="uabb-price-wrapper  <?php echo esc_attr( $price_pos ); ?>">
-			<span class="uabb-price-list-price <?php echo esc_attr( $price_item_cls ); ?>"><?php echo wp_kses_post( $original_price ); ?></span>
+			<span class="uabb-price-list-price <?php echo esc_attr( $price_item_cls ); ?>"><?php echo $original_price; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<?php if ( 'yes' === $item->discount_offer ) { ?>
-				<span class="uabb-price-list-price"><?php echo wp_kses_post( $item->price ); ?></span>
+				<span class="uabb-price-list-price"><?php echo $item->price; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<?php } ?>
 		</span>
 		<?php

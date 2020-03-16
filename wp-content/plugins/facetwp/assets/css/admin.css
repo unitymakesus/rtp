@@ -252,6 +252,7 @@ a:hover {
 }
 
 .facetwp-region input[type='text'],
+.facetwp-region input[type='number'],
 .facetwp-region select {
     width: 200px;
 }
@@ -275,10 +276,8 @@ a:hover {
 }
 
 .facetwp-region .item-name {
-    border: none;
-    box-shadow: none;
-    margin: 0;
-    color: #50b7ff;
+    display: inline-block;
+    margin: 0 18px 0 6px;
 }
 
 .table-row {
@@ -384,11 +383,6 @@ a:hover {
 
 .facetwp-region .fs-open .fs-arrow {
     transform: rotate(-180deg);
-}
-
-input.multiselect__input {
-    line-height: initial;
-    min-height: initial;
 }
 
 /* Data Source dropdown */
@@ -578,7 +572,7 @@ input.multiselect__input {
     width: 100px;
 }
 
-.qb-wrap .qb-posts-per-page {
+.qb-wrap input.qb-posts-per-page {
     width: 60px;
 }
 
@@ -597,10 +591,35 @@ input.multiselect__input {
     vertical-align: middle;
 }
 
-.qb-wrap .multiselect {
+.qb-wrap .v-select {
     display: inline-block;
     vertical-align: middle;
-    max-width: 300px;
+    min-width: 160px;
+    max-width: 360px;
+}
+
+.qb-wrap .v-select.vs--unsearchable {
+    vertical-align: top;
+}
+
+.qb-wrap .v-select .vs__search {
+    background: none;
+    box-shadow: none;
+    border: none;
+    height: 20px;
+    min-height: auto;
+}
+
+.qb-wrap .v-select .vs__dropdown-toggle {
+    border-color: #7e8993;
+}
+
+.qb-wrap .v-select .vs__selected {
+    height: 20px;
+}
+
+.qb-wrap .v-select .vs__actions {
+    display: none;
 }
 
 /* Boolean toggle */
@@ -699,6 +718,10 @@ input.multiselect__input {
 .builder-canvas {
     position: relative;
     outline: 1px solid #000;
+}
+
+.builder-settings-wrap h3:first-child {
+    margin-top: 0;
 }
 
 .builder-edge {
@@ -965,16 +988,17 @@ input.multiselect__input {
 
 .color-wrap .color-preview {
     position: absolute;
-    top: 2px;
+    top: 1px;
     left: 2px;
-    height: 21px;
-    width: 21px;
+    height: 28px;
+    width: 28px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
     z-index: 1;
 }
 
 .color-wrap input.color-input {
-    width: 120px;
-    padding-left: 30px;
+    padding-left: 36px;
 }
 
 @media (min-width: 783px) {

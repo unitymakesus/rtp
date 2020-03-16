@@ -8,6 +8,11 @@ class FacetWP_Builder
     public $custom_css;
 
 
+    function __construct() {
+        add_filter( 'facetwp_query_args', [ $this, 'hydrate_date_values' ], 999 );
+    }
+
+
     /**
      * Generate the layout HTML
      * @since 3.2.0
@@ -499,7 +504,7 @@ class FacetWP_Builder
         $tax_query = [];
         $meta_query = [];
         $date_query = [];
-        $post_type = [];
+        $post_type = 'any';
         $post_status = [ 'publish' ];
         $post_in = [];
         $post_not_in = [];
@@ -507,12 +512,16 @@ class FacetWP_Builder
         $author_not_in = [];
         $orderby = [];
 
-        foreach ( $query_obj['post_type'] as $data ) {
-            $post_type[] = $data['value'];
+        if ( ! empty( $query_obj['post_type'] ) ) {
+            $post_type = array_column( $query_obj['post_type'], 'value' );
         }
 
-        if ( empty( $post_type ) ) {
-            $post_type = 'any';
+        if ( empty( $query_obj['filters'] ) ) {
+            $query_obj['filters'] = [];
+        }
+
+        if ( empty( $query_obj['orderby'] ) ) {
+            $query_obj['orderby'] = [];
         }
 
         foreach ( $query_obj['filters'] as $filter ) {
@@ -535,9 +544,10 @@ class FacetWP_Builder
                 $value = $exists_clause ? '' : $value[0];
             }
 
-            // Date placeholders
-            $value = str_replace( 'now', date('Y-m-d H:i:s' ), $value );
-            $value = str_replace( 'today', date( 'Y-m-d' ), $value );
+            // Prepend with "date|" so we can populate with hydrate_date_values()
+            if ( 'DATE' == $type ) {
+                $value = 'date|' . $value;
+            }
 
             if ( 'ID' == $key ) {
                 if ( 'IN' == $compare ) {
@@ -710,5 +720,23 @@ class FacetWP_Builder
             'post_types' => $builder_post_types,
             'filter_by' => $data_sources
         ];
+    }
+
+
+    /**
+     * Replace "date|" placesholders with actual dates
+     */
+    function hydrate_date_values( $query_args ) {
+        if ( isset( $query_args['meta_query'] ) ) {
+            foreach ( $query_args['meta_query'] as $index => $row ) {
+                if ( isset( $row['value'] ) && is_string( $row['value'] ) && 0 === strpos( $row['value'], 'date|' ) ) {
+                    $value = trim( substr( $row['value'], 5 ) );
+                    $value = date( 'Y-m-d', strtotime( $value ) );
+                    $query_args['meta_query'][ $index ]['value'] = $value;
+                }
+            }
+        }
+
+        return $query_args;
     }
 }

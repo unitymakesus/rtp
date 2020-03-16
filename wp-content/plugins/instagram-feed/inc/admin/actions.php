@@ -180,7 +180,7 @@ function sbi_connect_business_accounts() {
 			'is_valid' => true,
 			'last_checked' => time(),
 			'profile_picture' => $profile_picture,
-			'name' => $name,
+			'name' => sbi_sanitize_emoji( $name ),
 			'type' => $type,
 			'use_tagged' => '1'
 		);
@@ -585,7 +585,7 @@ function sbi_connect_basic_account( $new_account_details ) {
 		if ( ! empty( $fuzzy_matches[0] ) ) {
 			$header_data = sbi_find_matching_data_from_results( $fuzzy_matches, $old_account_user_id );
 			$bio = SB_Instagram_Parse::get_bio( $header_data );
-			$accounts_to_save[ $new_account_details['user_id'] ]['bio'] = $bio;
+			$accounts_to_save[ $new_account_details['user_id'] ]['bio'] = sbi_sanitize_emoji( $bio );
 		}
 
 	}
@@ -877,7 +877,7 @@ function sbi_reconnect_accounts_notice() {
 			$error = '<p><b>' . sprintf( __( 'Error: Instagram Feed plugin - account for %s needs to be reconnected.', 'instagram-feed' ), '<em>'.$user_string.'</em>' ) . '</b><br>' . __( 'Due to recent Instagram platform changes some Instagram accounts will need to be reconnected in the plugin in order for them to continue updating.', 'instagram-feed' );
 		} else {
 			$notice_class = 'notice-warning';
-			$error = '<p><b>' . sprintf( __( 'Warning: Instagram Feed plugin - account for %s needs to be reconnected.', 'instagram-feed' ), '<em>'.$user_string.'</em>' ) . '</b><br>' . __( 'Due to Instagram platform changes on March 2, 2020, some Instagram accounts will need to be reconnected in the plugin to avoid disruption to your feeds.', 'instagram-feed' );
+			$error = '<p><b>' . sprintf( __( 'Warning: Instagram Feed plugin - account for %s needs to be reconnected.', 'instagram-feed' ), '<em>'.$user_string.'</em>' ) . '</b><br>' . __( 'Due to Instagram platform changes on March 31, 2020, some Instagram accounts will need to be reconnected in the plugin to avoid disruption to your feeds.', 'instagram-feed' );
 		}
 		if( !$should_show_link ) $error .= __( ' Use the big blue button below to reconnect your account.', 'instagram-feed' );
 	}

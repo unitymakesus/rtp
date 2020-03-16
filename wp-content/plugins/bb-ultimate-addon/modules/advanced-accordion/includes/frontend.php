@@ -28,14 +28,14 @@
 	data-index="<?php echo esc_attr( $i ); ?>">
 		<div class="uabb-adv-accordion-button uabb-adv-accordion-button<?php echo esc_attr( $id ); ?> uabb-adv-<?php echo esc_attr( $settings->icon_position ); ?>-text">
 			<?php echo wp_kses_post( $module->render_icon( 'before' ) ); ?>
-			<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-adv-accordion-button-label"><?php echo wp_kses_post( $settings->acc_items[ $i ]->acc_title ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
+			<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-adv-accordion-button-label"><?php echo $settings->acc_items[ $i ]->acc_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
 			<?php echo wp_kses_post( $module->render_icon( 'after' ) ); ?>
 		</div>
 		<div class="uabb-adv-accordion-content uabb-adv-accordion-content<?php echo esc_attr( $id ); ?> fl-clearfix <?php echo ( 'content' === $settings->acc_items[ $i ]->content_type ) ? 'uabb-accordion-desc uabb-text-editor' : ''; ?>">
 			<?php
 			if ( isset( $settings->acc_items[ $i ]->acc_content ) && 'content' === $settings->acc_items[ $i ]->content_type && '' !== $settings->acc_items[ $i ]->acc_content && '' === $settings->acc_items[ $i ]->ct_content ) {
 				global $wp_embed;
-				echo wp_kses_post( wpautop( $wp_embed->autoembed( $settings->acc_items[ $i ]->acc_content ) ) );
+				echo wpautop( $wp_embed->autoembed( $settings->acc_items[ $i ]->acc_content ) ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			} else {
 				echo $module->get_accordion_content( $settings->acc_items[ $i ] ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}

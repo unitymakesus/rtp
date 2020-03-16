@@ -1069,7 +1069,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 
 				if ( 'hamburger-label' === $toggle ) {
 					echo '<span class="uabb-creative-menu-mobile-toggle-label">';
-					echo wp_kses_post( ( isset( $this->settings->creative_menu_mobile_toggle_text ) && ! empty( $this->settings->creative_menu_mobile_toggle_text ) ) ? $this->settings->creative_menu_mobile_toggle_text : __( 'Menu', 'uabb' ) );
+					echo ( isset( $this->settings->creative_menu_mobile_toggle_text ) && ! empty( $this->settings->creative_menu_mobile_toggle_text ) ) ? $this->settings->creative_menu_mobile_toggle_text : __( 'Menu', 'uabb' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo '</span>';
 				}
 
@@ -1078,7 +1078,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 			} elseif ( 'text' === $toggle ) {
 				echo '<div class="uabb-creative-menu-mobile-toggle-container">';
 				echo '<div class="uabb-creative-menu-mobile-toggle text"><span class="uabb-creative-menu-mobile-toggle-label">';
-				echo wp_kses_post( ( isset( $this->settings->creative_menu_mobile_toggle_text ) && ! empty( $this->settings->creative_menu_mobile_toggle_text ) ) ? $this->settings->creative_menu_mobile_toggle_text : __( 'Menu', 'uabb' ) );
+				echo ( isset( $this->settings->creative_menu_mobile_toggle_text ) && ! empty( $this->settings->creative_menu_mobile_toggle_text ) ) ? $this->settings->creative_menu_mobile_toggle_text : __( 'Menu', 'uabb' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</span></div></div>';
 
 			}

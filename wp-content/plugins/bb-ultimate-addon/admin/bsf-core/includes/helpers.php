@@ -1,11 +1,17 @@
 <?php
 /**
  * Helper functions for BSF Core.
- * 
+ *
  * @author Brainstorm Force
  * @package bsf-core
  */
 
+/**
+ * BSF get API site.
+ *
+ * @param bool $prefer_unsecure Prefer unsecure.
+ * @return $bsf_api_site.
+ */
 function bsf_get_api_site( $prefer_unsecure = false ) {
 
 	if ( defined( 'BSF_API_URL' ) ) {
@@ -13,7 +19,7 @@ function bsf_get_api_site( $prefer_unsecure = false ) {
 	} else {
 		$bsf_api_site = 'http://support.brainstormforce.com/';
 
-		if ( false == $prefer_unsecure && wp_http_supports( array( 'ssl' ) ) ) {
+		if ( false === $prefer_unsecure && wp_http_supports( array( 'ssl' ) ) ) {
 			$bsf_api_site = set_url_scheme( $bsf_api_site, 'https' );
 		}
 	}
@@ -21,12 +27,25 @@ function bsf_get_api_site( $prefer_unsecure = false ) {
 	return $bsf_api_site;
 }
 
+/**
+ * BSF get API URL.
+ *
+ * @param bool $prefer_unsecure Prefer unsecure.
+ * @return $url.
+ */
 function bsf_get_api_url( $prefer_unsecure = false ) {
 	$url = bsf_get_api_site( $prefer_unsecure ) . 'wp-admin/admin-ajax.php';
 
 	return $url;
 }
 
+/**
+ * BSF time since last version check.
+ *
+ * @param int    $hours_completed Hours completed.
+ * @param string $option Option.
+ * @return $url.
+ */
 function bsf_time_since_last_versioncheck( $hours_completed, $option ) {
 
 	$seconds = $hours_completed * 3600;
@@ -34,9 +53,9 @@ function bsf_time_since_last_versioncheck( $hours_completed, $option ) {
 
 	$bsf_local_transient = (int) get_option( $option, false );
 
-	if ( $bsf_local_transient != false ) {
+	if ( false !== $bsf_local_transient ) {
 
-		// Find seconds passed since the last timestamp update (i.e. last request made)
+		// Find seconds passed since the last timestamp update (i.e. last request made).
 		$elapsed_seconds = (int) current_time( 'timestamp' ) - $bsf_local_transient;
 
 		// IF time is more than the required seconds allow a new HTTP request.
@@ -57,7 +76,7 @@ if ( ! function_exists( 'bsf_convert_core_path_to_relative' ) ) {
 	/**
 	 * Depracate bsf_convert_core_path_to_relative() to in favour of bsf_core_url()
 	 *
-	 * @param  $path $path depracated
+	 * @param  $path $path depracated.
 	 * @return String       URL of bsf-core directory.
 	 */
 	function bsf_convert_core_path_to_relative( $path ) {
@@ -69,6 +88,12 @@ if ( ! function_exists( 'bsf_convert_core_path_to_relative' ) ) {
 
 if ( ! function_exists( 'bsf_core_url' ) ) {
 
+	/**
+	 * BSF Core URL
+	 *
+	 * @param  string $append Append.
+	 * @return String URL of bsf-core directory.
+	 */
 	function bsf_core_url( $append = '' ) {
 		$path       = wp_normalize_path( BSF_UPDATER_PATH );
 		$theme_dir  = wp_normalize_path( get_template_directory() );
@@ -88,15 +113,20 @@ if ( ! function_exists( 'bsf_core_url' ) ) {
 
 if ( ! function_exists( 'get_brainstorm_product' ) ) {
 
+	/**
+	 * Get BSF product.
+	 *
+	 * @param  string $product_id Product ID.
+	 * @return array Product.
+	 */
 	function get_brainstorm_product( $product_id = '' ) {
-
 		$all_products = brainstorm_get_all_products();
 
 		foreach ( $all_products as $key => $product ) {
 
 			$product_id_bsf = isset( $product['id'] ) ? $product['id'] : '';
 
-			if ( $product_id == $product_id_bsf ) {
+			if ( $product_id === $product_id_bsf ) {
 
 				return $product;
 			}
@@ -106,6 +136,15 @@ if ( ! function_exists( 'get_brainstorm_product' ) ) {
 
 if ( ! function_exists( 'brainstorm_get_all_products' ) ) {
 
+	/**
+	 * Get BSF all products.
+	 *
+	 * @param  bool $skip_plugins Skip plugins.
+	 * @param  bool $skip_themes Skip themes.
+	 * @param  bool $skip_bundled Skip bundled.
+	 *
+	 * @return array All Products.
+	 */
 	function brainstorm_get_all_products( $skip_plugins = false, $skip_themes = false, $skip_bundled = false ) {
 
 		$brainstrom_products         = get_option( 'brainstrom_products', array() );
@@ -113,15 +152,15 @@ if ( ! function_exists( 'brainstorm_get_all_products' ) ) {
 		$brainstorm_plugins          = isset( $brainstrom_products['plugins'] ) ? $brainstrom_products['plugins'] : array();
 		$brainstorm_themes           = isset( $brainstrom_products['themes'] ) ? $brainstrom_products['themes'] : array();
 
-		if ( $skip_plugins == true ) {
+		if ( true === $skip_plugins ) {
 			$all_products = $brainstorm_themes;
-		} elseif ( $skip_themes == true ) {
+		} elseif ( true === $skip_themes ) {
 			$all_products = $brainstorm_plugins;
 		} else {
 			$all_products = $brainstorm_plugins + $brainstorm_themes;
 		}
 
-		if ( $skip_bundled == false ) {
+		if ( false === $skip_bundled ) {
 
 			foreach ( $brainstrom_bundled_products as $parent_id => $parent ) {
 
@@ -139,26 +178,26 @@ if ( ! function_exists( 'brainstorm_get_all_products' ) ) {
 		return $all_products;
 	}
 }
-
-/**
- * Generate's markup to generate notice to ask users to install required extensions.
- *
- * @since Graupi 1.9
- *
- * $product_id (string) Product ID of the brainstorm product
- * $mu_updater (bool) If True - give nag to separately install brainstorm updater multisite plugin
- */
 if ( ! function_exists( 'bsf_extension_nag' ) ) {
 
+
+	/**
+	 * Generate's markup to generate notice to ask users to install required extensions.
+	 *
+	 * @since Graupi 1.9
+	 *
+	 * @param string $product_id (string) Product ID of the brainstorm product.
+	 * @param bool   $mu_updater (bool) If True - give nag to separately install brainstorm updater multisite plugin.
+	 */
 	function bsf_extension_nag( $product_id = '', $mu_updater = false ) {
 
 		$display_nag = get_user_meta( get_current_user_id(), $product_id . '-bsf_nag_dismiss', true );
 
-		if ( $mu_updater == true ) {
+		if ( true === $mu_updater ) {
 			bsf_nag_brainstorm_updater_multisite();
 		}
 
-		if ( $display_nag === '1' ||
+		if ( '1' === $display_nag ||
 			! user_can( get_current_user_id(), 'activate_plugins' ) ||
 			! user_can( get_current_user_id(), 'install_plugins' ) ) {
 			return;
@@ -175,7 +214,7 @@ if ( ! function_exists( 'bsf_extension_nag' ) ) {
 
 		foreach ( $bsf_bundled_products as $key => $plugin ) {
 
-			if ( ! isset( $plugin->id ) || $plugin->id == '' || ! isset( $plugin->must_have_extension ) || $plugin->must_have_extension == 'false' ) {
+			if ( ! isset( $plugin->id ) || '' === $plugin->id || ! isset( $plugin->must_have_extension ) || 'false' === $plugin->must_have_extension ) {
 				continue;
 			}
 
@@ -193,51 +232,54 @@ if ( ! function_exists( 'bsf_extension_nag' ) ) {
 		$bsf_not_activated_plugins = rtrim( $bsf_not_activated_plugins, ', ' );
 		$bsf_not_installed_plugins = rtrim( $bsf_not_installed_plugins, ', ' );
 
-		if ( $bsf_not_activated_plugins !== '' || $bsf_not_installed_plugins !== '' ) {
+		if ( '' !== $bsf_not_activated_plugins || '' !== $bsf_not_installed_plugins ) {
 			echo '<div class="updated notice is-dismissible"><p></p>';
-			if ( $bsf_not_activated_plugins !== '' ) {
+			if ( '' !== $bsf_not_activated_plugins ) {
 				echo '<p>';
-				echo $bsf_product_name . __( ' requires following plugins to be active : ', 'bsf' );
+				echo esc_html( $bsf_product_name ) . esc_html__( ' requires following plugins to be active : ', 'bsf' );
 				echo '<strong><em>';
-				echo $bsf_not_activated_plugins;
+				echo esc_html( $bsf_not_activated_plugins );
 				echo '</strong></em>';
 				echo '</p>';
 				$bsf_activate = true;
 			}
 
-			if ( $bsf_not_installed_plugins !== '' ) {
+			if ( '' !== $bsf_not_installed_plugins ) {
 				echo '<p>';
-				echo $bsf_product_name . __( ' requires following plugins to be installed and activated : ', 'bsf' );
+				echo esc_html( $bsf_product_name ) . esc_html__( ' requires following plugins to be installed and activated : ', 'bsf' );
 				echo '<strong><em>';
-				echo $bsf_not_installed_plugins;
+				echo esc_html( $bsf_not_installed_plugins );
 				echo '</strong></em>';
 				echo '</p>';
 				$bsf_install = true;
 			}
 
-			if ( $bsf_activate == true ) {
+			if ( true === $bsf_activate ) {
 				$installer .= '<a href="' . get_admin_url() . 'plugins.php?plugin_status=inactive">' . __( 'Begin activating plugins', 'bsf' ) . '</a> | ';
 			}
 
-			if ( $bsf_install == true ) {
+			if ( true === $bsf_install ) {
 				$installer .= '<a href="' . bsf_exension_installer_url( $product_id ) . '">' . __( 'Begin installing plugins', 'bsf' ) . '</a> | ';
 			}
 
 			$installer .= '<a href="' . esc_url( add_query_arg( 'bsf-dismiss-notice', $product_id ) ) . '">' . __( 'Dismiss This Notice', 'bsf' ) . '</a>';
 
 			$installer = ltrim( $installer, '| ' );
+
+			wp_nonce_field( 'bsf-extension-nag', 'bsf-extension-nag-nonce', true, 1 );
 			echo '<p><strong>';
-			echo rtrim( $installer, ' |' );
+			echo esc_html( rtrim( $installer, ' |' ) );
 			echo '</p></strong>';
 
 			echo '<p></p></div>';
 		}
 	}
-	
 }
 
 if ( ! function_exists( 'bsf_nag_brainstorm_updater_multisite' ) ) {
-
+	/**
+	 * BSF Updater multisite.
+	 */
 	function bsf_nag_brainstorm_updater_multisite() {
 
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
@@ -249,16 +291,11 @@ if ( ! function_exists( 'bsf_nag_brainstorm_updater_multisite' ) ) {
 		}
 
 		echo '<div class="notice notice-error uct-notice is-dismissible"><p>';
-		printf(
-			__( 'Looks like you are on a WordPress Multisite, you will need to install and network activate %1$s Brainstorm Updater for Multisite %2$s plugin. Download it from %3$s here %4$s', 'bsf' ),
-			'<strong><em>',
-			'</strong></em>',
-			'<a href="http://bsf.io/bsf-updater-mu" target="_blank">',
-			'</a>'
-		);
+
+		/* translators: %1$s: strong tag %2%s: strong tag  %3%s: anchor tag %4%s: closing anchor tag */
+		sprintf( __( 'Looks like you are on a WordPress Multisite, you will need to install and network activate %1$s Brainstorm Updater for Multisite %2$s plugin. Download it from %3$s here %4$s', 'bsf' ), '<strong><em>', '<strong><em>', '<a href="http://bsf.io/bsf-updater-mu" target="_blank">', '</a>' );
 
 		echo '</p>';
 		echo '</div>';
 	}
-
 }

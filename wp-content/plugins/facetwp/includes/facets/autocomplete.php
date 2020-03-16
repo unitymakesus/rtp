@@ -15,10 +15,6 @@ class FacetWP_Facet_Autocomplete extends FacetWP_Facet
         // css-based template
         $this->maybe_buffer_output();
         add_action( 'facetwp_found_main_query', [ $this, 'template_handler' ] );
-
-        // deprecated
-        add_action( 'wp_ajax_facetwp_autocomplete_load', [ $this, 'ajax_load' ] );
-        add_action( 'wp_ajax_nopriv_facetwp_autocomplete_load', [ $this, 'ajax_load' ] );
     }
 
 
@@ -117,7 +113,7 @@ class FacetWP_Facet_Autocomplete extends FacetWP_Facet
 
         // simulate a refresh
         FWP()->facet->render(
-            FWP()->ajax->process_post_data()
+            FWP()->request->process_post_data()
         );
 
         // then grab the matching post IDs

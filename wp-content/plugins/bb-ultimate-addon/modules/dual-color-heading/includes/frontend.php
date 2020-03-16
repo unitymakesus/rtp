@@ -25,17 +25,17 @@ if ( ! UABB_Compatibility::$version_bb_check ) {
 	echo '<' . esc_attr( $settings->dual_tag_selection ) . ' >';
 	?>
 	<?php if ( ! empty( $settings->first_heading_link ) ) : ?>
-		<a href="<?php echo esc_url( $settings->first_heading_link ); ?>" title="<?php echo esc_attr( $settings->first_heading_text ); ?>" target="<?php echo esc_attr( $settings->first_heading_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->first_heading_link_target, $first_heading_link_nofollow, 1 ); ?>>
+		<a href="<?php echo $settings->first_heading_link; ?>" title="<?php echo $settings->first_heading_text; ?>" target="<?php echo esc_attr( $settings->first_heading_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->first_heading_link_target, $first_heading_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php endif; ?>
-	<span class="uabb-first-heading-text"><?php echo wp_kses_post( $settings->first_heading_text ); ?></span>
+	<span class="uabb-first-heading-text"><?php echo $settings->first_heading_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<?php if ( ! empty( $settings->first_heading_link ) ) : ?>
 		</a>
 	<?php endif; ?>
 
 	<?php if ( ! empty( $settings->second_heading_link ) ) : ?>
-		<a href="<?php echo esc_attr( $settings->second_heading_link ); ?>" title="<?php echo esc_attr( $settings->second_heading_text ); ?>" target="<?php echo esc_attr( $settings->second_heading_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->second_heading_link_target, $second_heading_link_nofollow, 1 ); ?>>
+		<a href="<?php echo $settings->second_heading_link; ?>" title="<?php echo $settings->second_heading_text; ?>" target="<?php echo esc_attr( $settings->second_heading_link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->second_heading_link_target, $second_heading_link_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php endif; ?>
-	<span class="uabb-second-heading-text"><?php echo wp_kses_post( $settings->second_heading_text ); ?></span>
+	<span class="uabb-second-heading-text"><?php echo $settings->second_heading_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<?php if ( ! empty( $settings->second_heading_link ) ) : ?>
 		</a>
 	<?php endif; ?>

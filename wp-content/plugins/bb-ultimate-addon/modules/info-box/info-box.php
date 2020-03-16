@@ -1046,12 +1046,12 @@ class UABBInfoBoxModule extends FLBuilderModule {
 		$this->render_image( 'left-title' );
 		echo "<div class='uabb-infobox-title-wrap'>";
 		if ( '' !== $this->settings->heading_prefix ) {
-			echo '<' . esc_attr( $this->settings->prefix_tag_selection ) . ' class="uabb-infobox-title-prefix">' . wp_kses_post( $this->settings->heading_prefix ) . '</' . esc_attr( $this->settings->prefix_tag_selection ) . '>';
+			echo '<' . esc_attr( $this->settings->prefix_tag_selection ) . ' class="uabb-infobox-title-prefix">' . $this->settings->heading_prefix . '</' . esc_attr( $this->settings->prefix_tag_selection ) . '>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 		if ( ! empty( $this->settings->title ) ) {
 			echo '<' . esc_attr( $this->settings->title_tag_selection ) . ' class="uabb-infobox-title">';
-			echo wp_kses_post( $this->settings->title );
+			echo $this->settings->title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</' . esc_attr( $this->settings->title_tag_selection ) . '>';
 		}
 		echo '</div>';
@@ -1079,7 +1079,7 @@ class UABBInfoBoxModule extends FLBuilderModule {
 	 */
 	public function render_link() {
 		if ( 'link' === $this->settings->cta_type ) {
-			echo '<a href="' . esc_url( $this->settings->link ) . '" target="' . esc_attr( $this->settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 0 ) ) . ' class="uabb-infobox-cta-link">' . wp_kses_post( $this->settings->cta_text ) . '</a>';
+			echo '<a href="' . $this->settings->link . '" target="' . esc_attr( $this->settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, $this->settings->link_nofollow, 0 ) ) . ' class="uabb-infobox-cta-link">' . $this->settings->cta_text . '</a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bb-plugin\n"
 "Report-Msgid-Bugs-To: hello@wpbeaverbuilder.com\n"
-"POT-Creation-Date: 2020-02-06 18:49:40+00:00\n"
+"POT-Creation-Date: 2020-02-20 18:42:04+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -193,7 +193,7 @@ msgstr ""
 msgid "Untitled Shape"
 msgstr ""
 
-#: classes/class-fl-builder-art.php:197 includes/column-settings.php:279
+#: classes/class-fl-builder-art.php:197 includes/column-settings.php:250
 #: includes/row-settings.php:620 includes/ui-field-border.php:35
 #: includes/ui-field-typography.php:141
 #: modules/contact-form/contact-form.php:444 modules/menu/menu.php:310
@@ -281,7 +281,7 @@ msgid "Center Left"
 msgstr ""
 
 #: classes/class-fl-builder-art.php:459 includes/column-settings.php:71
-#: includes/column-settings.php:229 includes/row-settings.php:117
+#: includes/column-settings.php:200 includes/row-settings.php:117
 #: includes/row-settings.php:299 modules/content-slider/content-slider.php:641
 #: modules/social-buttons/social-buttons.php:97
 msgid "Center"
@@ -317,7 +317,7 @@ msgid "Gradient Fill"
 msgstr ""
 
 #: classes/class-fl-builder-art.php:510 includes/column-settings.php:86
-#: includes/column-settings.php:161 includes/column-settings.php:280
+#: includes/column-settings.php:251 includes/column-settings.php:292
 #: includes/row-settings.php:621 includes/row-settings.php:662
 #: includes/ui-field-border.php:126 modules/callout/callout.php:604
 #: modules/content-slider/content-slider.php:497
@@ -327,8 +327,8 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: classes/class-fl-builder-art.php:523 includes/column-settings.php:175
-#: includes/column-settings.php:281 includes/row-settings.php:622
+#: classes/class-fl-builder-art.php:523 includes/column-settings.php:252
+#: includes/column-settings.php:306 includes/row-settings.php:622
 #: includes/row-settings.php:677 modules/button/button.php:482
 #: modules/callout/callout.php:643 modules/callout/callout.php:939
 #: modules/contact-form/contact-form.php:672
@@ -573,7 +573,25 @@ msgid ""
 "tags</strong> from a WordPress export file."
 msgstr ""
 
-#: classes/class-fl-builder-importer.php:215
+#: classes/class-fl-builder-importer.php:48
+msgid "Some bad characters were found in the xml file"
+msgstr ""
+
+#: classes/class-fl-builder-importer.php:51
+#: classes/class-fl-builder-importer.php:81
+#: classes/class-fl-builder-importer.php:89
+msgid "There was an error when reading this WXR file"
+msgstr ""
+
+#: classes/class-fl-builder-importer.php:52
+msgid ""
+"Details are shown above. The importer will now try again with a different "
+"parser..."
+msgstr ""
+
+#: classes/class-fl-builder-importer.php:94
+#: classes/class-fl-builder-importer.php:100
+#: classes/class-fl-builder-importer.php:468
 msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
 msgstr ""
 
@@ -704,24 +722,24 @@ msgstr ""
 
 #: classes/class-fl-builder-model.php:4893
 #: classes/class-fl-builder-model.php:4934
-#: classes/class-fl-builder-model.php:5004
-#: classes/class-fl-builder-model.php:6251 includes/ui-js-config.php:218
+#: classes/class-fl-builder-model.php:5008
+#: classes/class-fl-builder-model.php:6255 includes/ui-js-config.php:218
 msgid "Uncategorized"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5296
+#: classes/class-fl-builder-model.php:5300
 msgid "Logged In"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5300
+#: classes/class-fl-builder-model.php:5304
 msgid "Logged Out"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5304
+#: classes/class-fl-builder-model.php:5308
 msgid "Logic"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6207
+#: classes/class-fl-builder-model.php:6211
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:42
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:69
 #: extensions/fl-builder-core-templates-admin/includes/core-template-settings.php:7
@@ -747,21 +765,21 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6208
+#: classes/class-fl-builder-model.php:6212
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:43
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:70
 #: includes/ui-js-config.php:245
 msgid "Landing Pages"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6209
+#: classes/class-fl-builder-model.php:6213
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:44
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:71
 #: includes/ui-js-config.php:248
 msgid "Content Pages"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6464
+#: classes/class-fl-builder-model.php:6468
 #: extensions/fl-builder-user-templates/classes/class-fl-builder-user-templates-post-type.php:36
 #: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:139
 msgid "Beaver Builder"
@@ -863,7 +881,7 @@ msgstr ""
 
 #: classes/class-fl-builder-service-activecampaign.php:205
 #: classes/class-fl-builder-service-activecampaign.php:239
-#: classes/class-fl-builder-service-aweber.php:173
+#: classes/class-fl-builder-service-aweber.php:203
 #: classes/class-fl-builder-service-campaign-monitor.php:144
 #: classes/class-fl-builder-service-campaign-monitor.php:195
 #: classes/class-fl-builder-service-campayn.php:196
@@ -893,7 +911,7 @@ msgid "Choose..."
 msgstr ""
 
 #: classes/class-fl-builder-service-activecampaign.php:279
-#: classes/class-fl-builder-service-aweber.php:210
+#: classes/class-fl-builder-service-aweber.php:240
 msgid "A comma separated list of tags."
 msgstr ""
 
@@ -907,38 +925,38 @@ msgstr ""
 msgid "Error: Invalid API data."
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:70
+#: classes/class-fl-builder-service-aweber.php:72
 msgid "Error: You must provide an Authorization Code."
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:72
+#: classes/class-fl-builder-service-aweber.php:74
 msgid "Error: Please enter a valid Authorization Code."
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:118
+#: classes/class-fl-builder-service-aweber.php:120
 msgid "Authorization Code"
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:120
+#: classes/class-fl-builder-service-aweber.php:122
 #. translators: %s: register url
 msgid ""
 "Please register this website with AWeber to get your Authorization Code. "
 "<a%s>Register Now</a>"
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:237
+#: classes/class-fl-builder-service-aweber.php:267
 msgid ""
 "There was an error subscribing to AWeber. The account is no longer "
 "connected."
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:283
-#: classes/class-fl-builder-service-aweber.php:301
+#: classes/class-fl-builder-service-aweber.php:313
+#: classes/class-fl-builder-service-aweber.php:331
 msgid "There was an error connecting to AWeber. Please try again."
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:288
-#: classes/class-fl-builder-service-aweber.php:307
+#: classes/class-fl-builder-service-aweber.php:318
+#: classes/class-fl-builder-service-aweber.php:337
 #. translators: %s: error
 msgid "There was an error subscribing to AWeber. %s"
 msgstr ""
@@ -2126,7 +2144,7 @@ msgstr ""
 
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:16
 #: extensions/fl-builder-core-templates-admin/includes/core-template-settings.php:23
-#: includes/column-settings.php:218 includes/row-settings.php:288
+#: includes/column-settings.php:189 includes/row-settings.php:288
 #: modules/callout/callout.php:476 modules/callout/callout.php:559
 #: modules/content-slider/content-slider.php:636
 #: modules/post-slider/post-slider.php:683
@@ -3255,26 +3273,12 @@ msgstr ""
 msgid "Background"
 msgstr ""
 
-#: includes/column-settings.php:156 includes/row-settings.php:658
-#: modules/accordion/accordion.php:169 modules/accordion/accordion.php:272
-#: modules/button/button.php:457 modules/callout/callout.php:337
-#: modules/callout/callout.php:627
-#: modules/content-slider/content-slider.php:525 modules/cta/cta.php:209
-#: modules/icon/icon.php:194 modules/icon-group/icon-group.php:118
-#: modules/icon-group/icon-group.php:219 modules/tabs/tabs.php:66
-msgid "Background Color"
-msgstr ""
-
-#: includes/column-settings.php:171 includes/row-settings.php:673
-msgid "Background Gradient"
-msgstr ""
-
-#: includes/column-settings.php:185 includes/row-settings.php:224
+#: includes/column-settings.php:156 includes/row-settings.php:224
 #: modules/content-slider/content-slider.php:520
 msgid "Background Photo"
 msgstr ""
 
-#: includes/column-settings.php:190 includes/row-settings.php:260
+#: includes/column-settings.php:161 includes/row-settings.php:260
 #: includes/row-settings.php:591 modules/callout/callout.php:450
 #: modules/callout/callout.php:466 modules/callout/callout.php:471
 #: modules/content-slider/content-slider.php:495
@@ -3284,91 +3288,105 @@ msgstr ""
 msgid "Photo"
 msgstr ""
 
-#: includes/column-settings.php:201 includes/row-settings.php:271
+#: includes/column-settings.php:172 includes/row-settings.php:271
 msgid "Repeat"
 msgstr ""
 
-#: includes/column-settings.php:222 includes/row-settings.php:292
+#: includes/column-settings.php:193 includes/row-settings.php:292
 #: includes/ui-field-gradient.php:40
 msgid "Left Top"
 msgstr ""
 
-#: includes/column-settings.php:223 includes/row-settings.php:293
+#: includes/column-settings.php:194 includes/row-settings.php:293
 #: includes/ui-field-gradient.php:41
 msgid "Left Center"
 msgstr ""
 
-#: includes/column-settings.php:224 includes/row-settings.php:294
+#: includes/column-settings.php:195 includes/row-settings.php:294
 #: includes/ui-field-gradient.php:42
 msgid "Left Bottom"
 msgstr ""
 
-#: includes/column-settings.php:225 includes/row-settings.php:295
+#: includes/column-settings.php:196 includes/row-settings.php:295
 #: includes/ui-field-gradient.php:43
 msgid "Right Top"
 msgstr ""
 
-#: includes/column-settings.php:226 includes/row-settings.php:296
+#: includes/column-settings.php:197 includes/row-settings.php:296
 #: includes/ui-field-gradient.php:44
 msgid "Right Center"
 msgstr ""
 
-#: includes/column-settings.php:227 includes/row-settings.php:297
+#: includes/column-settings.php:198 includes/row-settings.php:297
 #: includes/ui-field-gradient.php:45
 msgid "Right Bottom"
 msgstr ""
 
-#: includes/column-settings.php:228 includes/row-settings.php:298
+#: includes/column-settings.php:199 includes/row-settings.php:298
 #: includes/ui-field-gradient.php:46
 msgid "Center Top"
 msgstr ""
 
-#: includes/column-settings.php:230 includes/row-settings.php:300
+#: includes/column-settings.php:201 includes/row-settings.php:300
 #: includes/ui-field-gradient.php:48
 msgid "Center Bottom"
 msgstr ""
 
-#: includes/column-settings.php:240 includes/row-settings.php:350
+#: includes/column-settings.php:211 includes/row-settings.php:350
 msgid "Attachment"
 msgstr ""
 
-#: includes/column-settings.php:244 includes/row-settings.php:354
+#: includes/column-settings.php:215 includes/row-settings.php:354
 #: modules/post-grid/post-grid.php:1239
 msgid "Scroll"
 msgstr ""
 
-#: includes/column-settings.php:245 includes/global-settings.php:93
+#: includes/column-settings.php:216 includes/global-settings.php:93
 #: includes/global-settings.php:107 includes/row-settings.php:20
 #: includes/row-settings.php:38 includes/row-settings.php:355
 msgid "Fixed"
 msgstr ""
 
-#: includes/column-settings.php:255 includes/row-settings.php:365
+#: includes/column-settings.php:226 includes/row-settings.php:365
 msgid "Scale"
 msgstr ""
 
-#: includes/column-settings.php:260 includes/row-settings.php:370
+#: includes/column-settings.php:231 includes/row-settings.php:370
 msgid "Fit"
 msgstr ""
 
-#: includes/column-settings.php:261 includes/row-settings.php:371
+#: includes/column-settings.php:232 includes/row-settings.php:371
 msgid "Fill"
 msgstr ""
 
-#: includes/column-settings.php:272 includes/row-settings.php:613
+#: includes/column-settings.php:243 includes/row-settings.php:613
 msgid "Background Overlay"
 msgstr ""
 
-#: includes/column-settings.php:276 includes/row-settings.php:617
+#: includes/column-settings.php:247 includes/row-settings.php:617
 msgid "Overlay Type"
 msgstr ""
 
-#: includes/column-settings.php:297 includes/row-settings.php:639
+#: includes/column-settings.php:268 includes/row-settings.php:639
 msgid "Overlay Color"
 msgstr ""
 
-#: includes/column-settings.php:306 includes/row-settings.php:648
+#: includes/column-settings.php:277 includes/row-settings.php:648
 msgid "Overlay Gradient"
+msgstr ""
+
+#: includes/column-settings.php:287 includes/row-settings.php:658
+#: modules/accordion/accordion.php:169 modules/accordion/accordion.php:272
+#: modules/button/button.php:457 modules/callout/callout.php:337
+#: modules/callout/callout.php:627
+#: modules/content-slider/content-slider.php:525 modules/cta/cta.php:209
+#: modules/icon/icon.php:194 modules/icon-group/icon-group.php:118
+#: modules/icon-group/icon-group.php:219 modules/tabs/tabs.php:66
+msgid "Background Color"
+msgstr ""
+
+#: includes/column-settings.php:302 includes/row-settings.php:673
+msgid "Background Gradient"
 msgstr ""
 
 #: includes/column-settings.php:316 includes/column-settings.php:320
@@ -8168,12 +8186,12 @@ msgid "List"
 msgstr ""
 
 #: classes/class-fl-builder-service-activecampaign.php:278
-#: classes/class-fl-builder-service-aweber.php:209
+#: classes/class-fl-builder-service-aweber.php:239
 msgctxt "A comma separated list of tags."
 msgid "Tags"
 msgstr ""
 
-#: classes/class-fl-builder-service-aweber.php:184
+#: classes/class-fl-builder-service-aweber.php:214
 #: classes/class-fl-builder-service-campaign-monitor.php:207
 #: classes/class-fl-builder-service-constant-contact.php:161
 #: classes/class-fl-builder-service-convertkit.php:161
@@ -8733,27 +8751,27 @@ msgctxt "Background type."
 msgid "Parallax"
 msgstr ""
 
-#: includes/column-settings.php:205 includes/row-settings.php:275
+#: includes/column-settings.php:176 includes/row-settings.php:275
 msgctxt "Background repeat."
 msgid "None"
 msgstr ""
 
-#: includes/column-settings.php:206 includes/row-settings.php:276
+#: includes/column-settings.php:177 includes/row-settings.php:276
 msgctxt "Background repeat."
 msgid "Tile"
 msgstr ""
 
-#: includes/column-settings.php:207 includes/row-settings.php:277
+#: includes/column-settings.php:178 includes/row-settings.php:277
 msgctxt "Background repeat."
 msgid "Horizontal"
 msgstr ""
 
-#: includes/column-settings.php:208 includes/row-settings.php:278
+#: includes/column-settings.php:179 includes/row-settings.php:278
 msgctxt "Background repeat."
 msgid "Vertical"
 msgstr ""
 
-#: includes/column-settings.php:259 includes/row-settings.php:369
+#: includes/column-settings.php:230 includes/row-settings.php:369
 msgctxt "Background scale."
 msgid "None"
 msgstr ""

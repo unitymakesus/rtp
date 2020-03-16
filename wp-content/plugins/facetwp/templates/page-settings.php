@@ -44,7 +44,7 @@ foreach ( $facet_types as $name => $class ) {
 <script src="<?php echo FACETWP_URL; ?>/assets/vendor/vue/Sortable.min.js"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/vendor/vue/vuedraggable.min.js"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/vendor/vue/vue-clickaway.min.js"></script>
-<script src="<?php echo FACETWP_URL; ?>/assets/vendor/vue/vue-multiselect.min.js"></script>
+<script src="<?php echo FACETWP_URL; ?>/assets/vendor/vue/vue-select/vue-select.js"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/vendor/font-awesome/solid.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/vendor/font-awesome/fontawesome.min.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/js/src/event-manager.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
@@ -82,7 +82,7 @@ FWP.data.settings = FWP.hooks.applyFilters('facetwp/load_settings', FWP.data.set
 </script>
 <link href="<?php echo FACETWP_URL; ?>/assets/css/admin.css?ver=<?php echo FACETWP_VERSION; ?>" rel="stylesheet">
 <link href="<?php echo FACETWP_URL; ?>/assets/vendor/fSelect/fSelect.css?ver=<?php echo FACETWP_VERSION; ?>" rel="stylesheet">
-<link href="<?php echo FACETWP_URL; ?>/assets/vendor/vue/vue-multiselect.min.css" rel="stylesheet">
+<link href="<?php echo FACETWP_URL; ?>/assets/vendor/vue/vue-select/vue-select.css" rel="stylesheet">
 
 <div id="app">
     <div class="facetwp-header">

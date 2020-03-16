@@ -5,11 +5,11 @@ jQuery(document).ready(function($) {
         event.preventDefault();
 
         var today = new Date(),
-            march = new Date('March 3, 2020 00:00:00'),
+            march = new Date('March 31, 2020 00:00:00'),
             oldApiURL = $(this).attr('data-old-api'),
             oldApiLink = '';
         if (today.getTime() < march.getTime()) {
-            oldApiLink = 'To connect using the legacy API, <a href="'+oldApiURL+'">click here</a> (expires on March 2, 2020).';
+            oldApiLink = 'To connect using the legacy API, <a href="'+oldApiURL+'">click here</a> (expires on March 31, 2020).';
         }
 
         var personalBasicApiURL = $('#sbi_config .sbi_admin_btn').attr('data-personal-basic-api'),

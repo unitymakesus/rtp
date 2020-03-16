@@ -25,12 +25,6 @@ class FacetWP_Settings_Admin
                         'label' => __( 'Separators', 'fwp' ),
                         'html' => $this->get_field_html( 'separators' )
                     ],
-                    'loading_animation' => [
-                        'label' => __( 'Loading animation', 'fwp' ),
-                        'html' => $this->get_field_html( 'loading_animation', 'dropdown', [
-                            'choices' => [ 'fade' => __( 'Fade', 'fwp' ), '' => __( 'Spin', 'fwp' ), 'none' => __( 'None', 'fwp' ) ]
-                        ] )
-                    ],
                     'prefix' => [
                         'label' => __( 'URL prefix', 'fwp' ),
                         'html' => $this->get_field_html( 'prefix', 'dropdown', [

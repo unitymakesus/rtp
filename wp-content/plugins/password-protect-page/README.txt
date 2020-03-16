@@ -43,6 +43,7 @@ Partial Content Protection feature allows you to [password protect certain secti
 
 = Integrate with Page Builders =
 Instead of using shortcode to protect part of content, you can use our built-in module on the most popular page builders including:
+
 * Elementor
 * Beaver Builder
 * Divi Builder (WIP)
@@ -51,9 +52,9 @@ Instead of using shortcode to protect part of content, you can use our built-in 
 These built-in modules allow you to set passwords, whitelisted roles, customize password forms and so on via our friendly User Interface. You no longer have to deal with the complex shortcode attributes.
 
 = Global - Master Passwords =
-When there are many password protected posts on your website, it becomes difficult and time-consuming to create or manage passwords for each content. That’s when global or master passwords come in handy.
+When there are many password protected posts on your website, it becomes difficult and time-consuming to create or manage passwords for each content. That’s when master passwords come in handy.
 
-Users will be able to unlock all posts protected by our PPWP Lite at once with just one master password.
+Users will be able to [unlock all protected posts at once](https://passwordprotectwp.com/docs/master-passwords-unlock-all-protected-content/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=password-protect-page-lite&utm_content=global-pwd) with just one master password.
 
 Please note that this feature **does not** password protect all posts automatically. It simply allows you to use master passwords to unlock every post that you choose to password protect. Original passwords attached to each post will still be working, together with these master (global) passwords.
 
@@ -66,10 +67,14 @@ You will be able to change the WordPress default password protected error messag
 
 The button and text’s font-size, color and background can also be customized through a friendly WYSIWYG HTML Editor.
 
+= Show Password Protected Post Excerpt =
+Many WordPress themes hide the post excerpt and featured image of password protected content by default. Enable this option to show excerpt of your password protect posts.
+
 = Hide Password Protected Content =
 By default, your password protected content will still show up on various pages such as home and category page once published.
 
 This feature allows you to control the visibility of your protected post types in various different views:
+
 * Hide posts from Recent Posts widgets
 * Hide posts from Next & Previous link on the single post
 * Hide posts on search results
@@ -91,20 +96,22 @@ Even though the posts are hidden, those who know the URL will still have access 
 >* Protect all posts belonging a category at once
 >* Automatically protect all sub pages with one password
 >* Set the same password for multiple pages
+>* Create unlimited global passwords for partial content protection shortcode
 >* Redirect to specific URLs after entering site-wide protection passwords
 >* Unlock all content at once with [Group Password Protection extension](https://passwordprotectwp.com/extensions/group-protection/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features)
->* Keep track of password usage, i.e. the time they're logged in, IP address and browser used, with Statistics extension
+>* Track password usage, i.e. the time they're logged in, IP address and browser used, with Statistics extension
 >* [Password protect WordPress categories](https://passwordprotectwp.com/extensions/access-levels/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features) with different access levels
 >* Integrate with Prevent Direct Access Gold to protect files embedded in content
 >
 > Check out [Password Protect WordPress Pro](https://passwordprotectwp.com/pricing/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=premium-after-pro-features) now!
 
 = Multilingual supported =
-Our plugin works out of the box with the top leading multilingual WordPress plugins such as WPML, Polylang, and Loco Translate. In other words, you can [translate our password forms](https://passwordprotectwp.com/docs/translate-password-forms-wpml-plugin/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), including headline, description, error message as well as placeholder and button text into the different languages.
+Our plugin works out of the box with the top leading multilingual WordPress plugins such as WPML, Polylang, and Loco Translate. In other words, you can [translate the password forms](https://passwordprotectwp.com/docs/how-to-translate-password-protect-wordpress-plugin/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), including its headline, description, error message as well as placeholder and button text into the different languages.
 
 = Documentation and support =
-*For documentation and tutorials go to our [Documentation](https://passwordprotectwp.com/docs/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite).
-*If you have any more questions or want to request new features, contact us through [this form](https://passwordprotectwp.com/contact/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=ppwp_lite&utm_content=contact-after-pro-features) or drop us an email at [hello@preventdirectaccess.com](mailto:hello@preventdirectaccess.com)
+
+* For documentation and tutorials go to our [Documentation](https://passwordprotectwp.com/docs/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite).
+* If you have any more questions or want to request new features, contact us through [this form](https://passwordprotectwp.com/contact/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=ppwp_lite&utm_content=contact-after-pro-features) or drop us an email at [hello@preventdirectaccess.com](mailto:hello@preventdirectaccess.com)
 
 Please check out these guides on [how to password protect WordPress page](https://passwordprotectwp.com/docs/getting-started/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) right way.
 
@@ -133,11 +140,11 @@ From your WordPress dashboard
 
 == Frequently Asked Questions ==
 
-= Why do I still see the password form after entering the correct password? =
+= Why do I get the error message after entering the correct password? =
 
 Below are 4 common reasons why the issue happens:
 
-* You're protecting content on a custom field
+* You're protecting content on a ACF or WordPress custom field
 * You're using a custom page template
 * You're using a conflicting theme and unsupported page builder plugin
 * You're using an unsupported caching method and/or plugin
@@ -198,14 +205,23 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 
 14. Control the visibility of your password protected content.
 
+15. Enable this option to show excerpt of password protected content.
+
 == Upgrade Notice ==
 
 N/A
 
 == Changelog ==
+
+= 1.4.2 =
+
+* Fix shortcode wrong error message for unregistered custom post types
+* Add "Show Post Excerpt" option
+* Fix caching issue with SG Optimizer plugin
+
 = 1.4.1 =
 
-* Enable to translate password forms with WPML plugin
+* Allow translating password forms with WPML & other top multilingual plugins
 
 = 1.4.0 =
 

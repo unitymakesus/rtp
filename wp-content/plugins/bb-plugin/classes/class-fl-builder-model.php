@@ -2823,15 +2823,15 @@ final class FLBuilderModel {
 			$instance->enabled = apply_filters( 'fl_builder_register_module', $instance->enabled, $instance );
 
 			// Save the instance in the modules array.
-			self::$modules[ $instance->slug ] = $instance;
-
-			/**
-			 * Use this filter to modify the config array for a settings form when it is registered.
-			 * @see fl_builder_register_settings_form
-			 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
-			 */
+			self::$modules[ $instance->slug ]                   = $instance;
 			self::$modules[ $instance->slug ]->form             = apply_filters( 'fl_builder_register_settings_form', $form, $instance->slug );
 			self::$modules[ $instance->slug ]->form['advanced'] = self::$settings_forms['module_advanced'];
+			/**
+			 * Use this filter to modify the config array for a settings form when it is registered.
+			 * @see fl_builder_register_module_settings_form
+			 * @link https://kb.wpbeaverbuilder.com/article/117-plugin-filter-reference
+			 */
+			self::$modules[ $instance->slug ]->form = apply_filters( 'fl_builder_register_module_settings_form', self::$modules[ $instance->slug ]->form, $instance->slug );
 		}
 	}
 
@@ -4975,7 +4975,11 @@ final class FLBuilderModel {
 
 			if ( has_post_thumbnail( $post->ID ) ) {
 				$image_data = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium_large' );
-				$image      = $image_data[0];
+				if ( is_array( $image_data ) ) {
+					$image = $image_data[0];
+				} else {
+					$image = FL_BUILDER_URL . 'img/templates/blank.jpg';
+				}
 			} else {
 				$image = FL_BUILDER_URL . 'img/templates/blank.jpg';
 			}

@@ -8,7 +8,7 @@
 $click_action_target = ( isset( $settings->click_action_target ) ) ? $settings->click_action_target : '_blank'; ?>
 <?php
 if ( 'yes' === $settings->filterable_gallery_enable ) {
-	echo wp_kses_post( $module->render_gallery_filters() );
+	echo $module->render_gallery_filters(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 ?>
 <?php
