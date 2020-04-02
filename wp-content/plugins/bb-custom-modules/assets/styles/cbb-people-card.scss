@@ -1,3 +1,5 @@
+@import "../global/variables.scss";
+
 .flex-grid .flex-item {
   .figure-card.figure-card-people {
     position: relative;
@@ -32,6 +34,7 @@
       padding: 10px;
       height: auto;
       margin: 0;
+      background: $color-white;
     }
 
     .card-title {

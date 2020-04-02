@@ -1,4 +1,20 @@
-/* line 2, stdin */
+/** Colors */
+
+/** Buttons */
+
+/** Navigation */
+
+/** Footer */
+
+/** Box Model  */
+
+/** Modified Breakpoints */
+
+/** Flow Text  */
+
+/** Gradients */
+
+/* line 4, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people {
   position: relative;
@@ -7,7 +23,7 @@
   overflow: hidden;
 }
 
-/* line 9, stdin */
+/* line 11, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people:focus-within .figure-card-img img {
   -webkit-transform: scale(1.03);
@@ -15,14 +31,14 @@
           transform: scale(1.03);
 }
 
-/* line 14, stdin */
+/* line 16, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people .figure-card-img {
   overflow: hidden;
   position: relative;
 }
 
-/* line 19, stdin */
+/* line 21, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people img,
 .flex-grid .flex-item .figure-card.figure-card-people .placeholder {
@@ -36,7 +52,7 @@
   transition: all 0.3s ease;
 }
 
-/* line 27, stdin */
+/* line 29, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people .card {
   position: absolute;
@@ -46,16 +62,17 @@
   padding: 10px;
   height: auto;
   margin: 0;
+  background: #FFF;
 }
 
-/* line 37, stdin */
+/* line 40, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people .card-title {
   margin: 0 0 0.25em;
   font-size: 1em;
 }
 
-/* line 42, stdin */
+/* line 45, stdin */
 
 .flex-grid .flex-item .figure-card.figure-card-people .card-subtitle {
   margin: 0;
