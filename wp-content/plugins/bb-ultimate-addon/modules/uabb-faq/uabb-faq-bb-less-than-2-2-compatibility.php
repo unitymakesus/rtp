@@ -197,6 +197,15 @@ FLBuilder::register_module(
 								'property' => 'background',
 							),
 						),
+						'faq_equal_height'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Equal Height', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'no'  => __( 'No', 'uabb' ),
+								'yes' => __( 'Yes', 'uabb' ),
+							),
+						),
 						'row_gap'              => array(
 							'type'        => 'unit',
 							'label'       => __( 'Row Gap', 'uabb' ),

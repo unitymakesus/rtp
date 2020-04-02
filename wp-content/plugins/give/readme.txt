@@ -5,7 +5,7 @@ Tags: donation, donations, donation plugin, wordpress donation plugin, givewp, g
 Requires at least: 4.8
 Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 2.6.0
+Stable tag: 2.6.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -223,14 +223,29 @@ The 2% fee on Stripe donations only applies to donations taken via our free Stri
 
 == Changelog ==
 
+= 2.6.2: April 1st, 2020 =
+* Fix: Resolved an issue with Stripe in the latest release which prevented the donation form from properly redirecting to the donation receipt page upon successful donation. [#4605](https://github.com/impress-org/givewp/issues/4605)
+* Fix: Modified how we compare values in Stripe's gateway JavaScript to prevent a Payment Intent error from happening for certain configurations. [#4604](https://github.com/impress-org/givewp/issues/4604)
+
+= 2.6.1: March 30th, 2020 =
+* New: Stripe now has the SEPA Direct Debit gateway integrated. This is a popular payment option in Europe and can be used to accept one-time and recurring donations. [#4571](https://github.com/impress-org/givewp/issues/4571), [#4313](https://github.com/impress-org/givewp/issues/4313)
+* Fix: The new Reports screen was not properly caching results which would cause delays in pulling data on larger sites or small resource servers. [#4514](https://github.com/impress-org/givewp/issues/4514)
+* Fix: The new Reports screen was having issues with certain currency formats which resulted in inaccurrate figures. [#4537](https://github.com/impress-org/givewp/issues/4537), [#4559](https://github.com/impress-org/givewp/issues/4559)
+* Fix: Resolved an issue with the new Reports interface throwing a few PHP notices. [#4515](https://github.com/impress-org/givewp/issues/4515), [#4593](https://github.com/impress-org/givewp/issues/4593), [#4592](https://github.com/impress-org/givewp/issues/4592)
+* Fix: Adjusted our Gutenberg styles so that it doesn't conflict with WordPress'. [#4577](https://github.com/impress-org/givewp/issues/4577)
+* Fix: Resolved an error when using Stripe's Checkout feature with the Recurring Donations causing "The Stripe Gateway returned an error while creating the Checkout Session" error. [#4566](https://github.com/impress-org/givewp/issues/4566)
+* Fix: Resolved an issue with user roles that would display the "Donations" top level menu item in WP-Admin incorrectly to subscribers. Note: none of the screens would be accessible. [#4524](https://github.com/impress-org/givewp/issues/4524)
+* Fix: Solved an issue where Stripe payments with the form grid not rendering correctly when opening and closing donation forms in the popup modal window. [#4467](https://github.com/impress-org/givewp/issues/4467)
+* Fix: The "Title" field would not correctly display as optional (the asterisk would not remove) when set as optional. [#4510](https://github.com/impress-org/givewp/issues/4510)
+
 = 2.6.0: March 4th, 2020 =
 * New: The Reporting feature of GiveWP has undergone a major enhancement. Now reports display using a much improved visual charting interface with a breakdown of income, donors, top donation forms, and more. [#1525](https://github.com/impress-org/givewp/issues/1525), [#4330](https://github.com/impress-org/givewp/issues/4330)
 * New: The WP-Admin dashboard Donation Report widget for GiveWP has also undergone a major improvement. Now you can get a high-level overview of your donations for the day, week, or month from directly in you dashboard. [#4370](https://github.com/impress-org/givewp/issues/4370)
 * New: The Akismet SPAM feature has been improved with logs for admins to better understand why an email has been flagged as SPAM as well as a new Whitelist setting for them to allow email addresses to bypass the check. [#4110](https://github.com/impress-org/givewp/issues/4110)
 * Fix: Resolved an issue with the "Recalculate Income Amount and Donation Counts for a Form" not accurately recalculating when using Currency Switcher add-on. [#4447](https://github.com/impress-org/givewp/issues/4447)
 * Fix: Resolved an issue with large databases with more than 13,000 donors receiving a fatal error when viewing the donor's list screen. [#4444](https://github.com/impress-org/givewp/issues/4444)
-* Tweak: You can now activate any plugin within the GiveWP Licenses tab. This resolves an issue with "this plugin does not have a valid header" error admins were receiving. [#4443](https://github.com/impress-org/givewp/issues/4443)
-* Tweak: Updated the `[give_login]` shortcode text output to "Username or Email Address" to match WP's login. Note: you have been able to always log in using email but now the text accurately reflects that. [#4434](https://github.com/impress-org/givewp/issues/4434)
+* Tweak: You can now activate any plugin within the GiveWP Licenses tab. This resolves an issue with "this plugin does not have a valid header" error admins were receiving. [#4443](https://github.com/impress-org/givewp/issues/4443) 
+* Tweak: Updated the `[give_login]` shortcode text output to "Username or Email Address" to match WP's login. Note: you have been able to always log in using email but now the text accurately reflects that. [#4434](https://github.com/impress-org/givewp/issues/4434) 
 
 = 2.5.13: January 15th, 2020 =
 * Fix: Resolved an issue when using button mode of multiple donation buttons appearing incorrectly within shortcodes, blocks, and widgets. [#4379](https://github.com/impress-org/givewp/issues/4379)

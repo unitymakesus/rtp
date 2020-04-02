@@ -95,7 +95,7 @@ jQuery('.fl-node-<?php echo esc_attr( $id ); ?>').on( 'click' , '.uabb-slide-fac
 		style3 = self.closest('.uabb-style3');
 	if( slide_type = 'style2' ) {
 		if( ! jQuery(e.target).hasClass('uabb-slide-down') && ! jQuery(e.target).closest('.uabb-slide-down' ).length ) {
-			var dropdown_icon = style2.find('.uabb-slide-dropdown .fa'),
+			var dropdown_icon = style2.find('.uabb-slide-dropdown .fas'),
 				slidebox_wrap = style2.closest('.uabb-slide-box-wrap');
 
 			if( style2.hasClass('open-slidedown') ){
@@ -118,7 +118,7 @@ jQuery('.fl-node-<?php echo esc_attr( $id ); ?>').on( 'click' , '.uabb-slide-fac
 	if( slide_type = 'style3' ) {
 		if( ! jQuery(e.target).hasClass('uabb-slide-down') && ! jQuery(e.target).closest('.uabb-slide-down' ).length ) {
 
-			var dropdown_icon = style3.find('.uabb-slide-dropdown .fa'),
+			var dropdown_icon = style3.find('.uabb-slide-dropdown .fas'),
 				slidebox_wrap = style3.closest('.uabb-slide-box-wrap');
 
 			if( style3.hasClass('open-slidedown') ) {

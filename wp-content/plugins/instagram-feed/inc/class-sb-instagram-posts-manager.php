@@ -430,7 +430,11 @@ class SB_Instagram_Posts_Manager
 				}
 			}
 
-			$error .= '<p>' . __( 'Click <a href="https://smashballoon.com/instagram-feed/docs/errors/">here</a> to troubleshoot.', 'instagram-feed' )  . '</p>';
+			$cap = current_user_can( 'manage_instagram_feed_options' ) ? 'manage_instagram_feed_options' : 'manage_options';
+			$cap = apply_filters( 'sbi_settings_pages_capability', $cap );
+			if ( current_user_can( $cap ) ) {
+				$error .= '<p>' . __( 'Click <a href="https://smashballoon.com/instagram-feed/docs/errors/">here</a> to troubleshoot.', 'instagram-feed' )  . '</p>';
+			}
 
 			$this->add_frontend_error( 'api_delay', $error );
 

@@ -43,11 +43,8 @@ FLBuilder::register_module(
 							'type'    => 'unit',
 							'label'   => __( 'Photo Size', 'uabb' ),
 							'slider'  => array(
-								'px' => array(
-									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
-								),
+								'max'  => 1000,
+								'step' => 1,
 							),
 							'units'   => array( 'px' ),
 							'preview' => array(

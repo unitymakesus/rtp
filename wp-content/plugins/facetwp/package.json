@@ -3,8 +3,8 @@
   "devDependencies": {
     "@rollup/plugin-buble": "^0.21.1",
     "@rollup/plugin-multi-entry": "^3.0.0",
-    "rollup": "^1.31.1",
-    "rollup-plugin-terser": "^5.2.0"
+    "rollup": "^2.1.0",
+    "rollup-plugin-terser": "^5.3.0"
   },
   "scripts": {
     "build": "rollup -c",

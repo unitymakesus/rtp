@@ -2,7 +2,7 @@
 Contributors: managewp,freediver
 Tags: manage multiple sites, backup, security, migrate, performance, analytics, Manage WordPress, Managed WordPress, WordPress management, WordPress manager, WordPress management, site management, control multiple sites, WordPress management dashboard, administration, automate, automatic, comments, clone, dashboard, duplicate, google analytics, login, manage, managewp, multiple, multisite, remote, seo, spam
 Requires at least: 3.1
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/quick-guide-gplv3.html
@@ -55,6 +55,12 @@ Check out the [ManageWP promo video](https://vimeo.com/220647227).
 https://vimeo.com/220647227
 
 == Changelog ==
+
+= 4.9.6 =
+
+- Updated logic for generating archive name for File Manager tool.
+- Update tested up to version for the plugin.
+- Fix: Edge case where a backup might fail due to root WP paths.
 
 = 4.9.3 =
 

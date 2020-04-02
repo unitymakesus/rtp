@@ -32,6 +32,8 @@ var key_array = new Array();
 		this.next_arrow = settings.next_arrow;
     this.prev_arrow = settings.prev_arrow;
 
+    	_nonce = this.nodeScope.find('.uabb-woo-products').data( 'nonce' );
+
 
 		key_array.push({'id' : settings.id, 'set' : settings.module_settings});
 
@@ -117,14 +119,8 @@ var key_array = new Array();
 		small 				: '',
 
 		_initWooProducts: function(){
-			//alert();
+
 			var self = this;
-
-			//self._initCount();
-
-			// if ( 'undefined' == typeof $scope ) {
-			// 	return;
-			// }
 
 			/* Slider */
 			if ( 'carousel' === self.layout ) {
@@ -160,15 +156,6 @@ var key_array = new Array();
 			                    }
 			                ]
 			            });
-
-			   			/*console.log( self.desktop );
-			   			console.log( self.slidesToScroll );
-
-			   			slider_selector.uabbslick({
-			                dots: true,
-			                slidesToShow: self.desktop,
-			                slidesToScroll: self.slidesToScroll,
-			            });*/
 					});
 				}
 			}
@@ -321,32 +308,6 @@ var key_array = new Array();
 					}, 600);
 				}
 			};
-
-
-			/*var	ast_qv_center_modal = function() {
-
-				ast_qv_wrapper.css({
-					'width'     : '',
-					'height'    : ''
-				});
-
-				ast_qv_wrapper_w 	= ast_qv_wrapper.width(),
-				ast_qv_wrapper_h 	= ast_qv_wrapper.height();
-
-				var window_w = $(window).width(),
-					window_h = $(window).height(),
-					width    = ( ( window_w - 60 ) > ast_qv_wrapper_w ) ? ast_qv_wrapper_w : ( window_w - 60 ),
-					height   = ( ( window_h - 120 ) > ast_qv_wrapper_h ) ? ast_qv_wrapper_h : ( window_h - 120 );
-
-				ast_qv_wrapper.css({
-					'left' : (( window_w/2 ) - ( width/2 )),
-					'top' : (( window_h/2 ) - ( height/2 )),
-					'width'     : width + 'px',
-					'height'    : height + 'px'
-				});
-			};
-
-			*/
 			var uabb_update_summary_height = function( update_css ) {
 				var quick_view = uabb_qv_content,
 					img_height = quick_view.find( '.product .uabb-qv-image-slider' ).first().height(),
@@ -432,7 +393,7 @@ var key_array = new Array();
 						jQuery.ajax ({
 							url: uabb.ajax_url,
 							type:'POST',
-							data:'action=uabb_add_cart_single_product&product_id=' + product_id + '&quantity=' + quantity,
+							data:'action=uabb_add_cart_single_product&product_id=' + product_id + '&quantity=' + quantity + '&security=' + _nonce,
 
 							success:function(results) {
 								// Trigger event so themes can refresh other areas.
@@ -496,6 +457,7 @@ var key_array = new Array();
 			 */
 			style_add_to_cart.prototype.onAddToCart = function( e ) {
 
+
 				e.preventDefault();
 
 				var $thisbutton = $(this),
@@ -509,7 +471,7 @@ var key_array = new Array();
 				jQuery.ajax ({
 					url: uabb.ajax_url,
 					type:'POST',
-					data:'action=uabb_add_cart_single_product&product_id=' + product_id + '&quantity=' + quantity,
+					data:'action=uabb_add_cart_single_product&product_id=' + product_id + '&quantity=' + quantity + '&security=' + _nonce,
 
 					success:function(results) {
 						// Trigger event so themes can refresh other areas.
@@ -528,12 +490,6 @@ var key_array = new Array();
 				if ( $(button) ) {
 					$(button).removeClass( 'loading' );
 					$(button).addClass( 'added' );
-
-					// Show view cart notice.
-					/*if ( ! uabb.is_cart && $(button).parent().find( '.added_to_cart' ).length === 0  && uabb.is_single_product) {
-						$(button).after( ' <a href="' + uabb.cart_url + '" class="added_to_cart wc-forward" title="' +
-							uabb.view_cart + '">' + uabb.view_cart + '</a>' );
-					}*/
 				}
 			};
 

@@ -1,3 +1,12 @@
+Version 1.26.1 - Thursday, 26th March 2020
+- Improvement: Button - Added focus style effect to the background color, text color, and border-color
+- Improvement: FAQ - Added equal height setting for the grid style
+- Fixed: Advanced Posts - Post content border settings not working
+- Fixed: Contact Form - Message required field setting not working
+- Fixed: Retina Image - Issue with Beaver Themer when header set to sticky
+- Fixed: Slide box - Drop down icon doesn't change in style 2 settings
+- Fixed: Woo Products - Quick View add to cart button not working
+
 Version 1.26.0 - Wednesday, 11th March 2020
 - New: Introduced Caldera Form Styler
 - Improvement: Business Reviews - Added a filter to change the review date format

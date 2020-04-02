@@ -958,4 +958,28 @@ jQuery(document).ready(function($) {
         }, 500);
     });
 
+    // notices
+
+    if (jQuery('#sbi-notice-bar').length) {
+        jQuery('#wpadminbar').after(jQuery('#sbi-notice-bar'));
+        jQuery('#wpcontent').css('padding-left', 0);
+        jQuery('#wpbody').css('padding-left', '20px');
+        jQuery('#sbi-notice-bar').show();
+    }
+
+    jQuery('#sbi-notice-bar .dismiss').click(function(e) {
+        e.preventDefault();
+        jQuery('#sbi-notice-bar').remove();
+        jQuery.ajax({
+            url: sbiA.ajax_url,
+            type: 'post',
+            data: {
+                action : 'sbi_lite_dismiss',
+                sbi_nonce: sbiA.sbi_nonce
+            },
+            success: function (data) {
+            }
+        });
+    });
+
 });

@@ -7,7 +7,7 @@
 	<?php } ?>
 	<div class="fl-builder-bar-title-area">
 		<div class="fl-builder-layout-pretitle"><?php echo $pretitle; ?></div>
-		<div class="fl-builder-layout-title" title="<?php echo $title; ?>"><?php echo $title; ?></div>
+		<div class="fl-builder-layout-title" title="<?php echo esc_attr( $title ); ?>"><?php echo esc_html( $title ); ?></div>
 	</div>
 	<?php if ( ! $simple_ui ) { ?>
 	<button class="fl-builder-button fl-builder-button-silent fl-builder-bar-title-caret" title="<?php _e( 'Toggle Main Menu', 'fl-builder' ); ?>">

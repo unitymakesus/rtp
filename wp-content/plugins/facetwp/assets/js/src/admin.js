@@ -1612,6 +1612,7 @@
                     if ('search' == val || 'pager' == val) {
                         this.facet.source = '';
                     }
+                    this.facet.source_other = '';
                 },
                 'facet.ghosts': function(val) {
                     if ('no' == val) {

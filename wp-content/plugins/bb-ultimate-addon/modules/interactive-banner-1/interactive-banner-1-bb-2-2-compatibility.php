@@ -78,7 +78,10 @@ FLBuilder::register_module(
 							'type'    => 'unit',
 							'label'   => __( 'Custom Banner Height', 'uabb' ),
 							'size'    => '8',
-							'slider'  => true,
+							'slider'  => array(
+								'max'  => 1000,
+								'step' => 1,
+							),
 							'units'   => array( 'px' ),
 							'preview' => array(
 								'type'      => 'css',

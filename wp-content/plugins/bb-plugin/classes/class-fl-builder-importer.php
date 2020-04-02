@@ -239,7 +239,16 @@ class FLBuilderImportParserSimpleXML extends WXR_Parser_SimpleXML {
 
 			foreach ( $wp->postmeta as $meta ) {
 				FLBuilderImporterDataFix::set_pcre_limit( apply_filters( 'fl_builder_importer_pcre', '23001337' ) );
-				$data               = FLBuilderImporterDataFix::run( $meta->meta_value );
+
+				if ( '_fl_builder_data' == $meta->meta_key ) {
+					$data = FLBuilderImporterDataFix::run( (string) $meta->meta_value );
+					if ( is_object( $data ) || is_array( $data ) ) {
+						$data = serialize( $data );
+					}
+				} else {
+					$data = $meta->meta_value;
+				}
+
 				$post['postmeta'][] = array(
 					'key'   => (string) $meta->meta_key,
 					'value' => (string) $data,

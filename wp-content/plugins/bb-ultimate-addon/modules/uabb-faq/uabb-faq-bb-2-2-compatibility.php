@@ -71,7 +71,7 @@ FLBuilder::register_module(
 									'sections' => array( 'title_icon' ),
 								),
 								'grid'      => array(
-									'fields' => array( 'columns', 'row_gap', 'column_gap' ),
+									'fields' => array( 'columns', 'row_gap', 'column_gap', 'faq_equal_height' ),
 								),
 							),
 						),
@@ -153,6 +153,15 @@ FLBuilder::register_module(
 							'responsive' => true,
 							'slider'     => true,
 							'units'      => array( 'px' ),
+						),
+						'faq_equal_height'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Equal Height', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'no'  => __( 'No', 'uabb' ),
+								'yes' => __( 'Yes', 'uabb' ),
+							),
 						),
 						'style_background_col' => array(
 							'type'        => 'color',

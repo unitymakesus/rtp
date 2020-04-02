@@ -50,7 +50,7 @@
 		</div>
 	<?php } else { ?>
 		<div class="uabb-faq-module uabb-module-content uabb-faq__column-<?php echo esc_attr( $settings->columns ); ?> uabb-faq__column-medium-<?php echo esc_attr( $settings->columns_medium ); ?> uabb-faq__column-responsive-<?php echo esc_attr( $settings->columns_responsive ); ?> ">
-			<div class="uabb-faq-wrap uabb-faq__layout-grid">
+			<div class="uabb-faq-wrap uabb-faq__layout-grid uabb-faq-equal-<?php echo esc_attr( $settings->faq_equal_height ); ?>" >
 				<?php
 				$item_count = count( $settings->faq_items );
 				for ( $i = 0; $i < $item_count;

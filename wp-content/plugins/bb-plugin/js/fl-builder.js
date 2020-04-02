@@ -9645,7 +9645,8 @@
 		 */
 		_ajaxUrl: function(params)
 		{
-			var url     = window.location.href.split( '#' ).shift(),
+			var config  = FLBuilderConfig,
+				url     = config.shortlink,
 				param   = null;
 
 			if(typeof params !== 'undefined') {
@@ -9655,7 +9656,6 @@
 					url += param + '=' + params[param];
 				}
 			}
-
 			return url;
 		},
 

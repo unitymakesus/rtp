@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: admin, dashboard, menu, security, wpmu
 Requires at least: 4.1
-Tested up to: 5.3
-Stable tag: 1.9.3
+Tested up to: 5.4
+Stable tag: 1.9.5
 
 Lets you edit the WordPress admin menu. You can re-order, hide or rename menus, add custom menus and more. 
 
@@ -62,6 +62,17 @@ Plugins installed in the `mu-plugins` directory are treated as "always on", so y
 3. Re-ordering menu items via drag and drop
 
 == Changelog ==
+
+= 1.9.5 =
+* Fixed a conflict with Media Ace, Snax and "What's Your Reaction?" plugins where activating Admin Menu Editor would cause a number of previously hidden menu items become visible.
+* Tested up to WP 5.4.
+
+= 1.9.4 =
+* Fixed another warning about get_magic_quotes_gpc() being deprecated in PHP 7.4. This instance was missed in the previous patch.
+* Added a workaround for an issue with MailPoet 3 where some menu settings didn't work on MailPoet's admin pages.
+* Added a workaround for an issue with Extended Widget Options where the "getting started" page that's added by that plugin showed up in the menu editor even though it was supposed to be hidden.
+* Reduced the amount of space used by plugin visibility settings. This change will take effect the next time you save the settings.
+* Extended the "compress menu configuration data" feature to use ZLIB compression in addition to menu data restructuring. This greatly decreases the amount of data stored in the database, but increases decompression overhead.
 
 = 1.9.3 =
 * Fixed a warning about get_magic_quotes_gpc() being deprecated in PHP 7.4.

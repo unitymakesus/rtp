@@ -747,6 +747,19 @@ function sbi_reset_resized() {
 }
 add_action( 'wp_ajax_sbi_reset_resized', 'sbi_reset_resized' );
 
+function sbi_lite_dismiss() {
+	$nonce = isset( $_POST['sbi_nonce'] ) ? sanitize_text_field( $_POST['sbi_nonce'] ) : '';
+
+	if ( ! wp_verify_nonce( $nonce, 'sbi_nonce' ) ) {
+		die ( 'You did not do this the right way!' );
+	}
+
+	set_transient( 'instagram_feed_dismiss_lite', 'dismiss', 1 * WEEK_IN_SECONDS );
+
+	die();
+}
+add_action( 'wp_ajax_sbi_lite_dismiss', 'sbi_lite_dismiss' );
+
 function sbi_reset_log() {
 
 	delete_option( 'sb_instagram_errors' );

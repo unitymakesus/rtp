@@ -4,7 +4,7 @@ Plugin Name: True Multisite Indexer
 Plugin URI: https://rudrastyh.com/plugins/get-posts-from-all-blogs-in-multisite-network
 Description: Indexes all posts across your network and brings them into one spot – a very powerful tool that you use as a base to display posts in different ways or to manage your network.
 Author: Misha Rudrastyh
-Version: 5.4.3
+Version: 5.4.4
 Author URI: https://rudrastyh.com
 Network: true
 */
@@ -53,7 +53,7 @@ function misha_vc_element() {
 }
 
 // activate updater
-new mishaUpgrade2( 'mul470e2_9t8t', 'true-multisite-indexer', 1272, '5.4.3', TRUE_MULTISITE_INDEXER_TEXT_DOMAIN, array( 'page' => 'multisite_indexer', 'network' => true ) );
+new mishaUpgrade2( 'mul470e2_9t8t', 'true-multisite-indexer', 1272, '5.4.4', TRUE_MULTISITE_INDEXER_TEXT_DOMAIN, array( 'page' => 'multisite_indexer', 'network' => true ) );
 
 /*
  * При обновлении плагина:

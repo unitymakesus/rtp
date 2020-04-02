@@ -101,11 +101,21 @@ class FacetWP_Integration_SearchWP
      * Add engines to the search facet
      */
     function search_engines( $engines ) {
-        $settings = get_option( SEARCHWP_PREFIX . 'settings' );
 
-        foreach ( $settings['engines'] as $key => $attr ) {
-            $label = isset( $attr['searchwp_engine_label'] ) ? $attr['searchwp_engine_label'] : __( 'Default', 'fwp' );
-            $engines[ 'swp_' . $key ] = 'SearchWP - ' . $label;
+        if ( version_compare( SEARCHWP_VERSION, '4.0.0', '>=' ) ) {
+            $settings = get_option( SEARCHWP_PREFIX . 'engines' );
+
+            foreach ( $settings as $key => $info ) {
+                $engines[ 'swp_' . $key ] = 'SearchWP - ' . $info['label'];
+            }
+        }
+        else {
+            $settings = get_option( SEARCHWP_PREFIX . 'settings' );
+
+            foreach ( $settings['engines'] as $key => $info ) {
+                $label = isset( $info['searchwp_engine_label'] ) ? $info['searchwp_engine_label'] : __( 'Default', 'fwp' );
+                $engines[ 'swp_' . $key ] = 'SearchWP - ' . $label;
+            }
         }
 
         return $engines;

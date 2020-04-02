@@ -902,47 +902,78 @@
         */
         onDragHandleHover: function(e) {
 
-            if (this.drag.isDragging) {
-	            return
-            };
+			if (this.drag.isDragging) {
+				return
+			};
 
-            var originalWidth,
+            var $this = this,
+			    originalWidth,
             	$handle = $(e.target),
 				row = $handle.closest('.fl-row'),
 				node = row.data('node'),
-				settings = FLBuilderSettingsConfig.nodes[ node ],
 				form = $( '.fl-builder-row-settings[data-node=' + node + ']' ),
 				unitField = form.find( '[name=max_content_width_unit]' ),
-				unit = unitField.length ? unitField.val() : settings.max_content_width_unit;
+				unit = 'px';
 
-			this.$row = row;
-			this.$rowContent = this.$row.find('.fl-row-content');
+			$this.onSettingsReady(node, function(settings){
 
-            this.row = {
-                node: node,
-                form: form,
-				unit: unit,
-                isFixedWidth: this.$row.hasClass('fl-row-fixed-width'),
-				parentWidth: 'vw' === unit ? $( window ).width() : this.$row.parent().width(),
-            };
+				// Get unit.
+				if (unitField.length) {
+					unit =  unitField.length;
+				} else if ('undefined' !== typeof settings) {
+					unit = settings.max_content_width_unit;
+				}
 
-            this.drag = {
-                edge: null,
-                isDragging: false,
-                originalPosition: null,
-                originalWidth: null,
-                calculatedWidth: null,
-                operation: null,
-            };
+				$this.$row = row;
+				$this.$rowContent = $this.$row.find('.fl-row-content');
 
-            if (this.row.isFixedWidth) {
-                this.drag.originalWidth = this.$row.width();
-            } else {
-                this.drag.originalWidth = this.$rowContent.width();
-            }
+	            $this.row = {
+	                node: node,
+	                form: form,
+					unit: unit,
+	                isFixedWidth: $this.$row.hasClass('fl-row-fixed-width'),
+					parentWidth: 'vw' === unit ? $( window ).width() : $this.$row.parent().width(),
+	            };
 
-            this.dragInit();
+	            $this.drag = {
+	                edge: null,
+	                isDragging: false,
+	                originalPosition: null,
+	                originalWidth: null,
+	                calculatedWidth: null,
+	                operation: null,
+	            };
+
+	            if ($this.row.isFixedWidth) {
+	                $this.drag.originalWidth = $this.$row.width();
+	            } else {
+	                $this.drag.originalWidth = $this.$rowContent.width();
+	            }
+
+	            $this.dragInit();
+			});
         },
+
+		/**
+        * Check if FLBuilderSettingsConfig.node is available.
+        * @return void
+        */
+		onSettingsReady: function(nodeId, callback) {
+			var nodes = 'undefined' !== typeof FLBuilderSettingsConfig.nodes ? FLBuilderSettingsConfig.nodes : null;
+
+			if (null !== nodes && 'undefined' !== typeof nodes[ nodeId ] ) {
+				callback( nodes[ nodeId ] );
+
+				if (null != RowResize._mouseEnterTimeout) {
+					clearTimeout( RowResize._mouseEnterTimeout );
+					RowResize._mouseEnterTimeout = null;
+				}
+			} else {
+				// If settings is not yet available, check again by timeout.
+				clearTimeout( RowResize._mouseEnterTimeout );
+				RowResize._mouseEnterTimeout = setTimeout(this.onSettingsReady.bind(this), 350, nodeId, callback);
+			}
+		},
 
         /**
         * Handle mouse down on the drag handle
@@ -950,6 +981,11 @@
         */
         onDragHandleDown: function() {
             $('body').addClass( 'fl-builder-row-resizing' );
+
+			if (null != RowResize._mouseEnterTimeout) {
+				clearTimeout( RowResize._mouseEnterTimeout );
+				RowResize._mouseEnterTimeout = null;
+			}
         },
 
         /**

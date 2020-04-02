@@ -957,7 +957,7 @@ class SB_Instagram_Feed
 	public function get_the_feed_html( $settings, $atts, $feed_types_and_terms, $connected_accounts_for_feed ) {
 		global $sb_instagram_posts_manager;
 
-		if ( empty( $this->post_data ) && ! empty( $connected_accounts_for_feed ) && $settings['minnum'] < 0 ) {
+		if ( empty( $this->post_data ) && ! empty( $connected_accounts_for_feed ) && $settings['minnum'] > 0 ) {
 			$this->handle_no_posts_found( $settings, $feed_types_and_terms );
 		}
 		$posts = array_slice( $this->post_data, 0, $settings['minnum'] );
@@ -1014,7 +1014,7 @@ class SB_Instagram_Feed
 
 		$flags = array();
 
-		if ( $settings['disable_resize'] ) {
+		if ( $settings['disable_resize'] || $settings['isgutenberg'] ) {
 			$flags[] = 'resizeDisable';
 		} elseif ( $settings['favor_local'] ) {
 			$flags[] = 'favorLocal';
@@ -1114,6 +1114,9 @@ class SB_Instagram_Feed
 	 * @since 2.0/5.0
 	 */
 	public static function get_ajax_page_load_html() {
+	    if ( SB_Instagram_Blocks::is_gb_editor() ) {
+	        return '';
+        }
 		$sbi_options = sbi_get_database_settings();
 		$font_method = isset( $sbi_options['sbi_font_method'] ) ? $sbi_options['sbi_font_method'] : 'svg';
 		$upload = wp_upload_dir();
@@ -1207,8 +1210,11 @@ class SB_Instagram_Feed
 
 		$error = '<p><b>' . __( 'Error: No posts found.', 'instagram-feed' ) . '</b>';
 		$error .= '<p>' . __( 'Make sure this account has posts available on instagram.com.', 'instagram-feed' ) . '</p>';
-
-		$error .= '<p><a href="https://smashballoon.com/instagram-feed/docs/errors/">' . __( 'Click here to troubleshoot', 'instagram-feed' ) . '</a></p>';
+		$cap = current_user_can( 'manage_instagram_feed_options' ) ? 'manage_instagram_feed_options' : 'manage_options';
+		$cap = apply_filters( 'sbi_settings_pages_capability', $cap );
+		if ( current_user_can( $cap ) ) {
+			$error .= '<p><a href="https://smashballoon.com/instagram-feed/docs/errors/">' . __( 'Click here to troubleshoot', 'instagram-feed' ) . '</a></p>';
+		}
 
 		$sb_instagram_posts_manager->add_frontend_error( 'noposts', $error );
 	}

@@ -21,7 +21,13 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
         $method = 'render_' . $pager_type;
         if ( method_exists( $this, $method ) ) {
-            return $this->$method( $facet );
+            $output = $this->$method( $facet );
+
+            if ( 'numbers' == $pager_type ) {
+                $output = '<div class="facetwp-pager">' . $output . '</div>';
+            }
+
+            return $output;
         }
     }
 
@@ -70,8 +76,6 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
                 $output .= $this->render_page( $page + 1, $next_label, 'next' );
             }
         }
-
-        $output = '<div class="facetwp-pager">' . $output . '</div>';
 
         return $output;
     }

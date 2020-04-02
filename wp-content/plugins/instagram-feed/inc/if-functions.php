@@ -936,6 +936,11 @@ function sb_instagram_scripts_enqueue() {
     );
 	//Pass option to JS file
 	wp_localize_script('sb_instagram_scripts', 'sb_instagram_js_options', $data );
+
+	if ( SB_Instagram_Blocks::is_gb_editor() ) {
+		wp_enqueue_style( 'sb_instagram_styles' );
+		wp_enqueue_script( 'sb_instagram_scripts' );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'sb_instagram_scripts_enqueue', 2 );
 

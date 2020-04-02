@@ -2,8 +2,8 @@
 Contributors: smashballoon, craig-at-smash-balloon
 Tags: Instagram, Instagram feed, Instagram photos, Instagram widget, Instagram gallery
 Requires at least: 3.4
-Tested up to: 5.3
-Stable tag: 2.2.1
+Tested up to: 5.4
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ Display Instagram posts from your Instagram accounts, either in the same single 
 * Display a **beautiful header** at the top of your feed
 * Display your Instagram photos chronologically or in random order
 * Add your own Custom CSS and JavaScript for even deeper customizations
+* Handy block for easily adding your feed to posts and pages using the block editor
 
 = Benefits =
 * **Increase Social Engagement** - Increase engagement between you and your Instagram followers. Increase your number of followers by displaying your Instagram content directly on your site.
@@ -324,8 +325,15 @@ We understand that sometimes you need help, have issues or just have questions. 
 * Plus more customization options added all the time!
 
 == Changelog ==
+= 2.3 =
+* New: Added an "Instagram Feed" Gutenberg block to use in the block editor, allowing you to easily add a feed to posts and pages.
+
+= 2.2.2 =
+* Tested with upcoming WordPress 5.4 update.
+* Tweak: Language files updated to account for all new strings.
+
 = 2.2.1 =
-* Important: March 2 deadline for migrating to the new Instagram API pushed back to March 31 by Instagram.
+* Important: March 2 deadline for migrating to the new Instagram API pushed back to March 31.
 * Fix: Some links to Instagram were missing a backslash at the end of the URL causing a 301 redirect.
 * Fix: Error saving updated account information caused by emoji in account bio or in account names and MySQL tables that didn't have a UTF8mb4 character set.
 

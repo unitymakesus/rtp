@@ -260,7 +260,7 @@ class Symfony_Filesystem_Filesystem
      * @param bool   $copyOnWindows Whether to copy files if on Windows
      *
      * @throws Symfony_Filesystem_Exception_IOException When symlink fails
-     * 
+     *
      * Warning: DO NOT call this function "s y m l i n k", the whole file gets deleted by some "very advanced" antivirus checker.
      */
     public function symboliclink($originDir, $targetDir, $copyOnWindows = false)
@@ -317,14 +317,17 @@ class Symfony_Filesystem_Filesystem
         $startPathArr = explode('/', trim($startPath, '/'));
         $endPathArr   = explode('/', trim($endPath, '/'));
 
-        // Find for which directory the common path stops
         $index = 0;
-        while (isset($startPathArr[$index]) && isset($endPathArr[$index]) && $startPathArr[$index] === $endPathArr[$index]) {
-            $index++;
-        }
+        $depth = 0;
+        if ($startPath !== '/') {
+            // Find for which directory the common path stops
+            while (isset($startPathArr[$index]) && isset($endPathArr[$index]) && $startPathArr[$index] === $endPathArr[$index]) {
+                $index++;
+            }
 
-        // Determine how deep the start path is relative to the common path (ie, "web/bundles" = 2 levels)
-        $depth = count($startPathArr) - $index;
+            // Determine how deep the start path is relative to the common path (ie, "web/bundles" = 2 levels)
+            $depth = count($startPathArr) - $index;
+        }
 
         // Repeated "../" for each level need to reach the common path
         $traverser = str_repeat('../', $depth);

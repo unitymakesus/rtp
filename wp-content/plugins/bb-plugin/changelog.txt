@@ -1,3 +1,26 @@
+<h4>2.3.2.5 - 03/24/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Update Font Awesome to 5.13 to include new virus/bacteria icons see: https://fontawesome.com/changelog/latest</li>
+	<li>Fixed undefined settings JS error on row hover.</li>
+</ul>
+
+<h4>2.3.2.4 - 03/16/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fix edit link for settings JS.</li>
+</ul>
+
+<h4>2.3.2.3 - 03/16/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fixed alignment isssue of color picker X icon on Firefox.</li>
+	<li>Fixed template importer issue.</li>
+	<li>Fixed JS error in legacy settings response.</li>
+	<li>Updated license warning logic in wp-admin.</li>
+	<li>Sanitize page title in Builder UI.</li>
+</ul>
+
 <h4>2.3.2.2 - 02/20/2020</h4>
 <strong>Hot Fix</strong>
 <ul>

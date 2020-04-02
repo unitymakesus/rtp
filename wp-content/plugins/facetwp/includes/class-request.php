@@ -62,6 +62,13 @@ class FacetWP_Request
 
             $this->url_vars = apply_filters( 'facetwp_preload_url_vars', $this->url_vars );
         }
+        // Populate $_GET
+        else {
+            $data = stripslashes_deep( $_POST['data'] );
+            foreach ( $data['http_params']['get'] as $key => $val ) {
+                $_GET[ $key ] = $val;
+            }
+        }
 
         if ( $this->is_preload || 'wp' == $tpl ) {
             add_action( 'pre_get_posts', [ $this, 'sacrificial_lamb' ], 998 );

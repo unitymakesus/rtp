@@ -92,7 +92,7 @@ class SB_Instagram_API_Connect
 	 *
 	 * @since 2.0/5.0
 	 */
-	public function get_next_page() {
+	public function get_next_page( $type = '' ) {
 		if ( ! empty( $this->response['pagination']['next_url'] ) ) {
 			return $this->response['pagination']['next_url'];
 		} elseif ( ! empty( $this->response['paging']['next'] ) ) {
@@ -201,9 +201,15 @@ class SB_Instagram_API_Connect
 
 				update_option( 'sb_instagram_settings', $options );
 
-				$error = '<p><b>' . sprintf( __( 'Error: Access Token for %s is not valid or has expired.', 'instagram-feed' ), $user_name ) . ' ' . __( 'Feed will not update.', 'instagram-feed' ) . '</b>';
-				$error .= '<p>' . __( 'There\'s an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin\'s Settings page.<br />If you continue to have an issue with your Access Token then please see <a href="https://smashballoon.com/my-instagram-access-token-keep-expiring/" target="_blank" rel="noopener">this FAQ</a> for more information.', 'instagram-feed' );
+				$error = '<p><b>' . sprintf( __( 'Error: Access Token for %s is not valid or has expired.', 'instagram-feed' ), $user_name ) . ' ' . __( 'Feed will not update.', 'instagram-feed' ) . '</b></p>';
 
+				$error .= '<p>' . __( 'There\'s an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin\'s Settings page.<br />', 'instagram-feed' );
+				$cap = current_user_can( 'manage_instagram_feed_options' ) ? 'manage_instagram_feed_options' : 'manage_options';
+				$cap = apply_filters( 'sbi_settings_pages_capability', $cap );
+				if ( current_user_can( $cap ) ) {
+					$error .= __( 'If you continue to have an issue with your Access Token then please see <a href="https://smashballoon.com/my-instagram-access-token-keep-expiring/" target="_blank" rel="noopener">this FAQ</a> for more information.', 'instagram-feed' );
+				}
+				$error .= '</p>';
 				$sb_instagram_posts_manager->add_frontend_error( 'at_' . $user_name, $error );
 
 				$error_time = 3600;

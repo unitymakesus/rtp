@@ -668,40 +668,37 @@ if ( 'yes' === $settings->show_meta ) {
 }
 
 <?php
-
-if ( 'grid' === $settings->is_carousel ) {
-
-	if ( ! $version_bb_check ) {
-		$settings->content_border_color = UABB_Helper::uabb_colorpicker( $settings, 'content_border_color', true );
-		?>
-		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-shadow {
-		<?php
-		if ( isset( $settings->content_border_type ) ) {
-			echo ( '' !== $settings->content_border_type ) ? 'border-style:' . esc_attr( $settings->content_border_type ) . ';' : '';
-		}
-		if ( isset( $settings->content_border_width ) ) {
-			echo ( '' !== $settings->content_border_width ) ? 'border-width:' . esc_attr( $settings->content_border_width ) . 'px;' : '';
-		}
-		if ( isset( $settings->content_border_radius ) ) {
-			echo ( '' !== $settings->content_border_radius ) ? 'border-radius:' . esc_attr( $settings->content_border_radius ) . 'px;' : '';
-		}
-		if ( isset( $settings->content_border_color ) ) {
-			echo ( '' !== $settings->content_border_color ) ? 'border-color:' . esc_attr( $settings->content_border_color ) . ';' : '';
-		}
-		?>
-		}
-		<?php
-	} else {
-		if ( class_exists( 'FLBuilderCSS' ) ) {
-			// Border - Settings.
-			FLBuilderCSS::border_field_rule(
-				array(
-					'settings'     => $settings,
-					'setting_name' => 'content_border',
-					'selector'     => ".fl-node-$id .uabb-blog-posts-shadow",
-				)
-			);
-		}
+if ( ! $version_bb_check ) {
+	$settings->content_border_color = UABB_Helper::uabb_colorpicker( $settings, 'content_border_color', true );
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-shadow,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .uabb-blog-posts-shadow {
+	<?php
+	if ( isset( $settings->content_border_type ) ) {
+		echo ( '' !== $settings->content_border_type ) ? 'border-style:' . esc_attr( $settings->content_border_type ) . ';' : '';
+	}
+	if ( isset( $settings->content_border_width ) ) {
+		echo ( '' !== $settings->content_border_width ) ? 'border-width:' . esc_attr( $settings->content_border_width ) . 'px;' : '';
+	}
+	if ( isset( $settings->content_border_radius ) ) {
+		echo ( '' !== $settings->content_border_radius ) ? 'border-radius:' . esc_attr( $settings->content_border_radius ) . 'px;' : '';
+	}
+	if ( isset( $settings->content_border_color ) ) {
+		echo ( '' !== $settings->content_border_color ) ? 'border-color:' . esc_attr( $settings->content_border_color ) . ';' : '';
+	}
+	?>
+	}
+	<?php
+} else {
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		// Border - Settings.
+		FLBuilderCSS::border_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'content_border',
+				'selector'     => ".fl-node-$id .uabb-blog-posts-shadow,.fl-node-$id .uabb-blog-posts .uabb-blog-posts-shadow",
+			)
+		);
 	}
 }
 ?>

@@ -491,14 +491,17 @@ function mmb_upload_file_action($params)
     }
 
     fclose($file);
-    $result = array(
+    $isWritable = is_writable($filePath);
+    $result     = array(
         'pathName'    => $filePath,
         'fileName'    => basename($filePath),
         'date'        => filemtime($filePath),
         'permissions' => substr(sprintf('%o', fileperms($filePath)), -4),
         'fileType'    => pathinfo($filePath, PATHINFO_EXTENSION),
         'fileSize'    => filesize($filePath),
-        'hasSubDir'   => false
+        'hasSubDir'   => false,
+        'writable'    => $isWritable,
+        'editable'    => $isWritable
     );
 
     mmb_response(array('message' => $transactions['upload_success'], 'ok' => true, 'result' => $result), true);

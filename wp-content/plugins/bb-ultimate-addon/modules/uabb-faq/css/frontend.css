@@ -54,6 +54,12 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.uabb__faq-layout-grid .uabb-faq-equal-yes .uabb-faq-item-wrap {
+    height:100%;
+}
+.uabb__faq-layout-grid .uabb-faq-equal-yes .uabb-faq-content {
+    height:100%;
+}
 .uabb-faq__column-1 .uabb-faq-item {
     width: 100%;
 }

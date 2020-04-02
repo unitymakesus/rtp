@@ -333,6 +333,8 @@ class MMB_Stats extends MMB_Core
 
         mwp_logger()->debug('Finished encrypting cookies...');
 
+        $absPath = trailingslashit(ABSPATH); // This will prevent 2 backslash when WP in root
+
         $stats['admin_usernames'] = $this->getUserList();
         $stats['site_title']      = get_bloginfo('name');
         $stats['site_tagline']    = get_bloginfo('description');
@@ -344,33 +346,49 @@ class MMB_Stats extends MMB_Core
         $stats['db_name']         = $this->get_active_db();
         $stats['db_prefix']       = $wpdb->prefix;
         $stats['content_path']    = WP_CONTENT_DIR;
-        $stats['absolute_path']   = ABSPATH;
+        $stats['absolute_path']   = $absPath;
         $stats['worker_path']     = $mmb_plugin_dir;
         $stats['site_home']       = get_option('home');
 
         $fs = new Symfony_Filesystem_Filesystem();
         if (defined('WP_CONTENT_DIR')) {
             $contentDir = WP_CONTENT_DIR;
+            // This will prevent 2 backslash when WP in root
+            if (substr($contentDir, 0, 2) === '//') {
+                $contentDir            = substr(WP_CONTENT_DIR, 1);
+                $stats['content_path'] = $contentDir;
+            }
+
             if (substr($contentDir, 0, 1) != '/' && strpos($contentDir, ABSPATH) === false) {
                 $contentDir = ABSPATH.$contentDir;
             }
-            $stats['content_relative_path'] = $fs->makePathRelative($contentDir, ABSPATH);
+            $stats['content_relative_path'] = $fs->makePathRelative($contentDir, $absPath);
         }
 
         if (defined('WP_PLUGIN_DIR')) {
             $pluginDir = WP_PLUGIN_DIR;
+            // This will prevent 2 backslash when WP in root
+            if (substr($pluginDir, 0, 2) === '//') {
+                $pluginDir = substr(WP_PLUGIN_DIR, 1);
+            }
+
             if (substr($pluginDir, 0, 1) != '/' && strpos($pluginDir, ABSPATH) === false) {
                 $pluginDir = ABSPATH.$pluginDir;
             }
-            $stats['plugin_relative_path'] = $fs->makePathRelative($pluginDir, ABSPATH);
+            $stats['plugin_relative_path'] = $fs->makePathRelative($pluginDir, $absPath);
         }
 
         if (defined('WPMU_PLUGIN_DIR')) {
             $muPluginDir = WPMU_PLUGIN_DIR;
+            // This will prevent 2 backslash when WP in root
+            if (substr($muPluginDir, 0, 2) === '//') {
+                $muPluginDir = substr(WPMU_PLUGIN_DIR, 1);
+            }
+
             if (substr($muPluginDir, 0, 1) != '/' && strpos($muPluginDir, ABSPATH) === false) {
                 $muPluginDir = ABSPATH.$muPluginDir;
             }
-            $stats['mu_plugin_relative_path'] = $fs->makePathRelative($muPluginDir, ABSPATH);
+            $stats['mu_plugin_relative_path'] = $fs->makePathRelative($muPluginDir, $absPath);
         }
 
         $uploadDirArray = wp_upload_dir();
@@ -378,7 +396,7 @@ class MMB_Stats extends MMB_Core
             $uploadDir = $uploadDirArray['basedir'];
         }
 
-        $stats['uploads_relative_path'] = $fs->makePathRelative($uploadDir, ABSPATH);
+        $stats['uploads_relative_path'] = $fs->makePathRelative($uploadDir, $absPath);
 
         $stats['writable']  = $this->is_server_writable();
         $stats['fs_method'] = !$this->check_if_pantheon() ? get_filesystem_method() : '';

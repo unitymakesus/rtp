@@ -23,17 +23,19 @@ class FacetWP_Upgrade
     private function clean_install() {
         global $wpdb;
 
+        $int = apply_filters( 'facetwp_use_bigint', false ) ? 'BIGINT' : 'INT';
+
         $sql = "
         CREATE TABLE IF NOT EXISTS {$wpdb->prefix}facetwp_index (
             id BIGINT unsigned not null auto_increment,
-            post_id INT unsigned,
+            post_id $int unsigned,
             facet_name VARCHAR(50),
             facet_value VARCHAR(50),
             facet_display_value VARCHAR(200),
-            term_id INT unsigned default '0',
-            parent_id INT unsigned default '0',
+            term_id $int unsigned default '0',
+            parent_id $int unsigned default '0',
             depth INT unsigned default '0',
-            variation_id INT unsigned default '0',
+            variation_id $int unsigned default '0',
             PRIMARY KEY (id),
             INDEX post_id_idx (post_id),
             INDEX facet_name_idx (facet_name),
@@ -50,9 +52,11 @@ class FacetWP_Upgrade
     private function run_upgrade() {
         global $wpdb;
 
+        $table = $wpdb->prefix . 'facetwp_index';
+
         if ( version_compare( $this->last_version, '1.9', '<' ) ) {
-            $wpdb->query( "ALTER TABLE {$wpdb->prefix}facetwp_index ADD COLUMN term_id INT unsigned default '0' AFTER facet_display_value" );
-            $wpdb->query( "UPDATE {$wpdb->prefix}facetwp_index SET term_id = facet_value WHERE LEFT(facet_source, 4) = 'tax/'" );
+            $wpdb->query( "ALTER TABLE $table ADD COLUMN term_id INT unsigned default '0' AFTER facet_display_value" );
+            $wpdb->query( "UPDATE $table SET term_id = facet_value WHERE LEFT(facet_source, 4) = 'tax/'" );
         }
 
         if ( version_compare( $this->last_version, '2.2.3', '<' ) ) {
@@ -61,20 +65,20 @@ class FacetWP_Upgrade
         }
 
         if ( version_compare( $this->last_version, '2.7', '<' ) ) {
-            $wpdb->query( "ALTER TABLE {$wpdb->prefix}facetwp_index ADD COLUMN variation_id INT unsigned default '0' AFTER depth" );
+            $wpdb->query( "ALTER TABLE $table ADD COLUMN variation_id INT unsigned default '0' AFTER depth" );
         }
 
         if ( version_compare( $this->last_version, '3.1.0', '<' ) ) {
-            $wpdb->query( "ALTER TABLE {$wpdb->prefix}facetwp_index MODIFY facet_name VARCHAR(50)" );
-            $wpdb->query( "ALTER TABLE {$wpdb->prefix}facetwp_index MODIFY facet_value VARCHAR(50)" );
-            $wpdb->query( "ALTER TABLE {$wpdb->prefix}facetwp_index MODIFY facet_display_value VARCHAR(200)" );
-            $wpdb->query( "CREATE INDEX facet_name_value_idx ON {$wpdb->prefix}facetwp_index (facet_name, facet_value)" );
+            $wpdb->query( "ALTER TABLE $table MODIFY facet_name VARCHAR(50)" );
+            $wpdb->query( "ALTER TABLE $table MODIFY facet_value VARCHAR(50)" );
+            $wpdb->query( "ALTER TABLE $table MODIFY facet_display_value VARCHAR(200)" );
+            $wpdb->query( "CREATE INDEX facet_name_value_idx ON $table (facet_name, facet_value)" );
         }
 
         if ( version_compare( $this->last_version, '3.3.2', '<' ) ) {
-            $wpdb->query( "CREATE INDEX post_id_idx ON {$wpdb->prefix}facetwp_index (post_id)" );
-            $wpdb->query( "DROP INDEX facet_source_idx ON {$wpdb->prefix}facetwp_index" );
-            $wpdb->query( "ALTER TABLE {$wpdb->prefix}facetwp_index DROP COLUMN facet_source" );
+            $wpdb->query( "CREATE INDEX post_id_idx ON $table (post_id)" );
+            $wpdb->query( "DROP INDEX facet_source_idx ON $table" );
+            $wpdb->query( "ALTER TABLE $table DROP COLUMN facet_source" );
         }
 
         if ( version_compare( $this->last_version, '3.3.3', '<' ) ) {

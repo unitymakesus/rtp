@@ -415,7 +415,17 @@ function sb_instagram_settings_page() {
 
 
 	<div id="sbi_admin" class="wrap">
+        <?php
+        $lite_notice_dismissed = get_transient( 'instagram_feed_dismiss_lite' );
 
+        if ( ! $lite_notice_dismissed ) :
+        ?>
+        <div id="sbi-notice-bar" style="display:none">
+            <span class="sbi-notice-bar-message"><?php _e( 'You\'re using Instagram Feed Lite. To unlock more features consider <a href="https://smashballoon.com/instagram-feed/?utm_source=WordPress&utm_campaign=instagramliteplugin&utm_medium=notice-bar" target="_blank" rel="noopener noreferrer">upgrading to Pro</a>.', 'instagram-feed'); ?></span>
+            <button type="button" class="dismiss" title="<?php _e( 'Dismiss this message.', 'instagram-feed'); ?>" data-page="overview">
+            </button>
+        </div>
+        <?php endif; ?>
 		<div id="header">
 			<h1><?php _e( 'Instagram Feed', 'instagram-feed' ); ?></h1>
 		</div>

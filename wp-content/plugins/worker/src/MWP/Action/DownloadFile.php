@@ -46,7 +46,9 @@ class MWP_Action_DownloadFile extends MWP_Action_Abstract
             fclose($indexPHP);
         }
 
-        $zipName = $filePath.time().".zip";
+        $randomString = mwp_generate_uuid4();
+
+        $zipName = $filePath.$randomString.".zip";
         if (!class_exists('ZipArchive')) {
             $escapedFiles = array();
             foreach ($files as $file) {

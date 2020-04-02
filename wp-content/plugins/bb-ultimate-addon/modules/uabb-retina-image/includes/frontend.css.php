@@ -25,7 +25,7 @@
 ?>
 
 <?php if ( ! $version_bb_check ) { ?>
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img-content .uabb-retina-img {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-retina-img {
 		<?php
 		if ( isset( $settings->photo_size ) ) {
 			echo ( '' !== $settings->photo_size ) ? 'width:' . esc_attr( $settings->photo_size ) . 'px;' : '';
@@ -38,7 +38,7 @@
 		array(
 			'settings'     => $settings,
 			'setting_name' => 'photo_size',
-			'selector'     => ".fl-node-$id .uabb-retina-img-content .uabb-retina-img",
+			'selector'     => ".fl-node-$id .uabb-retina-img",
 			'prop'         => 'width',
 		)
 	);

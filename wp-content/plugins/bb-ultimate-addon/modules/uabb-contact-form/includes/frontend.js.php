@@ -20,6 +20,7 @@
 			subject_required: "<?php echo esc_attr( $settings->subject_required ); ?>",
 			phone_required: "<?php echo esc_attr( $settings->phone_required ); ?>",
 			msg_required: "<?php echo esc_attr( $settings->msg_required ); ?>",
+			msg_toggle: "<?php echo esc_attr( $settings->msg_toggle ); ?>",
 			button_text: "<?php echo esc_attr( $settings->btn_text ); ?>"
 		});
 	});

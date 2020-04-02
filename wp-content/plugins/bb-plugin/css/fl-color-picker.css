@@ -257,6 +257,7 @@
 	background-color: #E7EBEF !important;
 	border-color:transparent;
 	cursor: pointer;
+	align-items: center;
 }
 .fl-color-picker-clear:hover {
 	fill: #6B6E75;
