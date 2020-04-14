@@ -44,7 +44,12 @@ if ( ! class_exists( 'GHU_Core' ) ) {
          */
         function get_github_updates() {
             $output = [];
+
+            // bust the cache to make sure the "GitHub URI" header is included
+            wp_cache_delete( 'plugins', 'plugins' );
+
             $plugins = get_plugins();
+
             foreach ( $plugins as $plugin_path => $info ) {
                 if ( isset( $this->active_plugins[ $plugin_path ] ) && ! empty( $info['GitHub URI'] ) ) {
                     $temp = [

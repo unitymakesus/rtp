@@ -5,15 +5,24 @@ $roles = get_editable_roles();
 	<td class="feature-input"><span class="feature-input"></span></td>
 	<td>
 		<p>
-			<label><?php echo esc_html__( 'Whitelisted Roles', PPW_Constants::DOMAIN ) ?></label>
-			<?php echo _e( 'Select user roles who can access all protected content without having to enter passwords.<em> Available in Pro version only.</em>', PPW_Constants::DOMAIN ) ?>
+			<label>
+				<?php echo esc_html__( 'Whitelisted Roles', PPW_Constants::DOMAIN ) ?>
+				<span class="ppwp_upgrade_advice">
+					<a rel="noopener" target="_blank" href="http://bit.ly/ppwp-lsb-pro">
+						<span class="dashicons dashicons-lock">
+							<span class="ppwp_upgrade_tooltip"><?php echo esc_html__( 'Available in Pro version only', PPW_Constants::DOMAIN ) ?></span>
+						</span>
+					</a>
+				</span>
+			</label>
+			<?php echo _e( 'Select user roles who can access all protected content without having to enter passwords.', PPW_Constants::DOMAIN ) ?>
 		</p>
 		<select id="wpp_free_whitelist_roles">
 			<option value="blank"><?php echo esc_html__( 'No one', PPW_Constants::DOMAIN ) ?></option>
-			<option value="admin_users"><?php echo esc_html__( 'Admin users', PPW_Constants::DOMAIN ) ?></option>
-			<option value="author"><?php echo esc_html__( 'The post\'s author', PPW_Constants::DOMAIN ) ?></option>
-			<option value="logged_users"><?php echo esc_html__( 'Logged-in users', PPW_Constants::DOMAIN ) ?></option>
-			<option value="custom_roles"><?php echo esc_html__( 'Choose custom roles', PPW_Constants::DOMAIN ) ?></option>
+			<option disabled value="admin_users"><?php echo esc_html__( 'Admin users', PPW_Constants::DOMAIN ) ?></option>
+			<option disabled value="author"><?php echo esc_html__( 'The post\'s author', PPW_Constants::DOMAIN ) ?></option>
+			<option disabled value="logged_users"><?php echo esc_html__( 'Logged-in users', PPW_Constants::DOMAIN ) ?></option>
+			<option disabled value="custom_roles"><?php echo esc_html__( 'Choose custom roles', PPW_Constants::DOMAIN ) ?></option>
 		</select>
 	</td>
 </tr>

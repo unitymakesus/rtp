@@ -703,11 +703,11 @@ class UABBAdvancedAccordionModule extends FLBuilderModule {
 		if ( $pos === $this->settings->icon_position && ( '' !== $this->settings->open_icon || '' !== $this->settings->close_icon ) ) {
 
 			if ( 'none' === $this->settings->icon_animation ) {
-				$output  = '<div class="uabb-adv-accordion-icon-wrap">';
+				$output  = '<div class="uabb-adv-accordion-icon-wrap" tabindex="0" >';
 				$output .= '<i class="uabb-adv-accordion-button-icon ' . $this->settings->close_icon . '"></i>';
 				$output .= '</div>';
 			} else {
-				$output  = '<div class="uabb-adv-accordion-icon-wrap uabb-adv-' . $this->settings->icon_animation . '">';
+				$output  = '<div class="uabb-adv-accordion-icon-wrap uabb-adv-' . $this->settings->icon_animation . '" tabindex="0" >';
 				$output .= '<div class="uabb-adv-accordion-icon-animation">';
 
 				if ( 'push-out-top' === $this->settings->icon_animation || 'push-out-left' === $this->settings->icon_animation ) {

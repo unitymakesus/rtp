@@ -34,8 +34,8 @@
 					'https://passwordprotectwp.com/customize-password-form-wordpress-customizer/'
 				);
 				$link_customizer    = sprintf(
-					'<a rel="noopener" href="%s">WordPress Customizer</a>',
-					'customize.php'
+					'<a target="_blank" rel="noopener" href="%s">WordPress Customizer</a>',
+					'customize.php?autofocus[panel]=ppwp'
 				);
 				$form_message       = sprintf(
 					// translators: %s: Link to documentation.

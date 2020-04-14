@@ -97,14 +97,16 @@ jQuery(document).ready(function( $ ) {
 	jQuery('.uabb-reload-icons').on('click', function() {
 
 		jQuery(this).find('i').addClass('uabb-reloading-iconfonts');
+		var _nonce = jQuery('#uabb-icons-form').data('nonce');
 
 		var data = {
-			'action': 'uabb_reload_icons'
+			'action': 'uabb_reload_icons',
+			'security' : _nonce
 		};
 
 		//	Reloading IconFonts
 		jQuery.post( uabb.ajax_url, data, function(response) {
-			if( response == 'success' ) {
+			if( response.success ) {
 				console.log('Reloading: ');
 				location.reload(true);
 			}

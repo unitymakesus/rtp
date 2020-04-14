@@ -105,6 +105,17 @@ if ( ! class_exists( 'PPW_Asset_Services' ) ) {
 		}
 
 		/**
+		 * Render css and js for troubleshoot tab
+		 */
+		public function load_assets_for_troubleshoot_tab() {
+			$module = PPW_Constants::TROUBLESHOOT_SETTINGS_MODULE;
+			if ( PPW_Constants::MENU_NAME === $this->page && ( $module === $this->tab || null === $this->tab ) ) {
+				$this->load_bundle_css( PPW_VERSION );
+				$this->load_js( $module, PPW_VERSION );
+			}
+		}
+
+		/**
 		 * Load asserts for meta-box.
 		 */
 		public function load_assets_for_meta_box() {

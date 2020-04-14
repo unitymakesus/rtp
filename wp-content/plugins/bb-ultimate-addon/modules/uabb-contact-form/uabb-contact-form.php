@@ -1101,7 +1101,7 @@ if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 $current_url = 'http://' . $host . strtok( $_SERVER['REQUEST_URI'], '?' );
 
 $default_template = sprintf(
-	/* translators: %1$s: search term, translators: %2$s: search term */ __(
+	/* translators: %1$s: search term, translators: %2$s: search term */    __(
 		'<strong>From:</strong> [NAME]
 <strong>Email:</strong> [EMAIL]
 <strong>Subject:</strong> [SUBJECT]

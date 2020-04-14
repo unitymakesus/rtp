@@ -22,6 +22,9 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
         $facet_parent_id = 0;
         $output = [];
 
+        $label_any = empty( $facet['label_any'] ) ? __( 'Any', 'fwp-front' ) : $facet['label_any'];
+        $label_any = facetwp_i18n( $label_any );
+
         // Orderby
         $orderby = $this->get_orderby( $facet );
 
@@ -64,7 +67,7 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
             $output[] = [
                 'facet_value'           => '',
-                'facet_display_value'   => __( 'Any', 'fwp-front' ),
+                'facet_display_value'   => $label_any,
                 'depth'                 => 0,
                 'counter'               => 1,
             ];
@@ -183,6 +186,20 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
      */
     function settings_html() {
 ?>
+        <div class="facetwp-row">
+            <div>
+                <?php _e( 'Default label', 'fwp' ); ?>:
+                <div class="facetwp-tooltip">
+                    <span class="icon-question">?</span>
+                    <div class="facetwp-tooltip-content">
+                        Customize the "Any" label
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="text" class="facet-label-any" value="<?php _e( 'Any', 'fwp' ); ?>" />
+            </div>
+        </div>
         <div class="facetwp-row">
             <div><?php _e( 'Sort by', 'fwp' ); ?>:</div>
             <div>

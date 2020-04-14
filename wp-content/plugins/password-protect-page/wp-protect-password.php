@@ -9,16 +9,16 @@
  * that starts the plugin.
  *
  * @link              https://passwordprotectwp.com?utm_source=user-website&utm_medium=pluginsite_link&utm_campaign=ppwp
- * @since             1.4.2
+ * @since             1.4.3.2
  * @package           Password_Protect_Page
  *
  * @wordpress-plugin
  * Plugin Name:       Password Protect WordPress Lite
- * Plugin URI:        https://passwordprotectwp.com?utm_source=user-website&utm_medium=pluginsite_link&utm_campaign=ppwp
+ * Plugin URI:        https://passwordprotectwp.com?utm_source=user-website&utm_medium=pluginsite_link&utm_campaign=ppwp_lite
  * Description:       Password protect the entire WordPress site, unlimited pages and posts by user roles. This plugin is required for our Pro version to work properly.
- * Version:           1.4.2
+ * Version:           1.4.3.2
  * Author:            BWPS
- * Author URI:        https://passwordprotectwp.com.com?utm_source=user-website&utm_medium=pluginsite_link&utm_campaign=ppwp
+ * Author URI:        https://passwordprotectwp.com?utm_source=user-website&utm_medium=author_link&utm_campaign=ppwp_lite
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       password-protect-page
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.1.2 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PPW_VERSION', '1.4.2' );
+define( 'PPW_VERSION', '1.4.3.2' );
 
 if ( ! defined( 'PPW_DIR_PATH' ) ) {
 	define( 'PPW_DIR_PATH', plugin_dir_path( __FILE__ ) );

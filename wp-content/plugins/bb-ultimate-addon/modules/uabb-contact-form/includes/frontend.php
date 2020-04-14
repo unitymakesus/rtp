@@ -101,7 +101,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 		<label for="uabb-name"><?php echo $settings->name_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="uabb-form-outter">
-			<input type="text" name="uabb-name" value=""
+			<input aria-label="text" type="text" name="uabb-name" value=""
 			<?php
 			if ( 'yes' === $settings->enable_placeholder ) {
 				?>
@@ -117,7 +117,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 		<label for="uabb-email"><?php echo $settings->email_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="uabb-form-outter">
-			<input type="email" name="uabb-email" value=""
+			<input aria-label="email" type="email" name="uabb-email" value=""
 			<?php
 			if ( 'yes' === $settings->enable_placeholder ) {
 				?>
@@ -133,7 +133,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 		<label for="uabb-subject"><?php echo $settings->subject_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="uabb-form-outter">
-			<input type="text" name="uabb-subject" value=""
+			<input aria-label="text" type="text" name="uabb-subject" value=""
 			<?php
 			if ( 'yes' === $settings->enable_placeholder ) {
 				?>
@@ -150,7 +150,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 		<label for="uabb-phone"><?php echo $settings->phone_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="uabb-form-outter">
-			<input type="tel" name="uabb-phone" value=""
+			<input aria-label="tel" type="tel" name="uabb-phone" value=""
 			<?php
 			if ( 'yes' === $settings->enable_placeholder ) {
 				?>
@@ -166,7 +166,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 		<label for="uabb-message"><?php echo $settings->msg_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 		<?php } ?>
 		<div class="uabb-form-outter-textarea">
-			<textarea name="uabb-message"
+			<textarea aria-label="uabb-message" name="uabb-message"
 			<?php
 			if ( 'yes' === $settings->enable_placeholder ) {
 				?>
@@ -183,7 +183,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 			<?php endif; ?>
 			<div class="uabb-form-outter">
 				<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>">
-					<input type="checkbox" class="checkbox-inline" id="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>" name="uabb-terms-checkbox" value="1" />
+					<input aria-label="checkbox" type="checkbox" class="checkbox-inline" id="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>" name="uabb-terms-checkbox" value="1" />
 					<span class="checkbox-label">
 						<?php echo $settings->terms_checkbox_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					</span>
@@ -221,7 +221,7 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 		</div>
 	</div>
 	<?php if ( 'redirect' === $settings->success_action ) : ?>
-		<input type="text" value="<?php echo $settings->success_url; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" style="display: none;" class="uabb-success-url">
+		<input aria-label="text" type="text" value="<?php echo $settings->success_url; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" style="display: none;" class="uabb-success-url">
 	<?php elseif ( 'none' === $settings->success_action ) : ?>
 		<span class="uabb-success-none" style="display:none;"><?php echo $settings->email_sccess; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<?php endif; ?>

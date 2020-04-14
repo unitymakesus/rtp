@@ -625,7 +625,7 @@ class SB_Instagram_Feed
 							$new_post_sets[] = $post_set;
 						}
 
-						$next_page = $connection->get_next_page();
+						$next_page = $connection->get_next_page( $type );
 						if ( ! empty( $next_page ) ) {
 							$next_pages[ $term . '_' . $type ] = $next_page;
 							$next_page_found = true;
@@ -666,8 +666,7 @@ class SB_Instagram_Feed
 											$post_set = $this->filter_posts( $data, $settings );
 											$new_post_sets[] = $post_set;
 										}
-										$next_page = $connection->get_next_page();
-										if ( ! empty( $next_page ) ) {
+										$next_page = $connection->get_next_page( $type );										if ( ! empty( $next_page ) ) {
 											$next_pages[ $term . '_' . $type ] = $next_page;
 											$next_page_found = true;
 										} else {
@@ -768,7 +767,7 @@ class SB_Instagram_Feed
 		$this->header_data = false;
 		global $sb_instagram_posts_manager;
 
-		$api_requests_delayed = $sb_instagram_posts_manager->are_current_api_request_delays( $connected_accounts_for_feed[ $first_user ]['user_id'] );
+		$api_requests_delayed = isset( $connected_accounts_for_feed[ $first_user ]['user_id'] ) ? $sb_instagram_posts_manager->are_current_api_request_delays( $connected_accounts_for_feed[ $first_user ]['user_id'] ) : $sb_instagram_posts_manager->are_current_api_request_delays();
 
 		if ( isset( $connected_accounts_for_feed[ $first_user ] ) && ! $api_requests_delayed ) {
 			$connection = new SB_Instagram_API_Connect( $connected_accounts_for_feed[ $first_user ], 'header', array() );
@@ -904,9 +903,9 @@ class SB_Instagram_Feed
 	 * @since 2.0/5.0
 	 */
 	public function should_use_pagination( $settings, $offset = 0 ) {
-	    if ( $settings['minnum'] < 1 ) {
-	        return false;
-        }
+		if ( $settings['minnum'] < 1 ) {
+			return false;
+		}
 		$posts_available = count( $this->post_data ) - ($offset + $settings['num']);
 		$show_loadmore_button_by_settings = ($settings['showbutton'] == 'on' || $settings['showbutton'] == 'true' || $settings['showbutton'] == true ) && $settings['showbutton'] !== 'false';
 
@@ -1034,11 +1033,6 @@ class SB_Instagram_Feed
 
 		if ( $sb_instagram_posts_manager->maybe_start_ajax_test() && ! $ajax_test_status['successful'] ) {
 			$flags[] = 'testAjax';
-		} elseif ( $sb_instagram_posts_manager->should_add_ajax_test_notice() ) {
-			$error = '<p><b>' . __( 'Error: admin-ajax.php test was not successful. Some features may not be available.', 'instagram-feed' ) . '</b>';
-			$error .= '<p>' . __( sprintf( 'Please visit %s to troubleshoot.', '<a href="https://smashballoon.com/admin-ajax-requests-are-not-working/">'.__( 'this page', 'instagram-feed' ).'</a>' ), 'instagram-feed' ) . '</p>';
-
-			$sb_instagram_posts_manager->add_frontend_error( 'ajax', $error );
 		}
 
 		if ( ! empty( $flags ) ) {
@@ -1114,9 +1108,9 @@ class SB_Instagram_Feed
 	 * @since 2.0/5.0
 	 */
 	public static function get_ajax_page_load_html() {
-	    if ( SB_Instagram_Blocks::is_gb_editor() ) {
-	        return '';
-        }
+		if ( SB_Instagram_Blocks::is_gb_editor() ) {
+			return '';
+		}
 		$sbi_options = sbi_get_database_settings();
 		$font_method = isset( $sbi_options['sbi_font_method'] ) ? $sbi_options['sbi_font_method'] : 'svg';
 		$upload = wp_upload_dir();
@@ -1351,6 +1345,12 @@ class SB_Instagram_Feed
 			} else {
 				$merged_posts = isset( $post_sets[0] ) ? $post_sets[0] : array();
 			}
+		} elseif ( $settings['sortby'] === 'api' ) {
+			if ( isset( $post_sets[0] ) ) {
+				foreach ( $post_sets as $post_set ) {
+					$merged_posts = array_merge( $merged_posts, $post_set );
+				}
+			}
 		} else {
 			// don't bother merging posts if there is only one post set
 			if ( isset( $post_sets[1] ) ) {
@@ -1387,7 +1387,7 @@ class SB_Instagram_Feed
 		}
 
 		// sorting done with "merge_posts" to be more efficient
-		if ( $settings['sortby'] === 'alternate' ) {
+		if ( $settings['sortby'] === 'alternate' || $settings['sortby'] === 'api' ) {
 			$return_post_set = $post_set;
 		} elseif ( $settings['sortby'] === 'random' ) {
 			/*

@@ -15,7 +15,7 @@ $btn_label      = _x( 'Login', PPW_Constants::CONTEXT_SITEWIDE_PASSWORD_FORM, 'p
 </head>
 <div class="pda-form-login ppw-swp-form-container">
 	<h1>
-		<a class="ppw-swp-logo">Password Protect WordPress plugin</a>
+		<a title="<?php echo esc_attr__( 'This site is password protected by PPWP plugin', 'password-protect-page') ?>" class="ppw-swp-logo">Password Protect WordPress plugin</a>
 	</h1>
 	<form class="ppw-swp-form" action="?action=ppw_postpass" method="post">
 		<label for=""><?php echo $password_label ?></label>

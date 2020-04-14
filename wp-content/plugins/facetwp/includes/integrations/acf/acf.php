@@ -10,6 +10,7 @@ class FacetWP_Integration_ACF
 
     function __construct() {
         add_filter( 'facetwp_facet_sources', [ $this, 'facet_sources' ] );
+        add_filter( 'facetwp_facet_orderby', [ $this, 'facet_orderby' ], 10, 2 );
         add_filter( 'facetwp_indexer_query_args', [ $this, 'lookup_acf_fields' ] );
         add_filter( 'facetwp_indexer_post_facet', [ $this, 'index_acf_values' ], 1, 2 );
         add_filter( 'facetwp_acf_display_value', [ $this, 'index_source_other' ], 1, 2 );
@@ -40,6 +41,27 @@ class FacetWP_Integration_ACF
         }
 
         return $sources;
+    }
+
+
+    /**
+     * If the facet "Sort by" value is "Term order", then preserve
+     * the custom order of certain ACF fields (checkboxes, radio, etc.)
+     */
+    function facet_orderby( $orderby, $facet ) {
+        if ( isset( $facet['source'] ) && isset( $facet['orderby'] ) ) {
+            if ( 0 === strpos( $facet['source'], 'acf/' ) && 'term_order' == $facet['orderby'] ) {
+                $field_id = array_pop( explode( '/', $facet['source'] ) );
+                $field_object = get_field_object( $field_id );
+                if ( ! empty( $field_object['choices'] ) ) {
+                    $choices = $field_object['choices'];
+                    $choices = implode( "','", esc_sql( $choices ) );
+                    $orderby = "FIELD(f.facet_display_value, '$choices')";
+                }
+            }
+        }
+
+        return $orderby;
     }
 
 

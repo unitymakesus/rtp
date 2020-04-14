@@ -30,7 +30,7 @@ class SB_Instagram_API_Connect
 	/**
 	 * @var object
 	 */
-	private $response;
+	protected $response;
 
 	/**
 	 * SB_Instagram_API_Connect constructor.
@@ -86,7 +86,23 @@ class SB_Instagram_API_Connect
 	}
 
 	/**
+	 * Certain endpoints don't include the "next" URL so
+	 * this method allows using the "cursors->after" data instead
+	 *
+	 * @param $type
+	 *
+	 * @return bool
+	 *
+	 * @since 2.2.2/5.3.3
+	 */
+	public function type_allows_after_paging( $type ) {
+		return false;
+	}
+
+	/**
 	 * Returns the full url for the next page of the API request
+	 *
+	 * @param $type
 	 *
 	 * @return string
 	 *
@@ -98,6 +114,11 @@ class SB_Instagram_API_Connect
 		} elseif ( ! empty( $this->response['paging']['next'] ) ) {
 			return $this->response['paging']['next'];
 		} else {
+			if ( $this->type_allows_after_paging( $type ) ) {
+				if ( isset( $this->response['paging']['cursors']['after'] ) ) {
+					return $this->response['paging']['cursors']['after'];
+				}
+			}
 			return '';
 		}
 	}
@@ -201,15 +222,9 @@ class SB_Instagram_API_Connect
 
 				update_option( 'sb_instagram_settings', $options );
 
-				$error = '<p><b>' . sprintf( __( 'Error: Access Token for %s is not valid or has expired.', 'instagram-feed' ), $user_name ) . ' ' . __( 'Feed will not update.', 'instagram-feed' ) . '</b></p>';
+				$error = '<p><b>' . sprintf( __( 'Error: Access Token for %s is not valid or has expired.', 'instagram-feed' ), $user_name ) . ' ' . __( 'Feed will not update.', 'instagram-feed' ) . '</b>';
+				$error .= '<p>' . __( 'There\'s an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin\'s Settings page.', 'instagram-feed' );
 
-				$error .= '<p>' . __( 'There\'s an issue with the Instagram Access Token that you are using. Please obtain a new Access Token on the plugin\'s Settings page.<br />', 'instagram-feed' );
-				$cap = current_user_can( 'manage_instagram_feed_options' ) ? 'manage_instagram_feed_options' : 'manage_options';
-				$cap = apply_filters( 'sbi_settings_pages_capability', $cap );
-				if ( current_user_can( $cap ) ) {
-					$error .= __( 'If you continue to have an issue with your Access Token then please see <a href="https://smashballoon.com/my-instagram-access-token-keep-expiring/" target="_blank" rel="noopener">this FAQ</a> for more information.', 'instagram-feed' );
-				}
-				$error .= '</p>';
 				$sb_instagram_posts_manager->add_frontend_error( 'at_' . $user_name, $error );
 
 				$error_time = 3600;
@@ -353,7 +368,7 @@ class SB_Instagram_API_Connect
 			if ( $endpoint_slug === 'access_token' ) {
 				$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} elseif ( $endpoint_slug === 'header' ) {
-				$url = 'https://graph.instagram.com/me?fields=id,username,media_count,account_type&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
+				$url = 'https://graph.instagram.com/me?fields=id,username,media_count&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} else {
 				$num = min( $num, 200 );
 				$url = 'https://graph.instagram.com/' . $connected_account['user_id'] . '/media?fields=media_url,thumbnail_url,caption,id,media_type,timestamp,username,comments_count,like_count,permalink,children{media_url,id,media_type,timestamp,permalink,thumbnail_url}&limit='.$num.'&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );

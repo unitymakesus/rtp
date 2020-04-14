@@ -132,6 +132,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			);
 
 			$whitelisted_roles = apply_filters( PPW_Constants::HOOK_SHORT_CODE_WHITELISTED_ROLES, $attrs['whitelisted_roles'] );
+
 			if ( $this->is_whitelisted_role( $whitelisted_roles ) ) {
 				return apply_filters( PPW_Constants::HOOK_SHORTCODE_RENDER_CONTENT, $content, $attrs );
 			}
@@ -266,8 +267,8 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		/**
 		 * Get restricted content form.
 		 *
-		 * @param array $attrs Short-code attributes.
-		 * @param int $number Short-code attributes.
+		 * @param array $attrs  Short-code attributes.
+		 * @param int   $number Short-code attributes.
 		 *
 		 * @return array|mixed
 		 */
@@ -289,7 +290,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 				PPW_Constants::SHORT_CODE_FORM_CURRENT_URL   => $this->get_the_permalink_without_cache( wp_rand( 0, 100 ) ),
 				PPW_Constants::SHORT_CODE_FORM_ID            => '' === $attrs['id'] ? get_the_ID() . wp_rand( 0, 1000 ) : wp_kses_post( $attrs['id'] ),
 				PPW_Constants::SHORT_CODE_FORM_CLASS         => '' === $attrs['class'] ? $this->get_main_class_name( $attrs ) : $this->get_main_class_name( $attrs ) . ' ' . wp_kses_post( $attrs['class'] ),
-				PPW_Constants::SHORT_CODE_PASSWORD_LABEL      => __( 'Password:', 'password-protect-page'),
+				PPW_Constants::SHORT_CODE_PASSWORD_LABEL     => __( 'Password:', 'password-protect-page' ),
 				PPW_Constants::SHORT_CODE_FORM_ERROR_MESSAGE => '',
 				'[PPW_PAGE]'                                 => $number,
 			);
@@ -390,7 +391,8 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		private function is_whitelisted_role( $whitelisted_roles ) {
 			$roles = explode( ',', trim( $whitelisted_roles ) );
 			foreach ( $roles as $role ) {
-				if ( in_array( $role, $this->supported_roles, true ) && current_user_can( trim( $role ) ) ) {
+				$role = trim( $role );
+				if ( in_array( $role, $this->supported_roles, true ) && current_user_can( $role ) ) {
 					return true;
 				}
 			}

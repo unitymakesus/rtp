@@ -45,12 +45,16 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		 */
 		public function customize_register( $wp_customize ) {
 
+			/* register toggle control */
+			$wp_customize->register_control_type( 'PPW_Toggle_Control' );
+			$wp_customize->register_control_type( 'PPW_Title_Group_Control' );
+
 			$wp_customize->add_panel( 'ppwp',
 				array(
 					'priority'       => 999,
 					'capability'     => 'edit_theme_options',
 					'theme_supports' => '',
-					'title'          => __( 'Password Protect WordPress', 'password-protect-page' ),
+					'title'          => __( 'Password Protect WordPress Form', 'password-protect-page' ),
 				)
 			);
 
@@ -115,6 +119,71 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				'priority' => 100,
 			) );
 
+			$wp_customize->add_setting( 'ppwp_form_instructions_background_title' );
+
+			$wp_customize->add_control(
+				new PPW_Title_Group_Control(
+					$wp_customize,
+					'ppwp_form_instructions_background_title', array(
+					'label'			=> __( 'Background', 'password-protect-page' ),
+					'section'  		=> 'ppwp_form_instructions',
+					'settings' 		=> 'ppwp_form_instructions_background_title',
+					'type'     		=> 'control_title',
+				) )
+			);
+
+			/* form background color */
+			$wp_customize->add_setting( 'ppwp_form_instructions_background_color', array(
+				'default' => PPW_Constants::DEFAULT_FORM_BACKGROUND_COLOR,
+			) );
+
+			$wp_customize->add_control(
+				new \WP_Customize_Color_Control(
+					$wp_customize,
+					'ppwp_form_instructions_background_color_control', array(
+					'label'    => __( 'Background Color', 'password-protect-page' ),
+					'section'  => 'ppwp_form_instructions',
+					'settings' => 'ppwp_form_instructions_background_color',
+				) )
+			);
+
+			/* form background padding */
+			$wp_customize->add_setting( 'ppwp_form_instructions_padding', array(
+				'default' => PPW_Constants::DEFAULT_FORM_PADDING,
+			) );
+			$wp_customize->add_control( 'ppwp_form_instructions_padding_control', array(
+				'label'			=> __( 'Padding', 'password-protect-page' ),
+				'section'  		=> 'ppwp_form_instructions',
+				'description' 	=> 'Padding in px',
+				'settings' 		=> 'ppwp_form_instructions_padding',
+				'type'     		=> 'number',
+			) );
+
+			/* form background border radius */
+			$wp_customize->add_setting( 'ppwp_form_instructions_border_radius', array(
+				'default' => PPW_Constants::DEFAULT_FORM_BORDER_RADIUS,
+			) );
+			$wp_customize->add_control( 'ppwp_form_instructions_border_radius_control', array(
+				'label'    => __( 'Border Radius', 'password-protect-page' ),
+				'section'  => 'ppwp_form_instructions',
+				'description' => 'Border Radius in px',
+				'settings' => 'ppwp_form_instructions_border_radius',
+				'type'     => 'number',
+			) );
+
+			$wp_customize->add_setting( 'ppwp_form_instructions_headline_title' );
+
+			$wp_customize->add_control(
+				new PPW_Title_Group_Control(
+					$wp_customize,
+					'ppwp_form_instructions_headline_title', array(
+					'label'			=> __( 'Headline', 'password-protect-page' ),
+					'section'  		=> 'ppwp_form_instructions',
+					'settings' 		=> 'ppwp_form_instructions_headline_title',
+					'type'     		=> 'control_title',
+				) )
+			);
+
 			/* instructions headline */
 			$wp_customize->add_setting( 'ppwp_form_instructions_headline', array(
 				'default' => __( PPW_Constants::DEFAULT_HEADLINE_TEXT, 'password-protect-page' ),
@@ -175,11 +244,24 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				'default' => __( PPW_Constants::DEFAULT_PLACEHOLDER, 'password-protect-page' ),
 			) );
 			$wp_customize->add_control( 'ppwp_form_instructions_placeholder_control', array(
-				'label'    => __( 'Placholder', 'password-protect-page' ),
+				'label'    => __( 'Placeholder', 'password-protect-page' ),
 				'section'  => 'ppwp_form_instructions',
 				'settings' => 'ppwp_form_instructions_placeholder',
 				'type'     => 'text',
 			) );
+
+			$wp_customize->add_setting( 'ppwp_form_instructions_description_title' );
+
+			$wp_customize->add_control(
+				new PPW_Title_Group_Control(
+					$wp_customize,
+					'ppwp_form_instructions_description_title', array(
+					'label'			=> __( 'Description', 'password-protect-page' ),
+					'section'  		=> 'ppwp_form_instructions',
+					'settings' 		=> 'ppwp_form_instructions_description_title',
+					'type'     		=> 'control_title',
+				) )
+			);
 
 			/* instructions text */
 			$wp_customize->add_setting( 'ppwp_form_instructions_text', array(
@@ -239,6 +321,19 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 
 			/* password typing - form instructions */
 
+			$wp_customize->add_setting( 'ppwp_form_instructions_label_title' );
+
+			$wp_customize->add_control(
+				new PPW_Title_Group_Control(
+					$wp_customize,
+					'ppwp_form_instructions_label_title', array(
+					'label'			=> __( 'Password Label', 'password-protect-page' ),
+					'section'  		=> 'ppwp_form_instructions',
+					'settings' 		=> 'ppwp_form_instructions_label_title',
+					'type'     		=> 'control_title',
+				) )
+			);
+
 			$wp_customize->add_setting( 'ppwp_form_instructions_password_label', array(
 				'default' => PPW_Constants::DEFAULT_PASSWORD_LABEL,
 			) );
@@ -250,17 +345,71 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				'type'     => 'text',
 			) );
 
+			/* instructions font size */
+			$wp_customize->add_setting( 'ppwp_form_instructions_password_label_font_size', array(
+				'default' => PPW_Constants::DEFAULT_TEXT_FONT_SIZE,
+			) );
+			$wp_customize->add_control( 'ppwp_form_instructions_password_label_font_size_control', array(
+				'label'       => __( 'Label Font Size', 'password-protect-page' ),
+				'description' => __( 'Font size in px', 'password-protect-page' ),
+				'section'     => 'ppwp_form_instructions',
+				'settings'    => 'ppwp_form_instructions_password_label_font_size',
+				'type'        => 'number',
+			) );
+
+			/* instructions font weight */
+			$wp_customize->add_setting( 'ppwp_form_instructions_password_label_font_weight', array(
+				'default' => PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT,
+			) );
+			$wp_customize->add_control( 'ppwp_form_instructions_password_label_font_weight_control', array(
+				'label'    => __( 'Label Font Weight', 'password-protect-page' ),
+				'section'  => 'ppwp_form_instructions',
+				'settings' => 'ppwp_form_instructions_password_label_font_weight',
+				'type'     => 'number',
+			) );
+
+			/* text color - form instructions */
+			$wp_customize->add_setting( 'ppwp_form_instructions_password_label_color', array(
+				'default' => PPW_Constants::DEFAULT_TEXT_FONT_COLOR,
+			) );
+
+			$wp_customize->add_control(
+				new \WP_Customize_Color_Control(
+					$wp_customize,
+					'ppwp_form_instructions_password_label_color_control', array(
+					'label'    => __( 'Description Text Color', 'password-protect-page' ),
+					'section'  => 'ppwp_form_instructions',
+					'settings' => 'ppwp_form_instructions_password_label_color',
+				) )
+			);
+
 			/* password typing - form instructions */
 
 			$wp_customize->add_setting( 'ppwp_form_instructions_is_show_password', array(
 				'default' => PPW_Constants::DEFAULT_IS_SHOW_PASSWORD,
 			) );
 
-			$wp_customize->add_control( 'ppwp_form_instructions_is_show_password_control', array(
-				'label'    => __( 'Password Reveal Button', 'password-protect-page' ),
-				'section'  => 'ppwp_form_instructions',
-				'settings' => 'ppwp_form_instructions_is_show_password',
-				'type'     => 'checkbox',
+			$wp_customize->add_control(
+				new PPW_Toggle_Control(
+					$wp_customize,
+					'ppwp_form_instructions_is_show_password_control', array(
+					'label'       => __( 'Password Reveal Button', 'password-protect-page' ),
+					'section'     => 'ppwp_form_instructions',
+					'type'        => 'toggle',
+					'settings'    => 'ppwp_form_instructions_is_show_password',
+				) )
+			);
+
+			/* show password text */
+			$wp_customize->add_setting( 'ppwp_form_instructions_show_password_text', array(
+				'default' => PPW_Constants::DEFAULT_SHOW_PASSWORD_TEXT,
+			) );
+
+			$wp_customize->add_control( 'ppwp_form_instructions_show_password_text_control', array(
+				'label'			=> __( 'Button Text', 'password-protect-page' ),
+				'section'  		=> 'ppwp_form_instructions',
+				'settings' 		=> 'ppwp_form_instructions_show_password_text',
+				'type'     		=> 'text',
 			) );
 
 			/* form error message section */
@@ -430,13 +579,13 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		public function dynamic_styles() {
 			?>
 			<style>
-				/*.ppw-individual-page {*/
-				/*	background: */<?php //echo get_theme_mod( 'ppwp_form_general_background_color', 'transparent' ); ?>/*;*/
-				/*	padding: */<?php //echo get_theme_mod( 'ppwp_form_general_padding', PPW_Constants::DEFAULT_FORM_PADDING ); ?>/*px;*/
-				/*	margin: */<?php //echo get_theme_mod( 'ppwp_form_general_margin', PPW_Constants::DEFAULT_FORM_MARGIN ); ?>/*px;*/
-				/*}*/
+				.ppw-ppf-input-container {
+					background-color: <?php echo get_theme_mod( 'ppwp_form_instructions_background_color', PPW_Constants::DEFAULT_FORM_BACKGROUND_COLOR ); ?>;
+					padding: <?php echo get_theme_mod( 'ppwp_form_instructions_padding', PPW_Constants::DEFAULT_FORM_PADDING ); ?>px;
+					border-radius: <?php echo get_theme_mod( 'ppwp_form_instructions_border_radius', PPW_Constants::DEFAULT_FORM_BORDER_RADIUS ) ?>px;
+				}
 
-				.ppw-ppf-input-container h3.ppw-ppf-headline {
+				.ppw-ppf-input-container div.ppw-ppf-headline {
 					font-size: <?php echo get_theme_mod( 'ppwp_form_instructions_headline_font_size', PPW_Constants::DEFAULT_HEADLINE_FONT_SIZE ); ?>px;
 					font-weight: <?php echo get_theme_mod( 'ppwp_form_instructions_headline_font_weight', PPW_Constants::DEFAULT_HEADLINE_FONT_WEIGHT ); ?>;
 					color: <?php echo get_theme_mod( 'ppwp_form_instructions_headline_color', PPW_Constants::DEFAULT_HEADLINE_FONT_COLOR ); ?>;
@@ -446,6 +595,12 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 					font-size: <?php echo get_theme_mod( 'ppwp_form_instructions_text_font_size', PPW_Constants::DEFAULT_TEXT_FONT_SIZE ); ?>px;
 					font-weight: <?php echo get_theme_mod( 'ppwp_form_instructions_text_font_weight', PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT ); ?>;
 					color: <?php echo get_theme_mod( 'ppwp_form_instructions_text_color', PPW_Constants::DEFAULT_TEXT_FONT_COLOR ); ?>;
+				}
+
+				.ppw-ppf-input-container label.ppw-pwd-label {
+					font-size: <?php echo get_theme_mod( 'ppwp_form_instructions_password_label_font_size', PPW_Constants::DEFAULT_TEXT_FONT_SIZE ); ?>px;
+					font-weight: <?php echo get_theme_mod( 'ppwp_form_instructions_password_label_font_weight', PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT ); ?>;
+					color: <?php echo get_theme_mod( 'ppwp_form_instructions_password_label_color', PPW_Constants::DEFAULT_TEXT_FONT_COLOR ); ?>;
 				}
 
 				div.ppwp-wrong-pw-error {

@@ -1,0 +1,13 @@
+.control-title--wrapper span.customize-control-title {
+    margin: 0px -12px;
+    border: 1px solid #ddd;
+    padding: 13px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1;
+    text-transform: uppercase;
+    color: #555;
+    background-color: #fff;
+    margin-top: 8px;
+}

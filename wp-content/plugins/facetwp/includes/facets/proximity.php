@@ -91,10 +91,8 @@ class FacetWP_Facet_Proximity_Core extends FacetWP_Facet
 
         <?php endif; ?>
 
-        <div class="facetwp-hidden">
-            <input type="text" class="facetwp-lat" value="<?php echo esc_attr( $lat ); ?>" />
-            <input type="text" class="facetwp-lng" value="<?php echo esc_attr( $lng ); ?>" />
-        </div>
+        <input type="hidden" class="facetwp-lat" value="<?php echo esc_attr( $lat ); ?>" />
+        <input type="hidden" class="facetwp-lng" value="<?php echo esc_attr( $lng ); ?>" />
 <?php
         return ob_get_clean();
     }

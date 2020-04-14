@@ -10,8 +10,17 @@ $all_page_post = ppw_free_get_all_page_post();
 	</td>
 	<td>
 		<p>
-			<label><?php echo esc_html__( 'Password Protect Private Pages', PPW_Constants::DOMAIN ) ?></label>
-			<?php echo _e( 'Set the same password to protect the following pages and posts.<em> Available in Pro version only.</em>', PPW_Constants::DOMAIN ) ?>
+			<label>
+				<?php echo esc_html__( 'Password Protect Private Pages', PPW_Constants::DOMAIN ) ?>
+				<span class="ppwp_upgrade_advice">
+					<a rel="noopener" target="_blank" href="http://bit.ly/ppwp-lsb-pro">
+						<span class="dashicons dashicons-lock">
+							<span class="ppwp_upgrade_tooltip"><?php echo esc_html__( 'Available in Pro version only', PPW_Constants::DOMAIN ) ?></span>
+						</span>
+					</a>
+				</span>
+			</label>
+			<?php echo _e( 'Set the same password to protect the following pages and posts.', PPW_Constants::DOMAIN ) ?>
 		</p>
 	</td>
 </tr>
@@ -20,7 +29,7 @@ $all_page_post = ppw_free_get_all_page_post();
 	<td><p><?php echo esc_html__( 'Select your private pages or posts', PPW_Constants::DOMAIN ) ?></p>
 		<select multiple="multiple" class="ppwp_select2">
 			<?php foreach ( $all_page_post as $page ): ?>
-				<option><?php echo esc_html( $page->post_title ) ?></option>
+				<option disabled="disabled"><?php echo esc_html( $page->post_title ) ?></option>
 			<?php endforeach; ?>
 		</select>
 	</td>

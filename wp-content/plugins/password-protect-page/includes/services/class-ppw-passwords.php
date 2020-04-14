@@ -152,37 +152,79 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		/**
 		 * Redirect after enter password
 		 *
-		 * @param $is_valid
+		 * @param bool $is_valid Is entered password valid.
 		 */
 		public function handle_redirect_after_enter_password( $is_valid ) {
-			$params_in_referer = ppw_core_get_param_in_url( wp_get_referer() );
+			// Refactor since 1.4.2.
+			// 1. Clean code
+			// 2. Easier to write UT.
+			$redirect_url = $this->get_redirect_url( $is_valid );
+			wp_safe_redirect( $redirect_url );
+			exit();
+		}
+
+		/**
+		 * Get redirect URL after user entered password.
+		 *
+		 * @param bool $is_valid Is password valid.
+		 *
+		 * @return string
+		 */
+		public function get_redirect_url( $is_valid ) {
+			$referrer_url      = $this->get_referer_url();
+			$params_in_referer = ppw_core_get_param_in_url( $referrer_url );
 
 			if ( $is_valid ) {
-				$url_redirect = preg_replace( '/[&?]' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true/', '', wp_get_referer() );
-				$params       = apply_filters( PPW_Constants::HOOK_PARAM_PASSWORD_SUCCESS, array(
-					'name'  => PPW_Constants::PASSWORD_PARAM_NAME,
-					'value' => PPW_Constants::PASSWORD_PARAM_VALUE
-				) );
+				$url_redirect = preg_replace( '/[&?]' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true/', '', $referrer_url );
+				$params       = apply_filters(
+					PPW_Constants::HOOK_PARAM_PASSWORD_SUCCESS,
+					array(
+						'name'  => PPW_Constants::PASSWORD_PARAM_NAME,
+						'value' => PPW_Constants::PASSWORD_PARAM_VALUE,
+					)
+				);
 
 				if ( array_key_exists( $params['name'], $params_in_referer ) && '1' === $params_in_referer[ $params['name'] ] ) {
-					wp_safe_redirect( $url_redirect );
-					exit();
+					return $url_redirect;
 				}
 
 				$params_in_redirect = ppw_core_get_param_in_url( $url_redirect );
-				$new_param          = empty( $params_in_redirect ) ? "?" . $params['name'] . '=' . $params['value'] : "&" . $params['name'] . '=' . $params['value'];
-				wp_safe_redirect( $url_redirect . $new_param );
-				exit();
+				$new_param          = empty( $params_in_redirect ) ? '?' . $params['name'] . '=' . $params['value'] : '&' . $params['name'] . '=' . $params['value'];
+
+				return $url_redirect . $new_param;
 			}
 
 			if ( array_key_exists( PPW_Constants::WRONG_PASSWORD_PARAM, $params_in_referer ) && 'true' === $params_in_referer[ PPW_Constants::WRONG_PASSWORD_PARAM ] ) {
-				wp_safe_redirect( wp_get_referer() );
-				exit();
+				return $referrer_url;
 			}
 
-			$new_param = empty( $params_in_referer ) ? "?" . PPW_Constants::WRONG_PASSWORD_PARAM . "=true" : "&" . PPW_Constants::WRONG_PASSWORD_PARAM . "=true";
-			wp_safe_redirect( wp_get_referer() . $new_param );
-			exit();
+			$new_param = empty( $params_in_referer ) ? '?' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true' : '&' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true';
+
+			return $referrer_url . $new_param;
+		}
+
+		/**
+		 * Get referer URL from HTTP Referrer or callback URL in post form action URL.
+		 *
+		 * @return mixed False if cannot find the referer URL.
+		 */
+		public function get_referer_url() {
+			$referrer_url = wp_get_referer();
+			if ( false === $referrer_url ) {
+				// We need to get the callback URL in the password form action URL.
+				// in case Referrer-Policy is set no-referrer.
+				$cb_param = PPW_Constants::CALL_BACK_URL_PARAM;
+				if ( isset( $_GET[ $cb_param ] ) ) { //phpcs:ignore
+					$referrer_url = rawurldecode( $_GET[ $cb_param ] ); //phpcs:ignore
+				}
+			}
+
+			// If doesn't have callback URL and no-referer then return to home page.
+			if ( false === $referrer_url ) {
+				$referrer_url = home_url();
+			}
+
+			return $referrer_url;
 		}
 
 		/**
@@ -685,11 +727,11 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 * @param string $password Password which user enter.
 		 */
 		public function handle_after_enter_password_in_password_form( $post_id, $password ) {
-			$is_valid = $this->is_valid_password_from_request( $post_id, $password);
+			$is_valid = $this->is_valid_password_from_request( $post_id, $password );
 			do_action( 'ppw_redirect_after_enter_password', $is_valid );
 		}
 
-		public function is_valid_password_from_request($post_id, $password) {
+		public function is_valid_password_from_request( $post_id, $password ) {
 			// Get current role of current user.
 			$current_roles   = ppw_core_get_current_role();
 			$is_pro_activate = apply_filters( PPW_Constants::HOOK_IS_PRO_ACTIVATE, false );

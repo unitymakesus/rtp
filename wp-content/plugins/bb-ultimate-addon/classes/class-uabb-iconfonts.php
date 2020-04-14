@@ -26,6 +26,10 @@ class UABB_IconFonts {
 	 * @since x.x.x
 	 */
 	public function init() {
+		// Check the user capability.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
 		add_action( 'wp_ajax_uabb_reload_icons', array( $this, 'reload_icons' ) );
 	}
 
@@ -35,9 +39,9 @@ class UABB_IconFonts {
 	 * @since x.x.x
 	 */
 	public function reload_icons() {
+		check_ajax_referer( 'uabb-icons-nonce', 'security' );
 		delete_option( '_uabb_enabled_icons' );
-		echo 'success';
-		die();
+		wp_send_json_success();
 	}
 
 	/**

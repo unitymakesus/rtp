@@ -3,7 +3,7 @@ Contributors: gaupoit, rexhoang, ppwp, buildwps
 Donate link: https://passwordprotectwp.com/features/?utm_source=wp.org&utm_medium=post&utm_campaign=plugin-link
 Tags: password protect, password, protect page, wordpress protection, login
 Requires at least: 4.7
-Tested up to: 5.3
+Tested up to: 5.4
 Stable tag: 5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -212,6 +212,23 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 N/A
 
 == Changelog ==
+
+= 1.4.3.2 =
+
+* [HotFix] Security issue when do not encode the callback query param's value
+
+= 1.4.3.1 =
+
+* [HotFix] Using ob_flush after ob_end_clean that throws warning message in password form
+
+= 1.4.3 =
+
+* [BugFix] Cannot redirect if Referrer policy is no-referrer
+* [BugFix] Whitelist role not working as example on settings
+* [BugFix] Conflict with PPP because of using template_reditect
+* [Improvement] Improve Customize individual page with WP Customizer
+* [Feature] Add troubleshooting checklist
+* [Feature] Customize password form description for each page
 
 = 1.4.2 =
 

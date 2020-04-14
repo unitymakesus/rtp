@@ -57,6 +57,10 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 						'tab'      => 'master_passwords',
 						'tab_name' => 'Master Passwords',
 					),
+					array(
+						'tab'      => 'troubleshooting',
+						'tab_name' => 'Troubleshooting',
+					)
 				)
 			);
 			?>
@@ -88,7 +92,7 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 		 * @param string $active_tab Active tab.
 		 */
 		private function render_content( $active_tab ) {
-			$tabs = apply_filters( PPW_Constants::HOOK_CUSTOM_TAB, array( 'general', 'misc', 'entire_site', 'shortcodes', 'master_passwords' ) );
+			$tabs = apply_filters( PPW_Constants::HOOK_CUSTOM_TAB, array( 'general', 'misc', 'entire_site', 'shortcodes', 'master_passwords', 'troubleshooting' ) );
 			foreach ( $tabs as $tab ) {
 				if ( $active_tab === $tab ) {
 					do_action( PPW_Constants::HOOK_RENDER_CONTENT_FOR_TAB . $tab );

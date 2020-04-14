@@ -120,6 +120,11 @@ if ( ! class_exists( 'UABB_Batch_Process' ) ) :
 		 */
 		public function update_hotlink_images() {
 
+			// Check the user capability.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
 			check_ajax_referer( 'uabb-template-cloud-nonce', 'security' );
 			error_log( 'UABB Batch Started' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 

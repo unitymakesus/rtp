@@ -370,7 +370,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 				<label for="uabb-name" class="uabb-label-mark"> <?php echo $label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 			<?php } ?>
 			<div class="uabb-form-outter">
-				<input type="<?php echo esc_attr( $type ); ?>" name="uabb_<?php echo esc_attr( $field_name ); ?>" value="" class="uabb-registration-form-requried-<?php echo esc_attr( $error_class ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
+				<input type="<?php echo esc_attr( $type ); ?>" aria-label="<?php echo esc_attr( $field_name ); ?>" name="uabb_<?php echo esc_attr( $field_name ); ?>" value="" class="uabb-registration-form-requried-<?php echo esc_attr( $error_class ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
 				<?php if ( 'email' === $type ) { ?>
 					<div class="uabb-registration_form-error-message uabb-registration_form-error-message-required"><span class="uabb-registration-form-invalid-field"></div>
 				<?php } else { ?>
@@ -547,7 +547,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		$current_url = 'http://' . $host . strtok( $_SERVER['REQUEST_URI'], '?' );
 
 		$default_template_reg = sprintf(
-			/* translators: %1$s: search term, translators: %2$s: search term */ __(
+			/* translators: %1$s: search term, translators: %2$s: search term */            __(
 				'Dear User,
 
 You have successfully created your "%1$s" account. Thank you for registering with us!

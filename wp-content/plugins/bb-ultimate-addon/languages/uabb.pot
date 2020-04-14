@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the Ultimate Addons for Beaver Builder package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Ultimate Addons for Beaver Builder 1.26.1\n"
+"Project-Id-Version: Ultimate Addons for Beaver Builder 1.26.2\n"
 "Report-Msgid-Bugs-To: "
 "https://wordpress.org/support/plugin/bb-ultimate-addon\n"
-"POT-Creation-Date: 2020-03-26 06:18:54+00:00\n"
+"POT-Creation-Date: 2020-04-09 07:34:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -366,7 +366,7 @@ msgstr ""
 #: admin/bsf-core/plugin-installer/index.php:178
 #: admin/bsf-core/plugin-installer/index.php:280
 #: classes/class-uabb-admin-settings.php:257
-#: classes/class-uabb-cloud-templates.php:700
+#: classes/class-uabb-cloud-templates.php:703
 msgid "Install"
 msgstr ""
 
@@ -378,7 +378,7 @@ msgstr ""
 #: admin/bsf-core/plugin-installer/index.php:194
 #: admin/bsf-core/plugin-installer/index.php:295
 #: classes/class-uabb-admin-settings.php:258
-#: classes/class-uabb-cloud-templates.php:684
+#: classes/class-uabb-cloud-templates.php:687
 msgid "Installed"
 msgstr ""
 
@@ -436,7 +436,7 @@ msgstr ""
 msgid "We will notify you once the process is complete."
 msgstr ""
 
-#: classes/batch-process/class-uabb-batch-process.php:255
+#: classes/batch-process/class-uabb-batch-process.php:260
 #. translators: %1$s: search term
 msgid ""
 "%1$s <a href=\" "
@@ -449,7 +449,7 @@ msgstr ""
 msgid "Ultimate Addons for Beaver Builder"
 msgstr ""
 
-#: classes/batch-process/class-uabb-batch-process.php:302
+#: classes/batch-process/class-uabb-batch-process.php:307
 msgid "Process Completed."
 msgstr ""
 
@@ -2397,7 +2397,7 @@ msgid "Installed!"
 msgstr ""
 
 #: classes/class-uabb-admin-settings.php:256
-#: classes/class-uabb-cloud-templates.php:677
+#: classes/class-uabb-cloud-templates.php:680
 msgid "Remove"
 msgstr ""
 
@@ -2702,12 +2702,12 @@ msgstr ""
 msgid "%s - Contact Support"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:541
+#: classes/class-uabb-cloud-templates.php:544
 #. translators: %s: search term
 msgid "Welcome to %s Template Cloud!"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:542
+#: classes/class-uabb-cloud-templates.php:545
 #. translators: %s: search term
 msgid ""
 "%s Template Cloud would allow you to browse through our growing library of "
@@ -2715,15 +2715,15 @@ msgid ""
 "need."
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:542
+#: classes/class-uabb-cloud-templates.php:545
 msgid "Let's get started"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:559
+#: classes/class-uabb-cloud-templates.php:562
 msgid "Refresh"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:583
+#: classes/class-uabb-cloud-templates.php:586
 #: modules/blog-posts/blog-posts.php:1827
 #: modules/blog-posts/blog-posts.php:1851
 #: modules/blog-posts/includes/loop-settings.php:113
@@ -2744,15 +2744,15 @@ msgstr ""
 msgid "All"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:662
+#: classes/class-uabb-cloud-templates.php:665
 msgid "Preview"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:693
+#: classes/class-uabb-cloud-templates.php:696
 msgid "Not .dat found"
 msgstr ""
 
-#: classes/class-uabb-cloud-templates.php:729
+#: classes/class-uabb-cloud-templates.php:732
 msgid "Templates are disabled from RestAPI."
 msgstr ""
 
@@ -2785,11 +2785,11 @@ msgstr ""
 msgid "%s"
 msgstr ""
 
-#: classes/class-uabb-init.php:411
+#: classes/class-uabb-init.php:415
 msgid "plugin requires"
 msgstr ""
 
-#: classes/class-uabb-init.php:411
+#: classes/class-uabb-init.php:415
 msgid " plugin installed & activated."
 msgstr ""
 
@@ -6220,6 +6220,49 @@ msgstr ""
 msgid "Page Templates"
 msgstr ""
 
+#: includes/column-js.php:149 includes/column-js.php:153
+#: includes/row-js.php:149 includes/row-js.php:153
+msgid ""
+"Add custom JSON for the Particles Background below. To generate a "
+"completely customized background style follow steps below -"
+msgstr ""
+
+#: includes/column-js.php:149 includes/row-js.php:149
+#. translators: %s: custom JS link
+msgid "1. Visit a link %1$s here %2$s and choose required attributes for particles"
+msgstr ""
+
+#: includes/column-js.php:149 includes/column-js.php:153
+#: includes/row-js.php:149 includes/row-js.php:153
+msgid ""
+"2. Once a custom style is created, download JSON from \"Download current "
+"config (json)\" link"
+msgstr ""
+
+#: includes/column-js.php:149 includes/column-js.php:153
+#: includes/row-js.php:149 includes/row-js.php:153
+msgid "3. Copy JSON code from the above file and paste it below"
+msgstr ""
+
+#: includes/column-js.php:149
+#. translators: %s: doc link
+msgid ""
+"To know more about creating a custom style, refer to a document %1$s here. "
+"%2$$s"
+msgstr ""
+
+#: includes/column-js.php:153 includes/row-js.php:153
+msgid "1. Visit a link"
+msgstr ""
+
+#: includes/column-js.php:153 includes/row-js.php:153
+msgid "here"
+msgstr ""
+
+#: includes/column-js.php:153 includes/row-js.php:153
+msgid "and choose required attributes for particles"
+msgstr ""
+
 #: includes/column-settings.php:46 includes/row-settings.php:40
 msgid "Particle Backgrounds"
 msgstr ""
@@ -6947,6 +6990,13 @@ msgstr ""
 msgid "Hide on Small Devices"
 msgstr ""
 
+#: includes/row-js.php:149
+#. translators: %s: doc link
+msgid ""
+"To know more about creating a custom style, refer to a document %1$s here. "
+"%2$s"
+msgstr ""
+
 #: includes/ui-panel-presets.php:85
 #. translators: %s: search term
 msgid "Note - You can enable, disable and manage %s presets here."
@@ -6961,7 +7011,7 @@ msgstr ""
 msgid "Note - You can enable, disable and manage %s sections here."
 msgstr ""
 
-#: lib/notices/class-astra-notices.php:120
+#: lib/notices/class-astra-notices.php:125
 msgid "WordPress Nonce not validated."
 msgstr ""
 
@@ -21803,7 +21853,7 @@ msgstr ""
 #. translators: %1$s: search term, %2$s: search term
 msgid ""
 "<div style=\"%2$s\"> The related CSS and JS scripts will load on "
-"request.</div>\r\n"
+"request.</div>\n"
 "\t\t<div style=\"%1$s\">A loader will appear during loading of the "
 "iFrame.</div>"
 msgstr ""
@@ -25281,15 +25331,15 @@ msgstr ""
 #: modules/uabb-contact-form/uabb-contact-form.php:1104
 #. translators: %1$s: search term, translators: %2$s: search term
 msgid ""
-"<strong>From:</strong> [NAME]\r\n"
-"<strong>Email:</strong> [EMAIL]\r\n"
-"<strong>Subject:</strong> [SUBJECT]\r\n"
-"\r\n"
-"<strong>Message Body:</strong>\r\n"
-"[MESSAGE]\r\n"
-"\r\n"
-"----\r\n"
-"You have received a new submission from %1$s\r\n"
+"<strong>From:</strong> [NAME]\n"
+"<strong>Email:</strong> [EMAIL]\n"
+"<strong>Subject:</strong> [SUBJECT]\n"
+"\n"
+"<strong>Message Body:</strong>\n"
+"[MESSAGE]\n"
+"\n"
+"----\n"
+"You have received a new submission from %1$s\n"
 "(%2$s)"
 msgstr ""
 
@@ -28169,12 +28219,12 @@ msgstr ""
 #: modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php:18
 #. translators: %1$s: search term, translators: %2$s: search term
 msgid ""
-"Thank you for registering with us! You can access your account at:\r\n"
-"\t\t<strong>User Name:</strong> [USERNAME]\r\n"
-"<strong>Password:</strong> [PASSWORD]\r\n"
-"\r\n"
-"----\r\n"
-"You have received a new submission from %1$s\r\n"
+"Thank you for registering with us! You can access your account at:\n"
+"\t\t<strong>User Name:</strong> [USERNAME]\n"
+"<strong>Password:</strong> [PASSWORD]\n"
+"\n"
+"----\n"
+"You have received a new submission from %1$s\n"
 "(%2$s)"
 msgstr ""
 
@@ -28265,18 +28315,18 @@ msgstr ""
 #: modules/uabb-registration-form/uabb-registration-form.php:550
 #. translators: %1$s: search term, translators: %2$s: search term
 msgid ""
-"Dear User,\r\n"
-"\r\n"
+"Dear User,\n"
+"\n"
 "You have successfully created your \"%1$s\" account. Thank you for "
-"registering with us!\r\n"
+"registering with us!\n"
 "Get the most of our service benefits with your registered account.Please "
-"click the link below to access your account.%2$s\r\n"
-"And here's the password [PASSWORD] to log in to the account.\r\n"
-"\r\n"
-"Regards,\r\n"
-"Team\r\n"
-"----\r\n"
-"You have received a new submission from %1$s\r\n"
+"click the link below to access your account.%2$s\n"
+"And here's the password [PASSWORD] to log in to the account.\n"
+"\n"
+"Regards,\n"
+"Team\n"
+"----\n"
+"You have received a new submission from %1$s\n"
 "\t\t\t(%2$s)"
 msgstr ""
 
@@ -29535,9 +29585,9 @@ msgstr ""
 #. translators: %s: search term
 msgid ""
 "<div style=\"%2$s\"> Make sure you add the actual URL of the video and not "
-"the share URL.</div>\r\n"
+"the share URL.</div>\n"
 "\t\t\t\t<div style=\"%1$s\"><b> Valid URL : </b>  "
-"https://www.youtube.com/watch?v=HJRzUQMhJMQ</div>\r\n"
+"https://www.youtube.com/watch?v=HJRzUQMhJMQ</div>\n"
 "\t\t\t\t<div style=\"%1$s\"> <b> Invalid URL : </b> "
 "https://youtu.be/HJRzUQMhJMQ</div>"
 msgstr ""
@@ -29546,9 +29596,9 @@ msgstr ""
 #. translators: %s: search term
 msgid ""
 "<div style=\"%1$s\">Make sure you add the actual URL of the video and not "
-"the share URL.</div>\r\n"
+"the share URL.</div>\n"
 "\t\t\t\t<div style=\"%1$s\"><b> Valid URL : </b>  "
-"https://vimeo.com/274860274</div>\r\n"
+"https://vimeo.com/274860274</div>\n"
 "\t\t\t\t<div style=\"%1$s\"> <b> Invalid URL : </b> "
 "https://vimeo.com/channels/staffpicks/274860274</div>"
 msgstr ""
@@ -29758,9 +29808,9 @@ msgstr ""
 #. translators: %s: search term
 msgid ""
 "<div style=\"%2$s\"> Make sure you add the actual URL of the video and not "
-"the share URL.</div>\r\n"
+"the share URL.</div>\n"
 "\t\t\t        <div style=\"%1$s\"><b> Valid URL : </b>  "
-"https://www.youtube.com/watch?v=HJRzUQMhJMQ</div>\r\n"
+"https://www.youtube.com/watch?v=HJRzUQMhJMQ</div>\n"
 "\t\t\t        <div style=\"%1$s\"> <b> Invalid URL : </b> "
 "https://youtu.be/HJRzUQMhJMQ</div>"
 msgstr ""
@@ -29769,9 +29819,9 @@ msgstr ""
 #. translators: %s: search term
 msgid ""
 "<div style=\"%1$s\">Make sure you add the actual URL of the video and not "
-"the categorized URL.</div>\r\n"
+"the categorized URL.</div>\n"
 "\t\t\t        <div style=\"%1$s\"><b> Valid URL : </b>  "
-"https://vimeo.com/274860274</div>\r\n"
+"https://vimeo.com/274860274</div>\n"
 "\t\t\t        <div style=\"%1$s\"> <b> Invalid URL : </b> "
 "https://vimeo.com/channels/staffpicks/274860274</div>"
 msgstr ""
@@ -30221,8 +30271,8 @@ msgstr ""
 
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:884
 msgid ""
-"Heading tag will be applied to a custom heading only.\r\n"
-"The default heading will inherit tag from WPForms plugin itself\r\n"
+"Heading tag will be applied to a custom heading only.\n"
+"The default heading will inherit tag from WPForms plugin itself\n"
 msgstr ""
 
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php:1006
@@ -30244,8 +30294,8 @@ msgstr ""
 
 #: modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php:1101
 msgid ""
-"Heading tag will be applied to a custom heading only.\r\n"
-"\tThe default heading will inherit tag from WPForms plugin itself\r\n"
+"Heading tag will be applied to a custom heading only.\n"
+"\tThe default heading will inherit tag from WPForms plugin itself\n"
 "\t"
 msgstr ""
 

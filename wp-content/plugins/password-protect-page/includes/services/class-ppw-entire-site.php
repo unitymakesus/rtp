@@ -86,8 +86,16 @@ if ( ! class_exists( 'PPW_Entire_Site_Services' ) ) {
 		 * Redirect after enter password
 		 */
 		public function entire_site_redirect_after_enter_password() {
-			global $wp;
-			$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+			// Can get the HTTP_REFERER first as the redirect URL that:
+			// Fixes the private link redirection belonged to PPP Pro.
+			if ( ! empty( $_SERVER['HTTP_REFERER'] ) ) {
+				$current_url = $_SERVER['HTTP_REFERER']; //phpcs:ignore
+			} else {
+				global $wp;
+				$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
+			}
+
+			// TODO: consider to user wp_safe_redirect.
 			wp_redirect( $current_url );
 		}
 

@@ -15,7 +15,7 @@ if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 $current_url = 'http://' . $host . strtok( $_SERVER['REQUEST_URI'], '?' );
 
 $default_template_reg = sprintf(
-	/* translators: %1$s: search term, translators: %2$s: search term */ __(
+	/* translators: %1$s: search term, translators: %2$s: search term */    __(
 		'Thank you for registering with us! You can access your account at:
 		<strong>User Name:</strong> [USERNAME]
 <strong>Password:</strong> [PASSWORD]

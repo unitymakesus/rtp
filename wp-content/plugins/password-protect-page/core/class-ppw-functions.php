@@ -233,7 +233,7 @@ function ppw_core_render_login_form() {
 	$wrong_password              = array_key_exists( PPW_Constants::WRONG_PASSWORD_PARAM, $query_params ) && 'true' === $query_params[ PPW_Constants::WRONG_PASSWORD_PARAM ];
 	$default_wrong_error_message = apply_filters( PPW_Constants::HOOK_MESSAGE_ENTERING_WRONG_PASSWORD, PPW_Constants::DEFAULT_WRONG_PASSWORD_MESSAGE );
 	$instruction_text            = apply_filters( PPW_Constants::HOOK_MESSAGE_PASSWORD_FORM, PPW_Constants::DEFAULT_FORM_MESSAGE );
-	$label                       = 'pwbox-' . ( empty( $post_id ) ? rand() : $post_id );
+	$label                       = 'pwbox-' . ( empty( $post_id ) ? wp_rand() : $post_id );
 
 	// phpcs:disable
 	$submit_label        = wp_kses_post( get_theme_mod( 'ppwp_form_button_label', PPW_Constants::DEFAULT_SUBMIT_LABEL ) );
@@ -242,6 +242,7 @@ function ppw_core_render_login_form() {
 	$headline_text       = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_headline', PPW_Constants::DEFAULT_HEADLINE_TEXT ) );
 	$form_message        = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_text', $instruction_text ) );
 	$wrong_password_text = wp_kses_post( get_theme_mod( 'ppwp_form_error_message_text', $default_wrong_error_message ) );
+	$show_password_text  = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_show_password_text', PPW_Constants::DEFAULT_SHOW_PASSWORD_TEXT ) );
 
 	/**
 	 * I18N
@@ -254,42 +255,106 @@ function ppw_core_render_login_form() {
 	$form_message        = _x( $form_message, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
 	$wrong_password_text = _x( $wrong_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' );
 	// phpcs:enable
-	$show_password = get_theme_mod( 'ppwp_form_instructions_is_show_password', PPW_Constants::DEFAULT_IS_SHOW_PASSWORD ) ? '<input id="ppw_' . $post_id . '" onclick="ppwShowPassword(' . $post_id . ')" type="checkbox"> ' . _x( 'Show password', PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ) : '';
+	$show_password_text = _x( $show_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ); // phpcs:ignore
 
+
+
+	/**
+	 * Fire hooks that can customize the from text.
+	 * Update the customize attributes that easier for user to customize.
+	 */
+	$customized_elements = apply_filters(
+		'ppwp_customize_ppf',
+		array(
+			'submit_label'        => $submit_label,
+			'password_label'      => $password_label,
+			'description'         => $form_message,
+			'headline'            => $headline_text,
+			'error_msg'           => $wrong_password_text,
+			'show_password_label' => $show_password_text,
+		),
+		$post_id
+	);
+	$submit_label        = $customized_elements['submit_label'];
+	$password_label      = $customized_elements['password_label'];
+	$form_message        = $customized_elements['description'];
+	$headline_text       = $customized_elements['headline'];
+	$wrong_password_text = $customized_elements['error_msg'];
+	$show_password_text  = $customized_elements['show_password_label'];
+
+	// We need to wrap the div for input to prevent the <p> tag generated when view HTML source.
+	$show_password      = get_theme_mod( 'ppwp_form_instructions_is_show_password', PPW_Constants::DEFAULT_IS_SHOW_PASSWORD ) ? '<div><input id="ppw_' . $post_id . '" onclick="ppwShowPassword(' . $post_id . ')" type="checkbox"/><label for="ppw_' . $post_id . '">' . _x( $show_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ) . '</label></div>' : ''; // phpcs:ignore
 	/**
 	 * Generate Password Form.
 	 */
-	$wrong_password_message = sprintf(
-		'<div class="ppwp-wrong-pw-error ppw-ppf-error-msg">%1$s</div>',
-		$wrong_password_text
-	);
-	$wrong_message          = $wrong_password ? $wrong_password_message : '';
-	$default_element        = '<div class="ppw-ppf-input-container">
-						<h3 class="ppw-ppf-headline">' . $headline_text . '</h3>
-						<div class="ppw-ppf-desc">' . $form_message . '</div>
-						<p>
-							<label for="' . $label . '">' . $password_label . ' <input placeholder="' . $place_holder . '" name="post_password" id="' . $label . '" type="password" size="20" /></label> <input type="submit" name="Submit" value="' . $submit_label . '" />
-						</p>' . $show_password . '</div>' .
-	                          $wrong_message;
 
+	if ( ! empty( $wrong_password_text ) ) {
+		$wrong_password_message = sprintf(
+			'<div class="ppwp-wrong-pw-error ppw-ppf-error-msg">%1$s</div>',
+			$wrong_password_text
+		);
+	} else {
+		$wrong_password_message = '';
+	}
+	$wrong_message = $wrong_password ? $wrong_password_message : '';
+
+	// Use Output Buffer Steam instead of HTML string contact because
+	// 1. When concat HTML string it will append the <p> tag (view HTML source)
+	// 2. Code cleaner and easy to maintain.
+	// Warning: DO NOT FORMAT CODE HERE.
+	ob_start();
+	?>
+	<div class="ppw-ppf-input-container">
+		<?php
+		if ( ! empty( $headline_text ) ) {
+			?>
+			<div class="ppw-ppf-headline"><?php echo $headline_text; // phpcs:ignore ?></div>
+			<?php
+		}
+		?>
+		<div class="ppw-ppf-desc"><?php echo $form_message; // phpcs:ignore ?></div>
+		<p>
+			<label class="ppw-pwd-label" for="<?php echo esc_attr( $label ); ?>"><?php echo esc_js( $password_label ); ?> <input placeholder="<?php echo esc_attr( $place_holder ); ?>" name="post_password" id="<?php echo esc_attr( $label ); ?>"  type="password" size="20"/></label><input type="submit" name="Submit" value="<?php echo esc_attr( $submit_label ); ?>"/>
+		</p><?php if ( ! empty( $show_password ) ) echo $show_password; // phpcs:ignore ?></div>
+	<?php if ( ! empty( $wrong_message ) ) echo $wrong_message; // phpcs:ignore ?>
+	<?php
+	$default_element = ob_get_clean();
+
+	// Fire hook here that user can customise the Password Form element.
 	$form_content = apply_filters( PPW_Constants::HOOK_CUSTOM_PASSWORD_FORM, $default_element, $post_id, $wrong_message );
-	$script       = '
-		<script>
-	        function ppwShowPassword(postId) {
-	            const ppwBox = jQuery(\'#pwbox-\' + postId);
-	            if (jQuery(\'#ppw_\' + postId).prop(\'checked\')) {
-	                ppwBox.attr({"type": \'text\',});
-	            } else {
-	                ppwBox.attr({"type": \'password\',});
-	            }
+	$script = '';
+	if ( ! empty( $show_password ) ) {
+		$script = '
+<div>
+	<script>
+	    function ppwShowPassword(postId) {
+	        const ppwBox = jQuery(\'#pwbox-\' + postId);
+	        if (jQuery(\'#ppw_\' + postId).prop(\'checked\')) {
+	            ppwBox.attr({"type": \'text\',});
+	        } else {
+	            ppwBox.attr({"type": \'password\',});
 	        }
-		</script>
-		';
-	$output       = '<form action="' . esc_url( site_url( 'wp-login.php?action=ppw_postpass', 'login_post' ) ) . '" class="ppw-post-password-form post-password-form" method="post">'
-	                . $form_content
-	                . '<input type="hidden" name="post_id" value="' . $post_id . '" />'
-	                . '</form>'
-	                . $script;
+	    }
+	</script>
+</div>';
+	}
+
+	// This is the a hotfix:
+	// Need to encode the query string value to prevent Suspicious Query String.
+	// https://stackoverflow.com/questions/996139/urlencode-vs-rawurlencode.
+	$callback_value = rawurlencode( apply_filters( PPW_Constants::HOOK_CALLBACK_URL, get_permalink() ) );
+	// When no-referer policy turns on we need to append the callback's URL in the form action URL.
+	// That helps the user can redirect to the right post/page.
+	$callback_url = sprintf( '%s=%s', PPW_Constants::CALL_BACK_URL_PARAM, $callback_value );
+	// Need to wrap the form by parent div because HTML will pre-append the </br> without parent div.
+	// TODO: move to view file.
+	ob_start();
+	?>
+<div class="ppw-post-password-container">
+	<form action="<?php echo esc_attr( esc_url( site_url( 'wp-login.php?action=ppw_postpass&' . $callback_url, 'login_post' ) ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
+</div>
+	<?php
+	$output = ob_get_clean();
 
 	return $output;
 }
@@ -297,7 +362,7 @@ function ppw_core_render_login_form() {
 /**
  * Get all post types
  *
- * @param string $output Value to output
+ * @param string $output Value to output.
  *
  * @return array Array Post types
  *
@@ -325,9 +390,9 @@ function ppw_core_get_unit_time( $password_cookie_expired ) {
 	if ( count( $time_die ) === 2 ) {
 		if ( $time_die[1] === "minutes" ) {
 			$unit = 60;
-		} else if ( $time_die[1] === "hours" ) {
+		} elseif ( $time_die[1] === "hours" ) {
 			$unit = 3600;
-		} else if ( $time_die[1] === "days" ) {
+		} elseif ( $time_die[1] === "days" ) {
 			$unit = 86400;
 		}
 	}

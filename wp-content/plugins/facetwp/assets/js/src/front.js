@@ -13,6 +13,7 @@ window.FWP = window.FWP || {};
         'is_reset': false,
         'is_refresh': false,
         'is_bfcache': false,
+        'is_hash_click': false,
         'auto_refresh': true,
         'soft_refresh': false,
         'frozen_facets':{},
@@ -30,26 +31,27 @@ window.FWP = window.FWP || {};
         }
     }
 
-    // Safari popstate fix
-    $(window).on('load', function() {
+    window.addEventListener('load', function() {
         setTimeout(function() {
-            $(window).on('popstate', function() {
+            window.addEventListener('popstate', function() {
 
                 // Detect browser "back-foward" cache
                 if (FWP.is_bfcache) {
                     FWP.loaded = false;
                 }
 
-                if ((FWP.loaded || FWP.is_bfcache) && ! FWP.is_refresh) {
+                if ((FWP.loaded || FWP.is_bfcache) && ! FWP.is_refresh && ! FWP.is_hash_click) {
                     FWP.is_popstate = true;
                     FWP.refresh();
                     FWP.is_popstate = false;
                 }
+
+                FWP.is_hash_click = false;
             });
 
-            // Prevent hash clicks from changing the URL
-            $(document).on('click', 'a[href^="#"]', function(e) {
-                e.preventDefault();
+            // Prevent hash clicks from triggering a refresh
+            $(document).on('click', 'a[href^="#"]', function() {
+                FWP.is_hash_click = true;
             });
         }, 0);
     });
@@ -279,7 +281,10 @@ window.FWP = window.FWP || {};
         FWP_HTTP.get = {};
         window.location.search.replace('?', '').split('&').forEach(function(el) {
             var item = el.split('=');
-            FWP_HTTP.get[item[0]] = item[1];
+
+            if ('' != item[0]) {
+                FWP_HTTP.get[item[0]] = item[1];
+            }
         });
     }
 

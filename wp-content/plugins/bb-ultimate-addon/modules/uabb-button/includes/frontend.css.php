@@ -649,50 +649,49 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 	}
 
 	/*transparent-fill-top*/
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-top-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-top-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-top-btn:hover:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		height: 100%;
 	}
 
 	/*transparent-fill-bottom*/
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-bottom-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-bottom-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-bottom-btn:hover:after,
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-bottom-btn:focus:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		height: 100%;
 	}
 
 	/*transparent-fill-left*/
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-left-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-left-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-left-btn:hover:after,
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-left-btn:focus:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		width: 100%;
 	}
 	/*transparent-fill-right*/
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-right-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-right-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-right-btn:hover:after,
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-right-btn:focus:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		width: 100%;
 	}
 
 	/*transparent-fill-center*/
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-center-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-center-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-center-btn:hover:after,
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-center-btn:focus:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		height: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );
 		width: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );
 	}
 
 	/* transparent-fill-diagonal */
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-diagonal-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-diagonal-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-diagonal-btn:hover:after,
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-diagonal-btn:focus:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		height: 260%;
 	}
 
 	/*transparent-fill-horizontal*/
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-horizontal-btn:focus:after,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-horizontal-btn:hover:after {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-horizontal-btn:hover:after,
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-transparent-fill-horizontal-btn:focus:after{
 		background: <?php echo esc_attr( uabb_theme_base_color( $settings->bg_hover_color ) ); ?>;
 		height: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );
 		width: calc( 100% + <?php echo esc_attr( $border_size ) . 'px'; ?> );
@@ -703,7 +702,7 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 	}
 
 	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-<?php echo esc_attr( $settings->transparent_button_options ); ?>-btn:hover .uabb-creative-button-text,
-	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-<?php echo esc_attr( $settings->transparent_button_options ); ?>-btn:foucs .uabb-creative-button-text {
+	.fl-node-<?php echo esc_attr( $id ); ?> a.uabb-creative-transparent-btn.uabb-<?php echo esc_attr( $settings->transparent_button_options ); ?>-btn:focus .uabb-creative-button-text{
 		color: <?php echo esc_attr( uabb_theme_button_text_color( $settings->text_hover_color ) ); ?>;
 		position: relative;
 		z-index: 9;

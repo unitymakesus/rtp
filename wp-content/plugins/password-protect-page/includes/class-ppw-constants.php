@@ -36,6 +36,10 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const HOOK_CUSTOM_PASSWORD_FORM = 'ppwp_customize_password_form';
 
+		const HOOK_CALLBACK_URL = 'ppwp_callback_url';
+
+		const CALL_BACK_URL_PARAM = 'callback_url';
+
 		const HOOK_SHOULD_RENDER_PASSWORD_FORM = 'ppwp_should_render_password_form';
 
 		const HOOK_DEFAULT_TAB = 'ppw_default_tab';
@@ -187,9 +191,11 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const DEFAULT_FORM_BACKGROUND_COLOR = '';
 
-		const DEFAULT_FORM_PADDING = '10';
+		const DEFAULT_FORM_PADDING = '';
 
-		const DEFAULT_FORM_MARGIN = '0';
+		const DEFAULT_FORM_MARGIN = '';
+
+		const DEFAULT_FORM_BORDER_RADIUS = '';
 
 		const DEFAULT_HEADLINE_FONT_SIZE = '';
 
@@ -218,6 +224,12 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const DEFAULT_BUTTON_TEXT_HOVER_COLOR = '';
 
 		const DEFAULT_BUTTON_BACKGROUND_HOVER_COLOR = '';
+
+		const DEFAULT_SHOW_PASSWORD_TEXT = 'Show password';
+
+		const DEFAULT_SHOW_PASSWORD_TEXT_SIZE = '';
+
+		const DEFAULT_PASSWORD_LABEL_FONT_COLOR = '';
 		//phpcs:ignore #endregion
 
 		//phpcs:ignore
@@ -246,6 +258,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const GENERAL_SETTINGS_MODULE = 'general';
 
 		const MISC_SETTINGS_MODULE = 'misc';
+
+		const TROUBLESHOOT_SETTINGS_MODULE = 'troubleshooting';
 
 		const SHORTCODES_SETTINGS_MODULE = 'shortcodes';
 		//phpcs:ignore #endregion

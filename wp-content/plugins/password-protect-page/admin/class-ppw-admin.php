@@ -106,6 +106,7 @@ class PPW_Admin {
 			$assert_services->load_css_hide_feature_set_password_wp();
 			$assert_services->load_js_show_notice_deactivate_plugin();
 			$assert_services->load_assets_for_misc_tab();
+			$assert_services->load_assets_for_troubleshoot_tab();
 		}
 	}
 
@@ -287,6 +288,20 @@ class PPW_Admin {
 		<div class="ppw_setting_page">
 			<?php
 			include PPW_DIR_PATH . 'includes/views/misc/view-ppw-misc.php';
+			?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Render Advanced tab
+	 */
+	public function ppw_free_render_content_troubleshooting() {
+		?>
+		<div class="ppw_setting_page">
+			<?php
+			include PPW_DIR_PATH . 'includes/views/troubleshooting/view-ppw-troubleshooting.php';
+			include PPW_DIR_PATH . 'includes/views/sidebar/view-ppw-sidebar.php';
 			?>
 		</div>
 		<?php

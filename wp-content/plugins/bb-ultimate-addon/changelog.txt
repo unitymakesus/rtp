@@ -1,3 +1,13 @@
+Version 1.26.2 - Thursday, 9th April 2020
+- Improvement: Added accessibility support for modules.
+- Improvement: Hardened the security of the plugin.
+- Improvement: Particle Backgrounds - Optimised Row / Column JavaScript.
+- Fixed: Button - Button text hover color not working with Transparent style.
+- Fixed: Interactive Banner 2 - Connection field issue fixed.
+- Fixed: Price List - WPML Translation not working issue fixed.
+- Fixed: Woo-Products - Custom flash content not working for variable products.
+- Fixed: Woo-Products - UI issue with BB theme.
+
 Version 1.26.1 - Thursday, 26th March 2020
 - Improvement: Button - Added focus style effect to the background color, text color, and border-color
 - Improvement: FAQ - Added equal height setting for the grid style

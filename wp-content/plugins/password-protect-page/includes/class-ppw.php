@@ -193,6 +193,8 @@ class Password_Protect_Page {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-text-editor-control.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-toggle-control.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-title-group-control.php';
 
 		/**
 		 * The class responsible for defining all addons.
@@ -281,6 +283,7 @@ class Password_Protect_Page {
 		$this->loader->add_action( 'ppw_render_content_shortcodes', $plugin_admin, 'ppw_free_render_content_shortcodes', 11 );
 		$this->loader->add_action( 'ppw_render_content_master_passwords', $plugin_admin, 'ppw_free_render_content_master_passwords', 11 );
 		$this->loader->add_action( 'ppw_render_content_misc', $plugin_admin, 'ppw_free_render_content_misc', 11 );
+		$this->loader->add_action( 'ppw_render_content_troubleshooting', $plugin_admin, 'ppw_free_render_content_troubleshooting', 11 );
 		$this->loader->add_action( PPW_Constants::HOOK_RESTRICT_CONTENT_AFTER_VALID_PWD, $plugin_admin, 'set_postpass_cookie_to_prevent_cache', 10, 2 );
 		$this->loader->add_action( 'rest_api_init', $plugin_admin, 'rest_api_init', 10, 2 );
 		$this->loader->add_filter( 'ppw_content_shortcode_source', $plugin_admin, 'handle_content_shortcode_for_multiple_pages', 11, 3 );

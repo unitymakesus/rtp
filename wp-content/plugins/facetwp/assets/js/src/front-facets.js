@@ -487,7 +487,7 @@
         // reset
         if ($this.hasClass('f-reset')) {
             $lat.val('');
-            $lat.val('');
+            $lng.val('');
             $input.val('');
             FWP.autoload();
             return;

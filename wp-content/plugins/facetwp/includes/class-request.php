@@ -65,8 +65,11 @@ class FacetWP_Request
         // Populate $_GET
         else {
             $data = stripslashes_deep( $_POST['data'] );
-            foreach ( $data['http_params']['get'] as $key => $val ) {
-                $_GET[ $key ] = $val;
+
+            if ( ! empty( $data['http_params']['get'] ) ) {
+                foreach ( $data['http_params']['get'] as $key => $val ) {
+                    $_GET[ $key ] = $val;
+                }
             }
         }
 

@@ -343,3 +343,10 @@ div.uabb-tabs > nav {
 .uabb-module-content .uabb-text-editor.uabb-tabs-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b):not(i) {
     font-weight: inherit;
 }
+
+/* Accesibility support */
+
+.uabb-tab-link:focus {
+    border: 1px solid #5E9ED6;
+    border-radius: 0.5px;
+}

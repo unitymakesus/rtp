@@ -100,7 +100,7 @@ class FacetWP_Indexer
 
         if ( ! empty( $matches ) ) {
             $facet_names = wp_list_pluck( $matches, 'name' );
-            $facet_names = implode( "','", array_map( 'esc_sql', $facet_names ) );
+            $facet_names = implode( "','", esc_sql( $facet_names ) );
 
             $wpdb->query( $wpdb->prepare( "
                 UPDATE {$this->table}
@@ -123,7 +123,7 @@ class FacetWP_Indexer
 
         if ( ! empty( $matches ) ) {
             $facet_names = wp_list_pluck( $matches, 'name' );
-            $facet_names = implode( "','", array_map( 'esc_sql', $facet_names ) );
+            $facet_names = implode( "','", esc_sql( $facet_names ) );
 
             $wpdb->query( "
                 DELETE FROM {$this->table}

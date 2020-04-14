@@ -42,7 +42,7 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 				if ( 'yes' === $settings->show_fname ) :
 					?>
 					<div class="uabb-form-field">
-					<input type="text" name="uabb-subscribe-form-fname" id="uabb-subscribe-form-fname" placeholder="<?php echo ( 'style2' !== $settings->form_style ) ? ( ( '' !== $settings->fname_label ) ? $settings->fname_label : esc_attr_e( 'Your Name', 'uabb' ) ) : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
+					<input type="text" name="uabb-subscribe-form-fname"  id="uabb-subscribe-form-fname" aria-label="fname" placeholder="<?php echo ( 'style2' !== $settings->form_style ) ? ( ( '' !== $settings->fname_label ) ? $settings->fname_label : __( 'Your Name', 'uabb' ) ) : '';  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
 					<?php
 					if ( 'style2' === $settings->form_style ) {
 						?>
@@ -58,7 +58,7 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 				if ( 'yes' === $settings->show_lname ) :
 					?>
 					<div class="uabb-form-field">
-					<input type="text" name="uabb-subscribe-form-lname" id="uabb-subscribe-form-lname" placeholder="<?php echo ( 'style2' !== $settings->form_style ) ? ( ( '' !== $settings->lname_label ) ? $settings->lname_label : esc_attr_e( 'Last Name', 'uabb' ) ) : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
+					<input type="text" name="uabb-subscribe-form-lname" id="uabb-subscribe-form-lname" aria-label="lname" placeholder="<?php echo ( 'style2' !== $settings->form_style ) ? ( ( '' !== $settings->lname_label ) ? $settings->lname_label : __( 'Last Name', 'uabb' ) ) : '';  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
 					<?php
 					if ( 'style2' === $settings->form_style ) {
 						?>
@@ -70,7 +70,7 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 				</div><?php endif; ?><!-- Inline Block Space Fix
 
 				--><div class="uabb-form-field">
-					<input type="email" name="uabb-subscribe-form-email" placeholder="<?php echo ( 'style2' !== $settings->form_style ) ? ( ( '' !== $settings->email_placeholder ) ? $settings->email_placeholder : esc_attr_e( 'Your Email', 'uabb' ) ) : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
+					<input type="email" name="uabb-subscribe-form-email" aria-label="email" placeholder="<?php echo ( 'style2' !== $settings->form_style ) ? ( ( '' !== $settings->email_placeholder ) ? $settings->email_placeholder : __( 'Your Email', 'uabb' ) ) : '';  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" />
 					<?php
 					if ( 'style2' === $settings->form_style ) {
 						?>
@@ -88,7 +88,7 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 							<?php endif; ?>
 							<div class="uabb-terms-wrap">
 								<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo esc_attr( $random_id ); ?>">
-									<input type="checkbox" id="uabb-terms-checkbox-<?php echo esc_attr( $random_id ); ?>" name="uabb-terms-checkbox" value="1" />
+									<input type="checkbox" id="uabb-terms-checkbox-<?php echo esc_attr( $random_id ); ?>" aria-label="checkbox" name="uabb-terms-checkbox" value="1" />
 									<span class="terms-checkbox">
 										<?php echo $settings->terms_checkbox_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 									</span>
@@ -129,7 +129,7 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 						<?php endif; ?>
 						<div class="uabb-terms-wrap">
 							<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo esc_attr( $random_id ); ?>">
-								<input type="checkbox" id="uabb-terms-checkbox-<?php echo esc_attr( $random_id ); ?>" name="uabb-terms-checkbox" value="1" />
+								<input type="checkbox" id="uabb-terms-checkbox-<?php echo esc_attr( $random_id ); ?>" aria-label="checkbox" name="uabb-terms-checkbox" value="1" />
 								<span class="terms-checkbox">
 									<?php echo $settings->terms_checkbox_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								</span>
