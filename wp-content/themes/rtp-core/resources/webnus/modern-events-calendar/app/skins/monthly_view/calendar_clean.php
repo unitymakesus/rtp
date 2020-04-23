@@ -139,6 +139,7 @@ elseif($week_start == 5) // Friday
                     // Get thumbnail
                     $siteID = get_post_meta($event->data->ID, 'dt_original_blog_id', true);
                     $origID = get_post_meta($event->data->ID, 'dt_original_post_id', true);
+                    $event_thumb = '';
                     if (!empty($siteID)) {
                       // If this is a syndicated post, switch to original site to get featured image
                       switch_to_blog($siteID);
