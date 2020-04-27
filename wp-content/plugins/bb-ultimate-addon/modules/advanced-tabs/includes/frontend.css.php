@@ -451,14 +451,28 @@ if ( ! $version_bb_check ) {
 <?php
 if ( 'bar' === $settings->style ) {
 	if ( 'yes' === $settings->tab_spacing && '' !== $settings->tab_spacing_size ) {
+		if ( 'horizontal' === $settings->tab_layout ) {
+			?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .fl-module-content .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> ul li {
+			margin: 0 <?php echo esc_attr( $settings->tab_spacing_size / 2 ); ?>px;
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .fl-module-content .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> ul {
+			margin: 0 -<?php echo esc_attr( $settings->tab_spacing_size / 2 ); ?>px;
+		}
+			<?php
+		}
+	}
+}
+if ( 'yes' === $settings->tab_spacing && '' !== $settings->tab_spacing_size ) {
+	if ( 'vertical' === $settings->tab_layout ) {
 		?>
-.fl-node-<?php echo esc_attr( $id ); ?> .fl-module-content .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> ul li {
-	margin: 0 <?php echo esc_attr( $settings->tab_spacing_size / 2 ); ?>px;
-}
-.fl-node-<?php echo esc_attr( $id ); ?> .fl-module-content .uabb-tabs .uabb-tabs-nav<?php echo esc_attr( $id ); ?> ul {
-	margin: 0 -<?php echo esc_attr( $settings->tab_spacing_size / 2 ); ?>px;
-}
-		<?php
+			.fl-node-<?php echo esc_attr( $id ); ?> .fl-module-content .uabb-tabs.uabb-tabs-layout-vertical .uabb-tabs-nav<?php echo esc_attr( $id ); ?> ul li {
+				margin: 0px 0px <?php echo esc_attr( $settings->tab_spacing_size / 2 ); ?>px 0px;
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .fl-module-content .uabb-tabs.uabb-tabs-layout-vertical .uabb-tabs-nav<?php echo esc_attr( $id ); ?> ul {
+				margin: 0px 0px -<?php echo esc_attr( $settings->tab_spacing_size / 2 ); ?>px 0px;
+			}
+			<?php
 	}
 }
 ?>
@@ -905,3 +919,27 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 		}
 	}
 <?php endif; ?>
+
+<?php
+if ( isset( $settings->tab_layout ) && 'vertical' === $settings->tab_layout ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs > nav a span,.uabb-tabs > nav a .uabb-tab-title {
+		display: inline; 
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-tabs > nav a {
+		white-space: normal;
+	}
+	<?php
+	if ( 'simple' === $settings->style ) {
+		if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->tab_border ) ) {
+			// Border - Settings.
+			FLBuilderCSS::border_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'tab_border',
+					'selector'     => ".fl-node-$id .uabb-tabs.uabb-tabs-layout-vertical .uabb-tabs-nav$id ul li.uabb-tab-current",
+				)
+			);
+		}
+	}
+} ?>

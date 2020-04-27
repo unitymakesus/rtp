@@ -129,6 +129,7 @@ jQuery(document).ready(function() {
 		_init: function()
 		{
 			this._initAnchorLinks();
+			this._resizeContent();
 		},
 
 		/**
@@ -182,6 +183,18 @@ jQuery(document).ready(function() {
 					catch( e ) {}
 				}
 			}
+		},
+		_resizeContent: function()
+		{
+			$(this.nodeClass + ' .uabb-tabs-layout-vertical').each($.proxy(this._resizeVertical, this));
+		},
+		_resizeVertical: function(e)
+		{
+			var wrap    = $(this.nodeClass + ' .uabb-tabs-layout-vertical'),
+				labels  = wrap.find('.uabb-tabs-nav'),
+				panels  = wrap.find('.uabb-tab-acc-content');
+
+			panels.css('min-height', labels.height() + 'px');
 		},
 
 		/**

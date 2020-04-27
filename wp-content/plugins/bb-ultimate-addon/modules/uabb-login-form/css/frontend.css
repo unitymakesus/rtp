@@ -209,6 +209,18 @@
   
 }
 
+/* Password eye icon */
+.uabb-lf-input-group.uabb-lf-row.uabb-lf-password-input{
+  position: relative;
+}
+.uabb-lf-input-group .uabb-lf-icon {
+  position: absolute;
+  margin-right: 10px;
+  bottom: 20px;
+  right: 0px;
+  z-index: 2;
+}
+
 /* Login Button width CSS */
 .uabb-lf-custom-wp-login-form .uabb-lf-btn-width_100 {
   width: 100%;
@@ -329,4 +341,25 @@
 .uabb-lf-form-wrap .uabb-lf-social-login-wrap .uabb-lf-facebook-light.uabb-fbLink .uabb-facebook-button-icon {
     padding: 10px 0 10px 10px;
 }
-
+.uabb-login-form-loader {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 1em;
+    color: inherit;
+    vertical-align: middle;
+    pointer-events: none;
+    border: .2em solid currentcolor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: 1s uabb-loader linear infinite;
+    position: relative;
+}
+@keyframes uabb-loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

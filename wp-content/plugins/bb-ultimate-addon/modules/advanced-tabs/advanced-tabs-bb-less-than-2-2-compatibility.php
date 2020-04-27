@@ -33,6 +33,23 @@ FLBuilder::register_module(
 				'general'            => array(
 					'title'  => '',
 					'fields' => array(
+						'tab_layout'            => array(
+							'type'    => 'select',
+							'label'   => __( 'Tab Layout', 'uabb' ),
+							'default' => 'horizontal',
+							'options' => array(
+								'horizontal' => __( 'Horizontal', 'uabb' ),
+								'vertical'   => __( 'Vertical', 'uabb' ),
+							),
+							'toggle'  => array(
+								'horizontal' => array(
+									'fields' => array( 'tab_style_width' ),
+								),
+							),
+							'preview' => array(
+								'type' => 'refresh',
+							),
+						),
 						'style'                 => array(
 							'type'    => 'select',
 							'label'   => __( 'Tab Appearance', 'uabb' ),
@@ -144,6 +161,13 @@ FLBuilder::register_module(
 								'yes' => __( 'Yes', 'uabb' ),
 							),
 							'help'    => __( 'Choosing yes will collapse all tabs by default.', 'uabb' ),
+						),
+						'active_tab'            => array(
+							'type'        => 'unit',
+							'label'       => __( 'Active Tab Index', 'uabb' ),
+							'placeholder' => __( '0', 'uabb' ),
+							'size'        => '5',
+							'help'        => __( 'Index of default active tab. Index starts from 0.', 'uabb' ),
 						),
 					),
 				),
@@ -729,7 +753,7 @@ FLBuilder::register_settings_form(
 						'fields' => array(
 							'label'    => array(
 								'type'        => 'text',
-								'default'     => __( 'Ticketing', 'uabb' ),
+								'default'     => __( 'Tab Title', 'uabb' ),
 								'label'       => __( 'Tab Title', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
@@ -789,7 +813,7 @@ FLBuilder::register_settings_form(
 							'ct_content'        => array(
 								'type'        => 'editor',
 								'label'       => '',
-								'default'     => '',
+								'default'     => __( 'This is tab content. Click to edit this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'ct_photo'          => array(

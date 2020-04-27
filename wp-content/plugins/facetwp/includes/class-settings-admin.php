@@ -74,6 +74,10 @@ class FacetWP_Settings_Admin
             unset( $defaults['woocommerce'] );
         }
 
+        if ( '_' == FWP()->helper->settings['settings']['prefix'] ) {
+            unset( $defaults['general']['fields']['prefix'] );
+        }
+
         return apply_filters( 'facetwp_settings_admin', $defaults, $this );
     }
 

@@ -313,7 +313,8 @@ function ppw_core_render_login_form() {
 		}
 		?>
 		<div class="ppw-ppf-desc"><?php echo $form_message; // phpcs:ignore ?></div>
-		<p>
+		<p class="ppw-ppf-field-container">
+			<?php do_action('ppwp_ppf_fields_before_password') ?>
 			<label class="ppw-pwd-label" for="<?php echo esc_attr( $label ); ?>"><?php echo esc_js( $password_label ); ?> <input placeholder="<?php echo esc_attr( $place_holder ); ?>" name="post_password" id="<?php echo esc_attr( $label ); ?>"  type="password" size="20"/></label><input type="submit" name="Submit" value="<?php echo esc_attr( $submit_label ); ?>"/>
 		</p><?php if ( ! empty( $show_password ) ) echo $show_password; // phpcs:ignore ?></div>
 	<?php if ( ! empty( $wrong_message ) ) echo $wrong_message; // phpcs:ignore ?>

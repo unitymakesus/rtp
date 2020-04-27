@@ -1,3 +1,14 @@
+Version 1.26.3 Thursday, 23rd April 2020
+- Improvement: Advanced Tabs - Added option Active Tab index for default active tab
+- Improvement: Advanced Tab - Added vertical tabs layout
+- Improvement: Button - UI & UX improvement in module
+- Improvement: Login Form - Added loader icon when user clicks login button
+- Improvement: Login Form - Added View Password option
+- Improvement: Modal Popup - Added Border setting option
+- Fixed: HTML rendering issue in settings field in some modules
+- Fixed: Retina Image - Issue with the image width
+- Fixed: Slide Box - Issue with WPML plugin with CTA Button
+
 Version 1.26.2 - Thursday, 9th April 2020
 - Improvement: Added accessibility support for modules.
 - Improvement: Hardened the security of the plugin.

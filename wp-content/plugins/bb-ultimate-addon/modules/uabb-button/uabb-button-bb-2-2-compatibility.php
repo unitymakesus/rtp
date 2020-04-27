@@ -395,7 +395,18 @@ FLBuilder::register_module(
 							'placeholder' => '0',
 							'maxlength'   => '3',
 							'size'        => '4',
-							'description' => 'px',
+							'units'       => array(
+								'px',
+								'vw',
+								'%',
+							),
+							'slider'      => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 1,
+								),
+							),
 							'preview'     => array(
 								'type'  => 'css',
 								'rules' => array(
@@ -421,8 +432,8 @@ FLBuilder::register_module(
 							'slider'      => array(
 								'px' => array(
 									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
+									'max'  => 100,
+									'step' => 1,
 								),
 							),
 							'units'       => array(

@@ -337,3 +337,14 @@ function ppw_handle_protected_content( $post, $content, $is_show_excerpt ) {
 
 	return $content;
 }
+
+/**
+ * Helper function to get Pro version.
+ */
+function ppw_get_pro_version() {
+	if ( ! defined( 'PPW_PRO_VERSION' ) ) {
+		return '';
+	}
+
+	return PPW_PRO_VERSION;
+}

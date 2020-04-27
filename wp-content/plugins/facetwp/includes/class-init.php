@@ -63,10 +63,6 @@ class FacetWP_Init
         // update checks
         include( FACETWP_DIR . '/includes/class-updater.php' );
 
-        if ( FWP()->helper->is_license_active() ) {
-            include( FACETWP_DIR . '/includes/libraries/github-updater.php' );
-        }
-
         // hooks
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'front_scripts' ] );

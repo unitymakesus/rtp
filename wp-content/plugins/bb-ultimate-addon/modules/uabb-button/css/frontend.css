@@ -2,3 +2,6 @@
 .uabb-creative-button-wrap a:visited {
 	padding: 12px 24px;
 }
+a.uabb-button.uabb-creative-button.uabb-creative-gradient-btn {
+    border: none;
+}

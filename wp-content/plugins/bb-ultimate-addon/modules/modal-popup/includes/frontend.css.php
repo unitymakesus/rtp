@@ -851,3 +851,14 @@ if ( 'button' === $settings->modal_on ) {
 	border-right-color: transparent;
 }
 
+<?php
+if ( class_exists( 'FLBuilderCSS' ) && isset( $settings->modal_border ) ) {
+	FLBuilderCSS::border_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'modal_border',
+			'selector'     => ".uamodal-$id .uabb-content",
+		)
+	);
+}
+?>

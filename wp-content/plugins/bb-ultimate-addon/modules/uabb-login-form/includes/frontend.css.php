@@ -18,6 +18,7 @@ $settings->lost_your_pass_color                = UABB_Helper::uabb_colorpicker( 
 $settings->errormsg_bgcolor                    = UABB_Helper::uabb_colorpicker( $settings, 'errormsg_bgcolor', true );
 $settings->errormsg_text_color                 = UABB_Helper::uabb_colorpicker( $settings, 'errormsg_text_color', true );
 $settings->checkbox_bgcolor                    = UABB_Helper::uabb_colorpicker( $settings, 'checkbox_bgcolor', true );
+$settings->eye_icon_color                      = UABB_Helper::uabb_colorpicker( $settings, 'eye_icon_color', true );
 /* Render Separator CSS */
 if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 
@@ -400,7 +401,40 @@ if ( 'enable' === esc_attr( $settings->separator_select ) ) {
 		}
 	}
 	?>
+<?php
+// Eye icon feild settings.
 
+if ( 'enable' === $settings->eye_icon ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-icon.toggle-password {
+		display:block;
+}
+	<?php
+} else {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-icon.toggle-password {
+		display:none;
+}
+	<?php
+}
+?>
+<?php
+if ( isset( $settings->eye_icon_color ) ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-input-group .uabb-lf-icon.toggle-password {
+		<?php
+		echo ( ! empty( $settings->eye_icon_color ) ) ? 'color:' . esc_attr( $settings->eye_icon_color ) . ';' : '';
+		?>
+	}
+	<?php
+}
+
+?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-input-group .uabb-lf-icon {
+		right: calc( 100% - <?php echo esc_attr( intval( $settings->input_field_width ) ); ?>% );
+	}
+
+<!-- Eye icon feild settings End -->
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-lf-form-wrap .uabb-lf-social-login-wrap .uabb-lf-google-button-wrap { 
 	<?php

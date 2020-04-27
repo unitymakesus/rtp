@@ -26,7 +26,7 @@
 
 																					}
 																					?>
-			<a href="<?php echo esc_url( $click_action_link ); ?>" target="<?php echo esc_attr( $click_action_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, $settings->click_action_nofollow, 1 ); ?> data-caption="<?php echo esc_attr( $photo->caption ); ?>">
+			<a href="<?php echo $click_action_link; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" target="<?php echo esc_attr( $click_action_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, $settings->click_action_nofollow, 1 ); ?> data-caption="<?php echo esc_attr( $photo->caption ); ?>">
 			<?php endif; ?>
 
 																						<?php

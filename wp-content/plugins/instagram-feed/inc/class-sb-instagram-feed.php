@@ -610,6 +610,10 @@ class SB_Instagram_Feed
 					if ( ! $skip_connection && ! $connection->is_wp_error() && ! $connection->is_instagram_error() ) {
 						$one_successful_connection = true;
 
+						$sb_instagram_posts_manager->remove_error( 'connection' );
+						$sb_instagram_posts_manager->remove_error( 'api' );
+						$sb_instagram_posts_manager->remove_error( 'at_' . $term );
+
 						$data = $connection->get_data();
 
 						if ( !$connected_account_for_term['is_valid'] ) {
@@ -660,13 +664,19 @@ class SB_Instagram_Feed
 									$this->num_api_calls++;
 									if ( ! $connection->is_wp_error() && ! $connection->is_instagram_error() ) {
 										$one_successful_connection = true;
+
+										$sb_instagram_posts_manager->remove_error( 'connection' );
+										$sb_instagram_posts_manager->remove_error( 'api' );
+										$sb_instagram_posts_manager->remove_error( 'at_' . $term );
+
 										$data = $connection->get_data();
 										if ( isset( $data[0]['id'] ) ) {
 											$one_post_found = true;
 											$post_set = $this->filter_posts( $data, $settings );
 											$new_post_sets[] = $post_set;
 										}
-										$next_page = $connection->get_next_page( $type );										if ( ! empty( $next_page ) ) {
+										$next_page = $connection->get_next_page( $type );
+										if ( ! empty( $next_page ) ) {
 											$next_pages[ $term . '_' . $type ] = $next_page;
 											$next_page_found = true;
 										} else {
@@ -684,12 +694,14 @@ class SB_Instagram_Feed
 							}
 
 							if ( ! $success && $error ) {
-								if ( is_wp_error( $error ) ) {
+								if ( $connection->is_wp_error() ) {
 									SB_Instagram_API_Connect::handle_wp_remote_get_error( $error );
 								} else {
 									SB_Instagram_API_Connect::handle_instagram_error( $error, $connected_accounts_for_feed[ $term ], $type );
 								}
 								$next_pages[ $term . '_' . $type ] = false;
+								$show_error_message = true;
+
 							}
 						} else {
 							if ( $skip_connection ) {
@@ -699,6 +711,7 @@ class SB_Instagram_Feed
 							} else {
 								SB_Instagram_API_Connect::handle_instagram_error( $connection->get_data(), $connected_accounts_for_feed[ $term ], $type );
 							}
+							$show_error_message = true;
 
 							$next_pages[ $term . '_' . $type ] = false;
 						}
@@ -707,22 +720,30 @@ class SB_Instagram_Feed
 					$one_api_request_delayed = true;
 
 					$this->add_report( 'delaying API request for ' . $term . ' - ' . $type );
+					$show_error_message = true;
+				}
 
-					$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed for this account.', 'instagram-feed' ), $connected_account_for_term['username'] ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b></p>';
-					$errors = $sb_instagram_posts_manager->get_errors();
-					if ( ! empty( $errors )  && current_user_can( 'manage_options' ) ) {
-						if ( isset( $errors['api'] ) ) {
-							$error .= '<p>' . $errors['api'][1] . '</p>';
-						} elseif ( isset( $errors['connection'] ) ) {
-							$error .= '<p>' . $errors['connection'][1] . '</p>';
-						} // https://smashballoon.com/instagram-feed/docs/errors/
-						$error .= '<p><a href="https://smashballoon.com/instagram-feed/docs/errors/">' . __( 'Click here to troubleshoot', 'instagram-feed' ) . '</a></p>';
+				if ( isset( $show_error_message ) ) {
+					$error = '';
+					if ( $sb_instagram_posts_manager->are_critical_errors() ) {
+						$error .= $sb_instagram_posts_manager->get_critical_errors();
 					} else {
-						$error .= '<p>' . __( 'There may be an issue with the Instagram access token that you are using. Your server might also be unable to connect to Instagram at this time.', 'instagram-feed' ) . '</p>';
+						$errors = $sb_instagram_posts_manager->get_frontend_errors();
+						$cap = current_user_can( 'manage_instagram_feed_options' ) ? 'manage_instagram_feed_options' : 'manage_options';
+						$cap = apply_filters( 'sbi_settings_pages_capability', $cap );
+						if ( current_user_can( $cap ) ) {
+							foreach ( $errors as $error_message ) {
+								$error .= $error_message;
+							}
+							$error .= '<p class="sbi-error-directions"><a href="https://smashballoon.com/instagram-feed/docs/errors/" target="_blank" rel="noopener">' . __( 'Directions on how to resolve this issue.', 'instagram-feed' )  . '</a></p>';
+						} else {
+							$error = '<p><b>' . sprintf( __( 'Error: API requests are being delayed for this account.', 'instagram-feed' ), $connected_account_for_term['username'] ) . ' ' . __( 'New posts will not be retrieved.', 'instagram-feed' ) . '</b></p>';
+							$error .= '<p>' . __( 'Log in as an administrator and view the Instagram Feed settings page for more details.', 'instagram-feed' ) . '</p>';
+						}
 					}
 
 					$sb_instagram_posts_manager->add_frontend_error( 'at_' . $connected_account_for_term['username'], $error );
-				}
+                }
 
 			}
 		}
@@ -776,6 +797,10 @@ class SB_Instagram_Feed
 
 			if ( ! $connection->is_wp_error() && ! $connection->is_instagram_error() ) {
 				$this->header_data = $connection->get_data();
+
+				$sb_instagram_posts_manager->remove_error( 'connection' );
+				$sb_instagram_posts_manager->remove_error( 'api' );
+				$sb_instagram_posts_manager->remove_error( 'at_' . $first_user );
 
 				if ( isset( $connected_accounts_for_feed[ $first_user ]['local_avatar'] ) && $connected_accounts_for_feed[ $first_user ]['local_avatar'] ) {
 					$upload = wp_upload_dir();

@@ -89,7 +89,7 @@ final class FacetWP_Helper
             'settings' => [
                 'thousands_separator' => ',',
                 'decimal_separator' => '.',
-                'prefix' => 'fwp_'
+                'prefix' => '_'
             ]
         ];
 
@@ -548,6 +548,26 @@ final class FacetWP_Helper
 
             if ( isset( $activation->status ) && 'success' == $activation->status ) {
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Get a license meta value
+     * Possible keys: status, message, expiration, payment_id, price_id
+     * @since 3.5.3
+     */
+    function get_license_meta( $key = 'status' ) {
+        $activation = get_option( 'facetwp_activation' );
+
+        if ( ! empty( $activation ) ) {
+            $data = json_decode( $activation, true );
+
+            if ( isset( $data[ $field ] ) ) {
+                return $data[ $field ];
             }
         }
 

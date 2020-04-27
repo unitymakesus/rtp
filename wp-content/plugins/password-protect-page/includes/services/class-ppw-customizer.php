@@ -412,6 +412,8 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				'type'     		=> 'text',
 			) );
 
+			do_action('ppw_customize_after_form_instructions', $wp_customize);
+
 			/* form error message section */
 			$wp_customize->add_section( 'ppwp_form_error_message', array(
 				'title'    => __( 'Error Message', 'password-protect-page' ),
@@ -433,6 +435,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 						'section'  => 'ppwp_form_error_message',
 						'settings' => 'ppwp_form_error_message_text',
 						'type'     => 'editor',
+						'priority' => 10,
 					)
 				)
 			);
@@ -448,6 +451,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				'section'     => 'ppwp_form_error_message',
 				'settings'    => 'ppwp_form_error_message_text_font_size',
 				'type'        => 'number',
+				'priority' 	  => 20,
 			) );
 
 			/* error message font weight */
@@ -459,6 +463,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				'section'  => 'ppwp_form_error_message',
 				'settings' => 'ppwp_form_error_message_text_font_weight',
 				'type'     => 'number',
+				'priority' => 25,
 			) );
 
 			/* error message text color */
@@ -473,6 +478,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 					'label'    => __( 'Text Color', 'password-protect-page' ),
 					'section'  => 'ppwp_form_error_message',
 					'settings' => 'ppwp_form_error_message_text_color',
+					'priority' => 30,
 				) )
 			);
 
@@ -488,6 +494,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 					'label'    => __( 'Background Color', 'password-protect-page' ),
 					'section'  => 'ppwp_form_error_message',
 					'settings' => 'ppwp_form_error_message_background_color',
+					'priority' => 35,
 				) )
 			);
 

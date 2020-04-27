@@ -354,6 +354,18 @@ FLBuilder::register_module(
 							'show_reset' => true,
 							'show_alpha' => true,
 						),
+						'modal_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Modal Popup Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-content',
+								'property' => 'border',
+								'unit'     => 'px',
+							),
+						),
 					),
 				),
 			),

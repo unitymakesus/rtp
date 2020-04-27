@@ -38,6 +38,7 @@ class UABBLoginForm extends FLBuilderModule {
 		add_action( 'wp_ajax_nopriv_uabb-lf-form-submit', array( $this, 'uabb_lf_form_submit_ajax_function' ) );
 		add_action( 'wp_ajax_nopriv_uabb-lf-google-submit', array( $this, 'uabb_lf_google_submit_ajax_function' ) );
 		add_action( 'wp_ajax_nopriv_uabb-lf-facebook-submit', array( $this, 'uabb_lf_facebook_submit_ajax_function' ) );
+		$this->add_css( 'font-awesome-5' );
 	}
 
 	/**

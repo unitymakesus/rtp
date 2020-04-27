@@ -5,16 +5,28 @@ class FacetWP_Ajax
 
     function __construct() {
 
+        $valid_actions = [
+            'save_settings',
+            'rebuild_index',
+            'get_info',
+            'get_query_args',
+            'heartbeat',
+            'license',
+            'backup'
+        ];
+
+        $action = isset( $_POST['action'] ) ? $_POST['action'] : '';
+        $is_valid = false;
+
+        if ( 0 === strpos( $action, 'facetwp_' ) ) {
+            $action = substr( $action, 8 );
+            $is_valid = in_array( $action, $valid_actions );
+        }
+
         // Authenticated
-        if ( current_user_can( 'manage_options' ) ) {
+        if ( $is_valid && current_user_can( 'manage_options' ) ) {
             if ( check_ajax_referer( 'fwp_admin_nonce', 'nonce', false ) ) {
-                add_action( 'wp_ajax_facetwp_save', [ $this, 'save_settings' ] );
-                add_action( 'wp_ajax_facetwp_rebuild_index', [ $this, 'rebuild_index' ] );
-                add_action( 'wp_ajax_facetwp_get_info', [ $this, 'get_info' ] );
-                add_action( 'wp_ajax_facetwp_get_query_args', [ $this, 'get_query_args' ] );
-                add_action( 'wp_ajax_facetwp_heartbeat', [ $this, 'heartbeat' ] );
-                add_action( 'wp_ajax_facetwp_license', [ $this, 'license' ] );
-                add_action( 'wp_ajax_facetwp_backup', [ $this, 'backup' ] );
+                add_action( 'wp_ajax_facetwp_' . $action, [ $this, $action ] );
             }
         }
 
@@ -62,18 +74,6 @@ class FacetWP_Ajax
     function rebuild_index() {
         update_option( 'facetwp_indexing_cancelled', 'no', 'no' );
         FWP()->indexer->index();
-        exit;
-    }
-
-
-    /**
-     * Resume stalled indexer
-     */
-    function resume_index() {
-        $touch = (int) FWP()->indexer->get_transient( 'touch' );
-        if ( 0 < $touch && $_POST['touch'] == $touch ) {
-            FWP()->indexer->index();
-        }
         exit;
     }
 
@@ -143,33 +143,6 @@ class FacetWP_Ajax
 
 
     /**
-     * The AJAX facet refresh handler
-     */
-    function refresh() {
-
-        global $wpdb;
-
-        $params = FWP()->request->process_post_data();
-        $output = FWP()->facet->render( $params );
-        $data = stripslashes_deep( $_POST['data'] );
-
-        // Ignore invalid UTF-8 characters in PHP 7.2+
-        if ( version_compare( phpversion(), '7.2', '<' ) ) {
-            $output = json_encode( $output );
-        }
-        else {
-            $output = json_encode( $output, JSON_INVALID_UTF8_IGNORE );
-        }
-
-        echo apply_filters( 'facetwp_ajax_response', $output, [
-            'data' => $data
-        ] );
-
-        exit;
-    }
-
-
-    /**
      * Keep track of indexing progress
      */
     function heartbeat() {
@@ -182,6 +155,38 @@ class FacetWP_Ajax
         }
 
         wp_send_json( $output );
+    }
+
+
+    /**
+     * License activation
+     */
+    function license() {
+        $license = $_POST['license'];
+
+        $request = wp_remote_post( 'http://api.facetwp.com', [
+            'body' => [
+                'action'        => 'activate',
+                'slug'          => 'facetwp',
+                'license'       => $license,
+                'host'          => FWP()->helper->get_http_host(),
+            ]
+        ] );
+
+        if ( ! is_wp_error( $request ) || 200 == wp_remote_retrieve_response_code( $request ) ) {
+            update_option( 'facetwp_license', $license );
+            update_option( 'facetwp_activation', $request['body'] );
+            update_option( 'facetwp_updater_last_checked', 0 );
+            echo $request['body'];
+        }
+        else {
+            echo json_encode( [
+                'status'    => 'error',
+                'message'   => __( 'Error', 'fwp' ) . ': ' . $request->get_error_message(),
+            ] );
+        }
+
+        exit;
     }
 
 
@@ -263,33 +268,40 @@ class FacetWP_Ajax
 
 
     /**
-     * License activation
+     * The AJAX facet refresh handler
      */
-    function license() {
-        $license = $_POST['license'];
+    function refresh() {
 
-        $request = wp_remote_post( 'http://api.facetwp.com', [
-            'body' => [
-                'action'        => 'activate',
-                'slug'          => 'facetwp',
-                'license'       => $license,
-                'host'          => FWP()->helper->get_http_host(),
-            ]
-        ] );
+        global $wpdb;
 
-        if ( ! is_wp_error( $request ) || 200 == wp_remote_retrieve_response_code( $request ) ) {
-            update_option( 'facetwp_license', $license );
-            update_option( 'facetwp_activation', $request['body'] );
-            update_option( 'facetwp_updater_last_checked', 0 );
-            echo $request['body'];
+        $params = FWP()->request->process_post_data();
+        $output = FWP()->facet->render( $params );
+        $data = stripslashes_deep( $_POST['data'] );
+
+        // Ignore invalid UTF-8 characters in PHP 7.2+
+        if ( version_compare( phpversion(), '7.2', '<' ) ) {
+            $output = json_encode( $output );
         }
         else {
-            echo json_encode( [
-                'status'    => 'error',
-                'message'   => __( 'Error', 'fwp' ) . ': ' . $request->get_error_message(),
-            ] );
+            $output = json_encode( $output, JSON_INVALID_UTF8_IGNORE );
         }
 
+        echo apply_filters( 'facetwp_ajax_response', $output, [
+            'data' => $data
+        ] );
+
+        exit;
+    }
+
+
+    /**
+     * Resume stalled indexer
+     */
+    function resume_index() {
+        $touch = (int) FWP()->indexer->get_transient( 'touch' );
+        if ( 0 < $touch && $_POST['touch'] == $touch ) {
+            FWP()->indexer->index();
+        }
         exit;
     }
 }

@@ -98,5 +98,10 @@ class FacetWP_Upgrade
                 update_option( 'facetwp_settings', json_encode( $settings ) );
             }
         }
+
+        if ( version_compare( $this->last_version, '3.5.3', '<' ) ) {
+            update_option( 'facetwp_updater_response', '', 'no' );
+            update_option( 'facetwp_updater_last_checked', '', 'no' );
+        }
     }
 }

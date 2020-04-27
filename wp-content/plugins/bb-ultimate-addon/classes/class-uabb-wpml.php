@@ -50,7 +50,6 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-price-list.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-business-hours.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-pricing-box.php';
-				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-slide-box.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-how-to.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-faq.php';
 			}
@@ -770,8 +769,8 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 
 			// Slide Box Module.
 			$form['slide-box'] = array(
-				'conditions'        => array( 'type' => 'slide-box' ),
-				'fields'            => array(
+				'conditions' => array( 'type' => 'slide-box' ),
+				'fields'     => array(
 					array(
 						'field'       => 'title_front',
 						'type'        => __( 'Slide Box : Title on Front', 'uabb' ),
@@ -803,7 +802,6 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 						'editor_type' => 'LINE',
 					),
 				),
-				'integration-class' => 'WPML_UABB_Slide_Box',
 			);
 
 			// Advanced Separator Module.

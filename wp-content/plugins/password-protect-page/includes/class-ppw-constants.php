@@ -128,6 +128,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const HOOK_SHORTCODE_ELEMENTOR_ATTRIBUTES = 'ppw_shortcode_elementor_attributes';
 
+		const HOOK_SHORTCODE_ELEMENTOR_CONTENT = 'ppw_shortcode_elementor_content';
+
 		const HOOK_SIDEBAR_SHORTCODE = 'ppw_sidebar_shortcode';
 
 		const HOOK_CHECK_CONTENT_IS_PROTECTED_BY_PRO = 'ppw_check_content_is_protected_by_pro';

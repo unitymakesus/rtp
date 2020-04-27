@@ -175,6 +175,15 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 			$params_in_referer = ppw_core_get_param_in_url( $referrer_url );
 
 			if ( $is_valid ) {
+				$referrer_url = apply_filters(
+					'ppwp_ppf_referrer_url',
+					$referrer_url,
+					array(
+						'is_valid'   => $is_valid,
+						'parameters' => $params_in_referer,
+					)
+				);
+
 				$url_redirect = preg_replace( '/[&?]' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true/', '', $referrer_url );
 				$params       = apply_filters(
 					PPW_Constants::HOOK_PARAM_PASSWORD_SUCCESS,
@@ -195,12 +204,26 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 			}
 
 			if ( array_key_exists( PPW_Constants::WRONG_PASSWORD_PARAM, $params_in_referer ) && 'true' === $params_in_referer[ PPW_Constants::WRONG_PASSWORD_PARAM ] ) {
-				return $referrer_url;
+				return apply_filters(
+					'ppwp_ppf_redirect_url',
+					$referrer_url,
+					array(
+						'is_valid'   => $is_valid,
+						'parameters' => $params_in_referer,
+					)
+				);
 			}
 
 			$new_param = empty( $params_in_referer ) ? '?' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true' : '&' . PPW_Constants::WRONG_PASSWORD_PARAM . '=true';
 
-			return $referrer_url . $new_param;
+			return apply_filters(
+				'ppwp_ppf_redirect_url',
+				$referrer_url . $new_param,
+				array(
+					'is_valid'   => $is_valid,
+					'parameters' => $params_in_referer,
+				)
+			);
 		}
 
 		/**

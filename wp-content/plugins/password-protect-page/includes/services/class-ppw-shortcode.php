@@ -82,7 +82,17 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			);
 
 			add_shortcode( PPW_Constants::PPW_HOOK_SHORT_CODE_NAME, array( $this, 'render_shortcode' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
+
+
+			/**
+			 * Need to keep the old Pro version work, because the sidewide shortcode is using global var ppwContentGlobal.
+			 */
+			if ( defined( 'PPW_PRO_VERSION' ) ) {
+				$pro_version = ppw_get_pro_version();
+				if ( version_compare( $pro_version, '1.2.2', '<' ) ) {
+					add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts' ) );
+				}
+			}
 
 			$this->main_class_name = PPW_Constants::DEFAULT_SHORTCODE_CLASS_NAME;
 		}
@@ -134,6 +144,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			$whitelisted_roles = apply_filters( PPW_Constants::HOOK_SHORT_CODE_WHITELISTED_ROLES, $attrs['whitelisted_roles'] );
 
 			if ( $this->is_whitelisted_role( $whitelisted_roles ) ) {
+				// Remember to wrap the content between the parent div. If you want to replace the shortcode content.
 				return apply_filters( PPW_Constants::HOOK_SHORTCODE_RENDER_CONTENT, $content, $attrs );
 			}
 
@@ -147,11 +158,14 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 				// When passwords attribute having special characters eg: <script>alert('hello')</script>. WP will encode the HTML tag. Need to decode to compare the value in Cookie.
 				$hashed_password = wp_hash_password( wp_specialchars_decode( $password ) );
 				if ( $this->is_valid_password( $hashed_password ) ) {
+					// Remember to wrap the content between the parent div. If you want to replace the shortcode content.
 					return apply_filters( PPW_Constants::HOOK_SHORTCODE_RENDER_CONTENT, $content, $attrs );
 				}
 			}
 
 			do_action( PPW_Constants::HOOK_SHORT_CODE_AFTER_CHECK_PASSWORD, $content );
+
+			$this->add_scripts();
 
 			return $this->get_restricted_content_form( $attrs, $number );
 		}
@@ -161,14 +175,6 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		 */
 		public function add_scripts() {
 			$assert_folder = '/public/js/dist';
-			if ( ! is_admin() ) {
-				wp_enqueue_style(
-					'ppw-cookie-css',
-					PPW_DIR_URL . "$assert_folder/ppw-rc-form.css",
-					'all',
-					PPW_VERSION
-				);
-			}
 			wp_enqueue_script(
 				'ppw-cookie',
 				PPW_DIR_URL . "$assert_folder/ppw-rc-form.bundle.js",
@@ -217,7 +223,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			$message = sprintf( __( '[%s] Empty content, invalid attributes or values', 'password-protect-page' ), PPW_Constants::PPW_HOOK_SHORT_CODE_NAME );
 			$message = apply_filters( PPW_Constants::HOOK_SHORT_CODE_ERROR_MESSAGE, $message );
 
-			if ( $this->is_empty_content( $content ) ) {
+			if ( $this->is_empty_content( $content, $attrs ) ) {
 				return $message;
 			}
 
@@ -236,6 +242,14 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		 * @return bool
 		 */
 		private function is_valid_password( $password ) {
+
+			$is_valid = apply_filters( 'ppw_shortcode_is_valid_password_with_cookie', false, $password, $_COOKIE );
+
+			if ( $is_valid ) {
+
+				return apply_filters( 'ppw_shortcode_after_check_is_valid_password_with_cookie', $is_valid, $password, array() );
+
+			}
 
 			$cookie_name = 'ppw_rc-' . get_the_ID();
 			if ( ! isset( $_COOKIE[ $cookie_name ] ) ) {
@@ -447,11 +461,14 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		 * Check whether the content is empty.
 		 *
 		 * @param string $content The content.
+		 * @param array  $attrs   The shortcode attributes.
 		 *
 		 * @return bool
 		 */
-		private function is_empty_content( $content ) {
-			return '' === $content;
+		private function is_empty_content( $content, $attrs ) {
+			$is_empty = '' === $content;
+
+			return apply_filters( 'ppwp_shortcode_is_empty_content', $is_empty, $content, $attrs );
 		}
 
 		/**

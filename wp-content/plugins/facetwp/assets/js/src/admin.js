@@ -1765,7 +1765,7 @@
                         method: 'POST',
                         dataType: 'json',
                         data: {
-                            action: 'facetwp_save',
+                            action: 'facetwp_save_settings',
                             nonce: FWP.nonce,
                             data: JSON.stringify(data)
                         }

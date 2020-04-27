@@ -213,6 +213,12 @@ N/A
 
 == Changelog ==
 
+= 1.4.4 =
+
+* [BugFix] Only load asserts (js) when rendering the shortcode.
+
+* [Improvement] Fire hooks in shortcode content, password handling and redirection.
+
 = 1.4.3.2 =
 
 * [HotFix] Security issue when do not encode the callback query param's value

@@ -89,7 +89,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'label'     => __( 'Partial Content Protection', 'password-protect-page' ),
 						'type'      => \Elementor\Controls_Manager::HEADING,
 						'separator' => 'before',
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_passwords',
@@ -100,7 +100,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'default'     => 'password1 password2',
 						'description' => 'Multiple passwords are separated by space, case-sensitivity, no more than 100 characters and don’t contain [, ], “, ‘',
 						'label_block' => true,
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_whitelisted_roles',
@@ -112,7 +112,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'options'     => $roles,
 						'description' => 'Select user roles who can access protected area without having to enter passwords',
 						'label_block' => true,
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_protected_content_headline',
@@ -120,14 +120,14 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'label'     => __( 'Protected Content', 'password-protect-page' ),
 						'type'      => \Elementor\Controls_Manager::HEADING,
 						'separator' => 'before',
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_protected_content',
 					'value' => [
 						'type'    => \Elementor\Controls_Manager::WYSIWYG,
 						'default' => __( 'This content is your protected content', 'password-protect-page' ),
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_protect_instruction',
@@ -135,7 +135,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'label'     => __( 'Password Form', 'password-protect-page' ),
 						'type'      => \Elementor\Controls_Manager::HEADING,
 						'separator' => 'before',
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_headline',
@@ -144,7 +144,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'type'        => \Elementor\Controls_Manager::TEXT,
 						'default'     => 'Restricted Content',
 						'label_block' => true,
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_placeholder',
@@ -153,7 +153,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'type'        => \Elementor\Controls_Manager::TEXT,
 						'default'     => '',
 						'label_block' => true,
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_button',
@@ -162,7 +162,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'type'        => \Elementor\Controls_Manager::TEXT,
 						'default'     => 'Enter',
 						'label_block' => true,
-					]
+					],
 				],
 				[
 					'key'   => 'ppwp_description',
@@ -171,7 +171,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 						'type'        => \Elementor\Controls_Manager::WYSIWYG,
 						'default'     => 'To view this protected content, enter the password below:',
 						'label_block' => true,
-					]
+					],
 				],
 			];
 
@@ -217,7 +217,13 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 		 * @return string PPWP Shortcode
 		 */
 		public function generate_shortcode() {
-			$settings          = $this->get_settings_for_display();
+			$settings = $this->get_settings_for_display();
+
+			$content = apply_filters( PPW_Constants::HOOK_SHORTCODE_ELEMENTOR_CONTENT, '', $settings );
+			if ( ! empty( $content ) ) {
+				return $content;
+			}
+
 			$passwords         = isset( $settings['ppwp_passwords'] ) ? $settings['ppwp_passwords'] : '';
 			$whitelisted_roles = $this->transform_whitelisted_roles_to_string( $settings );
 			$download_limit    = isset( $settings['ppwp_download_limit'] ) ? $settings['ppwp_download_limit'] : '';

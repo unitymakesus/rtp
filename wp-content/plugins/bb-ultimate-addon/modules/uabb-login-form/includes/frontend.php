@@ -46,7 +46,8 @@ if ( ! is_user_logged_in() || FLBuilderModel::is_builder_active() ) {
 					<label for="uabb-lf-name"> <?php echo $settings->password_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 				</div>
 				<div class="uabb-lf-input-group uabb-lf-row uabb-lf-password-input">
-					<input type="password" name="uabb-lf-password" aria-label="password" class="uabb-lf-password uabb-lf-form-input <?php echo esc_attr( $input_field_width_class ); ?> " value="" placeholder="<?php echo esc_attr( $settings->password_placeholder ); ?>" required />
+					<input type="password" id="uabb-password-field" name="uabb-lf-password" aria-label="password" class="uabb-lf-password uabb-lf-form-input <?php echo esc_attr( $input_field_width_class ); ?> " value="" placeholder="<?php echo esc_attr( $settings->password_placeholder ); ?>" required />
+							<span toggle="#uabb-password-field" aria-hidden="true" class="fa fa-fw fa-eye uabb-lf-icon toggle-password"></span>
 				</div>
 				<?php if ( 'enable' === $settings->remember_me_select ) { ?>
 					<div class="uabb-lf-input-group uabb-lf-row uabb-lf-checkbox">
@@ -63,7 +64,7 @@ if ( ! is_user_logged_in() || FLBuilderModel::is_builder_active() ) {
 
 				<div class="uabb-lf-input-group uabb-lf-row uabb-lf-submit-button-wrap">
 					<div class="uabb-lf-submit-button-align">
-						<input type="submit" class="uabb-lf-submit-button <?php echo esc_attr( $button_width_class ); ?>" name="uabb-lf-login-submit" value="<?php echo $settings->wp_login_btn_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
+						<button type="submit" class="uabb-lf-submit-button <?php echo esc_attr( $button_width_class ); ?>" name="uabb-lf-login-submit"><span class="uabb-login-form-button-text"><?php echo $settings->wp_login_btn_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></button>
 					</div>
 				</div>
 				<div class="uabb-lf-end-text-wrap">
