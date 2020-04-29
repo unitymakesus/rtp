@@ -146,7 +146,18 @@
 
 .single-mec-events {
   .mec-single-event-bar {
-    background: rgba($color-red-boxyard, 0.2);
+    background: $color-red-boxyard;
+    color: $color-white;
+
+    > div h3,
+    > div dd {
+      color: $color-white;
+    }
+
+    > div a {
+      color: $color-white;
+      text-decoration: underline;
+    }
   }
 
   .mec-event-export-module.mec-frontbox .mec-event-exporting .mec-export-details {
