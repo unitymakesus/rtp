@@ -16,6 +16,7 @@ rrrreplace/*
 
 # pro plugins
 wp-content/plugins/modern-events-calendar/
+wp-content/plugins/mec-event-api/
 
 # wordpress specific
 wp-config.php
