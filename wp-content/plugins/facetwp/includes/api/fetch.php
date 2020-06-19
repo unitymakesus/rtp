@@ -10,7 +10,7 @@ class FacetWP_API_Fetch
 
     // PHP < 5.3
     function register() {
-        register_rest_route( 'facetwp/v1/', '/fetch', [
+        register_rest_route( 'facetwp/v1', '/fetch', [
             'methods' => 'POST',
             'callback' => [ $this, 'callback' ],
             'permission_callback' => [ $this, 'permission_callback' ]

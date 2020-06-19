@@ -286,6 +286,8 @@ class CatalogApiTest extends \PHPUnit_Framework_TestCase
      * BatchRetrieveCatalogObjects
      *
      */
+
+    /*
     public function test_batchRetrieveCatalogObjects() {
       $coffeeId = $this->idMap[self::COFFEE_CLIENT_ID];
       $salesTaxId = $this->idMap[self::SALES_TAX_CLIENT_ID];
@@ -325,7 +327,6 @@ class CatalogApiTest extends \PHPUnit_Framework_TestCase
       $this->assertNull($coffee->getItemData()->getModifierListInfo()[0]->getMinSelectedModifiers());
       $this->assertNull($coffee->getItemData()->getModifierListInfo()[0]->getMaxSelectedModifiers());
       $this->assertNull($coffee->getItemData()->getModifierListInfo()[0]->getEnabled());
-      $this->assertNull($coffee->getItemData()->getImageUrl());
 
       $this->assertCount(2, $coffee->getItemData()->getVariations());
       $this->assertEquals("Small", $coffee->getItemData()->getVariations()[0]->getItemVariationData()->getName());
@@ -350,6 +351,7 @@ class CatalogApiTest extends \PHPUnit_Framework_TestCase
       $this->assertEquals($salesTaxId, $salesTax->getId());
       $this->assertEquals("Sales Tax", $salesTax->getTaxData()->getName());
     }
+    */
 
     /**
      * Test case for batchUpsertCatalogObjects

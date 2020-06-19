@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 CreateMobileAuthorizationCode
 
-Generates code to authorize a mobile application to connect to a Square card reader  Authorization codes are one-time-use and expire __60 minutes__ after being issued.  __Important:__ The `Authorization` header you provide to this endpoint must have the following format:  ``` Authorization: Bearer ACCESS_TOKEN ```  Replace `ACCESS_TOKEN` with a [valid production authorization credential](https://docs.connect.squareup.com/get-started#step-4-understand-the-different-application-credentials).
+Generates code to authorize a mobile application to connect to a Square card reader  Authorization codes are one-time-use and expire __60 minutes__ after being issued.  __Important:__ The `Authorization` header you provide to this endpoint must have the following format:  ``` Authorization: Bearer ACCESS_TOKEN ```  Replace `ACCESS_TOKEN` with a [valid production authorization credential](/docs/build-basics/access-tokens).
 
 ### Example
 ```php
@@ -22,11 +22,11 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\MobileAuthorizationApi();
+$apiInstance = new SquareConnect\Api\MobileAuthorizationApi();
 $body = new \SquareConnect\Model\CreateMobileAuthorizationCodeRequest(); // \SquareConnect\Model\CreateMobileAuthorizationCodeRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
 try {
-    $result = $api_instance->createMobileAuthorizationCode($body);
+    $result = $apiInstance->createMobileAuthorizationCode($body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling MobileAuthorizationApi->createMobileAuthorizationCode: ', $e->getMessage(), PHP_EOL;

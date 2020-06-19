@@ -28,7 +28,7 @@ class FacetWP_Facet_Dropdown extends FacetWP_Facet
         $where_clause = apply_filters( 'facetwp_facet_where', $where_clause, $facet );
 
         // Limit
-        $limit = ctype_digit( $facet['count'] ) ? $facet['count'] : 20;
+        $limit = $this->get_limit( $facet, 20 );
 
         $sql = "
         SELECT f.facet_value, f.facet_display_value, f.term_id, f.parent_id, f.depth, COUNT(DISTINCT f.post_id) AS counter
@@ -107,72 +107,11 @@ class FacetWP_Facet_Dropdown extends FacetWP_Facet
      * Output admin settings HTML
      */
     function settings_html() {
-?>
-        <div class="facetwp-row">
-            <div>
-                <?php _e( 'Default label', 'fwp' ); ?>:
-                <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
-                    <div class="facetwp-tooltip-content">
-                        Customize the first option label (default: "Any")
-                    </div>
-                </div>
-            </div>
-            <div>
-                <input type="text" class="facet-label-any" value="<?php _e( 'Any', 'fwp' ); ?>" />
-            </div>
-        </div>
-        <div class="facetwp-row" v-show="facet.source.substr(0, 3) == 'tax'">
-            <div>
-                <?php _e('Parent term', 'fwp'); ?>:
-                <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
-                    <div class="facetwp-tooltip-content">
-                        To show only child terms, enter the parent <a href="https://facetwp.com/how-to-find-a-wordpress-terms-id/" target="_blank">term ID</a>.
-                        Otherwise, leave blank.
-                    </div>
-                </div>
-            </div>
-            <div>
-                <input type="text" class="facet-parent-term" />
-            </div>
-        </div>
-        <div class="facetwp-row">
-            <div><?php _e('Sort by', 'fwp'); ?>:</div>
-            <div>
-                <select class="facet-orderby">
-                    <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
-                    <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
-                    <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
-                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
-                </select>
-            </div>
-        </div>
-        <div class="facetwp-row">
-            <div>
-                <?php _e('Hierarchical', 'fwp'); ?>:
-                <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
-                    <div class="facetwp-tooltip-content"><?php _e( 'Is this a hierarchical taxonomy?', 'fwp' ); ?></div>
-                </div>
-            </div>
-            <div>
-                <label class="facetwp-switch">
-                    <input type="checkbox" class="facet-hierarchical" true-value="yes" false-value="no" />
-                    <span class="facetwp-slider"></span>
-                </label>
-            </div>
-        </div>
-        <div class="facetwp-row">
-            <div>
-                <?php _e('Count', 'fwp'); ?>:
-                <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
-                    <div class="facetwp-tooltip-content"><?php _e( 'The maximum number of facet choices to show', 'fwp' ); ?></div>
-                </div>
-            </div>
-            <div><input type="text" class="facet-count" value="20" /></div>
-        </div>
-<?php
+        $this->render_setting( 'label_any' );
+        $this->render_setting( 'parent_term' );
+        $this->render_setting( 'modifiers' );
+        $this->render_setting( 'hierarchical' );
+        $this->render_setting( 'orderby' );
+        $this->render_setting( 'count' );
     }
 }

@@ -8,8 +8,6 @@ namespace The_SEO_Framework;
 
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() and $this instanceof $_this or die;
 
-// @TODO Move everything WC related over to here.
-
 \add_action( 'woocommerce_init', __NAMESPACE__ . '\\_init_wc_compat' );
 /**
  * Initializes WooCommerce compatibility.
@@ -67,8 +65,8 @@ function _set_real_id_wc_shop( $id ) {
  * @since 4.0.5
  * @access private
  *
- * @param bool $is_singular_archive Whether the post ID is a singular archive.
- * @param int  $id                  The current or supplied post ID.
+ * @param bool     $is_singular_archive Whether the post ID is a singular archive.
+ * @param int|null $id                  The supplied post ID. Null when in the loop.
  * @return bool
  */
 function _set_shop_singular_archive( $is_singular_archive, $id ) {

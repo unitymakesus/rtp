@@ -347,7 +347,7 @@ class FacetWP_Renderer
             $main_query = $GLOBALS['wp_the_query'];
 
             // Initial pageload
-            if ( $main_query->is_archive ) {
+            if ( $main_query->is_archive || $main_query->is_search ) {
                 if ( $main_query->is_category ) {
                     $defaults['cat'] = $main_query->get( 'cat' );
                 }
@@ -357,6 +357,9 @@ class FacetWP_Renderer
                 elseif ( $main_query->is_tax ) {
                     $defaults['taxonomy'] = $main_query->get( 'taxonomy' );
                     $defaults['term'] = $main_query->get( 'term' );
+                }
+                elseif ( $main_query->is_search ) {
+                    $defaults['s'] = $main_query->get( 's' );
                 }
 
                 $this->archive_args = $defaults;

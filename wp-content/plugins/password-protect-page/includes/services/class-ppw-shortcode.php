@@ -167,6 +167,16 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 
 			$this->add_scripts();
 
+			// Show custom text instead of password form.
+			$custom_form = apply_filters( PPW_Constants::HOOK_SHORTCODE_BEFORE_RENDER_PASSWORD_FORM, false, $attrs );
+			if ( false !== $custom_form ) {
+				return sprintf(
+					'<div class="%s">%s</div>',
+					$this->get_main_class_name( $attrs ),
+					$this->massage_attributes( $custom_form )
+				);
+			}
+
 			return $this->get_restricted_content_form( $attrs, $number );
 		}
 

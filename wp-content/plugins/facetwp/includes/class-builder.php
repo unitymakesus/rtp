@@ -133,7 +133,7 @@ class FacetWP_Builder
             $this->css[ $selector . ' button'] = $this->build_styles( $settings );
         }
         else {
-            $this->css[ $selector . ",\n" . $selector . ' a' ] = $this->build_styles( $settings );
+            $this->css[ $selector ] = $this->build_styles( $settings );
         }
 
         if ( 0 === strpos( $source, 'post_' ) || 'ID' == $source ) {
@@ -696,7 +696,7 @@ class FacetWP_Builder
         $builder_post_types = [];
 
         $post_types = get_post_types( [ 'public' => true ], 'objects' );
-        $data_sources = FWP()->helper->get_data_sources();
+        $data_sources = FWP()->helper->get_data_sources( 'builder' );
 
         // Remove ACF choices
         unset( $data_sources['acf'] );
@@ -724,7 +724,7 @@ class FacetWP_Builder
 
 
     /**
-     * Replace "date|" placesholders with actual dates
+     * Replace "date|" placeholders with actual dates
      */
     function hydrate_date_values( $query_args ) {
         if ( isset( $query_args['meta_query'] ) ) {

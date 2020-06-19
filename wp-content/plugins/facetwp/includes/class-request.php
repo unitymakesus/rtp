@@ -43,20 +43,16 @@ class FacetWP_Request
 
         // Pageload
         if ( $this->is_preload ) {
+            $features = [ 'paged', 'per_page', 'sort' ];
+            $valid_names = wp_list_pluck( FWP()->helper->get_facets(), 'name' );
+            $valid_names = array_merge( $valid_names, $features );
 
             // Store GET variables
-            foreach ( $_GET as $key => $val ) {
-                if ( 0 === strpos( $key, $prefix ) ) {
-                    $new_key = substr( $key, strlen( $prefix ) );
-                    $new_val = stripslashes( $val );
-
-                    if ( '' !== $new_val ) {
-                        if ( ! in_array( $new_key, [ 'paged', 'per_page', 'sort' ] ) ) {
-                            $new_val = explode( ',', $new_val );
-                        }
-
-                        $this->url_vars[ $new_key ] = $new_val;
-                    }
+            foreach ( $valid_names as $name ) {
+                if ( isset( $_GET[ $prefix . $name ] ) && '' !== $_GET[ $prefix . $name ] ) {
+                    $new_val = stripslashes_deep( $_GET[ $prefix . $name ] );
+                    $new_val = in_array( $name, $features ) ? $new_val : explode( ',', $new_val );
+                    $this->url_vars[ $name ] = $new_val;
                 }
             }
 

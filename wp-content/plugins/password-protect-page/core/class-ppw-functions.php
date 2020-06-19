@@ -257,8 +257,6 @@ function ppw_core_render_login_form() {
 	// phpcs:enable
 	$show_password_text = _x( $show_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ); // phpcs:ignore
 
-
-
 	/**
 	 * Fire hooks that can customize the from text.
 	 * Update the customize attributes that easier for user to customize.
@@ -315,7 +313,7 @@ function ppw_core_render_login_form() {
 		<div class="ppw-ppf-desc"><?php echo $form_message; // phpcs:ignore ?></div>
 		<p class="ppw-ppf-field-container">
 			<?php do_action('ppwp_ppf_fields_before_password') ?>
-			<label class="ppw-pwd-label" for="<?php echo esc_attr( $label ); ?>"><?php echo esc_js( $password_label ); ?> <input placeholder="<?php echo esc_attr( $place_holder ); ?>" name="post_password" id="<?php echo esc_attr( $label ); ?>"  type="password" size="20"/></label><input type="submit" name="Submit" value="<?php echo esc_attr( $submit_label ); ?>"/>
+			<label class="ppw-pwd-label" for="<?php echo esc_attr( $label ); ?>"><?php echo esc_js( $password_label ); ?> <input placeholder="<?php echo esc_attr( $place_holder ); ?>" name="post_password" id="<?php echo esc_attr( $label ); ?>"  type="password" size="20"/></label> <input type="submit" name="Submit" value="<?php echo esc_attr( $submit_label ); ?>"/>
 		</p><?php if ( ! empty( $show_password ) ) echo $show_password; // phpcs:ignore ?></div>
 	<?php if ( ! empty( $wrong_message ) ) echo $wrong_message; // phpcs:ignore ?>
 	<?php
@@ -328,14 +326,14 @@ function ppw_core_render_login_form() {
 		$script = '
 <div>
 	<script>
-	    function ppwShowPassword(postId) {
-	        const ppwBox = jQuery(\'#pwbox-\' + postId);
-	        if (jQuery(\'#ppw_\' + postId).prop(\'checked\')) {
-	            ppwBox.attr({"type": \'text\',});
-	        } else {
-	            ppwBox.attr({"type": \'password\',});
-	        }
-	    }
+		function ppwShowPassword(postId) {
+			const ppwBox = document.getElementById(\'pwbox-\' + postId);
+			if ( document.getElementById(\'ppw_\' + postId ).checked == true ) {
+				ppwBox.setAttribute(\'type\', \'text\');
+			} else {
+				ppwBox.setAttribute(\'type\', \'password\');
+			}
+		}
 	</script>
 </div>';
 	}
@@ -346,14 +344,30 @@ function ppw_core_render_login_form() {
 	$callback_value = rawurlencode( apply_filters( PPW_Constants::HOOK_CALLBACK_URL, get_permalink() ) );
 	// When no-referer policy turns on we need to append the callback's URL in the form action URL.
 	// That helps the user can redirect to the right post/page.
-	$callback_url = sprintf( '%s=%s', PPW_Constants::CALL_BACK_URL_PARAM, $callback_value );
+
+	/**
+	 * Some plugins or hosting can edit wp-login to another name and prevent it.
+	 * So need to put wp-login.php path of site_url function.
+	 */
+	$url = site_url( 'wp-login.php', 'login_post' );
+	$url = add_query_arg(
+		array(
+			'action'                           => 'ppw_postpass',
+			PPW_Constants::CALL_BACK_URL_PARAM => $callback_value
+		),
+		$url
+	);
+
+	// With this filter user can choose another action URL to use PPF Form.
+	$url = apply_filters( 'ppwp_ppf_action_url', $url );
+
 	// Need to wrap the form by parent div because HTML will pre-append the </br> without parent div.
 	// TODO: move to view file.
 	ob_start();
 	?>
-<div class="ppw-post-password-container">
-	<form action="<?php echo esc_attr( esc_url( site_url( 'wp-login.php?action=ppw_postpass&' . $callback_url, 'login_post' ) ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
-</div>
+	<div class="ppw-post-password-container">
+		<form action="<?php echo esc_attr( esc_url( $url ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
+	</div>
 	<?php
 	$output = ob_get_clean();
 

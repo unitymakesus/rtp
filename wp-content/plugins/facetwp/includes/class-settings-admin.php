@@ -129,7 +129,7 @@ class FacetWP_Settings_Admin
 
 <?php elseif ( 'dropdown' == $field_type ) : ?>
 
-        <select class="facetwp-setting slim" v-model="app.settings.<?php echo $setting_name; ?>">
+        <select class="facetwp-setting" v-model="app.settings.<?php echo $setting_name; ?>">
             <?php foreach ( $atts['choices'] as $val => $label ) : ?>
             <option value="<?php echo $val; ?>"><?php echo $label; ?></option>
             <?php endforeach; ?>
@@ -185,6 +185,23 @@ $false_value = isset( $atts['false_value'] ) ? $atts['false_value'] : 'no';
      */
     function get_activation_status() {
         $message = __( 'Not yet activated', 'fwp' );
+        $status = FWP()->helper->get_license_meta( 'status' );
+
+        if ( false !== $status ) {
+            if ( 'success' == $status ) {
+                $expiration = FWP()->helper->get_license_meta( 'expiration' );
+                $expiration = date( 'M j, Y', strtotime( $expiration ) );
+                $message = __( 'License active until', 'fwp' ) . ' ' . $expiration;
+            }
+            else {
+                $message = FWP()->helper->get_license_meta( 'message' );
+            }
+        }
+
+        return $message;
+
+
+        $message = __( 'Not yet activated', 'fwp' );
         $activation = get_option( 'facetwp_activation' );
 
         if ( ! empty( $activation ) ) {
@@ -208,7 +225,7 @@ $false_value = isset( $atts['false_value'] ) ? $atts['false_value'] : 'no';
      */
     function get_i18n_strings() {
         return [
-            'Results per row' => __( 'Results per row', 'fwp' ),
+            'Grid columns' => __( 'Grid columns', 'fwp' ),
             'Grid gap' => __( 'Grid gap', 'fwp' ),
             'Text style' => __( 'Text style', 'fwp' ),
             'Text color' => __( 'Text color', 'fwp' ),

@@ -46,10 +46,13 @@ Instead of using shortcode to protect part of content, you can use our built-in 
 
 * Elementor
 * Beaver Builder
+* WPBakery Page Builder
 * Divi Builder (WIP)
 * Visual Composer (WIP)
 
 These built-in modules allow you to set passwords, whitelisted roles, customize password forms and so on via our friendly User Interface. You no longer have to deal with the complex shortcode attributes.
+
+What's more, with PPWP Pro, you can even [protect the entire Elementor's templates](https://passwordprotectwp.com/docs/password-protect-partial-content-elementor/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), Beaver Builder's rows, columns, and page templates as well as limiting and tracking password usage.
 
 = Global - Master Passwords =
 When there are many password protected posts on your website, it becomes difficult and time-consuming to create or manage passwords for each content. That’s when master passwords come in handy.
@@ -61,14 +64,13 @@ Please note that this feature **does not** password protect all posts automatica
 The master passwords feature also comes with an easy-to-use interface allowing you to create unlimited master passwords and manage all of them in one place. You will have full control to (de)activate, delete passwords as well as restrict usage passwords by usage, time and user role.
 
 = Customize Password Form & Messages with WordPress Customizer =
-Customize the password form text and design to match the look and feel of your website.
+You can customize sitewide login form as well as single password form via WordPress built-in customizer.
 
-You will be able to change the WordPress default password protected error message as well as password form instruction, namely headline, description, password input placeholder, and button text.
+You will be able to remove or change our default logo to your own for the sitewide login form. You can also change the color and design of the password form to match the look and feel of your website.
 
-The button and text’s font-size, color and background can also be customized through a friendly WYSIWYG HTML Editor.
+As for the single password form, you will be given the ability to change the WordPress default password protected error message as well as password form instruction, namely headline, description, password input placeholder, and button text.
 
-= Show Password Protected Post Excerpt =
-Many WordPress themes hide the post excerpt and featured image of password protected content by default. Enable this option to show excerpt of your password protect posts.
+The button and text's font-size, color, and background can also be customized through a friendly WYSIWYG HTML Editor.
 
 = Hide Password Protected Content =
 By default, your password protected content will still show up on various pages such as home and category page once published.
@@ -84,6 +86,13 @@ This feature allows you to control the visibility of your protected post types i
 
 Even though the posts are hidden, those who know the URL will still have access to the pages (but not the protected content).
 
+= Show Password Protected Content in RSS Feeds =
+Even though you choose to show password protected content in RSS, a password form will display instead of its actual content by default. With PPWP plugin, you're able to show all protected content in RSS feeds. There is also an option to make your RSS feeds public even if your site is hidden.
+
+= Show Password Protected Post Excerpt =
+Many WordPress themes hide the post excerpt and featured image of password protected content by default. Enable this option to show excerpt of your password protect posts.
+
+
 > #### Pro Version
 > Our [Pro version](https://passwordprotectwp.com/features/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=password-protect-page-lite&utm_content=premium-after-pro-heading) offers many more advanced features:
 >
@@ -92,7 +101,7 @@ Even though the posts are hidden, those who know the URL will still have access 
 >* Manage all passwords while editing content or via our friendly popup
 >* Create unlimited passwords per user role
 >* Create the same passwords for multiple user roles
->* Bypass password protection via access links
+>* Bypass password protection via quick access links
 >* Protect all posts belonging a category at once
 >* Automatically protect all sub pages with one password
 >* Set the same password for multiple pages
@@ -102,6 +111,9 @@ Even though the posts are hidden, those who know the URL will still have access 
 >* Track password usage, i.e. the time they're logged in, IP address and browser used, with Statistics extension
 >* [Password protect WordPress categories](https://passwordprotectwp.com/extensions/access-levels/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features) with different access levels
 >* Integrate with Prevent Direct Access Gold to protect files embedded in content
+>* Sell password protected content via quick access links with [WooCommerce Integration extension](https://passwordprotectwp.com/extensions/woocommerce-integration/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
+>* Protect the entire shop page, including individual products and category pages with the same passwords.
+>* Require users to provide both password and username or email to unlock protected content with [Password Suite extension](https://passwordprotectwp.com/extensions/password-suite/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
 >
 > Check out [Password Protect WordPress Pro](https://passwordprotectwp.com/pricing/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=premium-after-pro-features) now!
 
@@ -111,6 +123,7 @@ Our plugin works out of the box with the top leading multilingual WordPress plug
 = Documentation and support =
 
 * For documentation and tutorials go to our [Documentation](https://passwordprotectwp.com/docs/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite).
+* Check out [compatible hostings, themes, and plugins](https://passwordprotectwp.com/docs/compatible-wordpress-plugins/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) with PPWP.
 * If you have any more questions or want to request new features, contact us through [this form](https://passwordprotectwp.com/contact/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=ppwp_lite&utm_content=contact-after-pro-features) or drop us an email at [hello@preventdirectaccess.com](mailto:hello@preventdirectaccess.com)
 
 Please check out these guides on [how to password protect WordPress page](https://passwordprotectwp.com/docs/getting-started/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) right way.
@@ -140,7 +153,7 @@ From your WordPress dashboard
 
 == Frequently Asked Questions ==
 
-= Why do I get the error message after entering the correct password? =
+= Why do I get an error message after entering the correct password? =
 
 Below are 4 common reasons why the issue happens:
 
@@ -149,7 +162,7 @@ Below are 4 common reasons why the issue happens:
 * You're using a conflicting theme and unsupported page builder plugin
 * You're using an unsupported caching method and/or plugin
 
-Please follow this guide on how to quickly [troubleshoot these common issues](https://passwordprotectwp.com/docs/basic-troubleshooting/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite).
+Please follow this guide on how to quickly [troubleshoot these common issues](https://passwordprotectwp.com/docs/basic-troubleshooting/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite). Learn more about [why password protected page is not working](https://passwordprotectwp.com/docs/wordpress-password-protected-page-not-working/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite).
 
 = Does the plugin password protect WooCommerce products? =
 
@@ -203,15 +216,45 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 
 13. Customize password form text and design with WordPress Customizer.
 
-14. Control the visibility of your password protected content.
+14. This is our default PPWP sitewide login form.
 
-15. Enable this option to show excerpt of password protected content.
+15. This is our default PPWP single password form.
+
+16. Control the visibility of your password protected content.
+
+17. Enable this option to show excerpt of password protected content.
 
 == Upgrade Notice ==
 
 N/A
 
 == Changelog ==
+
+= 1.4.5.1 =
+
+- [Feature] Share hook to handle tabs in sitewide sub-menu
+
+- [Improvement] Improve individual password form customizer
+
+- [BugFix] Use space instead of &nbsp; in single password form
+
+- [Improvement] Share hook to support custom form before rendering the password form.
+
+= 1.4.5 =
+
+* [Feature] Add option which forces to show content
+
+* [Feature] Allow users customize sitewide protection
+
+* [Feature] Display error message for sitewide protection
+
+* [Feature] Improve password form and customizer function
+
+* [Improvement] Move sitewide tab in sub-menu
+
+* [Improvement] Page visibility function always run in frontend
+
+* [BugFix] Allow displaying content in RSS while in protection
 
 = 1.4.4 =
 
@@ -334,4 +377,3 @@ N/A
 
 = 1.0.0 =
 * Add UI in the pages/posts that allow users to set a password for each user role.
-

@@ -54,7 +54,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 					'priority'       => 999,
 					'capability'     => 'edit_theme_options',
 					'theme_supports' => '',
-					'title'          => __( 'Password Protect WordPress Form', 'password-protect-page' ),
+					'title'          => __( 'PPWP Single Password Form', 'password-protect-page' ),
 				)
 			);
 
@@ -239,24 +239,13 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				) )
 			);
 
-			/* placeholder text */
-			$wp_customize->add_setting( 'ppwp_form_instructions_placeholder', array(
-				'default' => __( PPW_Constants::DEFAULT_PLACEHOLDER, 'password-protect-page' ),
-			) );
-			$wp_customize->add_control( 'ppwp_form_instructions_placeholder_control', array(
-				'label'    => __( 'Placeholder', 'password-protect-page' ),
-				'section'  => 'ppwp_form_instructions',
-				'settings' => 'ppwp_form_instructions_placeholder',
-				'type'     => 'text',
-			) );
-
 			$wp_customize->add_setting( 'ppwp_form_instructions_description_title' );
 
 			$wp_customize->add_control(
 				new PPW_Title_Group_Control(
 					$wp_customize,
 					'ppwp_form_instructions_description_title', array(
-					'label'			=> __( 'Description', 'password-protect-page' ),
+					'label'			=> __( 'Description Above Form', 'password-protect-page' ),
 					'section'  		=> 'ppwp_form_instructions',
 					'settings' 		=> 'ppwp_form_instructions_description_title',
 					'type'     		=> 'control_title',
@@ -319,15 +308,15 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				) )
 			);
 
-			/* password typing - form instructions */
+			// Add one more tab below "Description Text Color" control.
+			do_action( 'ppw_customize_after_text_color', $wp_customize );
 
 			$wp_customize->add_setting( 'ppwp_form_instructions_label_title' );
-
 			$wp_customize->add_control(
 				new PPW_Title_Group_Control(
 					$wp_customize,
 					'ppwp_form_instructions_label_title', array(
-					'label'			=> __( 'Password Label', 'password-protect-page' ),
+					'label'			=> __( 'Password Field', 'password-protect-page' ),
 					'section'  		=> 'ppwp_form_instructions',
 					'settings' 		=> 'ppwp_form_instructions_label_title',
 					'type'     		=> 'control_title',
@@ -377,14 +366,36 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				new \WP_Customize_Color_Control(
 					$wp_customize,
 					'ppwp_form_instructions_password_label_color_control', array(
-					'label'    => __( 'Description Text Color', 'password-protect-page' ),
+					'label'    => __( 'Label Text Color', 'password-protect-page' ),
 					'section'  => 'ppwp_form_instructions',
 					'settings' => 'ppwp_form_instructions_password_label_color',
 				) )
 			);
 
-			/* password typing - form instructions */
+			/* placeholder text */
+			$wp_customize->add_setting( 'ppwp_form_instructions_placeholder', array(
+				'default' => __( PPW_Constants::DEFAULT_PLACEHOLDER, 'password-protect-page' ),
+			) );
+			$wp_customize->add_control( 'ppwp_form_instructions_placeholder_control', array(
+				'label'    => __( 'Placeholder', 'password-protect-page' ),
+				'section'  => 'ppwp_form_instructions',
+				'settings' => 'ppwp_form_instructions_placeholder',
+				'type'     => 'text',
+			) );
 
+			$wp_customize->add_setting( 'ppwp_form_instructions_show_password_title' );
+			$wp_customize->add_control(
+				new PPW_Title_Group_Control(
+					$wp_customize,
+					'ppwp_form_instructions_show_password_title', array(
+					'label'			=> __( 'Show Password', 'password-protect-page' ),
+					'section'  		=> 'ppwp_form_instructions',
+					'settings' 		=> 'ppwp_form_instructions_show_password_title',
+					'type'     		=> 'control_title',
+				) )
+			);
+
+			/* password typing - form instructions */
 			$wp_customize->add_setting( 'ppwp_form_instructions_is_show_password', array(
 				'default' => PPW_Constants::DEFAULT_IS_SHOW_PASSWORD,
 			) );
@@ -393,7 +404,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				new PPW_Toggle_Control(
 					$wp_customize,
 					'ppwp_form_instructions_is_show_password_control', array(
-					'label'       => __( 'Password Reveal Button', 'password-protect-page' ),
+					'label'       => __( 'Show Password Reveal Button', 'password-protect-page' ),
 					'section'     => 'ppwp_form_instructions',
 					'type'        => 'toggle',
 					'settings'    => 'ppwp_form_instructions_is_show_password',
@@ -584,50 +595,54 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		 * @return void
 		 */
 		public function dynamic_styles() {
-			?>
+			$ppw_custom_css = "
 			<style>
-				.ppw-ppf-input-container {
-					background-color: <?php echo get_theme_mod( 'ppwp_form_instructions_background_color', PPW_Constants::DEFAULT_FORM_BACKGROUND_COLOR ); ?>;
-					padding: <?php echo get_theme_mod( 'ppwp_form_instructions_padding', PPW_Constants::DEFAULT_FORM_PADDING ); ?>px;
-					border-radius: <?php echo get_theme_mod( 'ppwp_form_instructions_border_radius', PPW_Constants::DEFAULT_FORM_BORDER_RADIUS ) ?>px;
-				}
+			.ppw-ppf-input-container {
+				background-color: " . get_theme_mod( 'ppwp_form_instructions_background_color', PPW_Constants::DEFAULT_FORM_BACKGROUND_COLOR ) . "!important;
+				padding: " . get_theme_mod( 'ppwp_form_instructions_padding', PPW_Constants::DEFAULT_FORM_PADDING ) . "px!important;
+				border-radius: " . get_theme_mod( 'ppwp_form_instructions_border_radius', PPW_Constants::DEFAULT_FORM_BORDER_RADIUS ) . "px!important;
+			}
 
-				.ppw-ppf-input-container div.ppw-ppf-headline {
-					font-size: <?php echo get_theme_mod( 'ppwp_form_instructions_headline_font_size', PPW_Constants::DEFAULT_HEADLINE_FONT_SIZE ); ?>px;
-					font-weight: <?php echo get_theme_mod( 'ppwp_form_instructions_headline_font_weight', PPW_Constants::DEFAULT_HEADLINE_FONT_WEIGHT ); ?>;
-					color: <?php echo get_theme_mod( 'ppwp_form_instructions_headline_color', PPW_Constants::DEFAULT_HEADLINE_FONT_COLOR ); ?>;
-				}
+			.ppw-ppf-input-container div.ppw-ppf-headline {
+				font-size: " . get_theme_mod( 'ppwp_form_instructions_headline_font_size', PPW_Constants::DEFAULT_HEADLINE_FONT_SIZE ) . "px!important;
+				font-weight: " . get_theme_mod( 'ppwp_form_instructions_headline_font_weight', PPW_Constants::DEFAULT_HEADLINE_FONT_WEIGHT ) . "!important;
+				color: " . get_theme_mod( 'ppwp_form_instructions_headline_color', PPW_Constants::DEFAULT_HEADLINE_FONT_COLOR ) . "!important;
+			}
 
-				.ppw-ppf-input-container div.ppw-ppf-desc {
-					font-size: <?php echo get_theme_mod( 'ppwp_form_instructions_text_font_size', PPW_Constants::DEFAULT_TEXT_FONT_SIZE ); ?>px;
-					font-weight: <?php echo get_theme_mod( 'ppwp_form_instructions_text_font_weight', PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT ); ?>;
-					color: <?php echo get_theme_mod( 'ppwp_form_instructions_text_color', PPW_Constants::DEFAULT_TEXT_FONT_COLOR ); ?>;
-				}
+			.ppw-ppf-input-container div.ppw-ppf-desc {
+				font-size: " . get_theme_mod( 'ppwp_form_instructions_text_font_size', PPW_Constants::DEFAULT_TEXT_FONT_SIZE ) . "px!important;
+				font-weight: " . get_theme_mod( 'ppwp_form_instructions_text_font_weight', PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT ) . "!important;
+				color: " . get_theme_mod( 'ppwp_form_instructions_text_color', PPW_Constants::DEFAULT_TEXT_FONT_COLOR ) . "!important;
+			}
 
-				.ppw-ppf-input-container label.ppw-pwd-label {
-					font-size: <?php echo get_theme_mod( 'ppwp_form_instructions_password_label_font_size', PPW_Constants::DEFAULT_TEXT_FONT_SIZE ); ?>px;
-					font-weight: <?php echo get_theme_mod( 'ppwp_form_instructions_password_label_font_weight', PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT ); ?>;
-					color: <?php echo get_theme_mod( 'ppwp_form_instructions_password_label_color', PPW_Constants::DEFAULT_TEXT_FONT_COLOR ); ?>;
-				}
+			.ppw-ppf-input-container label.ppw-pwd-label {
+				font-size: " . get_theme_mod( 'ppwp_form_instructions_password_label_font_size', PPW_Constants::DEFAULT_TEXT_FONT_SIZE ) . "px!important;
+				font-weight: " . get_theme_mod( 'ppwp_form_instructions_password_label_font_weight', PPW_Constants::DEFAULT_TEXT_FONT_WEIGHT ) . "!important;
+				color: " . get_theme_mod( 'ppwp_form_instructions_password_label_color', PPW_Constants::DEFAULT_TEXT_FONT_COLOR ) . "!important;
+			}
 
-				div.ppwp-wrong-pw-error {
-					font-size: <?php echo get_theme_mod( 'ppwp_form_error_message_text_font_size', PPW_Constants::DEFAULT_ERROR_TEXT_FONT_SIZE ); ?>px;
-					font-weight: <?php echo get_theme_mod( 'ppwp_form_error_message_text_font_weight', PPW_Constants::DEFAULT_ERROR_TEXT_FONT_WEIGHT ); ?>;
-					color: <?php echo get_theme_mod( 'ppwp_form_error_message_text_color', PPW_Constants::DEFAULT_ERROR_TEXT_FONT_COLOR ); ?>;
-					background: <?php echo get_theme_mod( 'ppwp_form_error_message_background_color', PPW_Constants::DEFAULT_ERROR_TEXT_BACKGROUND_COLOR ); ?>;
-				}
+			div.ppwp-wrong-pw-error {
+				font-size: " . get_theme_mod( 'ppwp_form_error_message_text_font_size', PPW_Constants::DEFAULT_ERROR_TEXT_FONT_SIZE ) . "px!important;
+				font-weight: " . get_theme_mod( 'ppwp_form_error_message_text_font_weight', PPW_Constants::DEFAULT_ERROR_TEXT_FONT_WEIGHT ) . "!important;
+				color: " . get_theme_mod( 'ppwp_form_error_message_text_color', PPW_Constants::DEFAULT_ERROR_TEXT_FONT_COLOR ) . "!important;
+				background: " . get_theme_mod( 'ppwp_form_error_message_background_color', PPW_Constants::DEFAULT_ERROR_TEXT_BACKGROUND_COLOR ) . "!important;
+			}
 
-				.ppw-ppf-input-container input[type="submit"] {
-					color: <?php echo get_theme_mod( 'ppwp_form_button_text_color', PPW_Constants::DEFAULT_BUTTON_TEXT_FONT_COLOR ); ?>;
-					background: <?php echo get_theme_mod( 'ppwp_form_button_background_color', PPW_Constants::DEFAULT_BUTTON_BACKGROUND_COLOR ); ?>;
-				}
+			.ppw-ppf-input-container input[type='submit'] {
+				color: " . get_theme_mod( 'ppwp_form_button_text_color', PPW_Constants::DEFAULT_BUTTON_TEXT_FONT_COLOR ) . "!important;
+				background: " . get_theme_mod( 'ppwp_form_button_background_color', PPW_Constants::DEFAULT_BUTTON_BACKGROUND_COLOR ) . "!important;
+			}
 
-				.ppw-ppf-input-container input[type="submit"]:hover {
-					color: <?php echo get_theme_mod( 'ppwp_form_button_text_hover_color', PPW_Constants::DEFAULT_BUTTON_TEXT_HOVER_COLOR ); ?>;
-					background: <?php echo get_theme_mod( 'ppwp_form_button_background_hover_color', PPW_Constants::DEFAULT_BUTTON_BACKGROUND_HOVER_COLOR ); ?>;
-				}
+			.ppw-ppf-input-container input[type='submit']:hover {
+				color: " . get_theme_mod( 'ppwp_form_button_text_hover_color', PPW_Constants::DEFAULT_BUTTON_TEXT_HOVER_COLOR ) . "!important;
+				background: " . get_theme_mod( 'ppwp_form_button_background_hover_color', PPW_Constants::DEFAULT_BUTTON_BACKGROUND_HOVER_COLOR ) . "!important;
+			}
 			</style>
-			<?php
+			";
+
+			// compress $ppw_custom_css.
+			$ppw_custom_css = preg_replace( "/\s{2,}/", " ", str_replace( "\n", "", str_replace( ', ', ",", $ppw_custom_css ) ) );
+			echo $ppw_custom_css;
 		}
 
 		/**

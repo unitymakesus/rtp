@@ -74,9 +74,13 @@ if ( ! class_exists( 'PPW_Elementor' ) ) {
 
 			// Include widget files.
 			require_once( __DIR__ . '/widgets/class-ppw-elementor-widget-shortcode.php' ); //phpcs:ignore
+			require_once( __DIR__ . '/widgets/class-ppw-elementor-advance-widget-shortcode.php' ); //phpcs:ignore
 
 			// Register widget.
 			\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new PPW_Shortcode_Widget() );
+			// Handle hooks from origin widget to add more features.
+			$advance_widget = new PPW_Shortcode_Advance_Widget();
+			$advance_widget->init();
 		}
 
 	}

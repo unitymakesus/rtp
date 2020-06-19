@@ -7,23 +7,17 @@ class FacetWP_Support
 
 
     function __construct() {
-        if ( FWP()->helper->is_license_active() ) {
-            $activation = get_option( 'facetwp_activation' );
-            $activation = json_decode( $activation );
-            $this->payment_id = $activation->payment_id;
-        }
+        $this->payment_id = (int) FWP()->helper->get_license_meta( 'payment_id' );
     }
 
 
     function get_html() {
-        $disabled = empty( $this->payment_id );
-
-        if ( $disabled ) {
-            $output = '<h3>Active License Required</h3>';
-            $output .= '<p>Please activate or renew your license to access support.</p>';
+        if ( 0 < $this->payment_id ) {
+            $output = '<iframe src="https://facetwp.com/support/create-ticket/?sysinfo=' . $this->get_sysinfo() .'"></iframe>';
         }
         else {
-            $output = '<iframe src="https://facetwp.com/support/create-ticket/?sysinfo=' . $this->get_sysinfo() .'"></iframe>';
+            $output = '<h3>Active License Required</h3>';
+            $output .= '<p>Please activate or renew your license to access support.</p>';
         }
 
         return $output;
@@ -41,7 +35,7 @@ class FacetWP_Support
 ?>
 Home URL:                   <?php echo home_url(); ?>
 
-Payment ID:                 <?php echo empty( $this->payment_id ) ? '' : $this->payment_id; ?>
+Payment ID:                 <?php echo $this->payment_id; ?>
 
 WordPress Version:          <?php echo get_bloginfo( 'version' ); ?>
 

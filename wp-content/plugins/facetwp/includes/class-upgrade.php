@@ -103,5 +103,16 @@ class FacetWP_Upgrade
             update_option( 'facetwp_updater_response', '', 'no' );
             update_option( 'facetwp_updater_last_checked', '', 'no' );
         }
+
+        if ( version_compare( $this->last_version, '3.5.4', '<' ) ) {
+            $settings = get_option( 'facetwp_settings' );
+            $settings = json_decode( $settings, true );
+
+            if ( ! isset( $settings['settings']['prefix'] ) ) {
+                $settings['settings']['prefix'] = 'fwp_';
+
+                update_option( 'facetwp_settings', json_encode( $settings ) );
+            }
+        }
     }
 }

@@ -20,7 +20,7 @@ $is_display           = $is_protected ? '' : 'ppwp-hidden-password';
 	<td>
 		<p>
 			<label><?php echo esc_html__( 'Password Protect Entire Site', PPW_Constants::DOMAIN ) ?></label>
-			<?php echo esc_html__( 'Set a password to protect your entire WordPress site', PPW_Constants::DOMAIN ) ?>
+			<?php echo sprintf( '%1$s <a href="%2$s">%3$s</a>.', __( 'Set passwords to protect your entire WordPress site. Customize password login form using', 'password-protect-page' ), admin_url( 'customize.php?autofocus[panel]=ppwp_sitewide' ), __( 'WordPress Customizer', 'password-protect-page' ) ) ?>
 		</p>
 	</td>
 </tr>

@@ -348,3 +348,27 @@ function ppw_get_pro_version() {
 
 	return PPW_PRO_VERSION;
 }
+
+/**
+ * Bypass function using to
+ *    - Display feed content when user turn on sitewide protection.
+ *
+ * @return bool True is bypass sitewide.
+ */
+function ppw_free_has_bypass_sitewide_protection() {
+	$has_bypass = defined( 'PPWP_SITEWIDE_FEED_DISPLAY' ) && PPWP_SITEWIDE_FEED_DISPLAY && is_feed();
+
+	return apply_filters( 'ppwp_sitewide_has_bypass', $has_bypass );
+}
+
+/**
+ * Bypass function using to
+ *    - Display feed content when post/page is protected by single protection.
+ *
+ * @return bool True is bypass post_password_required.
+ */
+function ppw_free_has_bypass_single_protection() {
+	$has_bypass = defined( 'PPWP_SINGLE_FEED_DISPLAY' ) && PPWP_SINGLE_FEED_DISPLAY && is_feed();
+
+	return apply_filters( 'ppwp_single_has_bypass', $has_bypass );
+}

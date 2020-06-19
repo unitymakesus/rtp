@@ -2,8 +2,8 @@
 Contributors: givewp
 Tags: donations, donation, ecommerce, e-commerce, fundraising, fundraiser, square, gateway
 Requires at least: 4.8
-Tested up to: 5.2
-Stable tag: 1.0.4
+Tested up to: 5.3
+Stable tag: 1.1.1
 Requires Give: 2.4.0
 License: GPLv3
 License URI: https://opensource.org/licenses/GPL-3.0
@@ -37,6 +37,15 @@ The manual installation method involves downloading our donation plugin and uplo
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
 == Changelog ==
+
+= 1.1.1: March 18th, 2020 =
+* Fix: When a donor did not provide an "Address line 2" field it would result in an error from Square preventing the donation from processing.
+
+= 1.1.0: February 27th, 2020 =
+* Important: When you are updating to this version please ensure that you reconnect your Square account.
+* New: Square's API has undergone significant updates and this update brings it up to date with all those changes. Specific updates include updating oAuth API to version 2.0, Locations API updated to v2, payment processing now using the new Payments API, and improvements to token renewals.
+* New: Square now has a proper sandbox for testing so we have added a new "Connect to Square Sandbox" button within the admin.
+* New: There is now a "Token Refresh" date field that displays within Square's WP-admin settings screen so you can more easily tell when the last refresh was and can even manually refresh it yourself. As well, there is also a line item under System Information for support.
 
 = 1.0.4: July 29th, 2019 =
 * New: When disconnecting the site from Square a notice now appears prompting the admin that any other sites connected to Give will also be disconnected. This is a requirement of the Square API and we are providing this to warn admins that other sites sharing the same Square connection will also be disconnected.

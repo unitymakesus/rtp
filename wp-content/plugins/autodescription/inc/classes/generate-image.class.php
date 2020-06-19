@@ -310,7 +310,7 @@ class Generate_Image extends Generate_Url {
 	 *    boolean multi:    Whether multiple images may be returned,
 	 *    array   cbs:      An array of image generation callbacks, in order of most important to least.
 	 *                      When 'multi' (or $single input) parameter is "false", it will use the first found.
-	 *    array   fallback: An array of image generaiton callbacks, in order of most important to least,
+	 *    array   fallback: An array of image generation callbacks, in order of most important to least,
 	 *                      Only one image is obtained from the fallback, and only if the regular cbs don't
 	 *                      return any image.
 	 * }
@@ -417,7 +417,6 @@ class Generate_Image extends Generate_Url {
 		$params = $this->get_image_generation_params( $args, $context );
 		$single = $single || ! $params['multi'];
 
-		// TODO s_image_details() here? The cbs may be discarded, and then we won't obtain any fallbacks...
 		$details = $this->process_image_cbs( $params['cbs'], $args, $params['size'], $single )
 				?: $this->process_image_cbs( $params['fallback'], $args, $params['size'], true );
 

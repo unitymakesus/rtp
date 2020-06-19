@@ -4,7 +4,7 @@ Tags: seo, xml sitemap, google search, open graph, schema.org, twitter card, per
 Requires at least: 4.9.0
 Tested up to: 5.4
 Requires PHP: 5.6.0
-Stable tag: 4.0.5
+Stable tag: 4.0.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,10 +76,11 @@ The SEO Framework sends us no information and does not create cookies. Learn mor
 
 For additional functionality, check out our free companion plugin [Extension Manager](https://theseoframework.com/?p=2760). It provides numerous free and paid extensions, such as:
 
-* [Local](https://theseoframework.com/?p=2306) lets you set up **important local business information** for search engines to consume.
-* [Focus](https://theseoframework.com/?p=2305) guides you through the process of writing targeted content that ranks with **focus keywords**, and for Premium users also their inflections and synonyms.
+* [Focus](https://theseoframework.com/?p=2305) guides you through the process of writing targeted content that ranks with **focus keywords and synonyms**.
 * [Articles](https://theseoframework.com/?p=2303) **enhances your published posts** by automatically adding important Structured Data.
 * [Honeypot](https://theseoframework.com/?p=2300) **catches comment spammers** through four lightweight yet powerful ways.
+* [Cord](https://theseoframework.com/?p=3404) helps you connect your website to **Google Analytics and Facebook Pixel**.
+* [Local](https://theseoframework.com/?p=2306) lets you set up **important local business information** for search engines to consume.
 * [AMP](https://theseoframework.com/?p=2304) **binds The SEO Framework to the AMP plugin** for AMP supported articles and pages.
 * [Monitor](https://theseoframework.com/?p=2302) **keeps track of your website's SEO** optimizations and statistics.
 * [Incognito](https://theseoframework.com/?p=2301) **hides all development-comments** from The SEO Framework.
@@ -228,6 +229,16 @@ If you wish to display breadcrumbs, then your theme should provide this. Alterna
 
 == Changelog ==
 
+= 4.0.7 =
+
+This follow-up update to 4.0.6 addresses an issue where the WooCommerce shop page was seen as an actual archive mistakenly. For that page, this issue caused your post-edit input, among other SEO data, to no longer be honored.
+
+= 4.0.6 =
+
+In this update, we addressed a few issues our amazing users helped investigate. With that, we implemented better bbPress title support, and fixed a bug regarding WooCommerce and term-ID collisions.
+
+We also increased the entropy for generating object caching keys, addressed some translation and RTL errors, and added [a few new filters](https://theseoframework.com/?p=3537).
+
 = 4.0.5 =
 
 In WordPress, we found various query endpoints that can be malformed to create broken pages. Backlinks to these pages can harm your site's ranking. In this update, we added advanced query protection, which you can enable via the robots meta settings.
@@ -236,7 +247,7 @@ The ["Connected Social Pages" input fields will now disappear](https://github.co
 
 On the other hand, we added a new feed indexing option, Discord sharing options (oEmbed, theme color), and the aforementioned advanced query protection option. Support for EDD and Polylang has been expanded, and we reintroduced the hyphen option for titles (which is the new default).
 
-In this update, we bring a few other quality-of-life changes, as well. We added a dozen new filters, touched up the interface, streamlined the query handler, and [fixed known corner-case issues and bugs](https://theseoframework.com/?p=3505#detailed).
+In this update, we also bring a few other quality-of-life changes, as well. We added a dozen new filters, touched up the interface, streamlined the query handler, and [fixed known corner-case issues and bugs](https://theseoframework.com/?p=3505).
 
 = 4.0.4 =
 

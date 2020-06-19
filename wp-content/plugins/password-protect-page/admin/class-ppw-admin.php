@@ -101,6 +101,7 @@ class PPW_Admin {
 			if ( ! $is_pro_activated ) {
 				$assert_services->load_assets_for_entire_site_tab();
 				$assert_services->load_assets_for_general_tab();
+				$assert_services->load_assets_for_entire_site_page();
 			}
 			$assert_services->load_assets_for_shortcodes();
 			$assert_services->load_css_hide_feature_set_password_wp();
@@ -213,6 +214,47 @@ class PPW_Admin {
 			'render_ui'
 		), PPW_DIR_URL . 'admin/images/ppw-icon-20x20.png' );
 		add_submenu_page( PPW_Constants::MENU_NAME, __( 'Settings', PPW_Constants::DOMAIN ), __( 'Settings', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::MENU_NAME );
+
+		// Hide sitewide submenu when Pro activate
+		if ( ! is_pro_active_and_valid_license() ) {
+			$this->sitewide_submenu();
+		}
+	}
+
+	/**
+	 * Add sitewide submenu
+	 */
+	public function sitewide_submenu() {
+		$setting_page = new PPW_Sitewide_Settings();
+
+		add_submenu_page( PPW_Constants::MENU_NAME, __( 'Sitewide', PPW_Constants::DOMAIN ), __( 'Sitewide', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::SITEWIDE_PAGE_PREFIX, array(
+			$setting_page,
+			'render_ui',
+		) );
+	}
+
+	/**
+	 * Hide sitewide tab content in Free version.
+	 */
+	public function ppw_handle_custom_tab( $tabs ) {
+		$tab_key = array_search( 'entire_site', $tabs, true );
+		if ( false !== $tab_key ) {
+			unset( $tabs[ $tab_key ] );
+		}
+
+		return $tabs;
+	}
+
+	/**
+	 * Hide sitewide tab in Free version.
+	 */
+	public function ppw_handle_add_new_tab( $tabs ) {
+		$tab_key = array_search( 'entire_site', array_column( $tabs, 'tab' ), true );
+		if ( false !== $tab_key ) {
+			unset( $tabs[ $tab_key ] );
+		}
+
+		return $tabs;
 	}
 
 	/**
@@ -339,6 +381,7 @@ class PPW_Admin {
 			PPW_Constants::HOOK_ADVANCED_VALID_INPUT_DATA,
 			array(
 				PPW_Constants::PROTECT_EXCERPT,
+				PPW_Constants::USE_CUSTOM_FORM_ACTION,
 			)
 		);
 		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
@@ -393,6 +436,10 @@ class PPW_Admin {
 	 * Feature entire site
 	 */
 	public function ppw_render_form_entire_site() {
+		if ( ppw_free_has_bypass_sitewide_protection() ) {
+			return;
+		}
+
 		$is_protect = ppw_core_get_setting_entire_site_type_bool( PPW_Constants::IS_PROTECT_ENTIRE_SITE );
 		if ( ! $is_protect ) {
 			return;
@@ -482,6 +529,10 @@ _end_;
 	 * @return bool  A post requires the user to supply a password.
 	 */
 	public function ppw_handle_post_password_required( $required, $post ) {
+		if ( ppw_free_has_bypass_single_protection() ) {
+			return $required;
+		}
+
 		if ( empty( $post->ID ) ) {
 			return $required;
 		}

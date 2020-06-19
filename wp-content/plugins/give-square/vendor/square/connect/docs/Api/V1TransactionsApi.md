@@ -32,12 +32,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the original payment's associated location.
 $body = new \SquareConnect\Model\V1CreateRefundRequest(); // \SquareConnect\Model\V1CreateRefundRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
 try {
-    $result = $api_instance->createRefund($location_id, $body);
+    $result = $apiInstance->createRefund($location_id, $body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->createRefund: ', $e->getMessage(), PHP_EOL;
@@ -82,11 +82,11 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the location to list bank accounts for.
 
 try {
-    $result = $api_instance->listBankAccounts($location_id);
+    $result = $apiInstance->listBankAccounts($location_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->listBankAccounts: ', $e->getMessage(), PHP_EOL;
@@ -130,14 +130,14 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the location to list online store orders for.
 $order = "order_example"; // string | TThe order in which payments are listed in the response.
 $limit = 56; // int | The maximum number of payments to return in a single response. This value cannot exceed 200.
 $batch_token = "batch_token_example"; // string | A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 
 try {
-    $result = $api_instance->listOrders($location_id, $order, $limit, $batch_token);
+    $result = $apiInstance->listOrders($location_id, $order, $limit, $batch_token);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->listOrders: ', $e->getMessage(), PHP_EOL;
@@ -184,7 +184,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the location to list payments for. If you specify me, this endpoint returns payments aggregated from all of the business's locations.
 $order = "order_example"; // string | The order in which payments are listed in the response.
 $begin_time = "begin_time_example"; // string | The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
@@ -194,7 +194,7 @@ $batch_token = "batch_token_example"; // string | A pagination cursor to retriev
 $include_partial = true; // bool | Indicates whether or not to include partial payments in the response. Partial payments will have the tenders collected so far, but the itemizations will be empty until the payment is completed.
 
 try {
-    $result = $api_instance->listPayments($location_id, $order, $begin_time, $end_time, $limit, $batch_token, $include_partial);
+    $result = $apiInstance->listPayments($location_id, $order, $begin_time, $end_time, $limit, $batch_token, $include_partial);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->listPayments: ', $e->getMessage(), PHP_EOL;
@@ -244,7 +244,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the location to list refunds for.
 $order = "order_example"; // string | TThe order in which payments are listed in the response.
 $begin_time = "begin_time_example"; // string | The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
@@ -253,7 +253,7 @@ $limit = 56; // int | The approximate number of refunds to return in a single re
 $batch_token = "batch_token_example"; // string | A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 
 try {
-    $result = $api_instance->listRefunds($location_id, $order, $begin_time, $end_time, $limit, $batch_token);
+    $result = $apiInstance->listRefunds($location_id, $order, $begin_time, $end_time, $limit, $batch_token);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->listRefunds: ', $e->getMessage(), PHP_EOL;
@@ -302,17 +302,17 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
-$location_id = "location_id_example"; // string | The ID of the location to list settlements for. If you specify me, this endpoint returns payments aggregated from all of the business's locations.
-$order = "order_example"; // string | TThe order in which payments are listed in the response.
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
+$location_id = "location_id_example"; // string | The ID of the location to list settlements for. If you specify me, this endpoint returns settlements aggregated from all of the business's locations.
+$order = "order_example"; // string | The order in which settlements are listed in the response.
 $begin_time = "begin_time_example"; // string | The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year.
 $end_time = "end_time_example"; // string | The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time.
-$limit = 56; // int | The maximum number of payments to return in a single response. This value cannot exceed 200.
+$limit = 56; // int | The maximum number of settlements to return in a single response. This value cannot exceed 200.
 $status = "status_example"; // string | Provide this parameter to retrieve only settlements with a particular status (SENT or FAILED).
 $batch_token = "batch_token_example"; // string | A pagination cursor to retrieve the next set of results for your original query to the endpoint.
 
 try {
-    $result = $api_instance->listSettlements($location_id, $order, $begin_time, $end_time, $limit, $status, $batch_token);
+    $result = $apiInstance->listSettlements($location_id, $order, $begin_time, $end_time, $limit, $status, $batch_token);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->listSettlements: ', $e->getMessage(), PHP_EOL;
@@ -324,11 +324,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **location_id** | **string**| The ID of the location to list settlements for. If you specify me, this endpoint returns payments aggregated from all of the business&#39;s locations. |
- **order** | **string**| TThe order in which payments are listed in the response. | [optional]
+ **location_id** | **string**| The ID of the location to list settlements for. If you specify me, this endpoint returns settlements aggregated from all of the business&#39;s locations. |
+ **order** | **string**| The order in which settlements are listed in the response. | [optional]
  **begin_time** | **string**| The beginning of the requested reporting period, in ISO 8601 format. If this value is before January 1, 2013 (2013-01-01T00:00:00Z), this endpoint returns an error. Default value: The current time minus one year. | [optional]
  **end_time** | **string**| The end of the requested reporting period, in ISO 8601 format. If this value is more than one year greater than begin_time, this endpoint returns an error. Default value: The current time. | [optional]
- **limit** | **int**| The maximum number of payments to return in a single response. This value cannot exceed 200. | [optional]
+ **limit** | **int**| The maximum number of settlements to return in a single response. This value cannot exceed 200. | [optional]
  **status** | **string**| Provide this parameter to retrieve only settlements with a particular status (SENT or FAILED). | [optional]
  **batch_token** | **string**| A pagination cursor to retrieve the next set of results for your original query to the endpoint. | [optional]
 
@@ -362,12 +362,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the bank account's associated location.
 $bank_account_id = "bank_account_id_example"; // string | The bank account's Square-issued ID. You obtain this value from Settlement objects returned.
 
 try {
-    $result = $api_instance->retrieveBankAccount($location_id, $bank_account_id);
+    $result = $apiInstance->retrieveBankAccount($location_id, $bank_account_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->retrieveBankAccount: ', $e->getMessage(), PHP_EOL;
@@ -412,12 +412,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the order's associated location.
 $order_id = "order_id_example"; // string | The order's Square-issued ID. You obtain this value from Order objects returned by the List Orders endpoint
 
 try {
-    $result = $api_instance->retrieveOrder($location_id, $order_id);
+    $result = $apiInstance->retrieveOrder($location_id, $order_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->retrieveOrder: ', $e->getMessage(), PHP_EOL;
@@ -462,12 +462,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the payment's associated location.
 $payment_id = "payment_id_example"; // string | The Square-issued payment ID. payment_id comes from Payment objects returned by the List Payments endpoint, Settlement objects returned by the List Settlements endpoint, or Refund objects returned by the List Refunds endpoint.
 
 try {
-    $result = $api_instance->retrievePayment($location_id, $payment_id);
+    $result = $apiInstance->retrievePayment($location_id, $payment_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->retrievePayment: ', $e->getMessage(), PHP_EOL;
@@ -512,12 +512,12 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the settlements's associated location.
 $settlement_id = "settlement_id_example"; // string | The settlement's Square-issued ID. You obtain this value from Settlement objects returned by the List Settlements endpoint.
 
 try {
-    $result = $api_instance->retrieveSettlement($location_id, $settlement_id);
+    $result = $apiInstance->retrieveSettlement($location_id, $settlement_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->retrieveSettlement: ', $e->getMessage(), PHP_EOL;
@@ -562,13 +562,13 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // Configure OAuth2 access token for authorization: oauth2
 SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$api_instance = new SquareConnect\Api\V1TransactionsApi();
+$apiInstance = new SquareConnect\Api\V1TransactionsApi();
 $location_id = "location_id_example"; // string | The ID of the order's associated location.
 $order_id = "order_id_example"; // string | The order's Square-issued ID. You obtain this value from Order objects returned by the List Orders endpoint
 $body = new \SquareConnect\Model\V1UpdateOrderRequest(); // \SquareConnect\Model\V1UpdateOrderRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
 
 try {
-    $result = $api_instance->updateOrder($location_id, $order_id, $body);
+    $result = $apiInstance->updateOrder($location_id, $order_id, $body);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling V1TransactionsApi->updateOrder: ', $e->getMessage(), PHP_EOL;

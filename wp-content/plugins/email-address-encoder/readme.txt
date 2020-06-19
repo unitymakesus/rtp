@@ -1,11 +1,11 @@
 === Email Address Encoder ===
 Contributors: tillkruess
-Donate link: https://www.paypal.me/tillkruss
+Donate link: https://github.com/sponsors/tillkruss
 Tags: antispam, anti spam, spam, email, e-mail, mail, spider, crawler, harvester, robots, spambot, block, obfuscate, obfuscation, encode, encoder, encoding, encrypt, encryption, protect, protection
 Requires at least: 2.0
-Tested up to: 5.1
+Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 1.0.19
+Stable tag: 1.0.21
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,6 +32,8 @@ Other content (like phone numbers) can be protected using `[encode]` shortcode:
 * Built-in plugin support for **ACF**, **Jetpack**, **WooCommerce** and many others
 
 Check out the [Premium](https://encoder.till.im/download?utm_source=wp-plugin&amp;utm_medium=readme) version of Email Address Encoder.
+
+[](http://coderisk.com/wp/plugin/email-address-encoder/RIPS-r0bJqKvBws)
 
 == Installation ==
 
@@ -68,6 +70,20 @@ You can use the "Page Scanner" found under _Settings -> Email Encoder_ to see wh
 4. [Premium] Phone number protection using polymorphous ROT47/CSS
 
 == Changelog ==
+
+- add "encoding" gutenberg block
+- Show premium upgrade page inside wordpress?
+- Dashboard widget with scanner results?
+
+= 1.0.21 =
+
+* Changed page slug to avoid issues with the `encode` keyword
+* Only search for unprotected emails on public pages
+* Show warning when page couldn't be fetched
+
+= 1.0.20 =
+
+* Encode emails in navigation menus
 
 = 1.0.19 =
 

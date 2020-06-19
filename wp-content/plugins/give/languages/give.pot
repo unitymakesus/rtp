@@ -107,7 +107,7 @@ msgstr ""
 msgid "GiveWP version %s is required to update this add-on."
 msgstr ""
 
-#: includes/ajax-functions.php:204, includes/country-functions.php:502, includes/country-functions.php:552, includes/country-functions.php:803, includes/admin/import-functions.php:461, includes/forms/template.php:1241, includes/admin/settings/class-settings-general.php:247, includes/admin/tools/export/class-batch-export-donors.php:189, includes/admin/tools/export/give-export-donations-exporter.php:198
+#: includes/ajax-functions.php:204, includes/country-functions.php:504, includes/country-functions.php:554, includes/country-functions.php:805, includes/admin/import-functions.php:461, includes/forms/template.php:1241, includes/admin/settings/class-settings-general.php:247, includes/admin/tools/export/class-batch-export-donors.php:189, includes/admin/tools/export/give-export-donations-exporter.php:198
 msgid "State"
 msgstr ""
 
@@ -325,7 +325,7 @@ msgstr ""
 msgid "Success"
 msgstr ""
 
-#: includes/class-give-cli-commands.php:1258, includes/post-types.php:352, includes/payments/functions.php:544, includes/admin/payments/class-payments-table.php:333, src/API/Endpoints/Reports/PaymentStatuses.php:79
+#: includes/class-give-cli-commands.php:1258, includes/post-types.php:352, includes/payments/functions.php:546, includes/admin/payments/class-payments-table.php:333, src/API/Endpoints/Reports/PaymentStatuses.php:79
 msgid "Failed"
 msgstr ""
 
@@ -415,6 +415,14 @@ msgstr ""
 msgid "License Information"
 msgstr ""
 
+#: includes/class-give-license-handler.php:783
+msgid "Expired:"
+msgstr ""
+
+#: includes/class-give-license-handler.php:783
+msgid "Renews:"
+msgstr ""
+
 #: includes/class-give-license-handler.php:795
 msgid "Renew to manage sites"
 msgstr ""
@@ -449,8 +457,16 @@ msgstr ""
 msgid "Access Support"
 msgstr ""
 
+#: includes/class-give-license-handler.php:887, includes/admin/tools/views/html-admin-page-system-info.php:956
+msgid "Version"
+msgstr ""
+
 #: includes/class-give-license-handler.php:903
 msgid "View Changelog"
+msgstr ""
+
+#: includes/class-give-license-handler.php:904
+msgid "Changelog of"
 msgstr ""
 
 #: includes/class-give-license-handler.php:913
@@ -523,7 +539,7 @@ msgstr ""
 
 #. translators: %s Stripe User ID
 #. translators: %s Stripe User ID
-#: includes/class-give-scripts.php:266, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:671
+#: includes/class-give-scripts.php:266, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:742
 msgid "Are you sure you want to disconnect GiveWP from Stripe? If disconnected, this website and any others sharing the same Stripe account (%s) that are connected to GiveWP will need to reconnect in order to process payments."
 msgstr ""
 
@@ -567,7 +583,7 @@ msgstr ""
 msgid "Ok"
 msgstr ""
 
-#: includes/class-give-scripts.php:294, includes/class-notices.php:633, includes/formatting.php:767, includes/api/class-give-api.php:1962, includes/api/class-give-api.php:1972, includes/api/class-give-api.php:1993, includes/api/class-give-api.php:2004, includes/forms/functions.php:308, includes/gateways/manual.php:38, includes/admin/donors/donor-actions.php:33, includes/admin/donors/donor-actions.php:58, includes/admin/donors/donor-actions.php:199, includes/admin/donors/donor-actions.php:217, includes/admin/donors/donor-actions.php:290, includes/admin/donors/donor-actions.php:308, includes/admin/donors/donor-actions.php:399, includes/admin/donors/donor-actions.php:499, includes/admin/donors/donor-actions.php:550, includes/admin/donors/donor-actions.php:596, includes/admin/emails/class-donation-receipt-email.php:275, includes/admin/emails/class-donation-receipt-email.php:314, includes/admin/emails/class-donor-note-email.php:79, includes/admin/emails/class-donor-register-email.php:114, includes/admin/emails/class-email-access-email.php:271, includes/admin/emails/class-new-donation-email.php:248, includes/admin/emails/class-new-donor-register-email.php:110, includes/admin/emails/class-new-offline-donation-email.php:260, includes/admin/emails/class-offline-donation-instruction-email.php:226, includes/admin/forms/dashboard-columns.php:274, includes/admin/payments/actions.php:31, includes/admin/payments/actions.php:86, includes/admin/payments/actions.php:99, includes/admin/payments/actions.php:382, includes/admin/payments/actions.php:402, includes/admin/payments/actions.php:460, includes/admin/payments/actions.php:482, includes/admin/payments/view-payment-details.php:20, includes/admin/payments/view-payment-details.php:34, includes/admin/payments/view-payment-details.php:44, includes/admin/reports/reports.php:162, includes/admin/upgrades/upgrade-functions.php:507, includes/admin/tools/data/class-give-tools-delete-donations.php:156, includes/admin/tools/data/class-give-tools-delete-import-donors.php:312, includes/admin/tools/data/class-give-tools-delete-test-donors.php:261, includes/admin/tools/data/class-give-tools-delete-test-transactions.php:132, includes/admin/tools/data/class-give-tools-recount-all-stats.php:250, includes/admin/tools/data/class-give-tools-recount-donor-stats.php:206, includes/admin/tools/data/class-give-tools-recount-form-stats.php:219, includes/admin/tools/data/class-give-tools-recount-income.php:187, includes/admin/tools/data/class-give-tools-recount-single-donor-stats.php:161, includes/admin/tools/data/class-give-tools-reset-stats.php:241, includes/admin/tools/export/class-batch-export.php:147, includes/admin/tools/export/class-core-settings-export.php:81, includes/admin/tools/export/class-export.php:186, includes/admin/tools/export/export-actions.php:28, includes/admin/tools/export/pdf-reports.php:31, includes/admin/tools/export/pdf-reports.php:35, includes/admin/tools/export/pdf-reports.php:39, includes/admin/tools/logs/class-api-requests-logs-list-table.php:158, includes/admin/tools/logs/class-gateway-error-logs-list-table.php:140, includes/admin/tools/logs/class-spam-logs-list-table.php:94, includes/gateways/stripe/includes/admin/admin-actions.php:213, includes/gateways/stripe/includes/admin/class-give-stripe-logs-list-table.php:87
+#: includes/class-give-scripts.php:294, includes/class-notices.php:633, includes/formatting.php:767, includes/api/class-give-api.php:1962, includes/api/class-give-api.php:1972, includes/api/class-give-api.php:1993, includes/api/class-give-api.php:2004, includes/forms/functions.php:308, includes/gateways/manual.php:38, includes/admin/donors/donor-actions.php:33, includes/admin/donors/donor-actions.php:58, includes/admin/donors/donor-actions.php:199, includes/admin/donors/donor-actions.php:217, includes/admin/donors/donor-actions.php:290, includes/admin/donors/donor-actions.php:308, includes/admin/donors/donor-actions.php:399, includes/admin/donors/donor-actions.php:499, includes/admin/donors/donor-actions.php:550, includes/admin/donors/donor-actions.php:596, includes/admin/emails/class-donation-receipt-email.php:275, includes/admin/emails/class-donation-receipt-email.php:314, includes/admin/emails/class-donor-note-email.php:79, includes/admin/emails/class-donor-register-email.php:114, includes/admin/emails/class-email-access-email.php:271, includes/admin/emails/class-new-donation-email.php:248, includes/admin/emails/class-new-donor-register-email.php:110, includes/admin/emails/class-new-offline-donation-email.php:260, includes/admin/emails/class-offline-donation-instruction-email.php:226, includes/admin/forms/dashboard-columns.php:274, includes/admin/payments/actions.php:31, includes/admin/payments/actions.php:86, includes/admin/payments/actions.php:99, includes/admin/payments/actions.php:382, includes/admin/payments/actions.php:402, includes/admin/payments/actions.php:460, includes/admin/payments/actions.php:482, includes/admin/payments/view-payment-details.php:20, includes/admin/payments/view-payment-details.php:34, includes/admin/payments/view-payment-details.php:44, includes/admin/reports/reports.php:162, includes/admin/upgrades/upgrade-functions.php:511, includes/admin/tools/data/class-give-tools-delete-donations.php:156, includes/admin/tools/data/class-give-tools-delete-import-donors.php:312, includes/admin/tools/data/class-give-tools-delete-test-donors.php:261, includes/admin/tools/data/class-give-tools-delete-test-transactions.php:132, includes/admin/tools/data/class-give-tools-recount-all-stats.php:250, includes/admin/tools/data/class-give-tools-recount-donor-stats.php:206, includes/admin/tools/data/class-give-tools-recount-form-stats.php:219, includes/admin/tools/data/class-give-tools-recount-income.php:187, includes/admin/tools/data/class-give-tools-recount-single-donor-stats.php:161, includes/admin/tools/data/class-give-tools-reset-stats.php:241, includes/admin/tools/export/class-batch-export.php:147, includes/admin/tools/export/class-core-settings-export.php:81, includes/admin/tools/export/class-export.php:186, includes/admin/tools/export/export-actions.php:28, includes/admin/tools/export/pdf-reports.php:31, includes/admin/tools/export/pdf-reports.php:35, includes/admin/tools/export/pdf-reports.php:39, includes/admin/tools/logs/class-api-requests-logs-list-table.php:158, includes/admin/tools/logs/class-gateway-error-logs-list-table.php:140, includes/admin/tools/logs/class-spam-logs-list-table.php:94, includes/gateways/stripe/includes/admin/admin-actions.php:220, includes/gateways/stripe/includes/admin/class-give-stripe-logs-list-table.php:87
 msgid "Error"
 msgstr ""
 
@@ -1176,3746 +1192,3754 @@ msgid "Cuba"
 msgstr ""
 
 #: includes/country-functions.php:144
-msgid "Cyprus Island"
+msgid "Cura&ccedil;ao"
 msgstr ""
 
 #: includes/country-functions.php:145
-msgid "Czech Republic"
+msgid "Cyprus Island"
 msgstr ""
 
 #: includes/country-functions.php:146
-msgid "Denmark"
+msgid "Czech Republic"
 msgstr ""
 
 #: includes/country-functions.php:147
-msgid "Djibouti"
+msgid "Denmark"
 msgstr ""
 
 #: includes/country-functions.php:148
-msgid "Dominica"
+msgid "Djibouti"
 msgstr ""
 
 #: includes/country-functions.php:149
-msgid "Dominican Republic"
+msgid "Dominica"
 msgstr ""
 
 #: includes/country-functions.php:150
-msgid "East Timor"
+msgid "Dominican Republic"
 msgstr ""
 
 #: includes/country-functions.php:151
-msgid "Ecuador"
+msgid "East Timor"
 msgstr ""
 
 #: includes/country-functions.php:152
-msgid "Egypt"
+msgid "Ecuador"
 msgstr ""
 
 #: includes/country-functions.php:153
-msgid "Equatorial Guinea"
+msgid "Egypt"
 msgstr ""
 
 #: includes/country-functions.php:154
-msgid "El Salvador"
+msgid "Equatorial Guinea"
 msgstr ""
 
 #: includes/country-functions.php:155
-msgid "Eritrea"
+msgid "El Salvador"
 msgstr ""
 
 #: includes/country-functions.php:156
-msgid "Estonia"
+msgid "Eritrea"
 msgstr ""
 
 #: includes/country-functions.php:157
-msgid "Ethiopia"
+msgid "Estonia"
 msgstr ""
 
 #: includes/country-functions.php:158
-msgid "Falkland Islands"
-msgstr ""
-
-#: includes/country-functions.php:159
-msgid "Faroe Islands"
-msgstr ""
-
-#: includes/country-functions.php:160
-msgid "Fiji"
-msgstr ""
-
-#: includes/country-functions.php:161
-msgid "Finland"
-msgstr ""
-
-#: includes/country-functions.php:162
-msgid "France"
-msgstr ""
-
-#: includes/country-functions.php:163
-msgid "French Guiana"
-msgstr ""
-
-#: includes/country-functions.php:164
-msgid "French Polynesia"
-msgstr ""
-
-#: includes/country-functions.php:165
-msgid "French Southern Territories"
-msgstr ""
-
-#: includes/country-functions.php:166
-msgid "Gabon"
-msgstr ""
-
-#: includes/country-functions.php:167
-msgid "Gambia"
-msgstr ""
-
-#: includes/country-functions.php:168
-msgid "Georgia"
-msgstr ""
-
-#: includes/country-functions.php:169
-msgid "Germany"
-msgstr ""
-
-#: includes/country-functions.php:170
-msgid "Greece"
-msgstr ""
-
-#: includes/country-functions.php:171
-msgid "Ghana"
-msgstr ""
-
-#: includes/country-functions.php:172
-msgid "Gibraltar"
-msgstr ""
-
-#: includes/country-functions.php:173
-msgid "Greenland"
-msgstr ""
-
-#: includes/country-functions.php:174
-msgid "Grenada"
-msgstr ""
-
-#: includes/country-functions.php:175
-msgid "Guadeloupe"
-msgstr ""
-
-#: includes/country-functions.php:176
-msgid "Guam"
-msgstr ""
-
-#: includes/country-functions.php:177
-msgid "Guatemala"
-msgstr ""
-
-#: includes/country-functions.php:178
-msgid "Guernsey"
-msgstr ""
-
-#: includes/country-functions.php:179
-msgid "Guinea"
-msgstr ""
-
-#: includes/country-functions.php:180
-msgid "Guinea-Bissau"
-msgstr ""
-
-#: includes/country-functions.php:181
-msgid "Guyana"
-msgstr ""
-
-#: includes/country-functions.php:182
-msgid "Haiti"
-msgstr ""
-
-#: includes/country-functions.php:183
-msgid "Heard and McDonald Islands"
-msgstr ""
-
-#: includes/country-functions.php:184
-msgid "Holy See (City Vatican State)"
-msgstr ""
-
-#: includes/country-functions.php:185
-msgid "Honduras"
-msgstr ""
-
-#: includes/country-functions.php:186
-msgid "Hong Kong"
-msgstr ""
-
-#: includes/country-functions.php:187
-msgid "Hungary"
-msgstr ""
-
-#: includes/country-functions.php:188
-msgid "Iceland"
-msgstr ""
-
-#: includes/country-functions.php:189
-msgid "India"
-msgstr ""
-
-#: includes/country-functions.php:190
-msgid "Indonesia"
-msgstr ""
-
-#: includes/country-functions.php:191
-msgid "Iran"
-msgstr ""
-
-#: includes/country-functions.php:192
-msgid "Iraq"
-msgstr ""
-
-#: includes/country-functions.php:193
-msgid "Ireland"
-msgstr ""
-
-#: includes/country-functions.php:194
-msgid "Isle of Man"
-msgstr ""
-
-#: includes/country-functions.php:195
-msgid "Israel"
-msgstr ""
-
-#: includes/country-functions.php:196
-msgid "Italy"
-msgstr ""
-
-#: includes/country-functions.php:197
-msgid "Jamaica"
-msgstr ""
-
-#: includes/country-functions.php:198
-msgid "Japan"
-msgstr ""
-
-#: includes/country-functions.php:199
-msgid "Jersey"
-msgstr ""
-
-#: includes/country-functions.php:200
-msgid "Jordan"
-msgstr ""
-
-#: includes/country-functions.php:201
-msgid "Kazakhstan"
-msgstr ""
-
-#: includes/country-functions.php:202
-msgid "Kenya"
-msgstr ""
-
-#: includes/country-functions.php:203
-msgid "Kiribati"
-msgstr ""
-
-#: includes/country-functions.php:204
-msgid "Kuwait"
-msgstr ""
-
-#: includes/country-functions.php:205
-msgid "Kyrgyzstan"
-msgstr ""
-
-#: includes/country-functions.php:206
-msgid "Lao People's Democratic Republic"
-msgstr ""
-
-#: includes/country-functions.php:207
-msgid "Latvia"
-msgstr ""
-
-#: includes/country-functions.php:208
-msgid "Lebanon"
-msgstr ""
-
-#: includes/country-functions.php:209
-msgid "Lesotho"
-msgstr ""
-
-#: includes/country-functions.php:210
-msgid "Liberia"
-msgstr ""
-
-#: includes/country-functions.php:211
-msgid "Libyan Arab Jamahiriya"
-msgstr ""
-
-#: includes/country-functions.php:212
-msgid "Liechtenstein"
-msgstr ""
-
-#: includes/country-functions.php:213
-msgid "Lithuania"
-msgstr ""
-
-#: includes/country-functions.php:214
-msgid "Luxembourg"
-msgstr ""
-
-#: includes/country-functions.php:215
-msgid "Macau"
-msgstr ""
-
-#: includes/country-functions.php:216
-msgid "Macedonia"
-msgstr ""
-
-#: includes/country-functions.php:217
-msgid "Madagascar"
-msgstr ""
-
-#: includes/country-functions.php:218
-msgid "Malawi"
-msgstr ""
-
-#: includes/country-functions.php:219
-msgid "Malaysia"
-msgstr ""
-
-#: includes/country-functions.php:220
-msgid "Maldives"
-msgstr ""
-
-#: includes/country-functions.php:221
-msgid "Mali"
-msgstr ""
-
-#: includes/country-functions.php:222
-msgid "Malta"
-msgstr ""
-
-#: includes/country-functions.php:223
-msgid "Marshall Islands"
-msgstr ""
-
-#: includes/country-functions.php:224
-msgid "Martinique"
-msgstr ""
-
-#: includes/country-functions.php:225
-msgid "Mauritania"
-msgstr ""
-
-#: includes/country-functions.php:226
-msgid "Mauritius"
-msgstr ""
-
-#: includes/country-functions.php:227
-msgid "Mayotte"
-msgstr ""
-
-#: includes/country-functions.php:228
-msgid "Mexico"
-msgstr ""
-
-#: includes/country-functions.php:229
-msgid "Micronesia"
-msgstr ""
-
-#: includes/country-functions.php:230
-msgid "Moldova, Republic of"
-msgstr ""
-
-#: includes/country-functions.php:231
-msgid "Monaco"
-msgstr ""
-
-#: includes/country-functions.php:232
-msgid "Mongolia"
-msgstr ""
-
-#: includes/country-functions.php:233
-msgid "Montenegro"
-msgstr ""
-
-#: includes/country-functions.php:234
-msgid "Montserrat"
-msgstr ""
-
-#: includes/country-functions.php:235
-msgid "Morocco"
-msgstr ""
-
-#: includes/country-functions.php:236
-msgid "Mozambique"
-msgstr ""
-
-#: includes/country-functions.php:237
-msgid "Myanmar"
-msgstr ""
-
-#: includes/country-functions.php:238
-msgid "Namibia"
-msgstr ""
-
-#: includes/country-functions.php:239
-msgid "Nauru"
-msgstr ""
-
-#: includes/country-functions.php:240
-msgid "Nepal"
-msgstr ""
-
-#: includes/country-functions.php:241
-msgid "Netherlands"
-msgstr ""
-
-#: includes/country-functions.php:242
-msgid "Netherlands Antilles"
-msgstr ""
-
-#: includes/country-functions.php:243
-msgid "New Caledonia"
-msgstr ""
-
-#: includes/country-functions.php:244
-msgid "New Zealand"
-msgstr ""
-
-#: includes/country-functions.php:245
-msgid "Nicaragua"
-msgstr ""
-
-#: includes/country-functions.php:246, includes/country-functions.php:1209
-msgid "Niger"
-msgstr ""
-
-#: includes/country-functions.php:247
-msgid "Nigeria"
-msgstr ""
-
-#: includes/country-functions.php:248
-msgid "Niue"
-msgstr ""
-
-#: includes/country-functions.php:249
-msgid "Norfolk Island"
-msgstr ""
-
-#: includes/country-functions.php:250
-msgid "North Korea"
-msgstr ""
-
-#: includes/country-functions.php:251
-msgid "Northern Mariana Islands"
-msgstr ""
-
-#: includes/country-functions.php:252
-msgid "Norway"
-msgstr ""
-
-#: includes/country-functions.php:253
-msgid "Oman"
-msgstr ""
-
-#: includes/country-functions.php:254
-msgid "Pakistan"
-msgstr ""
-
-#: includes/country-functions.php:255
-msgid "Palau"
-msgstr ""
-
-#: includes/country-functions.php:256
-msgid "Palestinian Territories"
-msgstr ""
-
-#: includes/country-functions.php:257
-msgid "Panama"
-msgstr ""
-
-#: includes/country-functions.php:258
-msgid "Papua New Guinea"
-msgstr ""
-
-#: includes/country-functions.php:259
-msgid "Paraguay"
-msgstr ""
-
-#: includes/country-functions.php:260
-msgid "Peru"
-msgstr ""
-
-#: includes/country-functions.php:261
-msgid "Philippines"
-msgstr ""
-
-#: includes/country-functions.php:262
-msgid "Pitcairn Island"
-msgstr ""
-
-#: includes/country-functions.php:263
-msgid "Poland"
-msgstr ""
-
-#: includes/country-functions.php:264
-msgid "Portugal"
-msgstr ""
-
-#: includes/country-functions.php:265
-msgid "Puerto Rico"
-msgstr ""
-
-#: includes/country-functions.php:266
-msgid "Qatar"
-msgstr ""
-
-#: includes/country-functions.php:267
-msgid "Reunion Island"
-msgstr ""
-
-#: includes/country-functions.php:268
-msgid "Romania"
-msgstr ""
-
-#: includes/country-functions.php:269
-msgid "Russian Federation"
-msgstr ""
-
-#: includes/country-functions.php:270
-msgid "Rwanda"
-msgstr ""
-
-#: includes/country-functions.php:271
-msgid "Saint Helena"
-msgstr ""
-
-#: includes/country-functions.php:272
-msgid "Saint Kitts and Nevis"
-msgstr ""
-
-#: includes/country-functions.php:273
-msgid "Saint Lucia"
-msgstr ""
-
-#: includes/country-functions.php:274
-msgid "Saint Pierre and Miquelon"
-msgstr ""
-
-#: includes/country-functions.php:275
-msgid "Saint Vincent and the Grenadines"
-msgstr ""
-
-#: includes/country-functions.php:276
-msgid "San Marino"
-msgstr ""
-
-#: includes/country-functions.php:277
-msgid "Sao Tome and Principe"
-msgstr ""
-
-#: includes/country-functions.php:278
-msgid "Saudi Arabia"
-msgstr ""
-
-#: includes/country-functions.php:279
-msgid "Senegal"
-msgstr ""
-
-#: includes/country-functions.php:280
-msgid "Serbia"
-msgstr ""
-
-#: includes/country-functions.php:281
-msgid "Seychelles"
-msgstr ""
-
-#: includes/country-functions.php:282
-msgid "Sierra Leone"
-msgstr ""
-
-#: includes/country-functions.php:283
-msgid "Singapore"
-msgstr ""
-
-#: includes/country-functions.php:284
-msgid "Slovak Republic"
-msgstr ""
-
-#: includes/country-functions.php:285
-msgid "Slovenia"
-msgstr ""
-
-#: includes/country-functions.php:286
-msgid "Solomon Islands"
-msgstr ""
-
-#: includes/country-functions.php:287
-msgid "Somalia"
-msgstr ""
-
-#: includes/country-functions.php:288
-msgid "South Africa"
-msgstr ""
-
-#: includes/country-functions.php:289
-msgid "South Georgia"
-msgstr ""
-
-#: includes/country-functions.php:290
-msgid "South Korea"
-msgstr ""
-
-#: includes/country-functions.php:291
-msgid "Spain"
-msgstr ""
-
-#: includes/country-functions.php:292
-msgid "Sri Lanka"
-msgstr ""
-
-#: includes/country-functions.php:293
-msgid "Sudan"
-msgstr ""
-
-#: includes/country-functions.php:294
-msgid "Suriname"
-msgstr ""
-
-#: includes/country-functions.php:295
-msgid "Svalbard and Jan Mayen Islands"
-msgstr ""
-
-#: includes/country-functions.php:296
 msgid "Eswatini"
 msgstr ""
 
+#: includes/country-functions.php:159
+msgid "Ethiopia"
+msgstr ""
+
+#: includes/country-functions.php:160
+msgid "Falkland Islands"
+msgstr ""
+
+#: includes/country-functions.php:161
+msgid "Faroe Islands"
+msgstr ""
+
+#: includes/country-functions.php:162
+msgid "Fiji"
+msgstr ""
+
+#: includes/country-functions.php:163
+msgid "Finland"
+msgstr ""
+
+#: includes/country-functions.php:164
+msgid "France"
+msgstr ""
+
+#: includes/country-functions.php:165
+msgid "French Guiana"
+msgstr ""
+
+#: includes/country-functions.php:166
+msgid "French Polynesia"
+msgstr ""
+
+#: includes/country-functions.php:167
+msgid "French Southern Territories"
+msgstr ""
+
+#: includes/country-functions.php:168
+msgid "Gabon"
+msgstr ""
+
+#: includes/country-functions.php:169
+msgid "Gambia"
+msgstr ""
+
+#: includes/country-functions.php:170
+msgid "Georgia"
+msgstr ""
+
+#: includes/country-functions.php:171
+msgid "Germany"
+msgstr ""
+
+#: includes/country-functions.php:172
+msgid "Greece"
+msgstr ""
+
+#: includes/country-functions.php:173
+msgid "Ghana"
+msgstr ""
+
+#: includes/country-functions.php:174
+msgid "Gibraltar"
+msgstr ""
+
+#: includes/country-functions.php:175
+msgid "Greenland"
+msgstr ""
+
+#: includes/country-functions.php:176
+msgid "Grenada"
+msgstr ""
+
+#: includes/country-functions.php:177
+msgid "Guadeloupe"
+msgstr ""
+
+#: includes/country-functions.php:178
+msgid "Guam"
+msgstr ""
+
+#: includes/country-functions.php:179
+msgid "Guatemala"
+msgstr ""
+
+#: includes/country-functions.php:180
+msgid "Guernsey"
+msgstr ""
+
+#: includes/country-functions.php:181
+msgid "Guinea"
+msgstr ""
+
+#: includes/country-functions.php:182
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: includes/country-functions.php:183
+msgid "Guyana"
+msgstr ""
+
+#: includes/country-functions.php:184
+msgid "Haiti"
+msgstr ""
+
+#: includes/country-functions.php:185
+msgid "Heard and McDonald Islands"
+msgstr ""
+
+#: includes/country-functions.php:186
+msgid "Holy See (City Vatican State)"
+msgstr ""
+
+#: includes/country-functions.php:187
+msgid "Honduras"
+msgstr ""
+
+#: includes/country-functions.php:188
+msgid "Hong Kong"
+msgstr ""
+
+#: includes/country-functions.php:189
+msgid "Hungary"
+msgstr ""
+
+#: includes/country-functions.php:190
+msgid "Iceland"
+msgstr ""
+
+#: includes/country-functions.php:191
+msgid "India"
+msgstr ""
+
+#: includes/country-functions.php:192
+msgid "Indonesia"
+msgstr ""
+
+#: includes/country-functions.php:193
+msgid "Iran"
+msgstr ""
+
+#: includes/country-functions.php:194
+msgid "Iraq"
+msgstr ""
+
+#: includes/country-functions.php:195
+msgid "Ireland"
+msgstr ""
+
+#: includes/country-functions.php:196
+msgid "Isle of Man"
+msgstr ""
+
+#: includes/country-functions.php:197
+msgid "Israel"
+msgstr ""
+
+#: includes/country-functions.php:198
+msgid "Italy"
+msgstr ""
+
+#: includes/country-functions.php:199
+msgid "Jamaica"
+msgstr ""
+
+#: includes/country-functions.php:200
+msgid "Japan"
+msgstr ""
+
+#: includes/country-functions.php:201
+msgid "Jersey"
+msgstr ""
+
+#: includes/country-functions.php:202
+msgid "Jordan"
+msgstr ""
+
+#: includes/country-functions.php:203
+msgid "Kazakhstan"
+msgstr ""
+
+#: includes/country-functions.php:204
+msgid "Kenya"
+msgstr ""
+
+#: includes/country-functions.php:205
+msgid "Kiribati"
+msgstr ""
+
+#: includes/country-functions.php:206
+msgid "Kosovo"
+msgstr ""
+
+#: includes/country-functions.php:207
+msgid "Kuwait"
+msgstr ""
+
+#: includes/country-functions.php:208
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: includes/country-functions.php:209
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: includes/country-functions.php:210
+msgid "Latvia"
+msgstr ""
+
+#: includes/country-functions.php:211
+msgid "Lebanon"
+msgstr ""
+
+#: includes/country-functions.php:212
+msgid "Lesotho"
+msgstr ""
+
+#: includes/country-functions.php:213
+msgid "Liberia"
+msgstr ""
+
+#: includes/country-functions.php:214
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: includes/country-functions.php:215
+msgid "Liechtenstein"
+msgstr ""
+
+#: includes/country-functions.php:216
+msgid "Lithuania"
+msgstr ""
+
+#: includes/country-functions.php:217
+msgid "Luxembourg"
+msgstr ""
+
+#: includes/country-functions.php:218
+msgid "Macau"
+msgstr ""
+
+#: includes/country-functions.php:219
+msgid "Madagascar"
+msgstr ""
+
+#: includes/country-functions.php:220
+msgid "Malawi"
+msgstr ""
+
+#: includes/country-functions.php:221
+msgid "Malaysia"
+msgstr ""
+
+#: includes/country-functions.php:222
+msgid "Maldives"
+msgstr ""
+
+#: includes/country-functions.php:223
+msgid "Mali"
+msgstr ""
+
+#: includes/country-functions.php:224
+msgid "Malta"
+msgstr ""
+
+#: includes/country-functions.php:225
+msgid "Marshall Islands"
+msgstr ""
+
+#: includes/country-functions.php:226
+msgid "Martinique"
+msgstr ""
+
+#: includes/country-functions.php:227
+msgid "Mauritania"
+msgstr ""
+
+#: includes/country-functions.php:228
+msgid "Mauritius"
+msgstr ""
+
+#: includes/country-functions.php:229
+msgid "Mayotte"
+msgstr ""
+
+#: includes/country-functions.php:230
+msgid "Mexico"
+msgstr ""
+
+#: includes/country-functions.php:231
+msgid "Micronesia"
+msgstr ""
+
+#: includes/country-functions.php:232
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: includes/country-functions.php:233
+msgid "Monaco"
+msgstr ""
+
+#: includes/country-functions.php:234
+msgid "Mongolia"
+msgstr ""
+
+#: includes/country-functions.php:235
+msgid "Montenegro"
+msgstr ""
+
+#: includes/country-functions.php:236
+msgid "Montserrat"
+msgstr ""
+
+#: includes/country-functions.php:237
+msgid "Morocco"
+msgstr ""
+
+#: includes/country-functions.php:238
+msgid "Mozambique"
+msgstr ""
+
+#: includes/country-functions.php:239
+msgid "Myanmar"
+msgstr ""
+
+#: includes/country-functions.php:240
+msgid "Namibia"
+msgstr ""
+
+#: includes/country-functions.php:241
+msgid "Nauru"
+msgstr ""
+
+#: includes/country-functions.php:242
+msgid "Nepal"
+msgstr ""
+
+#: includes/country-functions.php:243
+msgid "Netherlands"
+msgstr ""
+
+#: includes/country-functions.php:244
+msgid "Netherlands Antilles"
+msgstr ""
+
+#: includes/country-functions.php:245
+msgid "New Caledonia"
+msgstr ""
+
+#: includes/country-functions.php:246
+msgid "New Zealand"
+msgstr ""
+
+#: includes/country-functions.php:247
+msgid "Nicaragua"
+msgstr ""
+
+#: includes/country-functions.php:248, includes/country-functions.php:1211
+msgid "Niger"
+msgstr ""
+
+#: includes/country-functions.php:249
+msgid "Nigeria"
+msgstr ""
+
+#: includes/country-functions.php:250
+msgid "Niue"
+msgstr ""
+
+#: includes/country-functions.php:251
+msgid "Norfolk Island"
+msgstr ""
+
+#: includes/country-functions.php:252
+msgid "North Korea"
+msgstr ""
+
+#: includes/country-functions.php:253
+msgid "North Macedonia"
+msgstr ""
+
+#: includes/country-functions.php:254
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: includes/country-functions.php:255
+msgid "Norway"
+msgstr ""
+
+#: includes/country-functions.php:256
+msgid "Oman"
+msgstr ""
+
+#: includes/country-functions.php:257
+msgid "Pakistan"
+msgstr ""
+
+#: includes/country-functions.php:258
+msgid "Palau"
+msgstr ""
+
+#: includes/country-functions.php:259
+msgid "Palestinian Territories"
+msgstr ""
+
+#: includes/country-functions.php:260
+msgid "Panama"
+msgstr ""
+
+#: includes/country-functions.php:261
+msgid "Papua New Guinea"
+msgstr ""
+
+#: includes/country-functions.php:262
+msgid "Paraguay"
+msgstr ""
+
+#: includes/country-functions.php:263
+msgid "Peru"
+msgstr ""
+
+#: includes/country-functions.php:264
+msgid "Philippines"
+msgstr ""
+
+#: includes/country-functions.php:265
+msgid "Pitcairn Island"
+msgstr ""
+
+#: includes/country-functions.php:266
+msgid "Poland"
+msgstr ""
+
+#: includes/country-functions.php:267
+msgid "Portugal"
+msgstr ""
+
+#: includes/country-functions.php:268
+msgid "Puerto Rico"
+msgstr ""
+
+#: includes/country-functions.php:269
+msgid "Qatar"
+msgstr ""
+
+#: includes/country-functions.php:270
+msgid "Reunion Island"
+msgstr ""
+
+#: includes/country-functions.php:271
+msgid "Romania"
+msgstr ""
+
+#: includes/country-functions.php:272
+msgid "Russian Federation"
+msgstr ""
+
+#: includes/country-functions.php:273
+msgid "Rwanda"
+msgstr ""
+
+#: includes/country-functions.php:274
+msgid "Saint Helena"
+msgstr ""
+
+#: includes/country-functions.php:275
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: includes/country-functions.php:276
+msgid "Saint Lucia"
+msgstr ""
+
+#: includes/country-functions.php:277
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: includes/country-functions.php:278
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: includes/country-functions.php:279
+msgid "San Marino"
+msgstr ""
+
+#: includes/country-functions.php:280
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: includes/country-functions.php:281
+msgid "Saudi Arabia"
+msgstr ""
+
+#: includes/country-functions.php:282
+msgid "Senegal"
+msgstr ""
+
+#: includes/country-functions.php:283
+msgid "Serbia"
+msgstr ""
+
+#: includes/country-functions.php:284
+msgid "Seychelles"
+msgstr ""
+
+#: includes/country-functions.php:285
+msgid "Sierra Leone"
+msgstr ""
+
+#: includes/country-functions.php:286
+msgid "Singapore"
+msgstr ""
+
+#: includes/country-functions.php:287
+msgid "Slovak Republic"
+msgstr ""
+
+#: includes/country-functions.php:288
+msgid "Slovenia"
+msgstr ""
+
+#: includes/country-functions.php:289
+msgid "Solomon Islands"
+msgstr ""
+
+#: includes/country-functions.php:290
+msgid "Somalia"
+msgstr ""
+
+#: includes/country-functions.php:291
+msgid "South Africa"
+msgstr ""
+
+#: includes/country-functions.php:292
+msgid "South Georgia"
+msgstr ""
+
+#: includes/country-functions.php:293
+msgid "South Korea"
+msgstr ""
+
+#: includes/country-functions.php:294
+msgid "South Sudan"
+msgstr ""
+
+#: includes/country-functions.php:295
+msgid "Spain"
+msgstr ""
+
+#: includes/country-functions.php:296
+msgid "Sri Lanka"
+msgstr ""
+
 #: includes/country-functions.php:297
-msgid "Sweden"
+msgid "Sudan"
 msgstr ""
 
 #: includes/country-functions.php:298
-msgid "Switzerland"
+msgid "Suriname"
 msgstr ""
 
 #: includes/country-functions.php:299
-msgid "Syrian Arab Republic"
+msgid "Svalbard and Jan Mayen Islands"
 msgstr ""
 
 #: includes/country-functions.php:300
-msgid "Taiwan"
+msgid "Sweden"
 msgstr ""
 
 #: includes/country-functions.php:301
-msgid "Tajikistan"
+msgid "Switzerland"
 msgstr ""
 
 #: includes/country-functions.php:302
-msgid "Tanzania"
+msgid "Syrian Arab Republic"
 msgstr ""
 
 #: includes/country-functions.php:303
-msgid "Togo"
+msgid "Taiwan"
 msgstr ""
 
 #: includes/country-functions.php:304
-msgid "Tokelau"
+msgid "Tajikistan"
 msgstr ""
 
 #: includes/country-functions.php:305
-msgid "Tonga"
+msgid "Tanzania"
 msgstr ""
 
 #: includes/country-functions.php:306
-msgid "Thailand"
+msgid "Togo"
 msgstr ""
 
 #: includes/country-functions.php:307
-msgid "Trinidad and Tobago"
+msgid "Tokelau"
 msgstr ""
 
 #: includes/country-functions.php:308
-msgid "Tunisia"
+msgid "Tonga"
 msgstr ""
 
 #: includes/country-functions.php:309
-msgid "Turkey"
+msgid "Thailand"
 msgstr ""
 
 #: includes/country-functions.php:310
-msgid "Turkmenistan"
+msgid "Trinidad and Tobago"
 msgstr ""
 
 #: includes/country-functions.php:311
-msgid "Turks and Caicos Islands"
+msgid "Tunisia"
 msgstr ""
 
 #: includes/country-functions.php:312
-msgid "Tuvalu"
+msgid "Turkey"
 msgstr ""
 
 #: includes/country-functions.php:313
-msgid "Uganda"
+msgid "Turkmenistan"
 msgstr ""
 
 #: includes/country-functions.php:314
-msgid "Ukraine"
+msgid "Turks and Caicos Islands"
 msgstr ""
 
 #: includes/country-functions.php:315
-msgid "United Arab Emirates"
+msgid "Tuvalu"
 msgstr ""
 
 #: includes/country-functions.php:316
-msgid "Uruguay"
+msgid "Uganda"
 msgstr ""
 
 #: includes/country-functions.php:317
-msgid "US Minor Outlying Islands"
+msgid "Ukraine"
 msgstr ""
 
 #: includes/country-functions.php:318
-msgid "Uzbekistan"
+msgid "United Arab Emirates"
 msgstr ""
 
 #: includes/country-functions.php:319
-msgid "Vanuatu"
+msgid "Uruguay"
 msgstr ""
 
 #: includes/country-functions.php:320
-msgid "Venezuela"
+msgid "US Minor Outlying Islands"
 msgstr ""
 
 #: includes/country-functions.php:321
-msgid "Vietnam"
+msgid "Uzbekistan"
 msgstr ""
 
 #: includes/country-functions.php:322
-msgid "Virgin Islands (British)"
+msgid "Vanuatu"
 msgstr ""
 
 #: includes/country-functions.php:323
-msgid "Virgin Islands (USA)"
+msgid "Venezuela"
 msgstr ""
 
 #: includes/country-functions.php:324
-msgid "Wallis and Futuna Islands"
+msgid "Vietnam"
 msgstr ""
 
 #: includes/country-functions.php:325
-msgid "Western Sahara"
+msgid "Virgin Islands (British)"
 msgstr ""
 
 #: includes/country-functions.php:326
-msgid "Western Samoa"
+msgid "Virgin Islands (USA)"
 msgstr ""
 
 #: includes/country-functions.php:327
-msgid "Yemen"
+msgid "Wallis and Futuna Islands"
 msgstr ""
 
 #: includes/country-functions.php:328
-msgid "Yugoslavia"
+msgid "Western Sahara"
 msgstr ""
 
 #: includes/country-functions.php:329
-msgid "Zambia"
+msgid "Western Samoa"
 msgstr ""
 
 #: includes/country-functions.php:330
+msgid "Yemen"
+msgstr ""
+
+#: includes/country-functions.php:331
+msgid "Zambia"
+msgstr ""
+
+#: includes/country-functions.php:332
 msgid "Zimbabwe"
 msgstr ""
 
-#: includes/country-functions.php:562
+#: includes/country-functions.php:564
 msgid "District"
 msgstr ""
 
-#: includes/country-functions.php:568, includes/country-functions.php:579, includes/country-functions.php:596, includes/country-functions.php:658, includes/country-functions.php:680, includes/country-functions.php:711, includes/country-functions.php:775, includes/country-functions.php:798, includes/country-functions.php:825, includes/admin/import-functions.php:462
+#: includes/country-functions.php:570, includes/country-functions.php:581, includes/country-functions.php:598, includes/country-functions.php:660, includes/country-functions.php:682, includes/country-functions.php:713, includes/country-functions.php:777, includes/country-functions.php:800, includes/country-functions.php:827, includes/admin/import-functions.php:462
 msgid "Province"
 msgstr ""
 
-#: includes/country-functions.php:584
+#: includes/country-functions.php:586
 msgid "Canton"
 msgstr ""
 
-#: includes/country-functions.php:591, includes/country-functions.php:647, includes/country-functions.php:717, includes/admin/import-functions.php:464
+#: includes/country-functions.php:593, includes/country-functions.php:649, includes/country-functions.php:719, includes/admin/import-functions.php:464
 msgid "Region"
 msgstr ""
 
-#: includes/country-functions.php:652, includes/country-functions.php:663, includes/country-functions.php:808, includes/admin/import-functions.php:463
+#: includes/country-functions.php:654, includes/country-functions.php:665, includes/country-functions.php:810, includes/admin/import-functions.php:463
 msgid "County"
 msgstr ""
 
-#: includes/country-functions.php:685
+#: includes/country-functions.php:687
 msgid "Prefecture"
 msgstr ""
 
-#: includes/country-functions.php:728
+#: includes/country-functions.php:730
 msgid "State / Zone"
 msgstr ""
 
-#: includes/country-functions.php:780
+#: includes/country-functions.php:782
 msgid "Municipality"
 msgstr ""
 
-#: includes/country-functions.php:846
+#: includes/country-functions.php:848
 msgid "Adana"
 msgstr ""
 
-#: includes/country-functions.php:847
+#: includes/country-functions.php:849
 msgid "Ad&#305;yaman"
 msgstr ""
 
-#: includes/country-functions.php:848
+#: includes/country-functions.php:850
 msgid "Afyon"
 msgstr ""
 
-#: includes/country-functions.php:849
+#: includes/country-functions.php:851
 msgid "A&#287;r&#305;"
 msgstr ""
 
-#: includes/country-functions.php:850
+#: includes/country-functions.php:852
 msgid "Amasya"
 msgstr ""
 
-#: includes/country-functions.php:851
+#: includes/country-functions.php:853
 msgid "Ankara"
 msgstr ""
 
-#: includes/country-functions.php:852
+#: includes/country-functions.php:854
 msgid "Antalya"
 msgstr ""
 
-#: includes/country-functions.php:853
+#: includes/country-functions.php:855
 msgid "Artvin"
 msgstr ""
 
-#: includes/country-functions.php:854
+#: includes/country-functions.php:856
 msgid "Ayd&#305;n"
 msgstr ""
 
-#: includes/country-functions.php:855
+#: includes/country-functions.php:857
 msgid "Bal&#305;kesir"
 msgstr ""
 
-#: includes/country-functions.php:856
+#: includes/country-functions.php:858
 msgid "Bilecik"
 msgstr ""
 
-#: includes/country-functions.php:857
+#: includes/country-functions.php:859
 msgid "Bing&#246;l"
 msgstr ""
 
-#: includes/country-functions.php:858
+#: includes/country-functions.php:860
 msgid "Bitlis"
 msgstr ""
 
-#: includes/country-functions.php:859
+#: includes/country-functions.php:861
 msgid "Bolu"
 msgstr ""
 
-#: includes/country-functions.php:860
+#: includes/country-functions.php:862
 msgid "Burdur"
 msgstr ""
 
-#: includes/country-functions.php:861
+#: includes/country-functions.php:863
 msgid "Bursa"
 msgstr ""
 
-#: includes/country-functions.php:862
+#: includes/country-functions.php:864
 msgid "&#199;anakkale"
 msgstr ""
 
-#: includes/country-functions.php:863
+#: includes/country-functions.php:865
 msgid "&#199;ank&#305;r&#305;"
 msgstr ""
 
-#: includes/country-functions.php:864
+#: includes/country-functions.php:866
 msgid "&#199;orum"
 msgstr ""
 
-#: includes/country-functions.php:865
+#: includes/country-functions.php:867
 msgid "Denizli"
 msgstr ""
 
-#: includes/country-functions.php:866
+#: includes/country-functions.php:868
 msgid "Diyarbak&#305;r"
 msgstr ""
 
-#: includes/country-functions.php:867
+#: includes/country-functions.php:869
 msgid "Edirne"
 msgstr ""
 
-#: includes/country-functions.php:868
+#: includes/country-functions.php:870
 msgid "Elaz&#305;&#287;"
 msgstr ""
 
-#: includes/country-functions.php:869
+#: includes/country-functions.php:871
 msgid "Erzincan"
 msgstr ""
 
-#: includes/country-functions.php:870
+#: includes/country-functions.php:872
 msgid "Erzurum"
 msgstr ""
 
-#: includes/country-functions.php:871
+#: includes/country-functions.php:873
 msgid "Eski&#351;ehir"
 msgstr ""
 
-#: includes/country-functions.php:872
+#: includes/country-functions.php:874
 msgid "Gaziantep"
 msgstr ""
 
-#: includes/country-functions.php:873
+#: includes/country-functions.php:875
 msgid "Giresun"
 msgstr ""
 
-#: includes/country-functions.php:874
+#: includes/country-functions.php:876
 msgid "G&#252;m&#252;&#351;hane"
 msgstr ""
 
-#: includes/country-functions.php:875
+#: includes/country-functions.php:877
 msgid "Hakkari"
 msgstr ""
 
-#: includes/country-functions.php:876
+#: includes/country-functions.php:878
 msgid "Hatay"
 msgstr ""
 
-#: includes/country-functions.php:877
+#: includes/country-functions.php:879
 msgid "Isparta"
 msgstr ""
 
-#: includes/country-functions.php:878
+#: includes/country-functions.php:880
 msgid "&#304;&#231;el"
 msgstr ""
 
-#: includes/country-functions.php:879
+#: includes/country-functions.php:881
 msgid "&#304;stanbul"
 msgstr ""
 
-#: includes/country-functions.php:880
+#: includes/country-functions.php:882
 msgid "&#304;zmir"
 msgstr ""
 
-#: includes/country-functions.php:881
+#: includes/country-functions.php:883
 msgid "Kars"
 msgstr ""
 
-#: includes/country-functions.php:882
+#: includes/country-functions.php:884
 msgid "Kastamonu"
 msgstr ""
 
-#: includes/country-functions.php:883
+#: includes/country-functions.php:885
 msgid "Kayseri"
 msgstr ""
 
-#: includes/country-functions.php:884
+#: includes/country-functions.php:886
 msgid "K&#305;rklareli"
 msgstr ""
 
-#: includes/country-functions.php:885
+#: includes/country-functions.php:887
 msgid "K&#305;r&#351;ehir"
 msgstr ""
 
-#: includes/country-functions.php:886
+#: includes/country-functions.php:888
 msgid "Kocaeli"
 msgstr ""
 
-#: includes/country-functions.php:887
+#: includes/country-functions.php:889
 msgid "Konya"
 msgstr ""
 
-#: includes/country-functions.php:888
+#: includes/country-functions.php:890
 msgid "K&#252;tahya"
 msgstr ""
 
-#: includes/country-functions.php:889
+#: includes/country-functions.php:891
 msgid "Malatya"
 msgstr ""
 
-#: includes/country-functions.php:890
+#: includes/country-functions.php:892
 msgid "Manisa"
 msgstr ""
 
-#: includes/country-functions.php:891
+#: includes/country-functions.php:893
 msgid "Kahramanmara&#351;"
 msgstr ""
 
-#: includes/country-functions.php:892
+#: includes/country-functions.php:894
 msgid "Mardin"
 msgstr ""
 
-#: includes/country-functions.php:893
+#: includes/country-functions.php:895
 msgid "Mu&#287;la"
 msgstr ""
 
-#: includes/country-functions.php:894
+#: includes/country-functions.php:896
 msgid "Mu&#351;"
 msgstr ""
 
-#: includes/country-functions.php:895
+#: includes/country-functions.php:897
 msgid "Nev&#351;ehir"
 msgstr ""
 
-#: includes/country-functions.php:896
+#: includes/country-functions.php:898
 msgid "Ni&#287;de"
 msgstr ""
 
-#: includes/country-functions.php:897
+#: includes/country-functions.php:899
 msgid "Ordu"
 msgstr ""
 
-#: includes/country-functions.php:898
+#: includes/country-functions.php:900
 msgid "Rize"
 msgstr ""
 
-#: includes/country-functions.php:899
+#: includes/country-functions.php:901
 msgid "Sakarya"
 msgstr ""
 
-#: includes/country-functions.php:900
+#: includes/country-functions.php:902
 msgid "Samsun"
 msgstr ""
 
-#: includes/country-functions.php:901
+#: includes/country-functions.php:903
 msgid "Siirt"
 msgstr ""
 
-#: includes/country-functions.php:902
+#: includes/country-functions.php:904
 msgid "Sinop"
 msgstr ""
 
-#: includes/country-functions.php:903
+#: includes/country-functions.php:905
 msgid "Sivas"
 msgstr ""
 
-#: includes/country-functions.php:904
+#: includes/country-functions.php:906
 msgid "Tekirda&#287;"
 msgstr ""
 
-#: includes/country-functions.php:905
+#: includes/country-functions.php:907
 msgid "Tokat"
 msgstr ""
 
-#: includes/country-functions.php:906
+#: includes/country-functions.php:908
 msgid "Trabzon"
 msgstr ""
 
-#: includes/country-functions.php:907
+#: includes/country-functions.php:909
 msgid "Tunceli"
 msgstr ""
 
-#: includes/country-functions.php:908
+#: includes/country-functions.php:910
 msgid "&#350;anl&#305;urfa"
 msgstr ""
 
-#: includes/country-functions.php:909
+#: includes/country-functions.php:911
 msgid "U&#351;ak"
 msgstr ""
 
-#: includes/country-functions.php:910
+#: includes/country-functions.php:912
 msgid "Van"
 msgstr ""
 
-#: includes/country-functions.php:911
+#: includes/country-functions.php:913
 msgid "Yozgat"
 msgstr ""
 
-#: includes/country-functions.php:912
+#: includes/country-functions.php:914
 msgid "Zonguldak"
 msgstr ""
 
-#: includes/country-functions.php:913
+#: includes/country-functions.php:915
 msgid "Aksaray"
 msgstr ""
 
-#: includes/country-functions.php:914
+#: includes/country-functions.php:916
 msgid "Bayburt"
 msgstr ""
 
-#: includes/country-functions.php:915
+#: includes/country-functions.php:917
 msgid "Karaman"
 msgstr ""
 
-#: includes/country-functions.php:916
+#: includes/country-functions.php:918
 msgid "K&#305;r&#305;kkale"
 msgstr ""
 
-#: includes/country-functions.php:917
+#: includes/country-functions.php:919
 msgid "Batman"
 msgstr ""
 
-#: includes/country-functions.php:918
+#: includes/country-functions.php:920
 msgid "&#350;&#305;rnak"
 msgstr ""
 
-#: includes/country-functions.php:919
+#: includes/country-functions.php:921
 msgid "Bart&#305;n"
 msgstr ""
 
-#: includes/country-functions.php:920
+#: includes/country-functions.php:922
 msgid "Ardahan"
 msgstr ""
 
-#: includes/country-functions.php:921
+#: includes/country-functions.php:923
 msgid "I&#287;d&#305;r"
 msgstr ""
 
-#: includes/country-functions.php:922
+#: includes/country-functions.php:924
 msgid "Yalova"
 msgstr ""
 
-#: includes/country-functions.php:923
+#: includes/country-functions.php:925
 msgid "Karab&#252;k"
 msgstr ""
 
-#: includes/country-functions.php:924
+#: includes/country-functions.php:926
 msgid "Kilis"
 msgstr ""
 
-#: includes/country-functions.php:925
+#: includes/country-functions.php:927
 msgid "Osmaniye"
 msgstr ""
 
-#: includes/country-functions.php:926
+#: includes/country-functions.php:928
 msgid "D&#252;zce"
 msgstr ""
 
-#: includes/country-functions.php:941
+#: includes/country-functions.php:943
 msgid "Alba"
 msgstr ""
 
-#: includes/country-functions.php:942
+#: includes/country-functions.php:944
 msgid "Arad"
 msgstr ""
 
-#: includes/country-functions.php:943
+#: includes/country-functions.php:945
 msgid "Arges"
 msgstr ""
 
-#: includes/country-functions.php:944
+#: includes/country-functions.php:946
 msgid "Bacau"
 msgstr ""
 
-#: includes/country-functions.php:945
+#: includes/country-functions.php:947
 msgid "Bihor"
 msgstr ""
 
-#: includes/country-functions.php:946
+#: includes/country-functions.php:948
 msgid "Bistrita-Nasaud"
 msgstr ""
 
-#: includes/country-functions.php:947
+#: includes/country-functions.php:949
 msgid "Botosani"
 msgstr ""
 
-#: includes/country-functions.php:948
+#: includes/country-functions.php:950
 msgid "Braila"
 msgstr ""
 
-#: includes/country-functions.php:949
+#: includes/country-functions.php:951
 msgid "Brasov"
 msgstr ""
 
-#: includes/country-functions.php:950
+#: includes/country-functions.php:952
 msgid "Bucuresti"
 msgstr ""
 
-#: includes/country-functions.php:951
+#: includes/country-functions.php:953
 msgid "Buzau"
 msgstr ""
 
-#: includes/country-functions.php:952
+#: includes/country-functions.php:954
 msgid "Calarasi"
 msgstr ""
 
-#: includes/country-functions.php:953
+#: includes/country-functions.php:955
 msgid "Caras-Severin"
 msgstr ""
 
-#: includes/country-functions.php:954
+#: includes/country-functions.php:956
 msgid "Cluj"
 msgstr ""
 
-#: includes/country-functions.php:955
+#: includes/country-functions.php:957
 msgid "Constanta"
 msgstr ""
 
-#: includes/country-functions.php:956
+#: includes/country-functions.php:958
 msgid "Covasna"
 msgstr ""
 
-#: includes/country-functions.php:957
+#: includes/country-functions.php:959
 msgid "Dambovita"
 msgstr ""
 
-#: includes/country-functions.php:958
+#: includes/country-functions.php:960
 msgid "Dolj"
 msgstr ""
 
-#: includes/country-functions.php:959
+#: includes/country-functions.php:961
 msgid "Galati"
 msgstr ""
 
-#: includes/country-functions.php:960
+#: includes/country-functions.php:962
 msgid "Giurgiu"
 msgstr ""
 
-#: includes/country-functions.php:961
+#: includes/country-functions.php:963
 msgid "Gorj"
 msgstr ""
 
-#: includes/country-functions.php:962
+#: includes/country-functions.php:964
 msgid "Harghita"
 msgstr ""
 
-#: includes/country-functions.php:963
+#: includes/country-functions.php:965
 msgid "Hunedoara"
 msgstr ""
 
-#: includes/country-functions.php:964
+#: includes/country-functions.php:966
 msgid "Ialomita"
 msgstr ""
 
-#: includes/country-functions.php:965
+#: includes/country-functions.php:967
 msgid "Iasi"
 msgstr ""
 
-#: includes/country-functions.php:966
+#: includes/country-functions.php:968
 msgid "Ilfov"
 msgstr ""
 
-#: includes/country-functions.php:967
+#: includes/country-functions.php:969
 msgid "Maramures"
 msgstr ""
 
-#: includes/country-functions.php:968
+#: includes/country-functions.php:970
 msgid "Mehedinti"
 msgstr ""
 
-#: includes/country-functions.php:969
+#: includes/country-functions.php:971
 msgid "Mures"
 msgstr ""
 
-#: includes/country-functions.php:970
+#: includes/country-functions.php:972
 msgid "Neamt"
 msgstr ""
 
-#: includes/country-functions.php:971
+#: includes/country-functions.php:973
 msgid "Olt"
 msgstr ""
 
-#: includes/country-functions.php:972
+#: includes/country-functions.php:974
 msgid "Prahova"
 msgstr ""
 
-#: includes/country-functions.php:973
+#: includes/country-functions.php:975
 msgid "Salaj"
 msgstr ""
 
-#: includes/country-functions.php:974
+#: includes/country-functions.php:976
 msgid "Satu Mare"
 msgstr ""
 
-#: includes/country-functions.php:975
+#: includes/country-functions.php:977
 msgid "Sibiu"
 msgstr ""
 
-#: includes/country-functions.php:976
+#: includes/country-functions.php:978
 msgid "Suceava"
 msgstr ""
 
-#: includes/country-functions.php:977
+#: includes/country-functions.php:979
 msgid "Teleorman"
 msgstr ""
 
-#: includes/country-functions.php:978
+#: includes/country-functions.php:980
 msgid "Timis"
 msgstr ""
 
-#: includes/country-functions.php:979
+#: includes/country-functions.php:981
 msgid "Tulcea"
 msgstr ""
 
-#: includes/country-functions.php:980
+#: includes/country-functions.php:982
 msgid "Valcea"
 msgstr ""
 
-#: includes/country-functions.php:981
+#: includes/country-functions.php:983
 msgid "Vaslui"
 msgstr ""
 
-#: includes/country-functions.php:982
+#: includes/country-functions.php:984
 msgid "Vrancea"
 msgstr ""
 
-#: includes/country-functions.php:997
+#: includes/country-functions.php:999
 msgid "Azad Kashmir"
 msgstr ""
 
-#: includes/country-functions.php:998
+#: includes/country-functions.php:1000
 msgid "Balochistan"
 msgstr ""
 
-#: includes/country-functions.php:999
+#: includes/country-functions.php:1001
 msgid "FATA"
 msgstr ""
 
-#: includes/country-functions.php:1000
+#: includes/country-functions.php:1002
 msgid "Gilgit Baltistan"
 msgstr ""
 
-#: includes/country-functions.php:1001
+#: includes/country-functions.php:1003
 msgid "Islamabad Capital Territory"
 msgstr ""
 
-#: includes/country-functions.php:1002
+#: includes/country-functions.php:1004
 msgid "Khyber Pakhtunkhwa"
 msgstr ""
 
-#: includes/country-functions.php:1003
+#: includes/country-functions.php:1005
 msgid "Punjab"
 msgstr ""
 
-#: includes/country-functions.php:1004
+#: includes/country-functions.php:1006
 msgid "Sindh"
 msgstr ""
 
-#: includes/country-functions.php:1019
+#: includes/country-functions.php:1021
 msgid "Abra"
 msgstr ""
 
-#: includes/country-functions.php:1020
+#: includes/country-functions.php:1022
 msgid "Agusan del Norte"
 msgstr ""
 
-#: includes/country-functions.php:1021
+#: includes/country-functions.php:1023
 msgid "Agusan del Sur"
 msgstr ""
 
-#: includes/country-functions.php:1022
+#: includes/country-functions.php:1024
 msgid "Aklan"
 msgstr ""
 
-#: includes/country-functions.php:1023
+#: includes/country-functions.php:1025
 msgid "Albay"
 msgstr ""
 
-#: includes/country-functions.php:1024
+#: includes/country-functions.php:1026
 msgid "Antique"
 msgstr ""
 
-#: includes/country-functions.php:1025
+#: includes/country-functions.php:1027
 msgid "Apayao"
 msgstr ""
 
-#: includes/country-functions.php:1026
+#: includes/country-functions.php:1028
 msgid "Aurora"
 msgstr ""
 
-#: includes/country-functions.php:1027
+#: includes/country-functions.php:1029
 msgid "Basilan"
 msgstr ""
 
-#: includes/country-functions.php:1028
+#: includes/country-functions.php:1030
 msgid "Bataan"
 msgstr ""
 
-#: includes/country-functions.php:1029
+#: includes/country-functions.php:1031
 msgid "Batanes"
 msgstr ""
 
-#: includes/country-functions.php:1030
+#: includes/country-functions.php:1032
 msgid "Batangas"
 msgstr ""
 
-#: includes/country-functions.php:1031
+#: includes/country-functions.php:1033
 msgid "Benguet"
 msgstr ""
 
-#: includes/country-functions.php:1032
+#: includes/country-functions.php:1034
 msgid "Biliran"
 msgstr ""
 
-#: includes/country-functions.php:1033
+#: includes/country-functions.php:1035
 msgid "Bohol"
 msgstr ""
 
-#: includes/country-functions.php:1034
+#: includes/country-functions.php:1036
 msgid "Bukidnon"
 msgstr ""
 
-#: includes/country-functions.php:1035
+#: includes/country-functions.php:1037
 msgid "Bulacan"
 msgstr ""
 
-#: includes/country-functions.php:1036
+#: includes/country-functions.php:1038
 msgid "Cagayan"
 msgstr ""
 
-#: includes/country-functions.php:1037
+#: includes/country-functions.php:1039
 msgid "Camarines Norte"
 msgstr ""
 
-#: includes/country-functions.php:1038
+#: includes/country-functions.php:1040
 msgid "Camarines Sur"
 msgstr ""
 
-#: includes/country-functions.php:1039
+#: includes/country-functions.php:1041
 msgid "Camiguin"
 msgstr ""
 
-#: includes/country-functions.php:1040
+#: includes/country-functions.php:1042
 msgid "Capiz"
 msgstr ""
 
-#: includes/country-functions.php:1041
+#: includes/country-functions.php:1043
 msgid "Catanduanes"
 msgstr ""
 
-#: includes/country-functions.php:1042
+#: includes/country-functions.php:1044
 msgid "Cavite"
 msgstr ""
 
-#: includes/country-functions.php:1043
+#: includes/country-functions.php:1045
 msgid "Cebu"
 msgstr ""
 
-#: includes/country-functions.php:1044
+#: includes/country-functions.php:1046
 msgid "Compostela Valley"
 msgstr ""
 
-#: includes/country-functions.php:1045
+#: includes/country-functions.php:1047
 msgid "Cotabato"
 msgstr ""
 
-#: includes/country-functions.php:1046
+#: includes/country-functions.php:1048
 msgid "Davao del Norte"
 msgstr ""
 
-#: includes/country-functions.php:1047
+#: includes/country-functions.php:1049
 msgid "Davao del Sur"
 msgstr ""
 
-#: includes/country-functions.php:1048
+#: includes/country-functions.php:1050
 msgid "Davao Occidental"
 msgstr ""
 
-#: includes/country-functions.php:1049
+#: includes/country-functions.php:1051
 msgid "Davao Oriental"
 msgstr ""
 
-#: includes/country-functions.php:1050
+#: includes/country-functions.php:1052
 msgid "Dinagat Islands"
 msgstr ""
 
-#: includes/country-functions.php:1051
+#: includes/country-functions.php:1053
 msgid "Eastern Samar"
 msgstr ""
 
-#: includes/country-functions.php:1052
+#: includes/country-functions.php:1054
 msgid "Guimaras"
 msgstr ""
 
-#: includes/country-functions.php:1053
+#: includes/country-functions.php:1055
 msgid "Ifugao"
 msgstr ""
 
-#: includes/country-functions.php:1054
+#: includes/country-functions.php:1056
 msgid "Ilocos Norte"
 msgstr ""
 
-#: includes/country-functions.php:1055
+#: includes/country-functions.php:1057
 msgid "Ilocos Sur"
 msgstr ""
 
-#: includes/country-functions.php:1056
+#: includes/country-functions.php:1058
 msgid "Iloilo"
 msgstr ""
 
-#: includes/country-functions.php:1057
+#: includes/country-functions.php:1059
 msgid "Isabela"
 msgstr ""
 
-#: includes/country-functions.php:1058
+#: includes/country-functions.php:1060
 msgid "Kalinga"
 msgstr ""
 
-#: includes/country-functions.php:1059
+#: includes/country-functions.php:1061
 msgid "La Union"
 msgstr ""
 
-#: includes/country-functions.php:1060
+#: includes/country-functions.php:1062
 msgid "Laguna"
 msgstr ""
 
-#: includes/country-functions.php:1061
+#: includes/country-functions.php:1063
 msgid "Lanao del Norte"
 msgstr ""
 
-#: includes/country-functions.php:1062
+#: includes/country-functions.php:1064
 msgid "Lanao del Sur"
 msgstr ""
 
-#: includes/country-functions.php:1063
+#: includes/country-functions.php:1065
 msgid "Leyte"
 msgstr ""
 
-#: includes/country-functions.php:1064
+#: includes/country-functions.php:1066
 msgid "Maguindanao"
 msgstr ""
 
-#: includes/country-functions.php:1065
+#: includes/country-functions.php:1067
 msgid "Marinduque"
 msgstr ""
 
-#: includes/country-functions.php:1066
+#: includes/country-functions.php:1068
 msgid "Masbate"
 msgstr ""
 
-#: includes/country-functions.php:1067
+#: includes/country-functions.php:1069
 msgid "Misamis Occidental"
 msgstr ""
 
-#: includes/country-functions.php:1068
+#: includes/country-functions.php:1070
 msgid "Misamis Oriental"
 msgstr ""
 
-#: includes/country-functions.php:1069
+#: includes/country-functions.php:1071
 msgid "Mountain Province"
 msgstr ""
 
-#: includes/country-functions.php:1070
+#: includes/country-functions.php:1072
 msgid "Negros Occidental"
 msgstr ""
 
-#: includes/country-functions.php:1071
+#: includes/country-functions.php:1073
 msgid "Negros Oriental"
 msgstr ""
 
-#: includes/country-functions.php:1072
+#: includes/country-functions.php:1074
 msgid "Northern Samar"
 msgstr ""
 
-#: includes/country-functions.php:1073
+#: includes/country-functions.php:1075
 msgid "Nueva Ecija"
 msgstr ""
 
-#: includes/country-functions.php:1074
+#: includes/country-functions.php:1076
 msgid "Nueva Vizcaya"
 msgstr ""
 
-#: includes/country-functions.php:1075
+#: includes/country-functions.php:1077
 msgid "Occidental Mindoro"
 msgstr ""
 
-#: includes/country-functions.php:1076
+#: includes/country-functions.php:1078
 msgid "Oriental Mindoro"
 msgstr ""
 
-#: includes/country-functions.php:1077
+#: includes/country-functions.php:1079
 msgid "Palawan"
 msgstr ""
 
-#: includes/country-functions.php:1078
+#: includes/country-functions.php:1080
 msgid "Pampanga"
 msgstr ""
 
-#: includes/country-functions.php:1079
+#: includes/country-functions.php:1081
 msgid "Pangasinan"
 msgstr ""
 
-#: includes/country-functions.php:1080
+#: includes/country-functions.php:1082
 msgid "Quezon"
 msgstr ""
 
-#: includes/country-functions.php:1081
+#: includes/country-functions.php:1083
 msgid "Quirino"
 msgstr ""
 
-#: includes/country-functions.php:1082
+#: includes/country-functions.php:1084
 msgid "Rizal"
 msgstr ""
 
-#: includes/country-functions.php:1083
+#: includes/country-functions.php:1085
 msgid "Romblon"
 msgstr ""
 
-#: includes/country-functions.php:1084
+#: includes/country-functions.php:1086
 msgid "Samar"
 msgstr ""
 
-#: includes/country-functions.php:1085
+#: includes/country-functions.php:1087
 msgid "Sarangani"
 msgstr ""
 
-#: includes/country-functions.php:1086
+#: includes/country-functions.php:1088
 msgid "Siquijor"
 msgstr ""
 
-#: includes/country-functions.php:1087
+#: includes/country-functions.php:1089
 msgid "Sorsogon"
 msgstr ""
 
-#: includes/country-functions.php:1088
+#: includes/country-functions.php:1090
 msgid "South Cotabato"
 msgstr ""
 
-#: includes/country-functions.php:1089
+#: includes/country-functions.php:1091
 msgid "Southern Leyte"
 msgstr ""
 
-#: includes/country-functions.php:1090
+#: includes/country-functions.php:1092
 msgid "Sultan Kudarat"
 msgstr ""
 
-#: includes/country-functions.php:1091
+#: includes/country-functions.php:1093
 msgid "Sulu"
 msgstr ""
 
-#: includes/country-functions.php:1092
+#: includes/country-functions.php:1094
 msgid "Surigao del Norte"
 msgstr ""
 
-#: includes/country-functions.php:1093
+#: includes/country-functions.php:1095
 msgid "Surigao del Sur"
 msgstr ""
 
-#: includes/country-functions.php:1094
+#: includes/country-functions.php:1096
 msgid "Tarlac"
 msgstr ""
 
-#: includes/country-functions.php:1095
+#: includes/country-functions.php:1097
 msgid "Tawi-Tawi"
 msgstr ""
 
-#: includes/country-functions.php:1096
+#: includes/country-functions.php:1098
 msgid "Zambales"
 msgstr ""
 
-#: includes/country-functions.php:1097
+#: includes/country-functions.php:1099
 msgid "Zamboanga del Norte"
 msgstr ""
 
-#: includes/country-functions.php:1098
+#: includes/country-functions.php:1100
 msgid "Zamboanga del Sur"
 msgstr ""
 
-#: includes/country-functions.php:1099
+#: includes/country-functions.php:1101
 msgid "Zamboanga Sibugay"
 msgstr ""
 
-#: includes/country-functions.php:1100
+#: includes/country-functions.php:1102
 msgid "Metro Manila"
 msgstr ""
 
-#: includes/country-functions.php:1115
+#: includes/country-functions.php:1117
 msgid "El Callao"
 msgstr ""
 
-#: includes/country-functions.php:1116
+#: includes/country-functions.php:1118
 msgid "Municipalidad Metropolitana de Lima"
 msgstr ""
 
-#: includes/country-functions.php:1117
+#: includes/country-functions.php:1119
 msgid "Amazonas"
 msgstr ""
 
-#: includes/country-functions.php:1118
+#: includes/country-functions.php:1120
 msgid "Ancash"
 msgstr ""
 
-#: includes/country-functions.php:1119
+#: includes/country-functions.php:1121
 msgid "Apur&iacute;mac"
 msgstr ""
 
-#: includes/country-functions.php:1120
+#: includes/country-functions.php:1122
 msgid "Arequipa"
 msgstr ""
 
-#: includes/country-functions.php:1121
+#: includes/country-functions.php:1123
 msgid "Ayacucho"
 msgstr ""
 
-#: includes/country-functions.php:1122
+#: includes/country-functions.php:1124
 msgid "Cajamarca"
 msgstr ""
 
-#: includes/country-functions.php:1123
+#: includes/country-functions.php:1125
 msgid "Cusco"
 msgstr ""
 
-#: includes/country-functions.php:1124
+#: includes/country-functions.php:1126
 msgid "Huancavelica"
 msgstr ""
 
-#: includes/country-functions.php:1125
+#: includes/country-functions.php:1127
 msgid "Hu&aacute;nuco"
 msgstr ""
 
-#: includes/country-functions.php:1126
+#: includes/country-functions.php:1128
 msgid "Ica"
 msgstr ""
 
-#: includes/country-functions.php:1127
+#: includes/country-functions.php:1129
 msgid "Jun&iacute;n"
 msgstr ""
 
-#: includes/country-functions.php:1128
+#: includes/country-functions.php:1130
 msgid "La Libertad"
 msgstr ""
 
-#: includes/country-functions.php:1129
+#: includes/country-functions.php:1131
 msgid "Lambayeque"
 msgstr ""
 
-#: includes/country-functions.php:1130
+#: includes/country-functions.php:1132
 msgid "Lima"
 msgstr ""
 
-#: includes/country-functions.php:1131
+#: includes/country-functions.php:1133
 msgid "Loreto"
 msgstr ""
 
-#: includes/country-functions.php:1132
+#: includes/country-functions.php:1134
 msgid "Madre de Dios"
 msgstr ""
 
-#: includes/country-functions.php:1133
+#: includes/country-functions.php:1135
 msgid "Moquegua"
 msgstr ""
 
-#: includes/country-functions.php:1134
+#: includes/country-functions.php:1136
 msgid "Pasco"
 msgstr ""
 
-#: includes/country-functions.php:1135
+#: includes/country-functions.php:1137
 msgid "Piura"
 msgstr ""
 
-#: includes/country-functions.php:1136
+#: includes/country-functions.php:1138
 msgid "Puno"
 msgstr ""
 
-#: includes/country-functions.php:1137
+#: includes/country-functions.php:1139
 msgid "San Mart&iacute;n"
 msgstr ""
 
-#: includes/country-functions.php:1138
+#: includes/country-functions.php:1140
 msgid "Tacna"
 msgstr ""
 
-#: includes/country-functions.php:1139
+#: includes/country-functions.php:1141
 msgid "Tumbes"
 msgstr ""
 
-#: includes/country-functions.php:1140
+#: includes/country-functions.php:1142
 msgid "Ucayali"
 msgstr ""
 
-#: includes/country-functions.php:1155
+#: includes/country-functions.php:1157
 msgid "Bagmati"
 msgstr ""
 
-#: includes/country-functions.php:1156
+#: includes/country-functions.php:1158
 msgid "Bheri"
 msgstr ""
 
-#: includes/country-functions.php:1157
+#: includes/country-functions.php:1159
 msgid "Dhaulagiri"
 msgstr ""
 
-#: includes/country-functions.php:1158
+#: includes/country-functions.php:1160
 msgid "Gandaki"
 msgstr ""
 
-#: includes/country-functions.php:1159
+#: includes/country-functions.php:1161
 msgid "Janakpur"
 msgstr ""
 
-#: includes/country-functions.php:1160
+#: includes/country-functions.php:1162
 msgid "Karnali"
 msgstr ""
 
-#: includes/country-functions.php:1161
+#: includes/country-functions.php:1163
 msgid "Koshi"
 msgstr ""
 
-#: includes/country-functions.php:1162
+#: includes/country-functions.php:1164
 msgid "Lumbini"
 msgstr ""
 
-#: includes/country-functions.php:1163
+#: includes/country-functions.php:1165
 msgid "Mahakali"
 msgstr ""
 
-#: includes/country-functions.php:1164
+#: includes/country-functions.php:1166
 msgid "Mechi"
 msgstr ""
 
-#: includes/country-functions.php:1165
+#: includes/country-functions.php:1167
 msgid "Narayani"
 msgstr ""
 
-#: includes/country-functions.php:1166
+#: includes/country-functions.php:1168
 msgid "Rapti"
 msgstr ""
 
-#: includes/country-functions.php:1167
+#: includes/country-functions.php:1169
 msgid "Sagarmatha"
 msgstr ""
 
-#: includes/country-functions.php:1168
+#: includes/country-functions.php:1170
 msgid "Seti"
 msgstr ""
 
-#: includes/country-functions.php:1183
+#: includes/country-functions.php:1185
 msgid "Abia"
 msgstr ""
 
-#: includes/country-functions.php:1184
+#: includes/country-functions.php:1186
 msgid "Abuja"
 msgstr ""
 
-#: includes/country-functions.php:1185
+#: includes/country-functions.php:1187
 msgid "Adamawa"
 msgstr ""
 
-#: includes/country-functions.php:1186
+#: includes/country-functions.php:1188
 msgid "Akwa Ibom"
 msgstr ""
 
-#: includes/country-functions.php:1187
+#: includes/country-functions.php:1189
 msgid "Anambra"
 msgstr ""
 
-#: includes/country-functions.php:1188
+#: includes/country-functions.php:1190
 msgid "Bauchi"
 msgstr ""
 
-#: includes/country-functions.php:1189
+#: includes/country-functions.php:1191
 msgid "Bayelsa"
 msgstr ""
 
-#: includes/country-functions.php:1190
+#: includes/country-functions.php:1192
 msgid "Benue"
 msgstr ""
 
-#: includes/country-functions.php:1191
+#: includes/country-functions.php:1193
 msgid "Borno"
 msgstr ""
 
-#: includes/country-functions.php:1192
+#: includes/country-functions.php:1194
 msgid "Cross River"
 msgstr ""
 
-#: includes/country-functions.php:1193
+#: includes/country-functions.php:1195
 msgid "Delta"
 msgstr ""
 
-#: includes/country-functions.php:1194
+#: includes/country-functions.php:1196
 msgid "Ebonyi"
 msgstr ""
 
-#: includes/country-functions.php:1195
+#: includes/country-functions.php:1197
 msgid "Edo"
 msgstr ""
 
-#: includes/country-functions.php:1196
+#: includes/country-functions.php:1198
 msgid "Ekiti"
 msgstr ""
 
-#: includes/country-functions.php:1197
+#: includes/country-functions.php:1199
 msgid "Enugu"
 msgstr ""
 
-#: includes/country-functions.php:1198
+#: includes/country-functions.php:1200
 msgid "Gombe"
 msgstr ""
 
-#: includes/country-functions.php:1199
+#: includes/country-functions.php:1201
 msgid "Imo"
 msgstr ""
 
-#: includes/country-functions.php:1200
+#: includes/country-functions.php:1202
 msgid "Jigawa"
 msgstr ""
 
-#: includes/country-functions.php:1201
+#: includes/country-functions.php:1203
 msgid "Kaduna"
 msgstr ""
 
-#: includes/country-functions.php:1202
+#: includes/country-functions.php:1204
 msgid "Kano"
 msgstr ""
 
-#: includes/country-functions.php:1203
+#: includes/country-functions.php:1205
 msgid "Katsina"
 msgstr ""
 
-#: includes/country-functions.php:1204
+#: includes/country-functions.php:1206
 msgid "Kebbi"
 msgstr ""
 
-#: includes/country-functions.php:1205
+#: includes/country-functions.php:1207
 msgid "Kogi"
 msgstr ""
 
-#: includes/country-functions.php:1206
+#: includes/country-functions.php:1208
 msgid "Kwara"
 msgstr ""
 
-#: includes/country-functions.php:1207
+#: includes/country-functions.php:1209
 msgid "Lagos"
 msgstr ""
 
-#: includes/country-functions.php:1208
+#: includes/country-functions.php:1210
 msgid "Nasarawa"
 msgstr ""
 
-#: includes/country-functions.php:1210
+#: includes/country-functions.php:1212
 msgid "Ogun"
 msgstr ""
 
-#: includes/country-functions.php:1211
+#: includes/country-functions.php:1213
 msgid "Ondo"
 msgstr ""
 
-#: includes/country-functions.php:1212
+#: includes/country-functions.php:1214
 msgid "Osun"
 msgstr ""
 
-#: includes/country-functions.php:1213
+#: includes/country-functions.php:1215
 msgid "Oyo"
 msgstr ""
 
-#: includes/country-functions.php:1214
+#: includes/country-functions.php:1216
 msgid "Plateau"
 msgstr ""
 
-#: includes/country-functions.php:1215
+#: includes/country-functions.php:1217
 msgid "Rivers"
 msgstr ""
 
-#: includes/country-functions.php:1216
+#: includes/country-functions.php:1218
 msgid "Sokoto"
 msgstr ""
 
-#: includes/country-functions.php:1217
+#: includes/country-functions.php:1219
 msgid "Taraba"
 msgstr ""
 
-#: includes/country-functions.php:1218
+#: includes/country-functions.php:1220
 msgid "Yobe"
 msgstr ""
 
-#: includes/country-functions.php:1219
+#: includes/country-functions.php:1221
 msgid "Zamfara"
 msgstr ""
 
-#: includes/country-functions.php:1234
+#: includes/country-functions.php:1236
 msgid "Distrito Federal"
 msgstr ""
 
-#: includes/country-functions.php:1235
+#: includes/country-functions.php:1237
 msgid "Jalisco"
 msgstr ""
 
-#: includes/country-functions.php:1236
+#: includes/country-functions.php:1238
 msgid "Nuevo León"
 msgstr ""
 
-#: includes/country-functions.php:1237
+#: includes/country-functions.php:1239
 msgid "Aguascalientes"
 msgstr ""
 
-#: includes/country-functions.php:1238
+#: includes/country-functions.php:1240
 msgid "Baja California"
 msgstr ""
 
-#: includes/country-functions.php:1239
+#: includes/country-functions.php:1241
 msgid "Baja California Sur"
 msgstr ""
 
-#: includes/country-functions.php:1240
+#: includes/country-functions.php:1242
 msgid "Campeche"
 msgstr ""
 
-#: includes/country-functions.php:1241
+#: includes/country-functions.php:1243
 msgid "Chiapas"
 msgstr ""
 
-#: includes/country-functions.php:1242
+#: includes/country-functions.php:1244
 msgid "Chihuahua"
 msgstr ""
 
-#: includes/country-functions.php:1243
+#: includes/country-functions.php:1245
 msgid "Coahuila"
 msgstr ""
 
-#: includes/country-functions.php:1244
+#: includes/country-functions.php:1246
 msgid "Colima"
 msgstr ""
 
-#: includes/country-functions.php:1245
+#: includes/country-functions.php:1247
 msgid "Durango"
 msgstr ""
 
-#: includes/country-functions.php:1246
+#: includes/country-functions.php:1248
 msgid "Guanajuato"
 msgstr ""
 
-#: includes/country-functions.php:1247
+#: includes/country-functions.php:1249
 msgid "Guerrero"
 msgstr ""
 
-#: includes/country-functions.php:1248
+#: includes/country-functions.php:1250
 msgid "Hidalgo"
 msgstr ""
 
-#: includes/country-functions.php:1249
+#: includes/country-functions.php:1251
 msgid "Edo. de México"
 msgstr ""
 
-#: includes/country-functions.php:1250
+#: includes/country-functions.php:1252
 msgid "Michoacán"
 msgstr ""
 
-#: includes/country-functions.php:1251
+#: includes/country-functions.php:1253
 msgid "Morelos"
 msgstr ""
 
-#: includes/country-functions.php:1252
+#: includes/country-functions.php:1254
 msgid "Nayarit"
 msgstr ""
 
-#: includes/country-functions.php:1253
+#: includes/country-functions.php:1255
 msgid "Oaxaca"
 msgstr ""
 
-#: includes/country-functions.php:1254
+#: includes/country-functions.php:1256
 msgid "Puebla"
 msgstr ""
 
-#: includes/country-functions.php:1255
+#: includes/country-functions.php:1257
 msgid "Querétaro"
 msgstr ""
 
-#: includes/country-functions.php:1256
+#: includes/country-functions.php:1258
 msgid "Quintana Roo"
 msgstr ""
 
-#: includes/country-functions.php:1257
+#: includes/country-functions.php:1259
 msgid "San Luis Potosí"
 msgstr ""
 
-#: includes/country-functions.php:1258
+#: includes/country-functions.php:1260
 msgid "Sinaloa"
 msgstr ""
 
-#: includes/country-functions.php:1259
+#: includes/country-functions.php:1261
 msgid "Sonora"
 msgstr ""
 
-#: includes/country-functions.php:1260
+#: includes/country-functions.php:1262
 msgid "Tabasco"
 msgstr ""
 
-#: includes/country-functions.php:1261
+#: includes/country-functions.php:1263
 msgid "Tamaulipas"
 msgstr ""
 
-#: includes/country-functions.php:1262
+#: includes/country-functions.php:1264
 msgid "Tlaxcala"
 msgstr ""
 
-#: includes/country-functions.php:1263
+#: includes/country-functions.php:1265
 msgid "Veracruz"
 msgstr ""
 
-#: includes/country-functions.php:1264
+#: includes/country-functions.php:1266
 msgid "Yucatán"
 msgstr ""
 
-#: includes/country-functions.php:1265
+#: includes/country-functions.php:1267
 msgid "Zacatecas"
 msgstr ""
 
-#: includes/country-functions.php:1280
+#: includes/country-functions.php:1282
 msgid "Hokkaido"
 msgstr ""
 
-#: includes/country-functions.php:1281
+#: includes/country-functions.php:1283
 msgid "Aomori"
 msgstr ""
 
-#: includes/country-functions.php:1282
+#: includes/country-functions.php:1284
 msgid "Iwate"
 msgstr ""
 
-#: includes/country-functions.php:1283
+#: includes/country-functions.php:1285
 msgid "Miyagi"
 msgstr ""
 
-#: includes/country-functions.php:1284
+#: includes/country-functions.php:1286
 msgid "Akita"
 msgstr ""
 
-#: includes/country-functions.php:1285
+#: includes/country-functions.php:1287
 msgid "Yamagata"
 msgstr ""
 
-#: includes/country-functions.php:1286
+#: includes/country-functions.php:1288
 msgid "Fukushima"
 msgstr ""
 
-#: includes/country-functions.php:1287
+#: includes/country-functions.php:1289
 msgid "Ibaraki"
 msgstr ""
 
-#: includes/country-functions.php:1288
+#: includes/country-functions.php:1290
 msgid "Tochigi"
 msgstr ""
 
-#: includes/country-functions.php:1289
+#: includes/country-functions.php:1291
 msgid "Gunma"
 msgstr ""
 
-#: includes/country-functions.php:1290
+#: includes/country-functions.php:1292
 msgid "Saitama"
 msgstr ""
 
-#: includes/country-functions.php:1291
+#: includes/country-functions.php:1293
 msgid "Chiba"
 msgstr ""
 
-#: includes/country-functions.php:1292
+#: includes/country-functions.php:1294
 msgid "Tokyo"
 msgstr ""
 
-#: includes/country-functions.php:1293
+#: includes/country-functions.php:1295
 msgid "Kanagawa"
 msgstr ""
 
-#: includes/country-functions.php:1294
+#: includes/country-functions.php:1296
 msgid "Niigata"
 msgstr ""
 
-#: includes/country-functions.php:1295
+#: includes/country-functions.php:1297
 msgid "Toyama"
 msgstr ""
 
-#: includes/country-functions.php:1296
+#: includes/country-functions.php:1298
 msgid "Ishikawa"
 msgstr ""
 
-#: includes/country-functions.php:1297
+#: includes/country-functions.php:1299
 msgid "Fukui"
 msgstr ""
 
-#: includes/country-functions.php:1298
+#: includes/country-functions.php:1300
 msgid "Yamanashi"
 msgstr ""
 
-#: includes/country-functions.php:1299
+#: includes/country-functions.php:1301
 msgid "Nagano"
 msgstr ""
 
-#: includes/country-functions.php:1300
+#: includes/country-functions.php:1302
 msgid "Gifu"
 msgstr ""
 
-#: includes/country-functions.php:1301
+#: includes/country-functions.php:1303
 msgid "Shizuoka"
 msgstr ""
 
-#: includes/country-functions.php:1302
+#: includes/country-functions.php:1304
 msgid "Aichi"
 msgstr ""
 
-#: includes/country-functions.php:1303
+#: includes/country-functions.php:1305
 msgid "Mie"
 msgstr ""
 
-#: includes/country-functions.php:1304
+#: includes/country-functions.php:1306
 msgid "Shiga"
 msgstr ""
 
-#: includes/country-functions.php:1305
+#: includes/country-functions.php:1307
 msgid "Kyoto"
 msgstr ""
 
-#: includes/country-functions.php:1306
+#: includes/country-functions.php:1308
 msgid "Osaka"
 msgstr ""
 
-#: includes/country-functions.php:1307
+#: includes/country-functions.php:1309
 msgid "Hyogo"
 msgstr ""
 
-#: includes/country-functions.php:1308
+#: includes/country-functions.php:1310
 msgid "Nara"
 msgstr ""
 
-#: includes/country-functions.php:1309
+#: includes/country-functions.php:1311
 msgid "Wakayama"
 msgstr ""
 
-#: includes/country-functions.php:1310
+#: includes/country-functions.php:1312
 msgid "Tottori"
 msgstr ""
 
-#: includes/country-functions.php:1311
+#: includes/country-functions.php:1313
 msgid "Shimane"
 msgstr ""
 
-#: includes/country-functions.php:1312
+#: includes/country-functions.php:1314
 msgid "Okayama"
 msgstr ""
 
-#: includes/country-functions.php:1313
+#: includes/country-functions.php:1315
 msgid "Hiroshima"
 msgstr ""
 
-#: includes/country-functions.php:1314
+#: includes/country-functions.php:1316
 msgid "Yamaguchi"
 msgstr ""
 
-#: includes/country-functions.php:1315
+#: includes/country-functions.php:1317
 msgid "Tokushima"
 msgstr ""
 
-#: includes/country-functions.php:1316
+#: includes/country-functions.php:1318
 msgid "Kagawa"
 msgstr ""
 
-#: includes/country-functions.php:1317
+#: includes/country-functions.php:1319
 msgid "Ehime"
 msgstr ""
 
-#: includes/country-functions.php:1318
+#: includes/country-functions.php:1320
 msgid "Kochi"
 msgstr ""
 
-#: includes/country-functions.php:1319
+#: includes/country-functions.php:1321
 msgid "Fukuoka"
 msgstr ""
 
-#: includes/country-functions.php:1320
+#: includes/country-functions.php:1322
 msgid "Saga"
 msgstr ""
 
-#: includes/country-functions.php:1321
+#: includes/country-functions.php:1323
 msgid "Nagasaki"
 msgstr ""
 
-#: includes/country-functions.php:1322
+#: includes/country-functions.php:1324
 msgid "Kumamoto"
 msgstr ""
 
-#: includes/country-functions.php:1323
+#: includes/country-functions.php:1325
 msgid "Oita"
 msgstr ""
 
-#: includes/country-functions.php:1324
+#: includes/country-functions.php:1326
 msgid "Miyazaki"
 msgstr ""
 
-#: includes/country-functions.php:1325
+#: includes/country-functions.php:1327
 msgid "Kagoshima"
 msgstr ""
 
-#: includes/country-functions.php:1326
+#: includes/country-functions.php:1328
 msgid "Okinawa"
 msgstr ""
 
-#: includes/country-functions.php:1341
+#: includes/country-functions.php:1343
 msgid "Agrigento"
 msgstr ""
 
-#: includes/country-functions.php:1342
+#: includes/country-functions.php:1344
 msgid "Alessandria"
 msgstr ""
 
-#: includes/country-functions.php:1343
+#: includes/country-functions.php:1345
 msgid "Ancona"
 msgstr ""
 
-#: includes/country-functions.php:1344
+#: includes/country-functions.php:1346
 msgid "Aosta"
 msgstr ""
 
-#: includes/country-functions.php:1345
+#: includes/country-functions.php:1347
 msgid "Arezzo"
 msgstr ""
 
-#: includes/country-functions.php:1346
+#: includes/country-functions.php:1348
 msgid "Ascoli Piceno"
 msgstr ""
 
-#: includes/country-functions.php:1347
+#: includes/country-functions.php:1349
 msgid "Asti"
 msgstr ""
 
-#: includes/country-functions.php:1348
+#: includes/country-functions.php:1350
 msgid "Avellino"
 msgstr ""
 
-#: includes/country-functions.php:1349
+#: includes/country-functions.php:1351
 msgid "Bari"
 msgstr ""
 
-#: includes/country-functions.php:1350
+#: includes/country-functions.php:1352
 msgid "Barletta-Andria-Trani"
 msgstr ""
 
-#: includes/country-functions.php:1351
+#: includes/country-functions.php:1353
 msgid "Belluno"
 msgstr ""
 
-#: includes/country-functions.php:1352
+#: includes/country-functions.php:1354
 msgid "Benevento"
 msgstr ""
 
-#: includes/country-functions.php:1353
+#: includes/country-functions.php:1355
 msgid "Bergamo"
 msgstr ""
 
-#: includes/country-functions.php:1354
+#: includes/country-functions.php:1356
 msgid "Biella"
 msgstr ""
 
-#: includes/country-functions.php:1355
+#: includes/country-functions.php:1357
 msgid "Bologna"
 msgstr ""
 
-#: includes/country-functions.php:1356
+#: includes/country-functions.php:1358
 msgid "Bolzano"
 msgstr ""
 
-#: includes/country-functions.php:1357
+#: includes/country-functions.php:1359
 msgid "Brescia"
 msgstr ""
 
-#: includes/country-functions.php:1358
+#: includes/country-functions.php:1360
 msgid "Brindisi"
 msgstr ""
 
-#: includes/country-functions.php:1359
+#: includes/country-functions.php:1361
 msgid "Cagliari"
 msgstr ""
 
-#: includes/country-functions.php:1360
+#: includes/country-functions.php:1362
 msgid "Caltanissetta"
 msgstr ""
 
-#: includes/country-functions.php:1361
+#: includes/country-functions.php:1363
 msgid "Campobasso"
 msgstr ""
 
-#: includes/country-functions.php:1362
+#: includes/country-functions.php:1364
 msgid "Carbonia-Iglesias"
 msgstr ""
 
-#: includes/country-functions.php:1363
+#: includes/country-functions.php:1365
 msgid "Caserta"
 msgstr ""
 
-#: includes/country-functions.php:1364
+#: includes/country-functions.php:1366
 msgid "Catania"
 msgstr ""
 
-#: includes/country-functions.php:1365
+#: includes/country-functions.php:1367
 msgid "Catanzaro"
 msgstr ""
 
-#: includes/country-functions.php:1366
+#: includes/country-functions.php:1368
 msgid "Chieti"
 msgstr ""
 
-#: includes/country-functions.php:1367
+#: includes/country-functions.php:1369
 msgid "Como"
 msgstr ""
 
-#: includes/country-functions.php:1368
+#: includes/country-functions.php:1370
 msgid "Cosenza"
 msgstr ""
 
-#: includes/country-functions.php:1369
+#: includes/country-functions.php:1371
 msgid "Cremona"
 msgstr ""
 
-#: includes/country-functions.php:1370
+#: includes/country-functions.php:1372
 msgid "Crotone"
 msgstr ""
 
-#: includes/country-functions.php:1371
+#: includes/country-functions.php:1373
 msgid "Cuneo"
 msgstr ""
 
-#: includes/country-functions.php:1372
+#: includes/country-functions.php:1374
 msgid "Enna"
 msgstr ""
 
-#: includes/country-functions.php:1373
+#: includes/country-functions.php:1375
 msgid "Fermo"
 msgstr ""
 
-#: includes/country-functions.php:1374
+#: includes/country-functions.php:1376
 msgid "Ferrara"
 msgstr ""
 
-#: includes/country-functions.php:1375
+#: includes/country-functions.php:1377
 msgid "Firenze"
 msgstr ""
 
-#: includes/country-functions.php:1376
+#: includes/country-functions.php:1378
 msgid "Foggia"
 msgstr ""
 
-#: includes/country-functions.php:1377
+#: includes/country-functions.php:1379
 msgid "Forlì-Cesena"
 msgstr ""
 
-#: includes/country-functions.php:1378
+#: includes/country-functions.php:1380
 msgid "Frosinone"
 msgstr ""
 
-#: includes/country-functions.php:1379
+#: includes/country-functions.php:1381
 msgid "Genova"
 msgstr ""
 
-#: includes/country-functions.php:1380
+#: includes/country-functions.php:1382
 msgid "Gorizia"
 msgstr ""
 
-#: includes/country-functions.php:1381
+#: includes/country-functions.php:1383
 msgid "Grosseto"
 msgstr ""
 
-#: includes/country-functions.php:1382
+#: includes/country-functions.php:1384
 msgid "Imperia"
 msgstr ""
 
-#: includes/country-functions.php:1383
+#: includes/country-functions.php:1385
 msgid "Isernia"
 msgstr ""
 
-#: includes/country-functions.php:1384
+#: includes/country-functions.php:1386
 msgid "La Spezia"
 msgstr ""
 
-#: includes/country-functions.php:1385
+#: includes/country-functions.php:1387
 msgid "L'Aquila"
 msgstr ""
 
-#: includes/country-functions.php:1386
+#: includes/country-functions.php:1388
 msgid "Latina"
 msgstr ""
 
-#: includes/country-functions.php:1387
+#: includes/country-functions.php:1389
 msgid "Lecce"
 msgstr ""
 
-#: includes/country-functions.php:1388
+#: includes/country-functions.php:1390
 msgid "Lecco"
 msgstr ""
 
-#: includes/country-functions.php:1389
+#: includes/country-functions.php:1391
 msgid "Livorno"
 msgstr ""
 
-#: includes/country-functions.php:1390
+#: includes/country-functions.php:1392
 msgid "Lodi"
 msgstr ""
 
-#: includes/country-functions.php:1391
+#: includes/country-functions.php:1393
 msgid "Lucca"
 msgstr ""
 
-#: includes/country-functions.php:1392
+#: includes/country-functions.php:1394
 msgid "Macerata"
 msgstr ""
 
-#: includes/country-functions.php:1393
+#: includes/country-functions.php:1395
 msgid "Mantova"
 msgstr ""
 
-#: includes/country-functions.php:1394
+#: includes/country-functions.php:1396
 msgid "Massa-Carrara"
 msgstr ""
 
-#: includes/country-functions.php:1395
+#: includes/country-functions.php:1397
 msgid "Matera"
 msgstr ""
 
-#: includes/country-functions.php:1396
+#: includes/country-functions.php:1398
 msgid "Messina"
 msgstr ""
 
-#: includes/country-functions.php:1397
+#: includes/country-functions.php:1399
 msgid "Milano"
 msgstr ""
 
-#: includes/country-functions.php:1398
+#: includes/country-functions.php:1400
 msgid "Modena"
 msgstr ""
 
-#: includes/country-functions.php:1399
+#: includes/country-functions.php:1401
 msgid "Monza e della Brianza"
 msgstr ""
 
-#: includes/country-functions.php:1400
+#: includes/country-functions.php:1402
 msgid "Napoli"
 msgstr ""
 
-#: includes/country-functions.php:1401
+#: includes/country-functions.php:1403
 msgid "Novara"
 msgstr ""
 
-#: includes/country-functions.php:1402
+#: includes/country-functions.php:1404
 msgid "Nuoro"
 msgstr ""
 
-#: includes/country-functions.php:1403
+#: includes/country-functions.php:1405
 msgid "Olbia-Tempio"
 msgstr ""
 
-#: includes/country-functions.php:1404
+#: includes/country-functions.php:1406
 msgid "Oristano"
 msgstr ""
 
-#: includes/country-functions.php:1405
+#: includes/country-functions.php:1407
 msgid "Padova"
 msgstr ""
 
-#: includes/country-functions.php:1406
+#: includes/country-functions.php:1408
 msgid "Palermo"
 msgstr ""
 
-#: includes/country-functions.php:1407
+#: includes/country-functions.php:1409
 msgid "Parma"
 msgstr ""
 
-#: includes/country-functions.php:1408
+#: includes/country-functions.php:1410
 msgid "Pavia"
 msgstr ""
 
-#: includes/country-functions.php:1409
+#: includes/country-functions.php:1411
 msgid "Perugia"
 msgstr ""
 
-#: includes/country-functions.php:1410
+#: includes/country-functions.php:1412
 msgid "Pesaro e Urbino"
 msgstr ""
 
-#: includes/country-functions.php:1411
+#: includes/country-functions.php:1413
 msgid "Pescara"
 msgstr ""
 
-#: includes/country-functions.php:1412
+#: includes/country-functions.php:1414
 msgid "Piacenza"
 msgstr ""
 
-#: includes/country-functions.php:1413
+#: includes/country-functions.php:1415
 msgid "Pisa"
 msgstr ""
 
-#: includes/country-functions.php:1414
+#: includes/country-functions.php:1416
 msgid "Pistoia"
 msgstr ""
 
-#: includes/country-functions.php:1415
+#: includes/country-functions.php:1417
 msgid "Pordenone"
 msgstr ""
 
-#: includes/country-functions.php:1416
+#: includes/country-functions.php:1418
 msgid "Potenza"
 msgstr ""
 
-#: includes/country-functions.php:1417
+#: includes/country-functions.php:1419
 msgid "Prato"
 msgstr ""
 
-#: includes/country-functions.php:1418
+#: includes/country-functions.php:1420
 msgid "Ragusa"
 msgstr ""
 
-#: includes/country-functions.php:1419
+#: includes/country-functions.php:1421
 msgid "Ravenna"
 msgstr ""
 
-#: includes/country-functions.php:1420
+#: includes/country-functions.php:1422
 msgid "Reggio Calabria"
 msgstr ""
 
-#: includes/country-functions.php:1421
+#: includes/country-functions.php:1423
 msgid "Reggio Emilia"
 msgstr ""
 
-#: includes/country-functions.php:1422
+#: includes/country-functions.php:1424
 msgid "Rieti"
 msgstr ""
 
-#: includes/country-functions.php:1423
+#: includes/country-functions.php:1425
 msgid "Rimini"
 msgstr ""
 
-#: includes/country-functions.php:1424
+#: includes/country-functions.php:1426
 msgid "Roma"
 msgstr ""
 
-#: includes/country-functions.php:1425
+#: includes/country-functions.php:1427
 msgid "Rovigo"
 msgstr ""
 
-#: includes/country-functions.php:1426
+#: includes/country-functions.php:1428
 msgid "Salerno"
 msgstr ""
 
-#: includes/country-functions.php:1427
+#: includes/country-functions.php:1429
 msgid "Medio Campidano"
 msgstr ""
 
-#: includes/country-functions.php:1428
+#: includes/country-functions.php:1430
 msgid "Sassari"
 msgstr ""
 
-#: includes/country-functions.php:1429
+#: includes/country-functions.php:1431
 msgid "Savona"
 msgstr ""
 
-#: includes/country-functions.php:1430
+#: includes/country-functions.php:1432
 msgid "Siena"
 msgstr ""
 
-#: includes/country-functions.php:1431
+#: includes/country-functions.php:1433
 msgid "Siracusa"
 msgstr ""
 
-#: includes/country-functions.php:1432
+#: includes/country-functions.php:1434
 msgid "Sondrio"
 msgstr ""
 
-#: includes/country-functions.php:1433
+#: includes/country-functions.php:1435
 msgid "Taranto"
 msgstr ""
 
-#: includes/country-functions.php:1434
+#: includes/country-functions.php:1436
 msgid "Teramo"
 msgstr ""
 
-#: includes/country-functions.php:1435
+#: includes/country-functions.php:1437
 msgid "Terni"
 msgstr ""
 
-#: includes/country-functions.php:1436
+#: includes/country-functions.php:1438
 msgid "Torino"
 msgstr ""
 
-#: includes/country-functions.php:1437
+#: includes/country-functions.php:1439
 msgid "Ogliastra"
 msgstr ""
 
-#: includes/country-functions.php:1438
+#: includes/country-functions.php:1440
 msgid "Trapani"
 msgstr ""
 
-#: includes/country-functions.php:1439
+#: includes/country-functions.php:1441
 msgid "Trento"
 msgstr ""
 
-#: includes/country-functions.php:1440
+#: includes/country-functions.php:1442
 msgid "Treviso"
 msgstr ""
 
-#: includes/country-functions.php:1441
+#: includes/country-functions.php:1443
 msgid "Trieste"
 msgstr ""
 
-#: includes/country-functions.php:1442
+#: includes/country-functions.php:1444
 msgid "Udine"
 msgstr ""
 
-#: includes/country-functions.php:1443
+#: includes/country-functions.php:1445
 msgid "Varese"
 msgstr ""
 
-#: includes/country-functions.php:1444
+#: includes/country-functions.php:1446
 msgid "Venezia"
 msgstr ""
 
-#: includes/country-functions.php:1445
+#: includes/country-functions.php:1447
 msgid "Verbano-Cusio-Ossola"
 msgstr ""
 
-#: includes/country-functions.php:1446
+#: includes/country-functions.php:1448
 msgid "Vercelli"
 msgstr ""
 
-#: includes/country-functions.php:1447
+#: includes/country-functions.php:1449
 msgid "Verona"
 msgstr ""
 
-#: includes/country-functions.php:1448
+#: includes/country-functions.php:1450
 msgid "Vibo Valentia"
 msgstr ""
 
-#: includes/country-functions.php:1449
+#: includes/country-functions.php:1451
 msgid "Vicenza"
 msgstr ""
 
-#: includes/country-functions.php:1450
+#: includes/country-functions.php:1452
 msgid "Viterbo"
 msgstr ""
 
-#: includes/country-functions.php:1465
+#: includes/country-functions.php:1467
 msgid "Khuzestan  (خوزستان)"
 msgstr ""
 
-#: includes/country-functions.php:1466
+#: includes/country-functions.php:1468
 msgid "Tehran  (تهران)"
 msgstr ""
 
-#: includes/country-functions.php:1467
+#: includes/country-functions.php:1469
 msgid "Ilaam (ایلام)"
 msgstr ""
 
-#: includes/country-functions.php:1468
+#: includes/country-functions.php:1470
 msgid "Bushehr (بوشهر)"
 msgstr ""
 
-#: includes/country-functions.php:1469
+#: includes/country-functions.php:1471
 msgid "Ardabil (اردبیل)"
 msgstr ""
 
-#: includes/country-functions.php:1470
+#: includes/country-functions.php:1472
 msgid "Isfahan (اصفهان)"
 msgstr ""
 
-#: includes/country-functions.php:1471
+#: includes/country-functions.php:1473
 msgid "Yazd (یزد)"
 msgstr ""
 
-#: includes/country-functions.php:1472
+#: includes/country-functions.php:1474
 msgid "Kermanshah (کرمانشاه)"
 msgstr ""
 
-#: includes/country-functions.php:1473
+#: includes/country-functions.php:1475
 msgid "Kerman (کرمان)"
 msgstr ""
 
-#: includes/country-functions.php:1474
+#: includes/country-functions.php:1476
 msgid "Hamadan (همدان)"
 msgstr ""
 
-#: includes/country-functions.php:1475
+#: includes/country-functions.php:1477
 msgid "Ghazvin (قزوین)"
 msgstr ""
 
-#: includes/country-functions.php:1476
+#: includes/country-functions.php:1478
 msgid "Zanjan (زنجان)"
 msgstr ""
 
-#: includes/country-functions.php:1477
+#: includes/country-functions.php:1479
 msgid "Luristan (لرستان)"
 msgstr ""
 
-#: includes/country-functions.php:1478
+#: includes/country-functions.php:1480
 msgid "Alborz (البرز)"
 msgstr ""
 
-#: includes/country-functions.php:1479
+#: includes/country-functions.php:1481
 msgid "East Azarbaijan (آذربایجان شرقی)"
 msgstr ""
 
-#: includes/country-functions.php:1480
+#: includes/country-functions.php:1482
 msgid "West Azarbaijan (آذربایجان غربی)"
 msgstr ""
 
-#: includes/country-functions.php:1481
+#: includes/country-functions.php:1483
 msgid "Chaharmahal and Bakhtiari (چهارمحال و بختیاری)"
 msgstr ""
 
-#: includes/country-functions.php:1482
+#: includes/country-functions.php:1484
 msgid "South Khorasan (خراسان جنوبی)"
 msgstr ""
 
-#: includes/country-functions.php:1483
+#: includes/country-functions.php:1485
 msgid "Razavi Khorasan (خراسان رضوی)"
 msgstr ""
 
-#: includes/country-functions.php:1484
+#: includes/country-functions.php:1486
 msgid "North Khorasan (خراسان جنوبی)"
 msgstr ""
 
-#: includes/country-functions.php:1485
+#: includes/country-functions.php:1487
 msgid "Semnan (سمنان)"
 msgstr ""
 
-#: includes/country-functions.php:1486
+#: includes/country-functions.php:1488
 msgid "Fars (فارس)"
 msgstr ""
 
-#: includes/country-functions.php:1487
+#: includes/country-functions.php:1489
 msgid "Qom (قم)"
 msgstr ""
 
-#: includes/country-functions.php:1488
+#: includes/country-functions.php:1490
 msgid "Kurdistan / کردستان)"
 msgstr ""
 
-#: includes/country-functions.php:1489
+#: includes/country-functions.php:1491
 msgid "Kohgiluyeh and BoyerAhmad (کهگیلوییه و بویراحمد)"
 msgstr ""
 
-#: includes/country-functions.php:1490
+#: includes/country-functions.php:1492
 msgid "Golestan (گلستان)"
 msgstr ""
 
-#: includes/country-functions.php:1491
+#: includes/country-functions.php:1493
 msgid "Gilan (گیلان)"
 msgstr ""
 
-#: includes/country-functions.php:1492
+#: includes/country-functions.php:1494
 msgid "Mazandaran (مازندران)"
 msgstr ""
 
-#: includes/country-functions.php:1493
+#: includes/country-functions.php:1495
 msgid "Markazi (مرکزی)"
 msgstr ""
 
-#: includes/country-functions.php:1494
+#: includes/country-functions.php:1496
 msgid "Hormozgan (هرمزگان)"
 msgstr ""
 
-#: includes/country-functions.php:1495
+#: includes/country-functions.php:1497
 msgid "Sistan and Baluchestan (سیستان و بلوچستان)"
 msgstr ""
 
-#: includes/country-functions.php:1510
+#: includes/country-functions.php:1512
 msgid "Antrim"
 msgstr ""
 
-#: includes/country-functions.php:1511
+#: includes/country-functions.php:1513
 msgid "Armagh"
 msgstr ""
 
-#: includes/country-functions.php:1512
+#: includes/country-functions.php:1514
 msgid "Clare"
 msgstr ""
 
-#: includes/country-functions.php:1513
+#: includes/country-functions.php:1515
 msgid "Cork"
 msgstr ""
 
-#: includes/country-functions.php:1514
+#: includes/country-functions.php:1516
 msgid "Cavan"
 msgstr ""
 
-#: includes/country-functions.php:1515
+#: includes/country-functions.php:1517
 msgid "Carlow"
 msgstr ""
 
-#: includes/country-functions.php:1516
+#: includes/country-functions.php:1518
 msgid "Donegal"
 msgstr ""
 
-#: includes/country-functions.php:1517
+#: includes/country-functions.php:1519
 msgid "Dublin"
 msgstr ""
 
-#: includes/country-functions.php:1518
+#: includes/country-functions.php:1520
 msgid "Down"
 msgstr ""
 
-#: includes/country-functions.php:1519
+#: includes/country-functions.php:1521
 msgid "Derry"
 msgstr ""
 
-#: includes/country-functions.php:1520
+#: includes/country-functions.php:1522
 msgid "Fermanagh"
 msgstr ""
 
-#: includes/country-functions.php:1521
+#: includes/country-functions.php:1523
 msgid "Galway"
 msgstr ""
 
-#: includes/country-functions.php:1522
+#: includes/country-functions.php:1524
 msgid "Kildare"
 msgstr ""
 
-#: includes/country-functions.php:1523
+#: includes/country-functions.php:1525
 msgid "Kilkenny"
 msgstr ""
 
-#: includes/country-functions.php:1524
+#: includes/country-functions.php:1526
 msgid "Kerry"
 msgstr ""
 
-#: includes/country-functions.php:1525
+#: includes/country-functions.php:1527
 msgid "Longford"
 msgstr ""
 
-#: includes/country-functions.php:1526
+#: includes/country-functions.php:1528
 msgid "Louth"
 msgstr ""
 
-#: includes/country-functions.php:1527
+#: includes/country-functions.php:1529
 msgid "Limerick"
 msgstr ""
 
-#: includes/country-functions.php:1528
+#: includes/country-functions.php:1530
 msgid "Leitrim"
 msgstr ""
 
-#: includes/country-functions.php:1529
+#: includes/country-functions.php:1531
 msgid "Laois"
 msgstr ""
 
-#: includes/country-functions.php:1530
+#: includes/country-functions.php:1532
 msgid "Meath"
 msgstr ""
 
-#: includes/country-functions.php:1531
+#: includes/country-functions.php:1533
 msgid "Monaghan"
 msgstr ""
 
-#: includes/country-functions.php:1532
+#: includes/country-functions.php:1534
 msgid "Mayo"
 msgstr ""
 
-#: includes/country-functions.php:1533
+#: includes/country-functions.php:1535
 msgid "Offaly"
 msgstr ""
 
-#: includes/country-functions.php:1534
+#: includes/country-functions.php:1536
 msgid "Roscommon"
 msgstr ""
 
-#: includes/country-functions.php:1535
+#: includes/country-functions.php:1537
 msgid "Sligo"
 msgstr ""
 
-#: includes/country-functions.php:1536
+#: includes/country-functions.php:1538
 msgid "Tyrone"
 msgstr ""
 
-#: includes/country-functions.php:1537
+#: includes/country-functions.php:1539
 msgid "Tipperary"
 msgstr ""
 
-#: includes/country-functions.php:1538
+#: includes/country-functions.php:1540
 msgid "Waterford"
 msgstr ""
 
-#: includes/country-functions.php:1539
+#: includes/country-functions.php:1541
 msgid "Westmeath"
 msgstr ""
 
-#: includes/country-functions.php:1540
+#: includes/country-functions.php:1542
 msgid "Wicklow"
 msgstr ""
 
-#: includes/country-functions.php:1541
+#: includes/country-functions.php:1543
 msgid "Wexford"
 msgstr ""
 
-#: includes/country-functions.php:1556
+#: includes/country-functions.php:1558
 msgid "Αττική"
 msgstr ""
 
-#: includes/country-functions.php:1557
+#: includes/country-functions.php:1559
 msgid "Ανατολική Μακεδονία και Θράκη"
 msgstr ""
 
-#: includes/country-functions.php:1558
+#: includes/country-functions.php:1560
 msgid "Κεντρική Μακεδονία"
 msgstr ""
 
-#: includes/country-functions.php:1559
+#: includes/country-functions.php:1561
 msgid "Δυτική Μακεδονία"
 msgstr ""
 
-#: includes/country-functions.php:1560
+#: includes/country-functions.php:1562
 msgid "Ήπειρος"
 msgstr ""
 
-#: includes/country-functions.php:1561
+#: includes/country-functions.php:1563
 msgid "Θεσσαλία"
 msgstr ""
 
-#: includes/country-functions.php:1562
+#: includes/country-functions.php:1564
 msgid "Ιόνιοι Νήσοι"
 msgstr ""
 
-#: includes/country-functions.php:1563
+#: includes/country-functions.php:1565
 msgid "Δυτική Ελλάδα"
 msgstr ""
 
-#: includes/country-functions.php:1564
+#: includes/country-functions.php:1566
 msgid "Στερεά Ελλάδα"
 msgstr ""
 
-#: includes/country-functions.php:1565
+#: includes/country-functions.php:1567
 msgid "Πελοπόννησος"
 msgstr ""
 
-#: includes/country-functions.php:1566
+#: includes/country-functions.php:1568
 msgid "Βόρειο Αιγαίο"
 msgstr ""
 
-#: includes/country-functions.php:1567
+#: includes/country-functions.php:1569
 msgid "Νότιο Αιγαίο"
 msgstr ""
 
-#: includes/country-functions.php:1568
+#: includes/country-functions.php:1570
 msgid "Κρήτη"
 msgstr ""
 
-#: includes/country-functions.php:1583
+#: includes/country-functions.php:1585
 msgid "Chuquisaca"
 msgstr ""
 
-#: includes/country-functions.php:1584
+#: includes/country-functions.php:1586
 msgid "Beni"
 msgstr ""
 
-#: includes/country-functions.php:1585
+#: includes/country-functions.php:1587
 msgid "Cochabamba"
 msgstr ""
 
-#: includes/country-functions.php:1586
+#: includes/country-functions.php:1588
 msgid "La Paz"
 msgstr ""
 
-#: includes/country-functions.php:1587
+#: includes/country-functions.php:1589
 msgid "Oruro"
 msgstr ""
 
-#: includes/country-functions.php:1588
+#: includes/country-functions.php:1590
 msgid "Pando"
 msgstr ""
 
-#: includes/country-functions.php:1589
+#: includes/country-functions.php:1591
 msgid "Potosí"
 msgstr ""
 
-#: includes/country-functions.php:1590, includes/country-functions.php:1745
+#: includes/country-functions.php:1592, includes/country-functions.php:1747
 msgid "Santa Cruz"
 msgstr ""
 
-#: includes/country-functions.php:1591
+#: includes/country-functions.php:1593
 msgid "Tarija"
 msgstr ""
 
-#: includes/country-functions.php:1606
+#: includes/country-functions.php:1608
 msgid "Blagoevgrad"
 msgstr ""
 
-#: includes/country-functions.php:1607
+#: includes/country-functions.php:1609
 msgid "Burgas"
 msgstr ""
 
-#: includes/country-functions.php:1608
+#: includes/country-functions.php:1610
 msgid "Dobrich"
 msgstr ""
 
-#: includes/country-functions.php:1609
+#: includes/country-functions.php:1611
 msgid "Gabrovo"
 msgstr ""
 
-#: includes/country-functions.php:1610
+#: includes/country-functions.php:1612
 msgid "Haskovo"
 msgstr ""
 
-#: includes/country-functions.php:1611
+#: includes/country-functions.php:1613
 msgid "Kardzhali"
 msgstr ""
 
-#: includes/country-functions.php:1612
+#: includes/country-functions.php:1614
 msgid "Kyustendil"
 msgstr ""
 
-#: includes/country-functions.php:1613
+#: includes/country-functions.php:1615
 msgid "Lovech"
 msgstr ""
 
-#: includes/country-functions.php:1614
+#: includes/country-functions.php:1616
 msgid "Montana"
 msgstr ""
 
-#: includes/country-functions.php:1615
+#: includes/country-functions.php:1617
 msgid "Pazardzhik"
 msgstr ""
 
-#: includes/country-functions.php:1616
+#: includes/country-functions.php:1618
 msgid "Pernik"
 msgstr ""
 
-#: includes/country-functions.php:1617
+#: includes/country-functions.php:1619
 msgid "Pleven"
 msgstr ""
 
-#: includes/country-functions.php:1618
+#: includes/country-functions.php:1620
 msgid "Plovdiv"
 msgstr ""
 
-#: includes/country-functions.php:1619
+#: includes/country-functions.php:1621
 msgid "Razgrad"
 msgstr ""
 
-#: includes/country-functions.php:1620
+#: includes/country-functions.php:1622
 msgid "Ruse"
 msgstr ""
 
-#: includes/country-functions.php:1621
+#: includes/country-functions.php:1623
 msgid "Shumen"
 msgstr ""
 
-#: includes/country-functions.php:1622
+#: includes/country-functions.php:1624
 msgid "Silistra"
 msgstr ""
 
-#: includes/country-functions.php:1623
+#: includes/country-functions.php:1625
 msgid "Sliven"
 msgstr ""
 
-#: includes/country-functions.php:1624
+#: includes/country-functions.php:1626
 msgid "Smolyan"
 msgstr ""
 
-#: includes/country-functions.php:1625
+#: includes/country-functions.php:1627
 msgid "Sofia"
 msgstr ""
 
-#: includes/country-functions.php:1626
+#: includes/country-functions.php:1628
 msgid "Sofia-Grad"
 msgstr ""
 
-#: includes/country-functions.php:1627
+#: includes/country-functions.php:1629
 msgid "Stara Zagora"
 msgstr ""
 
-#: includes/country-functions.php:1628
+#: includes/country-functions.php:1630
 msgid "Targovishte"
 msgstr ""
 
-#: includes/country-functions.php:1629
+#: includes/country-functions.php:1631
 msgid "Varna"
 msgstr ""
 
-#: includes/country-functions.php:1630
+#: includes/country-functions.php:1632
 msgid "Veliko Tarnovo"
 msgstr ""
 
-#: includes/country-functions.php:1631
+#: includes/country-functions.php:1633
 msgid "Vidin"
 msgstr ""
 
-#: includes/country-functions.php:1632
+#: includes/country-functions.php:1634
 msgid "Vratsa"
 msgstr ""
 
-#: includes/country-functions.php:1633
+#: includes/country-functions.php:1635
 msgid "Yambol"
 msgstr ""
 
-#: includes/country-functions.php:1648
+#: includes/country-functions.php:1650
 msgid "Bagerhat"
 msgstr ""
 
-#: includes/country-functions.php:1649
+#: includes/country-functions.php:1651
 msgid "Bandarban"
 msgstr ""
 
-#: includes/country-functions.php:1650
+#: includes/country-functions.php:1652
 msgid "Barguna"
 msgstr ""
 
-#: includes/country-functions.php:1651
+#: includes/country-functions.php:1653
 msgid "Barisal"
 msgstr ""
 
-#: includes/country-functions.php:1652
+#: includes/country-functions.php:1654
 msgid "Bhola"
 msgstr ""
 
-#: includes/country-functions.php:1653
+#: includes/country-functions.php:1655
 msgid "Bogra"
 msgstr ""
 
-#: includes/country-functions.php:1654
+#: includes/country-functions.php:1656
 msgid "Brahmanbaria"
 msgstr ""
 
-#: includes/country-functions.php:1655
+#: includes/country-functions.php:1657
 msgid "Chandpur"
 msgstr ""
 
-#: includes/country-functions.php:1656
+#: includes/country-functions.php:1658
 msgid "Chittagong"
 msgstr ""
 
-#: includes/country-functions.php:1657
+#: includes/country-functions.php:1659
 msgid "Chuadanga"
 msgstr ""
 
-#: includes/country-functions.php:1658
+#: includes/country-functions.php:1660
 msgid "Comilla"
 msgstr ""
 
-#: includes/country-functions.php:1659
+#: includes/country-functions.php:1661
 msgid "Cox's Bazar"
 msgstr ""
 
-#: includes/country-functions.php:1660
+#: includes/country-functions.php:1662
 msgid "Dhaka"
 msgstr ""
 
-#: includes/country-functions.php:1661
+#: includes/country-functions.php:1663
 msgid "Dinajpur"
 msgstr ""
 
-#: includes/country-functions.php:1662
+#: includes/country-functions.php:1664
 msgid "Faridpur "
 msgstr ""
 
-#: includes/country-functions.php:1663
+#: includes/country-functions.php:1665
 msgid "Feni"
 msgstr ""
 
-#: includes/country-functions.php:1664
+#: includes/country-functions.php:1666
 msgid "Gaibandha"
 msgstr ""
 
-#: includes/country-functions.php:1665
+#: includes/country-functions.php:1667
 msgid "Gazipur"
 msgstr ""
 
-#: includes/country-functions.php:1666
+#: includes/country-functions.php:1668
 msgid "Gopalganj"
 msgstr ""
 
-#: includes/country-functions.php:1667
+#: includes/country-functions.php:1669
 msgid "Habiganj"
 msgstr ""
 
-#: includes/country-functions.php:1668
+#: includes/country-functions.php:1670
 msgid "Jamalpur"
 msgstr ""
 
-#: includes/country-functions.php:1669
+#: includes/country-functions.php:1671
 msgid "Jessore"
 msgstr ""
 
-#: includes/country-functions.php:1670
+#: includes/country-functions.php:1672
 msgid "Jhalokati"
 msgstr ""
 
-#: includes/country-functions.php:1671
+#: includes/country-functions.php:1673
 msgid "Jhenaidah"
 msgstr ""
 
-#: includes/country-functions.php:1672
+#: includes/country-functions.php:1674
 msgid "Joypurhat"
 msgstr ""
 
-#: includes/country-functions.php:1673
+#: includes/country-functions.php:1675
 msgid "Khagrachhari"
 msgstr ""
 
-#: includes/country-functions.php:1674
+#: includes/country-functions.php:1676
 msgid "Khulna"
 msgstr ""
 
-#: includes/country-functions.php:1675
+#: includes/country-functions.php:1677
 msgid "Kishoreganj"
 msgstr ""
 
-#: includes/country-functions.php:1676
+#: includes/country-functions.php:1678
 msgid "Kurigram"
 msgstr ""
 
-#: includes/country-functions.php:1677
+#: includes/country-functions.php:1679
 msgid "Kushtia"
 msgstr ""
 
-#: includes/country-functions.php:1678
+#: includes/country-functions.php:1680
 msgid "Lakshmipur"
 msgstr ""
 
-#: includes/country-functions.php:1679
+#: includes/country-functions.php:1681
 msgid "Lalmonirhat"
 msgstr ""
 
-#: includes/country-functions.php:1680
+#: includes/country-functions.php:1682
 msgid "Madaripur"
 msgstr ""
 
-#: includes/country-functions.php:1681
+#: includes/country-functions.php:1683
 msgid "Magura"
 msgstr ""
 
-#: includes/country-functions.php:1682
+#: includes/country-functions.php:1684
 msgid "Manikganj "
 msgstr ""
 
-#: includes/country-functions.php:1683
+#: includes/country-functions.php:1685
 msgid "Meherpur"
 msgstr ""
 
-#: includes/country-functions.php:1684
+#: includes/country-functions.php:1686
 msgid "Moulvibazar"
 msgstr ""
 
-#: includes/country-functions.php:1685
+#: includes/country-functions.php:1687
 msgid "Munshiganj"
 msgstr ""
 
-#: includes/country-functions.php:1686
+#: includes/country-functions.php:1688
 msgid "Mymensingh"
 msgstr ""
 
-#: includes/country-functions.php:1687
+#: includes/country-functions.php:1689
 msgid "Naogaon"
 msgstr ""
 
-#: includes/country-functions.php:1688
+#: includes/country-functions.php:1690
 msgid "Narail"
 msgstr ""
 
-#: includes/country-functions.php:1689
+#: includes/country-functions.php:1691
 msgid "Narayanganj"
 msgstr ""
 
-#: includes/country-functions.php:1690
+#: includes/country-functions.php:1692
 msgid "Narsingdi"
 msgstr ""
 
-#: includes/country-functions.php:1691
+#: includes/country-functions.php:1693
 msgid "Natore"
 msgstr ""
 
-#: includes/country-functions.php:1692
+#: includes/country-functions.php:1694
 msgid "Nawabganj"
 msgstr ""
 
-#: includes/country-functions.php:1693
+#: includes/country-functions.php:1695
 msgid "Netrakona"
 msgstr ""
 
-#: includes/country-functions.php:1694
+#: includes/country-functions.php:1696
 msgid "Nilphamari"
 msgstr ""
 
-#: includes/country-functions.php:1695
+#: includes/country-functions.php:1697
 msgid "Noakhali"
 msgstr ""
 
-#: includes/country-functions.php:1696
+#: includes/country-functions.php:1698
 msgid "Pabna"
 msgstr ""
 
-#: includes/country-functions.php:1697
+#: includes/country-functions.php:1699
 msgid "Panchagarh"
 msgstr ""
 
-#: includes/country-functions.php:1698
+#: includes/country-functions.php:1700
 msgid "Patuakhali"
 msgstr ""
 
-#: includes/country-functions.php:1699
+#: includes/country-functions.php:1701
 msgid "Pirojpur"
 msgstr ""
 
-#: includes/country-functions.php:1700
+#: includes/country-functions.php:1702
 msgid "Rajbari"
 msgstr ""
 
-#: includes/country-functions.php:1701
+#: includes/country-functions.php:1703
 msgid "Rajshahi"
 msgstr ""
 
-#: includes/country-functions.php:1702
+#: includes/country-functions.php:1704
 msgid "Rangamati"
 msgstr ""
 
-#: includes/country-functions.php:1703
+#: includes/country-functions.php:1705
 msgid "Rangpur"
 msgstr ""
 
-#: includes/country-functions.php:1704
+#: includes/country-functions.php:1706
 msgid "Satkhira"
 msgstr ""
 
-#: includes/country-functions.php:1705
+#: includes/country-functions.php:1707
 msgid "Shariatpur"
 msgstr ""
 
-#: includes/country-functions.php:1706
+#: includes/country-functions.php:1708
 msgid "Sherpur"
 msgstr ""
 
-#: includes/country-functions.php:1707
+#: includes/country-functions.php:1709
 msgid "Sirajganj"
 msgstr ""
 
-#: includes/country-functions.php:1708
+#: includes/country-functions.php:1710
 msgid "Sunamganj"
 msgstr ""
 
-#: includes/country-functions.php:1709
+#: includes/country-functions.php:1711
 msgid "Sylhet"
 msgstr ""
 
-#: includes/country-functions.php:1710
+#: includes/country-functions.php:1712
 msgid "Tangail"
 msgstr ""
 
-#: includes/country-functions.php:1711
+#: includes/country-functions.php:1713
 msgid "Thakurgaon"
 msgstr ""
 
-#: includes/country-functions.php:1726
+#: includes/country-functions.php:1728
 msgid "Ciudad Aut&oacute;noma de Buenos Aires"
 msgstr ""
 
-#: includes/country-functions.php:1727
+#: includes/country-functions.php:1729
 msgid "Buenos Aires"
 msgstr ""
 
-#: includes/country-functions.php:1728
+#: includes/country-functions.php:1730
 msgid "Catamarca"
 msgstr ""
 
-#: includes/country-functions.php:1729
+#: includes/country-functions.php:1731
 msgid "Chaco"
 msgstr ""
 
-#: includes/country-functions.php:1730
+#: includes/country-functions.php:1732
 msgid "Chubut"
 msgstr ""
 
-#: includes/country-functions.php:1731, includes/country-functions.php:2321
+#: includes/country-functions.php:1733, includes/country-functions.php:2323
 msgid "C&oacute;rdoba"
 msgstr ""
 
-#: includes/country-functions.php:1732
+#: includes/country-functions.php:1734
 msgid "Corrientes"
 msgstr ""
 
-#: includes/country-functions.php:1733
+#: includes/country-functions.php:1735
 msgid "Entre R&iacute;os"
 msgstr ""
 
-#: includes/country-functions.php:1734
+#: includes/country-functions.php:1736
 msgid "Formosa"
 msgstr ""
 
-#: includes/country-functions.php:1735
+#: includes/country-functions.php:1737
 msgid "Jujuy"
 msgstr ""
 
-#: includes/country-functions.php:1736
+#: includes/country-functions.php:1738
 msgid "La Pampa"
 msgstr ""
 
-#: includes/country-functions.php:1737, includes/country-functions.php:2330
+#: includes/country-functions.php:1739, includes/country-functions.php:2332
 msgid "La Rioja"
 msgstr ""
 
-#: includes/country-functions.php:1738
+#: includes/country-functions.php:1740
 msgid "Mendoza"
 msgstr ""
 
-#: includes/country-functions.php:1739
+#: includes/country-functions.php:1741
 msgid "Misiones"
 msgstr ""
 
-#: includes/country-functions.php:1740
+#: includes/country-functions.php:1742
 msgid "Neuqu&eacute;n"
 msgstr ""
 
-#: includes/country-functions.php:1741
+#: includes/country-functions.php:1743
 msgid "R&iacute;o Negro"
 msgstr ""
 
-#: includes/country-functions.php:1742
+#: includes/country-functions.php:1744
 msgid "Salta"
 msgstr ""
 
-#: includes/country-functions.php:1743
+#: includes/country-functions.php:1745
 msgid "San Juan"
 msgstr ""
 
-#: includes/country-functions.php:1744
+#: includes/country-functions.php:1746
 msgid "San Luis"
 msgstr ""
 
-#: includes/country-functions.php:1746
+#: includes/country-functions.php:1748
 msgid "Santa Fe"
 msgstr ""
 
-#: includes/country-functions.php:1747
+#: includes/country-functions.php:1749
 msgid "Santiago del Estero"
 msgstr ""
 
-#: includes/country-functions.php:1748
+#: includes/country-functions.php:1750
 msgid "Tierra del Fuego"
 msgstr ""
 
-#: includes/country-functions.php:1749
+#: includes/country-functions.php:1751
 msgid "Tucum&aacute;n"
 msgstr ""
 
-#: includes/country-functions.php:1846
+#: includes/country-functions.php:1848
 msgid "Alberta"
 msgstr ""
 
-#: includes/country-functions.php:1847
+#: includes/country-functions.php:1849
 msgid "British Columbia"
 msgstr ""
 
-#: includes/country-functions.php:1848
+#: includes/country-functions.php:1850
 msgid "Manitoba"
 msgstr ""
 
-#: includes/country-functions.php:1849
+#: includes/country-functions.php:1851
 msgid "New Brunswick"
 msgstr ""
 
-#: includes/country-functions.php:1850
+#: includes/country-functions.php:1852
 msgid "Newfoundland and Labrador"
 msgstr ""
 
-#: includes/country-functions.php:1851
+#: includes/country-functions.php:1853
 msgid "Nova Scotia"
 msgstr ""
 
-#: includes/country-functions.php:1852
+#: includes/country-functions.php:1854
 msgid "Northwest Territories"
 msgstr ""
 
-#: includes/country-functions.php:1853
+#: includes/country-functions.php:1855
 msgid "Nunavut"
 msgstr ""
 
-#: includes/country-functions.php:1854
+#: includes/country-functions.php:1856
 msgid "Ontario"
 msgstr ""
 
-#: includes/country-functions.php:1855
+#: includes/country-functions.php:1857
 msgid "Prince Edward Island"
 msgstr ""
 
-#: includes/country-functions.php:1856
+#: includes/country-functions.php:1858
 msgid "Quebec"
 msgstr ""
 
-#: includes/country-functions.php:1857
+#: includes/country-functions.php:1859
 msgid "Saskatchewan"
 msgstr ""
 
-#: includes/country-functions.php:1858
+#: includes/country-functions.php:1860
 msgid "Yukon"
 msgstr ""
 
-#: includes/country-functions.php:2304
+#: includes/country-functions.php:2306
 msgid "A Coru&ntilde;a"
 msgstr ""
 
-#: includes/country-functions.php:2305
+#: includes/country-functions.php:2307
 msgid "Álava"
 msgstr ""
 
-#: includes/country-functions.php:2306
+#: includes/country-functions.php:2308
 msgid "Albacete"
 msgstr ""
 
-#: includes/country-functions.php:2307
+#: includes/country-functions.php:2309
 msgid "Alicante"
 msgstr ""
 
-#: includes/country-functions.php:2308
+#: includes/country-functions.php:2310
 msgid "Almer&iacute;a"
 msgstr ""
 
-#: includes/country-functions.php:2309
+#: includes/country-functions.php:2311
 msgid "Asturias"
 msgstr ""
 
-#: includes/country-functions.php:2310
+#: includes/country-functions.php:2312
 msgid "&Aacute;vila"
 msgstr ""
 
-#: includes/country-functions.php:2311
+#: includes/country-functions.php:2313
 msgid "Badajoz"
 msgstr ""
 
-#: includes/country-functions.php:2312
+#: includes/country-functions.php:2314
 msgid "Baleares"
 msgstr ""
 
-#: includes/country-functions.php:2313
+#: includes/country-functions.php:2315
 msgid "Barcelona"
 msgstr ""
 
-#: includes/country-functions.php:2314
+#: includes/country-functions.php:2316
 msgid "Burgos"
 msgstr ""
 
-#: includes/country-functions.php:2315
+#: includes/country-functions.php:2317
 msgid "C&aacute;ceres"
 msgstr ""
 
-#: includes/country-functions.php:2316
+#: includes/country-functions.php:2318
 msgid "C&aacute;diz"
 msgstr ""
 
-#: includes/country-functions.php:2317
+#: includes/country-functions.php:2319
 msgid "Cantabria"
 msgstr ""
 
-#: includes/country-functions.php:2318
+#: includes/country-functions.php:2320
 msgid "Castell&oacute;n"
 msgstr ""
 
-#: includes/country-functions.php:2319
+#: includes/country-functions.php:2321
 msgid "Ceuta"
 msgstr ""
 
-#: includes/country-functions.php:2320
+#: includes/country-functions.php:2322
 msgid "Ciudad Real"
 msgstr ""
 
-#: includes/country-functions.php:2322
+#: includes/country-functions.php:2324
 msgid "Cuenca"
 msgstr ""
 
-#: includes/country-functions.php:2323
+#: includes/country-functions.php:2325
 msgid "Girona"
 msgstr ""
 
-#: includes/country-functions.php:2324
+#: includes/country-functions.php:2326
 msgid "Granada"
 msgstr ""
 
-#: includes/country-functions.php:2325
+#: includes/country-functions.php:2327
 msgid "Guadalajara"
 msgstr ""
 
-#: includes/country-functions.php:2326
+#: includes/country-functions.php:2328
 msgid "Gipuzkoa"
 msgstr ""
 
-#: includes/country-functions.php:2327
+#: includes/country-functions.php:2329
 msgid "Huelva"
 msgstr ""
 
-#: includes/country-functions.php:2328
+#: includes/country-functions.php:2330
 msgid "Huesca"
 msgstr ""
 
-#: includes/country-functions.php:2329
+#: includes/country-functions.php:2331
 msgid "Ja&eacute;n"
 msgstr ""
 
-#: includes/country-functions.php:2331
+#: includes/country-functions.php:2333
 msgid "Las Palmas"
 msgstr ""
 
-#: includes/country-functions.php:2332
+#: includes/country-functions.php:2334
 msgid "Le&oacute;n"
 msgstr ""
 
-#: includes/country-functions.php:2333
+#: includes/country-functions.php:2335
 msgid "Lleida"
 msgstr ""
 
-#: includes/country-functions.php:2334
+#: includes/country-functions.php:2336
 msgid "Lugo"
 msgstr ""
 
-#: includes/country-functions.php:2335
+#: includes/country-functions.php:2337
 msgid "Madrid"
 msgstr ""
 
-#: includes/country-functions.php:2336
+#: includes/country-functions.php:2338
 msgid "M&aacute;laga"
 msgstr ""
 
-#: includes/country-functions.php:2337
+#: includes/country-functions.php:2339
 msgid "Melilla"
 msgstr ""
 
-#: includes/country-functions.php:2338
+#: includes/country-functions.php:2340
 msgid "Murcia"
 msgstr ""
 
-#: includes/country-functions.php:2339
+#: includes/country-functions.php:2341
 msgid "Navarra"
 msgstr ""
 
-#: includes/country-functions.php:2340
+#: includes/country-functions.php:2342
 msgid "Ourense"
 msgstr ""
 
-#: includes/country-functions.php:2341
+#: includes/country-functions.php:2343
 msgid "Palencia"
 msgstr ""
 
-#: includes/country-functions.php:2342
+#: includes/country-functions.php:2344
 msgid "Pontevedra"
 msgstr ""
 
-#: includes/country-functions.php:2343
+#: includes/country-functions.php:2345
 msgid "Salamanca"
 msgstr ""
 
-#: includes/country-functions.php:2344
+#: includes/country-functions.php:2346
 msgid "Santa Cruz de Tenerife"
 msgstr ""
 
-#: includes/country-functions.php:2345
+#: includes/country-functions.php:2347
 msgid "Segovia"
 msgstr ""
 
-#: includes/country-functions.php:2346
+#: includes/country-functions.php:2348
 msgid "Sevilla"
 msgstr ""
 
-#: includes/country-functions.php:2347
+#: includes/country-functions.php:2349
 msgid "Soria"
 msgstr ""
 
-#: includes/country-functions.php:2348
+#: includes/country-functions.php:2350
 msgid "Tarragona"
 msgstr ""
 
-#: includes/country-functions.php:2349
+#: includes/country-functions.php:2351
 msgid "Teruel"
 msgstr ""
 
-#: includes/country-functions.php:2350
+#: includes/country-functions.php:2352
 msgid "Toledo"
 msgstr ""
 
-#: includes/country-functions.php:2351
+#: includes/country-functions.php:2353
 msgid "Valencia"
 msgstr ""
 
-#: includes/country-functions.php:2352
+#: includes/country-functions.php:2354
 msgid "Valladolid"
 msgstr ""
 
-#: includes/country-functions.php:2353
+#: includes/country-functions.php:2355
 msgid "Bizkaia"
 msgstr ""
 
-#: includes/country-functions.php:2354
+#: includes/country-functions.php:2356
 msgid "Zamora"
 msgstr ""
 
-#: includes/country-functions.php:2355
+#: includes/country-functions.php:2357
 msgid "Zaragoza"
 msgstr ""
 
@@ -5695,22 +5719,6 @@ msgstr ""
 msgid "Donation Forms"
 msgstr ""
 
-#: includes/misc-functions.php:597
-msgid "array_column() expects at least 2 parameters, %s given."
-msgstr ""
-
-#: includes/misc-functions.php:603
-msgid "array_column() expects parameter 1 to be array, %s given."
-msgstr ""
-
-#: includes/misc-functions.php:609
-msgid "array_column(): The column key should be either a string or an integer."
-msgstr ""
-
-#: includes/misc-functions.php:615
-msgid "array_column(): The index key should be either a string or an integer."
-msgstr ""
-
 #: includes/misc-functions.php:1533, includes/admin/tools/import/class-give-import-core-settings.php:472
 msgid "Please upload or provide a valid JSON file."
 msgstr ""
@@ -5731,15 +5739,15 @@ msgstr ""
 msgid "%1$s was called <strong>incorrectly</strong>. %2$s"
 msgstr ""
 
-#: includes/misc-functions.php:2177, includes/misc-functions.php:2217
+#: includes/misc-functions.php:2183, includes/misc-functions.php:2223
 msgid "View the receipt in your browser &raquo;"
 msgstr ""
 
-#: includes/misc-functions.php:2294
+#: includes/misc-functions.php:2300
 msgid "You are trying to access invalid donation receipt. Please try again."
 msgstr ""
 
-#: includes/misc-functions.php:2315
+#: includes/misc-functions.php:2321
 msgid "You must be logged in to view this donation receipt."
 msgstr ""
 
@@ -5933,7 +5941,7 @@ msgstr ""
 msgid "Enter form title here"
 msgstr ""
 
-#: includes/post-types.php:341, includes/payments/functions.php:543, includes/admin/payments/class-payments-table.php:325, src/API/Endpoints/Reports/PaymentStatuses.php:64
+#: includes/post-types.php:341, includes/payments/functions.php:545, includes/admin/payments/class-payments-table.php:325, src/API/Endpoints/Reports/PaymentStatuses.php:64
 msgid "Refunded"
 msgstr ""
 
@@ -5949,7 +5957,7 @@ msgid_plural "Failed <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/post-types.php:363, includes/payments/functions.php:549, includes/admin/payments/class-payments-table.php:329
+#: includes/post-types.php:363, includes/payments/functions.php:551, includes/admin/payments/class-payments-table.php:329
 msgid "Revoked"
 msgstr ""
 
@@ -5959,7 +5967,7 @@ msgid_plural "Revoked <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/post-types.php:374, includes/payments/functions.php:545, includes/admin/payments/class-payments-table.php:337, src/API/Endpoints/Reports/PaymentStatuses.php:74
+#: includes/post-types.php:374, includes/payments/functions.php:547, includes/admin/payments/class-payments-table.php:337, src/API/Endpoints/Reports/PaymentStatuses.php:74
 msgid "Cancelled"
 msgstr ""
 
@@ -5969,7 +5977,7 @@ msgid_plural "Cancelled <span class=\"count\">(%s)</span>"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/post-types.php:385, includes/payments/functions.php:546, includes/admin/payments/class-payments-table.php:341, src/API/Endpoints/Reports/PaymentStatuses.php:69
+#: includes/post-types.php:385, includes/payments/functions.php:548, includes/admin/payments/class-payments-table.php:341, src/API/Endpoints/Reports/PaymentStatuses.php:69
 msgid "Abandoned"
 msgstr ""
 
@@ -6187,20 +6195,16 @@ msgid "Donate Now"
 msgstr ""
 
 #: includes/shortcodes.php:980
-msgid "« Previous"
+msgid "&laquo; Previous"
 msgstr ""
 
 #: includes/shortcodes.php:981
-msgid "Next »"
+msgid "Next &raquo;"
 msgstr ""
 
 #. translators: %s: the template
 #: includes/template-functions.php:58
 msgid "The %s template was not found."
-msgstr ""
-
-#: includes/template-functions.php:403
-msgid "GiveWP Placeholder Image"
 msgstr ""
 
 #: includes/user-functions.php:314
@@ -6802,7 +6806,7 @@ msgid "Test and launch your campaign!"
 msgstr ""
 
 #: includes/admin/class-give-welcome.php:325, includes/admin/welcome.php:369
-msgid "You can choose these different modes by going to the \"Form Content\" section. From there, you can choose to add content before or after the donation form on a page, or if you choose \"None\" perhaps you want to instead use the shortcode. You can find the shortcode in the top right column directly under the Publish/Save button. This feature gives you the most amount of flexibility with controlling your content on your website all within the same page."
+msgid "You can choose these different modes by going to the \"Form Content\" section. From there, you can choose to add content before or after the donation form on a page, or choose \"None\" if you want to instead use the shortcode. You can find the shortcode in the top right column directly under the Publish/Save button. This feature gives you the most amount of flexibility with controlling your content on your website all within the same page."
 msgstr ""
 
 #: includes/admin/class-give-welcome.php:331, includes/admin/class-give-welcome.php:331
@@ -6906,7 +6910,7 @@ msgid_plural "%s GiveWP Forms"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/give-metabox-functions.php:194, includes/admin/forms/class-metabox-form-data.php:228, includes/admin/settings/class-settings-gateways.php:367, includes/admin/tools/views/html-admin-page-system-info.php:127, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:421
+#: includes/admin/give-metabox-functions.php:194, includes/admin/forms/class-metabox-form-data.php:228, includes/admin/settings/class-settings-gateways.php:367, includes/admin/tools/views/html-admin-page-system-info.php:127, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:422, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:494
 msgid "Default"
 msgstr ""
 
@@ -7760,7 +7764,7 @@ msgstr ""
 msgid "Credit Card Info"
 msgstr ""
 
-#: includes/forms/template.php:1005, includes/gateways/stripe/includes/actions.php:55, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:85
+#: includes/forms/template.php:1005, includes/gateways/stripe/includes/actions.php:55, includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:85, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:85
 msgid "This is a secure SSL encrypted payment."
 msgstr ""
 
@@ -7928,7 +7932,7 @@ msgstr ""
 msgid "Donation Total:"
 msgstr ""
 
-#: includes/forms/template.php:2207, includes/gateways/stripe/includes/actions.php:72, includes/gateways/stripe/includes/actions.php:83, includes/gateways/stripe/includes/actions.php:91, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:101, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:112, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:120
+#: includes/forms/template.php:2207, includes/gateways/stripe/includes/actions.php:72, includes/gateways/stripe/includes/actions.php:83, includes/gateways/stripe/includes/actions.php:91, includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:101, includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:112, includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:120, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:101, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:112, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:120
 msgid "Notice:"
 msgstr ""
 
@@ -8004,11 +8008,11 @@ msgstr ""
 msgid "Global Option"
 msgstr ""
 
-#: includes/forms/widget.php:187, includes/gateways/offline-donations.php:298, includes/admin/emails/class-email-setting-field.php:166, includes/admin/forms/class-metabox-form-data.php:156, includes/admin/forms/class-metabox-form-data.php:342, includes/admin/forms/class-metabox-form-data.php:354, includes/admin/forms/class-metabox-form-data.php:365, includes/admin/forms/class-metabox-form-data.php:390, includes/admin/forms/class-metabox-form-data.php:427, includes/admin/forms/class-metabox-form-data.php:494, includes/admin/forms/class-metabox-form-data.php:539, includes/admin/settings/class-settings-advanced.php:96, includes/admin/settings/class-settings-advanced.php:118, includes/admin/settings/class-settings-advanced.php:141, includes/admin/settings/class-settings-advanced.php:179, includes/admin/settings/class-settings-advanced.php:227, includes/admin/settings/class-settings-display.php:62, includes/admin/settings/class-settings-display.php:85, includes/admin/settings/class-settings-display.php:130, includes/admin/settings/class-settings-display.php:141, includes/admin/settings/class-settings-display.php:172, includes/admin/settings/class-settings-display.php:194, includes/admin/settings/class-settings-display.php:205, includes/admin/settings/class-settings-display.php:216, includes/admin/settings/class-settings-display.php:235, includes/admin/settings/class-settings-display.php:266, includes/admin/settings/class-settings-display.php:277, includes/admin/settings/class-settings-display.php:308, includes/admin/settings/class-settings-gateways.php:91, includes/admin/settings/class-settings-gateways.php:102, includes/admin/settings/class-settings-gateways.php:141, includes/admin/settings/class-settings-gateways.php:187, includes/admin/settings/class-settings-gateways.php:368, includes/admin/settings/class-settings-general.php:93, includes/admin/settings/class-settings-general.php:104, includes/admin/settings/class-settings-general.php:378, includes/admin/tools/import/class-give-import-donations.php:946, includes/admin/tools/import/class-give-import-donations.php:957, includes/admin/tools/import/class-give-import-donations.php:968, includes/admin/tools/views/html-admin-page-system-info.php:477, includes/admin/tools/views/html-admin-page-system-info.php:544, includes/admin/tools/views/html-admin-page-system-info.php:581, includes/admin/tools/views/html-admin-page-system-info.php:659, includes/admin/tools/views/html-admin-page-system-info.php:695, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:406, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:435
+#: includes/forms/widget.php:187, includes/gateways/offline-donations.php:298, includes/admin/emails/class-email-setting-field.php:166, includes/admin/forms/class-metabox-form-data.php:156, includes/admin/forms/class-metabox-form-data.php:342, includes/admin/forms/class-metabox-form-data.php:354, includes/admin/forms/class-metabox-form-data.php:365, includes/admin/forms/class-metabox-form-data.php:390, includes/admin/forms/class-metabox-form-data.php:427, includes/admin/forms/class-metabox-form-data.php:494, includes/admin/forms/class-metabox-form-data.php:539, includes/admin/settings/class-settings-advanced.php:96, includes/admin/settings/class-settings-advanced.php:118, includes/admin/settings/class-settings-advanced.php:141, includes/admin/settings/class-settings-advanced.php:179, includes/admin/settings/class-settings-advanced.php:227, includes/admin/settings/class-settings-display.php:62, includes/admin/settings/class-settings-display.php:85, includes/admin/settings/class-settings-display.php:130, includes/admin/settings/class-settings-display.php:141, includes/admin/settings/class-settings-display.php:172, includes/admin/settings/class-settings-display.php:194, includes/admin/settings/class-settings-display.php:205, includes/admin/settings/class-settings-display.php:216, includes/admin/settings/class-settings-display.php:235, includes/admin/settings/class-settings-display.php:266, includes/admin/settings/class-settings-display.php:277, includes/admin/settings/class-settings-display.php:308, includes/admin/settings/class-settings-gateways.php:91, includes/admin/settings/class-settings-gateways.php:102, includes/admin/settings/class-settings-gateways.php:141, includes/admin/settings/class-settings-gateways.php:187, includes/admin/settings/class-settings-gateways.php:368, includes/admin/settings/class-settings-general.php:93, includes/admin/settings/class-settings-general.php:104, includes/admin/settings/class-settings-general.php:378, includes/admin/tools/import/class-give-import-donations.php:946, includes/admin/tools/import/class-give-import-donations.php:957, includes/admin/tools/import/class-give-import-donations.php:968, includes/admin/tools/views/html-admin-page-system-info.php:477, includes/admin/tools/views/html-admin-page-system-info.php:544, includes/admin/tools/views/html-admin-page-system-info.php:581, includes/admin/tools/views/html-admin-page-system-info.php:659, includes/admin/tools/views/html-admin-page-system-info.php:695, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:407, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:435, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:479, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:507
 msgid "Enabled"
 msgstr ""
 
-#: includes/forms/widget.php:188, includes/gateways/offline-donations.php:299, includes/admin/emails/class-email-setting-field.php:167, includes/admin/emails/class-email-setting-field.php:177, includes/admin/forms/class-metabox-form-data.php:157, includes/admin/forms/class-metabox-form-data.php:306, includes/admin/forms/class-metabox-form-data.php:330, includes/admin/forms/class-metabox-form-data.php:343, includes/admin/forms/class-metabox-form-data.php:355, includes/admin/forms/class-metabox-form-data.php:366, includes/admin/forms/class-metabox-form-data.php:391, includes/admin/forms/class-metabox-form-data.php:428, includes/admin/forms/class-metabox-form-data.php:495, includes/admin/forms/class-metabox-form-data.php:540, includes/admin/settings/class-settings-advanced.php:97, includes/admin/settings/class-settings-advanced.php:119, includes/admin/settings/class-settings-advanced.php:142, includes/admin/settings/class-settings-advanced.php:180, includes/admin/settings/class-settings-advanced.php:228, includes/admin/settings/class-settings-display.php:63, includes/admin/settings/class-settings-display.php:86, includes/admin/settings/class-settings-display.php:96, includes/admin/settings/class-settings-display.php:118, includes/admin/settings/class-settings-display.php:131, includes/admin/settings/class-settings-display.php:142, includes/admin/settings/class-settings-display.php:173, includes/admin/settings/class-settings-display.php:195, includes/admin/settings/class-settings-display.php:206, includes/admin/settings/class-settings-display.php:217, includes/admin/settings/class-settings-display.php:236, includes/admin/settings/class-settings-display.php:267, includes/admin/settings/class-settings-display.php:278, includes/admin/settings/class-settings-display.php:309, includes/admin/settings/class-settings-gateways.php:92, includes/admin/settings/class-settings-gateways.php:103, includes/admin/settings/class-settings-gateways.php:142, includes/admin/settings/class-settings-gateways.php:188, includes/admin/settings/class-settings-general.php:94, includes/admin/settings/class-settings-general.php:105, includes/admin/settings/class-settings-general.php:379, includes/admin/tools/import/class-give-import-donations.php:947, includes/admin/tools/import/class-give-import-donations.php:958, includes/admin/tools/import/class-give-import-donations.php:969, includes/admin/tools/views/html-admin-page-system-info.php:477, includes/admin/tools/views/html-admin-page-system-info.php:544, includes/admin/tools/views/html-admin-page-system-info.php:581, includes/admin/tools/views/html-admin-page-system-info.php:659, includes/admin/tools/views/html-admin-page-system-info.php:695, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:407, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:436
+#: includes/forms/widget.php:188, includes/gateways/offline-donations.php:299, includes/admin/emails/class-email-setting-field.php:167, includes/admin/emails/class-email-setting-field.php:177, includes/admin/forms/class-metabox-form-data.php:157, includes/admin/forms/class-metabox-form-data.php:306, includes/admin/forms/class-metabox-form-data.php:330, includes/admin/forms/class-metabox-form-data.php:343, includes/admin/forms/class-metabox-form-data.php:355, includes/admin/forms/class-metabox-form-data.php:366, includes/admin/forms/class-metabox-form-data.php:391, includes/admin/forms/class-metabox-form-data.php:428, includes/admin/forms/class-metabox-form-data.php:495, includes/admin/forms/class-metabox-form-data.php:540, includes/admin/settings/class-settings-advanced.php:97, includes/admin/settings/class-settings-advanced.php:119, includes/admin/settings/class-settings-advanced.php:142, includes/admin/settings/class-settings-advanced.php:180, includes/admin/settings/class-settings-advanced.php:228, includes/admin/settings/class-settings-display.php:63, includes/admin/settings/class-settings-display.php:86, includes/admin/settings/class-settings-display.php:96, includes/admin/settings/class-settings-display.php:118, includes/admin/settings/class-settings-display.php:131, includes/admin/settings/class-settings-display.php:142, includes/admin/settings/class-settings-display.php:173, includes/admin/settings/class-settings-display.php:195, includes/admin/settings/class-settings-display.php:206, includes/admin/settings/class-settings-display.php:217, includes/admin/settings/class-settings-display.php:236, includes/admin/settings/class-settings-display.php:267, includes/admin/settings/class-settings-display.php:278, includes/admin/settings/class-settings-display.php:309, includes/admin/settings/class-settings-gateways.php:92, includes/admin/settings/class-settings-gateways.php:103, includes/admin/settings/class-settings-gateways.php:142, includes/admin/settings/class-settings-gateways.php:188, includes/admin/settings/class-settings-general.php:94, includes/admin/settings/class-settings-general.php:105, includes/admin/settings/class-settings-general.php:379, includes/admin/tools/import/class-give-import-donations.php:947, includes/admin/tools/import/class-give-import-donations.php:958, includes/admin/tools/import/class-give-import-donations.php:969, includes/admin/tools/views/html-admin-page-system-info.php:477, includes/admin/tools/views/html-admin-page-system-info.php:544, includes/admin/tools/views/html-admin-page-system-info.php:581, includes/admin/tools/views/html-admin-page-system-info.php:659, includes/admin/tools/views/html-admin-page-system-info.php:695, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:408, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:436, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:480, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:508
 msgid "Disabled"
 msgstr ""
 
@@ -8262,39 +8266,39 @@ msgstr ""
 msgid "This custom meta key has been deprecated for performance reasons. Your custom meta data will still be stored but we recommend updating your code to store meta keys individually from GiveWP 2.0.0."
 msgstr ""
 
-#: includes/payments/functions.php:541, includes/admin/payments/class-payments-table.php:317, src/API/Endpoints/Reports/PaymentStatuses.php:59
+#: includes/payments/functions.php:543, includes/admin/payments/class-payments-table.php:317, src/API/Endpoints/Reports/PaymentStatuses.php:59
 msgid "Pending"
 msgstr ""
 
-#: includes/payments/functions.php:542
+#: includes/payments/functions.php:544
 msgid "Complete"
 msgstr ""
 
-#: includes/payments/functions.php:547
+#: includes/payments/functions.php:549
 msgid "Pre-Approved"
 msgstr ""
 
-#: includes/payments/functions.php:548, includes/admin/payments/class-payments-table.php:321
+#: includes/payments/functions.php:550, includes/admin/payments/class-payments-table.php:321
 msgid "Processing"
 msgstr ""
 
-#: includes/payments/functions.php:1432, includes/admin/donors/donor-actions.php:452, includes/admin/donors/donor-actions.php:510, includes/admin/donors/donor-actions.php:562
+#: includes/payments/functions.php:1434, includes/admin/donors/donor-actions.php:452, includes/admin/donors/donor-actions.php:510, includes/admin/donors/donor-actions.php:562
 msgid "System"
 msgstr ""
 
-#: includes/payments/functions.php:1452
+#: includes/payments/functions.php:1454
 msgid "Delete this donation note."
 msgstr ""
 
-#: includes/payments/functions.php:1452, includes/admin/donors/class-donor-table.php:339, includes/admin/donors/class-donor-table.php:380, includes/admin/donors/class-donor-table.php:601, includes/admin/payments/class-payments-table.php:639, includes/admin/payments/class-payments-table.php:764
+#: includes/payments/functions.php:1454, includes/admin/donors/class-donor-table.php:339, includes/admin/donors/class-donor-table.php:380, includes/admin/donors/class-donor-table.php:601, includes/admin/payments/class-payments-table.php:639, includes/admin/payments/class-payments-table.php:764
 msgid "Delete"
 msgstr ""
 
-#: includes/payments/functions.php:1542, includes/admin/forms/class-metabox-form-data.php:150
+#: includes/payments/functions.php:1544, includes/admin/forms/class-metabox-form-data.php:150
 msgid "Custom Amount"
 msgstr ""
 
-#: includes/payments/functions.php:1674
+#: includes/payments/functions.php:1676
 msgctxt "custom donation dropdown item"
 msgid "Custom"
 msgstr ""
@@ -8323,7 +8327,7 @@ msgstr ""
 msgid "This license key is already in use on this website."
 msgstr ""
 
-#: includes/admin/add-ons/actions.php:215, includes/admin/add-ons/actions.php:260, includes/admin/add-ons/actions.php:285
+#: includes/admin/add-ons/actions.php:215, includes/admin/add-ons/actions.php:260, includes/admin/add-ons/actions.php:296
 msgid "Sorry, this license was unable to activate because the license status returned as <code>%2$s</code>. Please visit your <a href=\"%1$s\" target=\"_blank\">license dashboard</a> to check the details and access priority support."
 msgstr ""
 
@@ -8331,23 +8335,23 @@ msgstr ""
 msgid "Sorry, we are unable to activate this license because this key does not belong to this add-on. Please visit your <a href=\"%1$s\" target=\"_blank\">license dashboard</a> to check the details and access priority support."
 msgstr ""
 
-#: includes/admin/add-ons/actions.php:366
+#: includes/admin/add-ons/actions.php:377
 msgid "We are unable to deactivate invalid license"
 msgstr ""
 
-#: includes/admin/add-ons/actions.php:401
+#: includes/admin/add-ons/actions.php:412
 msgid "You have successfully deactivated the license."
 msgstr ""
 
-#: includes/admin/add-ons/actions.php:456, includes/admin/settings/class-settings-license.php:250
+#: includes/admin/add-ons/actions.php:467, includes/admin/settings/class-settings-license.php:250
 msgid "Last refreshed on %1$s at %2$s"
 msgstr ""
 
-#: includes/admin/add-ons/actions.php:583, includes/admin/add-ons/actions.php:655
+#: includes/admin/add-ons/actions.php:594, includes/admin/add-ons/actions.php:666
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s."
 msgstr ""
 
-#: includes/admin/add-ons/actions.php:591
+#: includes/admin/add-ons/actions.php:602
 msgid "There is a new version of %1$s available. %2$sView version %3$s details%4$s or %5$supdate now%6$s."
 msgstr ""
 
@@ -10230,7 +10234,7 @@ msgstr ""
 msgid "PayPal Standard Gateway Settings"
 msgstr ""
 
-#: includes/admin/settings/class-settings-gateways.php:135, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:200
+#: includes/admin/settings/class-settings-gateways.php:135, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:201
 msgid "Collect Billing Details"
 msgstr ""
 
@@ -11224,7 +11228,7 @@ msgstr ""
 msgid "Updates Completed."
 msgstr ""
 
-#: includes/admin/upgrades/upgrade-functions.php:506
+#: includes/admin/upgrades/upgrade-functions.php:510
 msgid "You do not have permission to do GiveWP upgrades."
 msgstr ""
 
@@ -11244,24 +11248,32 @@ msgstr ""
 msgid "<strong>Action Needed:</strong> Please update the Recurring Donations add-on to version <strong>1.9.4+</strong> in order to be compatible with GiveWP <strong>2.5.5+</strong>. If you are experiencing any issues please rollback GiveWP to 2.5.4 or below using the <a href=\"%1$s\" target=\"_blank\">WP Rollback</a> plugin and <a href=\"%2$s\" target=\"_blank\">contact support</a> for prompt assistance."
 msgstr ""
 
-#: includes/gateways/stripe/class-give-stripe.php:198
+#: includes/gateways/stripe/class-give-stripe.php:199
 msgid "Stripe - Credit Card"
 msgstr ""
 
-#: includes/gateways/stripe/class-give-stripe.php:199, includes/gateways/stripe/class-give-stripe.php:205
+#: includes/gateways/stripe/class-give-stripe.php:200, includes/gateways/stripe/class-give-stripe.php:206
 msgid "Credit Card"
 msgstr ""
 
-#: includes/gateways/stripe/class-give-stripe.php:204
+#: includes/gateways/stripe/class-give-stripe.php:205
 msgid "Stripe - Checkout"
 msgstr ""
 
-#: includes/gateways/stripe/class-give-stripe.php:210
+#: includes/gateways/stripe/class-give-stripe.php:211
 msgid "Stripe - SEPA Direct Debit"
 msgstr ""
 
-#: includes/gateways/stripe/class-give-stripe.php:211, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:114
+#: includes/gateways/stripe/class-give-stripe.php:212, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:114
 msgid "SEPA Direct Debit"
+msgstr ""
+
+#: includes/gateways/stripe/class-give-stripe.php:217
+msgid "Stripe - BECS Direct Debit"
+msgstr ""
+
+#: includes/gateways/stripe/class-give-stripe.php:218, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:115
+msgid "BECS Direct Debit"
 msgstr ""
 
 #: includes/admin/tools/data/class-give-tools-delete-donations.php:156
@@ -12721,10 +12733,6 @@ msgstr ""
 msgid "The name of the current active theme."
 msgstr ""
 
-#: includes/admin/tools/views/html-admin-page-system-info.php:956
-msgid "Version"
-msgstr ""
-
 #: includes/admin/tools/views/html-admin-page-system-info.php:957
 msgid "The installed version of the current active theme."
 msgstr ""
@@ -12851,7 +12859,7 @@ msgstr ""
 msgid "Credit card fields are disabled because your site is not running securely over HTTPS."
 msgstr ""
 
-#: includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:60, includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:100, includes/gateways/stripe/includes/class-give-stripe-customer.php:380, includes/gateways/stripe/includes/class-give-stripe-customer.php:476, includes/gateways/stripe/includes/class-give-stripe-customer.php:494, includes/gateways/stripe/includes/class-give-stripe-customer.php:575, includes/gateways/stripe/includes/class-give-stripe-gateway.php:127, includes/gateways/stripe/includes/class-give-stripe-gateway.php:262, includes/gateways/stripe/includes/class-give-stripe-gateway.php:342, includes/gateways/stripe/includes/class-give-stripe-gateway.php:421, includes/gateways/stripe/includes/class-give-stripe-logger.php:77, includes/gateways/stripe/includes/class-give-stripe-webhooks.php:168, includes/gateways/stripe/includes/give-stripe-helpers.php:539, includes/gateways/stripe/includes/give-stripe-helpers.php:632, includes/gateways/stripe/includes/give-stripe-helpers.php:797, includes/gateways/stripe/includes/admin/admin-actions.php:197, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:82
+#: includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:60, includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:100, includes/gateways/stripe/includes/class-give-stripe-customer.php:373, includes/gateways/stripe/includes/class-give-stripe-customer.php:469, includes/gateways/stripe/includes/class-give-stripe-customer.php:487, includes/gateways/stripe/includes/class-give-stripe-customer.php:568, includes/gateways/stripe/includes/class-give-stripe-gateway.php:127, includes/gateways/stripe/includes/class-give-stripe-gateway.php:262, includes/gateways/stripe/includes/class-give-stripe-gateway.php:342, includes/gateways/stripe/includes/class-give-stripe-gateway.php:421, includes/gateways/stripe/includes/class-give-stripe-logger.php:77, includes/gateways/stripe/includes/class-give-stripe-webhooks.php:168, includes/gateways/stripe/includes/give-stripe-helpers.php:539, includes/gateways/stripe/includes/give-stripe-helpers.php:632, includes/gateways/stripe/includes/give-stripe-helpers.php:797, includes/gateways/stripe/includes/admin/admin-actions.php:204, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:82
 msgid "Stripe Error"
 msgstr ""
 
@@ -12860,7 +12868,7 @@ msgstr ""
 msgid "The Stripe Gateway returned an error while creating the Checkout Session. Details: %s"
 msgstr ""
 
-#: includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:67, includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:107, includes/gateways/stripe/includes/class-give-stripe-customer.php:387, includes/gateways/stripe/includes/class-give-stripe-customer.php:483, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:89
+#: includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:67, includes/gateways/stripe/includes/class-give-stripe-checkout-session.php:107, includes/gateways/stripe/includes/class-give-stripe-customer.php:476, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:89
 msgid "An occurred while processing the donation with the gateway. Please try your donation again."
 msgstr ""
 
@@ -12869,7 +12877,7 @@ msgstr ""
 msgid "The Stripe Gateway returned an error while retrieving the Checkout Session. Details: %s"
 msgstr ""
 
-#: includes/gateways/stripe/includes/class-give-stripe-customer.php:190, includes/gateways/stripe/includes/class-give-stripe-customer.php:374
+#: includes/gateways/stripe/includes/class-give-stripe-customer.php:190
 msgid "Stripe - Customer Creation Error"
 msgstr ""
 
@@ -12890,17 +12898,20 @@ msgstr ""
 msgid "Stripe Customer generated by GiveWP via %s"
 msgstr ""
 
+#: includes/gateways/stripe/includes/class-give-stripe-customer.php:376
+msgid "The Stripe Gateway returned an error while creating the customer. Details:"
+msgstr ""
+
 #. translators: %s Exception Message Body
-#. translators: %s Exception Message Body
-#: includes/gateways/stripe/includes/class-give-stripe-customer.php:383, includes/gateways/stripe/includes/class-give-stripe-customer.php:479
+#: includes/gateways/stripe/includes/class-give-stripe-customer.php:472
 msgid "The Stripe Gateway returned an error while creating the customer. Details: %s"
 msgstr ""
 
-#: includes/gateways/stripe/includes/class-give-stripe-customer.php:493, includes/gateways/stripe/includes/class-give-stripe-customer.php:574, includes/gateways/stripe/includes/class-give-stripe-gateway.php:134, includes/gateways/stripe/includes/class-give-stripe-gateway.php:189, includes/gateways/stripe/includes/class-give-stripe-gateway.php:229, includes/gateways/stripe/includes/class-give-stripe-gateway.php:269, includes/gateways/stripe/includes/class-give-stripe-gateway.php:341, includes/gateways/stripe/includes/give-stripe-helpers.php:639
+#: includes/gateways/stripe/includes/class-give-stripe-customer.php:486, includes/gateways/stripe/includes/class-give-stripe-customer.php:567, includes/gateways/stripe/includes/class-give-stripe-gateway.php:134, includes/gateways/stripe/includes/class-give-stripe-gateway.php:189, includes/gateways/stripe/includes/class-give-stripe-gateway.php:229, includes/gateways/stripe/includes/class-give-stripe-gateway.php:269, includes/gateways/stripe/includes/class-give-stripe-gateway.php:341, includes/gateways/stripe/includes/give-stripe-helpers.php:639
 msgid "An error occurred while processing the donation. Please try again."
 msgstr ""
 
-#: includes/gateways/stripe/includes/class-give-stripe-customer.php:494, includes/gateways/stripe/includes/class-give-stripe-customer.php:575, includes/gateways/stripe/includes/class-give-stripe-gateway.php:342
+#: includes/gateways/stripe/includes/class-give-stripe-customer.php:487, includes/gateways/stripe/includes/class-give-stripe-customer.php:568, includes/gateways/stripe/includes/class-give-stripe-gateway.php:342
 msgid "An error occurred retrieving or creating the "
 msgstr ""
 
@@ -12947,13 +12958,13 @@ msgstr ""
 
 #. translators: %s Exception Message
 #. translators: 1. Error Message
-#: includes/gateways/stripe/includes/class-give-stripe-gateway.php:401, includes/gateways/stripe/includes/class-give-stripe-logger.php:61, includes/gateways/stripe/includes/admin/admin-actions.php:193
+#: includes/gateways/stripe/includes/class-give-stripe-gateway.php:401, includes/gateways/stripe/includes/class-give-stripe-logger.php:61, includes/gateways/stripe/includes/admin/admin-actions.php:200
 msgid "Message: %s"
 msgstr ""
 
 #. translators: %s Trace String
 #. translators: 1. Error Code
-#: includes/gateways/stripe/includes/class-give-stripe-gateway.php:410, includes/gateways/stripe/includes/class-give-stripe-logger.php:67, includes/gateways/stripe/includes/admin/admin-actions.php:194
+#: includes/gateways/stripe/includes/class-give-stripe-gateway.php:410, includes/gateways/stripe/includes/class-give-stripe-logger.php:67, includes/gateways/stripe/includes/admin/admin-actions.php:201
 msgid "Code: %s"
 msgstr ""
 
@@ -13172,11 +13183,15 @@ msgstr ""
 msgid "The Stripe Gateway returned an error while processing the donation."
 msgstr ""
 
-#: includes/gateways/stripe/includes/give-stripe-helpers.php:1157
+#: includes/gateways/stripe/includes/give-stripe-helpers.php:1161
 msgid "By providing your IBAN and confirming this payment, you are authorizing %1$s and Stripe, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited."
 msgstr ""
 
-#: includes/gateways/stripe/includes/give-stripe-scripts.php:43, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:347
+#: includes/gateways/stripe/includes/give-stripe-helpers.php:1168
+msgid "By providing your bank account details and confirming this payment, you agree to this Direct Debit Request and the <a href=\"%1$s\" target=\"_blank\">Direct Debit Request service agreement</a>, and authorise Stripe Payments Australia Pty Ltd ACN 160 180 343 Direct Debit User ID number 507156 (“Stripe”) to debit your account through the Bulk Electronic Clearing System (BECS) on behalf of %2$s (the “Merchant”) for any amounts separately communicated to you by the Merchant. You certify that you are either an account holder or an authorised signatory on the account listed above."
+msgstr ""
+
+#: includes/gateways/stripe/includes/give-stripe-scripts.php:43, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:348
 msgid "Donation Processing..."
 msgstr ""
 
@@ -13190,36 +13205,40 @@ msgid "Refund Charge in Stripe?"
 msgstr ""
 
 #. translators: 1. Refund ID
-#: includes/gateways/stripe/includes/admin/admin-actions.php:185
+#: includes/gateways/stripe/includes/admin/admin-actions.php:192
 msgid "Charge refunded in Stripe: %s"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/admin-actions.php:192
+#: includes/gateways/stripe/includes/admin/admin-actions.php:199
 msgid "The Stripe payment gateway returned an error while refunding a donation."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/admin-actions.php:208
+#: includes/gateways/stripe/includes/admin/admin-actions.php:215
 msgid "Something went wrong while refunding the charge in Stripe."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/admin-actions.php:293
+#: includes/gateways/stripe/includes/admin/admin-actions.php:300
 msgid "The Stripe gateway is enabled but you're not connected. Connect to Stripe to start accepting credit card donations directly on your website."
 msgstr ""
 
 #. translators: 1. Main Text, 2. Connect Link
-#: includes/gateways/stripe/includes/admin/admin-actions.php:306
+#: includes/gateways/stripe/includes/admin/admin-actions.php:313
 msgid "<p><strong>Stripe Connect:</strong> %1$s </p>%2$s"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/admin-actions.php:352
+#: includes/gateways/stripe/includes/admin/admin-actions.php:359
 msgid "The currency must be set as \"Euro (&euro;)\" within Give's <a href=\"%s\">Currency Settings</a> in order to collect donations through the Stripe - SEPA Direct Debit Payment Gateway."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/admin-helpers.php:161
+#: includes/gateways/stripe/includes/admin/admin-actions.php:380
+msgid "The currency must be set as \"AUD (&dollar;)\" within Give's <a href=\"%s\">Currency Settings</a> in order to collect donations through the Stripe - BECS Direct Debit Payment Gateway."
+msgstr ""
+
+#: includes/gateways/stripe/includes/admin/admin-helpers.php:162
 msgid "Connect with Stripe"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:67, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:95, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:131, includes/gateways/stripe/includes/admin/class-give-stripe-logs.php:101
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:67, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:95, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:132, includes/gateways/stripe/includes/admin/class-give-stripe-logs.php:101
 msgid "Stripe"
 msgstr ""
 
@@ -13231,136 +13250,136 @@ msgstr ""
 msgid "Stripe Checkout"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:162
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:163
 msgid "Stripe Connect"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:180, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:724
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:181, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:795
 msgid "Stripe Webhooks"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:188
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:189
 msgid "Statement Descriptor"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:189
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:190
 msgid "This is the text that appears on your donor's bank statements. Statement descriptors are limited to 22 characters, cannot use the special characters <code><</code>, <code>></code>, <code>'</code>, or <code>\"</code>, and must not consist solely of numbers. This is typically the name of your website or organization."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:201
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:202
 msgid "This option will enable the billing details section for Stripe which requires the donor's address to complete the donation. These fields are not required by Stripe to process the transaction, but you may have the need to collect the data."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:216
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:217
 msgid "Stripe Receipt Emails"
 msgstr ""
 
 #. translators: 1. GiveWP Support URL
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:219
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:220
 msgid "Check this option if you would like donors to receive receipt emails directly from Stripe. By default, donors will receive GiveWP generated <a href=\"%1$s\" target=\"_blank\">receipt emails</a>."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:227, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:230, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:278, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:281, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:379, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:382
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:228, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:231, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:279, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:282, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:380, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:383
 msgid "Stripe Gateway Documentation"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:256
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:257
 msgid "Credit Card Fields Format"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:257
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:258
 msgid "This option allows you to show single or multiple credit card fields on your donation forms."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:263
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:264
 msgid "Single Field"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:264
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:265
 msgid "Multi Field"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:307
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:308
 msgid "Checkout Type"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:308
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:309
 msgid "This option allows you to select from the two types of Stripe Checkout methods available for processing donations. The \"Modal\" option is the <a href=\"%1$s\" target=\"_blank\">legacy Stripe Checkout</a> and is not SCA compatible. The \"Redirect\" option uses Stripe's new <a href=\"%2$s\" target=\"_blank\">Checkout</a> interface and offers donors an easy way to pay with Credit Card, Apple, and Google Pay. As well, it is SCA compatible and fully supported by Stripe and GiveWP."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:314
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:315
 msgid "Modal (Legacy Checkout)"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:315
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:316
 msgid "Redirect (Checkout 2.0)"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:320
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:321
 msgid "Checkout Heading"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:321
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:322
 msgid "This is the main heading within the modal checkout. Typically, this is the name of your organization, cause, or website."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:329
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:330
 msgid "Stripe Checkout Image"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:330
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:331
 msgid "This image appears in when the Stripe checkout modal window opens and provides better brand recognition that leads to increased conversion rates. The recommended minimum size is a square image at 128x128px. The supported image types are: .gif, .jpeg, and .png."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:339
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:340
 msgid "Add or Upload Image"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:344
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:345
 msgid "Processing Text"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:345
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:346
 msgid "This text appears briefly once the donor has submitted a donation while GiveWP is confirming the payment with the Stripe API."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:352
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:353
 msgid "Verify Zip Code"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:353
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:354
 msgid "Specify whether Checkout should validate the billing ZIP code of the donor for added fraud protection."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:361
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:362
 msgid "Remember Me"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:362
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:363
 msgid "Specify whether to include the option to \"Remember Me\" for future donations."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:399
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:400, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:472
 msgid "Display Icon"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:400
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:401
 msgid "This option allows you to display a bank building icon within the IBAN input field for SEPA Direct Debit."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:414
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:415, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:487
 msgid "Icon Style"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:415
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:416, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:488
 msgid "This option allows you to select the icon style for the IBAN element of SEPA Direct Debit."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:422
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:423, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:495
 msgid "Solid"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:428
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:428, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:500
 msgid "Display Mandate Acceptance"
 msgstr ""
 
@@ -13368,7 +13387,7 @@ msgstr ""
 msgid "The mandate acceptance text is meant to explain to your donors how the payment processing will work for their donation. The text will display below the IBAN field."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:443
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:443, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:515
 msgid "Mandate Acceptance Text"
 msgstr ""
 
@@ -13376,151 +13395,199 @@ msgstr ""
 msgid "This text displays below the IBAN field and should provide clarity to your donors on how this payment option works."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:521
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:473
+msgid "This option allows you to display a bank building icon within the bank account input field for BECS Direct Debit."
+msgstr ""
+
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:501
+msgid "The mandate acceptance text is meant to explain to your donors how the payment processing will work for their donation. The text will display below the Bank Account fields."
+msgstr ""
+
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:516
+msgid "This text displays below the Bank Account fields and should provide clarity to your donors on how this payment option works."
+msgstr ""
+
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:592
 msgid "Stripe SDK Compatibility"
 msgstr ""
 
 #. translators: 1. GiveWP Support URL
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:524
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:595
 msgid "If you are using another plugin that uses Stripe to accept payments there is a chance that it may include the <a href=\"%1$s\" target=\"_blank\">Stripe SDK</a> (Software Development Kit) either through <a href=\"%2$s\" target=\"_blank\">Composer</a> or manually initalized. This can cause conflicts with GiveWP because WordPress does not have a dependency management system to prevent conflicts. To help resolve conflicts we have included two options to use Stripe alongside these other plugins. The recommended way is Composer, but if that is not working then we recommend manual initialization. If both options do not work please <a href=\"%3$s\" target=\"_blank\">contact support</a>."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:532
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:603
 msgid "Composer Autoloading"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:533
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:604
 msgid "Manual Initialization"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:539
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:610
 msgid "Stripe JS Incompatibility"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:540
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:611
 msgid "If your site has problems with processing cards using Stripe JS, check this option to use a fallback method of processing."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:546
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:617
 msgid "Stripe Styles"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:547
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:618
 msgid "Edit the properties above to match the look and feel of your WordPress theme. These styles will be applied to Stripe Credit Card fields including Card Number, CVC and Expiration. Any valid CSS property can be defined, however, it must be formatted as JSON, not CSS. For more information on Styling Stripe CC fields please see this <a href=\"https://stripe.com/docs/stripe-js/reference#element-options\" target=\"_blank\">article</a>."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:554
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:625
 msgid "Stripe Fonts"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:555
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:626
 msgid "Select the type of font you want to load in Stripe Credit Card fields including Card Number, CVC and Expiration. For more information on Styling Stripe CC fields please see this <a href=\"https://stripe.com/docs/stripe-js/reference#stripe-elements\" target=\"_blank\">article</a>."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:560
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:631
 msgid "Google Fonts"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:561, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:574
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:632, includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:645
 msgid "Custom Fonts"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:566
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:637
 msgid "Google Fonts URL"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:567
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:638
 msgid "Please enter the Google Fonts URL which is applied to your theme to have the Stripe Credit Card fields reflect the same fonts."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:575
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:646
 msgid "Edit the font properties above to match the fonts of your WordPress theme. These font properties will be applied to Stripe Credit Card fields including Card Number, CVC and Expiration. However, it must be formatted as JSON, not CSS."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:637
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:708
 msgid "Stripe Connection"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:644
-msgid "<strong>You are connected! Now this is important: Please now configure your Stripe webhook to finalize the setup.</strong>"
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:715
+msgid "You are connected! Now this is important: Please now configure your Stripe webhook to finalize the setup."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:647
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:718
 msgid "In order for Stripe to function properly, you must add a new Stripe webhook endpoint. To do this please visit the <a href='https://dashboard.stripe.com/webhooks' target='_blank'>Webhooks Section of your Stripe Dashboard</a> and click the <strong>Add endpoint</strong> button and paste the following URL:"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:650
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:721
 msgid "Stripe webhooks are required so GiveWP can communicate properly with the payment gateway to confirm payment completion, renewals, and more."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:663
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:734
 msgid "Connected"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:668
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:739
 msgid "Stripe is connected."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:676
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:747
 msgid "[Disconnect]"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:683
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:754
 msgid "Stripe is NOT connected."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:697
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:768
 msgid "The free Stripe payment gateway includes an additional 2%% fee for processing one-time donations. This fee is removed by activating the premium <a href=\"%1$s\" target=\"_blank\">Stripe add-on</a> and never applies to subscription donations made through the <a href=\"%2$s\" target=\"_blank\">Recurring Donations add-on</a>. <a href=\"%3$s\" target=\"_blank\">Learn More ></a>"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:731
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:802
 msgid "In order for Stripe to function properly, you must configure your Stripe webhooks."
 msgstr ""
 
 #. translators: 1. Webhook settings page.
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:734
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:805
 msgid " You can  visit your <a href=\"%1$s\" target=\"_blank\">Stripe Account Dashboard</a> to add a new webhook. "
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:737
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:808
 msgid "Please add a new webhook endpoint for the following URL:"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:741
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:812
 msgid "Webhook URL:"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:750
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:821
 msgid "Last webhook received on"
 msgstr ""
 
 #. translators: 1. Documentation on webhook setup.
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:759
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:830
 msgid "See our <a href=\"%1$s\" target=\"_blank\">documentation</a> for more information."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:767
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:838
 msgid "Stripe webhooks are important to setup so GiveWP can communicate properly with the payment gateway. It is not required to have the sandbox webhooks setup unless you are testing. Note: webhooks cannot be setup on localhost or websites in maintenance mode."
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:807
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:878
 msgid "Base Styles"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:821
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:892
 msgid "Empty Styles"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:837
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:908
 msgid "Invalid Styles"
 msgstr ""
 
-#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:853
+#: includes/gateways/stripe/includes/admin/class-give-stripe-admin-settings.php:924
 msgid "Complete Styles"
 msgstr ""
 
 #: includes/gateways/stripe/includes/admin/class-give-stripe-logs-list-table.php:135
 msgid "View Stripe Log"
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:77
+msgid "Bank Account Info"
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:102, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:102
+msgid "Mandate form fields are disabled because Stripe is not connected and your site is not running securely over HTTPS."
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:113, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:113
+msgid "Mandate form fields are disabled because Stripe is not connected."
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:121, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:121
+msgid "Mandate form fields are disabled because your site is not running securely over HTTPS."
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:128
+msgid "Bank Account"
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:237, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:211, includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:128, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:253
+msgid "Donation creating error"
+msgstr ""
+
+#. translators: %s Donation Data
+#. translators: %s Donation Data
+#. translators: %s Donation Data
+#. translators: %s Donation Data
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:240, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:214, includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:131, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:256
+msgid "Unable to create a pending donation. Details: %s"
+msgstr ""
+
+#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-becs.php:244, includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:218, includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:135, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:260
+msgid "The Stripe Gateway returned an error while creating a pending donation."
 msgstr ""
 
 #. translators: %s Exception Message Body
@@ -13548,21 +13615,6 @@ msgstr ""
 msgid "Unable to generate Payment Method ID. Please contact a site administrator for assistance."
 msgstr ""
 
-#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:211, includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:128, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:253
-msgid "Donation creating error"
-msgstr ""
-
-#. translators: %s Donation Data
-#. translators: %s Donation Data
-#. translators: %s Donation Data
-#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:214, includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:131, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:256
-msgid "Unable to create a pending donation. Details: %s"
-msgstr ""
-
-#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-card.php:218, includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:135, includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:260
-msgid "The Stripe Gateway returned an error while creating a pending donation."
-msgstr ""
-
 #: includes/gateways/stripe/includes/payment-methods/class-give-stripe-checkout.php:157
 msgid "Invalid Checkout Error"
 msgstr ""
@@ -13574,18 +13626,6 @@ msgstr ""
 
 #: includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:77
 msgid "IBAN Info"
-msgstr ""
-
-#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:102
-msgid "Mandate form fields are disabled because Stripe is not connected and your site is not running securely over HTTPS."
-msgstr ""
-
-#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:113
-msgid "Mandate form fields are disabled because Stripe is not connected."
-msgstr ""
-
-#: includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:121
-msgid "Mandate form fields are disabled because your site is not running securely over HTTPS."
 msgstr ""
 
 #: includes/gateways/stripe/includes/payment-methods/class-give-stripe-sepa.php:127

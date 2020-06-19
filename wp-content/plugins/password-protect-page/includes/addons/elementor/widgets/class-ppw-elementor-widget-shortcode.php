@@ -115,6 +115,18 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 					],
 				],
 				[
+					'key'   => 'ppwp_show_content',
+					'value' => [
+						'label'        => __( 'Show Content', 'password-protect-page' ),
+						'type'         => \Elementor\Controls_Manager::SWITCHER,
+						'default'      => 'no',
+						'label_on'     => __( 'Show', 'essential-addons-elementor' ),
+						'label_off'    => __( 'Hide', 'essential-addons-elementor' ),
+						'return_value' => 'yes',
+						'description'  => 'You can force show content in order to style them properly.',
+					],
+				],
+				[
 					'key'   => 'ppwp_protected_content_headline',
 					'value' => [
 						'label'     => __( 'Protected Content', 'password-protect-page' ),
@@ -126,7 +138,7 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 					'key'   => 'ppwp_protected_content',
 					'value' => [
 						'type'    => \Elementor\Controls_Manager::WYSIWYG,
-						'default' => __( 'This content is your protected content', 'password-protect-page' ),
+						'default' => __( 'This is your protected content.', 'password-protect-page' ),
 					],
 				],
 				[

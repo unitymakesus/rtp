@@ -233,7 +233,6 @@ final class Debug {
 	 * @since 2.8.0 1. Now escapes all parameters.
 	 *              2. Removed check for gettext.
 	 * @access private
-	 * @todo Escape translation string.
 	 *
 	 * @param string $p_or_m The Property or Method.
 	 * @param string $message A message explaining what has been done incorrectly.
@@ -583,6 +582,7 @@ final class Debug {
 	 *
 	 * @since 2.6.6
 	 * @since 4.0.0 Cleaned up global callers; only use TSF methods.
+	 * @since 4.1.0 Added more debugging variables added since 4.0.0.
 	 *
 	 * @param string $cache_version 'yup' or 'nope'
 	 * @return string Wrapped Query State debug output.
@@ -638,10 +638,13 @@ final class Debug {
 		$is_singular_archive    = $tsf->is_singular_archive();
 		$is_term_meta_capable   = $tsf->is_term_meta_capable();
 		$is_post_type_supported = $tsf->is_post_type_supported();
+		$is_taxonomy_supported  = $tsf->is_taxonomy_supported();
 		$get_post_type          = \get_post_type();
 		$get_post_type_real_ID  = $tsf->get_post_type_real_ID();
 		$admin_post_type        = $tsf->get_admin_post_type();
 		$current_taxonomy       = $tsf->get_current_taxonomy();
+		$is_taxonomy_disabled   = $tsf->is_taxonomy_disabled();
+		$is_taxonomy_public     = $tsf->is_taxonomy_public();
 		$is_post_type_archive   = \is_post_type_archive();
 		$is_protected           = $tsf->is_protected( $page_id );
 		// phpcs:enable, WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- Not this file's issue.

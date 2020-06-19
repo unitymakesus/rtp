@@ -425,67 +425,68 @@ final class FacetWP_Helper
      * @return array
      * @since 2.2.1
      */
-    function get_data_sources() {
-
-        // Return cached sources
-        if ( ! empty( $this->data_sources ) ) {
-            return $this->data_sources;
-        }
-
+    function get_data_sources( $context = 'default' ) {
         global $wpdb;
 
-        // Get excluded meta keys
-        $excluded_fields = apply_filters( 'facetwp_excluded_custom_fields', [
-            '_edit_last',
-            '_edit_lock',
-        ] );
+        // Cached?
+        if ( ! empty( $this->data_sources ) ) {
+            $sources = $this->data_sources;
+        }
+        else {
 
-        // Get taxonomies
-        $taxonomies = get_taxonomies( [], 'object' );
-
-        // Get custom fields
-        $meta_keys = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} ORDER BY meta_key" );
-        $custom_fields = array_diff( $meta_keys, $excluded_fields );
-
-        $sources = [
-            'posts' => [
-                'label' => __( 'Posts', 'fwp' ),
-                'choices' => [
-                    'post_type'         => __( 'Post Type', 'fwp' ),
-                    'post_date'         => __( 'Post Date', 'fwp' ),
-                    'post_modified'     => __( 'Post Modified', 'fwp' ),
-                    'post_title'        => __( 'Post Title', 'fwp' ),
-                    'post_author'       => __( 'Post Author', 'fwp' )
+            // Get excluded meta keys
+            $excluded_fields = apply_filters( 'facetwp_excluded_custom_fields', [
+                '_edit_last',
+                '_edit_lock',
+            ] );
+    
+            // Get taxonomies
+            $taxonomies = get_taxonomies( [], 'object' );
+    
+            // Get custom fields
+            $meta_keys = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} ORDER BY meta_key" );
+            $custom_fields = array_diff( $meta_keys, $excluded_fields );
+    
+            $sources = [
+                'posts' => [
+                    'label' => __( 'Posts', 'fwp' ),
+                    'choices' => [
+                        'post_type'         => __( 'Post Type', 'fwp' ),
+                        'post_date'         => __( 'Post Date', 'fwp' ),
+                        'post_modified'     => __( 'Post Modified', 'fwp' ),
+                        'post_title'        => __( 'Post Title', 'fwp' ),
+                        'post_author'       => __( 'Post Author', 'fwp' )
+                    ],
+                    'weight' => 10
                 ],
-                'weight' => 10
-            ],
-            'taxonomies' => [
-                'label' => __( 'Taxonomies', 'fwp' ),
-                'choices' => [],
-                'weight' => 20
-            ],
-            'custom_fields' => [
-                'label' => __( 'Custom Fields', 'fwp' ),
-                'choices' => [],
-                'weight' => 30
-            ]
-        ];
-
-        foreach ( $taxonomies as $tax ) {
-            $sources['taxonomies']['choices'][ 'tax/' . $tax->name ] = $tax->labels->name;
-        }
-
-        foreach ( $custom_fields as $cf ) {
-            if ( 0 !== strpos( $cf, '_oembed_' ) ) {
-                $sources['custom_fields']['choices'][ 'cf/' . $cf ] = $cf;
+                'taxonomies' => [
+                    'label' => __( 'Taxonomies', 'fwp' ),
+                    'choices' => [],
+                    'weight' => 20
+                ],
+                'custom_fields' => [
+                    'label' => __( 'Custom Fields', 'fwp' ),
+                    'choices' => [],
+                    'weight' => 30
+                ]
+            ];
+    
+            foreach ( $taxonomies as $tax ) {
+                $sources['taxonomies']['choices'][ 'tax/' . $tax->name ] = $tax->labels->name;
             }
+    
+            foreach ( $custom_fields as $cf ) {
+                if ( 0 !== strpos( $cf, '_oembed_' ) ) {
+                    $sources['custom_fields']['choices'][ 'cf/' . $cf ] = $cf;
+                }
+            }
+
+            $this->data_sources = $sources;
         }
 
-        $sources = apply_filters( 'facetwp_facet_sources', $sources );
+        $sources = apply_filters( 'facetwp_facet_sources', $sources, $context );
 
         uasort( $sources, [ $this, 'sort_by_weight' ] );
-
-        $this->data_sources = $sources;
 
         return $sources;
     }
@@ -541,17 +542,7 @@ final class FacetWP_Helper
      * @since 3.3.0
      */
     function is_license_active() {
-        $activation = get_option( 'facetwp_activation' );
-
-        if ( ! empty( $activation ) ) {
-            $activation = json_decode( $activation );
-
-            if ( isset( $activation->status ) && 'success' == $activation->status ) {
-                return true;
-            }
-        }
-
-        return false;
+        return ( 'success' == $this->get_license_meta( 'status' ) );
     }
 
 
@@ -566,8 +557,8 @@ final class FacetWP_Helper
         if ( ! empty( $activation ) ) {
             $data = json_decode( $activation, true );
 
-            if ( isset( $data[ $field ] ) ) {
-                return $data[ $field ];
+            if ( isset( $data[ $key ] ) ) {
+                return $data[ $key ];
             }
         }
 

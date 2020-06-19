@@ -59,6 +59,26 @@ if ( ! class_exists( 'PPW_Asset_Services' ) ) {
 		}
 
 		/**
+		 * Render css & js for sitewide submenu
+		 */
+		public function load_assets_for_entire_site_page() {
+			$module = PPW_Constants::ENTIRE_SITE_MODULE;
+			if ( PPW_Constants::SITEWIDE_PAGE_PREFIX === $this->page && ( 'general' === $this->tab || null === $this->tab ) ) {
+				$this->load_bundle_css( PPW_VERSION );
+				$this->load_js( $module, PPW_VERSION );
+				wp_localize_script(
+					"ppw-$module-js",
+					'ppw_entire_site_data',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+					)
+				);
+				$this->load_select2_lib();
+				$this->load_toastr_lib();
+			}
+		}
+
+		/**
 		 * Render css and js for general tab
 		 */
 		public function load_assets_for_general_tab() {

@@ -3,7 +3,7 @@
  * Plugin Name: Give - Square
  * Plugin URI:  https://givewp.com/addons/square/
  * Description: Adds support to accept donations via the Square Payment gateway.
- * Version:     1.0.4
+ * Version:     1.1.1
  * Author:      GiveWP
  * Author URI:  https://givewp.com
  * Text Domain: give-square
@@ -103,7 +103,7 @@ if ( ! class_exists( 'Give_Square' ) ) :
 		public function setup_constants() {
 
 			if ( ! defined( 'GIVE_SQUARE_VERSION' ) ) {
-				define( 'GIVE_SQUARE_VERSION', '1.0.3' );
+				define( 'GIVE_SQUARE_VERSION', '1.1.1' );
 			}
 
 			if ( ! defined( 'GIVE_SQUARE_MIN_GIVE_VER' ) ) {

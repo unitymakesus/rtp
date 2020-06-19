@@ -56,12 +56,12 @@ class OrderQuantityUnit implements ArrayAccess
     );
   
     /**
-      * $measurement_unit A [MeasurementUnit](#type-measurementunit) that represents the unit of measure for the quantity.
+      * $measurement_unit A `MeasurementUnit` that represents the unit of measure for the quantity.
       * @var \SquareConnect\Model\MeasurementUnit
       */
     protected $measurement_unit;
     /**
-      * $precision For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities like `\"1.0\"` and `\"1.1\"`, but not `\"1.01\"`.  Min: 0. Max: 5.  Orders Hub and older versions of Connect do not support non-integer quantities. See [Decimal quantities with Orders hub and older versions of Connect](/more-apis/orders/overview#decimal-quantities).
+      * $precision For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities like `\"1.0\"` and `\"1.1\"`, but not `\"1.01\"`.  Min: 0. Max: 5.
       * @var int
       */
     protected $precision;
@@ -96,7 +96,7 @@ class OrderQuantityUnit implements ArrayAccess
   
     /**
      * Sets measurement_unit
-     * @param \SquareConnect\Model\MeasurementUnit $measurement_unit A [MeasurementUnit](#type-measurementunit) that represents the unit of measure for the quantity.
+     * @param \SquareConnect\Model\MeasurementUnit $measurement_unit A `MeasurementUnit` that represents the unit of measure for the quantity.
      * @return $this
      */
     public function setMeasurementUnit($measurement_unit)
@@ -115,7 +115,7 @@ class OrderQuantityUnit implements ArrayAccess
   
     /**
      * Sets precision
-     * @param int $precision For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities like `\"1.0\"` and `\"1.1\"`, but not `\"1.01\"`.  Min: 0. Max: 5.  Orders Hub and older versions of Connect do not support non-integer quantities. See [Decimal quantities with Orders hub and older versions of Connect](/more-apis/orders/overview#decimal-quantities).
+     * @param int $precision For non-integer quantities, represents the number of digits after the decimal point that are recorded for this quantity.  For example, a precision of 1 allows quantities like `\"1.0\"` and `\"1.1\"`, but not `\"1.01\"`.  Min: 0. Max: 5.
      * @return $this
      */
     public function setPrecision($precision)

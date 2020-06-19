@@ -16,6 +16,7 @@ use \ArrayAccess;
  * @author   Square Inc.
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache License v2
  * @link     https://squareup.com/developers
+ * Note: This endpoint is in beta.
  */
 class OrderReturn implements ArrayAccess
 {
@@ -27,6 +28,7 @@ class OrderReturn implements ArrayAccess
         'uid' => 'string',
         'source_order_id' => 'string',
         'return_line_items' => '\SquareConnect\Model\OrderReturnLineItem[]',
+        'return_service_charges' => '\SquareConnect\Model\OrderReturnServiceCharge[]',
         'return_taxes' => '\SquareConnect\Model\OrderReturnTax[]',
         'return_discounts' => '\SquareConnect\Model\OrderReturnDiscount[]',
         'rounding_adjustment' => '\SquareConnect\Model\OrderRoundingAdjustment',
@@ -41,6 +43,7 @@ class OrderReturn implements ArrayAccess
         'uid' => 'uid',
         'source_order_id' => 'source_order_id',
         'return_line_items' => 'return_line_items',
+        'return_service_charges' => 'return_service_charges',
         'return_taxes' => 'return_taxes',
         'return_discounts' => 'return_discounts',
         'rounding_adjustment' => 'rounding_adjustment',
@@ -55,6 +58,7 @@ class OrderReturn implements ArrayAccess
         'uid' => 'setUid',
         'source_order_id' => 'setSourceOrderId',
         'return_line_items' => 'setReturnLineItems',
+        'return_service_charges' => 'setReturnServiceCharges',
         'return_taxes' => 'setReturnTaxes',
         'return_discounts' => 'setReturnDiscounts',
         'rounding_adjustment' => 'setRoundingAdjustment',
@@ -69,6 +73,7 @@ class OrderReturn implements ArrayAccess
         'uid' => 'getUid',
         'source_order_id' => 'getSourceOrderId',
         'return_line_items' => 'getReturnLineItems',
+        'return_service_charges' => 'getReturnServiceCharges',
         'return_taxes' => 'getReturnTaxes',
         'return_discounts' => 'getReturnDiscounts',
         'rounding_adjustment' => 'getRoundingAdjustment',
@@ -76,7 +81,7 @@ class OrderReturn implements ArrayAccess
     );
   
     /**
-      * $uid The return's Unique identifier, unique only within this order. This field is read-only.
+      * $uid Unique ID that identifies the return only within this order.
       * @var string
       */
     protected $uid;
@@ -91,12 +96,17 @@ class OrderReturn implements ArrayAccess
       */
     protected $return_line_items;
     /**
-      * $return_taxes Collection of taxes which are being returned.
+      * $return_service_charges Collection of service charges which are being returned.
+      * @var \SquareConnect\Model\OrderReturnServiceCharge[]
+      */
+    protected $return_service_charges;
+    /**
+      * $return_taxes Collection of references to taxes being returned for an order, including the total applied tax amount to be returned. The taxes must reference a top-level tax ID from the source order.
       * @var \SquareConnect\Model\OrderReturnTax[]
       */
     protected $return_taxes;
     /**
-      * $return_discounts Collection of discounts which are being returned.
+      * $return_discounts Collection of references to discounts being returned for an order, including the total applied discount amount to be returned. The discounts must reference a top-level discount ID from the source order.
       * @var \SquareConnect\Model\OrderReturnDiscount[]
       */
     protected $return_discounts;
@@ -133,6 +143,11 @@ class OrderReturn implements ArrayAccess
             } else {
               $this->return_line_items = null;
             }
+            if (isset($data["return_service_charges"])) {
+              $this->return_service_charges = $data["return_service_charges"];
+            } else {
+              $this->return_service_charges = null;
+            }
             if (isset($data["return_taxes"])) {
               $this->return_taxes = $data["return_taxes"];
             } else {
@@ -166,7 +181,7 @@ class OrderReturn implements ArrayAccess
   
     /**
      * Sets uid
-     * @param string $uid The return's Unique identifier, unique only within this order. This field is read-only.
+     * @param string $uid Unique ID that identifies the return only within this order.
      * @return $this
      */
     public function setUid($uid)
@@ -213,6 +228,25 @@ class OrderReturn implements ArrayAccess
         return $this;
     }
     /**
+     * Gets return_service_charges
+     * @return \SquareConnect\Model\OrderReturnServiceCharge[]
+     */
+    public function getReturnServiceCharges()
+    {
+        return $this->return_service_charges;
+    }
+  
+    /**
+     * Sets return_service_charges
+     * @param \SquareConnect\Model\OrderReturnServiceCharge[] $return_service_charges Collection of service charges which are being returned.
+     * @return $this
+     */
+    public function setReturnServiceCharges($return_service_charges)
+    {
+        $this->return_service_charges = $return_service_charges;
+        return $this;
+    }
+    /**
      * Gets return_taxes
      * @return \SquareConnect\Model\OrderReturnTax[]
      */
@@ -223,7 +257,7 @@ class OrderReturn implements ArrayAccess
   
     /**
      * Sets return_taxes
-     * @param \SquareConnect\Model\OrderReturnTax[] $return_taxes Collection of taxes which are being returned.
+     * @param \SquareConnect\Model\OrderReturnTax[] $return_taxes Collection of references to taxes being returned for an order, including the total applied tax amount to be returned. The taxes must reference a top-level tax ID from the source order.
      * @return $this
      */
     public function setReturnTaxes($return_taxes)
@@ -242,7 +276,7 @@ class OrderReturn implements ArrayAccess
   
     /**
      * Sets return_discounts
-     * @param \SquareConnect\Model\OrderReturnDiscount[] $return_discounts Collection of discounts which are being returned.
+     * @param \SquareConnect\Model\OrderReturnDiscount[] $return_discounts Collection of references to discounts being returned for an order, including the total applied discount amount to be returned. The discounts must reference a top-level discount ID from the source order.
      * @return $this
      */
     public function setReturnDiscounts($return_discounts)

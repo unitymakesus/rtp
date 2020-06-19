@@ -45,7 +45,7 @@ add_action( 'admin_enqueue_scripts', 'eae_enqueue_admin_scripts' );
 /**
  * Register callback to transmit email address to remote server.
  */
-add_action( 'load-settings_page_email-address-encoder', 'eae_transmit_email' );
+add_action( 'load-settings_page_eae', 'eae_transmit_email' );
 
 /**
  * Register callback to clear page caches.
@@ -85,7 +85,7 @@ function eae_register_ui() {
         __( 'Email Address Encoder', 'email-address-encoder' ),
         __( 'Email Encoder', 'email-address-encoder' ),
         'manage_options',
-        'email-address-encoder',
+        'eae',
         'eae_options_page'
     );
 }
@@ -165,7 +165,7 @@ function eae_plugin_actions_links( $links, $file ) {
         ),
         sprintf(
             '<a href="%s">%s</a>',
-            admin_url( 'options-general.php?page=email-address-encoder' ),
+            admin_url( 'options-general.php?page=eae' ),
             __( 'Settings', 'email-address-encoder' )
         ),
     ), $links );
@@ -206,6 +206,7 @@ function eae_enqueue_scripts() {
     wp_localize_script( 'email-detector', 'eae_detector', array(
         'one_email' => __( '1 Unprotected Email', 'email-address-encoder' ),
         'many_emails' => __( '{number} Unprotected Emails', 'email-address-encoder' ),
+        'fetch_failed' => __( '[Email Address Encoder] The email detector failed to fetch and search this page for unprotected email addresses. This happens in some scenarios, you can ignore this message.', 'email-address-encoder' ),
     ) );
 
     add_filter( 'script_loader_tag', 'eae_defer_script', 10, 2 );
@@ -311,7 +312,7 @@ function eae_page_scanner_notice() {
         __( 'Protect your email addresses!', 'email-address-encoder' ),
         sprintf(
             __( 'Receive <a href="%1$s">automatic warnings</a> when your site contains unprotected email addresses, or use the <a href="%1$s">page scanner</a> to test your site manually.', 'email-address-encoder' ),
-            admin_url( 'options-general.php?page=email-address-encoder' )
+            admin_url( 'options-general.php?page=eae' )
         )
     );
 }
@@ -461,7 +462,7 @@ function eae_compatibility_warnings() {
         'dashboard',
         'plugins',
         'edit-page',
-        'settings_page_email-address-encoder'
+        'settings_page_eae'
     );
 
     if ( ! in_array( $screen->id, $screens ) ) {
@@ -486,7 +487,7 @@ function eae_compatibility_warnings() {
             __( 'Incompatible plugin detected!', 'email-address-encoder' ),
             sprintf(
                 __( 'The "Ginger – EU Cookie Law" plugin decodes all HTML entities and thus prevents the Email Address Encoder from working. Please use a different cookie banner plugin, or use the full-page scanner technique of the <a href="%s">Premium version</a>.', 'email-address-encoder' ),
-                admin_url( 'options-general.php?page=email-address-encoder' )
+                admin_url( 'options-general.php?page=eae' )
             )
         );
     }

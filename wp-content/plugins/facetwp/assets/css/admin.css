@@ -275,6 +275,11 @@ a:hover {
     overflow: auto;
 }
 
+.facetwp-region textarea.facet-modifier-values {
+    width: 360px;
+    height: 120px;
+}
+
 .facetwp-region .item-name {
     display: inline-block;
     margin: 0 18px 0 6px;
@@ -300,14 +305,11 @@ a:hover {
 .facetwp-region .icon-question {
     display: inline-block;
     margin-left: 4px;
+    padding: 0 3px;
     border: 1px solid #ddd;
-    border-radius: 50%;
+    border-radius: 3px;
     cursor: pointer;
     line-height: 1;
-    width: 12px;
-    height: 12px;
-    font-size: 11px;
-    text-align: center;
 }
 
 .facetwp-region .icon-question:before {

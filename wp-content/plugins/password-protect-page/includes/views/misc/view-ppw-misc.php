@@ -5,6 +5,7 @@
 		<table class="ppwp_settings_table" cellpadding="4">
 			<?php
 			include PPW_DIR_PATH . 'includes/views/misc/view-ppw-protect-excerpt.php';
+			include PPW_DIR_PATH . 'includes/views/misc/view-ppw-use-another-action-url.php';
 			?>
 		</table>
 		<?php submit_button();?>

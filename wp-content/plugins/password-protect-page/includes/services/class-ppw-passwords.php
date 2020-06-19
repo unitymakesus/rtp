@@ -1214,9 +1214,13 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 * @return array
 		 */
 		public function custom_protected_ids() {
-			$protected_ids = apply_filters( PPW_Constants::HOOK_CUSTOM_POST_ID_HIDE_PROTECTED_POST, array() );
-			if ( empty( $protected_ids ) ) {
-				$protected_ids = $this->get_protected_post_ids();
+			$protected_ids = wp_cache_get( 'ppwp_protected_ids' );
+			if ( false === $protected_ids ) {
+				$protected_ids = apply_filters( PPW_Constants::HOOK_CUSTOM_POST_ID_HIDE_PROTECTED_POST, array() );
+				if ( empty( $protected_ids ) ) {
+					$protected_ids = $this->get_protected_post_ids();
+				}
+				wp_cache_set( 'ppwp_protected_ids', $protected_ids );
 			}
 
 			return $protected_ids;

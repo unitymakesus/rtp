@@ -157,6 +157,11 @@ class Password_Protect_Page {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-ppw-settings.php';
 
 		/**
+		 * The class responsible for sitewide settings
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-ppw-sitewide-settings.php';
+
+		/**
 		 * The class responsible for entire site services
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-entire-site.php';
@@ -192,6 +197,8 @@ class Password_Protect_Page {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-sitewide.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-upsell.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-text-editor-control.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-toggle-control.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-title-group-control.php';
@@ -264,6 +271,9 @@ class Password_Protect_Page {
 		$this->load_base();
 
 		if ( ! is_pro_active_and_valid_license() ) {
+			PPW_Customizer_Sitewide::get_instance()->register_sitewide_form();
+			PPW_Customizer_Upsell::get_instance();
+
 			$this->loader->add_action( 'wp_ajax_ppw_free_set_password', $plugin_admin, 'ppw_free_set_password' );
 			$this->loader->add_action( 'wp_ajax_ppw_free_update_general_settings', $plugin_admin, 'ppw_free_update_general_settings' );
 			$this->loader->add_action( 'wp_ajax_ppw_free_update_entire_site_settings', $plugin_admin, 'ppw_free_update_entire_site_settings' );
@@ -273,12 +283,17 @@ class Password_Protect_Page {
 			$this->loader->add_action( 'ppw_render_content_entire_site', $plugin_admin, 'ppw_free_render_content_entire_site', 11 );
 
 			$this->loader->add_filter( 'post_password_required', $plugin_admin, 'ppw_handle_post_password_required', 10, 2 );
+			$this->loader->add_filter( PPW_Constants::HOOK_CUSTOM_TAB, $plugin_admin, 'ppw_handle_custom_tab', 50 );
+			$this->loader->add_filter( PPW_Constants::HOOK_ADD_NEW_TAB, $plugin_admin, 'ppw_handle_add_new_tab', 50 );
+
+			$this->loader->add_action( 'ppw_render_sitewide_content_general', $plugin_admin, 'ppw_free_render_content_entire_site', 10 );
 			// Testing only the new feature that applied for free only.
 			$this->loader->add_shortcode( 'ppw-content-protect', $plugin_admin, 'handle_content_protect_short_code' );
 		} else {
 			$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'handle_plugin_loaded' );
 			$this->loader->add_action( 'admin_init', $plugin_admin, 'update_column_for_ppwp_pro' );
 		}
+		PPW_Customizer_Sitewide::get_instance()->register_sitewide_style();
 		$this->loader->add_action( 'wp_ajax_ppw_free_update_misc_settings', $plugin_admin, 'ppw_free_update_misc_settings' );
 		$this->loader->add_action( 'ppw_render_content_shortcodes', $plugin_admin, 'ppw_free_render_content_shortcodes', 11 );
 		$this->loader->add_action( 'ppw_render_content_master_passwords', $plugin_admin, 'ppw_free_render_content_master_passwords', 11 );
@@ -289,6 +304,7 @@ class Password_Protect_Page {
 		$this->loader->add_filter( 'ppw_content_shortcode_source', $plugin_admin, 'handle_content_shortcode_for_multiple_pages', 11, 3 );
 		PPW_Beaver_Loader::get_instance();
 		$this->loader->add_action( 'wp_ajax_ppw_free_subscribe_request', $plugin_admin, 'handle_subscribe_request' );
+
 		PPW_Elementor::get_instance( $this->loader );
 	}
 
@@ -329,6 +345,9 @@ class Password_Protect_Page {
 		$this->loader->add_filter( 'get_pages', $plugin_public, 'handle_hide_page_protected', 10, 2 );
 		$this->loader->add_filter( 'wpseo_exclude_from_sitemap_by_post_ids', $plugin_public, 'handle_hide_page_protected_yoast_seo_sitemaps', 10, 1 );
 		//phpcs:ignore #endregion
+
+		$this->loader->add_filter( 'ppwp_ppf_action_url', $plugin_public, 'ppw_core_get_ppf_action_url' );
+		$this->loader->add_action( 'wp', $plugin_public, 'ppw_core_validate_login', 5 );
 	}
 
 	/**

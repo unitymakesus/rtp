@@ -18,6 +18,9 @@ class FacetWP_Indexer
     /* (array) Facet properties for the value being indexed */
     public $facet;
 
+    /* (array) Value modifiers set via the admin UI */
+    public $modifiers;
+
 
     function __construct() {
         if ( apply_filters( 'facetwp_indexer_is_enabled', true ) ) {
@@ -162,14 +165,13 @@ class FacetWP_Indexer
     function index( $post_id = false ) {
         global $wpdb;
 
+        $this->index_all = ( false === $post_id );
+
         // Index everything
-        if ( false === $post_id ) {
+        if ( $this->index_all ) {
 
             // Store the pre-index settings (see FacetWP_Diff)
             update_option( 'facetwp_settings_last_index', get_option( 'facetwp_settings' ), 'no' );
-
-            // Index all flag
-            $this->index_all = true;
 
             // Bypass the PHP timeout
             ini_set( 'max_execution_time', 0 );
@@ -243,6 +245,9 @@ class FacetWP_Indexer
 
         // Get all facet sources
         $facets = FWP()->helper->get_facets();
+
+        // Populate an array of facet value modifiers
+        $this->modifiers = $this->get_value_modifiers( $facets );
 
         foreach ( $post_ids as $counter => $post_id ) {
 
@@ -349,6 +354,7 @@ class FacetWP_Indexer
 
             $this->manage_temp_table( 'replace' );
             $this->manage_temp_table( 'delete' );
+            $this->set_table_prop();
         }
 
         do_action( 'facetwp_indexer_complete' );
@@ -500,10 +506,22 @@ class FacetWP_Indexer
     function insert( $params ) {
         global $wpdb;
 
-        // Only accept scalar values
         $value = $params['facet_value'];
+        $display_value = $params['facet_display_value'];
+
+        // Only accept scalar values
         if ( '' === $value || ! is_scalar( $value ) ) {
             return;
+        }
+
+        // Apply UI-based modifiers
+        if ( isset( $this->modifiers[ $params['facet_name'] ] ) ) {
+            $mod = $this->modifiers[ $params['facet_name' ] ];
+            $is_match = in_array( $display_value, $mod['values'] );
+
+            if ( ( 'exclude' == $mod['type'] && $is_match ) || ( 'include' == $mod['type'] && ! $is_match ) ) {
+                return;
+            }
         }
 
         $wpdb->query( $wpdb->prepare( "INSERT INTO {$this->table}
@@ -511,7 +529,7 @@ class FacetWP_Indexer
             $params['post_id'],
             $params['facet_name'],
             FWP()->helper->safe_value( $value ),
-            $params['facet_display_value'],
+            $display_value,
             $params['term_id'],
             $params['parent_id'],
             $params['depth'],
@@ -609,7 +627,29 @@ class FacetWP_Indexer
             $wpdb->query( "INSERT INTO $table SELECT * FROM $temp_table" );
         }
         elseif ( 'delete' == $action ) {
-            $wpdb->query( "DROP TABLE $temp_table" );
+            $wpdb->query( "DROP TABLE IF EXISTS $temp_table" );
         }
+    }
+
+
+    /**
+     * Populate an array of facet value modifiers (defined in the admin UI)
+     * @since 3.5.6
+     */
+    function get_value_modifiers( $facets ) {
+        $output = [];
+
+        foreach ( $facets as $facet ) {
+            $name = $facet['name'];
+            $type = empty( $facet['modifier_type'] ) ? 'off' : $facet['modifier_type'];
+
+            if ( 'include' == $type || 'exclude' == $type ) {
+                $values = preg_split( '/\r\n|\r|\n/', trim( $facet['modifier_values'] ) );
+                $values = array_map( 'trim', $values );
+                $output[ $name ] = [ 'type' => $type, 'values' => $values ];
+            }
+        }
+
+        return $output;
     }
 }

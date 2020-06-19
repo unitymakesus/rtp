@@ -22,6 +22,7 @@ class PPW_Text_Editor_Custom_Control extends WP_Customize_Control {
 		<?php
 		wp_editor( $this->value(), $input_id, array(
 			'textarea_name' => $input_id,
+			'textarea_rows' => 3,
 		) );
 		do_action( 'admin_footer' );
 		do_action( 'admin_print_footer_scripts' );
