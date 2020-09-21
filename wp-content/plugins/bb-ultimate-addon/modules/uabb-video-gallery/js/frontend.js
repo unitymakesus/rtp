@@ -248,6 +248,10 @@
 
 							def_cat_sel = filters.find( '[data-filter="' + id + '"]' );
 
+							if ( 0 === def_cat_sel.length ) {
+								return;
+							}
+
 							if ( def_cat_sel.length > 0 ) {
 
 								def_cat_sel.siblings().removeClass( 'uabb-filter__current' );

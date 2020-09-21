@@ -147,6 +147,49 @@
 .uabb-registration-form .uabb-submit-btn.uabb-submit-btn-align-right {
 	margin-left:auto;
 }
+/* Terms Checkbox and Text CSS */
+
+.uabb-registration-form .uabb-terms-checkbox .checkbox-label {
+	height: 26px;
+	display: table-cell;
+	vertical-align: middle;
+	position: relative;
+}
+
+.uabb-registration-form .uabb-terms-checkbox-text {
+	margin: 10px 0;
+}
+
+.uabb-registration-form .uabb-terms-checkbox input[type="checkbox"] {
+	display: none;
+}
+
+.uabb-registration-form .uabb-terms-checkbox input[type="checkbox"] + span:before {
+	background: #fafafa;
+	content: '';
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    text-align: center;
+    border-radius: 2px;
+    border: 2px solid #afafaf;
+	transition: background-color 300ms ease;
+    border-radius: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"]:checked + span:before {
+    content: "\2714";
+    color: #3A3A3A;
+    font-size: 20px;
+    line-height: 18px;
+    font-weight: bold;
+}
+
+.uabb-registration-form .uabb-registration-form-error .uabb-registration-error {
+	display: inline-block;
+}
 /* Terms Checkbox and Text CSS end */
 @media (max-width: 992px) {
 	.uabb-input-group.uabb-rf-column-medium_100 {

@@ -56,7 +56,7 @@ class FacetWP_Settings_Admin
                 ]
             ],
             'backup' => [
-                'label' => __( 'Backup', 'fwp' ),
+                'label' => __( 'Import / Export', 'fwp' ),
                 'fields' => [
                     'export' => [
                         'label' => __( 'Export', 'fwp' ),

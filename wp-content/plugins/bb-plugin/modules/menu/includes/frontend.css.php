@@ -601,12 +601,7 @@ if ( isset( $settings->mobile_toggle ) && 'expanded' != $settings->mobile_toggle
 
 	.fl-node-<?php echo $id; ?> .fl-menu-mobile-toggle{
 		<?php
-		if ( isset( $settings->typography['font_size'] ) ) {
-			echo 'font-size: ' . $settings->typography['font_size']['length'] . $settings->typography['font_size']['unit'] . ';';
-		}
-		if ( isset( $settings->typography['text_transform'] ) ) {
-			echo 'text-transform: ' . $settings->typography['text_transform'] . ';';
-		}
+
 		if ( ! empty( $settings->link_color ) ) {
 			echo 'color: ' . FLBuilderColor::hex_or_rgb( $settings->link_color ) . ';';
 		}
@@ -615,6 +610,8 @@ if ( isset( $settings->mobile_toggle ) && 'expanded' != $settings->mobile_toggle
 		}
 
 		?>
+		font-size: <?php echo ( ! empty( $settings->typography['font_size']['length'] ) ? $settings->typography['font_size']['length'] : '16' ) . ( ! empty( $settings->typography['font_size']['unit'] ) ? $settings->typography['font_size']['unit'] : 'px' ); ?>;
+		text-transform: <?php echo ( ! empty( $settings->typography['text_transform'] ) ? $settings->typography['text_transform'] : 'none' ); ?>;
 		padding-left: <?php echo ! empty( $settings->link_spacing_left ) ? $settings->link_spacing_left . $settings->link_spacing_unit : '0'; ?>;
 		padding-right: <?php echo ! empty( $settings->link_spacing_right ) ? $settings->link_spacing_right . $settings->link_spacing_unit : '0'; ?>;
 		padding-top: <?php echo ! empty( $settings->link_spacing_top ) ? $settings->link_spacing_top . $settings->link_spacing_unit : '0'; ?>;

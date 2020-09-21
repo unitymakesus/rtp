@@ -267,6 +267,21 @@
 </script>
 <!-- #tmpl-fl-alert-lightbox -->
 
+<script type="text/html" id="tmpl-fl-pro-lightbox">
+	<span class="dashicons dashicons-no" onclick="FLLightbox.closeParent( this )"></span>
+	<div class="fl-pro-message-badge">
+		<span>PRO</span>
+	</div>
+	<div class="fl-pro-message-title">{{data.feature}} is a Pro Feature</div>
+	<div class="fl-pro-message-content">We're sorry, {{data.feature}} is not available on your plan. Please upgrade to unlock all these awesome features.</div>
+	<div class="fl-pro-message-button">
+		<button class="fl-builder-upgrade-button fl-builder-button" onclick="FLBuilder._upgradeClicked()">
+			<?php _ex( 'Upgrade', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?>
+		</button>
+	</div>
+</script>
+<!-- #tmpl-fl-pro-lightbox -->
+
 <script type="text/html" id="tmpl-fl-crash-lightbox">
 	<div class="fl-lightbox-message">{{{data.message}}}</div>
 	<# if ( data.debug ) { #>
@@ -274,7 +289,7 @@
 	<# } #>
 	<div class="fl-lightbox-message-info">{{{data.info}}}</div>
 	<div class="fl-lightbox-footer">
-		<span class="fl-builder-alert-close fl-builder-button fl-builder-button-large fl-builder-button-primary" href="javascript:void(0);"><?php _e( 'OK', 'fl-builder' ); ?></span>
+		<span class="fl-builder-alert-close fl-builder-button fl-builder-button-large fl-builder-button-primary" href=2"javascript:void(0);"><?php _e( 'OK', 'fl-builder' ); ?></span>
 	</div>
 </script>
 <!-- #tmpl-fl-crash-lightbox -->
@@ -324,6 +339,7 @@
 			<button class="fl-builder-button fl-builder-button-large" data-mode="default">
 				<?php _e( 'Exit', 'fl-builder' ); ?>
 			</button>
+			<span class="size"></span>
 		</div>
 		<div class="fl-responsive-preview-content"></div>
 	</div>
@@ -414,7 +430,7 @@
 	}
 	#>
 	<div class="fl-builder--main-menu-panel-view {{viewClasses}}" data-name="{{data.handle}}">
-		<div class="fl-builder--main-menu-panel-view-title">{{{backItem}}}{{data.name}}</div>
+		<div class="fl-builder--main-menu-panel-view-title">{{{backItem}}}{{{data.name}}}</div>
 
 		<div class="fl-builder--menu">
 			<# for (var key in data.items) {
@@ -444,12 +460,12 @@
 						break;
 					case "link":
 						#>
-						<a class="fl-builder--menu-item" href="{{{item.url}}}" data-type="link" target="_blank">{{item.label}} <span class="fl-builder--menu-item-accessory"><i class="fas fa-external-link-alt"></i></span></a>
+						<a class="fl-builder--menu-item" href="{{{item.url}}}" data-type="link" target="_blank">{{{item.label}}} <span class="fl-builder--menu-item-accessory"><i class="fas fa-external-link-alt"></i></span></a>
 						<#
 						break;
 					case "view":
 						#>
-						<button class="fl-builder--menu-item" data-type="view" data-view="{{item.view}}">{{item.label}}<span class="menu-view view-{{item.view}}">{{extra}}</span><span class="fl-builder--menu-item-accessory">&rarr;</span></button>
+						<button class="fl-builder--menu-item" data-type="view" data-view="{{item.view}}">{{{item.label}}}<span class="menu-view view-{{item.view}}">{{extra}}</span><span class="fl-builder--menu-item-accessory">&rarr;</span></button>
 						<#
 						break;
 					case "video":
@@ -768,8 +784,56 @@
 			<#
 		}
 	}
-	if (FLBuilderConfig.lite) { #>
-	<div class="fl-builder--panel-cta"><a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank"><i class="fas fa-external-link-alt"></i> <?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ); ?></a></div>
+	if ( FLBuilderConfig.lite ) {
+
+	#>
+	<div id="fl-builder-blocks-pro" class="fl-builder-blocks-section fl-builder-blocks-pro-closed">
+		<div class="fl-builder-blocks-section-header">
+			<span class="fl-builder-blocks-section-title">Pro</span>
+		</div>
+		<div class="fl-builder-blocks-section-content fl-builder-modules">
+			<#
+
+			var modules = FLBuilderConfig.contentItems.module;
+			var moduleSlugs = [];
+			var proModules = FLBuilderConfig.contentItems.pro;
+
+			for ( var i in modules ) {
+				moduleSlugs.push( modules[i].slug );
+			}
+
+			for( var slug in proModules ) {
+				var module 	= proModules[ slug ];
+
+				if ( jQuery.inArray( slug, moduleSlugs ) >= 0 ) {
+					continue;
+				}
+			#>
+			<span class="fl-builder-block fl-builder-block-module fl-builder-block-disabled" data-type="{{slug}}" onclick="FLBuilder._showProMessage('{{module.name}}')">
+				<span class="fl-builder-block-content">
+					<span class="fl-builder-block-icon">{{{module.icon}}}</span>
+					<span class="fl-builder-block-title">{{module.name}}</span>
+					<span class="fl-builder-pro-badge">PRO</span>
+				</span>
+			</span>
+			<# } #>
+		</div>
+		<div class="fl-builder-blocks-pro-overlay"></div>
+	</div>
+	<button class="fl-builder-button fl-builder-button-silent fl-builder-blocks-pro-expand" onclick="FLBuilder._toggleProModules()">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="20px" width="20px">
+			<path d="M5 6l5 5 5-5 2 1-7 7-7-7z"></path>
+		</svg>
+	</button>
+	<div class="fl-builder--panel-cta">
+		<img src="<?php echo FL_BUILDER_URL; ?>img/beaver.png" />
+		<a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank">
+			<?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ); ?>
+		</a>
+		<button class="fl-builder-upgrade-button fl-builder-button" onclick="FLBuilder._upgradeClicked()">
+			<?php _ex( 'Learn More', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?>
+		</button>
+	</div>
 	<# } #>
 </script>
 <!-- #tmpl-fl-content-panel-modules-view -->
@@ -802,19 +866,21 @@
 		<# } #>
 
 		<# if (FLBuilderConfig.lite) { #>
-		<div class="fl-builder--panel-cta"><a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank"><i class="fas fa-external-link-alt"></i> <?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ); ?></a></div>
+		<div class="fl-builder--panel-cta">
+			<img src="<?php echo FL_BUILDER_URL; ?>img/beaver.png" />
+			<a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank">
+				<?php _e( 'Get more time-saving features, modules, and expert support.', 'fl-builder' ); ?>
+			</a>
+			<button class="fl-builder-upgrade-button fl-builder-button" onclick="FLBuilder._upgradeClicked()">
+				<?php _ex( 'Learn More', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?>
+			</button>
+		</div>
 		<# } #>
 	</div>
 </script>
 <!-- #tmpl-fl-content-panel-col-groups-view -->
 
 <script type="text/html" id="tmpl-fl-content-panel-templates-view">
-	<# if (FLBuilderConfig.lite) { #>
-	<div class="fl-builder--panel-message">
-		<p><?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ); ?></p>
-		<a class="fl-builder-upgrade-button fl-builder-button" href="{{FLBuilderConfig.upgradeUrl}}" target="_blank"><?php _ex( 'Learn More', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?> <i class="fas fa-external-link-alt"></i></a>
-	</div>
-	<# } #>
 	<#
 	var categories;
 	if (!_.isUndefined(data.queryResults)) {
@@ -847,8 +913,12 @@
 							var background = template.image;
 							var id = _.isNumber( template.postId ) ? template.postId : template.id;
 						#>
-						<div class="fl-builder--template-collection-item" data-id="{{id}}" data-type="{{template.type}}">
-							<div class="fl-builder--template-thumbnail" style="background-image:url({{background}})"></div>
+						<div class="fl-builder--template-collection-item" data-id="{{id}}" data-type="{{template.type}}" data-premium="{{template.premium}}">
+							<div class="fl-builder--template-thumbnail" style="background-image:url({{background}})">
+								<# if ( FLBuilderConfig.lite && template.premium ) { #>
+								<span class="fl-builder-pro-badge">PRO</span>
+								<# } #>
+							</div>
 							<div class="fl-builder--template-name">{{template.name}}</div>
 						</div>
 						<# } #>
@@ -871,6 +941,17 @@
 		}
 		#>
 	</div>
+	<# if (FLBuilderConfig.lite) { #>
+	<div class="fl-builder--panel-cta">
+		<img src="<?php echo FL_BUILDER_URL; ?>img/beaver.png" />
+		<a href="https://www.wpbeaverbuilder.com/?utm_medium=bb-lite&amp;utm_source=builder-ui&amp;utm_campaign=modules-panel-cta" target="_blank">
+			<?php _ex( 'Save and reuse your layouts or kick-start your creativity with dozens of professionally designed templates.', 'Upgrade message that displays in the templates tab in lite installs.', 'fl-builder' ); ?>
+		</a>
+		<button class="fl-builder-upgrade-button fl-builder-button" onclick="FLBuilder._upgradeClicked()">
+			<?php _ex( 'Learn More', 'Link to learn more about premium Beaver Builder', 'fl-builder' ); ?>
+		</button>
+	</div>
+	<# } #>
 </script>
 <!-- #tmpl-fl-content-panel-templates-view -->
 
@@ -906,15 +987,20 @@
 								image = template.image,
 								id = _.isNumber( template.postId ) ? template.postId : template.id,
 								hasImage = image && !image.endsWith('blank.jpg'),
-								hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '';
+								hasImageClass = hasImage ? 'fl-builder-block-has-thumbnail' : '',
+								isPremium = FLBuilderConfig.lite && template.premium,
+								disabledClass = isPremium ? 'fl-builder-block-disabled' : '';
 						#>
-						<span class="fl-builder-block fl-builder-block-template fl-builder-block-row-template {{hasImageClass}}" data-id="{{id}}" data-type="{{template.type}}">
+						<span onclick="FLBuilder._showProMessage('{{template.name}}')" class="fl-builder-block fl-builder-block-template fl-builder-block-row-template {{hasImageClass}} {{disabledClass}}" data-id="{{id}}" data-type="{{template.type}}">
 							<span class="fl-builder-block-content">
 								<# if (hasImage) { #>
 								<div class="fl-builder-block-thumbnail" style="background-image:url({{image}})"></div>
 								<# } #>
 								<span class="fl-builder-block-title">{{template.name}}</span>
 							</span>
+							<# if ( FLBuilderConfig.lite && template.premium ) { #>
+							<span class="fl-builder-pro-badge">PRO</span>
+							<# } #>
 						</span>
 						<# } #>
 					</div>

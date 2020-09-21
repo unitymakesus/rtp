@@ -3,7 +3,7 @@
  * Plugin Name: The SEO Framework
  * Plugin URI: https://theseoframework.com/
  * Description: An automated, advanced, accessible, unbranded and extremely fast SEO solution for your WordPress website.
- * Version: 4.0.7
+ * Version: 4.1.1
  * Author: The SEO Framework Team
  * Author URI: https://theseoframework.com/
  * License: GPLv3
@@ -33,29 +33,11 @@ defined( 'ABSPATH' ) or die;
  */
 
 /**
- * @NOTE This file MUST be written according to WordPress' minimum PHP requirements.
+ * @NOTE This file MUST be written according to WordPress's minimum PHP requirements.
  *       Which is PHP 5.2.
  * When we only support WordPress 5.2+, it'll be PHP 5.6.
- * When we only support WordPress 5.4?+, it'll be PHP 7.1.
+ * When we only support WordPress 5.6?+, it'll be PHP 7.1.
  */
-
-// phpcs:disable, Squiz.Commenting.InlineComment, Squiz.PHP.CommentedOutCode
-//
-// Debug: Not to be used on production websites as it dumps and/or disables all kinds of stuff everywhere.
-//
-// add_action( 'plugins_loaded', function() { if ( is_super_admin() ) {
-// if ( is_admin() ) {
-// 	define( 'THE_SEO_FRAMEWORK_DEBUG', true );
-// 	define( 'THE_SEO_FRAMEWORK_DISABLE_TRANSIENTS', true );
-// 	delete_option( 'the_seo_framework_upgraded_db_version' );
-// 	( $_GET['reset_tsf_upgrade'] ?? 0 ) and delete_option( 'the_seo_framework_upgraded_db_version' ) and delete_option( 'the_seo_framework_initial_db_version' );
-// 	( $_GET['downgrade_tsf'] ?? 0 ) and update_option( 'the_seo_framework_upgraded_db_version', (string) (int) $_GET['downgrade_tsf'] );
-// 	( $_GET['downgrade_tsf_initial'] ?? 0 ) and update_option( 'the_seo_framework_initial_db_version', (string) (int) $_GET['downgrade_tsf_initial'] );
-// 	( $_GET['reset_tsf_tested'] ?? 0 ) and delete_option( 'the_seo_framework_tested_upgrade_version' );
-// 	add_filter( 'the_seo_framework_use_object_cache', '__return_false' );
-// }
-// }},0);
-// phpcs:enable, Squiz.Commenting.InlineComment, Squiz.PHP.CommentedOutCode
 
 /**
  * The plugin version.
@@ -64,7 +46,7 @@ defined( 'ABSPATH' ) or die;
  *
  * @since 2.3.5
  */
-define( 'THE_SEO_FRAMEWORK_VERSION', '4.0.7' );
+define( 'THE_SEO_FRAMEWORK_VERSION', '4.1.1' );
 
 /**
  * The plugin Database version.
@@ -73,7 +55,7 @@ define( 'THE_SEO_FRAMEWORK_VERSION', '4.0.7' );
  *
  * @since 2.7.0
  */
-define( 'THE_SEO_FRAMEWORK_DB_VERSION', '4051' );
+define( 'THE_SEO_FRAMEWORK_DB_VERSION', '4110' );
 
 /**
  * The plugin file, absolute unix path.
@@ -117,7 +99,7 @@ function the_seo_framework_boot() {
 	// Load plugin API functions.
 	require THE_SEO_FRAMEWORK_DIR_PATH_FUNCT . 'api.php';
 
-	// Prepare plugin upgrader before the plugin loads.
+	// Prepare plugin upgrader before the plugin loads. This may also downgrade (3103 or higher).
 	the_seo_framework_db_version() !== THE_SEO_FRAMEWORK_DB_VERSION
 		and require THE_SEO_FRAMEWORK_BOOTSTRAP_PATH . 'upgrade.php';
 
@@ -127,3 +109,22 @@ function the_seo_framework_boot() {
 	// Load plugin.
 	require THE_SEO_FRAMEWORK_BOOTSTRAP_PATH . 'load.php';
 }
+
+// phpcs:disable, Squiz.Commenting.InlineComment, Squiz.PHP.CommentedOutCode
+//
+// Debug: Not to be used on production websites as it dumps and/or disables all kinds of stuff everywhere.
+//        This is here as an easily accessible toolset used solely in the development of this plugin.
+//
+// add_action( 'plugins_loaded', function() { if ( is_super_admin() ) {
+// if ( is_admin() ) {
+// 	define( 'THE_SEO_FRAMEWORK_DEBUG', true );
+// 	define( 'THE_SEO_FRAMEWORK_DISABLE_TRANSIENTS', true );
+// 	delete_option( 'the_seo_framework_upgraded_db_version' );
+// 	( $_GET['reset_tsf_upgrade'] ?? 0 ) and delete_option( 'the_seo_framework_upgraded_db_version' ) and delete_option( 'the_seo_framework_initial_db_version' );
+// 	( $_GET['downgrade_tsf'] ?? 0 ) and update_option( 'the_seo_framework_upgraded_db_version', (string) (int) $_GET['downgrade_tsf'] );
+// 	( $_GET['downgrade_tsf_initial'] ?? 0 ) and update_option( 'the_seo_framework_initial_db_version', (string) (int) $_GET['downgrade_tsf_initial'] );
+// 	( $_GET['reset_tsf_tested'] ?? 0 ) and delete_option( 'the_seo_framework_tested_upgrade_version' );
+// 	add_filter( 'the_seo_framework_use_object_cache', '__return_false' );
+// }
+// }},0);
+// phpcs:enable, Squiz.Commenting.InlineComment, Squiz.PHP.CommentedOutCode

@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Prepares the List Edit view interface.
@@ -165,7 +165,10 @@ final class ListEdit extends ListTable {
 
 		$tsf = \the_seo_framework();
 
-		$query = [ 'id' => $post_id ];
+		$query = [
+			'id'       => $post_id,
+			'taxonomy' => '',
+		];
 
 		$r_defaults = $tsf->robots_meta(
 			$query,
@@ -176,25 +179,31 @@ final class ListEdit extends ListTable {
 
 		// NB: The indexes correspond to `autodescription-list[index]` field input names.
 		$data = [
-			'canonical' => [
+			'doctitle'    => [
+				'value' => $meta['_genesis_title'],
+			],
+			'description' => [
+				'value' => $meta['_genesis_description'],
+			],
+			'canonical'   => [
 				'value' => $meta['_genesis_canonical_uri'],
 			],
-			'noindex'   => [
+			'noindex'     => [
 				'value'    => $meta['_genesis_noindex'],
 				'isSelect' => true,
 				'default'  => empty( $r_defaults['noindex'] ) ? 'index' : 'noindex',
 			],
-			'nofollow'  => [
+			'nofollow'    => [
 				'value'    => $meta['_genesis_nofollow'],
 				'isSelect' => true,
 				'default'  => empty( $r_defaults['nofollow'] ) ? 'follow' : 'nofollow',
 			],
-			'noarchive' => [
+			'noarchive'   => [
 				'value'    => $meta['_genesis_noarchive'],
 				'isSelect' => true,
 				'default'  => empty( $r_defaults['noarchive'] ) ? 'archive' : 'noarchive',
 			],
-			'redirect'  => [
+			'redirect'    => [
 				'value' => $meta['redirect'],
 			],
 		];
@@ -204,6 +213,7 @@ final class ListEdit extends ListTable {
 		 * The index corresponds to field with the ID `autodescription-quick[%s]`, where %s is the index.
 		 *
 		 * @since 4.0.5
+		 * @since 4.1.0 Now has `doctitle` and `description` indexes in its first parameter.
 		 * @param array $data  The current data : {
 		 *    string Index => @param array : {
 		 *       @param mixed  $value    The current value.
@@ -216,10 +226,66 @@ final class ListEdit extends ListTable {
 		$data = \apply_filters_ref_array( 'the_seo_framework_list_table_data', [ $data, $query ] );
 
 		printf(
-			'<span class=hidden id=%s data-le="%s"></span>',
+			// '<span class=hidden id=%s data-le="%s"></span>',
+			'<span class=hidden id=%s %s></span>',
 			sprintf( 'tsfLeData[%s]', (int) $post_id ),
-			// phpcs:ignore, WordPress.Security.EscapeOutput -- esc_attr is too aggressive.
-			htmlspecialchars( json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT ), ENT_QUOTES, 'UTF-8' )
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$tsf->make_data_attributes( [ 'le' => $data ] )
+		);
+
+		if ( $tsf->is_static_frontpage( $query['id'] ) ) {
+			// phpcs:disable, WordPress.WhiteSpace.PrecisionAlignment
+			// When the homepage title is set, we can safely get the custom field.
+			$_has_home_title     = (bool) $tsf->escape_title( $tsf->get_option( 'homepage_title' ) );
+			$default_title       = $_has_home_title
+								 ? $tsf->get_custom_field_title( $query )
+								 : $tsf->get_filtered_raw_generated_title( $query );
+			$addition            = $tsf->get_home_title_additions();
+			$seplocation         = $tsf->get_home_title_seplocation();
+			$is_title_ref_locked = $_has_home_title;
+
+			// When the homepage description is set, we can safely get the custom field.
+			$_has_home_desc      = (bool) $tsf->escape_title( $tsf->get_option( 'homepage_description' ) );
+			$default_description = $_has_home_desc
+								 ? $tsf->get_description_from_custom_field( $query )
+								 : $tsf->get_generated_description( $query );
+			$is_desc_ref_locked  = $_has_home_desc;
+			// phpcs:enable, WordPress.WhiteSpace.PrecisionAlignment
+		} else {
+			$default_title       = $tsf->get_filtered_raw_generated_title( $query );
+			$addition            = $tsf->get_blogname();
+			$seplocation         = $tsf->get_title_seplocation();
+			$is_title_ref_locked = false;
+
+			$default_description = $tsf->get_generated_description( $query );
+			$is_desc_ref_locked  = false;
+		}
+
+		$title_data = [
+			'refTitleLocked'    => $is_title_ref_locked,
+			'defaultTitle'      => $default_title,
+			'addAdditions'      => $tsf->use_title_branding( $query ),
+			'additionValue'     => $tsf->s_title_raw( $addition ),
+			'additionPlacement' => 'left' === $seplocation ? 'before' : 'after',
+		];
+		$desc_data  = [
+			'refDescriptionLocked' => $is_desc_ref_locked,
+			'defaultDescription'   => $default_description,
+		];
+
+		printf(
+			// '<span class=hidden id=%s data-le-title="%s"></span>',
+			'<span class=hidden id=%s %s></span>',
+			sprintf( 'tsfLeTitleData[%s]', (int) $post_id ),
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$tsf->make_data_attributes( [ 'leTitle' => $title_data ] )
+		);
+		printf(
+			// '<span class=hidden id=%s data-le-description="%s"></span>',
+			'<span class=hidden id=%s %s></span>',
+			sprintf( 'tsfLeDescriptionData[%s]', (int) $post_id ),
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$tsf->make_data_attributes( [ 'leDescription' => $desc_data ] )
 		);
 
 		if ( $this->doing_ajax )
@@ -262,25 +328,31 @@ final class ListEdit extends ListTable {
 
 		// NB: The indexes correspond to `autodescription-list[index]` field input names.
 		$data = [
-			'canonical' => [
+			'doctitle'    => [
+				'value' => $meta['doctitle'],
+			],
+			'description' => [
+				'value' => $meta['description'],
+			],
+			'canonical'   => [
 				'value' => $meta['canonical'],
 			],
-			'noindex'   => [
+			'noindex'     => [
 				'value'    => $meta['noindex'],
 				'isSelect' => true,
 				'default'  => empty( $r_defaults['noindex'] ) ? 'index' : 'noindex',
 			],
-			'nofollow'  => [
+			'nofollow'    => [
 				'value'    => $meta['nofollow'],
 				'isSelect' => true,
 				'default'  => empty( $r_defaults['nofollow'] ) ? 'follow' : 'nofollow',
 			],
-			'noarchive' => [
+			'noarchive'   => [
 				'value'    => $meta['noarchive'],
 				'isSelect' => true,
 				'default'  => empty( $r_defaults['noarchive'] ) ? 'archive' : 'noarchive',
 			],
-			'redirect'  => [
+			'redirect'    => [
 				'value' => $meta['redirect'],
 			],
 		];
@@ -290,6 +362,7 @@ final class ListEdit extends ListTable {
 		 * The index corresponds to field with the ID `autodescription-quick[%s]`, where %s is the index.
 		 *
 		 * @since 4.0.5
+		 * @since 4.1.0 Now has `doctitle` and `description` indexes in its first parameter.
 		 * @param array $data  The current data : {
 		 *    string Index => @param array : {
 		 *       @param mixed  $value    The current value.
@@ -301,10 +374,43 @@ final class ListEdit extends ListTable {
 		 */
 		$data = \apply_filters_ref_array( 'the_seo_framework_list_table_data', [ $data, $query ] );
 
-		$container = sprintf(
-			'<span class=hidden id=%s data-le="%s"></span>',
+		$container = '';
+
+		$container .= sprintf(
+			'<span class=hidden id=%s %s></span>',
 			sprintf( 'tsfLeData[%s]', (int) $term_id ),
-			htmlspecialchars( json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_FORCE_OBJECT ), ENT_QUOTES, 'UTF-8' )
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$tsf->make_data_attributes( [ 'le' => $data ] )
+		);
+
+		$term_prefix = $tsf->use_generated_archive_prefix( \get_taxonomy( $query['taxonomy'] ) )
+			? $tsf->prepend_tax_label_prefix( '', $query['taxonomy'] )
+			: '';
+
+		$title_data = [
+			'refTitleLocked'    => false,
+			'defaultTitle'      => $tsf->get_filtered_raw_generated_title( $query ),
+			'addAdditions'      => $tsf->use_title_branding( $query ),
+			'additionValue'     => $tsf->s_title_raw( $tsf->get_blogname() ),
+			'additionPlacement' => 'left' === $tsf->get_title_seplocation() ? 'before' : 'after',
+			'termPrefix'        => $term_prefix,
+		];
+		$desc_data  = [
+			'refDescriptionLocked' => false,
+			'defaultDescription'   => $tsf->get_generated_description( $query ),
+		];
+
+		$container .= sprintf(
+			'<span class=hidden id=%s %s></span>',
+			sprintf( 'tsfLeTitleData[%s]', (int) $term_id ),
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$tsf->make_data_attributes( [ 'leTitle' => $title_data ] )
+		);
+		$container .= sprintf(
+			'<span class=hidden id=%s %s></span>',
+			sprintf( 'tsfLeDescriptionData[%s]', (int) $term_id ),
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$tsf->make_data_attributes( [ 'leDescription' => $desc_data ] )
 		);
 
 		if ( $this->doing_ajax )

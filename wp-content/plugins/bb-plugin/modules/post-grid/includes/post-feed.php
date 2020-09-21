@@ -9,9 +9,9 @@
 
 		<div class="fl-post-feed-header">
 
-			<h2 class="fl-post-feed-title" itemprop="headline">
+			<<?php echo $settings->posts_title_tag; ?> class="fl-post-feed-title" itemprop="headline">
 				<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a>
-			</h2>
+			</<?php echo $settings->posts_title_tag; ?>>
 
 			<?php do_action( 'fl_builder_post_feed_before_meta', $settings, $module ); ?>
 
@@ -50,7 +50,7 @@
 			<?php endif; ?>
 
 			<?php if ( $settings->show_terms && $module->get_post_terms() ) : ?>
-			<div class="fl-post-feed-meta">
+			<div class="fl-post-feed-meta-terms">
 				<div class="fl-post-feed-terms">
 					<span class="fl-terms-label"><?php echo $settings->terms_list_label; ?></span>
 					<?php echo $module->get_post_terms(); ?>

@@ -5,7 +5,7 @@ class Autooptimize {
 	var $name = 'AutoOptimize';
 	var $url  = 'https://wordpress.org/plugins/autoptimize/';
 
-	var $filters = array( 'fl_builder_init_ui' );
+	var $filters = array( 'init' );
 
 	static function run() {
 		if ( class_exists( '\autoptimizeCache' ) ) {
@@ -14,6 +14,8 @@ class Autooptimize {
 	}
 
 	function filters() {
-		add_filter( 'autoptimize_filter_noptimize', '__return_true' );
+		if ( isset( $_GET['fl_builder'] ) ) {
+			add_filter( 'autoptimize_filter_noptimize', '__return_true' );
+		}
 	}
 }

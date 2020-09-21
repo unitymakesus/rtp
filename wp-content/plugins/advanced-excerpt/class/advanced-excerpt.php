@@ -11,6 +11,7 @@ class Advanced_Excerpt {
 		'length' => 40,
 		'length_type' => 'words',
 		'no_custom' => 1,
+		'link_excerpt' => 0,
 		'no_shortcode' => 1,
 		'finish' => 'exact',
 		'ellipsis' => '&hellip;',
@@ -319,6 +320,10 @@ class Advanced_Excerpt {
 			}
 		}
 
+		if ( $link_excerpt ) {
+			$text = '<a href="' . get_permalink( $post ) . '">' . $text . '</a>';
+		}
+
 		return apply_filters( 'advanced_excerpt_content', $text );
 
 	}
@@ -336,7 +341,8 @@ class Advanced_Excerpt {
 				break;
             }
 			if ( $t[0] != '<' ) { // Token is not a tag
-				if ( $w >= $length && 'sentence' == $finish && preg_match( '/[\?\.\!].*$/uS', $t ) == 1 ) { // Limit reached, continue until ? . or ! occur at the end
+				$t_trimmed = trim( $t );
+				if ( $w >= $length && 'sentence' == $finish && preg_match( '/[\?\.\!](?!\d).*$/uS', $t_trimmed ) == 1 ) { // Limit reached, continue until ? . or ! occur at the end
 					$out .= trim( $t );
 					break;
 				}
@@ -417,7 +423,7 @@ class Advanced_Excerpt {
 		$_POST = stripslashes_deep( $_POST );
 		$this->options['length'] = (int) $_POST['length'];
 
-		$checkbox_options = array( 'no_custom', 'no_shortcode', 'add_link', 'link_new_tab', 'link_screen_reader', 'link_exclude_length', 'the_excerpt', 'the_content', 'the_content_no_break' );
+		$checkbox_options = array( 'no_custom', 'no_shortcode', 'add_link', 'link_new_tab', 'link_screen_reader', 'link_exclude_length', 'the_excerpt', 'the_content', 'the_content_no_break', 'link_excerpt' );
 
 		foreach ( $checkbox_options as $checkbox_option ) {
 			$this->options[$checkbox_option] = ( isset( $_POST[$checkbox_option] ) ) ? 1 : 0;

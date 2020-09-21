@@ -20,7 +20,8 @@ jQuery(document).ready(function() {
 		offcanvas_custom: '<?php echo esc_attr( $settings->off_canvas_custom ); ?>',
 		close_on: '<?php echo esc_attr( $settings->close_on_link ); ?>',
 		is_builder_active : '<?php echo esc_attr( $is_builder_active ); ?>',
-
+		collapse_inactive : '<?php echo esc_attr( $settings->collapse_inactive ); ?>',
+		submenu_toggle : '<?php echo esc_attr( $settings->submenu_toggle ); ?>'
 	});
 
 });

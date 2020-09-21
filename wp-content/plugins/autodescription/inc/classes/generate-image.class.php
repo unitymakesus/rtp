@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -37,9 +37,9 @@ class Generate_Image extends Generate_Url {
 	/**
 	 * Returns the image details from cache.
 	 * Only to be used within the loop, uses default parameters, inlucing the 'social' context.
+	 * Memoizes the return value.
 	 *
 	 * @since 4.0.0
-	 * @staticvar array $cache
 	 *
 	 * @return array The image details array, sequential: int => {
 	 *    string url:    The image URL,
@@ -300,6 +300,7 @@ class Generate_Image extends Generate_Url {
 	 * Returns image generation parameters.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.1 Now only the 'social' context will fetch images from the content.
 	 *
 	 * @param array|null $args    The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                            Leave null to autodetermine query.
@@ -331,8 +332,10 @@ class Generate_Image extends Generate_Url {
 				} else {
 					$cbs = [
 						'featured' => "$builder::get_featured_image_details",
-						'content'  => "$builder::get_content_image_details",
 					];
+					if ( 'social' === $context ) {
+						$cbs['content'] = "$builder::get_content_image_details";
+					}
 				}
 			} elseif ( $this->is_term_meta_capable() ) {
 				$cbs = [];
@@ -350,8 +353,10 @@ class Generate_Image extends Generate_Url {
 				} else {
 					$cbs = [
 						'featured' => "$builder::get_featured_image_details",
-						'content'  => "$builder::get_content_image_details",
 					];
+					if ( 'social' === $context ) {
+						$cbs['content'] = "$builder::get_content_image_details";
+					}
 				}
 			}
 		}
@@ -371,7 +376,7 @@ class Generate_Image extends Generate_Url {
 		 * @since 4.0.0
 		 * @param array      $params  : [
 		 *    string  size:     The image size to use.
-		 *    boolean multi:    Whether to allow multiple images to be returned.
+		 *    boolean multi:    Whether to allow multiple images to be returned. This may be overwritten by generators to 'false'.
 		 *    array   cbs:      The callbacks to parse. Ideally be generators, so we can halt remotely.
 		 *    array   fallback: The callbacks to parse. Ideally be generators, so we can halt remotely.
 		 * ];
@@ -447,7 +452,8 @@ class Generate_Image extends Generate_Url {
 		$i     = 0;
 
 		foreach ( $cbs as $cb ) {
-			foreach ( call_user_func_array( $cb, [ $args, $size ] ) as $details ) {
+			// This is one of the slowest calls in this plugin on PHP 5.6. However, PHP 7.0 optimized cuf(a). Neglegible.
+			foreach ( \call_user_func_array( $cb, [ $args, $size ] ) as $details ) {
 				if ( $details['url'] && $this->s_url_query( $details['url'] ) ) {
 					$items[ $i++ ] = $this->merge_extra_image_details( $details, $size );
 					if ( $single ) break 2;
@@ -549,7 +555,7 @@ class Generate_Image extends Generate_Url {
 
 		// Imply there's a correct ID set. When there's not, the loop won't run.
 		$meta  = \wp_get_attachment_metadata( $id );
-		$sizes = ! empty( $meta['sizes'] ) && is_array( $meta['sizes'] ) ? $meta['sizes'] : [];
+		$sizes = ! empty( $meta['sizes'] ) && \is_array( $meta['sizes'] ) ? $meta['sizes'] : [];
 
 		// law = largest accepted width.
 		$law  = 0;

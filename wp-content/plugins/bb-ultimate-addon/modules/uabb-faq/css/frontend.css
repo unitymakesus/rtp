@@ -82,6 +82,15 @@
     position: relative;
     overflow: hidden;
 }
+/* Accesibility support */
+.uabb-faq-question-label:focus,
+.uabb-faq-question-label:active,
+.uabb-faq-questions-button:focus,
+.uabb-faq-questions-button:active,
+.uabb-faq-icon-wrap:focus,
+.uabb-faq-icon-wrap:active {
+      outline: thin dotted;
+}
 @media (max-width: 992px) {
     .uabb-faq__column-medium-1 .uabb-faq-item {
         width: 100%;

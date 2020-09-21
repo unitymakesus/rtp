@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -42,19 +42,21 @@ class Generate_Title extends Generate_Description {
 	 *
 	 * @since 3.1.0
 	 * @since 3.2.2 No longer double-escapes the custom field title.
+	 * @since 4.1.0 Added the third $social parameter.
 	 * @uses $this->get_custom_field_title()
 	 * @uses $this->get_generated_title()
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                           Leave null to autodetermine query.
 	 * @param bool       $escape Whether to escape the title.
+	 * @param bool       $social Whether the title is meant for social display.
 	 * @return string The real title output.
 	 */
-	public function get_title( $args = null, $escape = true ) {
+	public function get_title( $args = null, $escape = true, $social = false ) {
 
 		// phpcs:disable, WordPress.WhiteSpace.PrecisionAlignment
-		$title = $this->get_custom_field_title( $args, false )
-			  ?: $this->get_generated_title( $args, false );
+		$title = $this->get_custom_field_title( $args, false, $social )
+			  ?: $this->get_generated_title( $args, false, $social );
 		// phpcs:enable, WordPress.WhiteSpace.PrecisionAlignment
 
 		return $escape ? $this->escape_title( $title ) : $title;
@@ -65,13 +67,15 @@ class Generate_Title extends Generate_Description {
 	 *
 	 * @since 3.1.0
 	 * @since 4.0.0 Moved the filter to a separated method.
+	 * @since 4.1.0 Added the third $social parameter.
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                           Leave null to autodetermine query.
 	 * @param bool       $escape Whether to escape the title.
+	 * @param bool       $social Whether the title is meant for social display.
 	 * @return string The custom field title.
 	 */
-	public function get_custom_field_title( $args = null, $escape = true ) {
+	public function get_custom_field_title( $args = null, $escape = true, $social = false ) {
 
 		$title = $this->get_filtered_raw_custom_field_title( $args );
 
@@ -82,7 +86,7 @@ class Generate_Title extends Generate_Description {
 			if ( $this->use_title_pagination( $args ) )
 				$this->merge_title_pagination( $title );
 
-			if ( $this->use_title_branding( $args ) )
+			if ( $this->use_title_branding( $args, $social ) )
 				$this->merge_title_branding( $title, $args );
 		}
 
@@ -96,15 +100,17 @@ class Generate_Title extends Generate_Description {
 	 * @since 3.2.4 1. Added check for title protection.
 	 *              2. Moved check for title pagination.
 	 * @since 4.0.0 Moved the filter to a separated method.
+	 * @since 4.1.0 Added the third $social parameter.
 	 * @uses $this->s_title_raw() : This is the same method used to prepare custom title on save.
 	 * @uses $this->get_filtered_raw_generated_title()
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                           Leave null to autodetermine query.
 	 * @param bool       $escape Whether to escape the title.
+	 * @param bool       $social Whether the title is meant for social display.
 	 * @return string The generated title output.
 	 */
-	public function get_generated_title( $args = null, $escape = true ) {
+	public function get_generated_title( $args = null, $escape = true, $social = false ) {
 
 		$title = $this->get_filtered_raw_generated_title( $args );
 
@@ -114,7 +120,7 @@ class Generate_Title extends Generate_Description {
 		if ( $this->use_title_pagination( $args ) )
 			$this->merge_title_pagination( $title );
 
-		if ( $this->use_title_branding( $args ) )
+		if ( $this->use_title_branding( $args, $social ) )
 			$this->merge_title_branding( $title, $args );
 
 		$title = $this->s_title_raw( $title );
@@ -315,6 +321,7 @@ class Generate_Title extends Generate_Description {
 	 *
 	 * @since 3.0.4
 	 * @since 3.1.0 The first parameter now expects an array.
+	 * @since 4.1.0 Now appends the "social" argument when getting the title.
 	 * @uses $this->get_title()
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
@@ -323,7 +330,7 @@ class Generate_Title extends Generate_Description {
 	 * @return string The generated Twitter Title.
 	 */
 	public function get_generated_twitter_title( $args = null, $escape = true ) {
-		return $this->get_title( $args, $escape );
+		return $this->get_title( $args, $escape, true );
 	}
 
 	/**
@@ -448,6 +455,7 @@ class Generate_Title extends Generate_Description {
 	 *
 	 * @since 3.0.4
 	 * @since 3.1.0 The first parameter now expects an array.
+	 * @since 4.1.0 Now appends the "social" argument when getting the title.
 	 * @uses $this->get_title()
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
@@ -456,7 +464,7 @@ class Generate_Title extends Generate_Description {
 	 * @return string The generated Open Graph Title.
 	 */
 	public function get_generated_open_graph_title( $args = null, $escape = true ) {
-		return $this->get_title( $args, $escape );
+		return $this->get_title( $args, $escape, true );
 	}
 
 	/**
@@ -517,7 +525,7 @@ class Generate_Title extends Generate_Description {
 			 * @since 4.0.6
 			 * @param string $title The post type archive title.
 			 */
-			$title = (string) \apply_filters( 'the_seo_framework_pta_title', '' );
+			$title = (string) \apply_filters( 'the_seo_framework_pta_title', '' ) ?: '';
 		}
 		// phpcs:enable, WordPress.WhiteSpace.PrecisionAlignment
 
@@ -571,7 +579,7 @@ class Generate_Title extends Generate_Description {
 	 */
 	public function get_raw_generated_title( $args = null ) {
 
-		$this->remove_default_title_filters();
+		$this->remove_default_title_filters( false, $args );
 
 		if ( null === $args ) {
 			$title = $this->generate_title_from_query();
@@ -587,49 +595,63 @@ class Generate_Title extends Generate_Description {
 
 	/**
 	 * Removes default title filters, for consistent output and sanitation.
+	 * Memoizes the filters removed, so it can add them back on reset.
 	 *
 	 * @since 3.1.0
+	 * @since 4.1.0 Added a second parameter, $args, to help soften the burden of this method.
 	 * @internal Only to be used within $this->get_raw_generated_title()
-	 * @staticvar array $filtered An array containing removed filters.
-	 * Peformance test: 0.000005s per remove+reset on PHP 7.2, single core VPN.
+	 * Peformance test: 0.000003s per remove+reset on PHP 7.3, single core VPN. This is the heaviest method of the plugin.
 	 *
-	 * @param bool $reset Whether to reset the removed filters
+	 * @param bool       $reset Whether to reset the removed filters.
+	 * @param array|null $args  The query arguments. Accepts 'id' and 'taxonomy'.
+	 *                          Leave null to autodetermine query.
 	 */
-	protected function remove_default_title_filters( $reset = false ) {
+	protected function remove_default_title_filters( $reset = false, $args = null ) {
 
 		static $filtered = [];
 
 		if ( $reset ) {
-			foreach ( $filtered as $filter => $priorities ) {
+			foreach ( $filtered as $tag => $priorities ) {
 				foreach ( $priorities as $priority => $functions ) {
 					foreach ( $functions as $function ) {
-						\add_filter( $filter, $function, $priority );
+						\add_filter( $tag, $function, $priority );
 					}
 				}
 			}
 			// Reset filters.
 			$filtered = [];
 		} else {
-			$filters = [ 'single_post_title', 'single_cat_title', 'single_tag_title' ];
+			if ( null === $args ) {
+				$filters = [ 'single_post_title', 'single_cat_title', 'single_tag_title' ];
+			} else {
+				$this->fix_generation_args( $args );
+				if ( 'category' === $args['taxonomy'] ) {
+					$filters = [ 'single_cat_title' ];
+				} elseif ( 'post_tag' === $args['taxonomy'] ) {
+					$filters = [ 'single_tag_title' ];
+				} else {
+					$filters = [ 'single_post_title' ];
+				}
+			}
+
 			/**
 			 * Texturization happens when outputting and saving the title; however,
 			 * we want the raw title, so we won't find unexplainable issues later.
 			 */
 			$functions = [ 'wptexturize' ];
 
-			// TODO: Is this the right location for this option check?
 			if ( ! $this->get_option( 'title_strip_tags' ) ) {
 				$functions[] = 'strip_tags';
 			}
 
-			foreach ( $filters as $filter ) {
+			foreach ( $filters as $tag ) {
 				foreach ( $functions as $function ) {
 					$it = 10;
 					$i  = 0;
 					// phpcs:ignore, WordPress.CodeAnalysis.AssignmentInCondition
-					while ( $priority = \has_filter( $filter, $function ) ) {
-						$filtered[ $filter ][ $priority ][] = $function;
-						\remove_filter( $filter, $function, $priority );
+					while ( $priority = \has_filter( $tag, $function ) ) {
+						$filtered[ $tag ][ $priority ][] = $function;
+						\remove_filter( $tag, $function, $priority );
 						// Some noob might've destroyed \WP_Hook. Safeguard.
 						if ( ++$i > $it ) break 1;
 					}
@@ -735,7 +757,7 @@ class Generate_Title extends Generate_Description {
 		if ( $term && \is_wp_error( $term ) )
 			return '';
 
-		if ( is_null( $term ) ) {
+		if ( \is_null( $term ) ) {
 			$_query = true;
 			$term   = \get_queried_object();
 		} else {
@@ -767,13 +789,8 @@ class Generate_Title extends Generate_Description {
 					/* translators: Tag archive title. 1: Tag name */
 					$title = $use_prefix ? sprintf( \__( 'Tag: %s', 'default' ), $title ) : $title;
 				} else {
-					$title   = $this->get_generated_single_term_title( $term );
-					$_prefix = $use_prefix ? $this->get_tax_type_label( $_tax ) : '';
-
-					if ( $_prefix ) {
-						/* translators: Taxonomy term archive title. 1: Taxonomy singular name, 2: Current taxonomy term */
-						$title = sprintf( \__( '%1$s: %2$s', 'autodescription' ), $_prefix, $title );
-					}
+					$title = $this->get_generated_single_term_title( $term );
+					$title = $use_prefix ? $this->prepend_tax_label_prefix( $title, $_tax ) : $title;
 				}
 			} elseif ( $term instanceof \WP_User && isset( $term->display_name ) ) {
 				$title = $term->display_name;
@@ -834,13 +851,8 @@ class Generate_Title extends Generate_Description {
 				/* translators: Post type archive title. 1: Post type name */
 				$title = $use_prefix ? sprintf( \__( 'Archives: %s', 'default' ), $title ) : $title;
 			} elseif ( $this->is_tax() ) {
-				$title   = $this->get_generated_single_term_title( $term );
-				$_prefix = $use_prefix ? $this->get_tax_type_label( $_tax ) : '';
-
-				if ( $_prefix ) {
-					/* translators: Taxonomy term archive title. 1: Taxonomy singular name, 2: Current taxonomy term */
-					$title = sprintf( \__( '%1$s: %2$s', 'autodescription' ), $_prefix, $title );
-				}
+				$title = $this->get_generated_single_term_title( $term );
+				$title = $use_prefix ? $this->prepend_tax_label_prefix( $title, $_tax ) : $title;
 			} else {
 				$title = \__( 'Archives', 'default' );
 			}
@@ -871,7 +883,7 @@ class Generate_Title extends Generate_Description {
 	public function get_generated_single_post_title( $id = 0 ) {
 
 		//? Home queries can be tricky. Use get_the_real_ID to be certain.
-		$_post = \get_post( $id ?: $this->get_the_real_ID(), OBJECT );
+		$_post = \get_post( $id ?: $this->get_the_real_ID() );
 		$title = '';
 
 		if ( isset( $_post->post_title ) ) {
@@ -896,6 +908,8 @@ class Generate_Title extends Generate_Description {
 	 *
 	 * @NOTE Taken from WordPress core. Altered to work in the Admin area.
 	 * @see WP Core single_term_title()
+	 * TODO Term names may not be empty. But, if you insert illegal characters when updating/creating a term (e.g. `<tag>`)
+	 *      the term name will be empty. When prefixes are added to the term (e.g. `Category:`), only that will be shown.
 	 *
 	 * @since 3.1.0
 	 * @since 4.0.0 No longer redundantly tests the query, now only uses the term input or queried object.
@@ -906,7 +920,7 @@ class Generate_Title extends Generate_Description {
 	 */
 	public function get_generated_single_term_title( $term = null ) {
 
-		if ( is_null( $term ) )
+		if ( \is_null( $term ) )
 			$term = \get_queried_object();
 
 		$term_name = '';
@@ -942,6 +956,9 @@ class Generate_Title extends Generate_Description {
 			}
 		}
 
+		// Store the prefix sprintf at get_generated_archive_title() instead and set this on title capture failure?
+		// We're working around a bug in WordPress here. This should be fixed inside WordPress! Forgo.
+		// return strlen( $term_name ) ? $term_name : $this->get_static_untitled_title();
 		return $term_name;
 	}
 
@@ -963,7 +980,7 @@ class Generate_Title extends Generate_Description {
 		if ( ! \is_post_type_archive( $post_type ) )
 			return '';
 
-		if ( is_array( $post_type ) )
+		if ( \is_array( $post_type ) )
 			$post_type = reset( $post_type );
 
 		$post_type_obj = \get_post_type_object( $post_type );
@@ -1042,13 +1059,13 @@ class Generate_Title extends Generate_Description {
 			$data = $this->get_title_branding_from_args( $args );
 		}
 
-		$title       = trim( $title );
-		$addition    = trim( $data['addition'] );
-		$seplocation = $data['seplocation'];
-		$sep         = $this->get_title_separator();
+		$title    = trim( $title );
+		$addition = trim( $data['addition'] );
 
 		if ( $addition && $title ) {
-			if ( 'left' === $seplocation ) {
+			$sep = $this->get_title_separator();
+
+			if ( 'left' === $data['seplocation'] ) {
 				$title = "$addition $sep $title";
 			} else {
 				$title = "$title $sep $addition";
@@ -1067,7 +1084,7 @@ class Generate_Title extends Generate_Description {
 	protected function get_title_branding_from_query() {
 
 		if ( $this->is_real_front_page() ) {
-			$addition    = $this->get_home_page_tagline();
+			$addition    = $this->get_home_title_additions();
 			$seplocation = $this->get_home_title_seplocation();
 		} else {
 			$addition    = $this->get_blogname();
@@ -1089,7 +1106,7 @@ class Generate_Title extends Generate_Description {
 	protected function get_title_branding_from_args( array $args ) {
 
 		if ( ! $args['taxonomy'] && $this->is_real_front_page_by_id( $args['id'] ) ) {
-			$addition    = $this->get_home_page_tagline();
+			$addition    = $this->get_home_title_additions();
 			$seplocation = $this->get_home_title_seplocation();
 		} else {
 			$addition    = $this->get_blogname();
@@ -1152,7 +1169,7 @@ class Generate_Title extends Generate_Description {
 
 		if ( $tax ) return;
 
-		$post = $id ? \get_post( $id, OBJECT ) : null;
+		$post = $id ? \get_post( $id ) : null;
 
 		if ( isset( $post->post_password ) && '' !== $post->post_password ) {
 			/**
@@ -1189,9 +1206,9 @@ class Generate_Title extends Generate_Description {
 
 	/**
 	 * Gets Title Separator.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.6.0
-	 * @staticvar string $sep
 	 *
 	 * @return string The Separator, unescaped.
 	 */
@@ -1237,11 +1254,31 @@ class Generate_Title extends Generate_Description {
 	}
 
 	/**
+	 * Prepends the taxonomy label to the title.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @param string $title    The title to prepend taxonomy label to.
+	 * @param string $taxonomy The taxonomy to get label from.
+	 * @return string The title with possibly prepended tax-label.
+	 */
+	public function prepend_tax_label_prefix( $title, $taxonomy ) {
+
+		$prefix = $this->get_tax_type_label( $taxonomy ) ?: '';
+
+		if ( $prefix ) {
+			/* translators: Taxonomy term archive title. 1: Taxonomy singular name, 2: Current taxonomy term */
+			$title = sprintf( \_x( '%1$s: %2$s', 'tax prefix: title', 'autodescription' ), $prefix, $title );
+		}
+
+		return $title;
+	}
+
+	/**
 	 * Determines whether to add or remove title protection prefixes.
 	 *
-	 * NOTE: This does not guarantee that protection is to be added.
-	 *
 	 * @since 3.2.4
+	 * NOTE: This does not guarantee that protection is to be added. Only that it will be considered. Bad method name.
 	 * @see $this->merge_title_protection()
 	 *
 	 * @param array|null $args The query arguments. Accepts 'id' and 'taxonomy'.
@@ -1253,7 +1290,7 @@ class Generate_Title extends Generate_Description {
 		if ( null === $args ) {
 			$use = $this->is_singular();
 		} else {
-			$this->fix_generation_args( $args );
+			$this->fix_generation_args( $args ); // redundant since we only check for a non-autofillable value... use empty( $args['tax..] ) instead?
 			$use = $args && ! $args['taxonomy'];
 		}
 
@@ -1264,7 +1301,7 @@ class Generate_Title extends Generate_Description {
 	 * Determines whether to add or remove title pagination additions.
 	 *
 	 * @since 3.2.4
-	 * NOTE: This does not guarantee that pagination is to be added.
+	 * NOTE: This does not guarantee that pagination is to be added. Only that it will be considered. Bad method name.
 	 * @see $this->merge_title_pagination()
 	 *
 	 * @param array|null $args The query arguments. Accepts 'id' and 'taxonomy'.
@@ -1294,30 +1331,43 @@ class Generate_Title extends Generate_Description {
 	 * @since 3.1.2 : 1. Added filter.
 	 *                2. Added strict taxonomical check.
 	 * @since 3.2.2 Now differentiates from query and parameter input.
+	 * @since 4.1.0 Added the second $social parameter.
 	 * @see $this->merge_title_branding()
 	 * @uses $this->use_title_branding_from_query()
 	 * @uses $this->use_title_branding_from_args()
 	 *
-	 * @param array|null $args The query arguments. Accepts 'id' and 'taxonomy'.
-	 *                         Leave null to autodetermine query.
+	 * @param array|null $args  The query arguments. Accepts 'id' and 'taxonomy'.
+	 *                           Leave null to autodetermine query.
+	 * @param bool       $social Whether the title is meant for social display.
 	 * @return bool True when additions are allowed.
 	 */
-	public function use_title_branding( $args = null ) {
+	public function use_title_branding( $args = null, $social = false ) {
 
-		if ( null === $args ) {
-			$use = $this->use_title_branding_from_query();
-		} else {
-			$this->fix_generation_args( $args );
-			$use = $this->use_title_branding_from_args( $args );
+		$use = true;
+
+		if ( $social ) {
+			$use = ! $this->get_option( 'social_title_rem_additions' );
+		}
+
+		// When social titles tend to use it, evaluate again from general title settings.
+		if ( $use ) {
+			if ( null === $args ) {
+				$use = $this->use_title_branding_from_query();
+			} else {
+				$this->fix_generation_args( $args );
+				$use = $this->use_title_branding_from_args( $args );
+			}
 		}
 
 		/**
 		 * @since 3.1.2
-		 * @param string     $use  Whether to use branding.
-		 * @param array|null $args The query arguments. Contains 'id' and 'taxonomy'.
-		 *                         Is null when query is autodetermined.
+		 * @since 4.1.0 Added the third $social parameter.
+		 * @param string     $use    Whether to use branding.
+		 * @param array|null $args   The query arguments. Contains 'id' and 'taxonomy'.
+		 *                           Is null when query is autodetermined.
+		 * @param bool       $social Whether the title is meant for social display.
 		 */
-		return \apply_filters_ref_array( 'the_seo_framework_use_title_branding', [ $use, $args ] );
+		return \apply_filters_ref_array( 'the_seo_framework_use_title_branding', [ $use, $args, $social ] );
 	}
 
 	/**
@@ -1397,12 +1447,12 @@ class Generate_Title extends Generate_Description {
 	 * Determines whether to add homepage tagline.
 	 *
 	 * @since 2.6.0
-	 * @since 3.0.4 Now checks for custom tagline or blog name existence.
+	 * @since 3.0.4 Now checks for `$this->get_home_title_additions()`.
 	 *
 	 * @return bool
 	 */
 	public function use_home_page_title_tagline() {
-		return $this->get_option( 'homepage_tagline' ) && $this->get_home_page_tagline();
+		return $this->get_option( 'homepage_tagline' ) && $this->get_home_title_additions();
 	}
 
 	/**
@@ -1430,18 +1480,17 @@ class Generate_Title extends Generate_Description {
 	}
 
 	/**
-	 * Returns the homepage tagline from option or bloginfo, when set.
+	 * Returns the homepage additions (tagline) from option or bloginfo, when set.
+	 * Memoizes the return value.
 	 *
-	 * @since 3.0.4
-	 * @since 4.0.0 Added caching.
-	 * @staticvar string $cache
-	 * @uses $this->get_blogdescription(), this method already trims.
+	 * @since 4.1.0
+	 * @uses $this->get_blogdescription(), that method already trims.
 	 *
 	 * @return string The trimmed tagline.
 	 */
-	public function get_home_page_tagline() {
+	public function get_home_title_additions() {
 		static $cache;
-		return $cache ?: $cache = $this->s_title_raw(
+		return isset( $cache ) ? $cache : $cache = $this->s_title_raw(
 			trim( $this->get_option( 'homepage_title_tagline' ) )
 			?: $this->get_blogdescription()
 			?: ''

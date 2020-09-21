@@ -119,12 +119,23 @@ class FLCalloutModule extends FLBuilderModule {
 	public function render_title() {
 		echo '<' . $this->settings->title_tag . ' class="fl-callout-title">';
 
+		if ( 'icon' === $this->settings->image_type ) {
+			if ( ! empty( $this->settings->link ) ) {
+				echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-title-link fl-callout-title-text">';
+			}
+		}
+
 		$this->render_image( 'left-title' );
 
 		echo '<span' . ( empty( $this->settings->link ) ? ' class="fl-callout-title-text"' : '' ) . '>';
 
-		if ( ! empty( $this->settings->link ) ) {
-			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-title-link fl-callout-title-text">';
+		if ( ! empty( $this->settings->link ) && 'icon' !== $this->settings->image_type ) {
+				$nofollow = '';
+
+			if ( 'yes' == $this->settings->link_nofollow ) {
+				$nofollow = 'rel="nofollow"';
+			}
+			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" ' . $nofollow . ' class="fl-callout-title-link fl-callout-title-text">';
 		}
 
 		echo $this->settings->title;
@@ -154,7 +165,13 @@ class FLCalloutModule extends FLBuilderModule {
 	 */
 	public function render_link() {
 		if ( 'link' == $this->settings->cta_type ) {
-			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-cta-link">' . $this->settings->cta_text . '</a>';
+			$nofollow = '';
+
+			if ( 'yes' == $this->settings->link_nofollow ) {
+				$nofollow = 'rel="nofollow"';
+			}
+
+			echo '<a href="' . $this->settings->link . '" ' . $nofollow . ' target="' . $this->settings->link_target . '" class="fl-callout-cta-link">' . $this->settings->cta_text . '</a>';
 		}
 	}
 
@@ -205,10 +222,10 @@ class FLCalloutModule extends FLBuilderModule {
 			'align'           => '',
 			'exclude_wrapper' => true,
 			'icon'            => $this->settings->icon,
-			'link'            => $this->settings->link,
-			'link_target'     => $this->settings->link_target,
 			'text'            => '',
 			'three_d'         => $this->settings->icon_3d,
+			'sr_text'         => $this->settings->sr_text,
+			'link'            => $this->settings->link,
 		);
 
 		foreach ( $this->settings as $key => $value ) {
@@ -553,7 +570,11 @@ FLBuilder::register_module('FLCalloutModule', array(
 						'type'  => 'icon',
 						'label' => __( 'Icon', 'fl-builder' ),
 					),
-
+					'sr_text'       => array(
+						'type'    => 'text',
+						'label'   => __( 'Screen Reader Text', 'fl-builder' ),
+						'default' => '',
+					),
 					'icon_position' => array(
 						'type'    => 'select',
 						'label'   => __( 'Position', 'fl-builder' ),

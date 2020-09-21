@@ -67,7 +67,7 @@
 			<?php if ( $fa5_pro_enabled || $legacy ) : ?>
 				<p>
 				<input style="width:300px;" placeholder="https://kit.fontawesome.com/nnnnnn.js" type="text" name="fl-fa-pro-kit" value="<?php echo esc_attr( get_option( '_fl_builder_kit_fa_pro' ) ); ?>" />
-				<br /><?php _e( 'For KIT support enter the kit url here otherwise the Pro CDN will be used.', 'fl-builder' ); ?>
+				<br /><?php _e( 'For KIT support enter the kit URL here otherwise the Pro CDN will be used.', 'fl-builder' ); ?>
 				<br /><br /><strong><?php _e( 'Note: KIT must be set to Webfont and not SVG.', 'fl-builder' ); ?></strong>
 				</p>
 				<p>

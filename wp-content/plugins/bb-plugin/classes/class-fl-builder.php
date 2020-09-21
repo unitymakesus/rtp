@@ -255,8 +255,13 @@ final class FLBuilder {
 	}
 
 	static public function rich_edit() {
+		global $wp_version;
 		if ( FLBuilderModel::is_builder_active() ) {
-			add_filter( 'get_user_option_rich_editing', '__return_true' );
+			if ( version_compare( $wp_version, '5.4.99', '<' ) ) {
+				add_filter( 'get_user_option_rich_editing', '__return_true' );
+			} else {
+				add_filter( 'user_can_richedit', '__return_true' ); // WP 5.5
+			}
 		}
 	}
 
@@ -771,6 +776,7 @@ final class FLBuilder {
 	static public function enqueue_ui_styles_scripts() {
 		if ( FLBuilderModel::is_builder_active() ) {
 			global $wp_the_query;
+			global $wp_version;
 
 			// Remove wp admin bar top margin
 			remove_action( 'wp_head', '_admin_bar_bump_cb' );
@@ -801,7 +807,7 @@ final class FLBuilder {
 				// skins need to come after default ui styles
 				wp_enqueue_style( 'fl-builder-ui-skin-dark', $css_url . 'fl-builder-ui-skin-dark.css', array(), $ver );
 
-				wp_enqueue_style( 'fl-builder-bundle', $css_url . 'build/builder.bundle.css', array(), $ver );
+				wp_enqueue_style( 'fl-builder-bundle', $css_url . 'build/builder.bundle.css', array( 'fl-fluid' ), $ver );
 			} else {
 				wp_enqueue_style( 'fl-builder-min', $css_url . 'fl-builder.min.css', array(), $ver );
 				wp_enqueue_style( 'fl-builder-bundle', $css_url . 'build/builder.bundle.min.css', array(), $ver );
@@ -813,6 +819,14 @@ final class FLBuilder {
 			/* RTL Support */
 			if ( is_rtl() ) {
 				wp_enqueue_style( 'fl-builder-rtl', $css_url . 'fl-builder-rtl.css', array(), $ver );
+			}
+
+			// React polyfill for older versions of WordPress.
+			if ( version_compare( $wp_version, '5.2', '<=' ) ) {
+				wp_deregister_script( 'react' );
+				wp_deregister_script( 'react-dom' );
+				wp_enqueue_script( 'react', $js_url . 'build/react.bundle.js', array(), $ver, true );
+				wp_enqueue_script( 'react-dom', $js_url . 'build/react-dom.bundle.js', array(), $ver, true );
 			}
 
 			/* We have custom versions of these that fixes bugs. */
@@ -859,8 +873,33 @@ final class FLBuilder {
 				wp_enqueue_script( 'select2', $js_url . 'select2.min.js', array(), $ver );
 			}
 
+			// Register FLUID library - Checks if Assistant has already registered a copy.
+			if (
+				! wp_script_is( 'fl-fluid', 'enqueued' ) &&
+				! wp_script_is( 'fl-fluid', 'registered' ) &&
+				! wp_script_is( 'fl-fluid', 'to_do' ) &&
+				! wp_script_is( 'fl-fluid', 'done' )
+			) {
+
+				if ( self::is_debug() ) {
+					$fluid_js  = 'build/fluid.bundle.js';
+					$fluid_css = 'build/fluid.bundle.css';
+				} else {
+					$fluid_js  = 'build/fluid.bundle.min.js';
+					$fluid_css = 'build/fluid.bundle.min.css';
+				}
+				// if < 5.0 we get an lodash conflict and fluid will not enqueue
+				if ( version_compare( $wp_version, '5.2', '<=' ) ) {
+					wp_register_script( 'fl-fluid', $js_url . $fluid_js, array( 'react', 'react-dom' ), $ver, false );
+				} else {
+					wp_register_script( 'fl-fluid', $js_url . $fluid_js, array( 'react', 'react-dom', 'lodash' ), $ver, false );
+				}
+				wp_register_style( 'fl-fluid', $css_url . $fluid_css, array(), $ver, null );
+			}
+
 			// Enqueue individual builder scripts if WP_DEBUG is on.
 			if ( self::is_debug() ) {
+
 				wp_enqueue_script( 'fl-color-picker', $js_url . 'fl-color-picker.js', array(), $ver );
 				wp_enqueue_script( 'fl-lightbox', $js_url . 'fl-lightbox.js', array(), $ver );
 				wp_enqueue_script( 'fl-icon-selector', $js_url . 'fl-icon-selector.js', array(), $ver );
@@ -874,8 +913,8 @@ final class FLBuilder {
 				wp_enqueue_script( 'fl-builder-responsive-preview', $js_url . 'fl-builder-responsive-preview.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-services', $js_url . 'fl-builder-services.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-tour', $js_url . 'fl-builder-tour.js', array(), $ver );
-				wp_enqueue_script( 'fl-builder-ui', $js_url . 'fl-builder-ui.js', array( 'fl-builder', 'mousetrap' ), $ver );
-				wp_enqueue_script( 'fl-builder-ui-main-menu', $js_url . 'fl-builder-ui-main-menu.js', array( 'fl-builder-ui' ), $ver );
+				wp_enqueue_script( 'fl-builder-ui', $js_url . 'fl-builder-ui.js', array( 'fl-builder', 'mousetrap', 'fl-fluid' ), $ver );
+				wp_enqueue_script( 'fl-builder-ui-main-menu', $js_url . 'fl-builder-ui-main-menu.js', array( 'fl-builder-ui', 'fl-fluid' ), $ver );
 				wp_enqueue_script( 'fl-builder-ui-panel-content', $js_url . 'fl-builder-ui-panel-content-library.js', array( 'fl-builder-ui' ), $ver );
 				wp_enqueue_script( 'fl-builder-ui-settings-forms', $js_url . 'fl-builder-ui-settings-forms.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-ui-settings-copy-paste', $js_url . 'fl-builder-ui-settings-copy-paste.js', array(), $ver );
@@ -884,10 +923,11 @@ final class FLBuilder {
 				wp_enqueue_script( 'fl-builder-search', $js_url . 'fl-builder-search.js', array( 'jquery' ), $ver );
 				wp_enqueue_script( 'fl-builder-save-manager', $js_url . 'fl-builder-save-manager.js', array( 'jquery' ), $ver );
 				wp_enqueue_script( 'fl-builder-history-manager', $js_url . 'fl-builder-history-manager.js', array(), $ver );
-				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.js', array(), $ver, true );
+				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.js', array( 'fl-fluid' ), $ver, true );
 			} else {
-				wp_enqueue_script( 'fl-builder-min', $js_url . 'fl-builder.min.js', array( 'jquery', 'mousetrap' ), $ver );
-				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.min.js', array(), $ver, true );
+
+				wp_enqueue_script( 'fl-builder-min', $js_url . 'fl-builder.min.js', array( 'jquery', 'mousetrap', 'fl-fluid' ), $ver );
+				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.min.js', array( 'fl-fluid' ), $ver, true );
 			}
 
 			/* Additional module styles and scripts */
@@ -1116,7 +1156,7 @@ final class FLBuilder {
 
 		// Tools
 		$tools_view = array(
-			'name'       => __( 'Tools', 'fl-builder' ),
+			'name'       => __( 'Tools', 'fl-builder' ) . ( $is_lite ? '<button class="fl-builder-upgrade-button fl-builder-button" onclick="FLBuilder._upgradeClicked()">Upgrade</button>' : '' ),
 			'isShowing'  => true,
 			'isRootView' => true,
 			'items'      => array(),
@@ -1133,12 +1173,12 @@ final class FLBuilder {
 			'type' => 'separator',
 		);
 
-		if ( ! $is_lite && ! $is_user_template && ( 'enabled' == $enabled_templates || 'user' == $enabled_templates ) ) {
+		if ( ! $is_user_template && ( 'enabled' == $enabled_templates || 'user' == $enabled_templates ) ) {
 			$tools_view['items'][10] = array(
-				'label'     => __( 'Save Template', 'fl-builder' ),
+				'label'     => __( 'Save Template', 'fl-builder' ) . ( $is_lite ? '<span class="fl-builder-pro-badge">PRO</span>' : '' ),
 				'type'      => 'event',
 				'eventName' => 'saveTemplate',
-				'accessory' => $key_shortcuts['saveTemplate']['keyLabel'],
+				'accessory' => isset( $key_shortcuts['saveTemplate'] ) ? $key_shortcuts['saveTemplate']['keyLabel'] : null,
 			);
 		}
 
@@ -1179,6 +1219,14 @@ final class FLBuilder {
 			'eventName' => 'showGlobalSettings',
 			'accessory' => $key_shortcuts['showGlobalSettings']['keyLabel'],
 		);
+
+		if ( $is_lite || defined( 'FL_THEME_BUILDER_VERSION' ) ) {
+			$tools_view['items'][65] = array(
+				'label'     => __( 'Themer Layouts', 'fl-builder' ) . ( $is_lite ? '<span class="fl-builder-pro-badge">PRO</span>' : '' ),
+				'type'      => 'event',
+				'eventName' => 'launchThemerLayouts',
+			);
+		}
 
 		$tools_view['items'][70] = array(
 			'type' => 'separator',
@@ -1506,7 +1554,13 @@ final class FLBuilder {
 		$add_btn_svg           = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="24" height="24"><rect x="0" fill="none" width="24" height="24" /><g><path d="M17 9v2h-6v6H9v-6H3V9h6V3h2v6h6z"/></g></svg>';
 		$notifications         = FLBuilderNotifications::get_notifications();
 		$feedback_label        = __( 'Dev Feedback', 'fl-builder' );
-		$show_feedback         = '{FL_BUILDER_VERSION}' === FL_BUILDER_VERSION;
+		$show_feedback         = false;
+
+		$show_notifications = ! $simple_ui &&
+							! FLBuilderModel::is_white_labeled() &&
+							$notifications['data'] &&
+							'{}' !== $notifications['data'] &&
+							! apply_filters( 'fl_disable_notifications', false );
 
 		if ( strstr( FL_BUILDER_VERSION, '-dev' ) ) {
 			$show_feedback = true;
@@ -1529,10 +1583,6 @@ final class FLBuilder {
 					'utm_campaign' => 'feedback-cta',
 				) ) . "');",
 			),
-			'upgrade'       => array(
-				'label' => __( 'Upgrade Today', 'fl-builder' ) . ' <i class="fas fa-external-link-alt"></i>',
-				'show'  => true === FL_BUILDER_LITE,
-			),
 			'buy'           => array(
 				'label' => __( 'Buy Now', 'fl-builder' ) . ' <i class="fas fa-external-link-alt"></i>',
 				'show'  => stristr( home_url(), 'demo.wpbeaverbuilder.com' ),
@@ -1543,6 +1593,7 @@ final class FLBuilder {
 			'content-panel' => array(
 				'label' => $add_btn_svg,
 				'show'  => ! $simple_ui,
+				'class' => 'fl-builder-button-silent',
 			),
 			'add-content'   => array( // Only added here for backwards compat.
 				'label' => $add_btn_svg,
@@ -1551,7 +1602,6 @@ final class FLBuilder {
 		) );
 
 		echo '<div class="fl-builder-bar-actions">';
-
 		$i = 0;
 
 		foreach ( $buttons as $slug => $button ) {
@@ -1564,22 +1614,29 @@ final class FLBuilder {
 				continue;
 			}
 
+			// Class
 			echo '<button class="fl-builder-' . $slug . '-button fl-builder-button';
-
 			if ( isset( $button['class'] ) ) {
 				echo ' ' . $button['class'];
 			}
-
 			echo '"';
 
+			// ID
+			if ( isset( $button['id'] ) ) {
+				echo ' id="' . $button['id'] . '"';
+			}
+
+			// Title Attribute
 			if ( isset( $button['title'] ) ) {
 				echo ' title="' . $button['title'] . '"';
 			}
 
+			// onClick Attribute
 			if ( isset( $button['onclick'] ) ) {
 				echo ' onclick="' . $button['onclick'] . '"';
 			}
 
+			// Button Content
 			echo '>' . $button['label'] . '</button>';
 
 			$i++;
@@ -1638,7 +1695,28 @@ final class FLBuilder {
 
 				// Print the styles if we are outside of the head tag.
 				if ( did_action( 'wp_enqueue_scripts' ) && ! doing_filter( 'wp_enqueue_scripts' ) ) {
+					ob_start();
 					wp_print_styles();
+					$styles = trim( ob_get_flush() );
+					$styles = explode( "\n", $styles );
+					if ( is_array( $styles ) && ! empty( $styles ) ) {
+						$js = '';
+						foreach ( $styles as $k => $style ) {
+							if ( ! $style ) {
+								continue;
+							}
+							$id = sprintf( '%s_$%s', $post->ID, $k );
+							if ( ! preg_match( "#<link\srel='stylesheet'\sid='([a-z0-9-_]+)'\s+href='(.*?)'#", $style, $matches ) ) {
+								continue;
+							}
+							$js .= sprintf( 'var head = document.getElementsByTagName("head")[0],cssLink_%1$s = document.createElement("link");cssLink_%1$s.rel = "stylesheet";cssLink_%1$s.href = "%3$s";cssLink_%1$s.id="%2$s";cssLink_%1$s.media="all";cssLink_%1$s.type="text/css";head.appendChild(cssLink_%1$s);', $id, $matches[1], $matches[2] );
+						}
+						if ( '' !== $js ) {
+							printf( '<script>%s</script>', $js );
+						}
+					} else {
+						wp_print_styles();
+					}
 				}
 
 				// Render the builder content.
@@ -1730,7 +1808,9 @@ final class FLBuilder {
 		}
 
 		// Add srcset attrs to images with the class wp-image-<ID>.
-		if ( function_exists( 'wp_make_content_images_responsive' ) ) {
+		if ( function_exists( 'wp_filter_content_tags' ) ) {
+			$content = wp_filter_content_tags( $content );
+		} elseif ( function_exists( 'wp_make_content_images_responsive' ) ) {
 			$content = wp_make_content_images_responsive( $content );
 		}
 
@@ -2215,7 +2295,7 @@ final class FLBuilder {
 
 			$vid_data = FLBuilderModel::get_row_bg_data( $row );
 
-			if ( $vid_data || in_array( $row->settings->bg_video_source, array( 'video_url', 'video_service' ) ) ) {
+			if ( $vid_data || in_array( $row->settings->bg_video_source, array( 'video_url', 'video_service', 'video_embed' ) ) ) {
 				$template_file = self::locate_template_file(
 					apply_filters( 'fl_builder_row_video_bg_template_base', 'row-video', $row ),
 					apply_filters( 'fl_builder_row_video_bg_template_slug', '', $row )
@@ -2225,6 +2305,8 @@ final class FLBuilder {
 					include $template_file;
 				}
 			}
+		} elseif ( 'embed' == $row->settings->bg_type && ! empty( $row->settings->bg_embed_code ) ) {
+			echo '<div class="fl-bg-embed-code">' . $row->settings->bg_embed_code . '</div>';
 		} elseif ( 'slideshow' == $row->settings->bg_type ) {
 			echo '<div class="fl-bg-slideshow"></div>';
 		}
@@ -2654,6 +2736,15 @@ final class FLBuilder {
 		$defaults        = FLBuilderModel::get_module_defaults( $type );
 		$settings        = (object) array_merge( (array) $defaults, (array) $settings );
 		$settings        = apply_filters( 'fl_builder_render_module_css_settings', $settings, $id, $type );
+
+		/**
+		 * Make sure the Class is not NULL before trying to use it, see #513
+		 * @since 2.4
+		 */
+		if ( null === FLBuilderModel::$modules[ $type ] ) {
+			printf( "\n/* Critical Error!! Class for %s with ID %s not found. */\n", $type, $id );
+			return false;
+		}
 
 		// Module
 		$class            = get_class( FLBuilderModel::$modules[ $type ] );

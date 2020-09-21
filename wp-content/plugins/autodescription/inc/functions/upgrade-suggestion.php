@@ -23,7 +23,9 @@ namespace The_SEO_Framework\Suggestion;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
+
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * This file holds functions for installing TSFEM.
@@ -34,95 +36,116 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @access private
  */
 
-_prepare();
+// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
+_prepare( $previous_version, $current_version );
 /**
  * Prepares a suggestion notification to ALL applicable plugin users on upgrade;
  * For TSFEM, it's shown when:
- *    0. The upgrade happens when an applicable user is on the admin pages. (always true w/ default actions)
+ *    0. The upgrade actually happened.
  *    1. The constant 'TSF_DISABLE_SUGGESTIONS' is not defined or false.
  *    2. The current dashboard is the main site's.
- *    3. The applicable user can install plugins.
- *    4. TSFEM isn't already installed.
- *    5. PHP and WP requirements of TSFEM are met.
+ *    3. TSFEM isn't already installed.
+ *    4. PHP and WP requirements of TSFEM are met.
  *
- * This notice is automatically dismissed, and it can be ignored without reappearing.
+ * The notice is automatically dismissed after X views, and it can be ignored without reappearing.
  *
  * @since 3.0.6
+ * @since 4.1.0 1. Now tests TSFEM 2.4.0 requirements.
+ *              2. Removed the user capability requirement, and forwarded that to `_suggest_extension_manager()`.
+ *              3. Can now run on the front-end without crashing.
+ *              4. Added the first two parameters, $previous_version and $current_version.
+ *              5. Now tests if the upgrade actually happened, before invoking the suggestion.
  * @access private
- * @uses the_seo_framework_add_upgrade_notice();
+ *
+ * @param string $previous_version The previous version the site upgraded from, if any.
+ * @param string $current_version  The current version of the site.
  */
-function _prepare() {
+function _prepare( $previous_version, $current_version ) {
 
+	//? 0
+	// phpcs:ignore, WordPress.PHP.StrictComparisons.LooseComparison -- might be mixed types.
+	if ( $previous_version == $current_version ) return;
 	//? 1
-	if ( defined( 'TSF_DISABLE_SUGGESTIONS' ) && TSF_DISABLE_SUGGESTIONS ) return;
+	if ( \defined( 'TSF_DISABLE_SUGGESTIONS' ) && TSF_DISABLE_SUGGESTIONS ) return;
 	//? 2
 	if ( ! \is_main_site() ) return;
-	//? 3
-	if ( ! \current_user_can( 'install_plugins' ) ) return;
-	//? 4a
-	if ( defined( 'TSF_EXTENSION_MANAGER_VERSION' ) ) return;
-	//= PHP<5.5 can't write in empty()
-	$plugin = \get_plugins();
-	//? 4b
-	if ( ! empty( $plugin['the-seo-framework-extension-manager/the-seo-framework-extension-manager.php'] ) ) return;
+	//? 3a
+	if ( \defined( 'TSF_EXTENSION_MANAGER_VERSION' ) ) return;
 
-	/** @source https://github.com/sybrew/The-SEO-Framework-Extension-Manager/blob/34674828a9e79bf72584e23aaa4a82ea1f154229/bootstrap/envtest.php#L51-L62 */
-	$envtest = false;
-	$_req    = [
-		'php' => [
-			'5.5' => 50521,
-			'5.6' => 50605,
-		],
-		'wp'  => '37965',
+	if ( ! \function_exists( '\\get_plugins' ) )
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+	//? 3b
+	if ( ! empty( \get_plugins()['the-seo-framework-extension-manager/the-seo-framework-extension-manager.php'] ) ) return;
+
+	/** @source https://github.com/sybrew/The-SEO-Framework-Extension-Manager/blob/08db1ab7410874c47d8f05b15479ce923857c35e/bootstrap/envtest.php#L68-L77 */
+	// We can forgo this test, since TSF has a higher requirement. We'll probably keep the plugins in line henceforth...
+	$requirements = [
+		'php' => 50605,
+		'wp'  => '4.9-dev',
 	];
 
-	//? PHP_VERSION_ID is definitely defined, but let's keep it homonymous with the envtest of TSFEM.
 	// phpcs:disable, Generic.Formatting.MultipleStatementAlignment, WordPress.WhiteSpace.PrecisionAlignment
-	   ! defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < $_req['php']['5.5'] and $envtest = 1
-	or PHP_VERSION_ID >= 50600 && PHP_VERSION_ID < $_req['php']['5.6'] and $envtest = 2
-	or $GLOBALS['wp_db_version'] < $_req['wp'] and $envtest = 3
-	or $envtest = true;
+	//? PHP_VERSION_ID is definitely defined, but let's keep it homonymous with the envtest of TSFEM.
+	   ! \defined( 'PHP_VERSION_ID' ) || PHP_VERSION_ID < $requirements['php'] and $test = 1
+	or version_compare( $GLOBALS['wp_version'], $requirements['wp'], '<' ) and $test = 2
+	or $test = true;
 	// phpcs:enable, Generic.Formatting.MultipleStatementAlignment, WordPress.WhiteSpace.PrecisionAlignment
 
-	//? 5
-	if ( true !== $envtest ) return;
+	//? 4
+	if ( true !== $test ) return;
 
-	_load_tsfem_suggestion();
+	// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
+	_suggest_extension_manager( $previous_version, $current_version );
 }
 
 /**
- * Loads the TSFEM suggestion.
- *
- * @since 3.2.4
- * @access private
- */
-function _load_tsfem_suggestion() {
-	\add_action( 'admin_notices', __NAMESPACE__ . '\\_suggest_extension_manager' );
-}
-
-/**
- * Outputs "look at TSFEM" notification to applicable plugin users on upgrade.
+ * Registers "look at TSFEM" notification to applicable plugin users on upgrade.
  *
  * @since 3.0.6
+ * @since 4.1.0 Is now a persistent notice, that outputs at most 3 times, on some admin pages, only for users that can install plugins.
  * @access private
+ *
+ * @param string $previous_version The previous version the site upgraded from, if any.
+ * @param string $current_version  The current version of the site.
  */
-function _suggest_extension_manager() {
+function _suggest_extension_manager( $previous_version, $current_version ) {
 
 	$tsf = \the_seo_framework();
 
-	$tsf->do_dismissible_notice(
-		$tsf->convert_markdown(
-			sprintf(
-				'**A word from Sybre, the developer of The SEO Framework:** We spent 3000 hours on version 4.0 of The SEO Framework, optimizing every aspect of the plugin, resulting in [1000 changes](%s), making this the highest performing SEO plugin! We humbly believe it shows we put you and your website first. There are still no ads or constant annoyances in your dashboard. As a result, many of our users don\'t know about [The SEO Framework &mdash; Extension Manager](%s). The extensions give extra SEO functionality, like **structured data for publishers**, **focus subject analysis**, and **spam protection**. All programmed with same meticulous standards. Many of the extensions are **free**, and the paid ones help to finance all our work. Consider [giving them a try](%s). Thank you.',
-				'https://theseoframework.com/about/an-introduction-to-a-thousand-changes/',
-				'https://theseoframework.com/extension-manager/',
-				'https://theseoframework.com/extensions/'
+	$suggest_key        = 'suggest-extension-manager';
+	$suggest_args       = [
+		'type'   => 'info',
+		'icon'   => false,
+		'escape' => false,
+	];
+	$suggest_conditions = [
+		'screens'      => [],
+		'excl_screens' => [ 'update-core', 'post', 'term', 'upload', 'media', 'plugin-editor', 'plugin-install', 'themes', 'widgets', 'user', 'nav-menus', 'theme-editor', 'profile', 'export', 'site-health', 'export-personal-data', 'erase-personal-data' ],
+		'capability'   => 'install_plugins',
+		'user'         => 0,
+		'count'        => 3,
+		'timeout'      => DAY_IN_SECONDS * 7,
+	];
+
+	if ( $previous_version < '4100' && $current_version < '4200' )
+		$tsf->register_dismissible_persistent_notice(
+			$tsf->convert_markdown(
+				vsprintf(
+					'<p>The SEO Framework was updated to v4.1! It brings 9 new features and [over 350 QOL improvements for performance and accessibility](%s).</p>
+					<p>Did you know we have [10 premium extensions](%s), adding features beyond SEO? Our anti-spam extension runs locally, has a 99.98%% catch rate, and adds only 0.13KB to your website.</p>
+					<p>We want to make TSF even better for you &mdash; please consider [filling out our survey](%s), it has 5 questions and should take you about 2 minutes. Thank you.</p>',
+					[
+						'https://theseoframework.com/?p=3598',
+						'https://theseoframework.com/?p=3599',
+						'https://theseoframework.com/?p=3591',
+					]
+				),
+				[ 'a', 'em', 'strong' ],
+				[ 'a_internal' => false ]
 			),
-			[ 'a', 'strong' ],
-			[ 'a_internal' => false ]
-		),
-		'info',
-		false,
-		false
-	);
+			$suggest_key,
+			$suggest_args,
+			$suggest_conditions
+		);
 }

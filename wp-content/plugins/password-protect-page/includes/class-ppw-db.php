@@ -96,7 +96,6 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 		public function uninstall() {
 			$this->wpdb->query( "DROP TABLE IF EXISTS $this->tbl_name" );
 		}
-
 		/**
 		 * Init table
 		 */
@@ -116,6 +115,10 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 				) $charset_collate;";
 				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 				dbDelta( $sql );
+
+				// Init setting when installing plugin firstly.
+				update_option( PPW_Constants::MISC_OPTIONS, wp_json_encode( array( 'wpp_use_custom_form_action' => 'true' ) ), 'no' );
+
 				$this->tbl_version = "1.0";
 				$this->update_table_version( $this->tbl_version );
 			}
@@ -254,6 +257,43 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 		}
 
 		/**
+		 * Find shared category password.
+		 *
+		 * @param string $password Password.
+		 *
+		 * @return array|object|void|null Database query result in format specified by $output or null on failure
+		 */
+		public function find_by_shared_category_password( $password ) {
+			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE BINARY password = %s AND post_id = 0 AND campaign_app_type = %s", $password, PPW_Category_Service::SHARED_CATEGORY_TYPE );
+
+			return $this->wpdb->get_row( $sql );
+		}
+
+		/**
+		 * Get all shared categories password.
+		 *
+		 * @return array|object|void|null Database query result in format specified by $output or null on failure
+		 */
+		public function get_all_shared_categories_password() {
+			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE post_id = 0 AND campaign_app_type = %s", PPW_Category_Service::SHARED_CATEGORY_TYPE );
+
+			return $this->wpdb->get_results( $sql );
+		}
+
+		/**
+		 * Get shared category password by password ID.
+		 *
+		 * @param int $password_id Password ID.
+		 *
+		 * @return array|object|void|null Database query result in format specified by $output or null on failure
+		 */
+		public function get_shared_category_password( $password_id ) {
+			$sql = $this->wpdb->prepare( "SELECT * FROM {$this->tbl_name} WHERE BINARY id = %d AND campaign_app_type = %s", $password_id, PPW_Category_Service::SHARED_CATEGORY_TYPE );
+
+			return $this->wpdb->get_row( $sql );
+		}
+
+		/**
 		 * Delete a row in table by id.
 		 *
 		 * @param int $id ID.
@@ -313,6 +353,24 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 
 			return $this->wpdb->get_var( $query );
 		}
+
+		/**
+		 * Get all backup post password.
+		 *
+		 * @return array|object|void|null Database query result in format specified by $output or null on failure
+		 */
+		public function get_wp_post_passwords() {
+			$sql = "SELECT * FROM {$this->wpdb->postmeta} WHERE meta_key = 'ppwp_post_password_bk'";
+
+			return $this->wpdb->get_results( $sql );
+		}
+
+		public function count_wp_post_passwords() {
+			$sql = "SELECT COUNT(*) FROM {$this->wpdb->postmeta} WHERE meta_key = 'ppwp_post_password_bk'";
+
+			return $this->wpdb->get_var( $sql );
+		}
+
 
 	}
 }

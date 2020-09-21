@@ -14,13 +14,13 @@ class DonationsVsIncome extends Endpoint {
 		$this->endpoint = 'donations-vs-income';
 	}
 
-	public function get_report( $request ) {
+	public function getReport( $request ) {
 
 		$start = date_create( $request->get_param( 'start' ) );
 		$end   = date_create( $request->get_param( 'end' ) );
 		$diff  = date_diff( $start, $end );
 
-		$data = array();
+		$data = [];
 
 		switch ( true ) {
 			case ( $diff->days > 900 ):
@@ -59,10 +59,10 @@ class DonationsVsIncome extends Endpoint {
 
 		$stats = new \Give_Payment_Stats();
 
-		$labels    = array();
-		$donations = array();
-		$income    = array();
-		$periods   = array();
+		$labels    = [];
+		$donations = [];
+		$income    = [];
+		$periods   = [];
 
 		$dateInterval = new \DateInterval( $interval );
 		while ( $start < $end ) {
@@ -79,30 +79,27 @@ class DonationsVsIncome extends Endpoint {
 			$donationsForPeriod = $stats->get_sales( 0, $periodStart, $periodEnd );
 			$incomeForPeriod    = $stats->get_earnings( 0, $periodStart, $periodEnd );
 
-			array_push( $donations, $donationsForPeriod );
-			array_push( $income, $incomeForPeriod );
-			array_push( $labels, $label );
-			array_push( $periods, $periodStart );
+			$donations[] = $donationsForPeriod;
+			$income[]    = $incomeForPeriod;
+			$labels[]    = $label;
+			$periods[]   = $periodStart;
 
 			date_add( $start, $dateInterval );
 		}
 
-		$data = array(
+		return [
 			'periods'  => $periods,
 			'labels'   => $labels,
-			'datasets' => array(
-				array(
+			'datasets' => [
+				[
 					'label' => 'Donations',
 					'data'  => $donations,
-				),
-				array(
+				],
+				[
 					'label' => 'Income',
 					'data'  => $income,
-				),
-			),
-		);
-
-		return $data;
-
+				],
+			],
+		];
 	}
 }

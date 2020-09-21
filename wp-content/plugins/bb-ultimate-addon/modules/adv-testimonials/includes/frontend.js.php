@@ -37,8 +37,8 @@ if ( 'slider' === $settings->tetimonial_layout ) {
 		pager : <?php echo ( 'wide' === $settings->navigation || 'compact-wide' === $settings->navigation ) ? 1 : 0; ?>,
 		nextSelector : '.fl-node-<?php echo esc_attr( $id ); ?> .uabb-slider-next',
 		prevSelector : '.fl-node-<?php echo esc_attr( $id ); ?> .uabb-slider-prev',
-		nextText: '<i class="fa fa-chevron-right"></i>',
-		prevText: '<i class="fa fa-chevron-left"></i>',
+		nextText: '<i class="<?php echo esc_attr( $next_arrow ); ?>"></i>',
+		prevText: '<i class="<?php echo esc_attr( $prev_arrow ); ?>"></i>',
 		controls : <?php echo ( 'compact' === $settings->navigation || 'compact-wide' === $settings->navigation ) ? 1 : 0; ?>,
 		onSliderLoad: function() {
 			jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-testimonials').addClass('uabb-testimonials-loaded');

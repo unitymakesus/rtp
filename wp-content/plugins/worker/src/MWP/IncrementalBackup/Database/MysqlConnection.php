@@ -30,20 +30,23 @@ class MWP_IncrementalBackup_Database_MysqlConnection implements MWP_IncrementalB
         }
 
         if ($configuration->isSocket()) {
+            /** @handled function */
             $this->connection = @mysql_connect(':'.$configuration->getSocketPath(), $configuration->getUsername(), $configuration->getPassword());
         } else {
             $host = $configuration->getHost();
             if ($configuration->getPort() !== null) {
                 $host .= ':'.$configuration->getPort();
             }
+            /** @handled function */
             $this->connection = @mysql_connect($host, $configuration->getUsername(), $configuration->getPassword());
         }
 
         if (!is_resource($this->connection)) {
             throw new MWP_IncrementalBackup_Database_Exception_ConnectionException(mysql_error(), mysql_errno());
         }
-
+        /** @handled function */
         @mysql_set_charset($configuration->getCharset(), $this->connection);
+        /** @handled function */
         mysql_select_db($configuration->getDatabase(), $this->connection);
     }
 
@@ -53,8 +56,10 @@ class MWP_IncrementalBackup_Database_MysqlConnection implements MWP_IncrementalB
     public function query($query, $useResult = false)
     {
         if ($useResult) {
+            /** @handled function */
             $result = mysql_unbuffered_query($query, $this->connection);
         } else {
+            /** @handled function */
             $result = mysql_query($query, $this->connection);
         }
 

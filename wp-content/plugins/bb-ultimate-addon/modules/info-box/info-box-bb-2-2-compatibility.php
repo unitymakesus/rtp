@@ -14,7 +14,7 @@ FLBuilder::register_module(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
-				'title'     => array(
+				'title'      => array(
 					'title'  => __( 'Title', 'uabb' ),
 					'fields' => array(
 						'heading_prefix' => array(
@@ -41,9 +41,10 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'text'      => array(
-					'title'  => __( 'Description', 'uabb' ),
-					'fields' => array(
+				'text'       => array(
+					'title'     => __( 'Description', 'uabb' ),
+					'collapsed' => true,
+					'fields'    => array(
 						'text' => array(
 							'type'          => 'editor',
 							'label'         => '',
@@ -59,9 +60,10 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'separator' => array( // Section.
-					'title'  => __( 'Separator', 'uabb' ), // Section Title.
-					'fields' => array( // Section Fields.
+				'separator'  => array( // Section.
+					'title'     => __( 'Separator', 'uabb' ), // Section Title.
+					'collapsed' => true,
+					'fields'    => array( // Section Fields.
 						'enable_separator'    => array(
 							'type'    => 'select',
 							'label'   => __( 'Separator', 'uabb' ),
@@ -151,9 +153,10 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'border'    => array(
-					'title'  => __( 'Border', 'uabb' ),
-					'fields' => array(
+				'border'     => array(
+					'title'     => __( 'Border', 'uabb' ),
+					'collapsed' => true,
+					'fields'    => array(
 						'uabb_border_type'   => array(
 							'type'    => 'select',
 							'label'   => __( 'Type', 'uabb' ),
@@ -188,19 +191,18 @@ FLBuilder::register_module(
 							),
 						),
 						'uabb_border_top'    => array(
-							'type'        => 'unit',
-							'label'       => __( 'Top Width', 'uabb' ),
-							'default'     => '1',
-							'placeholder' => '0',
-							'slider'      => array(
+							'type'    => 'unit',
+							'label'   => __( 'Top Width', 'uabb' ),
+							'default' => '1',
+							'slider'  => array(
 								'px' => array(
 									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
+									'max'  => 100,
+									'step' => 1,
 								),
 							),
-							'units'       => array( 'px' ),
-							'preview'     => array(
+							'units'   => array( 'px' ),
+							'preview' => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-infobox',
 								'property'  => 'border-top-width',
@@ -216,8 +218,8 @@ FLBuilder::register_module(
 							'slider'  => array(
 								'px' => array(
 									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
+									'max'  => 100,
+									'step' => 1,
 								),
 							),
 							'preview' => array(
@@ -236,8 +238,8 @@ FLBuilder::register_module(
 							'slider'  => array(
 								'px' => array(
 									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
+									'max'  => 100,
+									'step' => 1,
 								),
 							),
 							'preview' => array(
@@ -256,8 +258,8 @@ FLBuilder::register_module(
 							'slider'  => array(
 								'px' => array(
 									'min'  => 0,
-									'max'  => 1000,
-									'step' => 10,
+									'max'  => 100,
+									'step' => 1,
 								),
 							),
 							'preview' => array(
@@ -299,6 +301,71 @@ FLBuilder::register_module(
 								'yes' => _x( 'Yes', 'Border type.', 'uabb' ),
 								'no'  => _x( 'No', 'Border type.', 'uabb' ),
 							),
+						),
+					),
+				),
+				'box_shadow' => array(
+					'title'     => __( 'Box Shadow', 'uabb' ),
+					'collapsed' => true,
+					'fields'    => array(
+						'info_shadow_color_hor'  => array(
+							'type'   => 'unit',
+							'label'  => __( 'Horizontal Length', 'uabb' ),
+							'size'   => '5',
+							'units'  => array( 'px' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 1,
+								),
+							),
+						),
+						'info_shadow_color_ver'  => array(
+							'type'   => 'unit',
+							'label'  => __( 'Vertical Length', 'uabb' ),
+							'size'   => '5',
+							'units'  => array( 'px' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 1,
+								),
+							),
+						),
+						'info_shadow_color_blur' => array(
+							'type'   => 'unit',
+							'label'  => __( 'Blur Radius', 'uabb' ),
+							'size'   => '5',
+							'units'  => array( 'px' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 1,
+								),
+							),
+						),
+						'info_shadow_color_spr'  => array(
+							'type'   => 'unit',
+							'label'  => __( 'Spread Radius', 'uabb' ),
+							'size'   => '5',
+							'units'  => array( 'px' ),
+							'slider' => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 100,
+									'step' => 1,
+								),
+							),
+						),
+						'info_shadow_color'      => array(
+							'type'       => 'color',
+							'label'      => __( 'Shadow Color', 'uabb' ),
+							'default'    => 'rgba(168,168,168,0.5)',
+							'show_reset' => true,
+							'show_alpha' => true,
 						),
 					),
 				),
@@ -899,6 +966,7 @@ FLBuilder::register_module(
 						'info_box_padding_dimension' => array(
 							'type'       => 'dimension',
 							'label'      => __( 'Content Padding', 'uabb' ),
+							'default'    => '20',
 							'slider'     => array(
 								'px' => array(
 									'min'  => 0,

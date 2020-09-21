@@ -57,9 +57,10 @@ FLBuilder::register_module('FLRichTextModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-rich-text, .fl-rich-text *',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '{node} .fl-rich-text, {node} .fl-rich-text *',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'typography' => array(

@@ -32,6 +32,8 @@ class UABBSocialShare extends FLBuilderModule {
 				'icon'            => 'share-alt2.svg',
 			)
 		);
+		$this->add_css( 'font-awesome-5' );
+
 	}
 
 	/**

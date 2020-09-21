@@ -59,19 +59,19 @@ $label_on  = ( isset( $settings->label_box_on ) ) ? $settings->label_box_on : 'O
 
 			switch ( $settings->select_switch_style ) {
 				case 'round1':
-					$switch_html = '<label class="uabb-rbs-switch-label"><input type="checkbox" class="uabb-rbs-switch uabb-switch-round-1 uabb-clickable uabb-checkbox-clickable" ' . $is_checked . '><span class="uabb-rbs-slider uabb-rbs-round uabb-clickable switch1"></span></label>';
+					$switch_html = '<label class="uabb-rbs-switch-label"><input type="checkbox" class="uabb-rbs-switch uabb-switch-round-1 uabb-clickable uabb-checkbox-clickable ' . $is_checked . '"><span class="uabb-rbs-slider uabb-rbs-round uabb-clickable switch1"></span></label>';
 					break;
 
 				case 'round2':
-					$switch_html = '<div class="uabb-toggle"><input type="checkbox" class="uabb-switch-round-2 uabb-clickable uabb-checkbox-clickable" name="group1" id="toggle" ' . $is_checked . '><label for="toggle" class="uabb-clickable switch2"></label></div>';
+					$switch_html = '<div class="uabb-toggle"><input type="checkbox" class="uabb-rbs-switch-2 uabb-switch-round-2 uabb-clickable uabb-checkbox-clickable ' . $is_checked . '" name="group1" id="toggle"><label for="toggle" class="uabb-clickable switch2"></label></div>';
 					break;
 
 				case 'rectangle':
-					$switch_html = '<label class="uabb-rbs-switch-label"><input type="checkbox" class="uabb-rbs-switch uabb-switch-rectangle uabb-clickable uabb-checkbox-clickable" ' . $is_checked . '><span class="uabb-rbs-slider uabb-rbs-rect uabb-clickable switch3"></span></label>';
+					$switch_html = '<label class="uabb-rbs-switch-label"><input type="checkbox" class="uabb-rbs-switch uabb-switch-rectangle uabb-clickable uabb-checkbox-clickable ' . $is_checked . '"><span class="uabb-rbs-slider uabb-rbs-rect uabb-clickable switch3"></span></label>';
 					break;
 
 				case 'label_box':
-					$switch_html = '<div class="uabb-label-box uabb-clickable"><input type="checkbox" name="uabb-label-box" class="uabb-label-box-checkbox uabb-switch-label-box uabb-clickable uabb-checkbox-clickable" ' . $is_checked . ' id="myonoffswitch"><label for="myonoffswitch" class="uabb-label-box-label switch4"><span class="uabb-label-box-inner"><span class="uabb-label-box-inactive"><span class="uabb-label-box-switch">' . $label_off . '</span></span><span class="uabb-label-box-active"><span class="uabb-label-box-switch">' . $label_on . '</span></span></span></label></div>';
+					$switch_html = '<div class="uabb-label-box uabb-clickable"><input type="checkbox" name="uabb-label-box" class="uabb-label-box-checkbox uabb-switch-label-box uabb-clickable uabb-checkbox-clickable ' . $is_checked . '" id="myonoffswitch"><label for="myonoffswitch" class="uabb-label-box-label switch4"><span class="uabb-label-box-inner"><span class="uabb-label-box-inactive"><span class="uabb-label-box-switch">' . $label_off . '</span></span><span class="uabb-label-box-active"><span class="uabb-label-box-switch">' . $label_on . '</span></span></span></label></div>';
 					break;
 
 				default:

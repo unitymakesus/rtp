@@ -26,6 +26,17 @@
 		</label>
 		<# } #>
 
+		<# if ( data.field.show_download ) {
+			var value = data.settings[ data.name + '_download' ];
+			var checked = 'yes' === value ? 'checked' : '';
+		#>
+		<label>
+			<input type="checkbox" class="fl-link-field-download-cb" {{checked}} />
+			<input type="hidden" name="{{data.name}}_download" value="{{value}}" />
+			<span><?php _e( 'Force Download', 'fl-builder' ); ?></span>
+		</label>
+		<# } #>
+
 		<# if ( ! ( data.field.show_target && data.field.show_nofollow ) ) { #>
 				<label></label>
 		<# } #>

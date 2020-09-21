@@ -281,7 +281,7 @@ function ppw_core_render_login_form() {
 	$show_password_text  = $customized_elements['show_password_label'];
 
 	// We need to wrap the div for input to prevent the <p> tag generated when view HTML source.
-	$show_password      = get_theme_mod( 'ppwp_form_instructions_is_show_password', PPW_Constants::DEFAULT_IS_SHOW_PASSWORD ) ? '<div><input id="ppw_' . $post_id . '" onclick="ppwShowPassword(' . $post_id . ')" type="checkbox"/><label for="ppw_' . $post_id . '">' . _x( $show_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ) . '</label></div>' : ''; // phpcs:ignore
+	$show_password      = get_theme_mod( 'ppwp_form_instructions_is_show_password', PPW_Constants::DEFAULT_IS_SHOW_PASSWORD ) ? '<div class="ppw-ppf-show-pwd-btn" ><input id="ppw_' . $post_id . '" onclick="ppwShowPassword(' . $post_id . ')" type="checkbox"/><label for="ppw_' . $post_id . '">' . _x( $show_password_text, PPW_Constants::CONTEXT_PASSWORD_FORM, 'password-protect-page' ) . '</label></div>' : ''; // phpcs:ignore
 	/**
 	 * Generate Password Form.
 	 */
@@ -371,7 +371,36 @@ function ppw_core_render_login_form() {
 	<?php
 	$output = ob_get_clean();
 
+	if ( ppw_core_get_no_load_page_option() ) {
+		static $instance = 0;
+		if ( $instance === 0 ) {
+			$instance++;
+			wp_enqueue_script( 'ppw-single-password-form', PPW_DIR_URL . 'core/js/single-password-form.js', array( 'jquery' ), PPW_VERSION, true );
+			wp_localize_script(
+				"ppw-single-password-form",
+				'ppw_data',
+				array(
+					'restUrl' => get_rest_url(),
+					'nonce'   => wp_create_nonce( 'wp_rest' ),
+				)
+			);
+		}
+	}
+
 	return $output;
+}
+
+/**
+ * Get "No reload page" option value
+ * 
+ * @return bool
+ */
+function ppw_core_get_no_load_page_option() {
+	if ( defined( 'PPW_PPF_NOT_RELOAD' ) ) {
+		return PPW_PPF_NOT_RELOAD;
+	}
+
+	return ppw_core_get_setting_type_bool_by_option_name( 'wpp_no_reload_page', PPW_Constants::MISC_OPTIONS );
 }
 
 /**
@@ -423,12 +452,22 @@ function ppw_core_get_unit_time( $password_cookie_expired ) {
 function ppw_core_get_posts_password_protected_by_wp() {
 	$posts_type = apply_filters( PPW_Constants::HOOK_POST_TYPES, array( 'page', 'post' ) );
 
-	return get_posts( array(
-		'post_status'  => 'publish',
-		'post_type'    => $posts_type,
-		'numberposts'  => - 1,
-		'has_password' => true,
-	) );
+	return get_posts(
+		array(
+			'post_status'  => array(
+				'publish',
+				'pending',
+				'draft',
+				'auto-draft',
+				'future',
+				'private',
+				'trash',
+			),
+			'post_type'    => $posts_type,
+			'numberposts'  => - 1,
+			'has_password' => true,
+		)
+	);
 }
 
 /**
@@ -897,4 +936,22 @@ function ppw_core_ui_hide_protected_content( $ppw_hide, $ppw_options, $ppw_selec
 			</td>
 		</tr>
 	";
+}
+
+function ppw_core_get_error_msg( $post_id ) {
+	$default_message = apply_filters( PPW_Constants::HOOK_MESSAGE_ENTERING_WRONG_PASSWORD, PPW_Constants::DEFAULT_WRONG_PASSWORD_MESSAGE );
+	$message         = wp_kses_post( get_theme_mod( 'ppwp_form_error_message_text', $default_message ) );
+	$customize       = apply_filters(
+		'ppwp_customize_ppf',
+		array(
+			'submit_label'        => '',
+			'password_label'      => '',
+			'description'         => '',
+			'headline'            => '',
+			'error_msg'           => $message,
+			'show_password_label' => '',
+		),
+		$post_id
+	);
+	return $customize['error_msg'];
 }

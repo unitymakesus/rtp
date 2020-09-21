@@ -25,7 +25,7 @@ echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filt
 	'nestedColumns'              => ( ! defined( 'FL_BUILDER_NESTED_COLUMNS' ) || FL_BUILDER_NESTED_COLUMNS ),
 	'newUser'                    => FLBuilderModel::is_new_user(),
 	'pluginUrl'                  => FL_BUILDER_URL,
-	'relativePluginUrl'          => str_ireplace( home_url(), '', FL_BUILDER_URL ),
+	'relativePluginUrl'          => FLBuilderModel::get_relative_plugin_url(),
 	'postId'                     => $post_id,
 	'postStatus'                 => get_post_status(),
 	'postType'                   => get_post_type(),
@@ -67,6 +67,11 @@ echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filt
 	'statsEnabled'               => get_site_option( 'fl_builder_usage_enabled', false ),
 	'rememberTab'                => apply_filters( 'fl_remember_settings_tabs_enabled', true ),
 	'select2Enabled'             => apply_filters( 'fl_select2_enabled', true ),
+	'uploadTypes'                => apply_filters( 'fl_media_modal_types', array(
+		'image' => 'image',
+		'video' => 'video',
+	) ),
+	'themerLayoutsUrl'           => admin_url( '/edit.php?post_type=fl-theme-layout' ),
 ) ) ) . ';';
 
 /**
@@ -131,6 +136,7 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	'large'                          => esc_attr__( 'Large', 'fl-builder' ),
 	'manageTemplates'                => esc_attr__( 'Manage Templates', 'fl-builder' ),
 	'medium'                         => esc_attr__( 'Medium', 'fl-builder' ),
+	'mobile'                         => esc_attr__( 'Small', 'fl-builder' ),
 	'module'                         => esc_attr__( 'Module', 'fl-builder' ),
 	'moduleTemplateSaved'            => esc_attr__( 'Module Saved!', 'fl-builder' ),
 	'move'                           => esc_attr__( 'Move', 'fl-builder' ),

@@ -21,6 +21,13 @@ $settings->cat_filter_bg_hover_color     = UABB_Helper::uabb_colorpicker( $setti
 $settings->cat_filter_border_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'cat_filter_border_hover_color', true );
 $settings->photo_spacing                 = ( '' !== $settings->photo_spacing ) ? $settings->photo_spacing : '20';
 $settings->caption_bg_color              = ( '' !== $settings->caption_bg_color ) ? $settings->caption_bg_color : '#f7f7f7';
+$settings->load_more_bg_color            = UABB_Helper::uabb_colorpicker( $settings, 'load_more_bg_color', true );
+$settings->load_more_text_color          = UABB_Helper::uabb_colorpicker( $settings, 'load_more_text_color', true );
+$settings->load_more_text_hover_color    = UABB_Helper::uabb_colorpicker( $settings, 'load_more_text_hover_color', true );
+$settings->load_more_bg_hover_color      = UABB_Helper::uabb_colorpicker( $settings, 'load_more_bg_hover_color', true );
+$settings->border_hover_color            = UABB_Helper::uabb_colorpicker( $settings, 'border_hover_color', true );
+$settings->img_shadow_color              = UABB_Helper::uabb_colorpicker( $settings, 'img_shadow_color', true );
+$settings->img_shadow_color_hover        = UABB_Helper::uabb_colorpicker( $settings, 'img_shadow_color_hover', true );
 ?>
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-photo-gallery,
@@ -128,6 +135,86 @@ $settings->caption_bg_color              = ( '' !== $settings->caption_bg_color 
 	}
 }
 ?>
+
+<?php if ( isset( $settings->pagination ) && 'none' !== $settings->pagination && 'no' === $settings->filterable_gallery_enable ) { ?>
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gallery-pagination {
+	<?php if ( isset( $settings->load_more_align ) ) { ?>
+		text-align: <?php echo esc_attr( $settings->load_more_align ); ?>;
+	<?php } ?>
+}
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gallery-pagination.pagination-scroll {
+	display: none;
+}
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gallery-pagination .uabb-gallery-load-more {
+	<?php if ( isset( $settings->load_more_bg_color ) && '' !== $settings->load_more_bg_color ) { ?>
+		background-color: <?php echo esc_attr( $settings->load_more_bg_color ); ?>;
+	<?php } ?>
+	<?php if ( isset( $settings->load_more_text_color ) && '' !== $settings->load_more_text_color ) { ?>
+		color: <?php echo esc_attr( $settings->load_more_text_color ); ?>;
+	<?php } ?>
+}
+	<?php
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		// Load More - Border.
+		FLBuilderCSS::border_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'load_more_border',
+				'selector'     => ".fl-node-$id .uabb-gallery-pagination .uabb-gallery-load-more",
+			)
+		);
+
+		// Load More - Margin Top.
+		FLBuilderCSS::responsive_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'load_more_margin_top',
+				'selector'     => ".fl-node-$id .uabb-gallery-pagination .uabb-gallery-load-more",
+				'prop'         => 'margin-top',
+				'unit'         => 'px',
+			)
+		);
+
+		// Load More - Padding.
+		FLBuilderCSS::dimension_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'load_more_padding',
+				'selector'     => ".fl-node-$id .uabb-gallery-pagination .uabb-gallery-load-more",
+				'unit'         => 'px',
+				'props'        => array(
+					'padding-top'    => 'load_more_padding_top',
+					'padding-right'  => 'load_more_padding_right',
+					'padding-bottom' => 'load_more_padding_bottom',
+					'padding-left'   => 'load_more_padding_left',
+				),
+			)
+		);
+
+		// Load More - Typography.
+		FLBuilderCSS::typography_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'load_more_typo',
+				'selector'     => ".fl-node-$id .uabb-gallery-pagination .uabb-gallery-load-more",
+			)
+		);
+	}
+	?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gallery-pagination .uabb-gallery-load-more:hover {
+	<?php if ( isset( $settings->load_more_bg_hover_color ) && ! empty( $settings->load_more_bg_hover_color ) ) { ?>
+		background-color: <?php echo esc_attr( $settings->load_more_bg_hover_color ); ?>;
+	<?php } ?>
+	<?php if ( isset( $settings->load_more_text_hover_color ) && ! empty( $settings->load_more_text_hover_color ) ) { ?>
+		color: <?php echo esc_attr( $settings->load_more_text_hover_color ); ?>;
+	<?php } ?>
+	<?php if ( isset( $settings->border_hover_color ) && ! empty( $settings->border_hover_color ) ) { ?>
+		border-color: <?php echo esc_attr( $settings->border_hover_color ); ?>;
+	<?php } ?>
+}
+<?php } ?>
+
 <?php if ( $global_settings->responsive_enabled ) { // Global Setting If started. ?>
 	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
 		<?php if ( ! $version_bb_check ) { ?>
@@ -524,6 +611,39 @@ if ( isset( $settings->cat_filter_border_hover_color ) ) {
 				}
 				?>
 			}
+		<?php } ?>
+	}
+	<?php
+}
+
+// Image Box Shadow CSS.
+if ( 'yes' === $settings->img_drop_shadow ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-photo-gallery-content {
+		-webkit-box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->img_shadow_color ); ?>;
+		-moz-box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->img_shadow_color ); ?>;
+		-o-box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->img_shadow_color ); ?>;
+		box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->img_shadow_color ); ?>;
+		<?php if ( isset( $settings->img_shadow_hover_transition ) && 'yes' === $settings->img_hover_shadow ) { ?>
+			-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out;
+			-moz-transition: -moz-box-shadow <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out;
+			transition: box-shadow <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out;
+			will-change: box-shadow;
+		<?php } ?>
+		}
+<?php } ?>
+
+<?php if ( 'yes' === $settings->img_hover_shadow ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-photo-gallery-content:hover {
+		-webkit-box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_hover ); ?>;
+		-moz-box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_hover ); ?>;
+		-o-box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_hover ); ?>;
+		box-shadow: <?php echo esc_attr( $settings->img_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_spr_hover ); ?>px <?php echo esc_attr( $settings->img_shadow_color_hover ); ?>;
+		<?php if ( isset( $settings->img_shadow_hover_transition ) && 'yes' === $settings->img_hover_shadow ) { ?>
+			-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out;
+			-moz-transition: -moz-box-shadow <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out;
+			transition: box-shadow <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $settings->img_shadow_hover_transition ); ?>ms ease-in-out;
+			will-change: box-shadow;
 		<?php } ?>
 	}
 <?php } ?>

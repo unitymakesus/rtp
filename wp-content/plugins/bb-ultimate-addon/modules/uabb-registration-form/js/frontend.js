@@ -43,7 +43,10 @@
 		this.email_invalid_err_msg		 = settings.email_invalid_err_msg;
 		this.required_field_err_msg		 = settings.required_field_err_msg;
 		submit_button.on('click', $.proxy( this._submitform, this ) );
+		confirm_password = $node_module.find( 'input[name=uabb_confirm_pass]' );
 
+		confirm_password.on('keyup change',$.proxy( this.checkPassword, this ) );
+		
 		if ( 'yes' == this.check_password_strength ) {
 			$node_module.find( 'input[name=uabb_user_pass]' ).on('keyup change',$.proxy( this.strengthMeterPassword, this ) );
 		}
@@ -96,6 +99,33 @@
 					break;
 			}
 		},
+		checkPassword: function() {
+			node_module 		= $( '.fl-node-' + this.node );
+			var match_field = node_module.find( '.uabb-registration-form-pass-match' );
+			pass = node_module.find( 'input[name=uabb_user_pass]' ).val();
+			confirm_pass = node_module.find( 'input[name=uabb_confirm_pass]' ).val();
+		
+			if( pass === confirm_pass){
+            
+            match_field.removeClass('error');
+            match_field.addClass('success');
+            match_field.show();
+            match_field.html('Password matched');
+
+            setTimeout(function() {
+                match_field.fadeOut('slow');
+            }, 5000);
+
+          }else if( pass !== confirm_pass ){
+            
+            match_field.removeClass('success');
+            match_field.addClass('error');
+            match_field.show();
+            match_field.html('Password do not match');
+
+          }
+
+		},
 		_submitform: function() {
 
 			
@@ -119,6 +149,7 @@
 			node_id      	    = theForm.closest( '.fl-module' ).data( 'node' );
 			honeypot_field		= node_module.find( 'input[name=input_text]' );
 			reCaptchaField      = $('#'+ this.settings.id + '-uabb-grecaptcha');
+			termsCheckbox 	= $( node_Class + ' .uabb-terms-checkbox input' );
 
 			reCaptchaValue      = reCaptchaField.data( 'uabb-grecaptcha-response' );
 			user_email_regex	= /\S+@\S+\.\S+/;
@@ -278,6 +309,16 @@
 				user_email.addClass( 'uabb-form-error' );
 				if ( user_email.siblings( '.uabb-registration_form-error-message' ).empty() ) {
 					user_email.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
+				}
+			}
+			// validate if checkbox is checked
+			if ( termsCheckbox.length ) {
+				if ( ! termsCheckbox.is(':checked') ) {
+					$valid_field = true;
+					termsCheckbox.closest( '.uabb-registration-form .uabb-terms-checkbox' ).addClass( 'uabb-registration-form-error' );
+				}
+				else if ( termsCheckbox.closest( '.uabb-registration-form .uabb-terms-checkbox' ).hasClass( 'uabb-registration-form-error' ) ) {
+					termsCheckbox.closest( '.uabb-registration-form .uabb-terms-checkbox' ).removeClass( 'uabb-registration-form-error' );
 				}
 			}
 			// validate if reCAPTCHA is enabled and checked

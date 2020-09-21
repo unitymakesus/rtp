@@ -7,15 +7,16 @@ function fl_welcome_utm( $campaign ) {
 		'utm_campaign' => $campaign,
 	);
 }
-$blog_post_url   = FLBuilderModel::get_store_url( '?p=520854', fl_welcome_utm( 'settings-welcome-blog-post' ) );
+$blog_post_url   = FLBuilderModel::get_store_url( 'beaver-builder-2-4-oshaughnessy', fl_welcome_utm( 'settings-welcome-blog-post' ) );
 $change_logs_url = FLBuilderModel::get_store_url( 'change-logs', fl_welcome_utm( 'settings-welcome-change-logs' ) );
 $upgrade_url     = FLBuilderModel::get_upgrade_url( fl_welcome_utm( 'settings-welcome-upgrade' ) );
 $support_url     = FLBuilderModel::get_store_url( 'beaver-builder-support', fl_welcome_utm( 'settings-welcome-support' ) );
 $faqs_url        = FLBuilderModel::get_store_url( 'frequently-asked-questions', fl_welcome_utm( 'settings-welcome-faqs' ) );
-$forums_url      = FLBuilderModel::get_store_url( 'support', fl_welcome_utm( 'settings-welcome-forums' ) );
-$docs_url        = 'https://kb.wpbeaverbuilder.com/';
+$forums_url      = FLBuilderModel::get_store_url( 'go/forum', fl_welcome_utm( 'settings-welcome-forums' ) );
+$docs_url        = FLBuilderModel::get_store_url( 'go/docs', fl_welcome_utm( 'settings-welcome-docs' ) );
 $fb_url          = 'https://www.facebook.com/groups/beaverbuilders/';
-
+$release_ver     = '2.4';
+$release_name    = '&#8220;O&rsquo;Shaughnessy&#8221;';
 ?>
 <div id="fl-welcome-form" class="fl-settings-form">
 
@@ -51,6 +52,7 @@ $fb_url          = 'https://www.facebook.com/groups/beaverbuilders/';
 				<ul>
 					<li><?php _e( '<a href="https://www.wpbeaverbuilder.com/go/bb-facebook" target="_blank">Join the Beaver Builder\'s Group on Facebook</a>', 'fl-builder' ); ?></li>
 					<li><?php _e( '<a href="https://www.wpbeaverbuilder.com/go/bb-slack" target="_blank">Join the Beaver Builder\'s Group on Slack</a>', 'fl-builder' ); ?></li>
+					<li><?php _e( '<a href="https://www.wpbeaverbuilder.com/go/forum" target="_blank">Join the Beaver Builder Forums</a>', 'fl-builder' ); ?></li>
 				</ul>
 
 				<p><?php _e( 'Come by and share a project, ask a question, or just say hi! For news about new features and updates, like our <a href="https://www.facebook.com/wpbeaverbuilder/" target="_blank">Facebook Page</a> or follow us <a href="https://twitter.com/beaverbuilder" target="_blank">on Twitter</a>.', 'fl-builder' ); ?></p>
@@ -82,16 +84,17 @@ $fb_url          = 'https://www.facebook.com/groups/beaverbuilders/';
 
 			<div class="fl-welcome-col">
 
-				<?php /* translators: %s: builder version */ ?>
-				<h4><?php printf( __( 'What\'s New in Beaver Builder %s', 'fl-builder' ), '2.3 "Folsom"' ); ?></h4>
+				<?php /* translators: %s: builder name and version */ ?>
+				<h4><?php printf( __( "What's New in Beaver Builder", 'fl-builder' ) . ' %1$s %2$s', $release_ver, $release_name ); ?></h4>
 
-				<p><?php _e( 'We\'re thrilled to announce Beaver Builder 2.3 "Folsom". Beaver Builder 2.3 brings a number of workflow enhancements.', 'fl-builder' ); ?></p>
+				<?php /* translators: %1$s: version, %2$s: release name */ ?>
+				<p><?php printf( __( 'We\'re thrilled to announce Beaver Builder %1$s %2$s. Beaver Builder %1$s brings a number of workflow enhancements.', 'fl-builder' ), $release_ver, $release_name ); ?></p>
 
 				<ul>
-					<li><?php _e( 'Undo / Redo & History Manager.', 'fl-builder' ); ?></li>
-					<li><?php _e( 'Editing with BB on mobile devices now has support.', 'fl-builder' ); ?></li>
-					<li><?php _e( 'Copy and paste module settings across pages or even sites.', 'fl-builder' ); ?></li>
-					<li><?php _e( 'The Beaver Builder UI will now remember which settings tab was last open when opening new settings windows.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'New Modules: Button Group, List, Login and Search modules join the ranks.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'Video Module: now show it in a Lightbox or set it to sticky.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'Icons: Font Awesome Pro subset support added.', 'fl-builder' ); ?></li>
+					<li><?php _e( 'Row Backgrounds: now embed slideshows from slideshow plugins using shortcode.', 'fl-builder' ); ?></li>
 				</ul>
 				<?php /* translators: 1: blog post url: 2: changelog url */ ?>
 				<p><?php printf( __( 'There\'s a whole lot more, too! Read about everything else on our <a href="%1$s" target="_blank">update post</a> or <a href="%2$s" target="_blank">change logs</a>.', 'fl-builder' ), $blog_post_url, $change_logs_url ); ?></p>
@@ -107,7 +110,7 @@ $fb_url          = 'https://www.facebook.com/groups/beaverbuilders/';
 				<p><?php _e( 'The fastest way to find an answer to a question is to see if someone\'s already answered it!', 'fl-builder' ); ?></p>
 
 				<?php /* translators: 1: docs url: 2: facebook url */ ?>
-				<p><?php printf( __( 'For that, check our <a href="%1$s" target="_blank">Knowledge Base</a> or try searching <a href="%2$s" target="_blank">the Beaver Builders Facebook group</a>.', 'fl-builder' ), $docs_url, $fb_url ); ?></p>
+				<p><?php printf( __( 'For that, check our <a href="%1$s" target="_blank">Knowledge Base</a> or try searching <a href="%2$s" target="_blank">the Beaver Builders Facebook group</a> or our <a href="%3$s" target="_blank">Forums</a>.', 'fl-builder' ), $docs_url, $fb_url, $forums_url ); ?></p>
 
 				<?php if ( true === FL_BUILDER_LITE ) : ?>
 					<?php /* translators: %s: upgrade url */ ?>

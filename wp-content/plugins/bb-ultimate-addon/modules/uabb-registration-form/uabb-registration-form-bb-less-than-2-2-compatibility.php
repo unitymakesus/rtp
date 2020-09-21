@@ -199,6 +199,44 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'terms_section'        => array(
+					'title'  => __( 'Terms and Conditions Field', 'uabb' ),
+					'fields' => array(
+						'terms_checkbox'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Terms and Conditions Checkbox', 'uabb' ),
+							'default' => 'hide',
+							'options' => array(
+								'show' => __( 'Show', 'uabb' ),
+								'hide' => __( 'Hide', 'uabb' ),
+							),
+							'toggle'  => array(
+								'show' => array(
+									'fields'   => array( 'terms_checkbox_text', 'terms_text' ),
+									'sections' => array( 'checkbox_typography', 'terms_typography', 'terms-checkbox-style' ),
+								),
+							),
+						),
+						'terms_checkbox_text' => array(
+							'type'    => 'text',
+							'label'   => __( 'Checkbox Text', 'uabb' ),
+							'default' => __( 'I Accept the Terms and Conditions', 'uabb' ),
+						),
+						'terms_text'          => array(
+							'type'          => 'editor',
+							'label'         => 'Terms and Conditions',
+							'default'       => __( 'Please go through the following terms and conditions carefully.', 'uabb' ),
+							'media_buttons' => false,
+							'rows'          => 8,
+							'preview'       => array(
+								'type'      => 'text',
+								'selector'  => '.uabb-terms-text',
+								'important' => true,
+							),
+							'connections'   => array( 'string' ),
+						),
+					),
+				),
 				'after_submit_action'  => array(
 					'title'  => __( 'After Register Actions', 'uabb' ),
 					'fields' => array(

@@ -55,6 +55,14 @@
 		_init: function()
 		{
 			$( this.nodeClass + ' .fl-button' ).click( $.proxy( this._submit, this ) );
+			$( this.nodeClass + ' .fl-button' ).on( 'keydown, keyup', $.proxy( this._keyupdown, this ) );
+		},
+
+		_keyupdown: function(e) {
+			if( e.keyCode === 13 || e.keyCode === 32 ) {
+				e.preventDefault();
+				this._submit(e);
+			}
 		},
 
 		_submit: function( e )
@@ -91,9 +99,11 @@
 				if (name.val() === '') {
 					isValid = false;
 					name.parent().addClass('fl-error');
+					name.attr('aria-invalid', true);
 				}
 				else if (name.parent().hasClass('fl-error')) {
 					name.parent().removeClass('fl-error');
+					name.attr('aria-invalid', false);
 				}
 			}
 
@@ -102,9 +112,11 @@
 				if (email.val() === '' || !email_regex.test(email.val())) {
 					isValid = false;
 					email.parent().addClass('fl-error');
+					email.attr('aria-invalid', true);
 				}
 				else if (email.parent().hasClass('fl-error')) {
 					email.parent().removeClass('fl-error');
+					email.attr('aria-invalid', false);
 				}
 			}
 
@@ -113,9 +125,11 @@
 				if (subject.val() === '') {
 					isValid = false;
 					subject.parent().addClass('fl-error');
+					subject.attr('aria-invalid', true);
 				}
 				else if (subject.parent().hasClass('fl-error')) {
 					subject.parent().removeClass('fl-error');
+					subject.attr('aria-invalid', false);
 				}
 			}
 
@@ -124,9 +138,11 @@
 				if (phone.val() === '') {
 					isValid = false;
 					phone.parent().addClass('fl-error');
+					phone.attr('aria-invalid', true);
 				}
 				else if (phone.parent().hasClass('fl-error')) {
 					phone.parent().removeClass('fl-error');
+					phone.attr('aria-invalid', false);
 				}
 			}
 
@@ -134,9 +150,11 @@
 			if (message.val() === '') {
 				isValid = false;
 				message.parent().addClass('fl-error');
+				message.attr('aria-invalid', true);
 			}
 			else if (message.parent().hasClass('fl-error')) {
 				message.parent().removeClass('fl-error');
+				message.attr('aria-invalid', false);
 			}
 
 			// validate the terms and conditions checkbox if enabled

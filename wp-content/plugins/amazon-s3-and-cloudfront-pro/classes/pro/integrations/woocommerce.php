@@ -205,7 +205,7 @@ class Woocommerce extends Integration {
 			}
 
 			$bucket = preg_quote( $as3cf_item->bucket(), '@' );
-			$key    = preg_quote( $as3cf_item->path(), '@' );
+			$key    = preg_quote( $as3cf_item->key(), '@' );
 
 			// Check the attachment isn't used by other downloads
 			$sql = $wpdb->prepare( "

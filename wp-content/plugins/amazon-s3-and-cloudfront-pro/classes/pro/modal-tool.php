@@ -520,7 +520,7 @@ abstract class Modal_Tool extends Tool {
 	 */
 	protected function get_attachment_file_size( $attachment_id, $file_meta = false ) {
 		$bytes = 0;
-		$paths = AS3CF_Utils::get_attachment_file_paths( $attachment_id, true, $file_meta );
+		$paths = array_unique( AS3CF_Utils::get_attachment_file_paths( $attachment_id, true, $file_meta ) );
 
 		foreach ( $paths as $path ) {
 			$bytes += filesize( $path );

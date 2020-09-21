@@ -18,7 +18,11 @@
 				start: function( event, ui ) {
 					const item  = $( ui.item[0] );
 					const index = item.index();
-					$( '.yikes-drag-drop-tax-placeholder' ).css( 'height', item.css( 'height' ) );
+					const colspan = item.children( 'th,td' ).filter( ':visible' ).length;
+					$( '.yikes-drag-drop-tax-placeholder' )
+					.css( 'height', item.css( 'height' ) )
+					.css( 'display', 'flex' )
+					.css( 'width', '0' );
 				},
 				// Update callback.
 				update: function( event, ui ) {

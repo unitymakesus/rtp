@@ -64,10 +64,12 @@ FLBuilder::register_module('FLIconGroupModule', array(
 						'label'    => __( 'Spacing', 'fl-builder' ),
 						'default'  => '10',
 						'sanitize' => 'absint',
-						'units'    => array( 'px' ),
+						'units'    => array( 'px', 'pt', '%' ),
 						'slider'   => true,
 						'preview'  => array(
-							'type' => 'none',
+							'type'     => 'css',
+							'selector' => '{node} .fl-icon + .fl-icon',
+							'property' => 'margin-left',
 						),
 					),
 					'align'   => array(
@@ -156,15 +158,20 @@ FLBuilder::register_settings_form('icon_group_form', array(
 				'general' => array( // Section
 					'title'  => '', // Section Title
 					'fields' => array( // Section Fields
-						'icon' => array(
+						'icon'    => array(
 							'type'  => 'icon',
 							'label' => __( 'Icon', 'fl-builder' ),
 						),
-						'link' => array(
+						'link'    => array(
 							'type'          => 'link',
 							'label'         => __( 'Link', 'fl-builder' ),
 							'show_target'   => true,
 							'show_nofollow' => true,
+						),
+						'sr_text' => array(
+							'type'    => 'text',
+							'label'   => __( 'Screen Reader Text', 'fl-builder' ),
+							'default' => '',
 						),
 					),
 				),

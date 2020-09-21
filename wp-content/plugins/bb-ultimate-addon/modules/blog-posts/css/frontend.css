@@ -50,7 +50,8 @@
     width: 10%;
 }
 
-.uabb-blog-posts-masonary #infscr-loading {
+.uabb-blog-posts-masonary #infscr-loading,
+.uabb-blog-posts-grid #infscr-loading {
     bottom: -40px;
     position: absolute;
 }

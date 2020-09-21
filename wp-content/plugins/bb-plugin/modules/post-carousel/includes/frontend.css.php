@@ -38,37 +38,46 @@
 <?php if ( 'grid' == $layout ) : ?>
 
 	<?php if ( ! empty( $settings->text_color ) ) : ?>
-	.fl-node-<?php echo $id; ?> .fl-post-carousel{
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-text,
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-text .fl-post-carousel-title,
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-text .fl-post-carousel-meta * {
 		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
 	}
 	<?php endif; ?>
 
-	.fl-node-<?php echo $id; ?> .fl-post-carousel-post{
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post{
 		background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 	}
 
 	<?php if ( ! empty( $settings->link_color ) ) : ?>
-	.fl-node-<?php echo $id; ?> .fl-post-carousel-text a{
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-text a {
 		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_color ); ?>;
 	}
 	<?php endif; ?>
 
 	<?php if ( ! empty( $settings->link_hover_color ) ) : ?>
-	.fl-node-<?php echo $id; ?> .fl-post-carousel-text a:hover{
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-text a:hover {
 		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_hover_color ); ?>;
 	}
 	<?php endif; ?>
 
 <?php elseif ( 'gallery' == $layout ) : ?>
 
+	<?php if ( ! empty( $settings->text_color ) ) : ?>
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-text,
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-text .fl-post-carousel-meta *{
+		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
+	}
+	<?php endif; ?>
+
 	<?php if ( ! empty( $settings->link_hover_color ) ) : ?>
-	.fl-node-<?php echo $id; ?> .fl-post-carousel-link,
-	.fl-node-<?php echo $id; ?> .fl-post-carousel-link .fl-post-carousel-title{
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-link,
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-post .fl-post-carousel-link .fl-post-carousel-title {
 		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_hover_color ); ?>;
 	}
 	<?php endif; ?>
 
-	.fl-node-<?php echo $id; ?> .fl-post-carousel-text-wrap{
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-carousel-text-wrap{
 		background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 	}
 

@@ -9,7 +9,13 @@
 jQuery(document).ready(function() {
 	new UABBPhotoGallery({
 		id: '<?php echo esc_attr( $id ); ?>',
+		uabb_ajaxurl: "<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>",
 		layout:'<?php echo esc_attr( $settings->layout ); ?>',
+		pagination: '<?php echo esc_attr( $settings->pagination ); ?>',
+		isBuilderActive: <?php echo esc_attr( FLBuilderModel::is_builder_active() ? 'true' : 'false' ); ?>,
+		imgPerPage: <?php echo esc_attr( isset( $settings->images_per_page ) ? $settings->images_per_page : 6 ); ?>,
+		settings: <?php echo wp_json_encode( $settings ); ?>,
+		total_img_count: <?php echo esc_attr( ( isset( $settings->photos ) && is_array( $settings->photos ) ) ? count( $settings->photos ) : 0 ); ?>,
 	});
 });
 jQuery(document).ready(function( $ ) {

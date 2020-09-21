@@ -108,7 +108,7 @@ class Uploader_Process extends Background_Tool_Process {
 			$this->as3cf->update_media_library_total();
 			$this->license_limit = $this->as3cf->get_total_allowed_media_items_to_upload();
 
-			if ( 0 === $this->license_limit ) {
+			if ( 0 == $this->license_limit ) {
 				$this->cancel();
 
 				$account_link = sprintf( '<a href="%s" target="_blank">%s</a>', $this->as3cf->get_my_account_url(), __( 'My Account', 'amazon-s3-and-cloudfront' ) );

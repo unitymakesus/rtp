@@ -42,6 +42,15 @@
 		this.button_text = settings.button_text;
 		this.form 		= $( this.nodeClass + ' .uabb-contact-form' );
 		this.button		= this.form.find( '.uabb-contact-form-submit' );
+		this.recaptcha_version = settings.recaptcha_version;
+		reCaptchaField = $('#'+ this.settings.id + '-uabb-grecaptcha');
+		reCaptchaValue = reCaptchaField.data( 'uabb-grecaptcha-response' );
+		if ( 'v3' === this.recaptcha_version && reCaptchaField.length > 0 ) {
+			grecaptcha.ready( function () {
+				recaptcha_id = reCaptchaField.attr( 'data-widgetid' );
+				grecaptcha.execute( recaptcha_id );
+			});
+		}
 
 		this._init();
 	};
@@ -218,7 +227,7 @@
 			}
 
 			// validate if reCAPTCHA is enabled and checked
-			if ( reCaptchaField.length > 0 ) {
+			if ( 'v2' == this.recaptcha_version && reCaptchaField.length > 0 ) {
 				if ( 'undefined' === typeof reCaptchaValue || reCaptchaValue === false ) {
 					isValid = false;
 					reCaptchaField.parent().addClass( 'uabb-error' );
@@ -234,9 +243,11 @@
 			else {
 			
 				// disable send button
+				$recaptcha_version = this.recaptcha_version;
 				submit.addClass( 'uabb-disabled' );
 				submit.html( '<span>'+this.button.closest( '.uabb-contact-form-button' ).data( 'wait-text' )+'</span>' );
-				
+				$reCaptchaValue = reCaptchaValue;
+
 				// post the form data
 				$.post(ajaxurl, {
 					action	: 'uabb_builder_email',
@@ -247,6 +258,8 @@
 					phone	: phone.val(),
 					mailto	: mailto.val(),
 					message	: message.val(),
+					recaptcha_version : $recaptcha_version,
+					recaptcha_response : reCaptchaValue,
 					terms_checked		: termsCheckbox.is( ':checked' ) ? '1' : '0',
 					post_id 			: postId,
 					node_id 			: nodeId,

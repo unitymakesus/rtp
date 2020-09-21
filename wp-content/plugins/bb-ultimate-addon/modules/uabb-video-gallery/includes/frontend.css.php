@@ -22,8 +22,15 @@ $settings->arrows_color                   = UABB_Helper::uabb_colorpicker( $sett
 $settings->tag_color                      = UABB_Helper::uabb_colorpicker( $settings, 'tag_color', true );
 $settings->cat_filter_bg_hover_color      = UABB_Helper::uabb_colorpicker( $settings, 'cat_filter_bg_hover_color', true );
 
-?>
-<?php
+if ( FLBuilder::fa5_pro_enabled() ) {
+	?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video-gallery-wrap .slick-prev:before,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video-gallery-wrap .slick-next:before,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video-gallery-wrap ul.slick-dots li button:before {
+	font-family: 'Font Awesome 5 Pro';
+}
+	<?php
+}
 if ( ! $version_bb_check ) {
 	$settings->cat_filter_border_color        = UABB_Helper::uabb_colorpicker( $settings, 'cat_filter_border_color', true );
 	$settings->cat_filter_border_color_active = UABB_Helper::uabb_colorpicker( $settings, 'cat_filter_border_color_active', true );
@@ -302,7 +309,14 @@ if ( ! $version_bb_check ) {
 		?>
 	}
 <?php } ?>
-<?php if ( 'yes' === $settings->show_caption ) { ?>
+
+<?php if ( 'always' === $settings->show_caption ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video__gallery-item .uabb-video__caption {
+		opacity: 1;
+	}
+<?php } ?>
+
+<?php if ( 'yes' === $settings->show_caption || 'always' === $settings->show_caption ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video__caption {
 		<?php
 		if ( isset( $settings->caption_color ) ) {
@@ -618,7 +632,7 @@ if ( 'carousel' === $settings->layout && 'yes' === $settings->enable_dots ) {
 			}
 			?>
 		}
-		<?php if ( 'yes' === $settings->show_caption ) { ?>
+		<?php if ( 'yes' === $settings->show_caption || 'always' === $settings->show_caption ) { ?>
 			<?php if ( ! $version_bb_check ) { ?>
 				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video__caption {
 
@@ -820,7 +834,7 @@ if ( 'carousel' === $settings->layout && 'yes' === $settings->enable_dots ) {
 
 			?>
 		}
-		<?php if ( 'yes' === $settings->show_caption ) { ?>
+		<?php if ( 'yes' === $settings->show_caption || 'always' === $settings->show_caption ) { ?>
 			<?php if ( ! $version_bb_check ) { ?>
 				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-video__caption {
 

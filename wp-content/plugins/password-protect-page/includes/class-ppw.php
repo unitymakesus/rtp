@@ -162,6 +162,11 @@ class Password_Protect_Page {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-ppw-sitewide-settings.php';
 
 		/**
+		 * The class responsible for shortcode settings
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-ppw-partial-protection-settings.php';
+
+		/**
 		 * The class responsible for entire site services
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-entire-site.php';
@@ -213,6 +218,11 @@ class Password_Protect_Page {
 		 * The class responsible for defining database functions.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ppw-db.php';
+
+		/**
+		 * The class responsible for defining protect category.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-category.php';
 
 		/**
 		 * The class responsible for plugin SDK
@@ -285,16 +295,33 @@ class Password_Protect_Page {
 			$this->loader->add_filter( 'post_password_required', $plugin_admin, 'ppw_handle_post_password_required', 10, 2 );
 			$this->loader->add_filter( PPW_Constants::HOOK_CUSTOM_TAB, $plugin_admin, 'ppw_handle_custom_tab', 50 );
 			$this->loader->add_filter( PPW_Constants::HOOK_ADD_NEW_TAB, $plugin_admin, 'ppw_handle_add_new_tab', 50 );
+			$this->loader->add_filter( PPW_Constants::HOOK_CUSTOM_TAB, $plugin_admin, 'ppw_handle_hide_shortcode_content', 50 );
+			$this->loader->add_filter( PPW_Constants::HOOK_ADD_NEW_TAB, $plugin_admin, 'ppw_handle_hide_shortcode_tab', 50 );
 
 			$this->loader->add_action( 'ppw_render_sitewide_content_general', $plugin_admin, 'ppw_free_render_content_entire_site', 10 );
 			// Testing only the new feature that applied for free only.
 			$this->loader->add_shortcode( 'ppw-content-protect', $plugin_admin, 'handle_content_protect_short_code' );
+
+			$this->loader->add_action( 'post_row_actions', $plugin_admin, 'ppw_custom_row_action', 10, 2 );
+			$this->loader->add_action( 'page_row_actions', $plugin_admin, 'ppw_custom_row_action', 10, 2 );
+			$this->loader->add_action( 'wp_ajax_ppw_update_post_status', $plugin_admin, 'handle_update_post_status' );
+
+			$post_types = array( 'post', 'page' );
+			foreach ( $post_types as $post_type ) {
+				$this->loader->add_filter( 'manage_' . $post_type . '_posts_columns', $plugin_admin, 'add_custom_column' );
+				$this->loader->add_action( 'manage_' . $post_type . '_posts_custom_column', $plugin_admin, 'render_content_custom_column', 10, 2 );
+			}
+			PPW_Category_Service::get_instance()->register( false );
 		} else {
 			$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'handle_plugin_loaded' );
 			$this->loader->add_action( 'admin_init', $plugin_admin, 'update_column_for_ppwp_pro' );
+			PPW_Category_Service::get_instance()->register( true );
 		}
 		PPW_Customizer_Sitewide::get_instance()->register_sitewide_style();
 		$this->loader->add_action( 'wp_ajax_ppw_free_update_misc_settings', $plugin_admin, 'ppw_free_update_misc_settings' );
+		$this->loader->add_action( 'wp_ajax_ppw_free_update_category_settings', $plugin_admin, 'ppw_free_update_category_settings' );
+		$this->loader->add_action( 'wp_ajax_ppw_free_update_shortcode_settings', $plugin_admin, 'ppw_free_update_shortcode_settings' );
+		$this->loader->add_action( 'wp_ajax_ppw_free_restore_wp_passwords', $plugin_admin, 'ppw_free_restore_wp_passwords' );
 		$this->loader->add_action( 'ppw_render_content_shortcodes', $plugin_admin, 'ppw_free_render_content_shortcodes', 11 );
 		$this->loader->add_action( 'ppw_render_content_master_passwords', $plugin_admin, 'ppw_free_render_content_master_passwords', 11 );
 		$this->loader->add_action( 'ppw_render_content_misc', $plugin_admin, 'ppw_free_render_content_misc', 11 );
@@ -304,8 +331,11 @@ class Password_Protect_Page {
 		$this->loader->add_filter( 'ppw_content_shortcode_source', $plugin_admin, 'handle_content_shortcode_for_multiple_pages', 11, 3 );
 		PPW_Beaver_Loader::get_instance();
 		$this->loader->add_action( 'wp_ajax_ppw_free_subscribe_request', $plugin_admin, 'handle_subscribe_request' );
+		$this->loader->add_action( 'ppw_render_pcp_content_general', $plugin_admin, 'ppw_free_render_content_pcp_general_tab', 10 );
+		$this->loader->add_action( 'plugin_row_meta', $plugin_admin, 'register_plugins_links', 10, 2 );
 
 		PPW_Elementor::get_instance( $this->loader );
+
 	}
 
 	/**
@@ -319,14 +349,10 @@ class Password_Protect_Page {
 
 		$plugin_public = new PPW_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'template_redirect', $plugin_public, 'handle_access_link', - 10 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_assets' );
-
-		/**
-		 * The hook to add the custom class to the post.
-		 */
-		$this->loader->add_filter( 'body_class', $plugin_public, 'ppw_post_class' );
-
 		$this->loader->add_filter( 'the_content', $plugin_public, 'ppw_the_content', 99999 );
+		$this->loader->add_filter( 'ppw_cookie_expire', $plugin_public, 'set_cookie_time', 10 );
 
 		/**
 		 * The hook to render our password form
@@ -403,5 +429,7 @@ class Password_Protect_Page {
 
 		require_once PPW_DIR_PATH . 'includes/services/class-ppw-migrations.php';
 		require_once PPW_DIR_PATH . 'includes/services/class-ppw-migration-manager.php';
+		require_once PPW_DIR_PATH . 'includes/services/class-ppw-password-recovery.php';
+		require_once PPW_DIR_PATH . 'includes/services/class-ppw-password-recovery-manager.php';
 	}
 }

@@ -393,6 +393,7 @@ final class FLBuilderAdminSettings {
 		self::save_user_access();
 		self::clear_cache();
 		self::debug();
+		self::global_edit();
 		self::uninstall();
 
 		/**
@@ -585,11 +586,12 @@ final class FLBuilderAdminSettings {
 				// Check for supported sets.
 				$is_icomoon  = fl_builder_filesystem()->file_exists( $check_path . 'selection.json' );
 				$is_fontello = fl_builder_filesystem()->file_exists( $check_path . 'config.json' );
+				$is_awesome  = fl_builder_filesystem()->file_exists( $check_path . '/metadata/icons.json' );
 
 				// Show an error if we don't have a supported icon set.
-				if ( ! $is_icomoon && ! $is_fontello ) {
+				if ( ! $is_icomoon && ! $is_fontello && ! $is_awesome ) {
 					fl_builder_filesystem()->rmdir( $new_path, true );
-					self::add_error( __( 'Error! Please upload an icon set from either Icomoon or Fontello.', 'fl-builder' ) );
+					self::add_error( __( 'Error! Please upload an icon set from either Icomoon, Fontello or Font Awesome Pro Subset.', 'fl-builder' ) );
 					return;
 				}
 
@@ -601,6 +603,14 @@ final class FLBuilderAdminSettings {
 						self::add_error( __( 'Error! When downloading from Icomoon, be sure to click the Download Font button and not Generate SVG.', 'fl-builder' ) );
 						return;
 					}
+				}
+
+				// we need to patch the all.css file because _reasons_
+				if ( $is_awesome ) {
+					$search  = array( '.fa,.fas{font-family:', '.fad{', '.fal,.far{font-family' );
+					$replace = array( '.subset.fa,.subset.fas{font-family:', '.subset.fad{', '.subset.fal,.subset.far{font-family' );
+					$css     = str_replace( $search, $replace, fl_builder_filesystem()->file_get_contents( $check_path . 'css/all.min.css' ) );
+					fl_builder_filesystem()->file_put_contents( $check_path . 'css/all.min.css', $css );
 				}
 
 				// Enable the new set.
@@ -687,6 +697,28 @@ final class FLBuilderAdminSettings {
 				set_transient( 'fl_debug_mode', md5( rand() ), 172800 ); // 48 hours 172800
 			} else {
 				delete_transient( 'fl_debug_mode' );
+			}
+		}
+	}
+
+	/**
+	 * Update global js/css
+	 *
+	 * @since 2.4
+	 * @access private
+	 * @return void
+	 */
+	static private function global_edit() {
+		if ( ! FLBuilderAdmin::current_user_can_access_settings() ) {
+			return;
+		} elseif ( isset( $_POST['fl-css-js-nonce'] ) && wp_verify_nonce( $_POST['fl-css-js-nonce'], 'debug' ) ) {
+			if ( get_transient( 'fl_debug_mode' ) || ( defined( 'FL_ENABLE_META_CSS_EDIT' ) && FL_ENABLE_META_CSS_EDIT ) ) {
+				$css          = $_POST['css'];
+				$js           = $_POST['js'];
+				$options      = get_option( '_fl_builder_settings' );
+				$options->css = $css;
+				$options->js  = $js;
+				update_option( '_fl_builder_settings', $options );
 			}
 		}
 	}

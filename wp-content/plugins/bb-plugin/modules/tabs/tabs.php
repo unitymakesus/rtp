@@ -112,9 +112,10 @@ FLBuilder::register_module('FLTabsModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-tabs-label',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '{node} .fl-tabs-label',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'label_active_color' => array(
@@ -125,7 +126,7 @@ FLBuilder::register_module('FLTabsModule', array(
 						'show_alpha'  => true,
 						'preview'     => array(
 							'type'     => 'css',
-							'selector' => '.fl-tabs-label.fl-tab-active, .fl-tabs-panel-label',
+							'selector' => '{node} .fl-tabs-label.fl-tab-active, {node} .fl-tabs-panel-label',
 							'property' => 'color',
 						),
 					),
@@ -141,7 +142,7 @@ FLBuilder::register_module('FLTabsModule', array(
 						),
 						'preview'    => array(
 							'type'     => 'css',
-							'selector' => '.fl-tabs-label',
+							'selector' => '{node} .fl-tabs-label',
 							'property' => 'padding',
 						),
 					),
@@ -151,7 +152,7 @@ FLBuilder::register_module('FLTabsModule', array(
 						'responsive' => true,
 						'preview'    => array(
 							'type'      => 'css',
-							'selector'  => '.fl-tabs-label',
+							'selector'  => '{node} .fl-tabs-label',
 							'important' => true,
 						),
 					),
@@ -167,9 +168,10 @@ FLBuilder::register_module('FLTabsModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-tabs-panel-content',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '{node} .fl-tabs-panel .fl-tabs-panel-content, {node} .fl-tabs-panel .fl-tabs-panel-content *',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'content_padding'    => array(
@@ -184,7 +186,7 @@ FLBuilder::register_module('FLTabsModule', array(
 						),
 						'preview'    => array(
 							'type'     => 'css',
-							'selector' => '.fl-tabs-panel-content',
+							'selector' => '{node} .fl-tabs-panel-content',
 							'property' => 'padding',
 						),
 					),
@@ -194,7 +196,7 @@ FLBuilder::register_module('FLTabsModule', array(
 						'responsive' => true,
 						'preview'    => array(
 							'type'      => 'css',
-							'selector'  => '.fl-tabs-panel-content',
+							'selector'  => '{node} .fl-tabs-panel-content',
 							'important' => true,
 						),
 					),

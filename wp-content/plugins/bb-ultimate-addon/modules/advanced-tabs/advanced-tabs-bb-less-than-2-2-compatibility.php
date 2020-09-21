@@ -262,6 +262,14 @@ FLBuilder::register_module(
 								'equal' => __( 'Equal', 'uabb' ),
 							),
 						),
+						'tab_focus_color'                  => array(
+							'type'        => 'color',
+							'label'       => __( 'Tab Focus Color', 'uabb' ),
+							'default'     => '#5E9ED6',
+							'connections' => array( 'color' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+						),
 						'title_color'                      => array(
 							'type'       => 'color',
 							'label'      => __( 'Text Color', 'uabb' ),

@@ -98,6 +98,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 				$secure = false;
 			}
 
+			$expire = apply_filters( 'ppw_cookie_expire', $expire );
 			return setcookie( $cookie_name . COOKIEHASH, $password_hashed, $expire, COOKIEPATH, COOKIE_DOMAIN, $secure );
 		}
 
@@ -244,7 +245,8 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 
 			// If doesn't have callback URL and no-referer then return to home page.
 			if ( false === $referrer_url ) {
-				$referrer_url = home_url();
+				global $wp;
+				$referrer_url = home_url( $wp->request );
 			}
 
 			return $referrer_url;
@@ -387,6 +389,17 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		}
 
 		/**
+		 * Password is empty with not 0.
+		 *
+		 * @param string $pwd Password.
+		 *
+		 * @return bool
+		 */
+		public function has_no_empty_password( $pwd ) {
+			return ! empty( $pwd ) || '0' === $pwd;
+		}
+
+		/**
 		 * Get all passwords
 		 *
 		 * @param int|string $post_id The post ID.
@@ -404,9 +417,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 			$filtered_protected_roles  = array_filter(
 				$protected_roles,
 				function ( $pass ) {
-					if ( ! empty( $pass ) ) {
-						return $pass;
-					}
+					return $this->has_no_empty_password( $pass );
 				}
 			);
 			$has_role_passwords        = ! empty( $filtered_protected_roles );
@@ -464,7 +475,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 */
 		public function check_password_type_is_roles( $current_roles, $protectedRoles, $password, $post_id ) {
 			foreach ( $current_roles as $role ) {
-				if ( ! array_key_exists( $role, $protectedRoles ) || empty( $protectedRoles[ $role ] ) || $protectedRoles[ $role ] !== $password ) {
+				if ( ! array_key_exists( $role, $protectedRoles ) || ! $this->has_no_empty_password( $protectedRoles[ $role ] ) || $protectedRoles[ $role ] !== $password ) {
 					continue;
 				}
 
@@ -506,6 +517,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 				}
 
 				update_post_meta( $post_id, PPW_Constants::GLOBAL_PASSWORDS, $global_password );
+				update_post_meta( $post_id, 'ppwp_post_password_bk', $post->post_password );
 
 				// 3. Update default password for Wordpress
 				wp_update_post( array(
@@ -668,6 +680,96 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		}
 
 		/**
+		 * Generate custom row action.
+		 *
+		 * @param array    $actions An array for row action.
+		 * @param stdClass $post    The post object.
+		 *
+		 * @return array
+		 */
+		public function generate_custom_row_action( $actions, $post ) {
+			$post_id           = $post->ID;
+			$is_protected      = $this->is_protected_content( $post_id );
+			$btn_label         = $is_protected ? __( 'Unprotect', 'password-protect-page' ) : __( 'Protect', 'password-protect-page' );
+			$title             = $is_protected ? __( 'Unprotect this page', 'password-protect-page' ) : __( 'Protect this page', 'password-protect-page' );
+			$protection_status = $is_protected ? PPW_Constants::PROTECTION_STATUS['unprotect'] : PPW_Constants::PROTECTION_STATUS['protect'];
+
+			$actions['ppw_protect'] = '<a style="cursor: pointer" data-ppw-status="' . $protection_status . '" onclick="ppwpRowAction.handleOnClickRowAction(' . $post_id . ')" id="ppw-protect-post_' . $post_id . '" class="ppw-protect-action" title="' . $title . '">' . $btn_label . '</a>';
+
+			return $actions;
+		}
+
+		/**
+		 * Handle protect page/post.
+		 *
+		 * @param int $post_id The post ID.
+		 */
+		public function protect_page_post( $post_id ) {
+			$password = array(
+				uniqid( '', false )
+			);
+
+			$this->create_new_password( $post_id, 'global', $password, null );
+		}
+
+		/**
+		 * Handle unprotect page/post.
+		 *
+		 * @param int $post_id The post ID.
+		 */
+		public function unprotect_page_post( $post_id ) {
+			delete_post_meta( $post_id, PPW_Constants::POST_PROTECTION_ROLES );
+			delete_post_meta( $post_id, PPW_Constants::GLOBAL_PASSWORDS );
+		}
+
+		/**
+		 * Update post status request from row action
+		 *
+		 * @param array $request Request from row action.
+		 */
+		public function update_post_status( $request ) {
+			if ( ! isset( $request['postId'] ) || ! isset( $request['status'] ) ) {
+				send_json_data_error( __( 'Our server cannot understand the data request!', 'password-protect-page' ) );
+			}
+
+			$post_id       = $request['postId'];
+			$client_status = (int) $request['status'];
+
+			if ( ! in_array( $client_status, array_values( PPW_Constants::PROTECTION_STATUS ), true ) ) {
+				send_json_data_error( __( 'Our server cannot understand the data request!', 'password-protect-page' ) );
+			}
+
+			$server_status  = $client_status;
+			$message        = __( 'Oops! Something went wrong. Please reload the page and try again.', 'password-protect-page' );
+			$status_request = 400;
+			if ( PPW_Constants::PROTECTION_STATUS['protect'] === $client_status ) {
+				if ( ! $this->is_protected_content( $post_id ) ) {
+					$this->protect_page_post( $post_id );
+					$server_status  = PPW_Constants::PROTECTION_STATUS['unprotect'];
+					$message        = __( 'Great! You\'ve successfully protected this page.', 'password-protect-page' );
+					$status_request = 200;
+				}
+			} else {
+				if ( $this->is_protected_content( $post_id ) ) {
+					$this->unprotect_page_post( $post_id );
+					$server_status  = PPW_Constants::PROTECTION_STATUS['protect'];
+					$message        = __( 'Great! You\'ve successfully unprotected this page.', 'password-protect-page' );
+					$status_request = 200;
+				}
+			}
+
+			wp_send_json(
+				array(
+					'is_error'      => 200 === $status_request ? false : true,
+					'server_status' => $server_status,
+					'message'       => $message,
+				),
+				$status_request
+			);
+			wp_die();
+		}
+
+		/**
 		 * @param $pwds
 		 *
 		 * @return array
@@ -729,18 +831,21 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 			// 1. Check page/post is protected.
 			$result = $this->is_protected_content( $post_id );
 			if ( false === $result ) {
-				return $required;
+				return false;
 			}
 
-			// Check master password is valid.
-			if ( $this->check_master_password_is_valid( $post_id ) ) {
+			// 2. Check master password is valid.
+			$is_valid_master_password = $this->check_master_password_is_valid( $post_id );
+			if ( apply_filters( 'ppw_is_valid_cookie', $is_valid_master_password, $post_id ) ) {
 				return false;
 			}
 
 			// 3. Check password in cookie.
 			$passwords = $result['passwords'];
 
-			return false === $this->is_valid_cookie( $post_id, $passwords, PPW_Constants::COOKIE_NAME );
+			$is_valid = $this->is_valid_cookie( $post_id, $passwords, PPW_Constants::COOKIE_NAME );
+
+			return false === apply_filters( 'ppw_is_valid_cookie', $is_valid, $post_id );
 		}
 
 		/**
@@ -751,6 +856,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 */
 		public function handle_after_enter_password_in_password_form( $post_id, $password ) {
 			$is_valid = $this->is_valid_password_from_request( $post_id, $password );
+
 			do_action( 'ppw_redirect_after_enter_password', $is_valid );
 		}
 
@@ -768,9 +874,24 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 					$is_valid = $this->handle_master_passwords( $password, $is_valid, $current_roles, $post_id );
 				}
 			} else {
-				$is_valid = $this->is_valid_password( $password, $post_id, $current_roles );
-				$is_valid = $this->handle_master_passwords( $password, $is_valid, $current_roles, $post_id );
+				$is_valid = $this->is_valid_free_password( $post_id, $password, $current_roles );
 			}
+
+			return apply_filters( 'ppw_is_valid_password', $is_valid, $post_id, $password, $current_roles );
+		}
+
+		/**
+		 * Is valid free Password.
+		 * 
+		 * @param integer $post_id Post ID.
+		 * @param string $password Password.
+		 * @param string $current_roles Current user roles.
+		 * 
+		 * @return bool True is valid password, false is no.
+		 */
+		public function is_valid_free_password( $post_id, $password, $current_roles ) {
+			$is_valid = $this->is_valid_password( $password, $post_id, $current_roles );
+			$is_valid = $this->handle_master_passwords( $password, $is_valid, $current_roles, $post_id );
 
 			return $is_valid;
 		}
@@ -1224,6 +1345,28 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 			}
 
 			return $protected_ids;
+		}
+
+		/**
+		 * Restore WP Post password.
+		 */
+		public function restore_wp_post_password() {
+			$post_passwords = $this->passwords_repository->get_wp_post_passwords();
+			if ( empty( $post_passwords ) ) {
+				return;
+			}
+
+			foreach ( $post_passwords as $post_password ) {
+				$post_id = wp_update_post(
+					array(
+						'ID'            => $post_password->post_id,
+						'post_password' => $post_password->meta_value,
+					)
+				);
+				if ( $post_id ) {
+					delete_post_meta( $post_id, $post_password->meta_key, $post_password->meta_value );
+				}
+			}
 		}
 
 	}

@@ -6,9 +6,10 @@
  * POST index: autodescription-quick
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
 
 $robots_settings = [
 	'noindex'   => [
@@ -42,7 +43,7 @@ $robots_settings = [
 	 * @param string $post_type The post type slug, or current screen name if this is a taxonomy list table.
 	 * @param string $taxonomy  The current taxonomy type (if any).
 	 */
-	\do_action_ref_array(
+	do_action_ref_array(
 		'the_seo_framework_before_quick_edit',
 		[
 			$post_type,
@@ -50,7 +51,44 @@ $robots_settings = [
 		]
 	);
 	?>
-	<fieldset class=inline-edit-col-left>
+	<fieldset class=tsf-inline-edit-col-wide>
+		<legend class=inline-edit-legend><?php esc_html_e( 'General SEO Settings', 'autodescription' ); ?></legend>
+		<div class="inline-edit-col tsf-le-wide-complex-column">
+			<label for=autodescription-quick[doctitle]>
+				<span class=title><?php esc_html_e( 'Meta Title', 'autodescription' ); ?></span>
+			</label>
+			<?php
+			$this->get_option( 'display_character_counter' )
+				and $this->output_character_counter_wrap( 'autodescription-quick[doctitle]' );
+			$this->get_option( 'display_pixel_counter' )
+				and $this->output_pixel_counter_wrap( 'autodescription-quick[doctitle]', 'title' );
+			?>
+			<div class="tsf-pad-input tsf-title-wrap">
+				<input type=text id=autodescription-quick[doctitle] name=autodescription-quick[doctitle] value />
+				<?php
+				$this->output_js_title_data( 'autodescription-quick[doctitle]', [] );
+				?>
+			</div>
+		</div>
+		<div class="inline-edit-col tsf-le-wide-complex-column">
+			<label for=autodescription-quick[description]>
+				<span class=title><?php esc_html_e( 'Meta Description', 'autodescription' ); ?></span>
+			</label>
+			<?php
+			$this->get_option( 'display_character_counter' )
+				and $this->output_character_counter_wrap( 'autodescription-quick[description]' );
+			$this->get_option( 'display_pixel_counter' )
+				and $this->output_pixel_counter_wrap( 'autodescription-quick[description]', 'description' );
+			?>
+			<div class=tsf-pad-input>
+				<textarea id=autodescription-quick[description] name=autodescription-quick[description] rows=3 cols=22></textarea>
+				<?php
+				$this->output_js_description_data( 'autodescription-quick[description]', [] );
+				?>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset class=tsf-inline-edit-col-normal>
 		<legend class=inline-edit-legend><?php esc_html_e( 'Visibility SEO Settings', 'autodescription' ); ?></legend>
 		<div class=inline-edit-col>
 			<label>
@@ -98,7 +136,7 @@ $robots_settings = [
 	 * @param string $post_type The post type slug, or current screen name if this is a taxonomy list table.
 	 * @param string $post_type The current taxonomy type (if any).
 	 */
-	\do_action_ref_array(
+	do_action_ref_array(
 		'the_seo_framework_after_quick_edit',
 		[
 			$post_type,

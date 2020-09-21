@@ -14,6 +14,9 @@
 		new UABBWooProducts({
 			id: '<?php echo esc_attr( $id ); ?>',
 			ajaxurl: "<?php echo wp_kses_post( admin_url( 'admin-ajax.php' ) ); ?>",
+			is_cart: <?php echo esc_attr( is_cart() ? 'true' : 'false' ); ?>,
+			view_cart: '<?php echo esc_attr__( 'View cart', 'uabb' ); ?>',
+			cart_url: '<?php echo esc_url( apply_filters( 'uabb_woocommerce_add_to_cart_redirect', wc_get_cart_url() ) ); ?>',
 			layout: "<?php echo esc_attr( $settings->layout ); ?>",
 			skin: "<?php echo esc_attr( $settings->skin ); ?>",
 			next_arrow: '<?php echo apply_filters( 'uabb_woo_products_carousel_next_arrow_icon', 'fas fa-angle-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',

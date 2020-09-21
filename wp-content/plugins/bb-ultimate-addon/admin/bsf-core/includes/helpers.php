@@ -48,15 +48,15 @@ function bsf_get_api_url( $prefer_unsecure = false ) {
  */
 function bsf_time_since_last_versioncheck( $hours_completed, $option ) {
 
-	$seconds = $hours_completed * 3600;
+	$seconds = $hours_completed * HOUR_IN_SECONDS;
 	$status  = false;
 
-	$bsf_local_transient = (int) get_option( $option, false );
+	$last_update_timestamp = (int) get_option( $option, false );
 
-	if ( false !== $bsf_local_transient ) {
+	if ( false !== $last_update_timestamp ) {
 
 		// Find seconds passed since the last timestamp update (i.e. last request made).
-		$elapsed_seconds = (int) current_time( 'timestamp' ) - $bsf_local_transient;
+		$elapsed_seconds = (int) current_time( 'timestamp' ) - $last_update_timestamp;
 
 		// IF time is more than the required seconds allow a new HTTP request.
 		if ( $elapsed_seconds > $seconds ) {
@@ -298,4 +298,34 @@ if ( ! function_exists( 'bsf_nag_brainstorm_updater_multisite' ) ) {
 		echo '</p>';
 		echo '</div>';
 	}
+}
+
+/**
+ * Get product name from BSF core is loaded.
+ */
+function bsf_get_loaded_bsf_core_name() {
+
+	$path         = wp_normalize_path( BSF_UPDATER_PATH );
+	$theme_dir    = wp_normalize_path( WP_CONTENT_DIR . '/themes/' );
+	$plugin_dir   = wp_normalize_path( WP_PLUGIN_DIR );
+	$product_name = '';
+
+	if ( false !== strpos( $path, $theme_dir ) ) {
+		// This is a theme path.
+		$product_slug = str_replace( array( $theme_dir, '/admin/bsf-core' ), '', $path );
+	} elseif ( false !== strpos( $path, $plugin_dir ) ) {
+		// This is plugin path.
+		$product_slug = str_replace( array( $plugin_dir . '/', '/admin/bsf-core' ), '', $path );
+	}
+
+	$brainstrom_products = get_option( 'brainstrom_products', array() );
+	foreach ( $brainstrom_products as $type => $products ) {
+		foreach ( $products as $product ) {
+			if ( $product['slug'] === $product_slug ) {
+				$product_name = $product['name'];
+			}
+		}
+	}
+
+	return $product_name;
 }

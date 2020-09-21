@@ -237,7 +237,7 @@ class UabbBusinessReview extends FLBuilderModule {
 
 		$result = get_transient( $transient_name );
 
-		$expire_time = $settings->set_transient_time;
+		$expire_time = $this->get_expired_transient( $settings );
 
 		$expire_time = apply_filters( 'uabb_reviews_expire_time', $expire_time, $settings );
 
@@ -267,6 +267,35 @@ class UabbBusinessReview extends FLBuilderModule {
 			return false;
 		}
 	}
+
+	/**
+	 * Gets expire time of transient.
+	 *
+	 * @since 1.28.0
+	 * @param array $settings The settings array.
+	 * @return the reviews transient expire time.
+	 * @access public
+	 */
+	public function get_expired_transient( $settings ) {
+
+		$expire_value = $settings->set_transient_time;
+		$expire_time  = 60 * MINUTE_IN_SECONDS;
+
+		if ( '60 * MINUTE_IN_SECONDS' === $expire_value ) {
+			$expire_time = 60 * MINUTE_IN_SECONDS;
+		} elseif ( '24 * HOUR_IN_SECONDS' === $expire_value ) {
+			$expire_time = 24 * HOUR_IN_SECONDS;
+		} elseif ( '7 * DAY_IN_SECONDS' === $expire_value ) {
+			$expire_time = 7 * DAY_IN_SECONDS;
+		} elseif ( '30 * DAY_IN_SECONDS' === $expire_value ) {
+			$expire_time = 30 * DAY_IN_SECONDS;
+		} elseif ( '365 * DAY_IN_SECONDS' === $expire_value ) {
+			$expire_time = 365 * DAY_IN_SECONDS;
+		}
+
+		return $expire_time;
+	}
+
 	/**
 	 * Gets JSON Data from Google.
 	 *
@@ -394,7 +423,7 @@ class UabbBusinessReview extends FLBuilderModule {
 
 		$transient_name = 'uabb_reviews_' . $business_id;
 
-		$expire_time = $settings->set_transient_time;
+		$expire_time = $this->get_expired_transient( $settings );
 
 		$expire_time = apply_filters( 'uabb_reviews_expire_time', $expire_time, $this->settings );
 

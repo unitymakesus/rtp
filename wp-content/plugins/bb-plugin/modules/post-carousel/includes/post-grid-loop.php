@@ -1,4 +1,4 @@
-<div class="fl-post-carousel-post"<?php FLPostGridModule::print_schema( ' itemscope itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?>>
+<div <?php $module->render_post_class( 'grid' ); ?> <?php FLPostGridModule::print_schema( ' itemscope itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?>>
 
 	<?php FLPostGridModule::schema_meta(); ?>
 

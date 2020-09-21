@@ -4,6 +4,9 @@
  * @subpackage The_SEO_Framework\Admin\Edit\Inpost
  */
 
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
+// phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
+
 defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and The_SEO_Framework\Builders\Scripts::verify( $_secret ) or die;
 
 $tsf = the_seo_framework();
@@ -25,7 +28,7 @@ $tsf = the_seo_framework();
 		$tsf->make_info(
 			sprintf(
 				/* translators: %s = term name */
-				\esc_html__( 'The buttons below are for primary %s selection.', 'autodescription' ),
+				esc_html__( 'The buttons below are for primary %s selection.', 'autodescription' ),
 				'{{data.taxonomy.i18n.name}}'
 			)
 		);

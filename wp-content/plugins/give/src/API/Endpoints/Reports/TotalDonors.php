@@ -16,7 +16,7 @@ class TotalDonors extends Endpoint {
 		$this->endpoint = 'total-donors';
 	}
 
-	public function get_report( $request ) {
+	public function getReport( $request ) {
 		$start = date_create( $request->get_param( 'start' ) );
 		$end   = date_create( $request->get_param( 'end' ) );
 		$diff  = date_diff( $start, $end );
@@ -28,7 +28,10 @@ class TotalDonors extends Endpoint {
 				$interval = round( $diff->days / 12 );
 				$data     = $this->get_data( $start, $end, 'P' . $interval . 'D' );
 				break;
-			case ( $diff->days > 7 ):
+			case ( $diff->days > 5 ):
+				$data = $this->get_data( $start, $end, 'P1D' );
+				break;
+			case ( $diff->days > 4 ):
 				$data = $this->get_data( $start, $end, 'PT12H' );
 				break;
 			case ( $diff->days > 2 ):
@@ -44,10 +47,8 @@ class TotalDonors extends Endpoint {
 
 	public function get_data( $start, $end, $intervalStr ) {
 
-		$this->payments = $this->get_payments( $start->format( 'Y-m-d' ), $end->format( 'Y-m-d' ) );
-
-		$tooltips = array();
-		$donors   = array();
+		$tooltips = [];
+		$donors   = [];
 
 		$interval = new \DateInterval( $intervalStr );
 
@@ -60,14 +61,15 @@ class TotalDonors extends Endpoint {
 		while ( $periodStart < $end ) {
 
 			$donorsForPeriod = $this->get_donors( $periodStart->format( 'Y-m-d H:i:s' ), $periodEnd->format( 'Y-m-d H:i:s' ) );
+			$time            = $periodEnd->format( 'Y-m-d H:i:s' );
 
 			switch ( $intervalStr ) {
+				case 'P1D':
+					$time        = $periodStart->format( 'Y-m-d' );
+					$periodLabel = $periodStart->format( 'l' );
+					break;
 				case 'PT12H':
-					$periodLabel = $periodStart->format( 'D ga' ) . ' - ' . $periodEnd->format( 'D ga' );
-					break;
 				case 'PT3H':
-					$periodLabel = $periodStart->format( 'D ga' ) . ' - ' . $periodEnd->format( 'D ga' );
-					break;
 				case 'PT1H':
 					$periodLabel = $periodStart->format( 'D ga' ) . ' - ' . $periodEnd->format( 'D ga' );
 					break;
@@ -75,40 +77,45 @@ class TotalDonors extends Endpoint {
 					$periodLabel = $periodStart->format( 'M j, Y' ) . ' - ' . $periodEnd->format( 'M j, Y' );
 			}
 
-			$donors[] = array(
-				'x' => $periodEnd->format( 'Y-m-d H:i:s' ),
+			$donors[] = [
+				'x' => $time,
 				'y' => $donorsForPeriod,
-			);
+			];
 
-			$tooltips[] = array(
-				'title'  => $donorsForPeriod . ' ' . __( 'Donors', 'give' ),
+			$tooltips[] = [
+				'title'  => sprintf( _n( '%d Donor', '%d Donors', $donorsForPeriod, 'give' ), $donorsForPeriod ),
 				'body'   => __( 'Total Donors', 'give' ),
 				'footer' => $periodLabel,
-			);
+			];
 
 			// Add interval to set up next period
 			date_add( $periodStart, $interval );
 			date_add( $periodEnd, $interval );
 		}
 
+		if ( $intervalStr === 'P1D' ) {
+			$donors   = array_slice( $donors, 1 );
+			$tooltips = array_slice( $tooltips, 1 );
+		}
+
 		$totalDonorsForPeriod = $this->get_donors( $start->format( 'Y-m-d H:i:s' ), $end->format( 'Y-m-d H:i:s' ) );
 		$trend                = $this->get_trend( $start, $end, $donors );
 
 		$diff = date_diff( $start, $end );
-		$info = $diff->days > 1 ? __( 'VS previous' ) . ' ' . $diff->days . ' ' . __( 'days', 'give' ) : __( 'VS previous day' );
+		$info = $diff->days > 1 ? __( 'VS previous', 'give' ) . ' ' . $diff->days . ' ' . __( 'days', 'give' ) : __( 'VS previous day', 'give' );
 
 		// Create data objec to be returned, with 'highlights' object containing total and average figures to display
-		$data = array(
-			'datasets' => array(
-				array(
+		$data = [
+			'datasets' => [
+				[
 					'data'      => $donors,
 					'tooltips'  => $tooltips,
 					'trend'     => $trend,
 					'info'      => $info,
 					'highlight' => $totalDonorsForPeriod,
-				),
-			),
-		);
+				],
+			],
+		];
 
 		return $data;
 
@@ -123,7 +130,7 @@ class TotalDonors extends Endpoint {
 
 		$prevEnd = clone $start;
 
-		$prevDonors    = $this->get_prev_donors( $prevStart->format( 'Y-m-d H:i:s' ), $prevEnd->format( 'Y-m-d H:i:s' ) );
+		$prevDonors    = $this->get_donors( $prevStart->format( 'Y-m-d H:i:s' ), $prevEnd->format( 'Y-m-d H:i:s' ) );
 		$currentDonors = $this->get_donors( $start->format( 'Y-m-d H:i:s' ), $end->format( 'Y-m-d H:i:s' ) );
 
 		// Set default trend to 0
@@ -135,10 +142,10 @@ class TotalDonors extends Endpoint {
 			// Check if it is a percent decreate, or increase
 			if ( $prevDonors > $currentDonors ) {
 				// Calculate a percent decrease
-				$trend = round( ( ( ( $prevDonors - $currentDonors ) / $prevDonors ) * 100 ), 1 ) * -1;
+				$trend = ( ( ( $prevDonors - $currentDonors ) / $prevDonors ) * 100 ) * -1;
 			} elseif ( $currentDonors > $prevDonors ) {
 				// Calculate a percent increase
-				$trend = round( ( ( ( $currentDonors - $prevDonors ) / $prevDonors ) * 100 ), 1 );
+				$trend = ( ( $currentDonors - $prevDonors ) / $prevDonors ) * 100;
 			}
 		}
 
@@ -147,40 +154,15 @@ class TotalDonors extends Endpoint {
 
 	public function get_donors( $startStr, $endStr ) {
 
-		$donors = array();
+		$paymentObjects = $this->getPayments( $startStr, $endStr );
 
-		foreach ( $this->payments as $payment ) {
-			if ( $payment->date > $startStr && $payment->date < $endStr ) {
-				if ( $payment->status == 'publish' || $payment->status == 'give_subscription' ) {
-					$donors[] = $payment->donor_id;
+		$donors = [];
+
+		foreach ( $paymentObjects as $paymentObject ) {
+			if ( $paymentObject->date >= $startStr && $paymentObject->date < $endStr ) {
+				if ( $paymentObject->status == 'publish' || $paymentObject->status == 'give_subscription' ) {
+					$donors[] = $paymentObject->donor_id;
 				}
-			}
-		}
-
-		$unique     = array_unique( $donors );
-		$donorCount = count( $unique );
-
-		return $donorCount;
-	}
-
-	public function get_prev_donors( $startStr, $endStr ) {
-
-		$args = array(
-			'number'     => -1,
-			'paged'      => 1,
-			'orderby'    => 'date',
-			'order'      => 'DESC',
-			'start_date' => $startStr,
-			'end_date'   => $endStr,
-		);
-
-		$prevPayments = new \Give_Payments_Query( $args );
-		$prevPayments = $prevPayments->get_payments();
-
-		$donors = array();
-		foreach ( $prevPayments as $payment ) {
-			if ( $payment->date > $startStr && $payment->date < $endStr ) {
-				$donors[] = $payment->donor_id;
 			}
 		}
 

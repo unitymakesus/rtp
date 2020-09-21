@@ -4,13 +4,14 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-use The_SEO_Framework\Bridges\SeoSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+use The_SEO_Framework\Bridges\SeoSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_social_metabox', $instance );
 
 switch ( $instance ) :
@@ -31,7 +32,7 @@ switch ( $instance ) :
 				'callback' => SeoSettings::class . '::_social_metabox_twitter_tab',
 				'dashicon' => 'twitter',
 			],
-			'oembed' => [
+			'oembed'    => [
 				'name'     => 'oEmbed',
 				'callback' => SeoSettings::class . '::_social_metabox_oembed_tab',
 				'dashicon' => 'share-alt2',
@@ -59,13 +60,13 @@ switch ( $instance ) :
 		?>
 		<h4><?php esc_html_e( 'Social Meta Tags Settings', 'autodescription' ); ?></h4>
 		<?php
-		$this->description( __( 'Output various meta tags for social site integration, among other 3rd party services.', 'autodescription' ) );
+		$this->description( __( 'Output various meta tags for social site integration, among other third-party services.', 'autodescription' ) );
 
 		?>
 		<hr>
 		<?php
 
-		//* Echo Open Graph Tags checkboxes.
+		// Echo Open Graph Tags checkboxes.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'og_tags',
@@ -78,7 +79,7 @@ switch ( $instance ) :
 		if ( $this->detect_og_plugin() )
 			$this->attention_description( __( 'Note: Another Open Graph plugin has been detected. These meta tags might conflict.', 'autodescription' ) );
 
-		//* Echo Facebook Tags checkbox.
+		// Echo Facebook Tags checkbox.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'facebook_tags',
@@ -89,7 +90,7 @@ switch ( $instance ) :
 			true
 		);
 
-		//* Echo Twitter Tags checkboxes.
+		// Echo Twitter Tags checkboxes.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'twitter_tags',
@@ -102,7 +103,7 @@ switch ( $instance ) :
 		if ( $this->detect_twitter_card_plugin() )
 			$this->attention_description( __( 'Note: Another Twitter Card plugin has been detected. These meta tags might conflict.', 'autodescription' ) );
 
-		//* Echo oEmbed scripts checkboxes.
+		// Echo oEmbed scripts checkboxes.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'oembed_scripts',
@@ -115,10 +116,31 @@ switch ( $instance ) :
 		?>
 		<hr>
 
+		<h4><?php esc_html_e( 'Social Title Settings', 'autodescription' ); ?></h4>
+		<?php
+		$this->description( __( 'Most social sites and third-party services automatically include the website URL inside their embeds. When the site title is described well in the site URL, including it in the social title will be redundant.', 'autodescription' ) );
+
+		$info = $this->make_info(
+			__( 'When you provide a custom Open Graph or Twitter title, the site title will be omitted automatically.', 'autodescription' ),
+			'',
+			false
+		);
+
+		$this->wrap_fields(
+			$this->make_checkbox(
+				'social_title_rem_additions',
+				esc_html__( 'Remove site title from generated social titles?', 'autodescription' ) . ' ' . $info,
+				'',
+				false
+			),
+			true
+		);
+		?>
+		<hr>
+
 		<h4><?php esc_html_e( 'Social Image Settings', 'autodescription' ); ?></h4>
 		<?php
 		$this->description( __( 'A social image can be displayed when your website is shared. It is a great way to grab attention.', 'autodescription' ) );
-
 
 		$this->wrap_fields(
 			$this->make_checkbox(
@@ -142,7 +164,7 @@ switch ( $instance ) :
 		</p>
 		<p class="hide-if-no-tsf-js">
 			<?php
-			// phpcs:ignore, WordPress.Security.EscapeOutput
+			// phpcs:ignore, WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped.
 			echo $this->get_social_image_uploader_form( 'tsf_fb_socialimage' );
 			?>
 		</p>
@@ -344,11 +366,35 @@ switch ( $instance ) :
 		?>
 		<h4><?php esc_html_e( 'oEmbed Settings', 'autodescription' ); ?></h4>
 		<?php
-		$this->description( __( 'Some social sharing services and clients, like WordPress and Discord, obtain the linked page information via oEmbed.', 'autodescription' ) );
+		$this->description( __( 'Some social sharing services and clients, like WordPress, LinkedIn, and Discord, obtain the linked page information via oEmbed.', 'autodescription' ) );
 		?>
 		<hr>
 		<?php
 
+		// Split the wraps--the informational messages make for bad legibility otherwise.
+		$this->wrap_fields(
+			$this->make_checkbox(
+				'oembed_use_og_title',
+				__( 'Use Open Graph title?', 'autodescription' ),
+				__( 'Check this option if you want to replace page titles with Open Graph titles in embeds.', 'autodescription' ),
+				true
+			),
+			true
+		);
+		$_info = $this->make_info(
+			__( 'Only custom social images that are selected via the Media Library are considered.', 'autodescription' ),
+			'',
+			false
+		);
+		$this->wrap_fields(
+			$this->make_checkbox(
+				'oembed_use_social_image',
+				esc_html__( 'Use social image?', 'autodescription' ) . ' ' . $_info,
+				esc_html__( "LinkedIn displays the post's featured image in embeds. Check this option if you want to replace it with the social image.", 'autodescription' ),
+				false
+			),
+			true
+		);
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'oembed_remove_author',

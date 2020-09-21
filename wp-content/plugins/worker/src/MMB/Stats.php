@@ -269,6 +269,64 @@ class MMB_Stats extends MMB_Core
         return null;
     }
 
+    private function get_expired_transients(array $transientsData)
+    {
+        $expiredTransients = 0;
+        foreach ($transientsData as $transient) {
+            $expiredTransients += $this->get_expired_transients_size($transient['name'], $transient['suffix'], $transient['timeout'], $transient['mask'], $transient['limit']);
+        }
+        return $expiredTransients;
+    }
+
+    private function get_expired_transients_size($name, $suffix, $timeout, $mask, $limit)
+    {
+        /** @var wpdb $wpdb */
+        global $wpdb;
+
+        $prefix = $wpdb->prefix;
+
+        $timeoutName  = $name.$suffix;
+        $subStrLength = strlen($timeoutName) + 1;
+
+        $escapedTimeoutName = str_replace('_', '\_', $timeoutName);
+
+        $selectTimeOutedTransients = <<<SQL
+SELECT SUBSTR(option_name, {$subStrLength}) AS transient_name FROM {$prefix}options WHERE option_name LIKE '{$escapedTimeoutName}{$mask}' AND option_value < {$timeout} LIMIT {$limit}
+SQL;
+
+        $transientsToDelete  = $wpdb->get_col($selectTimeOutedTransients);
+        $timeoutsToDelete    = array();
+        $transientsTotalSize = 0;
+
+        if (count($transientsToDelete) === 0) {
+            return $transientsTotalSize;
+        }
+
+        foreach ($transientsToDelete as &$transient) {
+            $timeoutsToDelete[] = "'".$timeoutName.$transient."'";
+            $transient          = "'".$name.$transient."'";
+        }
+
+        $transientSizeClause = implode(',', $transientsToDelete);
+
+        $transientsSizeQuery = <<<SQL
+SELECT SUM(LENGTH(option_value)) as valueSize, SUM(LENGTH(option_name)) as nameSize  FROM {$prefix}options WHERE option_name IN ({$transientSizeClause})
+SQL;
+        $transientsSize      = $wpdb->get_results($transientsSizeQuery);
+        $transientsTotalSize += ((int)$transientsSize[0]->nameSize);
+        $transientsTotalSize += ((int)$transientsSize[0]->valueSize);
+
+        $transientSizeClause = implode(',', $timeoutsToDelete);
+        $transientsSizeQuery = <<<SQL
+SELECT SUM(LENGTH(option_value)) as valueSize, SUM(LENGTH(option_name)) as nameSize FROM {$prefix}options WHERE option_name IN ({$transientSizeClause})
+SQL;
+        $timeoutsSize        = $wpdb->get_results($transientsSizeQuery);
+        $transientsTotalSize += ((int)$timeoutsSize[0]->valueSize);
+        $transientsTotalSize += ((int)$timeoutsSize[0]->nameSize);
+
+        return $transientsTotalSize;
+    }
+
     public function get_stats(array $params)
     {
         $revisionLimit = (int)str_replace('r_', '', (string)$this->stats_arg($params, 'revisions', 'num_to_keep'));
@@ -284,6 +342,8 @@ class MMB_Stats extends MMB_Core
         if (!$postLimit) {
             $postLimit = 5;
         }
+        $transientsParams = (array)$this->stats_arg($params, 'transients', 'expire_data');
+
         unset($params);
         $save = array('plugins' => array('cleanup' => array('revisions' => array('num_to_keep' => $revisionLimit))));
         // These options are only used for the revision cleanup action.
@@ -310,6 +370,7 @@ class MMB_Stats extends MMB_Core
             'site_statistics'         => $this->get_site_statistics(),
             'num_revisions'           => mmb_num_revisions($revisionLimit),
             'overhead'                => mmb_handle_overhead(false),
+            'expired_transients'      => $this->get_expired_transients($transientsParams),
             'num_spam_comments'       => mmb_num_spam_comments(),
         );
 

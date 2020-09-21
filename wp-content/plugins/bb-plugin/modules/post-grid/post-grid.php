@@ -707,6 +707,20 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'label'   => __( 'Posts Element Class for UL', 'fl-builder' ),
 						'default' => '',
 					),
+					'posts_title_tag'          => array(
+						'type'    => 'select',
+						'label'   => __( 'Posts Title Tag', 'fl-builder' ),
+						'default' => 'h2',
+						'options' => array(
+							'h1' => '&lt;h1&gt;',
+							'h2' => '&lt;h2&gt;',
+							'h3' => '&lt;h3&gt;',
+							'h4' => '&lt;h4&gt;',
+							'h5' => '&lt;h5&gt;',
+							'h6' => '&lt;h6&gt;',
+						),
+						'help'    => __( 'Optional. Choose an appropriate Heading Tag for each Post Title.', 'fl-builder' ),
+					),
 				),
 
 			),
@@ -1010,7 +1024,7 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'show_alpha'  => true,
 						'preview'     => array(
 							'type'     => 'css',
-							'selector' => 'h2.fl-post-feed-title a, h2.fl-post-grid-title a',
+							'selector' => '.fl-post-feed-title a, .fl-post-grid-title a',
 							'property' => 'color',
 						),
 					),
@@ -1020,7 +1034,7 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'responsive' => true,
 						'preview'    => array(
 							'type'      => 'css',
-							'selector'  => 'h2.fl-post-feed-title, h2.fl-post-grid-title',
+							'selector'  => '.fl-post-feed-title, .fl-post-grid-title',
 							'important' => true,
 						),
 					),
@@ -1031,9 +1045,10 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-post-feed-meta, .fl-post-feed-meta a, .fl-post-grid-meta, .fl-post-grid-meta a',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '{node} .fl-post-feed .fl-post-feed-header .fl-post-feed-meta, {node} .fl-post-feed .fl-post-feed-header .fl-post-feed-meta span, {node} .fl-post-feed .fl-post-feed-header .fl-post-feed-meta a, {node} .fl-post-feed .fl-post-feed-header .fl-post-feed-meta-terms span, {node} .fl-post-feed .fl-post-feed-header .fl-post-feed-meta-terms a, {node} .fl-post-grid-meta, {node} .fl-post-grid-meta span, {node} .fl-post-grid-meta a, {node} .fl-post-grid-meta-terms span, {node} .fl-post-grid-meta-terms a',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'info_typography'    => array(
@@ -1053,9 +1068,10 @@ FLBuilder::register_module('FLPostGridModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-post-feed-content, .fl-post-feed-content p, .fl-post-grid-content, .fl-post-grid-content p',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '{node} .fl-post-feed-content, {node} .fl-post-feed-content p, {node} .fl-post-feed-content a, {node} .fl-post-grid-content, {node} .fl-post-grid-content p, {node} .fl-post-grid-content a, {node} .fl-builder-pagination ul.page-numbers li span, {node} .fl-builder-pagination ul.page-numbers li a',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'content_typography' => array(
@@ -1266,7 +1282,7 @@ FLBuilder::register_module('FLPostGridModule', array(
 							'1' => __( 'Show', 'fl-builder' ),
 							'0' => __( 'Hide', 'fl-builder' ),
 						),
-						'help'    => __( 'Shows the search form if no posts are found.' ),
+						'help'    => __( 'Shows the search form if no posts are found.', 'fl-builder' ),
 					),
 				),
 			),

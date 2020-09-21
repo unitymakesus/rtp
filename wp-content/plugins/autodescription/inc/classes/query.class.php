@@ -5,7 +5,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -45,6 +45,7 @@ class Query extends Core {
 
 	/**
 	 * Checks whether $wp_query or $current_screen is set.
+	 * Memoizes the return value once we're sure it won't change.
 	 *
 	 * @since 2.6.1
 	 * @since 2.9.0 Added doing it wrong notice.
@@ -52,7 +53,6 @@ class Query extends Core {
 	 *              2. Now asks for and passes $method.
 	 *              3. Now returns false on WP CLI.
 	 * @since 3.2.2 No longer spits out errors on production websites.
-	 * @staticvar bool $cache Always true once set.
 	 * @global \WP_Query $wp_query
 	 * @global \WP_Screen|null $current_screen
 	 *
@@ -66,7 +66,7 @@ class Query extends Core {
 		if ( isset( $cache ) )
 			return $cache;
 
-		if ( defined( 'WP_CLI' ) && WP_CLI )
+		if ( \defined( 'WP_CLI' ) && WP_CLI )
 			return $cache = false;
 
 		if ( isset( $GLOBALS['wp_query']->query ) || isset( $GLOBALS['current_screen'] ) )
@@ -98,7 +98,7 @@ class Query extends Core {
 
 		$this->_doing_it_wrong( \esc_html( $method ), \esc_html( $message ), '2.9.0' );
 
-		//* Backtrace debugging.
+		// Backtrace debugging.
 		$depth = 10;
 		static $_more = true;
 		if ( $_more ) {
@@ -118,7 +118,7 @@ class Query extends Core {
 	 */
 	public function get_post_type_real_ID( $post = null ) {
 
-		$post = is_null( $post ) ? $this->get_the_real_ID() : $post;
+		$post = \is_null( $post ) ? $this->get_the_real_ID() : $post;
 
 		return \get_post_type( $post );
 	}
@@ -154,10 +154,10 @@ class Query extends Core {
 
 	/**
 	 * Get the real page ID, also from CPT, archives, author, blog, etc.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.5.0
 	 * @since 3.1.0 No longer checks if we can cache the query when $use_cache is false.
-	 * @staticvar int $id the ID.
 	 *
 	 * @param bool $use_cache Whether to use the cache or not.
 	 * @return int|false The ID.
@@ -176,11 +176,11 @@ class Query extends Core {
 				return $id;
 		}
 
-		//* Try to get ID from plugins when caching is available.
+		// Try to get ID from plugins when caching is available.
 		$id = $use_cache ? $this->check_the_real_ID() : 0;
 
 		if ( ! $id ) {
-			//* This catches most IDs. Even Post IDs.
+			// This catches most IDs. Even Post IDs.
 			$id = \get_queried_object_id();
 		}
 
@@ -205,7 +205,7 @@ class Query extends Core {
 
 		$id = \get_the_ID();
 
-		//* Current term ID (outside loop).
+		// Current term ID (outside loop).
 		if ( ! $id && $this->is_archive_admin() )
 			$id = $this->get_admin_term_id();
 
@@ -276,12 +276,12 @@ class Query extends Core {
 
 	/**
 	 * Returns the current taxonomy, if any.
+	 * Memoizes the return value.
 	 *
 	 * @since 3.0.0
 	 * @since 3.1.0 1. Now works in the admin.
 	 *              2. Added caching
 	 * @global \WP_Screen $current_screen
-	 * @staticvar string $cache
 	 *
 	 * @return string The queried taxonomy type.
 	 */
@@ -446,7 +446,7 @@ class Query extends Core {
 	 */
 	public function is_archive_admin() {
 		global $current_screen;
-		return isset( $current_screen->base ) && in_array( $current_screen->base, [ 'edit-tags', 'term' ], true );
+		return isset( $current_screen->base ) && \in_array( $current_screen->base, [ 'edit-tags', 'term' ], true );
 	}
 
 	/**
@@ -496,7 +496,7 @@ class Query extends Core {
 	 */
 	public function is_wp_lists_edit() {
 		global $current_screen;
-		return isset( $current_screen->base ) && in_array( $current_screen->base, [ 'edit-tags', 'edit' ], true );
+		return isset( $current_screen->base ) && \in_array( $current_screen->base, [ 'edit-tags', 'edit' ], true );
 	}
 
 	/**
@@ -538,6 +538,7 @@ class Query extends Core {
 	 */
 	public function is_blog_page( $id = 0 ) {
 
+		// When the blog page is the front page, treat it as front instead of blog.
 		if ( ! $this->has_page_on_front() )
 			return false;
 
@@ -551,7 +552,7 @@ class Query extends Core {
 
 		static $pfp = null;
 
-		if ( is_null( $pfp ) )
+		if ( \is_null( $pfp ) )
 			$pfp = (int) \get_option( 'page_for_posts' );
 
 		if ( $id && $id === $pfp && false === \is_archive() ) {
@@ -617,7 +618,7 @@ class Query extends Core {
 	 * Extends default WordPress is_category() and determines screen in admin.
 	 *
 	 * @since 2.6.0
-	 * @since 3.1.0 No longer guesses category by name. It now only matches WordPress' built-in category.
+	 * @since 3.1.0 No longer guesses category by name. It now only matches WordPress's built-in category.
 	 * @since 4.0.0 Removed caching.
 	 *
 	 * @return bool Post Type is category
@@ -693,7 +694,7 @@ class Query extends Core {
 		if ( \is_front_page() )
 			$is_front_page = true;
 
-		//* Elegant Themes Support. Yay.
+		// Elegant Themes Support. Yay.
 		if ( false === $is_front_page && 0 === $this->get_the_real_ID() && $this->is_home() ) {
 			$sof = \get_option( 'show_on_front' );
 
@@ -755,14 +756,14 @@ class Query extends Core {
 
 		$sof = \get_option( 'show_on_front' );
 
-		//* Compare against $id
+		// Compare against $id
 		if ( 'page' === $sof ) {
 			if ( (int) \get_option( 'page_on_front' ) === $id ) {
 				$is_front_page = true;
 			}
 		} elseif ( 'posts' === $sof ) {
 			if ( 0 === $id ) {
-				//* 0 as ID causes many issues. Just test for is_home().
+				// 0 as ID causes many issues. Just test for is_home().
 				if ( $this->is_home() ) {
 					$is_front_page = true;
 				}
@@ -831,8 +832,8 @@ class Query extends Core {
 		if ( null !== $cache = $this->get_query_cache( __METHOD__, null, $page ) )
 			return $cache;
 
-		if ( is_int( $page ) || $page instanceof \WP_Post ) {
-			$is_page = in_array( \get_post_type( $page ), $this->get_hierarchical_post_types(), true );
+		if ( \is_int( $page ) || $page instanceof \WP_Post ) {
+			$is_page = \in_array( \get_post_type( $page ), $this->get_hierarchical_post_types(), true );
 		} else {
 			$is_page = \is_page( $page );
 		}
@@ -856,7 +857,7 @@ class Query extends Core {
 	 * @return bool
 	 */
 	public function is_page_admin() {
-		return $this->is_singular_admin() && in_array( $this->get_admin_post_type(), $this->get_hierarchical_post_types(), true );
+		return $this->is_singular_admin() && \in_array( $this->get_admin_post_type(), $this->get_hierarchical_post_types(), true );
 	}
 
 	/**
@@ -880,7 +881,7 @@ class Query extends Core {
 		&& \is_singular()
 		&& \current_user_can( 'edit_post', \get_the_ID() )
 		&& isset( $_GET['preview_id'], $_GET['preview_nonce'] )
-		&& \wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . (int) $_GET['preview_id'] )
+		&& \wp_verify_nonce( $_GET['preview_nonce'], 'post_preview_' . (int) $_GET['preview_id'] ) // WP doesn't check for unslash either; who would've guessed.
 		) {
 			$is_preview = true;
 		}
@@ -920,8 +921,8 @@ class Query extends Core {
 		if ( null !== $cache = $this->get_query_cache( __METHOD__, null, $post ) )
 			return $cache;
 
-		if ( is_int( $post ) || $post instanceof \WP_Post ) {
-			$is_single = in_array( \get_post_type( $post ), $this->get_nonhierarchical_post_types(), true );
+		if ( \is_int( $post ) || $post instanceof \WP_Post ) {
+			$is_single = \in_array( \get_post_type( $post ), $this->get_nonhierarchical_post_types(), true );
 		} else {
 			$is_single = \is_single( $post );
 		}
@@ -946,7 +947,7 @@ class Query extends Core {
 	 */
 	public function is_single_admin() {
 		// Checks for "is_singular_admin()" because the post type is non-hierarchical.
-		return $this->is_singular_admin() && in_array( $this->get_admin_post_type(), $this->get_nonhierarchical_post_types(), true );
+		return $this->is_singular_admin() && \in_array( $this->get_admin_post_type(), $this->get_nonhierarchical_post_types(), true );
 	}
 
 	/**
@@ -963,12 +964,12 @@ class Query extends Core {
 	 */
 	public function is_singular( $post_types = '' ) {
 
-		if ( is_int( $post_types ) ) {
+		if ( \is_int( $post_types ) ) {
 			// Integers are no longer accepted.
 			$post_types = '';
 		}
 
-		//* WP_Query functions require loop, do alternative check.
+		// WP_Query functions require loop, do alternative check.
 		if ( \is_admin() )
 			return $this->is_singular_admin();
 
@@ -1001,7 +1002,7 @@ class Query extends Core {
 	 */
 	public function is_singular_admin() {
 		global $current_screen;
-		return isset( $current_screen->base ) && in_array( $current_screen->base, [ 'edit', 'post' ], true );
+		return isset( $current_screen->base ) && \in_array( $current_screen->base, [ 'edit', 'post' ], true );
 	}
 
 	/**
@@ -1031,7 +1032,7 @@ class Query extends Core {
 	 */
 	public function is_tag( $tag = '' ) {
 
-		//* Admin requires another check.
+		// Admin requires another check.
 		if ( \is_admin() )
 			return $this->is_tag_admin();
 
@@ -1052,7 +1053,7 @@ class Query extends Core {
 	 * Determines if the page is a tag within the admin screen.
 	 *
 	 * @since 2.6.0
-	 * @since 3.1.0 No longer guesses tag by name. It now only matches WordPress' built-in tag.
+	 * @since 3.1.0 No longer guesses tag by name. It now only matches WordPress's built-in tag.
 	 * @since 4.0.0 Removed caching.
 	 *
 	 * @return bool Post Type is tag.
@@ -1168,7 +1169,7 @@ class Query extends Core {
 		if ( isset( $id ) ) {
 			$is_shop = (int) \get_option( 'woocommerce_shop_page_id' ) === $id;
 		} else {
-			$is_shop = ! \is_admin() && function_exists( 'is_shop' ) && \is_shop();
+			$is_shop = ! \is_admin() && \function_exists( 'is_shop' ) && \is_shop();
 		}
 
 		$this->set_query_cache(
@@ -1205,7 +1206,7 @@ class Query extends Core {
 		if ( $post ) {
 			$is_product = 'product' === \get_post_type( $post );
 		} else {
-			$is_product = function_exists( 'is_product' ) && \is_product();
+			$is_product = \function_exists( 'is_product' ) && \is_product();
 		}
 
 		$this->set_query_cache(
@@ -1246,9 +1247,9 @@ class Query extends Core {
 
 	/**
 	 * Determines if SSL is used.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.8.0
-	 * @staticvar bool $cache
 	 *
 	 * @return bool True if SSL, false otherwise.
 	 */
@@ -1430,7 +1431,7 @@ class Query extends Core {
 		if ( $this->is_singular() && ! $this->is_singular_archive() )
 			$post = \get_post( $this->get_the_real_ID() );
 
-		if ( $post instanceof \WP_Post ) {
+		if ( isset( $post ) && $post instanceof \WP_Post ) {
 			$content = $post->post_content;
 			if ( false !== strpos( $content, '<!--nextpage-->' ) ) {
 				$content = str_replace( "\n<!--nextpage-->", '<!--nextpage-->', $content );
@@ -1458,7 +1459,7 @@ class Query extends Core {
 			 */
 			$_pages = \apply_filters( 'content_pagination', $_pages, $post );
 
-			$numpages = count( $_pages );
+			$numpages = \count( $_pages );
 		} elseif ( isset( $wp_query->max_num_pages ) ) {
 			$numpages = (int) $wp_query->max_num_pages;
 		} else {
@@ -1487,10 +1488,10 @@ class Query extends Core {
 
 	/**
 	 * Determines whether we're on The SEO Framework's sitemap or not.
+	 * Memoizes the return value once set.
 	 *
 	 * @since 2.9.2
 	 * @since 4.0.0 Now uses static variables instead of class properties.
-	 * @staticvar bool $doing_sitemap
 	 *
 	 * @param bool $set Whether to set "doing sitemap".
 	 * @return bool
@@ -1519,8 +1520,6 @@ class Query extends Core {
 	 * Handles object cache for the query class.
 	 *
 	 * @since 2.7.0
-	 * @staticvar null|bool $can_cache_query True when this function can run.
-	 * @staticvar mixed     $cache           The cached query values.
 	 * @see $this->set_query_cache(); to set query cache.
 	 *
 	 * @param string $method       The method that wants to cache, used as the key to set or get.
@@ -1557,12 +1556,9 @@ class Query extends Core {
 		}
 
 		if ( isset( $value_to_set ) ) {
-			if ( isset( $cache[ $method ][ $hash ] ) ) {
-				$cache[ $method ][ $hash ] = $value_to_set;
-				return false;
-			}
+			$fresh_set                 = ! isset( $cache[ $method ][ $hash ] );
 			$cache[ $method ][ $hash ] = $value_to_set;
-			return true;
+			return $fresh_set;
 		} else {
 			if ( isset( $cache[ $method ][ $hash ] ) )
 				return $cache[ $method ][ $hash ];

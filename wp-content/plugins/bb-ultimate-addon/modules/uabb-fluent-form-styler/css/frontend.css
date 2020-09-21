@@ -1,0 +1,60 @@
+/**
+ * This file should contain frontend styles that
+ * will be applied to all module instances.
+ */
+
+.uabb-fluent-form-content {
+	position: relative;
+	padding: 25px;
+}
+
+.uabb-fluent-form-content .wpforms-container,
+.uabb-fluent-form-content .uabb-form-title,
+.uabb-fluent-form-content .uabb-form-description {
+	position: relative;
+}
+
+.uabb-fluent-form-content .caldera-grid .radio input[type=radio] {
+    margin-top: 3px;
+}
+
+.uabb-fluent-form-content div.wpforms-container-full .wpforms-form input.wpforms-field-medium,
+.uabb-fluent-form-content div.wpforms-container-full .wpforms-form select.wpforms-field-medium,
+.uabb-fluent-form-content div.wpforms-container-full .wpforms-form .wpforms-field-row.wpforms-field-medium {
+    max-width: 100%;
+}
+
+.uabb-fluent-form-content .ff-el-section-break hr {
+	display: none;
+}
+
+.uabb-fluent-form-content .fluentform  .ff-el-form-control:focus {
+	box-shadow: none;
+}
+
+.uabb-fluent-form-content .fluentform .ff-el-form-control {
+	padding: 12px 0;
+}
+
+.uabb-fluent-form-content select.ff-el-form-control:not([size]):not([multiple]) {
+	height: auto;
+	padding-left: 5px;
+}
+
+.uabb-fluent-form-content .ff-el-form-check-input.ff-el-form-check-checkbox,
+.uabb-fluent-form-content .ff-el-form-check-input.ff-el-form-check-radio {
+	cursor: pointer;
+}
+
+.uabb-fluent-form-content .fluentform .ff-el-form-control {
+	padding-left: 10px;
+}
+
+.uabb-fluent-form-content .fluentform .iti--allow-dropdown input.ff-el-form-control, 
+.uabb-fluent-form-content .fluentform.iti--allow-dropdown input[type=tel].ff-el-form-control, 
+.uabb-fluent-form-content .fluentform .iti--allow-dropdown input[type=text].ff-el-form-control, 
+.uabb-fluent-form-content .fluentform .iti--separate-dial-code input.ff-el-form-control, 
+.uabb-fluent-form-content .fluentform .iti--separate-dial-code input[type=tel].ff-el-form-control, 
+.uabb-fluent-form-content .fluentform .iti--separate-dial-code input[type=text].ff-el-form-control {
+	padding-left: 52px;
+}

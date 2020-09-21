@@ -41,10 +41,10 @@
 				width 	 = '100%';
 
 			if ( 'responsive' == mode ) {
-				width = settings.responsive_breakpoint >= 360 ? 360 : settings.responsive_breakpoint;
+				width = ( '1' !== settings.responsive_preview && settings.responsive_breakpoint >= 360 ) ? 360 : settings.responsive_breakpoint;
 				frame.width( width );
 			} else if ( 'medium' == mode ) {
-				width = settings.medium_breakpoint >= 769 ? 769 : settings.medium_breakpoint;
+				width = ( '1' !== settings.responsive_preview && settings.medium_breakpoint >= 769 ) ? 769 : settings.medium_breakpoint;
 				frame.width( width );
 			}
 
@@ -70,6 +70,21 @@
 			body.css( 'overflow', 'hidden' );
 		},
 
+		_showSize: function(mode) {
+				var show_size = $('.fl-builder--preview-actions .size' ),
+				medium = ( '1' === FLBuilderConfig.global.responsive_preview ) ? FLBuilderConfig.global.medium_breakpoint : 769,
+				responsive = ( '1' === FLBuilderConfig.global.responsive_preview ) ? FLBuilderConfig.global.responsive_breakpoint : 360,
+				size_text = '';
+
+			if ( 'responsive' === mode ) {
+					size_text = FLBuilderStrings.mobile + ' ' + responsive + 'px';
+			} else if ( 'medium' === mode ) {
+				size_text = FLBuilderStrings.medium + ' ' + medium + 'px';
+			}
+
+			show_size.html('').html(size_text)
+		},
+
 		/**
 		 * Removes the iframe for previewing the layout.
 		 *
@@ -79,6 +94,7 @@
 		destroy: function() {
 			$( '#fl-builder-preview-mask, #fl-builder-preview-frame' ).remove();
 			$( 'body' ).css( 'overflow', 'visible' );
+			$('.fl-builder--preview-actions .size' ).html('');
 		},
 	}
 } )( jQuery );

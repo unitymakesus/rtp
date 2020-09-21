@@ -1,0 +1,53 @@
+/**
+ * We don't want this stuff for our block, ever.
+ */
+.wp-block[data-type="fl-builder/layout"] {
+
+	.editor-block-contextual-toolbar {
+		display: none !important;
+	}
+}
+
+/**
+ * Lock down the block editor when the layout block is active.
+ */
+.fl-builder-layout-enabled {
+
+	.editor-block-toolbar,
+	.editor-inserter,
+	.editor-visual-editor__inserter,
+	.editor-default-block-appender,
+	.editor-block-list__insertion-point,
+	.editor-block-settings-menu,
+	.editor-block-mover,
+	.editor-block-list__breadcrumb,
+	.editor-block-list__block:not([data-type="fl-builder/layout"]) {
+		display: none !important;
+	}
+	.editor-block-list__block-edit:before {
+		outline: none !important;
+	}
+}
+
+/**
+ * Launch View
+ */
+.fl-builder-layout-launch-view {
+
+	.components-button {
+		margin: 0 5px;
+	}
+	.components-placeholder__fieldset {
+		max-width: none;
+	}
+}
+
+/**
+ * Loading View
+ */
+.fl-builder-layout-loading-view {
+
+	.spinner {
+		float: left;
+	}
+}

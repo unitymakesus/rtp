@@ -5,7 +5,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -93,7 +93,7 @@ class Init extends Query {
 	 * @since 2.8.0
 	 */
 	public function init_global_filters() {
-		//* Adjust category link to accommodate primary term.
+		// Adjust category link to accommodate primary term.
 		\add_filter( 'post_link_category', [ $this, '_adjust_post_link_category' ], 10, 3 );
 	}
 
@@ -103,10 +103,10 @@ class Init extends Query {
 	 * @since 2.8.0
 	 */
 	public function init_cron_actions() {
-		//* Init post update/delete caching actions.
+		// Init post update/delete caching actions.
 		$this->init_post_cache_actions();
 
-		//* Ping searchengines.
+		// Ping searchengines.
 		if ( $this->get_option( 'ping_use_cron' ) )
 			\add_action( 'tsf_sitemap_cron_hook', Bridges\Ping::class . '::ping_search_engines' );
 	}
@@ -133,53 +133,59 @@ class Init extends Query {
 		//= Initialize term meta filters and actions.
 		$this->init_term_meta();
 
-		//* Save post data.
+		// Save post data.
 		\add_action( 'save_post', [ $this, '_update_post_meta' ], 1, 2 );
 		\add_action( 'edit_attachment', [ $this, '_update_attachment_meta' ], 1 );
 		\add_action( 'save_post', [ $this, '_save_inpost_primary_term' ], 1, 2 );
 
-		//* Enqueues admin scripts.
+		// Enqueues admin scripts.
 		\add_action( 'admin_enqueue_scripts', [ $this, '_init_admin_scripts' ], 0, 1 );
 
-		//* Add plugin links to the plugin activation page.
+		// Add plugin links to the plugin activation page.
 		\add_filter( 'plugin_action_links_' . THE_SEO_FRAMEWORK_PLUGIN_BASENAME, [ $this, '_add_plugin_action_links' ], 10, 2 );
 		\add_filter( 'plugin_row_meta', [ $this, '_add_plugin_row_meta' ], 10, 2 );
 
 		if ( $this->load_options ) :
-			//* Set up site settings and allow saving resetting them.
+			// Set up site settings and allow saving resetting them.
 			\add_action( 'admin_init', [ $this, 'register_settings' ], 5 );
 
-			//* Initialize the SEO Bar for tables.
+			// Initialize the SEO Bar for tables.
 			\add_action( 'admin_init', [ $this, '_init_seo_bar_tables' ] );
 
-			//* Initialize List Edit for tables.
+			// Initialize List Edit for tables.
 			\add_action( 'admin_init', [ $this, '_init_list_edit' ] );
 
-			//* Adds post states to list view tables.
+			// Adds post states to list view tables.
 			\add_filter( 'display_post_states', [ $this, '_add_post_state' ], 10, 2 );
 
-			//* Loads setting notices.
+			// Loads setting notices.
 			\add_action( 'the_seo_framework_setting_notices', [ $this, '_do_settings_page_notices' ] );
 
-			//* Enqueue Post meta boxes.
+			// Enqueue Post meta boxes.
 			\add_action( 'add_meta_boxes', [ $this, '_init_post_edit_view' ], 5, 2 );
 
-			//* Enqueue Term meta output.
+			// Enqueue Term meta output.
 			\add_action( 'current_screen', [ $this, '_init_term_edit_view' ] );
 
-			//* Add menu links and register $this->seo_settings_page_hook
+			// Add menu links and register $this->seo_settings_page_hook
 			\add_action( 'admin_menu', [ $this, 'add_menu_link' ] );
 
-			//* Set up notices
-			\add_action( 'admin_notices', [ $this, 'notices' ] );
+			// Set up notices.
+			\add_action( 'admin_notices', [ $this, '_output_notices' ] );
 
-			//* Admin AJAX for counter options.
+			// Fallback HTML-only notice dismissal.
+			\add_action( 'admin_init', [ $this, '_dismiss_notice' ] );
+
+			// Admin AJAX for notice dismissal.
+			\add_action( 'wp_ajax_tsf-dismiss-notice', [ $this, '_wp_ajax_dismiss_notice' ] );
+
+			// Admin AJAX for counter options.
 			\add_action( 'wp_ajax_the_seo_framework_update_counter', [ $this, '_wp_ajax_update_counter_type' ] );
 
-			//* Admin AJAX for Gutenberg SEO Bar update.
+			// Admin AJAX for Gutenberg SEO Bar update.
 			\add_action( 'wp_ajax_the_seo_framework_update_post_data', [ $this, '_wp_ajax_get_post_data' ] );
 
-			//* Admin AJAX for TSF Cropper
+			// Admin AJAX for TSF Cropper
 			\add_action( 'wp_ajax_tsf-crop-image', [ $this, '_wp_ajax_crop_image' ] );
 		endif;
 
@@ -207,29 +213,32 @@ class Init extends Query {
 		 */
 		\do_action( 'the_seo_framework_front_init' );
 
-		//* Remove canonical header tag from WP
+		// Remove canonical header tag from WP
 		\remove_action( 'wp_head', 'rel_canonical' );
 
-		//* Remove shortlink.
+		// Remove shortlink.
 		\remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 
-		//* Remove adjecent rel tags.
+		// Remove adjecent rel tags.
 		\remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head' );
 
-		//* Earlier removal of the generator tag. Doesn't require filter.
+		// Earlier removal of the generator tag. Doesn't require filter.
 		\remove_action( 'wp_head', 'wp_generator' );
 
-		//* Prepares sitemap or stylesheet output.
-		if ( $this->can_run_sitemap() )
+		// Prepares sitemap or stylesheet output.
+		if ( $this->can_run_sitemap() ) {
+			// We can use action `set_404` when we support WP 5.5+...?
 			\add_action( 'template_redirect', [ $this, '_init_sitemap' ], 1 );
+			\add_filter( 'wp_sitemaps_enabled', '__return_false' );
+		}
 
-		//* Initialize 301 redirects.
+		// Initialize 301 redirects.
 		\add_action( 'template_redirect', [ $this, '_init_custom_field_redirect' ] );
 
-		//* Prepares requisite robots headers to avoid low-quality content penalties.
+		// Prepares requisite robots headers to avoid low-quality content penalties.
 		$this->prepare_robots_headers();
 
-		//* Output meta tags.
+		// Output meta tags.
 		\add_action( 'wp_head', [ $this, 'html_output' ], 1 );
 
 		if ( $this->get_option( 'alter_archive_query' ) )
@@ -238,12 +247,12 @@ class Init extends Query {
 		if ( $this->get_option( 'alter_search_query' ) )
 			$this->init_alter_search_query();
 
-		//* Alter the content feed.
-		\add_filter( 'the_content_feed', [ $this, 'the_content_feed' ], 10, 2 );
-
-		//* Only add the feed link to the excerpt if we're only building excerpts.
-		if ( $this->rss_uses_excerpt() )
-			\add_filter( 'the_excerpt_rss', [ $this, 'the_content_feed' ], 10, 1 );
+		// Modify the feed.
+		if ( $this->get_option( 'excerpt_the_feed' ) || $this->get_option( 'source_the_feed' ) ) {
+			// We could use actions 'do_feed_{$feed}', but I don't trust its variability.
+			// We could use action 'rss_tag_pre', but I don't trust its availability.
+			\add_action( 'template_redirect', [ $this, '_init_feed' ], 1 );
+		}
 
 		/**
 		 * @since 2.9.4
@@ -260,7 +269,7 @@ class Init extends Query {
 	 */
 	protected function init_front_end_filters() {
 
-		//* Overwrite the robots.txt file
+		// Overwrite the robots.txt file
 		\add_filter( 'robots_txt', [ $this, 'robots_txt' ], 10, 2 );
 
 		/**
@@ -268,12 +277,12 @@ class Init extends Query {
 		 * @param bool $overwrite_titles Whether to enable title overwriting.
 		 */
 		if ( \apply_filters( 'the_seo_framework_overwrite_titles', true ) ) {
-			//* Removes all pre_get_document_title filters.
+			// Removes all pre_get_document_title filters.
 			\remove_all_filters( 'pre_get_document_title', false );
 
-			//* New WordPress 4.4.0 filter. Hurray! It's also much faster :)
+			// New WordPress 4.4.0 filter. Hurray! It's also much faster :)
 			\add_filter( 'pre_get_document_title', [ $this, 'get_document_title' ], 10 );
-			//* Override WooThemes Title TODO move this to wc compat file.
+			// Override WooThemes Title TODO move this to wc compat file.
 			\add_filter( 'woo_title', [ $this, 'get_document_title' ], 99 );
 
 			/**
@@ -282,18 +291,18 @@ class Init extends Query {
 			 */
 			if ( \apply_filters( 'the_seo_framework_manipulate_title', true ) ) {
 				\remove_all_filters( 'wp_title', false );
-				//* Override WordPress Title
+				// Override WordPress Title
 				\add_filter( 'wp_title', [ $this, 'get_wp_title' ], 9 );
 			}
 		}
 
-		if ( $this->get_option( 'og_tags' ) ) {
-			//* Disable Jetpack's Open Graph tags. But Sybre, compat files? Yes.
+		if ( $this->get_option( 'og_tags' ) ) { // independent from filter at use_og_tags--let that be deciding later.
+			// Disable Jetpack's Open Graph tags. But Sybre, compat files? Yes.
 			\add_filter( 'jetpack_enable_open_graph', '__return_false' );
 		}
 
-		if ( $this->get_option( 'twitter_tags' ) ) {
-			//* Disable Jetpack's Twitter Card tags. But Sybre, compat files? Maybe.
+		if ( $this->get_option( 'twitter_tags' ) ) { // independent from filter at use_twitter_tags--let that be deciding later.
+			// Disable Jetpack's Twitter Card tags. But Sybre, compat files? Maybe.
 			\add_filter( 'jetpack_disable_twitter_cards', '__return_true' );
 			// Future, maybe. See <https://github.com/Automattic/jetpack/issues/13146#issuecomment-516841698>
 			// \add_filter( 'jetpack_enable_twitter_cards', '__return_false' );
@@ -301,7 +310,7 @@ class Init extends Query {
 
 		if ( ! $this->get_option( 'oembed_scripts' ) ) {
 			/**
-			 * Only hide the scripts, don't permeably purge them. That should be enough.
+			 * Only hide the scripts, don't permeably purge them. This should be enough.
 			 *
 			 * This will still allow embedding within WordPress Multisite via WP-REST's proxy, since WP won't look for a script.
 			 * We'd need to empty 'oembed_response_data' in that case... However, thanks to a bug in WP, this 'works' anyway.
@@ -342,7 +351,7 @@ class Init extends Query {
 			if ( ! empty( $function['callback'] ) ) {
 				$args = isset( $function['args'] ) ? $function['args'] : '';
 
-				$output .= call_user_func_array( $function['callback'], (array) $args );
+				$output .= \call_user_func_array( $function['callback'], (array) $args );
 			}
 		}
 
@@ -413,7 +422,7 @@ class Init extends Query {
 
 		$robots = $this->robots();
 
-		/** @since 4.0.4 : WP 5.3 patch, added. */
+		/** @since 4.0.4 : Added as WP 5.3 patch. */
 		$this->set_timezone( 'UTC' );
 
 		/**
@@ -424,7 +433,7 @@ class Init extends Query {
 
 		$before_legacy = $this->get_legacy_header_filters_output( 'before' );
 
-		//* Limit processing and redundant tags on 404 and search.
+		// Limit processing and redundant tags on 404 and search.
 		if ( $this->is_search() ) :
 			$output = $this->og_locale()
 					. $this->og_type()
@@ -451,6 +460,7 @@ class Init extends Query {
 			// aqp = advanced query protection
 			$output = '<meta name="tsf:aqp" value="1" />' . PHP_EOL;
 		else :
+			// Inefficient concatenation is inefficient. Improve this?
 			$output = $this->the_description()
 					. $this->og_image()
 					. $this->og_locale()
@@ -490,12 +500,10 @@ class Init extends Query {
 		 */
 		$after = (string) \apply_filters( 'the_seo_framework_pro', '' );
 
-		/** @since 4.0.4 : WP 5.3 patch, added. */
+		/** @since 4.0.4 : Added as WP 5.3 patch. */
 		$this->reset_timezone();
 
-		$output = $robots . $before . $before_legacy . $output . $after_legacy . $after;
-
-		return $output;
+		return "{$robots}{$before}{$before_legacy}{$output}{$after_legacy}{$after}";
 	}
 
 	/**
@@ -586,6 +594,16 @@ class Init extends Query {
 	}
 
 	/**
+	 * Prepares feed modifications.
+	 *
+	 * @since 4.1.0
+	 * @access private
+	 */
+	public function _init_feed() {
+		\is_feed() and Bridges\Feed::get_instance()->_init();
+	}
+
+	/**
 	 * Edits the robots.txt output.
 	 * Requires the site not to have a robots.txt file in the root directory.
 	 *
@@ -601,11 +619,14 @@ class Init extends Query {
 	 *                2. Improved invalid location test.
 	 *                3. No longer shortcircuits on non-public sites.
 	 *                4. Now marked as private. Will be renamed to `_robots_txt()` in the future.
+	 * @since 4.1.0 Now adds the WordPress Core sitemap URL.
 	 * @uses robots_txt filter located at WP core
 	 * @access private
+	 * @TODO extrapolate the contents without a warning to get_robots_txt(). Forward filter to it.
+	 *       See Monitor extension.
 	 *
 	 * @param string $robots_txt The current robots_txt output. Not used.
-	 * @param string $public The blog_public option value. Not used.
+	 * @param string $public The blog_public option value.
 	 * @return string Robots.txt output.
 	 */
 	public function robots_txt( $robots_txt = '', $public = '' ) {
@@ -629,7 +650,7 @@ class Init extends Query {
 			 */
 			$output .= (string) \apply_filters( 'the_seo_framework_robots_txt_pre', '' );
 
-			//* Output defaults
+			// Output defaults
 			$output .= "User-agent: *\r\n";
 			$output .= "Disallow: $site_path/wp-admin/\r\n";
 			$output .= "Allow: $site_path/wp-admin/admin-ajax.php\r\n";
@@ -649,7 +670,7 @@ class Init extends Query {
 			 */
 			$output .= (string) \apply_filters( 'the_seo_framework_robots_txt_pro', '' );
 
-			//* Add extra whitespace and sitemap full URL
+			// Add extra whitespace and sitemap full URL
 			if ( $this->can_do_sitemap_robots( true ) ) {
 				$sitemaps = Bridges\Sitemap::get_instance();
 				foreach ( $sitemaps->get_sitemap_endpoint_list() as $id => $data ) {
@@ -658,6 +679,14 @@ class Init extends Query {
 					}
 				}
 				$output .= "\r\n";
+			} elseif ( $this->get_option( 'sitemaps_robots' ) && ! $this->detect_sitemap_plugin() ) {
+				if ( \function_exists( '\\wp_sitemaps_get_server' ) ) {
+					$wp_sitemaps_server = \wp_sitemaps_get_server();
+					if ( $wp_sitemaps_server && method_exists( $wp_sitemaps_server, 'add_robots' ) ) {
+						// This method augments the output--it doesn't overwrite it.
+						$output = \wp_sitemaps_get_server()->add_robots( $output, $public );
+					}
+				}
 			}
 
 			$this->use_object_cache and $this->object_cache_set( $cache_key, $output, 86400 );
@@ -699,7 +728,7 @@ class Init extends Query {
 		\add_action( 'the_seo_framework_sitemap_header', [ $this, '_output_robots_noindex_headers' ] );
 
 		// This is not necessarily a WordPress query. Test it inline.
-		if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST )
+		if ( \defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST )
 			$this->_output_robots_noindex_headers();
 	}
 
@@ -786,7 +815,7 @@ class Init extends Query {
 
 		// Don't exclude pages in wp-admin.
 		if ( $wp_query->is_search ) {
-			//* Only interact with an actual Search Query.
+			// Only interact with an actual Search Query.
 			if ( ! isset( $wp_query->query['s'] ) )
 				return;
 
@@ -937,18 +966,46 @@ class Init extends Query {
 	 *
 	 * @WARNING: WordPress can switch blogs as this filter runs. So, check all options again, without cache!
 	 *           This should only happen at `/oembed/1.0/proxy`.
-	 * @TODO consider adding the (optional(ly)) thumbnail_url data?
 	 * @since 4.0.5
+	 * @since 4.1.1 Now also alters titles and images.
 	 * @access private
 	 *
-	 * @param array   $data   The response data.
-	 * @param WP_Post $post   The post object.
-	 * @param int     $width  The requested width.
-	 * @param int     $height The calculated height.
+	 * @param array    $data   The response data.
+	 * @param \WP_Post $post   The post object. May not be its placeholder `null`.
+	 * @param int      $width  The requested width.
+	 * @param int      $height The calculated height.
 	 * @return array Possibly altered $data.
 	 */
 	public function _alter_oembed_response_data( $data = [], $post = null, $width = 0, $height = 0 ) {
 
+		// Don't use cache. See @WARNING in doc comment.
+		if ( $this->get_option( 'oembed_use_og_title', false ) ) {
+			$data['title'] = $this->get_open_graph_title(
+				[
+					'id'       => $post->ID,
+					'taxonomy' => '',
+				]
+			) ?: $data['title'];
+		}
+		// Don't use cache. See @WARNING in doc comment.
+		if ( $this->get_option( 'oembed_use_social_image', false ) ) {
+			$image_details = current( $this->get_image_details(
+				[
+					'id'       => $post->ID,
+					'taxonomy' => '',
+				],
+				true,
+				'oembed',
+				true
+			) );
+
+			if ( $image_details && $image_details['url'] && $image_details['width'] && $image_details['height'] ) {
+				// Override WordPress provided data.
+				$data['thumbnail_url']    = $image_details['url'];
+				$data['thumbnail_width']  = $image_details['width'];
+				$data['thumbnail_height'] = $image_details['height'];
+			}
+		}
 		// Don't use cache. See @WARNING in doc comment.
 		if ( $this->get_option( 'oembed_remove_author', false ) ) {
 			unset( $data['author_url'], $data['author_name'] );

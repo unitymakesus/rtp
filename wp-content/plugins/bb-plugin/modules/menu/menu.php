@@ -31,6 +31,7 @@ class FLMenuModule extends FLBuilderModule {
 	 */
 	public function enqueue_scripts() {
 		if ( ! FLBuilderModel::is_builder_active() && $this->is_responsive_menu_flyout() ) {
+			wp_add_inline_script( 'fl-builder-layout-' . FLBuilderModel::get_post_id(), sprintf( 'var fl_responsive_close="%s"', __( 'Close', 'fl-builder' ) ) );
 			$this->add_css( 'font-awesome-5' );
 		}
 	}
@@ -519,9 +520,12 @@ FLBuilder::register_module('FLMenuModule', array(
 						'responsive' => array(
 							'default'    => array(
 								'default' => array(
-									'font_size' => array(
+									'font_size'   => array(
 										'length' => '16',
 										'unit'   => 'px',
+									),
+									'line_height' => array(
+										'length' => '1',
 									),
 								),
 							),

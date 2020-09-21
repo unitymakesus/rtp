@@ -28,7 +28,7 @@ global $post, $product, $woocommerce;
 		);
 		echo wp_kses_post(
 			sprintf(
-				'<li>%s</li>',
+				'<li class="woocommerce-product-gallery__image">%s</li>',
 				$image
 			)
 		);

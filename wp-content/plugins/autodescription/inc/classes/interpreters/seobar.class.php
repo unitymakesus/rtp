@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Interpreters;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Interprets the SEO Bar into an HTML item.
@@ -37,10 +37,11 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 final class SeoBar {
 	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
-	const STATE_UNKNOWN = 0b0001;
-	const STATE_BAD     = 0b0010;
-	const STATE_OKAY    = 0b0100;
-	const STATE_GOOD    = 0b1000;
+	const STATE_UNDEFINED = 0b0000;
+	const STATE_UNKNOWN   = 0b0001;
+	const STATE_BAD       = 0b0010;
+	const STATE_OKAY      = 0b0100;
+	const STATE_GOOD      = 0b1000;
 
 	/**
 	 * @since 4.0.0
@@ -134,11 +135,12 @@ final class SeoBar {
 	 * Passes the SEO Bar item collection by reference.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.1 Is now static.
 	 * @collector
 	 *
 	 * @return array SEO Bar items. Passed by reference.
 	 */
-	public function &collect_seo_bar_items() {
+	public static function &collect_seo_bar_items() {
 		return static::$items;
 	}
 
@@ -166,15 +168,17 @@ final class SeoBar {
 	 *
 	 * @since 4.0.0
 	 * @collector
-	 * @staticvar $_void The void. If an item doesn't exist, it's put in here,
-	 *                   only to be obliterated, annihilated, extirpated, eradicated, etc.
-	 *                   Also, you may be able to spawn an Ender Dragon if you pass four End Crystals.
 	 *
 	 * @param string $key The item key.
 	 * @return array Single SEO Bar item. Passed by reference.
 	 */
 	public static function &edit_seo_bar_item( $key ) {
 
+		/**
+		 * The void. If an item key doesn't exist, all values are put in here,
+		 * only to be obliterated, annihilated, extirpated, eradicated, etc., when called later.
+		 * Also, you may be able to spawn an Ender Dragon if you pass four End Crystals.
+		 */
 		static $_void = [];
 
 		if ( isset( static::$items[ $key ] ) ) :
@@ -256,6 +260,11 @@ final class SeoBar {
 	 *
 	 * @since 4.0.0
 	 * @generator
+	 * FIXME? The data herein is obtained via `builders/seobar-{type}.php`. If they escape their cache before we do here, it'd be much quicker.
+	 *        Provided, however, that there are fewer items cached (130~137) than SEOBar blocks outputted (240 on most sites).
+	 *        Moreover, all data provided comes from trusted sources. Nevertheless, we should escape as late as possible.
+	 *        WordPress still hangs on tight to their PHP5.2 roots, where HTML4+ escaping wasn't supported well. Updating that requires
+	 *        a whole lot of time, and paves way for potential security issues due to oversight. But, that'd speed up escaping for everyone.
 	 *
 	 * @param array $items The SEO Bar items.
 	 * @yield The SEO Bar HTML item.
@@ -268,7 +277,7 @@ final class SeoBar {
 					$this->interpret_status_to_class_suffix( $item ),
 					\esc_attr( $this->build_item_description( $item, 'aria' ) ),
 					\esc_attr( $this->build_item_description( $item, 'html' ) ),
-					$this->interpret_status_to_symbol( $item ),
+					\esc_html( $this->interpret_status_to_symbol( $item ) ),
 				]
 			);
 	}
@@ -277,7 +286,7 @@ final class SeoBar {
 	 * Builds the SEO Bar item description, in either HTML or plaintext.
 	 *
 	 * @since 4.0.0
-	 * @staticvar array $gettext Cached gettext calls.
+	 * @since 4.1.0 Removed accidental duplicated call to enumerate_assessment_list()
 	 *
 	 * @param array  $item See `$this->register_seo_bar_item()`
 	 * @param string $type The description type. Accepts 'html' or 'aria'.
@@ -289,13 +298,11 @@ final class SeoBar {
 		if ( null === $gettext ) {
 			$gettext = [
 				/* translators: 1 = SEO Bar type title, 2 = Status reason. 3 = Assessments */
-				'aria' => \__( '%1$s: %2$s %3$s', 'autodescription' ),
+				'aria' => \_x( '%1$s: %2$s %3$s', 'SEO Bar ARIA assessment enumeration', 'autodescription' ),
 			];
 		}
 
 		if ( 'aria' === $type ) {
-			$assess = $this->enumerate_assessment_list( $item );
-
 			return sprintf(
 				$gettext['aria'],
 				$item['title'],
@@ -322,24 +329,22 @@ final class SeoBar {
 	 * Enumerates the assessments in a plaintext format.
 	 *
 	 * @since 4.0.0
-	 * @staticvar array $gettext Cached gettext calls.
 	 *
 	 * @param array $item See `$this->register_seo_bar_item()`
 	 * @return string The SEO Bar item assessment, in plaintext.
 	 */
 	private function enumerate_assessment_list( array $item ) {
 
-		$count       = count( $item['assess'] );
+		$count       = \count( $item['assess'] );
 		$assessments = [];
 
 		static $gettext = null;
-
 		if ( null === $gettext ) {
 			$gettext = [
 				/* translators: 1 = Assessment number (mind the %d (D)), 2 = Assessment explanation */
-				'enum'        => \__( '%1$d: %2$s', 'autodescription' ),
+				'enum'        => \_x( '%1$d: %2$s', 'assessment enumeration', 'autodescription' ),
 				/* translators: 1 = 'Assessment(s)', 2 = A list of assessments. */
-				'list'        => \__( '%1$s: %2$s', 'autodescription' ),
+				'list'        => \_x( '%1$s: %2$s', 'assessment list', 'autodescription' ),
 				'assessment'  => \__( 'Assessment', 'autodescription' ),
 				'assessments' => \__( 'Assessments', 'autodescription' ),
 			];
@@ -368,6 +373,8 @@ final class SeoBar {
 	 *      This would meant hat we use the & logical operator, instead.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 1. Added 'undefined' support.
+	 *              2. Now defaults to 'undefined'.
 	 *
 	 * @param array $item See `$this->register_seo_bar_item()`
 	 * @return string The HTML class-suffix.
@@ -387,9 +394,13 @@ final class SeoBar {
 				$status = 'bad';
 				break;
 
-			default:
 			case static::STATE_UNKNOWN:
 				$status = 'unknown';
+				break;
+
+			default:
+			case static::STATE_UNDEFINED:
+				$status = 'undefined';
 				break;
 		endswitch;
 
@@ -400,7 +411,8 @@ final class SeoBar {
 	 * Enumerates the assessments in a plaintext format.
 	 *
 	 * @since 4.0.0
-	 * @staticvar bool $use_symbols
+	 * @since 4.1.0 1. Added 'undefined' support.
+	 *              2. Now defaults to 'undefined'.
 	 *
 	 * @param array $item See `$this->register_seo_bar_item()`
 	 * @return string The SEO Bar item assessment, in plaintext.
@@ -408,9 +420,9 @@ final class SeoBar {
 	private function interpret_status_to_symbol( array $item ) {
 
 		static $use_symbols = null;
-
-		if ( null === $use_symbols )
+		if ( null === $use_symbols ) {
 			$use_symbols = (bool) \the_seo_framework()->get_option( 'seo_bar_symbols' );
+		}
 
 		if ( $use_symbols && $item['status'] ^ static::STATE_GOOD ) {
 			switch ( $item['status'] ) :
@@ -422,15 +434,19 @@ final class SeoBar {
 					$symbol = '!!';
 					break;
 
-				default:
 				case static::STATE_UNKNOWN:
 					$symbol = '??';
+					break;
+
+				default:
+				case static::STATE_UNDEFINED:
+					$symbol = '--';
 					break;
 			endswitch;
 
 			return $symbol;
 		}
 
-		return \esc_html( $item['symbol'] );
+		return $item['symbol'];
 	}
 }

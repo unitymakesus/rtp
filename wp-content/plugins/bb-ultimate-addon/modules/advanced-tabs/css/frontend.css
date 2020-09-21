@@ -347,7 +347,7 @@ div.uabb-tabs > nav {
 /* Accesibility support */
 
 .uabb-tab-link:focus {
-    border: 1px solid #5E9ED6;
+    border: 1px solid;
     border-radius: 0.5px;
 }
 

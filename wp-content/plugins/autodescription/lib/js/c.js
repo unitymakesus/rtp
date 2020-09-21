@@ -88,18 +88,18 @@ window.tsfC = function( $ ) {
 	 * @access private
 	 *
 	 * @function
-	 * @param {Object} test
+	 * @param {Object} test The object to test.
 	 * @return {undefined}
 	 */
-	const updateCharacterCounter = ( test ) => {
+	const updateCharacterCounter = test => {
 
 		let el         = test.e,
 			text       = tsf.decodeEntities( test.text ),
 			guidelines = l10n.guidelines[ test.field ][ test.type ].chars;
 
 		let testLength = tsf.getStringLength( text ),
-			newClass = '',
-			exclaimer = '';
+			newClass   = '',
+			exclaimer  = '';
 
 		let classes = {
 			bad:     'tsf-count-bad',
@@ -161,10 +161,10 @@ window.tsfC = function( $ ) {
 	 * @access public
 	 *
 	 * @function
-	 * @param {Object} test
+	 * @param {Object} test The object to test.
 	 * @return {undefined}
 	 */
-	const updatePixelCounter = ( test ) => {
+	const updatePixelCounter = test => {
 
 		let el         = test.e,
 			text       = tsf.decodeEntities( test.text ),
@@ -183,9 +183,9 @@ window.tsfC = function( $ ) {
 
 		shadow.innerHTML = tsf.escapeString( text );
 
-		let testWidth = shadow.offsetWidth,
-			newClass = '',
-			newWidth = '',
+		let testWidth       = shadow.offsetWidth,
+			newClass        = '',
+			newWidth        = '',
 			guidelineHelper = '';
 
 		let classes = {
@@ -239,7 +239,7 @@ window.tsfC = function( $ ) {
 
 		// Update tooltip and ARIA label.
 		bar.dataset.desc = label;
-		// Replace HTML with spaces. TODO see TSF's PHP-code `strip_tags_cs()` for a better solution.
+		// Replace HTML tags with spaces. TODO see TSF's PHP-code `strip_tags_cs()` for a better solution.
 		// NOTE: Screen readers don't always read out HTML entities as intended. They should fix that, not us, as it's an escaping issue.
 		bar.setAttribute( 'aria-label', tsf.escapeString( label.replace( /(<([^>]+)?>?)/ig, ' ' ) ) );
 
@@ -256,7 +256,7 @@ window.tsfC = function( $ ) {
 	 * @return {undefined}
 	 */
 	const triggerCounterUpdate = () => {
-		$( window ).trigger( 'tsf-counter-updated' );
+		window.dispatchEvent( new CustomEvent( 'tsf-counter-updated' ) );
 	}
 
 	/**
@@ -269,7 +269,7 @@ window.tsfC = function( $ ) {
 	 * @param {(undefined|boolean)} countUp Whether to add one.
 	 * @return {undefined}
 	 */
-	const updateCounterClasses = ( countUp ) => {
+	const updateCounterClasses = countUp => {
 
 		if ( countUp ) ++counterType;
 
@@ -287,25 +287,25 @@ window.tsfC = function( $ ) {
 	 * @access private
 	 *
 	 * @function
-	 * @param {!jQuery.Event} event
+	 * @param {Event} event
 	 * @return {undefined}
 	 */
-	const _counterUpdate = ( event ) => {
+	const _counterUpdate = event => {
 
-		//* Update counters locally, and add a number.
+		// Update counters locally, and add a number.
 		//! We don't want this to be promised after the AJAX call, that'll resolve separately.
 		updateCounterClasses( true );
 
 		let target = '.tsf-counter-wrap .tsf-ajax',
 			status = 0;
 
-		//* Reset ajax loader
+		// Reset ajax loader
 		tsf.resetAjaxLoader( target );
 
-		//* Set ajax loader.
+		// Set ajax loader.
 		tsf.setAjaxLoader( target );
 
-		//* Setup external update.
+		// Setup external update.
 		let settings = {
 			method: 'POST',
 			url: ajaxurl,
@@ -320,7 +320,7 @@ window.tsfC = function( $ ) {
 
 				response = tsf.convertJSONResponse( response );
 
-				//* I could do value check, but that will simply lag behind. Unless an annoying execution delay is added.
+				// I could do value check, but that will simply lag behind. Unless an annoying execution delay is added.
 				if ( 'success' === response.type )
 					status = 1;
 
@@ -353,7 +353,9 @@ window.tsfC = function( $ ) {
 	 * @function
 	 * @return {jQuery}
 	 */
-	const resetCounterListener = () => $( '.tsf-counter' ).off( 'click.tsfC' ).on( 'click.tsfC', _counterUpdate );
+	const resetCounterListener = () => document.querySelectorAll( '.tsf-counter' ).forEach(
+		el => el.addEventListener( 'click', _counterUpdate )
+	);
 
 	/**
 	 * Initializes counters.
@@ -365,10 +367,8 @@ window.tsfC = function( $ ) {
 	 * @return {undefined}
 	 */
 	const _initCounters = () => {
-
 		// Any edit screen
 		resetCounterListener();
-
 	}
 
 	return Object.assign( {
@@ -383,7 +383,7 @@ window.tsfC = function( $ ) {
 		 * @return {undefined}
 		 */
 		load: () => {
-			$( document.body ).on( 'tsf-onload', _initCounters );
+			document.body.addEventListener( 'tsf-onload', _initCounters );
 		}
 	}, {
 		updatePixelCounter,
@@ -396,4 +396,4 @@ window.tsfC = function( $ ) {
 		l10n,
 	} );
 }( jQuery );
-jQuery( window.tsfC.load );
+window.tsfC.load();

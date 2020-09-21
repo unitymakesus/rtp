@@ -32,6 +32,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 						$this,
 						'ppwp_check_content_password',
 					),
+					'permission_callback' => '__return_true',
 				)
 			);
 
@@ -107,6 +108,20 @@ if ( ! class_exists( 'PPW_API' ) ) {
 					'permission_callback' => function () {
 						return current_user_can( 'edit_posts' );
 					},
+				)
+			);
+
+			register_rest_route(
+				'wppp/v1',
+				'validate-password',
+				array(
+					'methods'             => 'POST',
+					'callback'            => array(
+						$this,
+						'validate_password',
+					),
+					'permission_callback' => '__return_true',
+					'show_in_index'       => false
 				)
 			);
 		}
@@ -369,7 +384,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 				);
 			}
 
-			$matches = $this->search_shortcode_content( $content );
+			$matches = ppw_free_search_shortcode_content( $content );
 			$matches = $this->filter_short_code_matches( $matches, PPW_Constants::PPW_HOOK_SHORT_CODE_NAME );
 
 			if ( ! isset( $matches[ $data['idx'] ] ) ) {
@@ -383,13 +398,18 @@ if ( ! class_exists( 'PPW_API' ) ) {
 			$shortcode = $matches[ $data['idx'] ];
 
 			// Valid passwords.
-			$array_values = $this->handle_valid_password( $shortcode, $data['pss'] );
+			$array_values = ppw_free_valid_pcp_password( $shortcode, $data['pss'] );
 			if ( $array_values['is_valid_password'] ) {
 				$atts                          = $array_values['atts'];
 				$result['cookie_expired_time'] = $atts['cookie'];
 				$result['isValid']             = true;
 				$result['message']             = '';
 				do_action( PPW_Constants::HOOK_RESTRICT_CONTENT_AFTER_VALID_PWD, $post, $data['pss'] );
+			}
+
+			// Allow custom error message from error_msg shortcode's attribute.
+			if ( isset( $array_values['message'] ) ) {
+				$result['message'] = _x( wp_kses_post( $array_values['message'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' );
 			}
 
 			return wp_send_json(
@@ -428,6 +448,8 @@ if ( ! class_exists( 'PPW_API' ) ) {
 		 * @param string $password  Password from request.
 		 *
 		 * @return array
+		 * @deprecated 1.5.2
+		 *
 		 */
 		private function handle_valid_password( $shortcode, $password ) {
 			$default_args = array(
@@ -451,6 +473,10 @@ if ( ! class_exists( 'PPW_API' ) ) {
 				$default_args['atts']              = $atts;
 			}
 
+			if ( isset( $parsed_atts['error_msg'] ) ) {
+				$default_args['message'] = wp_kses_post( $parsed_atts['error_msg'] );
+			}
+
 			return $default_args;
 		}
 
@@ -460,9 +486,11 @@ if ( ! class_exists( 'PPW_API' ) ) {
 		 * @param string $content The post content.
 		 *
 		 * @return mixed
+		 * @deprecated 1.5.2
+		 *
 		 */
 		private function search_shortcode_content( $content ) {
-			preg_match_all( '/' . get_shortcode_regex() . '/', $content, $matches, PREG_SET_ORDER );
+			preg_match_all( '/' . get_shortcode_regex( array( 'ppwp' ) ) . '/', $content, $matches, PREG_SET_ORDER );
 
 			return $matches;
 		}
@@ -578,6 +606,62 @@ if ( ! class_exists( 'PPW_API' ) ) {
 			$elements = compact( 'id', 'authordata', 'currentday', 'currentmonth', 'page', 'pages', 'multipage', 'more', 'numpages' );
 
 			return $elements;
+		}
+
+		/**
+		 * @param $request
+		 *
+		 * @return WP_REST_Response
+		 */
+		public function validate_password( $request ) {
+			$post_id  = $request->get_param( 'post_id' );
+			$password = $request->get_param( 'password' );
+			$post_id  = absint( $post_id );
+			$password = wp_unslash( $password );
+
+			if ( empty( $post_id ) ) {
+				return new WP_REST_Response(
+					array(
+						'success' => false,
+						'message' => 'Post ID is empty',
+					),
+					400
+				);
+			}
+
+			$post    = get_post( $post_id );
+			if ( empty( $post ) ) {
+				return new WP_REST_Response(
+					array(
+						'success' => false,
+						'message' => 'Post not found',
+					),
+					400
+				);
+			}
+
+			$post_content     = $post->post_content;
+			$password_service = new PPW_Password_Services();
+			$is_valid         = $password_service->is_valid_password_from_request( $post_id, $password );
+
+			if ( ! $is_valid ) {
+				return new WP_REST_Response(
+					array(
+						'success' => false,
+						'message' => ppw_core_get_error_msg( $post_id ),
+					),
+					400
+				);
+			}
+
+			return new WP_REST_Response(
+				array(
+					'success'      => true,
+					'post_content' => '<div>' . do_shortcode( $post_content ) . '</div>',
+					'message'      => 'The password you entered is correct',
+				),
+				200
+			);
 		}
 	}
 }

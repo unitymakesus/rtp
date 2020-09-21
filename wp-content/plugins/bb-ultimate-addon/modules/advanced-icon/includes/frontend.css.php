@@ -244,3 +244,80 @@ if ( isset( $settings->responsive_align ) ) {
 	}
 }
 ?>
+
+<?php
+if ( $global_settings->responsive_enabled ) { // Global Setting If started.
+	?>
+	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {
+	<?php if ( 'horizontal' === $settings->icon_struc_align ) { ?>
+
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-horizontal .adv-icon-link {
+	margin-bottom: <?php echo esc_attr( $settings->spacing_medium ); ?>px;
+	display: inline-block;
+}
+
+/* Left */
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-left .adv-icon-link {
+	margin-right: <?php echo esc_attr( $settings->spacing_medium ); ?>px;
+}
+
+/* Center */
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-center .adv-icon-link {
+	margin-left: <?php echo intval( $settings->spacing_medium ) / 2; ?>px;
+	margin-right: <?php echo intval( $settings->spacing_medium ) / 2; ?>px;
+}
+
+/* Right */
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-right .adv-icon-link {
+	margin-left: <?php echo esc_attr( $settings->spacing_medium ); ?>px;
+}
+
+	<?php } ?>
+
+	<?php if ( 'vertical' === $settings->icon_struc_align ) { ?>
+
+
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-vertical .adv-icon-link {
+	margin-bottom: <?php echo esc_attr( $settings->spacing_medium ); ?>px;
+}
+
+	<?php } ?>
+}
+
+@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
+	<?php if ( 'horizontal' === $settings->icon_struc_align ) { ?>
+
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-horizontal .adv-icon-link {
+	margin-bottom: <?php echo esc_attr( $settings->spacing_responsive ); ?>px;
+	display: inline-block;
+}
+
+/* Left */
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-left .adv-icon-link {
+	margin-right: <?php echo esc_attr( $settings->spacing_responsive ); ?>px;
+}
+
+/* Center */
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-center .adv-icon-link {
+	margin-left: <?php echo intval( $settings->spacing_responsive ) / 2; ?>px;
+	margin-right: <?php echo intval( $settings->spacing_responsive ) / 2; ?>px;
+}
+
+/* Right */
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-right .adv-icon-link {
+	margin-left: <?php echo esc_attr( $settings->spacing_responsive ); ?>px;
+}
+
+	<?php } ?>
+
+	<?php if ( 'vertical' === $settings->icon_struc_align ) { ?>
+
+
+.fl-node-<?php echo esc_attr( $id ); ?> .adv-icon-vertical .adv-icon-link {
+	margin-bottom: <?php echo esc_attr( $settings->spacing_responsive ); ?>px;
+}
+
+	<?php } ?>
+}
+
+<?php } ?>

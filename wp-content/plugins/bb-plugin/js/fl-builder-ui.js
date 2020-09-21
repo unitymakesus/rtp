@@ -198,6 +198,12 @@
         * @return void
         */
         onEndEditingSession: function() {
+
+            if ( 'Builder' in FL && 'data' in FL.Builder ) {
+                const actions = FL.Builder.data.getSystemActions()
+                actions.setIsEditing(false)
+            }
+
             this.reset();
             this.addShortcut('restartEditingSession', 'mod+e');
         },
@@ -207,6 +213,12 @@
         * @return void
         */
         onRestartEditingSession: function() {
+
+            if ( 'Builder' in FL && 'data' in FL.Builder ) {
+                const actions = FL.Builder.data.getSystemActions()
+                actions.setIsEditing(true)
+            }
+
             this.reset();
             this.setDefaultKeyboardShortcuts();
         },
@@ -272,74 +284,6 @@
             e.preventDefault();
         },
     };
-
-    var KeyShortcutsUI = {
-
-        isShowing: false,
-
-        /**
-        * Fire up the keyboard shortcut UI
-        *
-        * @return void
-        */
-        init: function() {
-
-            this.render();
-
-            FLBuilder.addHook( 'showKeyboardShortcuts', this.show.bind( this ) );
-        },
-
-        /**
-        * Render the UI into the DOM
-        *
-        * @return void
-        */
-        render: function() {
-            var renderUI = wp.template('fl-keyboard-shortcuts'),
-                renderData = FLBuilderConfig.keyboardShortcuts;
-
-            this.$el = $( renderUI( renderData ) );
-            $('body').append( this.$el );
-
-            this.$el.find('.dismiss-shortcut-ui').on('click', this.hide.bind( this ) );
-            this.$el.on('click', this.hide.bind( this ) );
-        },
-
-        /**
-        * Show the keyboard shortcut UI
-        *
-        * @return void
-        */
-        show: function() {
-            if ( this.isShowing ) return;
-            this.$el.addClass('is-showing');
-            this.isShowing = true;
-        },
-
-        /**
-        * Hide the keyboard shortcut UI
-        *
-        * @return void
-        */
-        hide: function() {
-            if ( !this.isShowing ) return;
-            this.$el.removeClass('is-showing');
-            this.isShowing = false;
-        },
-
-        /**
-        * Toggle the UI on and off
-        *
-        * @return void
-        */
-        toggle: function() {
-            if ( this.isShowing ) {
-                this.hide();
-            } else {
-                this.show();
-            }
-        },
-    }
 
 
     /**
@@ -631,7 +575,7 @@
             this.isPreviewing = false;
             this.show();
             FLBuilder._highlightEmptyCols();
-			FLBuilderResponsivePreview.exit();
+            FLBuilderResponsivePreview.exit();
             $('html').removeClass('fl-builder-preview');
             $('html, body').addClass('fl-builder-edit');
         },
@@ -674,6 +618,7 @@
         onDeviceIconClick: function(e) {
             var mode = $(e.target).data('mode');
             FLBuilderResponsivePreview.switchTo(mode);
+            FLBuilderResponsivePreview._showSize(mode);
         },
 
         /**
@@ -1245,7 +1190,6 @@
         // End Render Order
 
         KeyShortcuts.init();
-        KeyShortcutsUI.init();
         EditingUI.init();
         BrowserState.init();
         RowResize.init();

@@ -118,7 +118,7 @@ body.rtl .fl-module-content-slider .bx-viewport {
 	top: 50%;
 	left: 0;
 	right: 0;
-	z-index: 20;
+	z-index: 1;
 	margin-top: -16px;
 }
 .fl-content-slider-navigation a{

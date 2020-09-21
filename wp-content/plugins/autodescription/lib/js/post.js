@@ -45,74 +45,17 @@ window.tsfPost = function( $ ) {
 	const l10n = 'undefined' !== typeof tsfPostL10n && tsfPostL10n;
 
 	/**
-	 * Refines styling for the navigation tabs on the settings pages.
-	 *
-	 * @since 4.0.0
+	 * @since 4.1.0
 	 * @access private
-	 * @todo merge with tsfSettings.tabToggle or a collective method?
-	 * @TODO add more debouncing.
-	 *
-	 * @function
-	 * @param {!jQuery.Event} event
-	 * @param {undefined|true} onload
-	 * @return {(undefined|null)}
+	 * @type {string}
 	 */
-	const _flexTabToggle = ( event, onload ) => {
-
-		let $currentToggle = $( event.target );
-
-		if ( ! $currentToggle.is( ':checked' ) ) return;
-
-		onload = typeof onload === 'boolean' ? onload : false;
-
-		let toggleId   = event.target.id,
-			toggleName = event.target.name;
-
-		let activeClass       = 'tsf-flex-tab-content-active',
-			toggleActiveClass = 'tsf-flex-tab-active',
-			$previousContent  = $( '.' + activeClass ),
-			$previousToggle   = $currentToggle.closest( '.tsf-flex-nav-tab-wrapper' ).find( '.' + toggleActiveClass );
-
-		//* Perform validity check, this prevents hidden browser validation errors.
-		let $invalidInput = $previousContent.find( 'input:invalid, select:invalid, textarea:invalid' );
-		if ( $invalidInput.length ) {
-			$invalidInput[0].reportValidity();
-
-			$previousToggle.prop( 'checked', true );
-			$currentToggle.prop( 'checked', false );
-			event.stopPropagation();
-			event.preventDefault();
-			return false; // stop propagation in jQuery.
-		}
-
-		let $newContent = $( '#' + toggleId + '-content' );
-
-		//= Previous active-state logger.
-		$previousToggle.removeClass( toggleActiveClass );
-		$previousToggle.siblings( 'label' ).removeClass( 'tsf-no-focus-ring' );
-		$currentToggle.addClass( toggleActiveClass );
-
-		//* Only parse if old content isn't the new.
-		if ( onload ) {
-			let $allContent = $( '.' + toggleName + '-content' );
-			$allContent.removeClass( activeClass ).hide();
-			$newContent.addClass( activeClass ).show();
-			$( '#' + toggleId ).trigger( 'tsf-flex-tab-toggled' );
-		} else if ( $newContent.length && ! $newContent.is( $previousContent ) ) {
-			let $allContent = $( '.' + toggleName + '-content' );
-
-			// Promises dont always complete, making for extraneous display.
-			$allContent.fadeOut( 150, function() {
-				$( this ).removeClass( activeClass );
-			} );
-			setTimeout( () => {
-				$newContent.addClass( activeClass ).fadeIn( 250 );
-			}, 150 );
-			setTimeout( () => {
-				$( '#' + toggleId ).trigger( 'tsf-flex-tab-toggled' );
-			}, 175 );
-		}
-	}
+	const _titleId = 'autodescription_title';
+	/**
+	 * @since 4.1.0
+	 * @access private
+	 * @type {string}
+	 */
+	const _descId = 'autodescription_description';
 
 	/**
 	 * Registers on resize/orientationchange listeners and debounces to only run
@@ -122,131 +65,275 @@ window.tsfPost = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access private
-	 * @TODO rewrite: make this seamless, especially during page-load.
 	 *
 	 * @function
 	 * @return {(undefined|null)}
 	 */
 	const _doFlexResizeListener = () => {
 
-		if ( ! $( '.tsf-flex' ).length ) return;
+		if ( ! document.querySelector( '.tsf-flex' ) ) return;
 
-		let _resizeTimeout = 0,
-			_lastWidth    = {},
-			_timeOut       = 0;
+		let overflowAnimationFrame = {};
+		const calculateTextOverflow = target => {
 
-		// Warning: Only checks for the first item existence.
-		let $tabWrapper = $( '.tsf-flex-nav-tab-wrapper' ),
-			$innerWrap  = $( '.tsf-flex-nav-tab-inner' ),
-			$navNames   = $( '.tsf-flex-nav-name' );
+			let innerWrap = target.querySelector( '.tsf-flex-nav-tab-inner' ),
+				navNames  = target.getElementsByClassName( 'tsf-flex-nav-name' );
 
-		if ( ! $tabWrapper.length ) return;
+			let displayNames = innerWrap.clientWidth <= target.clientWidth;
 
-		$( window ).on( 'tsf-flex-resize', () => {
+			if ( displayNames ) {
+				if ( +( target.dataset.displayedNames || 1 ) ) return; // Names are displayed by default on-load. Ergo, 1 by default.
+				target.dataset.displayedNames = 1;
+				$( navNames ).stop( false, true ).fadeIn( 250 );
+				// didShow = true;
+			} else {
+				if ( ! +( target.dataset.displayedNames || 1 ) ) return;
+				target.dataset.displayedNames = 0;
+				// Don't animate, we're overflowing--rectify that ASAP.
+				$( navNames ).hide();
+			}
 
-			clearTimeout( _resizeTimeout );
-
-			// Onload delays are 0, after than it's 10, 20 and 30 respectively.
-			let _delay = 0;
-
-			_resizeTimeout = setTimeout( () => {
-				let outerWrapWidth = $tabWrapper.width(),
-					innerWrapWidth = $innerWrap.width();
-
-				if ( ! _lastWidth.tabWrapper ) {
-					_lastWidth.tabWrapper = {};
-					_lastWidth.tabWrapper.outer = 0;
-					_lastWidth.tabWrapper.inner = 0;
-					_lastWidth.tabWrapper.shown = 1;
-				}
-
-				// First run, revealed, or testing for new width. Either way, fadeIn.
-				if ( ! _lastWidth.tabWrapper.shown && _lastWidth.tabWrapper.outer < outerWrapWidth ) {
-					/**
-					 * If ANYONE can find a way that doesn't make it flicker
-					 * without using clones with stripped IDs/names, let me know.
-					 * https://github.com/sybrew/the-seo-framework/issues/new
-					 */
-					$navNames.fadeIn( 250 );
-
-					// Wait for 10 ms for slow browsers.
+			if ( +target.dataset.displayedNames ) {
+				if ( innerWrap.clientWidth > target.clientWidth ) {
+					$( navNames ).stop( false, true ).hide();
+					target.dataset.displayedNames = 0;
+				} else {
+					// Loop once just to be certain, for the browser may be too slow to notice the offset change.
+					// Usually, this only happens once when the navNames are meant to be displayed (target width growing).
 					setTimeout( () => {
-						// Recalulate inner width (outer didn't change):
-						innerWrapWidth = $innerWrap.width();
-					}, _delay );
+						cancelAnimationFrame( overflowAnimationFrame[ target.id ] );
+						overflowAnimationFrame[ target.id ] = requestAnimationFrame( () => calculateTextOverflow( target ) );
+					}, 7 ); // 144hz
 				}
-
-				// Wait for an additional 10 ms for slow browsers.
-				setTimeout( () => {
-					if ( innerWrapWidth > outerWrapWidth ) {
-						// Overflow (can be first run).
-						$navNames.hide();
-						_lastWidth.tabWrapper.shown = 0;
-					} else if ( _lastWidth.tabWrapper.outer < outerWrapWidth ) {
-						// Grown or first run.
-						$navNames.fadeIn( 250 );
-						_lastWidth.tabWrapper.shown = 1;
-					}
-				}, _delay * 2 );
-
-				// Wait for an additional 10 ms for slow browsers.
-				setTimeout( () => {
-					_lastWidth.tabWrapper.outer = outerWrapWidth;
-					_lastWidth.tabWrapper.inner = innerWrapWidth;
-				}, _delay * 3 );
-			}, _timeOut );
-
-			// Update future timeouts.
-			_delay = 10;
-			_timeOut = 75;
-		} );
+			}
+		}
+		const prepareCalculateTextOverflow = event => {
+			let target = event.detail.target || document.getElementById( 'tsf-flex-inpost-tabs-wrapper' );
+			if ( ! target ) return;
+			overflowAnimationFrame[ target.id ] = requestAnimationFrame( () => calculateTextOverflow( target ) );
+		}
+		window.addEventListener( 'tsf-flex-resize', prepareCalculateTextOverflow );
 
 		/**
 		 * Triggers resize on event.
 		 *
 		 * @function
-		 * @return {(undefined|null)}
+		 * @param {HTMLElement|undefined} target The target that's being resized. Optional.
+		 * @return {undefined}
 		 */
-		const triggerResize = () => {
-			$( window ).trigger( 'tsf-flex-resize' );
+		const triggerResize = target => {
+			window.dispatchEvent( new CustomEvent( 'tsf-flex-resize', {
+				bubbles:    false,
+				cancelable: false,
+				detail:     {
+					target
+				},
+			} ) );
 		}
-		$( window ).on( 'resize orientationchange', triggerResize );
-		$( '#collapse-menu' ).on( 'click', triggerResize );
-		$( '.columns-prefs :input[type=radio]' ).on( 'change', triggerResize );
-		$( '.meta-box-sortables' ).on( 'sortupdate', triggerResize );
+		if ( 'undefined' !== typeof window.ResizeObserver ) {
+			let resizeAnimationFrame = {};
+			const resizeObserver = new ResizeObserver( entries => {
+				// There should be only one entry... Nevertheless, let's loop this for we might add more metaboxes.
+				for ( const entry of entries ) {
+					let target = entry.target;
+					cancelAnimationFrame( resizeAnimationFrame[ target.id ] );
+					resizeAnimationFrame[ target.id ] = requestAnimationFrame( () => {
+						// No support for all major browsers yet. Neither for entry.contentRect.
+						// if ( ! entry.dataset.boxSizeWidth ) {
+						// 	entry.dataset.boxSizeWidth = 0;
+						// }
+						// entry.dataset.boxSizeWidth = contentBoxSize.inlineSize;
 
-		//* Trigger after setup.
+						if ( ! target.dataset.lastWidth ) {
+							target.dataset.lastWidth = 0;
+						}
+						if ( +target.clientWidth !== +target.dataset.lastWidth ) {
+							target.dataset.lastWidth = target.clientWidth;
+							triggerResize( target );
+						}
+					} );
+				}
+			} );
+			resizeObserver.observe( document.getElementById( 'tsf-flex-inpost-tabs-wrapper' ) );
+		} else {
+			/**
+			 * Set asynchronous timeout because we need to wait for some actions to complete.
+			 * Also forward without event data. triggerResize's first parameter may not be of type Event.
+			 */
+			const triggerEdgeResize = () => setTimeout( triggerResize, 10 );
+
+			// EdgeHTML fallback support. Microsoft, release Edge Chromium already!
+			// Not detailed, not optimized. Edge case. Ha! Get it? ...
+			$( document ).on( 'wp-window-resized orientationchange', triggerEdgeResize );
+			$( '#collapse-menu' ).on( 'click', triggerEdgeResize );
+			$( '.columns-prefs :input[type=radio]' ).on( 'change', triggerEdgeResize );
+			$( '.meta-box-sortables' ).on( 'sortupdate', triggerEdgeResize ); // Removed WP 5.5?
+			$( document ).on( 'postbox-moved', triggerEdgeResize ); // New WP 5.5?
+			$( '#tsf-inpost-box .handle-order-higher, #tsf-inpost-box .handle-order-lower' ).on( 'click', triggerEdgeResize );
+		}
+
+		// Trigger after setup
 		triggerResize();
-	}
-
-	/**
-	 * Sets a class to the active element which helps excluding focus rings.
-	 *
-	 * @since 4.0.0
-	 * @access private
-	 * @see _flexTabToggle Handles this class.
-	 *
-	 * @function
-	 * @param {!jQuery.Event} event
-	 * @return {(undefined|null)}
-	 */
-	const _addNoFocusClass = ( event ) => {
-		event.currentTarget.classList.add( 'tsf-no-focus-ring' );
 	}
 
 	/**
 	 * Sets the navigation tabs content equal to the buttons.
 	 *
+	 * @todo Merge with tsfSettings._initTabs?
+	 *       It's basically a carbon copy, aside from the trigger and classes.
 	 * @since 4.0.0
-	 * @see _tabToggle
 	 * @access private
 	 *
 	 * @function
 	 * @return {(undefined|null)}
 	 */
 	const _initTabs = () => {
-		//= Triggers inpost change event for tabs. There's only one active tab.
-		$( '.tsf-flex-nav-tab-radio:checked' ).trigger( 'change', [ true ] );
+
+		let togglePromises  = {},
+			toggleTarget    = {},
+			toggleWrap      = {},
+			toggleContainer = {};
+
+		const tabToggledEvent = new CustomEvent( 'tsf-flex-tab-toggled' );
+
+		/**
+		 * Sets correct tab content and classes on toggle.
+		 *
+		 * @function
+		 * @param {Event} event
+		 * @return {(undefined|null)}
+		 */
+		const flexTabToggle = ( event ) => {
+
+			const currentToggle = event.target;
+			const onload        = ! event.isTrusted;
+
+			// Why is this here? For broken customEvent triggers?
+			// if ( ! currentToggle.checked ) return;
+
+			const toggleId   = event.target.id,
+				  toggleName = event.target.name;
+
+			toggleWrap.hasOwnProperty( toggleName ) || (
+				toggleWrap[ toggleName ] = currentToggle.closest( '.tsf-flex-nav-tab-wrapper' )
+			);
+
+			const activeClass       = 'tsf-flex-tab-content-active',
+				  toggleActiveClass = 'tsf-flex-tab-active',
+				  previousToggle    = toggleWrap[ toggleName ].querySelector( `.${toggleActiveClass}` );
+
+			if ( ! onload ) {
+				// Perform validity check, this prevents non-invoking hidden browser validation errors.
+				const invalidInput = document.querySelector( `.${activeClass} :invalid` );
+				if ( invalidInput ) {
+					invalidInput.reportValidity();
+
+					if ( previousToggle )
+						previousToggle.checked = true;
+
+					currentToggle.checked = false;
+
+					event.stopPropagation();
+					event.preventDefault();
+					return false; // stop propagation in jQuery.
+				}
+			}
+
+			if ( previousToggle ) {
+				previousToggle.classList.remove( toggleActiveClass );
+				let label = document.querySelector( `.tsf-flex-nav-tab-label[for="${previousToggle.id}"]` );
+				label && label.classList.remove( 'tsf-no-focus-ring' );
+			}
+			currentToggle.classList.add( toggleActiveClass );
+
+			if ( onload ) {
+				const newContent = document.getElementById( `${toggleId}-content` );
+
+				if ( ! newContent.classList.contains( activeClass ) ) {
+					const allContent = document.querySelectorAll( `.${toggleName}-content` );
+					allContent && allContent.forEach( element => {
+						element.classList.remove( activeClass );
+					} );
+					newContent && newContent.classList.add( activeClass );
+				}
+
+				document.getElementById( toggleId ).dispatchEvent( tabToggledEvent );
+			} else {
+				if ( ! toggleContainer.hasOwnProperty( toggleName ) ) {
+					toggleContainer[ toggleName ] = currentToggle.closest( '.inside' );
+					togglePromises[ toggleName ]  = void 0;
+				}
+
+				const fadeOutTimeout = 150;
+
+				// Set toggleTarget for (active or upcoming) Promise.
+				toggleTarget[ toggleName ] = toggleId;
+				// If the promise is running, let it finish and consider the newly set ID.
+				if ( 'undefined' !== typeof togglePromises[ toggleName ] ) return;
+
+				const $allContent = $( '.' + toggleName + '-content' );
+				const setCorrectTab = () => {
+					$( `#${toggleTarget[ toggleName ]}-content` ).stop( false, true ).addClass( activeClass ).fadeIn( 250 );
+					toggleContainer[ toggleName ].style.minHeight = '';
+					return new Promise( resolve => setTimeout( resolve, fadeOutTimeout ) );
+				};
+				const lockHeight = () => {
+					toggleContainer[ toggleName ].style.minHeight = toggleContainer[ toggleName ].getBoundingClientRect().height;
+				}
+
+				togglePromises[ toggleName ] = () => new Promise( resolve => {
+					// Lock height, so to prevent jumping.
+					lockHeight();
+
+					// Stop any running animations, and hide the content. Put in $.Deferred so to run the thenable only once.
+					$.when( $allContent.stop( false, true ).fadeOut( fadeOutTimeout ) ).then( () => {
+						$allContent.removeClass( activeClass );
+						resolve();
+					} );
+				} ).then(
+					setCorrectTab
+				).then( () => {
+					let toggledContent = document.getElementById( `${toggleTarget[ toggleName ]}-content` );
+
+					// Test if the correct tab has been set--otherwise, try again.
+					// Resolve if the query fails, so to prevent an infinite loop.
+					if ( ! toggledContent || toggledContent.classList.contains( activeClass ) ) {
+						document.getElementById( toggleTarget[ toggleName ] ).dispatchEvent( tabToggledEvent );
+						togglePromises[ toggleName ] = void 0;
+					} else {
+						// Lock height to prevent jumping.
+						lockHeight();
+						// Hide everything instantly. We don't make false promises here.
+						$allContent.removeClass( activeClass );
+						// Retry self.
+						togglePromises[ toggleName ]();
+					}
+				} );
+
+				togglePromises[ toggleName ]();
+			}
+		}
+
+		/**
+		 * Sets a class to the active element which helps excluding focus rings.
+		 *
+		 * @see flexTabToggle Handles this class.
+		 *
+		 * @function
+		 * @param {Event} event
+		 * @return {(undefined|null)}
+		 */
+		const addNoFocusClass = event => event.currentTarget.classList.add( 'tsf-no-focus-ring' );
+		document.querySelectorAll( '.tsf-flex-nav-tab-wrapper .tsf-flex-nav-tab-label' ).forEach( el => {
+			el.addEventListener( 'click', addNoFocusClass );
+		} );
+
+		document.querySelectorAll( '.tsf-flex-nav-tab-radio' ).forEach( el => {
+			el.addEventListener( 'change', flexTabToggle );
+		} );
+		document.querySelectorAll( '.tsf-flex-nav-tab-radio:checked' ).forEach( el => {
+			el.dispatchEvent( new Event( 'change' ) );
+		} );
 	}
 
 	/**
@@ -282,37 +369,50 @@ window.tsfPost = function( $ ) {
 	 */
 	const _initTitleListeners = () => {
 
-		tsfTitle.setInputElement( document.getElementById( 'autodescription_title' ) );
+		const titleInput = document.getElementById( _titleId );
+		if ( ! titleInput ) return;
 
-		tsfTitle.updateState( 'allowReferenceChange', ! l10n.params.refTitleLocked );
+		const blogNameTrigger = document.getElementById( 'autodescription_title_no_blogname' );
 
-		const protectedPrefix = tsf.escapeString( l10n.i18n.protectedTitle );
-		const privatePrefix   = tsf.escapeString( l10n.i18n.privateTitle );
+		tsfTitle.setInputElement( titleInput );
+
+		let state = JSON.parse(
+			document.getElementById( 'tsf-title-data_' + _titleId ).dataset.state
+		);
+
+		tsfTitle.updateStateOf( _titleId, 'allowReferenceChange', ! state.refTitleLocked );
+		tsfTitle.updateStateOf( _titleId, 'defaultTitle', state.defaultTitle.trim() );
+		tsfTitle.updateStateOf( _titleId, 'addAdditions', state.addAdditions );
+		tsfTitle.updateStateOf( _titleId, 'useSocialTagline', !! ( state.useSocialTagline || false ) );
+		tsfTitle.updateStateOf( _titleId, 'additionValue', state.additionValue.trim() );
+		tsfTitle.updateStateOf( _titleId, 'additionPlacement', state.additionPlacement );
+		tsfTitle.updateStateOf( _titleId, 'hasLegacy', !! ( state.hasLegacy || false ) );
 
 		/**
 		 * Updates title additions, based on singular settings change.
 		 *
 		 * @function
-		 * @param {!jQuery.Event} event
+		 * @param {Event} event
 		 * @return {undefined}
 		 */
-		const updateTitleAdditions = ( event ) => {
-
-			let prevUseTagline = tsfTitle.getState( 'useTagline' ),
-				useTagline     = ! $( event.target ).is( ':checked' );
+		const updateTitleAdditions = event => {
+			let prevAddAdditions = tsfTitle.getStateOf( _titleId, 'addAdditions' ),
+				addAdditions     = ! event.target.checked;
 
 			if ( l10n.params.additionsForcedDisabled ) {
-				useTagline = false;
+				addAdditions = false;
 			} else if ( l10n.params.additionsForcedEnabled ) {
-				useTagline = true;
+				addAdditions = true;
 			}
 
-			if ( prevUseTagline !== useTagline ) {
-				tsfTitle.updateState( 'useTagline', useTagline );
+			if ( prevAddAdditions !== addAdditions ) {
+				tsfTitle.updateStateOf( _titleId, 'addAdditions', addAdditions );
 			}
 		}
-		$( '#autodescription_title_no_blogname' ).on( 'change', updateTitleAdditions );
-		$( '#autodescription_title_no_blogname' ).trigger( 'change' );
+		if ( blogNameTrigger ) {
+			blogNameTrigger.addEventListener( 'change', updateTitleAdditions );
+			blogNameTrigger.dispatchEvent( new Event( 'change' ) );
+		}
 
 		/**
 		 * Sets private/protected visibility state.
@@ -323,16 +423,16 @@ window.tsfPost = function( $ ) {
 		 */
 		const setTitleVisibilityPrefix = ( visibility ) => {
 
-			let oldPrefixValue = tsfTitle.getState( 'prefixValue' ),
+			let oldPrefixValue = tsfTitle.getStateOf( _titleId, 'prefixValue' ),
 				prefixValue    = '';
 
 			switch ( visibility ) {
 				case 'password':
-					prefixValue = protectedPrefix;
+					prefixValue = tsfTitle.protectedPrefix;
 					break;
 
 				case 'private':
-					prefixValue = privatePrefix;
+					prefixValue = tsfTitle.privatePrefix;
 					break;
 
 				default:
@@ -342,7 +442,7 @@ window.tsfPost = function( $ ) {
 			}
 
 			if ( prefixValue !== oldPrefixValue )
-				tsfTitle.updateState( 'prefixValue', prefixValue );
+				tsfTitle.updateStateOf( _titleId, 'prefixValue', prefixValue );
 		}
 		$( document ).on( 'tsf-updated-gutenberg-visibility', ( event, visibility ) => setTitleVisibilityPrefix( visibility ) );
 
@@ -350,7 +450,7 @@ window.tsfPost = function( $ ) {
 		 * Sets private/protected visibility state for the classic editor.
 		 *
 		 * @function
-		 * @param {!jQuery.Event} event
+		 * @param {Event} event
 		 * @return {undefined}
 		 */
 		const setClassicTitleVisibilityPrefix = ( event ) => {
@@ -358,14 +458,15 @@ window.tsfPost = function( $ ) {
 			if ( 'password' === visibility ) {
 				let pass = $( '#visibility' ).find( '#post_password' ).val();
 				// A falsy-password (like '0'), will return true in "SOME OF" WP's front-end PHP, false in WP's JS before submitting...
-				// It won't invoke WordPress' password protection. TODO FIXME: file WP Core bug report.
+				// It won't invoke WordPress's password protection. TODO FIXME: file WP Core bug report.
 				if ( ! pass || ! pass.length ) {
 					visibility = 'public';
 				}
 			}
 			setTitleVisibilityPrefix( visibility );
 		}
-		$( '#visibility .save-post-visibility' ).on( 'click', setClassicTitleVisibilityPrefix );
+		const classicVisibilityInput = document.querySelector( '#visibility .save-post-visibility' );
+		classicVisibilityInput && classicVisibilityInput.addEventListener( 'click', setClassicTitleVisibilityPrefix );
 
 		if ( l10n.states.isPrivate ) {
 			setTitleVisibilityPrefix( 'private' );
@@ -383,19 +484,21 @@ window.tsfPost = function( $ ) {
 		const updateDefaultTitle = ( val ) => {
 			val = typeof val === 'string' && val.trim() || '';
 
-			let defaultTitle = l10n.params.stripTitleTags ? tsf.stripTags( val ) : val
+			let defaultTitle = tsfTitle.stripTitleTags ? tsf.stripTags( val ) : val
 
 			defaultTitle = defaultTitle || tsfTitle.untitledTitle;
 
-			tsfTitle.updateState( 'defaultTitle', defaultTitle );
+			tsfTitle.updateStateOf( _titleId, 'defaultTitle', defaultTitle );
 		}
 		//= The homepage listens to a static preset value. Update all others.
 		if ( ! l10n.params.isFront ) {
-			$( '#titlewrap #title' ).on( 'input', event => updateDefaultTitle( event.target.value ) );
+			const classicTitleInput = document.querySelector( '#titlewrap #title' );
+			classicTitleInput && classicTitleInput.addEventListener( 'input', event => updateDefaultTitle( event.target.value ) );
+
 			$( document ).on( 'tsf-updated-gutenberg-title', ( event, title ) => updateDefaultTitle( title ) );
 		}
 
-		tsfTitle.enqueueUnregisteredInputTrigger();
+		tsfTitle.enqueueUnregisteredInputTrigger( _titleId );
 	}
 
 	/**
@@ -409,20 +512,30 @@ window.tsfPost = function( $ ) {
 	 */
 	const _initDescriptionListeners = () => {
 
-		tsfDescription.setInputElement( document.getElementById( 'autodescription_description' ) );
+		let descInput = document.getElementById( _descId );
+		if ( ! descInput ) return;
 
-		tsfDescription.updateState( 'allowReferenceChange', ! l10n.params.refDescriptionLocked );
+		let state = JSON.parse(
+			document.getElementById( 'tsf-description-data_' + _descId ).dataset.state
+		);
+
+		tsfDescription.setInputElement( descInput );
+
+		tsfDescription.updateStateOf( _descId, 'allowReferenceChange', ! state.refDescriptionLocked );
+		tsfDescription.updateStateOf( _descId, 'defaultDescription', state.defaultDescription.trim() );
+		tsfDescription.updateStateOf( _descId, 'hasLegacy', !! ( state.hasLegacy || false ) );
 
 		// TODO set private/protected listeners, that will empty the generated description?
 		// TODO set post-content (via ajax) listeners?
 
-		tsfDescription.enqueueUnregisteredInputTrigger();
+		tsfDescription.enqueueUnregisteredInputTrigger( _descId );
 	}
 
 	/**
 	 * Initializes uncategorized general tab meta input listeners.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Removed postbox-toggled listener, since tsf-flex-resize is all-encapsulating now.
 	 * @access private
 	 *
 	 * @function
@@ -430,39 +543,14 @@ window.tsfPost = function( $ ) {
 	 */
 	const _initGeneralListeners = () => {
 
-		/**
-		 * Enqueues meta title and description input triggers
-		 *
-		 * @function
-		 * @param {!jQuery.Event} event
-		 * @param {Element} elem
-		 * @return {undefined}
-		 */
 		const enqueueGeneralInputListeners = () => {
-			tsfTitle.enqueueUnregisteredInputTrigger();
-			tsfDescription.enqueueUnregisteredInputTrigger();
+			tsfTitle.enqueueUnregisteredInputTrigger( _titleId );
+			tsfDescription.enqueueUnregisteredInputTrigger( _descId );
 		}
 
-		/**
-		 * Enqueues meta title and description input trigger synchronously on postbox collapse or open.
-		 *
-		 * @function
-		 * @param {!jQuery.Event} event
-		 * @param {Element} elem
-		 * @return {undefined}
-		 */
-		const triggerPostboxSynchronousUnregisteredInput = function( event, elem ) {
-			if ( 'tsf-inpost-box' === elem.id ) {
-				let inside = elem.querySelector( '.inside' );
-				if ( inside.offsetHeight > 0 && inside.offsetWidth > 0 ) {
-					enqueueGeneralInputListeners();
-				}
-			}
-		}
-		$( document ).on( 'postbox-toggled', triggerPostboxSynchronousUnregisteredInput );
-
+		// We can't bind to jQuery event listeners via native ES :(
 		$( '#tsf-flex-inpost-tab-general' ).on( 'tsf-flex-tab-toggled', enqueueGeneralInputListeners );
-		$( window ).on( 'tsf-flex-resize', enqueueGeneralInputListeners );
+		window.addEventListener( 'tsf-flex-resize', enqueueGeneralInputListeners );
 	}
 
 	/**
@@ -478,11 +566,11 @@ window.tsfPost = function( $ ) {
 
 		if ( ! l10n.states.isGutenbergPage ) return;
 
-		tsfTT.addBoundary( '#editor' );
+		'tsfTT' in window && tsfTT.addBoundary( '#editor' );
 
-			// Listen to the Gutenberg state changes.
-		$( document ).on( 'tsf-gutenberg-sidebar-opened', () => {
-			tsfTT.addBoundary( '.edit-post-sidebar .components-panel' );
+		// Listen to the Gutenberg state changes.
+		document.addEventListener( 'tsf-gutenberg-sidebar-opened', () => {
+			'tsfTT' in window && tsfTT.addBoundary( '.edit-post-sidebar .components-panel' );
 		} );
 	}
 
@@ -504,7 +592,7 @@ window.tsfPost = function( $ ) {
 		// We only use this because it looks nice. The rest is implied via the counter updates.
 		const seobarAjaxLoader = document.querySelector( '#tsf-doing-it-right-wrap .tsf-ajax' );
 
-		const desc   = document.getElementById( 'autodescription_description' ),
+		const desc   = document.getElementById( _descId ),
 			  ogDesc = document.getElementById( 'autodescription_og_description' ),
 			  twDesc = document.getElementById( 'autodescription_twitter_description' );
 
@@ -529,20 +617,18 @@ window.tsfPost = function( $ ) {
 
 					setTimeout( () => {
 						if ( tsfDescription ) {
-							tsfDescription.updateState( 'defaultDescription', tsf.escapeString( response.data.metadescription.trim() ) );
+							tsfDescription.updateStateOf( _descId, 'defaultDescription', response.data.metadescription.trim() );
 						}
 						if ( tsfSocial ) {
-							tsfSocial.updateState( 'ogDescPlaceholder', tsf.escapeString( response.data.ogdescription.trim() ) );
-							tsfSocial.updateState( 'twDescPlaceholder', tsf.escapeString( response.data.twdescription.trim() ) );
+							tsfSocial.updateState( 'ogDescPlaceholder', response.data.ogdescription.trim() );
+							tsfSocial.updateState( 'twDescPlaceholder', response.data.twdescription.trim() );
 						}
 
-						$( desc ).attr( 'placeholder', response.data.metadescription ).trigger( 'input' );
-						$( ogDesc ).attr( 'placeholder', response.data.ogdescription ).trigger( 'input' );
-						$( twDesc ).attr( 'placeholder', response.data.twdescription ).trigger( 'input' );
+						// Is this necessary? It's safer, though :)
+						imageUrl.placeholder = tsf.decodeEntities( response.data.imageurl );
+						imageUrl.dispatchEvent( new Event( 'change' ) );
 
-						$( imageUrl ).attr( 'placeholder', response.data.imageurl ).trigger( 'change' );
-
-						tsfAys && tsfAys.reset();
+						'tsfAys' in window && tsfAys.reset();
 					}, fadeTime );
 
 					$( seobar )
@@ -550,7 +636,9 @@ window.tsfPost = function( $ ) {
 							seobarAjaxLoader && tsf.unsetAjaxLoader( seobarAjaxLoader, true );
 						} )
 						.html( response.data.seobar )
-						.fadeIn( 500, tsfTT.triggerReset );
+						.fadeIn( 500, () => {
+							'tsfTT' in window && tsfTT.triggerReset();
+						} );
 					break;
 				case 'failure':
 					seobarAjaxLoader && tsf.unsetAjaxLoader( seobarAjaxLoader, false );
@@ -565,12 +653,12 @@ window.tsfPost = function( $ ) {
 			seobarAjaxLoader && tsf.unsetAjaxLoader( seobarAjaxLoader, false );
 		};
 
-		$( window ).on( 'tsf-gutenberg-onsave', event => {
+		document.addEventListener( 'tsf-gutenberg-onsave', event => {
 
-			//* Reset ajax loader, we only do that for the SEO Bar.
+			// Reset ajax loader, we only do that for the SEO Bar.
 			seobarAjaxLoader && tsf.resetAjaxLoader( seobarAjaxLoader );
 
-			//* Set ajax loader.
+			// Set ajax loader.
 			seobarAjaxLoader && tsf.setAjaxLoader( seobarAjaxLoader );
 
 			let settings = {
@@ -583,10 +671,10 @@ window.tsfPost = function( $ ) {
 					post_id: l10n.states.id,
 					get:     getData,
 				},
-				async:       true,
-				timeout:     7000,
-				success:     onSuccess,
-				error:       onFailure,
+				async:    true,
+				timeout:  7000,
+				success:  onSuccess,
+				error:    onFailure,
 			}
 
 			$.ajax( settings );
@@ -613,17 +701,18 @@ window.tsfPost = function( $ ) {
 	 * Initializes settings scripts on TSF-ready.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now registers the refNa title input.
 	 * @access private
 	 *
 	 * @function
 	 * @return {undefined}
 	 */
 	const _readySettings = () => {
-		// Initializes flex tab positions.
-		_initTabs();
-
 		// Initializes flex tab resize listeners.
 		_doFlexResizeListener();
+
+		// Initializes flex tab listeners and fixes positions.
+		_initTabs();
 
 		// Sets tooltip boundaries
 		_initTooltipBoundaries();
@@ -632,15 +721,16 @@ window.tsfPost = function( $ ) {
 		_initUpdateMetaBox();
 
 		tsfSocial.initTitleInputs( {
-			ref:  document.getElementById( 'tsf-title-reference' ),
-			meta: document.getElementById( 'autodescription_title' ),
-			og:   document.getElementById( 'autodescription_og_title' ),
-			tw:   document.getElementById( 'autodescription_twitter_title' ),
+			ref:   document.getElementById( 'tsf-title-reference_' + _titleId ),
+			refNa: document.getElementById( 'tsf-title-noadditions-reference_' + _titleId ),
+			meta:  document.getElementById( _titleId ),
+			og:    document.getElementById( 'autodescription_og_title' ),
+			tw:    document.getElementById( 'autodescription_twitter_title' ),
 		} );
 
 		tsfSocial.initDescriptionInputs( {
-			ref:  document.getElementById( 'tsf-description-reference' ),
-			meta: document.getElementById( 'autodescription_description' ),
+			ref:  document.getElementById( 'tsf-description-reference_' + _descId ),
+			meta: document.getElementById( _descId ),
 			og:   document.getElementById( 'autodescription_og_description' ),
 			tw:   document.getElementById( 'autodescription_twitter_description' ),
 		} );
@@ -658,15 +748,13 @@ window.tsfPost = function( $ ) {
 		 * @return {undefined}
 		 */
 		load: () => {
-			$( document.body ).on( 'tsf-onload', _loadSettings );
-			$( document.body ).on( 'tsf-ready', _readySettings );
-
-			// Toggle tabs for the inpost Flex settings.
-			$( '.tsf-flex-nav-tab-radio' ).on( 'change', _flexTabToggle );
-			$( '.tsf-flex-nav-tab-wrapper' ).on( 'click.tsfFlexNav', '.tsf-flex-nav-tab-label', _addNoFocusClass );
+			document.body.addEventListener( 'tsf-onload', _loadSettings );
+			document.body.addEventListener( 'tsf-ready', _readySettings );
 		}
-	}, {}, {
+	}, {
+		// No public methods.
+	}, {
 		l10n
 	} );
 }( jQuery );
-jQuery( window.tsfPost.load );
+window.tsfPost.load();

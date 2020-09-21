@@ -87,12 +87,16 @@
 	background-attachment: scroll;
 }
 
-/* Video Bg */
+/* Video and Embed Code Bg */
 .fl-row-bg-video,
-.fl-row-bg-video .fl-row-content {
+.fl-row-bg-video .fl-row-content,
+.fl-row-bg-embed,
+.fl-row-bg-embed .fl-row-content {
 	position: relative;
 }
-.fl-row-bg-video .fl-bg-video {
+
+.fl-row-bg-video .fl-bg-video,
+.fl-row-bg-embed .fl-bg-embed-code {
 	bottom: 0;
 	left: 0;
 	overflow: hidden;
@@ -100,7 +104,9 @@
 	right: 0;
 	top: 0;
 }
-.fl-row-bg-video .fl-bg-video video {
+
+.fl-row-bg-video .fl-bg-video video,
+.fl-row-bg-embed .fl-bg-embed-code video {
 	bottom: 0;
 	left: 0px;
 	max-width: none;
@@ -108,7 +114,8 @@
 	right: 0;
 	top: 0px;
 }
-.fl-row-bg-video .fl-bg-video iframe {
+.fl-row-bg-video .fl-bg-video iframe,
+.fl-row-bg-embed .fl-bg-embed-code iframe {
 	pointer-events: none;
 	width: 100vw;
   	height: 56.25vw; /* Given a 16:9 aspect ratio, 9/16*100 = 56.25 */
@@ -828,4 +835,16 @@ img.mfp-img {
 	stroke: none;
 	stroke-width: 0;
 	width:100%;
+}
+/*
+Fix ipad parallax issue on safari
+https://core.trac.wordpress.org/ticket/48802
+https://core.trac.wordpress.org/ticket/49285
+https://github.com/WordPress/gutenberg/issues/17718
+*/
+@supports (-webkit-touch-callout: inherit) {
+  .fl-row.fl-row-bg-parallax .fl-row-content-wrap {
+    background-position: center !important;
+    background-attachment: scroll !important;
+  }
 }

@@ -78,6 +78,51 @@ if ( ! class_exists( 'PPW_Asset_Services' ) ) {
 			}
 		}
 
+		public function load_assets_for_shortcode_page() {
+			if ( PPW_Constants::PCP_PAGE_PREFIX === $this->page && ( 'general' === $this->tab || null === $this->tab ) ) {
+				$this->load_bundle_css( PPW_VERSION );
+				$this->load_toastr_lib();
+				$this->load_shared_lib();
+			}
+		}
+
+		/**
+		 * Load assets for shortcode setting.
+		 */
+		public function load_assets_for_shortcode_setting() {
+			$module           = PPW_Constants::SHORTCODES_SETTINGS_MODULE;
+			$is_shortcode_tab = PPW_Constants::MENU_NAME === $this->page
+			                    && 'shortcodes' === $this->tab;
+			$is_pcp_submenu   = PPW_Constants::PCP_PAGE_PREFIX === $this->page
+			                    && ( 'general' === $this->tab || null === $this->tab );
+			if ( $is_shortcode_tab || $is_pcp_submenu ) {
+				$this->load_select2_lib();
+				$this->load_js( $module, PPW_VERSION );
+				wp_localize_script(
+					"ppw-$module-js",
+					'ppw_shortcode_data',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'home_url' => ppw_core_get_home_url_with_ssl(),
+						'nonce'    => wp_create_nonce( PPW_Constants::GENERAL_FORM_NONCE ),
+					)
+				);
+			}
+		}
+
+		/**
+		 * Is Partial Protection submenu.
+		 *
+		 * @param string $page Page name.
+		 * @param string $tab Tab name.
+		 *
+		 * @return bool
+		 */
+		public static function is_partial_protection_submenu( $page, $tab ) {
+			return PPW_Constants::PCP_PAGE_PREFIX === $page
+			       && ( 'general' === $tab || null === $tab );
+		}
+
 		/**
 		 * Render css and js for general tab
 		 */
@@ -121,6 +166,34 @@ if ( ! class_exists( 'PPW_Asset_Services' ) ) {
 				$this->load_toastr_lib();
 
 				do_action( PPW_Constants::HOOK_ADVANCED_TAB_LOAD_ASSETS );
+			}
+		}
+
+		/**
+		 * Render css and js for general tab
+		 */
+		public function load_assets_for_category_page() {
+			global $pagenow;
+			$module  = 'category';
+			$is_show = 'edit-tags.php' === $pagenow && isset( $_GET['taxonomy'] ) && 'category' === $_GET['taxonomy'];
+			$is_show = apply_filters( 'ppwp_is_load_assets_for_category_page', $is_show );
+			if ( $is_show ) {
+				$this->load_bundle_css( PPW_VERSION );
+				$this->load_css( $module, PPW_VERSION );
+				$this->load_js( $module, PPW_VERSION );
+				wp_localize_script(
+					"ppw-$module-js",
+					'ppw_category_data',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'home_url' => ppw_core_get_home_url_with_ssl(),
+						'nonce'    => wp_create_nonce( 'wp_rest' ),
+					)
+				);
+				$this->load_select2_lib();
+				$this->load_toastr_lib();
+
+				do_action( 'ppw_category_page_load_assets' );
 			}
 		}
 

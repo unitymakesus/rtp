@@ -3,11 +3,11 @@
 	FLBuilder.registerModuleHelper('content-slider', {
 
 		submit: function() {
-			var form   = $('.fl-builder-settings'),
-			transition = parseInt( form.find('input[name=speed]').val() ),
-			delay      = parseInt( form.find('input[name=delay]').val() )
+			var form       = $('.fl-builder-settings'),
+			    transition = parseFloat( form.find('input[name=speed]').val() ) * 1000,
+			    delay      = parseFloat( form.find('input[name=delay]').val() ) * 1000;
 
-			if ( transition > delay ) {
+			if ( transition >= delay ) {
 				FLBuilder.alert( FLBuilderStrings.contentSliderTransitionWarn )
 				return false;
 			}

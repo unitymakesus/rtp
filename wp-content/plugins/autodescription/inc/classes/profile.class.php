@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -29,6 +29,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * Class The_SEO_Framework\Profile
  *
  * Outputs Profile fields and saves metadata.
+ * TODO move this to admin-pages, invoke like `_init_post_edit_view()`?
  *
  * @since 3.0.0
  */
@@ -41,8 +42,10 @@ class Profile extends Generate_Ldjson {
 	 */
 	protected function init_profile_fields() {
 
-		//= No need to load anything if the current user can't even publish posts.
-		if ( ! \current_user_can( 'publish_posts' ) ) return;
+		//= No need to load anything if the current user can't even author posts.
+		// This is ultimately useless checking this on EVERY admin page.
+		// Debug me... 294 microseconds overhead. The cap check is cached, it seems. Takes as much time adding the actions.
+		if ( ! \current_user_can( THE_SEO_FRAMEWORK_AUTHOR_INFO_CAP ) ) return;
 
 		\add_action( 'show_user_profile', [ $this, '_add_user_author_fields' ], 0, 1 );
 		\add_action( 'edit_user_profile', [ $this, '_add_user_author_fields' ], 0, 1 );
@@ -81,8 +84,9 @@ class Profile extends Generate_Ldjson {
 	 */
 	public function _add_user_author_fields( \WP_User $user ) {
 
-		if ( ! $user->has_cap( 'publish_posts' ) ) return;
+		if ( ! $user->has_cap( THE_SEO_FRAMEWORK_AUTHOR_INFO_CAP ) ) return;
 
+		// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- includes...
 		$_field_settings = $this->get_profile_field_settings();
 
 		$fields = [
@@ -101,6 +105,7 @@ class Profile extends Generate_Ldjson {
 				'class'       => 'ltr',
 			],
 		];
+		// phpcs:enable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 
 		$this->get_view( 'profile/author', get_defined_vars() );
 	}
@@ -110,7 +115,7 @@ class Profile extends Generate_Ldjson {
 	 *
 	 * @since 3.0.0
 	 * @securitycheck 3.0.0 OK. NOTE: Nonces and refer(r)ers have been checked prior
-	 *                          to the actions bound to this method.
+	 *                          to the actions bound to this method. We check against them, redundantly.
 	 * @access private
 	 *
 	 * @param int $user_id The user ID.
@@ -124,7 +129,7 @@ class Profile extends Generate_Ldjson {
 
 		$user = new \WP_User( $user_id );
 
-		if ( ! $user->has_cap( 'publish_posts' ) ) return;
+		if ( ! $user->has_cap( THE_SEO_FRAMEWORK_AUTHOR_INFO_CAP ) ) return;
 
 		$success  = [];
 		$defaults = $this->get_default_user_data();

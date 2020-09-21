@@ -37,7 +37,7 @@
   -webkit-transition: .4s;
   transition: .4s;
 }
-.uabb-rbs-switch:checked + .uabb-rbs-slider:before {
+.uabb-rbs-switch.checked + .uabb-rbs-slider:before {
   -webkit-transform: translateX(2.1em);
   -ms-transform: translateX(2.1em);
   transform: translateX(2.1em);
@@ -178,7 +178,7 @@
 .uabb-label-box-inactive .uabb-label-box-switch {
   right: 0;
 }
-.uabb-label-box-checkbox:checked + .uabb-label-box-label .uabb-label-box-inner {
+.uabb-label-box-checkbox.checked + .uabb-label-box-label .uabb-label-box-inner {
     margin-left: 0;
 }
 
@@ -191,7 +191,7 @@
     width: 3.8em;
 }
 
-.uabb-toggle input[type="checkbox"] + label {
+.uabb-toggle .uabb-rbs-switch-2 + label {
   position: relative;
   display: inline-block;
   top: 0;
@@ -203,7 +203,7 @@
   height: 1.3em;
 }
 
-.uabb-toggle input[type="checkbox"] + label:before {
+.uabb-toggle .uabb-rbs-switch-2 + label:before {
   -webkit-transition: background-color 0.4s ease;
   transition: background-color 0.4s ease;
   box-sizing: border-box;
@@ -219,7 +219,7 @@
   -webkit-border-radius: 0.5em;
   border-radius: 0.5em;
 }
-.uabb-toggle input[type="checkbox"] + label:after {
+.uabb-toggle .uabb-rbs-switch-2 + label:after {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;

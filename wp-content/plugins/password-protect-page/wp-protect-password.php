@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://passwordprotectwp.com?utm_source=user-website&utm_medium=pluginsite_link&utm_campaign=ppwp
- * @since             1.4.5.1
+ * @since             1.6.0
  * @package           Password_Protect_Page
  *
  * @wordpress-plugin
  * Plugin Name:       Password Protect WordPress Lite
  * Plugin URI:        https://passwordprotectwp.com?utm_source=user-website&utm_medium=pluginsite_link&utm_campaign=ppwp_lite
  * Description:       Password protect the entire WordPress site, unlimited pages and posts by user roles. This plugin is required for our Pro version to work properly.
- * Version:           1.4.5.1
+ * Version:           1.6.0
  * Author:            BWPS
  * Author URI:        https://passwordprotectwp.com?utm_source=user-website&utm_medium=author_link&utm_campaign=ppwp_lite
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.1.2 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PPW_VERSION', '1.4.5.1' );
+define( 'PPW_VERSION', '1.6.0' );
 
 if ( ! defined( 'PPW_DIR_PATH' ) ) {
 	define( 'PPW_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -52,6 +52,11 @@ if ( ! defined( 'PPW_VIEW_URL' ) ) {
 if ( ! defined( 'PPW_PLUGIN_NAME' ) ) {
 	define( 'PPW_PLUGIN_NAME', 'Password Protect WordPress Lite' );
 }
+
+if ( ! defined( 'PPW_PLUGIN_BASE_NAME' ) ) {
+	define( 'PPW_PLUGIN_BASE_NAME', plugin_basename( __FILE__ ) );
+}
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-ppw-activator.php
@@ -121,6 +126,8 @@ add_action( 'plugins_loaded', 'ppw_free_load_plugin' );
 function ppw_free_load_plugin() {
 	global $migration_free_service;
 	$migration_free_service = new PPW_Default_PW_Manager_Services();
+	global $password_recovery_service;
+	$password_recovery_service = new PPW_Password_Recovery_Manager();
 }
 
 /**

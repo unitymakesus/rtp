@@ -150,7 +150,7 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 			'class'     => 'fl-builder-service-connect-input',
 			'type'      => 'text',
 			'label'     => __( 'Mautic Password', 'fl-builder' ),
-			'help'      => __( 'Password associated with the username. Make this a Long passPhrase.', 'fl-builder' ),
+			'help'      => __( 'Password associated with the username. Make this a Long Passphrase.', 'fl-builder' ),
 			'preview'   => array(
 				'type' => 'none',
 			),

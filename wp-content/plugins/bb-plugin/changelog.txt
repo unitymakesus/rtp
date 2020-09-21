@@ -1,3 +1,154 @@
+<h4>2.4.0.4 - 09/15/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fixed UI CSS issues</li>
+</ul>
+
+<h4>2.4.0.3 - 09/14/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Added pagination compatibility with Yoast SEO when category prefix is removed</li>
+	<li>Fixed WordPress not redirecting Post URLs that do not exist when BB is active</li>
+	<li>Fixed button group text hover global style not working for focus</li>
+	<li>Fixed one.com detection on Settings page</li>
+	<li>Fixed limit being bypassed on repeater fields</li>
+	<li>Fixed undefined offset with <code>wp_print_styles</code></li>
+	<li>Fixed Responsive Preview due to a bug in Chrome. Bug detailed here: https://bugs.chromium.org/p/chromium/issues/detail?id=843887</li>
+	<li>Fixed JS error when using Vimeo video in a row background when audio is enabled</li>
+	<li>Fixed Callout Module Icon links not working</li>
+	<li>Fixed Posts Module buttons being broken when using jQuery 3.5.1</li>
+	<li>Fixed compatibility with WordPress versions below 5.2 and ClassicPress</li>
+</ul>
+
+<h4>2.4.0.2 - 08/24/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Button Group Module: fix tabbing to button does not show text hover color</li>
+	<li>Fix undefined variable $premium relating to Templates</li>
+	<li>List Module: Fix string for Ordered List saying ul in tooltip for selecting an Icon </li>
+	<li>Fix styling failing to load when using Woocommerce, Yoast Seo and its Woo add-on, and fl_builder_insert_layout in products</li>
+	<li>Fix WP Foundation icons not showing after publish</li>
+	<li>List Module: add padding option to list items globally and individual list items</li>
+	<li>Fix "No plugin found" error on View Details modal on plugin page</li>
+	<li>Fix Slideshow module images not rendering alt text </li>
+	<li>Fix Post Carousel Lazy load issues with WordPress 5.5</li>
+	<li>Set responsive preview default to No in global settings to avoid affecting existing sites</li>
+	<li>Fix notice on BB Settings page when the jQuery Migrate Helper Plugin is active</li>
+</ul>
+
+<h4>2.4.0.1 - 08/12/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fixed Contact Form module: Labels still display even when set to "Show Placeholders only".</li>
+	<li>Fixed PHP warning when using layout shortcodes.</li>
+	<li>Fixed ACF issue where CSS was not being purged after updating ACF fields.</li>
+	<li>Fixed default settings not being used in Responsive Editing and Preview when Responsive settings in Previews is set to No.</li>
+	<li>Fixed lazy loading issues in post slider and contentslider modules.</li>
+	<li>Includes all fixes from 2.3.2.8</li>
+</ul>
+
+<h4>2.3.2.9 - 08/11/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Added support for WP 5.5 auto updates system for plugins and themes.</li>
+	<li>Fixed Rich Text editor issues in WP 5.5</li>
+	<li>Fixed broken image cropping on Flywheel hosting.</li>
+</ul>
+
+<h4>2.4 "O'Shaughnessy" Aug 5 2020</h4>
+Beaver Builder 2.4 is here! This is a major update and will be released as the official download on the My Account page first. Remote updates to all existing sites will begin soon!
+
+<strong>Enhancements</strong>
+<ul>
+	<li>NEW: List Module</li>
+	<li>NEW: Search Module</li>
+	<li>NEW: Login Module</li>
+	<li>NEW: Button Group Module</li>
+	<li>NEW: Integration with Assistant</li>
+	<li>BB Lite now has 3 additional modules: Button, Heading & Icon as well as a select few pre-made page Templates.</li>
+	<li>The same new templates that were added to Lite are available in all paid versions</li>
+	<li>WooCommerce Module - add ability to sort and include specific category IDs.</li>
+	<li>Video Module: Add new options to show video in a Lightbox, hide player settings, and sticky positioning and embed option now renders shortcodes</li>
+	<li>Row Backgrounds: Now you can use embed codes. Use html to embed videos from other sources or show sliders from other plugins using shortcodes</li>
+	<li>Subscribe Module: Added GroundHogg integration. GroundHogg WP Plugin required to use.</li>
+	<li>Added <code>main</code> as an option to row/column/module container element options.</li>
+	<li>Responsive Editing/Preview: In global settings, you can toggle to use your actual settings for responsive editing & preview instead of the default fixed with. The breakpoint width is also displayed during Responsive Editing/Preview</li>
+	<li>Add attachments to our link field search</li>
+	<li>When using layout shortcodes, move the css needed to the head instead of the body to avoid validation errors.</li>
+	<li>Update editor used for code editing</li>
+	<li>Font Awesome Pro subset support added! See https://blog.fontawesome.com/desktop-subsetter-beta/ for more info.</li>
+	<li>Keep lightbox open when Publish Shortcut Key is pressed.</li>
+	<li>Posts Module: Add option to change the Post Title tag.</li>
+	<li>History can now be completely disabled by setting FL_BUILDER_HISTORY_STATES to 0 or false.</li>
+	<li>LiteSpeed plugin added native support for Beaver Builder so litespeed removed from supported plugins in cache extension.</li>
+	<li>Add SpinupWP to cache clearing tool.</li>
+	<li>Alert on BB Settings page for <code>One.com</code> hosting users when htaccess blocks all JS in uploads folder.</li>
+	<li>Style hardening for UI tables, select 2 dropdowns, setting modal headings, and the media library modal.</li>
+	<li>Content Slider - if transition and delay are equal or if transition is higher than delay, prevent save.</li>
+	<li>Subscribe Module: Using terms and conditions check box now activates the Sendy GDPR flag for the contact</li>
+	<li>Add post classes to Post Slider and Post Carousel Modules so they are consistent with the Post Module</li>
+	<li>Countdown Module: Update to use a date picker and add field connection for Themer</li>
+	<li>New Filter: <code>fl_tabs_id_in_label</code> to allow Tab module IDs to be used as a prefix in the module output.</li>
+	<li>New filter: <code>fl_loop_paginate_links_args</code> to allow changing of the text in pagination.</li>
+	<li>New filter <code>fl_media_modal_types</code> to change the file types that show in the media library for photo and video modules</li>
+	<li>Accessibility: Add screen reader only text option to Icons</li>
+	<li>Accessibility: Add for labels to Subscribe Module</li>
+	<li>Accessibility: Allow choice of placeholders, labels or both for form elements and allow spacebar and enter to submit the form</li>
+	<li>Accessibility: Testimonials Module - flip controls so markup matches display</li>
+	<li>Accessibility: Menu Module - Fix accessibility issue with Flyout layout close button</li>
+	<li>Debug Mode - show phpinfo() if available, add content of child theme functions.php to debug output and allow editing of Layout CSS/JS and Global JS/CSS in WP Admin if debug is enabled</li>
+</ul>
+
+<strong>Bugs</strong>
+<ul>
+	<li>Menu Module: Fix line height not working for link items</li>
+	<li>Fix deprecated notice in PHP 7.2 or higher with InfusionSoft Library</li>
+	<li>Fix a PHP Notice (offset undefined) when dropping a Posts Module on the page</li>
+	<li>Remove autoload from options that we can, like fl_notifications</li>
+	<li>Fix a fatal error in certain cases when a used module goes missing</li>
+	<li>Fixed lodash issue when using Events Calendar and Assistant plugins.</li>
+	<li>Fixe Importer issues: imported items not showing the layout CSS/JS and other minor fixes</li>
+	<li>Fixed Import/Export not working with custom modules with _ in slug.</li>
+	<li>Fixed MultiSite domain mapping causing responsive settings to go full screen.</li>
+	<li>Fixed Autoptimize aggregate CSS causing responsive settings to go full screen.</li>
+	<li>SlideShow Module: Fixed notice for alt tag displaying</li>
+	<li>Hide Block Editor Inserter when editing a BB-enabled post</li>
+	<li>Fixed JS error of Post Spacing left blank in post Carousel</li>
+	<li>Fixed incorrect history order on sites running the MyISAM database engine.</li>
+	<li>Make sure mediaelementplayer library is available before trying to access.</li>
+	<li>Fixed typo error which resulted to incorrect editing status message.</li>
+	<li>Links to CSS files were sometimes broken when loading via shortcode.</li>
+	<li>Fix for Parallax on Safari iPadOS. Parallax is now disabled to avoid unwanted zoom on parallax images.</li>
+	<li>Fix for Video background not sized properly on the TwentyTwenty theme.</li>
+	<li>Add Sanitation for row background slider speed and transition settings</li>
+	<li>Fix for conflict with Mailster plugin where post data did not show in WP Admin.</li>
+	<li>Fix z-index issue with Menu Module sub-menu  and Content Slider Arrows</li>
+	<li>Fixed using Template in BB Categories causing Saved Templates item not to show in content panel</li>
+	<li>Fix column and row text color settings overriding module set text colors</li>
+	<li>Fix color picker order not being saved after publish</li>
+	<li>Fix conflict with Pop-up Builder plugin and Text Editor module</li>
+	<li>Fix Post Slider text background color not displaying</li>
+	<li>Fix typos/capitalization issues in some strings</li>
+	<li>Fix form fields not showing correct responsive editing device</li>
+	<li>Fix row background custom position fields not toggling properly</li>
+	<li>Fix callout module links not properly showing as nofollow when selected</li>
+	<li>Fix callout link text alignment</li>
+</ul>
+
+<h4>2.3.2.7 - 07/29/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fixed deprecated function warning in WP 5.5</li>
+	<li>Fixed an WordPress object cache bug when duplicating node templates.</li>
+	<li>Update Tested Up To for WP 5.5</li>
+</ul>
+
+<h4>2.3.2.6 - 06/30/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Update Mailerlite API files.</li>
+</ul>
+
 <h4>2.3.2.5 - 03/24/2020</h4>
 <strong>Hot Fix</strong>
 <ul>

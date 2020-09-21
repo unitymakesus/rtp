@@ -259,6 +259,23 @@ final class FLBuilderModel {
 	}
 
 	/**
+	 * Returns the relative URL for the plugin folder.
+	 *
+	 * @since 2.3
+	 * @return string
+	 */
+	static public function get_relative_plugin_url() {
+		$url         = str_ireplace( home_url(), '', FL_BUILDER_URL );
+		$parsed_path = parse_url( FL_BUILDER_URL, PHP_URL_PATH );
+
+		if ( strstr( $url, '://' ) && $parsed_path ) {
+			$url = $parsed_path;
+		}
+
+		return $url;
+	}
+
+	/**
 	 * Returns an array of post data from either $_POST['fl_builder_data']
 	 * or $_POST if that is not set.
 	 *
@@ -495,6 +512,7 @@ final class FLBuilderModel {
 
 			wp_set_post_lock( $data['fl_builder_post_lock']['post_id'] );
 		}
+		return $response;
 	}
 
 	/**
@@ -933,11 +951,10 @@ final class FLBuilderModel {
 	 * @since 1.6.3
 	 * @return void
 	 */
-	static public function delete_asset_cache_for_all_posts() {
+	static public function delete_asset_cache_for_all_posts( $parts = '*' ) {
 		$cache_dir = self::get_cache_dir();
-		$css       = glob( $cache_dir['path'] . '*.css' );
-		$js        = glob( $cache_dir['path'] . '*.js' );
-
+		$css       = glob( $cache_dir['path'] . $parts . '.css' );
+		$js        = glob( $cache_dir['path'] . $parts . '.js' );
 		if ( is_array( $css ) ) {
 			array_map( array( fl_builder_filesystem(), 'unlink' ), $css );
 		}
@@ -4202,6 +4219,9 @@ final class FLBuilderModel {
 			}
 		}
 
+		// Flush the cache so new meta is returned in wp meta functions.
+		wp_cache_flush();
+
 		// Duplicate post terms.
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
@@ -6243,6 +6263,7 @@ final class FLBuilderModel {
 				'type'     => 'core',
 				'kind'     => 'template',
 				'content'  => ! in_array( $type, array( 'row', 'column', 'module' ) ) ? 'layout' : $type,
+				'premium'  => isset( $template->premium ) ? ! ! $template->premium : false,
 			), $template );
 		}
 
@@ -6358,6 +6379,23 @@ final class FLBuilderModel {
 	 */
 	static public function get_module_templates_data() {
 		return apply_filters( 'fl_builder_module_templates_data', self::get_template_selector_data( 'module' ) );
+	}
+
+	/**
+	 * Returns the config for pro modules if it exists.
+	 *
+	 * @since 2.4
+	 * @return object
+	 */
+	static public function get_pro_modules_config() {
+		$path   = FL_BUILDER_DIR . 'json/modules-config.json';
+		$config = new stdClass;
+
+		if ( file_exists( $path ) ) {
+			$config = json_decode( file_get_contents( $path ) );
+		}
+
+		return $config;
 	}
 
 	/**

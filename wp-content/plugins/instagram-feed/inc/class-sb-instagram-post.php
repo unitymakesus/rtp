@@ -150,7 +150,7 @@ class SB_Instagram_Post
 			"'" . date( 'Y-m-d H:i:s' ) . "'",
 			"'" . esc_sql( $parsed_data['id'] ) . "'",
 			"'" . esc_sql( $timestamp ) . "'",
-			"'" . esc_sql( wp_json_encode( $this->instagram_api_data ) ) . "'",
+			"'" . esc_sql( sbi_json_encode( $this->instagram_api_data ) ) . "'",
 			"'pending'",
 			"'pending'",
 			0,
@@ -210,6 +210,8 @@ class SB_Instagram_Post
 			// the process is considered a success if one image is successfully resized
 			$one_successful_image_resize = false;
 
+			$ratio = 1;
+
 			foreach ( $image_sizes_to_make as $res_setting => $image_size ) {
 				if ( $account_type === 'business' ) {
 					$file_name = SB_Instagram_Parse::get_media_url( $this->instagram_api_data, 'lightbox' );
@@ -218,10 +220,6 @@ class SB_Instagram_Post
 				}
 				if ( ! empty( $file_name ) ) {
 
-					$sizes                   = array(
-						'height' => 1,
-						'width'  => 1
-					);
 
 
 					$suffix = $res_setting;
@@ -232,7 +230,9 @@ class SB_Instagram_Post
 
 					// not uncommon for the image editor to not work using it this way
 					if ( ! is_wp_error( $image_editor ) ) {
-						$sizes = $image_editor->get_size();
+						$old_sizes = $image_editor->get_size();
+
+						$ratio = $old_sizes['width'] / $old_sizes['height'];
 
 						$image_editor->resize( $image_size, null );
 
@@ -265,11 +265,10 @@ class SB_Instagram_Post
 
 				}
 
-
 			}
 
 			if ( $one_successful_image_resize ) {
-				$aspect_ratio = round( $sizes['width'] / $sizes['height'], 2 );
+				$aspect_ratio = round( $ratio, 2 );
 
 				$this->update_sbi_instagram_posts( array(
 					'media_id'     => $new_file_name,
@@ -345,7 +344,7 @@ class SB_Instagram_Post
 		}
 
 		$to_update = array(
-			'json_data' => wp_json_encode( $this->instagram_api_data )
+			'json_data' => sbi_json_encode( $this->instagram_api_data )
 		);
 
 		if ( $update_last_requested ) {
@@ -496,7 +495,7 @@ class SB_Instagram_Post
 
 			$username = isset( $this->instagram_api_data['username'] ) ? $this->instagram_api_data['username'] : '';
 			$permalink = isset( $this->instagram_api_data['permalink'] ) ? $this->instagram_api_data['permalink'] : '';
-			$children = isset( $this->instagram_api_data['children'] ) ? wp_json_encode( $this->instagram_api_data['children'] ) : '';
+			$children = isset( $this->instagram_api_data['children'] ) ? sbi_json_encode( $this->instagram_api_data['children'] ) : '';
 
 			$parsed_data['caption'] = $caption;
 			$parsed_data['media_url'] = $media_url;

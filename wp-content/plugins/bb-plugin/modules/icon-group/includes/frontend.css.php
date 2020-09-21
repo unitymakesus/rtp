@@ -25,6 +25,13 @@ FLBuilderCSS::responsive_rule( array(
 	'selector'     => ".fl-node-$id .fl-icon-group",
 	'prop'         => 'text-align',
 ) );
+?>
+
+.fl-node-<?php echo $id; ?> .fl-icon + .fl-icon {
+	margin-left: <?php echo $settings->spacing . $settings->spacing_unit; ?>;
+}
+
+<?php
 
 foreach ( $settings->icons as $i => $icon ) :
 	$index = $i + 1;
@@ -60,7 +67,6 @@ foreach ( $settings->icons as $i => $icon ) :
 		}
 	}
 	?>
-
 	<?php if ( isset( $icon->color ) && ! empty( $icon->color ) ) : ?>
 	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i,
 	.fl-node-<?php echo $id; ?> .fl-module-content .fl-icon:nth-child(<?php echo $index; ?>) i:before {
@@ -105,16 +111,3 @@ foreach ( $settings->icons as $i => $icon ) :
 	<?php endif; ?>
 
 <?php endforeach; ?>
-
-<?php
-
-switch ( $settings->align ) {
-	case 'right':
-		printf( "\n.fl-node-%s .fl-icon {margin-left: %spx;}", $id, $settings->spacing );
-		break;
-	case 'left':
-		printf( "\n.fl-node-%s .fl-icon {margin-right: %spx;}", $id, $settings->spacing );
-		break;
-	default:
-		printf( "\n.fl-node-%s .fl-icon {margin-left: %spx;margin-right: %spx}", $id, $settings->spacing, $settings->spacing );
-}

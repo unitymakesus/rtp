@@ -21,7 +21,7 @@ if ( ! empty( $password_cookie_expired ) ) {
 	<td>
 		<p>
 			<label><?php echo esc_html__( 'Cookie Expiration Time', PPW_Constants::DOMAIN ); ?></label>
-			<?php echo esc_html__( 'After this expiration time, you have to re-enter your password to access password protected content', PPW_Constants::DOMAIN ); ?>
+			<?php echo _e( 'By default, users won’t have to re-enter passwords until its cookie expires. You can also <a target="_blank" href="https://passwordprotectwp.com/docs/settings/#cookies">use session cookies</a> to log users out right after they close the browser.', PPW_Constants::DOMAIN ); ?>
 		</p>
 		<input required value="<?php echo esc_attr( $time ); ?>" class="wpp_time_number" type="number"
 		       id="wpp_password_cookie_times" min="1" max="<?php echo esc_attr( $max ); ?>"/>

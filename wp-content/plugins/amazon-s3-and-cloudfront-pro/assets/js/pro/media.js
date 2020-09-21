@@ -4,7 +4,7 @@
 	var media = wp.media;
 
 	/**
-	 * A button for S3 actions
+	 * A button for offload actions
 	 *
 	 * @constructor
 	 * @augments wp.media.view.Button
@@ -12,13 +12,14 @@
 	 * @augments wp.Backbone.View
 	 * @augments Backbone.View
 	 */
-	media.view.s3Button = media.view.Button.extend( {
+	media.view.OffloadButton = media.view.Button.extend( {
 		defaults: {
 			text: '',
 			style: 'primary',
 			size: 'large',
 			disabled: false
 		},
+
 		initialize: function( options ) {
 			if ( options ) {
 				this.options = options;
@@ -30,42 +31,34 @@
 			media.view.Button.prototype.initialize.apply( this, arguments );
 
 			this.controller.on( 'selection:toggle', this.toggleDisabled, this );
+			this.controller.on( 'select:activate', this.toggleDisabled, this );
+		},
+
+		render: function() {
+			media.view.Button.prototype.render.apply( this, arguments );
+			this.toggleDisabled();
+
+			return this;
 		},
 
 		toggleDisabled: function() {
-			this.model.set( 'disabled', ! this.controller.state().get( 'selection' ).length );
+			var selection = this.controller.state().get( 'selection' ).length > 0;
+
+			if ( ! selection ) {
+				this.$el.addClass( 'disabled' );
+			} else {
+				this.$el.removeClass( 'disabled' );
+			}
 		},
 
 		click: function( e ) {
 			e.preventDefault();
-			if ( this.$el.hasClass( 'disabled' ) ) {
-				return;
-			}
 
 			var selection = this.controller.state().get( 'selection' );
+			var models    = selection.models;
 
-			if ( ! selection.length ) {
+			if ( this.$el.hasClass( 'disabled' ) || ! selection.length ) {
 				return;
-			}
-
-			var askConfirm = false;
-			var that = this;
-			var models = [];
-
-			selection.each( function( model ) {
-				models.push( model );
-
-				if ( ! askConfirm && that.options.confirm ) {
-					if ( model.attributes[ that.options.confirm ] ) {
-						askConfirm = true;
-					}
-				}
-			} );
-
-			if ( this.options.confirm && askConfirm ) {
-				if ( ! confirm( as3cfpro_media.strings[ this.options.confirm ] ) ) {
-					return;
-				}
 			}
 
 			var payload = {
@@ -75,8 +68,8 @@
 				ids: _.pluck( models, 'id' )
 			};
 
-			this.startS3Action();
-			this.fireS3Action( payload )
+			this.startOffloadAction();
+			this.fireOffloadAction( payload )
 				.done( function() {
 					_.each( models, function( model ) {
 
@@ -86,139 +79,182 @@
 				} );
 		},
 
-		startS3Action: function() {
+		startOffloadAction: function() {
 			$( '.media-toolbar .spinner' ).css( 'visibility', 'visible' ).show();
 			$( '.media-toolbar-secondary .button' ).addClass( 'disabled' );
+			$( '.offload-buttons__submenu' ).addClass( 'hidden' );
 		},
 
 		/**
-		 * Send the S3 action request via ajax.
+		 * Send the offload action request via ajax.
 		 *
 		 * @param {object} payload
 		 *
 		 * @return {$.promise}      A jQuery promise that represents the request,
 		 *                          decorated with an abort() method.
 		 */
-		fireS3Action: function( payload ) {
+		fireOffloadAction: function( payload ) {
 			return wp.ajax.send( 'as3cfpro_process_media_action', { data: payload } )
-				.done( _.bind( this.returnS3Action, this ) );
+				.done( _.bind( this.returnOffloadAction, this ) );
 		},
 
-		returnS3Action: function( response ) {
+		returnOffloadAction: function( response ) {
 			if ( response && '' !== response ) {
 				$( '.as3cf-notice' ).remove();
 				$( '#wp-media-grid h1' ).after( response );
 			}
 
 			this.controller.trigger( 'selection:action:done' );
-			$( '.media-toolbar .spinner' ).hide();
-			$( '.media-toolbar-secondary .button' ).removeClass( 'disabled' );
-		},
-
-		render: function() {
-			media.view.Button.prototype.render.apply( this, arguments );
-			if ( this.controller.isModeActive( 'select' ) ) {
-				this.$el.addClass( 's3-actions-selected-button' );
-			} else {
-				this.$el.addClass( 's3-actions-selected-button hidden' );
-			}
-			this.toggleDisabled();
-			return this;
+			$( '.media-toolbar .spinner' ).attr( 'style', '' ).hide();
 		}
 	} );
 
 	/**
-	 * Show and hide the S3 buttons for the grid view only
+	 * A toggle button for offload dropdown button
+	 *
+	 * @constructor
+	 * @augments wp.media.view.Button
+	 * @augments wp.media.View
+	 * @augments wp.Backbone.View
+	 * @augments Backbone.View
 	 */
-	// Local instance of the SelectModeToggleButton to extend
+	media.view.OffloadToggle = media.view.Button.extend( {
+		className: 'offload-buttons__toggle',
+		defaults: {
+			style: 'primary',
+			size: 'large',
+			priority: -80,
+			disabled: true
+		},
+
+		initialize: function() {
+			media.view.Button.prototype.initialize.apply( this, arguments );
+			this.controller.on( 'selection:toggle', this.toggleDisabled, this );
+			this.controller.on( 'select:activate', this.toggleDisabled, this );
+
+			$( 'body' ).on( 'click', this.blur );
+
+			return this;
+		},
+
+		click: function( e ) {
+			e.preventDefault();
+
+			if ( this.$el.hasClass( 'disabled' ) ) {
+				return;
+			}
+
+			var toolbar = this.controller.content.get().toolbar;
+			this.$el.toggleClass( 'opened' );
+			toolbar.$( '.offload-buttons__submenu' ).toggleClass( 'hidden' );
+		},
+
+		blur: function() {
+			var $toggle = $( '.media-toolbar .offload-buttons__toggle' );
+			var $submenu = $( '.media-toolbar .offload-buttons__submenu' );
+
+			if ( $toggle.hasClass( 'opened' ) && ! $submenu.parent().is( ':active, :hover' ) ) {
+				$submenu.addClass( 'hidden' );
+				$toggle.removeClass( 'opened' );
+			}
+		},
+
+		toggleDisabled: function() {
+			var selection = this.controller.state().get( 'selection' ).length > 0;
+			this.model.set( 'disabled', ! selection );
+
+			if ( ! selection ) {
+				this.$el.addClass( 'disabled' );
+			} else {
+				this.$el.removeClass( 'disabled' );
+			}
+		}
+	} );
+
+	/**
+	 * Show and hide the offload dropdown button for the grid view only.
+	 */
 	var wpSelectModeToggleButton = media.view.SelectModeToggleButton;
 
 	/**
 	 * Extend the SelectModeToggleButton functionality to show and hide
-	 * the S3 buttons when the Bulk Select button is clicked
+	 * the offload dropdown button when the Bulk Select button is clicked
 	 */
 	media.view.SelectModeToggleButton = wpSelectModeToggleButton.extend( {
 		toggleBulkEditHandler: function() {
 			wpSelectModeToggleButton.prototype.toggleBulkEditHandler.call( this, arguments );
-			var toolbar = this.controller.content.get().toolbar;
+			var $toolbar = this.controller.content.get().toolbar;
+			var $buttons = $toolbar.$( '.offload-buttons' );
+			var $submenu = $buttons.find( '.offload-buttons__submenu' );
 
 			if ( this.controller.isModeActive( 'select' ) ) {
-				toolbar.$( '.s3-actions-selected-button' ).removeClass( 'hidden' );
+				$buttons.addClass( 'visible' );
 			} else {
-				toolbar.$( '.s3-actions-selected-button' ).addClass( 'hidden' );
+				$buttons.removeClass( 'visible' );
+			}
+
+			// Applies children's width to dropdown button
+			if ( $submenu.length ) {
+				$buttons.width( $submenu.outerWidth() );
 			}
 		}
 	} );
 
-	// Local instance of the AttachmentsBrowser
-	var wpAttachmentsBrowser = media.view.AttachmentsBrowser;
-
 	/**
-	 * Extend the Attachments browser toolbar to add the S3 buttons
+	 * Extend the AttachmentsBrowser toolbar to add the offload dropdown button
 	 */
+	var wpAttachmentsBrowser = media.view.AttachmentsBrowser;
 	media.view.AttachmentsBrowser = wpAttachmentsBrowser.extend( {
 		createToolbar: function() {
 			wpAttachmentsBrowser.prototype.createToolbar.call( this );
 
-			_( as3cfpro_media.actions.bulk ).each( function( action ) {
-				this.toolbar.set( action + 'S3SelectedButton', new media.view.s3Button( {
-					action: action,
-					scope: 'bulk',
-					controller: this.controller,
-					priority: -60
+			var default_button_action = as3cfpro_media.actions.bulk.shift();
+
+			var default_button = new media.view.OffloadButton( {
+				action: default_button_action,
+				classes: 'offload-buttons__action-default',
+				scope: 'bulk',
+				controller: this.controller
+			} ).render();
+
+			if ( as3cfpro_media.actions.bulk.length ) {
+				var buttons = [];
+
+				_( as3cfpro_media.actions.bulk ).each( function( action ) {
+					buttons.push(
+						new media.view.OffloadButton( {
+							action: action,
+							classes: 'offload-buttons__action',
+							scope: 'bulk',
+							controller: this.controller
+						} ).render()
+					);
+				}.bind( this ) );
+
+				var dropdown_toggle = new media.view.OffloadToggle( {
+					controller: this.controller
+				} ).render();
+
+				var buttons_submenu = new media.view.ButtonGroup( {
+					buttons: buttons,
+					classes: 'offload-buttons__submenu hidden'
+				} ).render();
+
+				this.toolbar.set( 'OffloadButtons', new media.view.ButtonGroup( {
+					buttons: [default_button, buttons_submenu, dropdown_toggle],
+					classes: 'offload-buttons',
+					priority: -80
 				} ).render() );
-			}.bind( this ) );
+			} else {
+				this.toolbar.set( 'OffloadButtons', new media.view.OffloadButton( {
+					action: default_button_action,
+					scope: 'bulk',
+					classes: 'offload-buttons',
+					priority: -80,
+					controller: this.controller
+				} ).render() );
+			}
+
 		}
 	} );
-
-	$( document ).ready( function() {
-		// Ask for confirmation when trying to remove attachment from S3 when the local file is missing
-		$( 'body' ).on( 'click', '.as3cfpro_remove a.local-warning', function( event ) {
-			if ( confirm( as3cfpro_media.strings.local_warning ) ) {
-				return true;
-			}
-			event.preventDefault();
-			event.stopImmediatePropagation();
-			return false;
-		} );
-
-		// Ask for confirmation on bulk action removal from S3
-		$( 'body' ).on( 'click', '.bulkactions #doaction', function( e ) {
-
-			var action = $( '#bulk-action-selector-top' ).val();
-			if ( 'bulk_as3cfpro_remove' !== action ) {
-				// No need to do anything when not removing from S3
-				return true;
-			}
-
-			var continueRemoval = false;
-			var mediaChecked = 0;
-
-			// Show warning if we have selected attachments to remove that have missing local files
-			$( 'input:checkbox[name="media[]"]:checked' ).each( function() {
-				var $titleTh = $( this ).parent().siblings( '.column-title' );
-
-				if ( $titleTh.find( '.row-actions span.as3cfpro_remove a' ).hasClass( 'local-warning' ) ) {
-					mediaChecked++;
-
-					if ( confirm( as3cfpro_media.strings.bulk_local_warning ) ) {
-						continueRemoval = true;
-					}
-
-					// Break out of loop early
-					return false;
-				}
-			} );
-
-			if ( mediaChecked > 0 ) {
-				// If media selected that have local files missing, return the outcome of the confirmation
-				return continueRemoval;
-			}
-
-			// No media selected continue form submit
-			return true;
-		} );
-
-	} );
-
 })( jQuery, _ );

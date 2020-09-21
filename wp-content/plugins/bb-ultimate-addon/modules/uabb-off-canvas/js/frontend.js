@@ -10,6 +10,8 @@
 		this.offcanvas_custom = settings.offcanvas_custom;
 		this.close_on = settings.close_on;
 		this.is_builder_active = settings.is_builder_active;
+		this.collapse_inactive = settings.collapse_inactive;
+		this.submenu_toggle = settings.submenu_toggle;
 
 		if ( 'yes' !== this.is_builder_active ) {
 
@@ -69,7 +71,7 @@
 
 			});
 		},
-		_showOffCanvas: function() {
+		_showOffCanvas: function(event) {
 
 			event.preventDefault();
 
@@ -121,6 +123,11 @@
 				$( '#offcanvas-' + this.node ).addClass( 'uabb-off-canvas-show' );
 
 		 	}
+
+		 	if ( 'arrows' === this.submenu_toggle || 'plus' === this.submenu_toggle ) {
+		 		this._menuOnClick();
+		 	}
+		 	
 		 	if ( 'yes' === this.esc_keypress ) {
 			 	$(document).on('keyup',function(e) {
 
@@ -133,6 +140,48 @@
 			if ( 'yes' === this.overlay_click ) {
 				ovarlay.off('click').on( 'click', $.proxy( this._closeOffCanvas, this ));
 			}
+		},
+		/**
+		 * Logic for submenu toggling on accordions or mobile menus (vertical, horizontal)
+		 *
+		 * @since  1.6.0
+		 * @return void
+		 */
+		_menuOnClick: function() {
+			$( '.uabb-has-submenu-container' ).off().click( $.proxy( function( e ) {
+
+				var $link			= $( e.target ).parents( '.uabb-has-submenu' ).first(),
+					$subMenu 		= $link.children( '.sub-menu' ).first(),
+					$href	 		= $link.children('.uabb-has-submenu-container').first().find('> a').attr('href'),
+					$subMenuParents = $( e.target ).parents( '.sub-menu' ),
+					$activeParent 	= $( e.target ).closest( '.uabb-has-submenu.uabb-active' ),
+					wrapperClass    = this.nodeClass + ' .uabb-creative-menu';
+
+				if( !$subMenu.is(':visible') || $(e.target).hasClass('uabb-menu-toggle')
+					|| ($subMenu.is(':visible') && (typeof $href === 'undefined' || $href == '#')) ) {
+					e.preventDefault();
+				}
+				else {
+					window.location.href = $href;
+					return;
+				}
+
+				if ( 'yes' === this.collapse_inactive ){
+
+					if ( !$link.parents('.menu-item').hasClass('uabb-active') ) {
+						$('.uabb-active', this.wrapperClass).not($link).removeClass('uabb-active');
+					}
+					else if ($link.parents('.menu-item').hasClass('uabb-active') && $link.parent('.sub-menu').length) {
+						$('.uabb-active', this.wrapperClass).not($link).not($activeParent).removeClass('uabb-active');
+					}
+
+					$('.sub-menu', this.wrapperClass).not($subMenu).not($subMenuParents).slideUp('normal');
+				}
+
+				$subMenu.slideToggle();
+				$link.toggleClass( 'uabb-active' );
+			}, this ) );
+
 		},
 		_closeOffCanvas: function() {
 

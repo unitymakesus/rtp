@@ -2,9 +2,7 @@
     'use strict';
     $(function () {
         $('a[aria-label="Deactivate Password Protect WordPress Lite"]').click(function () {
-            var message = ppw_deactivate_data.is_active_pro
-                ? 'Password Protect WordPress will not working and all your password-protected content will become public once you deactivate our plugin. Are you sure you want to deactivate it?'
-                : 'All your previously password protected pages and posts will become public once you deactivate our plugin. Are you sure you want to deactivate Password Protect WordPress Lite Plugin?';
+            var message = 'Please restore all your previously created passwords before deactivating the plugin to avoid all protected pages and posts becoming public.\nAre you sure you want to deactivate our PPWP Lite version now?';
             if (!confirm(message)) {
                 return false;
             }

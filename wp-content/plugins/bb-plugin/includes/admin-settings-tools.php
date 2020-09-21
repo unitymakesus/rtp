@@ -38,7 +38,7 @@
 	<form id="debug-form" action="<?php FLBuilderAdminSettings::render_form_action( 'tools' ); ?>" method="post">
 		<div class="fl-settings-form-content">
 			<?php if ( ! $debug ) : ?>
-			<p><?php _e( 'Enable debug mode to generate a unique support url.', 'fl-builder' ); ?></p>
+			<p><?php _e( 'Enable debug mode to generate a unique support URL.', 'fl-builder' ); ?></p>
 		<?php else : ?>
 			<p><?php _e( 'Copy this unique URL and send it to support as directed.', 'fl-builder' ); ?></p>
 		<?php endif; ?>
@@ -57,6 +57,38 @@
 			<?php wp_nonce_field( 'debug', 'fl-debug-nonce' ); ?>
 		</p>
 	</form>
+
+	<?php if ( get_transient( 'fl_debug_mode' ) || ( defined( 'FL_ENABLE_META_CSS_EDIT' ) && FL_ENABLE_META_CSS_EDIT ) ) : ?>
+
+		<?php
+		$data = get_option( '_fl_builder_settings' );
+		if ( ! isset( $data->css ) ) {
+			$css = '';
+		} else {
+			$css = $data->css;
+		}
+		if ( ! isset( $data->js ) ) {
+			$js = '';
+		} else {
+			$js = $data->js;
+		}
+		?>
+
+		<form id="css-js-form" action="<?php FLBuilderAdminSettings::render_form_action( 'tools' ); ?>" method="post">
+
+		<h3 class="fl-settings-form-header"><?php _e( 'Global CSS', 'fl-builder' ); ?></h3>
+
+		<p><textarea style="width:100%" rows=10 name="css"><?php echo esc_attr( $css ); ?></textarea></p>
+
+		<h3 class="fl-settings-form-header"><?php _e( 'Global JS', 'fl-builder' ); ?></h3>
+
+		<p><textarea style="width:100%" rows=10 name="js"><?php echo esc_attr( $js ); ?></textarea></p>
+
+		<input type="submit" name="update-css-js" class="button-primary" value="<?php echo esc_attr__( 'Update Global CSS/JS', 'fl-builder' ); ?>" />
+		<?php wp_nonce_field( 'debug', 'fl-css-js-nonce' ); ?>
+	</form>
+
+	<?php endif; ?>
 
 <?php
 if ( FLBuilderUsage::show_settings() ) {

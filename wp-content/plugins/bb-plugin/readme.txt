@@ -2,7 +2,7 @@
 Contributors: justinbusa, RobbyMcCullough, billyyoung, hinampaksh, diegoliv, webmandesign, eugenealegiojo, helgatheviking, ozancanakli, brentjettgmailcom, jproffitt71, brainstormforce, ideaboxcreations, laubsterboy, nikolayyordanov, codente, pross, pedromendonca
 Tags: page builder, beaver builder, landing page, front-end builder, drag and drop editor
 Requires at least: 4.6
-Tested up to: 5.2
+Tested up to: 5.5
 Requires PHP: 5.6
 Stable tag: trunk
 License: GPL2+
@@ -79,6 +79,10 @@ Every part of a Beaver Builder layout or landing page is fully responsive and lo
 = A WordPress Page Builder That's Optimized For Performance =
 
 We've designed Beaver Builder to create layouts and landing pages that load quickly. Many page builders load in an ungodly number of scripts and stylesheets to every page on your site. Not Beaver Builder! It only loads the assets needed for a given layout or landing page.
+
+= ClassicPress =
+
+This plugin is compatible with [ClassicPress](https://www.classicpress.net/).
 
 == Installation ==
 

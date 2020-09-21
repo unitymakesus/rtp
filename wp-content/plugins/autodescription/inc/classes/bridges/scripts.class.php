@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Sets up class loader as file is loaded.
@@ -33,6 +33,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @link https://bugs.php.net/bug.php?id=75771
  */
 $_load_scripts_class = function() {
+	// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
 	new Scripts();
 };
 
@@ -71,12 +72,12 @@ final class Scripts {
 
 	/**
 	 * The constructor. Can't be instantiated externally from this file.
+	 * Kills PHP on subsequent duplicated request. Enforces singleton.
 	 *
 	 * This probably autoloads at action "admin_enqueue_scripts", priority "0".
 	 *
 	 * @since 4.0.0
 	 * @access private
-	 * @staticvar int $count Enforces singleton.
 	 * @internal
 	 */
 	public function __construct() {
@@ -133,6 +134,11 @@ final class Scripts {
 				$_scripts[] = static::get_counter_scripts();
 		} elseif ( $tsf->is_wp_lists_edit() ) {
 			$_scripts[] = static::get_list_edit_scripts();
+			$_scripts[] = static::get_title_scripts();
+			$_scripts[] = static::get_description_scripts();
+
+			if ( $tsf->get_option( 'display_pixel_counter' ) || $tsf->get_option( 'display_character_counter' ) )
+				$_scripts[] = static::get_counter_scripts();
 		} elseif ( $tsf->is_seo_settings_page() ) {
 			static::prepare_media_scripts();
 			static::prepare_metabox_scripts();
@@ -177,7 +183,7 @@ final class Scripts {
 	 * @return mixed
 	 */
 	public static function decode_entities( $value ) {
-		return $value && is_string( $value ) ? html_entity_decode( $value, ENT_QUOTES | ENT_COMPAT, 'UTF-8' ) : $value;
+		return $value && \is_string( $value ) ? html_entity_decode( $value, ENT_QUOTES | ENT_COMPAT, 'UTF-8' ) : $value;
 	}
 
 	/**
@@ -251,7 +257,7 @@ final class Scripts {
 			[
 				'id'       => 'tsf',
 				'type'     => 'js',
-				'deps'     => [ 'jquery', 'tsf-tt' ],
+				'deps'     => [ 'jquery', 'tsf-tt', 'wp-util' ],
 				'autoload' => true,
 				'name'     => 'tsf',
 				'base'     => THE_SEO_FRAMEWORK_DIR_URL . 'lib/js/',
@@ -263,7 +269,9 @@ final class Scripts {
 							/**
 							 * Use $tsf->get_settings_capability() ?... might conflict with other nonces.
 							 */
+							// unused.
 							'manage_options' => \current_user_can( 'manage_options' ) ? \wp_create_nonce( 'tsf-ajax-manage_options' ) : false,
+							// unused.
 							'upload_files'   => \current_user_can( 'upload_files' ) ? \wp_create_nonce( 'tsf-ajax-upload_files' ) : false,
 							'edit_posts'     => \current_user_can( 'edit_posts' ) ? \wp_create_nonce( 'tsf-ajax-edit_posts' ) : false,
 						],
@@ -356,6 +364,7 @@ final class Scripts {
 	 * Returns LE (List Edit) scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now depends on title and description scripts.
 	 *
 	 * @return array The script params.
 	 */
@@ -374,7 +383,7 @@ final class Scripts {
 			[
 				'id'       => 'tsf-le',
 				'type'     => 'js',
-				'deps'     => [ 'jquery', 'tsf' ],
+				'deps'     => [ 'jquery', 'tsf-title', 'tsf-description', 'tsf' ],
 				'autoload' => true,
 				'name'     => 'le',
 				'base'     => THE_SEO_FRAMEWORK_DIR_URL . 'lib/js/',
@@ -391,6 +400,7 @@ final class Scripts {
 	 * Returns the SEO Settings page script params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Updated l10n.data.
 	 *
 	 * @return array The script params.
 	 */
@@ -412,13 +422,6 @@ final class Scripts {
 				'l10n'     => [
 					'name' => 'tsfSettingsL10n',
 					'data' => [
-						'i18n'   => [
-							'confirmReset'   => \__( 'Are you sure you want to reset all SEO settings to their defaults?', 'autodescription' ),
-							// phpcs:ignore, WordPress.WP.I18n -- WordPress doesn't have a comment, either.
-							'privateTitle'   => static::decode_entities( trim( str_replace( '%s', '', \__( 'Private: %s', 'default' ) ) ) ),
-							// phpcs:ignore, WordPress.WP.I18n -- WordPress doesn't have a comment, either.
-							'protectedTitle' => static::decode_entities( trim( str_replace( '%s', '', \__( 'Protected: %s', 'default' ) ) ) ),
-						],
 						'states' => [
 							'isFrontPrivate'   => $front_id && $tsf->is_private( $front_id ),
 							'isFrontProtected' => $front_id && $tsf->is_password_protected( $front_id ),
@@ -446,6 +449,7 @@ final class Scripts {
 	 * Returns Post edit scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Updated l10n.data.
 	 *
 	 * @return array The script params.
 	 */
@@ -482,17 +486,8 @@ final class Scripts {
 							'isGutenbergPage' => $tsf->is_gutenberg_page(),
 							'id'              => (int) $id,
 						],
-						'i18n'   => [
-							// phpcs:ignore, WordPress.WP.I18n -- WordPress doesn't have a comment, either.
-							'privateTitle'   => static::decode_entities( trim( str_replace( '%s', '', \__( 'Private: %s', 'default' ) ) ) ),
-							// phpcs:ignore, WordPress.WP.I18n -- WordPress doesn't have a comment, either.
-							'protectedTitle' => static::decode_entities( trim( str_replace( '%s', '', \__( 'Protected: %s', 'default' ) ) ) ),
-						],
 						'params' => [
 							'isFront'                 => $is_static_frontpage,
-							'refTitleLocked'          => $is_static_frontpage && $tsf->get_option( 'homepage_title' ),
-							'refDescriptionLocked'    => $is_static_frontpage && $tsf->get_option( 'homepage_description' ),
-							'stripTitleTags'          => (bool) $tsf->get_option( 'title_strip_tags' ),
 							'additionsForcedDisabled' => $additions_forced_disabled,
 							'additionsForcedEnabled'  => $additions_forced_enabled,
 						],
@@ -524,21 +519,20 @@ final class Scripts {
 	 * Returns Term scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Updated l10n.data.
 	 *
 	 * @return array The script params.
 	 */
 	public static function get_term_edit_scripts() {
 
-		$tsf = \the_seo_framework();
-
+		$tsf      = \the_seo_framework();
 		$taxonomy = $tsf->get_current_taxonomy();
 
 		$additions_forced_disabled = (bool) $tsf->get_option( 'title_rem_additions' );
-		$prefixes_forced_disabled  = (bool) $tsf->get_option( 'title_rem_prefixes' );
 
-		$_prefix = $tsf->get_tax_type_label( $taxonomy );
-		/* translators: Taxonomy term archive title. 1: Taxonomy singular name, 2: Current taxonomy term */
-		$term_prefix = sprintf( \__( '%1$s: %2$s', 'autodescription' ), $_prefix, '' );
+		$term_prefix = $tsf->use_generated_archive_prefix( \get_taxonomy( $taxonomy ) )
+			? $tsf->prepend_tax_label_prefix( '', $taxonomy )
+			: '';
 
 		return [
 			[
@@ -553,9 +547,7 @@ final class Scripts {
 					'name' => 'tsfTermL10n',
 					'data' => [
 						'params' => [
-							'stripTitleTags'          => (bool) $tsf->get_option( 'title_strip_tags' ),
 							'additionsForcedDisabled' => $additions_forced_disabled,
-							'prefixesForcedDisabled'  => $prefixes_forced_disabled,
 							'termPrefix'              => static::decode_entities( $term_prefix ),
 						],
 					],
@@ -648,36 +640,13 @@ final class Scripts {
 	 * Returns Title scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Updated l10n.data.
 	 *
 	 * @return array The script params.
 	 */
 	public static function get_title_scripts() {
 
 		$tsf = \the_seo_framework();
-
-		$_query = [
-			'id'       => $tsf->is_seo_settings_page() ? $tsf->get_the_front_page_ID() : $tsf->get_the_real_ID(),
-			'taxonomy' => $tsf->get_current_taxonomy(),
-		];
-
-		if ( ! $_query['taxonomy'] && $tsf->is_static_frontpage( $_query['id'] ) ) {
-			$addition    = $tsf->get_home_page_tagline();
-			$seplocation = $tsf->get_home_title_seplocation();
-		} else {
-			$addition    = $tsf->get_blogname();
-			$seplocation = $tsf->get_title_seplocation();
-		}
-
-		// NOTE: The custom fields can't be filtered...
-		if ( $tsf->is_seo_settings_page() && $tsf->has_page_on_front() ) {
-			$_default_title = $tsf->get_post_meta_item( '_genesis_title', $_query['id'] ) ?: '';
-		} elseif ( ! $_query['taxonomy'] && $tsf->is_static_frontpage( $_query['id'] ) ) {
-			$_default_title = $tsf->get_option( 'homepage_title' ) ?: '';
-		} else {
-			$_default_title = '';
-		}
-
-		$_default_title = $_default_title ?: $tsf->get_filtered_raw_generated_title( $_query );
 
 		return [
 			'id'       => 'tsf-title',
@@ -691,15 +660,18 @@ final class Scripts {
 				'name' => 'tsfTitleL10n',
 				'data' => [
 					'states' => [
-						'useTagline'        => $tsf->use_title_branding( $_query ),
-						'titleSeparator'    => static::decode_entities( $tsf->s_title_raw( $tsf->get_title_separator() ) ),
-						'additionPlacement' => 'left' === $seplocation ? 'before' : 'after',
-						'additionValue'     => static::decode_entities( $tsf->s_title_raw( $addition ) ),
-						'defaultTitle'      => static::decode_entities( $tsf->s_title_raw( $_default_title ) ),
-						'prefixPlacement'   => \is_rtl() ? 'after' : 'before',
+						'titleSeparator'  => static::decode_entities( $tsf->s_title_raw( $tsf->get_title_separator() ) ),
+						'prefixPlacement' => \is_rtl() ? 'after' : 'before',
 					],
 					'params' => [
-						'untitledTitle' => static::decode_entities( $tsf->s_title_raw( $tsf->get_static_untitled_title() ) ),
+						'untitledTitle'  => static::decode_entities( $tsf->s_title_raw( $tsf->get_static_untitled_title() ) ),
+						'stripTitleTags' => (bool) $tsf->get_option( 'title_strip_tags' ),
+					],
+					'i18n'   => [
+						// phpcs:ignore, WordPress.WP.I18n -- WordPress doesn't have a comment, either.
+						'privateTitle'   => static::decode_entities( trim( str_replace( '%s', '', \__( 'Private: %s', 'default' ) ) ) ),
+						// phpcs:ignore, WordPress.WP.I18n -- WordPress doesn't have a comment, either.
+						'protectedTitle' => static::decode_entities( trim( str_replace( '%s', '', \__( 'Protected: %s', 'default' ) ) ) ),
 					],
 				],
 			],
@@ -710,29 +682,11 @@ final class Scripts {
 	 * Returns Description scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 No longer outputs l10n (data).
 	 *
 	 * @return array The script params.
 	 */
 	public static function get_description_scripts() {
-
-		$tsf = \the_seo_framework();
-
-		$_query = [
-			'id'       => $tsf->is_seo_settings_page() ? $tsf->get_the_front_page_ID() : $tsf->get_the_real_ID(),
-			'taxonomy' => $tsf->get_current_taxonomy(),
-		];
-
-		$_default_description = '';
-
-		// NOTE: The custom fields can't be filtered...
-		if ( $tsf->is_seo_settings_page() && $tsf->has_page_on_front() ) {
-			$_default_description = $tsf->get_post_meta_item( '_genesis_description', $_query['id'] ) ?: '';
-		} elseif ( ! $_query['taxonomy'] && $tsf->is_static_frontpage( $_query['id'] ) ) {
-			$_default_description = $tsf->get_option( 'homepage_description' ) ?: '';
-		}
-
-		$_default_description = $_default_description ?: $tsf->get_generated_description( $_query, false );
-
 		return [
 			'id'       => 'tsf-description',
 			'type'     => 'js',
@@ -741,14 +695,6 @@ final class Scripts {
 			'name'     => 'description',
 			'base'     => THE_SEO_FRAMEWORK_DIR_URL . 'lib/js/',
 			'ver'      => THE_SEO_FRAMEWORK_VERSION,
-			'l10n'     => [
-				'name' => 'tsfDescriptionL10n',
-				'data' => [
-					'states' => [
-						'defaultDescription' => static::decode_entities( $tsf->s_description( $_default_description ) ),
-					],
-				],
-			],
 		];
 	}
 
@@ -800,9 +746,11 @@ final class Scripts {
 					'ogDescriptionPHLock' => (bool) $tsf->get_post_meta_item( '_open_graph_description', $_query['id'] ),
 				];
 
+				$_homepage_desc_placeholder = $tsf->get_post_meta_item( '_genesis_description', $_query['id'] );
+
 				$settings_placeholders = [
-					'ogDesc' => $tsf->get_post_meta_item( '_genesis_description', $_query['id'] ),
-					'twDesc' => $tsf->get_post_meta_item( '_genesis_description', $_query['id'] ),
+					'ogDesc' => $_homepage_desc_placeholder,
+					'twDesc' => $_homepage_desc_placeholder,
 				];
 			} elseif ( ! $_query['taxonomy'] && $tsf->is_static_frontpage( $_query['id'] ) ) {
 				$home_locks = [
@@ -812,9 +760,11 @@ final class Scripts {
 					'twDescriptionLock' => (bool) $tsf->get_option( 'homepage_twitter_description' ),
 				];
 
+				$_homepage_desc_placeholder = $tsf->get_option( 'homepage_description' );
+
 				$settings_placeholders = [
-					'ogDesc' => $tsf->get_option( 'homepage_description' ),
-					'twDesc' => $tsf->get_option( 'homepage_description' ),
+					'ogDesc' => $_homepage_desc_placeholder,
+					'twDesc' => $_homepage_desc_placeholder,
 				];
 			}
 		}
@@ -854,6 +804,7 @@ final class Scripts {
 	 * Returns Primary Term Selection scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now filters out unsupported taxonomies.
 	 *
 	 * @return array The script params.
 	 */
@@ -870,6 +821,8 @@ final class Scripts {
 		$gutenberg = $tsf->is_gutenberg_page();
 
 		foreach ( $_taxonomies as $_t ) {
+			if ( ! $tsf->is_taxonomy_supported( $_t->name ) ) continue;
+
 			$singular_name = $tsf->get_tax_type_label( $_t->name );
 
 			$primary_term_id = $tsf->get_primary_term_id( $id, $_t->name ) ?: 0;

@@ -73,6 +73,7 @@
 			FLBuilder.addHook( 'didEnterRevisionPreview', this._clearPreview );
 			FLBuilder.addHook( 'responsiveEditing', this._menuToggleClicked );
 			FLBuilder.addHook( 'preview-init', this._switchAllSettingsToCurrentMode );
+			FLBuilder.addHook( 'responsive-editing-switched', this._showSize );
 
 			$( 'body' ).delegate( '.fl-field-responsive-toggle', 'click', this._settingToggleClicked );
 			$( 'body' ).delegate( '.fl-responsive-preview-message button', 'click', this._previewToggleClicked );
@@ -109,6 +110,21 @@
 				'fl-builder-global-css',
 				'fl-builder-layout-css'
 			] );
+		},
+
+		_showSize: function() {
+				var show_size = $('.fl-responsive-preview-message .size' ),
+				medium = ( '1' === FLBuilderConfig.global.responsive_preview ) ? FLBuilderConfig.global.medium_breakpoint : 769,
+				responsive = ( '1' === FLBuilderConfig.global.responsive_preview ) ? FLBuilderConfig.global.responsive_breakpoint : 360,
+				size_text = '';
+
+			if ( $('.fl-responsive-preview').hasClass('fl-preview-responsive') ) {
+					size_text = FLBuilderStrings.mobile + ' ' + responsive + 'px';
+			} else if ( $('.fl-responsive-preview').hasClass('fl-preview-medium') ) {
+				size_text = FLBuilderStrings.medium + ' ' + medium + 'px';
+			}
+
+			show_size.html('').html(size_text)
 		},
 
 		/**
@@ -158,14 +174,16 @@
 
 			// Set the content width and apply media queries.
 			if ( 'responsive' == mode ) {
-				width = FLBuilderConfig.global.responsive_breakpoint >= 360 ? 360 : FLBuilderConfig.global.responsive_breakpoint;
+				width = ( '1' !== FLBuilderConfig.global.responsive_preview && FLBuilderConfig.global.responsive_breakpoint >= 360 ) ? 360 : FLBuilderConfig.global.responsive_breakpoint;
 				content.width( width );
 				FLBuilderSimulateMediaQuery.update( width, callback );
+				FLBuilderResponsiveEditing._setMarginPaddingPlaceholders();
 			}
 			else if ( 'medium' == mode ) {
-				width = FLBuilderConfig.global.medium_breakpoint >= 769 ? 769 : FLBuilderConfig.global.medium_breakpoint;
+				width = ( '1' !== FLBuilderConfig.global.responsive_preview && FLBuilderConfig.global.medium_breakpoint >= 769 ) ? 769 : FLBuilderConfig.global.medium_breakpoint;
 				content.width( width );
 				FLBuilderSimulateMediaQuery.update( width, callback );
+				FLBuilderResponsiveEditing._setMarginPaddingPlaceholders();
 			}
 			else {
 				content.width( '' );
@@ -296,6 +314,240 @@
 			self._switchAllSettingsTo( self._mode );
 
 			FLBuilder.triggerHook( 'responsive-editing-switched', self._mode );
+		},
+
+		/**
+		 * Set Placeholders for Padding and Margin
+		 *
+		 * @since 2.4
+		 * @access private
+		 * @method _setMarginPaddingPlaceholders
+		 */
+		_setMarginPaddingPlaceholders: function()
+		{
+			var paddingDefaultID    = '#fl-field-padding .fl-field-responsive-setting-default',
+				paddingDefault      = {
+					'values'        : {
+						'top'       : $( paddingDefaultID + ' input[ name="padding_top" ]').attr('value'),
+						'right'     : $( paddingDefaultID + ' input[ name="padding_right" ]').attr('value'),
+						'bottom'    : $( paddingDefaultID + ' input[ name="padding_bottom" ]').attr('value'),
+						'left'      : $( paddingDefaultID + ' input[ name="padding_left" ]').attr('value'),
+					},
+					'placeholders'  : {
+						'top'       : $( paddingDefaultID + ' input[ name="padding_top" ]').attr('placeholder'),
+						'right'     : $( paddingDefaultID + ' input[ name="padding_right" ]').attr('placeholder'),
+						'bottom'    : $( paddingDefaultID + ' input[ name="padding_bottom" ]').attr('placeholder'),
+						'left'      : $( paddingDefaultID + ' input[ name="padding_left" ]').attr('placeholder'),
+					}
+				},
+				paddingMediumID     = '#fl-field-padding .fl-field-responsive-setting-medium',
+				paddingMedium       = {
+					'values'        : {
+						'top'       : $( paddingMediumID + ' input[ name="padding_top_medium" ]').attr('value'),
+						'right'     : $( paddingMediumID + ' input[ name="padding_right_medium" ]').attr('value'),
+						'bottom'    : $( paddingMediumID + ' input[ name="padding_bottom_medium" ]').attr('value'),
+						'left'      : $( paddingMediumID + ' input[ name="padding_left_medium" ]').attr('value'),
+					},
+					'placeholders'  : {
+						'top'       : '',
+						'right'     : '',
+						'bottom'    : '',
+						'left'      : '',
+					}
+				},
+				paddingResponsiveID  = '#fl-field-padding .fl-field-responsive-setting-responsive',
+				paddingResponsive    = {
+					'values'        : {
+						'top'       : $( paddingMediumID + ' input[ name="padding_top_responsive" ]').attr('value'),
+						'right'     : $( paddingMediumID + ' input[ name="padding_right_responsive" ]').attr('value'),
+						'bottom'    : $( paddingMediumID + ' input[ name="padding_bottom_responsive" ]').attr('value'),
+						'left'      : $( paddingMediumID + ' input[ name="padding_left_responsive" ]').attr('value'),
+					},
+					'placeholders'  : {
+						'top'       : '',
+						'right'     : '',
+						'bottom'    : '',
+						'left'      : '',
+					}
+				},
+				marginDefaultID     = '#fl-field-margin .fl-field-responsive-setting-default',
+				marginDefault       = {
+					'values'        : {
+						'top'       : $( marginDefaultID + ' input[ name="margin_top" ]').attr('value'),
+						'right'     : $( marginDefaultID + ' input[ name="margin_right" ]').attr('value'),
+						'bottom'    : $( marginDefaultID + ' input[ name="margin_bottom" ]').attr('value'),
+						'left'      : $( marginDefaultID + ' input[ name="margin_left" ]').attr('value'),
+					},
+					'placeholders'  : {
+						'top'       : $( marginDefaultID + ' input[ name="margin_top" ]').attr('placeholder'),
+						'right'     : $( marginDefaultID + ' input[ name="margin_right" ]').attr('placeholder'),
+						'bottom'    : $( marginDefaultID + ' input[ name="margin_bottom" ]').attr('placeholder'),
+						'left'      : $( marginDefaultID + ' input[ name="margin_left" ]').attr('placeholder'),
+					}
+				},
+				marginMediumID      = '#fl-field-margin .fl-field-responsive-setting-medium',
+				marginMedium        = {
+					'values'        : {
+						'top'       : $( marginMediumID + ' input[ name="margin_top_medium" ]').attr('value'),
+						'right'     : $( marginMediumID + ' input[ name="margin_right_medium" ]').attr('value'),
+						'bottom'    : $( marginMediumID + ' input[ name="margin_bottom_medium" ]').attr('value'),
+						'left'      : $( marginMediumID + ' input[ name="margin_left_medium" ]').attr('value'),
+					},
+					'placeholders'	: {
+						'top'       : marginDefault.values.top ? marginDefault.values.top : marginDefault.placeholders.top,
+						'right'     : marginDefault.values.right ? marginDefault.values.right : marginDefault.placeholders.right,
+						'bottom'    : marginDefault.values.bottom ? marginDefault.values.bottom : marginDefault.placeholders.bottom,
+						'left'      : marginDefault.values.left ? marginDefault.values.left : marginDefault.placeholders.left,
+					}
+				},
+				marginResponsiveID  = '#fl-field-margin .fl-field-responsive-setting-responsive',
+				marginResponsive    = {
+					'values'        : {
+						'top'       : $( marginResponsiveID + ' input[ name="margin_top_responsive" ]').attr('value'),
+						'right'     : $( marginResponsiveID + ' input[ name="margin_right_responsive" ]').attr('value'),
+						'bottom'    : $( marginResponsiveID + ' input[ name="margin_bottom_responsive" ]').attr('value'),
+						'left'      : $( marginResponsiveID + ' input[ name="margin_left_responsive" ]').attr('value'),
+					},
+					'placeholders'  : {
+						'top'       : '',
+						'right'     : '',
+						'bottom'    : '',
+						'left'      : '',
+					}
+				};
+
+			// --- Set Padding Placeholders (Medium)---
+			// -- top --
+			if ( '' != paddingDefault.values.top ) {
+				$( paddingMediumID + ' input[ name="padding_top_medium"] ').attr( 'placeholder', paddingDefault.values.top );
+			} else {
+				$( paddingMediumID + ' input[ name="padding_top_medium"] ').attr( 'placeholder', paddingDefault.placeholders.top );
+			}
+
+			// -- right --
+			if ( '' != paddingDefault.values.right ) {
+				$( paddingMediumID + ' input[ name="padding_right_medium"] ').attr( 'placeholder', paddingDefault.values.right );
+			} else {
+				$( paddingMediumID + ' input[ name="padding_right_medium"] ').attr( 'placeholder', paddingDefault.placeholders.right );
+			}
+
+			// -- bottom --
+			if ( '' != paddingDefault.values.bottom ) {
+				$( paddingMediumID + ' input[ name="padding_bottom_medium"] ').attr( 'placeholder', paddingDefault.values.bottom );
+			} else {
+				$( paddingMediumID + ' input[ name="padding_bottom_medium"] ').attr( 'placeholder', paddingDefault.placeholders.bottom );
+			}
+
+			// -- left --
+			if ( '' != paddingDefault.values.left ) {
+				$( paddingMediumID + ' input[ name="padding_left_medium"] ').attr( 'placeholder', paddingDefault.values.left );
+			} else {
+				$( paddingMediumID + ' input[ name="padding_left_medium"] ').attr( 'placeholder', paddingDefault.placeholders.left );
+			}
+
+			// --- Set Padding Placeholders (Responsive) ---
+			// -- top --
+			if ( '' != paddingMedium.values.top ) {
+				$( paddingResponsiveID + ' input[ name="padding_top_responsive"] ').attr( 'placeholder', paddingMedium.values.top );
+			} else if ( '' != paddingDefault.values.top ) {
+				$( paddingResponsiveID + ' input[ name="padding_top_responsive"] ').attr( 'placeholder', paddingDefault.values.top );
+			} else {
+				$( paddingResponsiveID + ' input[ name="padding_top_responsive"] ').attr( 'placeholder', paddingDefault.placeholders.top );
+			}
+
+			// -- right --
+			if ( '' != paddingMedium.values.right ) {
+				$( paddingResponsiveID + ' input[ name="padding_right_responsive"] ').attr( 'placeholder', paddingMedium.values.right );
+			} else if ( '' != paddingDefault.values.right ) {
+				$( paddingResponsiveID + ' input[ name="padding_right_responsive"] ').attr( 'placeholder', paddingDefault.values.right );
+			} else {
+				$( paddingResponsiveID + ' input[ name="padding_right_responsive"] ').attr( 'placeholder', paddingDefault.placeholders.right );
+			}
+
+			// -- bottom --
+			if ( '' != paddingMedium.values.bottom ) {
+				$( paddingResponsiveID + ' input[ name="padding_bottom_responsive"] ').attr( 'placeholder', paddingMedium.values.bottom );
+			} else if ( '' != paddingDefault.values.bottom ) {
+				$( paddingResponsiveID + ' input[ name="padding_bottom_responsive"] ').attr( 'placeholder', paddingDefault.values.bottom );
+			} else {
+				$( paddingResponsiveID + ' input[ name="padding_bottom_responsive"] ').attr( 'placeholder', paddingDefault.placeholders.bottom );
+			}
+
+			// -- left --
+			if ( '' != paddingMedium.values.left ) {
+				$( paddingResponsiveID + ' input[ name="padding_left_responsive"] ').attr( 'placeholder', paddingMedium.values.left );
+			} else if ( '' != paddingDefault.values.left ) {
+				$( paddingResponsiveID + ' input[ name="padding_left_responsive"] ').attr( 'placeholder', paddingDefault.values.left );
+			} else {
+				$( paddingResponsiveID + ' input[ name="padding_left_responsive"] ').attr( 'placeholder', paddingDefault.placeholders.left );
+			}
+
+			// --- Set Margin Placeholders (Medium) ---
+			// -- top --
+			if ( '' != marginDefault.values.top ) {
+				$( marginMediumID + ' input[ name="margin_top_medium" ]').attr( 'placeholder', marginDefault.values.top );
+			} else {
+				$( marginMediumID + ' input[ name="margin_top_medium" ]').attr( 'placeholder', marginDefault.placeholders.top );
+			}
+
+			// -- right --
+			if ( '' != marginDefault.values.right ) {
+				$( marginMediumID + ' input[ name="margin_right_medium" ]').attr( 'placeholder', marginDefault.values.right );
+			} else {
+				$( marginMediumID + ' input[ name="margin_right_medium" ]').attr( 'placeholder', marginDefault.placeholders.right );
+			}
+
+			// -- bottom --
+			if ( '' != marginDefault.values.bottom ) {
+				$( marginMediumID + ' input[ name="margin_bottom_medium" ]').attr( 'placeholder', marginDefault.values.bottom );
+			} else {
+				$( marginMediumID + ' input[ name="margin_bottom_medium" ]').attr( 'placeholder', marginDefault.placeholders.bottom );
+			}
+
+			// -- left --
+			if ( '' != marginDefault.values.left ) {
+				$( marginMediumID + ' input[ name="margin_left_medium" ]').attr( 'placeholder', marginDefault.values.left );
+			} else {
+				$( marginMediumID + ' input[ name="margin_left_medium" ]').attr( 'placeholder', marginDefault.placeholders.left );
+			}
+
+			// --- Set Margin Placeholders (Responsive) ---
+			// -- top --
+			if ( '' != marginMedium.values.top ) {
+				$( marginResponsiveID + ' input[ name="margin_top_responsive" ]').attr( 'placeholder', marginMedium.values.top );
+			} else if ( '' != marginDefault.values.top ) {
+				$( marginResponsiveID + ' input[ name="margin_top_responsive" ]').attr( 'placeholder', marginDefault.values.top );
+			} else {
+				$( marginResponsiveID + ' input[ name="margin_top_responsive" ]').attr( 'placeholder', marginDefault.placeholders.top );
+			}
+
+			// -- right --
+			if ( '' != marginMedium.values.right ) {
+				$( marginResponsiveID + ' input[ name="margin_right_responsive" ]').attr( 'placeholder', marginMedium.values.right );
+			} else if ( '' != marginDefault.values.right ) {
+				$( marginResponsiveID + ' input[ name="margin_right_responsive" ]').attr( 'placeholder', marginDefault.values.right );
+			} else {
+				$( marginResponsiveID + ' input[ name="margin_right_responsive" ]').attr( 'placeholder', marginDefault.placeholders.right );
+			}
+
+			// -- bottom --
+			if ( '' != marginMedium.values.bottom ) {
+				$( marginResponsiveID + ' input[ name="margin_bottom_responsive" ]').attr( 'placeholder', marginMedium.values.bottom );
+			} else if ( '' != marginDefault.values.bottom ) {
+				$( marginResponsiveID + ' input[ name="margin_bottom_responsive" ]').attr( 'placeholder', marginDefault.values.bottom );
+			} else {
+				$( marginResponsiveID + ' input[ name="margin_bottom_responsive" ]').attr( 'placeholder', marginDefault.placeholders.bottom );
+			}
+
+			// -- left --
+			if ( '' != marginMedium.values.left ) {
+				$( marginResponsiveID + ' input[ name="margin_left_responsive" ]').attr( 'placeholder', marginMedium.values.left );
+			} else if ( '' != marginDefault.values.left ) {
+				$( marginResponsiveID + ' input[ name="margin_left_responsive" ]').attr( 'placeholder', marginDefault.values.left );
+			} else {
+				$( marginResponsiveID + ' input[ name="margin_left_responsive" ]').attr( 'placeholder', marginDefault.placeholders.left );
+			}
+
 		},
 
 		/**

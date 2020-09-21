@@ -213,6 +213,9 @@ FLBuilder::register_module(
 									'fields'   => array( 'filters_all_text', 'default_filter_switch', 'show_filter_title' ),
 									'sections' => array( 'section_style_cat_filters', 'section_typography_cat_filters' ),
 								),
+								'no'  => array(
+									'sections' => array( 'pagination' ),
+								),
 							),
 						),
 						'filters_all_text'          => array(
@@ -264,6 +267,44 @@ FLBuilder::register_module(
 							'label'       => __( 'Title Text', 'uabb' ),
 							'default'     => __( 'My photos', 'uabb' ),
 							'connections' => array( 'string', 'html' ),
+						),
+					),
+				),
+				'pagination'          => array(
+					'title'  => __( 'Pagination', 'uabb' ),
+					'fields' => array(
+						'pagination'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Pagination', 'uabb' ),
+							'default' => 'none',
+							'options' => array(
+								'none'      => __( 'None', 'uabb' ),
+								'load_more' => __( 'Load More', 'uabb' ),
+								'scroll'    => __( 'Scroll', 'uabb' ),
+							),
+							'toggle'  => array(
+								'none'      => array(
+									'sections' => array( 'filterable_settings' ),
+								),
+								'load_more' => array(
+									'sections' => array( 'pagination_button_style', 'section_typography_load_more' ),
+									'fields'   => array( 'images_per_page', 'load_more_text' ),
+								),
+								'scroll'    => array(
+									'fields' => array( 'images_per_page' ),
+								),
+							),
+						),
+						'images_per_page' => array(
+							'type'    => 'unit',
+							'label'   => __( 'Images Per Page', 'uabb' ),
+							'default' => '6',
+							'slider'  => true,
+						),
+						'load_more_text'  => array(
+							'type'    => 'text',
+							'label'   => __( 'Load More Button Text', 'uabb' ),
+							'default' => __( 'Load More', 'uabb' ),
 						),
 					),
 				),
@@ -371,6 +412,123 @@ FLBuilder::register_module(
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'preview'     => 'none',
+						),
+					),
+				),
+				'box_shadow'                  => array(
+					'title'  => __( 'Image Box Shadow', 'uabb' ),
+					'fields' => array(
+						'img_drop_shadow'             => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Box Shadow', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => 'This option is to set shadows for the individual images in the gallery',
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'img_shadow_color_hor', 'img_shadow_color_ver', 'img_shadow_color_blur', 'img_shadow_color_spr', 'img_shadow_color', 'img_shadow_color_opc' ),
+									'sections' => array( 'img_drop_shadow_responsive' ),
+								),
+							),
+						),
+						'img_shadow_color_hor'        => array(
+							'type'        => 'text',
+							'label'       => __( 'Horizontal Length', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_ver'        => array(
+							'type'        => 'text',
+							'label'       => __( 'Vertical Length', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_blur'       => array(
+							'type'        => 'text',
+							'label'       => __( 'Blur Radius', 'uabb' ),
+							'default'     => '7',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_spr'        => array(
+							'type'        => 'text',
+							'label'       => __( 'Spread Radius', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color'            => array(
+							'type'       => 'color',
+							'label'      => __( 'Shadow Color', 'uabb' ),
+							'default'    => 'rgba(168,168,168,0.5)',
+							'show_reset' => true,
+							'show_alpha' => true,
+						),
+						'img_hover_shadow'            => array(
+							'type'    => 'select',
+							'label'   => __( 'Change On Hover', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'img_shadow_color_hor_hover', 'img_shadow_color_ver_hover', 'img_shadow_color_blur_hover', 'img_shadow_color_spr_hover', 'img_shadow_color_hover', 'img_shadow_hover_transition' ),
+								),
+							),
+						),
+						'img_shadow_color_hor_hover'  => array(
+							'type'        => 'text',
+							'label'       => __( 'Horizontal Length', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_ver_hover'  => array(
+							'type'        => 'text',
+							'label'       => __( 'Vertical Length', 'uabb' ),
+							'default'     => '0',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_blur_hover' => array(
+							'type'        => 'text',
+							'label'       => __( 'Blur Radius', 'uabb' ),
+							'default'     => '10',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_spr_hover'  => array(
+							'type'        => 'text',
+							'label'       => __( 'Spread Radius', 'uabb' ),
+							'default'     => '1',
+							'size'        => '5',
+							'description' => 'px',
+						),
+						'img_shadow_color_hover'      => array(
+							'type'       => 'color',
+							'label'      => __( 'Shadow Color', 'uabb' ),
+							'default'    => 'rgba(168,168,168,0.9)',
+							'show_reset' => true,
+							'show_alpha' => true,
+						),
+						'img_shadow_hover_transition' => array(
+							'type'        => 'text',
+							'label'       => __( 'Transition Speed', 'uabb' ),
+							'default'     => 200,
+							'description' => 'ms',
+							'size'        => 5,
+							'maxlength'   => 5,
+							'help'        => __( 'Enter value in milliseconds.', 'uabb' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
 						),
 					),
 				),
@@ -558,6 +716,113 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'pagination_button_style'     => array(
+					'title'  => __( 'Button Style', 'uabb' ),
+					'fields' =>
+						array(
+							'load_more_bg_color'         => array(
+								'type'        => 'color',
+								'label'       => __( 'Background Color', 'uabb' ),
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+								'show_alpha'  => true,
+								'default'     => '#eee',
+								'preview'     => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more',
+									'property' => 'background',
+								),
+							),
+							'load_more_bg_hover_color'   => array(
+								'type'        => 'color',
+								'label'       => __( 'Background Hover Color', 'uabb' ),
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+								'show_alpha'  => true,
+							),
+							'load_more_text_color'       => array(
+								'type'        => 'color',
+								'label'       => __( 'Text Color', 'uabb' ),
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+								'show_alpha'  => true,
+								'connections' => array( 'color' ),
+								'preview'     => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more',
+									'property' => 'color',
+								),
+							),
+							'load_more_text_hover_color' => array(
+								'type'        => 'color',
+								'label'       => __( 'Text Hover Color', 'uabb' ),
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+								'show_alpha'  => true,
+							),
+							'load_more_border'           => array(
+								'type'       => 'border',
+								'label'      => __( 'Border', 'uabb' ),
+								'responsive' => true,
+								'preview'    => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more',
+								),
+							),
+							'border_hover_color'         => array(
+								'type'        => 'color',
+								'label'       => __( 'Border Hover Color', 'uabb' ),
+								'connections' => array( 'color' ),
+								'preview'     => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more:hover',
+									'property' => 'border-color',
+								),
+							),
+							'load_more_margin_top'       => array(
+								'type'    => 'unit',
+								'label'   => __( 'Margin Top', 'uabb' ),
+								'default' => '30',
+								'units'   => array( 'px' ),
+								'slider'  => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 1000,
+										'step' => 10,
+									),
+								),
+								'preview' => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more',
+									'property' => 'margin-top',
+								),
+							),
+							'load_more_padding'          => array(
+								'type'       => 'dimension',
+								'label'      => __( 'Padding', 'uabb' ),
+								'slider'     => true,
+								'units'      => array( 'px' ),
+								'default'    => '10',
+								'responsive' => true,
+								'preview'    => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more',
+									'property' => 'padding',
+									'unit'     => 'px',
+								),
+							),
+							'load_more_align'            => array(
+								'type'    => 'align',
+								'label'   => __( 'Alignment', 'uabb' ),
+								'default' => 'center',
+								'preview' => array(
+									'type'     => 'css',
+									'selector' => '.uabb-gallery-pagination',
+									'property' => 'text-align',
+								),
+							),
+						),
+				),
 			),
 		),
 		'typography' => array(
@@ -635,6 +900,20 @@ FLBuilder::register_module(
 								'type'      => 'css',
 								'selector'  => '.uabb-photo__gallery-filter',
 								'important' => true,
+							),
+						),
+					),
+				),
+				'section_typography_load_more'   => array(
+					'title'  => __( 'Load More Button', 'uabb' ),
+					'fields' => array(
+						'load_more_typo' => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-gallery-pagination .uabb-gallery-load-more',
 							),
 						),
 					),

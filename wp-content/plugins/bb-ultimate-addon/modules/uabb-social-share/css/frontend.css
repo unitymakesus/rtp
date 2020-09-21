@@ -1,0 +1,850 @@
+.uabb-social-share-wrap .uabb-ss-grid-button {
+    overflow: hidden;
+	font-size: 10px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+		-ms-flex-align: center;
+			align-items: center;
+	-webkit-box-pack: start;
+		-ms-flex-pack: start;
+			justify-content: flex-start;
+	-webkit-transition-duration: 0.2s;
+		-o-transition-duration: 0.2s;
+			transition-duration: 0.2s;
+	-webkit-transition-property: background-color, border-color, -webkit-filter;
+	transition-property: background-color, border-color, -webkit-filter;
+	-o-transition-property: filter, background-color, border-color;
+	transition-property: filter, background-color, border-color;
+	transition-property: filter, background-color, border-color, -webkit-filter;
+	height: 4.5em;
+	cursor: pointer;
+}
+.uabb-social-share-wrap .uabb-style-inline .uabb-ss-grid-item {
+    margin-top: 10px;
+}
+.uabb-ss-icon {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-item-align: stretch;
+		align-self: stretch;
+	-webkit-box-pack: center;
+		-ms-flex-pack: center;
+			justify-content: center;
+	-webkit-box-align: center;
+		-ms-flex-align: center;
+			align-items: center;
+	width: 4.5em;
+	position: relative;
+}
+.uabb-ss-icon i {
+	font-size: 2em;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-text {
+    padding-left: 1em;
+}
+.uabb-ss-button-text {
+	font-size: 1.5em;
+	padding-right: 1em;
+	-ms-flex-item-align: stretch;
+		align-self: stretch;
+	-webkit-box-flex: 1;
+		-ms-flex-positive: 1;
+			flex-grow: 1;
+	-webkit-box-align: center;
+		-ms-flex-align: center;
+			align-items: center;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	font-weight: 500;
+}
+.uabb-ss-grid-button .uabb-ss-grid-button-link {
+	display: flex;
+    width: 100%;
+    height: 100%;
+    text-decoration: none !important;
+}
+.uabb-ss-shape-rounded .uabb-ss-grid-button {
+	border-radius: 0.5em;
+}
+
+.uabb-ss-shape-circle .uabb-ss-grid-button {
+	border-radius: 99.9em;
+}
+.uabb-ss-flat .uabb-ss-button-email .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-email .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-email .uabb-ss-grid-button {
+    background-color:#676363;
+}
+.uabb-ss-flat .uabb-ss-button-myspace .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-myspace .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-myspace .uabb-ss-grid-button {
+    background-color:#3E5EAB;
+}
+.uabb-ss-flat .uabb-ss-button-google .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-google .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-google .uabb-ss-grid-button {
+    background-color:#d34836;
+}
+.uabb-ss-flat .uabb-ss-button-odnoklassniki .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-odnoklassniki .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-odnoklassniki .uabb-ss-grid-button {
+    background-color:#ed812b;
+}
+.uabb-ss-flat .uabb-ss-button-telegram .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-telegram .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-telegram .uabb-ss-grid-button {
+    background-color:#2CA5E0;
+}
+.uabb-ss-flat .uabb-ss-button-stumbleupon .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-stumbleupon .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-stumbleupon .uabb-ss-grid-button {
+    background-color:#f74425;
+}
+.uabb-ss-flat .uabb-ss-button-blogger .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-blogger .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-blogger .uabb-ss-grid-button {
+    background-color:#f57d00;
+}
+.uabb-ss-flat .uabb-ss-button-tumblr .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-tumblr .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-tumblr .uabb-ss-grid-button {
+    background-color:#36465d;
+}
+.uabb-ss-flat .uabb-ss-button-reddit .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-reddit .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-reddit .uabb-ss-grid-button {
+    background-color:#ff4500;
+} 
+.uabb-ss-flat .uabb-ss-button-pocket .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-pocket .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-pocket .uabb-ss-grid-button {
+    background-color:#EF3F56;
+}
+.uabb-ss-flat .uabb-ss-button-pinterest .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-pinterest .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-pinterest .uabb-ss-grid-button {
+    background-color:#bd081c;
+}
+.uabb-ss-flat .uabb-ss-button-digg .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-digg .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-digg .uabb-ss-grid-button {
+    background-color:#005be2;
+}
+.uabb-ss-flat .uabb-ss-button-delicious .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-delicious .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-delicious .uabb-ss-grid-button {
+    background-color:#3399ff;
+}
+.uabb-ss-flat .uabb-ss-button-facebook .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-facebook .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-facebook .uabb-ss-grid-button {
+	background-color:#3b5998;
+}
+.uabb-ss-flat .uabb-ss-button-twitter .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-twitter .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-twitter .uabb-ss-grid-button {
+    background-color:#1DA1F2;
+}
+.uabb-ss-flat .uabb-ss-button-odnoklassniki .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-odnoklassniki .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-odnoklassniki .uabb-ss-grid-button {
+    background-color:#F4731C;
+}
+.uabb-ss-flat .uabb-ss-button-linkedin .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-linkedin .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-linkedin .uabb-ss-grid-button {
+    background-color:#0077b5;
+}
+.uabb-ss-flat .uabb-ss-button-whatsapp .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-whatsapp .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-whatsapp .uabb-ss-grid-button {
+    background-color:#25d366;
+}
+.uabb-ss-flat .uabb-ss-button-skype .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-skype .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-skype .uabb-ss-grid-button {
+	background-color: #00AFF0;
+}
+.uabb-ss-flat .uabb-ss-button-buffer .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-buffer .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-buffer .uabb-ss-grid-button{
+	background-color: #1E2226;
+}
+.uabb-ss-flat .uabb-ss-button-vk .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-vk .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-vk .uabb-ss-grid-button{
+	background-color: #45668e;
+}
+.uabb-ss-flat .uabb-ss-button-xing .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-xing .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-xing .uabb-ss-grid-button{
+    background-color: #026466;
+}
+.uabb-ss-flat .uabb-ss-button-print .uabb-ss-grid-button,
+.uabb-ss-boxed .uabb-ss-button-print .uabb-ss-icon,
+.uabb-ss-gradient .uabb-ss-button-print .uabb-ss-grid-button{
+    background-color: #413f3f;
+}
+.uabb-ss-minimal .uabb-ss-icon i,
+.uabb-ss-minimal .uabb-ss-icon {
+    transition: 0.2s linear;
+}
+.uabb-ss-minimal .uabb-ss-button-text {
+    padding-left: 0.3em;
+}
+.uabb-ss-minimal .uabb-ss-icon {
+    background-color: transparent;
+}
+.uabb-ss-minimal .uabb-ss-icon:hover i,
+.uabb-ss-minimal .uabb-ss-grid-item:hover .uabb-ss-icon i {
+    color:#fcfcfc !important;
+}
+.uabb-ss-minimal .uabb-ss-button-email .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-email .uabb-ss-icon {
+    background-color:#676363;
+}
+.uabb-ss-minimal .uabb-ss-button-myspace .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-myspace .uabb-ss-icon {
+    background-color:#3E5EAB;
+}
+.uabb-ss-minimal .uabb-ss-button-google .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-google .uabb-ss-icon {
+    background-color:#d34836;
+}
+.uabb-ss-minimal .uabb-ss-button-odnoklassniki .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-odnoklassniki .uabb-ss-icon {
+    background-color:#ed812b;
+}
+.uabb-ss-minimal .uabb-ss-button-telegram .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-telegram .uabb-ss-icon {
+    background-color:#2CA5E0;
+}
+.uabb-ss-minimal .uabb-ss-button-stumbleupon .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-stumbleupon .uabb-ss-icon {
+    background-color:#f74425;
+}
+.uabb-ss-minimal .uabb-ss-button-blogger .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-blogger .uabb-ss-icon {
+    background-color:#f57d00;
+}
+.uabb-ss-minimal .uabb-ss-button-tumblr .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-tumblr .uabb-ss-icon {
+    background-color:#36465d;
+}
+.uabb-ss-minimal .uabb-ss-button-reddit .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-reddit .uabb-ss-icon {
+    background-color:#ff4500;
+}
+.uabb-ss-minimal .uabb-ss-button-pocket .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-pocket .uabb-ss-icon {
+    background-color:#EF3F56;
+}
+.uabb-ss-minimal .uabb-ss-button-pinterest .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-pinterest .uabb-ss-icon {
+    background-color:#bd081c;
+}
+.uabb-ss-minimal .uabb-ss-button-digg .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-digg .uabb-ss-icon {
+    background-color:#005be2;
+}
+.uabb-ss-minimal .uabb-ss-button-delicious .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-delicious .uabb-ss-icon {
+    background-color:#3399ff;
+}
+.uabb-ss-minimal .uabb-ss-button-facebook .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-facebook .uabb-ss-icon {
+	background-color:#3b5998;
+}
+.uabb-ss-minimal .uabb-ss-button-twitter .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-twitter .uabb-ss-icon {
+    background-color:#1DA1F2;
+}
+.uabb-ss-minimal .uabb-ss-button-odnoklassniki .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-odnoklassniki .uabb-ss-icon {
+    background-color:#F4731C;
+}
+.uabb-ss-minimal .uabb-ss-button-linkedin .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-linkedin .uabb-ss-icon {
+    background-color:#0077b5;
+}
+.uabb-ss-minimal .uabb-ss-button-whatsapp .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-whatsapp .uabb-ss-icon {
+    background-color:#25d366;
+}
+.uabb-ss-minimal .uabb-ss-button-skype .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-skype .uabb-ss-icon {
+	background-color: #00AFF0;
+}
+.uabb-ss-minimal .uabb-ss-button-buffer .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-buffer .uabb-ss-icon {
+	background-color: #1E2226;
+}
+.uabb-ss-minimal .uabb-ss-button-vk .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-vk .uabb-ss-icon {
+	background-color: #45668e;
+}
+.uabb-ss-minimal .uabb-ss-button-xing .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-xing .uabb-ss-icon {
+    background-color: #026466;
+}
+.uabb-ss-minimal .uabb-ss-button-print .uabb-ss-icon:hover,
+.uabb-ss-minimal .uabb-ss-grid-item:hover.uabb-ss-button-print .uabb-ss-icon {
+    background-color: #413f3f;
+}
+.uabb-social-share-horizontal .uabb-social-share-link-wrap {
+	vertical-align: top;
+	display: inline-block;
+}
+.uabb-social-share-wrap .uabb-ss-grid-button-link {
+	color: #ffffff;
+}
+.uabb-social-share-vertical .uabb-social-share-link-wrap {
+    display: block;
+}
+.uabb-social-share-vertical .uabb-social-share-link {
+    display: inline-block;
+}
+.uabb-social-share-link,
+.uabb-social-share-link:hover,
+.uabb-social-share-link:focus,
+.uabb-social-share-link:active,
+.uabb-social-share-link:visited {
+    text-decoration: none;
+    outline: none;
+}
+.uabb-ss-gradient .uabb-ss-button-text,
+.uabb-ss-gradient .uabb-ss-icon {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff2c), color-stop(100%,#4b4b4b1f));
+    background: -webkit-linear-gradient(top,#ffffff2c 0%,#4b4b4b1f 100%);
+    background: -o-linear-gradient(top,#ffffff2c 0%,#4b4b4b1f 100%);
+    background: -ms-linear-gradient(top,#ffffff2c 0%,#4b4b4b1f 100%);
+    background: linear-gradient(to bottom,#ffffff2c 0%,#4b4b4b1f 100%);
+}
+.uabb-ss-gradient.uabb-ss-view-icon .uabb-ss-icon {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff2c), color-stop(100%,#4b4b4b1f));
+    background: -webkit-linear-gradient(top,#ffffff2c 0%,#4b4b4b1f 100%);
+    background: -o-linear-gradient(top,#ffffff2c 0%,#4b4b4b1f 100%);
+    background: -ms-linear-gradient(top,#ffffff2c 0%,#4b4b4b1f 100%);
+    background: linear-gradient(to bottom,#ffffff2c 0%,#4b4b4b1f 100%);
+}
+.uabb-ss-minimal .uabb-ss-button-delicious .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-delicious .uabb-ss-icon i  {
+	color: #3399ff;
+}
+.uabb-ss-minimal .uabb-ss-button-digg .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-digg .uabb-ss-icon i  {
+    color: #005be2;
+}
+.uabb-ss-minimal .uabb-ss-button-print .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-print .uabb-ss-icon i  {
+	color: #413f3f;
+}
+.uabb-ss-minimal .uabb-ss-button-myspace .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-myspace .uabb-ss-icon i  {
+	color: #3E5EAB;
+}
+.uabb-ss-minimal .uabb-ss-button-facebook .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-facebook .uabb-ss-icon i {
+    color: #3b5998;
+}
+.uabb-ss-minimal .uabb-ss-button-email .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-email .uabb-ss-icon i  {
+	color: #383636;
+}
+.uabb-ss-minimal .uabb-ss-button-pocket .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-pocket .uabb-ss-icon i  {
+	color: #EF3F56;
+}
+.uabb-ss-minimal .uabb-ss-button-linkedin .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-linkedin .uabb-ss-icon i  {
+    color: #0077b5;
+}
+.uabb-ss-minimal .uabb-ss-button-odnoklassniki .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-odnoklassniki .uabb-ss-icon i  {
+    color: #F4731C;
+}
+.uabb-ss-minimal .uabb-ss-button-pinterest .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-pinterest .uabb-ss-icon i  {
+    color: #bd081c;
+}
+.uabb-ss-minimal .uabb-ss-button-reddit .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-reddit .uabb-ss-icon i  {
+    color: #ff4500;
+}
+.uabb-ss-minimal .uabb-ss-button-skype .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-skype .uabb-ss-icon i  {
+    color: #00AFF0;
+}
+.uabb-ss-minimal .uabb-ss-button-stumbleupon .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-stumbleupon .uabb-ss-icon i  {
+    color: #EB4924;
+}
+.uabb-ss-minimal .uabb-ss-button-tumblr .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-tumblr .uabb-ss-icon i  {
+	color: #35465c;
+}
+.uabb-ss-minimal .uabb-ss-button-telegram .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-telegram .uabb-ss-icon i  {
+    color: #2CA5E0;
+}
+.uabb-ss-minimal .uabb-ss-button-vk .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-vk .uabb-ss-icon i  {
+    color: #45668e;
+}
+.uabb-ss-minimal .uabb-ss-button-twitter .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-twitter .uabb-ss-icon i  {
+    color: #1DA1F2;
+}
+.uabb-ss-minimal .uabb-ss-button-whatsapp .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-whatsapp .uabb-ss-icon i  {
+    color: #25d366;
+}
+.uabb-ss-minimal .uabb-ss-button-xing .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-xing .uabb-ss-icon i  {
+    color: #026466;
+}
+.uabb-ss-minimal .uabb-ss-button-blogger .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-blogger .uabb-ss-icon i  {
+    color: #F06A35;
+}
+.uabb-ss-minimal .uabb-ss-button-buffer .uabb-ss-button-title,
+.uabb-ss-minimal .uabb-ss-button-buffer .uabb-ss-icon i  {
+    color: #1E2226;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-email .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-email .uabb-ss-grid-button {
+    border: 2px solid #676363;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-email .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-email .uabb-ss-grid-button-link {
+    color: #676363;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-myspace .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-myspace .uabb-ss-grid-button {
+    border: 2px solid #3E5EAB;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-myspace .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-myspace .uabb-ss-grid-button-link {
+    color: #3E5EAB;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-google .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-google .uabb-ss-grid-button {
+    border: 2px solid #d34836;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-google .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-google .uabb-ss-grid-button-link {
+    color: #d34836;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-odnoklassniki .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-odnoklassniki .uabb-ss-grid-button {
+    border: 2px solid #ed812b;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-odnoklassniki .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-odnoklassniki .uabb-ss-grid-button-link {
+    color: #ed812b;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-telegram .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-telegram .uabb-ss-grid-button {
+    border: 2px solid #2CA5E0;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-telegram .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-telegram .uabb-ss-grid-button-link {
+    color: #2CA5E0;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-stumbleupon .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-stumbleupon .uabb-ss-grid-button {
+    border: 2px solid #f74425;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-stumbleupon .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-stumbleupon .uabb-ss-grid-button-link {
+    color: #f74425;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-blogger .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-blogger .uabb-ss-grid-button {
+    border: 2px solid #f57d00;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-blogger .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-blogger .uabb-ss-grid-button-link {
+    color: #f57d00;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-tumblr .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-tumblr .uabb-ss-grid-button {
+    border: 2px solid #36465d;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-tumblr .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-tumblr .uabb-ss-grid-button-link {
+    color: #36465d;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-reddit .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-reddit .uabb-ss-grid-button {
+    border: 2px solid #ff4500;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-reddit .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-reddit .uabb-ss-grid-button-link {
+    color: #ff4500;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-pocket .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-pocket .uabb-ss-grid-button {
+    border: 2px solid #EF3F56;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-pocket .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-pocket .uabb-ss-grid-button-link {
+    color: #EF3F56;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-delicious .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-delicious .uabb-ss-grid-button {
+    border: 2px solid #3399ff;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-delicious .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-delicious .uabb-ss-grid-button-link {
+    color: #3399ff;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-digg .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-digg .uabb-ss-grid-button {
+    border: 2px solid #005be2;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-digg .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-digg .uabb-ss-grid-button-link {
+    color: #005be2;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-pinterest .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-pinterest .uabb-ss-grid-button {
+    border: 2px solid #bd081c;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-pinterest .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-pinterest .uabb-ss-grid-button-link {
+    color: #bd081c;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-facebook .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-facebook .uabb-ss-grid-button {
+    border: 2px solid #3b5998;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-facebook .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-facebook .uabb-ss-grid-button-link {
+    color: #3b5998;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-whatsapp .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-whatsapp .uabb-ss-grid-button {
+    border: 2px solid #25d366;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-whatsapp .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-whatsapp .uabb-ss-grid-button-link {
+    color: #25d366;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-linkedin .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-linkedin .uabb-ss-grid-button {
+    border: 2px solid #0077b5;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-linkedin .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-linkedin .uabb-ss-grid-button-link {
+    color: #0077b5;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-twitter .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-twitter .uabb-ss-grid-button {
+    border: 2px solid #1DA1F2;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-twitter .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-twitter .uabb-ss-grid-button-link {
+    color: #1DA1F2;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-skype .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-skype .uabb-ss-grid-button {
+    border: 2px solid #00AFF0;;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-skype .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-skype .uabb-ss-grid-button-link {
+    color: #00AFF0;;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-buffer .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-buffer .uabb-ss-grid-button {
+    border: 2px solid #1E2226;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-buffer .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-buffer .uabb-ss-grid-button-link {
+    color: #1E2226;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-vk .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-vk .uabb-ss-grid-button {
+    border: 2px solid #45668e;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-vk .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-vk .uabb-ss-grid-button-link {
+    color: #45668e;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-xing .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-xing .uabb-ss-grid-button {
+    border: 2px solid #026466;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-xing .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-xing .uabb-ss-grid-button-link {
+    color: #026466;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-print .uabb-ss-grid-button,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-print .uabb-ss-grid-button {
+    border: 2px solid #413f3f;
+}
+.uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-print .uabb-ss-button-text,
+.uabb-social-share-wrap .uabb-ss-framed .uabb-ss-button-print .uabb-ss-grid-button-link {
+    color: #413f3f;
+    
+}
+.uabb-ss-boxed .uabb-ss-button-text,
+.uabb-ss-gradient .uabb-ss-button-text {
+	padding-left: 0.2em;
+}
+.uabb-ss-minimal.uabb-ss-shape-rounded .uabb-ss-icon {
+	border-radius: 0.5em;
+}
+
+.uabb-ss-minimal.uabb-ss-shape-circle .uabb-ss-icon {
+	border-radius: 99.9em;
+}
+
+.uabb-ss-view-text .uabb-ss-button-text {
+	padding-left: 1em;
+}
+
+.uabb-ss-view-text .uabb-ss-grid-button,
+.uabb-ss-view-icon .uabb-ss-grid-button {
+	-webkit-box-pack: center;
+		-ms-flex-pack: center;
+	justify-content: center;
+}
+.uabb-ss-view-text .uabb-ss-icon,
+.uabb-ss-view-text .uabb-ss-button-text,
+.uabb-ss-view-icon .uabb-ss-icon,
+.uabb-ss-view-icon .uabb-ss-button-text {
+	-webkit-box-flex: 1;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+}
+
+.uabb-ss-shape-rounded .uabb-ss-grid-button {
+	border-radius: 0.5em;
+}
+
+.uabb-ss-shape-circle .uabb-ss-grid-button {
+	border-radius: 99.9em;
+}
+
+/* Hover effect */
+/* grow */
+.uabb-ss-grid-item.uabb-ss-animation-grow {
+    transition-duration: 0.3s;
+    transition-property: transform;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.uabb-ss-grid-item.uabb-ss-animation-grow:hover {
+    transform: scale(1.1);
+}
+  /* shrink */
+.uabb-ss-grid-item.uabb-ss-animation-shrink {
+    transition-duration: 0.3s;
+    transition-property: transform;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+.uabb-ss-grid-item.uabb-ss-animation-shrink:hover {
+    transform: scale(0.9);
+  }
+  /* Pulse */
+@keyframes pulse {
+    25% {
+      transform: scale(1.1);
+    }
+    75% {
+      transform: scale(0.9);
+    }
+  }
+.uabb-ss-grid-item.uabb-ss-animation-pulse {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+.uabb-ss-grid-item.uabb-ss-animation-pulse:hover {
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  /* Push */
+@keyframes push {
+    50% {
+      transform: scale(0.8);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+.uabb-ss-grid-item.uabb-ss-animation-push {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+.uabb-ss-grid-item.uabb-ss-animation-push:hover {
+    animation-name: push;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+  }
+  
+  /* Pop */
+@keyframes pop {
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+.uabb-ss-grid-item.uabb-ss-animation-pop {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+.uabb-ss-grid-item.uabb-ss-animation-pop:hover {
+    animation-name: pop;
+    animation-duration: 0.3s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+  }
+/* Float */
+.uabb-ss-grid-item.uabb-ss-animation-float {
+    transition-duration: 0.3s;
+    transition-property: transform;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+.uabb-ss-grid-item.uabb-ss-animation-float:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Sink */
+.uabb-ss-grid-item.uabb-ss-animation-sink {
+    transition-duration: 0.3s;
+    transition-property: transform;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+.uabb-ss-grid-item.uabb-ss-animation-sink:hover {
+    transform: translateY(5px);
+  }
+/* Float Shadow */
+.uabb-ss-grid-item.uabb-ss-animation-floatshadow {
+    position: relative;
+    transition-duration: 0.3s;
+    transition-property: transform;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  }
+  .uabb-ss-grid-item.uabb-ss-animation-floatshadow:before {
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+    content: '';
+    top: 100%;
+    left: 5%;
+    height: 10px;
+    width: 90%;
+    opacity: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 80%);
+    transition-duration: 0.3s;
+    transition-property: transform opacity;
+  }
+  .uabb-ss-grid-item.uabb-ss-animation-floatshadow:hover {
+    transform: translateY(-5px);
+  }
+  .uabb-ss-grid-item.uabb-ss-animation-floatshadow:hover:before {
+    opacity: 1;
+    transform: translateY(5px);
+  }
+  
+.uabb-style-floating {
+    position: fixed;
+    top: 32%;
+    z-index: 9998;
+    left: 0;
+    cursor: pointer;
+    display: block;
+}
+.uabb-style-floating.uabb-floating-align-right {
+    left: unset;
+    right: 0;
+}
+.uabb-style-floating.uabb-floating-align-left {
+    right: unset;
+    left: 0;
+}
+/* Alignment */
+.uabb-ss-wrap.uabb-ss-align-right {
+	-webkit-box-pack: end;
+		-ms-flex-pack: end;
+			justify-content: flex-end;
+}
+
+.uabb-ss-wrap.uabb-ss-align-left {
+	-webkit-box-pack: start;
+		-ms-flex-pack: start;
+			justify-content: flex-start;
+}
+
+.uabb-ss-wrap.uabb-ss-align-center {
+	-webkit-box-pack: center;
+		-ms-flex-pack: center;
+			justify-content: center;
+}
+
+/* Columns */
+.uabb-ss-column-auto .uabb-ss-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.uabb-ss-column-1 .uabb-ss-wrap {
+    grid-template-columns: repeat(1,1fr);
+    display: grid;
+}
+.uabb-ss-column-2 .uabb-ss-wrap {
+    grid-template-columns: repeat(2,1fr);
+    display: grid;
+}
+.uabb-ss-column-3 .uabb-ss-wrap {
+    grid-template-columns: repeat(3,1fr);
+    display: grid;
+}
+.uabb-ss-column-4 .uabb-ss-wrap {
+    grid-template-columns: repeat(4,1fr);
+    display: grid;
+}
+.uabb-ss-column-5 .uabb-ss-wrap {
+    grid-template-columns: repeat(5,1fr);
+    display: grid;
+}
+.uabb-ss-column-6 .uabb-ss-wrap {
+    grid-template-columns: repeat(6,1fr);
+    display: grid;
+}
+@media screen and (max-width: 980px) {
+
+    .uabb-social-share-wrap.uabb-ss-column-auto .uabb-style-inline .uabb-ss-grid-item:first-child {
+        margin-left: 10px !important;
+    }
+}

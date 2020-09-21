@@ -15,6 +15,7 @@ class FLWooCommerceModule extends FLBuilderModule {
 			'name'            => __( 'WooCommerce', 'fl-builder' ),
 			'description'     => __( 'Display products or categories from your WooCommerce store.', 'fl-builder' ),
 			'category'        => __( 'WooCommerce', 'fl-builder' ),
+			'icon'            => 'shopping-cart.svg',
 			'enabled'         => $enabled,
 			'partial_refresh' => true,
 		));
@@ -50,7 +51,7 @@ FLBuilder::register_module('FLWooCommerceModule', array(
 			'general'           => array(
 				'title'  => '',
 				'fields' => array(
-					'layout'        => array(
+					'layout'               => array(
 						'type'    => 'select',
 						'label'   => __( 'Layout', 'fl-builder' ),
 						'default' => '',
@@ -80,11 +81,17 @@ FLBuilder::register_module('FLWooCommerceModule', array(
 								'fields' => array( 'product_id' ),
 							),
 							'categories'   => array(
-								'fields' => array( 'autoparent', 'parent_cat_id', 'cat_columns' ),
+								'fields' => array( 'autoparent', 'product_category_ids', 'parent_cat_id', 'cat_columns', 'category_orderby', 'category_order' ),
 							),
 						),
 					),
-					'autoparent'    => array(
+					'product_category_ids' => array(
+						'type'    => 'text',
+						'label'   => __( 'Product Category IDs to include', 'fl-builder' ),
+						'default' => '',
+						'help'    => __( 'A comma-separated list of Product Category IDs to include. Leave blank to include all Product Categories.', 'fl-builder' ),
+					),
+					'autoparent'           => array(
 						'type'    => 'select',
 						'label'   => __( 'Autoselect Parent', 'fl-builder' ),
 						'default' => 'false',
@@ -98,21 +105,41 @@ FLBuilder::register_module('FLWooCommerceModule', array(
 							),
 						),
 					),
-					'product_id'    => array(
+					'product_id'           => array(
 						'type'    => 'text',
 						'label'   => __( 'Product ID', 'fl-builder' ),
 						'default' => '',
 						'size'    => '4',
 						'help'    => __( 'As you add products in the WooCommerce Products area, each will be assigned a unique ID. You can find this unique product ID by visiting the Products area and rolling over the product. The unique ID will be the first attribute.', 'fl-builder' ),
 					),
-					'parent_cat_id' => array(
+					'parent_cat_id'        => array(
 						'type'    => 'text',
 						'label'   => __( 'Parent Category ID', 'fl-builder' ),
 						'default' => '0',
 						'size'    => '4',
 						'help'    => __( 'As you add product categories in the WooCommerce Products area, each will be assigned a unique ID. This ID can be found by hovering on the category in the categories area under Products and looking in the URL that is displayed in your browser. The ID will be the only number value in the URL.', 'fl-builder' ),
 					),
-					'cat_columns'   => array(
+					'category_orderby'     => array(
+						'type'    => 'select',
+						'label'   => __( 'Sort Product Category By', 'fl-builder' ),
+						'default' => 'name',
+						'options' => array(
+							'name'       => _x( 'Name', 'Sort by.', 'fl-builder' ),
+							'id'         => __( 'Category ID', 'fl-builder' ),
+							'slug'       => __( 'Category Slug', 'fl-builder' ),
+							'menu_order' => __( 'Menu Order', 'fl-builder' ),
+						),
+					),
+					'category_order'       => array(
+						'type'    => 'select',
+						'label'   => __( 'Product Category Sort Direction', 'fl-builder' ),
+						'default' => 'asc',
+						'options' => array(
+							'asc'  => __( 'Ascending', 'fl-builder' ),
+							'desc' => __( 'Descending', 'fl-builder' ),
+						),
+					),
+					'cat_columns'          => array(
 						'type'    => 'select',
 						'label'   => __( 'Columns', 'fl-builder' ),
 						'default' => '4',

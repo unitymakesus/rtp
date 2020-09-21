@@ -252,7 +252,7 @@ class FLPhotoModule extends FLBuilderModule {
 			// See if the cropped photo already exists.
 			if ( fl_builder_filesystem()->file_exists( $cropped_path['path'] ) ) {
 				$src = $cropped_path['url'];
-			} elseif ( stristr( $src, FL_BUILDER_DEMO_URL ) && ! stristr( FL_BUILDER_DEMO_URL, $_SERVER['HTTP_HOST'] ) ) {
+			} elseif ( stristr( $src, FL_BUILDER_DEMO_DOMAIN ) && ! stristr( FL_BUILDER_DEMO_DOMAIN, $_SERVER['HTTP_HOST'] ) ) {
 				$src = $this->_get_cropped_demo_url();
 			} elseif ( stristr( $src, FL_BUILDER_OLD_DEMO_URL ) ) { // It doesn't, check if this is a OLD demo image.
 				$src = $this->_get_cropped_demo_url();
@@ -364,8 +364,9 @@ class FLPhotoModule extends FLBuilderModule {
 	protected function _get_editor() {
 		if ( $this->_has_source() && null === $this->_editor ) {
 
-			$url_path  = $this->_get_uncropped_url();
-			$file_path = str_ireplace( home_url(), ABSPATH, $url_path );
+			$url_path = $this->_get_uncropped_url();
+
+			$file_path = trailingslashit( WP_CONTENT_DIR ) . ltrim( str_replace( basename( WP_CONTENT_DIR ), '', wp_make_link_relative( $url_path ) ), '/' );
 
 			if ( fl_builder_filesystem()->file_exists( $file_path ) ) {
 				$this->_editor = wp_get_image_editor( $file_path );
@@ -437,7 +438,16 @@ class FLPhotoModule extends FLBuilderModule {
 	 */
 	protected function _get_cropped_demo_url() {
 		$info = $this->_get_cropped_path();
+		$src  = $this->settings->photo_src;
 
+		// Pull from a demo subsite.
+		if ( stristr( $src, '/uploads/sites/' ) ) {
+			$url_parts  = explode( '/uploads/sites/', $src );
+			$site_parts = explode( '/', $url_parts[1] );
+			return $url_parts[0] . '/uploads/sites/' . $site_parts[0] . '/bb-plugin/cache/' . $info['filename'];
+		}
+
+		// Pull from the demo main site.
 		return FL_BUILDER_DEMO_CACHE_URL . $info['filename'];
 	}
 

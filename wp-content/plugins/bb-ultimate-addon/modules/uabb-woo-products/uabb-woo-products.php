@@ -70,6 +70,20 @@ class UABBWooProductsModule extends FLBuilderModule {
 	}
 
 	/**
+	 * Get uid for logged out user
+	 *
+	 * @param int    $uid user id.
+	 * @param string $action action.
+	 */
+	public function filter_nonce_user_logged_out( $uid = 0, $action = '' ) {
+		if ( $uid && 0 !== $uid && $action && 'add_cart_single_product_ajax' === $action ) {
+			return $uid;
+		}
+
+		return 0;
+	}
+
+	/**
 	 * Get Woo Data via AJAX call.
 	 *
 	 * @since 1.5.0
@@ -157,6 +171,21 @@ class UABBWooProductsModule extends FLBuilderModule {
 						'terms'    => $product_visibility_term_ids['featured'],
 					);
 				}
+			}
+
+			$args['tax_query'][] = array(
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'exclude-from-catalog',
+				'operator' => 'NOT IN',
+			);
+
+			if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
+				$args['meta_query'][] = array(
+					'key'     => '_stock_status',
+					'value'   => 'instock',
+					'compare' => '=',
+				);
 			}
 		}
 
@@ -684,6 +713,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 	 * @return void.
 	 */
 	public function add_cart_single_product_ajax() {
+		add_filter( 'nonce_user_logged_out', array( $this, 'filter_nonce_user_logged_out' ) );
 		if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
 			$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( $_POST['product_id'] ) : 0;
 			$variation_id = isset( $_POST['variation_id'] ) ? sanitize_text_field( $_POST['variation_id'] ) : 0;

@@ -195,6 +195,11 @@ html:not(.fl-responsive-preview-enabled) .fl-builder-content-editing .fl-col-gro
 	display: inline-block;
 	margin-right: 8px;
 }
+.fl-responsive-preview-message .size {
+	position: absolute;
+	right: 30px;
+	font-size: 16px;
+}
 .fl-responsive-preview-message .fl-builder-button {
     display: inline-block;
     margin-left: 2px;
@@ -361,19 +366,23 @@ body.fl-builder--layout-has-drafted-changes .fl-builder-done-button:active {
 .fl-builder-publish-button {
 	line-height: 45px !important;
 }
-.fl-builder-content-panel-button,
-.fl-builder-content-panel-button:hover {
+button.fl-builder-content-panel-button,
+button.fl-builder-content-panel-button:hover {
 	fill: #00A0D2 !important;
 	font-size: 30px !important;
-	padding: 2px 8px !important;
+	padding: 2px 4px !important;
 }
 /* Silent buttons have the same dimensions but no background or "button" look. */
 .fl-builder-button-silent,
 .fl-builder-button-silent:hover {
-	padding:0 12px;
+	min-width: 40px;
+	padding:0 4px !important;
 	background:none !important;
 	border:2px solid transparent !important;
 	box-shadow:none !important;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 .fl-builder-done-button,
@@ -696,19 +705,10 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 .fl-builder-bar .fl-builder-content-panel-button {
 	align-items: baseline !important;
-	padding-top:1px;
 	font-weight: 400;
 }
-.fl-builder-content-panel-button svg {
-	transition-property: transform;
-	transition-duration: .25s;
-	transform: rotate(0deg) scale(1);
-	transform-origin: center;
-}
-.fl-builder-content-panel-is-showing .fl-builder-content-panel-button svg {
-	transform: rotate(135deg) scale(1.1) translate(.5px, -.5px);
-}
 .fl-builder--saving-indicator {
+	flex: 0 1 auto;
 	cursor: pointer;
 	display: flex;
 	align-self: center;
@@ -718,7 +718,6 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	color: #676f7a;
 	align-items: center;
 	line-height: 1.2;
-	min-width: 180px;
 	justify-content: flex-end;
 }
 .fl-builder--saving-indicator:hover {
@@ -745,8 +744,11 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 .fl-builder-buy-button:hover,
 .fl-builder-upgrade-button:hover,
-.fl-builder-feedback-button:hover {
-	background: #EE8E0D;
+.fl-builder-feedback-button:hover,
+.fl-builder-buy-button:focus,
+.fl-builder-upgrade-button:focus,
+.fl-builder-feedback-button:focus {
+	background: #EE8E0D !important;
 	color: #fff !important;
 }
 
@@ -871,6 +873,13 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 .fl-builder--preview-actions .device-icons i {
 	margin: 0 6px;
+}
+
+.fl-builder--preview-actions .size {
+	position: absolute;
+	left: 5px;
+	top: 40px;
+	font-size: 16px;
 }
 /* @endgroup Toolbar */
 
@@ -1417,6 +1426,10 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	position: relative;
 	height:47px;
 }
+.fl-builder-block-disabled,
+.fl-builder-block-disabled .fl-builder-block-content {
+	cursor: pointer !important;
+}
 .fl-builder-block.fl-builder-block-col-group {
 	height:84px;
 }
@@ -1574,40 +1587,55 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	display: none !important;
 }
 
-/* Lite version modules CTA */
-.fl-builder-modules-cta a {
-    color: #999 !important;
-    display: block !important;
-    font-size: 12px !important;
-    font-style: italic !important;
-    padding: 15px 20px !important;
-    line-height: 16px !important;
+/* Lite Version CTAs
+------------------------------------------------------ */
+
+/* Pro Modules List */
+#fl-builder-blocks-pro {
+	border-bottom: 4px solid #e7ebef;
+	position: relative;
 }
-.fl-builder-modules-cta a:hover {
-    background: #e5e5e5 !important;
-    color: #666 !important;
-	text-decoration: none !important;
+#fl-builder-blocks-pro.fl-builder-blocks-section .fl-builder-block {
+	cursor: pointer !important;
+	padding-right: 50px;
 }
-.fl-builder-modules-cta a:focus {
-	text-decoration: none !important;
+#fl-builder-blocks-pro .fl-builder-block:hover .fl-builder-block-content {
+	cursor: pointer !important;
+	padding-right: 60px;
 }
-.fl-builder-modules-cta .fa {
-	float: right !important;
-	font-size: 14px !important;
-	margin: 3px 0px 0 9px !important;
+.fl-builder-blocks-pro-closed {
+	height: 240px;
+	overflow: hidden;
+}
+.fl-builder-blocks-pro-overlay {
+	background: linear-gradient(to top,  rgba(245, 247, 249, 1) 0%,rgba(255,255,255,0) 100%);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+.fl-builder-blocks-pro-open .fl-builder-blocks-pro-overlay {
+	display: none;
+}
+.fl-builder-blocks-pro-expand.fl-builder-button {
+	display: inline-block !important;
+	font-size: 12px !important;
+    margin-bottom: 10px !important;
+	opacity: 0.4;
+	width: 100% !important;
+}
+.fl-builder-blocks-pro-expand:hover {
+	opacity: 1;
+}
+.fl-builder-blocks-pro-expand-rotate svg {
+	transform: rotate(180deg);
 }
 
-.fl-builder--panel-message {
-	text-align: center;
-	padding:40px 20px;
-	font-size: 16px;
-}
-.fl-builder--panel-message .fl-builder-button {
-	display: inline-block;
-	padding:10px;
-}
+/* Panel CTAs */
 .fl-builder--panel-cta {
-	padding: 20px 30px;
+	margin: 0 20px 20px 20px !important;
+	padding: 10px 30px 30px;
 	font-size:16px;
 	text-align: center;
 }
@@ -1617,6 +1645,110 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 }
 .fl-builder--panel-cta a:hover {
 	text-decoration: none;
+}
+.fl-builder--panel-cta img {
+	display: block;
+    max-width: 70px;
+    margin: 0 auto 20px;
+	position: relative;
+	right: 8px;
+}
+.fl-builder--panel-cta button {
+	display: inline;
+	margin-top: 25px;
+}
+
+/* Panel Messages */
+.fl-builder--panel-message {
+	text-align: center;
+	padding:40px 20px;
+	font-size: 16px;
+}
+.fl-builder--panel-message .fl-builder-button {
+	display: inline-block;
+	padding:10px;
+}
+
+/* Pro Badges */
+.fl-builder-pro-badge {
+	background: rgba(0,0,0,0.4);
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	padding: 2px 4px;
+}
+.fl-builder--menu-item .fl-builder-pro-badge {
+	margin-left: 10px;
+}
+.fl-builder-block-module .fl-builder-pro-badge {
+	padding: 2px;
+	position: absolute;
+	right: 20px;
+}
+.fl-builder-block-module:hover .fl-builder-pro-badge {
+	background: #F7A407;
+}
+.fl-builder--template-thumbnail .fl-builder-pro-badge {
+	background: #F7A407;
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	z-index: 1;
+}
+.fl-builder-block-row-template .fl-builder-pro-badge {
+	position: absolute;
+	top: auto;
+	bottom: 10px;
+    right: 10px;
+}
+
+/* Lite Version Tools Menu */
+.fl-builder-lite .fl-builder--menu-item[data-event="saveTemplate"],
+.fl-builder-lite .fl-builder--menu-item[data-event="launchThemerLayouts"] {
+	opacity: 0.5
+}
+
+/* Pro Version Lightbox
+------------------------------------------------------ */
+
+.fl-builder-pro-lightbox .fl-lightbox {
+	max-width: 450px;
+	padding: 30px;
+	text-align: center;
+}
+.fl-builder-pro-lightbox .dashicons-no {
+	cursor: pointer;
+	position: absolute;
+    right: 10px;
+    top: 14px;
+    font-size: 20px;
+    opacity: 0.3;
+}
+.fl-builder-pro-lightbox .dashicons-no:hover {
+    opacity: 1;
+}
+.fl-pro-message-badge {
+    margin-bottom: 15px;
+}
+.fl-pro-message-badge span {
+	background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+	font-size: 10px !important;
+	font-weight: bold;
+    padding: 2px 4px;
+}
+.fl-pro-message-title {
+	font-size: 20px !important;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+.fl-pro-message-content {
+	font-size: 16px !important;
+	line-height: 24px !important;
+	margin-bottom: 20px;
+}
+.fl-pro-message-button button {
+	display: inline;
 }
 
 /* Builder Panel Templates
@@ -1663,6 +1795,7 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	font-size: 13px;
 	transform-origin: center;
 	opacity: 1;
+	position: relative;
 }
 .fl-builder--template-thumbnail {
 	background-size: cover;
@@ -1673,6 +1806,7 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	transform-origin: bottom;
 	transition-property: transform, box-shadow;
 	transition-duration: .15s;
+	position: relative;
 }
 .fl-builder--template-collection-item[data-id="0"] .fl-builder--template-thumbnail {
 	border-color: #e4e7ea;
@@ -1972,6 +2106,7 @@ span.fl-builder-block-no-node-templates:hover {
 }
 button.fl-builder-button.fl-builder-bar-title-caret {
 	margin:4px;
+	padding: 0 12px !important;
 }
 button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	background-color: #e6eaed !important;
@@ -3191,26 +3326,6 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	z-index: -1;
 	min-height: 80vh;
 }
-
-/* Lite version templates CTA */
-.fl-builder-templates-cta {
-	margin-bottom: 20px;
-}
-.fl-builder-templates-cta p {
-	display: inline-block !important;
-	width: 75% !important;
-	font-size: 14px !important;
-	line-height: 1.5 !important;
-	margin-bottom: 0 !important;
-}
-.fl-builder-templates-cta .fl-builder-upgrade-button {
-	font-size: 13px !important;
-	line-height: 13px !important;
-	position: relative;
-	top: 8px;
-	left: 15px;
-	padding: 1px 12px;
-}
 /* @endgroup Template Selector */
 
 /* @group User Template Editing
@@ -3677,6 +3792,7 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 ------------------------------------------------------ */
 
 .fl-lightbox .fl-form-table  {
+	display: table;
 	background: none transparent;
 	border: none;
 	width: calc(100% - 35px); /* extra 25px for field connections toggle) */
@@ -4700,8 +4816,11 @@ input[type=number].fl-field-popup-slider-focus {
 .fl-builder-edit .media-frame.hide-menu {
 	visibility: visible;
 }
-.fl-builder-edit .media-router button {
-	color:inherit;
+.fl-builder-edit .media-modal .media-frame-router .media-router * {
+    color: #808080;
+}
+.fl-builder-edit .media-modal .media-frame-content * {
+    color: #808080;
 }
 span.select2-container.select2-container--open {
     z-index: 9999999;
@@ -5215,6 +5334,9 @@ ul.as-list {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+ul.as-list span.type {
+	float: right;
+}
 li.as-result-item, li.as-message {
 	border: none;
 }
@@ -5642,6 +5764,9 @@ body > .fl-builder-tour-dimmed {
 	outline:none;
 	top:0;
 	background: #E5EAED !important;
+}
+.fl-builder--main-menu-panel-view-title button {
+	float: right;
 }
 .fl-builder--menu-item:before {
 	display:block;
@@ -6106,7 +6231,6 @@ Rules to ensure compatibility with v2.0.
  	font-size: 13px !important;
  	line-height: 15px !important;
 	outline: none;
-	/* width: 100% !important; */
 }
 
 .select2-dropdown {
@@ -6122,4 +6246,28 @@ Rules to ensure compatibility with v2.0.
 }
 .fl-lightbox .select2-selection--single .select2-selection__arrow {
 	height: 32px;
+}
+.fl-builder-ui-skin--light .fl-lightbox .select2-selection__rendered {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-dropdown {
+    color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field::placeholder {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field::-webkit-input-placeholder { 
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field::-moz-placeholder{
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field:-ms-input-placeholder{
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field:-moz-placeholder {
+	color: #808080 !important;
 }

@@ -67,7 +67,7 @@ body .fl-post-grid-content p:last-of-type {
 body .fl-post-grid-text a {
 	text-decoration: none;
 }
-body h2.fl-post-grid-title {
+body .fl-post-grid-title {
 	font-size: 20px;
 	line-height: 26px;
 	margin: 0 0 10px;

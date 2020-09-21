@@ -35,7 +35,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @var array Notices.
 		 * @since 1.4.0
 		 */
-		private static $version = '1.1.5';
+		private static $version = '1.1.6';
 
 		/**
 		 * Notices
@@ -113,7 +113,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		public function dismiss_notice() {
 			// Check the user capability.
-			if ( ! current_user_can( 'manage_options' ) ) {
+			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( 'manage_options' ) ) ) {
 				return;
 			}
 

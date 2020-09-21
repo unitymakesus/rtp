@@ -10,6 +10,7 @@ cd __dev__/client/shared
 npm i
 npm run build 
 npm run build-setting
+npm run build-row-action
 
 For dev
 build css: npm run build-setting-dev

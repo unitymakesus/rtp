@@ -190,11 +190,7 @@ final class FLBuilderLoop {
 		$paged = self::get_paged();
 
 		// Get the offset.
-		if ( ! isset( $settings->offset ) || ! is_int( (int) $settings->offset ) ) {
-			$offset = 0;
-		} else {
-			$offset = $settings->offset;
-		}
+		$offset = isset( $settings->offset ) ? intval( $settings->offset ) : 0;
 
 		// Get the paged offset.
 		if ( $paged < 2 ) {
@@ -220,6 +216,16 @@ final class FLBuilderLoop {
 			'fields'              => $fields,
 			'settings'            => $settings,
 		);
+
+		// Set query keywords if specified in the settings.
+		if ( isset( $settings->keyword ) && ! empty( $settings->keyword ) ) {
+			$args['s'] = $settings->keyword;
+		}
+
+		// Set post_status if specified in the settings.
+		if ( isset( $settings->post_status ) && ! empty( $settings->post_status ) ) {
+			$args['post_status'] = $settings->post_status;
+		}
 
 		// Order by meta value arg.
 		if ( strstr( $order_by, 'meta_value' ) ) {
@@ -432,6 +438,8 @@ final class FLBuilderLoop {
 		}
 		// Generic Rule for Homepage / Search
 		$flpaged_rules[ $paged_regex . '/?([0-9]{1,})/?$' ] = 'index.php?&flpaged=$matches[1]';
+
+		$flpaged_rules = apply_filters( 'fl_builder_loop_rewrite_rules', $flpaged_rules );
 
 		foreach ( $flpaged_rules as $regex => $redirect ) {
 			add_rewrite_rule( $regex, $redirect, 'top' );
@@ -667,17 +675,32 @@ final class FLBuilderLoop {
 		if ( is_array( $wp_the_query->query ) ) {
 			foreach ( $wp_the_query->query as $key => $value ) {
 				if ( strpos( $key, 'flpaged' ) === 0 && is_page() && get_option( 'page_on_front' ) ) {
-					$redirect_url = false;
-					break;
+					return false;
 				}
 			}
 
-			// Disable canonical on single post pagination for all post types.
-			if ( true === $wp_the_query->is_singular
-				&& - 1 == $wp_the_query->current_post
-				&& true === $wp_the_query->is_paged
+			// Checks for paginated singular posts.
+			if ( false === $wp_the_query->is_singular
+				|| - 1 != $wp_the_query->current_post
+				|| false === $wp_the_query->is_paged
 			) {
-				$redirect_url = false;
+				return $redirect_url;
+			}
+
+			// Checks for posts module in the current layout.
+			$modules = FLBuilderModel::get_all_modules();
+
+			if ( FLBuilderModel::is_builder_enabled() && ! empty( $modules ) ) {
+				foreach ( $modules as $module ) {
+					if ( 'post-grid' == $module->slug ) {
+						return false;
+					}
+				}
+			}
+
+			// Checks for posts module in themer layouts.
+			if ( fl_theme_builder_has_post_grid() ) {
+				return false;
 			}
 		}
 
@@ -778,14 +801,20 @@ final class FLBuilderLoop {
 				$add_args['fl_rand_seed'] = self::$rand_seed;
 			}
 
-			echo paginate_links(array(
+			/**
+			 * @since 2.4
+			 * @see fl_loop_paginate_links_args
+			 */
+			$args = apply_filters( 'fl_loop_paginate_links_args', array(
 				'base'     => $base . '%_%',
 				'format'   => $format,
 				'current'  => $current_page,
 				'total'    => $total_pages,
 				'type'     => 'list',
 				'add_args' => $add_args,
-			));
+			), $query );
+
+			echo paginate_links( $args );
 		}
 	}
 

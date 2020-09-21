@@ -180,6 +180,18 @@
 				} )
 			}
 
+			if ( ! FLBuilderConfig.history.enabled ) {
+				FLBuilderConfig.mainMenu.history.items.push( {
+					eventName : 'historyItemClicked',
+					type      : 'event',
+					label     : wp.template( 'fl-history-list-item' )( {
+						label 		: FLBuilderConfig.history.labels.history_disabled,
+						current		: 0,
+						position    : 0,
+					} )
+				} )
+			}
+
 			FLBuilder.MainMenu.renderPanel( 'history' )
 		},
 

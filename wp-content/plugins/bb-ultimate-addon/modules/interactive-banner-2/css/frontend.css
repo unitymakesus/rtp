@@ -33,6 +33,12 @@
     display: block;
     position: relative
 }
+/* Image fit for the custom height settings */
+
+.uabb-new-ib .uabb-new-ib-img {
+    max-height: 100% !important;
+    object-fit: cover;
+}
 .uabb-new-ib {
     z-index: 1;
     overflow: hidden;
@@ -97,7 +103,7 @@
 .uabb-ib-effect-style15.uabb-ib2-min-height:not(.uabb-ib2-min-height) img,
 .uabb-ib-effect-style7.uabb-ib2-min-height:not(.uabb-ib2-min-height) img {
     max-width: none!important;
-    width: auto!important
+    width: 100%;
 }
 .uabb-new-ib a.uabb-new-ib-link {
     z-index: 1000;
@@ -177,9 +183,9 @@
     transition-duration: .35s
 }
 .uabb-ib-effect-style1.uabb-ib2-min-height img {
-    width: auto!important;
+    width: 100%;
     max-width: none!important;
-    min-height: 100%
+    min-height: 100%;
 }
 .uabb-ib-effect-style2 img {
     width: 100%
@@ -363,7 +369,7 @@
 .uabb-ib-effect-style4.uabb-ib2-min-height img {
     min-height: 100%;
     max-width: none!important;
-    width: auto!important
+    width: 100%;
 }
 .uabb-ib-effect-style4.uabb-ib2-hover img {
     -webkit-transform: translate3d(0,0,0) scale(1.2);
@@ -699,7 +705,7 @@
 }
 .uabb-new-ib.uabb-ib-effect-style11.uabb-ib2-min-height img {
     min-height: 100%;
-    width: auto!important;
+    width: 100%;
     max-width: none!important
 }
 .uabb-ib-effect-style11.uabb-ib2-hover img {
@@ -852,7 +858,7 @@
     transform: translate3d(0, 0, 0)
 }
 .uabb-ib-effect-style13.uabb-ib2-min-height img {
-    width: auto!important;
+    width: 100%;
     max-width: none!important;
     min-height: 100%
 }
@@ -948,13 +954,13 @@
 }
 .uabb-ib-effect-style15.uabb-ib2-min-height img {
     height: 100%;
-    width: auto!important;
+    width: 100%;
     max-width: none!important
 }
 .uabb-new-ib.uabb-ib-effect-style15:not(.uabb-ib2-min-height) .uabb-ib2-toggle-size,
 .uabb-new-ib.uabb-ib-effect-style5 .uabb-ib2-toggle-size {
     left: 50%;
-    width: auto!important;
+    width: 100%;
     height: 100%;
     max-width: none;
     -webkit-transform: translateX(-50%);

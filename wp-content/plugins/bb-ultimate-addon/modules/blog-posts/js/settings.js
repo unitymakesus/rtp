@@ -306,7 +306,7 @@
 
                 form.find('.fl-loop-builder-filter').hide();
                 form.find('.fl-loop-builder-' + post_type + '-filter').show();
-            if( is_carousel == 'masonary' ) {
+            if( is_carousel == 'masonary' || is_carousel == 'grid' ) {
                 tax_filter_div.hide();
 
                 if ( form.find('.fl-loop-builder-'+post_type+'-masonary_filter').children().length > 0 ) {
@@ -554,7 +554,7 @@
             if( is_carousel == 'grid' ) {
                 form.find('#fl-builder-settings-section-carousel_filter').hide();
                 form.find('#fl-builder-settings-section-grid_filter').show();
-                form.find('#fl-builder-settings-section-masonary_filter').hide();
+                form.find('#fl-builder-settings-section-masonary_filter').show();
                 form.find('#fl-field-post_per_grid_desktop').show();
                 form.find('#fl-field-below_element_space').show();
                 form.find('#fl-field-post_per_grid').hide();

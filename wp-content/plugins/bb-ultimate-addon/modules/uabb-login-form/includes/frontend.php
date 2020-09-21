@@ -43,7 +43,7 @@ if ( ! is_user_logged_in() || FLBuilderModel::is_builder_active() ) {
 					<input type="text" name="uabb-lf-name" aria-label="username" class="uabb-lf-username uabb-lf-form-input <?php echo esc_attr( $input_field_width_class ); ?>" value="" placeholder="<?php echo esc_attr( $settings->username_placeholder ); ?>" required />
 				</div>
 				<div class="uabb-lf-input-group uabb-lf-label">
-					<label for="uabb-lf-name"> <?php echo $settings->password_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
+					<label for="uabb-lf-password"> <?php echo $settings->password_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 				</div>
 				<div class="uabb-lf-input-group uabb-lf-row uabb-lf-password-input">
 					<input type="password" id="uabb-password-field" name="uabb-lf-password" aria-label="password" class="uabb-lf-password uabb-lf-form-input <?php echo esc_attr( $input_field_width_class ); ?> " value="" placeholder="<?php echo esc_attr( $settings->password_placeholder ); ?>" required />

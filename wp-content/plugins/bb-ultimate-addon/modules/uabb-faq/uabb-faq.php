@@ -13,6 +13,13 @@
 class UABBFAQModule extends FLBuilderModule {
 
 	/**
+	 * Checks if schema is rendered.
+	 *
+	 * @var $is_schema_rendered
+	 */
+	private $is_schema_rendered = false;
+
+	/**
 	 * Constructor function that constructs default values for the FAQ module.
 	 *
 	 * @method __construct
@@ -20,8 +27,8 @@ class UABBFAQModule extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'FAQ', 'uabb' ),
-				'description'     => __( 'FAQ', 'uabb' ),
+				'name'            => __( 'FAQ Schema', 'uabb' ),
+				'description'     => __( 'FAQ Schema', 'uabb' ),
 				'category'        => BB_Ultimate_Addon_Helper::module_cat( BB_Ultimate_Addon_Helper::$content_modules ),
 				'group'           => UABB_CAT,
 				'dir'             => BB_ULTIMATE_ADDON_DIR . 'modules/uabb-faq/',
@@ -32,6 +39,70 @@ class UABBFAQModule extends FLBuilderModule {
 		);
 
 		$this->add_css( 'font-awesome-5' );
+	}
+
+	/**
+	 * Render schema markup.
+	 *
+	 * @param boolean $return checks if return schema data.
+	 */
+	public function render_schema( $return = false ) {
+		global $uabb_faq_schema_items;
+
+		$settings      = $this->settings;
+		$enable_schema = true;
+
+		if ( isset( $settings->enable_schema ) && 'no' === $settings->enable_schema ) {
+			$enable_schema = false;
+		}
+
+		if ( ! $enable_schema ) {
+			return;
+		}
+
+		if ( $this->is_schema_rendered ) {
+			return;
+		}
+
+		$schema_data = array(
+			'@context'   => 'https://schema.org',
+			'@type'      => 'FAQPage',
+			'mainEntity' => array(),
+		);
+
+		$items = $this->get_faq_items();
+
+		$count = count( $items );
+
+		for ( $i = 0; $i < $count; $i++ ) {
+			if ( ! is_object( $items[ $i ] ) ) {
+				continue;
+			}
+
+			$item = (object) array(
+				'@type'          => 'Question',
+				'name'           => $items[ $i ]->faq_question,
+				'acceptedAnswer' => (object) array(
+					'@type' => 'Answer',
+					'text'  => $items[ $i ]->faq_answer,
+				),
+			);
+
+			$schema_data['mainEntity'][] = $item;
+		}
+
+		$uabb_faq_schema_items[] = $schema_data['mainEntity'];
+
+		if ( $return ) {
+			return $schema_data;
+		}
+		?>
+		<script type="application/ld+json">
+		<?php echo wp_json_encode( $schema_data ); ?>
+		</script>
+		<?php
+
+		$this->is_schema_rendered = true;
 	}
 
 	/**
@@ -64,6 +135,14 @@ class UABBFAQModule extends FLBuilderModule {
 	}
 
 	/**
+	 * Function to get FAQ items.
+	 */
+	public function get_faq_items() {
+
+		return $this->settings->faq_items;
+	}
+
+	/**
 	 * Function that renders FAQ's Icon
 	 *
 	 * @since 1.25.0
@@ -73,45 +152,12 @@ class UABBFAQModule extends FLBuilderModule {
 
 		if ( esc_attr( $this->settings->icon_position ) === $pos && ( '' !== esc_attr( $this->settings->open_icon ) || '' !== esc_attr( $this->settings->close_icon ) ) ) {
 
-				$output  = '<div class="uabb-faq-icon-wrap">';
+				$output  = '<div class="uabb-faq-icon-wrap" tabindex="0" >';
 				$output .= '<i class="uabb-faq-button-icon ' . esc_attr( $this->settings->close_icon ) . '"></i>';
 				$output .= '</div>';
 			return $output;
 		}
 		return '';
-	}
-	/**
-	 * Function that renders FAQ's Icon
-	 *
-	 * @since 1.25.0
-	 */
-	public function render_schema() {
-
-		$object_data = array();
-
-			$json_data = array(
-				'@context' => 'https://schema.org',
-				'@type'    => 'FAQPage',
-			);
-
-			foreach ( $this->settings->faq_items as $items ) {
-				$new_data = array(
-					'@type'          => 'Question',
-					'name'           => $items->faq_question,
-					'acceptedAnswer' =>
-					array(
-						'@type' => 'Answer',
-						'text'  => $items->faq_answer,
-					),
-				);
-				array_push( $object_data, $new_data );
-			}
-
-			$json_data['mainEntity'] = $object_data;
-
-			$encoded_data = wp_json_encode( $json_data );
-
-			return $encoded_data;
 	}
 }
 

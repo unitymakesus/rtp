@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -140,10 +140,10 @@ final class Deprecated {
 
 	/**
 	 * Returns the SEO Bar.
+	 * Memoizes the return value.
 	 *
 	 * @since 3.0.4
 	 * @since 4.0.0 Deprecated
-	 * @staticvar string $type
 	 * @deprecated
 	 *
 	 * @param string $column the current column : If it's a taxonomy, this is empty
@@ -170,11 +170,9 @@ final class Deprecated {
 	}
 
 	/**
-	 * Renders post status. Caches the output.
+	 * Renders post status. Memoizes the output.
 	 *
 	 * @since 2.1.9
-	 * @staticvar string $post_i18n The post type slug.
-	 * @staticvar bool $is_term If we're dealing with TT pages.
 	 * @since 2.8.0 Third parameter `$echo` has been put into effect.
 	 * @since 4.0.0 Deprecated.
 	 * @deprecated
@@ -250,13 +248,12 @@ final class Deprecated {
 	}
 
 	/**
-	 * Whether to lowercase the noun or keep it UCfirst.
+	 * Whether to lowercase the noun or keep it UCfirst. Memoizes the input noun's output.
 	 * Depending if language is German.
 	 *
 	 * @since 2.6.0
 	 * @since 4.0.0 Deprecated
 	 * @deprecated
-	 * @staticvar array $lowercase Contains nouns.
 	 *
 	 * @param string $noun The noun to lowercase.
 	 * @return string The maybe lowercase noun.
@@ -468,14 +465,14 @@ final class Deprecated {
 
 		$tsf = \the_seo_framework();
 
-		$tsf->_deprecated_function( 'the_seo_framework()->fetch_the_term()', '4.0.0' );
+		$tsf->_deprecated_function( 'the_seo_framework()->fetch_the_term()', '4.0.0', 'WP Core\'s get_term_by()' );
 
 		static $term = [];
 
 		if ( isset( $term[ $id ] ) )
 			return $term[ $id ];
 
-		//* Return null if no term can be detected.
+		// Return null if no term can be detected.
 		if ( false === $tsf->is_archive() )
 			return false;
 
@@ -492,7 +489,7 @@ final class Deprecated {
 				$term[ $id ] = \get_term_by( 'slug', \get_query_var( 'term' ), \get_query_var( 'taxonomy' ) );
 			} elseif ( \is_post_type_archive() ) {
 				$post_type = \get_query_var( 'post_type' );
-				$post_type = is_array( $post_type ) ? reset( $post_type ) : $post_type;
+				$post_type = \is_array( $post_type ) ? reset( $post_type ) : $post_type;
 
 				$term[ $id ] = \get_post_type_object( $post_type );
 			}
@@ -506,6 +503,7 @@ final class Deprecated {
 
 	/**
 	 * Return custom field post meta data.
+	 * Memoizes the return value.
 	 *
 	 * Return only the first value of custom field. Return false if field is
 	 * blank or not set.
@@ -513,7 +511,6 @@ final class Deprecated {
 	 * @since 2.0.0
 	 * @since 4.0.0 Deprecated
 	 * @deprecated
-	 * @staticvar array $field_cache
 	 *
 	 * @param string $field     Custom field key.
 	 * @param int    $post_id   The post ID.
@@ -525,7 +522,7 @@ final class Deprecated {
 
 		$tsf->_deprecated_function( 'the_seo_framework()->get_custom_field()', '4.0.0', 'the_seo_framework()->get_post_meta_item()' );
 
-		//* If field is falsesque, get_post_meta() will return an array.
+		// If field is falsesque, get_post_meta() will return an array.
 		if ( ! $field )
 			return false;
 
@@ -539,12 +536,12 @@ final class Deprecated {
 
 		$custom_field = \get_post_meta( $post_id, $field, true );
 
-		//* If custom field is empty, empty cache..
+		// If custom field is empty, empty cache..
 		if ( empty( $custom_field ) )
 			$field_cache[ $field ][ $post_id ] = '';
 
-		//* Render custom field, slashes stripped, sanitized if string
-		$field_cache[ $field ][ $post_id ] = is_array( $custom_field ) ? \stripslashes_deep( $custom_field ) : stripslashes( $custom_field );
+		// Render custom field, slashes stripped, sanitized if string
+		$field_cache[ $field ][ $post_id ] = \is_array( $custom_field ) ? \stripslashes_deep( $custom_field ) : stripslashes( $custom_field );
 
 		return $field_cache[ $field ][ $post_id ];
 	}
@@ -746,7 +743,7 @@ final class Deprecated {
 
 		$ids = [];
 
-		if ( function_exists( '\\The_SEO_Framework\\_get_product_gallery_image_details' ) ) {
+		if ( \function_exists( '\\The_SEO_Framework\\_get_product_gallery_image_details' ) ) {
 			foreach ( \The_SEO_Framework\_get_product_gallery_image_details() as $details ) {
 				$ids[] = $details['id'];
 			}
@@ -786,7 +783,7 @@ final class Deprecated {
 
 		\the_seo_framework()->_deprecated_function( 'the_seo_framework()->get_site_icon()', '4.0.0' );
 
-		$size = is_string( $size ) ? $size : 'full';
+		$size = \is_string( $size ) ? $size : 'full';
 
 		return \The_SEO_Framework\Builders\Images::get_site_icon_image_details( null, $size )->current()['url'];
 	}
@@ -856,5 +853,144 @@ final class Deprecated {
 	public function can_use_logo() {
 		\the_seo_framework()->_deprecated_function( 'the_seo_framework()->can_use_logo()', '4.0.0' );
 		return \the_seo_framework()->detect_theme_support( 'custom-logo' );
+	}
+
+	/**
+	 * Detect if the current screen type is a page or taxonomy.
+	 * Memoizes the return value.
+	 *
+	 * @since 2.3.1
+	 * @since 4.1.0 Deprecated.
+	 * @deprecated
+	 *
+	 * @param string $type the Screen type
+	 * @return bool true if post type is a page or post
+	 */
+	public function is_post_type_page( $type ) {
+
+		static $is_page = [];
+
+		if ( isset( $is_page[ $type ] ) )
+			return $is_page[ $type ];
+
+		$tsf = \the_seo_framework();
+
+		$tsf->_deprecated_function( 'the_seo_framework()->is_post_type_page()', '4.1.0' );
+
+		$post_page = (array) \get_post_types( [ 'public' => true ] );
+
+		foreach ( $post_page as $screen ) {
+			if ( $type === $screen ) {
+				return $is_page[ $type ] = true;
+			}
+		}
+
+		return $is_page[ $type ] = false;
+	}
+
+	/**
+	 * Checks whether the taxonomy is public and rewritable.
+	 *
+	 * @since 3.1.0
+	 * @since 4.1.0 1: Now returns true on all public taxonomies; not just public taxonomies with rewrite capabilities.
+	 *              2: Deprecated.
+	 * @deprecated
+	 *
+	 * @param string $taxonomy The taxonomy name.
+	 * @return bool
+	 */
+	public function is_taxonomy_public( $taxonomy = '' ) {
+
+		$tsf = \the_seo_framework();
+
+		$tsf->_deprecated_function( 'the_seo_framework()->is_taxonomy_public()', '4.1.0', 'the_seo_framework()->is_taxonomy_supported()' );
+
+		$taxonomy = $taxonomy ?: $tsf->get_current_taxonomy();
+		if ( ! $taxonomy ) return false;
+
+		$tax = \get_taxonomy( $taxonomy );
+
+		if ( false === $tax ) return false;
+
+		return ! empty( $tax->public );
+	}
+
+	/**
+	 * Return option from the options table and cache result.
+	 * Memoizes the return value.
+	 *
+	 * Values pulled from the database are cached on each request, so a second request for the same value won't cause a
+	 * second DB interaction.
+	 *
+	 * @since 2.0.0
+	 * @since 2.8.2 No longer decodes entities on request.
+	 * @since 3.1.0 Now uses the filterable call when caching is disabled.
+	 * @since 4.1.0 Deprecated.
+	 * @thanks StudioPress (http://www.studiopress.com/) for some code.
+	 * @deprecated
+	 *
+	 * @param string  $key        Option name.
+	 * @param string  $setting    Optional. Settings field name. Eventually defaults to null if not passed as an argument.
+	 * @param boolean $use_cache  Optional. Whether to use the cache value or not.
+	 * @return mixed The value of this $key in the database. Empty string on failure.
+	 */
+	public function the_seo_framework_get_option( $key, $setting = null, $use_cache = true ) {
+
+		if ( ! $setting ) return '';
+
+		$tsf = \the_seo_framework();
+
+		$tsf->_deprecated_function( 'the_seo_framework()->the_seo_framework_get_option()', '4.1.0', 'the_seo_framework()->get_option()' );
+
+		if ( ! $use_cache ) {
+			$options = $tsf->get_all_options( $setting, true );
+			return isset( $options[ $key ] ) ? \stripslashes_deep( $options[ $key ] ) : '';
+		}
+
+		static $cache = [];
+
+		if ( ! isset( $cache[ $setting ] ) )
+			$cache[ $setting ] = \stripslashes_deep( $tsf->get_all_options( $setting ) );
+
+		return isset( $cache[ $setting ][ $key ] ) ? $cache[ $setting ][ $key ] : '';
+	}
+
+	/**
+	 * Returns the homepage tagline from option or bloginfo, when set.
+	 *
+	 * @since 3.0.4
+	 * @since 4.0.0 Added caching.
+	 * @since 4.1.0 Deprecated.
+	 * @uses $this->get_blogdescription(), this method already trims.
+	 * @deprecated
+	 *
+	 * @return string The trimmed tagline.
+	 */
+	public function get_home_page_tagline() {
+
+		$tsf = \the_seo_framework();
+
+		$tsf->_deprecated_function( 'the_seo_framework()->get_home_page_tagline()', '4.1.0', 'the_seo_framework()->get_home_title_additions()' );
+
+		return $tsf->get_home_title_additions();
+	}
+
+	/**
+	 * Cached WordPress permalink structure settings.
+	 *
+	 * @since 2.6.0
+	 * @since 3.1.0 Removed caching.
+	 * @since 4.1.0 Deprecated.
+	 * @deprecated
+	 *
+	 * @return string permalink structure.
+	 */
+	public function permalink_structure() {
+
+		$tsf = \the_seo_framework();
+
+		$tsf->_deprecated_function( 'the_seo_framework()->permalink_structure()', '4.1.0', "get_option( 'permalink_structure' )" );
+
+		return \get_option( 'permalink_structure' );
 	}
 }

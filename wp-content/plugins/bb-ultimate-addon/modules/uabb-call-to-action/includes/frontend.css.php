@@ -54,6 +54,7 @@ if ( $version_bb_check ) {
 		'bg_hover_color'                             => $settings->btn_bg_hover_color,
 		'text_color'                                 => $settings->btn_text_color,
 		'text_hover_color'                           => $settings->btn_text_hover_color,
+		'hover_attribute'                            => $settings->hover_attribute,
 
 		/* Icon */
 		'icon'                                       => $settings->btn_icon,
@@ -115,6 +116,7 @@ if ( $version_bb_check ) {
 		'bg_hover_color'                             => $settings->btn_bg_hover_color,
 		'text_color'                                 => $settings->btn_text_color,
 		'text_hover_color'                           => $settings->btn_text_hover_color,
+		'hover_attribute'                            => $settings->hover_attribute,
 
 		/* Icon */
 		'icon'                                       => $settings->btn_icon,

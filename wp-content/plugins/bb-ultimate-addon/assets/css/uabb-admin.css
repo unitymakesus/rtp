@@ -661,3 +661,21 @@ div#fl-uabb-cloud-templates-form .fl-settings-form-header a {
     display: none;
     color: #ff0000;
 }
+/*Google API notice CSS*/
+.uabb-notice-link {
+    text-decoration: none;
+    font-weight: 500;
+}
+.uabb-api-info-msg {
+    background-color: #d9edf7;
+    color: #31708f;
+    width: max-content;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px 3px 3px 3px;
+    vertical-align: middle;
+}
+.uabb-api-info-msg span.dashicons-warning {
+    font-size: 18px;
+    vertical-align: middle;
+}

@@ -11,7 +11,7 @@ $checked = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::PROTECT
 	<td>
 		<p>
 			<label><?php echo esc_html__( 'Show Post Excerpt', 'password-protect-page' ); ?></label>
-			<?php echo _e( '<a target="_blank" href="https://passwordprotectwp.com/docs/display-featured-image-password-protected-excerpt/">Display the excerpt</a> of password protected posts', 'password-protect-page' ) ?>
+			<?php echo _e( '<a target="_blank" href="https://passwordprotectwp.com/docs/display-featured-image-password-protected-excerpt/">Display the excerpt</a> of password protected posts. You can also <a target="_blank" href="https://passwordprotectwp.com/docs/display-featured-image-password-protected-excerpt/#customize-default">customize the default excerpt</a> using a custom code snippet.', 'password-protect-page' ) ?>
 		</p>
 	</td>
 </tr>

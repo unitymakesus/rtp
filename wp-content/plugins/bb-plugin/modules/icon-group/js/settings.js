@@ -31,11 +31,9 @@
 		init: function() {
 			var form  = $( '.fl-builder-settings' ),
 				size = form.find( '#fl-field-size input[type=number]' ),
-				spacing = form.find( 'input[name=spacing]' ),
 				align = form.find( 'input[name=align]' );
 
 			size.on( 'input', this._previewSize );
-			spacing.on( 'input', this._previewSpacing );
 		},
 
 		_previewSize: function() {
@@ -76,24 +74,7 @@
 				}
 			} );
 		},
-
-		_previewSpacing: function() {
-			var icons = FLBuilder.preview.elements.node.find( '.fl-icon' ),
-				form = $( '.fl-builder-settings' ),
-				spacing = form.find( 'input[name=spacing]' ).val(),
-				align = form.find( 'input[name=align]' ).val(),
-				margin = '';
-
-			if ( 'left' === align ) {
-				margin = '10px ' + spacing + 'px 10px 0';
-			} else if ( 'center' === align ) {
-				margin = '10px ' + spacing + 'px';
-			} else if ( 'right' === align ) {
-				margin = '10px 0 10px ' + spacing + 'px';
-			}
-
-			icons.css( 'margin', margin );
-		},
+		
 	});
 
 } )( jQuery );

@@ -4,7 +4,10 @@
  * @subpackage The_SEO_Framework\Sitemap
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() and $this instanceof $_this or die;
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
+// phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
 
 $this->the_seo_framework_debug and $timer_start = microtime( true );
 
@@ -21,10 +24,11 @@ $sitemap_bridge->output_sitemap_urlset_open_tag();
 $sitemap_generated = false;
 $sitemap_content   = $this->get_option( 'cache_sitemap' ) ? $this->get_transient( $this->get_sitemap_transient_name() ) : false;
 
+// TODO convert this to an easily accessible method that stores and returns the value.
 if ( false === $sitemap_content ) {
 	$sitemap_generated = true;
 
-	//* Transient doesn't exist yet.
+	// Transient doesn't exist yet.
 	$sitemap_base = new \The_SEO_Framework\Builders\Sitemap_Base;
 	$sitemap_base->prepare_generation();
 
@@ -48,16 +52,18 @@ echo $sitemap_content;
 $sitemap_bridge->output_sitemap_urlset_close_tag();
 
 if ( $sitemap_generated ) {
-	echo "\n" . '<!-- ' . \esc_html__( 'Sitemap is generated for this view', 'autodescription' ) . ' -->';
+	echo "\n" . '<!-- ' . esc_html__( 'Sitemap is generated for this view', 'autodescription' ) . ' -->';
 } else {
-	echo "\n" . '<!-- ' . \esc_html__( 'Sitemap is served from cache', 'autodescription' ) . ' -->';
+	echo "\n" . '<!-- ' . esc_html__( 'Sitemap is served from cache', 'autodescription' ) . ' -->';
 }
 
 if ( $this->the_seo_framework_debug ) {
+	echo "\n" . '<!-- Site estimated current usage: ' . number_format( memory_get_usage() / 1024 / 1024, 3 ) . ' MB -->';
+	echo "\n" . '<!-- System estimated current usage: ' . number_format( memory_get_usage( true ) / 1024 / 1024, 3 ) . ' MB -->';
 	echo "\n" . '<!-- Site estimated peak usage: ' . number_format( memory_get_peak_usage() / 1024 / 1024, 3 ) . ' MB -->';
 	echo "\n" . '<!-- System estimated peak usage: ' . number_format( memory_get_peak_usage( true ) / 1024 / 1024, 3 ) . ' MB -->';
-	echo "\n" . '<!-- Freed memory prior to generation: ' . number_format( $this->clean_up_globals_for_sitemap( true ) / 1024, 3 ) . ' kB -->';
+	echo "\n" . '<!-- Freed memory prior to generation: ' . number_format( $sitemap_bridge->get_freed_memory( true ) / 1024, 3 ) . ' kB -->';
 	echo "\n" . '<!-- Sitemap generation time: ' . number_format( microtime( true ) - $timer_start, 6 ) . ' seconds -->';
 	echo "\n" . '<!-- Sitemap caching enabled: ' . ( $this->get_option( 'cache_sitemap' ) ? 'yes' : 'no' ) . ' -->';
-	echo "\n" . '<!-- Sitemap transient key: ' . \esc_html( $this->get_sitemap_transient_name() ) . ' -->';
+	echo "\n" . '<!-- Sitemap transient key: ' . esc_html( $this->get_sitemap_transient_name() ) . ' -->';
 }

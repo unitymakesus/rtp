@@ -478,6 +478,7 @@ FLBuilder::register_settings_form('col', array(
 								'section' => '&lt;section&gt;',
 								'article' => '&lt;article&gt;',
 								'aside'   => '&lt;aside&gt;',
+								'main'    => '&lt;main&gt;',
 								'header'  => '&lt;header&gt;',
 								'footer'  => '&lt;footer&gt;',
 							) ),

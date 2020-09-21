@@ -1,6 +1,13 @@
 <?php
 
-require_once( ABSPATH . '/wp-includes/class-wp-customize-control.php' );
+if ( function_exists( 'wp_get_theme' ) ) {
+	$curr_theme = wp_get_theme();
+	if ( method_exists( $curr_theme, 'get' ) && 'Edubin' === $curr_theme->get( 'Name' ) ) {
+		require_once( ABSPATH . WPINC . '/class-wp-customize-section.php' );
+	}
+}
+
+require_once( ABSPATH . WPINC . '/class-wp-customize-control.php' );
 
 class PPW_Text_Editor_Custom_Control extends WP_Customize_Control {
 	/**

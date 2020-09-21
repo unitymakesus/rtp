@@ -1,0 +1,26 @@
+.fl-builder-workspace {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999999;
+    pointer-events: none;
+
+    .fl-builder-workspace-panel {
+        position: absolute;
+        top: 45px;
+        right:0;
+        bottom:0;
+        width: 360px;
+        pointer-events: auto;
+
+        // Set inner contents to flex space.
+        display: flex;
+        flex-direction: column;
+
+        background: var(--fluid-background);
+        border-left: 2px solid var(--fluid-line-color);
+        overflow: auto;
+    }
+}

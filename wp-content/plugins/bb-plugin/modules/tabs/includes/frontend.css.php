@@ -2,7 +2,7 @@
 
 // Background Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-panels, .fl-node-$id .fl-tabs-label.fl-tab-active",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-tabs-panels, .fl-builder-content .fl-node-$id .fl-tabs-label.fl-tab-active",
 	'props'    => array(
 		'background-color' => $settings->bg_color,
 	),
@@ -20,7 +20,7 @@ FLBuilderCSS::rule( array(
 ) );
 
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-labels .fl-tabs-label.fl-tab-active",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-tabs .fl-tabs-labels .fl-tabs-label.fl-tab-active",
 	'props'    => array(
 		'border-color' => $settings->border_color,
 		'border-width' => array(
@@ -31,7 +31,7 @@ FLBuilderCSS::rule( array(
 ) );
 
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-horizontal .fl-tabs-labels .fl-tabs-label.fl-tab-active:after",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-tabs-horizontal .fl-builder-content .fl-tabs-labels .fl-tabs-label.fl-tab-active:after",
 	'props'    => array(
 		'bottom' => array(
 			'value' => '' === $settings->border_width ? '' : -$settings->border_width,
@@ -45,7 +45,7 @@ FLBuilderCSS::rule( array(
 ) );
 
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-vertical .fl-tabs-labels .fl-tabs-label.fl-tab-active:after",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-tabs-vertical .fl-tabs-labels .fl-tabs-label.fl-tab-active:after",
 	'props'    => array(
 		'right' => array(
 			'value' => '' === $settings->border_width ? '' : -$settings->border_width,
@@ -60,7 +60,7 @@ FLBuilderCSS::rule( array(
 
 // Label Text Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-label",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-tabs .fl-tabs-label",
 	'props'    => array(
 		'color' => $settings->label_text_color,
 	),
@@ -68,7 +68,7 @@ FLBuilderCSS::rule( array(
 
 // Label Active Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-label.fl-tab-active, .fl-node-$id .fl-tabs-panel-label",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-tabs-label.fl-tab-active, .fl-builder-content .fl-node-$id .fl-tabs-panel-label",
 	'props'    => array(
 		'color' => $settings->label_active_color,
 	),
@@ -78,7 +78,7 @@ FLBuilderCSS::rule( array(
 FLBuilderCSS::dimension_field_rule( array(
 	'settings'     => $settings,
 	'setting_name' => 'label_padding',
-	'selector'     => ".fl-node-$id .fl-tabs-label, .fl-node-$id .fl-tabs-label.fl-tab-active",
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-tabs .fl-tabs-label, .fl-builder-content .fl-node-$id .fl-tabs-label.fl-tab-active",
 	'props'        => array(
 		'padding-top'    => 'label_padding_top',
 		'padding-right'  => 'label_padding_right',
@@ -89,14 +89,14 @@ FLBuilderCSS::dimension_field_rule( array(
 
 // Label Typography
 FLBuilderCSS::typography_field_rule( array(
-	'selector'     => ".fl-node-$id .fl-tabs-label",
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-tabs-label",
 	'setting_name' => 'label_typography',
 	'settings'     => $settings,
 ) );
 
 // Content Text Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-tabs-panel-content",
+	'selector' => ".fl-builder-content .fl-row .fl-col .fl-node-$id .fl-tabs-panel .fl-tabs-panel-content, .fl-builder-content .fl-row .fl-col .fl-node-$id .fl-tabs-panel .fl-tabs-panel-content *",
 	'props'    => array(
 		'color' => $settings->content_text_color,
 	),

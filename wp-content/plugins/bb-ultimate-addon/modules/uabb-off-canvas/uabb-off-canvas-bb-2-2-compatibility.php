@@ -49,7 +49,7 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'menu'                 => array(
-									'fields'   => array( 'wp_menu', 'close_on_link' ),
+									'fields'   => array( 'wp_menu', 'close_on_link', 'submenu_toggle' ),
 									'sections' => array( 'section_menu_style', 'menu_typography' ),
 								),
 								'content'              => array(
@@ -68,6 +68,37 @@ FLBuilder::register_module(
 							),
 						),
 						'wp_menu'            => UABBOffCanvasModule::render_menus(),
+						'submenu_toggle'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Submenu Toggle', 'uabb' ),
+							'default' => 'none',
+							'options' => array(
+								'arrows' => __( 'Arrows', 'uabb' ),
+								'plus'   => __( 'Plus Sign', 'uabb' ),
+								'none'   => __( 'None', 'uabb' ),
+							),
+							'toggle'  => array(
+								'arrows' => array(
+									'fields' => array( 'collapse_inactive' ),
+								),
+								'plus'   => array(
+									'fields' => array( 'collapse_inactive' ),
+								),
+							),
+						),
+						'collapse_inactive'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Collapse Inactive', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Choosing yes will keep only one item open at a time. Choosing no will allow multiple items to be open at the same time.', 'uabb' ),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
 						'ct_content'         => array(
 							'type'        => 'editor',
 							'label'       => '',

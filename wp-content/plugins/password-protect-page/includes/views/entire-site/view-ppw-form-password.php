@@ -16,6 +16,7 @@ $is_wrong_password		= isset( $_GET['action'] ) && $_GET['action'] === 'ppw_postp
 	<link rel="icon" href="<?php echo esc_attr( get_site_icon_url() ); ?>"/>
 	<title><?php echo esc_attr( $page_title ); ?></title>
 	<link rel="stylesheet" href="<?php echo PPW_VIEW_URL; ?>dist/ppw-form-entire-site.css" type="text/css">
+	<?php do_action( PPW_Constants::HOOK_CUSTOM_HEADER_FORM_ENTIRE_SITE ); ?>
 	<style><?php do_action( PPW_Constants::HOOK_CUSTOM_STYLE_FORM_ENTIRE_SITE ); ?></style>
 	<?php wp_custom_css_cb(); ?>
 </head>
@@ -28,7 +29,7 @@ $is_wrong_password		= isset( $_GET['action'] ) && $_GET['action'] === 'ppw_postp
 			<label for="input_wp_protect_password"><?php echo $password_label ?></label>
 			<input class="input_wp_protect_password" type="password" id="input_wp_protect_password"
 				name="input_wp_protect_password" placeholder="<?php echo $password_placehoder ?>"/>
-			<?php 
+			<?php
 				if ( $is_wrong_password ) {
 					?>
 						<div id="ppw_entire_site_wrong_password" class="ppw-entire-site-password-error">
@@ -40,4 +41,5 @@ $is_wrong_password		= isset( $_GET['action'] ) && $_GET['action'] === 'ppw_postp
 			<input type="submit" class="button button-primary button-login" value="<?php echo $btn_label ?>">
 		</form>
 	</div>
+	<?php do_action( PPW_Constants::HOOK_CUSTOM_FOOTER_FORM_ENTIRE_SITE ); ?>
 </body>

@@ -240,6 +240,53 @@
     box-shadow: none;
 }
 
+.uabb-image-carousel ul.slick-dots {
+    display: block;
+    position: relative ;
+    margin: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+.uabb-image-carousel ul.slick-dots li {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+.uabb-image-carousel ul.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.uabb-image-carousel ul.slick-dots li button:before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight:900;
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '\f111';
+    text-align: center;
+    opacity: .25;
+    color: rgb(0, 0, 0);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 /* End Slick Slider */
 

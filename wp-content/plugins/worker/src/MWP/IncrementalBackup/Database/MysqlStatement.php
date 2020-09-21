@@ -26,6 +26,7 @@ class MWP_IncrementalBackup_Database_MysqlStatement implements MWP_IncrementalBa
      */
     public function fetch()
     {
+        /** @handled function */
         $row = @mysql_fetch_assoc($this->result);
         if ($row === false) {
             return null;
@@ -53,6 +54,7 @@ class MWP_IncrementalBackup_Database_MysqlStatement implements MWP_IncrementalBa
      */
     public function close()
     {
+        /** @handled function */
         return @mysql_free_result($this->result);
     }
 }

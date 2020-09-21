@@ -396,10 +396,10 @@ if ( 'none' !== $settings->image_type ) {
 				border-color: <?php echo esc_attr( $settings->uabb_border_color ); ?>;
 			<?php endif; ?>
 
-			border-top-width: <?php echo $settings->uabb_border_top ? esc_attr( $settings->uabb_border_top ) : '0'; ?>px;
-			border-bottom-width: <?php echo $settings->uabb_border_bottom ? esc_attr( $settings->uabb_border_bottom ) : '0'; ?>px;
-			border-left-width: <?php echo $settings->uabb_border_left ? esc_attr( $settings->uabb_border_left ) : '0'; ?>px;
-			border-right-width: <?php echo $settings->uabb_border_right ? esc_attr( $settings->uabb_border_right ) : '0'; ?>px;
+			border-top-width: <?php echo $settings->uabb_border_top ? esc_attr( $settings->uabb_border_top ) : ''; ?>px;
+			border-bottom-width: <?php echo $settings->uabb_border_bottom ? esc_attr( $settings->uabb_border_bottom ) : ''; ?>px;
+			border-left-width: <?php echo $settings->uabb_border_left ? esc_attr( $settings->uabb_border_left ) : ''; ?>px;
+			border-right-width: <?php echo $settings->uabb_border_right ? esc_attr( $settings->uabb_border_right ) : ''; ?>px;
 
 			<?php if ( $settings->uabb_border_top > 0 || $settings->uabb_border_bottom > 0 || $settings->uabb_border_left > 0 || $settings->uabb_border_right > 0 ) : ?>
 
@@ -436,16 +436,16 @@ if ( 'none' !== $settings->image_type ) {
 			<?php
 			if ( 'yes' === $converted || isset( $settings->info_box_padding_dimension_top ) && isset( $settings->info_box_padding_dimension_bottom ) && isset( $settings->info_box_padding_dimension_left ) && isset( $settings->info_box_padding_dimension_right ) ) {
 				if ( isset( $settings->info_box_padding_dimension_top ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_top ) ? 'padding-top:' . esc_attr( $settings->info_box_padding_dimension_top ) . 'px;' : 'padding-top: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_top ) ? 'padding-top:' . esc_attr( $settings->info_box_padding_dimension_top ) . 'px;' : '';
 				}
 				if ( isset( $settings->info_box_padding_dimension_bottom ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_bottom ) ? 'padding-bottom:' . esc_attr( $settings->info_box_padding_dimension_bottom ) . 'px;' : 'padding-bottom: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_bottom ) ? 'padding-bottom:' . esc_attr( $settings->info_box_padding_dimension_bottom ) . 'px;' : '';
 				}
 				if ( isset( $settings->info_box_padding_dimension_left ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_left ) ? 'padding-left:' . esc_attr( $settings->info_box_padding_dimension_left ) . 'px;' : 'padding-left: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_left ) ? 'padding-left:' . esc_attr( $settings->info_box_padding_dimension_left ) . 'px;' : '';
 				}
 				if ( isset( $settings->info_box_padding_dimension_right ) ) {
-					echo ( '' !== $settings->info_box_padding_dimension_right ) ? 'padding-right:' . esc_attr( $settings->info_box_padding_dimension_right ) . 'px;' : 'padding-right: 20px;';
+					echo ( '' !== $settings->info_box_padding_dimension_right ) ? 'padding-right:' . esc_attr( $settings->info_box_padding_dimension_right ) . 'px;' : '';
 				}
 			} elseif ( isset( $settings->info_box_padding ) && '' !== $settings->info_box_padding && isset( $settings->info_box_padding_dimension_top ) && ( '' === $settings->info_box_padding_dimension_top || '0' === $settings->info_box_padding_dimension_top ) && isset( $settings->info_box_padding_dimension_bottom ) && ( '' === $settings->info_box_padding_dimension_bottom || '0' === $settings->info_box_padding_dimension_bottom ) && isset( $settings->info_box_padding_dimension_left ) && ( '' === $settings->info_box_padding_dimension_left || '0' === $settings->info_box_padding_dimension_left ) && isset( $settings->info_box_padding_dimension_right ) && ( '' === $settings->info_box_padding_dimension_right || '0' === $settings->info_box_padding_dimension_right ) ) {
 				?>
@@ -479,6 +479,12 @@ if ( 'none' !== $settings->image_type ) {
 	<?php endif; ?>
 	}
 <?php } ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox {
+		-webkit-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
+		-moz-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
+		-o-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
+		box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
+		}
 <?php if ( isset( $settings->bg_color_hover ) && '' !== $settings->bg_color_hover ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox:hover {
 		background:<?php echo esc_attr( $settings->bg_color_hover ); ?>;

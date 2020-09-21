@@ -124,6 +124,10 @@
 							if( is_google_button_clicked === true ) {
 								
 								$.post( ajaxurl, data, function( response ) {
+
+								google_button_text = node_module.find( '.uabb-google-text' );
+
+								google_button_text.find( '.uabb-login-form-loader' ).remove();
 								
 								$( location ).attr( 'href', uabb_lf_google_redirect_login_url );
 								
@@ -147,6 +151,14 @@
 		{ 
 			FB.login( function( response ) {
 
+				fb_button_text = node_module.find( '.uabb-facebook-text' );
+
+				form_wrap.animate({
+					opacity: '0.45'
+				}, 500 ).addClass( 'uabb-form-waiting' );
+
+				fb_button_text.append( '<span class="uabb-login-form-loader"></span>' );
+
 				if ( response.status === 'connected' ) {
 					 FB.api( '/me', { fields: 'id, email, name , first_name, last_name,link, gender, locale, picture' },
 					    function ( response ) {
@@ -167,6 +179,8 @@
 							};
 
 					  	$.post( ajaxurl, fb_data, function( response ) {
+
+					  		fb_button_text.find( '.uabb-login-form-loader' ).remove();
 					
 							$( location ).attr( 'href', uabb_lf_facebook_redirect_login_url );
 						
@@ -184,7 +198,15 @@
 		},
 		_googleClick: function()
 		{
+			google_button_text = node_module.find( '.uabb-google-text' );
+
 			is_google_button_clicked = true;
+
+			form_wrap.animate({
+					opacity: '0.45'
+				}, 500 ).addClass( 'uabb-form-waiting' );
+
+			google_button_text.append( '<span class="uabb-login-form-loader"></span>' );
 		},
 		_submit: function( event )
 		{

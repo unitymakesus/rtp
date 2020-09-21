@@ -299,4 +299,11 @@ final class FLBuilderUtils {
 		return $url;
 	}
 
+	/**
+	 * @since 2.4
+	 */
+	public static function img_lazyload( $loading = 'load' ) {
+		return apply_filters( 'fl_lazyload', "loading='$loading'" );
+	}
+
 }

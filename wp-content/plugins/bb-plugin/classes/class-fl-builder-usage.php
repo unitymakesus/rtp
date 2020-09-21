@@ -217,7 +217,7 @@ final class FLBuilderUsage {
 			),
 			'settings' => array(
 				'name' => __( 'Builder Settings', 'fl-builder' ),
-				'data' => __( 'UI theme, pinned settings etc.' ),
+				'data' => __( 'UI theme, pinned settings etc.', 'fl-builder' ),
 			),
 		);
 

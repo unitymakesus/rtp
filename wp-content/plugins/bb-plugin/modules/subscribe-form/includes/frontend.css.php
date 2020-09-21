@@ -1,6 +1,24 @@
 <?php
 
-$input_selector = ".fl-node-$id .fl-subscribe-form .fl-form-field input, .fl-node-$id .fl-subscribe-form .fl-form-field input[type=text]";
+$input_selector = ".fl-builder-content .fl-node-$id .fl-subscribe-form .fl-form-field input, .fl-builder-content .fl-node-$id .fl-subscribe-form .fl-form-field input[type=text]";
+
+if ( ! empty( $settings->btn_text_color ) ) {
+	FLBuilderCSS::rule( array(
+		'selector' => ".fl-builder-content .fl-node-$id .fl-form-button a.fl-button, .fl-builder-content .fl-node-$id .fl-form-button a.fl-button:visited, .fl-builder-content .fl-node-$id .fl-form-button a.fl-button *, .fl-builder-content .fl-node-$id .fl-form-button a.fl-button:visited *",
+		'props'    => array(
+			'color' => $settings->btn_text_color,
+		),
+	) );
+}
+
+if ( ! empty( $settings->btn_text_hover_color ) ) {
+	FLBuilderCSS::rule( array(
+		'selector' => ".fl-builder-content .fl-node-$id .fl-form-button a.fl-button:hover, .fl-builder-content .fl-node-$id .fl-form-button a.fl-button:hover *",
+		'props'    => array(
+			'color' => $settings->btn_text_hover_color,
+		),
+	) );
+}
 
 // Default input styles
 FLBuilderCSS::rule( array(

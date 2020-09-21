@@ -272,7 +272,7 @@ function ppw_is_post_type_selected_in_setting( $post_type ) {
  */
 function ppw_get_post_id_from_request() {
 	if ( isset( $_POST['post_id'] ) ) {
-		return wp_unslash( $_POST['post_id'] );
+		return (int) wp_unslash( $_POST['post_id'] );
 	}
 	/**
 	 * Make sure http referer on server.
@@ -322,6 +322,8 @@ function ppw_get_page_title() {
  * @param WP_Post $post            Post WordPress Object.
  * @param string  $content         Content of post.
  * @param bool    $is_show_excerpt Is show excerpt.
+ *                                 TODO: Need to refactor logic for this function.
+ *
  * @return string
  */
 function ppw_handle_protected_content( $post, $content, $is_show_excerpt ) {
@@ -329,7 +331,7 @@ function ppw_handle_protected_content( $post, $content, $is_show_excerpt ) {
 		$content = $post->post_excerpt . $content;
 	}
 
-	if ( ! preg_match( '/name=.+post_id/mi', $content ) ) {
+	if ( ! is_singular() && ! preg_match( '/name=.+post_id/mi', $content ) ) {
 		$content = '<em>[This is password-protected.]</em>';
 
 		return apply_filters( 'the_ppw_password_message', $content );
@@ -371,4 +373,98 @@ function ppw_free_has_bypass_single_protection() {
 	$has_bypass = defined( 'PPWP_SINGLE_FEED_DISPLAY' ) && PPWP_SINGLE_FEED_DISPLAY && is_feed();
 
 	return apply_filters( 'ppwp_single_has_bypass', $has_bypass );
+}
+
+/**
+ * Has support PPWP shortcode for page builder.
+ *
+ * @return bool
+ */
+function ppw_free_has_support_shortcode_page_builder() {
+	// Have user turn on option.
+	$enabled = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USE_SHORTCODE_PAGE_BUILDER, PPW_Constants::SHORTCODE_OPTIONS );
+
+	return apply_filters( 'ppwp_shortcode_enable_page_builder', $enabled );
+}
+
+/**
+ * Checks the plaintext password against the encrypted Password.
+ *
+ * @param string $password Plaintext user's password
+ * @param string $hash     Hash of the user's password to check against.
+ *
+ * @return bool False, if the $password does not match the hashed password
+ * @link https://developer.wordpress.org/reference/functions/wp_check_password/
+ */
+function ppw_free_check_password( $password, $hash ) {
+	global $wp_hasher;
+	// If the stored hash is longer than an MD5,
+	// presume the new style phpass portable hash.
+	if ( empty( $wp_hasher ) ) {
+		require_once ABSPATH . WPINC . '/class-phpass.php';
+		// By default, use the portable hash from phpass.
+		$wp_hasher = new PasswordHash( 8, true );
+	}
+
+	return $wp_hasher->CheckPassword( $password, $hash );
+}
+
+/**
+ * Retrieve the shortcode matches for searching.
+ *
+ * @param $content
+ *
+ * @return array The regular expression contains 6 different sub matches to help with parsing.
+ * 1 - An extra [ to allow for escaping shortcodes with double [[]]
+ * 2 – The shortcode name
+ * 3 – The shortcode argument list
+ * 4 – The self closing /
+ * 5 – The content of a shortcode when it wraps some content.
+ * 6 – An extra ] to allow for escaping shortcodes with double [[]]
+ */
+function ppw_free_search_shortcode_content( $content ) {
+	preg_match_all( '/' . get_shortcode_regex( array( 'ppwp' ) ) . '/', $content, $matches, PREG_SET_ORDER );
+
+	return $matches;
+}
+
+function ppw_free_valid_pcp_password( $shortcode, $password ) {
+	$default_args = array(
+		'is_valid_password' => false,
+		'atts'              => array(),
+	);
+	// Check ppwp shortcode exist.
+	if ( PPW_Constants::PPW_HOOK_SHORT_CODE_NAME !== $shortcode[2] || ! isset( $shortcode[3] ) ) {
+		return $default_args;
+	}
+	// Parse shortcode string to array.
+	$parsed_atts = shortcode_parse_atts( trim( $shortcode[3] ) );
+
+	// Get attributes from shortcode.
+	$atts      = PPW_Shortcode::get_instance()->get_attributes( $parsed_atts );
+	$passwords = apply_filters( PPW_Constants::HOOK_SHORTCODE_PASSWORDS, array_filter( $atts['passwords'], 'strlen' ), $parsed_atts );
+
+	// Check password exist.
+	if ( in_array( $password, $passwords, true ) ) {
+		$default_args['is_valid_password'] = true;
+		$default_args['atts']              = $atts;
+	}
+
+	if ( isset( $parsed_atts['error_msg'] ) ) {
+		$default_args['message'] = wp_kses_post( $parsed_atts['error_msg'] );
+	}
+
+	return $default_args;
+}
+
+/**
+ * Validate date.
+ *
+ * @param        $date
+ * @param string $format
+ *
+ * @return bool
+ */
+function ppw_free_validate_date( $date ) {
+	return false !== strtotime( $date );
 }

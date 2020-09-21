@@ -30,7 +30,11 @@ if ( isset( $pages[ $settings->layout ] ) ) {
 } elseif ( 'add-cart' == $settings->layout ) { // Add to Cart Button
 	echo '[add_to_cart id="' . $settings->product_id . '" style=""]';
 } elseif ( 'categories' == $settings->layout ) { // Categories
-	echo '[product_categories parent="' . $settings->parent_cat_id . '" columns="' . $settings->cat_columns . '"]';
+	$cat_ids = '';
+	if ( ! empty( $settings->product_category_ids ) ) {
+		$cat_ids = 'ids = "' . $settings->product_category_ids . '"';
+	}
+	echo '[product_categories ' . $cat_ids . ' parent="' . $settings->parent_cat_id . '" columns="' . $settings->cat_columns . '" orderby="' . $settings->category_orderby . '" order="' . $settings->category_order . '"]';
 } elseif ( 'products' == $settings->layout ) { // Multiple Products
 	add_filter( 'post_class', array( $module, 'products_post_class' ) );
 

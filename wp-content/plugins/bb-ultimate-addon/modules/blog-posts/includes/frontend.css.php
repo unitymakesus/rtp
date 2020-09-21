@@ -341,9 +341,6 @@ if ( 'grid' === $settings->is_carousel || 'masonary' === $settings->is_carousel 
 	margin: 0 -<?php echo esc_attr( $grid_margin ); ?>px;
 }
 	<?php
-}
-
-if ( 'masonary' === $settings->is_carousel ) {
 
 	if ( isset( $settings->selfilter_border_enable ) && 'yes' === $settings->selfilter_border_enable ) {
 		$border_style = $settings->selfilter_border_style;
@@ -733,7 +730,14 @@ if ( 'grid' === $settings->is_carousel ) {
 
 <?php
 if ( 'carousel' === $settings->is_carousel ) {
-	?>
+
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts ul.slick-dots li button:before {
+	font-family: 'Font Awesome 5 Pro';
+}
+	<?php } ?>
+
 .fl-node-<?php echo esc_attr( $id ); ?> .slick-prev i,
 .fl-node-<?php echo esc_attr( $id ); ?> .slick-next i,
 .fl-node-<?php echo esc_attr( $id ); ?> .slick-prev i:hover,

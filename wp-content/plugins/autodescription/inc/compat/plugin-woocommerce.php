@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() and $this instanceof $_this or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and \the_seo_framework()->_verify_include_secret( $_secret ) or die;
 
 \add_action( 'woocommerce_init', __NAMESPACE__ . '\\_init_wc_compat' );
 /**
@@ -14,6 +14,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() a
  *
  * @since 3.1.0
  * @since 4.0.3 Added primary term support to products.
+ * @since 4.1.1 Added primary term support to category widgets.
  * @access private
  * @uses \is_product()
  */
@@ -24,7 +25,7 @@ function _init_wc_compat() {
 			/**
 			 * Removes TSF breadcrumbs. WooCommerce outputs theirs.
 			 */
-			if ( function_exists( '\\is_product' ) && \is_product() ) {
+			if ( \function_exists( '\\is_product' ) && \is_product() ) {
 				\add_filter( 'the_seo_framework_json_breadcrumb_output', '__return_false' );
 			}
 		}
@@ -37,6 +38,9 @@ function _init_wc_compat() {
 
 	// Adjust the structured-data breadcrumb primary term. Coincidentally(?), it uses the same filter structure; although, it misses the $post object.
 	\add_filter( 'woocommerce_breadcrumb_main_term', [ $tsf, '_adjust_post_link_category' ], 10, 2 );
+
+	// Adjust the widget's tree primary term. Coincidentally(?), it uses the same filter structure; although, it misses the $post object.
+	\add_filter( 'woocommerce_product_categories_widget_main_term', [ $tsf, '_adjust_post_link_category' ], 10, 2 );
 }
 
 \add_filter( 'the_seo_framework_real_id', __NAMESPACE__ . '\\_set_real_id_wc_shop' );
@@ -142,10 +146,10 @@ function _adjust_wc_image_generation_params( $params, $args ) {
 
 	if ( null === $args ) {
 		$is_product          = \the_seo_framework()->is_wc_product();
-		$is_product_category = function_exists( '\\is_product_category' ) && \is_product_category();
+		$is_product_category = \function_exists( '\\is_product_category' ) && \is_product_category();
 	} else {
 		if ( $args['taxonomy'] ) {
-			if ( function_exists( '\\is_product_category' ) ) {
+			if ( \function_exists( '\\is_product_category' ) ) {
 				$term                = \get_term( $args['id'], $args['taxonomy'] );
 				$is_product_category = $term && \is_product_category( $term );
 			}
@@ -189,7 +193,7 @@ function _get_product_gallery_image_details( $args = null, $size = 'full' ) {
 	if ( $post_id && \metadata_exists( 'post', $post_id, '_product_image_gallery' ) ) {
 		$product_image_gallery = \get_post_meta( $post_id, '_product_image_gallery', true );
 
-		$attachment_ids = array_map( 'absint', array_filter( explode( ',', $product_image_gallery ) ) );
+		$attachment_ids = array_map( '\\absint', array_filter( explode( ',', $product_image_gallery ) ) );
 	}
 
 	if ( $attachment_ids ) {

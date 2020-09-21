@@ -147,6 +147,8 @@ class PPW_Public {
 	 * @param array $classes Classes.
 	 *
 	 * @return array
+	 * @since 1.5.0 Mark deprecated function.
+	 * @deprecated
 	 */
 	public function ppw_post_class( $classes ) {
 		$classes[] = PPW_Constants::CUSTOM_POST_CLASS;
@@ -206,7 +208,7 @@ class PPW_Public {
 		}
 
 		// Check it is password form.
-		if ( false !== strpos( $content, 'ppw_postpass' ) && preg_match( '/<form.+(wp-login\.php\?action=ppw_postpass)/mi', $content ) && preg_match( '/name=.+post_password/mi', $content ) ) {
+		if ( post_password_required() ) {
 
 			return ppw_handle_protected_content( $post, $content, $is_show_excerpt );
 		}
@@ -357,7 +359,51 @@ class PPW_Public {
 			null
 		);
 
+		if ( isset( $_GET['ppws'] ) ) {
+			$url = add_query_arg( 'ppws', $_GET['ppws'], $url );
+		}
+
 		return $url;
+	}
+
+	/**
+	 * Set cookie time for password.
+	 * 
+	 * @param integer $time Expired time of a cookie.
+	 * 
+	 * @return integer
+	 */
+	public function set_cookie_time( $time ) {
+		if ( ! isset( $_GET['ppws'] ) || '1' !== $_GET['ppws'] ) {
+			return $time;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Handle access link with ppw_ac parameter and without encoding URL.
+	 */
+	public function handle_access_link() {
+		if ( ! isset( $_GET['ppw_ac'] ) ) {
+			return;
+		}
+		if ( ! is_singular() ) {
+			return;
+		}
+
+		$password    = wp_unslash( $_GET['ppw_ac'] );
+		$post_id     = get_the_ID();
+		$permalink   = get_permalink( $post_id );
+		$current_url = apply_filters( 'ppwp_access_link', $permalink, $post_id );
+
+		$password_service = new PPW_Password_Services();
+		$is_valid = $password_service->is_valid_password_from_request( $post_id, $password );
+
+		if ( $is_valid ) {
+			// Bypass single password.
+			add_filter( 'post_password_required', '__return_false', 50 );
+		}
 	}
 
 }

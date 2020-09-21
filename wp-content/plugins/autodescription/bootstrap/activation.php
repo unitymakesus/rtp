@@ -5,7 +5,7 @@
 
 namespace The_SEO_Framework\Bootstrap;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -29,7 +29,9 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  */
 
 //! @php7+ convert to IIFE
+// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
 _activation_set_options_autoload();
+// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
 _activation_set_plugin_check_caches();
 
 /**
@@ -70,7 +72,7 @@ function _activation_set_options_autoload() {
 
 		$temp_options = $options;
 		//? Write a small difference, so the change will be forwarded to the database.
-		if ( is_array( $temp_options ) )
+		if ( \is_array( $temp_options ) )
 			$temp_options['update_buster'] = (int) time();
 
 		$_success = \update_option( $setting, $temp_options, 'yes' );

@@ -4,13 +4,14 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-use The_SEO_Framework\Bridges\SeoSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+use The_SEO_Framework\Bridges\SeoSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_general_metabox', $instance );
 
 switch ( $instance ) :
@@ -36,10 +37,10 @@ switch ( $instance ) :
 				'callback' => SeoSettings::class . '::_general_metabox_timestamps_tab',
 				'dashicon' => 'clock',
 			],
-			'posttypes'   => [
-				'name'     => __( 'Post Types', 'autodescription' ),
-				'callback' => SeoSettings::class . '::_general_metabox_posttypes_tab',
-				'dashicon' => 'index-card',
+			'exclusions'  => [
+				'name'     => __( 'Exclusions', 'autodescription' ),
+				'callback' => SeoSettings::class . '::_general_metabox_exclusions_tab',
+				'dashicon' => 'editor-unlink',
 			],
 		];
 
@@ -102,7 +103,7 @@ switch ( $instance ) :
 
 		$pixel_info = $this->make_info(
 			__( 'The pixel counter computes whether the input will fit on search engine result pages.', 'autodescription' ),
-			'',
+			'https://kb.theseoframework.com/?p=48',
 			false
 		);
 
@@ -245,7 +246,6 @@ switch ( $instance ) :
 		<h4><?php esc_html_e( 'Transient Cache Settings', 'autodescription' ); ?></h4>
 		<?php
 		$this->description( __( 'To improve performance, generated output can be stored in the database as transient cache.', 'autodescription' ) );
-		$this->description( __( 'If your website has thousands of pages, or if other forms of caching are used, you might wish to adjust these options.', 'autodescription' ) );
 
 		$this->wrap_fields(
 			$this->make_checkbox(
@@ -268,9 +268,8 @@ switch ( $instance ) :
 			$this->wrap_fields(
 				$this->make_checkbox(
 					'cache_object',
-					esc_html__( 'Enable object cache?', 'autodescription' )
-					. ' ' . $this->make_info( __( 'Object cache generally works faster than transient cache.', 'autodescription' ), '', false ),
-					esc_html__( 'An object cache handler has been detected. If you enable this option, you may wish to disable the Schema.org transient caching.', 'autodescription' ),
+					esc_html__( 'Enable object cache?', 'autodescription' ),
+					esc_html__( 'An object cache handler has been detected.', 'autodescription' ),
 					false
 				),
 				true
@@ -322,7 +321,7 @@ switch ( $instance ) :
 			'prev_next_posts',
 			$this->convert_markdown(
 				/* translators: the backticks are Markdown! Preserve them as-is! */
-				\esc_html__( 'Add `rel` link tags to posts and pages?', 'autodescription' ),
+				esc_html__( 'Add `rel` link tags to posts and pages?', 'autodescription' ),
 				[ 'code' ]
 			),
 			'',
@@ -333,7 +332,7 @@ switch ( $instance ) :
 			'prev_next_archives',
 			$this->convert_markdown(
 				/* translators: the backticks are Markdown! Preserve them as-is! */
-				\esc_html__( 'Add `rel` link tags to archives?', 'autodescription' ),
+				esc_html__( 'Add `rel` link tags to archives?', 'autodescription' ),
 				[ 'code' ]
 			),
 			'',
@@ -344,7 +343,7 @@ switch ( $instance ) :
 			'prev_next_frontpage',
 			$this->convert_markdown(
 				/* translators: the backticks are Markdown! Preserve them as-is! */
-				\esc_html__( 'Add `rel` link tags to the homepage?', 'autodescription' ),
+				esc_html__( 'Add `rel` link tags to the homepage?', 'autodescription' ),
 				[ 'code' ]
 			),
 			'',
@@ -356,19 +355,13 @@ switch ( $instance ) :
 
 
 	case 'the_seo_framework_general_metabox_timestamps':
-		//* Sets timezone according to WordPress settings.
-		$this->set_timezone();
-
-		$timestamp_0 = date( 'Y-m-d' );
+		$timestamp_0 = gmdate( 'Y-m-d' );
 
 		/**
 		 * @link https://www.w3.org/TR/NOTE-datetime
 		 * We use the second expression of the time zone offset handling.
 		 */
-		$timestamp_1 = date( 'Y-m-d\TH:iP' );
-
-		//* Reset timezone to previous value.
-		$this->reset_timezone();
+		$timestamp_1 = gmdate( 'Y-m-d\TH:iP' );
 
 		?>
 		<h4><?php esc_html_e( 'Timestamp Settings', 'autodescription' ); ?></h4>
@@ -380,8 +373,8 @@ switch ( $instance ) :
 		<fieldset>
 			<legend>
 				<h4><?php esc_html_e( 'Timestamp Format Settings', 'autodescription' ); ?></h4>
-				<?php $this->description( __( 'This setting determines how specific the timestamp is.', 'autodescription' ) ); ?>
 			</legend>
+			<?php $this->description( __( 'This setting determines how specific the timestamp is.', 'autodescription' ) ); ?>
 
 			<p id="sitemaps-timestamp-format" class="tsf-fields">
 				<span class="tsf-toblock">
@@ -415,42 +408,95 @@ switch ( $instance ) :
 		<?php
 		break;
 
-	case 'the_seo_framework_general_metabox_posttypes':
+	case 'the_seo_framework_general_metabox_exclusions':
+		$default_options = $this->get_default_site_options();
+		$warned_options  = $this->get_warned_site_options();
+
 		?>
-		<h4><?php esc_html_e( 'Post Type Settings', 'autodescription' ); ?></h4>
+		<h4><?php esc_html_e( 'Exclusion Settings', 'autodescription' ); ?></h4>
 		<?php
-		$this->description( __( 'Post types are special content types. These options should not need changing when post types are registered correctly.', 'autodescription' ) );
+		$this->description( __( 'When checked, these options will remove meta optimizations, SEO suggestions, and sitemap inclusions for the selected post types and taxonomies. This will allow search engines to crawl the post type and taxonomies without advanced restrictions or directions.', 'autodescription' ) );
+		$this->attention_description_noesc(
+			$this->convert_markdown(
+				/* translators: backticks are code wraps. Markdown! */
+				esc_html__( "These options should not need changing when post types and taxonomies are registered correctly. When they aren't, consider applying `noindex` to purge them from search engines, instead.", 'autodescription' ),
+				[ 'code' ]
+			)
+		);
+		$this->description( __( 'Default post types and taxonomies can not be excluded.', 'autodescription' ) );
 		?>
 
 		<hr>
 
-		<h4><?php esc_html_e( 'Disable SEO', 'autodescription' ); ?></h4>
+		<h4><?php esc_html_e( 'Post Type Exclusions', 'autodescription' ); ?></h4>
 		<?php
-		$this->description( __( 'Select post types which should not receive any SEO optimization whatsoever. This will remove meta optimizations, SEO suggestions, and sitemap inclusions for the selected post types.', 'autodescription' ) );
-		$this->attention_description( __( 'Disabling SEO allows search engines to crawl the post type without restrictions or direction.', 'autodescription' ) );
-		$this->description( __( 'These settings are applied to the post type pages and their terms. When terms are shared between post types, all their post types should be checked for this to have an effect.', 'autodescription' ) );
-		$this->description( __( 'Default post types can not be disabled.', 'autodescription' ) );
+		$this->description( __( 'Select post types which should be excluded.', 'autodescription' ) );
+		$this->description( __( 'These settings apply to the post type pages and their terms. When terms are shared between post types, all their post types should be checked for this to have an effect.', 'autodescription' ) );
 
 		$forced_pt = $this->get_forced_supported_post_types();
 		$boxes     = [];
 
-		foreach ( $this->get_rewritable_post_types() as $post_type ) {
-			$pto = get_post_type_object( $post_type );
-			if ( ! isset( $pto->labels->name ) ) continue;
+		$pt_option_id = 'disabled_post_types';
+
+		foreach ( $this->get_public_post_types() as $post_type ) {
+			$_label = $this->get_post_type_label( $post_type, false );
+			if ( ! strlen( $_label ) ) continue;
 
 			$_label = sprintf(
 				'%s &ndash; <code>%s</code>',
-				esc_html( $pto->labels->name ),
+				esc_html( $_label ),
 				esc_html( $post_type )
 			);
 
 			$boxes[] = $this->make_checkbox_array( [
-				'id'       => 'disabled_post_types',
-				'class'    => 'tsf-disabled-post-types',
+				'id'       => $pt_option_id,
+				'class'    => 'tsf-excluded-post-types',
 				'index'    => $post_type,
 				'label'    => $_label,
 				'escape'   => false,
 				'disabled' => in_array( $post_type, $forced_pt, true ),
+				'default'  => ! empty( $default_options[ $pt_option_id ][ $post_type ] ),
+				'warned'   => ! empty( $warned_options[ $pt_option_id ][ $post_type ] ),
+			] );
+		}
+
+		$this->wrap_fields( $boxes, true );
+
+		?>
+		<hr>
+
+		<h4><?php esc_html_e( 'Taxonomy Exclusions', 'autodescription' ); ?></h4>
+		<?php
+		$this->description( __( 'Select taxonomies which should be excluded.', 'autodescription' ) );
+		$this->description( __( 'When taxonomies have all their bound post types excluded, they will inherit their exclusion status.', 'autodescription' ) );
+
+		$forced_tax = $this->get_forced_supported_taxonomies();
+		$boxes      = [];
+
+		$tax_option_id = 'disabled_taxonomies';
+
+		foreach ( $this->get_public_taxonomies() as $taxonomy ) {
+			$_label = $this->get_tax_type_label( $taxonomy, false );
+			if ( ! strlen( $_label ) ) continue;
+
+			$_label = sprintf(
+				'%s &ndash; <code>%s</code>',
+				esc_html( $_label ),
+				esc_html( $taxonomy )
+			);
+
+			$boxes[] = $this->make_checkbox_array( [
+				'id'       => 'disabled_taxonomies',
+				'class'    => 'tsf-excluded-taxonomies',
+				'index'    => $taxonomy,
+				'label'    => $_label,
+				'escape'   => false,
+				'disabled' => in_array( $taxonomy, $forced_tax, true ),
+				'default'  => ! empty( $default_options[ $tax_option_id ][ $taxonomy ] ),
+				'warned'   => ! empty( $warned_options[ $tax_option_id ][ $taxonomy ] ),
+				'data'     => [
+					'postTypes' => $this->get_post_types_from_taxonomy( $taxonomy ),
+				],
 			] );
 		}
 

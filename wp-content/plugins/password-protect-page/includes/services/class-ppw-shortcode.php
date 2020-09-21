@@ -58,6 +58,10 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 					'button'            => PPW_Constants::DEFAULT_SHORTCODE_BUTTON,
 					'whitelisted_roles' => '',
 					'group'             => '',
+					'label'             => PPW_Constants::DEFAULT_SHORTCODE_LABEL,
+					'error_msg'         => PPW_Constants::DEFAULT_SHORTCODE_ERROR_MSG,
+					'on'                => '',
+					'off'               => '',
 				)
 			);
 
@@ -82,6 +86,11 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			);
 
 			add_shortcode( PPW_Constants::PPW_HOOK_SHORT_CODE_NAME, array( $this, 'render_shortcode' ) );
+			add_filter( 'ppw_content_shortcode_source', array( $this, 'render_block_content' ), 15 );
+
+			// Support page builder.
+			add_action( 'the_post', array( $this, 'maybe_remove_ppwp_shortcode' ), 10 );
+			add_action( 'the_post', array( $this, 'maybe_add_ppwp_shortcode' ), 99999 );
 
 
 			/**
@@ -95,6 +104,68 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			}
 
 			$this->main_class_name = PPW_Constants::DEFAULT_SHORTCODE_CLASS_NAME;
+		}
+
+		/**
+		 * Maybe remove shortcode before WPBakery and WordPress do_shortcode in FrontEnd.
+		 */
+		public function maybe_remove_ppwp_shortcode() {
+			if ( ! ppw_free_has_support_shortcode_page_builder() ) {
+				return;
+			}
+
+			remove_shortcode( PPW_Constants::PPW_HOOK_SHORT_CODE_NAME );
+		}
+
+		/**
+		 * Maybe add shortcode back.
+		 */
+		public function maybe_add_ppwp_shortcode() {
+			if ( ! ppw_free_has_support_shortcode_page_builder() ) {
+				return;
+			}
+
+			add_filter( 'the_content', function ( $content ) {
+				add_shortcode( PPW_Constants::PPW_HOOK_SHORT_CODE_NAME, array( $this, 'render_shortcode' ) );
+
+				/* translators: Opening curly double quote. */
+				$opening_quote = _x( '&#8220;', 'opening curly double quote' );
+				/* translators: Closing curly double quote. */
+				$closing_quote = _x( '&#8221;', 'closing curly double quote' );
+				/* translators: Apostrophe, for example in 'cause or can't. */
+				$apos = _x( '&#8217;', 'apostrophe' );
+				/* translators: Prime, for example in 9' (nine feet). */
+				$prime = _x( '&#8242;', 'prime' );
+				/* translators: Double prime, for example in 9" (nine inches). */
+				$double_prime = _x( '&#8243;', 'double prime' );
+				/* translators: Opening curly single quote. */
+				$opening_single_quote = _x( '&#8216;', 'opening curly single quote' );
+				/* translators: Closing curly single quote. */
+				$closing_single_quote = _x( '&#8217;', 'closing curly single quote' );
+
+				$matches = ppw_free_search_shortcode_content( $content );
+				if ( ! empty( $matches ) ) {
+					foreach ( $matches as $match ) {
+						// The shortcode argument list
+						$old_argument_shortcode = $match[3];
+						$argument_shortcode     = $match[3];
+
+						$argument_shortcode = str_replace( $opening_quote, '"', $argument_shortcode );
+						$argument_shortcode = str_replace( $closing_quote, '"', $argument_shortcode );
+						$argument_shortcode = str_replace( $apos, '\'', $argument_shortcode );
+						$argument_shortcode = str_replace( $prime, '\'', $argument_shortcode );
+						$argument_shortcode = str_replace( $double_prime, '"', $argument_shortcode );
+						$argument_shortcode = str_replace( $opening_single_quote, '\'', $argument_shortcode );
+						$argument_shortcode = str_replace( $closing_single_quote, '\'', $argument_shortcode );
+
+						$content = str_replace( $old_argument_shortcode, $argument_shortcode, $content );
+					}
+				}
+
+				$content = do_shortcode( $content );
+
+				return $content;
+			}, 99999 );
 		}
 
 		/**
@@ -148,11 +219,16 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 				return apply_filters( PPW_Constants::HOOK_SHORTCODE_RENDER_CONTENT, $content, $attrs );
 			}
 
+			// Unlock content by datetime.
+			$unlocked = apply_filters( 'ppw_shortcode_unlock_content', $this->is_unlock_content_by_time( $attrs ), $attrs ); 
+			if ( $unlocked ) {
+				return apply_filters( PPW_Constants::HOOK_SHORTCODE_RENDER_CONTENT, $content, $attrs );
+			}
+
 			do_action( PPW_Constants::HOOK_SHORT_CODE_BEFORE_CHECK_PASSWORD, $content );
 
 			// Passwords attribute format: passwords="123 345 898942".
 			$passwords = apply_filters( PPW_Constants::HOOK_SHORTCODE_PASSWORDS, array_filter( explode( ' ', trim( $attrs['passwords'] ) ), 'strlen' ), $attrs );
-
 
 			foreach ( $passwords as $password ) {
 				// When passwords attribute having special characters eg: <script>alert('hello')</script>. WP will encode the HTML tag. Need to decode to compare the value in Cookie.
@@ -181,6 +257,46 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 		}
 
 		/**
+		 * Show content if user set on_date or off_date attribute.
+		 * $on_date: Date to unlock content
+		 * $off_date: Date to protect content.
+		 *
+		 * @param array $attrs Attributes.
+		 *
+		 * @return false True is unlock content else false.
+		 */
+		private function is_unlock_content_by_time( $attrs ) {
+			$on_date = false;
+			if ( '' !== $attrs['on'] ) {
+				$on_date = strtotime( $attrs['on'] );
+			}
+
+			$off_date = false;
+			if ( '' !== $attrs['off'] ) {
+				$off_date = strtotime( $attrs['off'] );
+			}
+
+			// Show password form if on_date and off_date are empty.
+			if ( ! $on_date && ! $off_date ) {
+				return false;
+			}
+
+			$now = current_time( 'timestamp' );
+
+			// Unlock content between on_date and off_date.
+			if ( $on_date && $off_date && $on_date <= $now && $off_date >= $now ) {
+				return apply_filters( 'ppw_shortcode_unlock_content_by_time', true, $attrs );
+			}
+
+			// Unlock content from on_date.
+			if ( $on_date && ! $off_date && $now >= $on_date ) {
+				return apply_filters( 'ppw_shortcode_unlock_content_by_time', true, $attrs );
+			}
+
+			return false;
+		}
+
+		/**
 		 * Require javascript bundle file for shortcode.
 		 */
 		public function add_scripts() {
@@ -199,7 +315,6 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 					'restUrl'             => get_rest_url(),
 					'nonce'               => wp_create_nonce( 'wp_rest' ),
 					'cookieExpiration'    => $this->get_cookie_expiration(),
-					'postClass'           => PPW_Constants::CUSTOM_POST_CLASS,
 					'supportedClassNames' => apply_filters(
 						'ppw_shortcode_supported_class_name',
 						array(
@@ -239,6 +354,20 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 
 			if ( ! $this->is_valid_attributes( $attrs ) ) {
 				return $message;
+			}
+
+			return true;
+		}
+
+		/**
+		 * @param $attrs
+		 */
+		private function is_valid_date( $attrs ) {
+			if ( '' !== $attrs['on'] && ! ppw_free_validate_date( $attrs['on'] ) ) {
+				return false;
+			}
+			if ( '' !== $attrs['off'] && ! ppw_free_validate_date( $attrs['off'] ) ) {
+				return false;
 			}
 
 			return true;
@@ -314,7 +443,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 				PPW_Constants::SHORT_CODE_FORM_CURRENT_URL   => $this->get_the_permalink_without_cache( wp_rand( 0, 100 ) ),
 				PPW_Constants::SHORT_CODE_FORM_ID            => '' === $attrs['id'] ? get_the_ID() . wp_rand( 0, 1000 ) : wp_kses_post( $attrs['id'] ),
 				PPW_Constants::SHORT_CODE_FORM_CLASS         => '' === $attrs['class'] ? $this->get_main_class_name( $attrs ) : $this->get_main_class_name( $attrs ) . ' ' . wp_kses_post( $attrs['class'] ),
-				PPW_Constants::SHORT_CODE_PASSWORD_LABEL     => __( 'Password:', 'password-protect-page' ),
+				PPW_Constants::SHORT_CODE_PASSWORD_LABEL     => _x( $this->massage_attributes( $attrs['label'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 				PPW_Constants::SHORT_CODE_FORM_ERROR_MESSAGE => '',
 				'[PPW_PAGE]'                                 => $number,
 			);
@@ -381,6 +510,10 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 						return false;
 					}
 				}
+			}
+
+			if ( ! $this->is_valid_date( $attrs ) ) {
+				return false;
 			}
 
 			return true;
@@ -584,6 +717,33 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			}
 
 			return $pages[ $page - 1 ];
+		}
+
+		/**
+		 * Handle block content on Gutenberg
+		 *
+		 * @param string $content Post content.
+		 *
+		 * @return string Content after rendered.
+		 */
+		public function render_block_content( $content ) {
+			if ( ! function_exists( 'parse_blocks' ) ||
+			     ! function_exists( 'has_blocks' ) ||
+			     ! function_exists( 'render_block' )
+			) {
+				return $content;
+			}
+			if ( has_blocks( $content ) ) {
+				$content_markup = '';
+				$blocks = parse_blocks( $content );
+				foreach ( $blocks as $block ) {
+					$content_markup .= render_block( $block );
+				}
+
+				return $content_markup;
+			}
+
+			return $content;
 		}
 	}
 

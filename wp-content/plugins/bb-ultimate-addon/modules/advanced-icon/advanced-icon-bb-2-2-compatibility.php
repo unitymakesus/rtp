@@ -63,6 +63,7 @@ FLBuilder::register_module(
 							'placeholder' => '10',
 							'maxlength'   => '2',
 							'size'        => '4',
+							'responsive'  => true,
 							'help'        => __( 'To manage the space between Icons / Image use this option', 'uabb' ),
 							'preview'     => array(
 								'type'     => 'css',

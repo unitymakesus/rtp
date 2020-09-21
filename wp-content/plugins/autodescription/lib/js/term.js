@@ -45,6 +45,19 @@ window.tsfTerm = function( $ ) {
 	const l10n = 'undefined' !== typeof tsfTermL10n && tsfTermL10n;
 
 	/**
+	 * @since 4.1.0
+	 * @access private
+	 * @type {string}
+	 */
+	const _titleId = 'autodescription-meta[doctitle]';
+	/**
+	 * @since 4.1.0
+	 * @access private
+	 * @type {string}
+	 */
+	const _descId = 'autodescription-meta[description]';
+
+	/**
 	 * Initializes Canonical URL meta input listeners.
 	 *
 	 * @since 4.0.0
@@ -79,37 +92,51 @@ window.tsfTerm = function( $ ) {
 	 */
 	const _initTitleListeners = () => {
 
-		const metaInput       = document.getElementById( 'autodescription-meta[doctitle]' );
+		const titleInput      = document.getElementById( _titleId );
 		const blogNameTrigger = document.getElementById( 'autodescription-meta[title_no_blog_name]' );
 
-		tsfTitle.setInputElement( metaInput );
+		tsfTitle.setInputElement( titleInput );
 
+		let state = JSON.parse(
+			document.getElementById( 'tsf-title-data_' + _titleId ).dataset.state
+		);
+
+		tsfTitle.updateStateOf( _titleId, 'allowReferenceChange', ! state.refTitleLocked );
+		tsfTitle.updateStateOf( _titleId, 'defaultTitle', state.defaultTitle.trim() );
+		tsfTitle.updateStateOf( _titleId, 'addAdditions', state.addAdditions );
+		tsfTitle.updateStateOf( _titleId, 'useSocialTagline', !! ( state.useSocialTagline || false ) );
+		tsfTitle.updateStateOf( _titleId, 'additionValue', state.additionValue.trim() );
+		tsfTitle.updateStateOf( _titleId, 'additionPlacement', state.additionPlacement );
+		tsfTitle.updateStateOf( _titleId, 'hasLegacy', !! ( state.hasLegacy || false ) );
+
+		// tsfTitle shouldn't be aware of this--since we remove the prefix on-input.
 		const termPrefix = tsf.escapeString( l10n.params.termPrefix );
 
 		/**
 		 * Updates title additions, based on singular settings change.
 		 *
 		 * @function
-		 * @param {!jQuery.Event} event
+		 * @param {Event} event
 		 * @return {undefined}
 		 */
-		const updateTitleAdditions = ( event ) => {
-
-			let prevUseTagline = tsfTitle.getState( 'useTagline' ),
-				useTagline     = ! $( event.target ).is( ':checked' );
+		const updateTitleAdditions = event => {
+			let prevAddAdditions = tsfTitle.getStateOf( _titleId, 'addAdditions' ),
+				addAdditions     = ! event.target.checked;
 
 			if ( l10n.params.additionsForcedDisabled ) {
-				useTagline = false;
+				addAdditions = false;
 			}
 
-			if ( prevUseTagline !== useTagline ) {
-				tsfTitle.updateState( 'useTagline', useTagline );
+			if ( prevAddAdditions !== addAdditions ) {
+				tsfTitle.updateStateOf( _titleId, 'addAdditions', addAdditions );
 			}
 		}
-		$( blogNameTrigger ).on( 'change', updateTitleAdditions );
-		$( blogNameTrigger ).trigger( 'change' );
+		if ( blogNameTrigger ) {
+			blogNameTrigger.addEventListener( 'change', updateTitleAdditions );
+			blogNameTrigger.dispatchEvent( new Event( 'change' ) );
+		}
 
-		//!? Disable as we don't add prefixes when using a custom title:
+		//!? Disabled as we don't add prefixes when using a custom title:
 		//
 		// /**
 		//  * Sets term prefix.
@@ -129,7 +156,7 @@ window.tsfTerm = function( $ ) {
 		// 	if ( prefixValue !== oldPrefixValue )
 		// 		tsfTitle.updateState( 'prefixValue', prefixValue );
 		// }
-		// $( metaInput ).on( 'input', setTermPrefixValue );
+		// $( titleInput ).on( 'input', setTermPrefixValue );
 
 		/**
 		 * Updates default title placeholder.
@@ -141,7 +168,7 @@ window.tsfTerm = function( $ ) {
 		const updateDefaultTitle = ( val ) => {
 			val = typeof val === 'string' && val.trim() || '';
 
-			let title = l10n.params.stripTitleTags ? tsf.stripTags( val ) : val;
+			let title = tsfTitle.stripTitleTags ? tsf.stripTags( val ) : val;
 
 			title = title || tsfTitle.untitledTitle;
 
@@ -153,11 +180,12 @@ window.tsfTerm = function( $ ) {
 				defaultTitle = termPrefix + ' ' + title;
 			}
 
-			tsfTitle.updateState( 'defaultTitle', defaultTitle );
+			tsfTitle.updateStateOf( _titleId, 'defaultTitle', defaultTitle );
 		}
-		$( '#edittag #name' ).on( 'input', event => updateDefaultTitle( event.target.value ) );
+		const termNameInput = document.querySelector( '#edittag #name' );
+		termNameInput && termNameInput.addEventListener( 'input', event => updateDefaultTitle( event.target.value ) );
 
-		tsfTitle.enqueueUnregisteredInputTrigger();
+		tsfTitle.enqueueUnregisteredInputTrigger( _titleId );
 	}
 
 	/**
@@ -171,11 +199,19 @@ window.tsfTerm = function( $ ) {
 	 */
 	const _initDescriptionListeners = () => {
 
-		tsfDescription.setInputElement( document.getElementById( 'autodescription-meta[description]' ) );
+		let state = JSON.parse(
+			document.getElementById( 'tsf-description-data_' + _descId ).dataset.state
+		);
 
-		// TODO set term-description input listeners?
+		tsfDescription.setInputElement( document.getElementById( _descId ) );
 
-		tsfDescription.enqueueUnregisteredInputTrigger();
+		// tsfDescription.updateState( 'allowReferenceChange', ! state.refDescriptionLocked );
+		tsfDescription.updateStateOf( _descId, 'defaultDescription', state.defaultDescription.trim() );
+		tsfDescription.updateStateOf( _descId, 'hasLegacy', !! ( state.hasLegacy || false ) );
+
+		// TODO set term-description-content (via ajax) listeners?
+
+		tsfDescription.enqueueUnregisteredInputTrigger( _descId );
 	}
 
 	/**
@@ -197,6 +233,7 @@ window.tsfTerm = function( $ ) {
 	 * Initializes settings scripts on TSF-ready.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now registers the refNa title input.
 	 * @access private
 	 *
 	 * @function
@@ -205,15 +242,16 @@ window.tsfTerm = function( $ ) {
 	const _readySettings = () => {
 
 		tsfSocial.initTitleInputs( {
-			ref:  document.getElementById( 'tsf-title-reference' ),
-			meta: document.getElementById( 'autodescription-meta[doctitle]' ),
-			og:   document.getElementById( 'autodescription-meta[og_title]' ),
-			tw:   document.getElementById( 'autodescription-meta[tw_title]' ),
+			ref:   document.getElementById( 'tsf-title-reference_' + _titleId ),
+			refNa: document.getElementById( 'tsf-title-noadditions-reference_' + _titleId ),
+			meta:  document.getElementById( _titleId ),
+			og:    document.getElementById( 'autodescription-meta[og_title]' ),
+			tw:    document.getElementById( 'autodescription-meta[tw_title]' ),
 		} );
 
 		tsfSocial.initDescriptionInputs( {
-			ref:  document.getElementById( 'tsf-description-reference' ),
-			meta: document.getElementById( 'autodescription-meta[description]' ),
+			ref:  document.getElementById( 'tsf-description-reference_' + _descId ),
+			meta: document.getElementById( _descId ),
 			og:   document.getElementById( 'autodescription-meta[og_description]' ),
 			tw:   document.getElementById( 'autodescription-meta[tw_description]' ),
 		} );
@@ -231,13 +269,13 @@ window.tsfTerm = function( $ ) {
 		 * @return {undefined}
 		 */
 		load: () => {
-			$( document.body ).on( 'tsf-onload', _loadSettings );
-			$( document.body ).on( 'tsf-ready', _readySettings );
+			document.body.addEventListener( 'tsf-onload', _loadSettings );
+			document.body.addEventListener( 'tsf-ready', _readySettings );
 		}
 	}, {
-
+		// No public methods.
 	}, {
 		l10n
 	} );
 }( jQuery );
-jQuery( window.tsfTerm.load );
+window.tsfTerm.load();

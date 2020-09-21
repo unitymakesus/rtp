@@ -61,7 +61,15 @@
 		_init: function()
 		{
 			this.button.on( 'click', $.proxy( this._submitForm, this ) );
+			this.button.on( 'keydown, keyup', $.proxy( this._keyupdown, this ) );
 			this.form.find( 'input[type="email"]' ).on( 'keypress', $.proxy( this._onEnterKey, this) );
+		},
+
+		_keyupdown: function(e) {
+			if( e.keyCode === 13 || e.keyCode === 32 ) {
+				e.preventDefault();
+				this._submitForm(e);
+			}
 		},
 
 		_submitForm: function( e )
@@ -148,7 +156,7 @@
 				ajaxData = {
 					action           : 'fl_builder_subscribe_form_submit',
 					name             : name.val(),
-					email            : email.val(), 
+					email            : email.val(),
 					success_url      : successUrl,
 					terms_checked    : termsCheckbox.is(':checked') ? '1' : '0',
 					post_id          : postId,

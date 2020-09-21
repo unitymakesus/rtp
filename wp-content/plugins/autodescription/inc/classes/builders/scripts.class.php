@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Builders;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Sets up class loader as file is loaded.
@@ -33,6 +33,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @link https://bugs.php.net/bug.php?id=75771
  */
 $_load_scripts_class = function() {
+	// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
 	new Scripts();
 };
 
@@ -110,12 +111,12 @@ final class Scripts {
 
 	/**
 	 * The constructor. Can't be instantiated externally from this file.
+	 * Kills PHP on subsequent duplicated request. Enforces singleton.
 	 *
 	 * This probably autoloads at action "admin_enqueue_scripts", priority "0".
 	 *
 	 * @since 3.1.0
 	 * @access private
-	 * @staticvar int $count Enforces singleton.
 	 * @internal
 	 */
 	public function __construct() {
@@ -125,6 +126,7 @@ final class Scripts {
 
 		static::$instance = &$this;
 
+		// These fail when called in the body.
 		\add_filter( 'admin_body_class', [ $this, '_add_body_class' ] );
 		\add_action( 'in_admin_header', [ $this, '_print_tsfjs_script' ] );
 
@@ -294,7 +296,7 @@ final class Scripts {
 	}
 
 	/**
-	 * Forwards known scripts to WordPress' script handler. Also prepares l10n and templates.
+	 * Forwards known scripts to WordPress's script handler. Also prepares l10n and templates.
 	 *
 	 * @since 3.2.2
 	 * @uses static::$scripts
@@ -325,7 +327,7 @@ final class Scripts {
 	}
 
 	/**
-	 * Enqueues scripts in WordPress' script handler. Also prepares l10n and templates.
+	 * Enqueues scripts in WordPress's script handler. Also prepares l10n and templates.
 	 *
 	 * @since 3.2.2
 	 * @see $this->forward_known_scripts();
@@ -400,10 +402,9 @@ final class Scripts {
 
 	/**
 	 * Generates file URL.
+	 * Memoizes use of RTL and minification.
 	 *
 	 * @since 3.1.0
-	 * @staticvar string $min
-	 * @staticvar string $rtl
 	 *
 	 * @param array $script The script arguments.
 	 * @param array $type Either 'js' or 'css'.
@@ -471,8 +472,6 @@ final class Scripts {
 	 * Converts color CSS.
 	 *
 	 * @since 3.1.0
-	 * @staticvar array $c_ck Color keys.
-	 * @staticvar array $c_cv Color values.
 	 *
 	 * @param array $css The CSS to convert.
 	 * @return array $css
@@ -480,7 +479,7 @@ final class Scripts {
 	private function convert_color_css( array $css ) {
 
 		static $c_ck, $c_cv;
-
+		// Memoize the conversion types.
 		if ( ! isset( $c_ck, $c_cv ) ) {
 			$_scheme = \get_user_option( 'admin_color' ) ?: 'fresh';
 			$_colors = $GLOBALS['_wp_admin_css_colors'];
@@ -489,8 +488,8 @@ final class Scripts {
 
 			if (
 			   ! isset( $_colors[ $_scheme ]->colors ) // phpcs:ignore, WordPress.WhiteSpace
-			|| ! is_array( $_colors[ $_scheme ]->colors )
-			|| count( $_colors[ $_scheme ]->colors ) < 4
+			|| ! \is_array( $_colors[ $_scheme ]->colors )
+			|| \count( $_colors[ $_scheme ]->colors ) < 4
 			) {
 				$_colors = [
 					'#222',
@@ -581,7 +580,7 @@ final class Scripts {
 	}
 
 	/**
-	 * Outputs tab view, whilst trying to prevent 3rd party interference on views.
+	 * Outputs tab view, whilst trying to prevent third-party interference on views.
 	 *
 	 * There's a secret key generated on each tab load. This key can be accessed
 	 * in the view through `$_secret`, and be sent back to this class.

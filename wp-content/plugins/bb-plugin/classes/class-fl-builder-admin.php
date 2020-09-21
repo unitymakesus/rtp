@@ -136,6 +136,17 @@ final class FLBuilderAdmin {
 			}
 		}
 
+		//Check for one.com htaccess file in uploads that breaks everything.
+		$upload_dir = wp_upload_dir();
+		$file       = trailingslashit( $upload_dir['basedir'] ) . '.htaccess';
+		if ( file_exists( $file ) ) {
+			$htaccess = file_get_contents( $file );
+			if ( false !== strpos( $htaccess, 'Block javascript except for visualcomposer (VC) plugin' ) ) {
+				FLBuilderAdminSettings::add_error(
+				/* translators: %s formatted .htaccess */
+				sprintf( __( 'Install Error! You appear to have a %s file in your uploads folder that will block all javascript files resulting in 403 errors. If you did not add this file please consult your host.', 'fl-builder' ), '<code>.htaccess</code>' ) );
+			}
+		}
 	}
 
 	/**

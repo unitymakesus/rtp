@@ -22,6 +22,33 @@ $settings = apply_filters( 'fl_builder_loop_settings', $settings );  // Allow ex
 do_action( 'uabb_woo_products_loop_settings_before_form', $settings ); // e.g Add custom FLBuilder::render_settings_field().
 
 ?>
+<div id="fl-builder-settings-section-source" class="fl-loop-data-source-select fl-builder-settings-section">
+	<table class="fl-form-table">
+		<?php
+
+		// Data Source.
+		FLBuilder::render_settings_field(
+			'data_source',
+			array(
+				'type'    => 'select',
+				'label'   => __( 'Source', 'uabb' ),
+				'default' => 'custom_query',
+				'options' => array(
+					'custom_query' => __( 'Custom Query', 'uabb' ),
+					'main_query'   => __( 'Main Query', 'uabb' ),
+				),
+				'toggle'  => array(
+					'custom_query' => array(
+						'fields' => array( 'grid_products' ),
+					),
+				),
+			),
+			$settings
+		);
+
+		?>
+	</table>
+</div>
 <div class="fl-custom-query fl-loop-data-source" data-source="custom_query">
 	<div id="fl-builder-settings-section-filter" class="fl-builder-settings-section">
 		<h3 class="fl-builder-settings-title">

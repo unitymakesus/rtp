@@ -472,6 +472,12 @@ FLBuilder::register_module(
 								'F Y'    => date_i18n( 'F Y' ),
 							),
 						),
+						'seprator_meta'   => array(
+							'type'    => 'text',
+							'label'   => __( 'Meta Separator', 'uabb' ),
+							'default' => ' | ',
+							'size'    => 4,
+						),
 						'show_categories' => array(
 							'type'    => 'select',
 							'label'   => __( 'Show Categories', 'uabb' ),

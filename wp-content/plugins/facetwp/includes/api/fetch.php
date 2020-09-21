@@ -56,8 +56,8 @@ class FacetWP_API_Fetch
         $facets = [];
 
         // Validate input
-        $page = (int) $params['query_args']['paged'];
-        $per_page = (int) $params['query_args']['posts_per_page'];
+        $page = isset( $params['query_args']['paged'] ) ? (int) $params['query_args']['paged'] : 1;
+        $per_page = isset( $params['query_args']['posts_per_page'] ) ? (int) $params['query_args']['posts_per_page'] : 10;
 
         $page = max( $page, 1 );
         $per_page = ( 0 === $per_page ) ? 10 : $per_page;
@@ -73,7 +73,7 @@ class FacetWP_API_Fetch
             if ( false !== $facet ) {
                 $facet['selected_values'] = (array) $facet_value;
                 $valid_facets[ $facet_name ] = $facet;
-                FWP()->facet->facets[] = $facet;
+                FWP()->facet->facets[ $facet_name ] = $facet;
             }
         }
 
@@ -88,6 +88,10 @@ class FacetWP_API_Fetch
         if ( 0 === $post_ids[0] && 1 === count( $post_ids ) ) {
             $post_ids = [];
         }
+
+        // Set necessary vars (keep this BELOW the empty check)
+        FWP()->facet->query_args['post__in'] = $post_ids;
+        FWP()->facet->query = (object) [ 'found_posts' => count( $post_ids ) ];
 
         // Get valid facets and their values
         foreach ( $valid_facets as $facet_name => $facet ) {
@@ -108,13 +112,20 @@ class FacetWP_API_Fetch
             if ( method_exists( $facet_types[ $facet['type'] ], 'load_values' ) ) {
                 $choices = $facet_types[ $facet['type'] ]->load_values( $args );
                 foreach ( $choices as $key => $choice ) {
-                    $choices[ $key ] = [
+                    $row = [
                         'value'     => $choice['facet_value'],
                         'label'     => $choice['facet_display_value'],
                         'depth'     => (int) $choice['depth'],
                         'count'     => (int) $choice['counter'],
                     ];
+
+                    if ( isset( $choice['parent_id'] ) ) {
+                        $row['parent_id'] = (int) $choice['parent_id'];
+                    }
+
+                    $choices[ $key ] = $row;
                 }
+
                 $facet_data['choices'] = $choices;
             }
 

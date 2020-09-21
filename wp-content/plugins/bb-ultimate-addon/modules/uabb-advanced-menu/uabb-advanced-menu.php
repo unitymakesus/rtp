@@ -1063,7 +1063,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 
 			if ( in_array( $toggle, array( 'hamburger', 'hamburger-label' ), true ) ) {
 				echo '<div class="uabb-creative-menu-mobile-toggle-container">';
-				echo '<div class="uabb-creative-menu-mobile-toggle ' . esc_attr( $toggle ) . '"><div class="uabb-svg-container">';
+				echo '<div class="uabb-creative-menu-mobile-toggle ' . esc_attr( $toggle ) . '" tabindex="0"><div class="uabb-svg-container">';
 				include 'img/hamburger-menu.svg';
 				echo '</div>';
 
@@ -1077,7 +1077,7 @@ class UABBCreativeMenu extends FLBuilderModule {
 
 			} elseif ( 'text' === $toggle ) {
 				echo '<div class="uabb-creative-menu-mobile-toggle-container">';
-				echo '<div class="uabb-creative-menu-mobile-toggle text"><span class="uabb-creative-menu-mobile-toggle-label">';
+				echo '<div class="uabb-creative-menu-mobile-toggle text" tabindex="0"><span class="uabb-creative-menu-mobile-toggle-label">';
 				echo ( isset( $this->settings->creative_menu_mobile_toggle_text ) && ! empty( $this->settings->creative_menu_mobile_toggle_text ) ) ? $this->settings->creative_menu_mobile_toggle_text : __( 'Menu', 'uabb' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo '</span></div></div>';
 

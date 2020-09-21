@@ -80,11 +80,20 @@ FLBuilderCSS::rule( array(
 
 // Text Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-icon-text, .fl-node-$id .fl-icon-text-link",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-module-content .fl-icon-wrap .fl-icon-text, .fl-builder-content .fl-node-$id .fl-module-content .fl-icon-wrap .fl-icon-text-link *",
 	'props'    => array(
-		'color' => $settings->text_color,
+		'color'     => $settings->text_color,
+		'important' => true,
 	),
 ) );
+
+if ( ! empty( $settings->text_color ) ) : ?>
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon-wrap .fl-icon-text,
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-module-content .fl-icon-wrap .fl-icon-text * {
+		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
+	}
+	<?php
+endif;
 
 // Text Typography
 FLBuilderCSS::typography_field_rule( array(

@@ -55,11 +55,12 @@ final class FLBuilderServiceEmailAddress extends FLBuilderService {
 		ob_start();
 
 		FLBuilder::render_settings_field( 'email', array(
-			'row_class' => 'fl-builder-service-connect-row',
-			'class'     => 'fl-builder-service-connect-input',
-			'type'      => 'text',
-			'label'     => __( 'Email Address', 'fl-builder' ),
-			'preview'   => array(
+			'row_class'   => 'fl-builder-service-connect-row',
+			'class'       => 'fl-builder-service-connect-input',
+			'type'        => 'text',
+			'label'       => __( 'Email Address', 'fl-builder' ),
+			'description' => sprintf( '%s&nbsp;<a target="_blank" href="https://docs.wpbeaverbuilder.com/beaver-builder/how-to-tips/use-smtp-to-send-form-notifications">%s</a>', __( 'Note: Please read the following info on email deliverability for this module.', 'fl-builder' ), __( 'Link to Doc', 'fl-builder' ) ),
+			'preview'     => array(
 				'type' => 'none',
 			),
 		));

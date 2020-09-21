@@ -20,23 +20,23 @@ if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
 	$link     = ''; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 }
 $review_notice_google      = sprintf( /* translators: %1$s: search term */
-		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
+	'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
 	$style1
 );
 $review_notice_yelp        = sprintf( /* translators: %1$s: search term */
-		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Yelp allows maximum 3 reviews.Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
+	'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Yelp allows maximum 3 reviews.Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
 	$style1
 );
 $review_text_yelp          = sprintf( /* translators: %1$s: search term */
-		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Yelp API allows to fetch only the 160 charachters of the review.', 'uabb' ) . '</div>',
+	'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Yelp API allows to fetch only the 160 charachters of the review.', 'uabb' ) . '</div>',
 	$style1
 );
 $review_notice_yelp_google = sprintf( /* translators: %1$s: search term */
-		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews & Yelp allows maximum 3 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
+	'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Google allows maximum 5 reviews & Yelp allows maximum 3 reviews. Click', 'uabb' ) . $link . __( 'to know more.', 'uabb' ) . '</div>',
 	$style1
 );
 $filter_notice             = sprintf( /* translators: %1$s: search term */
-		'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Choose the lowest star ratings to display. For example, choosing 3 star will display reviews with 3 star and above.', 'uabb' ) . '</div>',
+	'<div class="uabb-business-review-desc" style="%1$s">' . __( 'Choose the lowest star ratings to display. For example, choosing 3 star will display reviews with 3 star and above.', 'uabb' ) . '</div>',
 	$style1
 );
 

@@ -2,8 +2,8 @@
 Contributors: yikesinc, eherman24, liljimmi, yikesitskevin
 Tags: admin, term, meta, simple, order, taxonomy, metadata, termmeta, reorder
 Requires at least: 4.4
-Tested up to: 5.1.1
-Stable tag: 2.1.0
+Tested up to: 5.4
+Stable tag: 2.3.2
 
 Quickly and easily reorder taxonomy terms with an easy to use and intuitive drag and drop interface.
 
@@ -37,6 +37,15 @@ On the front end of the site your taxonomy terms will display in the order set i
 * Profit
 
 == Changelog ==
+
+= 2.3.2 =
+* Fixes column span bug present after updating to WordPress 5.5.
+
+= 2.3.0 =
+* Fixes bug with illegal string offset when disabling taxonomies under certain conditions.
+
+= 2.2.0 =
+* Added action `yikes_sto_taxonomy_order_updated` to hook into updated Taxonomy event. Thanks @d4mation!
 
 = 2.1.0 =
 * Singleton Pattern. This approach makes removing the filter, which sets the custom order, a lot easier.

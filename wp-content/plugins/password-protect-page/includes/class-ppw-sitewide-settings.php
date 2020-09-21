@@ -6,13 +6,13 @@ if ( ! class_exists( 'PPW_Sitewide_Settings' ) ) {
 		 * Render UI sitewide submenu settings page
 		 */
         public function render_ui() {
+	        $head_title = is_pro_active_and_valid_license() ? 'PPWP Pro' : 'PPWP Lite';
 			?>
 			<div class="wrap">
 				<div id="icon-themes" class="icon32"></div>
 				<h2>
-					<?php echo esc_html__( 'Password Protect WordPress: Sitewide Protection', 'wp-protect-password-setting' ); ?>
+					<?php echo esc_html__( $head_title . ': Sitewide Protection', 'wp-protect-password-setting' ); ?>
 				</h2>
-
 				<?php
 				$general_tab  = apply_filters( PPW_Constants::HOOK_SITEWIDE_TAB, 'general' );
 				$activated_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $general_tab;

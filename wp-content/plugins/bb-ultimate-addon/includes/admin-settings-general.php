@@ -129,6 +129,10 @@
 					endif;
 					?>
 				</p>
+				<div class="uabb-api-info-msg">
+			<span class="dashicons dashicons-warning"></span>
+			<?php echo( sprintf( /* translators: %s: doc link */ wp_kses_post( __( 'Google now requires an active billing account associated with your API Key. Click %1$s here %2$s to enable billing.', 'uabb' ) ), '<a class="uabb-notice-link" href="https://console.cloud.google.com/projectselector2/billing/enable" target="_blank">', '</a>' ) ); ?>
+			</div>
 				<input type="text" class="uabb-google-place-api uabb-wp-text" name="uabb-google-place-api" value="<?php echo esc_attr( $uabb_google_place_api ); ?>" />
 				<?php if ( 'yes' === $google_status ) { ?>
 					<div class="uabb-key-success"><?php esc_attr_e( 'Google Places API Key is authenticated correctly.', 'uabb' ); ?></div>

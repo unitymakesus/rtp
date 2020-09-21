@@ -25,7 +25,7 @@
 	border-style: solid;
 }
 
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-toggle input[type="checkbox"]:checked + label:after {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-toggle .uabb-rbs-switch-2.checked + label:after {
 	border-color: <?php echo esc_attr( ( false === strpos( $settings->color2, 'rgb' ) ) ? '#' . $settings->color2 : $settings->color2 ); ?>;
 	border-width: 0.3em;
 	border-style: solid;
@@ -35,7 +35,7 @@
 	background:<?php echo esc_attr( ( false === strpos( $settings->color1, 'rgb' ) ) ? '#' . $settings->color1 : $settings->color1 ); ?>;
 }
 
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-rbs-switch:checked + .uabb-rbs-slider {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-rbs-switch.checked + .uabb-rbs-slider {
 	background-color:<?php echo esc_attr( ( false === strpos( $settings->color2, 'rgb' ) ) ? '#' . $settings->color2 : $settings->color2 ); ?>;
 }
 
@@ -44,11 +44,11 @@
 	box-shadow: 0 0 1px <?php echo '#' . esc_attr( $settings->color2 ); ?>;
 }
 
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-toggle input[type="checkbox"]:checked + label:before {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-toggle .uabb-rbs-switch-2.checked + label:before {
 	background-color:<?php echo esc_attr( ( false === strpos( $settings->color2, 'rgb' ) ) ? '#' . $settings->color2 : $settings->color2 ); ?>;
 }
 
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-toggle input[type="checkbox"]:checked + label:after {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-toggle .uabb-rbs-switch-2.checked + label:after {
 	-webkit-transform: translateX(2.5em);
 	-ms-transform: translateX(2.5em);transform: translateX(2.5em);
 	border: 0.3em solid <?php echo esc_attr( $settings->color2 ); ?>;

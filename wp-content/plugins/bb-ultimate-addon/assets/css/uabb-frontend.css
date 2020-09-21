@@ -620,11 +620,6 @@ ___________________________________________________________________________*/
             transition: all 200ms linear;
 }
 
-/*.uabb-creative-button-wrap a *,
-.uabb-creative-button-wrap a:visited * {
-    color: #333;
-}*/
-
 .uabb-creative-button-wrap a:hover {
     text-decoration: none;
 }
@@ -669,11 +664,10 @@ ___________________________________________________________________________*/
 .uabb-creative-button-wrap .uabb-creative-button-has-icon .uabb-creative-button-text {
     vertical-align: middle;
 }
-
-
-
-
-
+.uabb-creative-button-wrap a,
+.uabb-creative-button-wrap a:visited {
+    padding: 12px 24px;
+}
 
 /*  Translate Button styles */
 

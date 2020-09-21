@@ -194,11 +194,16 @@ if ( 'show' === $settings->msg_toggle && '50' === $settings->msg_width ) {
 	<?php endif; ?>
 
 	<?php
-	if ( 'show' === $settings->uabb_recaptcha_toggle && ( isset( $settings->uabb_recaptcha_site_key ) && ! empty( $settings->uabb_recaptcha_site_key ) ) ) :
+	if ( 'show' === $settings->uabb_recaptcha_toggle ) :
 		?>
 	<div class="uabb-input-group uabb-recaptcha">
 		<span class="uabb-contact-error"><?php esc_html_e( 'Please check the captcha to verify you are not a robot.', 'uabb' ); ?></span>
-		<div id="<?php echo esc_attr( $id ); ?>-uabb-grecaptcha" class="uabb-grecaptcha" data-sitekey="<?php echo esc_attr( $settings->uabb_recaptcha_site_key ); ?>" data-theme="<?php echo esc_attr( $settings->uabb_recaptcha_theme ); ?>"></div>
+		<?php if ( 'v3' === $settings->uabb_recaptcha_version && ! empty( $settings->uabb_v3_recaptcha_site_key ) && ! empty( $settings->uabb_v3_recaptcha_secret_key ) ) { ?>
+			<div id="<?php echo esc_attr( $id ); ?>-uabb-grecaptcha" class="uabb-grecaptcha" data-sitekey="<?php echo esc_attr( $settings->uabb_v3_recaptcha_site_key ); ?>" data-theme="<?php echo esc_attr( $settings->uabb_recaptcha_theme ); ?>"  data-type="v3" data-action="Form" data-badge="<?php echo esc_attr( $settings->uabb_badge_position ); ?>" data-size="invisible"></div>
+		<?php } elseif ( 'v2' === $settings->uabb_recaptcha_version && ! empty( $settings->uabb_recaptcha_site_key ) && ! empty( $settings->uabb_recaptcha_secret_key ) ) { ?>
+			<div id="<?php echo esc_attr( $id ); ?>-uabb-grecaptcha" class="uabb-grecaptcha" data-sitekey="<?php echo esc_attr( $settings->uabb_recaptcha_site_key ); ?>" data-theme="<?php echo esc_attr( $settings->uabb_recaptcha_theme ); ?>"></div>
+		<?php } ?>
+
 	</div>
 	<?php endif; ?>
 

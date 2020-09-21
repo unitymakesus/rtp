@@ -4,9 +4,12 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
+// phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_feed_metabox', $instance );
 
 switch ( $instance ) :
@@ -40,7 +43,7 @@ switch ( $instance ) :
 			true
 		);
 
-		if ( $this->rss_uses_excerpt() ) {
+		if ( get_option( 'rss_use_excerpt' ) ) {
 			$this->description_noesc(
 				$this->convert_markdown(
 					sprintf(

@@ -208,6 +208,44 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'terms_section'        => array(
+					'title'  => __( 'Terms and Conditions Field', 'uabb' ),
+					'fields' => array(
+						'terms_checkbox'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Terms and Conditions Checkbox', 'uabb' ),
+							'default' => 'hide',
+							'options' => array(
+								'show' => __( 'Show', 'uabb' ),
+								'hide' => __( 'Hide', 'uabb' ),
+							),
+							'toggle'  => array(
+								'show' => array(
+									'fields'   => array( 'terms_checkbox_text', 'terms_text' ),
+									'sections' => array( 'checkbox_typography', 'terms_typography', 'terms-checkbox-style' ),
+								),
+							),
+						),
+						'terms_checkbox_text' => array(
+							'type'    => 'text',
+							'label'   => __( 'Checkbox Text', 'uabb' ),
+							'default' => __( 'I Accept the Terms and Conditions', 'uabb' ),
+						),
+						'terms_text'          => array(
+							'type'          => 'editor',
+							'label'         => 'Terms and Conditions',
+							'default'       => __( 'Please go through the following terms and conditions carefully.', 'uabb' ),
+							'media_buttons' => false,
+							'rows'          => 8,
+							'preview'       => array(
+								'type'      => 'text',
+								'selector'  => '.uabb-registration-form .uabb-terms-text',
+								'important' => true,
+							),
+							'connections'   => array( 'string' ),
+						),
+					),
+				),
 				'after_submit_action'  => array(
 					'title'  => __( 'After Register Actions', 'uabb' ),
 					'fields' => array(
@@ -278,7 +316,7 @@ FLBuilder::register_module(
 		'style'      => array(
 			'title'    => __( 'Style', 'uabb' ),
 			'sections' => array(
-				'form-style'         => array(
+				'form-style'           => array(
 					'title'  => 'Form Style',
 					'fields' => array(
 						'form_bg_type'           => array(
@@ -373,7 +411,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'input-border-style' => array(
+				'input-border-style'   => array(
 					'title'  => __( 'Input Style', 'uabb' ),
 					'fields' => array(
 						'input_padding'             => array(
@@ -457,7 +495,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'error-style'        => array(
+				'error-style'          => array(
 					'title'  => __( 'Validation Style', 'uabb' ),
 					'fields' => array(
 						'success_msg_color'   => array(
@@ -561,7 +599,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'login_link_style'   => array(
+				'login_link_style'     => array(
 					'title'  => __( 'Login Link Style', 'uabb' ),
 					'fields' => array(
 						'login_link_color'       => array(
@@ -587,6 +625,98 @@ FLBuilder::register_module(
 							'label'      => __( 'Link Alignment', 'uabb' ),
 							'default'    => 'center',
 							'responsive' => true,
+						),
+					),
+				),
+				'terms-checkbox-style' => array(
+					'title'  => __( 'Terms Checkbox Style', 'uabb' ),
+					'fields' => array(
+						'checkbox_size'           => array(
+							'type'    => 'unit',
+							'label'   => __( 'Size', 'uabb' ),
+							'default' => '24',
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'  => 'css',
+								'rules' => array(
+									array(
+										'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+										'property'  => 'width',
+										'unit'      => 'px',
+										'important' => true,
+									),
+									array(
+										'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+										'property'  => 'height',
+										'unit'      => 'px',
+										'important' => true,
+									),
+								),
+							),
+						),
+						'checkbox_bgcolor'        => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'background',
+								'important' => true,
+							),
+						),
+						'checkbox_selected_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Checked Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'refresh',
+							),
+						),
+						'checkbox_border_width'   => array(
+							'type'    => 'unit',
+							'label'   => __( 'Border Width', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'border-width',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'checkbox_border_color'   => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Border Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'border-color',
+								'important' => true,
+							),
+						),
+						'checkbox_border_radius'  => array(
+							'type'    => 'unit',
+							'label'   => __( 'Checkbox Round Corners', 'uabb' ),
+							'default' => '0',
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'border-radius',
+								'unit'      => 'px',
+								'important' => true,
+							),
 						),
 					),
 				),
@@ -896,6 +1026,61 @@ FLBuilder::register_module(
 								'type'      => 'css',
 								'selector'  => '.uabb-rf-success-message-wrap .uabb-rf-success-message,.uabb-registration-form .uabb-registration_form-error-message-required ',
 								'important' => true,
+							),
+						),
+					),
+				),
+
+				'terms_typography'        => array(
+					'title'  => __( 'Terms and Conditions Text', 'uabb' ),
+					'fields' => array(
+						'terms_typo'       => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-text',
+							),
+						),
+						'terms_text_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-text',
+								'property' => 'color',
+							),
+						),
+					),
+				),
+				'checkbox_typography'     => array(
+					'title'  => __( 'Checkbox Text', 'uabb' ),
+					'fields' => array(
+						'checkbox_typo'       => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-label',
+							),
+						),
+						'checkbox_text_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-label',
+								'property' => 'color',
 							),
 						),
 					),

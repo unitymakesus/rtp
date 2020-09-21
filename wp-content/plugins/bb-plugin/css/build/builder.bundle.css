@@ -1,3 +1,66 @@
+.fl-notifications-panel {
+  position: fixed;
+  top: calc( 44px + 1px);
+  /* top bar plus border */
+  left: 0;
+  bottom: 0;
+  width: 380px;
+  background: var(--fluid-background);
+  color: var(--fluid-color);
+  border-right: 1px solid #d5dadd;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
+  font-size: 14px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column; }
+  .fl-notifications-panel .fl-nanoscroller .fl-nanoscroller-content {
+    padding: 0 15px; }
+  .fl-notifications-panel .fl-panel-title {
+    flex: 0 0 auto;
+    padding: 15px 30px;
+    font-size: 18px; }
+  .fl-notifications-panel .fl-builder-ui-post {
+    flex: 0 0 auto;
+    display: flex;
+    display: block;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit; }
+    .fl-notifications-panel .fl-builder-ui-post:first-child {
+      margin-top: 0; }
+    .fl-notifications-panel .fl-builder-ui-post:hover {
+      text-decoration: none;
+      background: white;
+      color: black; }
+    .fl-notifications-panel .fl-builder-ui-post .fl-builder-ui-post-title {
+      font-size: 17px;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      color: #0089b4; }
+    .fl-notifications-panel .fl-builder-ui-post .fl-builder-ui-post-date {
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px; }
+  .fl-notifications-panel .fl-panel-loading-message {
+    padding: 0 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100%; }
+
+/* Toolbar Button */
+.fl-builder-bar-spacer {
+  flex: 1 1 auto; }
+
+#bell-active-dot {
+  visibility: hidden; }
+
+.fl-builder-has-new-notifications #bell-active-dot {
+  visibility: visible; }
+
 .fl-editable {
   position: relative;
   -webkit-user-select: text; }
@@ -104,75 +167,128 @@
 /* Tooltips are currently getting in the way of mouse events. */
 .mce-tooltip {
   display: none !important; }
-.fl-notifications-panel {
-  position: fixed;
-  top: calc( 44px + 1px);
-  /* top bar plus border */
-  left: 0;
-  bottom: 0;
-  width: 380px;
-  background: #F5F7F9;
-  color: #555555;
-  border-right: 1px solid #d5dadd;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif !important;
-  font-size: 14px;
-  z-index: 999999;
-  display: flex;
-  flex-direction: column; }
-  .fl-notifications-panel .fl-nanoscroller .fl-nanoscroller-content {
-    padding: 0 15px; }
-  .fl-notifications-panel .fl-panel-title {
-    flex: 0 0 auto;
-    padding: 15px 30px;
-    font-size: 18px; }
-  .fl-notifications-panel .fl-builder-ui-post {
-    flex: 0 0 auto;
-    display: flex;
-    display: block;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 4px;
-    text-decoration: none;
-    color: inherit; }
-    .fl-notifications-panel .fl-builder-ui-post:first-child {
-      margin-top: 0; }
-    .fl-notifications-panel .fl-builder-ui-post:hover {
-      text-decoration: none;
-      background: white;
-      color: black; }
-    .fl-notifications-panel .fl-builder-ui-post .fl-builder-ui-post-title {
-      font-size: 17px;
-      line-height: 1.4;
-      margin-bottom: 10px;
-      color: #0089b4; }
-    .fl-notifications-panel .fl-builder-ui-post .fl-builder-ui-post-date {
-      text-transform: uppercase;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 10px; }
-  .fl-notifications-panel .fl-panel-loading-message {
-    padding: 0 15px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    height: 100%; }
 
-/* Toolbar Button */
-.fl-builder-bar-spacer {
-  flex: 1 1 100%; }
-
-#bell-active-dot {
-  visibility: hidden; }
-
-.fl-builder-has-new-notifications #bell-active-dot {
-  visibility: visible; }
 svg.fl-symbol {
   flex: 0 0 auto; }
 
 svg#fl-symbol-container {
   display: none; }
-/**
- * This file is just here for demonstration purposes while we get
- * our Webpack workflow going. In the future styles should probably
- * be written on a per-component basis.
- */
+
+.fluid .fl-ui-panel-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999; }
+
+.fluid .fl-ui-panel {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  color: black;
+  min-height: 40px;
+  min-width: 40px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.05), 0px 12px 24px rgba(0, 0, 0, 0.15); }
+  .fluid .fl-ui-panel .fl-ui-panel-topbar {
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: row;
+    min-height: 40px;
+    padding: 10px; }
+    .fluid .fl-ui-panel .fl-ui-panel-topbar .fl-ui-panel-title {
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 16px;
+      font-weight: bold;
+      padding-left: 10px; }
+    .fluid .fl-ui-panel .fl-ui-panel-topbar .fl-ui-panel-trailing-actions {
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: row; }
+    .fluid .fl-ui-panel .fl-ui-panel-topbar .fl-ui-button {
+      background: transparent;
+      border: none;
+      top: 0;
+      box-shadow: none;
+      outline: none;
+      color: inherit;
+      padding: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px; }
+  .fluid .fl-ui-panel .fl-ui-panel-content {
+    flex: 1 1 auto;
+    overflow: auto;
+    padding-bottom: 20px; }
+
+body.fl-builder-ui-skin--dark .fl-ui-root .fl-ui-panel {
+  background: #23282d;
+  color: white; }
+
+.fluid .fl-ui-help {
+  background: rgba(0, 0, 0, 0.3); }
+  .fluid .fl-ui-help .fl-ui-panel {
+    max-height: calc( 100vh - 15px);
+    max-width: calc( 100vw - 15px);
+    min-width: 260px;
+    min-height: 100px; }
+
+.fluid ul.fl-ui-shortcut-list {
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+  .fluid ul.fl-ui-shortcut-list > li {
+    padding: 2px 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 40px;
+    margin: 0;
+    font-size: 14px; }
+    .fluid ul.fl-ui-shortcut-list > li:nth-child(even) {
+      background: rgba(1, 112, 147, 0.03); }
+  .fluid ul.fl-ui-shortcut-list .fl-ui-shortcut-item-keycode {
+    margin-left: auto;
+    padding-left: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: normal; }
+
+.fl-builder-workspace {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999999;
+  pointer-events: none; }
+  .fl-builder-workspace .fl-builder-workspace-panel {
+    position: absolute;
+    top: 45px;
+    right: 0;
+    bottom: 0;
+    width: 360px;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--fluid-background);
+    border-left: 2px solid var(--fluid-line-color);
+    overflow: auto; }
+
+.fl-builder-assistant-visible {
+  margin-right: 58px; }
+  .fl-builder-assistant-visible .fl-builder-ui-is-pinned-right .fl-builder--content-library-panel {
+    right: 58px; }
+

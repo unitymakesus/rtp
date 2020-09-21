@@ -9,7 +9,7 @@ $row_settings = array(
 		'style'    => array(
 			'title'    => __( 'Style', 'fl-builder' ),
 			'sections' => array(
-				'general'      => array(
+				'general'          => array(
 					'title'  => '',
 					'fields' => array(
 						'width'             => array(
@@ -123,7 +123,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'colors'       => array(
+				'colors'           => array(
 					'title'  => __( 'Colors', 'fl-builder' ),
 					'fields' => array(
 						'text_color'    => array(
@@ -168,7 +168,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'background'   => array(
+				'background'       => array(
 					'title'  => __( 'Background', 'fl-builder' ),
 					'fields' => array(
 						'bg_type' => array(
@@ -181,6 +181,7 @@ $row_settings = array(
 								'gradient'  => _x( 'Gradient', 'Background type.', 'fl-builder' ),
 								'photo'     => _x( 'Photo', 'Background type.', 'fl-builder' ),
 								'video'     => _x( 'Video', 'Background type.', 'fl-builder' ),
+								'embed'     => _x( 'Embedded Code', 'Background type.', 'fl-builder' ),
 								'slideshow' => array(
 									'label'   => _x( 'Slideshow', 'Background type.', 'fl-builder' ),
 									'premium' => true,
@@ -199,7 +200,6 @@ $row_settings = array(
 								),
 								'photo'     => array(
 									'sections' => array( 'bg_color', 'bg_photo', 'bg_overlay' ),
-									'fields'   => array( 'bg_x_position', 'bg_y_position' ),
 								),
 								'video'     => array(
 									'sections' => array( 'bg_color', 'bg_video', 'bg_overlay' ),
@@ -213,14 +213,17 @@ $row_settings = array(
 								'pattern'   => array(
 									'sections' => array( 'bg_pattern', 'bg_color', 'bg_overlay' ),
 								),
+								'embed'     => array(
+									'sections' => array( 'bg_embed_section' ),
+								),
 							),
 							'preview' => array(
-								'type' => 'none',
+								'type' => 'refresh',
 							),
 						),
 					),
 				),
-				'bg_photo'     => array(
+				'bg_photo'         => array(
 					'title'  => __( 'Background Photo', 'fl-builder' ),
 					'fields' => array(
 						'bg_image_source' => array(
@@ -302,7 +305,10 @@ $row_settings = array(
 							),
 							'toggle'     => array(
 								'custom_pos' => array(
-									'fields' => array( 'bg_x_position', 'bg_y_position' ),
+									'fields' => array(
+										'bg_x_position',
+										'bg_y_position',
+									),
 								),
 							),
 							'preview'    => array(
@@ -378,7 +384,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'bg_video'     => array(
+				'bg_video'         => array(
 					'title'  => __( 'Background Video', 'fl-builder' ),
 					'fields' => array(
 						'bg_video_source'      => array(
@@ -443,8 +449,8 @@ $row_settings = array(
 						),
 						'bg_video_service_url' => array(
 							'type'        => 'text',
-							'label'       => __( 'Youtube Or Vimeo URL', 'fl-builder' ),
-							'help'        => __( 'A video from Youtube or Vimeo to use as the background of this row. Most modern browsers support this format.', 'fl-builder' ),
+							'label'       => __( 'YouTube Or Vimeo URL', 'fl-builder' ),
+							'help'        => __( 'A video from YouTube or Vimeo to use as the background of this row. Most modern browsers support this format.', 'fl-builder' ),
 							'preview'     => array(
 								'type' => 'refresh',
 							),
@@ -487,7 +493,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'bg_slideshow' => array(
+				'bg_slideshow'     => array(
 					'title'  => __( 'Background Slideshow', 'fl-builder' ),
 					'fields' => array(
 						'ss_source'             => array(
@@ -532,6 +538,8 @@ $row_settings = array(
 							'label'       => __( 'Speed', 'fl-builder' ),
 							'default'     => '3',
 							'size'        => '5',
+							'sanitize'    => 'FLBuilderUtils::sanitize_non_negative_number',
+							'slider'      => true,
 							'description' => _x( 'seconds', 'Value unit for form field of time in seconds. Such as: "5 seconds"', 'fl-builder' ),
 							'preview'     => array(
 								'type' => 'none',
@@ -563,6 +571,8 @@ $row_settings = array(
 							'label'       => __( 'Transition Speed', 'fl-builder' ),
 							'default'     => '1',
 							'size'        => '5',
+							'sanitize'    => 'FLBuilderUtils::sanitize_non_negative_number',
+							'slider'      => true,
 							'description' => _x( 'seconds', 'Value unit for form field of time in seconds. Such as: "5 seconds"', 'fl-builder' ),
 							'preview'     => array(
 								'type' => 'none',
@@ -582,7 +592,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'bg_parallax'  => array(
+				'bg_parallax'      => array(
 					'title'  => __( 'Background Parallax', 'fl-builder' ),
 					'fields' => array(
 						'bg_parallax_image' => array(
@@ -609,7 +619,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'bg_overlay'   => array(
+				'bg_overlay'       => array(
 					'title'  => __( 'Background Overlay', 'fl-builder' ),
 					'fields' => array(
 						'bg_overlay_type'     => array(
@@ -623,10 +633,10 @@ $row_settings = array(
 							),
 							'toggle'  => array(
 								'color'    => array(
-									'fields' => array( 'bg_overlay_color', 'bg_x_position', 'bg_y_position' ),
+									'fields' => array( 'bg_overlay_color' ),
 								),
 								'gradient' => array(
-									'fields' => array( 'bg_overlay_gradient', 'bg_x_position', 'bg_y_position' ),
+									'fields' => array( 'bg_overlay_gradient' ),
 								),
 							),
 							'preview' => array(
@@ -654,7 +664,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'bg_color'     => array(
+				'bg_color'         => array(
 					'title'  => __( 'Background Color', 'fl-builder' ),
 					'fields' => array(
 						'bg_color' => array(
@@ -669,7 +679,7 @@ $row_settings = array(
 						),
 					),
 				),
-				'bg_gradient'  => array(
+				'bg_gradient'      => array(
 					'title'  => __( 'Background Gradient', 'fl-builder' ),
 					'fields' => array(
 						'bg_gradient' => array(
@@ -683,7 +693,21 @@ $row_settings = array(
 						),
 					),
 				),
-				'border'       => array(
+				'bg_embed_section' => array(
+					'title'  => __( 'Background Embedded Code', 'fl-builder' ),
+					'fields' => array(
+						'bg_embed_code' => array(
+							'type'        => 'code',
+							'editor'      => 'html',
+							'rows'        => '8',
+							'preview'     => array(
+								'type' => 'refresh',
+							),
+							'connections' => array( 'string' ),
+						),
+					),
+				),
+				'border'           => array(
 					'title'  => __( 'Border', 'fl-builder' ),
 					'fields' => array(
 						'border' => array(
@@ -840,6 +864,7 @@ $row_settings = array(
 								'section' => '&lt;section&gt;',
 								'article' => '&lt;article&gt;',
 								'aside'   => '&lt;aside&gt;',
+								'main'    => '&lt;main&gt;',
 								'header'  => '&lt;header&gt;',
 								'footer'  => '&lt;footer&gt;',
 							)),

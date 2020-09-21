@@ -56,6 +56,148 @@ class FLVideoModule extends FLBuilderModule {
 	}
 
 	/**
+	 * @since 2.4
+	 * @method render_poster_html
+	 */
+	public function render_video_html( $schema ) {
+		$video_html   = '';
+		$video_poster = $this->get_poster_url();
+		$video_meta   = '';
+
+		if ( 'media_library' === $this->settings->video_type ) {
+			$vid_data = $this->get_data();
+			$preload  = FLBuilderModel::is_builder_active() && ! empty( $vid_data->poster ) ? ' preload="none"' : '';
+
+			$video_meta .= '<meta itemprop="url" content="' . ( empty( $vid_data->url ) ? '' : $vid_data->url ) . '" />';
+			if ( $schema ) {
+				$video_meta .= '<meta itemprop="thumbnail" content="' . $video_poster . '" />';
+			}
+
+			$video_html = $video_meta;
+
+			$video_sc = sprintf( '%s', __( 'Video not specified. Please select one to display.', 'fl-builder' ) );
+
+			if ( ! empty( $vid_data->url ) ) {
+				$video_sc = '[video ' . $vid_data->extension . '="' . $vid_data->url . '"' . $vid_data->video_webm . ' poster="' . $video_poster . '" ' . $vid_data->autoplay . $vid_data->loop . $preload . '][/video]';
+			}
+
+			if ( 'yes' === $this->settings->video_lightbox ) {
+				$video_html .= '<div id="fl-node-' . $this->node . '-lightbox-content" class="fl-node-' . $this->node . '-lightbox-content' . ' fl-video-lightbox-content ' . ( empty( $vid_data->url ) ? '' : 'mfp-hide' ) . '">';
+				$video_html .= $video_sc;
+				$video_html .= '</div>';
+			} else {
+				$video_html .= $video_sc;
+			}
+		} elseif ( 'embed' === $this->settings->video_type ) {
+			global $wp_embed;
+
+			$video_embed = sprintf( '%s', __( 'Video embed code not specified.', 'fl-builder' ) );
+
+			if ( ! empty( $this->settings->embed_code ) ) {
+				$video_embed = $wp_embed->autoembed( do_shortcode( $this->settings->embed_code ) );
+			}
+
+			if ( 'yes' == $this->settings->video_lightbox ) {
+				$video_html  = '<div id="fl-node-' . $this->node . '-lightbox-content" class="fl-node-' . $this->node . '-lightbox-content' . ' fl-video-lightbox-content ' . ( empty( $this->settings->embed_code ) ? '' : 'mfp-hide' ) . '">';
+				$video_html .= $video_embed;
+				$video_html .= '</div>';
+			} else {
+				$video_html = $video_embed;
+			}
+		}
+
+		echo $video_html;
+	}
+
+	/**
+	 * @since 2.4
+	 * @method render_poster_html
+	 */
+	public function render_poster_html() {
+		$poster_html = '';
+
+		if ( 'yes' === $this->settings->video_lightbox ) {
+			if ( empty( $this->get_poster_url() ) ) {
+				$poster_html .= '<div class="fl-video-poster">';
+				$poster_html .= sprintf( '%s', __( 'Please specify a poster image if Video Lightbox is enabled.', 'fl-builder' ) );
+				$poster_html .= '</div>';
+			} else {
+				$video_url    = $this->get_video_url();
+				$poster_html .= '<div class="fl-video-poster" data-mfp-src="' . $video_url . '">';
+				$poster_html .= wp_get_attachment_image( $this->settings->poster, 'large', '', array( 'class' => 'img-responsive' ) );
+				$poster_html .= '</div>';
+			}
+		}
+
+		echo $poster_html;
+	}
+
+	/**
+	 * @since 2.4
+	 * @method get_poster_url
+	 */
+	private function get_poster_url() {
+		$url = empty( $this->settings->poster ) ? '' : $this->settings->poster_src;
+		return $url;
+	}
+
+	/**
+	 * @since 2.4
+	 * @method get_video_url
+	 */
+	private function get_video_url() {
+		$settings  = $this->settings;
+		$video_url = '';
+
+		if ( 'yes' === $settings->video_lightbox ) {
+			if ( 'embed' == $settings->video_type ) {
+				if ( strstr( $settings->embed_code, 'vimeo.com' ) ) {
+					$vid_id    = $this->get_video_id( 'vimeo', $settings->embed_code );
+					$video_url = 'https://vimeo.com/' . $vid_id;
+				} elseif ( strstr( $settings->embed_code, 'youtube.com' ) || strstr( $settings->embed_code, 'youtu.be' ) ) {
+					$vid_id    = $this->get_video_id( 'youtube', $settings->embed_code );
+					$video_url = 'https://youtube.com/watch?v=' . $vid_id;
+				} else {
+					$video_url = '';
+				}
+			} elseif ( 'media_library' == $settings->video_type ) {
+				$vid_data  = $this->get_data();
+				$video_url = ! empty( $vid_data->url ) ? $vid_data->url : '';
+			}
+		}
+
+		return $video_url;
+	}
+
+	/**
+	 * @method get_video_id
+	 * @param string $source
+	 * @param string $embed_code
+	 */
+	private function get_video_id( $source = '', $embed_code = '' ) {
+		$matches = array();
+		$id      = '';
+		$regex   = '';
+
+		$youtube_regex = '~(?:(?:<iframe [^>]*src=")?|(?:(?:<object .*>)?(?:<param .*</param>)*(?:<embed [^>]*src=")?)?)?(?:https?:\/\/(?:[\w]+\.)*(?:youtu\.be/| youtube\.com| youtube-nocookie\.com)(?:\S*[^\w\-\s])?([\w\-]{11})[^\s]*)"?(?:[^>]*>)?(?:</iframe>|</embed></object>)?~ix';
+		$vimeo_regex   = '~(?:<iframe [^>]*src=")?(?:https?:\/\/(?:[\w]+\.)*vimeo\.com(?:[\/\w]*\/videos?)?\/([0-9]+)[^\s]*)"?(?:[^>]*></iframe>)?(?:<p>.*</p>)?~ix';
+
+		if ( 'vimeo' == $source ) {
+			$regex = $vimeo_regex;
+		} elseif ( 'youtube' == $source ) {
+			$regex = $youtube_regex;
+		}
+
+		preg_match( $regex, $embed_code, $matches );
+
+		if ( ! empty( $matches ) ) {
+			$id = $matches[1];
+		}
+
+		return $id;
+	}
+
+	/**
 	 * @method update
 	 * @param $settings {object}
 	 */
@@ -111,8 +253,8 @@ class FLVideoModule extends FLBuilderModule {
 	 * Returns structured data markup.
 	 * @since 2.2
 	 */
-	public function get_structured_data( $module ) {
-		$settings = $module->settings;
+	public function get_structured_data() {
+		$settings = $this->settings;
 		$markup   = '';
 		if ( 'yes' != $settings->schema_enabled ) {
 			return false;
@@ -127,6 +269,17 @@ class FLVideoModule extends FLBuilderModule {
 
 		return $markup;
 	}
+
+	/**
+	 * @method enqueue_scripts
+	 * @since 2.4
+	 */
+	public function enqueue_scripts() {
+		if ( $this->settings && 'yes' == $this->settings->video_lightbox ) {
+			$this->add_js( 'jquery-magnificpopup' );
+			$this->add_css( 'jquery-magnificpopup' );
+		}
+	}
 }
 
 /**
@@ -136,10 +289,10 @@ FLBuilder::register_module('FLVideoModule', array(
 	'general' => array(
 		'title'    => __( 'General', 'fl-builder' ),
 		'sections' => array(
-			'general' => array(
+			'general'                => array(
 				'title'  => '',
 				'fields' => array(
-					'video_type' => array(
+					'video_type'       => array(
 						'type'    => 'select',
 						'label'   => __( 'Video Type', 'fl-builder' ),
 						'default' => 'wordpress',
@@ -149,20 +302,21 @@ FLBuilder::register_module('FLVideoModule', array(
 						),
 						'toggle'  => array(
 							'media_library' => array(
-								'fields' => array( 'video', 'video_webm', 'poster', 'autoplay', 'loop' ),
+								'sections' => array( 'video_controls_section' ),
+								'fields'   => array( 'video', 'video_webm', 'autoplay', 'loop' ),
 							),
 							'embed'         => array(
 								'fields' => array( 'embed_code' ),
 							),
 						),
 					),
-					'video'      => array(
+					'video'            => array(
 						'type'        => 'video',
 						'label'       => __( 'Video (MP4)', 'fl-builder' ),
 						'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'fl-builder' ),
 						'show_remove' => true,
 					),
-					'video_webm' => array(
+					'video_webm'       => array(
 						'type'        => 'video',
 						'show_remove' => true,
 						'label'       => __( 'Video (WebM)', 'fl-builder' ),
@@ -171,12 +325,31 @@ FLBuilder::register_module('FLVideoModule', array(
 							'type' => 'none',
 						),
 					),
-					'poster'     => array(
+					'embed_code'       => array(
+						'type'        => 'code',
+						'wrap'        => true,
+						'editor'      => 'html',
+						'label'       => '',
+						'rows'        => '9',
+						'connections' => array( 'custom_field' ),
+					),
+					'video_lightbox'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Show Video on Lightbox', 'fl-builder' ),
+						'default' => 'no',
+						'options' => array(
+							'yes' => __( 'Yes', 'fl-builder' ),
+							'no'  => __( 'No', 'fl-builder' ),
+						),
+						'help'    => __( 'Poster Image must be specified for the Lightbox to work.', 'fl-builder' ),
+					),
+					'poster'           => array(
 						'type'        => 'photo',
 						'show_remove' => true,
 						'label'       => _x( 'Poster', 'Video preview/fallback image.', 'fl-builder' ),
+						'help'        => __( 'An image must be specified for the Lightbox to work.', 'fl-builder' ),
 					),
-					'autoplay'   => array(
+					'autoplay'         => array(
 						'type'    => 'select',
 						'label'   => __( 'Auto Play', 'fl-builder' ),
 						'default' => '0',
@@ -188,7 +361,7 @@ FLBuilder::register_module('FLVideoModule', array(
 							'type' => 'none',
 						),
 					),
-					'loop'       => array(
+					'loop'             => array(
 						'type'    => 'select',
 						'label'   => __( 'Loop', 'fl-builder' ),
 						'default' => '0',
@@ -200,17 +373,79 @@ FLBuilder::register_module('FLVideoModule', array(
 							'type' => 'none',
 						),
 					),
-					'embed_code' => array(
-						'type'        => 'code',
-						'wrap'        => true,
-						'editor'      => 'html',
-						'label'       => '',
-						'rows'        => '9',
-						'connections' => array( 'custom_field' ),
+					'sticky_on_scroll' => array(
+						'type'    => 'select',
+						'label'   => __( 'Sticky on Scroll', 'fl-builder' ),
+						'default' => 'no',
+						'options' => array(
+							'no'  => __( 'No', 'fl-builder' ),
+							'yes' => __( 'Yes', 'fl-builder' ),
+						),
+						'preview' => array(
+							'type' => 'none',
+						),
 					),
 				),
 			),
-
+			'video_controls_section' => array(
+				'title'  => 'Video Controls',
+				'fields' => array(
+					'play_pause'  => array(
+						'type'    => 'select',
+						'label'   => __( 'Play/Pause', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+					),
+					'timer'       => array(
+						'type'    => 'select',
+						'label'   => __( 'Timer', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+					),
+					'time_rail'   => array(
+						'type'    => 'select',
+						'label'   => __( 'Time Rail', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+					),
+					'duration'    => array(
+						'type'    => 'select',
+						'label'   => __( 'Duration', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+					),
+					'volume'      => array(
+						'type'    => 'select',
+						'label'   => __( 'Volume', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+					),
+					'full_screen' => array(
+						'type'    => 'select',
+						'label'   => __( 'Fullscreen', 'fl-builder' ),
+						'default' => 'show',
+						'options' => array(
+							'show' => __( 'Show', 'fl-builder' ),
+							'hide' => __( 'Hide', 'fl-builder' ),
+						),
+					),
+				),
+			),
 		),
 	),
 	'schema'  => array(

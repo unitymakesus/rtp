@@ -76,15 +76,18 @@ final class FLUpdater {
 			return FLUpdater::$_responses[ $slug ];
 		}
 
-		FLUpdater::$_responses[ $slug ] = FLUpdater::api_request( FLUpdater::$_updates_api_url, array(
-			'fl-api-method' => 'update_info',
-			'license'       => FLUpdater::get_subscription_license(),
-			'domain'        => FLUpdater::validate_domain( network_home_url() ),
-			'product'       => $this->settings['name'],
-			'slug'          => $this->settings['slug'],
-			'version'       => $this->settings['version'],
-			'php'           => phpversion(),
-		) );
+		FLUpdater::$_responses[ $slug ] = FLUpdater::api_request(
+			FLUpdater::$_updates_api_url,
+			array(
+				'fl-api-method' => 'update_info',
+				'license'       => FLUpdater::get_subscription_license(),
+				'domain'        => FLUpdater::validate_domain( network_home_url() ),
+				'product'       => $this->settings['name'],
+				'slug'          => $this->settings['slug'],
+				'version'       => $this->settings['version'],
+				'php'           => phpversion(),
+			)
+		);
 
 		return FLUpdater::$_responses[ $slug ];
 	}
@@ -110,8 +113,7 @@ final class FLUpdater {
 		}
 
 		$response = $this->get_response();
-
-		if ( ! isset( $response->error ) ) {
+		if ( ! isset( $response->error ) || ( isset( $response->error ) && 'No update available.' === $response->error ) ) {
 
 			$transient->last_checked                       = time();
 			$transient->checked[ $this->settings['slug'] ] = $this->settings['version'];
@@ -120,7 +122,7 @@ final class FLUpdater {
 
 				$plugin = self::get_plugin_file( $this->settings['slug'] );
 
-				if ( version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
+				if ( isset( $response->new_version ) && version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
 
 					$transient->response[ $plugin ]              = new stdClass();
 					$transient->response[ $plugin ]->slug        = $response->slug;
@@ -129,19 +131,43 @@ final class FLUpdater {
 					$transient->response[ $plugin ]->url         = $response->homepage;
 					$transient->response[ $plugin ]->package     = $response->package;
 					$transient->response[ $plugin ]->tested      = $response->tested;
-					$transient->response[ $plugin ]->icons       = apply_filters( 'fl_updater_icon', array(
-						'1x'      => FL_BUILDER_URL . 'img/beaver-128.png',
-						'2x'      => FL_BUILDER_URL . 'img/beaver-256.png',
-						'default' => FL_BUILDER_URL . 'img/beaver-256.png',
-					), $response, $this->settings );
+					$transient->response[ $plugin ]->icons       = apply_filters(
+						'fl_updater_icon',
+						array(
+							'1x'      => FL_BUILDER_URL . 'img/beaver-128.png',
+							'2x'      => FL_BUILDER_URL . 'img/beaver-256.png',
+							'default' => FL_BUILDER_URL . 'img/beaver-256.png',
+						),
+						$response,
+						$this->settings
+					);
 
 					if ( empty( $response->package ) ) {
 						$transient->response[ $plugin ]->upgrade_notice = FLUpdater::get_update_error_message();
 					}
+				} else {
+					// no update, for wp 5.5 we have to add a mock item.
+					$item = (object) array(
+						'id'            => $plugin,
+						'slug'          => $this->settings['slug'],
+						'plugin'        => $plugin,
+						'new_version'   => $this->settings['version'],
+						'url'           => '',
+						'package'       => '',
+						'icons'         => array(),
+						'banners'       => array(),
+						'banners_rtl'   => array(),
+						'tested'        => '',
+						'requires_php'  => '',
+						'compatibility' => new stdClass(),
+					);
+					// Adding the "mock" item to the `no_update` property is required
+					// for the enable/disable auto-updates links to correctly appear in UI.
+					$transient->no_update[ $plugin ] = $item;
 				}
 			} elseif ( 'theme' == $this->settings['type'] ) {
 
-				if ( version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
+				if ( isset( $response->new_version ) && version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
 
 					$transient->response[ $this->settings['slug'] ] = array(
 						'new_version' => $response->new_version,
@@ -150,6 +176,19 @@ final class FLUpdater {
 						'package'     => $response->package,
 						'tested'      => $response->tested,
 					);
+				} else {
+					// no update, for wp 5.5 we have to add a mock item.
+					$item = array(
+						'theme'        => $this->settings['slug'],
+						'new_version'  => $this->settings['version'],
+						'url'          => '',
+						'package'      => '',
+						'requires'     => '',
+						'requires_php' => '',
+					);
+					// Adding the "mock" item to the `no_update` property is required
+					// for the enable/disable auto-updates links to correctly appear in UI.
+					$transient->no_update[ $this->settings['slug'] ] = $item;
 				}
 			}
 		}
@@ -174,7 +213,8 @@ final class FLUpdater {
 			return $false;
 		}
 
-		$response = $this->get_response();
+		$response  = $this->get_response();
+		$changelog = __( 'Could not locate changelog.txt', 'fl-builder' );
 
 		if ( ! isset( $response->error ) ) {
 
@@ -190,6 +230,23 @@ final class FLUpdater {
 			$info->last_updated  = $response->last_updated;
 			$info->download_link = $response->package;
 			$info->sections      = (array) $response->sections;
+			return apply_filters( 'fl_plugin_info_data', $info, $response );
+		} else {
+			if ( 'bb-plugin' === $this->settings['slug'] && file_exists( trailingslashit( plugin_dir_path( FL_BUILDER_FILE ) ) . '/changelog.txt' ) ) {
+				$changelog = file_get_contents( trailingslashit( plugin_dir_path( FL_BUILDER_FILE ) ) . '/changelog.txt' );
+			}
+			if ( 'bb-theme-builder' === $this->settings['slug'] && file_exists( trailingslashit( plugin_dir_path( FL_THEME_BUILDER_FILE ) ) . '/changelog.txt' ) ) {
+				$changelog = file_get_contents( trailingslashit( plugin_dir_path( FL_THEME_BUILDER_FILE ) ) . '/changelog.txt' );
+			}
+			$info              = new stdClass();
+			$info->name        = $this->settings['name'];
+			$info->version     = $this->settings['version'];
+			$info->slug        = $this->settings['slug'];
+			$info->plugin_name = $this->settings['name'];
+			$info->homepage    = 'https://www.wpbeaverbuilder.com/';
+
+			$info->sections              = array();
+			$info->sections['changelog'] = $changelog;
 			return apply_filters( 'fl_plugin_info_data', $info, $response );
 		}
 
@@ -325,12 +382,15 @@ final class FLUpdater {
 			$response->error = __( 'You submitted an invalid license. Non alphanumeric characters found.', 'fl-builder' );
 			return $response;
 		}
-		$response = FLUpdater::api_request(self::$_updates_api_url, array(
-			'fl-api-method' => 'activate_domain',
-			'license'       => $license,
-			'domain'        => FLUpdater::validate_domain( network_home_url() ),
-			'products'      => json_encode( self::$_products ),
-		));
+		$response = FLUpdater::api_request(
+			self::$_updates_api_url,
+			array(
+				'fl-api-method' => 'activate_domain',
+				'license'       => $license,
+				'domain'        => FLUpdater::validate_domain( network_home_url() ),
+				'products'      => json_encode( self::$_products ),
+			)
+		);
 		update_site_option( 'fl_themes_subscription_email', $license );
 		return $response;
 	}
@@ -343,11 +403,14 @@ final class FLUpdater {
 	 * @return bool
 	 */
 	static public function get_subscription_info() {
-		return self::api_request(self::$_updates_api_url, array(
-			'fl-api-method' => 'subscription_info',
-			'domain'        => FLUpdater::validate_domain( network_home_url() ),
-			'license'       => FLUpdater::get_subscription_license(),
-		));
+		return self::api_request(
+			self::$_updates_api_url,
+			array(
+				'fl-api-method' => 'subscription_info',
+				'domain'        => FLUpdater::validate_domain( network_home_url() ),
+				'license'       => FLUpdater::get_subscription_license(),
+			)
+		);
 	}
 
 	/**
@@ -381,17 +444,23 @@ final class FLUpdater {
 				$text = sprintf( __( 'Please enter a valid license key to enable automatic updates. %s', 'fl-builder' ), $link );
 			} else {
 				if ( 'bb-theme-builder/bb-theme-builder.php' === $plugin_data['plugin'] ) {
-					$subscribe_link = FLBuilderModel::get_store_url( 'beaver-themer', array(
-						'utm_medium'   => 'bb-theme-builder',
-						'utm_source'   => 'plugins-admin-page',
-						'utm_campaign' => 'subscribe',
-					) );
+					$subscribe_link = FLBuilderModel::get_store_url(
+						'beaver-themer',
+						array(
+							'utm_medium'   => 'bb-theme-builder',
+							'utm_source'   => 'plugins-admin-page',
+							'utm_campaign' => 'subscribe',
+						)
+					);
 				} else {
-					$subscribe_link = FLBuilderModel::get_store_url( '', array(
-						'utm_medium'   => 'bb',
-						'utm_source'   => 'plugins-admin-page',
-						'utm_campaign' => 'subscribe',
-					) );
+					$subscribe_link = FLBuilderModel::get_store_url(
+						'',
+						array(
+							'utm_medium'   => 'bb',
+							'utm_source'   => 'plugins-admin-page',
+							'utm_campaign' => 'subscribe',
+						)
+					);
 				}
 				$link = sprintf( '<a href="%s" target="_blank" style="color: #fff; text-decoration: underline;">%s &raquo;</a>', $subscribe_link, __( 'Subscribe Now', 'fl-builder' ) );
 				/* translators: %s: subscribe link */
@@ -399,7 +468,7 @@ final class FLUpdater {
 			}
 
 			$message .= '<span style="display:block;padding:10px 20px;margin:10px 0; background: #d54e21; color: #fff;">';
-			$message .= __( '<strong>UPDATE UNAVAILABLE!</strong>', 'fl-builder' );
+			$message .= sprintf( '<strong>%s<strong>', __( 'UPDATE UNAVAILABLE!', 'fl-builder' ) );
 			$message .= '&nbsp;&nbsp;&nbsp;';
 			$message .= $text;
 			$message .= '</span>';

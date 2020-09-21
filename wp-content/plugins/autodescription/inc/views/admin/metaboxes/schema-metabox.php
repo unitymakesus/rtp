@@ -4,13 +4,14 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-use The_SEO_Framework\Bridges\SeoSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+use The_SEO_Framework\Bridges\SeoSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_schema_metabox', $instance );
 
 switch ( $instance ) :
@@ -111,7 +112,7 @@ switch ( $instance ) :
 			'https://developers.google.com/search/docs/guides/enhance-site#add-your-sites-name-logo-and-social-links',
 			false
 		);
-		//* Echo checkbox.
+		// Echo checkbox.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'knowledge_output',
@@ -184,7 +185,7 @@ switch ( $instance ) :
 		</p>
 		<p class="hide-if-no-tsf-js">
 			<?php
-			//* Already escaped.
+			// phpcs:ignore, WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped.
 			echo $this->get_logo_uploader_form( 'knowledge_logo' );
 			?>
 		</p>

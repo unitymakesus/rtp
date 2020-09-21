@@ -5,34 +5,166 @@
  *  @package UABB Social share Module
  */
 
-$version_bb_check = UABB_Compatibility::$version_bb_check; ?>
-
-.uabb-social-share-horizontal .uabb-social-share-link-wrap {
-	vertical-align: top;
-	display: inline-block;
-}
-
-.uabb-social-share-vertical .uabb-social-share-link-wrap {
-	display: block;
-}
-.uabb-social-share-vertical .uabb-social-share-link {
-	display: inline-block;
-}
-
-.uabb-social-share-link,
-.uabb-social-share-link:hover,
-.uabb-social-share-link:focus,
-.uabb-social-share-link:active,
-.uabb-social-share-link:visited {
-	text-decoration: none;
-	outline: none;
-}
-
+$version_bb_check                = UABB_Compatibility::$version_bb_check;
+$settings->primary_color         = UABB_Helper::uabb_colorpicker( $settings, 'primary_color', true );
+$settings->secondary_color       = UABB_Helper::uabb_colorpicker( $settings, 'secondary_color', true );
+$settings->primary_hover_color   = UABB_Helper::uabb_colorpicker( $settings, 'primary_hover_color', true );
+$settings->secondary_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'secondary_hover_color', true );
+?>
 <?php
 	$settings->size    = ( '' !== $settings->size ) ? $settings->size : '40';
 	$settings->spacing = ( '' !== $settings->spacing ) ? $settings->spacing : '10';
 ?>
+<?php
+// Text Typography.
+if ( class_exists( 'FLBuilderCSS' ) ) {
 
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'width_border',
+			'selector'     => ".fl-node-$id .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-grid-button, .fl-node-$id .uabb-social-share-wrap .uabb-ss-framed .uabb-ss-grid-button ",
+			'prop'         => 'border-width',
+			'unit'         => 'px',
+		)
+	);
+
+	FLBuilderCSS::typography_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'title_typography',
+			'selector'     => ".fl-node-$id .uabb-ss-grid-button .uabb-ss-button-title",
+		)
+	);
+
+	// Text Padding Left.
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'title_padding_left',
+			'selector'     => ".fl-node-$id .uabb-ss-grid-button .uabb-ss-button-text",
+			'prop'         => 'padding-left',
+			'unit'         => 'px',
+		)
+	);
+
+	// Text Padding.
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'title_padding_right',
+			'selector'     => ".fl-node-$id .uabb-ss-grid-button .uabb-ss-button-text",
+			'prop'         => 'padding-right',
+			'unit'         => 'px',
+		)
+	);
+}
+?>
+<?php
+if ( isset( $settings->skins ) && 'default' !== $settings->skins ) {
+	if ( isset( $settings->column_gap ) ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-item {
+			<?php
+			echo ( '' !== $settings->column_gap ) ? 'margin-right:calc(' . esc_attr( $settings->column_gap ) / 2 . 'px);' : 'margin-right:calc( 10px/2 );';
+			echo ( '' !== $settings->column_gap ) ? 'margin-left:calc(' . esc_attr( $settings->column_gap ) / 2 . 'px);' : 'margin-left:calc( 10px/2 );';
+			?>
+		}
+		<?php
+	}
+	if ( isset( $settings->row_gap ) ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-item {
+			<?php
+			if ( isset( $settings->row_gap ) ) {
+				echo ( '' !== $settings->row_gap ) ? 'margin-bottom:' . esc_attr( $settings->row_gap ) . 'px;' : '';
+			}
+			?>
+		}
+		<?php
+	}
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ss-icon i {
+		<?php
+		if ( isset( $settings->icon_img_size ) ) {
+			echo ( '' !== $settings->icon_img_size ) ? 'font-size:' . esc_attr( $settings->icon_img_size ) . 'px;' : '';
+		}
+		?>
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-button {
+		<?php
+		if ( isset( $settings->button_height ) ) {
+			echo ( '' !== $settings->button_height ) ? 'height:' . esc_attr( $settings->button_height ) . 'px;' : '';
+		}
+		?>
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-style-floating {
+		<?php
+		if ( isset( $settings->floating_position ) ) {
+			echo ( '' !== $settings->floating_position ) ? 'top:' . esc_attr( $settings->floating_position ) . '%;' : '';
+		}
+		?>
+	}
+	<?php if ( 'custom' === $settings->color_style ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-flat .uabb-ss-grid-button,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-gradient .uabb-ss-grid-button,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-icon {
+			<?php
+			if ( isset( $settings->primary_color ) ) {
+				echo ( '' !== $settings->primary_color ) ? 'background:' . esc_attr( $settings->primary_color ) . ';' : '';
+			}
+			?>
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-minimal .uabb-ss-icon i {
+			<?php
+			if ( isset( $settings->primary_color ) ) {
+				echo ( '' !== $settings->primary_color ) ? 'color:' . esc_attr( $settings->primary_color ) . ';' : '';
+			}
+			?>
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-grid-button,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-framed .uabb-ss-grid-button {
+			<?php
+			if ( isset( $settings->primary_color ) ) {
+				echo ( '' !== $settings->primary_color ) ? 'border-color:' . esc_attr( $settings->primary_color ) . ';' : '';
+			}
+			?>
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-grid-item:hover .uabb-ss-grid-button,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-framed .uabb-ss-grid-item:hover .uabb-ss-grid-button {			
+							<?php
+							if ( isset( $settings->primary_hover_color ) ) {
+								echo ( '' !== $settings->primary_hover_color ) ? 'border-color:' . esc_attr( $settings->primary_hover_color ) . ';' : '';
+							}
+							?>
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-text,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-button .uabb-ss-grid-button-link,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-minimal .uabb-ss-button-text .uabb-ss-button-title {
+
+			<?php
+			if ( isset( $settings->secondary_color ) ) {
+				echo ( '' !== $settings->secondary_color ) ? 'color:' . esc_attr( $settings->secondary_color ) . ';' : '';
+			}
+			?>
+		}
+		<?php if ( isset( $settings->primary_hover_color ) && ! empty( $settings->primary_hover_color ) ) { ?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ss-flat .uabb-ss-grid-button:hover,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-grid-button:hover .uabb-ss-icon,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-gradient .uabb-ss-grid-button:hover,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-minimal .uabb-ss-grid-button:hover .uabb-ss-icon {
+				background:<?php echo esc_attr( $settings->primary_hover_color ); ?>;
+			}
+		<?php } ?>
+		<?php if ( isset( $settings->secondary_hover_color ) && ! empty( $settings->secondary_hover_color ) ) { ?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-boxed .uabb-ss-button-text:hover,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-button-link:hover,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-minimal .uabb-ss-grid-button:hover .uabb-ss-button-title {
+				color:<?php echo esc_attr( $settings->secondary_hover_color ); ?>;
+			}
+		<?php } ?>
+	<?php } ?>
+<?php } ?>
 <?php if ( 'horizontal' === $settings->icon_struc_align ) { ?>
 
 
@@ -286,3 +418,188 @@ if ( isset( $settings->responsive_align ) ) {
 	}
 }
 ?>
+<?php
+if ( isset( $settings->skins ) && 'default' !== $settings->skins ) {
+	if ( $global_settings->responsive_enabled ) {
+		?>
+		@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px ) {
+			<?php
+			if ( isset( $settings->column_gap_medium ) ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-item {
+					<?php
+					echo ( '' !== $settings->column_gap_medium ) ? 'margin-right:calc(' . esc_attr( $settings->column_gap_medium ) / 2 . 'px);' : 'margin-right:calc( 10px/2 );';
+					echo ( '' !== $settings->column_gap_medium ) ? 'margin-left:calc(' . esc_attr( $settings->column_gap_medium ) / 2 . 'px);' : 'margin-left:calc( 10px/2 );';
+					?>
+				}
+				<?php
+			}
+			if ( isset( $settings->row_gap_medium ) ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-item {
+					<?php
+					if ( isset( $settings->row_gap_medium ) ) {
+						echo ( '' !== $settings->row_gap_medium ) ? 'margin-bottom:' . esc_attr( $settings->row_gap_medium ) . 'px;' : '';
+					}
+					?>
+				}
+				<?php
+			}
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ss-icon i {
+				<?php
+				if ( isset( $settings->icon_img_size_medium ) ) {
+					echo ( '' !== $settings->icon_img_size_medium ) ? 'font-size:' . esc_attr( $settings->icon_img_size_medium ) . 'px;' : '';
+				}
+				?>
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-button {
+				<?php
+				if ( isset( $settings->button_height_medium ) ) {
+					echo ( '' !== $settings->button_height_medium ) ? 'height:' . esc_attr( $settings->button_height_medium ) . 'px;' : '';
+				}
+				?>
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-style-floating {
+				<?php
+				if ( isset( $settings->floating_position_medium ) ) {
+					echo ( '' !== $settings->floating_position_medium ) ? 'top:' . esc_attr( $settings->floating_position_medium ) . '%;' : '';
+				}
+				?>
+			}
+			.uabb-ss-column-medium-1 .uabb-ss-wrap {
+				grid-template-columns: repeat(1,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-medium-2 .uabb-ss-wrap {
+				grid-template-columns: repeat(2,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-medium-3 .uabb-ss-wrap {
+				grid-template-columns: repeat(3,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-medium-4 .uabb-ss-wrap {
+				grid-template-columns: repeat(4,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-medium-5 .uabb-ss-wrap {
+				grid-template-columns: repeat(5,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-medium-6 .uabb-ss-wrap {
+				grid-template-columns: repeat(6,1fr);
+				display: grid;
+			} 
+			.uabb-ss-wrap.uabb-ss-medium-align-right {
+				-webkit-box-pack: end;
+					-ms-flex-pack: end;
+						justify-content: flex-end;
+			}
+
+			.uabb-ss-wrap.uabb-ss-medium-align-left {
+				-webkit-box-pack: start;
+					-ms-flex-pack: start;
+						justify-content: flex-start;
+			}
+
+			.uabb-ss-wrap.uabb-ss-medium-align-center {
+				-webkit-box-pack: center;
+					-ms-flex-pack: center;
+						justify-content: center;
+			}
+		}
+		@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px ) {
+			<?php
+			if ( isset( $settings->column_gap_responsive ) ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-item {
+					<?php
+					echo ( '' !== $settings->column_gap_responsive ) ? 'margin-right:calc(' . esc_attr( $settings->column_gap_responsive ) / 2 . 'px);' : 'margin-right:calc( 10px/2 );';
+					echo ( '' !== $settings->column_gap_responsive ) ? 'margin-left:calc(' . esc_attr( $settings->column_gap_responsive ) / 2 . 'px);' : 'margin-left:calc( 10px/2 );';
+					?>
+				}
+				<?php
+			}
+			if ( isset( $settings->row_gap_responsive ) ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-item {
+					<?php
+					if ( isset( $settings->row_gap_responsive ) ) {
+						echo ( '' !== $settings->row_gap_responsive ) ? 'margin-bottom:' . esc_attr( $settings->row_gap_responsive ) . 'px;' : '';
+					}
+					?>
+				}
+				<?php
+			}
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-ss-icon i {
+				<?php
+				if ( isset( $settings->icon_img_size_responsive ) ) {
+					echo ( '' !== $settings->icon_img_size_responsive ) ? 'font-size:' . esc_attr( $settings->icon_img_size_responsive ) . 'px;' : '';
+				}
+				?>
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-button {
+				<?php
+				if ( isset( $settings->button_height_responsive ) ) {
+					echo ( '' !== $settings->button_height_responsive ) ? 'height:' . esc_attr( $settings->button_height_responsive ) . 'px;' : '';
+				}
+				?>
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-style-floating {
+				<?php
+				if ( isset( $settings->floating_position_responsive ) ) {
+					echo ( '' !== $settings->floating_position_responsive ) ? 'top:' . esc_attr( $settings->floating_position_responsive ) . '%;' : '';
+				}
+				?>
+			}
+			<?php if ( isset( $settings->text_hide_mobile ) && 'yes' === $settings->text_hide_mobile && 'icon-text' === $settings->share_view ) { ?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-social-share-wrap .uabb-ss-grid-button .uabb-ss-button-text {
+				display: none;
+			}
+			<?php } ?>
+			.uabb-ss-column-responsive-1 .uabb-ss-wrap {
+				grid-template-columns: repeat(1,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-responsive-2 .uabb-ss-wrap {
+				grid-template-columns: repeat(2,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-responsive-3 .uabb-ss-wrap {
+				grid-template-columns: repeat(3,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-responsive-4 .uabb-ss-wrap {
+				grid-template-columns: repeat(4,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-responsive-5 .uabb-ss-wrap {
+				grid-template-columns: repeat(5,1fr);
+				display: grid;
+			}
+			.uabb-ss-column-responsive-6 .uabb-ss-wrap {
+				grid-template-columns: repeat(6,1fr);
+				display: grid;
+			}
+			.uabb-ss-wrap.uabb-ss-responsive-align-right {
+				-webkit-box-pack: end;
+					-ms-flex-pack: end;
+						justify-content: flex-end;
+			}
+
+			.uabb-ss-wrap.uabb-ss-responsive-align-left {
+				-webkit-box-pack: start;
+					-ms-flex-pack: start;
+						justify-content: flex-start;
+			}
+
+			.uabb-ss-wrap.uabb-ss-responsive-align-center {
+				-webkit-box-pack: center;
+					-ms-flex-pack: center;
+						justify-content: center;
+			}
+		}
+	<?php }
+} ?>

@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -77,10 +77,10 @@ class Term_Data extends Post_Data {
 
 	/**
 	 * Returns and caches term meta for the current query.
+	 * Memoizes the return value for the current request.
 	 *
 	 * @since 3.0.0
 	 * @since 4.0.1 Now uses the filterable `get_the_real_ID()`
-	 * @staticvar array $cache
 	 *
 	 * @return array The current term meta.
 	 */
@@ -102,6 +102,8 @@ class Term_Data extends Post_Data {
 
 	/**
 	 * Returns term meta data from ID.
+	 * Memoizes the return value for the current request.
+	 *
 	 * Returns Genesis 2.3.0+ data if no term meta data is set via compat module.
 	 *
 	 * @since 2.7.0
@@ -110,7 +112,6 @@ class Term_Data extends Post_Data {
 	 * @since 3.1.0 Deprecated filter.
 	 * @since 4.0.0 1. Removed deprecated filter.
 	 *              2. Now fills in defaults.
-	 * @staticvar array $cache
 	 *
 	 * @param int  $term_id The Term ID.
 	 * @param bool $use_cache Whether to use caching.
@@ -289,11 +290,11 @@ class Term_Data extends Post_Data {
 		// We could test for is_wp_error( $term ), but this is more to the point.
 		if ( empty( $term->term_id ) ) return;
 
-		//* Check again against ambiguous injection...
+		// Check again against ambiguous injection...
 		// Note, however: function wp_update_term() already performs all these checks for us before firing this callback's action.
 		if ( ! \current_user_can( 'edit_term', $term->term_id ) ) return;
 		if ( ! isset( $_POST['_wpnonce'] ) ) return;
-		if ( ! \wp_verify_nonce( \stripslashes_from_strings_only( $_POST['_wpnonce'] ), 'update-tag_' . $term->term_id ) ) return;
+		if ( ! \wp_verify_nonce( $_POST['_wpnonce'], 'update-tag_' . $term->term_id ) ) return;
 
 		$data = (array) $_POST['autodescription-meta'];
 
@@ -319,7 +320,7 @@ class Term_Data extends Post_Data {
 		// We could test for is_wp_error( $term ), but this is more to the point.
 		if ( empty( $term->term_id ) ) return;
 
-		//* Check again against ambiguous injection...
+		// Check again against ambiguous injection...
 		// Note, however: function wp_ajax_inline_save_tax() already performs all these checks for us before firing this callback's action.
 		if ( ! \current_user_can( 'edit_term', $term->term_id ) ) return;
 		if ( ! \check_ajax_referer( 'taxinlineeditnonce', '_inline_edit', false ) ) return;
@@ -403,6 +404,7 @@ class Term_Data extends Post_Data {
 			]
 		);
 
+		// Do we want to cycle through the data, so we store only the non-defaults? @see save_post_meta()
 		\update_term_meta( $term->term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS, $data );
 	}
 
@@ -432,20 +434,48 @@ class Term_Data extends Post_Data {
 	 */
 	public function delete_term_meta( $term_id ) {
 
-		//* If this results in an empty data string, all data has already been removed by WP core.
+		// If this results in an empty data string, all data has already been removed by WP core.
 		$data = \get_term_meta( $term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS, true );
 
-		if ( is_array( $data ) ) {
+		if ( \is_array( $data ) ) {
 			foreach ( $this->get_term_meta_defaults( $term_id ) as $key => $value ) {
 				unset( $data[ $key ] );
 			}
 		}
 
+		// Only delete when no values are left, because someone else might've filtered it.
 		if ( empty( $data ) ) {
 			\delete_term_meta( $term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS );
 		} else {
 			\update_term_meta( $term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS, $data );
 		}
+	}
+
+	/**
+	 * Fetch latest public category ID.
+	 * Memoizes the return value.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return int Latest Category ID.
+	 */
+	public function get_latest_category_id() {
+
+		static $cat_id = null;
+
+		if ( null !== $cat_id )
+			return $cat_id;
+
+		$cats = \get_terms( [
+			'taxonomy'   => 'category',
+			'fields'     => 'ids',
+			'hide_empty' => false,
+			'orderby'    => 'term_id',
+			'order'      => 'DESC',
+			'number'     => 1,
+		] );
+
+		return $cat_id = reset( $cats );
 	}
 
 	/**
@@ -472,6 +502,7 @@ class Term_Data extends Post_Data {
 	 *
 	 * @since 3.0.0
 	 * @since 4.0.5 The `$post_type` fallback now uses a real query ID, instead of `$GLOBALS['post']`.
+	 * @since 4.1.0 Now filters taxonomies more graciously--expecting broken taxonomies returned in the filter.
 	 *
 	 * @param string $get       Whether to get the names or objects.
 	 * @param string $post_type The post type. Will default to current post type.
@@ -488,7 +519,7 @@ class Term_Data extends Post_Data {
 		$taxonomies = array_filter(
 			$taxonomies,
 			function( $t ) {
-				return $t->hierarchical;
+				return ! empty( $t->hierarchical );
 			}
 		);
 

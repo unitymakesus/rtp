@@ -315,6 +315,14 @@
 					}
 				}
 
+				$wrapper.find( '.uabb-creative-menu-mobile-toggle' ).off().on( 'focus', function( e ) {
+					$(this).on('keypress', function(e) {
+						if(e.which === 13) {
+							$(this).trigger('click');
+						}
+					});
+				} );
+
 				$wrapper.off().on( 'click', '.uabb-creative-menu-mobile-toggle', function( e ) {
 					$( this ).toggleClass( 'uabb-active' );
 					$menu.slideToggle();
@@ -381,6 +389,14 @@
 						$menu.css({ display: 'block' });
 					}
 				}
+
+				$wrapper.find( '.uabb-creative-menu-mobile-toggle' ).off().on( 'focus', function( e ) {
+					$(this).on('keypress', function(e) {
+						if(e.which === 13) {
+							$(this).trigger('click');
+						}
+					});
+				} );
 
 				$wrapper.off().on( 'click', '.uabb-creative-menu-mobile-toggle', function( e ) {
 					$( this ).toggleClass( 'uabb-active' );

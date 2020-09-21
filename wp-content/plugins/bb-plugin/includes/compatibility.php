@@ -162,3 +162,54 @@ function fl_theme_builder_cat_archive_post_grid( $query ) {
 
 	return $post_grid;
 }
+
+/**
+ * Fix canonical for singular layout with post-grid module pagination.
+ * @since 2.4
+ */
+function fl_theme_builder_has_post_grid() {
+	if ( ! class_exists( 'FLThemeBuilder' ) ) {
+		return false;
+	}
+
+	if ( ! FLThemeBuilder::has_layout() ) {
+		return false;
+	}
+
+	$layout_ids = array();
+
+	// Checks themer layout
+	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'header' ) ) ) {
+		$layout_ids[] = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'header' )[0];
+	}
+	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'singular' ) ) ) {
+		$layout_ids[] = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'singular' )[0];
+	}
+	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'footer' ) ) ) {
+		$layout_ids[] = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'footer' )[0];
+	}
+	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'part' ) ) ) {
+		$parts      = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'part' );
+		$layout_ids = array_merge( $layout_ids, $parts );
+	}
+
+	if ( empty( $layout_ids ) ) {
+		return false;
+	}
+
+	foreach ( $layout_ids as $layout_id ) {
+		$data = FLBuilderModel::get_layout_data( 'published', $layout_id );
+
+		foreach ( $data as $node_id => $node ) {
+			if ( 'module' != $node->type ) {
+				continue;
+			}
+
+			if ( isset( $node->settings->type ) && 'post-grid' == $node->settings->type ) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}

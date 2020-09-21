@@ -98,7 +98,7 @@ final class FLBuilderServiceActiveCampaign extends FLBuilderService {
 			'class'     => 'fl-builder-service-connect-input',
 			'type'      => 'text',
 			'label'     => __( 'API URL', 'fl-builder' ),
-			'help'      => __( 'Your API url can be found in your ActiveCampaign account under My Settings > Developer > API.', 'fl-builder' ),
+			'help'      => __( 'Your API URL can be found in your ActiveCampaign account under My Settings > Developer > API.', 'fl-builder' ),
 			'preview'   => array(
 				'type' => 'none',
 			),

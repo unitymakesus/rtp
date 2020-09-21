@@ -73,6 +73,7 @@ final class FLBuilderHistoryManager {
 			'template_applied'        => esc_attr__( 'Template Applied', 'fl-builder' ),
 			'row_template_applied'    => esc_attr__( 'Row Template Added', 'fl-builder' ),
 			'column_template_applied' => esc_attr__( 'Column Template Added', 'fl-builder' ),
+			'history_disabled'        => __( 'Undo/Redo history is currently disabled.', 'fl-builder' ),
 		);
 
 		$hooks = array(
@@ -125,8 +126,8 @@ final class FLBuilderHistoryManager {
 			'position' => self::get_position(),
 			'hooks'    => $hooks,
 			'labels'   => $labels,
+			'enabled'  => FL_BUILDER_HISTORY_STATES && FL_BUILDER_HISTORY_STATES > 0 ? true : false,
 		);
-
 		return $config;
 	}
 
@@ -134,6 +135,7 @@ final class FLBuilderHistoryManager {
 	 * Adds history data to the main menu config.
 	 */
 	static public function main_menu_config( $config ) {
+
 		$config['main']['items'][36] = array(
 			'label' => __( 'History', 'fl-builder' ),
 			'type'  => 'view',
@@ -155,10 +157,15 @@ final class FLBuilderHistoryManager {
 	 * when the builder is active.
 	 */
 	static public function init_states() {
-		$states = self::get_states();
+		if ( FL_BUILDER_HISTORY_STATES && FL_BUILDER_HISTORY_STATES > 0 ) {
+			$states = self::get_states();
 
-		if ( empty( $states ) ) {
-			self::save_current_state( 'draft_created' );
+			if ( empty( $states ) ) {
+				self::save_current_state( 'draft_created' );
+			}
+		} else {
+			$post_id = FLBuilderModel::get_post_id();
+			self::delete_states( $post_id );
 		}
 	}
 
@@ -169,7 +176,7 @@ final class FLBuilderHistoryManager {
 		global $wpdb;
 
 		$post_id = FLBuilderModel::get_post_id();
-		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND post_id = %d", '%_fl_builder_history_state%', $post_id ) );
+		$results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND post_id = %d ORDER BY meta_id", '%_fl_builder_history_state%', $post_id ) );
 		$states  = array();
 
 		foreach ( $results as $result ) {

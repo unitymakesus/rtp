@@ -5,12 +5,6 @@
  *  @package Registration Form Module
  */
 
-add_filter(
-	'script_loader_tag',
-	'uabb_rf_add_async_attribute',
-	10,
-	2
-);
 /**
  * Function that adds async attribute
  *
@@ -19,13 +13,18 @@ add_filter(
  * @param string $tag    Script tag.
  * @param string $handle Registered script handle.
  */
-function uabb_rf_add_async_attribute( $tag, $handle ) {
-
-	if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
+add_filter(
+	'script_loader_tag',
+	function( $tag, $handle ) {
+		if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
 			return $tag;
-	}
-	return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
-}
+		}
+		return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
+	},
+	10,
+	2
+);
+$message = __( 'Please accept the Terms and Conditions to proceed.', 'uabb' );
 ?>
 
 <?php
@@ -134,7 +133,22 @@ if ( 'yes' === $settings->hide_form_logged && is_user_logged_in() && ! FLBuilder
 									<span class="uabb-registration-error uabb-registration_form-error-message-required "><?php esc_attr_e( 'Please check the reCAPTCHA to verify you are not a robot.', 'uabb' ); ?></span>
 								</div>
 							</div>
-					<?php } if ( 'yes' === $settings->honeypot_check ) { ?>
+					<?php } if ( 'show' === $settings->terms_checkbox ) { ?>
+							<div class="uabb-input-group uabb-terms-checkbox">
+								<?php if ( isset( $settings->terms_text ) && ! empty( $settings->terms_text ) ) : ?>
+									<div class="uabb-terms-text"><?php echo $settings->terms_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+								<?php endif; ?>
+								<div class="uabb-form-outter">
+									<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>">
+										<input aria-label="checkbox" type="checkbox" class="checkbox-inline" id="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>" name="uabb-terms-checkbox" value="1" />
+										<span class="checkbox-label">
+											<?php echo $settings->terms_checkbox_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+										</span>
+									</label>
+								</div>
+								<label class="uabb-registration-error"><?php echo wp_kses_post( apply_filters( 'uabb_registration_form_error_message', $message ) ); ?></label>
+							</div>
+				<?php } if ( 'yes' === $settings->honeypot_check ) { ?>
 						<div class="uabb-input-group-honeypot">
 							<input size="1" type="text" style="display:none;" name="input_text">
 						</div>

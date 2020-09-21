@@ -668,7 +668,7 @@ class UABBVideoGallery extends FLBuilderModule {
 		if ( '' === $item->title ) {
 			return '';
 		}
-		if ( 'yes' !== $this->settings->show_caption ) {
+		if ( 'no' === $this->settings->show_caption ) {
 			return '';
 		}
 		?>

@@ -313,6 +313,16 @@
             FLBuilder.addHook('showGlobalSettings', this.showGlobalSettings.bind(this));
             FLBuilder.addHook('toggleUISkin', this.toggleUISkin.bind(this));
             FLBuilder.addHook('clearLayoutCache', this.clearLayoutCache.bind(this));
+            FLBuilder.addHook('launchThemerLayouts', this.launchThemerLayouts.bind(this));
+
+            // Show Keyboard Shortcuts
+            if ( 'FL' in window && 'Builder' in FL ) {
+                var actions = FL.Builder.data.getSystemActions();
+
+                FLBuilder.addHook( 'showKeyboardShortcuts', function() {
+                    actions.setShouldShowShortcuts( true );
+                });
+            }
         },
 
         /**
@@ -390,11 +400,29 @@
                 var toSkin = 'light';
             }
             $('body').removeClass('fl-builder-ui-skin--' + fromSkin ).addClass('fl-builder-ui-skin--' + toSkin);
+
+            if ( 'Builder' in FL && 'data' in FL.Builder ) {
+                var actions = FL.Builder.data.getSystemActions()
+                actions.setColorScheme( toSkin )
+            }
+
             // ajax save
             FLBuilder.ajax({
                 action: 'save_ui_skin',
                 skin_name: toSkin,
             });
+        },
+
+        /**
+        * @return void
+        */
+        launchThemerLayouts: function() {
+			if ( FLBuilderConfig.lite ) {
+				FLBuilder._showProMessage( 'Themer Layouts' );
+			} else {
+				window.open( FLBuilderConfig.themerLayoutsUrl );
+			}
+			MainMenuPanel.hide();
         },
     }
 

@@ -178,14 +178,14 @@ FLBuilder::register_module(
 				'carousel_filter' => array(
 					'title'  => __( 'Carousel Filter', 'uabb' ),
 					'fields' => array(
-						'slides_to_scroll' => array(
+						'slides_to_scroll'  => array(
 							'type'        => 'text',
 							'label'       => __( 'Images to Scroll', 'uabb' ),
 							'help'        => __( 'This is how many images you want to scroll at a time.', 'uabb' ),
 							'placeholder' => '1',
 							'size'        => '8',
 						),
-						'autoplay'         => array(
+						'autoplay'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Autoplay Image Scroll', 'uabb' ),
 							'help'    => __( 'Enables auto play of images.', 'uabb' ),
@@ -196,11 +196,11 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'yes' => array(
-									'fields' => array( 'animation_speed' ),
+									'fields' => array( 'animation_speed', 'pause_on_hover' ),
 								),
 							),
 						),
-						'animation_speed'  => array(
+						'animation_speed'   => array(
 							'type'        => 'text',
 							'label'       => __( 'Autoplay Speed', 'uabb' ),
 							'help'        => __( 'Enter the time interval to scroll image automatically.', 'uabb' ),
@@ -208,7 +208,17 @@ FLBuilder::register_module(
 							'size'        => '8',
 							'description' => 'ms',
 						),
-						'infinite_loop'    => array(
+						'pause_on_hover'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Pause on Hover', 'uabb' ),
+							'help'    => __( 'Enable this to stop slider pause on hover', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => 'Yes',
+								'no'  => 'No',
+							),
+						),
+						'infinite_loop'     => array(
 							'type'    => 'select',
 							'label'   => __( 'Infinite Loop', 'uabb' ),
 							'help'    => __( 'Enable this to scroll images in infinite loop.', 'uabb' ),
@@ -218,7 +228,7 @@ FLBuilder::register_module(
 								'no'  => 'No',
 							),
 						),
-						'lazyload'         => array(
+						'lazyload'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Enable Lazy Load', 'uabb' ),
 							'help'    => __( 'Enable this to load the image as soon as user slide to it.', 'uabb' ),
@@ -228,7 +238,7 @@ FLBuilder::register_module(
 								'no'  => __( 'No', 'uabb' ),
 							),
 						),
-						'enable_arrow'     => array(
+						'enable_arrow'      => array(
 							'type'    => 'select',
 							'label'   => __( 'Enable Arrows', 'uabb' ),
 							'help'    => __( 'Enable Next/Prev arrows to your carousel slider.', 'uabb' ),
@@ -241,6 +251,16 @@ FLBuilder::register_module(
 								'yes' => array(
 									'sections' => array( 'arrow_section' ),
 								),
+							),
+						),
+						'enable_arrow_resp' => array(
+							'type'    => 'select',
+							'label'   => __( 'Disable Arrows on Small Devices', 'uabb' ),
+							'help'    => __( 'Disable Next/Prev arrows to your carousel slider in small devices.', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
 							),
 						),
 					),

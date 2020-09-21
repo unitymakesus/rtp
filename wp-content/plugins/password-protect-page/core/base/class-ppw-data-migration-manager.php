@@ -6,7 +6,7 @@
  * Time: 20:15
  */
 
-if ( ! class_exists( ' ' ) ) {
+if ( ! class_exists( 'PPW_Migration_Manager' ) ) {
 	abstract class PPW_Migration_Manager extends PPW_Background_Task_Manager {
 
 		abstract public function get_migrations_class();

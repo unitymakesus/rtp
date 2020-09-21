@@ -103,7 +103,7 @@ function give_get_donation_form( $args = array() ) {
 			$form_title = ! is_singular( 'give_forms' ) ? apply_filters( 'give_form_title', '<h2 class="give-form-title">' . get_the_title( $form->ID ) . '</h2>' ) : '';
 
 			// Get Goal thank you message.
-			$goal_achieved_message = get_post_meta( $form->ID, '_give_form_goal_achieved_message', true );
+			$goal_achieved_message = give_get_meta( $form->ID, '_give_form_goal_achieved_message', true );
 			$goal_achieved_message = ! empty( $goal_achieved_message ) ? $form_title . apply_filters( 'the_content', $goal_achieved_message ) : '';
 
 			// Print thank you message.
@@ -523,7 +523,7 @@ function give_output_levels( $form_id ) {
 	$custom_amount_text = give_get_meta( $form_id, '_give_custom_amount_text', true );
 
 	if ( empty( $custom_amount_text ) ) {
-		$custom_amount_text = esc_html__( 'Give a Custom Amount', 'give' );
+		$custom_amount_text = esc_html__( 'Custom Amount', 'give' );
 	}
 
 	$output = '';
@@ -1014,7 +1014,7 @@ function give_get_cc_form( $form_id ) {
 			</label>
 
 			<input type="tel" autocomplete="off" name="card_number" id="card_number-<?php echo $form_id; ?>"
-				   class="card-number give-input required" placeholder="<?php _e( 'Card number', 'give' ); ?>"
+				   class="card-number give-input required" placeholder="<?php _e( 'Card Number', 'give' ); ?>"
 				   required aria-required="true"/>
 		</p>
 
@@ -1026,7 +1026,7 @@ function give_get_cc_form( $form_id ) {
 			</label>
 
 			<input type="tel" size="4" autocomplete="off" name="card_cvc" id="card_cvc-<?php echo $form_id; ?>"
-				   class="card-cvc give-input required" placeholder="<?php _e( 'Security code', 'give' ); ?>"
+				   class="card-cvc give-input required" placeholder="<?php _e( 'CVC', 'give' ); ?>"
 				   required aria-required="true"/>
 		</p>
 
@@ -1253,7 +1253,10 @@ function give_default_cc_address_fields( $form_id ) {
 		$require_state = ! array_key_exists( $selected_country, $no_states_country ) && give_field_is_required( 'card_state', $form_id );
 		// Used to determine is state input should be marked as required.
 		$validate_state = ! array_key_exists( $selected_country, $states_not_required_country_list ) && give_field_is_required( 'card_state', $form_id );
-
+		// Check if post code is required
+		$postcode_required = $selected_country
+			? ! array_key_exists( $selected_country, give_get_country_list_without_postcodes() ) && give_field_is_required( 'card_zip', $form_id )
+			: give_field_is_required( 'card_zip', $form_id );
 		?>
 		<p id="give-card-state-wrap"
 		   class="form-row form-row-first form-row-responsive <?php echo ( ! empty( $selected_country ) && ! $require_state ) ? 'give-hidden' : ''; ?> ">
@@ -1291,9 +1294,7 @@ function give_default_cc_address_fields( $form_id ) {
 		<p id="give-card-zip-wrap" class="form-row <?php echo $require_state ? 'form-row-last' : ''; ?> form-row-responsive">
 			<label for="card_zip" class="give-label">
 				<?php _e( 'Zip / Postal Code', 'give' ); ?>
-				<?php if ( give_field_is_required( 'card_zip', $form_id ) ) : ?>
-					<span class="give-required-indicator">*</span>
-				<?php endif; ?>
+				<span class="give-required-indicator<?php echo ( $postcode_required ? '' : ' give-hidden' ); ?>">*</span>
 				<?php echo Give()->tooltips->render_help( __( 'The zip or postal code for your billing address.', 'give' ) ); ?>
 			</label>
 
@@ -1303,10 +1304,10 @@ function give_default_cc_address_fields( $form_id ) {
 				id="card_zip"
 				name="card_zip"
 				autocomplete="postal-code"
-				class="card-zip give-input<?php echo( give_field_is_required( 'card_zip', $form_id ) ? ' required' : '' ); ?>"
+				class="card-zip give-input<?php echo( $postcode_required ? ' required' : '' ); ?>"
 				placeholder="<?php _e( 'Zip / Postal Code', 'give' ); ?>"
 				value="<?php echo isset( $give_user_info['card_zip'] ) ? $give_user_info['card_zip'] : ''; ?>"
-				<?php echo( give_field_is_required( 'card_zip', $form_id ) ? ' required aria-required="true" ' : '' ); ?>
+				<?php echo( $postcode_required ? ' required aria-required="true" ' : '' ); ?>
 			/>
 		</p>
 		<?php
@@ -1546,15 +1547,7 @@ function give_get_login_fields( $form_id ) {
 					<input type="hidden" name="give-purchase-var" value="needs-to-login"/>
 				<?php endif; ?>
 			</div>
-
-			<div id="give-forgot-password-wrap-<?php echo $form_id; ?>" class="give_login_forgot_password">
-				 <span class="give-forgot-password ">
-					 <a href="<?php echo wp_lostpassword_url(); ?>"
-						target="_blank"><?php _e( 'Reset Password', 'give' ); ?></a>
-				 </span>
-			</div>
 		</div>
-
 
 		<div id="give-user-login-submit-<?php echo $form_id; ?>" class="give-clearfix">
 			<input type="submit" class="give-submit give-btn button" name="give_login_submit"
@@ -1565,6 +1558,11 @@ function give_get_login_fields( $form_id ) {
 					   value="<?php _e( 'Cancel', 'give' ); ?>"/>
 			<?php } ?>
 			<span class="give-loading-animation"></span>
+			<div id="give-forgot-password-wrap-<?php echo $form_id; ?>" class="give_login_forgot_password">
+				<span class="give-forgot-password ">
+					<a href="<?php echo wp_lostpassword_url(); ?>" target="_blank"><?php _e( 'Reset Password', 'give' ); ?></a>
+				</span>
+			</div>
 		</div>
 		<?php
 		/**
@@ -1906,7 +1904,7 @@ function give_checkout_submit( $form_id, $args ) {
 		 */
 		do_action( 'give_donation_form_before_submit', $form_id, $args );
 
-		give_checkout_hidden_fields( $form_id );
+		give_checkout_hidden_fields( $form_id, $args );
 
 		echo give_get_donation_form_submit_button( $form_id, $args );
 
@@ -2135,12 +2133,13 @@ function give_form_display_content( $form_id, $args ) {
 /**
  * Renders the hidden Checkout fields.
  *
- * @param int $form_id The form ID.
+ * @param int   $form_id The form ID.
+ * @param array $args Shortcode args.
  *
  * @return void
  * @since 1.0
  */
-function give_checkout_hidden_fields( $form_id ) {
+function give_checkout_hidden_fields( $form_id, $args = array() ) {
 
 	/**
 	 * Fires while rendering hidden checkout fields, before the fields.
@@ -2149,7 +2148,7 @@ function give_checkout_hidden_fields( $form_id ) {
 	 *
 	 * @since 1.0
 	 */
-	do_action( 'give_hidden_fields_before', $form_id );
+	do_action( 'give_hidden_fields_before', $form_id, $args );
 
 	if ( is_user_logged_in() ) {
 		?>
@@ -2165,7 +2164,7 @@ function give_checkout_hidden_fields( $form_id ) {
 	 *
 	 * @since 1.0
 	 */
-	do_action( 'give_hidden_fields_after', $form_id );
+	do_action( 'give_hidden_fields_after', $form_id, $args );
 
 }
 

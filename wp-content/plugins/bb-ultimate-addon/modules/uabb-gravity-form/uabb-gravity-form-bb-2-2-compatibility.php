@@ -39,11 +39,11 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'no'   => array(
-									'fields'   => array( 'form_title', 'form_desc' ),
+									'fields'   => array( 'form_title', 'form_desc', 'form_text_align' ),
 									'sections' => array( 'form_title_typography', 'form_desc_typography' ),
 								),
 								'yes'  => array(
-									'fields'   => array( 'typo_show_title', 'typo_show_desc' ),
+									'fields'   => array( 'typo_show_title', 'typo_show_desc', 'form_text_align' ),
 									'sections' => array( 'form_title_typography', 'form_desc_typography' ),
 								),
 								'none' => array(
@@ -1141,7 +1141,7 @@ FLBuilder::register_module(
 				'label_typography'          => array(
 					'title'  => __( 'Form Label', 'uabb' ),
 					'fields' => array(
-						'typo_show_label'      => array(
+						'typo_show_label'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Show Label', 'uabb' ),
 							'default' => 'block',
@@ -1155,7 +1155,7 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'form_label_font_typo' => array(
+						'form_label_font_typo'     => array(
 							'type'       => 'typography',
 							'label'      => __( 'Typography', 'uabb' ),
 							'responsive' => true,
@@ -1165,7 +1165,7 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'label_color'          => array(
+						'label_color'              => array(
 							'type'        => 'color',
 							'label'       => __( 'Color', 'uabb' ),
 							'connections' => array( 'color' ),
@@ -1178,6 +1178,12 @@ FLBuilder::register_module(
 								'property'  => 'color',
 								'important' => true,
 							),
+						),
+						'form_label_margin_bottom' => array(
+							'type'   => 'unit',
+							'label'  => __( 'Bottom Margin', 'uabb' ),
+							'slider' => true,
+							'units'  => array( 'px' ),
 						),
 					),
 				),
@@ -1261,7 +1267,7 @@ FLBuilder::register_module(
 							'responsive' => true,
 							'preview'    => array(
 								'type'      => 'css',
-								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label',
+								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label, .uabb-gf-style .gform_wrapper .gfield .gfield_radio .gchoice_label label, .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox label',
 								'important' => true,
 							),
 						),
@@ -1274,7 +1280,7 @@ FLBuilder::register_module(
 							'show_reset'   => true,
 							'preview'      => array(
 								'type'      => 'css',
-								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label',
+								'selector'  => '.gform_wrapper .gfield .gfield_radio li label, .gform_wrapper .gfield .gfield_checkbox li label, .uabb-gf-style .gform_wrapper .gfield .gfield_radio .gchoice_label label, .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox label',
 								'property'  => 'color',
 								'important' => true,
 							),

@@ -56,6 +56,10 @@ https://vimeo.com/220647227
 
 == Changelog ==
 
+= 4.9.7 =
+
+- Update logic for calculating table overhead
+
 = 4.9.6 =
 
 - Updated logic for generating archive name for File Manager tool.

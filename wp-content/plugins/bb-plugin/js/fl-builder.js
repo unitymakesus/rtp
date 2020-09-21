@@ -582,7 +582,7 @@
 			// Row templates from the builder panel.
 			$('.fl-builder-row-templates').sortable($.extend({}, defaults, {
 				connectWith: FLBuilder._contentClass + ' .fl-row-drop-target',
-				items: '.fl-builder-block-row-template',
+				items: '.fl-builder-block-row-template:not(.fl-builder-block-disabled)',
 				stop: FLBuilder._nodeTemplateDragStop
 			}));
 
@@ -605,7 +605,7 @@
 			// Modules from the builder panel.
 			$('.fl-builder-modules, .fl-builder-widgets').sortable($.extend({}, defaults, {
 				connectWith: moduleConnections,
-				items: '.fl-builder-block-module',
+				items: '.fl-builder-block-module:not(.fl-builder-block-disabled)',
 				stop: FLBuilder._moduleDragStop
 			}));
 
@@ -720,7 +720,7 @@
 			$('body').delegate('.fl-builder-node-template-delete', 'mousedown', FLBuilder._stopPropagation);
 			$('body').delegate('.fl-builder-node-template-edit', 'click', FLBuilder._editNodeTemplateClicked);
 			$('body').delegate('.fl-builder-node-template-delete', 'click', FLBuilder._deleteNodeTemplateClicked);
-			$('body').delegate('.fl-builder-block', 'mousedown', FLBuilder._blockDragInit );
+			$('body').delegate('.fl-builder-block:not(.fl-builder-block-disabled)', 'mousedown', FLBuilder._blockDragInit );
 			$('body').on('mouseup', FLBuilder._blockDragCancel);
 
 			/* Actions Lightbox */
@@ -1056,6 +1056,64 @@
 			}
 		},
 
+		/* Lite Version
+		----------------------------------------------------------*/
+
+		/**
+		 * Opens a new window with the upgrade URL when the
+		 * upgrade button is clicked.
+		 *
+		 * @since 1.0
+		 * @access private
+		 * @method _upgradeClicked
+		 */
+		_upgradeClicked: function()
+		{
+			window.open(FLBuilderConfig.upgradeUrl);
+		},
+
+		/**
+		 * Toggles the pro module section in lite.
+		 *
+		 * @since 2.4
+		 */
+		_toggleProModules: function()
+		{
+			var button = $( '.fl-builder-blocks-pro-expand' ),
+				closed = $( '.fl-builder-blocks-pro-closed' ),
+				open = $( '.fl-builder-blocks-pro-open' );
+
+			button.toggleClass( 'fl-builder-blocks-pro-expand-rotate' );
+
+			if ( closed.length ) {
+				closed.removeClass( 'fl-builder-blocks-pro-closed' );
+				closed.addClass( 'fl-builder-blocks-pro-open' );
+			} else {
+				open.removeClass( 'fl-builder-blocks-pro-open' );
+				open.addClass( 'fl-builder-blocks-pro-closed' );
+			}
+		},
+
+		/**
+		 * Shows the the pro message lightbox.
+		 *
+		 * @since 2.4
+		 */
+		_showProMessage: function( feature )
+		{
+			if ( ! FLBuilderConfig.lite ) {
+				return
+			}
+
+			var alert = new FLLightbox({
+					className: 'fl-builder-pro-lightbox',
+					destroyOnClose: true
+				}),
+				template = wp.template( 'fl-pro-lightbox' );
+
+			alert.open( template( { feature : feature } ) );
+		},
+
 		/* TipTips
 		----------------------------------------------------------*/
 
@@ -1232,19 +1290,6 @@
 		----------------------------------------------------------*/
 
 		/**
-		 * Opens a new window with the upgrade URL when the
-		 * upgrade button is clicked.
-		 *
-		 * @since 1.0
-		 * @access private
-		 * @method _upgradeClicked
-		 */
-		_upgradeClicked: function()
-		{
-			window.open(FLBuilderConfig.upgradeUrl);
-		},
-
-		/**
 		 * Fires blur on mouse up to avoid focus ring when clicked with mouse.
 		 *
 		 * @since 2.0
@@ -1329,13 +1374,13 @@
 		* @since 2.0
 		* @access private
 		* @method _publishLayout
-		* @param bool whether or not builder should exit after publish
+		* @param {Boolean} shouldExit Whether or not builder should exit after publish
+		* @param {Boolean} openLightbox Whether or not to keep the lightboxes open.
 		* @return void
 		*/
-		_publishLayout: function( shouldExit ) {
-
+		_publishLayout: function( shouldExit, openLightbox ) {
 			// Save existing settings first if any exist. Don't proceed if it fails.
-			if ( ! FLBuilder._triggerSettingsSave( false, true ) ) {
+			if ( ! FLBuilder._triggerSettingsSave( openLightbox, true ) ) {
 				return;
 			}
 
@@ -1970,6 +2015,11 @@
 		 */
 		_saveUserTemplateClicked: function()
 		{
+			if ( FLBuilderConfig.lite ) {
+				FLBuilder._showProMessage( 'Saving Templates' );
+				return;
+			}
+
 			FLBuilderSettingsForms.render( {
 				id        : 'user_template',
 				className : 'fl-builder-user-template-settings',
@@ -6960,6 +7010,7 @@
 				parentBoxWrap.find( 'label.error' ).remove();
 				parentBoxForm.validate().hideErrors();
 				FLBuilder._toggleSettingsTabErrors();
+				FLBuilder._initMultipleFields();
 			} );
 
 			nestedBoxObj.close();
@@ -7377,6 +7428,7 @@
 		 * @method _initMultipleFields
 		 */
 		_initMultipleFields: function()
+
 		{
 			var multiples = $('.fl-builder-settings:visible .fl-builder-field-multiples'),
 				multiple  = null,
@@ -7595,23 +7647,37 @@
 				hide    = select.attr('data-hide'),
 				trigger = select.attr('data-trigger'),
 				val     = select.val(),
-				i       = 0;
+				i       = 0,
+				selectElem = select.attr( 'name' ),
+				allowToggle = false;
 
 			// TOGGLE sections, fields or tabs.
 			if(typeof toggle !== 'undefined') {
 
 				toggle = FLBuilder._jsonParse(toggle);
 
+				if ( 'responsive' === FLBuilderResponsiveEditing._mode && null != selectElem.match(/_responsive$/) ) {
+					allowToggle = true;
+				} else if ( 'medium' === FLBuilderResponsiveEditing._mode && null != selectElem.match(/_medium$/) ) {
+					allowToggle = true;
+				} else if ( 'default' === FLBuilderResponsiveEditing._mode && null == selectElem.match(/_responsive$/) &&  null == selectElem.match(/_medium$/) ) {
+					allowToggle = true;
+				}
+
 				for(i in toggle) {
-					FLBuilder._settingsSelectToggle(toggle[i].fields, 'hide', '#fl-field-');
-					FLBuilder._settingsSelectToggle(toggle[i].sections, 'hide', '#fl-builder-settings-section-');
-					FLBuilder._settingsSelectToggle(toggle[i].tabs, 'hide', 'a[href*=fl-builder-settings-tab-', ']');
+					if ( allowToggle ){
+						FLBuilder._settingsSelectToggle(toggle[i].fields, 'hide', '#fl-field-');
+						FLBuilder._settingsSelectToggle(toggle[i].sections, 'hide', '#fl-builder-settings-section-');
+						FLBuilder._settingsSelectToggle(toggle[i].tabs, 'hide', 'a[href*=fl-builder-settings-tab-', ']');
+					}
 				}
 
 				if(typeof toggle[val] !== 'undefined') {
-					FLBuilder._settingsSelectToggle(toggle[val].fields, 'show', '#fl-field-');
-					FLBuilder._settingsSelectToggle(toggle[val].sections, 'show', '#fl-builder-settings-section-');
-					FLBuilder._settingsSelectToggle(toggle[val].tabs, 'show', 'a[href*=fl-builder-settings-tab-', ']');
+					if ( allowToggle ){
+						FLBuilder._settingsSelectToggle(toggle[val].fields, 'show', '#fl-field-');
+						FLBuilder._settingsSelectToggle(toggle[val].sections, 'show', '#fl-builder-settings-section-');
+						FLBuilder._settingsSelectToggle(toggle[val].tabs, 'show', 'a[href*=fl-builder-settings-tab-', ']');
+					}
 				}
 			}
 
@@ -7789,7 +7855,7 @@
 				FLBuilder._singlePhotoSelector = wp.media({
 					title: FLBuilderStrings.selectPhoto,
 					button: { text: FLBuilderStrings.selectPhoto },
-					library : { type : 'image' },
+					library : { type : FLBuilderConfig.uploadTypes.image },
 					multiple: false
 				});
 				FLBuilder._singlePhotoSelector.on( 'open', FLBuilder._wpmedia_reset_errors );
@@ -8108,7 +8174,7 @@
 				FLBuilder._singleVideoSelector = wp.media({
 					title: FLBuilderStrings.selectVideo,
 					button: { text: FLBuilderStrings.selectVideo },
-					library : { type : 'video' },
+					library : { type : FLBuilderConfig.uploadTypes.video },
 					multiple: false
 				});
 
@@ -8431,6 +8497,7 @@
 			}, function() {
 				link.attr( 'id', 'fl-' + lightbox._node.attr( 'data-instance-id' ) );
 				lightbox._node.find( 'form.fl-builder-settings' ).attr( 'data-type', type );
+				FLBuilderResponsiveEditing._switchAllSettingsToCurrentMode();
 			} );
 		},
 
@@ -8568,7 +8635,11 @@
 				showResultListWhenNoMatch   : true,
 				queryParam                  : 'fl_as_query',
 				selectionLimit              : 1,
-				afterSelectionAdd           : FLBuilder._updateLinkField
+				afterSelectionAdd           : FLBuilder._updateLinkField,
+				formatList: function(data, elem){
+					var new_elem = elem.html(data.name + '<span class="type">[' + data.type + ']</span>');
+					return new_elem;
+				}
 			});
 
 			checkboxes.on( 'click', FLBuilder._linkFieldCheckboxClicked );

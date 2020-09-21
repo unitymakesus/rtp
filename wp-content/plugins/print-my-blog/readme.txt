@@ -3,7 +3,7 @@ Contributors: mnelson4
 Tags: print, PDF, backup, eBook, print button, ClassicPress
 Requires at least: 4.6
 Stable tag: trunk
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -249,6 +249,7 @@ The easiest way to print a draft post is to enable the front-end print buttons, 
 https://youtu.be/LemXhydDEvg
 
 = How do I show the print buttons on posts or pages? =
+**Using Print My Blog Settings and Custom Fields**
 You can add print buttons to all posts and/or pages from the WordPress admin dashboard, under "Print My Blog", click "Settings", then, next to "Show print buttons on:" select the posts and/or pages.
 If you don't want to show them on certain posts or pages, add the custom field named "pmb_buttons" to them with the value "hide".
 Alternatively, if you only want to show the button on specific posts or pages, add the custom field "pmb_buttons" to those posts or pages with the value "show".
@@ -256,6 +257,17 @@ Alternatively, if you only want to show the button on specific posts or pages, a
 https://www.youtube.com/watch?v=Ehep6GO5J6c
 
 https://www.youtube.com/watch?v=mWD8kDrhWMs
+
+**Using a Shortcode**
+You can add print buttons directly into your posts and pages by using the shortcode `[pmb_print_buttons]`. You can also supply it with the ID of a different post or page like so: `[pmb_print_buttons ID=123]`.
+
+**Editing Your Theme's Template Files**
+If you'd like to add the print buttons somewhere in your theme's template files, add the following PHP code anywhere inside the loop:
+
+`
+<?php echo do_shortcode('[pmb_print_buttons]'); ?>
+`
+
 
 == Screenshots ==
 
@@ -268,6 +280,35 @@ https://www.youtube.com/watch?v=mWD8kDrhWMs
 7. Add the Print My Blog block to add a form visitors can use to select what and how to print your blog.
 
 == Changelog ==
+
+= 2.9.5 September 16, 2020 =
+* Fix a conflict with OceanWP theme from registering select2 JS unnecessarily
+* Prevent images in multi-column layout from spilling over into other columns
+
+= 2.9.4 September 12, 2020 =
+* Fixed images not appearing when selecting that they be "fullsize"
+
+= 2.9.3 September 2, 2020 =
+* Fix a warning when used with AMP for WP plugin
+
+= 2.9.2 August 22, 2020 =
+* Improve integration with Hueman theme by adding the CSS class "entry" onto posts in print page
+* Add WPML integration by adding "lang" attribute to print page
+* Fix printing single pages without a parent, and when the parent not included in printout
+
+= 2.9.1 August 11, 2020 =
+* Fix Twentyseventeen theme so it displays authors
+
+= 2.9.0 July 30, 2020 =
+* Add [pmb_print_buttons] shortcode for adding print buttons anywhere to post body
+* Fixed removing images from printouts
+* In Twentyseventeen theme, add more space between featured images and post content
+* When resizing images, only resize ones that would be bigger than the desired maximum size
+* Recommend Chrome or Edge for generating PDFs as others don't include working hyperlinks
+
+= 2.8.0 July 20, 2020 =
+* Add setting for placing print buttons below post content
+* Fix issue with Restrict Content Pro and printing posts as less-privileged users
 
 = 2.7.2 July 9, 2020 =
 * Add CSS class "post-content" in addition to "entry-content" which improves the look in some themes like Rowling 1.x

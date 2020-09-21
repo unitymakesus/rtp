@@ -20,6 +20,8 @@ class Uploader extends Background_Tool {
 		parent::init();
 
 		$this->error_setting_migration();
+
+		add_action( 'as3cfpro_load_assets', array( $this, 'load_assets' ) );
 	}
 
 	/**
@@ -195,6 +197,18 @@ class Uploader extends Background_Tool {
 		$this->as3cf->notices->remove_notice_by_id( $notice_id );
 
 		parent::handle_start();
+	}
+
+	/**
+	 * Load assets.
+	 */
+	public function load_assets() {
+		parent::load_assets();
+
+		$this->as3cf->enqueue_script( 'as3cf-pro-uploader-script', 'assets/js/pro/tools/uploader', array(
+			'jquery',
+			'wp-util',
+		) );
 	}
 
 	/**

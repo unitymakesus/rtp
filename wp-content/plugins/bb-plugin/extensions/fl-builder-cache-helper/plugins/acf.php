@@ -1,19 +1,16 @@
 <?php
 namespace FLCacheClear;
 class ACF {
-
-	var $name = 'Advanced Custom Fields';
-	var $url  = 'https://wordpress.org/plugins/advanced-custom-fields/';
-
-	var $filters = array( 'admin_init' );
+	var $name    = 'Advanced Custom Fields';
+	var $url     = 'https://wordpress.org/plugins/advanced-custom-fields/';
+	var $actions = array( 'admin_init' );
 
 	function run() {
-		// nothing here
-	}
-
-	function filters() {
-		add_filter( 'acf/save_post', function( $post_id ) {
+		add_action( 'acf/save_post', function( $post_id ) {
 			\FLBuilderModel::delete_all_asset_cache( $post_id );
+
+			// delete partials
+			\FLBuilderModel::delete_asset_cache_for_all_posts( '*layout-partial*' );
 		});
 	}
 }

@@ -47,6 +47,7 @@ window.tsfSocial = function( $ ) {
 	/**
 	 * @since 4.0.0
 	 * @access private
+	 * @todo deprecate; either remove and contain these within the callers, or convert to states. See tsfTitle & tsfDescription.
 	 * @type {(Object<string, *>)} the query state.
 	 */
 	let state = {
@@ -59,6 +60,7 @@ window.tsfSocial = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access public
+	 * @todo deprecate; either remove, or convert to getStateOf. See tsfTitle & tsfDescription.
 	 *
 	 * @param {(string|undefined)} part The part to return. Leave empty to return the whole state.
 	 * @return {(Object<string, *>)|*|undefined}
@@ -72,6 +74,7 @@ window.tsfSocial = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access public
+	 * @todo deprecate; either remove, or convert to updateStateOf. See tsfTitle & tsfDescription.
 	 *
 	 * @param {string} type  The state index to change.
 	 * @param {*}      value The value to set the state to.
@@ -103,20 +106,22 @@ window.tsfSocial = function( $ ) {
 	 * Initializes social titles.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now handles the refNa input for the "no additions" values.
 	 * @access public
 	 *
 	 * @function
-	 * @param {(Object<string, Element>)} inputs The social input elements.
+	 * @param {Object<string,Element>} inputs The social input elements.
 	 * @return {undefined}
 	 */
 	const initTitleInputs = ( inputs ) => {
 
-		let $ogTitle   = $( inputs.og ),
-			$twTitle   = $( inputs.tw ),
-			$refTitle  = $( inputs.ref ),
-			$metaTitle = $( inputs.meta );
+		let ogTitle    = inputs.og,
+			twTitle    = inputs.tw,
+			refTitle   = inputs.ref,
+			refNaTitle = inputs.refNa,
+			metaTitle  = inputs.meta;
 
-		if ( ! $ogTitle.length || ! $twTitle.length || ! $metaTitle.length || ! $refTitle.length )
+		if ( ! ogTitle || ! twTitle || ! refTitle || ! refNaTitle || ! metaTitle )
 			return;
 
 		let ogLocked   = l10n.params.homeLocks.ogTitleLock,
@@ -124,9 +129,10 @@ window.tsfSocial = function( $ ) {
 			twLocked   = l10n.params.homeLocks.twTitleLock,
 			twPHLocked = l10n.params.homeLocks.twTitlePHLock;
 
-		let ogTitleValue  = ogLocked ? $ogTitle.attr( 'placeholder' ) : $ogTitle.val(),
-			twTitleValue  = twLocked ? $twTitle.attr( 'placeholder' ) : $twTitle.val(),
-			refTitleValue = $refTitle.html();
+		let ogTitleValue    = ogLocked ? ogTitle.placeholder : ogTitle.value,
+			twTitleValue    = twLocked ? twTitle.placeholder : twTitle.value,
+			refTitleNaValue = refNaTitle.innerHTML, // Security OK. RefNa is escaped.
+			refTitleValue   = refTitle.innerHTML;   // Security OK. Ref is escaped.
 
 		const getActiveValue = ( what ) => {
 			let val = '';
@@ -135,42 +141,43 @@ window.tsfSocial = function( $ ) {
 				case 'twitter':
 					val = twTitleValue;
 					if ( twLocked || twPHLocked ) {
-						val = val.length ? val : $twTitle.attr( 'placeholder' );
+						// TODO we need to step away from our reliance on placeholders.
+						val = val.length ? val : twTitle.placeholder;
 						break switchActive;
 					}
 					// get next if not set.
 				case 'og':
 					val = val.length ? val : ogTitleValue;
 					if ( ogLocked || ogPHLocked ) {
-						val = val.length ? val : $ogTitle.attr( 'placeholder' );
+						// TODO we need to step away from our reliance on placeholders.
+						val = val.length ? val : ogTitle.placeholder;
 						break switchActive;
 					}
 					// get next if not set.
 				case 'meta':
-					/**
-					 * Nothing here, all is handled by ref due to the title's complexity.
-					 * Moreover, OG Title and TW Title still contain the BLOGNAME additions by default.
-					 * NOTE this will become optional, see https://github.com/sybrew/the-seo-framework/issues/394
-					 * Then, we will run this switch state conditionally.
-					 *
-					 * e.g.
-					 * if ( l10n.params.useSocialTitleAdditions ) {
-					 *    // do nothing
-					 * } else {
-					 *    val = $metaTitle.val();
-					 * }
-					 */
-					// get next if not set.
+					// All is handled by ref due to the title's complexity.
 				case 'ref':
-					val = val.length ? val : refTitleValue;
+					if ( ! val.length ) {
+						// Tagline = additions = blog name = site title. Well done, Sybre. :) FIXME, noob.
+						if ( tsfTitle.getStateOf( metaTitle.id, 'useSocialTagline' ) ) {
+							val = refTitleValue;
+						} else {
+							val = refTitleNaValue;
+						}
+					}
 					break;
 			}
 			return val;
 		};
 		const setPlaceholders = () => {
-			// $.attr escapes.
-			ogLocked || ogPHLocked || $ogTitle.attr( 'placeholder', tsf.decodeEntities( getActiveValue( 'meta' ) ) );
-			twLocked || twPHLocked || $twTitle.attr( 'placeholder', tsf.decodeEntities( getActiveValue( 'og' ) ) );
+			if ( ! ogLocked && ! ogPHLocked ) {
+				// Security OK. All getActiveValue is escaped.
+				ogTitle.placeholder = tsf.decodeEntities( getActiveValue( 'meta' ) );
+			}
+			if ( ! twLocked && ! twPHLocked ) {
+				// Security OK. All getActiveValue is escaped.
+				twTitle.placeholder = tsf.decodeEntities( getActiveValue( 'og' ) );
+			}
 		};
 		const updateCounter = ( target, text, type ) => {
 			let counter = document.getElementById( target.id + '_chars' );
@@ -184,22 +191,28 @@ window.tsfSocial = function( $ ) {
 				type:  type,
 			} );
 		};
-		let updateSocialCountersBuffer = 0;
+		let updateSocialCountersBuffer = void 0;
 		const updateSocialCounters = () => {
 			clearTimeout( updateSocialCountersBuffer );
 			updateSocialCountersBuffer = setTimeout( () => {
-				$ogTitle.each( ( i, el ) => updateCounter( el, getActiveValue( 'og' ), 'opengraph' ) );
-				$twTitle.each( ( i, el ) => updateCounter( el, getActiveValue( 'twitter' ), 'twitter' ) );
+				updateCounter( ogTitle, getActiveValue( 'og' ), 'opengraph' );
+				updateCounter( twTitle, getActiveValue( 'twitter' ), 'twitter' );
 			}, 10 );
 		};
-		const updateRefTitle = ( event ) => {
-			refTitleValue = $refTitle.html();
-			setPlaceholders();
-			updateSocialCounters();
+		let updateRefTitleBuffer = void 0;
+		const updateRefTitle = event => {
+			clearTimeout( updateRefTitleBuffer );
+			updateRefTitleBuffer = setTimeout( () => {
+				refTitleValue   = refTitle.innerHTML;   // Security OK. Ref is escaped.
+				refTitleNaValue = refNaTitle.innerHTML; // Security OK. RefNa is escaped.
+				setPlaceholders();
+				updateSocialCounters();
+			}, 10 );
 		};
-		$refTitle.on( 'change.tsfUpdateRefTitle', updateRefTitle );
+		refTitle.addEventListener( 'change', updateRefTitle );
+		refNaTitle.addEventListener( 'change', updateRefTitle );
 
-		const updateOgTitle = ( event ) => {
+		const updateOgTitle = event => {
 			if ( ! ogLocked ) {
 				let text = event.target.value.trim();
 				ogTitleValue = text.length ? tsf.sDoubleSpace( text ) : '';
@@ -207,7 +220,7 @@ window.tsfSocial = function( $ ) {
 			setPlaceholders();
 			updateSocialCounters();
 		};
-		const updateTwTitle = ( event ) => {
+		const updateTwTitle = event => {
 			if ( ! twLocked ) {
 				let text = event.target.value.trim();
 				twTitleValue = text.length ? tsf.sDoubleSpace( text ) : '';
@@ -215,8 +228,8 @@ window.tsfSocial = function( $ ) {
 			setPlaceholders();
 			updateSocialCounters();
 		};
-		$ogTitle.on( 'input.tsfUpdateOgTitle', updateOgTitle );
-		$twTitle.on( 'input.tsfUpdateTwTitle', updateTwTitle );
+		ogTitle.addEventListener( 'input', updateOgTitle );
+		twTitle.addEventListener( 'input', updateTwTitle );
 	}
 
 	/**
@@ -231,12 +244,12 @@ window.tsfSocial = function( $ ) {
 	 */
 	const initDescriptionInputs = ( inputs ) => {
 
-		let $ogDesc   = $( inputs.og ),
-			$twDesc   = $( inputs.tw ),
-			$metaDesc = $( inputs.meta ),
-			$refDesc  = $( inputs.ref );
+		let ogDesc    = inputs.og,
+			twDesc    = inputs.tw,
+			refDesc   = inputs.ref,
+			metaDesc  = inputs.meta; // unused?
 
-		if ( ! $ogDesc.length || ! $twDesc.length || ! $metaDesc.length || ! $refDesc.length )
+		if ( ! ogDesc || ! twDesc || ! refDesc || ! metaDesc )
 			return;
 
 		let ogLocked   = l10n.params.homeLocks.ogDescriptionLock,
@@ -244,9 +257,9 @@ window.tsfSocial = function( $ ) {
 			twLocked   = l10n.params.homeLocks.twDescriptionLock,
 			twPHLocked = l10n.params.homeLocks.twDescriptionPHLock;
 
-		let ogDescValue  = ogLocked ? $ogDesc.attr( 'placeholder' ) : $ogDesc.val(),
-			twDescValue  = twLocked ? $twDesc.attr( 'placeholder' ) : $twDesc.val(),
-			refDescValue = $refDesc.html(); // already escaped.
+		let ogDescValue  = ogLocked ? ogDesc.placeholder : ogDesc.value,
+			twDescValue  = twLocked ? twDesc.placeholder : twDesc.value,
+			refDescValue = refDesc.innerHTML; // Security OK. Ref is escaped.
 
 		const getActiveValue = ( what, context ) => {
 			let val = '';
@@ -255,20 +268,22 @@ window.tsfSocial = function( $ ) {
 				case 'twitter':
 					val = twDescValue;
 					if ( twLocked || twPHLocked ) {
-						val = val.length ? val : $twDesc.attr( 'placeholder' );
+						// TODO we need to step away from our reliance on placeholders.
+						val = val.length ? val : twDesc.placeholder;
 						break switchActive;
 					}
 					// get next if not set.
 				case 'og':
 					val = val.length ? val : ogDescValue;
 					if ( ogLocked || ogPHLocked ) {
-						val = val.length ? val : $ogDesc.attr( 'placeholder' );
+						// TODO we need to step away from our reliance on placeholders.
+						val = val.length ? val : ogDesc.placeholder;
 						break switchActive;
 					}
 					// get next if not set.
 				case 'meta':
 						if ( ! val.length ) {
-							if ( ! $metaDesc.val().length ) {
+							if ( ! metaDesc.value.length ) {
 								if ( 'twitter' === context ) {
 									val = state.twDescPlaceholder;
 								} else if ( 'og' === context ) {
@@ -284,9 +299,14 @@ window.tsfSocial = function( $ ) {
 			return val;
 		};
 		const setPlaceholders = () => {
-			// $.attr escapes.
-			ogLocked || ogPHLocked || $ogDesc.attr( 'placeholder', tsf.decodeEntities( getActiveValue( 'meta', 'og' ) ) );
-			twLocked || twPHLocked || $twDesc.attr( 'placeholder', tsf.decodeEntities( getActiveValue( 'og', 'twitter' ) ) );
+			if ( ! ogLocked && ! ogPHLocked ) {
+				// Security OK. All getActiveValue is escaped.
+				ogDesc.placeholder = tsf.decodeEntities( getActiveValue( 'meta', 'og' ) );
+			}
+			if ( ! twLocked && ! twPHLocked ) {
+				// Security OK. All getActiveValue is escaped.
+				twDesc.placeholder = tsf.decodeEntities( getActiveValue( 'og', 'twitter' ) );
+			}
 		};
 		const updateCounter = ( target, text, type ) => {
 			let counter = document.getElementById( target.id + '_chars' );
@@ -304,16 +324,16 @@ window.tsfSocial = function( $ ) {
 		const updateSocialCounters = () => {
 			clearTimeout( updateSocialCountersBuffer );
 			updateSocialCountersBuffer = setTimeout( () => {
-				$ogDesc.each( ( i, el ) => updateCounter( el, getActiveValue( 'og', 'og' ), 'opengraph' ) );
-				$twDesc.each( ( i, el ) => updateCounter( el, getActiveValue( 'twitter', 'twitter' ), 'twitter'  ) );
+				updateCounter( ogDesc, getActiveValue( 'og', 'og' ), 'opengraph' );
+				updateCounter( twDesc, getActiveValue( 'twitter', 'twitter' ), 'twitter' );
 			}, 10 );
 		};
-		const updateRefDesc = ( event ) => {
-			refDescValue = $refDesc.html();
+		const updateRefDesc = event => {
+			refDescValue = refDesc.innerHTML; // Security OK. Ref is escaped.
 			setPlaceholders();
 			updateSocialCounters();
 		};
-		$refDesc.on( 'change.tsfUpdateRefDesc', updateRefDesc );
+		refDesc.addEventListener( 'change', updateRefDesc );
 
 		const updateOgDesc = ( event ) => {
 			if ( ! ogLocked ) {
@@ -331,8 +351,8 @@ window.tsfSocial = function( $ ) {
 			setPlaceholders();
 			updateSocialCounters();
 		};
-		$ogDesc.on( 'input.tsfUpdateOgDesc', updateOgDesc );
-		$twDesc.on( 'input.tsfUpdateTwDesc', updateTwDesc );
+		ogDesc.addEventListener( 'input', updateOgDesc );
+		twDesc.addEventListener( 'input', updateTwDesc );
 	}
 
 	return Object.assign( {
@@ -356,4 +376,4 @@ window.tsfSocial = function( $ ) {
 		l10n
 	} );
 }( jQuery );
-jQuery( window.tsfSocial.load );
+window.tsfSocial.load();

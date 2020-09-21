@@ -56,7 +56,7 @@
 						<div id="fl-builder-settings-tab-{{tabId}}" class="fl-builder-settings-tab<# if ( tabId === data.activeTab ) { #> fl-active<# } #>">
 
 							<# if ( tab.file ) { #>
-								<div class="fl-legacy-settings-tab" data-tab="{{tabId}}" />
+								<div class="fl-legacy-settings-tab" data-tab="{{tabId}}"></div>
 							<# } else if ( tab.template ) { #>
 								<# tab = FLBuilderSettingsForms.renderTabTemplate( tab, data.settings ); #>
 								{{{tab}}}
@@ -78,7 +78,7 @@
 								<div id="fl-builder-settings-section-{{sectionId}}" class="fl-builder-settings-section {{collapsedClass}}">
 
 									<# if ( section.file ) { #>
-										<div class="fl-legacy-settings-section" data-section="{{sectionId}}" data-tab="{{tabId}}" />
+										<div class="fl-legacy-settings-section" data-section="{{sectionId}}" data-tab="{{tabId}}"></div>
 									<# } else if ( section.template ) { #>
 										<# section = FLBuilderSettingsForms.renderSectionTemplate( section, data.settings ); #>
 										{{{section}}}

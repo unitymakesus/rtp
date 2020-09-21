@@ -121,17 +121,17 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 
 	// Text Color
 	if ( ! empty( $slide->text_color ) ) {
-		echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-title, ';
-		echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text, ';
-		echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text * ';
+		echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-title, ';
+		echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text, ';
+		echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text * ';
 		echo '{ color: ' . FLBuilderColor::hex_or_rgb( $slide->text_color ) . '; }';
-		echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text strong ';
+		echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text strong ';
 		echo '{ color: inherit; }';
 	}
 
 	// Text BG Color
 	if ( ! empty( $slide->text_bg_color ) ) {
-		echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-content ';
+		echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-content ';
 		echo '{ background-color: ' . FLBuilderColor::hex_or_rgb( $slide->text_bg_color ) . ';';
 		echo 'padding-top: ' . $slide->text_padding_top . 'px;';
 		echo 'padding-right: ' . $slide->text_padding_right . 'px;';
@@ -152,9 +152,9 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 
 		// Responsive Text Color
 		if ( ! empty( $slide->r_text_color ) ) {
-			echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-title, ';
-			echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text, ';
-			echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text * ';
+			echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-title, ';
+			echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text, ';
+			echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text * ';
 			echo '{ color: ' . FLBuilderColor::hex_or_rgb( $slide->r_text_color ) . '; }';
 			echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-text strong ';
 			echo '{ color: inherit; }';
@@ -167,10 +167,10 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 
 		// Responsive Text BG Color
 		if ( ! empty( $slide->r_text_bg_color ) ) {
-			echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-content ';
+			echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-content ';
 			echo '{ background-color: ' . FLBuilderColor::hex_or_rgb( $slide->r_text_bg_color ) . '; }';
 		} else {
-			echo '.fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-content ';
+			echo '.fl-builder-content .fl-node-' . $id . ' .fl-slide-' . $i . ' .fl-slide-content ';
 			echo '{ background-color: transparent; }';
 		}
 

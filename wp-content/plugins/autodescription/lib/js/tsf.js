@@ -95,6 +95,7 @@ window.tsf = function( $ ) {
 		return _canUseDOMParserTest;
 	}
 
+	let _decodeEntitiesDOMParser = void 0;
 	/**
 	 * Decodes string entities securely.
 	 *
@@ -107,14 +108,14 @@ window.tsf = function( $ ) {
 	 * @access public
 	 *
 	 * @credit <https://stackoverflow.com/questions/1912501/unescape-html-entities-in-javascript/34064434#34064434>
-	 * Modified to allow <, >, and \ entities.
+	 * Modified to allow <, >, and \ entities, and cached the parser.
 	 *
 	 * @param {String} str The text to decode.
 	 * @return {String} The decoded text.
 	 */
 	const decodeEntities = ( str ) => {
 
-		if ( ! str.length ) return '';
+		if ( 'string' !== typeof str || ! str.length ) return '';
 
 		let map = {
 			'<':  '&#x3C;',
@@ -125,11 +126,12 @@ window.tsf = function( $ ) {
 		str = str.replace( /[<>\\]/g, m => map[ m ] );
 
 		if ( _canUseDOMParser() ) {
-			str = ( new DOMParser() ).parseFromString( str, 'text/html' ).documentElement.textContent;
+			_decodeEntitiesDOMParser = _decodeEntitiesDOMParser || new DOMParser();
+			str = _decodeEntitiesDOMParser.parseFromString( str, 'text/html' ).documentElement.textContent;
 		} else {
-			let el = document.createElement( 'span' );
-			el.innerHTML = str;
-			str = ampHTMLtoText( el.textContent );
+			_decodeEntitiesDOMParser = _decodeEntitiesDOMParser || document.createElement( 'span' );
+			_decodeEntitiesDOMParser.innerHTML = str;
+			str = ampHTMLtoText( _decodeEntitiesDOMParser.textContent );
 		}
 
 		return str;
@@ -291,20 +293,42 @@ window.tsf = function( $ ) {
 	}
 
 	/**
-	 * Dismissible notices. Uses class .tsf-notice.
+	 * Dismissible notices that use notice wrapper class .tsf-notice.
 	 *
 	 * @since 2.6.0
 	 * @since 2.9.3 Now correctly removes the node from DOM.
+	 * @since 4.1.0 1. Now is more in line with how WordPress dismisses notices.
+	 *              2. Now also handles dismissible persistent notices.
 	 * @access private
 	 *
 	 * @function
-	 * @param {!jQuery.Event} event
+	 * @param {Event} event
 	 * @return {undefined}
 	 */
-	const _dismissNotice = ( event ) => {
-		$( event.target ).parents( '.tsf-notice' ).slideUp( 200, function() {
-			this.remove();
+	const _dismissNotice = event => {
+
+		let $notice = $( event.target ).parents( '.tsf-notice' ).first(),
+			key     = event.target.dataset && event.target.dataset.key || void 0,
+			nonce   = event.target.dataset && event.target.dataset.nonce || void 0;
+
+		$notice.fadeTo( 100, 0, () => {
+			$notice.slideUp( 100, () => {
+				$notice.remove();
+			} );
 		} );
+
+		if ( key && nonce ) {
+			// The notice is removed regardless of this being completed.
+			// Do not inform the user of its completion--it adds a lot to the annoyance.
+			// Instead, rely on keeping the 'count' low!
+			wp.ajax.post(
+				'tsf-dismiss-notice',
+				{
+					'tsf-dismiss-key': key,
+					'tsf-dismiss-nonce': nonce,
+				}
+			);
+		}
 	}
 
 	/**
@@ -350,6 +374,7 @@ window.tsf = function( $ ) {
 	 * Also stops any animation and resets fadeout to beginning.
 	 *
 	 * @since 2.7.0
+	 * @since 4.1.0 Now ends animations instead of halting. Instantly shows the element again.
 	 * @access public
 	 *
 	 * @function
@@ -357,14 +382,35 @@ window.tsf = function( $ ) {
 	 * @return {undefined}
 	 */
 	const resetAjaxLoader = ( target ) => {
-		$( target ).stop().empty().prop( 'class', 'tsf-ajax' ).css( 'opacity', '1' ).removeProp( 'style' );
+		$( target ).stop( false, true ).empty().prop( 'class', 'tsf-ajax' ).show();
+	}
+
+	/**
+	 * Outputs deprecation warning to console.
+	 *
+	 * @since 4.1.0
+	 * @access private
+	 *
+	 * @function
+	 * @param {string} target
+	 * @param {string} version
+	 * @param {string} replacement
+	 * @return {undefined}
+	 */
+	const deprecatedFunc = ( name, version, replacement ) => {
+		version     = version && ` since The SEO Framework ${version}` || '';
+		replacement = replacement && ` Use ${replacement} instead.` || '';
+		console.warn( `[DEPRECATED]: ${name} is deprecated since${version}.${replacement}` );
 	}
 
 	/**
 	 * Sets postbox toggle handlers.
 	 * TODO move to Settings.js and Post.js respectively?
 	 *
+	 * TODO also check for hide-postbox-tog... it prevents the user from saving the page.
+	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 No longer causes an infinite loop (call stack size excession).
 	 * @access private
 	 *
 	 * @function
@@ -372,42 +418,85 @@ window.tsf = function( $ ) {
 	 */
 	const _initPostboxToggle = () => {
 
-		let $handles;
-
-		$handles = $( '.postbox[id^="autodescription-"], .postbox#tsf-inpost-box' ).find( '.hndle, .handlediv' );
-
-		if ( ! $handles || ! $handles.length ) return;
-
-		let $input;
-
-		const validate = () => {
-			$input[0].reportValidity();
-		}
+		// Get TSF postboxes. Move this inside of the event for the "dynamic web"?
+		let $postboxes = $( '.postbox[id^="autodescription-"], .postbox#tsf-inpost-box' );
 
 		/**
 		 * HACK: Reopens a box if it contains invalid input values, and notifies the users thereof.
 		 * WordPress should implement this in a non-hacky way, so to give us more freedom.
 		 *
-		 * There are no needs for timeouts because this should always run later
-		 * than "postboxes.handle_click", as that script is loaded earlier.
+		 * Alternatively, we could validate the input and reopen the boxes when the user hits "save".
+		 * I do prefer the direct feedback though.
+		 *
+		 * Note that this event might get deprecated!
 		 */
-		const handleClick = ( event ) => {
-			let $postbox = $( event.target ).closest( '.postbox' );
-			if ( $postbox[0].classList.contains( 'closed' ) ) {
-				$input = $postbox.find( 'input:invalid, select:invalid, textarea:invalid' );
-				if ( $input.length ) {
-					$( document ).one( 'postbox-toggled', validate );
-					$( event.target ).trigger( 'click' );
+		$( document ).on( 'postbox-toggled', ( event, $postbox ) => {
+			if ( ! $postbox || ! $postboxes.is( $postbox ) ) return;
+
+			// WordPress bug--they send an array but should've sent it within one.
+			// Let's assume they might fix it by converting it to jQuery.
+			$postbox = $( $postbox );
+
+			let $input = $postbox.find( 'input:invalid, select:invalid, textarea:invalid' );
+			if ( ! $input.length ) return;
+
+			// Defer from event.
+			setTimeout( () => {
+				if ( $postbox.is( ':hidden' ) ) {
+					let id = $postbox.attr( 'id' );
+					// Unhide the postbox. Then, loop back to the other parts.
+					$( `#${id}-hide` ).trigger( 'click.postboxes' );
+				} else {
+					if ( $postbox.hasClass( 'closed' ) ) {
+						// Reopen self. Loops back to this function.
+						$postbox.find( '.hndle, .handlediv' ).first().trigger( 'click.postboxes' );
+					} else {
+						// Phase 2, this runs after looping back.
+						let firstInput = $input.get( 0 );
+						if ( $( firstInput ).is( ':visible' ) ) {
+							firstInput.reportValidity();
+						}
+					}
 				}
-			}
+			} );
+		} );
+	}
+
+	let isInteractive = false;
+	/**
+	 * Dispatches tsf-interactive event.
+	 *
+	 * This fires as soon as all TSF script are done loading. A few more may load here that rely on user interaction.
+	 * Use case: User is expected to interact confidently with the page. (This obviously isn't true, since WP is slow, but one day...)
+	 *
+	 * Feel free to asynchronously do things at this point.
+	 *
+	 * Example: jQuery( document.body ).on( 'tsf-interactive', myFunc );
+	 * Or:      document.body.addEventListener( 'tsf-interactive', myFunc );
+	 *
+	 * @since 4.1.1
+	 * @access private
+	 *
+	 * @function
+	 */
+	const _triggerInteractive = () => {
+		if ( ! isInteractive ) {
+			isInteractive = true;
+			document.body.dispatchEvent( new CustomEvent( 'tsf-interactive' ) );
 		}
-		$handles.on( 'click.tsfPostboxes', handleClick );
 	}
 
 	/**
-	 * Sets tsf-ready action.
+	 * Dispatches tsf-ready event.
+	 *
+	 * This fires as soon as all TSF scripts have registered their interactions.
+	 * Use case: User may still see elements painting.
+	 *
+	 * You should not work asynchronously here.
+	 * ...yet we do by triggering "enqueueTriggerInput" events. We need to fix that.
 	 *
 	 * Example: jQuery( document.body ).on( 'tsf-ready', myFunc );
+	 * Or:      document.body.addEventListener( 'tsf-ready', myFunc );
 	 *
 	 * @since 2.9.0
 	 * @access private
@@ -415,13 +504,19 @@ window.tsf = function( $ ) {
 	 * @function
 	 */
 	const _triggerReady = () => {
-		$( document.body ).trigger( 'tsf-ready' );
+		document.body.dispatchEvent( new CustomEvent( 'tsf-ready' ) );
 	}
 
 	/**
-	 * Sets 'tsf-onload' action.
+	 * Dispatches 'tsf-onload' event.
+	 *
+	 * This fires as soon as all TSF scripts are loaded.
+	 * Use case: User still sees a white screen, window has yet to be painted.
+	 *
+	 * You should not work asynchronously here.
 	 *
 	 * Example: jQuery( document.body ).on( 'tsf-onload, myFunc );
+	 * Or:      document.body.addEventListener( 'tsf-onload', myFunc );
 	 *
 	 * @since 3.1.0
 	 * @access private
@@ -429,9 +524,10 @@ window.tsf = function( $ ) {
 	 * @function
 	 */
 	const _triggerOnLoad = () => {
-		$( document.body ).trigger( 'tsf-onload' );
+		document.body.dispatchEvent( new CustomEvent( 'tsf-onload' ) );
 	}
 
+	let _isReady = false;
 	/**
 	 * Runs document-on-ready actions.
 	 *
@@ -442,14 +538,28 @@ window.tsf = function( $ ) {
 	 */
 	const _doReady = () => {
 
+		if ( _isReady ) return;
+
+		document.removeEventListener( "DOMContentLoaded", _doReady );
+		document.removeEventListener( "load", _doReady );
+
 		// Triggers tsf-onload event.
 		_triggerOnLoad();
 
 		// Sets postbox toggles on load.
 		_initPostboxToggle();
 
+		// Enable dismissal of PHP-inserted notices.
+		document.querySelectorAll( '.tsf-dismiss' ).forEach( el => el.addEventListener( 'click', _dismissNotice ) );
+
 		// Trigger tsf-ready event.
 		_triggerReady();
+
+		_isReady = true;
+
+		// Trigger tsf-interactive event. 'load' might be too late 'cause images are loading (slow 3G...)
+		document.addEventListener( 'load', _triggerInteractive );
+		setTimeout( _triggerInteractive, 100 );
 	}
 
 	return Object.assign( {
@@ -464,10 +574,34 @@ window.tsf = function( $ ) {
 		 * @return {undefined}
 		 */
 		load: () => {
-			// Dismiss notices.
-			$( '.tsf-dismiss' ).on( 'click', _dismissNotice );
 
-			$( document.body ).ready( _doReady );
+			/**
+			 * From: https://developer.akamai.com/blog/2017/12/04/beware-performancetimingdominteractive
+			 * "Overall, I found that pages with external (not in the HTML) CSS, JavaScript, or fonts
+			 * could lead to inaccurate estimations of domInteractive"
+			 */
+			// document.addEventListener( 'readystatechange', () => {
+			// 	// Interactive means that the document was fully read. However, we cannot reliably determine if all dependencies have been loaded?
+			// 	[ 'interactive', 'complete' ].includes( document.readyState ) && _doReady();
+			// } );
+
+			/**
+			 * The code below isn't affected by the above mentioned issues; albeit not as smoothly executed as we'd like...
+			 * such as any page on theseoframework.com; which benefit from considering load order & inline scripts, making for seamless rendering.
+			 *
+			 * WordPress admin always forces us to load JS assets last--at least, when we do things by their book. We should
+			 * honor this, at the expense of extra layout shifts and delayed rendering of critical markup.
+			 *
+			 * @source jQuery 3.5.1
+			 */
+			if ( document.readyState === "complete" ||
+				( document.readyState !== "loading" && ! document.documentElement.doScroll ) ) {
+				// Handle it asynchronously to allow scripts the opportunity to delay ready.
+				setTimeout( _doReady() );
+			} else {
+				document.addEventListener( "DOMContentLoaded", _doReady );
+				document.addEventListener( "load", _doReady );
+			}
 		}
 	}, {
 		stripTags,
@@ -481,8 +615,9 @@ window.tsf = function( $ ) {
 		setAjaxLoader,
 		unsetAjaxLoader,
 		resetAjaxLoader,
+		deprecatedFunc,
 	}, {
 		l10n
 	} );
 }( jQuery );
-jQuery( window.tsf.load );
+window.tsf.load();

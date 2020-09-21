@@ -11,6 +11,11 @@
 
 $version_bb_check = UABB_Compatibility::$version_bb_check;
 $converted        = UABB_Compatibility::$uabb_migration;
+if ( FLBuilder::fa5_pro_enabled() ) {
+	$font_family = 'Font Awesome 5 Pro';
+} else {
+	$font_family = 'Font Awesome 5 Free';
+}
 
 if ( isset( $settings->creative_submenu_shadow_color_opc ) && '' === $settings->creative_submenu_shadow_color_opc ) {
 	$settings->creative_submenu_shadow_color_opc = '100';
@@ -273,7 +278,7 @@ if ( 'right' === $settings->creative_menu_alignment ) {
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .uabb-menu-toggle:before,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .sub-menu .uabb-menu-toggle:before {
 		content: '\f107';
-		font-family: 'Font Awesome 5 Free';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
 		z-index: 1;
 		font-size: inherit;
 		line-height: 0;
@@ -289,7 +294,7 @@ if ( 'right' === $settings->creative_menu_alignment ) {
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .uabb-menu-toggle:before,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu.full-screen .uabb-menu-overlay .sub-menu .uabb-menu-toggle:before {
 		content: '\f067';
-		font-family: 'Font Awesome 5 Free';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
 		font-size: 0.7em;
 		z-index: 1;
 		font-weight: 900;
@@ -306,7 +311,7 @@ if ( ( ( 'horizontal' === $settings->creative_menu_layout || 'vertical' === $set
 	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-menu-toggle:before {
 		content: '\f107';
-		font-family: 'Font Awesome 5 Free';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
 		z-index: 1;
 		font-size: inherit;
 		line-height: 0;
@@ -319,7 +324,7 @@ if ( ( ( 'horizontal' === $settings->creative_menu_layout || 'vertical' === $set
 	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-menu-toggle:before {
 		content: '\f067';
-		font-family: 'Font Awesome 5 Free';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
 		font-size: 0.7em;
 		z-index: 1;
 		font-weight: 900;
@@ -476,15 +481,12 @@ if ( $global_settings->responsive_enabled ) {
 		<?php // Horizontal Or Vertical Menu. ?>
 		<?php if ( in_array( $settings->creative_menu_layout, array( 'horizontal', 'vertical' ), true ) ) { ?>
 
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:hover > .sub-menu,
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:focus > .sub-menu {
-				display: block;
-			}
-
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:hover > .sub-menu,
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:focus > .sub-menu {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:focus-within > .sub-menu,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:hover > .sub-menu {
 				visibility: visible;
 				opacity: 1;
+				display: block;
+
 			}
 
 			.fl-node-<?php echo esc_attr( $id ); ?> .menu .uabb-has-submenu.uabb-menu-submenu-right .sub-menu {
@@ -1954,6 +1956,12 @@ if ( ! $version_bb_check ) {
 	}
 <?php } ?>
 
+/***************************** Accordion **********************************/
+<?php if ( 'default' === $settings->creative_mobile_menu_type && isset( $settings->collapse_menu ) && 'yes' === $settings->collapse_menu ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .menu {
+		display: none;
+	}
+<?php } ?>
 
 /***************************** Off Canvas **********************************/
 <?php if ( 'off-canvas' === $settings->creative_mobile_menu_type ) { ?>

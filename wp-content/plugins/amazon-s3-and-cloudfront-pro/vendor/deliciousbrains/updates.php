@@ -37,18 +37,20 @@ class Delicious_Brains_API_Updates {
 	function __construct( Delicious_Brains_API_Licences $licences ) {
 		$this->licences = $licences;
 
-		add_filter( 'delicious_brains_plugins', array( $this, 'register_plugin_for_updates' ) );
-		add_filter( 'site_transient_update_plugins', array( $this, 'site_transient_update_plugins' ) );
-		add_filter( 'plugins_api', array( $this, 'short_circuit_wordpress_org_plugin_info_request' ), 10, 3 );
-		add_filter( 'http_response', array( $this, 'verify_download' ), 10, 3 );
-		add_filter( 'plugins_api', array( $this, 'inject_addon_install_resource' ), 10, 3 );
+		if ( ! is_multisite() || is_network_admin() ) {
+			add_filter( 'delicious_brains_plugins', array( $this, 'register_plugin_for_updates' ) );
+			add_filter( 'site_transient_update_plugins', array( $this, 'site_transient_update_plugins' ) );
+			add_filter( 'plugins_api', array( $this, 'short_circuit_wordpress_org_plugin_info_request' ), 10, 3 );
+			add_filter( 'http_response', array( $this, 'verify_download' ), 10, 3 );
+			add_filter( 'plugins_api', array( $this, 'inject_addon_install_resource' ), 10, 3 );
 
-		add_action( 'admin_print_scripts-plugins.php', array( $this, 'enqueue_plugin_update_script' ) );
-		add_action( 'admin_print_scripts-update-core.php', array( $this, 'enqueue_plugin_update_script' ) );
-		add_action( 'current_screen', array( $this, 'check_again_clear_transients' ) );
-		add_action( 'install_plugins_pre_plugin-information', array( $this, 'plugin_update_popup' ) );
+			add_action( 'admin_print_scripts-plugins.php', array( $this, 'enqueue_plugin_update_script' ) );
+			add_action( 'admin_print_scripts-update-core.php', array( $this, 'enqueue_plugin_update_script' ) );
+			add_action( 'current_screen', array( $this, 'check_again_clear_transients' ) );
+			add_action( 'install_plugins_pre_plugin-information', array( $this, 'plugin_update_popup' ) );
 
-		add_action( 'load-plugins.php', array( $this, 'clear_licence_transient' ) );
+			add_action( 'load-plugins.php', array( $this, 'clear_licence_transient' ) );
+		}
 
 		$this->add_plugin_notice( $this->licences->plugin->basename );
 		if ( $this->licences->addons ) {
@@ -191,7 +193,7 @@ class Delicious_Brains_API_Updates {
 				'strings' => array(
 					'check_licence_again'     => __( 'Check My License Again', 'amazon-s3-and-cloudfront' ),
 					'licence_check_problem'   => __( 'A problem occurred when trying to check the license, please try again.', 'amazon-s3-and-cloudfront' ),
-					'requires_parent_licence' => __( 'Requires a valid license for %s.', 'amazon-s3-and-cloudfront' )
+					'requires_parent_licence' => __( 'Requires a valid license for %s.', 'amazon-s3-and-cloudfront' ),
 				),
 				'plugins' => apply_filters( 'delicious_brains_plugins', array() ),
 			)
@@ -205,9 +207,9 @@ class Delicious_Brains_API_Updates {
 	 * Short circuits the HTTP request to WordPress.org servers to retrieve plugin information.
 	 * Will only fire on the update-core.php admin page.
 	 *
-	 * @param  object|bool $res    Plugin resource object or boolean false.
-	 * @param  string      $action The API call being performed.
-	 * @param  object      $args   Arguments for the API call being performed.
+	 * @param object|bool $res    Plugin resource object or boolean false.
+	 * @param string      $action The API call being performed.
+	 * @param object      $args   Arguments for the API call being performed.
 	 *
 	 * @return object|bool Plugin resource object or boolean false.
 	 */

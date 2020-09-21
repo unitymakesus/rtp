@@ -6,6 +6,11 @@
  */
 
 $version_bb_check = UABB_Compatibility::$version_bb_check;
+if ( FLBuilder::fa5_pro_enabled() ) {
+	$font_family = 'Font Awesome 5 Pro';
+} else {
+	$font_family = 'Font Awesome 5 Free';
+}
 
 $settings->page_overlay        = UABB_Helper::uabb_colorpicker( $settings, 'page_overlay', true );
 $settings->menu_color          = UABB_Helper::uabb_colorpicker( $settings, 'menu_color', true );
@@ -488,7 +493,49 @@ if ( ! $version_bb_check ) {
 	}
 	?>
 }
+
 <?php
+if ( isset( $settings->submenu_toggle ) && 'none' || $settings->submenu_toggle ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-has-submenu > .sub-menu {
+	display: none;
+}
+	<?php
+}
+/* Toggle - Arrows */
+if ( 'arrows' === $settings->submenu_toggle ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-menu-toggle {
+		float: right;
+		padding-left: 10px;
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-menu-toggle:before {
+		content: '\f107';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
+		z-index: 1;
+		font-size: inherit;
+		line-height: 0;
+		font-weight: 900;
+	}
+	<?php
+
+	/* Toggle - Plus */
+} elseif ( 'plus' === $settings->submenu_toggle ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-menu-toggle {
+		float: right;
+		padding-left: 10px;
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-offcanvas-menu .uabb-menu-toggle:before {
+		content: '\f067';
+		font-family: '<?php echo esc_attr( $font_family ); ?>';
+		font-size: 0.7em;
+		z-index: 1;
+		font-weight: 900;
+	}
+	<?php
+}
+
 if ( $global_settings->responsive_enabled ) {
 	?>
 	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?> ) {

@@ -70,7 +70,7 @@
 			$( 'button.module-import-apply' ).click( function() {
 				var form        = $( '.fl-builder-settings-lightbox .fl-builder-settings' ),
 					data        = $( '.module-import-input' ).val(),
-					t           = data.match( /\/\/\/\s\{type:([a-z0-9-]+)/ ),
+					t           = data.match( /\/\/\/\s\{type:([_a-z0-9-]+)/ ),
 					type        = false,
 					moduleType  = $( '.fl-builder-module-settings' ).data( 'type' ),
 					errorDiv    = $( '.fl-builder-settings-lightbox .module-import-error' );

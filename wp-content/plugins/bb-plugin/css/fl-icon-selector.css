@@ -83,6 +83,12 @@
 	width: 60px;
 	background: transparent;
 }
+.fl-icons-list .dashicons-before:before{
+	font-size: 40px;
+	vertical-align: unset;
+	width: 40px;
+}
+
 .fl-icons-list i:hover {
 	background: white;
 	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);

@@ -41,14 +41,14 @@ FLBuilderCSS::rule( array(
 
 // Title Typography
 FLBuilderCSS::typography_field_rule( array(
-	'selector'     => ".fl-node-$id .fl-cta-title",
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-cta-title",
 	'setting_name' => 'title_typography',
 	'settings'     => $settings,
 ) );
 
 // Content Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-builder-content .fl-row .fl-col .fl-node-$id .fl-cta-text-content",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-cta-wrap .fl-cta-text-content *",
 	'props'    => array(
 		'color' => $settings->text_color,
 	),
@@ -56,7 +56,7 @@ FLBuilderCSS::rule( array(
 
 // Content Typography
 FLBuilderCSS::typography_field_rule( array(
-	'selector'     => ".fl-node-$id .fl-cta-text-content",
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-cta-text-content",
 	'setting_name' => 'text_typography',
 	'settings'     => $settings,
 ) );

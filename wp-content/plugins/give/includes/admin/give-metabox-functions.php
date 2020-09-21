@@ -63,6 +63,7 @@ function give_get_field_callback( $field ) {
 			$func_name = "{$func_name_prefix}_{$field['type']}";
 			break;
 
+		case 'hidden':
 		case 'levels_id':
 			$func_name = "{$func_name_prefix}_hidden_input";
 			break;
@@ -81,6 +82,10 @@ function give_get_field_callback( $field ) {
 
 		case 'chosen':
 			$func_name = "{$func_name_prefix}_chosen_input";
+			break;
+
+		case 'label':
+			$func_name = "{$func_name_prefix}_label_field";
 			break;
 
 		default:
@@ -190,9 +195,9 @@ function give_render_field( $field ) {
 
 		case 'give_default_radio_inline':
 			$field['type']    = 'radio';
-			$field['options'] = array(
+			$field['options'] = [
 				'default' => __( 'Default', 'give' ),
-			);
+			];
 			break;
 
 		case 'donation_limit':
@@ -324,21 +329,21 @@ function give_chosen_input( $field ) {
 	$placeholder            = isset( $field['placeholder'] ) ? 'data-placeholder="' . $field['placeholder'] . '"' : '';
 	$data_type              = ! empty( $field['data_type'] ) ? $field['data_type'] : '';
 	$type                   = '';
-	$allow_new_values       = '';
-	$field['value']         = give_get_field_value( $field, $thepostid );
-	$field['value']         = is_array( $field['value'] ) ?
-		array_fill_keys( array_filter( $field['value'] ), 'selected' ) :
-		$field['value'];
-	$title_prefixes_value   = ( is_array( $field['value'] ) && count( $field['value'] ) > 0 ) ?
-		array_merge( $field['options'], $field['value'] ) :
-		$field['options'];
+	$field['value']         = array_filter( (array) give_get_field_value( $field, $thepostid ) );
+	$choices                = $field['options'];
+	$fieldName              = esc_attr( give_get_field_name( $field ) );
+	$allow_new_values       = ! empty( $field['allow-custom-values'] ) && (bool) $field['allow-custom-values'] ? 'data-allows-new-values="true"' : '';
 
 	// Set attributes based on multiselect datatype.
 	if ( 'multiselect' === $data_type ) {
-		$type             = 'multiple';
-		$allow_new_values = 'data-allows-new-values="true"';
+		$type           = 'multiple';
+		$field['value'] = empty( $field['value'] ) ? [] : $field['value'];
+		$fieldName     .= '[]';
 	}
 
+	if ( $allow_new_values && $field['value'] ) {
+		$choices = array_merge( array_combine( $field['value'], $field['value'] ), $choices );
+	}
 	?>
 	<p class="give-field-wrap <?php echo esc_attr( $field['id'] ); ?>_field <?php echo esc_attr( $field['wrapper_class'] ); ?>">
 		<label for="<?php echo esc_attr( give_get_field_name( $field ) ); ?>">
@@ -348,22 +353,58 @@ function give_chosen_input( $field ) {
 		<select
 				class="give-select-chosen give-chosen-settings"
 				style="<?php echo esc_attr( $field['style'] ); ?>"
-				name="<?php echo esc_attr( give_get_field_name( $field ) ); ?>[]"
+				name="<?php echo $fieldName; ?>"
 				id="<?php echo esc_attr( $field['id'] ); ?>"
 			<?php echo "{$type} {$allow_new_values} {$placeholder}"; ?>
 		>
 			<?php
-			if ( is_array( $title_prefixes_value ) && count( $title_prefixes_value ) > 0 ) {
-				foreach ( $title_prefixes_value as $key => $value ) {
-					echo sprintf(
-						'<option %1$s value="%2$s">%2$s</option>',
-						( 'selected' === $value ) ? 'selected="selected"' : '',
-						esc_attr( $key )
-					);
-				}
+			foreach ( $choices as $key => $name ) {
+				echo sprintf(
+					'<option %1$s value="%2$s">%3$s</option>',
+					in_array( $key, $field['value'] ) ? 'selected="selected"' : '',
+					esc_attr( $key ),
+					$name
+				);
 			}
 			?>
 		</select>
+		<?php echo esc_attr( $field['after_field'] ); ?>
+		<?php echo give_get_field_description( $field ); ?>
+	</p>
+	<?php
+}
+
+/**
+ * Output a label field
+ * Note: only for internal use.
+ *
+ * @param array $field         {
+ *                              Optional. Array of text input field arguments.
+ *
+ * @type string $id            Field ID. Default ''.
+ * @type string $wrapper_class CSS class to use for wrapper of input field. Default ''.
+ * @type string $value         Value of input field. Default ''.
+ * @type string $title         Text to display. HTML supported Default ''.
+ * @type string $before_field  Text/HTML to add before input field. Default ''.
+ * @type string $after_field   Text/HTML to add after input field. Default ''.
+ * }
+ *
+ * @since 2.7.0
+ *
+ * @return void
+ */
+function give_label_field( $field ) {
+	global $thepostid, $post;
+
+	$thepostid              = empty( $thepostid ) ? $post->ID : $thepostid;
+	$field['style']         = isset( $field['style'] ) ? $field['style'] : '';
+	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
+	$field['before_field']  = '';
+	$field['after_field']   = '';
+	?>
+	<p class=" <?php echo esc_attr( $field['id'] ); ?>_field <?php echo esc_attr( $field['wrapper_class'] ); ?>">
+		<?php echo esc_attr( $field['before_field'] ); ?>
+		<?php echo $field['title']; ?>
 		<?php echo esc_attr( $field['after_field'] ); ?>
 		<?php echo give_get_field_description( $field ); ?>
 	</p>
@@ -403,26 +444,26 @@ function give_donation_limit( $field ) {
 	$thepostid = empty( $thepostid ) ? $post->ID : $thepostid;
 
 	// Default arguments.
-	$default_options = array(
+	$default_options = [
 		'style'         => '',
 		'wrapper_class' => '',
 		'value'         => give_get_field_value( $field, $thepostid ),
 		'data_type'     => 'decimal',
 		'before_field'  => '',
 		'after_field'   => '',
-	);
+	];
 
 	// Field options.
-	$field['options'] = ! empty( $field['options'] ) ? $field['options'] : array();
+	$field['options'] = ! empty( $field['options'] ) ? $field['options'] : [];
 
 	// Default field option arguments.
 	$field['options'] = wp_parse_args(
 		$field['options'],
-		array(
+		[
 			'display_label' => '',
 			'minimum'       => give_format_decimal( '1.00', false, false ),
 			'maximum'       => give_format_decimal( '999999.99', false, false ),
-		)
+		]
 	);
 
 	// Set default field options.
@@ -449,20 +490,20 @@ function give_donation_limit( $field ) {
 					$currency_position  = give_get_option( 'currency_position', 'before' );
 					$price_field_labels = 'minimum' === $amount_range ? __( 'Minimum amount', 'give' ) : __( 'Maximum amount', 'give' );
 
-					$tooltip_html = array(
+					$tooltip_html = [
 						'before' => Give()->tooltips->render_span(
-							array(
+							[
 								'label'       => $price_field_labels,
 								'tag_content' => sprintf( '<span class="give-money-symbol give-money-symbol-before">%s</span>', give_currency_symbol() ),
-							)
+							]
 						),
 						'after'  => Give()->tooltips->render_span(
-							array(
+							[
 								'label'       => $price_field_labels,
 								'tag_content' => sprintf( '<span class="give-money-symbol give-money-symbol-after">%s</span>', give_currency_symbol() ),
-							)
+							]
 						),
-					);
+					];
 
 					$before_html = ! empty( $field_options['before_field'] )
 						? $field_options['before_field']
@@ -532,7 +573,7 @@ function give_hidden_input( $field ) {
 	$field['value'] = give_get_field_value( $field, $thepostid );
 
 	// Custom attribute handling
-	$custom_attributes = array();
+	$custom_attributes = [];
 
 	if ( ! empty( $field['attributes'] ) && is_array( $field['attributes'] ) ) {
 
@@ -580,10 +621,10 @@ function give_textarea_input( $field ) {
 	$field['style']         = isset( $field['style'] ) ? $field['style'] : '';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
 	$field['value']         = give_get_field_value( $field, $thepostid );
-	$default_attributes     = array(
+	$default_attributes     = [
 		'cols' => 20,
 		'rows' => 10,
-	);
+	];
 	?>
 	<div class="give-field-wrap <?php echo esc_attr( $field['id'] ); ?>_field <?php echo esc_attr( $field['wrapper_class'] ); ?>">
 		<label for="<?php echo give_get_field_name( $field ); ?>"><?php echo wp_kses_post( $field['name'] ); ?></label>
@@ -626,23 +667,27 @@ function give_wysiwyg( $field ) {
 	$field['style']         = isset( $field['style'] ) ? $field['style'] : '';
 	$field['wrapper_class'] = isset( $field['wrapper_class'] ) ? $field['wrapper_class'] : '';
 
-	$field['unique_field_id'] = give_get_field_name( $field );
-	$editor_attributes        = array(
+	// Since WP 3.9.0 WP does not allow square brackets in field id.
+	// If we pass square brackets in field id then code will work as expected but you will get PHP warnings.
+	// wp-includes/class-wp-editor.php::parse_settings::106
+	$field['unique_field_id'] = str_replace( [ '[', ']' ], [ '_', '' ], give_get_field_name( $field ) );
+
+	$editor_attributes = [
 		'textarea_name' => isset( $field['repeatable_field_id'] ) ? $field['repeatable_field_id'] : $field['id'],
 		'textarea_rows' => '10',
 		'editor_css'    => esc_attr( $field['style'] ),
 		'editor_class'  => $field['attributes']['class'],
-	);
-	$data_wp_editor           = ' data-wp-editor="' . base64_encode(
+	];
+	$data_wp_editor    = ' data-wp-editor="' . base64_encode(
 		json_encode(
-			array(
+			[
 				$field['value'],
 				$field['unique_field_id'],
 				$editor_attributes,
-			)
+			]
 		)
 	) . '"';
-	$data_wp_editor           = isset( $field['repeatable_field_id'] ) ? $data_wp_editor : '';
+	$data_wp_editor    = isset( $field['repeatable_field_id'] ) ? $data_wp_editor : '';
 
 	echo '<div class="give-field-wrap ' . $field['unique_field_id'] . '_field ' . esc_attr( $field['wrapper_class'] ) . '"' . $data_wp_editor . '><label for="' . $field['unique_field_id'] . '">' . wp_kses_post( $field['name'] ) . '</label>';
 
@@ -882,7 +927,7 @@ function give_media( $field ) {
 	// Allow developer to save attachment ID or attachment url as metadata.
 	$field['fvalue'] = isset( $field['fvalue'] ) ? $field['fvalue'] : 'url';
 
-	$allow_media_preview_tags = array( 'jpg', 'jpeg', 'png', 'gif', 'ico' );
+	$allow_media_preview_tags = [ 'jpg', 'jpeg', 'png', 'gif', 'ico' ];
 	$preview_image_src        = $field['value'] ? ( 'id' === $field['fvalue'] ? wp_get_attachment_url( $field['value'] ) : $field['value'] ) : '#';
 	$preview_image_extension  = $preview_image_src ? pathinfo( $preview_image_src, PATHINFO_EXTENSION ) : '';
 	$is_show_preview          = in_array( $preview_image_extension, $allow_media_preview_tags );
@@ -920,7 +965,7 @@ function give_default_gateway( $field ) {
 
 	// get all active payment gateways.
 	$gateways         = give_get_enabled_payment_gateways( $thepostid );
-	$field['options'] = array();
+	$field['options'] = [];
 
 	// Set field option value.
 	if ( ! empty( $gateways ) ) {
@@ -931,7 +976,7 @@ function give_default_gateway( $field ) {
 
 	// Add a field to the Give Form admin single post view of this field
 	if ( is_object( $post ) && 'give_forms' === $post->post_type ) {
-		$field['options'] = array_merge( array( 'global' => esc_html__( 'Global Default', 'give' ) ), $field['options'] );
+		$field['options'] = array_merge( [ 'global' => esc_html__( 'Global Default', 'give' ) ], $field['options'] );
 	}
 
 	// Render select field.
@@ -979,7 +1024,7 @@ function give_email_preview_buttons( $field ) {
 	/* @var WP_Post $post */
 	global $post;
 
-	$field_id = str_replace( array( '_give_', '_preview_buttons' ), '', $field['id'] );
+	$field_id = str_replace( [ '_give_', '_preview_buttons' ], '', $field['id'] );
 
 	ob_start();
 
@@ -989,11 +1034,11 @@ function give_email_preview_buttons( $field ) {
 		'<a href="%1$s" class="button-secondary" target="_blank">%2$s</a>',
 		wp_nonce_url(
 			add_query_arg(
-				array(
+				[
 					'give_action' => 'preview_email',
 					'email_type'  => $field_id,
 					'form_id'     => $post->ID,
-				),
+				],
 				home_url()
 			),
 			'give-preview-email'
@@ -1005,12 +1050,12 @@ function give_email_preview_buttons( $field ) {
 		' <a href="%1$s" aria-label="%2$s" class="button-secondary">%3$s</a>',
 		wp_nonce_url(
 			add_query_arg(
-				array(
+				[
 					'give_action'     => 'send_preview_email',
 					'email_type'      => $field_id,
 					'give-messages[]' => 'sent-test-email',
 					'form_id'         => $post->ID,
-				)
+				]
 			),
 			'give-send-preview-email'
 		),
@@ -1056,10 +1101,10 @@ function give_get_field_value( $field, $postid ) {
 			$minimum = give_get_meta( $postid, '_give_custom_amount_minimum', true );
 		}
 
-		$field_value = array(
+		$field_value = [
 			'minimum' => $minimum,
 			'maximum' => give_get_meta( $postid, $field['id'] . '_maximum', true ),
-		);
+		];
 	} else {
 		// Get value from db.
 		$field_value = give_get_meta( $postid, $field['id'], true );
@@ -1250,8 +1295,17 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 
 		<table class="give-repeatable-fields-section-wrapper" cellspacing="0">
 			<?php
-			$repeater_field_values = give_get_meta( $thepostid, $fields['id'], true );
-			$header_title          = isset( $fields['options']['header_title'] )
+			// Get value.
+			$repeater_field_values = ! empty( $fields['attributes']['value'] )
+				? $fields['attributes']['value']
+				: give_get_meta( $thepostid, $fields['id'], true );
+
+			// Setup default value.
+			if ( empty( $repeater_field_values ) && ! empty( $fields['default'] ) ) {
+				$repeater_field_values = $fields['default'];
+			}
+
+			$header_title = isset( $fields['options']['header_title'] )
 				? $fields['options']['header_title']
 				: esc_attr__( 'Group', 'give' );
 
@@ -1270,7 +1324,7 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 			<tr class="give-template give-row">
 				<td class="give-repeater-field-wrap give-column" colspan="2">
 					<div class="give-row-head give-move">
-						<button type="button" class="handlediv button-link"><span class="toggle-indicator"></span>
+						<button type="button" class="give-handlediv button-link"><span class="toggle-indicator"></span>
 						</button>
 						<span class="give-remove" title="<?php esc_html_e( 'Remove Group', 'give' ); ?>">-</span>
 						<h2>
@@ -1288,8 +1342,8 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 							$field['repeat']              = true;
 							$field['repeatable_field_id'] = give_get_repeater_field_id( $field, $fields );
 							$field['id']                  = str_replace(
-								array( '[', ']' ),
-								array( '_', '' ),
+								[ '[', ']' ],
+								[ '_', '' ],
 								$field['repeatable_field_id']
 							);
 							?>
@@ -1305,7 +1359,7 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 					<tr class="give-row">
 						<td class="give-repeater-field-wrap give-column" colspan="2">
 							<div class="give-row-head give-move">
-								<button type="button" class="handlediv button-link">
+								<button type="button" class="give-handlediv button-link">
 									<span class="toggle-indicator"></span></button>
 								<span class="give-remove" title="<?php esc_html_e( 'Remove Group', 'give' ); ?>">-
 								</span>
@@ -1325,8 +1379,8 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 									$field['repeatable_field_id'] = give_get_repeater_field_id( $field, $fields, $index );
 									$field['attributes']['value'] = give_get_repeater_field_value( $field, $field_group, $fields );
 									$field['id']                  = str_replace(
-										array( '[', ']' ),
-										array( '_', '' ),
+										[ '[', ']' ],
+										[ '_', '' ],
 										$field['repeatable_field_id']
 									);
 									?>
@@ -1344,7 +1398,7 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 				<tr class="give-row">
 					<td class="give-repeater-field-wrap give-column" colspan="2">
 						<div class="give-row-head give-move">
-							<button type="button" class="handlediv button-link">
+							<button type="button" class="give-handlediv button-link">
 								<span class="toggle-indicator"></span></button>
 							<span class="give-remove" title="<?php esc_html_e( 'Remove Group', 'give' ); ?>">-
 							</span>
@@ -1368,8 +1422,8 @@ function _give_metabox_form_data_repeater_fields( $fields ) {
 									$fields
 								);
 								$field['id']                  = str_replace(
-									array( '[', ']' ),
-									array( '_', '' ),
+									[ '[', ']' ],
+									[ '_', '' ],
 									$field['repeatable_field_id']
 								);
 								give_render_field( $field );

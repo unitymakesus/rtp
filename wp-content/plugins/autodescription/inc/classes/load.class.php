@@ -7,7 +7,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -33,14 +33,15 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  *
  * @since 2.8.0
  * @since 4.0.0 No longer implements an interface. It's implied.
+ * @since 4.1.0 Now extends `Cache` instead of `Feed`.
  */
-final class Load extends Feed {
+final class Load extends Cache {
 
 	/**
 	 * @since 2.4.3
 	 * @var bool Enable object caching.
 	 */
-	protected $use_object_cache = true;
+	protected $use_object_cache = false;
 
 	/**
 	 * @since 2.2.9
@@ -101,7 +102,10 @@ final class Load extends Feed {
 		 * @since 2.8.0 : Uses method $this->use_object_cache() as default.
 		 * @param bool $use_object_cache Whether to enable object caching.
 		 */
-		$this->use_object_cache = (bool) \apply_filters( 'the_seo_framework_use_object_cache', $this->use_object_cache() );
+		$this->use_object_cache = (bool) \apply_filters(
+			'the_seo_framework_use_object_cache',
+			\wp_using_ext_object_cache() && $this->get_option( 'cache_object' )
+		);
 
 		//? We always use this, because we need to test whether the sitemap must be outputted.
 		$this->pretty_permalinks = '' !== \get_option( 'permalink_structure' );
@@ -117,15 +121,15 @@ final class Load extends Feed {
 	 */
 	public function init_debug_vars() {
 
-		$this->the_seo_framework_debug = defined( 'THE_SEO_FRAMEWORK_DEBUG' ) && THE_SEO_FRAMEWORK_DEBUG ?: $this->the_seo_framework_debug;
+		$this->the_seo_framework_debug = \defined( 'THE_SEO_FRAMEWORK_DEBUG' ) && THE_SEO_FRAMEWORK_DEBUG ?: $this->the_seo_framework_debug;
 		if ( $this->the_seo_framework_debug ) {
 			\The_SEO_Framework\Debug::_set_instance( $this->the_seo_framework_debug );
 		}
 
-		$this->the_seo_framework_use_transients = defined( 'THE_SEO_FRAMEWORK_DISABLE_TRANSIENTS' ) && THE_SEO_FRAMEWORK_DISABLE_TRANSIENTS ? false : $this->the_seo_framework_use_transients;
+		$this->the_seo_framework_use_transients = \defined( 'THE_SEO_FRAMEWORK_DISABLE_TRANSIENTS' ) && THE_SEO_FRAMEWORK_DISABLE_TRANSIENTS ? false : $this->the_seo_framework_use_transients;
 
-		//* WP Core definition.
-		$this->script_debug = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ?: $this->script_debug;
+		// WP Core definition.
+		$this->script_debug = \defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ?: $this->script_debug;
 	}
 
 	/**
@@ -144,68 +148,47 @@ final class Load extends Feed {
 		// $this->_include_compat( 'mbstring', 'php' );
 		// phpcs:enable, Squiz.PHP.CommentedOutCode
 
-		//* Disable Headway theme SEO.
+		// Disable Headway theme SEO.
 		\add_filter( 'headway_seo_disabled', '__return_true' );
 
 		if ( $this->is_theme( 'genesis' ) ) {
-			//* Genesis Framework
+			// Genesis Framework
 			$this->_include_compat( 'genesis', 'theme' );
 		}
 
 		if ( $this->detect_plugin( [ 'constants' => [ 'ICL_LANGUAGE_CODE' ] ] ) ) {
-			//* WPML
+			// WPML
 			$this->_include_compat( 'wpml', 'plugin' );
 		}
 		if ( $this->detect_plugin( [ 'constants' => [ 'POLYLANG_VERSION' ] ] ) ) {
-			//* Polylang
+			// Polylang
 			$this->_include_compat( 'polylang', 'plugin' );
 		}
 
 		if ( $this->detect_plugin( [ 'globals' => [ 'ultimatemember' ] ] ) ) {
-			//* Ultimate Member
+			// Ultimate Member
 			$this->_include_compat( 'ultimatemember', 'plugin' );
 		}
 		if ( $this->detect_plugin( [ 'globals' => [ 'bp' ] ] ) ) {
-			//* BuddyPress
+			// BuddyPress
 			$this->_include_compat( 'buddypress', 'plugin' );
 		}
 
 		if ( $this->detect_plugin( [ 'functions' => [ 'bbpress' ] ] ) ) {
-			//* bbPress
+			// bbPress
 			$this->_include_compat( 'bbpress', 'plugin' );
 		} elseif ( $this->detect_plugin( [ 'constants' => [ 'WPFORO_BASENAME' ] ] ) ) {
-			//* wpForo
+			// wpForo
 			$this->_include_compat( 'wpforo', 'plugin' );
 		}
 
 		if ( $this->detect_plugin( [ 'functions' => [ 'wc' ] ] ) ) {
-			//* WooCommerce.
+			// WooCommerce.
 			$this->_include_compat( 'woocommerce', 'plugin' );
 		} elseif ( $this->detect_plugin( [ 'constants' => [ 'EDD_VERSION' ] ] ) ) {
-			//* Easy Digital Downloads.
+			// Easy Digital Downloads.
 			$this->_include_compat( 'edd', 'plugin' );
 		}
-	}
-
-	/**
-	 * Includes compatibility files.
-	 *
-	 * @since 2.8.0
-	 * @access private
-	 * @staticvar array $included Maintains cache of whether files have been loaded.
-	 *
-	 * @param string $what The vendor/plugin/theme name for the compatibilty.
-	 * @param string $type The compatibility type. Be it 'plugin' or 'theme'.
-	 * @return bool True on success, false on failure. Files are expected not to return any values.
-	 */
-	public function _include_compat( $what, $type = 'plugin' ) {
-
-		static $included = [];
-
-		if ( ! isset( $included[ $what ][ $type ] ) )
-			$included[ $what ][ $type ] = (bool) require THE_SEO_FRAMEWORK_DIR_PATH_COMPAT . $type . '-' . $what . '.php';
-
-		return $included[ $what ][ $type ];
 	}
 
 	/**

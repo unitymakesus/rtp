@@ -60,6 +60,9 @@ foreach ( $settings->thead_row as $head_row ) {
 			<?php if ( '' !== $head_row->head_bg_color && isset( $head_row->head_bg_color ) ) { ?>
 				background-color: <?php echo esc_attr( ( false === strpos( $head_row->head_bg_color, 'rgb' ) ) ? '#' . $head_row->head_bg_color : $head_row->head_bg_color ); ?>;
 			<?php } ?>
+			<?php if ( isset( $head_row->head_align ) && '' !== $head_row->head_align ) { ?>
+				text-align: <?php echo esc_attr( $head_row->head_align ); ?>;
+			<?php } ?>
 		}
 
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-table-header .table-heading-<?php echo esc_attr( $table_header ); ?> .before-icon,
@@ -105,6 +108,9 @@ foreach ( $settings->tbody_row as $body_row ) {
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-table-features .table-body-<?php echo esc_attr( $table_body ); ?> {
 			<?php if ( '' !== $body_row->body_bg_color && isset( $body_row->body_bg_color ) ) { ?>
 				background-color: <?php echo esc_attr( ( false === strpos( $body_row->body_bg_color, 'rgb' ) ) ? '#' . $body_row->body_bg_color : $body_row->body_bg_color ); ?>;
+			<?php } ?>
+			<?php if ( isset( $body_row->body_align ) && '' !== $body_row->body_align ) { ?>
+				text-align: <?php echo esc_attr( $body_row->body_align ); ?>;
 			<?php } ?>
 		}
 

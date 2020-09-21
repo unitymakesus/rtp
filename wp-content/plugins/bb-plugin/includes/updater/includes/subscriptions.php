@@ -30,7 +30,7 @@ if ( '{FL_BUILDER_NAME}' !== $plugin_data['Name'] && ! in_array( $plugin_name, $
 	}
 
 	if ( $show_warning ) {
-		$header_txt = __( 'Beaver Builder updates issue!!' );
+		$header_txt = __( 'Beaver Builder updates issue!!', 'fl-builder' );
 		// translators: %s: Product name
 		$txt = sprintf( __( 'Updates for Beaver Builder will not work as you appear to have %s activated but it is not in your available downloads.', 'fl-builder' ), '<strong>' . $plugin_name . '</strong>' );
 		printf(

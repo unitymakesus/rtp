@@ -161,23 +161,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 		 * Render Cart Button.
 		 *
 		 * @since 1.10.0
-		 * @method enqueue_scripts
-		 */
-		public function enqueue_scripts() {
-
-			$localize = array(
-				'is_cart'   => is_cart(),
-				'view_cart' => esc_attr__( 'View cart', 'uabb' ),
-				'cart_url'  => apply_filters( 'uabb_woocommerce_add_to_cart_redirect', wc_get_cart_url() ),
-			);
-
-			wp_localize_script( 'jquery', 'uabb_cart', $localize );
-		}
-
-		/**
-		 * Render Cart Button.
-		 *
-		 * @since 1.10.0
 		 * @method get_inner_classes
 		 */
 		public function get_inner_classes() {

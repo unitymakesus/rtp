@@ -1,0 +1,40 @@
+.fluid {
+
+    .fl-ui-help {
+        background: rgba(0,0,0,.3);
+
+        .fl-ui-panel {
+            max-height: calc( 100vh - 15px );
+            max-width: calc( 100vw - 15px );
+            min-width: 260px;
+            min-height: 100px;
+        }
+    }
+    ul.fl-ui-shortcut-list {
+        margin:0;
+        padding:0;
+        list-style: none;
+
+        & > li {
+            padding: 2px 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 40px;
+            margin: 0;
+            font-size: 14px;
+
+            &:nth-child(even) {
+                background: rgba(1,112,147,.03);
+            }
+        }
+
+        .fl-ui-shortcut-item-keycode {
+            margin-left: auto;
+            padding-left: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+    }
+}

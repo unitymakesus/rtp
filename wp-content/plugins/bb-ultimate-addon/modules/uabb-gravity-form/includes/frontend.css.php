@@ -190,8 +190,7 @@ if ( ! $version_bb_check ) {
 					'settings'     => $settings,
 					'setting_name' => 'input_border',
 					'selector'     => ".fl-node-$id .uabb-gf-style input[type=tel], .fl-node-$id .uabb-gf-style input[type=email], .fl-node-$id .uabb-gf-style input[type=text], .fl-node-$id .uabb-gf-style input[type=url], .fl-node-$id .uabb-gf-style input[type=number], .fl-node-$id .uabb-gf-style input[type=date],
-    .fl-node-$id .uabb-gf-style select, .fl-node-$id .uabb-gf-style textarea, .fl-node-$id .uabb-gf-style select:focus,
-    .fl-node-$id .uabb-gf-style textarea:focus, .fl-node-$id .gform_wrapper .ginput_container_select .chosen-container-single .chosen-single, .fl-node-$id .chosen-container .chosen-container-single .chosen-container-active .chosen-with-drop, .fl-node-$id .gform_wrapper .ginput_container_select .chosen-container-active.chosen-with-drop .chosen-single, .fl-node-$id .gform_wrapper .chosen-container .chosen-drop",
+    .fl-node-$id .uabb-gf-style select, .fl-node-$id .uabb-gf-style textarea, .fl-node-$id .gform_wrapper .ginput_container_select .chosen-container-single .chosen-single, .fl-node-$id .chosen-container .chosen-container-single .chosen-container-active .chosen-with-drop, .fl-node-$id .gform_wrapper .ginput_container_select .chosen-container-active.chosen-with-drop .chosen-single, .fl-node-$id .gform_wrapper .chosen-container .chosen-drop",
 				)
 			);
 	}
@@ -251,10 +250,10 @@ if ( ! $version_bb_check ) {
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=url]:focus,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=number]:focus,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=number]:active,
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=date]:focus,
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=date]:active,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style select:focus,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style select:active,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=date]:focus,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style input[type=date]:active,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style textarea:active,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style textarea:focus,
 .fl-node-<?php echo esc_attr( $id ); ?> .gform_wrapper .chosen-container-active.chosen-with-drop .chosen-single,
@@ -314,7 +313,13 @@ if ( ! $version_bb_check ) {
 		color: <?php echo esc_attr( $settings->label_color ); ?>;
 	<?php } ?>
 }
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style form .gform_body .gfield_label,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style form .gf_progressbar_title,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style form .gf_page_steps {
 
+	margin-bottom: <?php echo esc_attr( $settings->form_label_margin_bottom ); ?>px;
+
+}
 <?php if ( ! $version_bb_check ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .gform_wrapper .gfield .ginput_container span label {
 
@@ -333,14 +338,18 @@ if ( ! $version_bb_check ) {
 <?php } ?>
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_checkbox .gfield_checkbox li, 
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio li {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio li,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_checkbox .gfield_checkbox div, 
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio div {
 	<?php if ( $settings->input_text_align ) { ?>
 		text-align: <?php echo esc_attr( $settings->input_text_align ); ?>;
 	<?php } ?>
 }
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio li label, 
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio div label, 
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox div label {
 
 	<?php if ( 'true' === $settings->radio_check_custom_option ) { ?>
 		<?php if ( $settings->radio_checkbox_color ) { ?>
@@ -359,7 +368,9 @@ if ( ! $version_bb_check ) {
 
 <?php if ( ! $version_bb_check ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio li label, 
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio div label, 
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox div label {
 
 		<?php if ( 'true' === $settings->radio_check_custom_option ) { ?>
 			<?php if ( 'Default' !== $settings->radio_checkbox_font_family['family'] ) { ?>
@@ -393,7 +404,7 @@ if ( ! $version_bb_check ) {
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'radio_input_typo',
-				'selector'     => ".fl-node-$id .uabb-gf-style .gform_wrapper .gfield_radio li label, .fl-node-$id .uabb-gf-style .gform_wrapper .gfield_checkbox li label",
+				'selector'     => ".fl-node-$id .uabb-gf-style .gform_wrapper .gfield_radio li label, .fl-node-$id .uabb-gf-style .gform_wrapper .gfield_checkbox li label, .fl-node-$id .uabb-gf-style .gform_wrapper .gfield_radio div label, .fl-node-$id .uabb-gf-style .gform_wrapper .gfield_checkbox div label",
 			)
 		);
 	}
@@ -410,7 +421,8 @@ if ( 'true' === $settings->radio_check_custom_option ) {
 	}
 
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_checkbox .gfield_checkbox input[type='checkbox'] + label:before,
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio'] + label:before {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio'] + label:before,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio .gchoice_label label:before {
 		content: '';
 		background: <?php echo esc_attr( $settings->radio_check_bgcolor ); ?>;
 		border: <?php echo esc_attr( $settings->radio_check_border_width ); ?>px solid #<?php echo esc_attr( $settings->radio_check_border_color ); ?>;
@@ -435,12 +447,14 @@ if ( 'true' === $settings->radio_check_custom_option ) {
 		border-radius: <?php echo esc_attr( $settings->checkbox_border_radius ); ?>px;
 	}
 
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio']:checked + label:before {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio']:checked + label:before,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio .gchoice_button.uabb-radio-active + .gchoice_label label:before {
 		background: #<?php echo esc_attr( $settings->radio_check_selected_color ); ?>;
 		box-shadow: inset 0px 0px 0px 4px <?php echo esc_attr( $settings->radio_check_bgcolor ); ?>;
 	}
 
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio'] + label:before {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio input[type='radio'] + label:before,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_body .ginput_container_radio .gfield_radio .gchoice_label label:before {
 		border-radius: <?php echo esc_attr( $settings->radio_btn_border_radius ); ?>px;
 	}
 
@@ -1316,7 +1330,9 @@ if ( 'gradient' === $settings->btn_style ) {
 
 		<?php if ( ! $version_bb_check ) { ?>
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio li label, 
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio div label, 
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox div label {
 
 				<?php if ( 'true' === $settings->radio_check_custom_option ) { ?>
 
@@ -1372,7 +1388,9 @@ if ( 'gradient' === $settings->btn_style ) {
 			}
 
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_radio li label, 
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox li label {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox li label,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_radio div label, 
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox div label {
 				<?php if ( isset( $settings->radio_checkbox_font_size['medium'] ) && '' !== $settings->radio_checkbox_font_size['medium'] && 'true' === $settings->radio_check_custom_option ) : ?>
 					font-size: <?php echo esc_attr( $settings->radio_checkbox_font_size['medium'] ); ?>px;
 				<?php endif; ?>
@@ -1581,7 +1599,9 @@ if ( 'gradient' === $settings->btn_style ) {
 		<?php if ( ! $version_bb_check ) { ?>
 
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio li label, 
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox li label,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_radio div label, 
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield_checkbox div label {
 				<?php if ( 'true' === $settings->radio_check_custom_option ) { ?>
 
 					<?php if ( 'Default' !== $settings->radio_checkbox_font_family['family'] ) { ?>
@@ -1634,7 +1654,9 @@ if ( 'gradient' === $settings->btn_style ) {
 			}
 
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_radio li label, 
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox li label {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox li label,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_radio div label, 
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-gf-style .gform_wrapper .gfield .gfield_checkbox div label {
 				<?php if ( isset( $settings->radio_checkbox_font_size['small'] ) && '' !== $settings->radio_checkbox_font_size['small'] && 'true' === $settings->radio_check_custom_option ) : ?>
 					font-size: <?php echo esc_attr( $settings->radio_checkbox_font_size['small'] ); ?>px;
 				<?php endif; ?>

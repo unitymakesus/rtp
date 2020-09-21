@@ -11,7 +11,7 @@ class FLTestimonialsModule extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(array(
 			'name'            => __( 'Testimonials', 'fl-builder' ),
-			'description'     => __( 'An animated tesimonials area.', 'fl-builder' ),
+			'description'     => __( 'An animated testimonials area.', 'fl-builder' ),
 			'category'        => __( 'Media', 'fl-builder' ),
 			'partial_refresh' => true,
 			'icon'            => 'format-quote.svg',
@@ -175,9 +175,10 @@ FLBuilder::register_module('FLTestimonialsModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-testimonial',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '{node} .fl-testimonials-wrap .fl-testimonials .fl-testimonial, {node} .fl-testimonials-wrap .fl-testimonials .fl-testimonial *',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'text_typography' => array(
@@ -186,7 +187,7 @@ FLBuilder::register_module('FLTestimonialsModule', array(
 						'responsive' => true,
 						'preview'    => array(
 							'type'     => 'css',
-							'selector' => '.fl-testimonial',
+							'selector' => '{node} .fl-testimonial',
 						),
 					),
 				),

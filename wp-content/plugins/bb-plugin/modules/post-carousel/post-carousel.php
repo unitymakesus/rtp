@@ -115,7 +115,7 @@ class FLPostCarouselModule extends FLBuilderModule {
 				'photo_src'    => $src,
 				'photo_source' => 'library',
 				'attributes'   => array(
-					'data-no-lazy' => 1,
+					'loading' => 'false',
 				),
 			);
 
@@ -129,6 +129,24 @@ class FLPostCarouselModule extends FLBuilderModule {
 
 		}
 
+	}
+
+	/**
+	 * Renders the CSS class for each post item.
+	 *
+	 * @since 2.4
+	 * @return void
+	 */
+	public function render_post_class( $layout ) {
+		$settings     = $this->settings;
+		$no_thumbnail = ! has_post_thumbnail( get_the_ID() );
+		$classes      = array( 'fl-post-carousel-post' );
+
+		if ( 'gallery' === $layout && $no_thumbnail ) {
+			$classes[] = 'fl-post-no-thumb';
+		}
+
+		post_class( apply_filters( 'fl_builder_post_carousel_classes', $classes, $settings ) );
 	}
 
 }

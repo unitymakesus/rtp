@@ -4,7 +4,7 @@
 	$post_icon_position = isset( $settings->post_icon_position ) ? $settings->post_icon_position : 'above';
 
 ?>
-<div class="fl-post-carousel-post<?php echo $no_thumb; ?>"<?php FLPostGridModule::print_schema( ' itemscope itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?>>
+<div <?php $module->render_post_class( 'gallery' ); ?> <?php FLPostGridModule::print_schema( ' itemscope itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?>>
 
 	<?php FLPostGridModule::schema_meta(); ?>
 

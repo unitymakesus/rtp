@@ -303,17 +303,17 @@ final class FLBuilderAutoSuggest {
 		$data  = array();
 		$like  = self::get_like();
 		$types = FLBuilderLoop::post_types();
-		$slugs = array();
+		$slugs = array( 'attachment' );
 
 		foreach ( $types as $slug => $type ) {
 			$slugs[] = esc_sql( $slug );
 		}
 
 		// we cant use an array of arrays for prepare() so use sprintf 1st.
-		$query = sprintf( "SELECT ID, post_title FROM {$wpdb->posts}
+		$query = sprintf( "SELECT ID, post_title, post_type FROM {$wpdb->posts}
 			WHERE post_title LIKE %%s
 			AND post_type IN ('%s')
-			AND post_status = 'publish'",
+			AND post_status IN ('publish', 'inherit')",
 			implode( "', '", $slugs )
 		);
 
@@ -322,9 +322,11 @@ final class FLBuilderAutoSuggest {
 		// @codingStandardsIgnoreEnd
 
 		foreach ( $posts as $post ) {
+
 			$data[] = array(
-				'name'  => $post->post_title,
-				'value' => get_permalink( $post->ID ),
+				'name'  => ( 'attachment' === $post->post_type ) ? basename( wp_get_attachment_url( $post->ID ) ) : esc_html( $post->post_title ),
+				'value' => ( 'attachment' === $post->post_type ) ? wp_get_attachment_url( $post->ID ) : get_permalink( $post->ID ),
+				'type'  => ucfirst( $post->post_type ),
 			);
 		}
 

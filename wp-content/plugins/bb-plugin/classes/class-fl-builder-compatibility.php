@@ -14,6 +14,7 @@ final class FLBuilderCompatibility {
 		add_action( 'fl_builder_photo_cropped', array( __CLASS__, 'tinypng_support' ), 10, 2 );
 		add_action( 'plugins_loaded', array( __CLASS__, 'wc_memberships_support' ), 11 );
 		add_action( 'plugins_loaded', array( __CLASS__, 'admin_ssl_upload_fix' ), 11 );
+		add_action( 'plugins_loaded', __CLASS__ . '::popup_builder' );
 		add_action( 'added_post_meta', array( __CLASS__, 'template_meta_add' ), 10, 4 );
 		add_action( 'fl_builder_insert_layout_render', array( __CLASS__, 'insert_layout_render_search' ), 10, 3 );
 		add_action( 'fl_builder_fa_pro_save', array( __CLASS__, 'clear_theme_cache' ) );
@@ -62,6 +63,20 @@ final class FLBuilderCompatibility {
 		add_filter( 'option_cookiebot-nooutput', array( __CLASS__, 'fix_cookiebot' ) );
 		add_filter( 'fl_select2_enabled', array( __CLASS__, 'fix_memberium' ) );
 		add_filter( 'option_wp-smush-lazy_load', array( __CLASS__, 'fix_smush' ) );
+		add_filter( 'fl_row_bg_video_wrapper_class', array( __CLASS__, 'fix_twenty_twenty_video' ) );
+		add_filter( 'fl_builder_loop_rewrite_rules', array( __CLASS__, 'fix_wpseo_category_pagination_rule' ) );
+	}
+
+	/**
+	 * @since 2.4
+	 */
+	public static function popup_builder() {
+		if ( isset( $_GET['fl_builder'] ) ) {
+			if ( class_exists( '\sgpb\PopupBuilderInit' ) ) {
+				$instance = sgpb\PopupBuilderInit::getInstance();
+				self::remove_filters_with_method_name( 'media_buttons', 'popupMediaButton', 10 );
+			}
+		}
 	}
 
 	public static function fix_smush( $option ) {
@@ -723,6 +738,87 @@ final class FLBuilderCompatibility {
 			$response['html'] .= ob_get_clean();
 		}
 		return $response;
+	}
+
+	/**
+	 * Helper function
+	 * @see https://github.com/herewithme/wp-filters-extras/blob/master/wp-filters-extras.php
+	 */
+	public static function remove_filters_with_method_name( $hook_name = '', $method_name = '', $priority = 0 ) {
+		global $wp_filter;
+
+		// Take only filters on right hook name and priority
+		if ( ! isset( $wp_filter[ $hook_name ][ $priority ] ) || ! is_array( $wp_filter[ $hook_name ][ $priority ] ) ) {
+			return false;
+		}
+
+		// Loop on filters registered
+		foreach ( (array) $wp_filter[ $hook_name ][ $priority ] as $unique_id => $filter_array ) {
+			// Test if filter is an array ! (always for class/method)
+			if ( isset( $filter_array['function'] ) && is_array( $filter_array['function'] ) ) {
+				// Test if object is a class and method is equal to param !
+				if ( is_object( $filter_array['function'][0] ) && get_class( $filter_array['function'][0] ) && $filter_array['function'][1] == $method_name ) {
+					// Test for WordPress >= 4.7 WP_Hook class (https://make.wordpress.org/core/2016/09/08/wp_hook-next-generation-actions-and-filters/)
+					if ( is_a( $wp_filter[ $hook_name ], 'WP_Hook' ) ) {
+						unset( $wp_filter[ $hook_name ]->callbacks[ $priority ][ $unique_id ] );
+					} else {
+						unset( $wp_filter[ $hook_name ][ $priority ][ $unique_id ] );
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Fix row background video on Twenty Twenty theme.
+	 * @since 2.4
+	 */
+	public static function fix_twenty_twenty_video( $classes ) {
+		if ( 'twentytwenty' == get_option( 'template' ) && ! in_array( 'intrinsic-ignore', $classes ) ) {
+			$classes[] = 'intrinsic-ignore';
+		}
+
+		return $classes;
+	}
+
+	/**
+	 * Fix compatibility issue with Yoast SEO when category prefix is removed
+	 * in the settings.
+	 *
+	 * @since 2.4
+	 */
+	public static function fix_wpseo_category_pagination_rule( $rewrite_rules ) {
+		if ( ! class_exists( 'WPSEO_Rewrite' ) ) {
+			return $rewrite_rules;
+		}
+
+		if ( ! isset( $GLOBALS['wpseo_rewrite'] ) ) {
+			return $rewrite_rules;
+		}
+
+		if ( ! method_exists( $GLOBALS['wpseo_rewrite'], 'category_rewrite_rules' ) ) {
+			return $rewrite_rules;
+		}
+
+		global $wp_rewrite;
+
+		$wpseo_rewrite_rules = $GLOBALS['wpseo_rewrite']->category_rewrite_rules();
+		$page_base           = $wp_rewrite->pagination_base;
+		$flpaged_base        = 'paged-[0-9]{1,}';
+		$flpaged_rules       = array();
+
+		foreach ( $wpseo_rewrite_rules as $regex => $redirect ) {
+			if ( strpos( $regex, '/' . $page_base . '/' ) !== false ) {
+				$flregex = str_replace( $page_base, $flpaged_base, $regex );
+
+				// Adds our custom paged rule.
+				$flpaged_rules[ $flregex ] = 'index.php?category_name=$matches[1]&flpaged=$matches[2]';
+			}
+		}
+		$rewrite_rules = array_merge( $flpaged_rules, $rewrite_rules );
+
+		return $rewrite_rules;
 	}
 }
 FLBuilderCompatibility::init();

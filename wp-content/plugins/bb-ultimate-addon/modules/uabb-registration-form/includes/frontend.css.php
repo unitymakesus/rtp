@@ -22,6 +22,12 @@ $settings->pass_strong_color          = UABB_Helper::uabb_colorpicker( $settings
 $settings->success_msg_color          = UABB_Helper::uabb_colorpicker( $settings, 'success_msg_color', true );
 $settings->input_border_active_color  = UABB_Helper::uabb_colorpicker( $settings, 'input_border_active_color', true );
 $settings->label_color                = UABB_Helper::uabb_colorpicker( $settings, 'label_color', true );
+$settings->checkbox_bgcolor           = UABB_Helper::uabb_colorpicker( $settings, 'checkbox_bgcolor', true );
+$settings->checkbox_selected_color    = UABB_Helper::uabb_colorpicker( $settings, 'checkbox_selected_color', true );
+$settings->checkbox_border_color      = UABB_Helper::uabb_colorpicker( $settings, 'checkbox_border_color', true );
+$settings->checkbox_text_color        = UABB_Helper::uabb_colorpicker( $settings, 'checkbox_text_color', true );
+$settings->terms_text_color           = UABB_Helper::uabb_colorpicker( $settings, 'terms_text_color', true );
+
 ?>
 <?php
 // Alignment.
@@ -114,6 +120,24 @@ if ( isset( $settings->label_bottom_margin ) ) {
 	<?php
 }
 ?>
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form-pass-match.success {
+	<?php
+	if ( isset( $settings->success_msg_color ) && '' !== $settings->success_msg_color ) {
+		echo 'color:' . esc_attr( $settings->success_msg_color ) . ';';
+	}
+	?>
+}
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form-pass-match.error {
+	<?php
+	if ( isset( $settings->error_msg_color ) && '' !== $settings->error_msg_color ) {
+		echo 'color:' . esc_attr( $settings->error_msg_color ) . ';';
+	}
+
+	?>
+}
+
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-rf-success-message-wrap .uabb-rf-success-message {
 	<?php
 	if ( isset( $settings->success_msg_color ) ) {
@@ -249,7 +273,8 @@ if ( isset( $settings->invalid_border_color ) ) {
 		?>
 	}
 <?php } if ( isset( $settings->error_msg_color ) ) { ?>
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-registration_form-error-message-required {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-registration_form-error-message-required,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-registration-form-error .uabb-registration-error {
 		<?php
 			echo ( '' !== $settings->error_msg_color ) ? 'color:' . esc_attr( $settings->error_msg_color ) . ';' : '';
 		?>
@@ -443,6 +468,131 @@ if ( isset( $settings->invalid_border_color ) ) {
 
 	?>
 }
+
+<!--Terms and Conditions code starts here. -->
+<?php if ( 'show' === $settings->terms_checkbox ) { ?>
+
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-input-group-wrap .uabb-terms-label {
+		color: <?php echo esc_attr( $settings->checkbox_text_color ); ?>;
+	}
+
+	/* Check-boxes typography CSS */
+	<?php if ( ! $version_bb_check ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-terms-label {
+
+			<?php if ( 'Default' !== $settings->checkbox_font_family['family'] ) : ?>
+				<?php UABB_Helper::uabb_font_css( $settings->checkbox_font_family ); ?>
+			<?php endif; ?>
+
+			<?php if ( isset( $settings->checkbox_font_size ) && '' !== $settings->checkbox_font_size ) : ?>
+				font-size: <?php echo esc_attr( $settings->checkbox_font_size ); ?>px;
+			<?php endif; ?>
+
+			<?php if ( isset( $settings->checkbox_line_height ) && '' !== $settings->checkbox_line_height ) : ?>
+				line-height: <?php echo esc_attr( $settings->checkbox_line_height ); ?>em;
+			<?php endif; ?>
+
+			<?php if ( 'none' !== $settings->checkbox_text_transform ) : ?>
+				text-transform: <?php echo esc_attr( $settings->checkbox_text_transform ); ?>;
+			<?php endif; ?>
+
+			<?php if ( '' !== $settings->checkbox_text_letter_spacing ) : ?>
+				letter-spacing: <?php echo esc_attr( $settings->checkbox_text_letter_spacing ); ?>px;
+			<?php endif; ?>
+		}
+		<?php
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'checkbox_typo',
+					'selector'     => ".fl-node-$id .uabb-registration-form .uabb-terms-label",
+				)
+			);
+		}
+	}
+}
+?>
+
+<?php if ( 'show' === $settings->terms_checkbox ) { ?>
+
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-terms-text {
+		<?php if ( isset( $settings->terms_text_color ) && '' !== $settings->terms_text_color ) { ?>
+			color: <?php echo esc_attr( $settings->terms_text_color ); ?>;
+		<?php } ?>
+
+	}
+
+	/* Terms typography CSS */
+	<?php if ( ! $version_bb_check ) { ?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-terms-text {
+
+			<?php if ( 'Default' !== $settings->terms_font_family['family'] ) : ?>
+				<?php UABB_Helper::uabb_font_css( $settings->terms_font_family ); ?>
+			<?php endif; ?>
+
+			<?php if ( isset( $settings->terms_font_size ) && '' !== $settings->terms_font_size ) : ?>
+				font-size: <?php echo esc_attr( $settings->terms_font_size ); ?>px;
+			<?php endif; ?>
+
+			<?php if ( isset( $settings->terms_line_height ) && '' !== $settings->terms_line_height ) : ?>
+				line-height: <?php echo esc_attr( $settings->terms_line_height ); ?>em;
+			<?php endif; ?>
+
+			<?php if ( 'none' !== $settings->terms_text_transform ) : ?>
+				text-transform: <?php echo esc_attr( $settings->terms_text_transform ); ?>;
+			<?php endif; ?>
+
+			<?php if ( '' !== $settings->terms_text_letter_spacing ) : ?>
+				letter-spacing: <?php echo esc_attr( $settings->terms_text_letter_spacing ); ?>px;
+			<?php endif; ?>
+		}
+		<?php
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'terms_typo',
+					'selector'     => ".fl-node-$id .uabb-registration-form .uabb-terms-text",
+				)
+			);
+		}
+	}
+}
+?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-input-group-wrap .uabb-terms-label {
+	color: <?php echo esc_attr( $settings->checkbox_text_color ); ?>;
+}
+<?php
+$font_size     = intval( $settings->checkbox_size );
+$checked_width = $font_size - intval( $settings->checkbox_border_width );
+?>
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-input-group-wrap .uabb-terms-label input[type="checkbox"] + span:before {
+	<?php if ( isset( $settings->checkbox_bgcolor ) && '' !== $settings->checkbox_bgcolor ) : ?>
+	background-color: <?php echo esc_attr( $settings->checkbox_bgcolor ); ?>;
+	<?php endif; ?>
+	border-width: <?php echo esc_attr( $settings->checkbox_border_width ); ?>px;
+	border-color: <?php echo esc_attr( $settings->checkbox_border_color ); ?>;
+	width: <?php echo esc_attr( $settings->checkbox_size ); ?>px;
+	height: <?php echo esc_attr( $settings->checkbox_size ); ?>px;
+}
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-input-group-wrap input[type="checkbox"]:checked + span:before {
+	font-size: <?php echo esc_attr( $checked_width ); ?>px;
+	line-height: <?php echo esc_attr( $checked_width ); ?>px;
+	color: <?php echo esc_attr( $settings->checkbox_selected_color ); ?>;
+}
+
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before {
+	border-radius: <?php echo esc_attr( $settings->checkbox_border_radius ); ?>px;
+}
+
+/* Terms and Conditions code ends here */
+
+/* Typography responsive css */
 <?php if ( ! $version_bb_check ) { ?>
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-registration_form-error-message-required,
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-rf-success-message-wrap .uabb-rf-success-message {

@@ -4,16 +4,17 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-use The_SEO_Framework\Bridges\SeoSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+use The_SEO_Framework\Bridges\SeoSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_homepage_metabox', $instance );
 
-$home_id  = $this->get_the_front_page_ID();
+$home_id = $this->get_the_front_page_ID();
 
 $_generator_args = [
 	'id'       => $home_id,
@@ -63,29 +64,7 @@ switch ( $instance ) :
 		break;
 
 	case 'the_seo_framework_homepage_metabox_general':
-		$description_from_post_message = $title_from_post_message = '';
-
-		$frompost_title = $home_id ? $this->get_post_meta_item( '_genesis_title', $home_id ) : '';
-		if ( $frompost_title ) {
-			//! FIXME: Doesn't consider filters. Inject filter here, it's hackish...? Make a specific function, smelly...?
-			if ( $this->use_title_branding( $_generator_args ) ) {
-				$this->merge_title_branding( $frompost_title, $_generator_args );
-			}
-			$home_title_placeholder = $this->escape_title( $frompost_title );
-		} else {
-			$home_title_placeholder = $this->get_generated_title( $_generator_args );
-		}
-
-		//* Fetch the description from the homepage.
-		$frompost_description = $home_id ? $this->get_post_meta_item( '_genesis_description', $home_id ) : '';
-
-		if ( $frompost_description ) {
-			$description_placeholder = $frompost_description;
-		} else {
-			$description_placeholder = $this->get_generated_description( $_generator_args );
-		}
 		?>
-
 		<p>
 			<label for="<?php $this->field_id( 'homepage_title' ); ?>" class="tsf-toblock">
 				<strong><?php esc_html_e( 'Meta Title', 'autodescription' ); ?></strong>
@@ -97,15 +76,33 @@ switch ( $instance ) :
 					);
 				?>
 			</label>
-			<?php
-			//* Output these unconditionally, with inline CSS attached to allow reacting on settings.
-			$this->output_character_counter_wrap( $this->get_field_id( 'homepage_title' ), '', (bool) $this->get_option( 'display_character_counter' ) );
-			$this->output_pixel_counter_wrap( $this->get_field_id( 'homepage_title' ), 'title', (bool) $this->get_option( 'display_pixel_counter' ) );
-			?>
 		</p>
-		<p id="tsf-title-wrap">
-			<input type="text" name="<?php $this->field_name( 'homepage_title' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_title' ); ?>" placeholder="<?php echo esc_attr( $home_title_placeholder ); ?>" value="<?php echo $this->esc_attr_preserve_amp( $this->get_option( 'homepage_title' ) ); ?>" autocomplete=off />
-			<?php $this->output_js_title_elements(); ?>
+		<?php
+		// Output these unconditionally, with inline CSS attached to allow reacting on settings.
+		$this->output_character_counter_wrap( $this->get_field_id( 'homepage_title' ), '', (bool) $this->get_option( 'display_character_counter' ) );
+		$this->output_pixel_counter_wrap( $this->get_field_id( 'homepage_title' ), 'title', (bool) $this->get_option( 'display_pixel_counter' ) );
+		?>
+		<p class=tsf-title-wrap>
+			<input type="text" name="<?php $this->field_name( 'homepage_title' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_title' ); ?>" value="<?php echo $this->esc_attr_preserve_amp( $this->get_option( 'homepage_title' ) ); ?>" autocomplete=off />
+			<?php
+			$this->output_js_title_elements(); // legacy
+			$this->output_js_title_data(
+				$this->get_field_id( 'homepage_title' ),
+				[
+					'state' => [
+						'refTitleLocked'    => false,
+						'defaultTitle'      =>
+							( $home_id ? $this->get_post_meta_item( '_genesis_title', $home_id ) : '' )
+							?: $this->get_filtered_raw_generated_title( $_generator_args ),
+						'addAdditions'      => $this->use_title_branding( $_generator_args ),
+						'useSocialTagline'  => $this->use_title_branding( $_generator_args, true ),
+						'additionValue'     => $this->get_home_title_additions(),
+						'additionPlacement' => 'left' === $this->get_home_title_seplocation() ? 'before' : 'after',
+						'hasLegacy'         => true,
+					],
+				]
+			);
+			?>
 		</p>
 		<?php
 		$this->description( __( 'Note: The input value of this field may be used to describe the name of the site elsewhere.', 'autodescription' ) );
@@ -120,7 +117,7 @@ switch ( $instance ) :
 		 */
 		if ( $home_id && apply_filters( 'the_seo_framework_warn_homepage_global_title', false ) ) {
 			$this->attention_noesc(
-				//* Markdown escapes.
+				// Markdown escapes.
 				$this->convert_markdown(
 					sprintf(
 						/* translators: %s = Homepage URL markdown */
@@ -128,7 +125,7 @@ switch ( $instance ) :
 						esc_url( admin_url( 'post.php?post=' . $home_id . '&action=edit#tsf-inpost-box' ) )
 					),
 					[ 'a' ],
-					[ 'a_internal' => false ]
+					[ 'a_internal' => false ] // opens in new tab.
 				)
 			);
 		}
@@ -146,15 +143,28 @@ switch ( $instance ) :
 					);
 				?>
 			</label>
-			<?php
-			//* Output these unconditionally, with inline CSS attached to allow reacting on settings.
-			$this->output_character_counter_wrap( $this->get_field_id( 'homepage_description' ), '', (bool) $this->get_option( 'display_character_counter' ) );
-			$this->output_pixel_counter_wrap( $this->get_field_id( 'homepage_description' ), 'description', (bool) $this->get_option( 'display_pixel_counter' ) );
-			?>
 		</p>
+		<?php
+		// Output these unconditionally, with inline CSS attached to allow reacting on settings.
+		$this->output_character_counter_wrap( $this->get_field_id( 'homepage_description' ), '', (bool) $this->get_option( 'display_character_counter' ) );
+		$this->output_pixel_counter_wrap( $this->get_field_id( 'homepage_description' ), 'description', (bool) $this->get_option( 'display_pixel_counter' ) );
+		?>
 		<p>
-			<textarea name="<?php $this->field_name( 'homepage_description' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_description' ); ?>" rows="3" cols="70" placeholder="<?php echo esc_attr( $description_placeholder ); ?>"><?php echo esc_attr( $this->get_option( 'homepage_description' ) ); ?></textarea>
-			<?php $this->output_js_description_elements(); ?>
+			<textarea name="<?php $this->field_name( 'homepage_description' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_description' ); ?>" rows="3" cols="70"><?php echo esc_attr( $this->get_option( 'homepage_description' ) ); ?></textarea>
+			<?php
+			$this->output_js_description_elements(); // legacy
+			$this->output_js_description_data(
+				$this->get_field_id( 'homepage_description' ),
+				[
+					'state' => [
+						'defaultDescription' =>
+							( $home_id ? $this->get_post_meta_item( '_genesis_description', $home_id ) : '' )
+							?: $this->get_generated_description( $_generator_args ),
+						'hasLegacy'          => true,
+					],
+				]
+			);
+			?>
 		</p>
 		<?php
 
@@ -170,7 +180,7 @@ switch ( $instance ) :
 		 */
 		if ( $home_id && apply_filters( 'the_seo_framework_warn_homepage_global_description', false ) ) {
 			$this->attention_noesc(
-				//* Markdown escapes.
+				// Markdown escapes.
 				$this->convert_markdown(
 					sprintf(
 						/* translators: %s = Homepage URL markdown */
@@ -178,7 +188,7 @@ switch ( $instance ) :
 						esc_url( admin_url( 'post.php?post=' . $home_id . '&action=edit#tsf-inpost-box' ) )
 					),
 					[ 'a' ],
-					[ 'a_internal' => false ]
+					[ 'a_internal' => false ] // opens in new tab.
 				)
 			);
 		}
@@ -187,12 +197,12 @@ switch ( $instance ) :
 	case 'the_seo_framework_homepage_metabox_additions':
 		$tagline_placeholder = $this->s_title_raw( $this->get_blogdescription() );
 
-		//* Fetches escaped title parts.
+		// Fetches escaped title parts.
 		$_example_title = $this->escape_title(
 			$this->get_filtered_raw_custom_field_title( $_generator_args ) ?: $this->get_filtered_raw_generated_title( $_generator_args )
 		);
-		// FIXME? When no blog description or tagline is set... this will be empty and ugly on no-JS.
-		$_example_blogname  = $this->escape_title( $this->get_home_page_tagline() ?: $this->get_static_untitled_title() );
+		// FIXME? When no blog description or tagline is set... this will be empty and be ugly on no-JS.
+		$_example_blogname  = $this->escape_title( $this->get_home_title_additions() ?: $this->get_static_untitled_title() );
 		$_example_separator = esc_html( $this->get_separator( 'title' ) );
 
 		// TODO very readable.
@@ -275,11 +285,11 @@ switch ( $instance ) :
 					?>
 				</strong>
 			</label>
-			<?php
-			//* Output this unconditionally, with inline CSS attached to allow reacting on settings.
-			$this->output_character_counter_wrap( $this->get_field_id( 'homepage_og_title' ), '', (bool) $this->get_option( 'display_character_counter' ) );
-			?>
 		</p>
+		<?php
+		// Output this unconditionally, with inline CSS attached to allow reacting on settings.
+		$this->output_character_counter_wrap( $this->get_field_id( 'homepage_og_title' ), '', (bool) $this->get_option( 'display_character_counter' ) );
+		?>
 		<p>
 			<input type="text" name="<?php $this->field_name( 'homepage_og_title' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_og_title' ); ?>" placeholder="<?php echo esc_attr( $social_placeholders['title']['og'] ); ?>" value="<?php echo $this->esc_attr_preserve_amp( $this->get_option( 'homepage_og_title' ) ); ?>" autocomplete=off />
 		</p>
@@ -299,14 +309,13 @@ switch ( $instance ) :
 					?>
 				</strong>
 			</label>
-			<?php
-			//* Output this unconditionally, with inline CSS attached to allow reacting on settings.
-			$this->output_character_counter_wrap( $this->get_field_id( 'homepage_og_description' ), '', (bool) $this->get_option( 'display_character_counter' ) );
-			?>
 		</p>
+		<?php
+		// Output this unconditionally, with inline CSS attached to allow reacting on settings.
+		$this->output_character_counter_wrap( $this->get_field_id( 'homepage_og_description' ), '', (bool) $this->get_option( 'display_character_counter' ) );
+		?>
 		<p>
 			<textarea name="<?php $this->field_name( 'homepage_og_description' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_og_description' ); ?>" rows="3" cols="70" placeholder="<?php echo esc_attr( $social_placeholders['description']['og'] ); ?>" autocomplete=off><?php echo esc_attr( $this->get_option( 'homepage_og_description' ) ); ?></textarea>
-			<?php $this->output_js_description_elements(); ?>
 		</p>
 		<?php
 		if ( $this->has_page_on_front() && $custom_og_desc ) {
@@ -325,11 +334,11 @@ switch ( $instance ) :
 					?>
 				</strong>
 			</label>
-			<?php
-			//* Output this unconditionally, with inline CSS attached to allow reacting on settings.
-			$this->output_character_counter_wrap( $this->get_field_id( 'homepage_twitter_title' ), '', (bool) $this->get_option( 'display_character_counter' ) );
-			?>
 		</p>
+		<?php
+		// Output this unconditionally, with inline CSS attached to allow reacting on settings.
+		$this->output_character_counter_wrap( $this->get_field_id( 'homepage_twitter_title' ), '', (bool) $this->get_option( 'display_character_counter' ) );
+		?>
 		<p>
 			<input type="text" name="<?php $this->field_name( 'homepage_twitter_title' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_twitter_title' ); ?>" placeholder="<?php echo esc_attr( $social_placeholders['title']['twitter'] ); ?>" value="<?php echo $this->esc_attr_preserve_amp( $this->get_option( 'homepage_twitter_title' ) ); ?>" autocomplete=off />
 		</p>
@@ -349,14 +358,13 @@ switch ( $instance ) :
 					?>
 				</strong>
 			</label>
-			<?php
-			//* Output this unconditionally, with inline CSS attached to allow reacting on settings.
-			$this->output_character_counter_wrap( $this->get_field_id( 'homepage_twitter_description' ), '', (bool) $this->get_option( 'display_character_counter' ) );
-			?>
 		</p>
+		<?php
+		// Output this unconditionally, with inline CSS attached to allow reacting on settings.
+		$this->output_character_counter_wrap( $this->get_field_id( 'homepage_twitter_description' ), '', (bool) $this->get_option( 'display_character_counter' ) );
+		?>
 		<p>
 			<textarea name="<?php $this->field_name( 'homepage_twitter_description' ); ?>" class="large-text" id="<?php $this->field_id( 'homepage_twitter_description' ); ?>" rows="3" cols="70" placeholder="<?php echo esc_attr( $social_placeholders['description']['twitter'] ); ?>" autocomplete=off><?php echo esc_attr( $this->get_option( 'homepage_twitter_description' ) ); ?></textarea>
-			<?php $this->output_js_description_elements(); ?>
 		</p>
 		<?php
 		if ( $this->has_page_on_front() && ( $custom_og_desc || $custom_tw_desc ) ) {
@@ -371,7 +379,7 @@ switch ( $instance ) :
 		<?php
 		$this->description( __( 'A social image can be displayed when your homepage is shared. It is a great way to grab attention.', 'autodescription' ) );
 
-		//* Fetch image placeholder.
+		// Fetch image placeholder.
 		$image_details     = current( $this->get_generated_image_details( $_generator_args, true, 'social', true ) );
 		$image_placeholder = isset( $image_details['url'] ) ? $image_details['url'] : '';
 
@@ -393,6 +401,7 @@ switch ( $instance ) :
 		</p>
 		<p class="hide-if-no-tsf-js">
 			<?php
+			// phpcs:ignore, WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped.
 			echo $this->get_social_image_uploader_form( 'tsf_homepage_socialimage' );
 			?>
 		</p>
@@ -431,7 +440,7 @@ switch ( $instance ) :
 
 		$i_label = sprintf(
 			/* translators: 1: Option label, 2: [?] option info note, 3: Optional warning */
-			esc_html__( '%1$s %2$s %3$s', 'autodescription' ),
+			esc_html_x( '%1$s %2$s %3$s', 'robots setting', 'autodescription' ),
 			$this->convert_markdown(
 				/* translators: the backticks are Markdown! Preserve them as-is! */
 				esc_html__( 'Apply `noindex` to the homepage?', 'autodescription' ),
@@ -447,7 +456,7 @@ switch ( $instance ) :
 
 		$f_label = sprintf(
 			/* translators: 1: Option label, 2: [?] option info note, 3: Optional warning */
-			esc_html__( '%1$s %2$s %3$s', 'autodescription' ),
+			esc_html_x( '%1$s %2$s %3$s', 'robots setting', 'autodescription' ),
 			$this->convert_markdown(
 				/* translators: the backticks are Markdown! Preserve them as-is! */
 				esc_html__( 'Apply `nofollow` to the homepage?', 'autodescription' ),
@@ -463,7 +472,7 @@ switch ( $instance ) :
 
 		$a_label = sprintf(
 			/* translators: 1: Option label, 2: [?] option info note, 3: Optional warning */
-			esc_html__( '%1$s %2$s %3$s', 'autodescription' ),
+			esc_html_x( '%1$s %2$s %3$s', 'robots setting', 'autodescription' ),
 			$this->convert_markdown(
 				/* translators: the backticks are Markdown! Preserve them as-is! */
 				esc_html__( 'Apply `noarchive` to the homepage?', 'autodescription' ),
@@ -524,7 +533,7 @@ switch ( $instance ) :
 		<?php
 		$this->description( __( "If your homepage is paginated and outputs content that's also found elsewhere on the website, enabling this option may prevent duplicate content.", 'autodescription' ) );
 
-		//* Echo checkbox.
+		// Echo checkbox.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'home_paged_noindex',

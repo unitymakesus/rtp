@@ -48,9 +48,13 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const HOOK_SITEWIDE_TAB = 'ppw_sitewide_tab';
 
+		const HOOK_PCP_TAB = 'ppw_pcp_tab';
+
 		const HOOK_ADD_NEW_TAB = 'ppw_add_new_tab';
 
 		const HOOK_ADD_NEW_SITEWIDE_SUBMENU = 'ppw_sitewide_submenu_add_new_tab';
+
+		const HOOK_ADD_NEW_PCP_SUBMENU = 'ppw_pcp_submenu_add_new_tab';
 
 		const HOOK_RENDER_CONTENT_FOR_TAB = 'ppw_render_content_';
 
@@ -58,7 +62,11 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const HOOK_CUSTOM_SITEWIDE_TAB = 'ppw_custom_sitewide_tab';
 
+		const HOOK_CUSTOM_PCP_TAB = 'ppw_custom_pcp_tab';
+
 		const HOOK_RENDER_CONTENT_FOR_SITEWIDE_TAB = 'ppw_render_sitewide_content_';
+
+		const HOOK_RENDER_CONTENT_FOR_PCP_TAB = 'ppw_render_pcp_content_';
 
 		const HOOK_COOKIE_EXPIRED = 'post_password_expires';
 
@@ -77,6 +85,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const HOOK_PLUGIN_INFO = 'ppw_plugin_info';
 
 		const HOOK_CUSTOM_HEADER_FORM_ENTIRE_SITE = 'ppw_custom_header_form_entire_site';
+
+		const HOOK_CUSTOM_FOOTER_FORM_ENTIRE_SITE = 'ppw_custom_footer_form_entire_site';
 
 		const HOOK_CUSTOM_TEXT_FEATURE_REMOVE_DATA = 'ppw_custom_text_feature_remove_data';
 
@@ -269,6 +279,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const SITEWIDE_PAGE_PREFIX = 'ppwp-sitewide';
 
+		const PCP_PAGE_PREFIX = 'ppwp-partial-protection';
+
 		const META_BOX_MODULE = 'meta-box';
 
 		const ENTIRE_SITE_MODULE = 'entire-site';
@@ -288,11 +300,15 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const GENERAL_FORM_NONCE = 'ppw_general_form_nonce';
 
+		const ROW_ACTION_NONCE = 'ppw_row_action_nonce';
+
 		const ENTIRE_SITE_OPTIONS = 'wp_protect_password_set_password_options';
 
 		const GENERAL_OPTIONS = 'wp_protect_password_setting_options';
 
 		const MISC_OPTIONS = 'wp_protect_password_misc_options';
+
+		const SHORTCODE_OPTIONS = 'wp_protect_password_shortcode_options';
 
 		const POST_PROTECTION_ROLES = 'post_protection_roles';
 
@@ -304,7 +320,11 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const REMOVE_DATA = 'wpp_remove_data';
 
-		const USE_CUSTOM_FORM_ACTION= 'wpp_use_custom_form_action';
+		const USE_CUSTOM_FORM_ACTION = 'wpp_use_custom_form_action';
+
+		const NO_RELOAD_PAGE = 'wpp_no_reload_page';
+
+		const USE_SHORTCODE_PAGE_BUILDER = 'wpp_use_shortcode_page_builder';
 
 		const PROTECT_EXCERPT = 'wpp_protect_excerpt';
 
@@ -352,6 +372,10 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const CUSTOM_POST_CLASS = 'ppwp-short-code-post';
 
+		const CUSTOM_TABLE_COLUMN_NAME = 'ppw_password_protection';
+
+		const CUSTOM_TABLE_COLUMN_TITLE = 'Password Protection';
+
 		const DEFAULT_SHORTCODE_CLASS_NAME = 'ppw-restricted-content';
 
 		const DEFAULT_SHORTCODE_HEADLINE = 'Restricted Content';
@@ -360,6 +384,9 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const DEFAULT_SHORTCODE_BUTTON = 'Enter';
 
+		const DEFAULT_SHORTCODE_LABEL = 'Password:';
+
+		const DEFAULT_SHORTCODE_ERROR_MSG = 'Please enter the correct password!';
 
 		const TBL_NAME = 'pda_passwords';
 
@@ -439,6 +466,17 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const EVERYWHERE_PAGE = 'ppw_everywhere_pages';
 
 		const XML_YOAST_SEO_SITEMAPS = 'ppw_xml_yoast_seo_sitemaps';
+		//phpcs:ignore #endregion
+
+		//phpcs:ignore
+		const PROTECTION_STATUS = array(
+			'protect'   => 1,
+			'unprotect' => 0,
+		);
+
+		const PROTECT_LABEL = 'Protect';
+
+		const UNPROTECT_LABEL = 'Unprotect';
 		//phpcs:ignore #endregion
 
 		const CONTEXT_PASSWORD_FORM = 'PPF';

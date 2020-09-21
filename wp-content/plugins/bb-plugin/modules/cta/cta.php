@@ -295,7 +295,7 @@ FLBuilder::register_module('FLCtaModule', array(
 						'show_alpha'  => true,
 						'preview'     => array(
 							'type'      => 'css',
-							'selector'  => '.fl-cta-text-content',
+							'selector'  => '.fl-cta-text-content, .fl-cta-text-content *',
 							'property'  => 'color',
 							'important' => true,
 						),

@@ -2,10 +2,17 @@
 /**
  * @package The_SEO_Framework\Bootstrap\Install
  *
- * @NOTE This file MUST be written according to WordPress' minimum PHP requirements.
+ * @NOTE This file MUST be written according to WordPress's minimum PHP requirements.
  *       Which is PHP 5.2.
  * When we only support WordPress 5.2+, it'll be PHP 5.6.
- * When we only support WordPress 5.4?+, it'll be PHP 7.1.
+ * When we only support WordPress 5.6?+, it'll be PHP 7.1.
+ *
+ * This file can be removed when we only support WordPress 5.2 or later. However, their
+ * onboarding message isn't as useful, informative, or even as friendly.
+ *
+ * To use that, we need to add these plugin headers in the plugin's main PHP file:
+ * Requires PHP: 5.6.5
+ * Requires at least: 5.1
  */
 
 defined( 'THE_SEO_FRAMEWORK_DB_VERSION' ) or die;
@@ -51,7 +58,7 @@ function the_seo_framework_pre_boot_test() {
 	$ms = is_multisite();
 
 	if ( $ms && function_exists( 'get_network' ) ) {
-		//* Try bypassing testing and deactivation gaming when the main blog has already been tested.
+		// Try bypassing testing and deactivation gaming when the main blog has already been tested.
 
 		/**
 		 * @since 2.9.4
@@ -72,7 +79,7 @@ function the_seo_framework_pre_boot_test() {
 
 	$requirements = array(
 		'php' => 50600,
-		'wp'  => '4.9-dev',
+		'wp'  => '5.1-dev',
 	);
 
 	// phpcs:disable, Generic.Formatting.MultipleStatementAlignment, WordPress.WhiteSpace.PrecisionAlignment
@@ -81,7 +88,7 @@ function the_seo_framework_pre_boot_test() {
 	or $test = true;
 	// phpcs:enable, Generic.Formatting.MultipleStatementAlignment, WordPress.WhiteSpace.PrecisionAlignment
 
-	//* All good.
+	// All good.
 	if ( true === $test ) {
 		update_option( 'the_seo_framework_tested_upgrade_version', THE_SEO_FRAMEWORK_DB_VERSION );
 		return;
@@ -100,16 +107,16 @@ function the_seo_framework_pre_boot_test() {
 	$admin  = is_admin();
 	$silent = ! $admin;
 
-	//* Not good. Deactivate plugin.
+	// Not good. Deactivate plugin.
 	deactivate_plugins( plugin_basename( THE_SEO_FRAMEWORK_PLUGIN_BASE_FILE ), $silent, $network_mode );
 
-	//* Don't die on front-end. Live, my friend.
+	// Don't die on front-end. Live, my friend.
 	if ( ! $admin )
 		return;
 
 	switch ( $test ) :
 		case 1:
-			//* PHP requirements not met, always count up to encourage best standards.
+			// PHP requirements not met, always count up to encourage best standards.
 			$requirement = 'PHP 5.6.0 or later';
 			$issue       = 'PHP version';
 			$version     = PHP_VERSION;
@@ -117,8 +124,8 @@ function the_seo_framework_pre_boot_test() {
 			break;
 
 		case 2:
-			//* WordPress requirements not met.
-			$requirement = 'WordPress 4.9 or later';
+			// WordPress requirements not met.
+			$requirement = 'WordPress 5.1 or later';
 			$issue       = 'WordPress version';
 			$version     = $GLOBALS['wp_version'];
 			$subtitle    = 'WordPress Requirements';
@@ -129,11 +136,11 @@ function the_seo_framework_pre_boot_test() {
 			break;
 	endswitch;
 
-	//* network_admin_url() falls back to admin_url() on single. But networks can enable single too.
+	// network_admin_url() falls back to admin_url() on single. But networks can enable single too.
 	$pluginspage = $network_mode ? network_admin_url( 'plugins.php' ) : admin_url( 'plugins.php' );
 
-	//* Let's have some fun with teapots.
-	$response = floor( time() / DAY_IN_SECONDS ) === floor( strtotime( 'first day of April ' . date( 'Y' ) ) / DAY_IN_SECONDS ) ? 418 : 500;
+	// Let's have some fun with teapots.
+	$response = floor( time() / DAY_IN_SECONDS ) === floor( strtotime( 'first day of April ' . gmdate( 'Y' ) ) / DAY_IN_SECONDS ) ? 418 : 500;
 
 	wp_die(
 		sprintf(

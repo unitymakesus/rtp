@@ -32,6 +32,7 @@ class Remove_Local_Files extends Background_Tool {
 		add_action( 'as3cf_pre_media_settings', array( $this, 'render_modal' ) );
 		add_filter( 'as3cf_handle_post_request', array( $this, 'handle_post_request' ) );
 		add_filter( 'as3cf_action_for_changed_settings_key', array( $this, 'action_for_changed_settings_key' ), 10, 2 );
+		add_action( 'as3cfpro_load_assets', array( $this, 'load_assets' ) );
 	}
 
 	/**
@@ -48,6 +49,18 @@ class Remove_Local_Files extends Background_Tool {
 	}
 
 	/**
+	 * Load assets.
+	 */
+	public function load_assets() {
+		parent::load_assets();
+
+		$this->as3cf->enqueue_script( 'as3cf-pro-remove-local-files-script', 'assets/js/pro/tools/remove-local-files', array(
+			'jquery',
+			'wp-util',
+		) );
+	}
+
+	/**
 	 * Maybe start remove local files process via post request.
 	 *
 	 * @param array $changed_keys
@@ -58,7 +71,7 @@ class Remove_Local_Files extends Background_Tool {
 		if (
 			! empty( $_GET['action'] ) &&
 			'remove-local-files' === $_GET['action'] &&
-			! $this->as3cf->get_provider()->needs_access_keys() &&
+			! $this->as3cf->get_storage_provider()->needs_access_keys() &&
 			$this->as3cf->get_setting( 'bucket' ) &&
 			! empty( $_POST['remove-local-files'] )
 		) {
@@ -72,12 +85,20 @@ class Remove_Local_Files extends Background_Tool {
 	 * Should the Remove all files from server prompt be the next action?
 	 *
 	 * @param string $action
-	 * @param string $key
+	 * @param array  $changed_keys
 	 *
 	 * @return string
 	 */
-	public function action_for_changed_settings_key( $action, $key ) {
-		if ( empty( $action ) && 'remove-local-file' === $key && $this->should_render() ) {
+	public function action_for_changed_settings_key( $action, $changed_keys ) {
+		// If this step already processed, shortcut out.
+		if (
+			( ! empty( $_GET['action'] ) && 'remove-local-files' === $_GET['action'] ) ||
+			( ! empty( $_GET['prev_action'] ) && 'remove-local-files' === $_GET['prev_action'] )
+		) {
+			return $action;
+		}
+
+		if ( empty( $action ) && in_array( 'remove-local-file', $changed_keys ) && $this->should_render() ) {
 			return 'remove-local-files';
 		}
 
@@ -103,11 +124,9 @@ class Remove_Local_Files extends Background_Tool {
 	 * Render modal in footer.
 	 */
 	public function render_modal() {
-		if ( ! $this->should_render() ) {
-			return;
+		if ( ( ! empty( $_GET['action'] ) && 'remove-local-files' === $_GET['action'] ) || $this->should_render() ) {
+			$this->as3cf->render_view( 'modals/remove-local-files' );
 		}
-
-		$this->as3cf->render_view( 'modals/remove-local-files' );
 	}
 
 	/**

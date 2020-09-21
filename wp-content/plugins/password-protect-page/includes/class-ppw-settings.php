@@ -17,8 +17,6 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 					<?php _e( $plugin_info['name'], 'wp-protect-password-setting' ); ?>
 					<span class="ppwp_version"><?php _e( $plugin_info['version'] ) ?></span>
 				</h2>
-				<p><a rel="noopener noreferrer" href="<?php echo admin_url( 'admin.php?page=wp_protect_password_options&tab=misc' ); ?>">Use custom form action</a> to fix potential conflicts with certain security plugins and hostings.</p>
-
 				<?php
 				$default_tab  = apply_filters( PPW_Constants::HOOK_DEFAULT_TAB, 'general' );
 				$activate_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $default_tab;
@@ -44,7 +42,7 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 					),
 					array(
 						'tab'      => 'misc',
-						'tab_name' => 'Misc',
+						'tab_name' => 'Advanced',
 					),
 					array(
 						'tab'      => 'entire_site',

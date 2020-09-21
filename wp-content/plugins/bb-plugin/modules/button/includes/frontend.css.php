@@ -182,10 +182,16 @@ if ( 'enable' == $settings->button_transition ) :
 
 <?php
 
+	$button_node_id = "fl-node-$id";
+if ( isset( $settings->id ) && ! empty( $settings->id ) ) {
+	$button_node_id = $settings->id;
+}
+
 // Click action - lightbox
 if ( isset( $settings->click_action ) && 'lightbox' == $settings->click_action ) :
 	if ( 'html' == $settings->lightbox_content_type ) :
 		?>
+	.<?php echo $button_node_id; ?>.fl-button-lightbox-content,
 	.fl-node-<?php echo $id; ?>.fl-button-lightbox-content {
 		background: #fff none repeat scroll 0 0;
 		margin: 20px auto;
@@ -194,6 +200,9 @@ if ( isset( $settings->click_action ) && 'lightbox' == $settings->click_action )
 		position: relative;
 		width: auto;
 	}
+
+	.<?php echo $button_node_id; ?>.fl-button-lightbox-content .mfp-close,
+	.<?php echo $button_node_id; ?>.fl-button-lightbox-content .mfp-close:hover,
 	.fl-node-<?php echo $id; ?>.fl-button-lightbox-content .mfp-close,
 	.fl-node-<?php echo $id; ?>.fl-button-lightbox-content .mfp-close:hover {
 		top: -10px!important;

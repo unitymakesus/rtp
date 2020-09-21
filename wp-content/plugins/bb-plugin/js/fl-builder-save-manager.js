@@ -52,7 +52,7 @@
             // we can't yet reliably set it to needing publish when settings are changed.
             FLBuilder.addHook('didShowLightbox', this.setLayoutNeedsPublish.bind(this));
 
-            if (FLBuilderConfig.layoutHasDraftedChanges || ! FLBuilderConfig.builderEnabledd) {
+            if ( FLBuilderConfig.layoutHasDraftedChanges || ! FLBuilderConfig.builderEnabled ) {    
                 this.setLayoutNeedsPublish();
                 this.resetStatusMessage();
             }
@@ -194,7 +194,7 @@
         onPublishAndRemain: function() {
 			FLBuilder.MainMenu.hide();
             if (this.layoutNeedsPublish) {
-                FLBuilder._publishLayout(false);
+                FLBuilder._publishLayout(false, true);
             } else {
                 this.showStatusMessage(this.messages.noChanges);
 

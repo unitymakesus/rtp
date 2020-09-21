@@ -323,6 +323,46 @@ final class FLBuilderIcons {
 						}
 					}
 				}
+			} elseif ( fl_builder_filesystem()->file_exists( $folder . '/metadata/icons.json' ) ) { // font awesome pro subsets
+				$data = json_decode( fl_builder_filesystem()->file_get_contents( $folder . '/metadata/icons.json' ) );
+				$key  = basename( $folder );
+				$url  = str_ireplace( $upload_info['path'], $upload_info['url'], $folder );
+
+				if ( is_object( $data ) ) {
+
+					if ( is_admin() || in_array( $key, $enabled_icons ) ) {
+
+						self::$sets[ $key ] = array(
+							'name'       => 'Font Awesome Custom Subset',
+							'prefix'     => '',
+							'type'       => 'awesome',
+							'path'       => $folder,
+							'url'        => $url,
+							'stylesheet' => $url . '/css/all.min.css',
+							'icons'      => array(),
+						);
+
+						foreach ( $data as $k => $icon ) {
+
+							foreach ( $icon->styles as $style ) {
+								switch ( $style ) {
+									case 'solid':
+										self::$sets[ $key ]['icons'][] = 'subset fas fa-' . $k;
+										break;
+									case 'regular':
+										self::$sets[ $key ]['icons'][] = 'subset far fa-' . $k;
+										break;
+									case 'duotone':
+										self::$sets[ $key ]['icons'][] = 'subset fad fa-' . $k;
+										break;
+									case 'light':
+										self::$sets[ $key ]['icons'][] = 'subset fal fa-' . $k;
+										break;
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -412,22 +452,28 @@ final class FLBuilderIcons {
 		// Is this a core icon?
 		if ( stristr( $icon, 'fa fa-' ) ) {
 			wp_enqueue_style( 'font-awesome' );
-		} elseif ( stristr( $icon, 'far fa-' ) || stristr( $icon, 'fas fa-' ) || stristr( $icon, 'fab fa-' ) || stristr( $icon, 'fal fa-' ) || stristr( $icon, 'fad fa-' ) ) {
-			wp_enqueue_style( 'font-awesome-5' );
+			return;
 		} elseif ( stristr( $icon, 'fi-' ) ) {
 			wp_enqueue_style( 'foundation-icons' );
+			return;
 		} elseif ( stristr( $icon, 'dashicon' ) ) {
 			wp_enqueue_style( 'dashicons' );
-		} else {
+			return;
+		}
 
-			$sets = self::get_sets();
-
-			foreach ( (array) $sets as $key => $data ) {
-				if ( in_array( $icon, $data['icons'] ) ) {
-					self::enqueue_custom_styles_by_key( $key );
-				}
+		$sets = self::get_sets();
+		foreach ( (array) $sets as $key => $data ) {
+			if ( in_array( $icon, $data['icons'] ) ) {
+				self::enqueue_custom_styles_by_key( $key );
+				return;
 			}
 		}
+
+		// finally check for fa5, we do this last because subsets miight be loaded in the block above.
+		if ( stristr( $icon, 'far fa-' ) || stristr( $icon, 'fas fa-' ) || stristr( $icon, 'fab fa-' ) || stristr( $icon, 'fal fa-' ) || stristr( $icon, 'fad fa-' ) ) {
+			wp_enqueue_style( 'font-awesome-5' );
+		}
+
 	}
 
 	/**
@@ -450,6 +496,9 @@ final class FLBuilderIcons {
 					wp_enqueue_style( $key, $set['stylesheet'], array(), FL_BUILDER_VERSION );
 				}
 				if ( 'fontello' == $set['type'] ) {
+					wp_enqueue_style( $key, $set['stylesheet'], array(), FL_BUILDER_VERSION );
+				}
+				if ( 'awesome' == $set['type'] ) {
 					wp_enqueue_style( $key, $set['stylesheet'], array(), FL_BUILDER_VERSION );
 				}
 			}

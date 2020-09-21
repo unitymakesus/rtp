@@ -6,15 +6,20 @@
 		{	
 			var form    	= $('.fl-builder-settings'),
 				icoimage_style	= form.find('select[name=icoimage_style]');
-							
+				skins	= form.find('select[name=skins]');
+				color_style	= form.find('select[name=color_style]');
+
 			this._toggleBorderOptions();
 
+			skins.on( 'change', this._toggleSkins );
+			color_style.on( 'change', this._toggleSkins );
+			form.find('select[name=display_position]').on( 'change', this._toggleSkins );
+
+			this._toggleSkins();
 
 				// Validation events
 			icoimage_style.on('change', $.proxy( this._toggleBorderOptions, this ) ) ;
-			
 		},
-		
 		_toggleBorderOptions: function() {
 			var form		= $('.fl-builder-settings'),
 				icoimage_style 	= form.find('select[name=icoimage_style]').val(),
@@ -35,6 +40,42 @@
 				form.find('#fl-field-border_hover_color').hide();
 			}
 		},
+		_toggleSkins: function() {
+			var form		= $('.fl-builder-settings');
+
+			if ( 'default' !== form.find('select[name=skins]').val() ) {
+				form.find('#fl-field-column').show();
+				form.find('#fl-field-display_position').show();
+				form.find('#fl-builder-settings-section-social_skins').show();
+				form.find('#fl-field-share_alignment').show();
+				form.find('#fl-field-share_shape').show();
+				form.find('#fl-field-share_view').show();
+				if ( 'default' !== form.find('select[name=color_style]').val() ) {
+					form.find('#fl-builder-settings-section-social_color_skin').show();				
+				} else {
+					form.find('#fl-builder-settings-section-social_color_skin').hide();
+				}
+				if ( 'floating' === form.find('select[name=display_position]').val() ) {
+					form.find('#fl-field-floating_alignment').show();
+					form.find('#fl-field-share_alignment').hide();
+					form.find('#fl-field-column').hide();
+				} else {
+					form.find('#fl-field-floating_alignment').hide();
+					form.find('#fl-field-share_alignment').show();
+					form.find('#fl-field-column').show();
+				}
+			} else {
+				form.find('#fl-field-column').hide();
+				form.find('#fl-field-display_position').hide();
+				form.find('#fl-builder-settings-section-social_skins').hide();
+				form.find('#fl-builder-settings-section-social_color_skin').hide();
+				form.find('#fl-field-floating_alignment').hide();
+				form.find('#fl-field-share_alignment').hide();
+				form.find('#fl-field-share_shape').hide();
+				form.find('#fl-field-share_view').hide();
+
+			}
+		}
 	});
 	
 	FLBuilder.registerModuleHelper('uabb_social_share_form', {
@@ -75,8 +116,11 @@
 				}
 				
 			} else if ( image_type == 'icon' ) {
-				icon.rules('add', { required: true });
+				if ( 'default' !== form.find('select[name=skins]').val() ) {
+				form.find('.fl-builder-settings-tabs a[href="#fl-builder-settings-tab-form_style"]').hide();
+				} else {
 				form.find('.fl-builder-settings-tabs a[href="#fl-builder-settings-tab-form_style"]').show();
+				}
 				if( ico_image_style == 'simple' ) {
 					form.find('#fl-field-bg_color').hide();
 					form.find('#fl-field-bg_color_opc').hide();

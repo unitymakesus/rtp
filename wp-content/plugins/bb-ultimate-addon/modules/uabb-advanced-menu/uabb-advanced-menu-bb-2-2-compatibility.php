@@ -523,6 +523,9 @@ FLBuilder::register_module(
 								'below-row'   => __( 'Below Row', 'uabb' ),
 							),
 							'toggle'  => array(
+								'default'     => array(
+									'fields' => array( 'collapse_menu' ),
+								),
 								'off-canvas'  => array(
 									'fields'   => array( 'creative_menu_responsive_link_color', 'creative_menu_responsive_link_hover_color', 'creative_menu_responsive_link_border_color', 'creative_menu_offcanvas_direction', 'creative_menu_animation_speed', 'creative_menu_responsive_overlay_bg_color', 'creative_menu_responsive_overlay_padding_dimension', 'creative_menu_close_icon_size', 'creative_menu_close_icon_color', 'creative_menu_responsive_overlay_color', 'creative_menu_off_canvas_shadow', 'creative_menu_responsive_toggle' ),
 									'sections' => array( 'creative_menu_responsive_close_style' ),
@@ -531,6 +534,15 @@ FLBuilder::register_module(
 									'fields'   => array( 'creative_menu_responsive_link_color', 'creative_menu_responsive_link_hover_color', 'creative_menu_responsive_link_border_color', 'creative_menu_full_screen_effects', 'creative_menu_animation_speed', 'creative_menu_responsive_overlay_bg_color', 'creative_menu_close_icon_size', 'creative_menu_close_icon_color', 'creative_menu_responsive_toggle' ),
 									'sections' => array( 'creative_menu_responsive_close_style' ),
 								),
+							),
+						),
+						'collapse_menu'                   => array(
+							'type'    => 'select',
+							'label'   => __( 'Collapse Menu', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
 							),
 						),
 						'creative_menu_full_screen_effects' => array(

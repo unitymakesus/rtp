@@ -4,36 +4,41 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-use The_SEO_Framework\Bridges\SeoSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+use The_SEO_Framework\Bridges\SeoSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_robots_metabox', $instance );
 
 switch ( $instance ) :
 	case 'the_seo_framework_robots_metabox_main':
-		// Tackle the plurality issue with https://github.com/sybrew/the-seo-framework/issues/20 ?
-		// Or should we tacking it when we add _all_ term type specifics (like SEO exclusion) support?
-
-		//* Robots types
-		$types = [
-			// TODO These ARE plural. https://github.com/sybrew/the-seo-framework/issues/508#issuecomment-597654089
-			'category' => __( 'Category archives', 'autodescription' ),
-			'tag'      => __( 'Tag archives', 'autodescription' ),
-			'author'   => __( 'Author pages', 'autodescription' ),
-			'date'     => __( 'Date archives', 'autodescription' ),
-			'search'   => __( 'Search pages', 'autodescription' ),
-			// TODO This IS NOT plural. https://github.com/sybrew/the-seo-framework/issues/508#issuecomment-597654089
-			'site'     => _x( 'the entire site', '...for the entire site', 'autodescription' ),
+		$global_types = [
+			'author' => [
+				'i18n'     => __( 'Author pages', 'autodescription' ),
+				'i18ntype' => 'plural',
+			],
+			'date'   => [
+				'i18n'     => __( 'Date archives', 'autodescription' ),
+				'i18ntype' => 'plural',
+			],
+			'search' => [
+				'i18n'     => __( 'Search pages', 'autodescription' ),
+				'i18ntype' => 'plural',
+			],
+			'site'   => [
+				'i18n'     => _x( 'the entire site', '...for the entire site', 'autodescription' ),
+				'i18ntype' => 'singular',
+			],
 		];
 
-		// TODO This IS plural. https://github.com/sybrew/the-seo-framework/issues/508#issuecomment-597654089
-		$post_types = $this->get_rewritable_post_types();
+		$post_types = $this->get_public_post_types();
+		$taxonomies = $this->get_public_taxonomies();
 
-		//* Robots i18n
+		// Robots i18n
 		$robots = [
 			'noindex'   => [
 				'value' => 'noindex',
@@ -60,19 +65,34 @@ switch ( $instance ) :
 				'name'     => __( 'Indexing', 'autodescription' ),
 				'callback' => SeoSettings::class . '::_robots_metabox_no_tab',
 				'dashicon' => 'filter',
-				'args'     => [ $types, $post_types, $robots['noindex'] ],
+				'args'     => [
+					'global_types' => $global_types,
+					'post_types'   => $post_types,
+					'taxonomies'   => $taxonomies,
+					'robots'       => $robots['noindex'],
+				],
 			],
 			'follow'  => [
 				'name'     => __( 'Following', 'autodescription' ),
 				'callback' => SeoSettings::class . '::_robots_metabox_no_tab',
 				'dashicon' => 'editor-unlink',
-				'args'     => [ $types, $post_types, $robots['nofollow'] ],
+				'args'     => [
+					'global_types' => $global_types,
+					'post_types'   => $post_types,
+					'taxonomies'   => $taxonomies,
+					'robots'       => $robots['nofollow'],
+				],
 			],
 			'archive' => [
 				'name'     => __( 'Archiving', 'autodescription' ),
 				'callback' => SeoSettings::class . '::_robots_metabox_no_tab',
 				'dashicon' => 'download',
-				'args'     => [ $types, $post_types, $robots['noarchive'] ],
+				'args'     => [
+					'global_types' => $global_types,
+					'post_types'   => $post_types,
+					'taxonomies'   => $taxonomies,
+					'robots'       => $robots['noarchive'],
+				],
 			],
 		];
 
@@ -279,10 +299,15 @@ switch ( $instance ) :
 		$ro_value = $robots['value'];
 		$ro_i18n  = $robots['desc'];
 
-		/* translators: 1 = noindex/nofollow/noarchive, 2 = Post, Post type, Category archives, the entire site, etc. */
-		$apply_x_to_y_i18n = esc_html__( 'Apply %1$s to %2$s?', 'autodescription' );
+		/* translators: SINGULAR. 1 = noindex/nofollow/noarchive, 2 = The entire site */
+		$apply_x_to_y_i18n_singular = esc_html_x( 'Apply %1$s to %2$s?', 'singular', 'autodescription' );
+		/* translators: PLURAL. 1 = noindex/nofollow/noarchive, 2 = Archives, Posts, Pages, etc. */
+		$apply_x_to_y_i18n_plural = esc_html_x( 'Apply %1$s to %2$s?', 'plural', 'autodescription' );
 
 		$ro_name_wrapped = $this->code_wrap( $ro_value );
+
+		$default_options = $this->get_default_site_options();
+		$warned_options  = $this->get_warned_site_options();
 
 		?>
 		<h4><?php esc_html_e( 'Robots Settings', 'autodescription' ); ?></h4>
@@ -290,20 +315,98 @@ switch ( $instance ) :
 		$this->description( $ro_i18n );
 		?>
 		<hr>
+
+		<h4><?php esc_html_e( 'Post Type Settings', 'autodescription' ); ?></h4>
 		<?php
+		$this->description( __( 'These settings apply to the post type pages and their terms. When terms are shared between post types, all their post types should be checked for this to have an effect.', 'autodescription' ) );
+
+		$pt_option_id = $this->get_robots_post_type_option_id( $ro_value );
+
+		// When the post OR page post types are available, show this warning.
+		if ( in_array( $ro_value, [ 'noindex', 'nofollow' ], true ) && array_intersect( $post_types, [ 'post', 'page' ] ) )
+			$this->attention_description( __( 'Warning: No site should enable these options for Posts and Pages.', 'autodescription' ) );
+
+		// TODO can we assume that there's at least one post type at all times? Can WP be used in this way, albeit headless?
+		$checkboxes = [];
+
+		foreach ( $post_types as $post_type ) {
+			$checkboxes[] = $this->make_checkbox_array( [
+				'id'       => $pt_option_id,
+				'class'    => 'tsf-robots-post-types',
+				'index'    => $post_type,
+				'label'    => sprintf(
+					// RTL supported: Because the post types are Roman, browsers enforce the order.
+					'%s &ndash; <code>%s</code>',
+					sprintf( $apply_x_to_y_i18n_plural, $ro_name_wrapped, esc_html( $this->get_post_type_label( $post_type, false ) ) ),
+					esc_html( $post_type )
+				),
+				'escape'   => false,
+				'disabled' => false,
+				'default'  => ! empty( $default_options[ $pt_option_id ][ $post_type ] ),
+				'warned'   => ! empty( $warned_options[ $pt_option_id ][ $post_type ] ),
+				'data'     => [
+					'robots' => $ro_value,
+				],
+			] );
+		}
+
+		$this->wrap_fields( $checkboxes, true );
+
+		?>
+		<hr>
+
+		<h4><?php esc_html_e( 'Taxonomy Settings', 'autodescription' ); ?></h4>
+		<?php
+		$this->description( __( "These settings apply to the taxonomies of post types. When taxonomies have all their bound post types' options checked, they will inherit their status.", 'autodescription' ) );
+
+		$tax_option_id = $this->get_robots_taxonomy_option_id( $ro_value );
+
+		// TODO can we assume that there's at least one taxonomy at all times? Can WP be used in this way, albeit headless?
+		$checkboxes = [];
+
+		foreach ( $taxonomies as $taxonomy ) {
+			$checkboxes[] = $this->make_checkbox_array( [
+				'id'       => $tax_option_id,
+				'class'    => 'tsf-robots-taxonomies',
+				'index'    => $taxonomy,
+				'label'    => sprintf(
+					// RTL supported: Because the post types are Roman, browsers enforce the order.
+					'%s &ndash; <code>%s</code>',
+					sprintf( $apply_x_to_y_i18n_plural, $ro_name_wrapped, esc_html( $this->get_tax_type_label( $taxonomy, false ) ) ),
+					esc_html( $taxonomy )
+				),
+				'escape'   => false,
+				'disabled' => false,
+				'default'  => ! empty( $default_options[ $tax_option_id ][ $taxonomy ] ),
+				'warned'   => ! empty( $warned_options[ $tax_option_id ][ $taxonomy ] ),
+				'data'     => [
+					'postTypes' => $this->get_post_types_from_taxonomy( $taxonomy ),
+					'robots'    => $ro_value,
+				],
+			] );
+		}
+
+		$this->wrap_fields( $checkboxes, true );
+
+		?>
+		<hr>
+
+		<h4><?php esc_html_e( 'Global Settings', 'autodescription' ); ?></h4>
+		<?php
+		$this->description( __( 'These settings apply to other globally registered content types.', 'autodescription' ) );
 
 		$checkboxes = '';
-		foreach ( $types as $type => $i18n ) {
+		foreach ( $global_types as $type => $data ) {
 
 			$label = sprintf(
-				$apply_x_to_y_i18n,
+				'singular' === $data['i18ntype'] ? $apply_x_to_y_i18n_singular : $apply_x_to_y_i18n_plural,
 				$ro_name_wrapped,
-				esc_html( $i18n )
+				esc_html( $data['i18n'] )
 			);
 
 			$id = $this->s_field_id( $type . '_' . $ro_value );
 
-			//* Add warning if it's 'site'.
+			// Add warning if it's 'site'.
 			if ( 'site' === $type ) {
 				$checkboxes .= '<hr class="tsf-option-spacer">';
 
@@ -318,44 +421,6 @@ switch ( $instance ) :
 		}
 
 		$this->wrap_fields( $checkboxes, true );
-
-		?>
-		<hr>
-
-		<h4><?php esc_html_e( 'Post Type Settings', 'autodescription' ); ?></h4>
-		<?php
-		$this->description( __( 'These settings are applied to the post type pages and their terms. When terms are shared between post types, all their post types should be checked for this to have an effect.', 'autodescription' ) );
-
-		$option_id = $this->get_robots_post_type_option_id( $ro_value );
-
-		if ( in_array( $ro_value, [ 'noindex', 'nofollow' ], true ) )
-			$this->attention_description( __( 'Warning: No site should enable these options for Posts and Pages.', 'autodescription' ) );
-
-		// TODO can we assume that there's at least one post type at all times? Can WP be used in this way, albeit headless?
-		// Let's assign $boxes, for that matter.
-		$boxes = [];
-
-		foreach ( $post_types as $post_type ) {
-			$pto = \get_post_type_object( $post_type );
-			if ( ! $pto ) continue;
-
-			$boxes[] = $this->make_checkbox_array( [
-				'id'       => $option_id,
-				'index'    => $post_type,
-				'label'    => sprintf(
-					// RTL supported: Because the post types are Roman, browsers enforce the order.
-					'%s &ndash; <code>%s</code>',
-					sprintf( $apply_x_to_y_i18n, $ro_name_wrapped, esc_html( $pto->labels->name ) ),
-					esc_html( $post_type )
-				),
-				'escape'   => false,
-				'disabled' => false,
-				'default'  => 'noindex' === $ro_value && 'attachment' === $post_type,
-				'warned'   => in_array( $ro_value, [ 'noindex', 'nofollow' ], true ) && in_array( $post_type, [ 'page', 'post' ], true ),
-			] );
-		}
-
-		$this->wrap_fields( $boxes, true );
 		break;
 
 	default:

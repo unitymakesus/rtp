@@ -104,8 +104,8 @@ window.tsfPT = function( $ ) {
 			let wrap = document.getElementById( 'taxonomy-' + taxonomy ),
 				tabs = wrap.querySelectorAll( '.tabs-panel' );
 
-			let $postbox = $( wrap ).closest( '.postbox' );
-			if ( $postbox.length && $postbox.hasClass( 'closed' ) ) return;
+			let postbox = wrap.closest( '.postbox' );
+			if ( postbox && postbox.classList.contains( 'closed' ) ) return;
 
 			let tab = [].slice.call( tabs ).filter( ( el ) => {
 				return el.offsetWidth > 0 || el.offsetHeight > 0 || el.getClientRects().length > 0;
@@ -259,7 +259,7 @@ window.tsfPT = function( $ ) {
 			fixHelpPos( event.data.taxonomy );
 		}
 
-		const initVars = function( taxonomy ) {
+		const initVars = ( taxonomy ) => {
 			let $box = getBox( taxonomy, 1 );
 
 			input$[ taxonomy ]   = $box.find( 'input[type=checkbox]' );
@@ -267,7 +267,7 @@ window.tsfPT = function( $ ) {
 
 			let found = {}, val;
 			uniqueChecked$[ taxonomy ] = checked$[ taxonomy ];
-			uniqueChecked$[ taxonomy ].each( function( index, element ) {
+			uniqueChecked$[ taxonomy ].each( ( index, element ) => {
 				val = $( element ).val();
 				if ( found[ val ] ) {
 					uniqueChecked$[ taxonomy ].splice( index, 1 );
@@ -316,7 +316,7 @@ window.tsfPT = function( $ ) {
 				//? One has been set previously via this script, reselect it.
 				makePrimary( taxonomy, primaries[ taxonomy ] );
 			} else {
-				//? Select one according to WordPress' term list sorting.
+				//? Select one according to WordPress's term list sorting.
 				makeFirstPrimary( taxonomy );
 			}
 		}
@@ -330,7 +330,7 @@ window.tsfPT = function( $ ) {
 				//? One has been saved earlier via this script.
 				makePrimary( taxonomy, taxonomies[ taxonomy ].primary );
 			} else {
-				//? Select one according to WordPress' term list sorting.
+				//? Select one according to WordPress's term list sorting.
 				makeFirstPrimary( taxonomy );
 			}
 		}
@@ -362,7 +362,7 @@ window.tsfPT = function( $ ) {
 		 * @return {undefined}
 		 */
 		load: () => {
-			$( document.body ).on( 'tsf-onload', _initPrimaryTerm );
+			document.body.addEventListener( 'tsf-onload', _initPrimaryTerm );
 		}
 	}, {
 
@@ -370,4 +370,4 @@ window.tsfPT = function( $ ) {
 		l10n
 	} );
 }( jQuery );
-jQuery( window.tsfPT.load );
+window.tsfPT.load();

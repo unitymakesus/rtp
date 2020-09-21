@@ -4,13 +4,14 @@
  * @subpackage The_SEO_Framework\Admin\Edit\Term
  */
 
-use The_SEO_Framework\Bridges\TermSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch Term ID and taxonomy.
+use The_SEO_Framework\Bridges\TermSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch Term ID and taxonomy.
 $term_id = $term->term_id;
 $meta    = $this->get_term_meta( $term_id );
 
@@ -39,9 +40,6 @@ $show_og = (bool) $this->get_option( 'og_tags' );
 $show_tw = (bool) $this->get_option( 'twitter_tags' );
 
 $social_placeholders = $this->_get_social_placeholders( $_generator_args );
-
-$title_placeholder       = $this->get_generated_title( $_generator_args );
-$description_placeholder = $this->get_generated_description( $_generator_args );
 
 //! Social image placeholder.
 $image_details     = current( $this->get_generated_image_details( $_generator_args, true, 'social', true ) );
@@ -130,14 +128,30 @@ $robots_settings = [
 				?>
 			</th>
 			<td>
-				<div id="tsf-title-wrap">
-					<input name="autodescription-meta[doctitle]" id="autodescription-meta[doctitle]" type="text" placeholder="<?php echo esc_attr( $title_placeholder ); ?>" value="<?php echo $this->esc_attr_preserve_amp( $title ); ?>" size="40" autocomplete=off />
-					<?php $this->output_js_title_elements(); ?>
+				<div class=tsf-title-wrap>
+					<input name="autodescription-meta[doctitle]" id="autodescription-meta[doctitle]" type="text" value="<?php echo $this->esc_attr_preserve_amp( $title ); ?>" size="40" autocomplete=off />
+					<?php
+					$this->output_js_title_elements(); // legacy
+					$this->output_js_title_data(
+						'autodescription-meta[doctitle]',
+						[
+							'state' => [
+								'refTitleLocked'    => false,
+								'defaultTitle'      => $this->get_filtered_raw_generated_title( $_generator_args ),
+								'addAdditions'      => $this->use_title_branding( $_generator_args ),
+								'useSocialTagline'  => $this->use_title_branding( $_generator_args, true ),
+								'additionValue'     => $this->s_title_raw( $this->get_blogname() ),
+								'additionPlacement' => 'left' === $this->get_title_seplocation() ? 'before' : 'after',
+								'hasLegacy'         => true,
+							],
+						]
+					);
+					?>
 				</div>
 				<label for="autodescription-meta[title_no_blog_name]" class="tsf-term-checkbox-wrap">
 					<input type="checkbox" name="autodescription-meta[title_no_blog_name]" id="autodescription-meta[title_no_blog_name]" value="1" <?php checked( $this->get_term_meta_item( 'title_no_blog_name', $term_id ) ); ?> />
 					<?php
-					esc_html_e( 'Remove the blog name?', 'autodescription' );
+					esc_html_e( 'Remove the site title?', 'autodescription' );
 					echo ' ';
 					$this->make_info( __( 'Use this when you want to rearrange the title parts manually.', 'autodescription' ) );
 					?>
@@ -165,9 +179,18 @@ $robots_settings = [
 				?>
 			</th>
 			<td>
-				<textarea name="autodescription-meta[description]" id="autodescription-meta[description]" placeholder="<?php echo esc_attr( $description_placeholder ); ?>" rows="4" cols="50" class="large-text" autocomplete=off><?php echo $this->esc_attr_preserve_amp( $description ); ?></textarea>
+				<textarea name="autodescription-meta[description]" id="autodescription-meta[description]" rows="4" cols="50" class="large-text" autocomplete=off><?php echo $this->esc_attr_preserve_amp( $description ); ?></textarea>
 				<?php
-				$this->output_js_description_elements();
+				$this->output_js_description_elements(); // legacy
+				$this->output_js_description_data(
+					'autodescription-meta[description]',
+					[
+						'state' => [
+							'defaultDescription' => $this->get_generated_description( $_generator_args ),
+							'hasLegacy'          => true,
+						],
+					]
+				);
 				?>
 			</td>
 		</tr>

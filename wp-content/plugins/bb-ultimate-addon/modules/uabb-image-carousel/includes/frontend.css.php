@@ -19,6 +19,7 @@ $settings->caption_bg_color = ( '' !== $settings->caption_bg_color ) ? $settings
 $settings->arrow_color            = UABB_Helper::uabb_colorpicker( $settings, 'arrow_color' );
 $settings->arrow_background_color = UABB_Helper::uabb_colorpicker( $settings, 'arrow_background_color', true );
 $settings->arrow_color_border     = UABB_Helper::uabb_colorpicker( $settings, 'arrow_color_border' );
+$settings->dots_color             = UABB_Helper::uabb_colorpicker( $settings, 'dots_color' );
 ?>
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel {
@@ -74,6 +75,39 @@ $settings->arrow_color_border     = UABB_Helper::uabb_colorpicker( $settings, 'a
 	}
 	?>
 }
+
+
+<?php
+if ( 'yes' === $settings->enable_dots ) {
+
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel ul.slick-dots li button:before {
+			font-family: 'Font Awesome 5 Pro';
+		}
+		<?php
+	}
+	if ( '' !== $settings->dots_size && isset( $settings->dots_size ) ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel .slick-dots li button:before {
+			<?php echo ( '' !== $settings->dots_size ) ? 'font-size:' . esc_attr( $settings->dots_size ) . 'px;' : ''; ?>
+		}
+			<?php
+	}
+
+	if ( '' !== $settings->dots_color && isset( $settings->dots_color ) ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel ul.slick-dots li button:before {
+			<?php echo ( '' !== $settings->dots_color ) ? 'color:' . esc_attr( $settings->dots_color ) . ';' : ''; ?>
+		}
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel ul.slick-dots li.slick-active button:before {
+			<?php echo ( '' !== $settings->dots_color ) ? 'color:' . esc_attr( $settings->dots_color ) . ';' : ''; ?>
+			opacity:1;
+		}
+			<?php
+	}
+}
+?>
 
 <?php if ( 'inside' === $settings->arrow_position ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> div.uabb-image-carousel .slick-prev,
@@ -219,6 +253,7 @@ $settings->arrow_color_border     = UABB_Helper::uabb_colorpicker( $settings, 'a
 			line-height: 20px;
 			font-size: 15px;
 		}
+
 		<?php if ( ! $version_bb_check ) { ?>
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel-caption,
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-background-mask .uabb-caption  {
@@ -240,5 +275,14 @@ $settings->arrow_color_border     = UABB_Helper::uabb_colorpicker( $settings, 'a
 				<?php } ?>
 			}
 		<?php } ?>
+		<?php
+		if ( 'yes' === $settings->enable_arrow_resp ) {
+			?>
+
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content .slick-prev.slick-arrow,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content .slick-next.slick-arrow {
+				display:none !important;
+			}
+			<?php } ?>
 	}
 <?php } ?>

@@ -250,6 +250,7 @@ FLBuilder::register_module('FLButtonModule', array(
 						'placeholder'   => __( 'http://www.example.com', 'fl-builder' ),
 						'show_target'   => true,
 						'show_nofollow' => true,
+						'show_download' => true,
 						'preview'       => array(
 							'type' => 'none',
 						),

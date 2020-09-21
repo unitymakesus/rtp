@@ -24,7 +24,7 @@ jQuery(document).ready(function(){
 		breakPoints: {
 			medium: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>,
 			small: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>,
-			custom: <?php echo esc_attr( $settings->custom_breakpoint ); ?>
+			custom: <?php echo esc_attr( ( $settings->custom_breakpoint ) ? $settings->custom_breakpoint : '768' ); ?>
 		},
 		mobileBreakpoint: '<?php echo esc_attr( $mobile_breakpoint ); ?>',
 		mediaBreakpoint: '<?php echo wp_kses_post( $module->media_breakpoint() ); ?>',

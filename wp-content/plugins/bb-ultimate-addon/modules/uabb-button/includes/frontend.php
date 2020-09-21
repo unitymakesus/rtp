@@ -20,7 +20,7 @@ if ( 'default' === $settings->style ) {
 	}
 	$nofollow = ( isset( $settings->link_nofollow ) ) ? $settings->link_nofollow : '0';
 	?>
-		<a href="<?php echo $settings->link; ?>" target="<?php echo esc_attr( $settings->link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, $nofollow, 1 ); ?> class="uabb-button <?php echo esc_attr( $theme_button ); ?> uabb-creative-button <?php echo 'uabb-creative-' . esc_attr( $settings->style ) . '-btn'; ?> <?php echo wp_kses_post( $module->get_button_style() ); ?> <?php echo ( isset( $settings->a_class ) ) ? esc_attr( $settings->a_class ) : ''; ?> <?php echo esc_attr( $settings->custom_class ); ?>" <?php echo ( isset( $settings->a_data ) ) ? esc_attr( $settings->a_data ) : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="button">
+		<a href="<?php echo $settings->link; ?>" target="<?php echo esc_attr( $settings->link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->link_target, $nofollow, 1 ); ?> class="uabb-button <?php echo esc_attr( $theme_button ); ?> uabb-creative-button <?php echo 'uabb-creative-' . esc_attr( $settings->style ) . '-btn'; ?> <?php echo wp_kses_post( $module->get_button_style() ); ?> <?php echo ( isset( $settings->a_class ) ) ? esc_attr( $settings->a_class ) : ''; ?> <?php echo esc_attr( $settings->custom_class ); ?>" <?php echo ( isset( $settings->a_data ) ) ? $settings->a_data : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> role="button">
 			<?php
 			if ( isset( $settings->icon_type ) && 'photo' === $settings->icon_type ) {
 

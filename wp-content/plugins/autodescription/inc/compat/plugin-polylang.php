@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() and $this instanceof $_this or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and \the_seo_framework()->_verify_include_secret( $_secret ) or die;
 
 /**
  * Warns homepage global title and description about receiving input.
@@ -29,7 +29,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = \the_seo_framework_class() a
  * @return string
  */
 function pll__( $string ) {
-	if ( function_exists( 'PLL' ) && function_exists( '\\pll__' ) ) {
+	if ( \function_exists( 'PLL' ) && \function_exists( '\\pll__' ) ) {
 		if ( \PLL() instanceof \PLL_Frontend ) {
 			return \pll__( $string );
 		}
@@ -37,43 +37,46 @@ function pll__( $string ) {
 	return $string;
 }
 
-\add_filter( 'pll_home_url_white_list', __NAMESPACE__ . '\\_whitelist_tsf_urls' );
-\add_filter( 'pll_home_url_black_list', __NAMESPACE__ . '\\_blaclist_tsf_sitemap_styles' );
+\add_filter( 'pll_home_url_white_list', __NAMESPACE__ . '\\_allowlist_tsf_urls' );
+\add_filter( 'pll_home_url_black_list', __NAMESPACE__ . '\\_blocklist_tsf_sitemap_styles' );
 /**
- * Accompany the most broken and asinine idea in WordPress' history.
- * Adds The SEO Framework's files to their whitelist of autoincompatible doom.
+ * Accompany the most broken and asinine idea in WordPress's history.
+ * Adds The SEO Framework's files to their allowlist of autoincompatible doom.
  *
  * @since 3.2.4
+ * @since 4.1.0 Renamed function and parameters to something racially neutral.
  *
- * @param array $whitelist The wildcard file parts that are whitelisted.
+ * @param array $allowlist The wildcard file parts that are allowlisted.
  * @return array
  */
-function _whitelist_tsf_urls( $whitelist ) {
-	$whitelist[] = [ 'file' => 'autodescription/inc' ];
-	return $whitelist;
+function _allowlist_tsf_urls( $allowlist ) {
+	$allowlist[] = [ 'file' => 'autodescription/inc' ];
+	return $allowlist;
 }
 
 /**
- * Accompany the most broken and asinine idea in WordPress' history.
+ * Accompany the most broken and asinine idea in WordPress's history.
  * ...and stop messing with the rewrite system while doing so.
  * Also, you should add support for class methods. Stop living in the PHP 4 era.
  *
  * @since 3.2.4
+ * @since 4.1.0 Renamed function and parameters to something racially neutral.
  *
- * @param array $blacklist The wildcard file parts that are blacklisted.
+ * @param array $blocklist The wildcard file parts that are blocklisted.
  * @return array
  */
-function _blaclist_tsf_sitemap_styles( $blacklist ) {
+function _blocklist_tsf_sitemap_styles( $blocklist ) {
 	// y u no recurse
-	$blacklist[] = [ 'function' => 'get_expected_sitemap_endpoint_url' ];
-	$blacklist[] = [ 'function' => 'get_sitemap_base_path_info' ];
-	$blacklist[] = [ 'file' => 'autodescription/inc/compat/plugin-polylang.php' ];
-	return $blacklist;
+	$blocklist[] = [ 'function' => 'get_expected_sitemap_endpoint_url' ];
+	$blocklist[] = [ 'function' => 'get_sitemap_base_path_info' ];
+	$blocklist[] = [ 'file' => 'autodescription/inc/compat/plugin-polylang.php' ];
+	return $blocklist;
 }
 
 \add_filter( 'the_seo_framework_sitemap_path_prefix', __NAMESPACE__ . '\\_fix_sitemap_prefix', 9 );
 /**
  * Fixes the sitemap prefix, because setting the home URL globally requires only one filter.
+ * This will mess up translating with query-vars, though... FIXME?
  *
  * @since 4.0.0
  * @param string $prefix The path prefix. Ideally appended with a slash.
@@ -82,11 +85,11 @@ function _blaclist_tsf_sitemap_styles( $blacklist ) {
  */
 function _fix_sitemap_prefix( $prefix = '' ) {
 
-	if ( function_exists( '\\pll_home_url' ) ) {
+	if ( \function_exists( '\\pll_home_url' ) ) {
 		$home_url        = \home_url();
 		$ruined_home_url = \pll_home_url();
 
-		$path = trim( substr_replace( $ruined_home_url, '', 0, strlen( $home_url ) ), '/' );
+		$path = trim( substr_replace( $ruined_home_url, '', 0, \strlen( $home_url ) ), '/' );
 
 		return $path ? "$prefix$path/" : $prefix;
 	}
@@ -111,11 +114,11 @@ function _fix_home_url( $url, $id ) {
 \add_action( 'the_seo_framework_delete_cache_sitemap', __NAMESPACE__ . '\\_polylang_flush_sitemap', 10, 4 );
 /**
  * Deletes all sitemap transients, instead of just one.
+ * Can only clear once per request.
  *
  * @since 4.0.5
  * @global \wpdb $wpdb
  * @access private
- * @staticvar bool $cleared
  *
  * @param string $type    The flush type. Comes in handy when you use a catch-all function.
  * @param int    $id      The post, page or TT ID. Defaults to the_seo_framework()->get_the_real_ID().

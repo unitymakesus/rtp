@@ -50,7 +50,7 @@ class UABBContactFormModule extends FLBuilderModule {
 	 */
 	public function enqueue_scripts() {
 		$settings = $this->settings;
-		if ( isset( $settings->uabb_recaptcha_toggle ) && 'show' === $settings->uabb_recaptcha_toggle && isset( $settings->uabb_recaptcha_site_key ) && ! empty( $settings->uabb_recaptcha_site_key ) ) {
+		if ( isset( $settings->uabb_recaptcha_toggle ) && 'show' === $settings->uabb_recaptcha_toggle ) {
 
 			$site_lang = substr( get_locale(), 0, 2 );
 			$post_id   = FLBuilderModel::get_post_id();
@@ -63,6 +63,33 @@ class UABBContactFormModule extends FLBuilderModule {
 				true
 			);
 		}
+	}
+
+	/**
+	 * Function that adds async attribute
+	 *
+	 * @since 1.22.0
+	 * @method  get_client_ip for the enqueued return IP
+	 */
+	public static function get_client_ip() {
+		$server_ip_keys = array(
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		);
+
+		foreach ( $server_ip_keys as $key ) {
+			if ( isset( $_SERVER[ $key ] ) && filter_var( $_SERVER[ $key ], FILTER_VALIDATE_IP ) ) {
+				return $_SERVER[ $key ];
+			}
+		}
+
+		// Fallback local ip.
+		return '127.0.0.1';
 	}
 
 	/**
@@ -85,6 +112,57 @@ class UABBContactFormModule extends FLBuilderModule {
 		$site_name        = get_option( 'blogname' );
 
 		$mailto = apply_filters( 'uabb_cf_change_admin_email', get_option( 'admin_email' ) );
+
+		if ( 'v3' === $settings->uabb_recaptcha_version ) {
+
+				$recaptcha_response = isset( $_POST['recaptcha_response'] ) ? sanitize_text_field( $_POST['recaptcha_response'] ) : false;
+
+				$recaptcha_secret = $settings->uabb_v3_recaptcha_secret_key;
+
+				$client_ip = self::get_client_ip();
+
+			if ( 0 > $settings->uabb_v3_recaptcha_score || 1 < $settings->uabb_v3_recaptcha_score ) {
+				$recaptcha_score = 0.5;
+			}
+				$request  = array(
+					'body' => array(
+						'secret'   => $recaptcha_secret,
+						'response' => $recaptcha_response,
+						'remoteip' => $client_ip,
+					),
+				);
+				$response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', $request );
+
+				$response_code = wp_remote_retrieve_response_code( $response );
+
+				if ( 200 !== (int) $response_code ) {
+					/* translators: %d admin link */
+					$error['recaptcha'] = sprintf( __( 'Can not connect to the reCAPTCHA server (%d).', 'uabb' ), $response_code );
+				} else {
+					$body   = wp_remote_retrieve_body( $response );
+					$result = json_decode( $body, true );
+
+					$action = ( ( isset( $result['action'] ) && 'Form' === $result['action'] ) && ( $result['score'] > $recaptcha_score ) );
+
+					if ( ! $result['success'] ) {
+						if ( ! $action ) {
+							$message = __( 'Invalid Form - reCAPTCHA validation failed', 'uabb' );
+
+							if ( isset( $result['error-codes'] ) ) {
+								$result_errors = array_flip( $result['error-codes'] );
+
+								foreach ( $recaptcha_errors as $error_key => $error_desc ) {
+									if ( isset( $result_errors[ $error_key ] ) ) {
+										$message = $recaptcha_errors[ $error_key ];
+										break;
+									}
+								}
+							}
+							$error['recaptcha'] = $message;
+						}
+					}
+				}
+		}
 
 		if ( $node_id ) {
 			// Get the module settings.

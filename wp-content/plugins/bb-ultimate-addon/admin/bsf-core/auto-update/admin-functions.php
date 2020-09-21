@@ -38,20 +38,15 @@ if ( ! function_exists( 'bsf_update_all_product_version' ) ) {
 	 */
 	function bsf_update_all_product_version() {
 
-		$brainstrom_products         = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-		$brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? get_option( 'brainstrom_bundled_products' ) : array();
-
-		$mix_products       = array();
-		$update_ready       = array();
-		$bsf_product_themes = array();
-		$bsf_product_themes = array();
+		$brainstrom_products         = get_option( 'brainstrom_products', array() );
+		$brainstrom_bundled_products = get_option( 'brainstrom_bundled_products', array() );
+		$bsf_product_themes          = array();
 
 		if ( ! empty( $brainstrom_products ) ) :
 			$bsf_product_plugins = ( isset( $brainstrom_products['plugins'] ) ) ? $brainstrom_products['plugins'] : array();
 			$bsf_product_themes  = ( isset( $brainstrom_products['themes'] ) ) ? $brainstrom_products['themes'] : array();
 		endif;
 
-		$product_updated         = false;
 		$bundled_product_updated = false;
 
 		if ( ! empty( $bsf_product_plugins ) ) {
@@ -75,7 +70,6 @@ if ( ! function_exists( 'bsf_update_all_product_version' ) ) {
 				if ( '' !== $current_version ) {
 					if ( version_compare( $version, $current_version ) === - 1 || 1 === version_compare( $version, $current_version ) ) {
 						$brainstrom_products['plugins'][ $key ]['version'] = $current_version;
-						$product_updated                                   = true;
 					}
 				}
 			}
@@ -102,7 +96,6 @@ if ( ! function_exists( 'bsf_update_all_product_version' ) ) {
 				if ( '' !== $current_version || false !== $current_version ) {
 					if ( version_compare( $version, $current_version ) === - 1 || 1 === version_compare( $version, $current_version ) ) {
 						$brainstrom_products['themes'][ $key ]['version'] = $current_version;
-						$product_updated                                  = true;
 					}
 				}
 			}
@@ -222,9 +215,9 @@ if ( ! function_exists( 'bsf_notices' ) ) {
 	function bsf_notices() {
 		global $pagenow;
 
-		if ( 'plugins.php' === $pagenow || 'post-new.php' === $pagenow || 'edit.php' === $pagenow || 'post.php' === $pagenow ) {
+		if ( 'update-core.php' === $pagenow || 'plugins.php' === $pagenow || 'post-new.php' === $pagenow || 'edit.php' === $pagenow || 'post.php' === $pagenow ) {
 			$brainstrom_products         = get_option( 'brainstrom_products' );
-			$brainstrom_bundled_products = ( get_option( 'brainstrom_bundled_products' ) ) ? get_option( 'brainstrom_bundled_products' ) : array();
+			$brainstrom_bundled_products = get_option( 'brainstrom_bundled_products', array() );
 
 			if ( empty( $brainstrom_products ) ) {
 				return false;
@@ -327,66 +320,11 @@ if ( ! function_exists( 'bsf_notices' ) ) {
 					);
 
 					if ( ( $is_multisite && $is_network_admin ) || ! $is_multisite ) {
-						echo '<div class="update-nag bsf-update-nag">' . wp_kses( $message, $allowed_html ) . '</div>';
+						echo '<div class="notice notice-warning"><p>' . wp_kses( $message, $allowed_html ) . '</p></div>';
 					}
 				endif;
 			endforeach;
 		}
-	}
-}
-
-if ( ! function_exists( 'bsf_get_free_products' ) ) {
-	/**
-	 * Get free products data.
-	 *
-	 * @return array
-	 */
-	function bsf_get_free_products() {
-		$plugins = get_plugins();
-		$themes  = wp_get_themes();
-
-		$brainstrom_products = ( get_option( 'brainstrom_products' ) ) ? get_option( 'brainstrom_products' ) : array();
-
-		$bsf_free_products = array();
-
-		if ( ! empty( $brainstrom_products ) ) :
-			$bsf_product_plugins = ( isset( $brainstrom_products['plugins'] ) ) ? $brainstrom_products['plugins'] : array();
-			$bsf_product_themes  = ( isset( $brainstrom_products['themes'] ) ) ? $brainstrom_products['themes'] : array();
-		endif;
-
-		foreach ( $plugins as $plugin => $plugin_data ) {
-			if ( 'Brainstorm Force' === trim( $plugin_data['Author'] ) ) {
-				if ( ! empty( $bsf_product_plugins ) ) :
-					foreach ( $bsf_product_plugins as $key => $bsf_product_plugin ) {
-						$bsf_template = ( isset( $bsf_product_plugin['template'] ) ) ? $bsf_product_plugin['template'] : '';
-						if ( $plugin === $bsf_template ) {
-							if ( isset( $bsf_product_plugin['is_product_free'] ) && ( true === $bsf_product_plugin['is_product_free'] || 'true' === $bsf_product_plugin['is_product_free'] ) ) {
-								$bsf_free_products[] = $bsf_product_plugin;
-							}
-						}
-					}
-				endif;
-			}
-		}
-
-		foreach ( $themes as $theme => $theme_data ) {
-			$data         = wp_get_theme( $theme );
-			$theme_author = trim( $data->display( 'Author', false ) );
-			if ( 'Brainstorm Force' === $theme_author ) {
-				if ( ! empty( $bsf_product_themes ) ) :
-					foreach ( $bsf_product_themes as $key => $bsf_product_theme ) {
-						$bsf_template = $bsf_product_theme['template'];
-						if ( $theme === $bsf_template ) {
-							if ( isset( $bsf_product_theme['is_product_free'] ) && ( true === $bsf_product_theme['is_product_free'] || 'true' === $bsf_product_theme['is_product_free'] ) ) {
-								$bsf_free_products[] = $bsf_product_theme;
-							}
-						}
-					}
-				endif;
-			}
-		}
-
-		return $bsf_free_products;
 	}
 }
 
@@ -398,9 +336,6 @@ if ( ! function_exists( 'bsf_theme_deactivation' ) ) {
 	 * @return void
 	 */
 	function bsf_theme_deactivation() {
-
-		delete_site_transient( 'bsf_get_bundled_products' );
-		delete_site_option( 'bsf_installer_menu' );
 		update_option( 'bsf_force_check_extensions', false );
 	}
 }
@@ -432,6 +367,7 @@ if ( ! function_exists( 'bsf_get_free_menu_position' ) ) {
 		return $start;
 	}
 }
+
 if ( ! function_exists( 'bsf_get_option' ) ) {
 	/**
 	 * Get free theme position.
@@ -475,68 +411,3 @@ if ( ! function_exists( 'bsf_sort' ) ) {
 		return strcmp( strtolower( $a->short_name ), strtolower( $b->short_name ) );
 	}
 }
-
-if ( ! function_exists( 'brainstorm_switch' ) ) {
-	/**
-	 * Brainstorm Switch
-	 *
-	 * Outputs markup for the switch
-	 *
-	 * @param string $name - name for the switch, this will be the reference for saving the value.
-	 * @param bool   $default - Default valuw of switch, true|false.
-	 * @return string
-	 */
-	function brainstorm_switch( $name = '', $default = false ) {
-
-		$checked             = '0';
-		$bsf_updater_options = get_option( 'bsf_updater_options', array() );
-
-		if ( isset( $bsf_updater_options[ $name ] ) ) {
-			$checked = $bsf_updater_options[ $name ];
-		}
-		$uid    = uniqid();
-		$switch = '';
-
-		$switch .= "\t\t" . '<div class="switch-wrapper">
-							<input type="text"  id="brainstorm_switch_' . $uid . '" class="' . $name . ' form-control smile-input bsf-switch-input" value="' . esc_attr( $checked ) . '"/>
-							<input type="checkbox" ' . checked( true, $checked, false ) . ' id="brainstorm_core_switch_' . $uid . '" name="' . $name . '" class="ios-toggle smile-input bsf-switch-input switch-checkbox smile-switch " value="0" >
-							<label class="bsf-switch-btn checkbox-label" data-on="ON"  data-off="OFF" data-id="brainstorm_switch_' . $uid . '" for="brainstorm_core_switch_' . $uid . '">
-							</label>
-						</div>';
-
-		return $switch;
-	}
-}
-
-
-if ( ! function_exists( 'update_bsf_core_options_callback' ) ) {
-
-	/**
-	 * Save option brainstorm updater advanced/debug settings.
-	 */
-	function update_bsf_core_options_callback() {
-
-		if ( ! isset( $_POST['security'] ) || ! wp_verify_nonce( $_POST['security'], 'bsf-update-menu-settings' ) ) {
-			wp_send_json_error( __( 'Invalid Request', 'bsf' ) );
-		}
-
-		$option = isset( $_POST['option'] ) ? esc_attr( $_POST['option'] ) : '';
-		$value  = isset( $_POST['value'] ) ? esc_attr( $_POST['value'] ) : '';
-
-		$bsf_updater_options            = get_option( 'bsf_updater_options', array() );
-		$bsf_updater_options[ $option ] = $value;
-
-		update_option( 'bsf_updater_options', $bsf_updater_options );
-		$bsf_updater_options = get_option( 'bsf_updater_options', array() );
-
-		$location = bsf_registration_page_url( '&author' );
-
-		$response = array(
-			'redirect' => $location,
-		);
-
-		wp_send_json( $response );
-	}
-}
-
-add_action( 'wp_ajax_update_bsf_core_options', 'update_bsf_core_options_callback' );

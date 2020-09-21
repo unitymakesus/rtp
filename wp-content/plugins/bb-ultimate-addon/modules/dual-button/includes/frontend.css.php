@@ -42,6 +42,7 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 
 /* Divider Styles */
 <?php if ( 'default' === $settings->dual_button_style ) { ?>
+	<?php if ( ! $version_bb_check ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn.uabb-btn-one,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn.uabb-btn-two {
 		<?php
@@ -59,6 +60,26 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 		}
 		?>
 	}
+			<?php
+	} else {
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::dimension_field_rule(
+				array(
+					'settings'     => $settings,
+					'setting_name' => 'button_padding_dimension',
+					'selector'     => ".fl-node-$id .uabb-btn.uabb-btn-one,.fl-node-$id .uabb-btn.uabb-btn-two",
+					'unit'         => 'px',
+					'props'        => array(
+						'padding-top'    => 'button_padding_dimension_top',
+						'padding-right'  => 'button_padding_dimension_right',
+						'padding-bottom' => 'button_padding_dimension_bottom',
+						'padding-left'   => 'button_padding_dimension_left',
+					),
+				)
+			);
+		}
+	}
+	?>
 	<?php
 		$settings->button_border = uabb_theme_border( $settings->button_border );
 

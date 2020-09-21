@@ -46,12 +46,6 @@ class PPW_Admin {
 	 */
 	private $free_services;
 
-	/**
-	 * Shortcode services
-	 *
-	 * @var PPW_Shortcode
-	 */
-	private $shortcode_services;
 
 	/**
 	 * Subscribe services
@@ -59,6 +53,13 @@ class PPW_Admin {
 	 * @var PPW_Password_Subscribe
 	 */
 	private $subscribe_services;
+
+	/**
+	 * Asset service in Free version
+	 *
+	 * @var PPW_Asset_Services
+	 */
+	private $free_asset_services;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -69,11 +70,11 @@ class PPW_Admin {
 	 * @since    1.0.0
 	 */
 	public function __construct( $plugin_name, $version ) {
-		$this->plugin_name        = $plugin_name;
-		$this->version            = $version;
-		$this->free_services      = new PPW_Password_Services();
-		$this->shortcode_services = new PPW_Shortcode();
-		$this->subscribe_services = new PPW_Password_Subscribe();
+		$this->plugin_name         = $plugin_name;
+		$this->version             = $version;
+		$this->free_services       = new PPW_Password_Services();
+		$this->subscribe_services  = new PPW_Password_Subscribe();
+		$this->free_asset_services = new PPW_Asset_Services( null, null );
 	}
 
 	/**
@@ -103,11 +104,14 @@ class PPW_Admin {
 				$assert_services->load_assets_for_general_tab();
 				$assert_services->load_assets_for_entire_site_page();
 			}
+			$assert_services->load_assets_for_shortcode_page();
 			$assert_services->load_assets_for_shortcodes();
 			$assert_services->load_css_hide_feature_set_password_wp();
 			$assert_services->load_js_show_notice_deactivate_plugin();
 			$assert_services->load_assets_for_misc_tab();
+			$assert_services->load_assets_for_category_page();
 			$assert_services->load_assets_for_troubleshoot_tab();
+			$assert_services->load_assets_for_shortcode_setting();
 		}
 	}
 
@@ -205,6 +209,57 @@ class PPW_Admin {
 	}
 
 	/**
+	 * Add row action protect/unprotect posts and pages
+	 *
+	 * @param array    $actions An array of row action.
+	 * @param stdClass $post    The post object.
+	 *
+	 * @return array
+	 */
+	public function ppw_custom_row_action( $actions, $post ) {
+		$post_status = $post->post_status;
+		$post_type   = $post->post_type;
+		$post_id     = $post->ID;
+
+		if ( ! in_array( $post_type, array( 'page', 'post' ), true ) || 'trash' === $post_status || ! current_user_can( 'edit_post', $post_id ) ) {
+			return $actions;
+		}
+
+		wp_enqueue_style( 'ppw-row-action-css', PPW_DIR_URL . 'admin/css/ppw-row-action.css', array(), PPW_VERSION, 'all');
+		wp_enqueue_script( 'ppw-row-action-js', PPW_DIR_URL . 'admin/js/dist/ppw-row-action.js', array( 'jquery' ), PPW_VERSION, true );
+		wp_localize_script(
+			'ppw-row-action-js',
+			'ppw_row_action_data',
+			array(
+				'ajax_url'    => admin_url( 'admin-ajax.php' ),
+				'nonce'       => wp_create_nonce( PPW_Constants::ROW_ACTION_NONCE ),
+				'plugin_name' => 'Password Protect WordPress Lite',
+			)
+		);
+		$this->free_asset_services->load_toastr_lib();
+
+		return $this->free_services->generate_custom_row_action( $actions, $post );
+	}
+
+	/**
+	 * Handle feature update post status in row action.
+	 */
+	public function handle_update_post_status() {
+		if ( ! isset( $_REQUEST['nonce'] ) || ! wp_verify_nonce( $_REQUEST['nonce'], PPW_Constants::ROW_ACTION_NONCE ) ) {
+			wp_send_json(
+				array(
+					'is_error' => true,
+					'message'  => PPW_Constants::BAD_REQUEST_MESSAGE,
+				),
+				400
+			);
+			wp_die();
+		}
+
+		return $this->free_services->update_post_status( $_REQUEST );
+	}
+
+	/**
 	 * Add menu
 	 */
 	public function ppw_add_menu() {
@@ -213,9 +268,10 @@ class PPW_Admin {
 			$setting_page,
 			'render_ui'
 		), PPW_DIR_URL . 'admin/images/ppw-icon-20x20.png' );
-		add_submenu_page( PPW_Constants::MENU_NAME, __( 'Settings', PPW_Constants::DOMAIN ), __( 'Settings', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::MENU_NAME );
+		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Settings', PPW_Constants::DOMAIN ), __( 'Settings', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::MENU_NAME );
+		$this->partial_protection_submenu();
 
-		// Hide sitewide submenu when Pro activate
+		// Hide sitewide when Pro activate.
 		if ( ! is_pro_active_and_valid_license() ) {
 			$this->sitewide_submenu();
 		}
@@ -227,10 +283,23 @@ class PPW_Admin {
 	public function sitewide_submenu() {
 		$setting_page = new PPW_Sitewide_Settings();
 
-		add_submenu_page( PPW_Constants::MENU_NAME, __( 'Sitewide', PPW_Constants::DOMAIN ), __( 'Sitewide', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::SITEWIDE_PAGE_PREFIX, array(
+		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Sitewide', PPW_Constants::DOMAIN ), __( 'Sitewide Protection', PPW_Constants::DOMAIN ), 'manage_options', PPW_Constants::SITEWIDE_PAGE_PREFIX, array(
 			$setting_page,
 			'render_ui',
 		) );
+	}
+
+	/**
+	 * Add Partial Protection submenu.
+	 */
+	public function partial_protection_submenu() {
+		$setting_page = new PPW_Partial_Protection_Settings();
+		add_submenu_page( PPW_Constants::MENU_NAME, __( 'PPWP › Partial Protection', 'password-protect-page' ), __( 'Partial Protection', 'password-protect-page' ),
+			'manage_options', PPW_Constants::PCP_PAGE_PREFIX, array(
+				$setting_page,
+				'render_ui'
+			)
+		);
 	}
 
 	/**
@@ -250,6 +319,39 @@ class PPW_Admin {
 	 */
 	public function ppw_handle_add_new_tab( $tabs ) {
 		$tab_key = array_search( 'entire_site', array_column( $tabs, 'tab' ), true );
+		if ( false !== $tab_key ) {
+			unset( $tabs[ $tab_key ] );
+		}
+
+		return $tabs;
+	}
+
+	/**
+	 * Handle hide shortcode tab in Free version.
+	 *
+	 * @param array $tabs List of tabs in setting page.
+	 *
+	 * @return array
+	 */
+	public function ppw_handle_hide_shortcode_tab( $tabs ) {
+		foreach ( $tabs as $key => $tab ) {
+			if ( array( 'tab' => 'shortcodes', 'tab_name' => 'Shortcodes' ) === $tab ) {
+				unset( $tabs[ $key ] );
+			}
+		}
+
+		return $tabs;
+	}
+
+	/**
+	 * Handle hide shortcode content in Free version.
+	 *
+	 * @param array $tabs List of tabs in setting page.
+	 *
+	 * @return array
+	 */
+	public function ppw_handle_hide_shortcode_content( $tabs ) {
+		$tab_key = array_search( 'shortcodes', $tabs, true );
 		if ( false !== $tab_key ) {
 			unset( $tabs[ $tab_key ] );
 		}
@@ -297,6 +399,19 @@ class PPW_Admin {
 				include PPW_DIR_PATH . 'includes/views/sidebar/view-ppw-sidebar.php';
 			}
 			do_action( PPW_Constants::HOOK_SIDEBAR_SHORTCODE );
+			?>
+		</div>
+		<?php
+	}
+
+	public function ppw_free_render_content_pcp_general_tab() {
+		?>
+		<div class="ppw_setting_page">
+			<?php
+			include PPW_DIR_PATH . 'includes/views/partial-protection/view-ppw-pcp-general.php';
+			if ( ! is_pro_active_and_valid_license() ) {
+				include PPW_DIR_PATH . 'includes/views/sidebar/view-ppw-sidebar.php';
+			}
 			?>
 		</div>
 		<?php
@@ -382,6 +497,7 @@ class PPW_Admin {
 			array(
 				PPW_Constants::PROTECT_EXCERPT,
 				PPW_Constants::USE_CUSTOM_FORM_ACTION,
+				PPW_Constants::NO_RELOAD_PAGE,
 			)
 		);
 		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
@@ -399,6 +515,89 @@ class PPW_Admin {
 		$data_settings = wp_unslash( $_REQUEST['settings'] );
 
 		update_option( PPW_Constants::MISC_OPTIONS, wp_json_encode( $data_settings ), 'no' );
+
+		wp_die( true );
+	}
+
+
+	/**
+	 * Update shortcode settings.
+	 */
+	public function ppw_free_update_shortcode_settings() {
+		$setting_keys = apply_filters(
+			'ppw_shortcode_valid_input_data',
+			array(
+				PPW_Constants::USE_SHORTCODE_PAGE_BUILDER,
+			)
+		);
+		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
+			wp_send_json(
+				array(
+					'is_error' => true,
+					'message'  => PPW_Constants::BAD_REQUEST_MESSAGE,
+				),
+				400
+			);
+
+			wp_die();
+		}
+
+		$data_settings = wp_unslash( $_REQUEST['settings'] );
+
+		update_option( PPW_Constants::SHORTCODE_OPTIONS, wp_json_encode( $data_settings ), 'no' );
+
+		wp_die( true );
+	}
+
+	/**
+	 * Update category settings.
+	 */
+	public function ppw_free_update_category_settings() {
+		$setting_keys = array(
+			'ppwp_is_protect_category',
+			'ppwp_categories_password',
+			'ppwp_protected_categories_selected',
+		);
+		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
+			wp_send_json(
+				array(
+					'is_error' => true,
+					'message'  => PPW_Constants::BAD_REQUEST_MESSAGE,
+				),
+				400
+			);
+
+			wp_die();
+		}
+
+		$data_settings = wp_unslash( $_REQUEST['settings'] );
+		$passwords     = PPW_Repository_Passwords::get_instance()->get_all_shared_categories_password();
+
+		// Add new shared password if password is not exist
+		// Update password if it is exist.
+		if ( count( $passwords ) > 0 ) {
+			$password_id = $passwords[0]->id;
+			PPW_Repository_Passwords::get_instance()->update_password(
+				$password_id,
+				array(
+					'password' => $data_settings['ppwp_categories_password'],
+				)
+			);
+		} else {
+			PPW_Repository_Passwords::get_instance()->add_new_password(
+				array(
+					'password'          => $data_settings['ppwp_categories_password'],
+					'post_id'           => 0,
+					'contact_id'        => 0,
+					'campaign_app_type' => PPW_Category_Service::SHARED_CATEGORY_TYPE,
+					'hits_count'        => 0,
+					'created_time'      => time(),
+				)
+			);
+		}
+		unset( $data_settings['ppwp_categories_password'] );
+
+		update_option( PPW_Category_Service::OPTION_NAME, wp_json_encode( $data_settings ), 'no' );
 
 		wp_die( true );
 	}
@@ -469,7 +668,6 @@ class PPW_Admin {
 			die();
 		}
 
-		do_action( PPW_Constants::HOOK_CUSTOM_HEADER_FORM_ENTIRE_SITE );
 		include PPW_DIR_PATH . 'includes/views/entire-site/view-ppw-form-password.php';
 		die();
 	}
@@ -529,11 +727,15 @@ _end_;
 	 * @return bool  A post requires the user to supply a password.
 	 */
 	public function ppw_handle_post_password_required( $required, $post ) {
-		if ( ppw_free_has_bypass_single_protection() ) {
+		if ( empty( $post->ID ) ) {
 			return $required;
 		}
 
-		if ( empty( $post->ID ) ) {
+		if ( empty( $post->post_type ) || ! ppw_is_post_type_selected_in_setting( $post->post_type ) ) {
+			return $required;
+		}
+
+		if ( ppw_free_has_bypass_single_protection() ) {
 			return $required;
 		}
 
@@ -554,7 +756,7 @@ _end_;
 			return $content;
 		}
 
-		return $this->shortcode_services->get_content_by_page_number( $post, $data['page'] );
+		return PPW_Shortcode::get_instance()->get_content_by_page_number( $post, $data['page'] );
 	}
 
 	/**
@@ -654,5 +856,67 @@ _end_;
 		if ( defined( 'PPW_PRO_VERSION' ) && version_compare( PPW_PRO_VERSION, '1.1.5.1', '<' ) ) {
 			printf( '<div class="%1$s"><p><b>Password Protect WordPress: </b>%2$s</p></div>', esc_attr( $class ), $message );
 		}
+	}
+
+	public function add_custom_column( $columns ) {
+		global $post_status;
+
+		if ( 'trash' === $post_status ) {
+			return $columns;
+		}
+
+		$columns[ PPW_Constants::CUSTOM_TABLE_COLUMN_NAME ] = PPW_Constants::CUSTOM_TABLE_COLUMN_TITLE;
+
+		return $columns;
+	}
+
+	public function render_content_custom_column ( $column, $post_id ) {
+		if ( PPW_Constants::CUSTOM_TABLE_COLUMN_NAME === $column ) {
+			include PPW_DIR_PATH . 'includes/views/column/view-ppw-column.php';
+		}
+	}
+
+	/**
+	 * Restore WP Passwords.
+	 */
+	public function ppw_free_restore_wp_passwords() {
+		if ( ! isset( $_POST['security_check'] ) ) {
+			wp_send_json(
+				array(
+					'is_error' => true,
+					'message'  => PPW_Constants::BAD_REQUEST_MESSAGE,
+				),
+				400
+			);
+		}
+		check_ajax_referer( PPW_Constants::GENERAL_FORM_NONCE, 'security_check' );
+
+		global $password_recovery_service;
+		$password_recovery_service->start_run();
+
+		wp_send_json(
+			array(
+				'is_error' => false,
+				'message'  => 'Start restoring backup passwords successfully.',
+			),
+			200
+		);
+	}
+
+	/**
+	 * Filters the array of row meta for each plugin in the Plugins list table.
+	 *
+	 * @param array  $plugin_meta An array of the plugin's metadata, including the version, author, author URI, and plugin URI.
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 *
+	 * @return array
+	 */
+	public function register_plugins_links( $plugin_meta, $plugin_file ) {
+		if ( PPW_PLUGIN_BASE_NAME === $plugin_file ) {
+			$misc_setting = admin_url( 'admin.php?page=wp_protect_password_options&tab=misc' );
+			$plugin_meta[] = '<a href="' . $misc_setting . '">' . __( 'Restore passwords', 'password-protect-page' ) . '</span>';
+		}
+
+		return $plugin_meta;
 	}
 }

@@ -53,6 +53,8 @@ function PmbPrintPage(pmb_instance_vars, translations) {
 	this.order = pmb_instance_vars.order;
 	this.working = false;
 	this.shortcodes = pmb_instance_vars.shortcodes;
+	this.can_view_sensitive_data = null;
+	this.lang = pmb_instance_vars.lang;
     /**
      * Initializes variables and begins fetching taxonomies, then gets started fetching posts/pages.
      * @function
@@ -66,22 +68,33 @@ function PmbPrintPage(pmb_instance_vars, translations) {
         this.print_ready = jQuery(this.print_ready_selector);
         this.loading_content = jQuery(this.loading_content_selector);
 
-        var alltaxonomiesCollection = new wp.api.collections.Taxonomies();
-        alltaxonomiesCollection.fetch(
-          {
-            data: this.getCollectionQueryData(),
-          }
-        ).then(
-            (taxonomies) => {
-                this.working = true;
-                this.taxonomies = taxonomies;
-                // ok we have everything we need to start. So let's get it started!
-                this.beginLoading();
-            },
-            (jqxhr,textStatus,errorThrown) => {
-                this.stopAndShowError(errorThrown);
-            });
+        this.preloadTaxonomies();
     };
+    this.preloadTaxonomies = function() {
+			var alltaxonomiesCollection = new wp.api.collections.Taxonomies();
+			alltaxonomiesCollection.fetch(
+				{
+					data: this.getCollectionQueryData(),
+				}
+			).then(
+				(taxonomies) => {
+					this.working = true;
+					this.taxonomies = taxonomies;
+					// ok we have everything we need to start. So let's get it started!
+					this.beginLoading();
+				},
+				(jqxhr,textStatus,errorThrown) => {
+					if(errorThrown==='Forbidden'){
+						// They might be logged-in but not have permission to
+						// edit the post. So try again but in read context.
+						this.can_view_sensitive_data = false;
+						this.preloadTaxonomies();
+					} else {
+						this.stopAndShowError(errorThrown);
+          }
+
+				});
+    }
 
     this.getCollection = function() {
         if(this.post_type === 'post') {
@@ -136,11 +149,18 @@ function PmbPrintPage(pmb_instance_vars, translations) {
         if( this.canGetSensitiveData()) {
 			data.context = 'edit';
 		}
+        // Add the language if WPML or someone set it.
+        if(this.lang){
+            data.lang = this.lang;
+        }
 		return data;
 	};
 
 	this.canGetSensitiveData = function() {
-	    return this.isUserLoggedIn && ! this.proxy_for;
+	    if(this.can_view_sensitive_data === null){
+	        this.can_view_sensitive_data = this.isUserLoggedIn && ! this.proxy_for;
+      }
+      return this.can_view_sensitive_data;
     };
 
 
@@ -323,6 +343,7 @@ function PmbPrintPage(pmb_instance_vars, translations) {
             );
             posts_to_render = this.getChildrenOf(0);
             this.organizePostsInPage(posts_to_render);
+            this.dontForgotOrphanPages();
         } else {
             this.ordered_posts = this.posts;
         }
@@ -348,6 +369,26 @@ function PmbPrintPage(pmb_instance_vars, translations) {
             post = posts.shift();
         }
     };
+
+    /**
+     * If pages didn't have the parent in the collection, they could get missed. This adds them to the end.
+     */
+    this.dontForgotOrphanPages = function(){
+        for(var i=0;i<this.posts.length;i++){
+            var page_id = this.posts[i].id;
+            var found = false;
+            for(var j=0; j<this.ordered_posts.length; j++){
+                var added_page_id = this.ordered_posts[j].id;
+                if( page_id === added_page_id){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                this.ordered_posts.push(this.posts[i]);
+            }
+        }
+    }
 
     /**
      * Renders the posts on the page
@@ -430,61 +471,6 @@ function PmbPrintPage(pmb_instance_vars, translations) {
             jQuery('.alignright').removeClass('alignright');
             jQuery('.alignleft').removeClass('alignleft');
         }
-        // Don't wrap tiled gallery images- we have CSS to avoid page breaks in them
-        // although currently, they don't display well because they need JS that doesn't get enqueued
-        var non_emojis = jQuery('.pmb-posts img:not(.emoji, div.tiled-gallery img, img.fg-image, img.size-thumbnail)').filter(function() {
-            var element = jQuery(this);
-            // If it's got a figure wrapper, don't wrap the image, we'll select the figure next.
-            if(element.parent('figure').length !== 0){
-                return false;
-            }
-            // only wrap images bigger than 400 pixels.
-            return element.attr("height") > 400;
-        });
-        var wp_block_galleries = jQuery('.pmb-posts .wp-block-gallery');
-        var images_with_figures = jQuery('figure.wp-caption').filter(function(){
-           var element = jQuery(this);
-           if(element.find('img').length){
-               return true;
-           }
-           return false;
-        });
-        images_with_figures.addClass('pmb-image');
-        if(this.image_size === 0){
-            non_emojis.remove();
-            wp_block_galleries.remove();
-        } else{
-            non_emojis.wrap('<div class="pmb-image"></div>');
-            if(this.image_size !== false) {
-                var pmb_print = this;
-                non_emojis.each(function () {
-                    var obj = jQuery(this);
-                    var height = pmb_print.image_size;
-                    // Modify the CSS here. We could have written CSS rules but the selector worked slightly differently
-                    // in CSS compared to jQuery.
-                    // Let's make the image smaller and centered
-                    obj.css({
-                        'max-height': height + 'in',
-                        'max-width:': '100%',
-                        'width': 'auto',
-                        'height': 'auto',
-                        'display': 'block',
-                        'margin-left': 'auto',
-                        'margin-right': 'auto'
-                    });
-                });
-                wp_block_galleries.each(function(){
-                    var obj = jQuery(this);
-                    // Galleries can't be resized by height (they just cut off
-                    // content underneath the set height). Need to use width.
-                    obj.css({
-                      'max-width': (pmb_print.image_size * 1.25) + 'in',
-                      'margin-right':'auto',
-                      'margin-left':'auto'
-                    });
-                })
-            }
-        }
 
         if(this.format !== 'ebook') {
 			jQuery('.pmb-posts h1').addClass('pmb-header');
@@ -504,6 +490,8 @@ function PmbPrintPage(pmb_instance_vars, translations) {
         jQuery('div.wp-video').css({'width': '','min-width':'', 'height': '', 'min-height': ''});
         // unhide the contents.
         jQuery('.pmb-posts').toggle();
+        // Resize images after unhiding because then we can know how big images actually are.
+        this.resizeImages();
         if(this.foogallery) {
             jQuery('img[data-src-fg]').each(function(arg1, arg2){
                let el = jQuery(this);
@@ -526,6 +514,80 @@ function PmbPrintPage(pmb_instance_vars, translations) {
         });
         jQuery(document).trigger('pmb_wrap_up');
     };
+
+    this.resizeImages = function() {
+        // Images that take up the entire page width are usually too big, so we usually want to shrink images and center them.
+        // Plus, we want to avoid page breaks inside them. But tiny emojis shouldn't be shrunk, nor do we need to worry about
+        // page breaks inside them. Images that are part of a gallery, or are pretty small and inline, also shouldn't be shrunk.
+        // So first let's determine how tall the user requested the tallest image could be. Anything bigger than that
+        // needs to be wrapped in a div (or figure) and resized.
+        var desired_max_height = this.image_size * 100; // 1 inch is about 100 pixels.
+        var wp_block_galleries = jQuery('.pmb-posts .wp-block-gallery');
+        if(this.image_size === 0){
+            // Remove all images, except emojis.
+            jQuery('.pmb-posts img:not(.emoji)').remove();
+            wp_block_galleries.remove();
+        } else{
+            var big_images = jQuery('.pmb-posts img:not(.emoji, div.tiled-gallery img, img.fg-image, img.size-thumbnail)').filter(function(){
+                // only wrap images bigger than the desired maximum height in pixels.
+                var element = jQuery(this);
+                return element.height() > desired_max_height;
+            });
+            // Images that are bigger than this will get wrapped in a 'pmb-image' div or figure in order to avoid
+            // pagebreaks inside them
+            var wrap_threshold = 300;
+            // Keep track of images that are already wrapped in a caption. We don't need to wrap them in a div.
+            var big_images_without_figures = jQuery('.pmb-posts img').filter(function() {
+                var element = jQuery(this);
+                // If there's no figure, and the image is big enough, include it.
+                if(element.parent('figure').length === 0 && element.height() > wrap_threshold){
+                    return true;
+                }
+                return false;
+            });
+            var figures_containing_a_big_image = jQuery('figure.wp-caption, figure.wp-block-image').filter(function(){
+                var element = jQuery(this);
+                // If there's a figure and the figure is big enough, include it.
+                if(element.find('img').length && element.height() > wrap_threshold){
+                    return true;
+                }
+                return false;
+            });
+            figures_containing_a_big_image.addClass('pmb-image');
+            big_images_without_figures.wrap('<div class="pmb-image"></div>');
+            // Center the images inside pmb-images
+            // figures_containing_a_big_image.add(big_images_without_figures).each(function() {
+            //     var obj = jQuery(this);
+            //     obj.css({
+            //         'width': 'auto',
+            //         'height': 'auto',
+            //         'display': 'block',
+            //         'margin-left': 'auto',
+            //         'margin-right': 'auto'
+            //     });
+            // });
+            big_images.each(function () {
+                var obj = jQuery(this);
+                // Modify the CSS here. We could have written CSS rules but the selector worked slightly differently
+                // in CSS compared to jQuery.
+                // Let's make the image smaller and centered
+                obj.css({
+                    'max-height': desired_max_height,
+                    'max-width:': '100%',
+                });
+            });
+            wp_block_galleries.each(function(){
+                var obj = jQuery(this);
+                // Galleries can't be resized by height (they just cut off
+                // content underneath the set height). Need to use width.
+                obj.css({
+                    'max-width': (desired_max_height * 1.25),
+                    'margin-right':'auto',
+                    'margin-left':'auto'
+                });
+            })
+        }
+    }
 
     /**
      * Pretty up the site's title and URL for printing, especially for single posts.
@@ -560,7 +622,9 @@ function PmbPrintPage(pmb_instance_vars, translations) {
         }
         var html_to_add = '';
         if(this.format !== 'ebook'){
-            html_to_add += '<article id="post-' + post.id + '" class="post-' + post.id + ' post type-' + this.post_type + ' status-' + post.status + ' hentry pmb-post-article">'
+            // added CSS class "entry" for Hueman theme https://wordpress.org/themes/hueman/ whch adds that CSS class on the frontend
+            // and uses it for styling.
+            html_to_add += '<article id="post-' + post.id + '" class="post-' + post.id + ' post type-' + this.post_type + ' status-' + post.status + ' entry hentry pmb-post-article">'
 			+ '<header class="pmb-post-header entry-header">';
         }
         if(this.showTitle) {

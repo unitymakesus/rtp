@@ -339,7 +339,7 @@ final class FLBuilderUserTemplates {
 				if ( count( $saved_layouts['categorized'] ) > 1 ) {
 					foreach ( $saved_layouts['categorized'] as $handle => $category ) {
 						$data['tabs']['templates']['views'][] = array(
-							'handle'       => 'user-' . $handle,
+							'handle'       => 'fl-user-' . $handle,
 							'name'         => $category['name'],
 							'isSubItem'    => true,
 							'parent'       => 'user-templates',

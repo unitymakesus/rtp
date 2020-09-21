@@ -30,6 +30,13 @@ class UABBTableofContents extends FLBuilderModule {
 				'icon'            => 'toc.svg',
 			)
 		);
+		add_filter(
+			'rank_math/researches/toc_plugins',
+			function( $toc_plugins ) {
+				$toc_plugins['bb-ultimate-addon/bb-ultimate-addon.php'] = 'Ultimate Addons for Beaver Builder';
+				return $toc_plugins;
+			}
+		);
 		$this->add_js( 'uabbtableofcontents', $this->url . 'js/jquery.toc.js', array(), '', true );
 		$this->add_css( 'font-awesome-5' );
 

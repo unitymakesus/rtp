@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Builders;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Generates the sitemap.
@@ -93,6 +93,34 @@ abstract class Sitemap {
 	abstract public function build_sitemap();
 
 	/**
+	 * Creates XML entry from array input.
+	 *
+	 * Note: Not final, other classes may overwrite this.
+	 *
+	 * @since 4.1.1
+	 *
+	 * @param array $data  The data to create an XML item from. Expected to be escaped and XML-safe!
+	 * @param int   $level The iteration level. Default 1 (one level in from urlset).
+	 *                     Affects non-mandatory tab indentation for readability.
+	 * @return string The XML data.
+	 */
+	protected function create_xml_entry( $data, $level = 1 ) {
+
+		$out = '';
+
+		foreach ( $data as $key => $value ) {
+			$tabs = str_repeat( "\t", $level );
+
+			if ( \is_array( $value ) )
+				$value = "\n" . $this->create_xml_entry( $value, $level + 1 ) . $tabs;
+
+			$out .= "$tabs<$key>$value</$key>\n";
+		}
+
+		return $out;
+	}
+
+	/**
 	 * Determines if post is possibly included in the sitemap.
 	 *
 	 * This is a weak check, as the filter might not be present outside of the sitemap's scope.
@@ -132,7 +160,13 @@ abstract class Sitemap {
 
 		// ROBOTS_IGNORE_PROTECTION as we don't need to test 'private' (because of sole 'publish'), and 'password' (because of false 'has_password')
 		return ! isset( $excluded[ $post_id ] )
-			&& ! static::$tsf->is_robots_meta_noindex_set_by_args( [ 'id' => $post_id ], \The_SEO_Framework\ROBOTS_IGNORE_PROTECTION );
+			&& ! static::$tsf->is_robots_meta_noindex_set_by_args(
+				[
+					'id'       => $post_id,
+					'taxonomy' => '',
+				],
+				\The_SEO_Framework\ROBOTS_IGNORE_PROTECTION
+			);
 	}
 
 	/**

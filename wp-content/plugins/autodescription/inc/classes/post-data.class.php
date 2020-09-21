@@ -6,7 +6,7 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
@@ -52,7 +52,7 @@ class Post_Data extends Detect {
 	 *
 	 * Unlike other post meta calls, no \WP_Post object is accepted as an input value,
 	 * this is done for performance reasons, so we can cache here, instead of relying on
-	 * WordPress' cache, where they cast many filters and redundantly sanitize the object.
+	 * WordPress's cache, where they cast many filters and redundantly sanitize the object.
 	 *
 	 * When we'll be moving to PHP 7 and later, we'll enforce type hinting.
 	 *
@@ -72,16 +72,16 @@ class Post_Data extends Detect {
 
 	/**
 	 * Returns all registered custom SEO fields for a post.
+	 * Memoizes the return value.
 	 *
 	 * Unlike other post meta calls, no \WP_Post object is accepted as an input value,
 	 * this is done for performance reasons, so we can cache here, instead of relying on
-	 * WordPress' cache, where they cast many filters and redundantly sanitize the object.
+	 * WordPress's cache, where they cast many filters and redundantly sanitize the object.
 	 *
 	 * When we'll be moving to PHP 7 and later, we'll enforce type hinting.
 	 *
 	 * @since 4.0.0
 	 * @since 4.0.2 Now tests for valid post ID in the post object.
-	 * @staticvar array $cache
 	 *
 	 * @param int  $post_id   The post ID.
 	 * @param bool $use_cache Whether to use caching.
@@ -145,7 +145,7 @@ class Post_Data extends Detect {
 	 *
 	 * Unlike other post meta calls, no \WP_Post object is accepted as an input value,
 	 * this is done for performance reasons, so we can cache here, instead of relying on
-	 * WordPress' cache, where they cast many filters and redundantly sanitize the object.
+	 * WordPress's cache, where they cast many filters and redundantly sanitize the object.
 	 *
 	 * When we'll be moving to PHP 7 and later, we'll enforce type hinting.
 	 *
@@ -272,10 +272,11 @@ class Post_Data extends Detect {
 			]
 		);
 
-		//* Cycle through $data, insert value or delete field
+		// Cycle through $data, insert value or delete field
 		foreach ( (array) $data as $field => $value ) {
-			//* Save $value, or delete if the $value is empty.
-			if ( $value ) {
+			// Save $value, or delete if the $value is empty.
+			// We can safely assume no one-zero/qubit options pass through here thanks to sanitization earlier--alleviating database weight.
+			if ( $value || ( \is_string( $value ) && \strlen( $value ) ) ) {
 				\update_post_meta( $post->ID, $field, $value );
 			} else {
 				// This is fine for as long as we merge the getter values with the defaults.
@@ -358,14 +359,14 @@ class Post_Data extends Detect {
 		$nonce_name   = $this->inpost_nonce_name;
 		$nonce_action = $this->inpost_nonce_field;
 
-		//* Check that the user is allowed to edit the post
+		// Check that the user is allowed to edit the post
 		if ( ! \current_user_can( 'edit_post', $post->ID ) ) return;
 		if ( ! isset( $_POST[ $nonce_name ] ) ) return;
-		if ( ! \wp_verify_nonce( \stripslashes_from_strings_only( $_POST[ $nonce_name ] ), $nonce_action ) ) return;
+		if ( ! \wp_verify_nonce( $_POST[ $nonce_name ], $nonce_action ) ) return;
 
 		$data = (array) $_POST['autodescription'];
 
-		//* Perform nonce check and save fields.
+		// Perform nonce check and save fields.
 		$this->save_post_meta( $post, $data );
 	}
 
@@ -373,6 +374,7 @@ class Post_Data extends Detect {
 	 * Overwrites a part of the post meta on quick-edit.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Allowed title and description parsing.
 	 *
 	 * @param int      $post_id The post ID. Unused.
 	 * @param \WP_Post $post    The post object.
@@ -384,7 +386,7 @@ class Post_Data extends Detect {
 
 		if ( empty( $post->ID ) ) return;
 
-		//* Check again against ambiguous injection...
+		// Check again against ambiguous injection...
 		// Note, however: function wp_ajax_inline_save() already performs all these checks for us before firing this callback's action.
 		if ( ! \current_user_can( 'edit_post', $post->ID ) ) return;
 		if ( ! \check_ajax_referer( 'inlineeditnonce', '_inline_edit', false ) ) return;
@@ -393,6 +395,11 @@ class Post_Data extends Detect {
 
 		foreach ( (array) $_POST['autodescription-quick'] as $key => $value ) :
 			switch ( $key ) :
+				case 'doctitle':
+					$new_data['_genesis_title'] = $value;
+					break;
+
+				case 'description':
 				case 'noindex':
 				case 'nofollow':
 				case 'noarchive':
@@ -426,7 +433,6 @@ class Post_Data extends Detect {
 	 * Overwrites a park of the post meta on bulk-edit.
 	 *
 	 * @since 4.0.0
-	 * @staticvar bool $verified_referer Will hold true after the first update passes.
 	 *
 	 * @param int      $post_id The post ID. Unused.
 	 * @param \WP_Post $post    The post object.
@@ -438,11 +444,12 @@ class Post_Data extends Detect {
 
 		if ( empty( $post->ID ) ) return;
 
-		//* Check again against ambiguous injection...
+		// Check again against ambiguous injection...
 		// Note, however: function bulk_edit_posts() already performs all these checks for us before firing this callback's action.
 		if ( ! \current_user_can( 'edit_post', $post->ID ) ) return;
 
 		static $verified_referer = false;
+		// Memoize the referer check--if it passes (and doesn't exit/die PHP), we're good to execute subsequently.
 		if ( ! $verified_referer ) {
 			\check_admin_referer( 'bulk-posts' );
 			$verified_referer = true;
@@ -486,7 +493,7 @@ class Post_Data extends Detect {
 	 * @since 3.0.0
 	 * @since 4.0.0 1. Now allows updating during `WP_CRON`.
 	 *              2. Now allows updating during `WP_AJAX`.
-	 * @securitycheck 3.0.0 OK.
+	 * @securitycheck 4.1.0 OK.
 	 *
 	 * @param int      $post_id The post ID. Unused, but sent through filter.
 	 * @param \WP_Post $post    The post object.
@@ -512,7 +519,7 @@ class Post_Data extends Detect {
 		if ( \wp_is_post_autosave( $post ) ) return;
 		if ( \wp_is_post_revision( $post ) ) return;
 
-		//* Check that the user is allowed to edit the post. Nonce checks are done in bulk later.
+		// Check that the user is allowed to edit the post. Nonce checks are done in bulk later.
 		if ( ! \current_user_can( 'edit_post', $post->ID ) ) return;
 
 		$post_type = \get_post_type( $post ) ?: false;
@@ -534,7 +541,7 @@ class Post_Data extends Detect {
 
 		foreach ( $values as $t => $v ) {
 			if ( ! isset( $_POST[ $v['name'] ] ) ) continue;
-			if ( \wp_verify_nonce( \stripslashes_from_strings_only( $_POST[ $v['name'] ] ), $v['action'] ) ) {
+			if ( \wp_verify_nonce( $_POST[ $v['name'] ], $v['action'] ) ) { // Redundant. Fortified.
 				$this->update_primary_term_id( $post->ID, $t, $v['value'] );
 			}
 		}
@@ -542,11 +549,11 @@ class Post_Data extends Detect {
 
 	/**
 	 * Fetch latest public post ID.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.4.3
 	 * @since 2.9.3 : 1. Removed object caching.
 	 *              : 2. It now uses WP_Query, instead of wpdb.
-	 * @staticvar int $post_id
 	 *
 	 * @return int Latest Post ID.
 	 */
@@ -576,7 +583,7 @@ class Post_Data extends Detect {
 	 * Fetches Post content.
 	 *
 	 * @since 2.6.0
-	 * @since 3.1.0 No longer applies WordPress' default filters.
+	 * @since 3.1.0 No longer applies WordPress's default filters.
 	 *
 	 * @param int $id The post ID.
 	 * @return string The post content.
@@ -600,9 +607,11 @@ class Post_Data extends Detect {
 	 * @since 2.6.6
 	 * @since 3.1.0 Added Elementor detection
 	 * @since 4.0.0 Now detects page builders before looping over the meta.
+	 * @TODO deprecate?
+	 * @ignore unused.
 	 *
 	 * @param int $post_id The post ID to check.
-	 * @return boolean
+	 * @return bool
 	 */
 	public function uses_page_builder( $post_id ) {
 
@@ -618,7 +627,7 @@ class Post_Data extends Detect {
 		 */
 		$detected = \apply_filters( 'the_seo_framework_detect_page_builder', null, $post_id, $meta );
 
-		if ( is_bool( $detected ) )
+		if ( \is_bool( $detected ) )
 			return $detected;
 
 		if ( ! $this->detect_page_builder() )
@@ -627,20 +636,65 @@ class Post_Data extends Detect {
 		if ( empty( $meta ) )
 			return false;
 
-		if ( isset( $meta['_elementor_edit_mode'][0] ) && '' !== $meta['_elementor_edit_mode'][0] && defined( 'ELEMENTOR_VERSION' ) ) :
-			//* Elementor by Elementor LTD
+		if ( isset( $meta['_elementor_edit_mode'][0] ) && '' !== $meta['_elementor_edit_mode'][0] && \defined( 'ELEMENTOR_VERSION' ) ) :
+			// Elementor by Elementor LTD
 			return true;
-		elseif ( isset( $meta['_et_pb_use_builder'][0] ) && 'on' === $meta['_et_pb_use_builder'][0] && defined( 'ET_BUILDER_VERSION' ) ) :
-			//* Divi Builder by Elegant Themes
+		elseif ( isset( $meta['_et_pb_use_builder'][0] ) && 'on' === $meta['_et_pb_use_builder'][0] && \defined( 'ET_BUILDER_VERSION' ) ) :
+			// Divi Builder by Elegant Themes
 			return true;
-		elseif ( isset( $meta['_wpb_vc_js_status'][0] ) && 'true' === $meta['_wpb_vc_js_status'][0] && defined( 'WPB_VC_VERSION' ) ) :
-			//* Visual Composer by WPBakery
+		elseif ( isset( $meta['_wpb_vc_js_status'][0] ) && 'true' === $meta['_wpb_vc_js_status'][0] && \defined( 'WPB_VC_VERSION' ) ) :
+			// Visual Composer by WPBakery
 			return true;
-		elseif ( isset( $meta['panels_data'][0] ) && '' !== $meta['panels_data'][0] && defined( 'SITEORIGIN_PANELS_VERSION' ) ) :
-			//* Page Builder by SiteOrigin
+		elseif ( isset( $meta['panels_data'][0] ) && '' !== $meta['panels_data'][0] && \defined( 'SITEORIGIN_PANELS_VERSION' ) ) :
+			// Page Builder by SiteOrigin
 			return true;
-		elseif ( isset( $meta['_fl_builder_enabled'][0] ) && '1' === $meta['_fl_builder_enabled'][0] && defined( 'FL_BUILDER_VERSION' ) ) :
-			//* Beaver Builder by Fastline Media...
+		elseif ( isset( $meta['_fl_builder_enabled'][0] ) && '1' === $meta['_fl_builder_enabled'][0] && \defined( 'FL_BUILDER_VERSION' ) ) :
+			// Beaver Builder by Fastline Media...
+			return true;
+		endif;
+
+		return false;
+	}
+
+	/**
+	 * Determines whether the post has a page builder that renders content dynamically attached to it.
+	 * Doesn't use plugin detection features as some builders might be incorporated within themes.
+	 *
+	 * Detects the following builders:
+	 * - Divi Builder by Elegant Themes
+	 * - Visual Composer by WPBakery
+	 *
+	 * @since 4.1.0
+	 *
+	 * @param int $post_id The post ID to check.
+	 * @return bool
+	 */
+	public function uses_non_html_page_builder( $post_id ) {
+
+		$meta = \get_post_meta( $post_id );
+
+		/**
+		 * @since 4.1.0
+		 * @param boolean|null $detected Whether a builder should be detected.
+		 * @param int          $post_id The current Post ID.
+		 * @param array        $meta The current post meta.
+		 */
+		$detected = \apply_filters( 'the_seo_framework_detect_non_html_page_builder', null, $post_id, $meta );
+
+		if ( \is_bool( $detected ) )
+			return $detected;
+
+		if ( ! $this->detect_non_html_page_builder() )
+			return false;
+
+		if ( empty( $meta ) )
+			return false;
+
+		if ( isset( $meta['_et_pb_use_builder'][0] ) && 'on' === $meta['_et_pb_use_builder'][0] && \defined( 'ET_BUILDER_VERSION' ) ) :
+			// Divi Builder by Elegant Themes
+			return true;
+		elseif ( isset( $meta['_wpb_vc_js_status'][0] ) && 'true' === $meta['_wpb_vc_js_status'][0] && \defined( 'WPB_VC_VERSION' ) ) :
+			// Visual Composer by WPBakery
 			return true;
 		endif;
 
@@ -660,7 +714,7 @@ class Post_Data extends Detect {
 	 * @return bool True if protected or private, false otherwise.
 	 */
 	public function is_protected( $post = null ) {
-		$post = \get_post( $post ); // This is here so we don't create another instance.
+		$post = \get_post( $post ); // This is here so we don't have to create another instance in the methods called.
 		return $this->is_password_protected( $post ) || $this->is_private( $post );
 	}
 
@@ -700,7 +754,7 @@ class Post_Data extends Detect {
 	 */
 	public function is_draft( $post = null ) {
 		$post = \get_post( $post );
-		return isset( $post->post_status ) && in_array( $post->post_status, [ 'draft', 'auto-draft', 'pending' ], true );
+		return isset( $post->post_status ) && \in_array( $post->post_status, [ 'draft', 'auto-draft', 'pending' ], true );
 	}
 
 	/**
@@ -749,7 +803,7 @@ class Post_Data extends Detect {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param int|null $post_id The post ID.
+	 * @param int|null $post_id  The post ID.
 	 * @param string   $taxonomy The taxonomy name.
 	 * @return \WP_Term|false The primary term. False if not set.
 	 */
@@ -759,6 +813,9 @@ class Post_Data extends Detect {
 
 		if ( ! $primary_id ) return false;
 
+		// Users can alter the term list via quick/bulk edit, but cannot set a primary term that way.
+		// Users can also delete a term from the site that was previously assigned as primary.
+		// So, test if the term still exists for the post.
 		$terms        = \get_the_terms( $post_id, $taxonomy );
 		$primary_term = false;
 
@@ -777,7 +834,7 @@ class Post_Data extends Detect {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param int|null $post_id The post ID.
+	 * @param int|null $post_id  The post ID.
 	 * @param string   $taxonomy The taxonomy name.
 	 * @return int     The primary term ID. 0 if not set.
 	 */

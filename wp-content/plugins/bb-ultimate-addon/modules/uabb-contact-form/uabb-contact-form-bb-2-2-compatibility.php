@@ -1381,7 +1381,7 @@ FLBuilder::register_module(
 				'recaptcha_general' => array(
 					'title'  => '',
 					'fields' => array(
-						'uabb_recaptcha_toggle'     => array(
+						'uabb_recaptcha_toggle'        => array(
 							'type'    => 'select',
 							'label'   => 'reCAPTCHA Field',
 							'default' => 'hide',
@@ -1393,13 +1393,47 @@ FLBuilder::register_module(
 							'preview' => array(
 								'type' => 'none',
 							),
-							'toggle'  => array(
-								'show' => array(
-									'fields' => array( 'uabb_recaptcha_theme', 'uabb_recaptcha_site_key', 'uabb_recaptcha_secret_key' ),
-								),
+						),
+						'uabb_recaptcha_version'       => array(
+							'type'    => 'select',
+							'label'   => __( 'reCAPTCHA Version', 'uabb' ),
+							'default' => 'v2',
+							'options' => array(
+								'v2' => __( 'v2', 'uabb' ),
+								'v3' => __( 'v3', 'uabb' ),
 							),
 						),
-						'uabb_recaptcha_site_key'   => array(
+						'uabb_badge_position'          => array(
+							'type'    => 'select',
+							'label'   => __( 'Badge Position', 'uabb' ),
+							'options' => array(
+								'bottomright' => __( 'Bottom Right', 'uabb' ),
+								'bottomleft'  => __( 'Bottom Left', 'uabb' ),
+								'inline'      => __( 'Inline', 'uabb' ),
+							),
+						),
+						'uabb_v3_recaptcha_site_key'   => array(
+							'type'        => 'text',
+							'label'       => __( 'Site Key', 'uabb' ),
+							'connections' => array( 'string', 'html' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'uabb_v3_recaptcha_secret_key' => array(
+							'type'        => 'text',
+							'label'       => __( 'Secret Key', 'uabb' ),
+							'connections' => array( 'string', 'html' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'uabb_v3_recaptcha_score'      => array(
+							'type'    => 'unit',
+							'label'   => __( 'reCAPTCHA Score', 'uabb' ),
+							'default' => '0.5',
+						),
+						'uabb_recaptcha_site_key'      => array(
 							'type'    => 'text',
 							'label'   => __( 'Site Key', 'uabb' ),
 							'default' => '',
@@ -1407,7 +1441,7 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
-						'uabb_recaptcha_secret_key' => array(
+						'uabb_recaptcha_secret_key'    => array(
 							'type'    => 'text',
 							'label'   => __( 'Secret Key', 'uabb' ),
 							'default' => '',
@@ -1415,7 +1449,7 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
-						'uabb_recaptcha_theme'      => array(
+						'uabb_recaptcha_theme'         => array(
 							'type'    => 'select',
 							'label'   => __( 'Theme', 'uabb' ),
 							'default' => 'light',

@@ -30,8 +30,6 @@ if ( '' == $settings->heading && 'compact' == $settings->layout ) {
 		</div>
 		<?php endfor; ?>
 	</div>
-
-	<div class="fl-slider-next" role="button" aria-pressed="false"></div>
 	<div class="fl-slider-prev" role="button" aria-pressed="false"></div>
-
+	<div class="fl-slider-next" role="button" aria-pressed="false"></div>
 </div>
