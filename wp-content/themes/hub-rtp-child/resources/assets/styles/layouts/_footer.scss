@@ -1,0 +1,129 @@
+.page-footer {
+  background: none;
+  padding-top: 0;
+
+  a:focus {
+    box-shadow: 0 0 0 0.2rem transparentize($color-white, 0.5);
+  }
+
+  .footer-social {
+    padding: 3em 0;
+    margin: 0;
+    color: $color-grey-dark;
+
+    h2 {
+      padding: 14px 10px;
+      margin-top: 0;
+    }
+
+    .borders {
+      padding: 1em 0;
+      border-top: 2px solid $color-grey-light;
+      border-bottom: 2px solid $color-grey-light;
+    }
+
+    .widget {
+      padding-right: 10px;
+    }
+
+    @media #{$large-and-up} {
+      .borders,
+      .footer-social-left,
+      .footer-social-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .borders {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .footer-social-right {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .footer-main {
+    margin: 0;
+    padding: 2.5em 0;
+    background: $color-slate-dark;
+
+    h2 {
+      font-size: 21px;
+      font-weight: 200;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    .widget_text {
+      a {
+        color: $color-white;
+        text-decoration: underline;
+
+        &:hover, &:focus, &:active {
+          text-decoration-style: double;
+        }
+      }
+
+      img {
+        width: 20px;
+        margin-right: 5px;
+      }
+    }
+
+    .menu a {
+      font-size: 20px;
+      color: $color-white;
+
+      &:hover, &:focus, &:active {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer-utility {
+    padding: 1em 0;
+    background-color: $color-black;
+    margin-bottom: 0;
+    font-size: 0.8rem;
+
+    p {
+      font-size: 0.8rem;
+    }
+
+    a {
+      color: $color-white;
+      text-decoration: underline;
+
+      &:hover, &:focus, &:active {
+        text-decoration-style: double;
+      }
+    }
+
+    .menu {
+      display: flex;
+      margin-right: 2em;
+
+      li {
+        margin: 0 7px;
+      }
+    }
+  }
+
+  @media #{$small-and-down} {
+    height: auto;
+
+    a.unity-link {
+      display: block;
+      margin: 1em auto;
+    }
+
+    .footer-utility-right, .footer-social-right {
+      justify-content: flex-start;
+    }
+  }
+}

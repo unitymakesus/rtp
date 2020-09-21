@@ -1,0 +1,18 @@
+.hero-diagonal {
+  position: relative;
+  z-index: 100;
+
+  .fl-row-content-wrap::before {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: -10.5vw;
+    height: 10.5vw;
+    transform: skewY(-6deg);
+    transform-origin: 100% 0;
+    background: inherit;
+    content: '';
+    z-index: -1;
+    -webkit-backface-visibility: hidden;
+  }
+}

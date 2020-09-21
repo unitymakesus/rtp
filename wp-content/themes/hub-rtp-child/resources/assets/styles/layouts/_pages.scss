@@ -1,0 +1,25 @@
+.badges {
+  img {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+  }
+}
+
+.page-header {
+  padding: 2.5rem 0 1rem 0;
+  text-align: center;
+
+  h1 {
+    color: $primary-color;
+  }
+}
+
+.alert {
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.error404 .entry-content {
+  min-height: 40vh;
+}
