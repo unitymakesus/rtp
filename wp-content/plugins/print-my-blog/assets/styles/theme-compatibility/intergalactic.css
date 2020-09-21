@@ -1,0 +1,14 @@
+.pmb-posts .entry-title{
+    position:initial;
+    z-index:0;
+    top:initial;
+    -ms-transform: translateY(0%);
+    -moz-transform: translateY(0%);
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+}
+.pmb-posts .entry-header{
+    position: initial;
+    clear: none;
+    height: initial;
+}

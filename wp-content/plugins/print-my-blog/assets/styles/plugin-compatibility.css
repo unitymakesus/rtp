@@ -1,0 +1,62 @@
+/* Hide Content from the following plugins...*/
+/* Yuzo Related Posts */
+.pmb-posts .yuzo_related_post{
+    display:none;
+}
+/* I Recommend This */
+.pmb-posts .dot-irecommendthis{
+    display:none;
+}
+/* AdControl */
+.pmb-print-page #ac-top{
+    display:none;
+}
+/* JetPack's ShareDaddy content */
+.pmb-posts .sharedaddy{
+    display:none;
+}
+/* JetPack tiled galleries. When printing, we actually do need to show their backgrounds. */
+@media print {
+    .pmb-posts .tiled-gallery-caption {
+        background: #eee !important;
+        background: rgba(255, 255, 255, .8) !important;
+    }
+}
+
+/*
+* PowerPress https://wordpress.org/plugins/powerpress/
+* Don't show the play button as it doesn't work; insetad link to it.
+ */
+.pmb-posts .powerpress_player{
+    display:none;
+}
+
+/* Prevents plugin https://www.tipsandtricks-hq.com/wordpress-audio-music-player-plugin-4556
+from adding a gray box in the footer when using Prince
+ */
+.pmb-posts #sm2movie {
+    display: none;
+}
+
+/*
+Video JS https://wordpress.org/plugins/videojs-html5-player/ Avoid having large videos break in the middle
+ */
+.pmb-posts .video-js{
+    width:100%;
+    height:auto;
+}
+
+/*
+Video.js https://wordpress.org/plugins/videojs-html5-video-player-for-wordpress/ Avoid page breaks inside videos
+ */
+.pmb-posts .video-wrapper{
+    page-break-inside:avoid;
+}
+
+/**
+Hide Google Recaptcha from printouts
+
+ */
+.pmb-posts .grecaptcha-badge{
+    display:none !important;
+}
