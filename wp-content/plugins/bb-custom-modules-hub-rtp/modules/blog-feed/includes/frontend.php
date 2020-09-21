@@ -75,6 +75,6 @@ $i = 1;
                 </article>
             </div>
             <?php $i++; ?>
-        <?php endwhile; endif; ?>
+        <?php endwhile; endif; wp_reset_postdata(); ?>
     </div>
 </div>
