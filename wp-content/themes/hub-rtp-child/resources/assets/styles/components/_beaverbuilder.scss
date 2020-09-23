@@ -97,6 +97,17 @@
 // Style Buttons
 .fl-builder-content a.fl-button {
   @extend .btn;
+
+  font-size: 1rem;
+  line-height: 50px !important;
+  font-weight: 400;
+  border-radius: 6px;
+  height: auto;
+  text-transform: none;
+
+  &:visited {
+    background-color: $color-purple-hub;
+  }
 }
 
 // Change header z-index when BB editor active

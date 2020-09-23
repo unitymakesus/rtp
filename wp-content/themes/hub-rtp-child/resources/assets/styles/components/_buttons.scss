@@ -12,7 +12,14 @@
   &:focus {
     background-color: $color-purple-hub-interact;
     text-decoration: none;
+  }
+
+  &:hover {
     box-shadow: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5);
   }
 
   &:active {
@@ -63,13 +70,14 @@ input[type="submit"] {
 
 .btn-pause-play {
   display: none;
-  position: relative;
-  top: 1rem;
-  right: 1rem;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
   color: $color-white;
   background-color: $color-purple-hub;
   text-decoration: none;
   border-radius: 0;
+  border: 0;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
@@ -82,6 +90,10 @@ input[type="submit"] {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   z-index: 100;
+
+  &:active {
+    background-color: $color-purple-hub-active;
+  }
 
   // Display on larger screens only (video is disabled on mobile).
   @media #{$medium-and-up} {

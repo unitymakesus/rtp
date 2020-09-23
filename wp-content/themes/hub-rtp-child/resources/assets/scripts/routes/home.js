@@ -5,7 +5,7 @@ export default {
     /**
      * Modaal
      */
-    $('.modaal-video').modaal({
+    $('.modaal-video .fl-button').modaal({
       type: 'video',
     });
   },
