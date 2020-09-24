@@ -147,7 +147,7 @@ body.single-vendor #content {
     color: $color-slate-boxyard;
   }
 
-  &::after {
+  &.fl-row::after {
     display: inline-block;
     position: absolute;
     top: 0;
