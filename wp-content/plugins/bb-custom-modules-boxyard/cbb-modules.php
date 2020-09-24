@@ -75,12 +75,9 @@ add_filter( 'fl_builder_register_module', function($enabled, $instance) {
     'rich-text',
     'accordion',
     'html',
-    'uabb-image-carousel',
     'cbb-navigation-card',
     'cbb-text-card',
-    'cbb-today-feed',
     'uabb-info-list',
-    'uabb-photo',
     'separator',
   ];
 

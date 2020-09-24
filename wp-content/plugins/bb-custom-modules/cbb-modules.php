@@ -81,7 +81,7 @@ add_action( 'init', 'load_custom_modules' );
 // Disable modules we don't ever want to use
 function cbb_disable_modules( $enabled, $instance ) {
   $disable = array(
-    'photo',
+    // 'photo',
     'content-slider',
     'cbb-editorial-cards',
     'gallery',
