@@ -1,0 +1,51 @@
+.sticky-utilities {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  margin-bottom: -92px;
+  margin-left: auto;
+  width: 100%;
+  max-width: 44px;
+  border-top: 2px solid $color-slate-boxyard;
+  border-bottom: 2px solid $color-slate-boxyard;
+  margin-right: 0;
+  z-index: 100;
+
+  .tippy-box {
+    width: 300px;
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    appearance: none;
+    background-color: $color-red-boxyard;
+    width: 44px;
+    height: 44px;
+    border-left: 4px solid $color-slate-boxyard;
+    border-right: 4px solid $color-slate-boxyard;
+    border-top: 2px solid $color-slate-boxyard;
+    border-bottom: 2px solid $color-slate-boxyard;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  &__toggle-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__toggle-icon path {
+    fill: $color-white;
+  }
+
+  @media #{$medium-and-up} {
+    .admin-bar & {
+      top: 32px;
+    }
+  }
+}

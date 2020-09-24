@@ -1,0 +1,131 @@
+@import "../global/variables.scss";
+
+.home-hero-wrapper {
+  position: relative;
+}
+
+.home-hero {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    object-fit: cover;
+    min-height: 100%;
+  }
+}
+
+.home-banner-wrapper {
+  color: $color-white;
+  margin: 0 auto;
+  width: 1260px;
+  max-width: 90%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  height: auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.home-banner {
+  @include rtp-gradient-trans;
+
+  padding: 60px 36px 30px;
+
+  .banner-badge {
+    border-color: $color-white;
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    font-weight: bold;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 30px;
+    height: 30px;
+    text-transform: uppercase;
+
+    span {
+      position: absolute;
+      display: block;
+      font-size: 0.8em;
+      font-weight: 300;
+      left: 9px;
+      top: 7px;
+      white-space: nowrap;
+    }
+  }
+
+  .banner-content {
+    max-width: 900px;
+  }
+
+  h1 {
+    padding: 0;
+  }
+}
+
+.banner-cta {
+  @include unc-duke-gradient;
+
+  font-size: 0.9em;
+  text-align: right;
+
+  a {
+    color: $color-white !important;
+    display: block;
+    text-align: right;
+    width: 100%;
+    padding: 10px 30px;
+    font-weight: bold;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    transition: color 0.3s ease;
+    vertical-align: middle;
+
+    span {
+      vertical-align: middle;
+    }
+
+    .arrow {
+      display: inline-block;
+      padding: 8px;
+      width: 40px;
+      height: 40px;
+      transition: transform 0.3s ease;
+
+      path {
+        fill: $color-white;
+        transition: fill 0.3s ease;
+      }
+    }
+
+    &:hover, &:focus, &:active {
+      text-decoration: underline !important;
+
+      .arrow {
+        transform: translate3d(10px, 0, 0);
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .xlarge-align-top {
+    .home-hero img {
+      top: 0;
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+}

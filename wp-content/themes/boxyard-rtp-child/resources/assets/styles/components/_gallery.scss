@@ -1,0 +1,40 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: $gutter-width / 2;
+
+  > div {
+    position: relative;
+    background: $color-slate-boxyard;
+    overflow: hidden;
+
+    &::before {
+      display: block;
+      padding-bottom: 100%;
+      content: '';
+    }
+  }
+
+  a {
+    &:hover,
+    &:focus {
+      img {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+  }
+}

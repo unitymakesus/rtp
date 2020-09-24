@@ -1,0 +1,128 @@
+{
+    "key": "group_5f4004ba97d3f",
+    "title": "Vendor Map Directory",
+    "fields": [
+        {
+            "key": "field_5f4004be17852",
+            "label": "Suites",
+            "name": "vendor_map_suites",
+            "type": "repeater",
+            "instructions": "Used to populate tooltips (with vendor links) on each of the suites in the map asset. The Suite ID must match an existing ID number on the map asset.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add Item",
+            "sub_fields": [
+                {
+                    "key": "field_5f4004cb17853",
+                    "label": "ID",
+                    "name": "id",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_5f4004d617854",
+                    "label": "Vendor",
+                    "name": "vendor",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "vendor"
+                    ],
+                    "taxonomy": "",
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "return_format": "id",
+                    "ui": 1
+                }
+            ]
+        },
+        {
+            "key": "field_5f43df2db908b",
+            "label": "Map Alternative Text",
+            "name": "vendor_map_alternative_text",
+            "type": "textarea",
+            "instructions": "For visitors who cannot see the map (i.e. visitors with partial or full blindness), please provide a text alternative to describe information presented by the map graphic. This text description will be conveyed to and read aloud by assistive technology.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5f43df8ab908c",
+            "label": "Map PDF",
+            "name": "vendor_map_pdf",
+            "type": "file",
+            "instructions": "Visitors may also print out a PDF version of the map.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "views\/template-vendors.blade.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "",
+    "modified": 1600276407
+}

@@ -1,0 +1,330 @@
+@import "~modaal/dist/css/modaal";
+@import "../global/variables.scss";
+
+.figure-card {
+  position: relative;
+
+  &:focus-within .card {
+    a {
+      outline: 0;
+    }
+
+    .card-cta {
+      .text {
+        text-decoration: underline !important;
+      }
+
+      .arrow {
+        transform: translate3d(10px, 0, 0);
+      }
+    }
+  }
+
+  .card {
+    background: $color-white;
+    padding: 24px 24px 4px;
+    position: relative;
+    transition: box-shadow 0.3s;
+    box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+
+    &:hover, &:focus-within, &:active {
+      box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .meta {
+      position: absolute;
+      right: 24px;
+      top: 38px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+  }
+
+  .card-badge {
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    font-weight: bold;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 30px;
+    height: 30px;
+    text-transform: uppercase;
+
+    span {
+      position: absolute;
+      display: block;
+      font-size: 0.8em;
+      font-weight: 400;
+      left: 9px;
+      top: 7px;
+      white-space: nowrap;
+    }
+  }
+
+  .card-title {
+    margin: 40px 16px 20px;
+
+    a {
+      font-weight: 600 !important;
+      text-decoration: none !important;
+      color: $color-black;
+
+      &:hover, &:focus, &:active {
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  .card-content {
+    margin: 0 16px 20px;
+    font-weight: 300;
+  }
+
+  .card-cta {
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 4px;
+    padding: 5px;
+    margin: 0 16px;
+
+    a {
+      display: flex;
+      color: $color-black;
+      text-align: right;
+      width: 100%;
+      height: auto;
+      font-weight: 400 !important;
+      font-size: 0.9em;
+      line-height: 1.5;
+      padding: 0.75rem 0;
+      text-transform: uppercase;
+      text-decoration: none !important;
+      transition: color 0.3s ease;
+      vertical-align: middle;
+
+      span {
+        vertical-align: middle;
+      }
+
+      .text {
+        flex-grow: 1;
+      }
+
+      .arrow {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-left: 0.5rem;
+        flex-shrink: 0;
+        align-self: center;
+        transition: transform 0.3s ease;
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+
+        path {
+          fill: $color-black;
+          transition: fill 0.3s ease;
+        }
+      }
+
+      &:hover, &:focus, &:active {
+        .text {
+          text-decoration: underline !important;
+        }
+
+        .arrow {
+          transform: translate3d(10px, 0, 0);
+        }
+      }
+    }
+  }
+
+  .pattern-background {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 15px;
+    left: 65px;
+    right: 0;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.badge-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-slate;
+      color: $color-slate;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-slate;
+
+        .arrow path {
+          fill: $color-slate;
+        }
+      }
+    }
+  }
+
+  &.badge-hub, &.badge-hub-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-unc;
+      color: $color-unc;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-unc;
+
+        .arrow path {
+          fill: $color-unc;
+        }
+      }
+    }
+  }
+
+  &.badge-boxyard, &.badge-boxyard-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-boxyard;
+      color: $color-boxyard;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-boxyard;
+
+        .arrow path {
+          fill: $color-boxyard;
+        }
+      }
+    }
+  }
+
+  &.badge-frontier, &.badge-frontier-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-mint;
+      color: $color-mint;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-mint-a11y;
+
+        .arrow path {
+          fill: $color-mint;
+        }
+      }
+    }
+  }
+
+  &.badge-stem, &.badge-stem-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-purple;
+      color: $color-purple;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-purple;
+
+        .arrow path {
+          fill: $color-purple;
+        }
+      }
+    }
+  }
+
+  &.figure-card-vertical {
+    position: relative;
+    padding-bottom: 40px;
+
+    .figure-card-img img, .placeholder {
+      width: 100%;
+      display: block;
+      position: relative;
+      z-index: 1;
+      background: $color-white;
+    }
+
+    .placeholder {
+      @include rtp-gradient;
+    }
+
+    .pattern-background {
+      bottom: 0;
+    }
+
+    @media only screen and (min-width: 768px) {
+      .card {
+        margin: -65px 15px 0;
+        z-index: 2;
+      }
+
+      .figure-card-img img, .placeholder {
+        height: 300px;
+        object-fit: cover;
+      }
+    }
+  }
+
+  &.figure-card-horizontal {
+    .figure-card-img {
+      width: 100%;
+      line-height: 0;
+    }
+
+    &.figure-align-right {
+      .figure-card-img img {
+        left: auto;
+        right: 50%;
+        margin-left: auto;
+        margin-right: -50vw;
+      }
+    }
+
+    @media only screen and (min-width: 768px) {
+      display: flex;
+
+      .card {
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+        width: 50%;
+        z-index: 2;
+      }
+
+      .figure-card-img {
+        display: flex;
+
+        img {
+          width: 66vw;
+          height: 500px;
+          left: 50%;
+          margin-left: -50vw;
+          object-fit: cover;
+          position: relative;
+          z-index: 1;
+        }
+      }
+
+      &.figure-align-right {
+        .card {
+          left: 30px;
+          right: auto;
+        }
+      }
+    }
+  }
+}

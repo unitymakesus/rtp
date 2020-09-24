@@ -1,0 +1,123 @@
+.social-icons,
+.menu-boxyard-social-icons-container {
+  line-height: 1em;
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 0;
+    display: inline-block;
+    float: none;
+    margin-right: 10px;
+
+    a {
+      display: block;
+      position: relative;
+      height: 40px;
+      width: 40px;
+      padding: 0;
+      overflow: hidden;
+      text-align: left;
+      text-indent: -100em;
+      background: $color-grey-light;
+      transition: 0.3s background-color ease-in-out;
+
+      &:hover, &:focus {
+        background: $color-red-boxyard;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 30px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        transition: all 0.3s;
+      }
+    }
+
+    &.icon-facebook a::before {
+      background-image: image('socialicons/facebook.svg');
+    }
+
+    &.icon-instagram a::before {
+      background-image: image('socialicons/instagram.svg');
+    }
+
+    &.icon-linkedin a::before {
+      background-image: image('socialicons/linkedin.svg');
+    }
+
+    &.icon-pinterest a::before {
+      background-image: image('socialicons/pinterest.svg');
+    }
+
+    &.icon-twitter a::before {
+      background-image: image('socialicons/twitter.svg');
+    }
+
+    &.icon-youtube a::before {
+      background-image: image('socialicons/youtube.svg');
+    }
+  }
+}
+
+.social-icons--light {
+  li {
+    a {
+      background: $color-slate-boxyard;
+    }
+
+    &.icon-twitter a::before {
+      background-image: image('socialicons/twitter-light.svg');
+    }
+
+    &.icon-facebook a::before {
+      background-image: image('socialicons/facebook-light.svg');
+    }
+
+    &.icon-instagram a::before {
+      background-image: image('socialicons/instagram-light.svg');
+    }
+  }
+}
+
+.footer-social-left .menu {
+  li {
+    a {
+      background: $color-grey-dark;
+
+      &:hover, &:focus, &:active {
+        background: $color-slate;
+      }
+    }
+
+    &.icon-facebook a::before {
+      background-image: image('socialicons/facebook-light.svg');
+    }
+
+    &.icon-instagram a::before {
+      background-image: image('socialicons/instagram-light.svg');
+    }
+
+    &.icon-linkedin a::before {
+      background-image: image('socialicons/linkedin-light.svg');
+    }
+
+    &.icon-pinterest a::before {
+      background-image: image('socialicons/pinterest-light.svg');
+    }
+
+    &.icon-twitter a::before {
+      background-image: image('socialicons/twitter-light.svg');
+    }
+
+    &.icon-youtube a::before {
+      background-image: image('socialicons/youtube-light.svg');
+    }
+  }
+}

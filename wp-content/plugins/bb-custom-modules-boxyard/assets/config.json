@@ -1,0 +1,30 @@
+{
+  "entry": {
+    "cbb-rtp-splash": [
+      "./scripts/cbb-rtp-splash.js",
+      "./styles/cbb-rtp-splash.scss"
+    ],
+    "cbb-hero-banner": [
+      "./styles/cbb-hero-banner.scss"
+    ],
+    "cbb-cta": [
+      "./scripts/cbb-cta.js",
+      "./styles/cbb-cta.scss"
+    ],
+    "cbb-navigation-card": [
+      "./styles/cbb-navigation-card.scss"
+    ],
+    "cbb-blog-events-feeds": [
+      "./styles/cbb-blog-events-feeds.scss"
+    ],
+    "cbb-people-card": [
+      "./styles/cbb-people-card.scss"
+    ],
+    "cbb-bg-video-plyr": [
+      "./scripts/cbb-bg-video-plyr.js",
+      "./styles/cbb-bg-video-plyr.scss"
+    ]
+  },
+  "publicPath": "/wp-content/plugins/bb-custom-modules",
+  "cacheBusting": "[name]_[hash:8]"
+}

@@ -1,0 +1,32 @@
+.searchwp-highlight {
+  background: $color-grey-light;
+}
+
+.search-results, .search-no-results, .archive {
+  .main {
+    margin-bottom: 2rem;
+  }
+
+  .container.entry-content {
+    padding: 3rem 20px;
+  }
+
+  .excerpt {
+    border-radius: 0;
+    box-shadow: none;
+    padding-bottom: 0 !important;
+  }
+
+  .entry-summary {
+    p {
+      display: inline;
+      margin: 0;
+    }
+  }
+}
+
+.entry-content {
+  .search-form {
+    max-width: 500px;
+  }
+}

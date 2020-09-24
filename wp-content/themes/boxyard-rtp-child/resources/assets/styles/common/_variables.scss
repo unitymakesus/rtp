@@ -1,0 +1,108 @@
+/** Colors */
+// Neutrals
+$color-black:                 #000;
+$color-slate-dark:            #1F2A3A;
+$color-slate:                 #333F48;
+$color-grey-dark:             #7A868C;
+$color-grey-medium:           #A2A9AE;
+$color-grey-light:            #CBC8C7;
+$color-almost-white:          #F8F8F8;
+$color-white:                 #FFF;
+
+// Master Brand
+$color-blue-unc:              #4B9CD3;
+$color-blue-duke:             #012169;
+$color-red-nccu:              #82052A;
+$color-red-state:             #C00;
+
+// Accents
+$color-orange:                #FC4C02;
+$color-purple:                #654EA3;
+$color-purple-light:          #EEEDF5;
+
+// Hub
+$color-blue-hub:              #194685;
+
+// Frontier
+$color-mint:                  #57C1A5;
+$color-mint-light:            #88E3D1;
+$color-mint-lighter:          #AFE5D9;
+$color-mint-a11y:             #2FA787;
+$color-pink:                  #F7406C;
+$color-pink-light:            #EE9AAC;
+$color-blue-frontier:         #0094C9;
+
+// STEM
+$color-blue-unc-light:        #BCCFE9;
+$color-blue-duke-light:       #8DA3C0;
+$color-red-state-light:       #E19097;
+$color-red-nccu-light:        #C29399;
+
+// Boxyard
+$color-red-boxyard:           #E63C2F;
+$color-slate-light-boxyard:   #99ABAF;
+$color-slate-boxyard:         #003B4A;
+$color-rust-boxyard:          #9D311A;
+
+$brand-primary: $color-red-boxyard;
+
+// Utilities
+$color-blue : #007EA7;
+$color-red  : #A3320B;
+$color-green: #4A8354;
+
+$primary-color  : $color-black;
+$secondary-color: $color-grey-dark;
+$success-color  : $color-green;
+$error-color    : $color-red;
+$link-color     : $color-blue;
+
+/** Typography */
+$em-base     : 18px;
+$rem-base    : 18px;
+$primary-font: 'Helvetica', sans-serif;
+
+/** Buttons */
+// Shared styles
+$button-background-focus: lighten($primary-color, 10%);
+$button-font-size       : 1.2rem;
+$button-height          : 50px;
+$button-padding         : 0 1rem;
+$button-radius          : 0;
+
+/** Navigation */
+$navbar-height       : auto;
+$navbar-height-mobile: auto;
+
+/** Footer */
+$footer-font-color          : $color-white;
+$footer-copyright-font-color: $color-white;
+
+/** Box Model  */
+$spacer: 2rem;
+
+/** Grid */
+$gutter-width: 30px;
+
+/** Modified Breakpoints */
+$xsmall-screen   : 600px;
+$xsmall-screen-up: 601px;
+$small-screen-up : 769px;
+$medium-screen-up: 993px;
+$large-screen-up : 1201px;
+$small-screen    : 768px;
+$medium-screen   : 992px;
+$large-screen    : 1200px;
+$small-and-up    : "only screen and (min-width : #{$xsmall-screen-up})";
+$xsmall-and-down : "only screen and (max-width : #{$xsmall-screen})";
+
+/** Flow Text  */
+$range        : $large-screen - $medium-screen;
+$intervals    : 18;
+$interval-size: $range / $intervals;
+
+/** Assets */
+$asset-base-path: '../images' !default;
+
+/** Misc */
+$box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;

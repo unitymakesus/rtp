@@ -1,0 +1,255 @@
+.archive, .search-results {
+  .page-header {
+    margin-bottom: 2em;
+  }
+
+  .figure-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-rows: auto;
+    grid-gap: 20px 1rem;
+    margin-bottom: 2rem;
+
+    @media #{$small-and-up} {
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    }
+  }
+
+  .figure-card {
+    position: relative;
+    height: 100%;
+    padding-bottom: 40px;
+
+    &:hover .card,
+    &:focus-within .card {
+      box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+
+      .card-cta {
+        a {
+          .text {
+            text-decoration: underline !important;
+          }
+
+          .arrow {
+            transform: translate3d(10px, 0, 0);
+          }
+        }
+      }
+    }
+
+    img, .placeholder {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      background: $color-white;
+      display: block;
+    }
+
+    .placeholder {
+      background-image: url('../images/texture-single-header.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .card {
+      margin: -65px 30px 0;
+      height: calc(100% - 235px);
+      background: #FFF;
+      padding: 24px 24px 4px;
+      position: relative;
+      transition: box-shadow 0.3s;
+      box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+
+      &:hover, &:focus, &:active {
+        box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+      }
+
+      .meta {
+        position: absolute;
+        right: 24px;
+        top: 39px;
+        font-weight: 700;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+    }
+
+    .card-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .card-badge {
+      border-style: solid;
+      border-width: 0;
+      border-top-width: 8px;
+      border-left-width: 8px;
+      font-weight: bold;
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      width: 30px;
+      height: 30px;
+      text-transform: uppercase;
+
+      span {
+        position: absolute;
+        display: block;
+        font-size: 0.8em;
+        font-weight: 700;
+        left: 9px;
+        top: 7px;
+        white-space: nowrap;
+      }
+    }
+
+    .card-title {
+      margin: 50px 16px 20px;
+
+      a {
+        font-weight: 600 !important;
+        text-decoration: none !important;
+        color: $color-black;
+
+        &:hover, &:focus, &:active {
+          text-decoration: underline !important;
+        }
+      }
+    }
+
+    .card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-style: solid;
+      border-width: 0;
+      border-top-width: 4px;
+      padding: 5px;
+      margin: auto 0 5px;
+
+      .arrow {
+        display: inline-block;
+        padding: 4px 0 14px 14px;
+        width: 40px;
+        height: 40px;
+        transition: -webkit-transform 0.3s ease;
+        transition: transform 0.3s ease;
+
+        path {
+          fill: $color-black;
+          transition: fill 0.3s ease;
+        }
+      }
+    }
+
+    .pattern-background {
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      bottom: 0;
+      left: 65px;
+      right: 0;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    &.no-image {
+      .card {
+        height: 100%;
+        margin: 0 0 50px 0;
+      }
+    }
+
+    &.badge-rtp {
+      .card-badge, .card-cta {
+        border-color: $color-slate;
+        color: $color-slate;
+      }
+
+      .card-cta a {
+        &:hover, &:focus, &:active {
+          color: $color-slate;
+
+          .arrow path {
+            fill: $color-slate;
+          }
+        }
+      }
+    }
+
+    &.badge-hub, &.badge-hub-rtp {
+      .card-badge, .card-cta {
+        border-color: $color-blue-unc;
+        color: $color-blue-unc;
+      }
+
+      .card-cta a {
+        &:hover, &:focus, &:active {
+          color: $color-blue-unc;
+
+          .arrow path {
+            fill: $color-blue-unc;
+          }
+        }
+      }
+    }
+
+    &.badge-boxyard, &.badge-boxyard-rtp {
+      .card-badge, .card-cta {
+        border-color: $color-red-boxyard;
+        color: $color-red-boxyard;
+      }
+
+      .card-cta a {
+        &:hover, &:focus, &:active {
+          color: $color-red-boxyard;
+
+          .arrow path {
+            fill: $color-red-boxyard;
+          }
+        }
+      }
+    }
+
+    &.badge-frontier, &.badge-frontier-rtp {
+      .card-badge, .card-cta {
+        border-color: $color-mint;
+        color: $color-mint;
+      }
+
+      .card-cta a {
+        &:hover, &:focus, &:active {
+          color: $color-mint-a11y;
+
+          .arrow path {
+            fill: $color-mint;
+          }
+        }
+      }
+    }
+
+    &.badge-stem, &.badge-stem-rtp {
+      .card-badge, .card-cta {
+        border-color: $color-purple;
+        color: $color-purple;
+      }
+
+      .card-cta a {
+        &:hover, &:focus, &:active {
+          color: $color-purple;
+
+          .arrow path {
+            fill: $color-purple;
+          }
+        }
+      }
+    }
+  }
+}

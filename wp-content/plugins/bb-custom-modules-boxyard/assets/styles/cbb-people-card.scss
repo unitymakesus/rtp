@@ -1,0 +1,49 @@
+.flex-grid .flex-item {
+  .figure-card.figure-card-people {
+    position: relative;
+    height: 0;
+    padding-bottom: 100%;
+    overflow: hidden;
+
+    &:focus-within .figure-card-img {
+      img {
+        transform: scale(1.03);
+      }
+    }
+
+    .figure-card-img {
+      overflow: hidden;
+      position: relative;
+    }
+
+    img, .placeholder {
+      width: 100%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .card {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      padding: 10px;
+      height: auto;
+      margin: 0;
+    }
+
+    .card-title {
+      margin: 0 0 0.25em;
+      font-size: 1em;
+    }
+
+    .card-subtitle {
+      margin: 0;
+      font-size: 0.8em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+  }
+}

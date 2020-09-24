@@ -1,0 +1,140 @@
+.btn {
+  height: auto;
+  font-weight: 700;
+
+  &:not(.btn-small) {
+    padding: 10px 2rem;
+  }
+}
+
+button:hover,
+a.btn:hover {
+  cursor: pointer;
+}
+
+.btn-primary {
+  display: inline-block;
+  background-color: $color-slate-boxyard;
+  color: $color-white;
+  line-height: 1;
+  box-shadow: none;
+  font-weight: 700;
+  margin-right: 0;
+  padding: 1rem 2rem;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    background-color: $color-slate-light-boxyard;
+    color: $color-black;
+  }
+
+  &:active {
+    background-color: $color-black;
+    color: $color-white;
+  }
+}
+
+.btn-secondary {
+  display: inline-block;
+  background-color: $color-white;
+  color: $color-slate-boxyard;
+  border: 2px solid currentColor;
+  line-height: 1;
+  box-shadow: none;
+  font-weight: normal;
+  margin-right: 0;
+  padding: 12px 2rem;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    background-color: $color-slate-boxyard;
+    border-color: $color-white;
+    color: $color-white !important;
+  }
+
+  &:active {
+    background-color: $color-black;
+    border-color: $color-black;
+    color: $color-white !important;
+  }
+}
+
+a.btn {
+  color: $color-white;
+}
+
+input[type="submit"] {
+  @extend .btn;
+}
+
+// Menu toggles
+.btn-menu-toggle,
+.btn-topnav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+
+  > i {
+    font-size: inherit;
+  }
+}
+
+.btn-menu-toggle {
+  padding: 0.6rem 0.75rem;
+  color: black;
+  border-color: rgba($color-black, 0.75);
+
+  &:focus,
+  &:active {
+    color: white;
+  }
+}
+
+.btn-topnav-toggle {
+  padding: 0.6rem 0.75rem;
+  margin: 6px 0.5rem 6px 0;
+  color: $color-white;
+  border-color: rgba($color-white, 0.75);
+}
+
+.btn-pause-play {
+  display: none;
+  position: relative;
+  top: 1rem;
+  left: 1rem;
+  border: 2px solid $color-slate-boxyard;
+  color: $color-white;
+  background-color: $color-grey-dark;
+  text-decoration: none;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 44px;
+  height: 44px;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NzcuODg2IDQ3Ny44ODYiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik00NzYuMDkxIDIzMS4zMzJhMTcuMDY4IDE3LjA2OCAwIDAwLTcuNjYyLTcuNjYyTDI0LjY5NSAxLjgwNEMxNi4yNjQtMi40MSA2LjAxMyAxLjAxIDEuOCA5LjQ0MkExNy4wNjggMTcuMDY4IDAgMDAwIDE3LjA3OXY0NDMuNzMzYy0uMDA0IDkuNDI2IDcuNjMzIDE3LjA3IDE3LjA1OSAxNy4wNzVhMTcuMDY4IDE3LjA2OCAwIDAwNy42MzctMS44TDQ2OC40MjkgMjU0LjIyYzguNDM2LTQuMjA1IDExLjg2Ni0xNC40NTIgNy42NjItMjIuODg4eiIvPjwvc3ZnPg==');
+  background-size: 22px 22px;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 100;
+
+  // Display on larger screens only (video is disabled on mobile).
+  @media #{$medium-and-up} {
+    display: inline-block;
+  }
+
+  &.playing {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NzcuODY3IDQ3Ny44NjciPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xODcuNzMzIDBINTEuMmMtOS40MjYgMC0xNy4wNjcgNy42NDEtMTcuMDY3IDE3LjA2N1Y0NjAuOGMwIDkuNDI2IDcuNjQxIDE3LjA2NyAxNy4wNjcgMTcuMDY3aDEzNi41MzNjOS40MjYgMCAxNy4wNjctNy42NDEgMTcuMDY3LTE3LjA2N1YxNy4wNjdDMjA0LjggNy42NDEgMTk3LjE1OSAwIDE4Ny43MzMgMHpNNDI2LjY2NyAwSDI5MC4xMzNjLTkuNDI2IDAtMTcuMDY3IDcuNjQxLTE3LjA2NyAxNy4wNjdWNDYwLjhjMCA5LjQyNiA3LjY0MSAxNy4wNjcgMTcuMDY3IDE3LjA2N2gxMzYuNTMzYzkuNDI2IDAgMTcuMDY3LTcuNjQxIDE3LjA2Ny0xNy4wNjdWMTcuMDY3QzQ0My43MzMgNy42NDEgNDM2LjA5MiAwIDQyNi42NjcgMHoiLz48L3N2Zz4=');
+  }
+}
