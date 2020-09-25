@@ -16564,7 +16564,20 @@ ul.mec-weekly-view-dates-events article::before {
   margin-bottom: 1em;
 }
 
-/* line 637, resources/assets/styles/layouts/_calendar.scss */
+/* line 636, resources/assets/styles/layouts/_calendar.scss */
+
+.single-mec-events .mec-events-content ul {
+  padding-left: 40px;
+  list-style-type: disc;
+}
+
+/* line 641, resources/assets/styles/layouts/_calendar.scss */
+
+.single-mec-events .mec-events-content ul > li {
+  list-style-type: disc;
+}
+
+/* line 646, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-booking-button {
   margin: 20px 10px;
@@ -16573,14 +16586,14 @@ ul.mec-weekly-view-dates-events article::before {
   font-size: 1.1rem;
 }
 
-/* line 644, resources/assets/styles/layouts/_calendar.scss */
+/* line 653, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social {
   text-align: left;
   padding: 12px 14px !important;
 }
 
-/* line 648, resources/assets/styles/layouts/_calendar.scss */
+/* line 657, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social h3,
 .single-mec-events .mec-event-social .mec-single-event-location.mec-frontbox h3,
@@ -16591,7 +16604,7 @@ ul.mec-weekly-view-dates-events article::before {
   padding-bottom: 0;
 }
 
-/* line 654, resources/assets/styles/layouts/_calendar.scss */
+/* line 663, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social h3::before,
 .single-mec-events .mec-event-social .mec-single-event-location.mec-frontbox h3::before,
@@ -16599,19 +16612,19 @@ ul.mec-weekly-view-dates-events article::before {
   display: none;
 }
 
-/* line 659, resources/assets/styles/layouts/_calendar.scss */
+/* line 668, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-sharing {
   margin-top: 0;
 }
 
-/* line 663, resources/assets/styles/layouts/_calendar.scss */
+/* line 672, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-event-social .mec-event-social-icon {
   text-align: center;
 }
 
-/* line 668, resources/assets/styles/layouts/_calendar.scss */
+/* line 677, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-location.mec-frontbox {
   border: none;
@@ -16621,7 +16634,7 @@ ul.mec-weekly-view-dates-events article::before {
           box-shadow: none;
 }
 
-/* line 674, resources/assets/styles/layouts/_calendar.scss */
+/* line 683, resources/assets/styles/layouts/_calendar.scss */
 
 .single-mec-events .mec-single-event-location.mec-frontbox h3 {
   margin: 0 0 0.5em;
