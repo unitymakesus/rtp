@@ -226,3 +226,34 @@ if( function_exists('acf_add_options_page') ) {
     'icon_url'   => 'dashicons-megaphone',
   ));
 }
+
+/**
+ * Event Space Features Shortcode
+ */
+add_shortcode('event-space', function ($atts) {
+    $features = shortcode_atts(array(
+        'wifi'               => '',
+        'whiteboard'         => '',
+        'tv'                 => '',
+        'hdmi'               => '',
+        'screen'             => '',
+        'projector'          => '',
+        'microphone'         => '',
+        'podium'             => '',
+        'sofa'               => '',
+        'layouts'            => '',
+        'seats'              => '',
+        'video-conferencing' => '',
+        'sound'              => '',
+    ), $atts);
+
+    ob_start();
+
+    foreach ($features as $icon => $feature) {
+        if (!empty($feature)) {
+            echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+        }
+    }
+
+    return ob_get_clean();
+});

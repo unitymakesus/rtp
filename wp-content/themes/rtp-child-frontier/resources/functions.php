@@ -207,28 +207,30 @@ function get_day_status($test) {
 /**
  * Event Space Features Shortcode
  */
- add_shortcode('event-space', function($atts) {
-   $features = shortcode_atts( array(
-		'wifi' => '',
-    'whiteboard' => '',
-    'tv' => '',
-    'hdmi' => '',
-    'screen' => '',
-    'projector' => '',
-		'microphone' => '',
-		'podium' => '',
-		'sofa' => '',
-    'layouts' => '',
-    'seats' => ''
-	), $atts );
+add_shortcode('event-space', function ($atts) {
+    $features = shortcode_atts(array(
+        'wifi'               => '',
+        'whiteboard'         => '',
+        'tv'                 => '',
+        'hdmi'               => '',
+        'screen'             => '',
+        'projector'          => '',
+        'microphone'         => '',
+        'podium'             => '',
+        'sofa'               => '',
+        'layouts'            => '',
+        'seats'              => '',
+        'video-conferencing' => '',
+        'sound'              => '',
+    ), $atts);
 
-  ob_start();
+    ob_start();
 
-  foreach ($features as $icon => $feature) {
-    if (!empty($feature)) {
-      echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+    foreach ($features as $icon => $feature) {
+        if (!empty($feature)) {
+            echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+        }
     }
-  }
 
-  return ob_get_clean();
- });
+    return ob_get_clean();
+});
