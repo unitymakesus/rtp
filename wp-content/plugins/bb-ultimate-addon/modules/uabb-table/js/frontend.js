@@ -16,6 +16,7 @@
         this.show_sort          = settings.show_sort;
         this.table_type         = settings.table_type;
         this.show_entries_all_label = settings.show_entries_all_label;
+        this.responsive_layout = settings.responsive_layout;
 
         // initialize the menu 
         this._init();
@@ -32,6 +33,21 @@
             var settings    = this.settings;
             var node        = settings.id;
             var nodeClass   = '.fl-node-' + node;
+
+            if ( 'stack' == this.responsive_layout ) {
+                var columnTH = $(nodeClass).find('.table-header-th');
+                var rowTR = $(nodeClass).find('.tbody-row');
+
+                rowTR.each( function( i, tr) {
+                    var th = $(tr).find('.table-body-td');
+                    th.each( function( index, th ) {
+                        $(th).prepend( '<div class="table-header-th">' + columnTH.eq(index).html() + '</div>' );
+                        if ( 'yes' == this.show_sort ) {
+                            $(th).prepend('<i class="uabb-sort-icon fa fa-sort"> </i>');
+                        }
+                    } );
+                } );
+            }
 
             $(nodeClass + " #searchHere").on("keyup", function() {
 
@@ -152,8 +168,18 @@
 
                     $( nodeClass + ' .uabb-table-header .table-header-th' ).css('cursor', 'pointer');
                     $( nodeClass + ' .uabb-table-header .table-header-th .th-style' ).css('cursor', 'pointer');
+
+                    $( nodeClass + ' div.table-header-th' ).css('cursor', 'pointer');
+                    $( nodeClass + ' div.table-header-th .th-style' ).css('cursor', 'pointer');
                     
                     $( nodeClass + ' .uabb-table-header .table-header-th' ).click(function() {
+
+                        var $cell = $(this);
+                        var cellIndex = $cell.index();
+
+                        sortTable(cellIndex);
+                    });
+                    $( nodeClass + ' div.table-header-th' ).click(function() {
 
                         var $cell = $(this);
                         var cellIndex = $cell.index();

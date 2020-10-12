@@ -99,9 +99,14 @@ class FacetWP_Request
         $has_query_run = ( ! empty( FWP()->facet->query ) );
 
         if ( $do_abort && $has_query_run && isset( $this->query_vars ) ) {
-            // Remove junk defaults from the end of this query's vars
-            // E.g. cache_results, update_post_term_cache, update_post_meta_cache
-            $query_vars = array_slice( $query->query_vars, 0, count( $this->query_vars ) );
+
+            // New var; any changes to $query will cause is_main_query() to return false
+            $query_vars = $query->query_vars;
+
+            // If paged = 0, set to 1 or the compare will fail
+            if ( empty( $query_vars['paged'] ) ) {
+                $query_vars['paged'] = 1;
+            }
 
             // Only intercept the identical query
             if ( $query_vars === $this->query_vars ) {
@@ -142,9 +147,14 @@ class FacetWP_Request
             return;
         }
 
-        $is_main_query = ( $query->is_main_query() && ! $query->is_singular && ! $query->is_feed );
-        $is_main_query = ( true === $query->get( 'suppress_filters', false ) ) ? false : $is_main_query; // skip get_posts()
-        $is_main_query = ( wp_doing_ajax() && ! $this->is_refresh ) ? false : $is_main_query; // skip other ajax
+        // Skip other ajax
+        if ( wp_doing_ajax() && ! $this->is_refresh ) {
+            return;
+        }
+
+        $is_main_query = ( $query->is_main_query() || $query->is_archive );
+        $is_main_query = ( $query->is_singular || $query->is_feed ) ? false : $is_main_query;
+        $is_main_query = ( $query->get( 'suppress_filters', false ) ) ? false : $is_main_query; // skip get_posts()
         $is_main_query = ( '' !== $query->get( 'facetwp' ) ) ? (bool) $query->get( 'facetwp' ) : $is_main_query; // flag
         $is_main_query = apply_filters( 'facetwp_is_main_query', $is_main_query, $query );
 
@@ -153,7 +163,13 @@ class FacetWP_Request
             // Set the flag
             $query->set( 'facetwp', true );
 
-            // Store the default WP query vars
+            // If "s" is an empty string and no post_type is set, WP sets
+            // post_type = "any". We want to prevent this except on the search page.
+            if ( '' == $query->get( 's' ) && ! isset( $_GET['s'] ) ) {
+                $query->set( 's', null );
+            }
+
+            // Set the initial query vars, needed for render()
             $this->query_vars = $query->query_vars;
 
             // Notify
@@ -162,6 +178,9 @@ class FacetWP_Request
             // Generate the FWP output
             $data = ( $this->is_preload ) ? $this->process_preload_data() : $this->process_post_data();
             $this->output = FWP()->facet->render( $data );
+
+            // Set the updated query vars, needed for maybe_abort_query()
+            $this->query_vars = FWP()->facet->query->query_vars;
 
             // Set the updated query vars
             if ( ! $this->is_preload || ! empty( $this->url_vars ) ) {

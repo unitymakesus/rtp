@@ -388,7 +388,7 @@ if ( 'none' !== $settings->image_type ) {
 <?php } ?>
 
 /* Border Properties */
-<?php if ( 'none' !== $settings->uabb_border_type ) : ?>
+<?php if ( 'none' !== $settings->uabb_border_type || 'yes' === $settings->enable_box_shadow ) : ?>
 		.fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox {
 			border-style: <?php echo esc_attr( $settings->uabb_border_type ); ?>;
 
@@ -396,12 +396,13 @@ if ( 'none' !== $settings->image_type ) {
 				border-color: <?php echo esc_attr( $settings->uabb_border_color ); ?>;
 			<?php endif; ?>
 
-			border-top-width: <?php echo $settings->uabb_border_top ? esc_attr( $settings->uabb_border_top ) : ''; ?>px;
-			border-bottom-width: <?php echo $settings->uabb_border_bottom ? esc_attr( $settings->uabb_border_bottom ) : ''; ?>px;
-			border-left-width: <?php echo $settings->uabb_border_left ? esc_attr( $settings->uabb_border_left ) : ''; ?>px;
-			border-right-width: <?php echo $settings->uabb_border_right ? esc_attr( $settings->uabb_border_right ) : ''; ?>px;
+			border-radius: <?php echo $settings->border_radius ? esc_attr( $settings->border_radius ) : 0; ?>px;
+			border-top-width: <?php echo $settings->uabb_border_top ? esc_attr( $settings->uabb_border_top ) : 0; ?>px;
+			border-bottom-width: <?php echo $settings->uabb_border_bottom ? esc_attr( $settings->uabb_border_bottom ) : 0; ?>px;
+			border-left-width: <?php echo $settings->uabb_border_left ? esc_attr( $settings->uabb_border_left ) : 0; ?>px;
+			border-right-width: <?php echo $settings->uabb_border_right ? esc_attr( $settings->uabb_border_right ) : 0; ?>px;
 
-			<?php if ( $settings->uabb_border_top > 0 || $settings->uabb_border_bottom > 0 || $settings->uabb_border_left > 0 || $settings->uabb_border_right > 0 ) : ?>
+			<?php if ( $settings->uabb_border_top > 0 || $settings->uabb_border_bottom > 0 || $settings->uabb_border_left > 0 || $settings->uabb_border_right > 0 || 'yes' === $settings->enable_box_shadow ) : ?>
 
 					<?php
 					if ( 'yes' === $converted || isset( $settings->info_box_padding_dimension_top ) && isset( $settings->info_box_padding_dimension_bottom ) && isset( $settings->info_box_padding_dimension_left ) && isset( $settings->info_box_padding_dimension_right ) ) {
@@ -478,14 +479,20 @@ if ( 'none' !== $settings->image_type ) {
 		<?php UABB_Helper::uabb_gradient_css( $settings->bg_gradient ); ?>
 	<?php endif; ?>
 	}
-<?php } ?>
+	<?php
+}
+if ( isset( $settings->enable_box_shadow ) && 'yes' === $settings->enable_box_shadow ) {
+	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox {
 		-webkit-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
 		-moz-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
 		-o-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
 		box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
 		}
-<?php if ( isset( $settings->bg_color_hover ) && '' !== $settings->bg_color_hover ) { ?>
+	<?php
+}
+if ( isset( $settings->bg_color_hover ) && '' !== $settings->bg_color_hover ) {
+	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox:hover {
 		background:<?php echo esc_attr( $settings->bg_color_hover ); ?>;
 	}
@@ -563,6 +570,25 @@ if ( 'custom' === $settings->min_height_switch && '' !== $settings->min_height )
 		color: <?php echo ( '' !== $settings->subhead_color_hover ) ? esc_attr( $settings->subhead_color_hover ) : ''; ?>;
 	}
 <?php } ?>
+
+/* Icon Margin */
+<?php if ( 'icon' === $settings->image_type || 'photo' === $settings->image_type ) { ?>
+	<?php
+	if ( 'left-title' === $settings->img_icon_position || 'left' === $settings->img_icon_position ) {
+		?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .infobox-left .uabb-imgicon-wrap {
+		margin-right: <?php echo ( '' !== $settings->icon_spacing ) ? esc_attr( $settings->icon_spacing ) : '20'; ?>px;
+	}
+		<?php
+	}
+	if ( 'right-title' === $settings->img_icon_position || 'right' === $settings->img_icon_position ) {
+		?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .infobox-right .uabb-imgicon-wrap {
+		margin-left: <?php echo ( '' !== $settings->icon_spacing ) ? esc_attr( $settings->icon_spacing ) : '20'; ?>px;
+	}
+	<?php } ?>
+<?php } ?>
+
 /* Icon Margin */
 <?php if ( 'icon' === $settings->image_type ) { ?>
 	<?php
@@ -933,6 +959,9 @@ if ( 'icon' === $settings->image_type ) {
 		}
 		$cal_width = $cal_width + 20;
 	}
+}
+if ( 'left-title' === $settings->img_icon_position || 'left' === $settings->img_icon_position || 'right-title' === $settings->img_icon_position || 'right' === $settings->img_icon_position ) {
+	$cal_width = $cal_width + intval( $settings->icon_spacing );
 }
 ?>
 

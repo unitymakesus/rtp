@@ -140,13 +140,19 @@ class FLCalloutModule extends FLBuilderModule {
 
 		echo $this->settings->title;
 
+		if ( 'right-title' === $this->settings->icon_position ) {
+			$this->render_image( 'right-title' );
+		}
+
 		if ( ! empty( $this->settings->link ) ) {
 			echo '</a>';
 		}
 
 		echo '</span>';
 
-		$this->render_image( 'right-title' );
+		if ( 'right-title' !== $this->settings->icon_position ) {
+			$this->render_image( 'right-title' );
+		}
 
 		echo '</' . $this->settings->title_tag . '>';
 	}
@@ -227,6 +233,10 @@ class FLCalloutModule extends FLBuilderModule {
 			'sr_text'         => $this->settings->sr_text,
 			'link'            => $this->settings->link,
 		);
+
+		if ( isset( $this->settings->icon_position ) && ( 'left-title' === $this->settings->icon_position || 'right-title' === $this->settings->icon_position ) ) {
+			unset( $settings['link'] );
+		}
 
 		foreach ( $this->settings as $key => $value ) {
 			if ( strstr( $key, 'icon_' ) ) {

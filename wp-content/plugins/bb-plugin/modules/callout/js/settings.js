@@ -9,11 +9,13 @@
 				iconSize = form.find( '#fl-field-icon_size input[type=number]' ),
 				buttonBgColor = form.find( 'input[name=btn_bg_color]' ),
 				icon = form.find( 'input[name=icon]' ),
-				icon2 = form.find( 'input[name=btn_icon]' );
+				icon2 = form.find( 'input[name=btn_icon]' ),
+				photoCrop = form.find( 'select[name=photo_crop]' );
 
+				this._flipSettings();
 				icon.on( 'change', this._flipSettings );
 				icon2.on( 'change', this._flipSettings );
-				this._flipSettings()
+				photoCrop.on( 'change', this._photoCropChanged );
 
 			// Preview events.
 			align.on('change', this._previewAlign);
@@ -102,6 +104,18 @@
 				preview.updateCSSRule( selector, 'border-color', bgColor );
 			} else {
 				preview.delayPreview( e );
+			}
+		},
+
+		_photoCropChanged: function() {
+			var form = $( '.fl-builder-settings' ),
+				crop = form.find( 'select[name=photo_crop]' ),
+				radius = form.find( '.fl-border-field-radius' );
+
+			if ( 'circle' === crop.val() ) {
+				radius.hide();
+			} else {
+				radius.show();
 			}
 		},
 	});

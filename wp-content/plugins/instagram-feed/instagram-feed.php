@@ -3,7 +3,7 @@
 Plugin Name: Smash Balloon Instagram Feed
 Plugin URI: https://smashballoon.com/instagram-feed
 Description: Display beautifully clean, customizable, and responsive Instagram feeds.
-Version: 2.4.6
+Version: 2.5
 Author: Smash Balloon
 Author URI: https://smashballoon.com/
 License: GPLv2 or later
@@ -23,7 +23,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if ( ! defined( 'SBIVER' ) ) {
-	define( 'SBIVER', '2.4.6' );
+	define( 'SBIVER', '2.5' );
 }
 // Db version.
 if ( ! defined( 'SBI_DBVERSION' ) ) {
@@ -97,6 +97,7 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-cron-updater.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-display-elements.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-feed.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-oembed.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-parse.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post-set.php';
@@ -547,25 +548,25 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . "options";
 		$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%!sbi\_%')
+	        DELETE
+	        FROM $table_name
+	        WHERE `option_name` LIKE ('%!sbi\_%')
         " );
 		$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
+	        DELETE
+	        FROM $table_name
+	        WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
         " );
 		$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
+	        DELETE
+	        FROM $table_name
+	        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
         " );
 		$wpdb->query( "
-    DELETE
-    FROM $table_name
-    WHERE `option_name` LIKE ('%sb_wlupdated_%')
-    " );
+		    DELETE
+		    FROM $table_name
+		    WHERE `option_name` LIKE ('%sb_wlupdated_%')
+	    " );
 
 		//image resizing
 		$upload                 = wp_upload_dir();
@@ -597,10 +598,12 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			        FROM $table_name
 			        WHERE `option_name` LIKE ('%\_transient\_timeout\_\$sbi\_%')
 			        " );
-		delete_option( 'sbi_hashtag_ids' );
-		delete_option( 'sb_instagram_errors' );
 		delete_option( 'sbi_usage_tracking_config' );
 		delete_option( 'sbi_usage_tracking' );
+		delete_option( 'sbi_oembed_token' );
+		delete_option( 'sbi_rating_notice' );
+		delete_option( 'sbi_refresh_report' );
+		delete_option( 'sbi_welcome_seen' );
 
 		global $wp_roles;
 		$wp_roles->remove_cap( 'administrator', 'manage_instagram_feed_options' );

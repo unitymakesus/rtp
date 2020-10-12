@@ -43,9 +43,8 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
         // Show "ghost" facet choices
         // For performance gains, only run if facets are in use
         $show_ghosts = FWP()->helper->facet_is( $facet, 'ghosts', 'yes' );
-        $is_filtered = FWP()->unfiltered_post_ids !== FWP()->facet->query_args['post__in'];
 
-        if ( $show_ghosts && $is_filtered && ! empty( FWP()->unfiltered_post_ids ) ) {
+        if ( $show_ghosts && FWP()->is_filtered ) {
             $raw_post_ids = implode( ',', FWP()->unfiltered_post_ids );
 
             $sql = "

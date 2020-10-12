@@ -298,6 +298,22 @@ class SB_Instagram_Posts_Manager
 		sbi_create_database_table();
 	}
 
+	public static function top_post_request_already_made( $hashtag ) {
+		$list_of_top_hashtags = get_option( 'sbi_top_api_calls', array() );
+
+		return in_array( $hashtag, $list_of_top_hashtags, true );
+	}
+
+	public static function maybe_update_list_of_top_hashtags( $hashtag ) {
+		$list_of_top_hashtags = get_option( 'sbi_top_api_calls', array() );
+
+		if ( ! in_array( $hashtag, $list_of_top_hashtags, true ) ) {
+			$list_of_top_hashtags[] = $hashtag;
+			update_option( 'sbi_top_api_calls', $list_of_top_hashtags );
+		}
+
+	}
+
 	/**
 	 * @return array
 	 *
@@ -330,14 +346,29 @@ class SB_Instagram_Posts_Manager
 
 			update_option( 'sb_instagram_errors', $this->errors, false );
 		} else {
+
+			foreach ( $this->errors as $type => $error ) {
+				if ( strpos( $type, 'expiration_' ) !== false ) {
+					unset( $this->errors[ $type ] );
+				}
+			}
+
 			delete_option( 'sb_instagram_error_page' );
-			delete_option( 'sb_instagram_errors' );
+			update_option( 'sb_instagram_errors', $this->errors, false );
 		}
 	}
 
 	public function remove_all_errors() {
-		delete_option( 'sb_instagram_errors' );
+		if ( empty( $this->errors ) ) {
+			return;
+		}
+		foreach ( $this->errors as $type => $error ) {
+			if ( strpos( $type, 'expiration_' ) === false ) {
+				unset( $this->errors[ $type ] );
+			}
+		}
 		delete_option( 'sb_instagram_error_page' );
+		update_option( 'sb_instagram_errors', $this->errors, false );
 		sb_instagram_cron_clear_cache();
 	}
 
@@ -408,6 +439,10 @@ class SB_Instagram_Posts_Manager
 						if ( strpos( $key, 'at_100' ) !== false ) {
 							$error_100_found = true;
 						}
+					} elseif ( strpos( $key, 'expiration_' ) !== false ) {
+						$reconnect_instructions_needed = true;
+
+						$error = '<p>' . $value[1] . '</p>';
 					}
 					if ( isset( $value[2] ) ) {
 						$hash = '#' . $value[2];
@@ -505,6 +540,8 @@ class SB_Instagram_Posts_Manager
 			$is_delay = (get_transient( SBI_USE_BACKUP_PREFIX . 'sbi_'  . $account_id ) !== false);
 		}
 
+		$is_delay = apply_filters( 'sbi_is_api_delay', $is_delay );
+
 		return $is_delay;
 	}
 
@@ -525,6 +562,8 @@ class SB_Instagram_Posts_Manager
 
 				}
 			} elseif ( strpos( $error_key, 'at_' ) !== false ) {
+				$are_errors = true;
+			} elseif ( strpos( $error_key, 'expiration_' ) !== false ) {
 				$are_errors = true;
 			}
 		}

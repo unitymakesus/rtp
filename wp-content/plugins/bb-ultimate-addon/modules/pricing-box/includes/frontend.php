@@ -52,7 +52,8 @@ if ( 'yes' === $settings->add_legend ) {
 		if ( ! is_object( $settings->pricing_columns[ $i ] ) ) {
 			continue;
 		}
-		$pricingColumn = $settings->pricing_columns[ $i ]; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+		$pricing_column = $settings->pricing_columns[ $i ];
+		$layout         = 'uabb-duration-layout-' . $pricing_column->duration_position;
 
 		?>
 	<div class="uabb-pricing-table-col-<?php echo esc_attr( $columns ); ?> uabb-pricing-table-outter-<?php echo esc_attr( $i + 1 ); ?> uabb-pricing-element-box">
@@ -65,28 +66,38 @@ if ( 'yes' === $settings->add_legend ) {
 			}
 			?>
 			<div class="uabb-pricing-table-inner-wrap">
-				<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-pricing-table-title"><?php echo $pricingColumn->title; ?></<?php echo esc_attr( $settings->title_typography_tag_selection ); // @codingStandardsIgnoreLine. ?>>
-				<<?php echo esc_attr( $settings->price_typography_tag_selection ); ?> class="uabb-pricing-table-price">
-					<?php echo $pricingColumn->price; // @codingStandardsIgnoreLine. ?>
+			<?php if ( 'icon' === $pricing_column->title_icon_setting ) { ?>
+				<span class="uabb-price-table-title-icon"><i class="<?php echo esc_attr( $pricing_column->title_icon ); ?>" aria-hidden="true"></i>
+							</span>
+					<?php } ?>
+				<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-pricing-table-title"><?php echo $pricing_column->title; ?></<?php echo esc_attr( $settings->title_typography_tag_selection ); // @codingStandardsIgnoreLine. ?>>
+
+				<?php if ( 'above' === $settings->price_position ) { ?>
+					<<?php echo esc_attr( $settings->price_typography_tag_selection ); ?> class="uabb-pricing-table-price">
+					<?php if ( 'yes' === $pricing_column->set_sale_price && ! empty( $pricing_column->original_price ) ) { ?>
+							<span class="uabb-price-table-original-price uabb-price-typo-excluded"><?php echo wp_kses_post( $pricing_column->original_price ); ?></span>
+					<?php } ?> 
+					<?php echo $pricing_column->price; // @codingStandardsIgnoreLine. ?>
 					<?php
-					if ( '' !== $pricingColumn->duration ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+					if ( '' !== $pricing_column->duration ) {
 						?>
-					<span class="uabb-pricing-table-duration"><?php echo $pricingColumn->duration; // @codingStandardsIgnoreLine. ?></span>
+						<span class="uabb-pricing-table-duration <?php echo esc_attr( $layout ); ?>"><?php echo $pricing_column->duration; // @codingStandardsIgnoreLine. ?></span>
 						<?php
 					}
 					?>
-				</<?php echo esc_attr( $settings->price_typography_tag_selection ); ?>>
+					</<?php echo esc_attr( $settings->price_typography_tag_selection ); ?>>
+				<?php } ?>
 				<ul class="uabb-pricing-table-features">
 					<?php
-					if ( ! empty( $pricingColumn->features ) ) : // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
-						$count = count( $pricingColumn->features ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+					if ( ! empty( $pricing_column->features ) ) :
+						$count = count( $pricing_column->features );
 						for ( $j = 0; $j < $count; $j++ ) :
 							?>
-							<?php if ( '' !== trim( $pricingColumn->features[ $j ] ) ) : // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase ?>
+							<?php if ( '' !== trim( $pricing_column->features[ $j ] ) ) : ?>
 						<li>
 								<?php
 								if ( 'yes' === $settings->add_legend && 'yes' === $settings->responsive_size ) :
-									if ( isset( $settings->legend_column->features[ $j ] ) ) : // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase
+									if ( isset( $settings->legend_column->features[ $j ] ) ) :
 										?>
 										<span class="uabb-pricing-ledgend">
 											<?php echo $settings->legend_column->features[ $j ]; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -95,17 +106,52 @@ if ( 'yes' === $settings->add_legend ) {
 										endif;
 							endif;
 								?>
+								<?php if ( 'before' === $pricing_column->icon_position ) { ?>
 
-								<?php echo $pricingColumn->features[ $j ]; // @codingStandardsIgnoreLine. ?>
+									<?php if ( 'icon' === $pricing_column->image_type ) { ?>
+							<span class="uabb-feature-list-icon uabb-price-table-icon-before"><i class="<?php echo esc_attr( $pricing_column->icon ); ?>" aria-hidden="true"></i>
+							</span>
+					<?php } ?>
+								<?php echo $pricing_column->features[ $j ]; // @codingStandardsIgnoreLine. ?>
+					<?php } else { ?>
+								<?php echo $pricing_column->features[ $j ]; // @codingStandardsIgnoreLine. ?>
+									<?php if ( 'icon' === $pricing_column->image_type ) { ?>
+							<span class="uabb-feature-list-icon uabb-price-table-icon-after"><i class="<?php echo esc_attr( $pricing_column->icon ); ?>" aria-hidden="true"></i>
+							</span>
+					<?php } ?>
+						<?php } ?>
+
 						</li>
 						<?php endif; ?>
 						<?php endfor; ?>
 					<?php endif; ?> 
 				</ul>
+				<?php if ( 'below' === $settings->price_position ) { ?>
+					<<?php echo esc_attr( $settings->price_typography_tag_selection ); ?> class="uabb-pricing-table-price">
+					<?php if ( 'yes' === $pricing_column->set_sale_price && ! empty( $pricing_column->original_price ) ) { ?>
+							<span class="uabb-price-table-original-price uabb-price-typo-excluded"><?php echo wp_kses_post( $pricing_column->original_price ); ?></span>
+					<?php } ?> 
+					<?php echo $pricing_column->price; // @codingStandardsIgnoreLine. ?>
+					<?php
+					if ( '' !== $pricing_column->duration ) {
+						?>
+						<span class="uabb-pricing-table-duration <?php echo esc_attr( $layout ); ?>"><?php echo $pricing_column->duration; // @codingStandardsIgnoreLine. ?></span>
+						<?php
+					}
+					?>
+					</<?php echo esc_attr( $settings->price_typography_tag_selection ); ?>>
+				<?php } ?>
 				<?php ( 'yes' === $settings->pricing_columns[ $i ]->show_button ) ? $module->render_button( $i ) : ''; ?>
 				<?php do_action( 'uabb_price_box_button', $i ); ?>
 			</div>
 		</div>
+		<?php
+		if ( isset( $settings->pricing_columns[ $i ]->ribbon_style ) && 'none' !== $settings->pricing_columns[ $i ]->ribbon_style ) {
+			?>
+		<div class="uabb-price-box-ribbon-<?php echo esc_attr( $columns ); ?> uabb-ribbon-<?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_style ); ?> uabb-ribbon-<?php echo esc_attr( $settings->pricing_columns[ $i ]->horizontal_pos ); ?>">
+			<div class="uabb-price-box-ribbon-content"><?php echo wp_kses_post( $settings->pricing_columns[ $i ]->ribbon_title ); ?></div>
+		</div>
+		<?php } ?>
 	</div>
 		<?php
 

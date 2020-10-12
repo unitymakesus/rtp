@@ -5,12 +5,19 @@
  *  @package UABB Fancy Text Module
  */
 
+$class = 'uabb-fancy-heading';
+
+	$class .= ' uabb-fancy-text-' . $settings->effect_type;
+if ( in_array( $settings->effect_type, array( 'swirl', 'blinds', 'wave' ) ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+	$class .= ' uabb-fancy-letters';
+}
+
 ?>
 
 <div class="uabb-module-content uabb-fancy-text-node">
 <?php if ( ! empty( $settings->effect_type ) ) { ?>
-	<?php echo '<' . esc_attr( $settings->text_tag_selection ); ?> class="uabb-fancy-text-wrap uabb-fancy-text-<?php echo esc_attr( $settings->effect_type ); ?>"><!--
-	--><span class="uabb-fancy-text-prefix"><?php echo $settings->prefix; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php echo '<!--'; ?>
+	<?php echo '<' . esc_attr( $settings->text_tag_selection ); ?> class="uabb-fancy-text-wrap <?php echo esc_attr( $class ); ?>"><!--
+	--><span class="uabb-fancy-plain-text uabb-fancy-text-wrapper uabb-fancy-text-prefix"><?php echo $settings->prefix; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php echo '<!--'; ?>
 	<?php
 		$output = '';
 
@@ -21,9 +28,7 @@
 			$output .= '</span>';
 		$output     .= '</span><!--';
 		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	if ( 'slide_up' === $settings->effect_type ) {
+	} elseif ( 'slide_up' === $settings->effect_type ) {
 		$adjust_class = '';
 		$slide_order  = array( "\r\n", "\n", "\r", '<br/>', '<br>' );
 		$replace      = '|';
@@ -47,10 +52,14 @@
 			$output .= '</span>';
 			$output .= '</span><!--';
 			echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	} else {
+		$output .= '--><span class="uabb-fancy-text-dynamic-wrapper uabb-fancy-text-wrapper">';
+		$output .= '</span><!--';
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	?>
 
-	<?php echo '-->'; ?><span class="uabb-fancy-text-suffix"><?php echo $settings->suffix; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+	<?php echo '-->'; ?><span class=" uabb-fancy-plain-text uabb-fancy-text-wrapper uabb-fancy-text-suffix"><?php echo $settings->suffix; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<?php echo '</' . esc_attr( $settings->text_tag_selection ) . '>'; ?>
 <?php } ?>
 </div>

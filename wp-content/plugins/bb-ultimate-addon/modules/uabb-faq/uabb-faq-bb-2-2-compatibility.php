@@ -239,7 +239,7 @@ FLBuilder::register_module(
 						),
 						'faq_title_bg_hover_color' => array(
 							'type'        => 'color',
-							'label'       => __( 'Background Hover/Focus Color', 'uabb' ),
+							'label'       => __( 'Background Hover/Active Color', 'uabb' ),
 							'show_reset'  => true,
 							'show_alpha'  => true,
 							'connections' => array( 'color' ),

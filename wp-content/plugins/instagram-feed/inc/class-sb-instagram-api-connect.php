@@ -228,9 +228,6 @@ class SB_Instagram_API_Connect
 					$error = '<p><b>' . sprintf( __( 'Error: Permission for the Smash Balloon App is not valid or has expired.', 'instagram-feed' ), $user_name ) . ' ' . __( 'Feed will not update.', 'instagram-feed' ) . '</b></p>';
 					$error .= '<p>' . sprintf( __( 'API error %s:', 'instagram-feed' ), $response['error']['code'] ) . ' ' . $response['error']['message'] . '</p>';
 					$sb_instagram_posts_manager->add_error( 'at_100_' . $user_name, array( 'Business 100 Error', $error, $response['error']['code'] ) );
-					if ( current_user_can( $cap ) ) {
-						$error .= '<p class="sbi-error-directions"><a href="https://smashballoon.com/instagram-feed/docs/errors/" target="_blank" rel="noopener">' . __( 'Directions on how to resolve this issue', 'instagram-feed' ) . '</a></p>';
-					}
 					$sb_instagram_posts_manager->add_frontend_error( 'at_100_' . $user_name, $error );
 
 				} else {
@@ -352,7 +349,7 @@ class SB_Instagram_API_Connect
 
 		if ( $account_type === 'basic' ) {
 			if ( $endpoint_slug === 'access_token' ) {
-				$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
+				$url = 'https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} elseif ( $endpoint_slug === 'header' ) {
 				$url = 'https://graph.instagram.com/me?fields=id,username,media_count&access_token=' . sbi_maybe_clean( $connected_account['access_token'] );
 			} else {

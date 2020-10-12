@@ -129,7 +129,7 @@ $settings->fancy_color = UABB_Helper::uabb_colorpicker( $settings, 'fancy_color'
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'fancy_text_typo',
-				'selector'     => ".fl-node-$id .uabb-fancy-text-main",
+				'selector'     => ".fl-node-$id .uabb-fancy-text-wrap .uabb-fancy-text-main, .fl-node-$id .uabb-fancy-text-wrap .uabb-fancy-text-dynamic-wrapper.uabb-fancy-text-wrapper",
 			)
 		);
 	}
@@ -137,7 +137,8 @@ $settings->fancy_color = UABB_Helper::uabb_colorpicker( $settings, 'fancy_color'
 ?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-fancy-text-wrap .uabb-fancy-text-main .uabb-slide_text,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-fancy-text-wrap .uabb-fancy-text-main .uabb-typed-main,
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content .uabb-fancy-text-wrap .uabb-fancy-text-main {
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content .uabb-fancy-text-wrap .uabb-fancy-text-main,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-fancy-text-wrap .uabb-fancy-text-dynamic-wrapper.uabb-fancy-text-wrapper {
 	<?php if ( '' !== $settings->fancy_color ) : ?>
 		color: <?php echo esc_attr( $settings->fancy_color ); ?>;
 	<?php endif; ?>

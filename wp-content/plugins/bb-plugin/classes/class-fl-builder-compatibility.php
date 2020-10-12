@@ -43,6 +43,7 @@ final class FLBuilderCompatibility {
 		add_action( 'fl_theme_builder_before_render_header', array( __CLASS__, 'fix_lazyload_header_start' ) );
 		add_action( 'fl_theme_builder_after_render_header', array( __CLASS__, 'fix_lazyload_header_end' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'ee_remove_stylesheet' ), 99999 );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'fix_woocommerce_products_filter' ), 12 );
 
 		// Filters
 		add_filter( 'fl_builder_is_post_editable', array( __CLASS__, 'bp_pages_support' ), 11, 2 );
@@ -819,6 +820,19 @@ final class FLBuilderCompatibility {
 		$rewrite_rules = array_merge( $flpaged_rules, $rewrite_rules );
 
 		return $rewrite_rules;
+	}
+	/**
+	 * Fix compatibility issue Woocommerce Products Filter Add-on
+	 *
+	 * @since 2.4.1
+	 */
+	public static function fix_woocommerce_products_filter() {
+		if ( class_exists( 'WooCommerce' )
+		&& class_exists( 'WooCommerce_Product_Filter_Plugin\Plugin' )
+		&& class_exists( 'FLBuilderModel' )
+		&& ( FLBuilderModel::is_builder_active() ) ) {
+			wp_deregister_script( 'wcpf-plugin-polyfills-script' );
+		}
 	}
 }
 FLBuilderCompatibility::init();

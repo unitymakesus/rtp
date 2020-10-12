@@ -6005,8 +6005,11 @@ final class FLBuilderModel {
 
 		// glob() will return false on error so cast as an array() just in case.
 		foreach ( (array) $templates as $template ) {
+			$basename = basename( $template );
 
-			if ( 'templates.dat' == basename( $template ) ) {
+			if ( 'templates.dat' === $basename ) {
+				continue;
+			} elseif ( true !== FL_BUILDER_LITE && 'templates-config.dat' === $basename ) {
 				continue;
 			}
 

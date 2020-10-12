@@ -53,6 +53,11 @@ class Common {
 
 		// Translate Press integration.
 		add_filter( 'smush_skip_image_from_lazy_load', array( $this, 'trp_translation_editor' ) );
+
+		// Jetpack CDN compatibility.
+		if ( class_exists( '\Jetpack' ) ) {
+			add_filter( 'smush_cdn_skip_image', array( $this, 'jetpack_cdn_compat' ), 10, 2 );
+		}
 	}
 
 	/**
@@ -370,16 +375,47 @@ class Common {
 	 * Disables "Lazy Load" on Translate Press translate editor
 	 *
 	 * @param bool   $skip  Should skip? Default: false.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function trp_translation_editor( $skip ){
-		
-		if( ! class_exists( '\TRP_Translate_Press' ) || ! isset( $_GET['trp-edit-translation'] ) ){	
+
+		if( ! class_exists( '\TRP_Translate_Press' ) || ! isset( $_GET['trp-edit-translation'] ) ){
 			return $skip;
 		}
 
 		return true;
+	}
+
+	/**************************************
+	 *
+	 * Jetpack
+	 *
+	 * @since 3.7.1
+	 */
+
+	/**
+	 * Skips the url from the srcset from our CDN when it's already served by Jetpack's CDN.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param bool   $skip  Should skip? Default: false.
+	 * @param string $url Source.
+	 *
+	 * @return bool
+	 */
+	public function jetpack_cdn_compat( $skip, $url ) {
+		if ( method_exists( '\Jetpack', 'is_module_active' ) && ! \Jetpack::is_module_active( 'photon' ) ) {
+			return $skip;
+		}
+
+		$parsed_url = wp_parse_url( $url );
+
+		// The image already comes from Jetpack's CDN.
+		if ( preg_match( '#^i[\d]{1}.wp.com$#i', $parsed_url['host'] ) ) {
+			return true;
+		}
+		return $skip;
 	}
 
 	/**************************************

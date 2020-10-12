@@ -46,11 +46,21 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'left'  => array(
-									'fields' => array( 'align_items', 'mobile_view' ),
+									'fields' => array( 'align_items', 'mobile_view', 'list_alignment' ),
 								),
 								'right' => array(
-									'fields' => array( 'align_items', 'mobile_view' ),
+									'fields' => array( 'align_items', 'mobile_view', 'list_alignment' ),
 								),
+							),
+						),
+						'list_alignment'             => array(
+							'type'       => 'align',
+							'label'      => __( 'List Alignment', 'uabb' ),
+							'responsive' => 'true',
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '',
+								'property' => 'text-align',
 							),
 						),
 						'align_items'                => array(
@@ -547,6 +557,7 @@ FLBuilder::register_settings_form(
 								'type'        => 'text',
 								'label'       => __( 'Custom Text', 'uabb' ),
 								'description' => '',
+								'help'        => __( 'It is recommended to add only one character.', 'uabb' ),
 							),
 							'custom_color' => array(
 								'type'        => 'color',

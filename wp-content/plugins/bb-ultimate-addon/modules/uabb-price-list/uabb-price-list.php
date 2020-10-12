@@ -361,6 +361,7 @@ class UABBPriceList extends FLBuilderModule {
 			foreach ( $this->settings->add_price_list_item  as $index => $item ) {
 				?>
 					<div class="uabb-price-list-item uabb-price-list-animation-<?php echo esc_attr( $this->settings->price_list_hover_animation ); ?>">
+					<?php if ( 'none' !== $item->image_type || ! empty( $item->photo_src ) || ! empty( $item->photo_url ) ) { ?>
 						<div class="uabb-price-list-image">
 							<?php if ( 'library' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_src ) ) { ?>
 								<img src=" <?php echo esc_url( $item->photo_src ); ?>">
@@ -369,6 +370,7 @@ class UABBPriceList extends FLBuilderModule {
 								<img src=" <?php echo $item->photo_url; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
 							<?php } ?>
 						</div>
+							<?php } ?>
 						<div class="uabb-price-list-text">
 							<div class="uabb-price-list-header">
 								<?php echo $this->render_item_header( $item ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

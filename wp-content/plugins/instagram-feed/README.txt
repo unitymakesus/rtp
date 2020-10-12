@@ -3,7 +3,7 @@ Contributors: smashballoon, craig-at-smash-balloon
 Tags: Instagram, Instagram feed, Instagram photos, Instagram widget, Instagram gallery
 Requires at least: 3.4
 Tested up to: 5.5
-Stable tag: 2.4.6
+Stable tag: 2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -325,6 +325,17 @@ We understand that sometimes you need help, have issues or just have questions. 
 * Plus more customization options added all the time!
 
 == Changelog ==
+= 2.5 =
+* New: Added support for Instagram oEmbeds. When you share a link to a Instagram post, WordPress automatically converts it into an embedded Facebook post for you (an "oEmbed"). However, on October 24, 2020, WordPress is discontinuing support for Instagram oEmbeds and so any existing or new embeds will no longer work. Don't worry though, we have your back! This update adds support for Instagram oEmbeds and so, after updating, the Instagram Feed plugin will automatically keep your oEmbeds working. It will also power any new oEmbeds you post going forward.
+* New: Install our other free social media plugins right from the Instagram Feed settings menu. Use our Facebook, YouTube, and Twitter plugins to add even more social content to your website and help further engage your viewers and increase your followers.
+* Tweak: Changed the names of the CSS and JavaScript files to prevent certain ad blockers from hiding the feed. Original files with original names still included in this update.
+* Tweak: Background caching and favoring local images are now the default settings for new installs.
+* Fix: Fixed PHP warning too few arguments when using Spanish translation files.
+
+= 2.4.7 =
+* Important: Due to recent Instagram changes, private accounts will need to be manually refreshed every 60 days. If you have a private Instagram account, consider making it public to avoid needing to manually reconnect your account.
+* New: Added a notice for accounts that are private which lets you know how long until the account needs to be refreshed. You will also be alerted using our admin notice and email notification system if a private account will soon need to be refreshed.
+
 = 2.4.6 =
 * New: Added a PHP hook "sbi_clear_page_caches" which allows you to dynamically disable the Instagram Feed code that clears caches created by common page caching plugins.
 * New: Added a PHP hook "sbi_resize_url" which allows you to change the default URL of locally stored images. This can be helpful for sites using CDNs.

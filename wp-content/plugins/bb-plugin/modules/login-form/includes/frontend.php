@@ -14,14 +14,14 @@
 	<?php if ( 'stacked' === $settings->layout ) : ?>
 		<?php if ( isset( $settings->forget ) && 'yes' === $settings->forget ) : ?>
 		<div class="fl-input-field fl-remember-forget">
-			<a href="<?php echo wp_lostpassword_url( get_permalink() ); ?>" title="Lost Password">Forgot?</a>
+			<a href="<?php echo wp_lostpassword_url( get_permalink() ); ?>" title="Lost Password"><?php _e( 'Forgot?', 'fl-builder' ); ?></a>
 		</div>
 		<?php endif; ?>
 
 		<?php if ( isset( $settings->remember ) && 'yes' === $settings->remember ) : ?>
 		<div class="fl-input-field fl-remember-checkbox">
 			<label for="fl-login-checkbox-<?php echo $id; ?>">
-				<input type="checkbox" name="fl-login-form-remember" value="1" /><span class="fl-remember-checkbox-text">Remember me</span>
+				<input type="checkbox" name="fl-login-form-remember" value="1" /><span class="fl-remember-checkbox-text"><?php _e( 'Remember me', 'fl-builder' ); ?></span>
 			</label>
 		</div>
 		<?php endif; ?>

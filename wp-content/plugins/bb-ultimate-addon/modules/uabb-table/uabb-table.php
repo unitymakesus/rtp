@@ -31,6 +31,8 @@ class UABBTable extends FLBuilderModule {
 			)
 		);
 
+		$this->add_css( 'font-awesome-5' );
+
 		add_filter( 'wp_handle_upload_prefilter', array( $this, 'uabb_csv_file_handle' ), 10, 1 );
 	}
 	/**

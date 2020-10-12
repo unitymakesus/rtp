@@ -33,7 +33,8 @@
 		equal_height_box: '<?php echo esc_attr( $settings->equal_height_box ); ?>',
 		uabb_masonary_filter_type: '<?php echo isset( $settings->$filter_type ) ? esc_attr( $settings->$filter_type ) : 'buttons'; ?>',
 		mesonry_equal_height: '<?php echo isset( $settings->mesonry_equal_height ) ? esc_attr( $settings->mesonry_equal_height ) : 'no'; ?>',
-		blog_image_position: '<?php echo esc_attr( $settings->blog_image_position ); ?>'
+		blog_image_position: '<?php echo esc_attr( $settings->blog_image_position ); ?>',
+		element_space: '<?php echo esc_attr( $settings->element_space ); ?>'
 	};
 
 	jQuery(document).ready( function() {
@@ -173,5 +174,10 @@
 	});
 
 	new UABBBlogPosts( args );
+	<?php if ( 'grid' === $settings->is_carousel ) { ?>
+	jQuery(window).on('load', function() {
+		jQuery('.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-grid').isotope('layout');
+	});
+	<?php } ?>
 
 })(jQuery);

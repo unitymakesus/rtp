@@ -101,6 +101,11 @@ body h6.fl-callout-title {
 	vertical-align: top;
 	padding-left: 15px;
 }
+
+.fl-callout-icon-right-title .fl-callout-title-link .fl-icon,
+.fl-callout-icon-right-title .fl-callout-title-text .fl-icon {
+	display: inline-block;
+}
 .fl-callout-icon-left .fl-callout-content,
 .fl-callout-icon-right .fl-callout-content,
 .fl-callout-icon-left-text .fl-callout-text-wrap,

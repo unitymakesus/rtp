@@ -18,6 +18,7 @@ if ( 'transparent' === $settings->dual_button_style ) {
 if ( 'default' === $settings->dual_button_style ) {
 	$theme_button = 'ast-button';
 }
+
 ?>
 <div class="uabb-module-content uabb-dual-button <?php echo 'uabb-align-' . esc_attr( $settings->dual_button_align ); ?>">
 	<div class="uabb-dual-button-wrapper <?php echo 'uabb-' . esc_attr( $settings->dual_button_type ); ?> <?php echo 'uabb-' . esc_attr( $settings->dual_button_type ) . '-' . esc_attr( $settings->dual_button_width_type ); ?>">

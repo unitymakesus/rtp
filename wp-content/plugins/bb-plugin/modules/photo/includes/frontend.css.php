@@ -17,6 +17,15 @@ FLBuilderCSS::responsive_rule( array(
 ) );
 
 // Border
+if ( 'circle' === $settings->crop ) {
+	$settings->border['radius'] = array(
+		'top_left'     => '',
+		'top_right'    => '',
+		'bottom_left'  => '',
+		'bottom_right' => '',
+	);
+}
+
 FLBuilderCSS::border_field_rule( array(
 	'settings'     => $settings,
 	'setting_name' => 'border',

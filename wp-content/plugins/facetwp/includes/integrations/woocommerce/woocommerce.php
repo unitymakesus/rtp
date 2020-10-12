@@ -112,12 +112,15 @@ class FacetWP_Integration_WooCommerce
             if ( 'product' == get_post_type( $post_id ) ) {
                 if ( 'variable' == $this->get_product_type( $post_id ) ) {
                     $product = wc_get_product( $post_id );
-                    $children = $product->get_children();
-                    $args['post_type'] = [ 'product', 'product_variation' ];
-                    $args['post__in'] = $children;
-                    $args['post__in'][] = $post_id;
-                    $args['posts_per_page'] = -1;
-                    unset( $args['p'] );
+
+                    if ( false !== $product ) {
+                        $children = $product->get_children();
+                        $args['post_type'] = [ 'product', 'product_variation' ];
+                        $args['post__in'] = $children;
+                        $args['post__in'][] = $post_id;
+                        $args['posts_per_page'] = -1;
+                        unset( $args['p'] );
+                    }
                 }
             }
         }
@@ -383,13 +386,15 @@ class FacetWP_Integration_WooCommerce
         $index_all = ( 'yes' === FWP()->helper->get_setting( 'wc_index_all', 'no' ) );
         $index_all = apply_filters( 'facetwp_index_all_products', $index_all );
 
-        if ( ! $index_all && ( 'product' == $post_type || 'product_variation' == $post_type ) ) {
+        if ( 'product' == $post_type || 'product_variation' == $post_type ) {
             $product = wc_get_product( $post_id );
-            if ( ! $product || ! $product->is_in_stock() ) {
+
+            if ( ! $product || ( ! $index_all && ! $product->is_in_stock() ) ) {
                 return true; // skip
             }
         }
 
+        // Default handling
         if ( 'product' != $post_type || empty( $facet['source'] ) ) {
             return $return;
         }
@@ -397,7 +402,6 @@ class FacetWP_Integration_WooCommerce
         // Ignore product attributes with "Used for variations" ticked
         if ( 0 === strpos( $facet['source'], 'tax/pa_' ) ) {
             if ( 'variable' == $this->get_product_type( $post_id ) ) {
-                $product = wc_get_product( $post_id );
                 $attrs = $product->get_attributes();
                 $attr_name = str_replace( 'tax/', '', $facet['source'] );
                 if ( isset( $attrs[ $attr_name ] ) && 1 === $attrs[ $attr_name ]['is_variation'] ) {
@@ -408,7 +412,6 @@ class FacetWP_Integration_WooCommerce
 
         // Custom woo fields
         if ( 0 === strpos( $facet['source'], 'woo/' ) ) {
-            $product = wc_get_product( $post_id );
             $source = substr( $facet['source'], 4 );
 
             // Price

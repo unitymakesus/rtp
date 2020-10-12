@@ -237,9 +237,53 @@ if ( 'left' === $settings->icon_position ) {
 	}
 	<?php
 }
-?>
 
-<?php
+if ( isset( $settings->list_alignment ) && 'top' !== $settings->icon_position ) {
+	?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-left,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-right {
+		text-align: <?php echo esc_attr( $settings->list_alignment ); ?>;
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-content-wrapper.uabb-info-list-left .uabb-info-list-content,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-content-wrapper.uabb-info-list-right .uabb-info-list-content {
+		width: auto;
+	}
+
+	<?php
+	if ( 'yes' === $settings->list_connector_option && 'left' === $settings->icon_position ) {
+		if ( 'center' === $settings->list_alignment ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-left li .uabb-info-list-connector {
+				left: 55%;
+			}
+			<?php
+		}
+		if ( 'right' === $settings->list_alignment ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-left li .uabb-info-list-connector {
+				left: 85%;
+			}
+			<?php
+		}
+	}
+	if ( 'yes' === $settings->list_connector_option && 'right' === $settings->icon_position ) {
+		if ( 'center' === $settings->list_alignment ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-right li .uabb-info-list-connector {
+				right: 55%;
+			}
+			<?php
+		}
+		if ( 'left' === $settings->list_alignment ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-right li .uabb-info-list-connector {
+				right: 85%;
+			}
+			<?php
+		}
+	}
+}
+
 /* Assign Style to inner Items*/
 	$list_item_counter = 0;
 foreach ( $settings->add_list_item as $item ) {
@@ -674,8 +718,27 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 		}
 	}
 	?>
+
+	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ) . 'px'; ?>) {
+		<?php if ( isset( $settings->list_alignment_medium ) && 'top' !== $settings->icon_position ) { ?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-left,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-right {
+				text-align: <?php echo esc_attr( $settings->list_alignment_medium ); ?>;
+			}	
+		<?php } ?>
+	}
+
 	@media ( max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ) . 'px'; ?> ) {
-		<?php if ( 'stack' === $settings->mobile_view ) { ?>
+		<?php if ( isset( $settings->list_alignment_responsive ) && 'top' !== $settings->icon_position ) { ?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-left,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-right {
+				text-align: <?php echo esc_attr( $settings->list_alignment_responsive ); ?>;
+			}	
+			<?php
+		}
+
+		if ( 'stack' === $settings->mobile_view ) {
+			?>
 			.fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-content-wrapper .uabb-info-list-icon {
 				padding: 0;
 				margin-bottom: 20px;

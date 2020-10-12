@@ -1281,6 +1281,8 @@ class BlogPostsModule extends FLBuilderModule {
 	public function enqueue_scripts() {
 
 		$this->add_js( 'jquery-infinitescroll' );
+		$this->add_js( 'imagesloaded' );
+		$this->add_js( 'jquery-throttle' );
 		$this->add_js( 'jquery-mosaicflow' );
 		$this->add_js( 'isotope', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-masonary.js', array( 'jquery' ), '', true );
 		$this->add_js( 'carousel', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-carousel.js', array( 'jquery' ), '', true );

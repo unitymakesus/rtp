@@ -1123,6 +1123,19 @@ body .fl-theme-builder-preview-select-item-child:hover {
 
 /* @endgroup Pinned UI */
 
+.fl-builder-content-panel-button svg {
+    transition-property: transform;
+    transition-duration: .25s;
+    transform: rotate(0deg) scale(1);
+    transform-origin: center;
+}
+.fl-builder-content-panel-is-showing .fl-builder-content-panel-button svg {
+    transform: rotate(135deg) scale(1.1) translate(.5px, -.5px);
+}
+.fl-builder--content-library-panel .fl-builder--panel-arrow svg {
+    vertical-align: inherit;
+}
+
 /* @group Content Panel
 ------------------------------------------------------ */
 @keyframes fl-builder-show-panel {
@@ -3795,6 +3808,7 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 	display: table;
 	background: none transparent;
 	border: none;
+	overflow: inherit;
 	width: calc(100% - 35px); /* extra 25px for field connections toggle) */
 }
 .fl-lightbox .fl-form-table tbody {
@@ -6259,7 +6273,7 @@ Rules to ensure compatibility with v2.0.
 .fl-builder-ui-skin--light .select2-search__field::placeholder {
 	color: #808080 !important;
 }
-.fl-builder-ui-skin--light .select2-search__field::-webkit-input-placeholder { 
+.fl-builder-ui-skin--light .select2-search__field::-webkit-input-placeholder {
 	color: #808080 !important;
 }
 .fl-builder-ui-skin--light .select2-search__field::-moz-placeholder{

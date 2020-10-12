@@ -8,9 +8,11 @@
 	$version_bb_check = UABB_Compatibility::$version_bb_check;
 	$converted        = UABB_Compatibility::$uabb_migration;
 
-	$settings->color      = UABB_Helper::uabb_colorpicker( $settings, 'color' );
-	$settings->desc_color = UABB_Helper::uabb_colorpicker( $settings, 'desc_color' );
-	$settings->bg_color   = UABB_Helper::uabb_colorpicker( $settings, 'bg_color' );
+	$settings->color         = UABB_Helper::uabb_colorpicker( $settings, 'color' );
+	$settings->desc_color    = UABB_Helper::uabb_colorpicker( $settings, 'desc_color' );
+	$settings->bg_color      = UABB_Helper::uabb_colorpicker( $settings, 'bg_color' );
+	$settings->bg_text_color = UABB_Helper::uabb_colorpicker( $settings, 'bg_text_color' );
+
 
 	$settings->heading_margin_top    = ( '' !== trim( $settings->heading_margin_top ) ) ? $settings->heading_margin_top : '0';
 	$settings->heading_margin_bottom = ( '' !== trim( $settings->heading_margin_bottom ) ) ? $settings->heading_margin_bottom : '15';
@@ -18,6 +20,30 @@
 	$settings->desc_margin_bottom    = ( '' !== trim( $settings->desc_margin_bottom ) ) ? $settings->desc_margin_bottom : '0';
 	$settings->img_size              = ( '' !== trim( $settings->img_size ) ) ? $settings->img_size : '50';
 
+if ( class_exists( 'FLBuilderCSS' ) ) {
+	if ( isset( $settings->head_vertical_position ) ) {
+		FLBuilderCSS::responsive_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'head_vertical_position',
+				'selector'     => ".fl-node-$id .uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before",
+				'prop'         => 'top',
+				'unit'         => 'px',
+			)
+		);
+	}
+	if ( isset( $settings->head_horizental_position ) ) {
+		FLBuilderCSS::responsive_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'head_horizental_position',
+				'selector'     => ".fl-node-$id .uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before",
+				'prop'         => 'left',
+				'unit'         => 'px',
+			)
+		);
+	}
+}
 if ( 'none' !== $settings->separator_style ) {
 
 	$position = '0';
@@ -140,11 +166,32 @@ if ( apply_filters( 'uabb_heading_remove_description_default_space', true ) ) {
 	}
 	?>
 }
-<?php if ( isset( $settings->bg_color ) ) { ?>
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-heading .uabb-heading-text {
-		<?php echo ( '' !== $settings->bg_color ) ? 'background:' . esc_attr( $settings->bg_color ) : ''; ?>
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-heading .uabb-heading-text {
+
+<?php if ( 'color' === $settings->heading_bg_type ) { ?>
+	<?php echo ( '' !== $settings->bg_color ) ? 'background:' . esc_attr( $settings->bg_color ) : ''; ?>
+<?php } elseif ( 'image' === $settings->heading_bg_type && isset( FLBuilderPhoto::get_attachment_data( $settings->heading_bg_img )->url ) ) { ?>
+	background-image: url(<?php echo esc_attr( FLBuilderPhoto::get_attachment_data( $settings->heading_bg_img )->url ); ?>);
+	background-position: <?php echo esc_attr( $settings->heading_bg_img_pos ); ?>;
+	background-size: <?php echo esc_attr( $settings->heading_bg_img_size ); ?>;
+	background-repeat: <?php echo esc_attr( $settings->heading_bg_img_repeat ); ?>;
+	background-attachment: <?php echo esc_attr( $settings->bg_attachment ); ?>;
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	<?php
+} elseif ( $version_bb_check ) {
+	if ( 'gradient' === $settings->heading_bg_type ) {
+		?>
+	background:<?php echo esc_attr( FLBuilderColor::gradient( $settings->heading_gradient ) ); ?>;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+		<?php
 	}
-<?php } ?>
+}
+
+?>
+}
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-heading {
 	margin-top: <?php echo esc_attr( $settings->heading_margin_top ); ?>px;
@@ -259,13 +306,28 @@ if ( apply_filters( 'uabb_heading_remove_description_default_space', true ) ) {
 			array(
 				'settings'     => $settings,
 				'setting_name' => 'desc_font_typo',
-				'selector'     => ".fl-node-$id .uabb-text-editor",
+				'selector'     => ".fl-node-$id .uabb-text-editor, .fl-node-$id .uabb-text-editor p",
 			)
 		);
 	}
 }
 ?>
+/* Background text styling */
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before {
+	color: <?php echo esc_attr( $settings->bg_text_color ); ?>;
+	<?php
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		FLBuilderCSS::typography_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'bg_text_typo',
+				'selector'     => ".fl-node-$id .uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before",
+			)
+		);
+	}
+	?>
 
+}
 <?php /* Global Setting If started */ ?>
 <?php if ( $global_settings->responsive_enabled ) { ?>
 

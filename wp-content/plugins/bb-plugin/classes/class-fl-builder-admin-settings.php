@@ -101,7 +101,7 @@ final class FLBuilderAdminSettings {
 			}
 		}
 		// Scripts
-		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array(), FL_BUILDER_VERSION );
+		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array( 'jquery-tiptip' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-actual', FL_BUILDER_URL . 'js/jquery.actual.min.js', array( 'jquery' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-multiselect', FL_BUILDER_URL . 'js/jquery.multiselect.js', array( 'jquery' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );

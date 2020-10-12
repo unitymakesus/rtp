@@ -30,6 +30,8 @@ $settings->_btn_one_text_hover_color = UABB_Helper::uabb_colorpicker( $settings,
 $settings->_btn_two_text_color       = UABB_Helper::uabb_colorpicker( $settings, '_btn_two_text_color' );
 $settings->_btn_two_text_hover_color = UABB_Helper::uabb_colorpicker( $settings, '_btn_two_text_hover_color' );
 
+$settings->border_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'border_hover_color' );
+
 $settings->button_border_width     = ( '' !== $settings->button_border_width ) ? $settings->button_border_width : '2';
 $settings->img_icon_width_btn_one  = ( '' !== $settings->img_icon_width_btn_one ) ? $settings->img_icon_width_btn_one : '30';
 $settings->img_icon_width_btn_two  = ( '' !== $settings->img_icon_width_btn_two ) ? $settings->img_icon_width_btn_two : '30';
@@ -410,7 +412,6 @@ $settings->spacing_between_buttons = ( '' !== $settings->spacing_between_buttons
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-btn-two .uabb-imgicon-wrap .uabb-icon i {
 	color: <?php echo esc_attr( uabb_theme_button_text_color( $settings->_btn_two_text_color ) ); ?>;
 }
-
 <?php } ?>
 
 /************* Global Hover Styles *****************/
@@ -1259,6 +1260,34 @@ if ( ! $version_bb_check ) {
 			)
 		);
 	}
+}
+?>
+
+<?php
+if ( class_exists( 'FLBuilderCSS' ) ) {
+
+	// Button one border - Settings.
+	FLBuilderCSS::border_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'btn_one_border',
+			'selector'     => ".fl-node-$id .uabb-btn.uabb-btn-one",
+		)
+	);
+}
+?>
+
+<?php
+if ( class_exists( 'FLBuilderCSS' ) ) {
+
+	// Button two border - Settings.
+	FLBuilderCSS::border_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'btn_two_border',
+			'selector'     => ".fl-node-$id .uabb-btn.uabb-btn-two",
+		)
+	);
 }
 ?>
 

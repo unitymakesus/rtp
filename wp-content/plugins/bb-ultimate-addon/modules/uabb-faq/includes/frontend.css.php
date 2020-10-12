@@ -245,7 +245,7 @@ if ( isset( $settings->faq_title_hover_color ) && ! empty( $settings->faq_title_
 	}
 <?php } if ( isset( $settings->faq_title_bg_hover_color ) && ! empty( $settings->faq_title_bg_hover_color ) && 'accordion_style' === $settings->layout_style ) { ?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-faq-questions:hover,
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-adv-accordion-item-active > .uabb-faq-questions {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-faq-item-active > .uabb-faq-questions {
 		background: <?php echo esc_attr( $settings->faq_title_bg_hover_color ); ?>;
 	}
 	<?php

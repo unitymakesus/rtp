@@ -15,6 +15,7 @@
 			show_sort : '<?php echo esc_attr( $settings->show_sort ); ?>',
 			table_type : '<?php echo esc_attr( $settings->table_type ); ?>',
 			show_entries_all_label: '<?php echo esc_attr( $settings->show_entries_all_label ); ?>',
+			responsive_layout : '<?php echo esc_attr( $settings->responsive_layout ); ?>',
 		});
 	});
 })(jQuery);

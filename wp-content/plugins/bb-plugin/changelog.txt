@@ -1,3 +1,20 @@
+<h4>2.4.0.5</h4> - 09/28/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Button Module: Fix lightbox not working if ID specified in module settings</li>
+	<li>Callout Module: fix links not working on icons</li>
+	<li>Login Module: Make strings translateable</li>
+	<li>Photo Module & Callout Module: Fix cropping hanging with unreachable URLs</li>
+	<li>Photo Module: new filter <code>fl_builder_photo_noimage</code></li>
+	<li>Post Carousel Module: Fix equal height issue on some themes</li>
+	<li>Fix Content Panel button animation</li>
+	<li>Fix Themer field connection button not showing in TwentyTwenty theme</li>
+	<li>Fix layout shortcode CSS issue</li>
+	<li>Fix fatal error for KeyCDN Cache Enabler users</li>
+	<li>WooCommerce Product Filters Add-on - fix conflict</li>
+	<li>Add tiptip a dependency for admin JS</li>
+</ul>
+
 <h4>2.4.0.4 - 09/15/2020</h4>
 <strong>Hot Fix</strong>
 <ul>

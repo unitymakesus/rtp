@@ -129,7 +129,7 @@ FLBuilder::register_module(
 		'extra_features' => array(
 			'title'    => __( 'Features', 'uabb' ),
 			'sections' => array(
-				'enable_sort'   => array(
+				'enable_sort'        => array(
 					'title'  => __( 'Sorting', 'uabb' ),
 					'fields' => array(
 						'show_sort' => array(
@@ -145,7 +145,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'enable_search' => array(
+				'enable_search'      => array(
 					'title'  => __( 'Search Field', 'uabb' ),
 					'fields' => array(
 						'show_search'  => array(
@@ -175,7 +175,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'enable_filter' => array(
+				'enable_filter'      => array(
 					'title'  => __( 'Entries Dropdown', 'uabb' ),
 					'fields' => array(
 						'show_entries'           => array(
@@ -209,6 +209,21 @@ FLBuilder::register_module(
 							'default'     => __( 'All', 'uabb' ),
 							'placeholder' => __( 'All', 'uabb' ),
 							'connections' => array( 'string', 'html' ),
+						),
+					),
+				),
+				'responsive_setting' => array(
+					'title'  => __( 'Responsive', 'uabb' ),
+					'fields' => array(
+						'responsive_layout' => array(
+							'type'    => 'select',
+							'label'   => __( 'Responsive Layout', 'uabb' ),
+							'default' => 'scroll',
+							'help'    => __( 'Select table layout for resposive devices.', 'uabb' ),
+							'options' => array(
+								'scroll' => __( 'Scroll', 'uabb' ),
+								'stack'  => __( 'Stacked', 'uabb' ),
+							),
 						),
 					),
 				),

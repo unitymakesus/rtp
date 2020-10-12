@@ -19,7 +19,7 @@ class UABBDualColorModule extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'Dual Color Heading', 'uabb' ),
+				'name'            => __( 'Dual Color Headings', 'uabb' ),
 				'description'     => __( 'A totally awesome module!', 'uabb' ),
 				'category'        => BB_Ultimate_Addon_Helper::module_cat( BB_Ultimate_Addon_Helper::$creative_modules ),
 				'group'           => UABB_CAT,

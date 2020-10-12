@@ -17,7 +17,46 @@ FLBuilder::register_module(
 				'general' => array(
 					'title'  => '',
 					'fields' => array(
-						'prefix'     => array(
+						'effect_type' => array(
+							'type'    => 'select',
+							'label'   => __( 'Effect', 'uabb' ),
+							'default' => 'type',
+							'options' => array(
+								'type'       => __( 'Type', 'uabb' ),
+								'slide_up'   => __( 'Slide Up', 'uabb' ),
+								'clip'       => __( 'Clip', 'uabb' ),
+								'flip'       => __( 'Flip', 'uabb' ),
+								'swirl'      => __( 'Swirl', 'uabb' ),
+								'blinds'     => __( 'Blinds', 'uabb' ),
+								'drop-in'    => __( 'Drop-in', 'uabb' ),
+								'wave'       => __( 'Wave', 'uabb' ),
+								'slide'      => __( 'Push', 'uabb' ),
+								'slide-down' => __( 'Slide Down', 'uabb' ),
+							),
+							'toggle'  => array(
+								'type'     => array(
+									'fields' => array( 'typing_speed', 'back_speed', 'start_delay', 'back_delay', 'enable_loop', 'show_cursor', 'cursor_text', 'cursor_blink', 'min_height' ),
+								),
+								'slide_up' => array(
+									'fields' => array( 'animation_speed', 'pause_time', 'show_items', 'pause_hover' ),
+								),
+								'clip'     => array(
+									'fields' => array( 'duration_reveal', 'animation_revel' ),
+								),
+								'swirl'    => array(
+									'fields' => array( 'letter_delay' ),
+								),
+								'blinds'   => array(
+									'fields' => array( 'letter_delay' ),
+								),
+								'wave'     => array(
+									'fields' => array( 'letter_delay' ),
+								),
+							),
+							'help'    => __( 'Select the effect for fancy text.', 'uabb' ),
+
+						),
+						'prefix'      => array(
 							'type'        => 'text',
 							'label'       => __( 'Prefix', 'uabb' ),
 							'default'     => '',
@@ -28,7 +67,7 @@ FLBuilder::register_module(
 								'selector' => '.uabb-fancy-text-prefix',
 							),
 						),
-						'fancy_text' => array(
+						'fancy_text'  => array(
 							'type'        => 'textarea',
 							'label'       => __( 'Fancy Text', 'uabb' ),
 							'default'     => '',
@@ -36,7 +75,7 @@ FLBuilder::register_module(
 							'help'        => __( 'String with fancy effects. You can add multiple strings by adding each string on a new line.', 'uabb' ),
 							'connections' => array( 'string', 'html' ),
 						),
-						'suffix'     => array(
+						'suffix'      => array(
 							'type'        => 'text',
 							'label'       => __( 'Suffix', 'uabb' ),
 							'default'     => '',
@@ -52,25 +91,6 @@ FLBuilder::register_module(
 				'effect'  => array(
 					'title'  => __( 'Effect', 'uabb' ),
 					'fields' => array(
-						'effect_type'     => array(
-							'type'    => 'select',
-							'label'   => __( 'Effect', 'uabb' ),
-							'default' => 'type',
-							'options' => array(
-								'type'     => __( 'Type', 'uabb' ),
-								'slide_up' => __( 'Slide', 'uabb' ),
-							),
-							'toggle'  => array(
-								'type'     => array(
-									'fields' => array( 'typing_speed', 'back_speed', 'start_delay', 'back_delay', 'enable_loop', 'show_cursor', 'cursor_text', 'cursor_blink', 'min_height' ),
-								),
-								'slide_up' => array(
-									'fields' => array( 'animation_speed', 'pause_time', 'show_items', 'pause_hover' ),
-								),
-							),
-							'help'    => __( 'Select the effect for fancy text.', 'uabb' ),
-
-						),
 						'typing_speed'    => array(
 							'type'      => 'unit',
 							'label'     => __( 'Typing Speed', 'uabb' ),
@@ -180,6 +200,38 @@ FLBuilder::register_module(
 								'no'  => __( 'No', 'uabb' ),
 							),
 							'help'    => __( 'When mouse is over fancy text, it should pause slide effect.', 'uabb' ),
+						),
+						'animation_delay' => array(
+							'type'      => 'unit',
+							'label'     => __( 'Animation Delay', 'uabb' ),
+							'default'   => '2500',
+							'maxlength' => '6',
+							'size'      => '8',
+							'units'     => array( 'ms' ),
+						),
+						'duration_reveal' => array(
+							'type'      => 'unit',
+							'label'     => __( 'Animation Revel Duaration', 'uabb' ),
+							'default'   => '600',
+							'maxlength' => '6',
+							'size'      => '8',
+							'units'     => array( 'ms' ),
+						),
+						'animation_revel' => array(
+							'type'      => 'unit',
+							'label'     => __( 'Animation Revel time', 'uabb' ),
+							'default'   => '1500',
+							'maxlength' => '6',
+							'size'      => '8',
+							'units'     => array( 'ms' ),
+						),
+						'letter_delay'    => array(
+							'type'      => 'unit',
+							'label'     => __( 'Letters Animation Delay', 'uabb' ),
+							'default'   => '50',
+							'maxlength' => '6',
+							'size'      => '8',
+							'units'     => array( 'ms' ),
 						),
 					),
 				),
@@ -331,7 +383,7 @@ FLBuilder::register_module(
 							'responsive' => true,
 							'preview'    => array(
 								'type'      => 'css',
-								'selector'  => '.uabb-fancy-text-main',
+								'selector'  => '.uabb-fancy-text-wrap .uabb-fancy-text-main, .uabb-fancy-text-wrap .uabb-fancy-text-dynamic-wrapper',
 								'important' => true,
 							),
 						),
@@ -344,7 +396,7 @@ FLBuilder::register_module(
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
-								'selector' => '.uabb-module-content .uabb-fancy-text-wrap .uabb-fancy-text-main',
+								'selector' => '.uabb-fancy-text-wrap .uabb-fancy-text-main, .uabb-fancy-text-wrap .uabb-fancy-text-dynamic-wrapper.uabb-fancy-text-wrapper',
 								'property' => 'color',
 							),
 						),

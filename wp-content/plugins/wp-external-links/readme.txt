@@ -1,10 +1,10 @@
 === External Links - nofollow, noopener & new window ===
-Contributors: WebFactory, UnderConstructionPage, googlemapswidget, wpreset
+Contributors: WebFactory
 Tags: new window, new tab, external links, nofollow, noopener, ugc, sponsored, follow, dofollow, seo, noreferrer, internal links, target, links, link, internal link, external link
 Requires at least: 4.2
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 2.46
+Stable tag: 2.47
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ Manage internal & external links: open in new window or tab, control nofollow, u
 WP External Links plugin was completely rebuilt in v2 and has lots of new features, like noopener, ugc and sponsored values for rel; font icons, internal links options and full WPMU support.
 
 = Features =
-* Manage external and internal links 
+* Manage external and internal links
 * Open links in new window or tab
 * Add follow or nofollow (for SEO)
 * Add noopener and noreferrer (for security)
@@ -42,6 +42,7 @@ When deactivating the plugin, all contents will be the same as it was before.
 
 **Like the plugin?** [Rate it](http://wordpress.org/support/view/plugin-reviews/wp-external-links) to support the development.
 
+[](http://coderisk.com/wp/plugin/wp-external-links/RIPS-6c7cnI_6Et)
 
 == Installation ==
 
@@ -243,11 +244,16 @@ See [FAQ](https://wordpress.org/plugins/wp-external-links/faq/) for more info.
 
 == Changelog ==
 
+= 2.47 =
+ * 2020-10-05
+ * added settings link to plugins table
+ * added promo for WP 301 Redirects PRO
+
 = 2.46 =
  * 2020-05-09
  * fixed "unable to save post" when using Gutenberg
  * sorry for two updated in two days :(
- 
+
 = 2.45 =
  * 2020-05-08
  * fixed compatibility issue with Site Kit by Google
@@ -255,12 +261,12 @@ See [FAQ](https://wordpress.org/plugins/wp-external-links/faq/) for more info.
 = 2.43 =
  * 2019-12-27
  * improved link detection regex
- 
+
 = 2.42 =
  * 2019-12-18
  * fixed various undefined variable notices
  * fixed an issue when there’s no href attribute set in an A element
- 
+
 = 2.40 =
  * 2019-11-20
  * no longer loads CSS and FontAwesome globally on admin pages
@@ -271,7 +277,7 @@ See [FAQ](https://wordpress.org/plugins/wp-external-links/faq/) for more info.
  * FontAwesome updated to 4.7 with 41 new icons
  * bug fix: ship anchor URLs (#anchor)
  * bug fix: don't match domain if the name is contained in the URL
- 
+
 = 2.32 =
  * 2019-07-09
  * security fixes

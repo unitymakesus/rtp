@@ -18,7 +18,7 @@ var photo = null;
 if ( FLBuilderSettingsConfig.attachments[ data.value ] ) {
 	photo = FLBuilderSettingsConfig.attachments[ data.value ];
 	photo.isAttachment = true;
-} else if ( ! _.isEmpty( data.value ) ) {
+} else if ( typeof data.value !== 'undefined' ) {
 	if ( data.settings[ data.rootName + '_src' ] ) {
 		photo = {
 			id: data.value,

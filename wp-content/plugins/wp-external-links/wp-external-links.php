@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:    WP External Links
- * Version:        2.46
+ * Version:        2.47
  * Plugin URI:     https://wordpress.org/plugins/wp-external-links/
  * Description:    Open external links in a new tab or window, control "nofollow" and "noopener", set font icon; SEO friendly.
  * Author:         WebFactory Ltd
@@ -9,8 +9,10 @@
  * License:        Dual licensed under the MIT and GPLv2+ licenses
  * Text Domain:    wp-external-links
  */
- 
- 
+
+require_once 'wp301/wp301.php';
+new wf_wp301(__FILE__, 'toplevel_page_wpel-settings-page');
+
 if ( ! function_exists( 'wpel_init' ) ):
 
     function wpel_init()
@@ -19,6 +21,8 @@ if ( ! function_exists( 'wpel_init' ) ):
         if ( ! defined( 'ABSPATH' ) ) {
             die();
         }
+
+        define( 'TEST_WPEL_PLUGIN_FILE', __FILE__ );
 
         $plugin_file = defined( 'TEST_WPEL_PLUGIN_FILE' ) ? TEST_WPEL_PLUGIN_FILE : __FILE__;
         $plugin_dir = dirname( __FILE__ );

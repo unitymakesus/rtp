@@ -147,9 +147,21 @@ FLBuilder::register_module(
 							'label'   => __( 'Connector Line Style', 'uabb' ),
 							'default' => 'dotted',
 							'options' => array(
+								'none'   => __( 'None', 'uabb' ),
 								'solid'  => __( 'Solid', 'uabb' ),
 								'dashed' => __( 'Dashed', 'uabb' ),
 								'dotted' => __( 'Dotted', 'uabb' ),
+							),
+							'toggle'  => array(
+								'solid'  => array(
+									'fields' => array( 'price_list_connector_width', 'price_list_connector_color', 'price_list_connector_hover_color' ),
+								),
+								'dashed' => array(
+									'fields' => array( 'price_list_connector_width', 'price_list_connector_color', 'price_list_connector_hover_color' ),
+								),
+								'dotted' => array(
+									'fields' => array( 'price_list_connector_width', 'price_list_connector_color', 'price_list_connector_hover_color' ),
+								),
 							),
 							'preview' => array(
 								'type'      => 'css',

@@ -5,6 +5,8 @@
  *  @package UABB Fancy Text Module
  */
 
+$fancy_text = str_replace( array( "\r\n", "\n", "\r", '<br/>', '<br>' ), '|', $settings->fancy_text );
+
 if ( 'type' === $settings->effect_type ) {
 
 	$strings = $type_speed = $start_delay = $back_speed = $back_delay = $loop = $loop_count = $show_cursor = $cursor_char = ''; // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments.Found
@@ -86,5 +88,23 @@ jQuery( document ).ready(function($) {
 
 	<?php
 
-}
+} else {
+	$animation_speed = ( ! empty( $settings->animation_delay ) ) ? $settings->animation_delay : 2500;
+	$duration_reveal = ( ! empty( $settings->duration_reveal ) ) ? $settings->duration_reveal : 600;
+	$animation_revel = ( ! empty( $settings->animation_revel ) ) ? $settings->letter_delay : 1500;
+	$letter_delay    = ( ! empty( $settings->letter_delay ) ) ? $settings->letter_delay : 50;
+
+	?>
+	jQuery( document ).ready(function($) {
+	new UABBFancyText({
+		id:                 '<?php echo esc_attr( $id ); ?>',
+		animation:          '<?php echo esc_attr( $settings->effect_type ); ?>',
+		animation_speed:     <?php echo $animation_speed; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		duration_reveal:     <?php echo $duration_reveal; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		animation_revel:     <?php echo $animation_revel; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		letter_delay:     <?php echo $letter_delay; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>,
+		fancy_text: '<?php echo str_replace( "'", "\'", $fancy_text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>',
+	});
+});
+<?php }
 ?>

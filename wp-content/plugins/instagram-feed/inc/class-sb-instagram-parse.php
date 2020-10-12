@@ -268,10 +268,10 @@ class SB_Instagram_Parse
 	public static function get_name( $header_data ) {
 		if ( isset( $header_data['name'] ) ) {
 			return $header_data['name'];
-		} elseif ( isset( $header_data['data'] ) ) {
+		} elseif ( isset( $header_data['data']['full_name'] ) ) {
 			return $header_data['data']['full_name'];
 		}
-		return '';
+		return SB_Instagram_Parse::get_username( $header_data );
 	}
 
 	/**
@@ -307,13 +307,13 @@ class SB_Instagram_Parse
 	 *
 	 * @since 2.0/5.0
 	 */
-	protected static function fix_permalink( $permalink ) {
+	public static function fix_permalink( $permalink ) {
 		if ( substr_count( $permalink, '/' ) > 5 ) {
 			$permalink_array = explode( '/', $permalink );
 			$perm_id = $permalink_array[ count( $permalink_array ) - 2 ];
 			$permalink = 'https://www.instagram.com/p/' . $perm_id . '/';
 		}
-
 		return $permalink;
+
 	}
 }

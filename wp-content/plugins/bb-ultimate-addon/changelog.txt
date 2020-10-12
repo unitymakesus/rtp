@@ -1,3 +1,35 @@
+Version 1.28.7 Wednesday, 7th October 2020
+- Improvement: Dual Button - Added border settings for each button
+- Improvement: Dual Color Heading - Added background text option
+- Improvement: Dual Color Heading - Added background fill option
+- Improvement: Dual Color Heading - Added inline and stack option for headings
+- Improvement: Dual Color Heading - Added separate typography for both headings
+- Improvement: Dual Color Heading - Option to add text after the Heading
+- Improvement: Heading - Added background text option
+- Improvement: Heading - Added fill background image and gradient option
+- Improvement: Heading - Added Description position option
+- Improvement: Info Box - Added option for Border Radius
+- Improvement: Info Box - Added Image / Icon Spacing option
+- Improvement: Price Box - Added Heading icon option
+- Improvement: Price Box - Added Featured List icon option
+- Improvement: Price Box - Added Offering Price Option
+- Improvement: Price Box - Added Ribbon option
+- Improvement: Price Box - Added Price Position option
+- Improvement: Price Box - Added Box Padding and Item Padding options for Feature List
+- Improvement: Price Box - Added Box Shadow option
+- Improvement: Info List - Added an option to align list
+- Improvement: Fancy Text - Added New animations
+- Improvement: Price List - Added none border option for Connector Line style
+- Improvement: Table - Added responsive support
+- Fixed: Advanced Posts - Posts layout issue with Grid layout
+- Fixed: Dual Button - Border Hover Color setting not working
+- Fixed: FAQ Schema - Active FAQ background color not working
+- Fixed: Heading - Alignment setting not working for Description
+- Fixed: Info Box - Border setting not working properly in some themes
+- Fixed: Table - Border is applied even if set to zero
+- Fixed: Price List - Layout issue when Image is not set
+- Fixed: Price List - Connector hover color not working
+
 Version 1.28.6 Tuesday, 15th September 2020
 - Fixed: Info Box: Resolved default padding causing layout issue.
 - Fixed: Image Carousel: Enable Arrow settings conflict in mobile devices

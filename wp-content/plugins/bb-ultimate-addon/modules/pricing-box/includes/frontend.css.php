@@ -156,8 +156,26 @@ $border_size = ( '' !== $settings->border_size ) ? $settings->border_size : 1;
 	padding-bottom: 0;
 }
 
-
 <?php endif; ?>
+
+<?php if ( isset( $settings->list_icon_size ) && '' !== $settings->list_icon_size ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table .uabb-price-table-icon-before,
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table .uabb-price-table-icon-after {
+		font-size: <?php echo esc_attr( $settings->list_icon_size ); ?>px;
+	}
+<?php } ?>
+
+<?php if ( isset( $settings->title_icon_size ) && '' !== $settings->title_icon_size ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table .uabb-price-table-title-icon {
+		font-size: <?php echo esc_attr( $settings->title_icon_size ); ?>px;
+	}
+<?php } ?>
+
+<?php if ( isset( $settings->title_icon_spacing ) && '' !== $settings->title_icon_spacing ) { ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table .uabb-price-table-title-icon {
+		margin-right: <?php echo esc_attr( $settings->title_icon_spacing ); ?>px;
+	}
+<?php } ?>
 
 <?php
 $is_featured_set = false;
@@ -190,9 +208,104 @@ for ( $i = 0; $i < $count; $i++ ) :
 
 			$settings->pricing_columns[ $i ]->price_typography_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'price_typography_color' );
 
+			$settings->pricing_columns[ $i ]->original_price_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'original_price_color' );
+
 			$settings->pricing_columns[ $i ]->duration_typography_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'duration_typography_color' );
 
 			$settings->pricing_columns[ $i ]->highlight_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'highlight_color' );
+
+			$settings->pricing_columns[ $i ]->list_icon_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'list_icon_color' );
+
+			$settings->pricing_columns[ $i ]->title_icon_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'title_icon_color' );
+
+	if ( isset( $settings->list_icon_spacing ) && '' !== $settings->list_icon_spacing ) {
+		if ( 'before' === $settings->pricing_columns[ $i ]->icon_position ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-table-icon-before {
+				margin-right: <?php echo esc_attr( $settings->list_icon_spacing ); ?>px;
+			}
+			<?php
+		}
+		if ( 'after' === $settings->pricing_columns[ $i ]->icon_position ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-table-icon-after {
+				margin-left: <?php echo esc_attr( $settings->list_icon_spacing ); ?>px;
+			}
+			<?php
+		}
+	}
+	if ( ! empty( $settings->pricing_columns[ $i ]->list_icon_color ) ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-feature-list-icon {
+			color: <?php echo esc_attr( $settings->pricing_columns[ $i ]->list_icon_color ); ?>;
+		}
+		<?php
+	}
+	if ( ! empty( $settings->pricing_columns[ $i ]->title_icon_color ) ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-table-title-icon {
+			color: <?php echo esc_attr( $settings->pricing_columns[ $i ]->title_icon_color ); ?>;
+		}
+		<?php
+	}
+
+	if ( 'stacked' === $settings->pricing_columns[ $i ]->title_icon_position ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-table-title-icon {
+			display: block;
+		}
+	<?php } ?>
+
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-column-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-table-original-price {
+		<?php echo ( '' !== $settings->pricing_columns[ $i ]->original_price_color ) ? 'color: ' . esc_attr( $settings->pricing_columns[ $i ]->original_price_color ) . ';' : ''; ?>
+	}
+
+	<?php
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		FLBuilderCSS::dimension_field_rule(
+			array(
+				'settings'     => $settings->pricing_columns[ $i ],
+				'setting_name' => 'list_box_padding',
+				'selector'     => ".fl-node-$id .uabb-pricing-table-outter-" . ( $i + 1 ) . ' .uabb-pricing-table-features',
+				'unit'         => 'px',
+				'props'        => array(
+					'padding-top'    => 'list_box_padding_top',
+					'padding-right'  => 'list_box_padding_right',
+					'padding-bottom' => 'list_box_padding_bottom',
+					'padding-left'   => 'list_box_padding_left',
+				),
+			)
+		);
+		FLBuilderCSS::dimension_field_rule(
+			array(
+				'settings'     => $settings->pricing_columns[ $i ],
+				'setting_name' => 'list_item_padding',
+				'selector'     => ".fl-node-$id .uabb-pricing-table-outter-" . ( $i + 1 ) . ' .uabb-pricing-table-features li',
+				'unit'         => 'px',
+				'props'        => array(
+					'padding-top'    => 'list_item_padding_top',
+					'padding-right'  => 'list_item_padding_right',
+					'padding-bottom' => 'list_item_padding_bottom',
+					'padding-left'   => 'list_item_padding_left',
+				),
+			)
+		);
+	}
+
+	if ( 'yes' === $settings->pricing_columns[ $i ]->price_box_shadow ) {
+
+		$box_shadow_color = ( false === strpos( $settings->pricing_columns[ $i ]->box_shadow_color, 'rgb' ) ) ? '#' . $settings->pricing_columns[ $i ]->box_shadow_color : $settings->pricing_columns[ $i ]->box_shadow_color;
+		?>
+
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-pricing-table-column {
+			-webkit-box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+			-moz-box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+			-o-box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+			box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->box_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		}
+
+		<?php
+	}
 
 	if ( 'yes' === $settings->pricing_columns[ $i ]->set_featured ) {
 		$is_featured_set = true;
@@ -972,9 +1085,9 @@ if ( 'yes' === $settings->responsive_size ) {
 }
 	<?php
 }
-?>
 
-<?php if ( $global_settings->responsive_enabled ) { // Responsive Typography. ?>
+if ( $global_settings->responsive_enabled ) { // Responsive Typography.
+	?>
 	@media ( max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px ) {
 	<?php if ( ! $version_bb_check ) { ?>
 		.fl-builder-content .fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-column .uabb-pricing-table-title {
@@ -1200,3 +1313,111 @@ if ( 'yes' === $settings->responsive_size ) {
 		<?php endif; ?>
 	}
 <?php } ?>
+
+/* Ribbon CSS Starts here */
+
+<?php
+// Loop through and style each pricing box.
+$count = count( $settings->pricing_columns );
+for ( $i = 0; $i < $count; $i++ ) {
+
+	if ( ! is_object( $settings->pricing_columns[ $i ] ) ) {
+		continue;
+	}
+
+	if ( isset( $settings->pricing_columns[ $i ]->ribbon_style ) && 'none' !== $settings->pricing_columns[ $i ]->ribbon_style ) {
+		if ( 'corner' === $settings->pricing_columns[ $i ]->ribbon_style ) {
+			if ( isset( $settings->pricing_columns[ $i ]->ribbon_distance ) && '' !== $settings->pricing_columns[ $i ]->ribbon_distance ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-ribbon-corner .uabb-price-box-ribbon-content {
+					margin-top: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_distance ); ?>px;
+					transform: translateY(-50%) translateX(-50%) translateX(<?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_distance ); ?>) rotate(-45deg);
+				}
+				<?php
+			}
+		}
+		if ( 'circular' === $settings->pricing_columns[ $i ]->ribbon_style ) {
+			if ( isset( $settings->pricing_columns[ $i ]->ribbon_size ) && '' !== $settings->pricing_columns[ $i ]->ribbon_size ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-ribbon-circular .uabb-price-box-ribbon-content {
+					min-height: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_size ); ?>em;
+					min-width: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_size ); ?>em;
+					line-height: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_size ); ?>em;
+					z-index: 1;
+				}
+				<?php
+			}
+		}
+		if ( 'flag' === $settings->pricing_columns[ $i ]->ribbon_style ) {
+			if ( isset( $settings->pricing_columns[ $i ]->ribbon_top_distance ) && '' !== $settings->pricing_columns[ $i ]->ribbon_top_distance ) {
+				?>
+				.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-ribbon-flag .uabb-price-box-ribbon-content {
+					top: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_top_distance ); ?>%;
+				}
+				<?php
+			}
+			if ( class_exists( 'FLBuilderCSS' ) ) {
+				FLBuilderCSS::dimension_field_rule(
+					array(
+						'settings'     => $settings->pricing_columns[ $i ],
+						'setting_name' => 'ribbon_padding',
+						'selector'     => ".fl-node-$id .uabb-pricing-table-outter-" . ( $i + 1 ) . ' .uabb-ribbon-flag .uabb-price-box-ribbon-content',
+						'unit'         => 'px',
+						'props'        => array(
+							'padding-top'    => 'ribbon_padding_top',
+							'padding-right'  => 'ribbon_padding_right',
+							'padding-bottom' => 'ribbon_padding_bottom',
+							'padding-left'   => 'ribbon_padding_left',
+						),
+					)
+				);
+			}
+		}
+
+		$settings->pricing_columns[ $i ]->ribbon_bg_color     = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'ribbon_bg_color', true );
+		$settings->pricing_columns[ $i ]->ribbon_text_color   = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'ribbon_text_color', true );
+		$settings->pricing_columns[ $i ]->ribbon_shadow_color = UABB_Helper::uabb_colorpicker( $settings->pricing_columns[ $i ], 'ribbon_shadow_color', true );
+
+		if ( ! empty( $settings->pricing_columns[ $i ]->ribbon_bg_color ) ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-box-ribbon-content {
+				background-color: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_bg_color ); ?>;
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-ribbon-flag .uabb-price-box-ribbon-content:before {
+				border-left: 8px solid <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_bg_color ); ?>;
+			}
+			<?php
+		}
+
+		if ( ! empty( $settings->pricing_columns[ $i ]->ribbon_text_color ) ) {
+			?>
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-box-ribbon-content {
+				color: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_text_color ); ?>;
+			}
+			<?php
+		}
+
+		if ( 'yes' === $settings->pricing_columns[ $i ]->ribbon_box_shadow ) {
+			?>
+
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-pricing-table-outter-<?php echo esc_attr( $i ) + 1; ?> .uabb-price-box-ribbon-content {
+				-webkit-box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color ); ?>;
+				-moz-box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color ); ?>;
+				-o-box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color ); ?>;
+				box-shadow: <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->pricing_columns[ $i ]->ribbon_shadow_color ); ?>;
+			}
+
+		<?php }
+
+		if ( class_exists( 'FLBuilderCSS' ) ) {
+			FLBuilderCSS::typography_field_rule(
+				array(
+					'settings'     => $settings->pricing_columns[ $i ],
+					'setting_name' => 'ribbon_typo',
+					'selector'     => ".fl-node-$id .uabb-pricing-table-outter-" . ( $i + 1 ) . ' .uabb-price-box-ribbon-content',
+				)
+			);
+		}
+	}
+}
+?>

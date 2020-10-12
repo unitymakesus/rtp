@@ -7,10 +7,10 @@ class FacetWP_Integration_SearchWP
 
 
     function __construct() {
-        add_filter( 'facetwp_query_args', [ $this, 'search_args' ], 10, 2 );
-        add_filter( 'facetwp_pre_filtered_post_ids', [ $this, 'search_page' ], 10, 2 );
+        add_filter( 'facetwp_query_args', [ $this, 'query_args' ], 10, 2 );
         add_filter( 'facetwp_facet_filter_posts', [ $this, 'search_facet' ], 10, 2 );
         add_filter( 'facetwp_facet_search_engines', [ $this, 'search_engines' ] );
+        add_filter( 'searchwp\native\args', [ $this, 'searchwp_native_args' ], 10, 2 );
     }
 
 
@@ -18,20 +18,42 @@ class FacetWP_Integration_SearchWP
      * Prevent the default WP search from running when SearchWP is enabled
      * @since 1.3.2
      */
-    function search_args( $args, $class ) {
+    function query_args( $args, $class ) {
 
         if ( $class->is_search ) {
             $this->search_terms = $args['s'];
 
-            if ( version_compare( SEARCHWP_VERSION, '4.0', '<' ) ) {
-                unset( $args['s'] );
+            // Set "post__in" based on SWP_Query results
+            $swp_query = new SWP_Query( [
+                's'                 => $this->search_terms,
+                'posts_per_page'    => 200,
+                'fields'            => 'ids',
+                'facetwp'           => true,
+            ] );
+
+            if ( empty( $args['post__in'] ) ) {
+                $post_ids = $swp_query->posts;
+            }
+            else {
+                $post_ids = [];
+                $haystack = array_flip( $args['post__in'] );
+
+                foreach ( $swp_query->posts as $post_id ) {
+                    if ( isset( $haystack[ $post_id ] ) ) {
+                        $post_ids[] = $post_id;
+                    }
+                }
             }
 
-            $args['suppress_filters'] = true;
+            $args['post__in'] = empty( $post_ids ) ? [ 0 ] : $post_ids;
+
             if ( empty( $args['post_type'] ) ) {
                 $args['post_type'] = 'any';
                 $args['post_status'] = 'any';
             }
+
+            // Prevent WP core search from running
+            unset( $args['s'] );
         }
 
         return $args;
@@ -39,34 +61,17 @@ class FacetWP_Integration_SearchWP
 
 
     /**
-     * Use SWP_Query to retrieve matching post IDs
-     * @since 2.1.2
+     * Trick SearchWP into running while ghosting core search
+     * This hook is within `posts_pre_query`, i.e. before the query runs
+     * @since 3.6.5
      */
-    function search_page( $post_ids, $class ) {
-
-        if ( empty( $this->search_terms ) ) {
-            return $post_ids;
+    function searchwp_native_args( $args, $query ) {
+        if ( ! empty( $this->search_terms ) ) {
+            $args['s'] = $this->search_terms; // Trigger SearchWP
+            $query->set( 's', $this->search_terms ); // Needed for get_search_query()
         }
 
-        $swp_query = new SWP_Query( [
-            's'                 => $this->search_terms,
-            'posts_per_page'    => 200,
-            'fields'            => 'ids',
-            'facetwp'           => true,
-        ] );
-
-        $intersected_ids = [];
-
-        // Speed up comparison
-        $post_ids = array_flip( $post_ids );
-
-        foreach ( $swp_query->posts as $post_id ) {
-            if ( isset( $post_ids[ $post_id ] ) ) {
-                $intersected_ids[] = $post_id;
-            }
-        }
-
-        return empty( $intersected_ids ) ? [ 0 ] : $intersected_ids;
+        return $args;
     }
 
 

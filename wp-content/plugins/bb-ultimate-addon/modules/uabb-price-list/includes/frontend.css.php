@@ -17,6 +17,8 @@ $settings->price_color                      = UABB_Helper::uabb_colorpicker( $se
 $settings->price_hover_color                = UABB_Helper::uabb_colorpicker( $settings, 'price_hover_color' );
 $settings->price_list_connector_color       = UABB_Helper::uabb_colorpicker( $settings, 'price_list_connector_color' );
 $settings->price_list_border_hover_color    = UABB_Helper::uabb_colorpicker( $settings, 'price_list_border_hover_color' );
+$settings->price_list_connector_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'price_list_connector_hover_color' );
+
 
 if ( ! $version_bb_check ) {
 	$settings->price_list_border_color = UABB_Helper::uabb_colorpicker( $settings, 'price_list_border_color' );

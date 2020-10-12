@@ -84,8 +84,26 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
             $this->current_tab = key( $this->tabs );
         }
 
+        add_filter('plugin_action_links_' . plugin_basename(TEST_WPEL_PLUGIN_FILE), array($this, 'plugin_action_links'));
         add_filter('install_plugins_table_api_args_featured', array($this, 'featured_plugins_tab'));
     }
+
+    /**
+     * Add "Configure Settings" action link to plugins table, left part
+     *
+     * @param array  $links  Initial list of links.
+     *
+     * @return array
+     */
+    function plugin_action_links($links)
+    {
+      $settings_link = '<a href="' . admin_url('admin.php?page=wpel-settings-page') . '" title="Open WP External Links Settings">Configure Settings</a>';
+
+      array_unshift($links, $settings_link);
+
+      return $links;
+    }
+
 
     /**
     * Helper function for adding plugins to featured list
@@ -248,8 +266,8 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
             wp_enqueue_style( 'font-awesome' );
             wp_enqueue_style( 'wpel-admin-style' );
             wp_enqueue_script( 'wpel-admin-script' );
-        } 
-        
+        }
+
         wp_enqueue_style( 'wpel-admin-global-style' );
     }
 

@@ -63,25 +63,6 @@ if ( ! $version_bb_check ) {
 	$settings->pagination_color_border = UABB_Helper::uabb_colorpicker( $settings, 'pagination_color_border' );
 	$settings->pagination_border_size  = ( '' !== $settings->pagination_border_size ) ? $settings->pagination_border_size : '2';
 }
-if ( 'grid' === $settings->is_carousel ) {
-	if ( 'yes' === $settings->equal_height_box ) {
-		?>
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-wrap: wrap;
-		flex-wrap: wrap;
-}
-
-.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .uabb-post-wrapper {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-}
-		<?php
-	}
-}
 
 if ( 'top' === $settings->blog_image_position ) {
 	?>
@@ -704,6 +685,9 @@ if ( ! $version_bb_check ) {
 if ( 'grid' === $settings->is_carousel ) {
 	?>
 @media all and ( min-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px ) {
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-post-grid-sizer {
+		width: <?php echo esc_attr( ( 100 / $settings->post_per_grid ) ); ?>%;
+	}
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-post-wrapper:nth-child(<?php echo esc_attr( $settings->post_per_grid ); ?>n+1){
 		<!-- clear: left; -->
 	}
@@ -1301,7 +1285,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-4,
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-3,
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-2,
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-1 {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-1,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-post-grid-sizer {
 				width: <?php echo esc_attr( ( 100 / $settings->post_per_grid_medium ) ); ?>%;
 			}
 
@@ -1646,7 +1631,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-4,
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-3,
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-2,
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-1 {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts-col-1,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-post-grid-sizer {
 				width: <?php echo ( esc_attr( 100 / $settings->post_per_grid_small ) ); ?>%;
 			}
 			<?php

@@ -59,7 +59,7 @@ final class WPEL_Update extends WPRun_Base_1x0x0
         if ( $site_already_set ) {
             return;
         }
-        
+
         // get default values
         $external_link_values = WPEL_External_Link_Fields::get_instance()->get_default_values();
         $internal_link_values = WPEL_Internal_Link_Fields::get_instance()->get_default_values();
@@ -114,9 +114,11 @@ final class WPEL_Update extends WPRun_Base_1x0x0
                 $external_link_values[ 'class' ] = $val( $old_style, 'class_name' );
                 $external_link_values[ 'no_icon_for_img' ] = $val( $old_style, 'image_no_icon' );
             }
+            /*
             if ( ! empty( $old_extra ) ) {
                 // nothing
             }
+            */
             if ( ! empty( $old_screen ) ) {
                 $admin_link_values[ 'own_admin_menu' ] = ( 'admin.php' == $val( $old_screen, 'menu_position' ) ) ? '1' : '';
             }

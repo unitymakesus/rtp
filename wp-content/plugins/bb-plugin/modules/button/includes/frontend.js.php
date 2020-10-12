@@ -1,11 +1,7 @@
 <?php
-	$button_node_id = "fl-node-$id";
+$button_node_id = "fl-node-$id";
 
-if ( isset( $settings->id ) && ! empty( $settings->id ) ) {
-	$button_node_id = $settings->id;
-}
-?>
-<?php if ( isset( $settings->click_action ) && 'lightbox' == $settings->click_action ) : ?>
+if ( isset( $settings->click_action ) && 'lightbox' == $settings->click_action ) : ?>
 (function($){
 	$('.<?php echo $button_node_id; ?> .fl-button-lightbox').magnificPopup({
 		<?php if ( 'video' == $settings->lightbox_content_type ) : ?>

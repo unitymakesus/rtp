@@ -37,12 +37,18 @@ class FacetWP_Builder
         if ( have_posts() ) {
             while ( have_posts() ) : the_post();
 
-                // Prevent short-tags from leaking onto other posts
-                $this->data = [
+                // Default dynamic tags
+                $tags = [
                     'post:id'       => $post->ID,
                     'post:name'     => $post->post_name,
+                    'post:type'     => $post->post_type,
                     'post:url'      => get_permalink()
                 ];
+
+                $this->data = apply_filters( 'facetwp_builder_dynamic_tags', $tags, [
+                    'layout' => $layout,
+                    'post' => $post
+                ] );
 
                 $output .= '<div class="fwpl-result">';
 

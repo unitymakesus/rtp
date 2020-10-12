@@ -81,8 +81,9 @@ body.rtl .fl-post-carousel-post {
 }
 
 .fl-post-carousel-loaded .fl-post-carousel-post {
-    position: relative;
-    visibility: visible;
+	position: relative;
+	visibility: visible;
+	margin: 0;
 }
 
 .fl-post-carousel-image img {

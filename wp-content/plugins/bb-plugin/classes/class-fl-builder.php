@@ -1695,28 +1695,7 @@ final class FLBuilder {
 
 				// Print the styles if we are outside of the head tag.
 				if ( did_action( 'wp_enqueue_scripts' ) && ! doing_filter( 'wp_enqueue_scripts' ) ) {
-					ob_start();
 					wp_print_styles();
-					$styles = trim( ob_get_flush() );
-					$styles = explode( "\n", $styles );
-					if ( is_array( $styles ) && ! empty( $styles ) ) {
-						$js = '';
-						foreach ( $styles as $k => $style ) {
-							if ( ! $style ) {
-								continue;
-							}
-							$id = sprintf( '%s_$%s', $post->ID, $k );
-							if ( ! preg_match( "#<link\srel='stylesheet'\sid='([a-z0-9-_]+)'\s+href='(.*?)'#", $style, $matches ) ) {
-								continue;
-							}
-							$js .= sprintf( 'var head = document.getElementsByTagName("head")[0],cssLink_%1$s = document.createElement("link");cssLink_%1$s.rel = "stylesheet";cssLink_%1$s.href = "%3$s";cssLink_%1$s.id="%2$s";cssLink_%1$s.media="all";cssLink_%1$s.type="text/css";head.appendChild(cssLink_%1$s);', $id, $matches[1], $matches[2] );
-						}
-						if ( '' !== $js ) {
-							printf( '<script>%s</script>', $js );
-						}
-					} else {
-						wp_print_styles();
-					}
 				}
 
 				// Render the builder content.

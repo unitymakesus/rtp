@@ -249,19 +249,23 @@ class FLPhotoModule extends FLBuilderModule {
 
 			$cropped_path = $this->_get_cropped_path();
 
-			// See if the cropped photo already exists.
 			if ( fl_builder_filesystem()->file_exists( $cropped_path['path'] ) ) {
+				// An existing cropped photo exists.
 				$src = $cropped_path['url'];
-			} elseif ( stristr( $src, FL_BUILDER_DEMO_DOMAIN ) && ! stristr( FL_BUILDER_DEMO_DOMAIN, $_SERVER['HTTP_HOST'] ) ) {
-				$src = $this->_get_cropped_demo_url();
-			} elseif ( stristr( $src, FL_BUILDER_OLD_DEMO_URL ) ) { // It doesn't, check if this is a OLD demo image.
-				$src = $this->_get_cropped_demo_url();
-			} else { // A cropped photo doesn't exist, try to create one.
+			} else {
 
-				$url = $this->crop();
+				// A cropped photo doesn't exist, check demo sites then try to create one.
+				$post_data    = FLBuilderModel::get_post_data();
+				$editing_node = isset( $post_data['node_id'] );
+				$demo_domain  = FL_BUILDER_DEMO_DOMAIN;
 
-				if ( $url ) {
-					$src = $url;
+				if ( ! $editing_node && stristr( $src, $demo_domain ) && ! stristr( $demo_domain, $_SERVER['HTTP_HOST'] ) ) {
+					$src = $this->_get_cropped_demo_url();
+				} elseif ( ! $editing_node && stristr( $src, FL_BUILDER_OLD_DEMO_URL ) ) {
+					$src = $this->_get_cropped_demo_url();
+				} else {
+					$url = $this->crop();
+					$src = $url ? $url : $src;
 				}
 			}
 		}
@@ -371,10 +375,11 @@ class FLPhotoModule extends FLBuilderModule {
 			if ( fl_builder_filesystem()->file_exists( $file_path ) ) {
 				$this->_editor = wp_get_image_editor( $file_path );
 			} else {
-				$this->_editor = wp_get_image_editor( $url_path );
+				if ( ! is_wp_error( wp_safe_remote_head( $url_path, array( 'timeout' => 5 ) ) ) ) {
+					$this->_editor = wp_get_image_editor( $url_path );
+				}
 			}
 		}
-
 		return $this->_editor;
 	}
 
@@ -426,7 +431,7 @@ class FLPhotoModule extends FLBuilderModule {
 		} elseif ( ! empty( $this->settings->photo_src ) ) {
 			$url = $this->settings->photo_src;
 		} else {
-			$url = FL_BUILDER_URL . 'img/pixel.png';
+			$url = apply_filters( 'fl_builder_photo_noimage', FL_BUILDER_URL . 'img/pixel.png' );
 		}
 
 		return $url;

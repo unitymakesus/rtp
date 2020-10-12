@@ -454,9 +454,7 @@
                         <option value="ASC">ASC</option>
                         <option value="DESC">DESC</option>
                     </select>
-                    <span @click="deleteSortCriteria(index)" class="qb-remove">
-                        <i class="fas fa-minus-circle"></i>
-                    </span>
+                    <span @click="deleteSortCriteria(index)" class="qb-remove" v-html="FWP.svg['minus-circle']"></span>
                 </div>
 
                 <div class="qb-condition"
@@ -500,9 +498,7 @@
                         :placeholder="getPlaceholder(row)">
                     </v-select>
 
-                    <span @click="deleteFilterCriteria(index)" class="qb-remove">
-                        <i class="fas fa-minus-circle"></i>
-                    </span>
+                    <span @click="deleteFilterCriteria(index)" class="qb-remove" v-html="FWP.svg['minus-circle']"></span>
                 </div>
 
                 <div class="qb-add">
@@ -847,11 +843,11 @@
             props: ['settings', 'name', 'meta'],
             template: `
             <div class="text-style-icons">
-                <span @click="toggleChoice('align', 'left')" :class="{ active: isActive('align', 'left') }"><i class="fas fa-align-left"></i></span>
-                <span @click="toggleChoice('align', 'center')" :class="{ active: isActive('align', 'center') }"><i class="fas fa-align-center"></i></span>
-                <span @click="toggleChoice('align', 'right')" :class="{ active: isActive('align', 'right') }"><i class="fas fa-align-right"></i></span>
-                <span @click="toggleChoice('bold')" :class="{ active: isActive('bold') }"><i class="fas fa-bold"></i></span>
-                <span @click="toggleChoice('italic')" :class="{ active: isActive('italic') }"><i class="fas fa-italic"></i></span>
+                <span @click="toggleChoice('align', 'left')" :class="{ active: isActive('align', 'left') }" v-html="FWP.svg['align-left']"></span>
+                <span @click="toggleChoice('align', 'center')" :class="{ active: isActive('align', 'center') }" v-html="FWP.svg['align-center']"></span>
+                <span @click="toggleChoice('align', 'right')" :class="{ active: isActive('align', 'right') }" v-html="FWP.svg['align-right']"></span>
+                <span @click="toggleChoice('bold')" :class="{ active: isActive('bold') }" v-html="FWP.svg['bold']"></span>
+                <span @click="toggleChoice('italic')" :class="{ active: isActive('italic') }" v-html="FWP.svg['italic']"></span>
             </div>
             `,
             methods: {
@@ -974,10 +970,10 @@
             template: `
             <div class="builder-row">
                 <div class="builder-row-actions" :class="classIsChild">
-                    <span @click="editRow" title="Edit row"><i class="fas fa-cog"></i></span>
-                    <span @click="addCol" title="Add columm"><i class="fas fa-columns"></i></span>
-                    <span @click="addRow" title="Add row"><i class="fas fa-plus"></i></span>
-                    <span @click="deleteRow" title="Delete row"><i class="fas fa-times"></i></span>
+                    <span @click="editRow" title="Edit row" v-html="FWP.svg['cog']"></span>
+                    <span @click="addCol" title="Add columm" v-html="FWP.svg['columns']"></span>
+                    <span @click="addRow" title="Add row" v-html="FWP.svg['plus']"></span>
+                    <span @click="deleteRow" title="Delete row" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-row-inner" :style="{ gridTemplateColumns: row.settings.grid_template_columns }">
                     <builder-col
@@ -1047,8 +1043,8 @@
                 <col-resizer :cols="cols" :index="index" v-show="index < (cols.length - 1)"></col-resizer>
                 <popover :col="col" v-if="adding_item" v-on-clickaway="away"></popover>
                 <div class="builder-col-actions">
-                    <span @click="editCol" title="Edit columm"><i class="fas fa-cog"></i></span>
-                    <span @click="deleteCol" title="Delete column"><i class="fas fa-times"></i></span>
+                    <span @click="editCol" title="Edit columm" v-html="FWP.svg['cog']"></span>
+                    <span @click="deleteCol" title="Delete column" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-col-inner" :class="[ !col.items.length ? 'empty-col' : '' ]">
                     <draggable v-model="col.items" handle=".item-drag" group="drag-across-columns" class="draggable">
@@ -1178,11 +1174,11 @@
             template: `
             <div class="builder-item">
                     <div class="builder-item-actions">
-                    <span @click="deleteItem" title="Delete item"><i class="fas fa-times"></i></span>
+                    <span @click="deleteItem" title="Delete item" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-item-inner" @click="editItem" :class="[ item.settings.is_hidden ? 'is-hidden' : '' ]">
                     <span class="item-drag" v-html="$root.layout_data[item.source]"></span>
-                    <span v-if="item.settings.is_hidden"><i class="fas fa-eye-slash"></i></span>
+                    <span v-if="item.settings.is_hidden" v-html="FWP.svg['eye-slash']"></span>
                 </div>
             </div>
             `,
@@ -1275,7 +1271,7 @@
                     <div class="card-drag">&#9776;</div>
                     <div class="card-label">
                         <span class="label-text" :title="facet.name">{{ facet.label }}</span>
-                        <span v-if="facet._code">&nbsp; <i class="fas fa-lock"></i></span>
+                        <span v-if="facet._code" v-html="FWP.svg['lock']"></span>
                     </div>
                     <div class="card-delete" @click.stop="$root.deleteItem('facet', index)"></div>
                     <div class="card-type">{{ facet.type }}</div>
@@ -1309,7 +1305,7 @@
                     <div class="card-drag">&#9776;</div>
                     <div class="card-label">
                         <span class="label-text" :title="template.name">{{ template.label }}</span>
-                        <span v-if="template._code">&nbsp;<i class="fas fa-lock"></i></span>
+                        <span v-if="template._code" v-html="FWP.svg['lock']"></span>
                     </div>
                     <div class="card-delete" @click.stop="$root.deleteItem('template', index)"></div>
                     <div class="card-display-mode">{{ getDisplayMode(index) }}</div>
@@ -1361,7 +1357,7 @@
             <div>
                 <div class="item-locked" v-if="facet._code">
                     This facet is registered in code. Click to allow edits:
-                    <span @click="unlock"><i class="fas fa-lock-open"></i></span>
+                    <span @click="unlock" v-html="FWP.svg['lock-open']"></span>
                 </div>
                 <div class="facetwp-content" :class="[ 'type-' + facet.type, { locked: facet._code } ]">
                     <div class="facetwp-row">
@@ -1459,7 +1455,7 @@
             <div>
                 <div class="item-locked" v-if="template._code">
                     This template is registered in code. Click to allow edits:
-                    <span @click="unlock"><i class="fas fa-lock-open"></i></span>
+                    <span @click="unlock" v-html="FWP.svg['lock-open']"></span>
                 </div>
                 <div class="facetwp-content" :class="{ locked: template._code }">
                     <div class="table-row">

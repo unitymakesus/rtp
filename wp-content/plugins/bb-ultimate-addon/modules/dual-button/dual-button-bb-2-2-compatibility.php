@@ -176,13 +176,13 @@ FLBuilder::register_module(
 							'toggle'  => array(
 								'transparent' => array(
 									'sections' => array( 'dual_border_section' ),
-									'fields'   => array( 'transparent_button_options' ),
+									'fields'   => array( 'transparent_button_options', 'dual_button_radius' ),
 								),
 								'flat'        => array(
-									'fields' => array( 'flat_button_options', '_btn_one_back_color', '_btn_two_back_color' ),
+									'fields' => array( 'flat_button_options', '_btn_one_back_color', '_btn_two_back_color', 'dual_button_radius' ),
 								),
 								'gradient'    => array(
-									'fields' => array( '_btn_one_back_color', '_btn_two_back_color' ),
+									'fields' => array( '_btn_one_back_color', '_btn_two_back_color', 'dual_button_radius' ),
 								),
 								'default'     => array(
 									'fields' => array( 'button_padding_dimension', 'button_border', '_btn_one_back_color', '_btn_two_back_color', 'border_hover_color' ),
@@ -373,6 +373,18 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
+						'btn_one_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-btn.uabb-btn-one',
+								'property' => 'border',
+								'unit'     => 'px',
+							),
+						),
 					),
 				),
 
@@ -487,6 +499,18 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Hover Color', 'uabb' ),
 							'preview'     => array(
 								'type' => 'none',
+							),
+						),
+						'btn_two_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-btn.uabb-btn-two',
+								'property' => 'border',
+								'unit'     => 'px',
 							),
 						),
 					),
