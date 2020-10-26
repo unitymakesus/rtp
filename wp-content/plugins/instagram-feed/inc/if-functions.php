@@ -775,6 +775,10 @@ function sbi_hextorgb( $hex ) {
 	return implode( ',', $rgb ); // returns the rgb values separated by commas
 }
 
+function sbi_is_url( $input ) {
+	return (bool) filter_var( $input, FILTER_VALIDATE_URL );
+}
+
 
 /**
  * Added to workaround MySQL tables that don't use utf8mb4 character sets

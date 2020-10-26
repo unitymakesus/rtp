@@ -1,3 +1,12 @@
+<h4>2.4.0.6</h4> - 10/12/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fixed PHP notice that appears when dropping a Menu module on the page (Issue #775)</li>
+	<li>Fixed Callout modules not working in Pre-Built Rows (Issue #767)</li>
+	<li>Fixed importer line break issue with imported css/js in layouts (Issue #758)</li>
+	<li>Fixed fatal on Flywheel Cloud hosting when you have Lite installed and then activate a Premium version (Issue #770)</li>
+</ul>
+
 <h4>2.4.0.5</h4> - 09/28/2020</h4>
 <strong>Hot Fix</strong>
 <ul>

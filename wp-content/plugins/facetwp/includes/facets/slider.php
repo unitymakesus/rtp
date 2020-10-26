@@ -135,8 +135,6 @@ class FacetWP_Facet_Slider extends FacetWP_Facet
             <div>
                 <data-sources
                     :facet="facet"
-                    :selected="facet.source_other"
-                    :sources="$root.data_sources"
                     settingName="source_other">
                 </data-sources>
             </div>

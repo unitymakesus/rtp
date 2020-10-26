@@ -223,11 +223,18 @@ window.FWP = window.FWP || {};
             var $el = args.element;
             $(document).on('facetwp-refresh', function() {
 
+                if ('fselect' == $el.data('type')) {
+                    var height = $el.find('.fs-label-wrap').outerHeight() + $el.find('.fs-dropdown').outerHeight() + 5;
+                }
+                else {
+                    var height = $el.height();
+                }
+
                 $el.addClass('is-loading');
                 $el.prepend('<div class="facetwp-overlay">');
                 $el.find('.facetwp-overlay').css({
                     width: $el.width(),
-                    height: $el.height()
+                    height: height
                 });
             });
 

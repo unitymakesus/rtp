@@ -137,13 +137,11 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
             <div>
                 <data-sources
                     :facet="facet"
-                    :selected="facet.source_other"
-                    :sources="$root.data_sources"
                     settingName="source_other">
                 </data-sources>
             </div>
         </div>
-        <div class="facetwp-row">
+        <div class="facetwp-row" v-show="facet.source_other">
             <div><?php _e('Compare type', 'fwp'); ?>:</div>
             <div>
                 <select class="facet-compare-type">

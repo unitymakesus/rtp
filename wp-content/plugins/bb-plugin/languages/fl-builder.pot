@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bb-plugin\n"
 "Report-Msgid-Bugs-To: hello@wpbeaverbuilder.com\n"
-"POT-Creation-Date: 2020-09-25 17:46:12+00:00\n"
+"POT-Creation-Date: 2020-10-12 17:19:24+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -627,7 +627,7 @@ msgstr ""
 msgid "This does not appear to be a WXR file, missing/invalid WXR version number"
 msgstr ""
 
-#: classes/class-fl-builder-loader.php:160
+#: classes/class-fl-builder-loader.php:162
 msgid ""
 "Beaver Builder may not be functioning correctly as it does not have "
 "permission to write files to the WordPress uploads directory on your "
@@ -635,14 +635,14 @@ msgid ""
 "continuing or contact your host for assistance."
 msgstr ""
 
-#: classes/class-fl-builder-loader.php:174
+#: classes/class-fl-builder-loader.php:176
 #. translators: %s: plugins page link
 msgid ""
 "You currently have two versions of Beaver Builder active on this site. "
 "Please <a href=\"%s\">deactivate one</a> before continuing."
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3052
+#: classes/class-fl-builder-model.php:3060
 #: classes/class-fl-builder-module.php:364 modules/audio/audio.php:20
 #: modules/button/button.php:15 modules/button-group/button-group.php:15
 #: modules/heading/heading.php:16 modules/html/html.php:15
@@ -652,7 +652,7 @@ msgstr ""
 msgid "Basic"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3053
+#: classes/class-fl-builder-model.php:3061
 #: modules/content-slider/content-slider.php:15 modules/gallery/gallery.php:15
 #: modules/icon/icon.php:15 modules/icon-group/icon-group.php:15
 #: modules/map/map.php:15 modules/slideshow/slideshow.php:15
@@ -660,7 +660,7 @@ msgstr ""
 msgid "Media"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3054 modules/callout/callout.php:15
+#: classes/class-fl-builder-model.php:3062 modules/callout/callout.php:15
 #: modules/contact-form/contact-form.php:15 modules/cta/cta.php:15
 #: modules/login-form/login-form.php:19 modules/menu/menu.php:20
 #: modules/search/search.php:15 modules/social-buttons/social-buttons.php:15
@@ -668,7 +668,7 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3055
+#: classes/class-fl-builder-model.php:3063
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:8
 #: modules/accordion/accordion.php:15 modules/button-group/button-group.php:60
 #: modules/countdown/countdown.php:147 modules/cta/cta.php:191
@@ -686,12 +686,12 @@ msgstr ""
 msgid "Layout"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3056 modules/countdown/countdown.php:15
+#: classes/class-fl-builder-model.php:3064 modules/countdown/countdown.php:15
 #: modules/numbers/numbers.php:15
 msgid "Info"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3057
+#: classes/class-fl-builder-model.php:3065
 #: modules/post-carousel/post-carousel.php:15
 #: modules/post-carousel/post-carousel.php:267
 #: modules/post-grid/post-grid.php:13 modules/post-grid/post-grid.php:15
@@ -700,82 +700,82 @@ msgstr ""
 msgid "Posts"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3058
+#: classes/class-fl-builder-model.php:3066
 #: classes/class-fl-builder-module.php:366 includes/column-settings.php:332
 #: includes/module-settings.php:6 includes/row-settings.php:727
 msgid "Advanced"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3059
-#: classes/class-fl-builder-model.php:3075
+#: classes/class-fl-builder-model.php:3067
+#: classes/class-fl-builder-model.php:3083
 msgid "Other"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3076
-#: classes/class-fl-builder-model.php:3211
-#: classes/class-fl-builder-model.php:3638
+#: classes/class-fl-builder-model.php:3084
+#: classes/class-fl-builder-model.php:3219
+#: classes/class-fl-builder-model.php:3646
 #: extensions/fl-builder-user-templates/includes/admin-add-new-form.php:43
 #: includes/admin-settings-modules.php:78 includes/ui-js-config.php:224
 #: modules/widget/widget.php:15 modules/widget/widget.php:16
 msgid "WordPress Widgets"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3676
+#: classes/class-fl-builder-model.php:3684
 msgid "1 Column"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3681
+#: classes/class-fl-builder-model.php:3689
 msgid "2 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3686
+#: classes/class-fl-builder-model.php:3694
 msgid "3 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3691
+#: classes/class-fl-builder-model.php:3699
 msgid "4 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3696
+#: classes/class-fl-builder-model.php:3704
 msgid "5 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3701
+#: classes/class-fl-builder-model.php:3709
 msgid "6 Columns"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3706
+#: classes/class-fl-builder-model.php:3714
 msgid "Left Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3711
+#: classes/class-fl-builder-model.php:3719
 msgid "Right Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:3716
+#: classes/class-fl-builder-model.php:3724
 msgid "Left & Right Sidebar"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4913
-#: classes/class-fl-builder-model.php:4954
-#: classes/class-fl-builder-model.php:5028
-#: classes/class-fl-builder-model.php:6279 includes/ui-js-config.php:225
+#: classes/class-fl-builder-model.php:4921
+#: classes/class-fl-builder-model.php:4962
+#: classes/class-fl-builder-model.php:5036
+#: classes/class-fl-builder-model.php:6287 includes/ui-js-config.php:225
 msgid "Uncategorized"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5320
+#: classes/class-fl-builder-model.php:5328
 msgid "Logged In"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5324
+#: classes/class-fl-builder-model.php:5332
 msgid "Logged Out"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:5328
+#: classes/class-fl-builder-model.php:5336
 msgid "Logic"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6234
+#: classes/class-fl-builder-model.php:6242
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:42
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:69
 #: extensions/fl-builder-core-templates-admin/includes/core-template-settings.php:7
@@ -803,21 +803,21 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6235
+#: classes/class-fl-builder-model.php:6243
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:43
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:70
 #: includes/ui-js-config.php:252
 msgid "Landing Pages"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6236
+#: classes/class-fl-builder-model.php:6244
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates-edit.php:44
 #: extensions/fl-builder-core-templates-admin/includes/admin-core-templates.php:71
 #: includes/ui-js-config.php:255
 msgid "Content Pages"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:6509
+#: classes/class-fl-builder-model.php:6517
 #: extensions/fl-builder-user-templates/classes/class-fl-builder-user-templates-post-type.php:36
 #: extensions/fl-builder-white-label/classes/class-fl-builder-white-label.php:139
 msgid "Beaver Builder"
@@ -8842,13 +8842,13 @@ msgid ""
 "ensure compatibility with Beaver Builder."
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4194
+#: classes/class-fl-builder-model.php:4202
 #. translators: %s: post/page title
 msgctxt "%s stands for post/page title."
 msgid "Copy of %s"
 msgstr ""
 
-#: classes/class-fl-builder-model.php:4971
+#: classes/class-fl-builder-model.php:4979
 msgctxt "Default user template category."
 msgid "Uncategorized"
 msgstr ""

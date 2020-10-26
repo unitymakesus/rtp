@@ -254,7 +254,7 @@ a:hover {
 .facetwp-region input[type='text'],
 .facetwp-region input[type='number'],
 .facetwp-region select {
-    width: 200px;
+    width: 220px;
 }
 
 .facet-fields input.facet-step,
@@ -517,7 +517,7 @@ a:hover {
 
 .facetwp-row {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 220px 1fr;
     padding-bottom: 20px;
 }
 
@@ -865,7 +865,7 @@ a:hover {
 
 .popover {
     position: absolute;
-    width: 200px;
+    width: 220px;
     top: 20px;
     left: 20px;
     background-color: #fff;
@@ -878,7 +878,7 @@ a:hover {
 }
 
 .popover-search input[type='text'] {
-    width: 200px;
+    width: 220px;
     box-shadow: none;
     outline-style: none;
     border-color: transparent;
@@ -887,7 +887,7 @@ a:hover {
 }
 
 .popover-choices {
-    max-height: 200px;
+    max-height: 220px;
     padding: 4px 0;
     overflow: scroll;
 }

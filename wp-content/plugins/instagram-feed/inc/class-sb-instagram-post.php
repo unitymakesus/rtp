@@ -217,6 +217,9 @@ class SB_Instagram_Post
 				} else {
 					$file_name = isset( $image_source_set[ $image_size ] ) ? $image_source_set[ $image_size ] : SB_Instagram_Parse::get_media_url( $this->instagram_api_data, 'lightbox' );
 				}
+				if ( strpos( $file_name, 'placeholder' ) !== false ) {
+					$file_name = '';
+				}
 				if ( ! empty( $file_name ) ) {
 
 					$sizes                   = array(

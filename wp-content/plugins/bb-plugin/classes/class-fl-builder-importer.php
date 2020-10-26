@@ -284,9 +284,20 @@ final class FLBuilderImporterDataFix {
 			return $data;
 		}
 
-		$data = preg_replace_callback('!s:(\d+):"(.*?)";!', function( $m ) {
-			return 's:' . strlen( $m[2] ) . ':"' . $m[2] . '";';
-		}, self::sanitize_from_word( $data, $linebreaks ) );
+		if ( $linebreaks ) {
+			$data = preg_replace_callback('!([a-z-_0-9]+)";s:(\d+):"(.*?)";!', function( $m ) {
+				// new replace logic.
+				if ( 'css' === $m[1] || 'js' === $m[1] || 'html' === $m[1] ) {
+					$m[3] = str_replace( '<br data-fl-fixed=true />', "\n", $m[3] );
+				}
+				$m[3] = str_replace( '<br data-fl-fixed=true />', '<br />', $m[3] );
+				return 's:' . strlen( $m[3] ) . ':"' . $m[3] . '";';
+			}, self::sanitize_from_word( $data, $linebreaks ) );
+		} else {
+			$data = preg_replace_callback('!s:(\d+):"(.*?)";!', function( $m ) {
+				return 's:' . strlen( $m[2] ) . ':"' . $m[2] . '";';
+			}, self::sanitize_from_word( $data, $linebreaks ) );
+		}
 
 		$data = maybe_unserialize( $data );
 
@@ -311,7 +322,7 @@ final class FLBuilderImporterDataFix {
 			'–'  => '-',
 			'—'  => '-',
 			'…'  => '&#8230;',
-			"\n" => '<br />',
+			"\n" => '<br data-fl-fixed=true />',
 		);
 
 		if ( ! $linebreaks ) {

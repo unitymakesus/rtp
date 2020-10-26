@@ -423,7 +423,11 @@ class FacetWP_Builder
                 $href = get_term_link( $term_data['term_id'], $term_data['taxonomy'] );
             }
 
-            $value = '<a href="' . $href . '" target="' . $target . '">' . $value . '</a>';
+            if ( ! empty( $target ) ) {
+                $target = ' target="' . $target . '"';
+            }
+
+            $value = '<a href="' . $href . '"' . $target . '>' . $value . '</a>';
         }
 
         return $value;

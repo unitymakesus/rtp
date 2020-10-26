@@ -794,6 +794,10 @@ function sb_instagram_settings_page() {
             </button>
         </div>
         <?php endif; ?>
+
+        <?php do_action( 'sbi_admin_overview_before_table' ); ?>
+
+
 		<div id="header">
 			<h1><?php _e( 'Instagram Feed', 'instagram-feed' ); ?></h1>
 		</div>
@@ -1165,7 +1169,7 @@ function sb_instagram_settings_page() {
                                 <label><?php _e('Please enter the User ID for this Profile:', 'instagram-feed');?></label>
                                 <input name="sb_manual_account_id" id="sb_manual_account_id" type="text" value="" style="margin-top: 4px; padding: 5px 9px; margin-left: 0px;" size="40" minlength="5" maxlength="100" placeholder="Eg: 15641403491391489" />
                             </div>
-                            <p id="sbi_no_js_warning" class="sbi_notice"><?php echo sprintf( __('It looks like JavaScript is not working on this page. Some features may not work fully. Visit %sthis page%s for help resolving this issue.', 'instagram-feed'), '<a href="https://smashballoon.com/i-cant-connect-or-manage-accounts-on-the-instagram-feed-settings-page/" target="_blank" rel="noopener">', '</a>' ); ?></p>
+                            <p id="sbi_no_js_warning" class="sbi_nojs_notice"><?php echo sprintf( __('It looks like JavaScript is not working on this page. Some features may not work fully. Visit %sthis page%s for help resolving this issue.', 'instagram-feed'), '<a href="https://smashballoon.com/i-cant-connect-or-manage-accounts-on-the-instagram-feed-settings-page/" target="_blank" rel="noopener">', '</a>' ); ?></p>
                             <p class="sbi_submit" style="display: inline-block;"><input type="submit" name="sbi_submit" id="sbi_manual_submit" class="button button-primary" value="<?php _e('Connect This Account', 'instagram-feed' );?>"></p>
                         </div>
                     </td>
@@ -3194,13 +3198,13 @@ endif;
 $error_page = $sb_instagram_posts_manager->get_error_page();
 if ( $error_page ) {
 	echo 'Feed with error: ' . esc_url( get_the_permalink( $error_page ) ). "\n";
-}
-$ajax_statuses = $sb_instagram_posts_manager->get_ajax_status();
-if ( ! $ajax_statuses['successful'] ) {
-	?>
-## AJAX Status ##
-	<?php
-	echo 'test not successful';
+}?>
+
+## oEmbed: ##
+<?php
+$oembed_token_settings = get_option( 'sbi_oembed_token', array() );
+foreach( $oembed_token_settings as $key => $value ) {
+    echo $key . ': ' . esc_attr( $value ) . "\n";
 }
 ?>
 </textarea>

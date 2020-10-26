@@ -1069,6 +1069,11 @@
     "fallback": "cursive"
   }
 }, {
+  "Commissioner": {
+    "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900"],
+    "fallback": "sans-serif"
+  }
+}, {
   "Concert One": {
     "variants": ["regular"],
     "fallback": "sans-serif"
@@ -1200,7 +1205,7 @@
   }
 }, {
   "Cuprum": {
-    "variants": ["regular", "italic", "700", "700italic"],
+    "variants": ["regular", "500", "600", "700", "italic", "500italic", "600italic", "700italic"],
     "fallback": "sans-serif"
   }
 }, {
@@ -1340,7 +1345,7 @@
   }
 }, {
   "Domine": {
-    "variants": ["regular", "700"],
+    "variants": ["regular", "500", "600", "700"],
     "fallback": "serif"
   }
 }, {
@@ -3649,6 +3654,11 @@
     "fallback": "sans-serif"
   }
 }, {
+  "Piazzolla": {
+    "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900", "100italic", "200italic", "300italic", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
+    "fallback": "serif"
+  }
+}, {
   "Piedra": {
     "variants": ["regular"],
     "fallback": "sans-serif"
@@ -3940,7 +3950,7 @@
   }
 }, {
   "Red Rose": {
-    "variants": ["300", "regular", "700"],
+    "variants": ["300", "regular", "500", "600", "700"],
     "fallback": "sans-serif"
   }
 }, {
@@ -4171,6 +4181,11 @@
 }, {
   "Sansita": {
     "variants": ["regular", "italic", "700", "700italic", "800", "800italic", "900", "900italic"],
+    "fallback": "sans-serif"
+  }
+}, {
+  "Sansita Swashed": {
+    "variants": ["300", "regular", "500", "600", "700", "800", "900"],
     "fallback": "sans-serif"
   }
 }, {

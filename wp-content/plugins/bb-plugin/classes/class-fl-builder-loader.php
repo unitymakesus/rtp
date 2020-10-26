@@ -26,7 +26,9 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			$plugin_dirname = basename( dirname( dirname( __FILE__ ) ) );
 
 			if ( $lite_active && $plugin_dirname != $lite_dirname ) {
-				deactivate_plugins( array( $lite_dirname . '/fl-builder.php' ), false, is_network_admin() );
+				add_action( 'admin_init', function() {
+					deactivate_plugins( array( 'beaver-builder-lite-version/fl-builder.php' ), false, is_network_admin() );
+				});
 				return;
 			} elseif ( class_exists( 'FLBuilder' ) ) {
 				add_action( 'admin_notices', __CLASS__ . '::double_install_admin_notice' );
@@ -46,7 +48,7 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 		 * @return void
 		 */
 		static private function define_constants() {
-			define( 'FL_BUILDER_VERSION', '2.4.0.5' );
+			define( 'FL_BUILDER_VERSION', '2.4.0.6' );
 			define( 'FL_BUILDER_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'fl-builder.php' );
 			define( 'FL_BUILDER_DIR', plugin_dir_path( FL_BUILDER_FILE ) );
 			define( 'FL_BUILDER_URL', plugins_url( '/', FL_BUILDER_FILE ) );

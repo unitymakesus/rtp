@@ -308,7 +308,10 @@ final class FLBuilderCSS {
 			}
 		}
 		if ( isset( $setting['line_height'] ) && ! empty( $setting['line_height']['length'] ) ) {
-			$props['line-height'] = $setting['line_height']['length'] . $setting['line_height']['unit'];
+			$props['line-height'] = $setting['line_height']['length'];
+			if ( isset( $setting['line_height']['unit'] ) && ! empty( $setting['line_height']['unit'] ) ) {
+				$props['line-height'] .= $setting['line_height']['unit'];
+			}
 		}
 		if ( isset( $setting['letter_spacing'] ) && ! empty( $setting['letter_spacing']['length'] ) ) {
 			$props['letter-spacing'] = $setting['letter_spacing']['length'] . 'px';

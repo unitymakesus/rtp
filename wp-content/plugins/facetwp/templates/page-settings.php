@@ -210,7 +210,7 @@ FWP.data.settings = FWP.hooks.applyFilters('facetwp/load_settings', FWP.data.set
         <!-- Support tab -->
 
         <div class="facetwp-region facetwp-region-support" :class="{ active: active_tab == 'support' }">
-            <div v-if="is_support_loaded" v-html="support_html"></div>
+            <div v-if="is_support_loaded" v-html="FWP.support_html"></div>
         </div>
 
         <!-- Copy to clipboard -->

@@ -2922,10 +2922,7 @@ final class FLBuilderModel {
 	static public function get_default_enabled_modules() {
 		$default = array_keys( self::$modules );
 
-		// These modules are deprecated and disabled by default.
-		$deprecated = array(
-			'social-buttons',
-		);
+		$deprecated = self::get_deprecated_modules();
 
 		// Remove deprecated modules from the defaults.
 		foreach ( $default as $key => $slug ) {
@@ -2935,6 +2932,17 @@ final class FLBuilderModel {
 		}
 
 		return array_values( $default );
+	}
+
+	/**
+	 * @since 2.4.1
+	 */
+	static public function get_deprecated_modules() {
+		// These modules are deprecated and disabled by default.
+		$deprecated = array(
+			'social-buttons',
+		);
+		return $deprecated;
 	}
 
 	/**

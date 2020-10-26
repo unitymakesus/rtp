@@ -3,7 +3,7 @@
 Plugin Name: Smash Balloon Instagram Feed
 Plugin URI: https://smashballoon.com/instagram-feed
 Description: Display beautifully clean, customizable, and responsive Instagram feeds.
-Version: 2.5
+Version: 2.5.3
 Author: Smash Balloon
 Author URI: https://smashballoon.com/
 License: GPLv2 or later
@@ -23,11 +23,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if ( ! defined( 'SBIVER' ) ) {
-	define( 'SBIVER', '2.5' );
+	define( 'SBIVER', '2.5.3' );
 }
 // Db version.
 if ( ! defined( 'SBI_DBVERSION' ) ) {
-	define( 'SBI_DBVERSION', '1.5' );
+	define( 'SBI_DBVERSION', '1.6' );
 }
 
 // Upload folder name for local image files for posts
@@ -103,6 +103,7 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post-set.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-posts-manager.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-settings.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-single.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-token-refresher.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/blocks/class-sbi-blocks.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-tracking.php';
@@ -120,6 +121,14 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 			if ( version_compare( PHP_VERSION,  '5.3.0' ) >= 0
 				 && version_compare( get_bloginfo( 'version' ), '4.6' , '>=' ) ) {
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-notifications.php';
+				$sbi_notifications = new SBI_Notifications();
+				$sbi_notifications->init();
+
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-new-user.php';
+				$sbi_newuser = new SBI_New_User();
+				$sbi_newuser->init();
+
 				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/addon-functions.php';
 				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/PluginSilentUpgrader.php';
 				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/PluginSilentUpgraderSkin.php';
@@ -263,6 +272,13 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 			sbi_update_option( 'sbi_usage_tracking', $usage_tracking, false );
 		}
+		if ( ! wp_next_scheduled( 'sbi_notification_update' ) ) {
+			$timestamp = strtotime( 'next monday' );
+			$timestamp = $timestamp + (3600 * 24 * 7);
+			$six_am_local = $timestamp + sbi_get_utc_offset() + (6*60*60);
+
+			wp_schedule_event( $six_am_local, 'sbiweekly', 'sbi_notification_update' );
+		}
 	}
 
 	register_activation_hook( __FILE__, 'sb_instagram_activate' );
@@ -276,6 +292,7 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		wp_clear_scheduled_hook( 'sb_instagram_twicedaily' );
 		wp_clear_scheduled_hook( 'sb_instagram_cron_job' );
 		wp_clear_scheduled_hook( 'sb_instagram_feed_issue_email' );
+		wp_clear_scheduled_hook( 'sbi_notification_update' );
 	}
 
 	register_deactivation_hook( __FILE__, 'sb_instagram_deactivate' );
@@ -510,6 +527,18 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			update_option( 'sbi_db_version', SBI_DBVERSION );
 		}
 
+		if ( (float) $db_ver < 1.6 ) {
+			if ( ! wp_next_scheduled( 'sbi_notification_update' ) ) {
+				$timestamp = strtotime( 'next monday' );
+				$timestamp = $timestamp + (3600 * 24 * 7);
+				$six_am_local = $timestamp + sbi_get_utc_offset() + (6*60*60);
+
+				wp_schedule_event( $six_am_local, 'sbiweekly', 'sbi_notification_update' );
+			}
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
 
 	}
 
@@ -600,10 +629,13 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			        " );
 		delete_option( 'sbi_usage_tracking_config' );
 		delete_option( 'sbi_usage_tracking' );
+		delete_option( 'sbi_notifications' );
+		delete_option( 'sbi_newuser_notifications' );
 		delete_option( 'sbi_oembed_token' );
 		delete_option( 'sbi_rating_notice' );
 		delete_option( 'sbi_refresh_report' );
-		delete_option( 'sbi_welcome_seen' );
+		delete_option( 'sbi_single_cache' );
+
 
 		global $wp_roles;
 		$wp_roles->remove_cap( 'administrator', 'manage_instagram_feed_options' );

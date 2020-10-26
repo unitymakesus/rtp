@@ -413,7 +413,7 @@
                     {{ 'Fetch' | i18n }}
                     <v-select
                         v-model="query_obj.post_type"
-                        :options="$root.query_data.post_types"
+                        :options="FWP.query_data.post_types"
                         :multiple="true"
                         :searchable="false"
                         :close-on-select="false"
@@ -443,7 +443,7 @@
                             <option value="post__in">post__in</option>
                         </optgroup>
                         <optgroup label="Custom Fields">
-                            <option v-for="(label, name) in $root.data_sources.custom_fields.choices" :value="name">{{ label }}</option>
+                            <option v-for="(label, name) in FWP.data_sources.custom_fields.choices" :value="name">{{ label }}</option>
                         </optgroup>
                     </fselect>
                     <select v-model="row.type" v-show="row.key.substr(0, 3) == 'cf/'" class="qb-type">
@@ -464,7 +464,7 @@
 
                 <div v-for="(row, index) in query_obj.filters" class="qb-condition">
                     <fselect :row="row">
-                        <optgroup v-for="data in $root.query_data.filter_by" :label="data.label">
+                        <optgroup v-for="data in FWP.query_data.filter_by" :label="data.label">
                             <option v-for="(label, name) in data.choices" :value="name" v-html="label"></option>
                         </optgroup>
                     </fselect>
@@ -951,7 +951,7 @@
                 });
 
                 this.$root.$on('edit-item', ({source, settings}) => {
-                    self.title = self.$root.layout_data[source];
+                    self.title = FWP.layout_data[source];
                     self.type = 'item';
                     self.settings = self.mergeSettings(settings, self.type, source);
                     self.source = source;
@@ -1177,7 +1177,7 @@
                     <span @click="deleteItem" title="Delete item" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-item-inner" @click="editItem" :class="[ item.settings.is_hidden ? 'is-hidden' : '' ]">
-                    <span class="item-drag" v-html="$root.layout_data[item.source]"></span>
+                    <span class="item-drag" v-html="FWP.layout_data[item.source]"></span>
                     <span v-if="item.settings.is_hidden" v-html="FWP.svg['eye-slash']"></span>
                 </div>
             </div>
@@ -1216,7 +1216,7 @@
                 <div class="popover-choices">
                     <div
                         @click="saveItem(source)"
-                        v-for="(label, source) in $root.layout_data"
+                        v-for="(label, source) in FWP.layout_data"
                         v-show="isMatch(label)"
                         v-html="label">
                     </div>
@@ -1381,18 +1381,14 @@
                             <facet-types
                                 :facet="facet"
                                 :selected="facet.type"
-                                :types="$root.facet_types">
+                                :types="FWP.facet_types">
                             </facet-types>
                         </div>
                     </div>
                     <div class="facetwp-row field-data-source">
                         <div>{{ 'Data source' | i18n }}:</div>
                         <div>
-                            <data-sources
-                                :facet="facet"
-                                :selected="facet.source"
-                                :sources="$root.data_sources">
-                            </data-sources>
+                            <data-sources :facet="facet"></data-sources>
                         </div>
                     </div>
                     <hr />
@@ -1527,14 +1523,14 @@
             },
             template: `
             <div class="facet-fields">
-                <component :is="dynComponent" v-bind="$props"></component>
+                <component :is="dynComponent" :facet="facet"></component>
             </div>
             `,
             computed: {
 
-                tableToDivs() {
+                settingsHtml() {
                     const self = this;
-                    let html = this.$root.clone[this.facet.type];
+                    let html = FWP.clone[this.facet.type];
                     let custom_settings = ['_code'];
 
                     // Backwards compatibility
@@ -1595,8 +1591,8 @@
                 // use a dynamic component so the data bindings (e.g. v-model) get compiled
                 dynComponent() {
                     return {
-                        template: '<div>' + this.tableToDivs + '</div>',
-                        props: this.$options.props
+                        template: '<div>' + this.settingsHtml + '</div>',
+                        props: ['facet']
                     }
                 }
             },
@@ -1606,18 +1602,18 @@
             watch: {
                 'facet.type': function(val) {
                     if ('search' == val || 'pager' == val) {
-                        this.facet.source = '';
+                        Vue.set(this.facet, 'source', '');
                     }
-                    this.facet.source_other = '';
+                    Vue.set(this.facet, 'source_other', '');
                 },
                 'facet.ghosts': function(val) {
                     if ('no' == val) {
-                        this.facet.preserve_ghosts = 'no';
+                        Vue.set(this.facet, 'preserve_ghosts', 'no');
                     }
                 },
                 'facet.hierarchical': function(val) {
                     if ('no' == val) {
-                        this.facet.show_expanded = 'no';
+                        Vue.set(this.facet, 'show_expanded', 'no');
                     }
                 }
             }
@@ -1626,18 +1622,16 @@
         Vue.component('data-sources', {
             props: {
                 facet: Object,
-                selected: String,
-                sources: Object,
                 settingName: {
                     type: String,
                     default: 'source'
                 }
             },
             template: `
-            <select :id="rand" v-model="dataSourcesModel">
+            <select :id="rand">
                 <option v-if="settingName != 'source'" value="">{{ 'None' | i18n }}</option>
-                <optgroup v-for="optgroup in sources" :label="optgroup.label">
-                    <option v-for="(label, key) in optgroup.choices" :value="key" :selected="selected == key">{{ label }}</option>
+                <optgroup v-for="optgroup in FWP.data_sources" :label="optgroup.label">
+                    <option v-for="(label, key) in optgroup.choices" :value="key" :selected="facet[settingName] == key">{{ label }}</option>
                 </optgroup>
             </select>
             `,
@@ -1646,19 +1640,8 @@
 
                     // only update this current instance
                     if (0 < $($wrap).find('#' + this.rand).length) {
-                        this.facet[this.settingName] = this.$el.value;
+                        Vue.set(this.facet, this.settingName, this.$el.value);
                     }
-                }
-            },
-            computed: {
-                dataSourcesModel() {
-
-                    // create the setting if needed
-                    if ('undefined' === typeof this.facet[this.settingName]) {
-                        Vue.set(this.facet, this.settingName, '');
-                    }
-
-                    return this.facet[this.settingName];
                 }
             },
             created() {
@@ -1684,12 +1667,6 @@
                 editing_facet: false,
                 editing_template: false,
                 row_counts: {},
-                facet_types: FWP.facet_types,
-                data_sources: FWP.data_sources,
-                layout_data: FWP.layout_data,
-                query_data: FWP.query_data,
-                support_html: FWP.support_html,
-                clone: FWP.clone,
                 active_tab: 'facets',
                 active_subnav: 'general',
                 is_support_loaded: false,
