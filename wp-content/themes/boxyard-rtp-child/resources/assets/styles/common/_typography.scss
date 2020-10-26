@@ -117,7 +117,7 @@ figure {
 }
 
 .entry-content {
-  ul:not(.select-dropdown) {
+  ul:not(.select-dropdown):not(.social-icons) {
     li {
       list-style: none;
       position: relative;
