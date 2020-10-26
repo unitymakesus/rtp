@@ -28,6 +28,23 @@ select {
   @extend .custom-select;
 }
 
+.wp-core-ui {
+  [type="checkbox"]:not(:checked),
+  [type="checkbox"]:checked {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  select {
+    display: inline-block;
+
+    &#media-attachment-date-filters {
+      width: auto;
+    }
+  }
+}
+
 .gform_wrapper .gform_body {
   .gsection {
     border-bottom: 0;
