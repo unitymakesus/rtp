@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import tippy, { roundArrow } from 'tippy.js';
+import hideOnEsc from '../util/tippyjs/hideOnEsc';
 
 /**
  * GSAP our suites (boxes) in.
@@ -95,6 +96,7 @@ function interactMap() {
     interactive: true,
     offset: [0, -20],
     placement: 'top',
+    plugins: [hideOnEsc],
     theme: 'dark',
   });
 }
