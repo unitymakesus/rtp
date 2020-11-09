@@ -61,12 +61,12 @@ select {
   }
 
   .gfield {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin-bottom: 1rem;
 
     &::before {
-      display: none;
+      display: none !important;
     }
 
     &_required {
