@@ -21,7 +21,7 @@
       top: -1rem;
       left: 0;
       font-size: 0.85rem;
-      color: $color-white;
+      color: inherit;
     }
   }
 
@@ -32,6 +32,10 @@
 
     padding-left: 0;
     padding-right: 16px !important;
+
+    &:not(:last-of-type) {
+      margin-bottom: 1.5rem;
+    }
 
     @media #{$medium-and-up} {
       input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"] {
@@ -45,6 +49,13 @@
       margin-bottom: 15px;
       padding-left: 16px !important;
       padding-right: 16px !important;
+      border-bottom: 0;
+    }
+
+    .gform--bg-white & {
+      input[type="text"], input[type="textarea"], input[type="url"], input[type="password"], input[type="email"], textarea {
+        background-color: #F1F1F1;
+      }
     }
   }
 
@@ -66,6 +77,10 @@
 
   .gfield_required {
     color: $color-red-state;
+  }
+
+  .gfield_error {
+    padding-top: 1.25rem !important;
   }
 
   div.ginput_container {
@@ -117,17 +132,6 @@
     margin-top: -15px;
   }
 
-  .gform_button.button {
-    @extend .btn;
-
-    font-size: 1rem;
-    line-height: 50px !important;
-    font-weight: 400;
-    border-radius: 6px;
-    height: auto;
-    text-transform: none;
-  }
-
   #error {
     background-color: $error-color;
     color: $color-white;
@@ -150,9 +154,30 @@
     }
   }
 
+  .gform_button.button {
+    .home & {
+      @extend .btn;
+
+      font-size: 1rem;
+      line-height: 50px !important;
+      font-weight: 400;
+      border-radius: 6px;
+      height: auto;
+      text-transform: none;
+    }
+
+    .page-template-template-full-hide-title & {
+      @extend .btn-alt;
+    }
+  }
+
   input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
     color: $color-slate;
     font-weight: 400;
+  }
+
+  input[type="submit"]:hover {
+    cursor: pointer;
   }
 
   .select-wrapper {

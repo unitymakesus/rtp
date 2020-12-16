@@ -27,15 +27,43 @@
   }
 }
 
-button:hover,
-a.btn:hover {
-  cursor: pointer;
+.btn-alt {
+  border: 0;
+  border-radius: 0;
+  padding: 0.6rem 3rem;
+  width: calc(100% - 16px);
+  background-color: $color-blue-duke;
+  color: $color-white;
+  text-decoration: none;
+  box-shadow: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 4px;
+  transition: background-color 0.3s ease-in-out;
+
+  &:hover,
+  &:focus {
+    background-color: lighten($color-blue-duke, 10%);
+    text-decoration: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5);
+  }
+
+  &:active {
+    background-color: darken($color-blue-duke, 5%);
+  }
 }
 
-input[type="submit"] {
-  @extend .btn;
-
-  height: auto;
+button:hover,
+a.btn:hover,
+a.btn-alt:hover {
+  cursor: pointer;
 }
 
 // Menu toggles
