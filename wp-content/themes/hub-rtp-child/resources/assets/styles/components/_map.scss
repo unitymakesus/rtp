@@ -1,0 +1,24 @@
+.hub-office-map {
+  path {
+    fill: none;
+    stroke: rgba(0, 0, 0, 0);
+    stroke-miterlimit: 10;
+  }
+
+  .property path {
+    fill: transparent;
+    mix-blend-mode: overlay;
+    transition: fill 0.3s ease-in-out;
+  }
+
+  .property:hover path,
+  .property:focus path {
+    fill: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+  }
+
+  .property--darken:hover path,
+  .property--darken:focus path {
+    fill: rgba(0, 0, 0, 0.5);
+  }
+}

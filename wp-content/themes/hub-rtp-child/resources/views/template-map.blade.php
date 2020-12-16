@@ -6,6 +6,6 @@
 
 @section('content')
   @while(have_posts()) @php the_post() @endphp
-    @include('partials.office-map')
+    @php echo do_shortcode('[hub-office-map]') @endphp
   @endwhile
 @endsection

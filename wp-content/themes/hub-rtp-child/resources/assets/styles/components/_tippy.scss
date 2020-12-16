@@ -1,0 +1,42 @@
+.tippy-box {
+  border-radius: 0;
+  box-shadow: $box-shadow;
+
+  a {
+    color: inherit;
+  }
+
+  &[data-theme~='light'] {
+    border: 2px solid $color-black;
+    background-color: $color-white;
+    color: $color-black;
+
+    a {
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+
+    > .tippy-svg-arrow > svg:first-child {
+      fill: $color-black;
+    }
+
+    > .tippy-svg-arrow > svg:last-child {
+      fill: $color-white;
+    }
+  }
+}
+
+.tippy-content {
+  padding: 1rem;
+  font-size: 1rem;
+
+  > * {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

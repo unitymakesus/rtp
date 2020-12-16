@@ -28,6 +28,9 @@
 @import "~materialize-css/sass/components/forms/forms";
 // @import "~materialize-css/sass/components/preloader";
 @import "~modaal/dist/css/modaal.scss";
+@import "~tippy.js/dist/tippy.css";
+@import "~tippy.js/dist/svg-arrow.css";
+@import "~tippy.js/dist/border.css";
 
 /** Import theme styles */
 @import "common/functions";
@@ -48,6 +51,7 @@
 @import "components/pagination";
 @import "components/people";
 @import "components/search";
+@import "components/tippy";
 @import "components/unity";
 @import "layouts/header";
 @import "layouts/navbar";
