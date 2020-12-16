@@ -30,6 +30,12 @@ mix.sass(`${src}/styles/hub-rtp-blog-feed.scss`, `${dist}/styles`, {
 mix.sass(`${src}/styles/hub-rtp-carousel.scss`, `${dist}/styles`, {
   implementation: require('node-sass'),
 });
+mix.sass(`${src}/styles/hub-rtp-contact-card.scss`, `${dist}/styles`, {
+  implementation: require('node-sass'),
+});
+mix.sass(`${src}/styles/hub-rtp-figure-card.scss`, `${dist}/styles`, {
+  implementation: require('node-sass'),
+});
 
 /**
  * JS.
