@@ -7,7 +7,7 @@
             "label": "Properties",
             "name": "office_map_properties",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "Use the fields below to edit the tooltip text for each defined property on the map.<br\/>\r\n<strong>Note:<\/strong> Properties cannot be added or removed from the map.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,16 +18,54 @@
             "collapsed": "field_5fda5cff41ff3",
             "min": 0,
             "max": 0,
-            "layout": "table",
+            "layout": "block",
             "button_label": "Add Property",
             "sub_fields": [
                 {
                     "key": "field_5fda5cff41ff3",
-                    "label": "ID",
+                    "label": "Map ID",
                     "name": "id",
                     "type": "text",
                     "instructions": "",
                     "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5fdc070a8bc66",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5fdc07138bc67",
+                    "label": "Square Feet",
+                    "name": "sqft",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -79,5 +117,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1608148013
+    "modified": 1608256094
 }

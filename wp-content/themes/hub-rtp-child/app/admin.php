@@ -35,6 +35,16 @@ add_action('acf/init', function () {
 });
 
 /**
+ * Map directory IDs are read-only.
+ * @source https://www.advancedcustomfields.com/resources/acf-prepare_field/
+ */
+add_filter('acf/prepare_field/key=field_5fda5cff41ff3', function ($field) {
+    $field['readonly'] = true;
+
+    return $field;
+});
+
+/**
  * Hide those pesky dashboard panels.
  */
 add_action('wp_dashboard_setup', function () {
