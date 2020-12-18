@@ -6,6 +6,7 @@
 
 @section('content')
   @while(have_posts()) @php the_post() @endphp
-    @php echo do_shortcode('[hub-office-map]') @endphp
+    <h1 class="screen-reader-text">{{ App::title() }}</h1>
+    @include('partials.content-page')
   @endwhile
 @endsection

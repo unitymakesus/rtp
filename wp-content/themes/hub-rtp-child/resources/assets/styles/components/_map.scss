@@ -1,24 +1,129 @@
 .hub-office-map {
-  path {
-    fill: none;
-    stroke: rgba(0, 0, 0, 0);
-    stroke-miterlimit: 10;
+  position: relative;
+  line-height: 1;
+
+  &__legend {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 350px;
+    background-color: $color-white;
+
+    @media #{$medium-and-up} {
+      display: block;
+    }
   }
 
-  .property path {
-    fill: transparent;
-    mix-blend-mode: overlay;
-    transition: fill 0.3s ease-in-out;
+  &__legend-heading {
+    @extend .h3;
+
+    text-transform: uppercase;
   }
 
-  .property:hover path,
-  .property:focus path {
-    fill: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
+  &__legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+
+    > li {
+      font-weight: bold;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      flex-basis: 50%;
+
+      // Nudge that "Restaurants & Retail" item full width...
+      &:last-of-type {
+        flex-basis: 100%;
+      }
+    }
   }
 
-  .property--darken:hover path,
-  .property--darken:focus path {
-    fill: rgba(0, 0, 0, 0.5);
+  &__legend-filters {
+    display: flex;
+    justify-content: space-between;
+    border-top: 2px solid $color-grey-light;
+    padding-top: 0.875rem;
+    margin-top: 0.875rem;
+  }
+
+  &__legend-filter {
+    @extend .btn-filter;
+
+    font-weight: bold;
+    font-size: 0.875rem;
+  }
+
+  svg {
+    display: none;
+
+    @media #{$medium-and-up} {
+      display: block;
+    }
+
+    path {
+      fill: none;
+      stroke: rgba(0, 0, 0, 0);
+      stroke-miterlimit: 10;
+    }
+
+    .property path {
+      fill: transparent;
+      mix-blend-mode: overlay;
+      transition: fill 0.3s ease-in-out;
+    }
+
+    .property:hover path,
+    .property:focus path,
+    .property--is-highlighted path {
+      fill: rgba(255, 255, 255, 0.5);
+    }
+
+    .property:hover path {
+      cursor: pointer;
+    }
+  }
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+
+  &::before {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 0.5rem;
+    background-color: $color-black;
+    content: '';
+  }
+
+  &--blue::before {
+    background-color: rgb(28, 66, 127);
+  }
+
+  &--green::before {
+    background-color: rgb(155, 187, 52);
+  }
+
+  &--purple::before {
+    background-color: rgb(170, 91, 169);
+  }
+
+  &--red::before {
+    background-color: rgb(231, 21, 60);
+  }
+
+  &--light-blue::before {
+    background-color: rgb(83, 163, 204);
+  }
+}
+
+.hub-office-map__mobile {
+  @media #{$medium-and-up} {
+    display: none;
   }
 }

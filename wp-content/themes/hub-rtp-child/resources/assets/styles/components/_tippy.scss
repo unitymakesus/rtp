@@ -6,10 +6,9 @@
     color: inherit;
   }
 
-  &[data-theme~='light'] {
-    border: 2px solid $color-black;
-    background-color: $color-white;
-    color: $color-black;
+  &[data-theme~='hub-blue'] {
+    background-color: $color-blue-hub;
+    color: $color-white;
 
     a {
       &:hover,
@@ -18,19 +17,17 @@
       }
     }
 
-    > .tippy-svg-arrow > svg:first-child {
-      fill: $color-black;
-    }
-
-    > .tippy-svg-arrow > svg:last-child {
-      fill: $color-white;
+    > .tippy-svg-arrow > svg {
+      fill: $color-blue-hub;
     }
   }
 }
 
 .tippy-content {
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  font-weight: 300;
+  font-size: 0.9rem;
 
   > * {
     margin-top: 0;
@@ -38,5 +35,18 @@
 
   > *:last-child {
     margin-bottom: 0;
+  }
+}
+
+.map-tooltip {
+  &__heading {
+    @extend .h3;
+
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &__text {
+    margin-top: 1rem;
   }
 }
