@@ -1,3 +1,4 @@
+// Top diagonal section.
 .hero-diagonal {
   position: relative;
   z-index: 100;
@@ -7,6 +8,26 @@
     right: 0;
     left: 0;
     top: -10.5vw;
+    height: 10.5vw;
+    transform: skewY(-6deg);
+    transform-origin: 100% 0;
+    background: inherit;
+    content: '';
+    z-index: -1;
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+// Bottom diagonal section.
+.hero-diagonal-bottom {
+  position: relative;
+  z-index: 100;
+
+  .fl-row-content-wrap::after {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
     height: 10.5vw;
     transform: skewY(-6deg);
     transform-origin: 100% 0;
