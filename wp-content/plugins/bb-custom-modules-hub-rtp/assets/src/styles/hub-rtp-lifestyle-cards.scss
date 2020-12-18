@@ -1,0 +1,466 @@
+.cbb-lifestyle {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  padding-bottom: 5rem;
+  max-width: 1600px;
+  margin: 0 auto;
+
+  &__card {
+    position: relative;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  @media screen and (min-width: 992px) {
+    grid-gap: 2rem;
+    padding-bottom: 2rem;
+
+    &__card {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  }
+
+  &__card-inner {
+    display: flex;
+    position: relative;
+    perspective: 40rem;
+    height: 100%;
+    transition: transform calc(0.7s / 4);
+    transition-delay: 0.7s, 0s;
+    text-decoration: none;
+    color: inherit;
+    z-index: 1;
+  }
+
+  &__card-toggle {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    z-index: 15;
+    appearance: none;
+    border: 0;
+    width: 44px;
+    height: 44px;
+    line-height: 0;
+    background-color: rgba(0, 0, 0, .25);
+    transition: background-color 0.3s ease-in-out;
+    padding: 0.25rem;
+
+    &:hover,
+    &:focus {
+      background-color: #716EB1;
+    }
+
+    &:active {
+      background-color: #423F7A;
+    }
+
+    svg {
+      width: 28px;
+      height: 28px;
+      transition: 0.3s transform ease-in-out;
+      transform-origin: center;
+    }
+
+    &[aria-expanded="true"] > svg {
+      transform: rotate(45deg);
+    }
+  }
+
+  &__card-body {
+    display: flex;
+    flex-grow: 1;
+    transform-style: preserve-3d;
+    transition: 0.7s transform;
+    border-radius: 0.25rem;
+
+    .prefers-reduced-motion & {
+      transition: 0s transform;
+    }
+
+    .cbb-lifestyle__card-inner.is-active & {
+      transform: rotateX(-180deg);
+    }
+  }
+
+  &__card-front,
+  &__card-back {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    min-height: 250px;
+    margin: 0;
+    border-radius: 0;
+    backface-visibility: hidden;
+    min-width: 100%;
+  }
+
+  &__card-front {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__card-back {
+    padding: 1rem;
+    font-size: 1.125rem;
+    font-weight: 300;
+    background-color: #FFF;
+    color: #000 !important;
+    transform: rotateX(-180deg) translate(-100%, 0);
+    overflow: hidden;
+
+    &-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 1rem 120px 1rem 1rem;
+    }
+
+    h4 {
+      margin: 0 0 .25rem 0;
+    }
+
+    p:first-of-type {
+      margin-top: 0;
+    }
+
+    p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    ul {
+      margin: 0;
+    }
+
+    li {
+      line-height: 1;
+    }
+  }
+
+  &__card-icon img {
+    position: absolute;
+    top: 50%;
+    right: 1.5rem;
+    transform: translateY(-50%);
+    max-width: 100px !important;
+    width: 100%;
+  }
+}
+
+$morning-offset: 30px;
+
+.fl-module-lifestyle-cards--morning {
+  .cbb-lifestyle__card:nth-of-type(1) {
+    .cbb-lifestyle__card-back-inner {
+      padding-right: 1rem;
+    }
+
+    .cbb-lifestyle__card-icon img {
+      top: 100%;
+      right: 0;
+      bottom: -15px;
+      translate: none;
+    }
+  }
+
+  .cbb-lifestyle__card:nth-of-type(2),
+  .cbb-lifestyle__card:nth-of-type(3) {
+    .cbb-lifestyle__card-back-inner {
+      padding-right: 180px;
+    }
+
+    .cbb-lifestyle__card-icon img {
+      max-width: 150px !important;
+    }
+  }
+
+  .cbb-lifestyle__card:nth-of-type(4) {
+    .cbb-lifestyle__card-back-inner {
+      padding-top: 130px;
+      padding-right: 1rem;
+    }
+
+    .cbb-lifestyle__card-icon img {
+      top: 1.5rem;
+      left: 2rem;
+      max-width: 100px !important;
+      transform: none;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .cbb-lifestyle__card:nth-of-type(1) {
+      position: relative;
+      margin-left: 100px;
+      margin-right: $morning-offset;
+
+      &::after {
+        position: absolute;
+        display: inline-block;
+        top: 90px;
+        left: -60px;
+        width: 174px;
+        height: 343px;
+        background-image: url(../images/pattern-dots-large.svg);
+        background-size: 174px 343px;
+        content: '';
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(2) {
+      width: calc(100% + #{$morning-offset});
+      left: -$morning-offset;
+      margin-bottom: $morning-offset;
+
+      .cbb-lifestyle__card-back-inner {
+        justify-content: center;
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(3) {
+      top: -$morning-offset;
+      margin-bottom: -#{$morning-offset};
+      margin-top: #{$morning-offset};
+
+      .cbb-lifestyle__card-back-inner {
+        justify-content: center;
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(4) {
+      top: -#{$morning-offset};
+      margin-bottom: -#{$morning-offset};
+      margin-right: 100px;
+
+      &::after {
+        position: absolute;
+        display: inline-block;
+        top: 60px;
+        right: -120px;
+        width: 250px;
+        height: 215px;
+        background-image: url(../images/pattern-triangles.svg);
+        background-size: 250px 215px;
+        content: '';
+      }
+    }
+  }
+
+  .cbb-lifestyle__card-back-inner {
+    background-color: transparentize(#4ca1d2, 0.8);
+  }
+
+  h4 {
+    color: #4ca1d2;
+  }
+}
+
+.fl-module-lifestyle-cards--afternoon {
+  .cbb-lifestyle__card-back-inner {
+    background-color: transparentize(#5955a4, 0.8);
+  }
+
+  h4 {
+    color: #5955a4;
+  }
+
+  @media screen and (min-width: 992px) {
+    .cbb-lifestyle {
+      grid-template-columns: repeat(12, [col-start] 1fr);
+    }
+
+    .cbb-lifestyle__card:nth-of-type(1) {
+      grid-row: 1;
+      grid-column: col-start 4 / span 4;
+
+      .cbb-lifestyle__card-back-inner {
+        padding-top: 100px;
+        padding-right: 1rem;
+      }
+
+      .cbb-lifestyle__card-icon img {
+        max-width: 80px !important;
+        top: 0;
+        right: 60px;
+        transform: none;
+      }
+
+      &::after {
+        position: absolute;
+        display: inline-block;
+        top: 0;
+        left: -240px;
+        width: 240px;
+        height: 300px;
+        background-image: url(../images/pattern-bars.svg);
+        background-size: 274px 300px;
+        content: '';
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(2) {
+      grid-row: 1;
+      grid-column: col-start 8 / span 4;
+
+      .cbb-lifestyle__card-icon img {
+        max-width: 120px !important;
+        top: 0;
+        right: 60px;
+        transform: none;
+      }
+
+      .cbb-lifestyle__card-back-inner {
+        padding-top: 100px;
+        padding-right: 1rem;
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(3) {
+      max-width: 100%;
+      grid-column: span 12;
+
+      .cbb-lifestyle__card-back,
+      .cbb-lifestyle__card-front {
+        min-height: 400px;
+      }
+
+      .cbb-lifestyle__card-back-inner {
+        padding: 3rem 295px 3rem 3rem;
+        font-size: 1.25rem;
+        justify-content: center;
+      }
+
+      .cbb-lifestyle__card-icon img {
+        max-width: 275px !important;
+        top: initial;
+        bottom: 0;
+        transform: none;
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(4) {
+      grid-row: 3;
+      grid-column: col-start 2 / span 4;
+
+      .cbb-lifestyle__card-back-inner {
+        padding-right: 1rem;
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(5) {
+      grid-row: 3;
+      grid-column: col-start 6 / span 4;
+
+      .cbb-lifestyle__card-back-inner {
+        padding-right: 1rem;
+      }
+
+      .cbb-lifestyle__card-icon img {
+        position: relative;
+        transform: none;
+        max-width: 300px !important;
+        top: 0;
+        right: 0;
+        padding-top: 1rem;
+      }
+
+      &::after {
+        position: absolute;
+        display: inline-block;
+        top: 24px;
+        right: -340px;
+        width: 350px;
+        height: 208px;
+        background-image: url(../images/pattern-dots-trio.svg);
+        background-size: 359px 208px;
+        content: '';
+      }
+    }
+  }
+}
+
+.fl-module-lifestyle-cards--evening {
+  .cbb-lifestyle__card-back-inner {
+    background-color: transparentize(#133681, 0.8);
+  }
+
+  h4 {
+    color: #133681;
+  }
+
+  $evening-offset: 100px;
+
+  .cbb-lifestyle__card:nth-of-type(2) {
+    .cbb-lifestyle__card-back-inner {
+      padding-top: 120px;
+      padding-right: 1rem;
+    }
+
+    .cbb-lifestyle__card-icon img {
+      top: 1.5rem;
+      left: 2rem;
+      max-width: 100px !important;
+      transform: none;
+    }
+  }
+
+  .cbb-lifestyle__card:nth-of-type(3) {
+    .cbb-lifestyle__card-back-inner {
+      padding-right: 1rem;
+    }
+
+    .cbb-lifestyle__card-icon img {
+      position: relative;
+      transform: none;
+      max-width: 100% !important;
+      top: 0;
+      right: 0;
+      padding-top: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .cbb-lifestyle__card:nth-of-type(1) {
+      top: -$morning-offset;
+      margin-bottom: -#{$morning-offset};
+      margin-top: #{$evening-offset};
+      width: calc(100% + #{$evening-offset});
+
+      .cbb-lifestyle__card-back-inner {
+        justify-content: center;
+      }
+    }
+
+    .cbb-lifestyle__card:nth-of-type(2) {
+      margin-right: $evening-offset * 2;
+      left: $evening-offset;
+    }
+
+    .cbb-lifestyle__card:nth-of-type(3) {
+      margin-left: $evening-offset * 2;
+      right: $evening-offset;
+    }
+
+    .cbb-lifestyle__card:nth-of-type(4) {
+      bottom: -$morning-offset;
+      margin-top: -#{$morning-offset};
+      margin-bottom: #{$evening-offset};
+      width: calc(100% + #{$evening-offset});
+      left: -$evening-offset;
+
+      .cbb-lifestyle__card-back-inner {
+        justify-content: center;
+      }
+    }
+  }
+}

@@ -58,6 +58,7 @@ add_action('init', function() {
         require_once CBB_HUB_DIR . 'modules/carousel/carousel.php';
         require_once CBB_HUB_DIR . 'modules/contact-card/contact-card.php';
         require_once CBB_HUB_DIR . 'modules/figure-card/figure-card.php';
+        require_once CBB_HUB_DIR . 'modules/lifestyle-cards/lifestyle-cards.php';
     }
 });
 
