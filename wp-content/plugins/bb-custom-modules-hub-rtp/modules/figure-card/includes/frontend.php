@@ -1,4 +1,4 @@
-<div class="hub-rtp-figure-card hub-rtp-figure-card--image-align-<?php echo $settings->image_align; ?>">
+<div class="hub-rtp-figure-card hub-rtp-figure-card--align-<?php echo $settings->image_align; ?>">
     <figure class="hub-rtp-figure-card__image">
         <?php echo wp_get_attachment_image($settings->image, 'large'); ?>
     </figure>
