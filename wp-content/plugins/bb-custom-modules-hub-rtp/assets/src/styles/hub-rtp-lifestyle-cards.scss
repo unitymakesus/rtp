@@ -158,7 +158,7 @@
     top: 50%;
     right: 1.5rem;
     transform: translateY(-50%);
-    max-width: 500px !important;
+    max-width: 100px !important;
     width: 100%;
   }
 }
@@ -428,7 +428,7 @@ $morning-offset: 30px;
     .cbb-lifestyle__card-icon img {
       position: relative;
       transform: none;
-      max-width: 100% !important;
+      max-width: 500px !important;
       top: 0;
       right: 0;
       padding-top: 2rem;
