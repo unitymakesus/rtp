@@ -37,7 +37,17 @@ FLBuilder::register_module('HubRTPFigureCard', [
                             'left' => __('Left', ''),
                             'right' => __('Right', '')
                         ]
-                    ]
+                    ],
+                    'object_position' => [
+                        'type'    => 'select',
+                        'label'   => __('Image Vertical Focus', ''),
+                        'default' => 'center',
+                        'options' => [
+                            'bottom' => __('Bottom', ''),
+                            'center' => __('Center', ''),
+                            'top'    => __('Top', ''),
+                        ]
+                    ],
                 ]
             ],
             'hub-rtp-figure-card-content' => [

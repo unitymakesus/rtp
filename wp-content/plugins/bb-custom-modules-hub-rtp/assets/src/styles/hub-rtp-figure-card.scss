@@ -31,18 +31,18 @@
     }
 
     &--align-left {
-      flex-direction: row;
-
-      .hub-rtp-figure-card__image {
-        right: 0;
-      }
-    }
-
-    &--align-right {
       flex-direction: row-reverse;
 
       .hub-rtp-figure-card__image {
         left: 0;
+      }
+    }
+
+    &--align-right {
+      flex-direction: row;
+
+      .hub-rtp-figure-card__image {
+        right: 0;
       }
     }
 
@@ -61,5 +61,19 @@
     &__content {
       margin: 4rem 2rem;
     }
+  }
+}
+
+.object-position {
+  &-top {
+    object-position: top;
+  }
+
+  &-center {
+    object-position: center;
+  }
+
+  &-bottom {
+    object-position: center;
   }
 }
