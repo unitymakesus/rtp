@@ -6,11 +6,11 @@ $message = array(
 );
 
 ?>
-<tr>
+<tr <?php echo $checked === 'checked' ? 'style="color: gray;"' : ''; ?>>
 	<td>
 		<label class="pda_switch" for="<?php echo esc_attr( PPW_Constants::USE_CUSTOM_FORM_ACTION ); ?>">
 			<input type="checkbox"
-			       id="<?php echo esc_attr( PPW_Constants::USE_CUSTOM_FORM_ACTION ); ?>" <?php echo esc_attr( $checked ); ?>/>
+			       id="<?php echo esc_attr( PPW_Constants::USE_CUSTOM_FORM_ACTION ); ?>" <?php echo esc_attr( $checked ); ?> <?php echo $checked === 'checked' ? 'disabled' : ''; ?>/>
 			<span class="pda-slider round"></span>
 		</label>
 	</td>

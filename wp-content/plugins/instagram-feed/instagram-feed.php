@@ -3,7 +3,7 @@
 Plugin Name: Smash Balloon Instagram Feed
 Plugin URI: https://smashballoon.com/instagram-feed
 Description: Display beautifully clean, customizable, and responsive Instagram feeds.
-Version: 2.5.3
+Version: 2.6.2
 Author: Smash Balloon
 Author URI: https://smashballoon.com/
 License: GPLv2 or later
@@ -23,11 +23,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if ( ! defined( 'SBIVER' ) ) {
-	define( 'SBIVER', '2.5.3' );
+	define( 'SBIVER', '2.6.2' );
 }
 // Db version.
 if ( ! defined( 'SBI_DBVERSION' ) ) {
-	define( 'SBI_DBVERSION', '1.6' );
+	define( 'SBI_DBVERSION', '1.7' );
 }
 
 // Upload folder name for local image files for posts
@@ -97,6 +97,7 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-cron-updater.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-display-elements.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-feed.php';
+		include_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-gdpr-integrations.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-oembed.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-parse.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post.php';
@@ -535,6 +536,24 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 				wp_schedule_event( $six_am_local, 'sbiweekly', 'sbi_notification_update' );
 			}
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
+		if ( (float) $db_ver < 1.7 ) {
+			include_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-gdpr-integrations.php';
+			$sbi_options = get_option( 'sb_instagram_settings', array() );
+			$disable_resizing = isset( $sbi_options['sb_instagram_disable_resize'] ) ? $sbi_options['sb_instagram_disable_resize'] === 'on' || $sbi_options['sb_instagram_disable_resize'] === true : false;
+
+			$sbi_statuses_option = get_option( 'sbi_statuses', array() );
+
+			if ( $disable_resizing || ! SB_Instagram_GDPR_Integrations::gdpr_tests_successful( true ) ) {
+				$sbi_statuses_option['gdpr']['from_update_success'] = false;
+			} else {
+				$sbi_statuses_option['gdpr']['from_update_success'] = true;
+			}
+
+			update_option( 'sbi_statuses', $sbi_statuses_option );
 
 			update_option( 'sbi_db_version', SBI_DBVERSION );
 		}

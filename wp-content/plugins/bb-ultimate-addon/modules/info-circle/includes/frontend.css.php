@@ -445,7 +445,7 @@ foreach ( $settings->add_circle_item as $item ) {
 				if ( 'color' === $settings->outer_bg_type ) :
 					?>
 					background-color: <?php echo esc_attr( $settings->outer_bg_color ); ?>;
-				<?php elseif ( 'image' === $settings->outer_bg_type ) : ?>
+				<?php elseif ( 'image' === $settings->outer_bg_type && isset( FLBuilderPhoto::get_attachment_data( $settings->outer_bg_img )->url ) ) : ?>
 					background-image: url(
 					<?php echo esc_url( FLBuilderPhoto::get_attachment_data( $settings->outer_bg_img )->url ); ?>
 					);
@@ -632,7 +632,7 @@ if ( 'custom' === $settings->content_width && 'color' === $settings->outer_bg_ty
 	}
 	<?php
 	/* Outer Circle Background Image */
-	elseif ( 'image' === $settings->outer_bg_type ) :
+	elseif ( 'image' === $settings->outer_bg_type && isset( FLBuilderPhoto::get_attachment_data( $settings->outer_bg_img )->url ) ) :
 		?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-circle-out {
 		background-image: url(

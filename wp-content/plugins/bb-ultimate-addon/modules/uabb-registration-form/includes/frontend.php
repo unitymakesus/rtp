@@ -67,6 +67,7 @@ if ( 'yes' === $settings->hide_form_logged && is_user_logged_in() && ! FLBuilder
 			'user_email'   => 'User Email',
 			'first_name'   => 'First Name',
 			'last_name'    => 'Last Name',
+			'phone'        => 'Phone',
 		);
 		$form_field   = $settings->form_field;
 		foreach ( $form_field as $key => $item ) {
@@ -133,28 +134,48 @@ if ( 'yes' === $settings->hide_form_logged && is_user_logged_in() && ! FLBuilder
 									<span class="uabb-registration-error uabb-registration_form-error-message-required "><?php esc_attr_e( 'Please check the reCAPTCHA to verify you are not a robot.', 'uabb' ); ?></span>
 								</div>
 							</div>
-					<?php } if ( 'show' === $settings->terms_checkbox ) { ?>
+							<?php
+						}
+
+						if ( ( 'yes' === $settings->login_link || 'yes' === $settings->lost_your_pass ) && 'above' === $settings->login_text_position ) {
+							?>
+							<div class=" uabb-input-group uabb-rform-exteral-link-wrap" >
+									<?php if ( 'yes' === $settings->login_link ) { ?>
+									<a class="uabb-rform-exteral-link" href="<?php echo $login_link; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+										<span> <?php echo $settings->login_link_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
+									</a>
+								<?php } ?>
+									<?php if ( 'yes' === $settings->lost_your_pass ) { ?>
+									<a class="uabb-rform-exteral-link" href="<?php echo $lost_link; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
+										<span> <?php echo $settings->lost_link_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
+									</a>
+								<?php } ?>
+							</div>
+							<?php
+						}
+						if ( 'show' === $settings->terms_checkbox ) {
+							?>
 							<div class="uabb-input-group uabb-terms-checkbox">
-								<?php if ( isset( $settings->terms_text ) && ! empty( $settings->terms_text ) ) : ?>
+									<?php if ( isset( $settings->terms_text ) && ! empty( $settings->terms_text ) ) : ?>
 									<div class="uabb-terms-text"><?php echo $settings->terms_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 								<?php endif; ?>
 								<div class="uabb-form-outter">
 									<label class="uabb-terms-label" for="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>">
 										<input aria-label="checkbox" type="checkbox" class="checkbox-inline" id="uabb-terms-checkbox-<?php echo esc_attr( $id ); ?>" name="uabb-terms-checkbox" value="1" />
 										<span class="checkbox-label">
-											<?php echo $settings->terms_checkbox_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+												<?php echo $settings->terms_checkbox_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 										</span>
 									</label>
 								</div>
 								<label class="uabb-registration-error"><?php echo wp_kses_post( apply_filters( 'uabb_registration_form_error_message', $message ) ); ?></label>
 							</div>
-				<?php } if ( 'yes' === $settings->honeypot_check ) { ?>
+					<?php } if ( 'yes' === $settings->honeypot_check ) { ?>
 						<div class="uabb-input-group-honeypot">
 							<input size="1" type="text" style="display:none;" name="input_text">
 						</div>
 					<?php } ?>
 								<button type="submit" class="uabb-submit-btn uabb-registration-form-submit uabb-submit-btn-align-<?php echo esc_attr( $settings->btn_align ); ?> uabb-rf-btn-col_<?php echo esc_attr( $settings->btn_col_width ); ?> uabb-rf-btn-medium-col_<?php echo esc_attr( $settings->btn_col_width_medium ); ?> uabb-rf-btn-responsive-col_<?php echo esc_attr( $settings->btn_col_width_responsive ); ?>" ><span class="uabb-registration-form-button-text"><?php echo ( $settings->btn_text ) ? $settings->btn_text : 'Submit'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></button>
-						<?php if ( 'yes' === $settings->login_link || 'yes' === $settings->lost_your_pass ) { ?>
+						<?php if ( ( 'yes' === $settings->login_link || 'yes' === $settings->lost_your_pass ) && 'below' === $settings->login_text_position ) { ?>
 							<div class=" uabb-input-group uabb-rform-exteral-link-wrap" >
 								<?php if ( 'yes' === $settings->login_link ) { ?>
 									<a class="uabb-rform-exteral-link" href="<?php echo $login_link; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">

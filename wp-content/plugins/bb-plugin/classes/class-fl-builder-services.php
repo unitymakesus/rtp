@@ -111,6 +111,11 @@ final class FLBuilderServices {
 			'name'  => 'MailerLite',
 			'class' => 'FLBuilderServiceMailerLite',
 		),
+		'mailjet'                 => array(
+			'type'  => 'autoresponder',
+			'name'  => 'Mailjet',
+			'class' => 'FLBuilderServiceMailjet',
+		),
 		'mailpoet'                => array(
 			'type'  => 'autoresponder',
 			'name'  => 'MailPoet',

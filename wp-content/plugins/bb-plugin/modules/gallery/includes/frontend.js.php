@@ -79,4 +79,10 @@
 		<?php endif; ?>
 	});
 
+	jQuery(document).ready(function(){
+		setTimeout(function(){
+			jQuery('.fl-node-<?php echo $id; ?> .fl-mosaicflow-content').trigger('resize');
+		},50);
+	});
+
 })(jQuery);

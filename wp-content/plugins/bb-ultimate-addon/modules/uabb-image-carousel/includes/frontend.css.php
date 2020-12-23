@@ -80,12 +80,14 @@ $settings->dots_color             = UABB_Helper::uabb_colorpicker( $settings, 'd
 <?php
 if ( 'yes' === $settings->enable_dots ) {
 
-	if ( FLBuilder::fa5_pro_enabled() ) {
-		?>
+	if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+		if ( FLBuilder::fa5_pro_enabled() ) {
+			?>
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-image-carousel ul.slick-dots li button:before {
 			font-family: 'Font Awesome 5 Pro';
 		}
-		<?php
+			<?php
+		}
 	}
 	if ( '' !== $settings->dots_size && isset( $settings->dots_size ) ) {
 		?>

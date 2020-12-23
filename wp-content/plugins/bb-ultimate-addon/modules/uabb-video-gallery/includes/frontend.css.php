@@ -22,14 +22,16 @@ $settings->arrows_color                   = UABB_Helper::uabb_colorpicker( $sett
 $settings->tag_color                      = UABB_Helper::uabb_colorpicker( $settings, 'tag_color', true );
 $settings->cat_filter_bg_hover_color      = UABB_Helper::uabb_colorpicker( $settings, 'cat_filter_bg_hover_color', true );
 
-if ( FLBuilder::fa5_pro_enabled() ) {
-	?>
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-video-gallery-wrap .slick-prev:before,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-video-gallery-wrap .slick-next:before,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-video-gallery-wrap ul.slick-dots li button:before {
 	font-family: 'Font Awesome 5 Pro';
 }
-	<?php
+		<?php
+	}
 }
 if ( ! $version_bb_check ) {
 	$settings->cat_filter_border_color        = UABB_Helper::uabb_colorpicker( $settings, 'cat_filter_border_color', true );

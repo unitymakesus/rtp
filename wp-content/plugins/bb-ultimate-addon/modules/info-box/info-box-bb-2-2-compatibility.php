@@ -438,6 +438,7 @@ FLBuilder::register_module(
 						'icon'      => array(
 							'type'        => 'icon',
 							'label'       => __( 'Icon', 'uabb' ),
+							'default'     => 'far fa-smile',
 							'show_remove' => true,
 						),
 						'icon_size' => array(

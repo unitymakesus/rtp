@@ -264,6 +264,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const DEFAULT_WRONG_PASSWORD_MESSAGE = 'Please enter the correct password!';
 
+		const DEFAULT_ERROR_RECAPTCHA_MESSAGE = 'Google reCAPTCHA verification failed, please try again later.';
+
 		const BAD_REQUEST_MESSAGE = 'Our server cannot understand the data request!';
 
 		const EMPTY_PASSWORD = 'Please fill out empty fields.';
@@ -279,6 +281,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const SITEWIDE_PAGE_PREFIX = 'ppwp-sitewide';
 
+		const EXTERNAL_SERVICES_PREFIX = 'ppwp-integrations';
+
 		const PCP_PAGE_PREFIX = 'ppwp-partial-protection';
 
 		const META_BOX_MODULE = 'meta-box';
@@ -286,6 +290,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const ENTIRE_SITE_MODULE = 'entire-site';
 
 		const GENERAL_SETTINGS_MODULE = 'general';
+
+		const EXTERNAL_SETTINGS_MODULE = 'external';
 
 		const MISC_SETTINGS_MODULE = 'misc';
 
@@ -310,6 +316,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const SHORTCODE_OPTIONS = 'wp_protect_password_shortcode_options';
 
+		const EXTERNAL_OPTIONS = 'wp_protect_password_external_options';
+
 		const POST_PROTECTION_ROLES = 'post_protection_roles';
 
 		const ENTIRE_SITE_COOKIE_NAME = 'pda_protect_password';
@@ -325,6 +333,14 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const NO_RELOAD_PAGE = 'wpp_no_reload_page';
 
 		const USE_SHORTCODE_PAGE_BUILDER = 'wpp_use_shortcode_page_builder';
+
+		const USING_RECAPTCHA = 'wpp_use_recaptcha';
+
+		const RECAPTCHA_API_KEY = 'wpp_recaptcha_api_key';
+
+		const RECAPTCHA_API_SECRET = 'wpp_recaptcha_api_secret';
+
+		const RECAPTCHA_SCORE = 'wpp_recaptcha_score';
 
 		const PROTECT_EXCERPT = 'wpp_protect_excerpt';
 

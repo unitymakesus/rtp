@@ -467,7 +467,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 		$cat_slug            = $this->get_category_slug( $photo );
 		$classes             = $item_class . ' ' . $cat_slug . ' ' . $layout_class;
 		?>
-		<div class="<?php echo esc_attr( $classes ); ?>" data-item-id="<?php echo esc_attr( $photo->id ); ?>">
+		<div class="<?php echo esc_attr( $classes ); ?>" data-item-id="<?php echo esc_attr( $photo->id ); ?>" itemprop="associatedMedia" itemscope="itemscope" itemtype="http://schema.org/ImageObject">
 			<div class="uabb-photo-gallery-content <?php echo ( ( 'none' !== $settings->click_action ) && ! empty( $photo->link ) ) ? 'uabb-photo-gallery-link' : ''; ?>">
 
 																						<?php if ( 'none' !== $settings->click_action ) : ?>
@@ -483,10 +483,10 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 																								$click_action_link = $photo->link;
 																							}
 																							?>
-				<a href="<?php echo $click_action_link; ?>" target="<?php echo esc_attr( $click_action_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, 0, 1 ); ?> data-caption="<?php echo esc_attr( $photo->caption ); ?>"><?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<a href="<?php echo $click_action_link; ?>" target="<?php echo esc_attr( $click_action_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, 0, 1 ); ?> data-caption="<?php echo esc_attr( $photo->caption ); ?>" itemprop="contentUrl"><?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php endif; ?>
 
-				<img class="uabb-gallery-img" src="<?php echo esc_url( $photo->src ); ?>" alt="<?php echo esc_attr( $photo->alt ); ?>" title="<?php echo esc_attr( $photo->title ); ?>" />
+				<img class="uabb-gallery-img" src="<?php echo esc_url( $photo->src ); ?>" alt="<?php echo esc_attr( $photo->alt ); ?>" title="<?php echo esc_attr( $photo->title ); ?>" itemprop="thumbnail" />
 																							<?php if ( 'none' !== $settings->hover_effects ) : ?>
 					<!-- Overlay Wrapper -->
 					<div class="uabb-background-mask <?php echo esc_attr( $settings->hover_effects ); ?>">

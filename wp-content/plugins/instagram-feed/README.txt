@@ -2,8 +2,8 @@
 Contributors: smashballoon, craig-at-smash-balloon
 Tags: Instagram, Instagram feed, Instagram photos, Instagram widget, Instagram gallery
 Requires at least: 3.4
-Tested up to: 5.5
-Stable tag: 2.5.3
+Tested up to: 5.6
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ Display Instagram posts from your Instagram accounts, either in the same single 
 * Completely **responsive** and mobile ready - layout looks great on any screen size and in any container width
 * **Completely customizable** - Customize the width, height, number of photos, number of columns, image size, background color, image spacing and more!
 * Display **multiple Instagram feeds** on the same page or on different pages throughout your site
+* **GDPR Compliance** - automatically integrates with many of the popular GDPR cookie consent plugins and includes a 1-click easy GDPR setting.
 * Use the built-in **shortcode options** to completely customize each of your Instagram feeds
 * Display thumbnail, medium or **full-size photos** from your Instagram feed
 * **Infinitely load more** of your Instagram photos with the 'Load More' button
@@ -331,6 +332,25 @@ We understand that sometimes you need help, have issues or just have questions. 
 * Plus more customization options added all the time!
 
 == Changelog ==
+= 2.6.2 =
+* Tweak: If the image resizing feature isn't able to work successfully due to an issue, then the GDPR setting will be disabled unless manually enabled to prevent blank images in the feed.
+* Fix: In some situations the GDPR setting was incorrectly reporting an error with image resizing.
+
+= 2.6.1 =
+* Fix: Fixed PHP error related to a missing file.
+
+= 2.6 =
+* New: Integrations with popular GDPR cookie consent solutions added: Cookie Notice by dFactory, GDPR Cookie Consent by WebToffee, Cookiebot by Cybot A/S, Complianz by Really Simple Plugins, and Borlabs Cookie by Borlabs. Visit the Instagram Feed settings page, Customize tab, GDPR section for more information.
+* Fix: API error notices would not be removed from the WordPress dashboard after successfully reconnecting an account when the problem was resolved.
+* Fix: Fixed PHP Error that would occur when connecting a personal account that would result in an HTTP error.
+* Fix: oEmbeds were not always working in much older versions of WordPress.
+* Fix: Play and carousel icons would appear very large for small images when the the mobile layout was disabled.
+
+= 2.5.4 =
+* Fix: Added more debugging info to the System Info for oEmbeds.
+* Fix: Added a workaround for a rare issue where oEmbed access tokens wouldn't save.
+* Fix: Carousel posts would not show images when using the "Disable JS Image Loading" setting and image resizing was disabled.
+
 = 2.5.3 =
 * Fix: Fixed an issue caused by an unannounced Instagram API change affecting thumbnails in certain video posts which don't have image data available in the API.
 * Fix: Added oEmbed account info to the plugin "System Info" to make debugging easier.

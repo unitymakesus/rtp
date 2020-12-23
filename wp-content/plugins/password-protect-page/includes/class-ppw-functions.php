@@ -468,3 +468,78 @@ function ppw_free_valid_pcp_password( $shortcode, $password ) {
 function ppw_free_validate_date( $date ) {
 	return false !== strtotime( $date );
 }
+
+function ppw_get_background_image( $image ) {
+	$img = get_theme_mod( 'ppwp_pro_form_background_image', '' );
+	if ( ! empty( $img ) ) {
+		return $img;
+	}
+
+	return PPW_DIR_URL . 'includes/customizers/assets/images/backgrounds/' . $image;
+}
+
+
+/**
+ * Support with builder plugin.
+ *
+ * @param integer $post_id      Post ID.
+ * @param string  $post_content Post Content.
+ *
+ * @return string Post Content.
+ */
+function ppw_support_third_party_content_plugin( $post_id, $post_content ) {
+	if ( method_exists( '\WPBMap', 'addAllMappedShortcodes' ) ) {
+		\WPBMap::addAllMappedShortcodes();
+	}
+	if ( class_exists( '\TablePress' ) ) {
+		\TablePress::$controller = \TablePress::load_controller( 'frontend' );
+		\TablePress::$controller->init_shortcodes();
+	}
+	if ( class_exists( '\\Elementor\\Plugin' ) ) {
+		if ( \Elementor\Plugin::$instance->db->is_built_with_elementor( $post_id ) ) {
+			// Disable function check post_password_required because need to get content show to user.
+			remove_all_filters( 'post_password_required' );
+			$post_content = \Elementor\Plugin::$instance->frontend->get_builder_content( $post_id, true );
+		}
+	}
+
+	return apply_filters( 'ppw_content_compatibility', $post_content );
+}
+
+/**
+ * Get PPWP Pro plugin data version.
+ *
+ * @return false|string
+ */
+function ppw_get_pro_data_version() {
+	if ( defined( 'PPW_PRO_VERSION' ) ) {
+		return PPW_PRO_VERSION;
+	}
+
+	if ( ! function_exists( 'get_plugins' )
+	     || ! function_exists( 'is_plugin_active' )
+	     || ! function_exists( 'get_plugins' )
+	) {
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+	}
+
+	// Check plugin is active from option data.
+	if ( ! is_plugin_active( PPW_Constants::PRO_DIRECTORY ) && ! is_plugin_active( PPW_Constants::DEV_PRO_DIRECTORY ) ) {
+		return false;
+	}
+
+	// Get plugin version from file.
+	$installed_plugins = get_plugins();
+
+	// Get Pro Production folder version.
+	if ( isset( $installed_plugins[ PPW_Constants::PRO_DIRECTORY ], $installed_plugins[ PPW_Constants::PRO_DIRECTORY ]['Version'] ) ) {
+		return $installed_plugins[ PPW_Constants::PRO_DIRECTORY ]['Version'];
+	}
+
+	// Get Pro Development folder version.
+	if ( isset( $installed_plugins[ PPW_Constants::DEV_PRO_DIRECTORY ], $installed_plugins[ PPW_Constants::DEV_PRO_DIRECTORY ]['Version'] ) ) {
+		return $installed_plugins[ PPW_Constants::DEV_PRO_DIRECTORY ]['Version'];
+	}
+
+	return false;
+}

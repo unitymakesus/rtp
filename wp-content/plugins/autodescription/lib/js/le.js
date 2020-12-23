@@ -87,7 +87,7 @@ window.tsfLe = function( $ ) {
 	 */
 	const _setInlinePostValues = id => {
 
-		let dataElement = document.getElementById( 'tsfLeData[' + id + ']' ),
+		let dataElement = document.getElementById( `tsfLeData[${id}]` ),
 			data        = void 0;
 
 		try {
@@ -98,20 +98,20 @@ window.tsfLe = function( $ ) {
 
 		let element;
 
-		for ( let index in data ) {
+		for ( let option in data ) {
 
-			element = document.getElementById( 'autodescription-quick[%s]'.replace( '%s', index ) );
+			element = document.getElementById( 'autodescription-quick[%s]'.replace( '%s', option ) );
 			if ( ! element ) continue;
 
-			if ( data[ index ].isSelect ) {
-				tsf.selectByValue( element, data[ index ].value );
+			if ( data[ option ].isSelect ) {
+				tsf.selectByValue( element, data[ option ].value );
 
 				// Do `sprintf( 'Default (%s)', x.default )`.
 				let _default = element.querySelector( '[value="0"]' );
 				if ( _default )
-					_default.innerHTML = _default.innerHTML.replace( '%s', tsf.decodeEntities( data[ index ].default ) );
+					_default.innerHTML = _default.innerHTML.replace( '%s', tsf.decodeEntities( data[ option ].default ) );
 			} else {
-				element.value = tsf.decodeEntities( data[ index ].value );
+				element.value = tsf.decodeEntities( data[ option ].value );
 			}
 		}
 	}
@@ -135,7 +135,7 @@ window.tsfLe = function( $ ) {
 	 * @access private
 	 *
 	 * @function
-	 * @param event
+	 * @param {Event} event
 	 * @return {undefined}
 	 */
 	const _setTitleVisibilityPrefix = event => {
@@ -177,7 +177,7 @@ window.tsfLe = function( $ ) {
 	 * @access private
 	 *
 	 * @function
-	 * @param event
+	 * @param {Event} event
 	 * @return {undefined}
 	 */
 	const _setDefaultTitle = event => {
@@ -205,7 +205,7 @@ window.tsfLe = function( $ ) {
 	}
 
 	/**
-	 * Sets inline title input values for quick-edit.
+	 * Augments and binds inline title input values for quick-edit.
 	 *
 	 * @since 4.1.0
 	 * @access private
@@ -271,7 +271,7 @@ window.tsfLe = function( $ ) {
 	}
 
 	/**
-	 * Sets inline description input values for quick-edit.
+	 * Augments and binds inline description input values for quick-edit.
 	 *
 	 * @since 4.1.0
 	 * @access private

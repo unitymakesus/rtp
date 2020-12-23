@@ -90,7 +90,7 @@ final class FLBuilderAdminSettings {
 		// Styles
 		wp_enqueue_style( 'fl-builder-admin-settings', FL_BUILDER_URL . 'css/fl-builder-admin-settings.css', array(), FL_BUILDER_VERSION );
 		wp_enqueue_style( 'jquery-multiselect', FL_BUILDER_URL . 'css/jquery.multiselect.css', array(), FL_BUILDER_VERSION );
-		wp_enqueue_style( 'jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), FL_BUILDER_VERSION );
+		wp_enqueue_style( 'fl-jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), FL_BUILDER_VERSION );
 
 		if ( FLBuilder::fa5_pro_enabled() ) {
 			if ( '' !== get_option( '_fl_builder_kit_fa_pro' ) ) {
@@ -101,10 +101,10 @@ final class FLBuilderAdminSettings {
 			}
 		}
 		// Scripts
-		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array( 'jquery-tiptip' ), FL_BUILDER_VERSION );
+		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array( 'fl-jquery-tiptip' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-actual', FL_BUILDER_URL . 'js/jquery.actual.min.js', array( 'jquery' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-multiselect', FL_BUILDER_URL . 'js/jquery.multiselect.js', array( 'jquery' ), FL_BUILDER_VERSION );
-		wp_enqueue_script( 'jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );
+		wp_enqueue_script( 'fl-jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );
 
 		// Media Uploader
 		wp_enqueue_media();
@@ -205,7 +205,7 @@ final class FLBuilderAdminSettings {
 			),
 			'license'     => array(
 				'title'    => __( 'License', 'fl-builder' ),
-				'show'     => FL_BUILDER_LITE !== true && ( is_network_admin() || ! self::multisite_support() ),
+				'show'     => ( is_network_admin() || ! self::multisite_support() ),
 				'priority' => 100,
 			),
 			'upgrade'     => array(

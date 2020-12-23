@@ -178,6 +178,14 @@ final class FL_Debug {
 			self::register( 'wp_media_upload_path', $args );
 		}
 
+		if ( defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML ) {
+			$args = array(
+				'name' => 'Unfiltered HTML is globally disabled! ( DISALLOW_UNFILTERED_HTML )',
+				'data' => 'Yes',
+			);
+			self::register( 'is_multi', $args );
+		}
+
 		$args = array(
 			'name' => 'Post Counts',
 			'data' => self::divider(),

@@ -14,7 +14,7 @@ if ( ! class_exists( "PPW_Settings" ) ) {
 			<div class="wrap">
 				<div id="icon-themes" class="icon32"></div>
 				<h2>
-					<?php _e( $plugin_info['name'], 'wp-protect-password-setting' ); ?>
+					<?php _e( $plugin_info['name'], 'password-protect-page' ); ?>
 					<span class="ppwp_version"><?php _e( $plugin_info['version'] ) ?></span>
 				</h2>
 				<?php

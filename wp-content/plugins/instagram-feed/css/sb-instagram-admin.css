@@ -2445,6 +2445,57 @@
 	margin-top: 20px;
 }
 
+
+/* GDPR Settings */
+.gdpr_tooltip p{
+	padding: 0 0 10px 0;
+}
+.gdpr_tooltip span{
+	display: inline-block;
+	margin: 0;
+	font-weight: bold;
+	font-size: 14px;
+}
+.gdpr_tooltip .sbi-list{
+	padding: 0 0 10px 0;
+}
+.gdpr_tooltip li{
+	padding: 0;
+}
+.sbi_gdpr_plugin_active .sbi_active{
+	display: inline-block;
+	padding: 10px 20px 15px 20px;
+	border-radius: 5px;
+	background: #edf4f0;
+	border: 1px solid #2c8649;
+	color: #2c8649;
+	margin: 8px 0 0 0;
+}
+.sbi_gdpr_plugin_active svg{
+	width: 16px;
+	height: 16px;
+	position: relative;
+	top: 3px;
+	margin-right: 2px;
+}
+.sbi_gdpr_plugin_active path{
+	fill: green;
+}
+.sbi_gdpr_list,
+.sbi_gdpr_yes,
+.sbi_gdpr_no{
+	display: none;
+}
+#sbi_admin .sbi_gdpr_error {
+	padding: 10px 20px 15px 20px;
+	border-radius: 5px;
+	background: #F7E6E6;
+	border: 1px solid #BA7B7B;
+	color: #592626;
+}
+#sbi_admin .sbi-list {
+	list-style: inside disc;
+}
 /* Clear */
 .sbi-clear:before {
 	content: " ";

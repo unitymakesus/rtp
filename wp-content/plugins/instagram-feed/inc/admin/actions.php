@@ -145,41 +145,6 @@ function sbi_delete_local_avatar( $username ) {
 	}
 }
 
-function sbi_create_local_avatar( $username, $file_name ) {
-	$image_editor = wp_get_image_editor( $file_name );
-
-	if ( ! is_wp_error( $image_editor ) ) {
-		$upload = wp_upload_dir();
-
-		$full_file_name = trailingslashit( $upload['basedir'] ) . trailingslashit( SBI_UPLOADS_NAME ) . $username  . '.jpg';
-
-		$saved_image = $image_editor->save( $full_file_name );
-
-		if ( ! $saved_image ) {
-			global $sb_instagram_posts_manager;
-
-			$sb_instagram_posts_manager->add_error( 'image_editor_save', array(
-				__( 'Error saving edited image.', 'instagram-feed' ),
-				$full_file_name
-			) );
-		} else {
-		    return true;
-        }
-	} else {
-		global $sb_instagram_posts_manager;
-
-		$message = __( 'Error editing image.', 'instagram-feed' );
-		if ( isset( $image_editor ) && isset( $image_editor->errors ) ) {
-			foreach ( $image_editor->errors as $key => $item ) {
-				$message .= ' ' . $key . '- ' . $item[0] . ' |';
-			}
-		}
-
-		$sb_instagram_posts_manager->add_error( 'image_editor', array( $file_name, $message ) );
-	}
-	return false;
-}
-
 function sbi_connect_business_accounts() {
 	$nonce = $_POST['sbi_nonce'];
 
@@ -224,7 +189,7 @@ function sbi_connect_business_accounts() {
 		}
 		global $sb_instagram_posts_manager;
 
-		$sb_instagram_posts_manager->remove_error( 'at_' . $username );
+		$sb_instagram_posts_manager->remove_all_errors();
 		delete_transient( SBI_USE_BACKUP_PREFIX . 'sbi_'  . $user_id );
 	}
 
@@ -377,8 +342,7 @@ function sbi_do_account_delete( $account_id ) {
 	update_option( 'sb_instagram_settings', $options );
 	global $sb_instagram_posts_manager;
 
-	$sb_instagram_posts_manager->remove_error( 'at_' . $username );
-	$sb_instagram_posts_manager->remove_error( 'api' );
+	$sb_instagram_posts_manager->remove_all_errors();
 }
 
 function sbi_connect_new_account( $access_token, $account_id ) {
@@ -544,7 +508,7 @@ function sbi_connect_new_account( $access_token, $account_id ) {
 
 			global $sb_instagram_posts_manager;
 
-			$sb_instagram_posts_manager->remove_error( 'at_' . $json['username'] );
+			$sb_instagram_posts_manager->remove_all_errors();
 			delete_transient( SBI_USE_BACKUP_PREFIX . 'sbi_'  . $json['id'] );
 
 		}
@@ -596,7 +560,7 @@ function sbi_connect_new_account( $access_token, $account_id ) {
 			delete_transient( SBI_USE_BACKUP_PREFIX . 'sbi_'  . $user_id );
 			global $sb_instagram_posts_manager;
 
-			$sb_instagram_posts_manager->remove_error( 'at_' . $username );
+			$sb_instagram_posts_manager->remove_all_errors();
 			$options['connected_accounts'] = $connected_accounts;
 
 			update_option( 'sb_instagram_settings', $options );
@@ -759,9 +723,7 @@ function sbi_connect_basic_account( $new_account_details ) {
 	update_option( 'sb_instagram_settings', $options );
 	global $sb_instagram_posts_manager;
 
-	$sb_instagram_posts_manager->remove_error( 'at_' . $new_account_details['username'] );
-	$sb_instagram_posts_manager->remove_error( 'api' );
-	$sb_instagram_posts_manager->remove_error( 'expiration_' . $new_account_details['user_id'] );
+	$sb_instagram_posts_manager->remove_all_errors();
 	return $options;
 }
 

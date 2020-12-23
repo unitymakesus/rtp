@@ -21,20 +21,23 @@ This plugin does not protect images or uploaded files so if you attach the media
 
 Please note that the passwords will be stored in the post meta and this plugin will set a cookie to allow access to the protected pages or posts.
 
-= An Inside Look at Password Protect WordPress Pro =
+= An Inside Look at Password Protect WordPress - PPWP Pro =
 https://www.youtube.com/watch?v=myYsKXZyNwc
 
 = Password Protected Features =
 The Lite version of Password Protect WordPress (PPWP) plugin offers the following features:
 
 == Protect WordPress Pages & Posts with Unlimited Passwords ==
-The plugin extends WordPress's built-in password protection feature and allows you to set multiple passwords per Page and Post. What's more, you can protect the content with just a single click. Once protected, a random password will be automatically generated for you.
+The plugin extends WordPress built-in password protection feature and allows you to set multiple passwords per Page and Post. What's more, you can protect the content with just a single click. Once protected, a random password will be automatically generated for you.
 
 = Password Protect WordPress Pages & Posts by User Roles =
-There is an option allowing you to password protect your WordPress Pages & Posts by user roles. In other words, you can set different passwords for different user roles, i.e. one for subscribers, one for editors role.
+There is an option allowing you to password protect your WordPress Pages & Posts by user roles. In other words, you can set different passwords for different user roles, i.e. one for subscribers, one for editors.
+
+= Prevent Password Abuse with reCAPTCHA =
+Stop password abuse and spam by bots and automated software with Google reCAPTCHA v3. Real users will be able to access protected content with ease as usual.
 
 = Unlock Password Protected Content without Page Refresh =
-Use Ajax to display protected content without having to reload the entire page. It will help improve user experience and avoid server caching after users enter their password.
+[Use Ajax to display protected content](https://passwordprotectwp.com/docs/unlock-password-protected-content-without-page-refresh/) without having to reload the entire page. It will help improve user experience and avoid server caching after users enter their password.
 
 == Password Protect WordPress Categories ==
 Instead of creating an individual password for each post, you can protect all posts under one or multiple categories at once. Once users unlock a post successfully, they will be able to access the rest of the content automatically.
@@ -47,14 +50,14 @@ Partial Content Protection feature allows you to [password protect certain secti
 
 = Show/Hide Premium Content at a Specific Time =
 
-You can also choose when to publish the secure content to users. For example, they’re allowed to see the content without having to enter passwords from XXX to XXX using the following shortcode’s attributes.
+You can also choose when to publish the secure content to users. For example, they’re allowed to see the content without having to enter passwords from XXX to XXX using the following shortcode attributes.
 
 `
 [ppwp passwords=123 on="2020/10/20 14:00:00" off="2020/10/30 14:00:00"] Your protected section will be shown automatically from 2 pm October 20, 2020 to 2 pm  October 30, 2020[/ppwp]
 `
 
 == Integrate with Page Builders ==
-Instead of using our shortcode to protect part of content, you can use our built-in module on the top page builders including:
+Instead of using our shortcode to protect part of content, you can use our built-in module for the top page builders including:
 
 * Elementor
 * Beaver Builder
@@ -67,23 +70,25 @@ These built-in modules allow you to set passwords, whitelisted roles, customize 
 
 What's more, with PPWP Pro, you can even [protect the entire Elementor's templates](https://passwordprotectwp.com/docs/password-protect-partial-content-elementor/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), Beaver Builder's rows, columns, and page templates as well as limiting and tracking password usage.
 
-== Global - Master Passwords ==
+== Master Passwords ==
 When there are many password protected posts on your website, it becomes difficult and time-consuming to create or manage passwords for each content. That’s when master passwords come in handy.
 
 Users will be able to [unlock all protected posts at once](https://passwordprotectwp.com/docs/master-passwords-unlock-all-protected-content/?utm_source=wp.org&utm_medium=plugin_desc_link&utm_campaign=password-protect-page-lite&utm_content=global-pwd) with just one master password.
 
-Please note that this feature **does not** password protect all posts automatically. It simply allows you to use master passwords to unlock every post that you choose to password protect. Original passwords attached to each post will still be working, together with these master (global) passwords.
+Please note that this feature **does not** password protect all posts automatically. It simply allows you to use master passwords to unlock those that you’ve already password protected. Original passwords attached to each post will still be working, together with these master passwords.
 
 The master passwords feature also comes with an easy-to-use interface allowing you to create unlimited master passwords and manage all of them in one place. You will have full control to (de)activate, delete passwords as well as restrict usage passwords by usage, time, and user role.
 
 == Customize Password Form & Messages with WordPress Customizer ==
-You can customize the sitewide login form as well as the single password form via WordPress built-in customizer.
+Customize the sitewide login form and single password form via WordPress built-in customizer.
 
-You will be able to remove or change our default logo to your own for the sitewide login form. You can also change the color and design of the password form to match the look and feel of your website.
+You’re allowed to remove or change our default logo to your own for the sitewide login form. Also, you can change the color and design of the form to match the look and feel of your website.
 
-As for the single password form, you will be given the ability to change the WordPress default password protected error message as well as password form instruction, namely headline, description, password input placeholder, and button text.
+As for the single password form, you will be able to change the WordPress default error message as well as password form instructions, namely headline, description, password input placeholder, and button text.
 
 The button and text's font-size, color, and background can also be customized through a friendly WYSIWYG HTML Editor.
+
+Besides the default login page, you can now select one from our pre-designed themes that suits your site best.
 
 
 == Hide Password Protected Content ==
@@ -103,11 +108,11 @@ Even though the posts are hidden, those who know the URL will still have access 
 = Show Password Protected Content in RSS Feeds =
 Even though you choose to show password protected content in RSS, a password form will display instead of its actual content by default. With PPWP plugin, you're able to show all protected content in RSS feeds. There is also an option to make your RSS feeds public even if your site is hidden.
 
-= Show Password Protected Post Excerpt =
-Many WordPress themes hide the post excerpt and featured image of password protected content by default. Enable this option to show excerpt of your password protect posts.
+= Show Password Protected Post Excerpts =
+Many WordPress themes hide the post excerpt and featured image of password protected content by default. Enable this option to show excerpts of your password protect posts.
 
 = Password's Cookies Expiration =
-By default, users won't have to re-enter passwords to access a protected page or post until its cookies expire. You can change the default cookie expiration time on the plugin's settings page to whatever suits your use case. Or else, choose session cookies which will be removed automatically whenever users close their browser. As a result, users have to re-enter password when opening the browser again.
+By default, users won't have to re-enter passwords to access a protected page or post until its cookies expire. You can change the default cookie expiration time on the plugin settings page to whatever suits your use case. Or else, choose session cookies which will be removed automatically whenever users close their browser. As a result, users have to re-enter password when opening the browser again.
 
 
 > #### Pro Version
@@ -136,6 +141,8 @@ By default, users won't have to re-enter passwords to access a protected page or
 >
 > Check out [Password Protect WordPress (PPWP) Pro](https://passwordprotectwp.com/pricing/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=premium-after-pro-features) now!
 
+Get access to all extensions and priority support with any of our [PPWP Pro membership](https://passwordprotectwp.com/membership?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=premium-after-pro-features) plans.
+
 = Multilingual supported =
 Our plugin works out of the box with the top leading multilingual WordPress plugins such as WPML, Polylang, and Loco Translate. In other words, you can [translate the password forms](https://passwordprotectwp.com/docs/how-to-translate-password-protect-wordpress-plugin/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite), including its headline, description, error message as well as placeholder and button text into the different languages.
 
@@ -150,7 +157,7 @@ Note that we have to **migrate your default WordPress passwords** to our systems
 
 You may want to restore all your previously created passwords before deactivating the plugin to avoid all protected pages and posts becoming public.
 
-Please check out these guides on [how to password protect WordPress page](https://passwordprotectwp.com/docs/getting-started/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) right way.
+Please check out these guides on [how to password protect WordPress page](https://passwordprotectwp.com/docs/getting-started/?utm_source=wp.org&utm_medium=guide-link&utm_campaign=password-protect-page-lite) the right way.
 
 == Installation ==
 
@@ -193,7 +200,7 @@ Yes, the Pro version helps [password protect any WordPress custom post types](ht
 
 = Will my password protected content show up in Google search results? =
 
-No, your content won’t appear on Google and other search engine results once password protected by the Pro version. The Free version doesn't [block search engines from finding and indexing your content](https://passwordprotectwp.com/docs/block-google-search-indexing/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite).
+The Free version doesn't [block search engines from finding and indexing your content](https://passwordprotectwp.com/docs/block-google-search-indexing/?utm_source=wp.org&utm_medium=faq-link&utm_campaign=ppwp-lite). However, your content won’t appear on Google and other search engine results once password protected by the Pro version.
 
 = Can I password protect parts of WordPress page content? =
 
@@ -259,9 +266,25 @@ N/A
 
 == Changelog ==
 
+= 1.7.1 =
+
+* [Feature] Bulk action to delete master passwords
+* [Improvement] Remove caching notification under plugin's settings page
+
+= 1.7.0 =
+
+* [Feature] Apply reCAPTCHA to single password form
+* [Feature] Provide some pre-designed sitewide login page templates
+* [Improvement] Integrate "No reload page" feature with top page builders
+* [BugFix] Conflict with StoreVilla theme
+* [BugFix] Master cookie is saved with wrong format
+* [BugFix] Cookie is saved successfully but content is still locked
+* [BugFix] Plugin settings inaccessible for Editor role
+
+
 = 1.6.0 =
 
-* [Feature] Show/hide partial content at a specific time 
+* [Feature] Show/hide partial content at a specific time
 * [Feature] Unlock password protected content without reloading page
 * [Feature] Support session cookies
 * [BugFix] Password category doesn't work properly with content belonging multiple categories

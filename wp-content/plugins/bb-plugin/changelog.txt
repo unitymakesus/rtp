@@ -1,4 +1,76 @@
-<h4>2.4.0.6</h4> - 10/12/2020</h4>
+<h4>2.4.1.3 - 12/21/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Content Slider Module: Fix empty image alt text on mobile layout (#916)</li>
+	<li>Gallery Module: Fix loading issue with Collage layout (#917)</li>
+	<li>Photo Module: Fix PHP notice when showing captions and loading image via URL (#937)</li>
+	<li>Posts Modules: Fix PHP notices related to TEC loop (#911)</li>
+	<li>Fix overridden responsive values not showing on toggle (#914)</li>
+	<li>Remove Dark Mode keyboard shortcut due to customer feedback (#929)</li>
+	<li>Fix TwentyTwentyOne compatibility with the menu module (#907)</li>
+	<li>Make sure our sensitive code check allows <code>&amp;</code> (#924)</li>
+</ul>
+
+
+<h4>2.4.1.2 - 12/03/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Gallery Module: Captions do not show when image source is SmugMug (#891)</li>
+	<li>List Module: Fix Duplicate Heading and Content tag options (#879)</li>
+	<li>Posts Modules: Fix "match all posts except" option not working properly with TEC Events(#874)</li>
+	<li>Fix Fatal errors when using PHP 5.4 and WP 4.9 and below (#875)</li>
+	<li>Notifications Area: Fix background transparency (#898)</li>
+	<li>Sensitive code protection: allow some improper HTML and when triggered, try to highlight the problem code (#872)</li>
+	<li>Agency Version: Fix issue with Branding filter where icon doesn't work if you previously changed that value in WP admin (#849)</li>
+</ul>
+
+<h4>2.4.1.1 - 11/18/2020</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fix RankMath integration (#866)</li>
+	<li>Tweak sensitive code fix so that it doesn't prevent allowed HTML (#840)</li>
+	<li>Fix updating global element does not update CSS (#838)</li>
+	<li>Fix attribute preview not selecting all matching elements (#864)</li>
+	<li>Fix Content Slider button padding applying to other Content Slider modules on the same page (#850)</li>
+	<li>More UI Style hardening for letter-spacing in CSS (#842)</li>
+</ul>
+
+<h4>2.4.1 - 11/5/2020</h4>
+<strong>Enhancements</strong>
+<ul>
+	<li>Button Group: Convert Button Spacing to a dimension field and make it responsive for more control (#791)</li>
+	<li>Button Group: Add group name option for Accessibility</li>
+	<li>The Events Calendar: Posts Module now respects the Events Calendar "Hide from Event" Listings checkbox (#495)</li>
+	<li>List Module: Add Icon Width Field (#576)</li>
+	<li>Add Object Cache to Cache Helper Tool (#691)</li>
+	<li>Subscribe Module: Add integration with Mailjet</li>
+	<li>Update FontAwesome to 5.15.1 (#784)</li>
+	<li>Do not clear cache on upgrader_process_complete as cache is already cleared when BB is updated</li>
+	<li>Use wp_kses_post for photo captions (#448)</li>
+	<li>Make sure users who enter sensitive code have WordPress' unfiltered html capability (#448)</li>
+</ul>
+
+<strong>Bug Fix</strong>
+<ul>
+	<li>Accordion Module: Fix RTL issue with labels (#414)
+	<li>Button Group: Fix Button Spacing not working on Safari (#791)</li>
+	<li>Button Group: Fix responsive alignment (#690)</li>
+	<li>Content Slider: Fix button padding not working (#625)</li>
+	<li>Text Editor Module: Add compatibility with the HappyFoxChat plugin (#445)</li>
+	<li>Layout Shortcodes: fix issue where an empty slug attribute can load all posts for the layout (#608)</li>
+	<li>Posts Module: Move Post Grid Sizer to the bottom (#497)</li>
+	<li>Posts Module: Fix compatibility with WOOF WooCommerce Products Filter (#649)</li>
+	<li>Posts Module: Fix pagination on Polylang translated pages or on the WooCommerce Shop Layout when more than one module is on the page (#718 & #752)</li>
+	<li>Search Module: Fix bug with the $settings variable (#779)</li>
+	<li>Fix PHP notice on a 404 layout when using layout shortcodes (#693)</li>
+	<li>Fix fixed background images showing as zoomed in on iPadOS (#686)</li>
+	<li>Fix UI not opening on Themer Header Layout when Klaviyo plugin is active (#791)</li>
+	<li>Fix Yoast Integration not reading BB content (#788)</li>
+	<li>Fix Tooltips issue in User Access area of settings when WooCommerce is active (#748)</li>
+	<li>Fix broken serialization during import and the "Invalid Content" dialog in some cases when editing a page or a post (#834)</li>
+</ul>
+
+<h4>2.4.0.6 - 10/12/2020</h4>
 <strong>Hot Fix</strong>
 <ul>
 	<li>Fixed PHP notice that appears when dropping a Menu module on the page (Issue #775)</li>
@@ -7,7 +79,7 @@
 	<li>Fixed fatal on Flywheel Cloud hosting when you have Lite installed and then activate a Premium version (Issue #770)</li>
 </ul>
 
-<h4>2.4.0.5</h4> - 09/28/2020</h4>
+<h4>2.4.0.5 - 09/28/2020</h4>
 <strong>Hot Fix</strong>
 <ul>
 	<li>Button Module: Fix lightbox not working if ID specified in module settings</li>

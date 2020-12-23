@@ -107,7 +107,7 @@ class SB_Instagram_Settings {
 				'feedid'           => isset( $db['sb_instagram_feed_id'] ) ? $db['sb_instagram_feed_id'] : false,
 				'resizeprocess'    => isset( $db['sb_instagram_resizeprocess'] ) ? $db['sb_instagram_resizeprocess'] : 'background',
 				'customtemplates'    => isset( $db['custom_template'] ) ? $db['custom_template'] : '',
-
+				'gdpr'    => isset( $db['gdpr'] ) ? $db['gdpr'] : 'auto',
 			), $atts );
 
 		$this->settings['customtemplates'] = $this->settings['customtemplates'] === 'true' || $this->settings['customtemplates'] === 'on';
@@ -125,7 +125,6 @@ class SB_Instagram_Settings {
 		$this->settings['disable_resize'] = isset( $db['sb_instagram_disable_resize'] ) && ($db['sb_instagram_disable_resize'] === 'on');
 		$this->settings['favor_local'] = ! isset( $db['sb_instagram_favor_local'] ) || ($db['sb_instagram_favor_local'] === 'on') || ($db['sb_instagram_favor_local'] === true);
 		$this->settings['backup_cache_enabled'] = ! isset( $db['sb_instagram_backup'] ) || ($db['sb_instagram_backup'] === 'on') || $db['sb_instagram_backup'] === true;
-		$this->settings['font_method'] = isset( $db['sbi_font_method'] ) ? $db['sbi_font_method'] : 'svg';
 		$this->settings['headeroutside'] = ($this->settings['headeroutside'] === true || $this->settings['headeroutside'] === 'on' || $this->settings['headeroutside'] === 'true');
 		$this->settings['disable_js_image_loading'] = isset( $db['disable_js_image_loading'] ) && ($db['disable_js_image_loading'] === 'on');
 		$this->settings['ajax_post_load'] = isset( $db['sb_ajax_initial'] ) && ($db['sb_ajax_initial'] === 'on');
@@ -154,6 +153,10 @@ class SB_Instagram_Settings {
 		if ( $this->settings['isgutenberg'] ) {
 			$this->settings['ajax_post_load'] = false;
 			$this->settings['disable_js_image_loading'] = true;
+		}
+
+		if ( SB_Instagram_GDPR_Integrations::doing_gdpr( $this->settings ) ) {
+			SB_Instagram_GDPR_Integrations::init();
 		}
 	}
 
@@ -218,7 +221,6 @@ class SB_Instagram_Settings {
 			'sb_instagram_disable_resize',
 			'disable_js_image_loading',
 			'enqueue_js_in_head',
-			'sbi_font_method',
 			'sb_instagram_disable_awesome',
 			'sb_ajax_initial',
 			'use_custom'
@@ -829,7 +831,6 @@ class SB_Instagram_Settings {
 			'sb_ajax_initial' => false,
 			'enqueue_css_in_shortcode' => false,
 			'sb_instagram_disable_mob_swipe' => false,
-			'sbi_font_method' => 'svg',
 			'sbi_br_adjust' => true,
 			'sb_instagram_media_vine' => false,
 			'custom_template' => false,

@@ -228,6 +228,9 @@ class SB_Instagram_API_Connect
 					$error = '<p><b>' . sprintf( __( 'Error: Permission for the Smash Balloon App is not valid or has expired.', 'instagram-feed' ), $user_name ) . ' ' . __( 'Feed will not update.', 'instagram-feed' ) . '</b></p>';
 					$error .= '<p>' . sprintf( __( 'API error %s:', 'instagram-feed' ), $response['error']['code'] ) . ' ' . $response['error']['message'] . '</p>';
 					$sb_instagram_posts_manager->add_error( 'at_100_' . $user_name, array( 'Business 100 Error', $error, $response['error']['code'] ) );
+					if ( current_user_can( $cap ) ) {
+						$error .= '<p class="sbi-error-directions"><a href="https://smashballoon.com/instagram-feed/docs/errors/" target="_blank" rel="noopener">' . __( 'Directions on how to resolve this issue', 'instagram-feed' ) . '</a></p>';
+					}
 					$sb_instagram_posts_manager->add_frontend_error( 'at_100_' . $user_name, $error );
 
 				} else {
@@ -269,9 +272,12 @@ class SB_Instagram_API_Connect
 				$options['connected_accounts'] = $connected_accounts;
 
 				update_option( 'sb_instagram_settings', $options );
-
 				global $sb_instagram_posts_manager;
-				$sb_instagram_posts_manager->add_error( 'error_18', array( 'Too many hashtags', $response['error']['error_user_msg'] ) );
+				$error = '<p><b>' . __( 'Error: Hashtag limit of 30 unique hashtags per week has been reached.', 'instagram-feed' ) . '</b>';
+				$error .= '<p>' . __( 'If you need to display more than 30 hashtag feeds on your site, consider connecting an additional business account from a separate Instagram and Facebook account.', 'instagram-feed' );
+
+				$sb_instagram_posts_manager->add_frontend_error( 'hashtag_limit_reached', $error );
+				$sb_instagram_posts_manager->add_error( 'error_18', array( 'Too many hashtags', $error ) );
 
 			} elseif ( (int)$response['error']['code'] === 10 ) {
 				$user_name = $error_connected_account['username'];

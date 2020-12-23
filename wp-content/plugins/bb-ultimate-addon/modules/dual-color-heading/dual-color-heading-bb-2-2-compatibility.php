@@ -101,6 +101,7 @@ FLBuilder::register_module(
 						'bg_heading'         => array(
 							'type'        => 'text',
 							'label'       => __( 'Text', 'uabb' ),
+							'default'     => 'Background',
 							'connections' => array( 'string', 'html' ),
 						),
 					),

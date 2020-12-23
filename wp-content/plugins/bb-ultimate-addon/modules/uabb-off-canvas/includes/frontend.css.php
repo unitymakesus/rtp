@@ -6,8 +6,12 @@
  */
 
 $version_bb_check = UABB_Compatibility::$version_bb_check;
-if ( FLBuilder::fa5_pro_enabled() ) {
-	$font_family = 'Font Awesome 5 Pro';
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		$font_family = 'Font Awesome 5 Pro';
+	} else {
+		$font_family = 'Font Awesome 5 Free';
+	}
 } else {
 	$font_family = 'Font Awesome 5 Free';
 }

@@ -128,9 +128,10 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 				return false;
 			}
 
-			$cookie = sanitize_text_field( $_COOKIE[ $cookie_name . $post_id . COOKIEHASH ] );
-			$hash   = wp_unslash( $cookie );
-			if ( 0 !== strpos( $hash, '$P$B' ) ) {
+			$cookie  = sanitize_text_field( $_COOKIE[ $cookie_name . $post_id . COOKIEHASH ] );
+			$hash    = wp_unslash( $cookie );
+			$checked = apply_filters( 'ppw_check_md5_format', true );
+			if ( $checked && 0 !== strpos( $hash, '$P$B' ) ) {
 				return false;
 			}
 
@@ -234,7 +235,9 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 */
 		public function get_referer_url() {
 			$referrer_url = wp_get_referer();
-			if ( false === $referrer_url ) {
+			$using_cb     = false === $referrer_url;
+			$using_cb     = apply_filters( 'ppw_use_callback_url', $using_cb );
+			if ( $using_cb ) {
 				// We need to get the callback URL in the password form action URL.
 				// in case Referrer-Policy is set no-referrer.
 				$cb_param = PPW_Constants::CALL_BACK_URL_PARAM;
@@ -855,6 +858,11 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 * @param string $password Password which user enter.
 		 */
 		public function handle_after_enter_password_in_password_form( $post_id, $password ) {
+			$using_recaptcha = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS );
+			if ( $using_recaptcha && ! PPW_Recaptcha::get_instance()->is_valid_recaptcha() ) {
+				do_action( 'ppw_redirect_after_enter_password', false );
+			}
+
 			$is_valid = $this->is_valid_password_from_request( $post_id, $password );
 
 			do_action( 'ppw_redirect_after_enter_password', $is_valid );
@@ -882,16 +890,18 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 
 		/**
 		 * Is valid free Password.
-		 * 
-		 * @param integer $post_id Post ID.
-		 * @param string $password Password.
-		 * @param string $current_roles Current user roles.
-		 * 
+		 *
+		 * @param integer $post_id       Post ID.
+		 * @param string  $password      Password.
+		 * @param array   $current_roles Current user roles.
+		 *
 		 * @return bool True is valid password, false is no.
 		 */
 		public function is_valid_free_password( $post_id, $password, $current_roles ) {
 			$is_valid = $this->is_valid_password( $password, $post_id, $current_roles );
-			$is_valid = $this->handle_master_passwords( $password, $is_valid, $current_roles, $post_id );
+			if ( $this->is_protected_content( $post_id ) ) {
+				$is_valid = $this->handle_master_passwords( $password, $is_valid, $current_roles, $post_id );
+			}
 
 			return $is_valid;
 		}

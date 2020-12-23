@@ -34,7 +34,6 @@ namespace The_SEO_Framework\Builders;
  * @access public
  */
 abstract class Sitemap {
-	use \The_SEO_Framework\Traits\Enclose_Core_Final;
 
 	/**
 	 * @var null|\The_SEO_Framework\Load
@@ -80,6 +79,27 @@ abstract class Sitemap {
 	 */
 	final public function shutdown_generation() {
 		static::$tsf->reset_timezone();
+	}
+
+	/**
+	 * Generates and returns the sitemap content.
+	 * We recommend you overwriting this method to include caching.
+	 *
+	 * @since 4.1.2
+	 * @abstract
+	 * TODO consider adding ...$args?
+	 *
+	 * @return string The sitemap content.
+	 */
+	public function generate_sitemap() {
+
+		$this->prepare_generation();
+
+		$sitemap = $this->build_sitemap();
+
+		$this->shutdown_generation();
+
+		return $sitemap;
 	}
 
 	/**
@@ -188,7 +208,6 @@ abstract class Sitemap {
 		if ( null === $excluded ) {
 			/**
 			 * @since 4.0.0
-			 * @ignore NOT USED INTERNALLY!
 			 * @param array $excluded Sequential list of excluded IDs: [ int ...term_id ]
 			 */
 			$excluded = (array) \apply_filters( 'the_seo_framework_sitemap_exclude_term_ids', [] );

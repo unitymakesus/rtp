@@ -8,6 +8,11 @@
 			enable_recaptcha = form.find('select[name=uabb_recaptcha_toggle]');
 			enable_recaptcha.on('change',this.enable_recaptcha );
 			form.find('select[name=uabb_recaptcha_version]').on('change',this.enable_recaptcha );
+			lost_your_pass = form.find('select[name=lost_your_pass]');
+			login_link = form.find('select[name=login_link]');
+			this.login_pwd_toggle();
+			lost_your_pass.on('change',this.login_pwd_toggle );
+			login_link.on('change',this.login_pwd_toggle );
 			this.enable_recaptcha();
 			this._hideDocs();
 		},
@@ -51,6 +56,17 @@
 				form.find( '#fl-field-uabb_recaptcha_site_key' ).hide();
 				form.find( '#fl-field-uabb_recaptcha_secret_key' ).hide();
 				form.find( '#fl-field-uabb_recaptcha_theme' ).hide();
+			}
+		},
+		login_pwd_toggle: function() {
+			var form       = $('.fl-builder-settings'),
+			lost_your_pass = form.find('select[name=lost_your_pass]');
+			login_link     = form.find('select[name=login_link]');
+
+			if ( 'yes' === lost_your_pass.val() && 'yes' === login_link.val() ) {
+				form.find('#fl-field-login_text_position').show();
+			} else {
+				form.find('#fl-field-login_text_position').hide();
 			}
 		},
 		_hideDocs: function() {

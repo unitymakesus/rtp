@@ -11,6 +11,10 @@ const { Component } = wp.element
  */
 class BuilderMoreMenuItem extends Component {
 	render() {
+		if( this.hasBuilderBlock() ) {
+			jQuery('body').addClass('fl-builder-blocks');
+			jQuery(document).trigger('fl-builder-fix-blocks');
+		}
 		return (
 			<PluginMoreMenuItem onClick={ this.menuItemClicked.bind( this ) }>
 				{ this.hasBuilderBlock() ? strings.launch : strings.convert }

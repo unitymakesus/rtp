@@ -511,10 +511,11 @@ final class FLBuilderLoop {
 			return;
 		}
 
-		$is_single = false;
+		$has_archive = is_string( $args->has_archive ) ? $args->has_archive : false;
+		$is_single   = false;
 
 		// Check if it's a CPT archive or CPT single.
-		if ( $custom_paged['current_page'] != $post_type ) {
+		if ( $custom_paged['current_page'] != $post_type && $has_archive != $custom_paged['current_page'] ) {
 
 			// Is a child post of the current post type?
 			$post_object = get_page_by_path( $custom_paged['current_page'], OBJECT, $post_type );

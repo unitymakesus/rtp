@@ -239,7 +239,7 @@ if ( '' !== $photo_src ) {
 				$im_icon_backside = 0;
 				$im_icon_size     = 0;
 				if ( '' !== $settings->hotspot_marker[ $i ]->icon && 'custom' === $settings->hotspot_marker[ $i ]->icon_style ) {
-					$im_icon_backside = $settings->hotspot_marker[ $i ]->icon_bg_size + ( $settings->hotspot_marker[ $i ]->icon_border_width * 2 );
+					$im_icon_backside = (int) $settings->hotspot_marker[ $i ]->icon_bg_size + ( $settings->hotspot_marker[ $i ]->icon_border_width * 2 );
 					$im_icon_size     = $settings->hotspot_marker[ $i ]->icon_size;
 				} elseif ( '' !== $settings->hotspot_marker[ $i ]->icon && 'circle' === $settings->hotspot_marker[ $i ]->icon_style || 'square' === $settings->hotspot_marker[ $i ]->icon_style ) {
 					$im_icon_size = $settings->hotspot_marker[ $i ]->icon_size * 2;

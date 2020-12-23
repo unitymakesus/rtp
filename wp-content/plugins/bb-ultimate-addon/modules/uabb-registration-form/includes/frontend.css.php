@@ -29,6 +29,7 @@ $settings->checkbox_text_color        = UABB_Helper::uabb_colorpicker( $settings
 $settings->terms_text_color           = UABB_Helper::uabb_colorpicker( $settings, 'terms_text_color', true );
 
 ?>
+
 <?php
 // Alignment.
 if ( ! $version_bb_check ) {
@@ -592,8 +593,30 @@ $checked_width = $font_size - intval( $settings->checkbox_border_width );
 
 /* Terms and Conditions code ends here */
 
+<?php
+if ( 'yes' === $settings->inline_btn_login_text && 'yes' === $settings->login_link && 'no' === $settings->lost_your_pass ) {
+	if ( 'show' === $settings->terms_checkbox ) {
+		?>
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-input-group.uabb-terms-checkbox {
+			width: 100%;
+		}
+<?php } ?>
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-submit-btn.uabb-registration-form-submit {
+		display: inline;
+		width: 50%;
+	}
+	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-input-group.uabb-rform-exteral-link-wrap {
+		width: 50%;
+		margin-bottom: 0;
+		margin-top: 10px;
+		height: auto;
+	}
+	<?php
+}
+
 /* Typography responsive css */
-<?php if ( ! $version_bb_check ) { ?>
+if ( ! $version_bb_check ) {
+	?>
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-registration-form .uabb-registration_form-error-message-required,
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-rf-success-message-wrap .uabb-rf-success-message {
 			<?php if ( 'default' !== $settings->message_link_font_family['family'] && 'default' !== $settings->message_link_font_family['weight'] ) : ?>
@@ -983,4 +1006,6 @@ $checked_width = $font_size - intval( $settings->checkbox_border_width );
 			?>
 		}
 	}
-<?php } ?>
+	<?php
+}
+?>

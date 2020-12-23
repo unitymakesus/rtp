@@ -45,7 +45,7 @@ final class FLBuilderShortcodes {
 			} else {
 				$args['post__in'] = explode( ',', $attrs['id'] );
 			}
-		} elseif ( isset( $attrs['slug'] ) ) {
+		} elseif ( isset( $attrs['slug'] ) && '' !== $attrs['slug'] ) {
 			$args['orderby'] = 'name';
 			$args['name']    = $attrs['slug'];
 		} else {

@@ -68,7 +68,7 @@ final class FLBuilder {
 	 * @since 2.1
 	 */
 	static public $fa4_url     = '';
-	static public $fa5_pro_url = 'https://pro.fontawesome.com/releases/v5.12.0/css/all.css';
+	static public $fa5_pro_url = 'https://pro.fontawesome.com/releases/v5.15.1/css/all.css';
 
 	/**
 	 * Initializes hooks.
@@ -737,6 +737,10 @@ final class FLBuilder {
 				return;
 			}
 
+			if ( $global ) {
+				$asset_ver = FLBuilderModel::get_asset_version( $path );
+			}
+
 			// Enqueue.
 			if ( 'css' == $type ) {
 				wp_enqueue_style( $handle, $url, $css_deps, $asset_ver, $css_media );
@@ -791,7 +795,7 @@ final class FLBuilder {
 			wp_enqueue_style( 'foundation-icons' );
 			wp_enqueue_style( 'jquery-nanoscroller', $css_url . 'jquery.nanoscroller.css', array(), $ver );
 			wp_enqueue_style( 'jquery-autosuggest', $css_url . 'jquery.autoSuggest.min.css', array(), $ver );
-			wp_enqueue_style( 'jquery-tiptip', $css_url . 'jquery.tiptip.css', array(), $ver );
+			wp_enqueue_style( 'fl-jquery-tiptip', $css_url . 'jquery.tiptip.css', array(), $ver );
 			wp_enqueue_style( 'bootstrap-tour', $css_url . 'bootstrap-tour-standalone.min.css', array(), $ver );
 			if ( true === apply_filters( 'fl_select2_enabled', true ) ) {
 				wp_enqueue_style( 'select2', $css_url . 'select2.min.css', array(), $ver );
@@ -860,7 +864,7 @@ final class FLBuilder {
 			wp_enqueue_script( 'jquery-ui-sortable', $js_url . 'jquery.ui.sortable.js', array( 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-mouse' ), $ver );
 			wp_enqueue_script( 'jquery-nanoscroller', $js_url . 'jquery.nanoscroller.min.js', array(), $ver );
 			wp_enqueue_script( 'jquery-autosuggest', $js_url . 'jquery.autoSuggest.min.js', array(), $ver );
-			wp_enqueue_script( 'jquery-tiptip', $js_url . 'jquery.tiptip.min.js', array(), $ver );
+			wp_enqueue_script( 'fl-jquery-tiptip', $js_url . 'jquery.tiptip.min.js', array(), $ver );
 			wp_enqueue_script( 'jquery-showhideevents', $js_url . 'jquery.showhideevents.js', array(), $ver );
 			wp_enqueue_script( 'jquery-simulate', $js_url . 'jquery.simulate.js', array(), $ver );
 			wp_enqueue_script( 'jquery-validate', $js_url . 'jquery.validate.min.js', array(), $ver );
@@ -1236,7 +1240,6 @@ final class FLBuilder {
 			'label'     => __( 'Change UI Brightness', 'fl-builder' ),
 			'type'      => 'event',
 			'eventName' => 'toggleUISkin',
-			'accessory' => $key_shortcuts['toggleUISkin']['keyLabel'],
 		);
 
 		$tools_view['items'][100] = array(
@@ -1417,10 +1420,6 @@ final class FLBuilder {
 			'showLayoutSettings' => array(
 				'label'   => _x( 'Open Layout Settings', 'Keyboard action to open the layout settings panel', 'fl-builder' ),
 				'keyCode' => 'mod+y',
-			),
-			'toggleUISkin'       => array(
-				'label'   => _x( 'Change UI Brightness', 'Keyboard action to switch between light and dark UI brightness', 'fl-builder' ),
-				'keyCode' => 'o',
 			),
 			'showSearch'         => array(
 				'label'   => _x( 'Display Module Search', 'Keyboard action to open the module search panel', 'fl-builder' ),
@@ -2245,6 +2244,9 @@ final class FLBuilder {
 		}
 		if ( ! empty( $row->settings->top_edge_shape ) || ! empty( $row->settings->bottom_edge_shape ) ) {
 			$attrs['class'][] = 'fl-row-has-layers';
+		}
+		if ( ( 'photo' === $row->settings->bg_type ) && ( 'fixed' === $row->settings->bg_attachment ) ) {
+			$attrs['class'][] = 'fl-row-bg-fixed';
 		}
 
 		// Data

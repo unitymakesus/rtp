@@ -216,6 +216,12 @@ function sbi_oembeds_page() {
         </div>
 	<?php } else {
 		if ( $valid_new_access_token ) {
+		    if ( ! is_array( $oembed_token_settings ) ) {
+			    $oembed_token_settings = array(
+                    'access_token' => '',
+                    'disabled' => '',
+			    );
+            }
 			$oembed_token_settings['access_token'] = $valid_new_access_token;
 			$oembed_token_settings['disabled'] = false;
 			update_option( 'sbi_oembed_token', $oembed_token_settings );
@@ -420,14 +426,13 @@ function sb_instagram_settings_page() {
 		'sb_ajax_initial' => false,
 		'enqueue_css_in_shortcode' => false,
 		'sb_instagram_ajax_theme'           => false,
-		'sb_instagram_disable_resize'       => false,
+		'gdpr' => 'auto',
+	    'sb_instagram_disable_resize'       => false,
 		'sb_instagram_favor_local'          => true,
 		'sb_instagram_minnum' => 0,
 		'disable_js_image_loading'          => false,
 		'enqueue_js_in_head'                => false,
 		'sb_instagram_disable_mob_swipe' => false,
-		'sbi_font_method' => 'svg',
-		'sb_instagram_disable_awesome'      => false,
         'custom_template' => false,
         'disable_admin_notice' => false,
 		'enable_email_report' => 'on',
@@ -443,6 +448,7 @@ function sb_instagram_settings_page() {
 	$sb_instagram_user_id = $options[ 'sb_instagram_user_id' ];
 	$sb_instagram_preserve_settings = $options[ 'sb_instagram_preserve_settings' ];
 	$sb_instagram_ajax_theme = $options[ 'sb_instagram_ajax_theme' ];
+    $gdpr = $options[ 'gdpr' ];
 	$enqueue_js_in_head = $options[ 'enqueue_js_in_head' ];
 	$disable_js_image_loading = $options[ 'disable_js_image_loading' ];
 	$sb_instagram_disable_resize = $options[ 'sb_instagram_disable_resize' ];
@@ -493,8 +499,6 @@ function sb_instagram_settings_page() {
 	$sb_instagram_backup = $options[ 'sb_instagram_backup' ];
 	$sb_ajax_initial = $options[ 'sb_ajax_initial' ];
 	$enqueue_css_in_shortcode = $options[ 'enqueue_css_in_shortcode' ];
-	$sbi_font_method = $options[ 'sbi_font_method' ];
-	$sb_instagram_disable_awesome = $options[ 'sb_instagram_disable_awesome' ];
 	$sb_instagram_custom_template = $options[ 'custom_template' ];
 	$sb_instagram_disable_admin_notice = $options[ 'disable_admin_notice' ];
 	$sb_instagram_enable_email_report = $options[ 'enable_email_report' ];
@@ -636,6 +640,7 @@ function sb_instagram_settings_page() {
 				$sb_instagram_custom_css = $_POST[ 'sb_instagram_custom_css' ];
 				$sb_instagram_custom_js = $_POST[ 'sb_instagram_custom_js' ];
 				isset($_POST[ 'sb_instagram_ajax_theme' ]) ? $sb_instagram_ajax_theme = sanitize_text_field( $_POST[ 'sb_instagram_ajax_theme' ] ) : $sb_instagram_ajax_theme = '';
+				isset($_POST[ 'gdpr' ]) ? $gdpr = sanitize_text_field( $_POST[ 'gdpr' ] ) : $gdpr = '';
 				isset($_POST[ 'enqueue_js_in_head' ]) ? $enqueue_js_in_head = $_POST[ 'enqueue_js_in_head' ] : $enqueue_js_in_head = '';
 				isset($_POST[ 'disable_js_image_loading' ]) ? $disable_js_image_loading = $_POST[ 'disable_js_image_loading' ] : $disable_js_image_loading = '';
 				isset($_POST[ 'sb_instagram_disable_resize' ]) ? $sb_instagram_disable_resize= sanitize_text_field( $_POST[ 'sb_instagram_disable_resize' ] ) : $sb_instagram_disable_resize = '';
@@ -646,8 +651,6 @@ function sb_instagram_settings_page() {
 				isset($_POST[ 'sb_instagram_backup' ]) ? $sb_instagram_backup = $_POST[ 'sb_instagram_backup' ] : $sb_instagram_backup = '';
 				isset($_POST[ 'sb_ajax_initial' ]) ? $sb_ajax_initial = $_POST[ 'sb_ajax_initial' ] : $sb_ajax_initial = '';
 				isset($_POST[ 'enqueue_css_in_shortcode' ]) ? $enqueue_css_in_shortcode = $_POST[ 'enqueue_css_in_shortcode' ] : $enqueue_css_in_shortcode = '';
-				isset($_POST[ 'sbi_font_method' ]) ? $sbi_font_method = $_POST[ 'sbi_font_method' ] : $sbi_font_method = 'svg';
-				isset($_POST[ 'sb_instagram_disable_awesome' ]) ? $sb_instagram_disable_awesome = sanitize_text_field( $_POST[ 'sb_instagram_disable_awesome' ] ) : $sb_instagram_disable_awesome = '';
 
 				$options[ 'sb_instagram_width' ] = $sb_instagram_width;
 				$options[ 'sb_instagram_width_unit' ] = $sb_instagram_width_unit;
@@ -684,6 +687,7 @@ function sb_instagram_settings_page() {
 				$options[ 'sb_instagram_custom_css' ] = $sb_instagram_custom_css;
 				$options[ 'sb_instagram_custom_js' ] = $sb_instagram_custom_js;
 				$options[ 'sb_instagram_ajax_theme' ] = $sb_instagram_ajax_theme;
+				$options[ 'gdpr' ] = $gdpr;
 				$options[ 'enqueue_js_in_head' ] = $enqueue_js_in_head;
 				$options[ 'disable_js_image_loading' ] = $disable_js_image_loading;
 				$options[ 'sb_instagram_disable_resize' ] = $sb_instagram_disable_resize;
@@ -694,9 +698,6 @@ function sb_instagram_settings_page() {
 				$options[ 'sb_instagram_cron' ] = $sb_instagram_cron;
 				$options['sb_instagram_backup'] = $sb_instagram_backup;
 				$options['enqueue_css_in_shortcode'] = $enqueue_css_in_shortcode;
-
-				$options['sbi_font_method'] = $sbi_font_method;
-				$options[ 'sb_instagram_disable_awesome' ] = $sb_instagram_disable_awesome;
 
 				isset($_POST[ 'sb_instagram_custom_template' ]) ? $sb_instagram_custom_template = $_POST[ 'sb_instagram_custom_template' ] : $sb_instagram_custom_template = '';
 				$options['custom_template'] = $sb_instagram_custom_template;
@@ -1393,9 +1394,10 @@ function sb_instagram_settings_page() {
 				<a href="#headeroptions"><?php _e( 'Header', 'instagram-feed' ); ?></a>
 				<a href="#loadmore"><?php _e( "'Load More' Button", 'instagram-feed' ); ?></a>
 				<a href="#follow"><?php _e( "'Follow' Button", 'instagram-feed' ); ?></a>
-				<a href="#customcss"><?php _e( 'Custom CSS', 'instagram-feed' ); ?></a>
+                <a href="#gdpr"><?php _e( 'GDPR', 'instagram-feed' ); ?></a>
+                <a href="#customcss"><?php _e( 'Custom CSS', 'instagram-feed' ); ?></a>
 				<a href="#customjs"><?php _e( 'Custom JavaScript', 'instagram-feed' ); ?></a>
-			</p>
+            </p>
 
 			<input type="hidden" name="<?php echo $sb_instagram_customize_hidden_field; ?>" value="Y">
 
@@ -2226,7 +2228,122 @@ function sb_instagram_settings_page() {
 				</table>
 			</div>
 
+            <hr id="gdpr" />
+            <h3><?php _e('GDPR', 'instagram-feed'); ?></h3>
 
+            <table class="form-table">
+                <tbody>
+                <tr>
+                    <th class="bump-left"><label class="bump-left"><?php _e("Enable GDPR settings", 'instagram-feed'); ?></label><code class="sbi_shortcode"> gdpr
+                            Eg: gdpr=yes</code></th>
+                    <td>
+
+						<?php
+						$select_options = array(
+							array(
+								'label' => __( 'Automatic', 'instagram-feed' ),
+								'value' => 'auto'
+							),
+							array(
+								'label' => __( 'Yes', 'instagram-feed' ),
+								'value' => 'yes'
+							),
+							array(
+								'label' => __( 'No', 'instagram-feed' ),
+								'value' => 'no'
+							)
+						)
+						?>
+						<?php
+						$gdpr_list = "<ul class='sbi-list'>
+                            	<li>" . __('Only local images (not from Instagram\'s CDN) will be displayed in the feed.', 'instagram-feed') . "</li>
+                            	<li>" . __('Placeholder blank images will be displayed until images are available.', 'instagram-feed') . "</li>
+                            </ul>";
+						?>
+                        <div>
+                            <select name="gdpr" id="sbi_gdpr_setting">
+								<?php foreach ( $select_options as $select_option ) :
+									$selected = $select_option['value'] === $gdpr ? ' selected' : '';
+									?>
+                                    <option value="<?php echo esc_attr( $select_option['value'] ); ?>"<?php echo $selected; ?> ><?php echo esc_html( $select_option['label'] ); ?></option>
+								<?php endforeach; ?>
+                            </select>
+                            <a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e('What does this mean?', 'instagram-feed'); ?></a>
+                            <div class="sbi_tooltip gdpr_tooltip">
+
+                                <p><span><?php _e("Yes", "instagram-feed" ); ?>:</span> <?php _e("Enabling this setting prevents all images and videos from being loaded directly from Instagram's servers (CDN) to prevent any requests to external websites in your browser. To accommodate this, some features of the plugin will be disabled or limited.", "instagram-feed" ); ?> <a href="JavaScript:void(0);" class="sbi_show_gdpr_list"><?php _e( 'What will be limited?', 'instagram-feed' ); ?></a></p>
+
+								<?php echo "<div class='sbi_gdpr_list'>" . $gdpr_list . '</div>'; ?>
+
+
+                                <p><span><?php _e("No", "instagram-feed" ); ?>:</span> <?php _e("The plugin will still make some requests to load and display images and videos directly from Instagram.", "instagram-feed" ); ?></p>
+
+
+                                <p><span><?php _e("Automatic", "instagram-feed" ); ?>:</span> <?php echo sprintf( __( 'The plugin will only load images and videos directly from Instagram if consent has been given by one of these integrated %s', 'instagram-feed' ), '<a href="https://smashballoon.com/doc/gdpr-plugin-list/?instagram" target="_blank" rel="noopener">' . __( 'GDPR cookie plugins', 'instagram-feed' ) . '</a>' ); ?></p>
+
+                                <p><?php echo sprintf( __( '%s to learn more about GDPR compliance in the Instagram Feed plugin.', 'instagram-feed' ), '<a href="https://smashballoon.com/doc/instagram-feed-gdpr-compliance/?instagram" target="_blank" rel="noopener">'. __( 'Click here', 'instagram-feed' ).'</a>' ); ?></p>
+                            </div>
+                        </div>
+
+	                    <?php if ( ! SB_Instagram_GDPR_Integrations::gdpr_tests_successful( isset( $_GET['retest'] ) ) ) :
+							$errors = SB_Instagram_GDPR_Integrations::gdpr_tests_error_message();
+							?>
+                            <div class="sb_instagram_box sbi_gdpr_error">
+                                <div class="sb_instagram_box_setting">
+                                    <p>
+                                        <strong><?php _e( 'Error:', 'instagram-feed' ); ?></strong> <?php _e("Due to a configuration issue on your web server, the GDPR setting is unable to be enabled.", "instagram-feed" ); ?></p>
+                                    <p>
+										<?php echo $errors; ?>
+                                    </p>
+                                </div>
+                            </div>
+						<?php else: ?>
+
+                            <div class="sbi_gdpr_auto">
+								<?php if ( SB_Instagram_GDPR_Integrations::gdpr_plugins_active() ) :
+									$active_plugin = SB_Instagram_GDPR_Integrations::gdpr_plugins_active();
+									?>
+                                    <div class="sbi_gdpr_plugin_active">
+                                        <div class="sbi_active">
+                                            <p>
+                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-check-circle fa-w-16 fa-2x"><path fill="currentColor" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z" class=""></path></svg>
+                                                <b><?php echo sprintf( __( '%s detected', 'instagram-feed' ), $active_plugin ); ?></b>
+                                                <br />
+												<?php _e( 'Some Instagram Feed features will be limited for visitors to ensure GDPR compliance until they give consent.', 'instagram-feed' ); ?>
+                                                <a href="JavaScript:void(0);" class="sbi_show_gdpr_list"><?php _e( 'What will be limited?', 'instagram-feed' ); ?></a>
+                                            </p>
+											<?php echo "<div class='sbi_gdpr_list'>" . $gdpr_list . '</div>'; ?>
+                                        </div>
+
+                                    </div>
+								<?php else: ?>
+                                    <div class="sb_instagram_box">
+                                        <div class="sb_instagram_box_setting">
+                                            <p><?php echo sprintf( __( 'No GDPR consent plugin detected. Install a compatible %sGDPR consent plugin%s, or manually enable the setting above to display a GDPR compliant version of the feed to all visitors.', 'instagram-feed' ), '<a href="https://smashballoon.com/doc/gdpr-plugin-list/?instagram"  target="_blank" rel="noopener">', '</a>' ); ?></p>
+                                        </div>
+                                    </div>
+								<?php endif; ?>
+                            </div>
+
+                            <div class="sb_instagram_box sbi_gdpr_yes">
+                                <div class="sb_instagram_box_setting">
+                                    <p><?php _e( "No requests will be made to third-party websites. To accommodate this, some features of the plugin will be limited:", 'instagram-feed' ); ?></p>
+									<?php echo $gdpr_list; ?>
+                                </div>
+                            </div>
+
+                            <div class="sb_instagram_box sbi_gdpr_no">
+                                <div class="sb_instagram_box_setting">
+                                    <p><?php _e( "The plugin will function as normal and load images directly from Instagram.", 'instagram-feed' ); ?></p>
+                                </div>
+                            </div>
+
+						<?php endif; ?>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
 
 			<hr id="customcss" />
 			<h3><?php _e('Misc', 'instagram-feed'); ?></h3>
@@ -2360,23 +2477,6 @@ function sb_instagram_settings_page() {
 			</table>
 			<table class="form-table">
 				<tbody>
-				<tr valign="top">
-					<th scope="row"><label><?php _e("Disable Icon Font", 'instagram-feed'); ?></label></th>
-					<td>
-						<input type="checkbox" name="sb_instagram_disable_awesome" id="sb_instagram_disable_awesome" <?php if($sb_instagram_disable_awesome == true) echo 'checked="checked"' ?> /> <?php _e( 'Yes', 'instagram-feed' ); ?>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="sbi_font_method"><?php _e("Icon Method", 'instagram-feed'); ?></label></th>
-					<td>
-						<select name="sbi_font_method" id="sbi_font_method" class="default-text">
-							<option value="svg" id="sbi-font_method" class="default-text" <?php if($sbi_font_method == 'svg') echo 'selected="selected"' ?>>SVG</option>
-							<option value="fontfile" id="sbi-font_method" class="default-text" <?php if($sbi_font_method == 'fontfile') echo 'selected="selected"' ?>><?php _e("Font File", 'instagram-feed'); ?></option>
-						</select>
-						<a class="sbi_tooltip_link" href="JavaScript:void(0);"><?php _e('What does this mean?', 'instagram-feed'); ?></a>
-						<p class="sbi_tooltip"><?php _e("This plugin uses SVGs for all icons in the feed. Use this setting to switch to font icons.", 'instagram-feed'); ?></p>
-					</td>
-				</tr>
                 <tr>
                     <th class="bump-left"><label class="bump-left"><?php _e("Enable Custom Templates", 'instagram-feed'); ?></label></th>
                     <td>
@@ -3200,12 +3300,34 @@ if ( $error_page ) {
 	echo 'Feed with error: ' . esc_url( get_the_permalink( $error_page ) ). "\n";
 }?>
 
+## GDPR: ##
+<?php
+if ( ! SB_Instagram_GDPR_Integrations::gdpr_tests_successful() ) :
+	$errors = SB_Instagram_GDPR_Integrations::gdpr_tests_error_message();
+	?><?php echo $errors; ?>
+<?php endif; ?>
+
 ## oEmbed: ##
 <?php
 $oembed_token_settings = get_option( 'sbi_oembed_token', array() );
 foreach( $oembed_token_settings as $key => $value ) {
     echo $key . ': ' . esc_attr( $value ) . "\n";
 }
+
+$single = new SB_Instagram_Single( 'https://www.instagram.com/p/CCq1D_cMYMF/' );
+$post = $single->fetch();
+$message = '';
+if ( isset( $post['thumbnail_url'] ) ) {
+	$message = 'success';
+} else {
+    $error = $single->get_error();
+
+    if ( ! empty( $error ) ) {
+        $message = $error;
+    }
+}
+echo 'oEmbed request test: ' . esc_attr( $message );
+
 ?>
 </textarea>
             <div><input id="sbi_reset_log" class="button-secondary" type="submit" value="<?php esc_attr_e( 'Reset Error Log' ); ?>" style="vertical-align: middle;"/></div>

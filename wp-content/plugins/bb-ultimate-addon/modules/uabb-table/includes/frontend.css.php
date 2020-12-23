@@ -494,6 +494,7 @@ if ( '' === $settings->entries_border_size ) {
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-table .table-body-td .content-text {
 				display: block;
 				width: 100%;
+				padding: <?php echo esc_attr( $settings->body_cell_padding ); ?>px;
 			}
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-table-inner-wrap .uabb-table-features .table-body-td {
 				padding: 0px;

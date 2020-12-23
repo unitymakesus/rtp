@@ -43,6 +43,20 @@ if ( class_exists( 'FLBuilderCSS' ) ) {
 			)
 		);
 	}
+	FLBuilderCSS::dimension_field_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'seprator_padding',
+			'selector'     => ".fl-node-$id .uabb-divider-content",
+			'unit'         => 'px',
+			'props'        => array(
+				'padding-top'    => 'seprator_padding_top',
+				'padding-right'  => 'seprator_padding_right',
+				'padding-bottom' => 'seprator_padding_bottom',
+				'padding-left'   => 'seprator_padding_left',
+			),
+		)
+	);
 }
 if ( 'none' !== $settings->separator_style ) {
 
@@ -399,6 +413,11 @@ if ( apply_filters( 'uabb_heading_remove_description_default_space', true ) ) {
 				}
 				?>
 			}
+			.uabb-background-heading-wrap::before {
+				-webkit-transform: translateY(-50%);
+				-ms-transform: translateY(-50%);
+				transform: translateY(-50%);
+			}
 		}
 
 		<?php /* Small Breakpoint media query */ ?>
@@ -476,6 +495,11 @@ if ( apply_filters( 'uabb_heading_remove_description_default_space', true ) ) {
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-heading-wrapper .uabb-subheading,
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-heading-wrapper .uabb-subheading * {
 				text-align: <?php echo esc_attr( $settings->r_custom_alignment ); ?>;
+			}
+			.uabb-background-heading-wrap::before {
+				-webkit-transform: translateY(-50%);
+				-ms-transform: translateY(-50%);
+				transform: translateY(-50%);
 			}
 
 			<?php

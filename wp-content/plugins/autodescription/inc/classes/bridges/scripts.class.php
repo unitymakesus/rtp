@@ -52,7 +52,6 @@ $_load_scripts_class = function() {
  * @final Can't be extended.
  */
 final class Scripts {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * @since 4.0.0
@@ -595,6 +594,7 @@ final class Scripts {
 	 * Returns Media scripts params.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.2 Removed redundant button titles.
 	 *
 	 * @return array The script params.
 	 */
@@ -613,10 +613,10 @@ final class Scripts {
 					'labels' => [
 						'social' => [
 							'imgSelect'      => \esc_attr__( 'Select Image', 'autodescription' ),
-							'imgSelectTitle' => \esc_attr_x( 'Select social image', 'Button hover', 'autodescription' ),
+							'imgSelectTitle' => '',
 							'imgChange'      => \esc_attr__( 'Change Image', 'autodescription' ),
 							'imgRemove'      => \esc_attr__( 'Remove Image', 'autodescription' ),
-							'imgRemoveTitle' => \esc_attr__( 'Remove selected social image', 'autodescription' ),
+							'imgRemoveTitle' => '',
 							'imgFrameTitle'  => \esc_attr_x( 'Select Social Image', 'Frame title', 'autodescription' ),
 							'imgFrameButton' => \esc_attr__( 'Use this image', 'autodescription' ),
 						],
@@ -625,7 +625,7 @@ final class Scripts {
 							'imgSelectTitle' => '',
 							'imgChange'      => \esc_attr__( 'Change Logo', 'autodescription' ),
 							'imgRemove'      => \esc_attr__( 'Remove Logo', 'autodescription' ),
-							'imgRemoveTitle' => \esc_attr__( 'Unset selected logo', 'autodescription' ),
+							'imgRemoveTitle' => '',
 							'imgFrameTitle'  => \esc_attr_x( 'Select Logo', 'Frame title', 'autodescription' ),
 							'imgFrameButton' => \esc_attr__( 'Use this image', 'autodescription' ),
 						],

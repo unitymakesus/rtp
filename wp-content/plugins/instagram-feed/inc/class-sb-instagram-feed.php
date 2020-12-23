@@ -377,6 +377,8 @@ class SB_Instagram_Feed
 
 		global $wpdb;
 
+		$offset = max( 0, $offset );
+
 		$posts_table_name = $wpdb->prefix . SBI_INSTAGRAM_POSTS_TYPE;
 		$feeds_posts_table_name = $wpdb->prefix . SBI_INSTAGRAM_FEEDS_POSTS;
 
@@ -654,6 +656,7 @@ class SB_Instagram_Feed
 					} else {
 
 						if ( $this->can_try_another_request( $type, $connected_accounts_for_feed[ $term ] ) ) {
+
 							$this->add_report( 'trying other accounts' );
 							$i = 0;
 							$attempted = array( $connected_accounts_for_feed[ $term ]['user_id'] );
@@ -707,10 +710,13 @@ class SB_Instagram_Feed
 										}
 									}
 									$i++;
+								} else {
+									$error = $connection->get_data();
 								}
 							}
 
 							if ( ! $success && $error ) {
+
 								if ( $connection->is_wp_error() ) {
 									SB_Instagram_API_Connect::handle_wp_remote_get_error( $error );
 								} else {
@@ -827,6 +833,16 @@ class SB_Instagram_Feed
 
 					$full_file_name = $resized_url . $this->header_data['username']  . '.jpg';
 					$this->header_data['local_avatar'] = $full_file_name;
+				} else {
+					if ( !$sb_instagram_posts_manager->image_resizing_disabled() && ! isset( $connected_accounts_for_feed[ $first_user ]['local_avatar'] ) ) {
+						if ( sbi_store_local_avatar( $connected_accounts_for_feed[ $first_user ] ) ) {
+							$upload = wp_upload_dir();
+							$resized_url = trailingslashit( $upload['baseurl'] ) . trailingslashit( SBI_UPLOADS_NAME );
+
+							$full_file_name = $resized_url . $this->header_data['username']  . '.jpg';
+							$this->header_data['local_avatar'] = $full_file_name;
+						}
+					}
 				}
 				if ( empty( $this->header_data['bio'] )
 				     && isset( $connected_accounts_for_feed[ $first_user ]['bio'] ) ) {
@@ -1069,6 +1085,12 @@ class SB_Instagram_Feed
 		if ( $settings['ajax_post_load'] ) {
 			$flags[] = 'ajaxPostLoad';
 		}
+		if ( SB_Instagram_GDPR_Integrations::doing_gdpr( $settings ) ) {
+			$flags[] = 'gdpr';
+			if ( ! SB_Instagram_GDPR_Integrations::blocking_cdn( $settings ) ) {
+				$flags[] = 'overrideBlockCDN';
+			}
+		}
 		if ( isset( $_GET['sbi_debug'] ) ) {
 			$flags[] = 'debug';
 		}
@@ -1078,6 +1100,8 @@ class SB_Instagram_Feed
 		if ( $sb_instagram_posts_manager->maybe_start_ajax_test() && ! $ajax_test_status['successful'] ) {
 			$flags[] = 'testAjax';
 		}
+
+		$flags = apply_filters( 'sbi_flags', $flags, $settings );
 
 		if ( ! empty( $flags ) ) {
 			$other_atts .= ' data-sbi-flags="' . implode(',', $flags ) . '"';
@@ -1156,7 +1180,7 @@ class SB_Instagram_Feed
 			return '';
 		}
 		$sbi_options = sbi_get_database_settings();
-		$font_method = isset( $sbi_options['sbi_font_method'] ) ? $sbi_options['sbi_font_method'] : 'svg';
+		$font_method = 'svg';
 		$upload = wp_upload_dir();
 		$resized_url = trailingslashit( $upload['baseurl'] ) . trailingslashit( SBI_UPLOADS_NAME );
 
@@ -1349,7 +1373,7 @@ class SB_Instagram_Feed
 
 		$image_ids = array();
 		$post_index = $offset;
-		$icon_type = $settings['font_method'];
+		$icon_type = 'svg';
 		$resized_images = $this->get_resized_images();
 
 		foreach ( $posts as $post ) {

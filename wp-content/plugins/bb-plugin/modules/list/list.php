@@ -64,7 +64,7 @@ class FLListModule extends FLBuilderModule {
 		$list_icon = '';
 
 		if ( ! empty( $list_item_icon ) ) {
-			$list_icon = '<i class="fl-list-item-icon ' . $list_item_icon . ' fa-fw" aria-hidden="true"></i>';
+			$list_icon = '<i class="fl-list-item-icon ' . $list_item_icon . '" aria-hidden="true"></i>';
 		} else {
 			$list_icon = $list_icon_default;
 		}
@@ -145,7 +145,7 @@ FLBuilder::register_module(
 		'general' => array(
 			'title'    => __( 'General', 'fl-builder' ),
 			'sections' => array(
-				'display'            => array(
+				'display'                => array(
 					'title'  => __( 'Display', 'fl-builder' ),
 					'fields' => array(
 						'list_type'           => array(
@@ -216,7 +216,13 @@ FLBuilder::register_module(
 								'content_right' => __( 'Right of Content', 'fl-builder' ),
 							),
 						),
-						'heading_tag'         => array(
+					),
+				),
+				'list_item_tags_section' => array(
+					'title'     => __( 'List Item Tags', 'fl-builder' ),
+					'collapsed' => true,
+					'fields'    => array(
+						'heading_tag' => array(
 							'type'    => 'select',
 							'label'   => __( 'List Item Heading Tag', 'fl-builder' ),
 							'default' => 'h3',
@@ -232,7 +238,7 @@ FLBuilder::register_module(
 							),
 							'help'    => __( 'The wrapper tag for the heading of each list item. Heading appears above the text content.', 'fl-builder' ),
 						),
-						'content_tag'         => array(
+						'content_tag' => array(
 							'type'    => 'select',
 							'label'   => __( 'List Item Content Tag', 'fl-builder' ),
 							'default' => 'div',
@@ -245,7 +251,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'list_items_section' => array(
+				'list_items_section'     => array(
 					'title'  => __( 'List Items', 'fl-builder' ),
 					'fields' => array(
 						'list_items' => array(
@@ -363,6 +369,29 @@ FLBuilder::register_module(
 								'type'      => 'css',
 								'selector'  => '{node}.fl-module-list .fl-list-item-icon',
 								'property'  => 'font-size',
+								'important' => true,
+							),
+						),
+						'icon_width'   => array(
+							'type'         => 'unit',
+							'label'        => __( 'Icon Width', 'fl-builder' ),
+							'maxlength'    => '5',
+							'size'         => '5',
+							'sanitize'     => 'absint',
+							'slider'       => true,
+							'units'        => array(
+								'px',
+							),
+							'default_unit' => 'px',
+							'slider'       => array(
+								'min'  => 30,
+								'max'  => 400,
+								'step' => 10,
+							),
+							'preview'      => array(
+								'type'      => 'css',
+								'selector'  => '{node}.fl-module-list .fl-list-item-icon',
+								'property'  => 'width',
 								'important' => true,
 							),
 						),
@@ -538,6 +567,7 @@ FLBuilder::register_settings_form(
 							'heading' => array(
 								'type'  => 'text',
 								'label' => __( 'Heading Text', 'fl-builder' ),
+								'help'  => __( 'Leave empty if you don\'t want to include a heading.', 'fl-builder' ),
 							),
 						),
 					),

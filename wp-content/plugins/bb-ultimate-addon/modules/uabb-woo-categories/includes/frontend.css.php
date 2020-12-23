@@ -141,12 +141,16 @@ if ( ! isset( $settings->display_cat_desc ) ) {
 <?php
 if ( 'carousel' === $settings->layout ) {
 	/* Slider */
-	if ( FLBuilder::fa5_pro_enabled() ) {
-		?>
+	if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+		if ( FLBuilder::fa5_pro_enabled() ) {
+			?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-categories-carousel ul.slick-dots li button:before {
 	font-family: 'Font Awesome 5 Pro';
 }
-	<?php } ?>
+			<?php
+		}
+	}
+	?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-woo-categories-carousel .slick-arrow i {
 	<?php
 	$color       = uabb_theme_base_color( $new_arrow_color );

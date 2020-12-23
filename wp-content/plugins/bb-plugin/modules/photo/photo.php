@@ -311,6 +311,26 @@ class FLPhotoModule extends FLBuilderModule {
 	}
 
 	/**
+	 * @method get_caption
+	 */
+	public function get_caption() {
+		$photo   = $this->get_data();
+		$caption = '';
+
+		if ( $photo && ! empty( $this->settings->show_caption ) && ! empty( $photo->caption ) ) {
+			if ( ! empty( $photo->data_source ) && 'smugmug' === $photo->data_source ) {
+				$caption = esc_html( $photo->caption );
+			} elseif ( isset( $photo->id ) ) {
+				$caption = wp_kses_post( wp_get_attachment_caption( $photo->id ) );
+			} else {
+				$caption = esc_html( $photo->caption );
+			}
+		}
+
+		return $caption;
+	}
+
+	/**
 	 * @method get_attributes
 	 */
 	public function get_attributes() {

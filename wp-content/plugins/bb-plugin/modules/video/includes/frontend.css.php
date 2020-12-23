@@ -5,9 +5,9 @@
 <?php endif; ?>
 
 <?php if ( 'hide' == $settings->play_pause ) : ?>
-		.fl-node-<?php echo $id; ?> .mejs-playpause-button {
-			display: none !important;
-		}		
+	.fl-node-<?php echo $id; ?> .mejs-playpause-button {
+		display: none !important;
+	}	
 <?php endif; ?>
 
 <?php if ( 'hide' == $settings->timer ) : ?>

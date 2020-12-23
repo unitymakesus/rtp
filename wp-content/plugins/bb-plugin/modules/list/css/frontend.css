@@ -1,5 +1,5 @@
-.fl-module-list .fl-list-item, .fl-list-item-content {
-  clear: both;
+.fl-module-list .fl-list-item .fl-list-item-wrapper {
+  width: 100%;
 }
 
 .fl-module-list .fl-list {
@@ -18,8 +18,7 @@
 
 .fl-module-list .fl-list-item-heading .fl-list-item-heading-icon,
 .fl-module-list .fl-list-item-heading .fl-list-item-heading-icon .fl-list-item-icon {
-  display: table-cell;
-  vertical-align: middle;
+  display: inline-block;
 }
 
 .fl-module-list .fl-list-item-heading .fl-list-item-heading-text {
@@ -44,6 +43,6 @@
   width: 100%;
 }
 
-.fl-module-list .fl-list-item-content .fl-list-item-content-text p {
+.fl-module-list .fl-list-item-content .fl-list-item-content-text p:last-child {
   margin-bottom: 0px;
 }

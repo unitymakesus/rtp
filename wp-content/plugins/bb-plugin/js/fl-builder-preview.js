@@ -2948,7 +2948,9 @@
 			if ( 'function' === typeof formatValue ) {
 				value = formatValue( value );
 			}
-			element[0].setAttribute( attrName, value );
+			for (i = 0; i < element.length; i++) {
+				element[i].setAttribute( attrName, value );
+			}
 		},
 
 		/**

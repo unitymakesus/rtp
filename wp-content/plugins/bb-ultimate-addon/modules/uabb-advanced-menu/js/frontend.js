@@ -459,6 +459,14 @@
 		_toggleMenu: function() {
 			var self = this;
 			// Toggle Click
+			$(self.nodeClass).find('.uabb-creative-menu-mobile-toggle' ).off().on( 'focus', function( e ) {
+				$(this).on('keypress', function(e) {
+					if(e.which === 13) {
+						$(this).trigger('click');
+					}
+				});
+			} );
+
 			$(self.nodeClass).find('.uabb-creative-menu-mobile-toggle' ).off('click').on( 'click', function() {
 				if( $(self.nodeClass).find('.uabb-creative-menu').hasClass('menu-open') ) {
 					$(self.nodeClass).find('.uabb-creative-menu').addClass('menu-close');

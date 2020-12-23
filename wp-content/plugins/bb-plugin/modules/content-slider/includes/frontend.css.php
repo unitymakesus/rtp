@@ -183,44 +183,27 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 	}
 
 	// Button Styles
-	if ( 'button' == $slide->cta_type ) {
+	if ( 'button' == $slide->cta_type ) :
 
 		if ( ! isset( $slide->btn_style ) ) {
 			$slide->btn_style = 'flat';
 		}
 
-		FLBuilderCSS::responsive_rule( array(
+		FLBuilderCSS::dimension_field_rule( array(
 			'settings'     => $slide,
 			'unit'         => 'px',
-			'setting_name' => 'btn_padding_top',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap",
-			'prop'         => 'padding-top',
-		) );
-
-		FLBuilderCSS::responsive_rule( array(
-			'settings'     => $slide,
-			'unit'         => 'px',
-			'setting_name' => 'btn_padding_right',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap",
-			'prop'         => 'padding-right',
-		) );
-		FLBuilderCSS::responsive_rule( array(
-			'settings'     => $slide,
-			'unit'         => 'px',
-			'setting_name' => 'btn_padding_bottom',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap",
-			'prop'         => 'padding-bottom',
-		) );
-		FLBuilderCSS::responsive_rule( array(
-			'settings'     => $slide,
-			'unit'         => 'px',
-			'setting_name' => 'btn_padding_left',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap",
-			'prop'         => 'padding-left',
+			'setting_name' => 'btn_padding',
+			'selector'     => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
+			'props'        => array(
+				'padding-top'    => 'btn_padding_top',
+				'padding-right'  => 'btn_padding_right',
+				'padding-bottom' => 'btn_padding_bottom',
+				'padding-left'   => 'btn_padding_left',
+			),
 		) );
 
 		FLBuilderCSS::rule( array(
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
 			'enabled'  => ! empty( $slide->btn_bg_color ),
 			'props'    => array(
 				'background-color' => $slide->btn_bg_color,
@@ -228,7 +211,7 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 		) );
 
 		FLBuilderCSS::rule( array(
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
 			'enabled'  => ! empty( $slide->btn_bg_hover_color ),
 			'props'    => array(
 				'background-color' => $slide->btn_bg_hover_color,
@@ -236,7 +219,7 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 		) );
 
 		FLBuilderCSS::rule( array(
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button span.fl-button-text",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button span.fl-button-text",
 			'enabled'  => ! empty( $slide->btn_text_color ),
 			'props'    => array(
 				'color' => $slide->btn_text_color,
@@ -244,7 +227,7 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 		) );
 
 		FLBuilderCSS::rule( array(
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover span.fl-button-text",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover span.fl-button-text",
 			'enabled'  => ! empty( $slide->btn_text_hover_color ),
 			'props'    => array(
 				'color' => $slide->btn_text_hover_color,
@@ -262,7 +245,7 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 			}
 
 			FLBuilderCSS::rule( array(
-				'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
+				'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
 				'enabled'  => isset( $bg_grad_start ),
 				'props'    => array(
 					'background' => 'linear-gradient(to bottom, ' . FLBuilderColor::hex_or_rgb( $bg_grad_start ) . ' 0%,' . FLBuilderColor::hex_or_rgb( $slide->btn_bg_color ) . ' 100%)',
@@ -270,7 +253,7 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 			) );
 
 			FLBuilderCSS::rule( array(
-				'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
+				'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
 				'enabled'  => isset( $bg_hover_grad_start ),
 				'props'    => array(
 					'background' => 'linear-gradient(to bottom, ' . FLBuilderColor::hex_or_rgb( $bg_hover_grad_start ) . ' 0%,' . FLBuilderColor::hex_or_rgb( $slide->btn_bg_color ) . ' 100%)',
@@ -280,7 +263,7 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 		}
 
 		FLBuilderCSS::rule( array(
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button *",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button *",
 			'enabled'  => ( isset( $slide->btn_button_transition ) && 'enable' == $slide->btn_button_transition ),
 			'props'    => array(
 				'transition'         => 'all 0.2s linear !important',
@@ -293,32 +276,32 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 		FLBuilderCSS::typography_field_rule( array(
 			'settings'     => $slide,
 			'setting_name' => 'btn_typography',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap",
+			'selector'     => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap",
 		) );
 
 		FLBuilderCSS::typography_field_rule( array(
 			'settings'     => $slide,
 			'setting_name' => 'btn_typography',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
+			'selector'     => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button",
 		) );
 
 		FLBuilderCSS::border_field_rule( array(
 			'settings'     => $slide,
 			'setting_name' => 'btn_border',
-			'selector'     => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button, .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
+			'selector'     => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button, .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
 		) );
 
 
 		FLBuilderCSS::rule( array(
 			'enabled'  => ! empty( $slide->btn_border_hover_color ),
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button:hover",
 			'props'    => array(
 				'border-color' => $slide->btn_border_hover_color,
 			),
 		) );
 
 		FLBuilderCSS::rule( array(
-			'selector' => ".fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon",
+			'selector' => ".fl-node-$id .fl-slide-$i .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon",
 			'enabled'  => ! empty( $slide->btn_text_color ),
 			'props'    => array(
 				'color' => $slide->btn_text_color,
@@ -327,19 +310,19 @@ for ( $i = 0; $i < count( $settings->slides ); $i++ ) {
 
 		if ( $slide->btn_duo_color1 && false !== strpos( $slide->btn_icon, 'fad fa' ) ) :
 			?>
-			.fl-slide-<?php echo $i; ?> .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon.fad:before {
+			.fl-node-<?php echo $id; ?> .fl-slide-<?php echo $i; ?> .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon.fad:before {
 				color: <?php echo FLBuilderColor::hex_or_rgb( $slide->btn_duo_color1 ); ?>;
 			}
 			<?php
-			endif;
+		endif;
 
 		if ( $slide->btn_duo_color2 && false !== strpos( $slide->btn_icon, 'fad fa' ) ) :
 			?>
-			.fl-slide-<?php echo $i; ?> .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon.fad:after {
+			.fl-node-<?php echo $id; ?> .fl-slide-<?php echo $i; ?> .fl-slide-cta-button .fl-button-wrap a.fl-button i.fl-button-icon.fad:after {
 				color: <?php echo FLBuilderColor::hex_or_rgb( $slide->btn_duo_color2 ); ?>;
 				opacity: 1;
 			}
 			<?php
-			endif;
-	}
+		endif;
+	endif; // End Button Style
 }

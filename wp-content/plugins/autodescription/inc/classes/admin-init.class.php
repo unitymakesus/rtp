@@ -62,12 +62,13 @@ class Admin_Init extends Init {
 	 * Adds post states for the post/page edit.php query.
 	 *
 	 * @since 4.0.0
+	 * @access private
 	 *
 	 * @param array    $states The current post states array
-	 * @param \WP_Post $post The Post Object.
+	 * @param \WP_Post $post   The Post Object.
 	 * @return array Adjusted $states
 	 */
-	public function _add_post_state( $states = [], $post ) {
+	public function _add_post_state( $states = [], $post = null ) {
 
 		$post_id = isset( $post->ID ) ? $post->ID : false;
 
@@ -91,6 +92,7 @@ class Admin_Init extends Init {
 	 * @since 3.1.0
 	 * @since 4.0.0 Now discerns autoloading between taxonomies and singular types.
 	 * @since 4.1.0 Now invokes autoloading when persistent scripts are enqueued (regardless of validity).
+	 * @since 4.1.2 Now autoenqueues on edit.php and edit-tags.php regardless of SEO Bar output (for quick/bulk-edit support).
 	 * @access private
 	 *
 	 * @param string|null $hook The current page hook.
@@ -121,16 +123,6 @@ class Admin_Init extends Init {
 					'edit-tags.php',
 					'term.php',
 				];
-
-				if ( ! $this->get_option( 'display_seo_bar_tables' ) ) {
-					$enqueue_hooks = array_diff(
-						$enqueue_hooks,
-						[
-							'edit.php',
-							'edit-tags.php',
-						]
-					);
-				}
 			}
 
 			if ( \in_array( $hook, $enqueue_hooks, true ) )
@@ -861,7 +853,7 @@ class Admin_Init extends Init {
 				$parent_url = \wp_get_attachment_url( $attachment_id );
 				$url        = str_replace( basename( $parent_url ), basename( $cropped ), $parent_url );
 
-				// phpcs:ignore, WordPress.PHP.NoSilencedErrors -- Feature may be disabled.
+				// phpcs:ignore, WordPress.PHP.NoSilencedErrors -- Feature may be disabled; should not cause fatal errors.
 				$size       = @getimagesize( $cropped );
 				$image_type = ( $size ) ? $size['mime'] : 'image/jpeg';
 

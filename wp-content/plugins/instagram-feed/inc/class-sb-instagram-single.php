@@ -29,6 +29,11 @@ class SB_Instagram_Single
 	private $post;
 
 	/**
+	 * @var array
+	 */
+	private $error;
+
+	/**
 	 * SB_Instagram_Single constructor.
 	 *
 	 * @param $permalink_or_permalink_id string
@@ -44,6 +49,7 @@ class SB_Instagram_Single
 			$this->permalink_id = $permalink_or_permalink_id;
 			$this->permalink = 'https://www.instagram.com/p/' . $this->permalink_id;
 		}
+		$this->error = false;
 	}
 
 	/**
@@ -84,6 +90,10 @@ class SB_Instagram_Single
 		return $this->post;
 	}
 
+	public function get_error() {
+		return $this->error;
+	}
+
 	/**
 	 * Image URLs expire so this will compare when the data
 	 * was last updated from the API
@@ -115,6 +125,7 @@ class SB_Instagram_Single
 		$access_token = SB_Instagram_Oembed::last_access_token();
 
 		if ( empty( $access_token ) ) {
+			$this->error = 'No access token';
 			return false;
 		}
 
@@ -132,8 +143,15 @@ class SB_Instagram_Single
 
 			if ( $data && isset( $data['error'] ) ) {
 				$this->add_oembed_request_delay();
+				$this->error = sprintf( __( 'API error %s:', 'instagram-feed' ), $data['error']['code'] ) . ' ' . $data['error']['message'];
 				$data = false;
 			}
+		} else {
+			$error = '';
+			foreach ( $result->errors as $key => $item ) {
+				$error .= $key . ' - ' . $item[0] . ' ';
+			}
+			$this->error = $error;
 		}
 
 		return $data;

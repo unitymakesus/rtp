@@ -15,7 +15,7 @@ $sb_images_style = SB_Instagram_Display_Elements::get_sbi_images_style( $setting
 $image_resolution_setting = $settings['imageres'];
 $cols_setting = $settings['cols'];
 $num_setting = $settings['num'];
-$icon_type = $settings['font_method'];
+$icon_type = 'svg';
 
 /**
  * Add HTML or execute code before the feed displays.

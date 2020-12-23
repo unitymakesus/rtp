@@ -22,8 +22,9 @@ $settings->dots_color      = UABB_Helper::uabb_colorpicker( $settings, 'dots_col
 $settings->arrows_color    = UABB_Helper::uabb_colorpicker( $settings, 'arrows_color', true );
 $settings->read_more_color = UABB_Helper::uabb_colorpicker( $settings, 'read_more_color', true );
 
-if ( FLBuilder::fa5_pro_enabled() ) {
-	?>
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-review .uabb-star-full.uabb-star-custom,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-review .uabb-star-empty.uabb-star-custom,
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap .slick-prev:before,
@@ -31,7 +32,8 @@ if ( FLBuilder::fa5_pro_enabled() ) {
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-reviews-module-wrap ul.slick-dots li button:before {
 	font-family: 'Font Awesome 5 Pro';
 }
-	<?php
+		<?php
+	}
 }
 if ( ! $version_bb_check ) {
 	$settings->block_border_color = UABB_Helper::uabb_colorpicker( $settings, 'block_border_color', true );

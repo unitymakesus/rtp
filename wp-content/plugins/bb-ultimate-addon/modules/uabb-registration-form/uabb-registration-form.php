@@ -259,6 +259,8 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 			$last_name = ( isset( $data['last_name'] ) && ! empty( $data['last_name'] ) ) ? sanitize_user( $data['last_name'], true ) : '';
 
+			$phone = ( isset( $data['phone'] ) && ! empty( $data['phone'] ) ) ? sanitize_user( $data['phone'], true ) : '';
+
 			if ( true === $error_flag ) {
 
 				$response['success'] = false;
@@ -276,6 +278,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 						'user_email'      => isset( $user_email ) ? $user_email : '',
 						'first_name'      => isset( $first_name ) ? $first_name : '',
 						'last_name'       => isset( $last_name ) ? $last_name : '',
+						'phone'           => isset( $phone ) ? $phone : '',
 						'user_registered' => gmdate( 'Y-m-d H:i:s' ),
 						'role'            => $user_role,
 					)
@@ -449,6 +452,14 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 						'responsive' => $item->field_width_responsive,
 					);
 					$this->create_field( $item->field_type, 'text', $item->field_label, $item->field_required, $field_width, $item->field_placeholder );
+					break;
+				case 'phone':
+					$field_width = array(
+						'desktop'    => $item->field_width,
+						'medium'     => $item->field_width_medium,
+						'responsive' => $item->field_width_responsive,
+					);
+					$this->create_field( $item->field_type, 'tel', $item->field_label, $item->field_required, $field_width, $item->field_placeholder );
 					break;
 				default:
 					break;

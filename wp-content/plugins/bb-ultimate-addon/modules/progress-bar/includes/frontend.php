@@ -22,16 +22,16 @@
 			<div class="uabb-progress-bar-wrapper uabb-vertical-center uabb-layout-<?php echo esc_attr( $settings->layout ); ?> uabb-progress-bar-style-<?php echo esc_attr( $style ); ?> uabb-progress-bar-<?php echo esc_attr( $i ); ?>" data-number="<?php echo ( 'circular' !== $settings->layout ) ? esc_attr( $tmp[ $i ]->horizontal_number ) : ''; ?>">
 					<?php
 					if ( 'horizontal' === $settings->layout ) {
-						$module->render_horizontal_content( $tmp[ $i ], 'style1', '', $i );
-						$module->render_horizontal_content( $tmp[ $i ], 'style4', 'above', $i );
+						$module->render_horizontal_content( $i, $tmp[ $i ], 'style1' );
+						$module->render_horizontal_content( $i, $tmp[ $i ], 'style4', 'above' );
 						$module->render_horizontal_progress_bar( $tmp[ $i ], $i );
-						$module->render_horizontal_content( $tmp[ $i ], 'style2', '', $i );
-						$module->render_horizontal_content( $tmp[ $i ], 'style4', 'below', $i );
+						$module->render_horizontal_content( $i, $tmp[ $i ], 'style2' );
+						$module->render_horizontal_content( $i, $tmp[ $i ], 'style4', 'below' );
 					} elseif ( 'vertical' === $settings->layout ) {
-						$module->render_vertical_content( $tmp[ $i ], 'style1', $i );
+						$module->render_vertical_content( $i, $tmp[ $i ], 'style1' );
 						$module->render_vertical_progress_bar( $tmp[ $i ], $i );
-						$module->render_vertical_content( $tmp[ $i ], 'style2', $i );
-						$module->render_vertical_content( $tmp[ $i ], 'style3', $i );
+						$module->render_vertical_content( $i, $tmp[ $i ], 'style2' );
+						$module->render_vertical_content( $i, $tmp[ $i ], 'style3' );
 					} elseif ( 'circular' === $settings->layout ) {
 						?>
 				<div class="uabb-percent-wrap">

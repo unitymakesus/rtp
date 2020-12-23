@@ -170,7 +170,17 @@ final class FLBuilderWhiteLabel {
 	static public function get_branding_icon() {
 		$value = FLBuilderModel::get_admin_settings_option( '_fl_builder_branding_icon', false );
 
-		return false === $value ? self::get_default_branding_icon() : $value;
+		// never been set so use default
+		if ( false === $value ) {
+			return self::get_default_branding_icon();
+		}
+		// setting has been blanked
+		if ( '' === $value ) {
+			if ( has_filter( 'fl_builder_default_branding_icon' ) ) {
+				return self::get_default_branding_icon();
+			}
+		}
+		return $value;
 	}
 
 	/**

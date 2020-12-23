@@ -372,5 +372,19 @@ if ( ! class_exists( 'PPW_Repository_Passwords' ) ) {
 		}
 
 
+		/**
+		 * Delete selected passwords by id
+		 * String will convert to int
+		 *
+		 * @param array $selected_ids ID Passwords selected.
+		 *
+		 * @return mixed
+		 */
+		public function bulk_delete_passwords( $selected_ids ) {
+			$selected_ids = implode( ',', array_map( 'absint', $selected_ids ) );
+
+			return $this->wpdb->query( "DELETE FROM {$this->tbl_name} WHERE ID IN({$selected_ids})" );
+		}
+
 	}
 }

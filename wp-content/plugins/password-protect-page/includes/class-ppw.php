@@ -97,7 +97,6 @@ class Password_Protect_Page {
 	 * @access   private
 	 */
 	private function load_dependencies() {
-
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
@@ -131,6 +130,11 @@ class Password_Protect_Page {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-options.php';
 
 		/**
+		 * Require Recaptcha Services Class
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-recaptcha.php';
+
+		/**
 		 * Require Services Class
 		 * TODO: need to rename for meaningful idea.
 		 */
@@ -160,6 +164,11 @@ class Password_Protect_Page {
 		 * The class responsible for sitewide settings
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-ppw-sitewide-settings.php';
+
+		/**
+		 * The class responsible for external settings
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . '/includes/class-ppw-external-settings.php';
 
 		/**
 		 * The class responsible for shortcode settings
@@ -204,9 +213,6 @@ class Password_Protect_Page {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-sitewide.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/services/class-ppw-customizer-upsell.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-text-editor-control.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-toggle-control.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/customizers/class-ppw-title-group-control.php';
 
 		/**
 		 * The class responsible for defining all addons.
@@ -234,6 +240,19 @@ class Password_Protect_Page {
 
 		$this->loader = new PPW_Loader();
 
+		$pro_version = ppw_get_pro_data_version();
+		if ( $pro_version && version_compare( $pro_version, '1.3.2', '<' ) ) {
+			if ( function_exists( 'wp_get_theme' ) ) {
+				$curr_theme = wp_get_theme();
+				$theme_name = $curr_theme->get( 'Name' );
+				if ( method_exists( $curr_theme, 'get' )
+				     && in_array( $theme_name, [ 'Edubin', 'StoreVilla' ] ) ) {
+					require_once( ABSPATH . WPINC . '/class-wp-customize-section.php' );
+				}
+			}
+
+			require_once( ABSPATH . WPINC . '/class-wp-customize-control.php' );
+		}
 	}
 
 	/**
@@ -264,6 +283,9 @@ class Password_Protect_Page {
 
 		$plugin_admin = new PPW_Admin( $this->get_plugin_name(), $this->get_version() );
 		PPW_Customizer_Service::get_instance();
+		PPW_Customizer_Sitewide::register_themes();
+		PPW_Recaptcha::get_instance()->register();
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_assets' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'ppw_add_menu', 10 );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'handle_admin_notices', 10 );
@@ -321,6 +343,7 @@ class Password_Protect_Page {
 		$this->loader->add_action( 'wp_ajax_ppw_free_update_misc_settings', $plugin_admin, 'ppw_free_update_misc_settings' );
 		$this->loader->add_action( 'wp_ajax_ppw_free_update_category_settings', $plugin_admin, 'ppw_free_update_category_settings' );
 		$this->loader->add_action( 'wp_ajax_ppw_free_update_shortcode_settings', $plugin_admin, 'ppw_free_update_shortcode_settings' );
+		$this->loader->add_action( 'wp_ajax_ppw_free_update_external_settings', $plugin_admin, 'ppw_free_update_external_settings' );
 		$this->loader->add_action( 'wp_ajax_ppw_free_restore_wp_passwords', $plugin_admin, 'ppw_free_restore_wp_passwords' );
 		$this->loader->add_action( 'ppw_render_content_shortcodes', $plugin_admin, 'ppw_free_render_content_shortcodes', 11 );
 		$this->loader->add_action( 'ppw_render_content_master_passwords', $plugin_admin, 'ppw_free_render_content_master_passwords', 11 );
@@ -332,6 +355,7 @@ class Password_Protect_Page {
 		PPW_Beaver_Loader::get_instance();
 		$this->loader->add_action( 'wp_ajax_ppw_free_subscribe_request', $plugin_admin, 'handle_subscribe_request' );
 		$this->loader->add_action( 'ppw_render_pcp_content_general', $plugin_admin, 'ppw_free_render_content_pcp_general_tab', 10 );
+		$this->loader->add_action( 'ppw_render_external_content_recaptcha', $plugin_admin, 'ppw_free_render_content_external_recaptcha', 10 );
 		$this->loader->add_action( 'plugin_row_meta', $plugin_admin, 'register_plugins_links', 10, 2 );
 
 		PPW_Elementor::get_instance( $this->loader );
@@ -349,10 +373,16 @@ class Password_Protect_Page {
 
 		$plugin_public = new PPW_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'wp_head', $plugin_public, 'add_tag_to_head');
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'handle_access_link', - 10 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_assets' );
 		$this->loader->add_filter( 'the_content', $plugin_public, 'ppw_the_content', 99999 );
 		$this->loader->add_filter( 'ppw_cookie_expire', $plugin_public, 'set_cookie_time', 10 );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_ppw_validate_password', $plugin_public, 'ppw_validate_password' );
+		$this->loader->add_action( 'wp_ajax_ppw_validate_password', $plugin_public, 'ppw_validate_password' );
+		$this->loader->add_filter( 'et_builder_load_actions', $plugin_public, 'add_action_to_divi' );
+
 
 		/**
 		 * The hook to render our password form

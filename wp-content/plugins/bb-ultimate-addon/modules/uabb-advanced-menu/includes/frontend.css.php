@@ -11,8 +11,12 @@
 
 $version_bb_check = UABB_Compatibility::$version_bb_check;
 $converted        = UABB_Compatibility::$uabb_migration;
-if ( FLBuilder::fa5_pro_enabled() ) {
-	$font_family = 'Font Awesome 5 Pro';
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		$font_family = 'Font Awesome 5 Pro';
+	} else {
+		$font_family = 'Font Awesome 5 Free';
+	}
 } else {
 	$font_family = 'Font Awesome 5 Free';
 }
@@ -431,7 +435,7 @@ if ( $global_settings->responsive_enabled ) {
 	<?php /* Below Row Layout CSS ends here */ ?>
 
 	<?php if ( 'always' !== $module->media_breakpoint() ) { ?>
-		@media only screen and ( min-width: <?php echo esc_attr( ( $module->media_breakpoint() ) + 1 ); ?>px ) {
+		@media only screen and ( min-width: <?php echo esc_attr( ( (int) $module->media_breakpoint() ) + 1 ); ?>px ) {
 
 		<?php // Horizontal Menu. ?>
 		<?php if ( 'horizontal' === $settings->creative_menu_layout ) { ?>
@@ -481,12 +485,17 @@ if ( $global_settings->responsive_enabled ) {
 		<?php // Horizontal Or Vertical Menu. ?>
 		<?php if ( in_array( $settings->creative_menu_layout, array( 'horizontal', 'vertical' ), true ) ) { ?>
 
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:focus-within > .sub-menu,
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:hover > .sub-menu {
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:hover > .sub-menu,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:focus > .sub-menu {
 				visibility: visible;
 				opacity: 1;
 				display: block;
+			}
 
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-creative-menu .uabb-has-submenu:focus-within > .sub-menu {
+				visibility: visible;
+				opacity: 1;
+				display: block;
 			}
 
 			.fl-node-<?php echo esc_attr( $id ); ?> .menu .uabb-has-submenu.uabb-menu-submenu-right .sub-menu {
@@ -1021,6 +1030,18 @@ if ( ! empty( $settings->creative_menu_background_hover_color ) || $settings->cr
 			);
 		}
 	}
+}
+
+if ( class_exists( 'FLBuilderCSS' ) ) {
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'hamburger_icon_size',
+			'selector'     => ".fl-node-$id .uabb-creative-menu-mobile-toggle.hamburger",
+			'prop'         => 'font-size',
+			'unit'         => 'px',
+		)
+	);
 }
 
 if ( ! $version_bb_check ) {

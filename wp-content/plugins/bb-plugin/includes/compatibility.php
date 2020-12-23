@@ -179,17 +179,20 @@ function fl_theme_builder_has_post_grid() {
 	$layout_ids = array();
 
 	// Checks themer layout
-	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'header' ) ) ) {
-		$layout_ids[] = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'header' )[0];
+	$header = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'header' );
+	if ( ! empty( $header ) ) {
+		$layout_ids[] = $header[0];
 	}
-	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'singular' ) ) ) {
-		$layout_ids[] = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'singular' )[0];
+	$single = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'singular' );
+	if ( ! empty( $single ) ) {
+		$layout_ids[] = $single[0];
 	}
-	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'footer' ) ) ) {
-		$layout_ids[] = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'footer' )[0];
+	$footer = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'footer' );
+	if ( ! empty( $footer ) ) {
+		$layout_ids[] = $footer[0];
 	}
-	if ( ! empty( FLThemeBuilderLayoutData::get_current_page_layout_ids( 'part' ) ) ) {
-		$parts      = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'part' );
+	$parts = FLThemeBuilderLayoutData::get_current_page_layout_ids( 'part' );
+	if ( ! empty( $parts ) ) {
 		$layout_ids = array_merge( $layout_ids, $parts );
 	}
 

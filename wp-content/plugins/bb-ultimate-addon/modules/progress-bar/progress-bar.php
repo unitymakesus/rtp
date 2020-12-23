@@ -651,12 +651,12 @@ class ProgressBarModule extends FLBuilderModule {
 	 * Function to render Horizontal Content
 	 *
 	 * @method render_horizontal_content
+	 * @param var    $i gets the value for the content.
 	 * @param object $obj gets the object for the content.
 	 * @param string $style gets the value for various styles.
 	 * @param var    $position gets the positon for the content.
-	 * @param var    $i gets the value for the content.
 	 */
-	public function render_horizontal_content( $obj, $style = '', $position = '', $i ) {
+	public function render_horizontal_content( $i, $obj, $style = '', $position = '' ) {
 
 		if ( $this->settings->horizontal_style === $style ) {
 			if ( 'style4' === $style ) {
@@ -716,11 +716,11 @@ class ProgressBarModule extends FLBuilderModule {
 	 * Function to render Vertical Content
 	 *
 	 * @method render_vertical_content
+	 * @param var    $i gets the value for the content.
 	 * @param object $obj gets the object for the content.
 	 * @param string $style gets the value for various styles.
-	 * @param var    $i gets the value for the content.
 	 */
-	public function render_vertical_content( $obj, $style = '', $i ) {
+	public function render_vertical_content( $i, $obj, $style = '' ) {
 
 		if ( $this->settings->vertical_style === $style ) {
 			if ( 'style3' !== $style ) {

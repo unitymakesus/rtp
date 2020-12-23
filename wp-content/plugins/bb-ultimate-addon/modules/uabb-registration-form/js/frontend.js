@@ -41,7 +41,9 @@
 		reCaptchaValue               = reCaptchaField.data( 'uabb-grecaptcha-response' );
 		this.password_match_err_msg		 = settings.password_match_err_msg;
 		this.email_invalid_err_msg		 = settings.email_invalid_err_msg;
+		this.phone_invalid_err_msg		 = settings.phone_invalid_err_msg;
 		this.required_field_err_msg		 = settings.required_field_err_msg;
+		this.wp_version                  = settings.wp_version;
 		submit_button.on('click', $.proxy( this._submitform, this ) );
 		confirm_password = $node_module.find( 'input[name=uabb_confirm_pass]' );
 
@@ -76,9 +78,13 @@
 			var pass1 = $pass1.val();
    			var pass2 = $pass2.val();
 
-   				// Extend our blacklist array with those from the inputs & site data
-    		blacklistArray = blacklistArray.concat( wp.passwordStrength.userInputBlacklist() )
- 
+   			// Extend our blacklist array with those from the inputs & site data
+   			if ( this.wp_version ) {
+   				blacklistArray = blacklistArray.concat( wp.passwordStrength.userInputDisallowedList() );
+   			} else {
+    			blacklistArray = blacklistArray.concat( wp.passwordStrength.userInputBlacklist() );
+    		}
+
     			// Get the password strength
    			var strength = wp.passwordStrength.meter( pass1, blacklistArray );
  
@@ -142,6 +148,7 @@
 			user_email 			=  node_module.find( 'input[name=uabb_user_email]' );
 			user_nicename 		=  node_module.find( 'input[name=uabb_user_nicename]' );
 			user_nicename 		=  node_module.find( 'input[name=uabb_user_nicename]' );
+			phone   			=  node_module.find( 'input[name=uabb_phone]' );
 			theForm	  			= $( node_Class + ' .uabb-registration-form')
 			post_id      	    = theForm.closest( '.fl-builder-content' ).data( 'post-id' );
 			template_id		    = theForm.data( 'template-id' );
@@ -153,6 +160,7 @@
 
 			reCaptchaValue      = reCaptchaField.data( 'uabb-grecaptcha-response' );
 			user_email_regex	= /\S+@\S+\.\S+/;
+			phone_regex         = /^[0-9()#&+*-=.]+$/;
 			ajaxurl             = this.uabb_ajaxurl
 			_nonce              = node_module.find( '.uabb-registration-form' ).data('nonce');
 			$password           = '';		
@@ -161,6 +169,7 @@
 			$user_login         = '';
 			$user_url           = '';
 			$user_email         = '';
+			$phone              = '';
 			$valid_field        = false;
 
 			event.preventDefault();
@@ -180,6 +189,10 @@
 				
 			} else {
 				node_module.find( '.uabb-rf-honeypot' ).hide();
+			}
+
+			if ( user_pass.length > 0  && '' !== user_pass.val() ) {
+				$password = user_pass.val();
 			}
 
 			if ( user_pass.length > 0 && confirm_password.length > 0 ) {
@@ -311,6 +324,40 @@
 					user_email.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
 				}
 			}
+
+			if ( phone.length > 0  && '' !== phone.val() ) {
+
+				if ( phone.val().trim() !== '') {
+
+					if ( phone_regex.test( phone.val().trim() ) ) {
+
+					phone.parent().removeClass('uabb-form-error');
+
+					phone.siblings( '.uabb-registration_form-error-message' ).hide();
+
+					$phone = phone.val();
+
+					} else {
+
+						$valid_field = true;
+						phone.parent().addClass('uabb-registration-form-error');
+						phone.parent().removeClass('uabb-form-error');
+
+						if ( phone.siblings( '.uabb-registration_form-error-message' ).empty() ) {
+							phone.siblings('.uabb-registration_form-error-message').append(this.phone_invalid_err_msg ).show();
+						}
+					}
+				}					
+			} else if ( phone.length > 0 && phone.hasClass( 'uabb-registration-form-requried-yes' ) ) {
+					
+				$valid_field = true;
+
+				phone.parent().addClass('uabb-registration-form-error');
+				phone.addClass( 'uabb-form-error' );
+				if ( phone.siblings( '.uabb-registration_form-error-message' ).empty() ) {
+					phone.siblings( '.uabb-registration_form-error-message' ).append( this.required_field_err_msg ).show();
+				}
+			}
 			// validate if checkbox is checked
 			if ( termsCheckbox.length ) {
 				if ( ! termsCheckbox.is(':checked') ) {
@@ -347,6 +394,7 @@
 					"last_name": $last_name,
 	     			"user_email": $user_email,
 	     			"user_url": $user_url,
+	     			"phone": $phone,
 	     			"recaptcha_version":$recaptcha_version,
 	     			"recaptcha_response" : reCaptchaValue,
 	     		};

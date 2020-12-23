@@ -9,6 +9,7 @@ global $wp_embed;
 
 $image_data            = FLBuilderPhoto::get_attachment_data( $settings->image );
 $image_alt             = isset( $image_data->alt ) ? $image_data->alt : '';
+$image_title           = isset( $image_data->title ) ? $image_data->title : '';
 $supply_container      = array();
 $tool_container        = array();
 $steps_container       = array();
@@ -192,7 +193,7 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 				</div>
 				<?php if ( isset( $settings->image_src ) && ! empty( $settings->image_src ) ) { ?>
 				<div class="uabb-how-to-image">
-					<img class="uabb-how-to-img-decs " src="<?php echo esc_url( $settings->image_src ); ?>" alt="<?php echo esc_attr( $image_alt ); ?>" />
+					<img class="uabb-how-to-img-decs " src="<?php echo esc_url( $settings->image_src ); ?>" alt="<?php echo esc_attr( $image_alt ); ?>" title="<?php echo esc_attr( $image_title ); ?>" />
 				</div>
 				<?php } ?>
 				<?php if ( 'yes' === esc_attr( $settings->show_advanced ) ) { ?>
@@ -297,11 +298,12 @@ if ( empty( $settings->uabb_tool[0] ) || 'no' === $settings->show_advanced || 'n
 								</div>
 								<?php
 								if ( isset( $step->step_image ) && ! empty( $step->step_image ) ) {
-									$image_data     = FLBuilderPhoto::get_attachment_data( $step->step_image );
-									$step_image_alt = isset( $image_data->alt ) ? $image_data->alt : '';
+									$image_data       = FLBuilderPhoto::get_attachment_data( $step->step_image );
+									$step_image_alt   = isset( $image_data->alt ) ? $image_data->alt : '';
+									$step_image_title = isset( $image_data->title ) ? $image_data->title : '';
 									?>
 									<div class="uabb-how-to-step-image">
-										<img class="uabb-how-to-img-step" src="<?php echo esc_url( $step->step_image_src ); ?>" alt="<?php echo esc_attr( $step_image_alt ); ?>" />
+										<img class="uabb-how-to-img-step" src="<?php echo esc_url( $step->step_image_src ); ?>" alt="<?php echo esc_attr( $step_image_alt ); ?>" title="<?php echo esc_attr( $step_image_title ); ?>" />
 									</div>
 								<?php } ?>
 							</div>

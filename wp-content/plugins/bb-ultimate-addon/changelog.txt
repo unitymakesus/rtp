@@ -1,3 +1,37 @@
+Version 1.28.10 Tuesday, 15th December 2020
+- Improvement: Compatibility with PHP v8.0.
+- Improvement: Advanced Posts - Added Taxonomy Badge option.
+- Improvement: Advanced Posts - Added options to add icons for Post Meta.
+- Improvement: Advanced Posts - Added Inter Post Meta Spacing option.
+- Improvement: Advanced Posts - Added Bottom Spacing option for Taxonomy Badge, Title & Meta.
+- Improvement: Image/Icon - Added WPML support.
+- Improvement: User Registration Form - Added Phone field.
+- Improvement: User Registration Form - Added option to make Register Button and Login Link inline.
+- Improvement: User Registration Form - Added option to set Lost Your Password Text above Terms and Conditions.
+- Fixed: Google Map - Window scrolls down on close of InfoWindow on Chrome.
+- Fixed: How-to Schema - Added 'title' attributes to steps images.
+- Fixed: Price Box - Title background color width issue.
+- Fixed: Woo - Products - Grid layout issue with BB theme on archive pages.
+
+Version 1.28.9 Wednesday 4th November 2020
+- Improvement: Advanced Menu - Added Hamburger Icon Size option.
+- Improvement: Advanced Menu - Improved Accessibility for all types of menu.
+- Improvement: Heading - Added spacing option for separator
+- Improvement: Hotspot - Provided filters to change the tour navigation strings.
+- Fixed: Advanced Menu - Sub menu not displayed on Internet Explorer
+- Fixed: Advanced Tabs - Active Tab Index setting not working properly.
+- Fixed: Font Awesome 5 Pro conflict in some UABB modules.
+- Fixed: Info Box - Box Shadow not working properly
+- Fixed: Off-Canvas - Close Canvas on Menu Link conflict with sub menu.
+- Fixed: Photo Gallery - CreativeWork warning for Caption.
+- Fixed: User Registration Form - Added WordPress 5.5 password check compatibility.
+- Fixed: User Registration Form - Password not getting saved when new user is created
+- Fixed: WPForms Styler - Checked Color setting not working for Checkbox.
+
+Version 1.28.8 Friday, 16th October 2020
+- Fixed: Info List - Layout stacking issue in some cases
+- Fixed: Table - Body Cells Padding not working in Responsive Stacked layout
+
 Version 1.28.7 Wednesday, 7th October 2020
 - Improvement: Dual Button - Added border settings for each button
 - Improvement: Dual Color Heading - Added background text option

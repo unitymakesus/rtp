@@ -45,7 +45,6 @@ $_load_sitemap_class = function() {
  * @final Can't be extended.
  */
 final class Sitemap {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * @since 4.0.0
@@ -152,6 +151,8 @@ final class Sitemap {
 	 * Returns the expected sitemap endpoint for the given ID.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.2 No longer passes the path to the home_url() function because
+	 *              Polylang is being astonishingly asinine.
 	 * @global \WP_Rewrite $wp_rewrite
 	 *
 	 * @param string $id The base ID. Default 'base'.
@@ -168,13 +169,26 @@ final class Sitemap {
 		$scheme = static::$tsf->get_preferred_scheme();
 		$prefix = $this->get_sitemap_path_prefix();
 
+		$home_url = \home_url( '/', $scheme );
+
+		// Other plugins may append a query (such as translations).
+		$home_query = parse_url( $home_url, PHP_URL_QUERY );
+		// Remove query from URL when found. Add back later.
+		if ( $home_query )
+			$home_url = static::$tsf->s_url( $home_url );
+
 		if ( $wp_rewrite->using_index_permalinks() ) {
-			$url = \home_url( "/index.php$prefix{$list[ $id ]['endpoint']}", $scheme );
+			$path = "/index.php$prefix{$list[ $id ]['endpoint']}";
 		} elseif ( $wp_rewrite->using_permalinks() ) {
-			$url = \home_url( "$prefix{$list[ $id ]['endpoint']}", $scheme );
+			$path = "$prefix{$list[ $id ]['endpoint']}";
 		} else {
-			$url = \home_url( "$prefix?tsf-sitemap=$id", $scheme );
+			$path = "$prefix?tsf-sitemap=$id";
 		}
+
+		$url = \trailingslashit( $home_url ) . ltrim( $path, '/' );
+
+		if ( $home_query )
+			$url = static::$tsf->append_php_query( $url, $home_query );
 
 		return \esc_url_raw( $url );
 	}
@@ -195,6 +209,7 @@ final class Sitemap {
 		 * @link Example: https://github.com/sybrew/tsf-term-sitemap
 		 * @param array $list The endpoints: {
 		 *   'id' => array: {
+		 *      'cache_id' => string   Optional. The cache key to use for locking. Defaults to index 'id'.
 		 *      'endpoint' => string   The expected "pretty" endpoint, meant for administrative display.
 		 *      'epregex'  => string   The endpoint regex, following the home path regex.
 		 *                             N.B. Be wary of case sensitivity. Append the i-flag.
@@ -213,12 +228,14 @@ final class Sitemap {
 			'the_seo_framework_sitemap_endpoint_list',
 			[
 				'base'           => [
+					'lock_id'  => 'base',
 					'endpoint' => 'sitemap.xml',
 					'regex'    => '/^sitemap\.xml/i',
 					'callback' => static::class . '::output_base_sitemap',
 					'robots'   => true,
 				],
 				'index'          => [
+					'lock_id'  => 'base',
 					'endpoint' => 'sitemap_index.xml',
 					'regex'    => '/^sitemap_index\.xml/i',
 					'callback' => static::class . '::output_base_sitemap',
@@ -235,6 +252,115 @@ final class Sitemap {
 	}
 
 	/**
+	 * Tells whether sitemap caching is enabled by user.
+	 *
+	 * @since 4.1.2
+	 *
+	 * @return bool
+	 */
+	public function sitemap_cache_enabled() {
+		return (bool) static::$tsf->get_option( 'cache_sitemap' );
+	}
+
+	/**
+	 * Outputs a '503: Service Unavailable' header and no-cache headers.
+	 *
+	 * @since 4.1.2
+	 * TODO consider instead of sending me, output the previous sitemap from cache, instead? Spaghetti.
+	 *
+	 * @param int $timeout How many seconds the user has to wait. Optional. Leave 0 to send a generic message.
+	 */
+	public function output_locked_header( $timeout = 0 ) {
+		static::$tsf->clean_response_header();
+		\status_header( 503 );
+		\nocache_headers();
+		if ( $timeout ) {
+			printf(
+				'Sitemap is locked for %d seconds. Try again later.',
+				(int) ( $timeout - time() )
+			);
+		} else {
+			echo 'Sitemap is locked temporarily. Try again later.';
+		}
+		echo PHP_EOL;
+		exit;
+	}
+
+	/**
+	 * Returns the sitemap's lock cache ID.
+	 *
+	 * @since 4.1.2
+	 *
+	 * @param string|false $sitemap_id The sitemap ID to test. False when key is invalid.
+	 */
+	public function get_lock_key( $sitemap_id = 'base' ) {
+
+		$ep_list = $this->get_sitemap_endpoint_list();
+
+		if ( ! isset( $ep_list[ $sitemap_id ] ) ) return false;
+
+		$lock_id = isset( $ep_list[ $sitemap_id ]['lock_id'] ) ? $ep_list[ $sitemap_id ]['lock_id'] : $sitemap_id;
+
+		return static::$tsf->generate_cache_key( 0, '', 'sitemap_lock' ) . "_{$lock_id}";
+	}
+
+	/**
+	 * Locks a sitemap for the current blog & locale and $sitemap_id, preferably
+	 * at least as long as PHP is allowed to run.
+	 *
+	 * @since 4.1.2
+	 *
+	 * @param string $sitemap_id The sitemap ID.
+	 * @return bool True on succes, false on failure.
+	 */
+	public function lock_sitemap( $sitemap_id = 'base' ) {
+
+		$lock_key = $this->get_lock_key( $sitemap_id );
+		if ( ! $lock_key ) return false;
+
+		// This is rather at most as PHP will run. However, 3 minutes to generate a sitemap is already ludicrous.
+		$timeout = (int) min( ini_get( 'max_execution_time' ), 3 * MINUTE_IN_SECONDS );
+
+		return \set_transient(
+			$lock_key,
+			time() + $timeout,
+			$timeout
+		);
+	}
+
+	/**
+	 * Unlocks a sitemap for the current blog & locale and $sitemap_id.
+	 *
+	 * @since 4.1.2
+	 *
+	 * @param string $sitemap_id The sitemap ID.
+	 * @return bool True on succes, false on failure.
+	 */
+	public function unlock_sitemap( $sitemap_id = 'base' ) {
+
+		$lock_key = $this->get_lock_key( $sitemap_id );
+		if ( ! $lock_key ) return false;
+
+		return \delete_transient( $lock_key );
+	}
+
+	/**
+	 * Tells whether a sitemap is locked for the current blog & locale and $sitemap_id.
+	 *
+	 * @since 4.1.2
+	 *
+	 * @param string $sitemap_id The sitemap ID.
+	 * @return bool|int False if not locked, the lock UNIX release time otherwise.
+	 */
+	public function is_sitemap_locked( $sitemap_id = 'base' ) {
+
+		$lock_key = $this->get_lock_key( $sitemap_id );
+		if ( ! $lock_key ) return false;
+
+		return \get_transient( $lock_key );
+	}
+
+	/**
 	 * Outputs sitemap.xml 'file' and header.
 	 *
 	 * @since 2.2.9
@@ -243,8 +369,18 @@ final class Sitemap {
 	 *              3. Now overrides other header tags.
 	 * @since 4.0.0 1. Moved to \The_SEO_Framework\Bridges\Sitemap
 	 *              2. Renamed from `output_sitemap()`
+	 * @since 4.1.2 Is now static.
+	 *
+	 * @param string $sitemap_id The sitemap ID.
 	 */
-	public function output_base_sitemap() {
+	public static function output_base_sitemap( $sitemap_id = 'base' ) {
+
+		$locked_timeout = static::get_instance()->is_sitemap_locked( $sitemap_id );
+
+		if ( false !== $locked_timeout ) {
+			static::get_instance()->output_locked_header( $locked_timeout );
+			exit;
+		}
 
 		// Remove output, if any.
 		static::$tsf->clean_response_header();
@@ -255,7 +391,7 @@ final class Sitemap {
 		}
 
 		// Fetch sitemap content and add trailing line. Already escaped internally.
-		static::$tsf->get_view( 'sitemap/xml-sitemap' );
+		static::$tsf->get_view( 'sitemap/xml-sitemap', compact( 'sitemap_id' ) );
 		echo "\n";
 
 		// We're done now.
@@ -271,8 +407,9 @@ final class Sitemap {
 	 *              3. Now overrides other header tags.
 	 * @since 4.0.0 1. Moved to \The_SEO_Framework\Bridges\Sitemap
 	 *              2. Renamed from `output_sitemap_xsl_stylesheet()`
+	 * @since 4.1.2 Is now static.
 	 */
-	public function output_stylesheet() {
+	public static function output_stylesheet() {
 
 		static::$tsf->clean_response_header();
 
@@ -350,6 +487,25 @@ final class Sitemap {
 	 */
 	public function output_sitemap_urlset_close_tag() {
 		echo '</urlset>';
+	}
+
+	/**
+	 * Returns the sitemap base path.
+	 * Useful when the path is non-standard, like notoriously in Polylang.
+	 *
+	 * @since 4.1.2
+	 *
+	 * @return string The path.
+	 */
+	private function get_sitemap_base_path() {
+		/**
+		 * @since 4.1.2
+		 * @param string $path The home path.
+		 */
+		return \apply_filters(
+			'the_seo_framework_sitemap_base_path',
+			rtrim( parse_url( \get_home_url(), PHP_URL_PATH ), '/' )
+		);
 	}
 
 	/**
@@ -435,19 +591,19 @@ final class Sitemap {
 	private function get_sitemap_base_path_info() {
 		global $wp_rewrite;
 
-		$home_path = rtrim( parse_url( \get_home_url(), PHP_URL_PATH ), '/' );
+		$base_path = $this->get_sitemap_base_path();
 		$prefix    = $this->get_sitemap_path_prefix();
 
 		$use_query_var = false;
 
 		if ( $wp_rewrite->using_index_permalinks() ) {
-			$path = "$home_path/index.php$prefix";
+			$path = "$base_path/index.php$prefix";
 		} elseif ( $wp_rewrite->using_permalinks() ) {
-			$path = "$home_path$prefix";
+			$path = "$base_path$prefix";
 		} else {
 			// Yes, we know. This is not really checking for standardized query-variables.
 			// It's straightforward and doesn't mess with the rest of the site, however.
-			$path = "$home_path$prefix?tsf-sitemap=";
+			$path = "$base_path$prefix?tsf-sitemap=";
 
 			$use_query_var = true;
 		}

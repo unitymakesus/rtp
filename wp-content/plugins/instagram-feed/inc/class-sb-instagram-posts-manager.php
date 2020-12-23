@@ -252,7 +252,7 @@ class SB_Instagram_Posts_Manager
 		foreach ( $connected_accounts as $account_id => $data ) {
 
 			if ( isset( $data['local_avatar'] ) ) {
-				$connected_accounts[ $account_id ]['local_avatar'] = false;
+				unset( $connected_accounts[ $account_id ]['local_avatar'] );
 			}
 
 		}
@@ -408,6 +408,7 @@ class SB_Instagram_Posts_Manager
 		if ( isset( $this->frontend_errors['api_delay'] ) ) {
 			return array( 'api_delay' => $this->frontend_errors['api_delay'] );
 		}
+
 		return $this->frontend_errors;
 	}
 
@@ -559,7 +560,6 @@ class SB_Instagram_Posts_Manager
 
 				if ( in_array( (int)$errors['api'][2], $critical_error_numbers, true ) ) {
 					$are_errors = true;
-
 				}
 			} elseif ( strpos( $error_key, 'at_' ) !== false ) {
 				$are_errors = true;

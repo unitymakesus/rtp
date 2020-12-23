@@ -83,6 +83,31 @@ class PPW_Public {
 	}
 
 	/**
+	 * Add tag to head.
+	 */
+	public function add_tag_to_head() {
+		if ( ! ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS ) ) {
+			return;
+		}
+
+		$recaptcha_key = ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_API_KEY, PPW_Constants::EXTERNAL_OPTIONS );
+		ob_start();
+		?>
+		<script src="https://www.google.com/recaptcha/api.js?render=<?php echo $recaptcha_key; ?>"></script>
+		<script>
+		  grecaptcha.ready(function () {
+			grecaptcha.execute('<?php echo $recaptcha_key; ?>', { action: 'enter_password' }).then(function (token) {
+			  var recaptchaResponse = document.getElementById('ppwRecaptchaResponse');
+			  recaptchaResponse.value = token;
+			});
+		  });
+		</script>
+		<?php
+
+		echo ob_get_clean();
+	}
+
+	/**
 	 * Filter before render content.
 	 *
 	 * @param string $content Content of post/page.
@@ -368,9 +393,9 @@ class PPW_Public {
 
 	/**
 	 * Set cookie time for password.
-	 * 
+	 *
 	 * @param integer $time Expired time of a cookie.
-	 * 
+	 *
 	 * @return integer
 	 */
 	public function set_cookie_time( $time ) {
@@ -404,6 +429,111 @@ class PPW_Public {
 			// Bypass single password.
 			add_filter( 'post_password_required', '__return_false', 50 );
 		}
+	}
+
+	/**
+	 * Validate password with "No Reload Page" Option.
+	 */
+	public function ppw_validate_password() {
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'ppw_password_nonce' ) ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'message' => 'Cookie nonce is invalid',
+				),
+				403
+			);
+			wp_die();
+		}
+		if ( ! isset( $_POST['post_password'] ) ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'message' => 'Password doest not exist',
+				),
+				400
+			);
+			wp_die();
+		}
+		if ( empty( $_POST['post_id'] ) ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'message' => 'Post ID is empty',
+				),
+				400
+			);
+			wp_die();
+		}
+		$post_id  = $_POST['post_id'];
+		$password = $_POST['post_password'];
+		$post_id  = absint( $post_id );
+		$password = wp_unslash( $password );
+
+		// Not check password if post does not exist.
+		$post = get_post( $post_id );
+		if ( empty( $post ) ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'message' => 'Post not found',
+				),
+				400
+			);
+			wp_die();
+		}
+
+		// Check with recaptcha if user turn on this option.
+		$using_recaptcha = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS );
+		if ( $using_recaptcha && ! PPW_Recaptcha::get_instance()->is_valid_recaptcha() ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'message' => PPW_Recaptcha::get_instance()->get_error_message(),
+				),
+				400
+			);
+			wp_die();
+		}
+
+		$post_content     = ppw_support_third_party_content_plugin( $post_id, $post->post_content );
+		$post_content     = apply_filters( 'the_content', $post_content );
+		$password_service = new PPW_Password_Services();
+		$is_valid         = $password_service->is_valid_password_from_request( $post_id, $password );
+
+		if ( ! $is_valid ) {
+			wp_send_json(
+				array(
+					'success' => false,
+					'message' => ppw_core_get_error_msg( $post_id ),
+				),
+				400
+			);
+			wp_die();
+		}
+
+		wp_send_json(
+			array(
+				'success'      => true,
+				'post_content' => '<div>' . do_shortcode( $post_content ) . '</div>',
+				'message'      => 'The password you entered is correct',
+			),
+			200
+		);
+		wp_die();
+	}
+
+	/**
+	 * Support our action to compatibility with Divi builder.
+	 *
+	 * @param array $actions Ajax Actions.
+	 *
+	 * @return array
+	 */
+	public function add_action_to_divi( $actions ) {
+		$actions[] = 'ppw_validate_password';
+
+		return $actions;
 	}
 
 }

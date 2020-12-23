@@ -15,8 +15,44 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 			add_action( 'customize_register', array( $this, 'customize_register' ), 15 );
 		}
 
+		public static function register_themes() {
+			$self = new self();
+			add_action( 'customize_register', array( $self, 'customize_register_themes' ), 25 );
+			add_action( 'ppw_custom_style_form_entire_site', array( $self, 'load_css_to_pro' ), 15 );
+		}
+
 		public function register_sitewide_style() {
 			add_action( PPW_Constants::HOOK_CUSTOM_STYLE_FORM_ENTIRE_SITE, array( $this, 'dynamic_styles' ) );
+		}
+
+	    /**
+	     * @param $wp_customize
+	     */
+		public function customize_register_themes( $wp_customize ) {
+			if ( ! class_exists( 'PPW_Presets_Control' ) ) {
+				include PPW_DIR_PATH . 'includes/customizers/class-ppw-presets.php';
+			}
+
+			$wp_customize->add_section( 'ppw_customize_presets', array(
+				'title'    => __( 'Themes', 'password-protect-page' ),
+				'panel'    => 'ppwp_sitewide',
+				'priority' => 50,
+			) );
+
+			$wp_customize->add_setting( 'ppw_customize_presets_settings', array(
+				'default'    => 'default0',
+				'capability' => 'edit_theme_options',
+			) );
+
+			$wp_customize->add_control(
+				new PPW_Presets_Control( $wp_customize, 'ppw_customize_presets_settings',
+					array(
+						'section' => 'ppw_customize_presets',
+						// 'label'   => __( 'Themes', 'loginpress' ),
+						'choices' => $this->get_templates(),
+					)
+				)
+			);
 		}
 
 		/**
@@ -44,6 +80,17 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 		 * @return void
 		 */
 		public function customize_register( $wp_customize ) {
+			if ( ! class_exists( 'PPW_Toggle_Control' ) ) {
+				include PPW_DIR_PATH . 'includes/customizers/class-ppw-title-group-control.php';
+			}
+			if ( ! class_exists( 'PPW_Title_Group_Control' ) ) {
+				include PPW_DIR_PATH . 'includes/customizers/class-ppw-toggle-control.php';
+			}
+
+			/* register toggle control */
+			$wp_customize->register_control_type( 'PPW_Toggle_Control' );
+			$wp_customize->register_control_type( 'PPW_Title_Group_Control' );
+
 			$wp_customize->add_panel( 'ppwp_sitewide',
 				array(
 					'priority'       => 999,
@@ -59,10 +106,6 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 				'panel'    => 'ppwp_sitewide',
 				'priority' => 100,
 			) );
-
-			/* register toggle control */
-			$wp_customize->register_control_type( 'PPW_Toggle_Control' );
-			$wp_customize->register_control_type( 'PPW_Title_Group_Control' );
 
 			// Add an option to disable the logo.
 			$wp_customize->add_setting( 'ppwp_pro_logo_disable' );
@@ -157,7 +200,7 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 
 			/* password form background color */
 			$wp_customize->add_setting( 'ppwp_pro_form_instructions_background_color', array(
-				'default' => '#ffffff',
+				'default' => '',
 			) );
 
 			$wp_customize->add_control(
@@ -284,9 +327,9 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 		 * TODO: move this styles into css file.
 		 * @return void
 		 */
-
-		public function dynamic_styles() {
-			$sw_custom_css = "
+	    public function dynamic_styles() {
+	    	$sw_custom_css = $this->get_preset_css();
+		    $sw_custom_css = $sw_custom_css . "
 			.pda-form-login {
 				width: " . get_theme_mod( 'ppwp_pro_form_instructions_width' ) . "px!important;
 			}
@@ -314,14 +357,81 @@ if ( ! class_exists( 'PPW_Customizer_Sitewide' ) ) {
 				background-color: " . get_theme_mod( 'ppwp_pro_form_button_background_color' ) . "!important;
 				border-color: " . get_theme_mod( 'ppwp_pro_form_button_background_color' ) . "!important;
 			}
-
 			";
 
 			// remove space in $sw_custom_css.
-			$sw_custom_css = preg_replace( "/\s{2,}/", " ", str_replace( "\n", "", str_replace( ', ', ",", $sw_custom_css ) ) );
+			$sw_custom_css = $this->optimize_css( $sw_custom_css );
 			echo $sw_custom_css;
-
 		}
 
-	}
+		/*
+		 * Optimize css.
+		 */
+		public function optimize_css( $sw_custom_css ) {
+	    	return preg_replace( "/\s{2,}/", " ", str_replace( "\n", "", str_replace( ', ', ",", $sw_custom_css ) ) );
+		}
+
+	    /**
+	     * Get templates.
+	     *
+	     * @return array
+	     */
+	    public function get_templates() {
+		    $free_templates = array();
+		    $themes_name    = array(
+			    __( 'Default', 'password-protect-page' ),
+			    __( 'Event', 'password-protect-page' ),
+			    __( 'Business', 'password-protect-page' ),
+			    __( 'Wedding', 'password-protect-page' ),
+		    );
+
+		    foreach ( $themes_name as $index => $theme_name ) {
+			    $free_templates["default{$index}"] = array(
+				    'thumbnail' => PPW_DIR_URL . 'includes/customizers/assets/images/thumbnail/sw-default' . $index . '.png',
+				    'id'        => "default{$index}",
+				    'name'      => $theme_name,
+				    'css_file'  => PPW_DIR_PATH . 'includes/customizers/assets/css/sw-default' . $index . '.php',
+			    );
+		    }
+
+		    return apply_filters( 'ppw_customizer_sitewide_templates', $free_templates );
+	    }
+
+	    /**
+	     * Get css of a theme.
+	     *
+	     * @return string
+	     */
+	    public function get_preset_css() {
+		    $default_preset = 'default0';
+		    $preset         = get_theme_mod( 'ppw_customize_presets_settings', $default_preset );
+		    $sw_custom_css  = '';
+		    if ( $preset !== $default_preset ) {
+			    $templates = $this->get_templates();
+			    if ( isset( $templates[ $preset ], $templates[ $preset ]['css_file'] ) ) {
+				    ob_start();
+				    include_once( $templates[ $preset ]['css_file'] );
+				    ?>
+				    @media screen and (max-width: 768px) {
+					    .pda-form-login {
+					        width: 100%;
+			            }
+				        .pda-form-login form {
+				            width: 90%;
+				        }
+				    }
+				    <?php
+				    $sw_custom_css = ob_get_clean();
+			    }
+		    }
+
+		    return $sw_custom_css;
+	    }
+
+	    public function load_css_to_pro() {
+	    	echo $this->optimize_css( $this->get_preset_css() );
+	    }
+
+
+    }
 }

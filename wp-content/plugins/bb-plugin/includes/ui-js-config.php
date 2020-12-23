@@ -72,6 +72,10 @@ echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filt
 		'video' => 'video',
 	) ),
 	'themerLayoutsUrl'           => admin_url( '/edit.php?post_type=fl-theme-layout' ),
+	'userCaps'                   => array(
+		'unfiltered_html'        => current_user_can( 'unfiltered_html' ),
+		'global_unfiltered_html' => defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML ? true : false,
+	),
 ) ) ) . ';';
 
 /**
@@ -100,6 +104,7 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	'codeerrorhtml'                  => esc_attr__( 'You cannot add <script> or <iframe> tag here.', 'fl-builder' ),
 	'codeErrorFix'                   => esc_attr__( 'Fix Errors', 'fl-builder' ),
 	'codeErrorIgnore'                => esc_attr__( 'Save With Errors', 'fl-builder' ),
+	'codeErrorDetected'              => esc_html__( 'We detected a possible issue here:', 'fl-builder' ),
 	'column'                         => esc_attr__( 'Column', 'fl-builder' ),
 	'contentSliderSelectLayout'      => esc_attr__( 'Please select either a background layout or content layout before submitting.', 'fl-builder' ),
 	'contentSliderTransitionWarn'    => esc_attr__( 'Transition value should be lower than Delay value.', 'fl-builder' ),
@@ -224,6 +229,14 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	'widgetsCategoryTitle'           => esc_attr__( 'WordPress Widgets', 'fl-builder' ),
 	'uncategorized'                  => esc_attr__( 'Uncategorized', 'fl-builder' ),
 	'yesPlease'                      => esc_attr__( 'Yes Please!', 'fl-builder' ),
+	'noScriptWarn'                   => array(
+		'heading' => esc_attr__( 'Settings could not be saved.', 'fl-builder' ),
+		// translators: %s : User Role
+		'message' => sprintf( esc_attr__( 'These settings contain sensitive code that is not allowed for your user role (%s).', 'fl-builder' ), FLBuilderUtils::get_current_user_role() ),
+		'global'  => esc_attr__( 'These settings contain sensitive code that is not allowed as DISALLOW_UNFILTERED_HTML has been set globally via wp-config.', 'fl-builder' ),
+		// translators: %s : Link to Docs
+		'footer'  => sprintf( esc_attr__( 'See [%s] for more information.', 'fl-builder' ), '<a target="_blank" href="https://docs.wpbeaverbuilder.com/beaver-builder/troubleshooting/common-issues/error-settings-not-saved">link</a>' ),
+	),
 	'savedStatus'                    => array(
 		'saving'               => esc_attr__( 'Saving...', 'fl-builder' ),
 		'savingTooltip'        => esc_attr__( 'The layout is currently being saved', 'fl-builder' ),
@@ -238,7 +251,6 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 		'publishingTooltip'    => esc_attr__( 'Changes being published', 'fl-builder' ),
 		'nothingToSave'        => esc_attr__( 'No new changes to save', 'fl-builder' ),
 		'hasAlreadySaved'      => esc_attr__( 'Your changes are saved', 'fl-builder' ),
-
 	),
 	'typeLabels'                     => array(
 		'template' => esc_attr__( 'Template', 'fl-builder' ),

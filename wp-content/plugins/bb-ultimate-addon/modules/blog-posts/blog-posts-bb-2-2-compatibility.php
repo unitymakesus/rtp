@@ -330,7 +330,7 @@ FLBuilder::register_module(
 		'uabb_controls'    => array(
 			'title'    => __( 'Controls', 'uabb' ),
 			'sections' => array(
-				'image_settings'   => array(
+				'image_settings'          => array(
 					'title'  => __( 'Featured Image', 'uabb' ),
 					'fields' => array(
 						'show_featured_image'        => array(
@@ -387,7 +387,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'title_settings'   => array(
+				'title_settings'          => array(
 					'title'  => __( 'Title', 'uabb' ),
 					'fields' => array(
 						'show_title' => array(
@@ -407,7 +407,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'meta_settings'    => array(
+				'meta_settings'           => array(
 					'title'  => __( 'Post Meta', 'uabb' ),
 					'fields' => array(
 						'show_meta'       => array(
@@ -433,6 +433,16 @@ FLBuilder::register_module(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
 							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'author_icon' ),
+								),
+							),
+						),
+						'author_icon'     => array(
+							'type'        => 'icon',
+							'label'       => __( 'Author Icon', 'uabb' ),
+							'show_remove' => true,
 						),
 						'show_date'       => array(
 							'type'    => 'select',
@@ -444,9 +454,14 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'yes' => array(
-									'fields' => array( 'date_format' ),
+									'fields' => array( 'date_format', 'date_icon' ),
 								),
 							),
+						),
+						'date_icon'       => array(
+							'type'        => 'icon',
+							'label'       => __( 'Date Icon', 'uabb' ),
+							'show_remove' => true,
 						),
 						'date_format'     => array(
 							'type'    => 'select',
@@ -486,6 +501,16 @@ FLBuilder::register_module(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
 							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'cat_icon' ),
+								),
+							),
+						),
+						'cat_icon'        => array(
+							'type'        => 'icon',
+							'label'       => __( 'Category Icon', 'uabb' ),
+							'show_remove' => true,
 						),
 						'show_tags'       => array(
 							'type'    => 'select',
@@ -495,6 +520,16 @@ FLBuilder::register_module(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
 							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'tag_icon' ),
+								),
+							),
+						),
+						'tag_icon'        => array(
+							'type'        => 'icon',
+							'label'       => __( 'Tag Icon', 'uabb' ),
+							'show_remove' => true,
 						),
 						'show_comments'   => array(
 							'type'    => 'select',
@@ -504,10 +539,70 @@ FLBuilder::register_module(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
 							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'comments_icon' ),
+								),
+							),
+						),
+						'comments_icon'   => array(
+							'type'        => 'icon',
+							'label'       => __( 'Comments Icon', 'uabb' ),
+							'show_remove' => true,
 						),
 					),
 				),
-				'excerpt_settings' => array(
+				'taxonomy_badge_settings' => array(
+					'title'  => __( 'Taxonomy Badge', 'uabb' ),
+					'fields' => array(
+						'taxonomy_badge' => array(
+							'type'    => 'select',
+							'label'   => __( 'Taxonomy Badge', 'uabb' ),
+							'default' => 'disable',
+							'options' => array(
+								'enable'  => __( 'Enable', 'uabb' ),
+								'disable' => __( 'Disable', 'uabb' ),
+							),
+							'toggle'  => array(
+								'enable' => array(
+									'fields'   => array( 'terms_to_show', 'max_terms', 'term_icon', 'term_divider' ),
+									'sections' => array( 'taxonomy_badge_style', 'term_typography' ),
+								),
+							),
+						),
+						'terms_to_show'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Select Taxonomy', 'uabb' ),
+							'default' => 'category',
+							'options' => array(
+								'category' => __( 'Category', 'uabb' ),
+								'post_tag' => __( 'Tag', 'uabb' ),
+							),
+						),
+						'max_terms'      => array(
+							'type'    => 'unit',
+							'label'   => __( 'Max Terms to Show', 'uabb' ),
+							'default' => '1',
+							'slider'  => true,
+						),
+						'term_icon'      => array(
+							'type'        => 'icon',
+							'label'       => __( 'Term Icon', 'uabb' ),
+							'show_remove' => true,
+						),
+						'term_divider'   => array(
+							'type'    => 'text',
+							'label'   => __( 'Term Divider', 'uabb' ),
+							'default' => __( '|', 'uabb' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms .uabb-listing__terms-link:not(:last-child):after',
+								'property' => 'content',
+							),
+						),
+					),
+				),
+				'excerpt_settings'        => array(
 					'title'  => __( 'Content', 'uabb' ),
 					'fields' => array(
 						'show_excerpt'       => array(
@@ -560,7 +655,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'cta'              => array(
+				'cta'                     => array(
 					'title'  => __( 'Call to Action', 'uabb' ),
 					'fields' => array(
 						'cta_type'      => array(
@@ -624,7 +719,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'btn-style'        => array(
+				'btn-style'               => array(
 					'title'  => __( 'Style', 'uabb' ),
 					'fields' => array(
 						'btn_style'                      => array(
@@ -715,7 +810,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'btn-icon'         => array( // Section.
+				'btn-icon'                => array( // Section.
 					'title'  => __( 'Icons', 'uabb' ),
 					'fields' => array(
 						'btn_icon'          => array(
@@ -734,7 +829,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'btn-colors'       => array( // Section.
+				'btn-colors'              => array( // Section.
 					'title'  => __( 'Colors', 'uabb' ),
 					'fields' => array(
 						'btn_text_color'       => array(
@@ -787,7 +882,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'btn-structure'    => array(
+				'btn-structure'           => array(
 					'title'  => __( 'Structure', 'uabb' ),
 					'fields' => array(
 						'btn_width'                => array(
@@ -1065,11 +1160,7 @@ FLBuilder::register_module(
 							'placeholder' => '30',
 							'units'       => array( 'px' ),
 							'preview'     => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-post-wrapper',
-								'property'  => 'margin-bottom',
-								'unit'      => 'px',
-								'important' => true,
+								'type' => 'refresh',
 							),
 							'slider'      => array(
 								'px' => array(
@@ -1716,6 +1807,92 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'taxonomy_badge_style'  => array(
+					'title'  => __( 'Taxonomy Badge Styling', 'uabb' ),
+					'fields' => array(
+						'term_padding'       => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms',
+								'property' => 'padding',
+								'unit'     => 'px',
+							),
+						),
+						'term_border_radius' => array(
+							'type'    => 'unit',
+							'label'   => __( 'Border Radius', 'uabb' ),
+							'units'   => array( 'px' ),
+							'slider'  => true,
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms',
+								'property' => 'border-radius',
+								'unit'     => 'px',
+							),
+						),
+						'term_alignment'     => array(
+							'type'       => 'align',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'default'    => 'center',
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap',
+								'property' => 'text-align',
+							),
+						),
+						'term_color'         => array(
+							'type'        => 'color',
+							'label'       => __( 'Color', 'uabb' ),
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms',
+								'property' => 'color',
+							),
+						),
+						'term_hover_color'   => array(
+							'type'        => 'color',
+							'label'       => __( 'Hover Color', 'uabb' ),
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+						),
+						'term_bg_color'      => array(
+							'type'        => 'color',
+							'label'       => __( 'Background Color', 'uabb' ),
+							'default'     => '#e4e4e4',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms',
+								'property' => 'background-color',
+							),
+						),
+						'term_spacing'       => array(
+							'type'    => 'unit',
+							'label'   => __( 'Bottom Spacing', 'uabb' ),
+							'units'   => array( 'px' ),
+							'default' => '20',
+							'slider'  => true,
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap',
+								'property' => 'margin-bottom',
+								'unit'     => 'px',
+							),
+						),
+					),
+				),
 			),
 		),
 		'typography'       => array( // Tab.
@@ -1724,7 +1901,7 @@ FLBuilder::register_module(
 				'title_typography'                        => array(
 					'title'  => __( 'Title', 'uabb' ),
 					'fields' => array(
-						'title_tag_selection' => array(
+						'title_tag_selection'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Tag', 'uabb' ),
 							'default' => 'h3',
@@ -1740,7 +1917,7 @@ FLBuilder::register_module(
 								'span' => __( 'span', 'uabb' ),
 							),
 						),
-						'title_font_typo'     => array(
+						'title_font_typo'      => array(
 							'type'       => 'typography',
 							'label'      => __( 'Typography', 'uabb' ),
 							'responsive' => true,
@@ -1750,7 +1927,7 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'title_color'         => array(
+						'title_color'          => array(
 							'type'        => 'color',
 							'label'       => __( 'Color', 'uabb' ),
 							'default'     => '',
@@ -1762,6 +1939,18 @@ FLBuilder::register_module(
 								'selector'  => '.uabb-post-heading a',
 								'property'  => 'color',
 								'important' => true,
+							),
+						),
+						'title_bottom_spacing' => array(
+							'type'    => 'unit',
+							'label'   => __( 'Bottom Spacing', 'uabb' ),
+							'units'   => array( 'px' ),
+							'slider'  => true,
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post-heading',
+								'property' => 'margin-bottom',
+								'unit'     => 'px',
 							),
 						),
 					),
@@ -1798,7 +1987,7 @@ FLBuilder::register_module(
 				'meta_typography'                         => array(
 					'title'  => __( 'Post Meta', 'uabb' ),
 					'fields' => array(
-						'meta_tag_selection' => array(
+						'meta_tag_selection'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Meta Tag', 'uabb' ),
 							'default' => 'h5',
@@ -1814,7 +2003,7 @@ FLBuilder::register_module(
 								'span' => __( 'span', 'uabb' ),
 							),
 						),
-						'meta_font_typo'     => array(
+						'meta_font_typo'      => array(
 							'type'       => 'typography',
 							'label'      => __( 'Typography', 'uabb' ),
 							'responsive' => true,
@@ -1824,7 +2013,7 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'meta_text_color'    => array(
+						'meta_text_color'     => array(
 							'type'        => 'color',
 							'label'       => __( 'Meta Color', 'uabb' ),
 							'default'     => '',
@@ -1838,7 +2027,7 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'meta_color'         => array(
+						'meta_color'          => array(
 							'type'        => 'color',
 							'label'       => __( 'Meta Link Color', 'uabb' ),
 							'default'     => '',
@@ -1852,13 +2041,43 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'meta_hover_color'   => array(
+						'meta_hover_color'    => array(
 							'type'        => 'color',
 							'label'       => __( 'Meta Link Hover Color', 'uabb' ),
 							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_reset'  => true,
 							'show_alpha'  => true,
+						),
+						'meta_space'          => array(
+							'type'    => 'unit',
+							'label'   => __( 'Inter Meta Spacing', 'uabb' ),
+							'units'   => array( 'px' ),
+							'help'    => __( 'Manage the spacing between two meta.', 'uabb' ),
+							'slider'  => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post-meta span',
+								'property' => 'margin-right',
+							),
+						),
+						'meta_bottom_spacing' => array(
+							'type'    => 'unit',
+							'label'   => __( 'Bottom Spacing', 'uabb' ),
+							'units'   => array( 'px' ),
+							'slider'  => true,
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post-meta',
+								'property' => 'margin-bottom',
+								'unit'     => 'px',
+							),
 						),
 					),
 				),
@@ -2004,6 +2223,20 @@ FLBuilder::register_module(
 								'selector'  => 'select.uabb-masonary-filters, ul.uabb-masonary-filters li',
 								'property'  => 'color',
 								'important' => true,
+							),
+						),
+					),
+				),
+				'term_typography'                         => array(
+					'title'  => __( 'Taxonomy Badge', 'uabb' ),
+					'fields' => array(
+						'term_font_typo' => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms',
 							),
 						),
 					),

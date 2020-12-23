@@ -90,7 +90,7 @@ class Creative_Menu_Walker extends Walker_Nav_Menu {
 	 * @param var   $args gets the arguments for the elements.
 	 * @param var   $output gets the output for the element.
 	 */
-	public function display_element( $element, &$children_elements, $max_depth, $depth = 0, $args, &$output ) {
+	public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
 		$id_field = $this->db_fields['id'];
 		if ( is_object( $args[0] ) ) {
 			$args[0]->has_children = ! empty( $children_elements[ $element->$id_field ] );

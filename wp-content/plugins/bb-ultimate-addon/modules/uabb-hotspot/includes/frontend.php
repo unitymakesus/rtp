@@ -14,6 +14,13 @@ if ( 'yes' === $settings->hotspot_tour ) {
 	}
 }
 
+$next_label     = __( 'Next', 'uabb' );
+$previous_label = __( 'Previous', 'uabb' );
+$endtour_label  = __( 'End Tour', 'uabb' );
+$next           = apply_filters( 'uabb_hotspot_next_label', $next_label, $settings );
+$previous       = apply_filters( 'uabb_hotspot_previous_label', $previous_label, $settings );
+$end            = apply_filters( 'uabb_hotspot_endtour_label', $endtour_label, $settings );
+
 if ( isset( $photo_src ) ) {
 	if ( '' !== $photo_src ) {
 		?>
@@ -57,17 +64,17 @@ if ( isset( $photo_src ) ) {
 								<span class="uabb-tour"><span class="uabb-actual-step"><?php echo esc_attr( $counter ); ?> <?php esc_attr_e( 'of', 'uabb' ); ?> <?php echo count( $settings->hotspot_marker ); ?>	</span>
 									<ul class="uabb-hotspot-tour-tooltip-list-group" >
 										<li class="uabb-hotspot-tour-tooltip-list-group-item">
-											<a class="uabb-prev uabb-prev-<?php echo esc_attr( $i ); ?>" id='<?php echo esc_attr( $i ); ?>' data-tooltips-id="<?php echo esc_attr( $counter ); ?>"> &#171; <?php esc_attr_e( 'Previous', 'uabb' ); ?></a>
+											<a class="uabb-prev uabb-prev-<?php echo esc_attr( $i ); ?>" id='<?php echo esc_attr( $i ); ?>' data-tooltips-id="<?php echo esc_attr( $counter ); ?>"> &#171; <?php echo esc_attr( $previous ); ?></a>
 										</li>
 										<li class="uabb-hotspot-tour-tooltip-list-group-item">
-											<a class="uabb-next uabb-next-<?php echo esc_attr( $i ); ?>" id='<?php echo esc_attr( $i ); ?>' data-tooltips-id="<?php echo esc_attr( $counter ); ?>"><?php esc_attr_e( 'Next', 'uabb' ); ?> &#187; </a>
+											<a class="uabb-next uabb-next-<?php echo esc_attr( $i ); ?>" id='<?php echo esc_attr( $i ); ?>' data-tooltips-id="<?php echo esc_attr( $counter ); ?>"><?php echo esc_attr( $next ); ?> &#187; </a>
 										</li>
 									</ul>
 								</span>
 								<?php
 								if ( 'yes' === $settings->hotspot_tour_autoplay && 'yes' === $settings->hotspot_tour_repeat ) {
 									?>
-										<span class="uabb-hotspot-end"><a class="uabb-tour-end" data-itemid="<?php echo esc_attr( $i ); ?>"><?php esc_attr_e( 'End Tour', 'uabb' ); ?></a></span>
+										<span class="uabb-hotspot-end"><a class="uabb-tour-end" data-itemid="<?php echo esc_attr( $i ); ?>"><?php echo esc_attr( $end ); ?></a></span>
 									<?php
 								}
 							}

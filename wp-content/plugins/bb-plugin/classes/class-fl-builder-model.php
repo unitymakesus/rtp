@@ -790,7 +790,7 @@ final class FLBuilderModel {
 	 * @since 1.0
 	 * @return string
 	 */
-	static public function get_asset_version() {
+	static public function get_asset_version( $path = false ) {
 		$post_id = self::get_post_id();
 		$active  = self::is_builder_active();
 		$preview = self::is_builder_draft_preview();
@@ -798,9 +798,10 @@ final class FLBuilderModel {
 		if ( $active || $preview ) {
 			return md5( uniqid() );
 		} else {
-			return md5( get_post_modified_time( 'U', false, $post_id ) );
+			return $path ? md5( file_get_contents( $path ) ) : md5( get_post_modified_time( 'U', false, $post_id ) );
 		}
 	}
+
 
 	/**
 	 * Returns an array of paths for the CSS and JS assets
@@ -4045,6 +4046,76 @@ final class FLBuilderModel {
 			'layout'   => FLBuilderAJAXLayout::render(),
 		);
 	}
+
+	/**
+	 * Verify the settings for a node to make sure they
+	 * can be saved safely.
+	 *
+	 * @since 2.4.1
+	 * @param object $settings The settings to verify.
+	 * @return bool
+	 */
+	static public function verify_settings( $settings ) {
+		return self::verify_settings_kses( $settings );
+	}
+
+	/**
+	 * Verify the settings for a node by running them through wp_kses.
+	 * Any settings that have changed mean unallowed code was entered.
+	 *
+	 * @since 2.4.1
+	 * @param object $settings The settings to verify.
+	 * @return bool
+	 */
+	public static function verify_settings_kses( $settings ) {
+
+		if ( ! has_filter( 'safe_style_css', '__return_empty_array' ) ) {
+			add_filter( 'safe_style_css', '__return_empty_array' );
+		}
+
+		foreach ( $settings as $key => $value ) {
+			if ( is_string( $value ) ) {
+				$value     = stripslashes( $value );
+				$sanitized = wp_kses_post( $value );
+				if ( json_encode( $sanitized ) !== json_encode( self::fix_kses( $value ) ) ) {
+					remove_filter( 'safe_style_css', '__return_empty_array' );
+					$output = array(
+						'diff'   => wp_text_diff( $value, $sanitized, array( 'show_split_view' => false ) ),
+						'value'  => self::fix_kses( $value ),
+						'parsed' => $sanitized,
+						'key'    => $key,
+					);
+					return $output;
+				}
+			} else {
+				if ( is_object( $value ) || is_array( $value ) ) {
+					if ( ! self::verify_settings_kses( $value ) ) {
+						remove_filter( 'safe_style_css', '__return_empty_array' );
+						return false;
+					}
+				}
+			}
+		}
+
+		remove_filter( 'safe_style_css', '__return_empty_array' );
+		return true;
+	}
+
+	/**
+	 * Add a space to self closing tags and other things if there isnt one because kses will and checks will fail.
+	 * @since 2.4.2
+	 */
+	static public function fix_kses( $value ) {
+
+		// fix & -> &amp;
+		$value = preg_replace( '#(&)(?!amp;)#', '&amp;', $value );
+
+		// fix <br/> -> <br />
+		$value = preg_replace( '#(<[a-z]+)(\/>)#', '$1 $2', $value );
+
+		return $value;
+	}
+
 
 	/**
 	 * Sanitizes settings for a form.

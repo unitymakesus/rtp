@@ -12,8 +12,6 @@ $style1                          = '<div style="line-height: 1.5em;  padding-top
 $style2                          = '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;">';
 $user_role_desc                  = $style1 . __( 'The default option will assign the user role as per the WordPress backend setting.', 'uabb' ) . '</div>';
 $user_hide_form_desc             = $style1 . __( 'Enable this option if you wish to hide the form at the frontend from logged in users.', 'uabb' ) . '</div>';
-$login_link_desc                 = $style1 . __( 'Add the “Login” link below the register button.', 'uabb' ) . '</div>';
-$lost_pass_desc                  = $style1 . __( 'Add the “Lost Password” link below the register button.', 'uabb' ) . '</div>';
 $enable_email_desc               = $style1 . __( 'On enabling this option, visit the Email tab to send a customized email to the user.', 'uabb' ) . '</div>';
 $email_content_desc              = $style2 . __( 'Here you can design the Email Content user will receive.', 'uabb' ) . '</div>';
 $register_website_recaptcha_desc = $style2 . __( 'Please register keys for your website at', 'uabb' );
@@ -93,15 +91,14 @@ FLBuilder::register_module(
 							'label' => __( 'Message For Logged In Users', 'uabb' ),
 						),
 						'login_link'              => array(
-							'type'        => 'select',
-							'label'       => __( 'Login Link', 'uabb' ),
-							'default'     => 'no',
-							'options'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Login Link', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => $login_link_desc,
-							'toggle'      => array(
+							'toggle'  => array(
 								'yes' => array(
 									'fields'   => array( 'login_link_text', 'login_link_to' ),
 									'sections' => array( 'login_link_style', 'login_link_typography' ),
@@ -111,7 +108,7 @@ FLBuilder::register_module(
 						'login_link_text'         => array(
 							'type'        => 'text',
 							'label'       => __( 'Login Link Text', 'uabb' ),
-							'default'     => 'Login',
+							'default'     => 'Login |',
 							'connections' => array( 'string', 'html' ),
 						),
 						'login_link_to'           => array(
@@ -136,18 +133,19 @@ FLBuilder::register_module(
 							'connections'   => array( 'url' ),
 						),
 						'lost_your_pass'          => array(
-							'type'        => 'select',
-							'label'       => __( 'Lost Your Password Link', 'uabb' ),
-							'default'     => 'no',
-							'options'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Lost Your Password Link', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => $lost_pass_desc,
-							'toggle'      => array(
+							'toggle'  => array(
 								'yes' => array(
-									'fields'   => array( 'lost_link_text', 'lost_link_to' ),
-									'sections' => array( 'login_link_style', 'lost_link_typography' ),
+									'fields' => array( 'lost_link_text', 'lost_link_to' ),
+								),
+								'no'  => array(
+									'fields' => array( 'inline_btn_login_text' ),
 								),
 							),
 						),
@@ -204,6 +202,24 @@ FLBuilder::register_module(
 								'yes' => array(
 									'sections' => array( 'label_typography' ),
 								),
+							),
+						),
+						'login_text_position'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Login and Lost Your Password Text Position', 'uabb' ),
+							'default' => 'below',
+							'options' => array(
+								'above' => __( 'Above Terms and Conditions Field', 'uabb' ),
+								'below' => __( 'Below Register Button', 'uabb' ),
+							),
+						),
+						'inline_btn_login_text'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Inline Register Button and Login Text', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
 							),
 						),
 					),
@@ -600,7 +616,7 @@ FLBuilder::register_module(
 					),
 				),
 				'login_link_style'     => array(
-					'title'  => __( 'Login Link Style', 'uabb' ),
+					'title'  => __( 'Password/Login Link Style', 'uabb' ),
 					'fields' => array(
 						'login_link_color'       => array(
 							'type'       => 'color',
@@ -608,10 +624,9 @@ FLBuilder::register_module(
 							'show_reset' => true,
 							'show_alpha' => true,
 							'preview'    => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-rform-exteral-link-wrap .uabb-rform-exteral-link',
-								'property'  => 'color',
-								'important' => true,
+								'type'     => 'css',
+								'selector' => '.uabb-rform-exteral-link-wrap .uabb-rform-exteral-link',
+								'property' => 'color',
 							),
 						),
 						'login_link_hover_color' => array(
@@ -1235,12 +1250,12 @@ FLBuilder::register_settings_form(
 									'user_email'   => __( 'Email', 'uabb' ),
 									'first_name'   => __( 'First Name', 'uabb' ),
 									'last_name'    => __( 'Last Name', 'uabb' ),
+									'phone'        => __( 'Phone', 'uabb' ),
 								),
 							),
 							'field_label'       => array(
 								'type'        => 'text',
 								'label'       => __( 'Label', 'uabb' ),
-								'default'     => __( 'Username', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'field_placeholder' => array(

@@ -1,10 +1,3 @@
-/**
- *  TODO:
- * 
- *  - Explore other ways to render video in Magnific Popup. 
- *  - Fix Media Library video style when rendered in Magnific Popup.
- *  - Fix Media Library video autoplay/mute. 
- */
 (function($){
 	<?php if ( isset( $settings->video_lightbox ) && 'yes' == $settings->video_lightbox ) : ?>
 		$('.fl-node-<?php echo $id; ?> .fl-video-poster').magnificPopup({

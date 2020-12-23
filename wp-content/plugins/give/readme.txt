@@ -1,11 +1,11 @@
 === GiveWP - Donation Plugin and Fundraising Platform ===
-Contributors: givewp, dlocc, webdevmattcrom, ravinderk, mehul0810, kevinwhoffman, jason_the_adams, henryholtgeerts, kbjohnson90, alaca
+Contributors: givewp, dlocc, webdevmattcrom, ravinderk, mehul0810, kevinwhoffman, jason_the_adams, henryholtgeerts, kbjohnson90, alaca, benmeredithgmailcom
 Donate link: https://givewp.com/
-Tags: donation, donations, donation plugin, wordpress donation plugin, givewp, give, wp donation, ecommerce, e-commerce, fundraising, fundraiser, crowdfunding, wordpress donations, gutenberg, gutenberg donations, commerce, wordpress ecommerce, giving, charity, donate, gifts, non-profit, paypal, stripe, churches, nonprofit, paypal donations, paypal donate, stripe donations, stripe donate, authorize.net, authorize.net donations
-Requires at least: 4.8
-Tested up to: 5.5
+Tags: donation, fundraising, crowdfunding, givewp, give
+Requires at least: 4.9
+Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 2.8.1
+Stable tag: 2.9.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -26,6 +26,7 @@ GiveWP is free and yet is full of many advanced features to suit your needs. Sli
 **[Powerful Donation Forms](https://go.givewp.com/features-forms)**
 
 * Build custom donation forms in your WordPress admin
+* Use the multi-step donation form template or GiveWP legacy forms
 * GiveWP inherits your themes styles so it integrates seamlessly out of the box
 * Add goals, multiple giving amounts, custom amounts, terms and conditions and more with just a couple clicks
 
@@ -50,7 +51,7 @@ Find out more:
 
 = Who Uses GiveWP? =
 
-With more than 80,000+ active installs of GiveWP, we hear more and more success stories from nonprofit organizations using GiveWP. Causes are using GiveWP to raise millions of dollars per year. Check out some of our [GiveWP Stories](https://go.givewp.com/stories) and [Case Studies](https://go.givewp.com/case-studies) for details about their success.
+With more than 100,000+ active installs of GiveWP, we hear more and more success stories from nonprofit organizations using GiveWP. Causes are using GiveWP to raise millions of dollars per year. Check out some of our [GiveWP Stories](https://go.givewp.com/stories) and [Case Studies](https://go.givewp.com/case-studies) for details about their success.
 
 = Why Use GiveWP for Donations? =
 
@@ -66,7 +67,9 @@ The strength of GiveWP lies within its optimized donation forms. When creating a
 
 = First Time Users =
 
-For new users, we suggest reviewing our [documentation](https://go.givewp.com/docs "Visit the GiveWP documentation") to get an understanding of how the plugin works. If you run into any trouble, we offer [free support](https://wordpress.org/support/plugin/give "Visit the GiveWP support page on WordPress.org") to help you with your issues, questions, and concerns.
+[youtube https://www.youtube.com/watch?v=UNRa8Dc6Ayc&feature=youtu.be]
+
+For new users, we suggest reviewing our [Getting Started Guide](https://go.givewp.com/rmgettingstarted "Visit the GiveWP Getting Started Guide") to get an understanding of how the plugin works. If you run into any trouble, we offer [free support](https://wordpress.org/support/plugin/give "Visit the GiveWP support page on WordPress.org") to help you with your issues, questions, and concerns.
 
 If you are a GiveWP customer with an active license of any of our popular add-ons, we'd love to hear from you and support you via our [Priority Support channel](https://go.givewp.com/support).
 
@@ -74,8 +77,8 @@ If you are a GiveWP customer with an active license of any of our popular add-on
 
 GiveWP comes with several payment gateway options:
 
-* **Stripe** -- Our Stripe integration allows you to accept credit card donations on your website. There is a small 2% fee associated with these donations. Want no additional fees? Upgrade to our [Stripe Premium add-on](https://go.givewp.com/addon-stripe).
-* **PayPal Standard** -- Allow worldwide donations with PayPal Standard. No additional fees applied.
+* **Works with Stripe** -- Our Stripe integration allows you to accept credit card donations on your website. There is a small 2% fee associated with these donations. Want no additional fees? Upgrade to our [Stripe Premium add-on](https://go.givewp.com/addon-stripe).
+* **PayPal Donations** -- Allow worldwide donations with PayPal Donations. No additional fees applied.
 * **Offline Donations** -- Enable your donors to send checks or physical donations with an offline gateway with instructions.
 * **Test Gateway** -- use the Test Gateway to see exactly how your donors will walk through the donation process.
 
@@ -83,21 +86,30 @@ GiveWP comes with several payment gateway options:
 
 GiveWP's goal is to "Democratize Generosity." We want to make it easy for *everyone* to raise funds online. The money you raise using GiveWP is yours to support your cause. Period. We are supported through the sale of [premium GiveWP add-ons](https://go.givewp.com/addons "View all of GiveWP's Premium Add-ons"). Add-ons enable advanced features that enable you to extend the functionality of GiveWP.
 
-For example, you can use one of our add-ons to accept funds through your favorite [payment gateway](https://go.givewp.com/addons-payment-gateways), enable [recurring donations](https://go.givewp.com/addon-recurring), or send donor emails to your favorite email marketing platform. [View all of GiveWP's Add-ons](https://go.givewp.com/addons "View all GiveWP add-ons") to discover all the ways you can further enhance and extend GiveWP.
+Must-Have Add-ons for GiveWP:
 
+* Recurring Donations
+* Form Field Manager
+* Fee Recovery
+* Tributes
+* PDF Receipts
+* Funds & Designations
+
+[View all of GiveWP's Add-ons](https://go.givewp.com/addons "View all GiveWP add-ons") to discover all the ways you can further enhance and extend GiveWP.
 = Easy to Customize and Enhance =
 
-GiveWP is built by [Impress.org](https://go.givewp.com/impress "Visit the developers of GiveWP - Impress.org"), our plugins are built from the ground up to be intuitive and easy to use. By following along with our [Getting Started Guide](https://go.givewp.com/give-101 "GiveWP 101 - Getting started using GiveWP to accept donations on WordPress"), setting up GiveWP to accept donations on WordPress is simple and easy.
+GiveWP is built by [Impress.org](https://go.givewp.com/impress "Visit the developers of GiveWP - Impress.org"), our plugins are built from the ground up to be intuitive and easy to use. By following along with our [Getting Started Guide](https://go.givewp.com/rmgettingstarted "GiveWP 101 - Getting started using GiveWP to accept donations on WordPress"), setting up GiveWP to accept donations on WordPress is simple and easy.
 
 Are you a developer? GiveWP is fully extendable. We built in an advanced templating system similar to the ones found in many of WordPress' top plugins that makes customizing many of GiveWP's frontend elements upgrade proof and extremely flexible. Run into some trouble? We're here to help! Along with the plugin is a support team that is dedicated, fast to respond, and always willing to squash bugs and help troubleshoot.
 
-Here's some great developer-oriented tutorials and docs to help you customize GiveWP to your liking:
+Here are some great developer-oriented tutorials and docs to help you customize GiveWP to your liking:
 
 * [Create Dramatic Donation Email Receipts](https://go.givewp.com/blog-emails)
 * [Populate Donor Info with One Click](https://go.givewp.com/blog-populate)
 * [Using the GiveWP API to Create Charts with ChartJS](https://go.givewp.com/blog-api)
-* [Themeing with GiveWP](https://go.givewp.com/docs-theming)
+* [Theming with GiveWP](https://go.givewp.com/docs-theming)
 * [How to Create Custom Form Fields in GiveWP](https://go.givewp.com/docs-custom-fields)
+* [Create a Peer-to-Peer GiveWP Campaign with Caldera Forms](https://go.givewp.com/rmp2p)
 
 
 = About the GiveWP Team =
@@ -113,6 +125,7 @@ Stay in touch with us for important plugin news and updates:
 * **[GiveWP Newsletter](https://go.givewp.com/subscribe "Subscribe to GiveWP via MailChimp")**
 * **[Facebook](https://go.givewp.com/fb "Visit the GiveWP on Facebook")**
 * **[GiveWP Add-ons](https://go.givewp.com/addons "View all GiveWP Add-ons")**
+* **[Write for GiveWP](https://go.givewp.com/rmwrite4us)**
 
 = Contribute to GiveWP =
 
@@ -125,6 +138,7 @@ Here's a few ways you can contribute to GiveWP:
 * Translate GiveWP into your native language. The best place to do that is here on wordpress.org. Go to [https://translate.wordpress.org/](https://translate.wordpress.org/projects/wp-plugins/give), then search for your language, click the "Plugins" tab, then search for "GiveWP". When you've submitted at least 95% of GiveWP's strings, the language moderators will review and approve your translations and then they will be available to all WordPress users for your native language. If you are interested in translating any of our Premium Add-ons, [contact us](https://go.givewp.com/contact), we'd love to chat with you about that.
 
 * Join the [GiveWP Community Facebook group](https://go.givewp.com/fb-group). We chat about all things related to WordPress, GiveWP, fundraising, and online donations in general.
+
 
 == Upgrade Notice ==
 
@@ -199,29 +213,67 @@ The 2% fee on Stripe donations only applies to donations taken via our free Stri
 
 == Screenshots ==
 
-1. This is an example of a simple, yet powerful, donation form that allows the user to input a custom amount.
+1. Creating powerful donation forms is easy with GiveWP. Simply install the plugin, create a new donation form, set the desired giving options, and publish!
 
-2. Creating powerful donation forms is easy with GiveWP. Simply install the plugin, create a new donation form, set the desired giving options, and publish!
+2. Customizing your donation forms is easy and intuitive with customization options for any fundraising campaign.
 
-3. Donation form fields can appear within a modal window (as shown here), be revealed with a nice sliding animation, or display entirely on the page (default).
+3. Display you donation forms within a responsive grid on any page to make it easy for your visitors to choose a giving option.
 
-4. GiveWP makes the donation process simple and easy for your donors. This helps maximize conversion rates and further empower your cause.
+4. Show of your donor's generosity with our customizable Donor Wall block and shortcode.
 
-5. The multi-level donation amount functionality allows you to set different giving levels for your donors to choose from. In addition, you can allow donors to specify custom donation amounts and even set donation goals.
+5. Manage your donors and receive key insights to maximize your fundraising efforts.
 
-6. The admin view of a donation form with multi-level amounts configured. GiveWP's flexible options allow you to control whether the amounts output as radio buttons, a select field, or input buttons.
+6. Extend GiveWP with a robust suite of powerful [Add-ons](https://go.givewp.com/addons "View all GiveWP Add-ons"). Accept recurring donations, credit cards, add custom form fields, and more!
 
-7. Don't need donation levels? No problem. You can set a default amount and allow your donor's to configure a custom donation amount to create a simple, yet powerful, donation form.
+7. GiveWP is thoroughly [documented](https://go.givewp.com/docs "Visit the GiveWP documentation") to help you get started quickly and learn basic to advanced features and functionalities.
 
-8. In-depth donation reports allow you to track just how much your cause has raised over time. You can even export the data to CSV or PDF formats.
-
-9. Extend GiveWP with a robust suite of powerful [Add-ons](https://go.givewp.com/addons "View all GiveWP Add-ons"). Accept recurring donations, credit cards, add custom form fields, and more!
-
-10. GiveWP is thoroughly [documented](https://go.givewp.com/docs "Visit the GiveWP documentation") to help you get started quickly and learn basic to advanced features and functionalities.
-
-11. GiveWP has a dedicated support team to help answer any questions you may have and help you through stumbling blocks.
+8. GiveWP has a dedicated support team to help answer any questions you may have and help you through stumbling blocks.
 
 == Changelog ==
+
+= 2.9.5: December 3rd, 2020 =
+* New: Added Jamaica to list of countries for onboarding
+* Fixed: Currency Switcher options display correctly on Windows machines
+* Fixed: Corrected style issues in Multi-Step forms on iOS devices
+* Fixed: Restored compatibility with WP versions prior to 5.1.1
+
+= 2.9.4: November 20th, 2020 =
+* Fixed: Revenue database migration for donations with an amount of 0 now work
+* Fixed: Restored compatibility with versions of WP prior to 5.5 when deleting donations
+* Fixed: Stripe single-input credit card fields work once again
+* Fixed: Donor's updating the card of Stripe subscriptions work again
+
+= 2.9.3: November 17th, 2020 =
+* Fixed: Stripe Credit Card donations now work when it is not the default gateway
+* Fixed: Stripe Checkout Modal are working again as well
+* Fixed: A MigrationRunner warning no longer displays on fresh installs and sites upgrading from 2.8.0
+
+= 2.9.2: November 9th, 2020 =
+* New: Added a method for manually triggering migrations to re-attempt failed migrations
+* Fixed: Resolved an issue when creating donations for currencies with different decimal ranges
+* Fixed: Free add-ons no longer cause license errors
+* Fixed: Resolved issue that prevented some donors from updating their subscription card or amount
+* Fixed: Stripe Modal now renders without any issues on different screen sizes
+* Fixed: Recover donation form to be ready for a retry after Stripe error
+* Fixed: Multi-step form now reflects form color when embedded on a page
+* Fixed: MultiForm Goal shortcode now supports comma separated lists
+* Fixed: Resolved issue with revenue table migration failing on MyISAM tables
+
+= 2.9.1: October 28th, 2020 =
+* Fixed: Restore PayPal Standard functionality that was affected by a name change in GiveWP 2.9.0 (#5414)
+* Fixed: Restore compatibility with WordPress 4.9
+
+= 2.9.0: October 27th, 2020 =
+* Added: New [PayPal Donations](https://givewp.com/lps/paypal-donations) gateway allows your donors to give using Debit or Credit Cards directly on your website with no additional fees
+* Added: New Multi-form Goal block combines progress from multiple donation forms towards a common goal
+* Added: Company Name can now be displayed on Donor Wall (#5374)
+* Added: Multi-step form styles are now compatible with Currency Switcher (#5220)
+* Changed: New database table handles revenue independently from donations for improved performance (#5257)
+* Fixed: Imported donations do not affect donation levels anymore (#5410)
+* Fixed: Reports for "All Time" are now inclusive of the first day (#5400)
+* Fixed: Tabbing through credit card fields now works in the expected order (#5380)
+* Fixed: Legacy form loading spinner no longer stutters (#5397)
+* Fixed: Field description text is now accessible and aligned (#5396)
 
 = 2.8.1: October 8th, 2020 =
 * Fixed: Donations now process for non-US countries using billing details [#5355](https://github.com/impress-org/givewp/pull/5355)
@@ -273,19 +325,19 @@ The 2% fee on Stripe donations only applies to donations taken via our free Stri
 
 = 2.7.1: June 30th, 2020 =
 * Fix: Resolved an issue with the 2.7.0 releasing causing the Form Grid shortcode to not render due to a PHP fatal error. [#4877](https://github.com/impress-org/givewp/issues/4877)
-* Fix: Updated a JavaScript version to the latest to prevent browser caching from causing the Reports widgets to not function until a hard browser refresh. [#4876](https://github.com/impress-org/givewp/pull/4876) 
+* Fix: Updated a JavaScript version to the latest to prevent browser caching from causing the Reports widgets to not function until a hard browser refresh. [#4876](https://github.com/impress-org/givewp/pull/4876)
 
 = 2.7.0: June 29th, 2020 =
 * New: We're excited to announce a new way to create your donation forms called "Form Templates". The first template is allows you to create a highly customizable multi-step donation form where you control all the text, colors, and images in place. Be sure to update to the latest version of your add-ons for full compatibility. [Read more about Form Templates](https://go.givewp.com/wpgivewp27)
 * New: Multiple Stripe Account is here! Now you can connect to multiple Stripe accounts and set them per donation form. That means organizations, like charities with chapters or schools with clubs that need to raise money online, can create different forms to accept donations through separate Stripe accounts. [Read more about Stripe Multi-Accounts](http://docs.givewp.com/stripe-free)
 * New: Our Gutenberg blocks' UI was improved so they are have a better user experience.
-* Tweak: Previous to this release we were packaging two TCPDF packages for backwards compatibility reason. We removed one of the packages and now are relying on the composer package. This means that you'll need to be running the PDF Receipts version add-on at 2.3.4 or higher for compatibility. [#4656](https://github.com/impress-org/givewp/pull/4656) 
+* Tweak: Previous to this release we were packaging two TCPDF packages for backwards compatibility reason. We removed one of the packages and now are relying on the composer package. This means that you'll need to be running the PDF Receipts version add-on at 2.3.4 or higher for compatibility. [#4656](https://github.com/impress-org/givewp/pull/4656)
 * Fix: If you install GiveWP and didn't configure anything there would be a JavaScript error on the frontend if Stripe is not connected but enabled, which it is by default for new installs. [#4709](https://github.com/impress-org/givewp/pull/4709)
 * Fix: Improved how reports are rounding percentages so that the trend comparisons are more accurate. [#4766](https://github.com/impress-org/givewp/issues/4766)
-* Fix: Monaco doesn't have states so don't display or require a state field when that country is selected. [#4773](https://github.com/impress-org/givewp/pull/4773) 
+* Fix: Monaco doesn't have states so don't display or require a state field when that country is selected. [#4773](https://github.com/impress-org/givewp/pull/4773)
 * Fix: Properly internationalized a tooltip in Stripe so translations properly display. [#4677](https://github.com/impress-org/givewp/pull/4677)
 * Fix: The "Add-ons" like on the plugin activation welcome screen was broken. [#4843](https://github.com/impress-org/givewp/pull/4843)
-* Fix: Resolved a caching conflict with WP Rocket that was preventing donation forms from being cached properly. [#4546](https://github.com/impress-org/givewp/pull/4546) 
+* Fix: Resolved a caching conflict with WP Rocket that was preventing donation forms from being cached properly. [#4546](https://github.com/impress-org/givewp/pull/4546)
 * Fix: Prevented a fatal error that could occur on the Donor profile screen in WP-Admin when the Stripe add-on is active but no Stripe payment gateways are enabled. [#4787](https://github.com/impress-org/givewp/pull/4787)
 
 = 2.6.3: May 19th, 2020 =
@@ -320,8 +372,8 @@ The 2% fee on Stripe donations only applies to donations taken via our free Stri
 * New: The Akismet SPAM feature has been improved with logs for admins to better understand why an email has been flagged as SPAM as well as a new Whitelist setting for them to allow email addresses to bypass the check. [#4110](https://github.com/impress-org/givewp/issues/4110)
 * Fix: Resolved an issue with the "Recalculate Income Amount and Donation Counts for a Form" not accurately recalculating when using Currency Switcher add-on. [#4447](https://github.com/impress-org/givewp/issues/4447)
 * Fix: Resolved an issue with large databases with more than 13,000 donors receiving a fatal error when viewing the donor's list screen. [#4444](https://github.com/impress-org/givewp/issues/4444)
-* Tweak: You can now activate any plugin within the GiveWP Licenses tab. This resolves an issue with "this plugin does not have a valid header" error admins were receiving. [#4443](https://github.com/impress-org/givewp/issues/4443) 
-* Tweak: Updated the `[give_login]` shortcode text output to "Username or Email Address" to match WP's login. Note: you have been able to always log in using email but now the text accurately reflects that. [#4434](https://github.com/impress-org/givewp/issues/4434) 
+* Tweak: You can now activate any plugin within the GiveWP Licenses tab. This resolves an issue with "this plugin does not have a valid header" error admins were receiving. [#4443](https://github.com/impress-org/givewp/issues/4443)
+* Tweak: Updated the `[give_login]` shortcode text output to "Username or Email Address" to match WP's login. Note: you have been able to always log in using email but now the text accurately reflects that. [#4434](https://github.com/impress-org/givewp/issues/4434)
 
 = 2.5.13: January 15th, 2020 =
 * Fix: Resolved an issue when using button mode of multiple donation buttons appearing incorrectly within shortcodes, blocks, and widgets. [#4379](https://github.com/impress-org/givewp/issues/4379)
@@ -702,7 +754,7 @@ The 2% fee on Stripe donations only applies to donations taken via our free Stri
 * Fix: GiveWP was conflicting with Beaver Builder preventing users from seeing the builder options within the WP-admin single page/post view. [#3207](https://github.com/impress-org/givewp/issues/3207)
 * Fix: GiveWP's API was not respecting the date range parameters passed to it. Now it does so you can filter the API by date ranges as expected. [#3191](https://github.com/impress-org/givewp/issues/3191)
 * Fix: This version contains a database cleanup routine to delete donation payment meta that is not attached to any payment. For instance, if you deleted a payment the metadata associated with it still remained prior to this version. With this upgrade the orphaned data will be removed. [#3205](https://github.com/impress-org/givewp/issues/3205)
-* Fix: Resolved PHP notices when exporting donor in lower PHP versions. [#3222](https://github.com/impress-org/givewp/issues/3222), [#3218](https://github.com/impress-org/givewp/issues/3218)
+* Fix: Resolved PHP notices when exporting donor in lower PHP versions. (#3222)[https://github.com/impress-org/givewp/issues/3222], [#3218](https://github.com/impress-org/givewp/issues/3218)
 * Fix: We've updated the donation form's form HTML tag ID so it's unique per form for better W3C compatibility and to ensure Stripe elements works as expected with multiple forms on a single page. [#3139](https://github.com/impress-org/givewp/issues/3139)
 * Fix: Several typos on the welcome guide were corrected. [#3230](https://github.com/impress-org/givewp/issues/3230)
 * Fix: Inline plugin upgrade notices were not displaying properly in previous versions. [#2789](https://github.com/impress-org/givewp/issues/2789)
@@ -812,18 +864,16 @@ The 2% fee on Stripe donations only applies to donations taken via our free Stri
 * Fix: Donors are now required to actually add content into the First Name field and not just use a space character to pass the validation. [#2562](https://github.com/impress-org/givewp/issues/2562)
 
 
-[See full changelog here >>](https://plugins.svn.wordpress.org/give/trunk/changelog.txt)
-
 == Upgrade Notice ==
 
+= 2.9.0 =
+This version contains a database upgrade that improves performance by migrating donation meta to a new revenue table. Please ensure you have a backup in place prior to updating and be sure to update GiveWP Core and then your GiveWP Add-ons to the latest versions for maximum compatibility.
+
 = 2.7.0 =
-This version contains a database upgrade for donation forms and Stripe. Please ensure you have a backup in place prior to updating and be sure to update GiveWP Core and then your GiveWP Add-ons to the latest versions for maximum compatibility. 
+This version contains a database upgrade for donation forms and Stripe. Please ensure you have a backup in place prior to updating and be sure to update GiveWP Core and then your GiveWP Add-ons to the latest versions for maximum compatibility.
 
 = 2.1.3 =
 This version contains a database cleanup routine to delete donation payment meta that is not attached to any payment. For instance, if you deleted a payment the metadata associated with it still remained prior to this version. With this upgrade the orphaned data will be removed.
 
 = 2.1.0 =
 This new version is full of many great features and enhancements. Please ensure you have a backup in place prior to updating and be sure to update GiveWP Core and then your GiveWP Add-ons to the latest versions for maximum compatibility.
-
-
-

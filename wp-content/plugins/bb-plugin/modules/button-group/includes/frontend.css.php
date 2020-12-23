@@ -33,18 +33,53 @@ if ( 'full' === $settings->width ) {
 	justify-content: <?php echo $button_group_horiz_align; ?>
 }
 
-<?php if ( ! empty( $settings->space_between ) ) : ?>
-	.fl-node-<?php echo $id; ?> .fl-button-group-layout-horizontal .fl-button-group-buttons {
-		column-gap: <?php echo $settings->space_between . $settings->space_between_unit; ?>;
-	}
-	.fl-node-<?php echo $id; ?> .fl-button-group-layout-horizontal .fl-button-group-buttons .fl-button-group-button + .fl-button-group-button {
-		padding-bottom: <?php echo $settings->space_between . $settings->space_between_unit; ?>;
-	}
-	.fl-node-<?php echo $id; ?> .fl-button-group-layout-vertical .fl-button-group-buttons .fl-button-group-button {
-		padding-bottom: <?php echo $settings->space_between . $settings->space_between_unit; ?>;
-	}
-	<?php
-endif;
+<?php
+
+// Align Horizontal -- Desktop
+if ( 'horizontal' === $settings->layout && ! empty( $settings->align ) ) {
+	FLBuilderCSS::rule( array(
+		'selector' => ".fl-node-$id .fl-button-group-layout-horizontal .fl-button-group-buttons",
+		'media'    => 'default',
+		'props'    => array(
+			'justify-content' => $module->map_horizontal_alignment( $settings->align ),
+		),
+	) );
+}
+
+// Align Horizontal -- Medium
+if ( 'horizontal' === $settings->layout && ! empty( $settings->align_medium ) ) {
+	FLBuilderCSS::rule( array(
+		'selector' => ".fl-node-$id .fl-button-group-layout-horizontal .fl-button-group-buttons",
+		'media'    => 'medium',
+		'props'    => array(
+			'justify-content' => $module->map_horizontal_alignment( $settings->align_medium ),
+		),
+	) );
+}
+
+// Align Horizontal -- Responsive
+if ( 'horizontal' === $settings->layout && ! empty( $settings->align_responsive ) ) {
+	FLBuilderCSS::rule( array(
+		'selector' => ".fl-node-$id .fl-button-group-layout-horizontal .fl-button-group-buttons",
+		'media'    => 'responsive',
+		'props'    => array(
+			'justify-content' => $module->map_horizontal_alignment( $settings->align_responsive ),
+		),
+	) );
+}
+
+// Button Spacing
+FLBuilderCSS::dimension_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'button_spacing',
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-button-group .fl-button-group-buttons .fl-button-group-button",
+	'props'        => array(
+		'padding-top'    => 'button_spacing_top',
+		'padding-right'  => 'button_spacing_right',
+		'padding-bottom' => 'button_spacing_bottom',
+		'padding-left'   => 'button_spacing_left',
+	),
+) );
 
 // Text (Color, Typography, etc)
 if ( ! empty( $settings->text_color ) ) :
@@ -72,7 +107,21 @@ FLBuilderCSS::typography_field_rule( array(
 	'selector'     => ".fl-builder-content .fl-node-$id .fl-button-group a.fl-button, .fl-builder-content .fl-node-$id .fl-button-group a.fl-button:visited",
 ) );
 
-// Padding
+// Button Padding
+FLBuilderCSS::dimension_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'button_padding',
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-button-group .fl-button-group-buttons .fl-button-group-button a.fl-button",
+	'unit'         => 'px',
+	'props'        => array(
+		'padding-top'    => 'button_padding_top',
+		'padding-right'  => 'button_padding_right',
+		'padding-bottom' => 'button_padding_bottom',
+		'padding-left'   => 'button_padding_left',
+	),
+) );
+
+// Container Padding
 FLBuilderCSS::dimension_field_rule( array(
 	'settings'     => $settings,
 	'setting_name' => 'padding',

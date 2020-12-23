@@ -113,6 +113,21 @@ if ( ! class_exists( 'PPW_API' ) ) {
 
 			register_rest_route(
 				'wppp/v1',
+				'/master-passwords/bulk-delete',
+				array(
+					'methods'             => 'POST',
+					'callback'            => array(
+						$this,
+						'bulk_delete_master_passwords',
+					),
+					'permission_callback' => function () {
+						return current_user_can( 'edit_posts' );
+					},
+				)
+			);
+
+			register_rest_route(
+				'wppp/v1',
 				'validate-password',
 				array(
 					'methods'             => 'POST',
@@ -258,6 +273,38 @@ if ( ! class_exists( 'PPW_API' ) ) {
 				array(
 					'result'  => array(),
 					'success' => false,
+				),
+				400
+			);
+		}
+
+		/**
+		 * Bulk delete master password.
+		 *
+		 * @param object $request Request from body.
+		 *
+		 * @return WP_REST_Response The REST response.
+		 */
+		public function bulk_delete_master_passwords( $request ) {
+			$ids        = $request->get_param( 'ids' );
+			$ppwp_repo  = new PPW_Repository_Passwords();
+			$is_deleted = $ppwp_repo->bulk_delete_passwords( $ids );
+			if ( $is_deleted ) {
+				return wp_send_json(
+					array(
+						'result'  => $is_deleted,
+						'success' => true,
+						'message' => 'Cool! You’ve successfully deleted the passwords'
+					),
+					200
+				);
+			}
+
+			return wp_send_json(
+				array(
+					'result'  => array(),
+					'success' => false,
+					'message' => ''
 				),
 				400
 			);
@@ -615,7 +662,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 		 */
 		public function validate_password( $request ) {
 			$post_id  = $request->get_param( 'post_id' );
-			$password = $request->get_param( 'password' );
+			$password = $request->get_param( 'post_password' );
 			$post_id  = absint( $post_id );
 			$password = wp_unslash( $password );
 
@@ -640,7 +687,7 @@ if ( ! class_exists( 'PPW_API' ) ) {
 				);
 			}
 
-			$post_content     = $post->post_content;
+			$post_content     = apply_filters( 'the_content', $post->post_content );
 			$password_service = new PPW_Password_Services();
 			$is_valid         = $password_service->is_valid_password_from_request( $post_id, $password );
 
@@ -653,6 +700,9 @@ if ( ! class_exists( 'PPW_API' ) ) {
 					400
 				);
 			}
+
+			// Don not check post type in PPWP shortcode.
+			add_filter( 'ppw_shortcode_allow_bypass_valid_post_type', '__return_true' );
 
 			return new WP_REST_Response(
 				array(

@@ -43,7 +43,7 @@ if ( 'underline' === $settings->style ) {
 				$class = ( 'yes' === $settings->show_icon || 'iconfall' === $settings->style ) ? '<span class="uabb-tabs-icon"><i class= " ' . $settings->items[ $i ]->tab_icon . '"></i></span>' : '';
 				?>
 
-			<div id="section-<?php echo esc_attr( $settings->style ); ?>-<?php echo esc_attr( $i ); ?>" class="<?php echo esc_attr( $settings->id ) . '-' . esc_attr( $i ); ?> section <?php echo ( 0 === $i ) ? 'uabb-content-current' : ''; ?>">
+			<div id="section-<?php echo esc_attr( $settings->style ); ?>-<?php echo esc_attr( $i ); ?>" class="<?php echo esc_attr( $settings->id ) . '-' . esc_attr( $i ); ?> section <?php echo ( (int) $settings->active_tab === $i ) ? 'uabb-content-current' : ''; ?>">
 				<?php if ( 'accordion' === $settings->responsive ) : ?>
 				<div class="uabb-tab-acc-title uabb-acc-<?php echo esc_attr( $i ); ?>">
 					<<?php echo esc_attr( $settings->title_tag_selection ); ?> class="uabb-title-tag">

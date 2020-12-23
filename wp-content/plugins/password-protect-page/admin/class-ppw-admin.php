@@ -105,6 +105,7 @@ class PPW_Admin {
 				$assert_services->load_assets_for_entire_site_page();
 			}
 			$assert_services->load_assets_for_shortcode_page();
+			$assert_services->load_assets_for_external_page();
 			$assert_services->load_assets_for_shortcodes();
 			$assert_services->load_css_hide_feature_set_password_wp();
 			$assert_services->load_js_show_notice_deactivate_plugin();
@@ -264,7 +265,7 @@ class PPW_Admin {
 	 */
 	public function ppw_add_menu() {
 		$setting_page = new PPW_Settings();
-		add_menu_page( 'Protect Password Settings', 'Password Protect WordPress', 'administrator', PPW_Constants::MENU_NAME, array(
+		add_menu_page( 'Protect Password Settings', 'Password Protect WordPress', 'manage_options', PPW_Constants::MENU_NAME, array(
 			$setting_page,
 			'render_ui'
 		), PPW_DIR_URL . 'admin/images/ppw-icon-20x20.png' );
@@ -275,6 +276,8 @@ class PPW_Admin {
 		if ( ! is_pro_active_and_valid_license() ) {
 			$this->sitewide_submenu();
 		}
+
+		$this->load_external_submenu();
 	}
 
 	/**
@@ -287,6 +290,26 @@ class PPW_Admin {
 			$setting_page,
 			'render_ui',
 		) );
+	}
+
+
+	/**
+	 * Add external submenu.
+	 */
+	public function load_external_submenu() {
+		$setting_page = new PPW_External_Settings();
+
+		add_submenu_page(
+			PPW_Constants::MENU_NAME,
+			__( 'PPWP › Integrations', PPW_Constants::DOMAIN ),
+			__( 'Integrations', PPW_Constants::DOMAIN ),
+			'manage_options',
+			PPW_Constants::EXTERNAL_SERVICES_PREFIX,
+			array(
+				$setting_page,
+				'render_ui',
+			)
+		);
 	}
 
 	/**
@@ -417,6 +440,19 @@ class PPW_Admin {
 		<?php
 	}
 
+	public function ppw_free_render_content_external_recaptcha() {
+		?>
+		<div class="ppw_setting_page">
+			<?php
+			include PPW_DIR_PATH . 'includes/views/external/view-ppw-general.php';
+			if ( ! is_pro_active_and_valid_license() ) {
+				include PPW_DIR_PATH . 'includes/views/sidebar/view-ppw-sidebar.php';
+			}
+			?>
+		</div>
+		<?php
+	}
+
 	/**
 	 * Render Master Passwords tab
 	 */
@@ -485,6 +521,33 @@ class PPW_Admin {
 
 		$data_settings = wp_unslash( $_REQUEST['settings'] );
 		update_option( PPW_Constants::GENERAL_OPTIONS, wp_json_encode( $data_settings ), 'no' );
+		wp_die( true );
+	}
+
+	/**
+	 * Update settings
+	 */
+	public function ppw_free_update_external_settings() {
+		$setting_keys = array(
+			PPW_Constants::RECAPTCHA_SCORE,
+			PPW_Constants::RECAPTCHA_API_KEY,
+			PPW_Constants::RECAPTCHA_API_SECRET,
+			PPW_Constants::USING_RECAPTCHA
+		);
+		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
+			wp_send_json(
+				array(
+					'is_error' => true,
+					'message'  => PPW_Constants::BAD_REQUEST_MESSAGE,
+				),
+				400
+			);
+
+			wp_die();
+		}
+
+		$data_settings = wp_unslash( $_REQUEST['settings'] );
+		update_option( PPW_Constants::EXTERNAL_OPTIONS, wp_json_encode( $data_settings ), 'no' );
 		wp_die( true );
 	}
 

@@ -165,6 +165,7 @@ class Generate_Ldjson extends Generate_Image {
 	 *
 	 * @since 2.9.3
 	 * @since 3.0.0 This whole functions now only listens to the searchbox option.
+	 * @since 4.1.2 Now properly slashes the search URL.
 	 *
 	 * @return string escaped LD+JSON Search and Sitename script.
 	 */
@@ -191,6 +192,7 @@ class Generate_Ldjson extends Generate_Image {
 		];
 
 		//= The searchbox part.
+		$pattern     = '%s{%s}';
 		$action_name = 'search_term_string';
 		$search_link = $this->pretty_permalinks ? \trailingslashit( \get_search_link() ) : \get_search_link();
 		/**
@@ -199,10 +201,16 @@ class Generate_Ldjson extends Generate_Image {
 		 */
 		$search_url = (string) \apply_filters( 'the_seo_framework_ld_json_search_url', $search_link );
 
+		if ( ! empty( $GLOBALS['wp_rewrite']->get_search_permastruct() ) ) {
+			$pattern    = \user_trailingslashit( '%s{%s}', 'search' );
+			$search_url = \trailingslashit( $search_url );
+		}
+
 		$data += [
 			'potentialAction' => [
 				'@type'       => 'SearchAction',
-				'target'      => sprintf( '%s{%s}', \esc_url( $search_url ), $action_name ),
+				// not properly sanitized; however, search_term_string is inert.
+				'target'      => sprintf( $pattern, \esc_url( $search_url ), $action_name ),
 				'query-input' => sprintf( 'required name=%s', $action_name ),
 			],
 		];
@@ -326,7 +334,7 @@ class Generate_Ldjson extends Generate_Image {
 	 *
 	 * @since 4.0.0
 	 * @uses $this->get_image_details()
-	 * @ignore Not used internally, only externally.
+	 * @api Not used internally, only externally.
 	 *
 	 * @param array|null $args    The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                            Leave null to autodetermine query.

@@ -487,6 +487,7 @@ body .fl-builder-bar .fl-builder-bar-content {
 	transition-property: background-color, opacity, transform;
 	transition-duration: .35s;
 	pointer-events: auto;
+	letter-spacing: normal;
 }
 body .fl-builder-bar .fl-builder-bar-content.is-muted {
 	pointer-events: none;
@@ -1987,6 +1988,7 @@ span.fl-builder-block-no-node-templates:hover {
 }
 .fl-builder--panel-view.is-showing {
 	display: block;
+	letter-spacing: normal;
 }
 
 .fl-builder--content-library-panel.ui-draggable-dragging {
@@ -2916,6 +2918,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	padding: 6px 0;
 	position: absolute;
 	text-align: left;
+	letter-spacing: normal;
 	top: 100%;
 	width: 165px;
 	z-index: 100008;
@@ -3035,6 +3038,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	flex-direction: column;
 	padding: 25px;
 	text-align: center;
+	letter-spacing: normal;
 }
 .fl-builder-actions-title {
 	color: #333 !important;
@@ -3072,6 +3076,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	color: #333 !important;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	font-size: 16px !important;
+	letter-spacing: normal;
 	line-height: 24px;
 	padding: 30px;
 }
@@ -3358,6 +3363,7 @@ form.fl-builder-settings {
 	padding: 0;
 	display: flex;
 	flex-direction: column;
+	letter-spacing: normal;
 }
 .fl-builder-settings-message {
 	font-size: 15px !important;
@@ -4808,6 +4814,9 @@ input[type=number].fl-field-popup-slider-focus {
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 }
+.fl-builder-edit .media-modal-content {
+	letter-spacing: normal;
+}
 .fl-builder-edit .media-modal-content h1 {
 	font-family: inherit;
 }
@@ -5450,6 +5459,7 @@ li.as-result-item em {
 #tiptip_content {
 	background: #333;
 	box-shadow: none;
+	letter-spacing: normal;
 }
 /* @endgroup Settings Lightboxes */
 
@@ -6284,4 +6294,14 @@ Rules to ensure compatibility with v2.0.
 }
 .fl-builder-ui-skin--light .select2-search__field:-moz-placeholder {
 	color: #808080 !important;
+}
+
+.fl-diff td.diff-addedline,
+.fl-diff td.diff-context,
+.fl-diff td.diff-deletedline span {
+	display: none;
+}
+
+.fl-diff table.diff {
+	width: 100%;
 }

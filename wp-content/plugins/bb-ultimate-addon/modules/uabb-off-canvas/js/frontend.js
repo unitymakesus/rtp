@@ -34,7 +34,9 @@
 
 				get_li.each(function() {
 
-					get_li.addClass( 'uabb-offcanvas-close' );
+					if ( !( $(this).hasClass( 'uabb-has-submenu' ) ) ) {
+						$(this).addClass( 'uabb-offcanvas-close' );
+					}
 
 				});
 			}

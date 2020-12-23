@@ -895,6 +895,18 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'integration-class' => 'WPML_UABB_Infolist',
 			);
 
+			// Image / Icon module.
+			$form['image-icon'] = array(
+				'conditions' => array( 'type' => 'image-icon' ),
+				'fields'     => array(
+					array(
+						'field'       => 'photo_url',
+						'type'        => __( 'Photo : URL', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
+			);
+
 			// Photo.
 			$form['uabb-photo'] = array(
 				'conditions' => array( 'type' => 'uabb-photo' ),

@@ -37,12 +37,16 @@ if ( ! empty( $settings->button_bg_color ) ) {
 	$bg_grad_start = '#' . FLBuilderColor::adjust_brightness( uabb_parse_color_to_hex( $settings->button_bg_color ), 30, 'lighten' );
 }
 
-if ( FLBuilder::fa5_pro_enabled() ) {
-	?>
+if ( method_exists( 'FLBuilder', 'fa5_pro_enabled' ) ) {
+	if ( FLBuilder::fa5_pro_enabled() ) {
+		?>
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-caf-form .uabb-caf-select-custom:after {
 	font-family: 'Font Awesome 5 Pro';
 }
-<?php } ?>
+		<?php
+	}
+}
+?>
 
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-caf-form {
 

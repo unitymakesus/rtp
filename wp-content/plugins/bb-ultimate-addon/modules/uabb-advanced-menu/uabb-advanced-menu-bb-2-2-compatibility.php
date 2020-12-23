@@ -495,6 +495,19 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
+						'hamburger_icon_size'              => array(
+							'type'       => 'unit',
+							'label'      => __( 'Hamburger Icon Size', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle.hamburger',
+								'property' => 'font-size',
+								'unit'     => 'px',
+							),
+						),
 						'creative_menu_navigation_alignment' => array(
 							'type'       => 'align',
 							'label'      => __( 'Navigation Alignment', 'uabb' ),

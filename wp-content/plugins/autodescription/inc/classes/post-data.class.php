@@ -462,12 +462,11 @@ class Post_Data extends Detect {
 
 			// This is sent via GET. Keep using $_REQUEST for future-compatibility.
 			foreach ( (array) $_REQUEST['autodescription-bulk'] as $key => $value ) :
-				if ( 'nochange' === $value ) continue;
-
 				switch ( $key ) :
 					case 'noindex':
 					case 'nofollow':
 					case 'noarchive':
+						if ( 'nochange' === $value ) continue 2;
 						$new_data[ "_genesis_$key" ] = $value;
 						break;
 
@@ -548,7 +547,7 @@ class Post_Data extends Detect {
 	}
 
 	/**
-	 * Fetch latest public post ID.
+	 * Fetch latest public post/page ID.
 	 * Memoizes the return value.
 	 *
 	 * @since 2.4.3

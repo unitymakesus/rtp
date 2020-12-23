@@ -291,14 +291,13 @@ final class FLBuilderImporterDataFix {
 					$m[3] = str_replace( '<br data-fl-fixed=true />', "\n", $m[3] );
 				}
 				$m[3] = str_replace( '<br data-fl-fixed=true />', '<br />', $m[3] );
-				return 's:' . strlen( $m[3] ) . ':"' . $m[3] . '";';
+				return $m[1] . '";s:' . strlen( $m[3] ) . ':"' . $m[3] . '";';
 			}, self::sanitize_from_word( $data, $linebreaks ) );
 		} else {
 			$data = preg_replace_callback('!s:(\d+):"(.*?)";!', function( $m ) {
 				return 's:' . strlen( $m[2] ) . ':"' . $m[2] . '";';
 			}, self::sanitize_from_word( $data, $linebreaks ) );
 		}
-
 		$data = maybe_unserialize( $data );
 
 		// return if maybe_unserialize() returns an object or array, this is good.

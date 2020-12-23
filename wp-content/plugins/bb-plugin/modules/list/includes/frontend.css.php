@@ -93,6 +93,17 @@ if ( ! empty( $settings->icon_size ) ) :
 	<?php
 endif;
 
+// Icon Style - Width
+if ( ! empty( $settings->icon_width ) ) :
+	?>
+	.fl-node-<?php echo $id; ?> .fl-list-item-heading-icon .fl-list-item-icon,
+	.fl-node-<?php echo $id; ?> .fl-list-item-content-icon .fl-list-item-icon {
+		width: <?php echo $settings->icon_width . 'px'; ?>;
+		text-align: center;
+	}
+	<?php
+endif;
+
 // Icon Padding
 FLBuilderCSS::dimension_field_rule( array(
 	'settings'     => $settings,

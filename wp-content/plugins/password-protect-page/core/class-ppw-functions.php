@@ -361,12 +361,18 @@ function ppw_core_render_login_form() {
 	// With this filter user can choose another action URL to use PPF Form.
 	$url = apply_filters( 'ppwp_ppf_action_url', $url );
 
+	if ( ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS ) ) {
+		$recaptcha_input = '<input type="hidden" name="ppw_recaptcha_response" id="ppwRecaptchaResponse" />';
+	} else {
+		$recaptcha_input = '';
+	}
+
 	// Need to wrap the form by parent div because HTML will pre-append the </br> without parent div.
 	// TODO: move to view file.
 	ob_start();
 	?>
 	<div class="ppw-post-password-container">
-		<form action="<?php echo esc_attr( esc_url( $url ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
+		<form action="<?php echo esc_attr( esc_url( $url ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/><?php echo $recaptcha_input; ?></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
 	</div>
 	<?php
 	$output = ob_get_clean();
@@ -380,8 +386,8 @@ function ppw_core_render_login_form() {
 				"ppw-single-password-form",
 				'ppw_data',
 				array(
-					'restUrl' => get_rest_url(),
-					'nonce'   => wp_create_nonce( 'wp_rest' ),
+					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'ppw_password_nonce' ),
 				)
 			);
 		}
@@ -392,15 +398,29 @@ function ppw_core_render_login_form() {
 
 /**
  * Get "No reload page" option value
- * 
+ *
  * @return bool
  */
 function ppw_core_get_no_load_page_option() {
 	if ( defined( 'PPW_PPF_NOT_RELOAD' ) ) {
 		return PPW_PPF_NOT_RELOAD;
 	}
+	// Check user turn on our option.
+	$allowed = ppw_core_get_setting_type_bool_by_option_name( 'wpp_no_reload_page', PPW_Constants::MISC_OPTIONS );
+	if ( ! $allowed ) {
+		return false;
+	}
 
-	return ppw_core_get_setting_type_bool_by_option_name( 'wpp_no_reload_page', PPW_Constants::MISC_OPTIONS );
+	// Not handle with product because we are not render product layout so it make wrong UI.
+	$excluded = ( function_exists( 'is_product' ) && is_product() )
+				|| ( function_exists( 'is_shop') && is_shop() );
+	$excluded = apply_filters( 'ppw_not_reload_excluded', $excluded );
+
+	if ( $excluded ) {
+		return false;
+	}
+
+	return true;
 }
 
 /**

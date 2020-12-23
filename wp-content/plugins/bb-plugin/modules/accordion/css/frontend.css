@@ -50,7 +50,6 @@
 	filter: alpha(opacity = 50);
 }
 
-
 .fl-accordion-content {
 	display: none;
 }
@@ -86,4 +85,12 @@
 }
 .fl-accordion-large .fl-accordion-content {
 	padding: 0 50px 25px 25px;
+}
+
+.rtl .fl-accordion-item .fl-accordion-button-label,
+.rtl .fl-accordion-item .fl-accordion-content * {
+	text-align: right;
+}
+.rtl .fl-accordion-item .fl-accordion-button-icon {
+	padding-left: 0;
 }

@@ -36,7 +36,7 @@
 .fl-node-<?php echo esc_attr( $id ); ?> .uabb-contact-form {
 	<?php if ( 'color' === $settings->form_bg_type ) { ?>
 		background-color: <?php echo esc_attr( $settings->form_bg_color ); ?>;
-	<?php } elseif ( 'image' === $settings->form_bg_type ) { ?>
+	<?php } elseif ( 'image' === $settings->form_bg_type && isset( FLBuilderPhoto::get_attachment_data( $settings->form_bg_img )->url ) ) { ?>
 		background-image: url(<?php echo esc_attr( FLBuilderPhoto::get_attachment_data( $settings->form_bg_img )->url ); ?>);
 		background-position: <?php echo esc_attr( $settings->form_bg_img_pos ); ?>;
 		background-size: <?php echo esc_attr( $settings->form_bg_img_size ); ?>;

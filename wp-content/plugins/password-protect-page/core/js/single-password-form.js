@@ -6,15 +6,22 @@
   function handleSubmitBtn(evt) {
 	evt.preventDefault();
 	$form = $(this);
-	var post_id = $form.find('input[name="post_id"]').val();
-	var password = $form.find('input[name="post_password"]').val();
-	$submitBtn = $form.find('input[type=submit]');
+	$inputs = $form.find('input');
+	var values = {};
+	var $submitBtn = {};
+	$inputs.each(function() {
+	  if ( 'Submit' !== this.name ) {
+		values[this.name] = $(this).val();
+	  } else {
+		$submitBtn = $(this);
+	  }
+	});
+	values['nonce'] = ppw_data.nonce;
+	values['action'] = 'ppw_validate_password';
+
 	$submitBtn.prop("disabled", true);
 	sendRequestToValidatePassword(
-	  {
-		post_id,
-		password
-	  },
+	    values,
 	  function(data, error) {
 		$submitBtn.prop("disabled", false);
 		var $message = $form.find('div.ppw-ppf-error-msg');
@@ -35,11 +42,7 @@
 
   function sendRequestToValidatePassword(_data, cb) {
 	$.ajax({
-	  beforeSend: function (xhrObj) {
-		xhrObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhrObj.setRequestHeader("X-WP-Nonce", ppw_data.nonce);
-	  },
-	  url: ppw_data.restUrl + 'wppp/v1/validate-password',
+	  url: ppw_data.ajaxUrl,
 	  type: 'POST',
 	  data: _data,
 	  success: function (data) {

@@ -202,6 +202,7 @@ class FLGalleryModule extends FLBuilderModule {
 					$data->width       = $media[ count( $media ) - 1 ]['width'];
 					$data->link        = $link;
 					$data->src         = $src;
+					$data->data_source = 'smugmug';
 
 					// Push the photo data.
 					array_push( $photos, $data );

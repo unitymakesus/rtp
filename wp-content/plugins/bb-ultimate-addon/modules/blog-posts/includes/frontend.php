@@ -107,11 +107,11 @@ if ( 'masonary' === $settings->is_carousel || 'grid' === $settings->is_carousel 
 		}
 
 
-		$top_featured_image_content = $module->render_featured_image( 'top', $the_query->posts[ $i ], $i );
+		$top_featured_image_content = $module->render_featured_image( $the_query->posts[ $i ], $i );
 
-		$left_featured_image_content       = $module->render_featured_image( 'left', $the_query->posts[ $i ], $i );
-		$background_featured_image_content = $module->render_featured_image( 'background', $the_query->posts[ $i ], $i );
-		$right_featured_image_content      = $module->render_featured_image( 'right', $the_query->posts[ $i ], $i );
+		$left_featured_image_content       = $module->render_featured_image( $the_query->posts[ $i ], $i, 'left' );
+		$background_featured_image_content = $module->render_featured_image( $the_query->posts[ $i ], $i, 'background' );
+		$right_featured_image_content      = $module->render_featured_image( $the_query->posts[ $i ], $i, 'right' );
 
 		$left_hide_class = ( '' === $left_featured_image_content && '' === $right_featured_image_content ) ? 'uabb-empty-img' : '';
 
@@ -148,7 +148,7 @@ if ( 'masonary' === $settings->is_carousel || 'grid' === $settings->is_carousel 
 <?php
 
 /*
- * Render Pagination
+ *  Render Pagination
  */
 
 if ( 'carousel' !== $settings->is_carousel && 'yes' === $show_pagination ) {

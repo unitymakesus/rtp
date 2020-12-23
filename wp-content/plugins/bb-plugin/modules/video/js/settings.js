@@ -2,17 +2,6 @@
 
 	FLBuilder.registerModuleHelper( 'video', {
 
-		// rules: {
-		// 	service: {
-		// 		required: true
-		// 	}
-		// },
-
-		init: function()
-		{
-
-		},
-
 		submit: function()
 		{
 

@@ -67,6 +67,7 @@ class FLSearchModule extends FLBuilderModule {
 		$args->keyword     = $s;
 		$args->post_type   = 'any';
 		$args->post_status = 'publish';
+		$args->settings    = $settings;
 
 		// Remove paged & offset parameters
 		add_filter( 'fl_builder_loop_query_args', array( $this, 'remove_pagination_args' ), 10 );

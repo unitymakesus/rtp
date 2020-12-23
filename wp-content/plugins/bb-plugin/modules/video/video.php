@@ -117,7 +117,8 @@ class FLVideoModule extends FLBuilderModule {
 		$poster_html = '';
 
 		if ( 'yes' === $this->settings->video_lightbox ) {
-			if ( empty( $this->get_poster_url() ) ) {
+			$poster_url = $this->get_poster_url();
+			if ( empty( $poster_url ) ) {
 				$poster_html .= '<div class="fl-video-poster">';
 				$poster_html .= sprintf( '%s', __( 'Please specify a poster image if Video Lightbox is enabled.', 'fl-builder' ) );
 				$poster_html .= '</div>';

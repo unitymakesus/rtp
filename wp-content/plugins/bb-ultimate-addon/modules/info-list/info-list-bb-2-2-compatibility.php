@@ -58,10 +58,9 @@ FLBuilder::register_module(
 							'label'      => __( 'List Alignment', 'uabb' ),
 							'responsive' => 'true',
 							'preview'    => array(
-								'type'     => 'css',
-								'selector' => '',
-								'property' => 'text-align',
+								'type' => 'refresh',
 							),
+							'help'       => __( 'This option will only work when List Connector is disabled.', 'uabb' ),
 						),
 						'align_items'                => array(
 							'type'    => 'select',

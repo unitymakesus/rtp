@@ -345,7 +345,7 @@ if ( 'true' === $settings->radio_check_custom_option ) {
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-wpf-styler .wpforms-form .wpforms-field input[type="checkbox"]:checked + label:before {
 		content: "\2714";
 		font-size: calc(<?php echo esc_attr( $font_size ); ?>px - <?php echo esc_attr( $settings->radio_check_border_width ); ?>px );
-		color: <?php echo esc_attr( $settings->radio_check_selected_color ); ?>;
+		color: #<?php echo esc_attr( $settings->radio_check_selected_color ); ?>;
 	}
 
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-wpf-styler .wpforms-form .wpforms-field input[type="checkbox"] + label:before {

@@ -44,10 +44,20 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		 * @return void
 		 */
 		public function customize_register( $wp_customize ) {
+			if ( ! class_exists( 'PPW_Title_Group_Control' ) ) {
+				include PPW_DIR_PATH . 'includes/customizers/class-ppw-title-group-control.php';
+			}
+			if ( ! class_exists( 'PPW_Toggle_Control' ) ) {
+				include PPW_DIR_PATH . 'includes/customizers/class-ppw-toggle-control.php';
+			}
+			if ( ! class_exists( 'PPW_Text_Editor_Custom_Control' ) ) {
+				include PPW_DIR_PATH . 'includes/customizers/class-ppw-text-editor-control.php';
+			}
 
 			/* register toggle control */
 			$wp_customize->register_control_type( 'PPW_Toggle_Control' );
 			$wp_customize->register_control_type( 'PPW_Title_Group_Control' );
+			$wp_customize->register_control_type( 'PPW_Text_Editor_Custom_Control' );
 
 			$wp_customize->add_panel( 'ppwp',
 				array(
@@ -57,60 +67,6 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 					'title'          => __( 'PPWP Single Password Form', 'password-protect-page' ),
 				)
 			);
-
-
-//			TODO: --- Comment this function to develop later.---
-//          /* general section */
-//			$wp_customize->add_section( 'ppwp_form_general',
-//				array(
-//					'title' => __( 'General', 'password-protect-page' ),
-//					'panel' => 'ppwp',
-//				) );
-//
-//			/* background color - form container */
-//			$wp_customize->add_setting( 'ppwp_form_general_background_color',
-//				array(
-//					'default' => PPW_Constants::DEFAULT_FORM_BACKGROUND_COLOR,
-//				) );
-//
-//			$wp_customize->add_control(
-//				new \WP_Customize_Color_Control(
-//					$wp_customize,
-//					'ppwp_form_general_background_color_control',
-//					array(
-//						'label'       => __( 'Background Color', 'password-protect-page' ),
-//						'description' => __( 'Change the background color of the form', 'password-protect-page' ),
-//						'section'     => 'ppwp_form_general',
-//						'settings'    => 'ppwp_form_general_background_color',
-//					)
-//				)
-//			);
-//
-//			// padding - form container
-//			$wp_customize->add_setting( 'ppwp_form_general_padding', array(
-//				'default' => PPW_Constants::DEFAULT_FORM_PADDING,
-//			) );
-
-//			$wp_customize->add_control( 'ppwp_form_general_padding_control', array(
-//				'label'       => __( 'Padding', 'password-protect-page' ),
-//				'description' => __( 'Padding in PX', 'password-protect-page' ),
-//				'section'     => 'ppwp_form_general',
-//				'settings'    => 'ppwp_form_general_padding',
-//				'type'        => 'text',
-//			) );
-//
-//			// margin - form container
-//			$wp_customize->add_setting( 'ppwp_form_general_margin', array(
-//				'default' => PPW_Constants::DEFAULT_FORM_MARGIN,
-//			) );
-//
-//			$wp_customize->add_control( 'ppwp_form_general_margin_control', array(
-//				'label'       => __( 'Margin', 'password-protect-page' ),
-//				'description' => __( 'Margin in PX', 'password-protect-page' ),
-//				'section'     => 'ppwp_form_general',
-//				'settings'    => 'ppwp_form_general_margin',
-//				'type'        => 'text',
-//			) );
 
 			/* form instructions section */
 			$wp_customize->add_section( 'ppwp_form_instructions', array(
@@ -445,8 +401,26 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 						'label'    => __( 'Error Message', 'password-protect-page' ),
 						'section'  => 'ppwp_form_error_message',
 						'settings' => 'ppwp_form_error_message_text',
-						'type'     => 'editor',
+						'type'     => 'textarea',
 						'priority' => 10,
+					)
+				)
+			);
+
+			/* error message text */
+			$wp_customize->add_setting( 'ppwp_form_error_recaptcha_message_text', array(
+				'default' => __( PPW_Constants::DEFAULT_ERROR_RECAPTCHA_MESSAGE, 'password-protect-page' ),
+			) );
+			$wp_customize->add_control(
+				new PPW_Text_Editor_Custom_Control(
+					$wp_customize,
+					'ppwp_form_error_recaptcha_message_text',
+					array(
+						'label'    => __( 'Failed reCAPTCHA Message', 'password-protect-page' ),
+						'section'  => 'ppwp_form_error_message',
+						'settings' => 'ppwp_form_error_recaptcha_message_text',
+						'type'     => 'textarea',
+						'priority' => 15,
 					)
 				)
 			);
@@ -649,9 +623,15 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		 * Enqueue script for customizer control
 		 */
 		public function enqueue() {
-			wp_enqueue_script( 'ppwp-customizer', PPW_DIR_URL . 'admin/js/customizer.js', array( 'jquery' ) );
+			wp_enqueue_script( 'ppwp-customizer', PPW_DIR_URL . 'admin/js/customizer.js', array( 'jquery' ), PPW_VERSION );
+			wp_localize_script(
+				"ppwp-customizer",
+				'ppw_data',
+				array(
+					'backgroundDIR' => PPW_DIR_URL . 'includes/customizers/assets/images/backgrounds/',
+				)
+			);
 		}
-
 	}
 }
 

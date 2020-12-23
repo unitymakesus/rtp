@@ -678,3 +678,27 @@ select.uabb-masonary-filters {
 .uabb-module-content .uabb-text-editor *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b) {
     font-weight: inherit;
 }
+
+.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms {
+    margin: 0;
+}
+
+.uabb-blog-posts .uabb-post__terms-wrap {
+    margin-bottom: 10px;
+}
+
+.uabb-blog-posts .uabb-post__terms .uabb-listing__terms-link {
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+    line-height: inherit;
+    font-style: inherit;
+}
+
+.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms {
+    padding: 5px 10px;
+}
+
+.uabb-blog-posts .uabb-post__terms-wrap .uabb-post__terms i {
+    margin-right: 2px;
+}

@@ -225,7 +225,7 @@ if ( 'center' === $settings->align ) {
 		$get_icon_img_width = $im_icon_size + $im_icon_backside + $settings->icon_text_spacing;
 	} elseif ( 'photo' === $settings->image_type ) {
 		if ( 'custom' === $settings->image_style ) {
-			$im_backside = ( $settings->img_bg_size * 2 ) + ( $settings->img_border_width * 2 );
+			$im_backside = ( (int) $settings->img_bg_size * 2 ) + ( (int) $settings->img_border_width * 2 );
 		} else {
 			$im_backside = 0;
 		}

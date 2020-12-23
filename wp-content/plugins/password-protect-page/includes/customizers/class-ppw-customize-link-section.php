@@ -4,8 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require_once( ABSPATH . '/wp-includes/class-wp-customize-section.php' );
-
 if ( class_exists( 'WP_Customize_Section' ) && ! class_exists( 'PPW_Customize_Link_Section' ) ) {
 
 	/**

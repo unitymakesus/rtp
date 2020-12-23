@@ -843,8 +843,16 @@ https://core.trac.wordpress.org/ticket/49285
 https://github.com/WordPress/gutenberg/issues/17718
 */
 @supports (-webkit-touch-callout: inherit) {
-  .fl-row.fl-row-bg-parallax .fl-row-content-wrap {
+  .fl-row.fl-row-bg-parallax .fl-row-content-wrap,
+  .fl-row.fl-row-bg-fixed .fl-row-content-wrap {
     background-position: center !important;
     background-attachment: scroll !important;
   }
+}
+
+@supports (-webkit-touch-callout: none) {
+	.fl-row.fl-row-bg-fixed .fl-row-content-wrap {
+		background-position: center !important;
+		background-attachment: scroll !important;
+	}
 }

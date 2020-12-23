@@ -19,12 +19,70 @@ class FLButtonGroupModule extends FLBuilderModule {
 	}
 
 	/**
+	 * This is used in generating the alignment of the horizontal buttons.
+	 *
+	 * @method map_horizontal_alignment
+	 * @return string
+	 */
+	public function map_horizontal_alignment( $align ) {
+		$map_alignment = array(
+			'left'   => 'flex-start',
+			'center' => 'center',
+			'right'  => 'flex-end',
+		);
+
+		return $map_alignment[ $align ];
+	}
+
+	/**
 	 * @method enqueue_scripts
 	 */
 	public function enqueue_scripts() {
 		$this->add_js( 'jquery-magnificpopup' );
 		$this->add_css( 'font-awesome-5' );
 		$this->add_css( 'jquery-magnificpopup' );
+	}
+
+	/**
+	 * Ensure backwards compatibility with old settings.
+	 *
+	 * @param object $settings A module settings object.
+	 * @param object $helper A settings compatibility helper.
+	 * @return object
+	 */
+	public function filter_settings( $settings, $helper ) {
+		// Convert 'space_between' Unit field to 'button_spacing' Dimension field.
+
+		if ( isset( $settings->space_between ) ) {
+
+			// Left and Top Spacing
+			foreach ( array( '_left', '_left_medium', '_left_responsive', '_top', '_top_medium', '_top_responsive' ) as $key ) {
+				$settings->{ 'button_spacing' . $key } = 0;
+			}
+
+			// Right Spacing -- apply on horizontal layout.
+			if ( 'horizontal' === $settings->layout ) {
+				foreach ( array( '_right', '_right_medium', '_right_responsive' )  as $key ) {
+					$settings->{ 'button_spacing' . $key } = intval( $settings->space_between );
+				}
+			}
+
+			// Bottom Spacing
+			foreach ( array( '_bottom', '_bottom_medium', '_bottom_responsive' )  as $key ) {
+				$settings->{ 'button_spacing' . $key } = intval( $settings->space_between );
+			}
+
+			unset( $settings->space_between );
+		}
+
+		if ( isset( $settings->space_between_unit ) ) {
+			foreach ( array( '_unit', '_medium_unit', '_responsive_unit' ) as $unit ) {
+				$settings->{'button_spacing' . $unit } = $settings->space_between_unit;
+			}
+			unset( $settings->space_between_unit );
+		}
+
+		return $settings;
 	}
 }
 
@@ -38,7 +96,14 @@ FLBuilder::register_module('FLButtonGroupModule', array(
 			'general' => array(
 				'title'  => '',
 				'fields' => array(
-					'items' => array(
+					'button_group_label' => array(
+						'type'        => 'text',
+						'label'       => __( 'Button Group Label', 'fl-builder' ),
+						'placeholder' => __( 'Button Group Label', 'fl-builder' ),
+						'connections' => array( 'string' ),
+						'help'        => __( 'A unique identifier for the Button Group. This helps in accessibility.', 'fl-builder' ),
+					),
+					'items'              => array(
 						'type'         => 'form',
 						'label'        => __( 'Button', 'fl-builder' ),
 						'form'         => 'buttons_form', // ID from registered form below
@@ -55,7 +120,7 @@ FLBuilder::register_module('FLButtonGroupModule', array(
 			'style'  => array(
 				'title'  => '',
 				'fields' => array(
-					'layout'        => array(
+					'layout'         => array(
 						'type'    => 'select',
 						'label'   => __( 'Layout', 'fl-builder' ),
 						'default' => 'horizotal',
@@ -69,28 +134,13 @@ FLBuilder::register_module('FLButtonGroupModule', array(
 							),
 						),
 					),
-					'align'         => array(
+					'align'          => array(
 						'type'       => 'align',
 						'label'      => __( 'Align', 'fl-builder' ),
 						'default'    => 'left',
 						'responsive' => true,
 					),
-					'space_between' => array(
-						'type'         => 'unit',
-						'label'        => 'Space Between Buttons',
-						'units'        => array(
-							'px',
-							'vw',
-						),
-						'default_unit' => 'px',
-						'slider'       => array(
-							'min'  => 0,
-							'max'  => 100,
-							'step' => 1,
-						),
-						'default'      => 5,
-					),
-					'width'         => array(
+					'width'          => array(
 						'type'    => 'select',
 						'label'   => __( 'Width', 'fl-builder' ),
 						'default' => 'full',
@@ -104,7 +154,7 @@ FLBuilder::register_module('FLButtonGroupModule', array(
 							),
 						),
 					),
-					'custom_width'  => array(
+					'custom_width'   => array(
 						'type'    => 'unit',
 						'label'   => __( 'Custom Width', 'fl-builder' ),
 						'default' => '200',
@@ -121,12 +171,35 @@ FLBuilder::register_module('FLButtonGroupModule', array(
 							'%',
 						),
 					),
-					'padding'       => array(
+					'padding'        => array(
 						'type'       => 'dimension',
-						'label'      => __( 'Padding', 'fl-builder' ),
+						'label'      => __( 'Container Padding', 'fl-builder' ),
 						'responsive' => true,
 						'slider'     => true,
 						'units'      => array( 'px' ),
+						'help'       => __( 'This applies to the entire Button Group module itself.', 'fl-builder' ),
+					),
+					'button_padding' => array(
+						'type'       => 'dimension',
+						'label'      => __( 'Button Padding', 'fl-builder' ),
+						'responsive' => true,
+						'slider'     => true,
+						'units'      => array( 'px' ),
+						'help'       => __( 'Apply padding to all buttons. This can be overridden in the individual button settings.', 'fl-builder' ),
+					),
+					'button_spacing' => array(
+						'type'         => 'dimension',
+						'label'        => __( 'Button Spacing', 'fl-builder' ),
+						'responsive'   => true,
+						'slider'       => true,
+						'default'      => '5',
+						'default_unit' => 'px',
+						'units'        => array(
+							'px',
+							'em',
+							'%',
+							'vw',
+						),
 					),
 				),
 			),

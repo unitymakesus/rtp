@@ -71,10 +71,7 @@
 	?>
 	<table class="ppwp_settings_table" cellpadding="4">
 		<?php
-			include PPW_DIR_PATH . 'includes/views/general/view-ppw-notices-cache.php';
-			include PPW_DIR_PATH . 'includes/views/general/view-ppw-wp-super-cache.php';
-			include PPW_DIR_PATH . 'includes/views/general/view-ppw-w3-total-cache.php';
-			include PPW_DIR_PATH . 'includes/views/general/view-ppw-wp-fastest-cache.php';
+		include PPW_DIR_PATH . 'includes/views/general/view-ppw-notices-cache.php';
 		?>
 	</table>
 </form>

@@ -238,7 +238,7 @@ if ( 'left' === $settings->icon_position ) {
 	<?php
 }
 
-if ( isset( $settings->list_alignment ) && 'top' !== $settings->icon_position ) {
+if ( ! empty( $settings->list_alignment ) && 'top' !== $settings->icon_position && 'no' === $settings->list_connector_option ) {
 	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-left,
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list .uabb-info-list-right {
@@ -250,38 +250,6 @@ if ( isset( $settings->list_alignment ) && 'top' !== $settings->icon_position ) 
 	}
 
 	<?php
-	if ( 'yes' === $settings->list_connector_option && 'left' === $settings->icon_position ) {
-		if ( 'center' === $settings->list_alignment ) {
-			?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-left li .uabb-info-list-connector {
-				left: 55%;
-			}
-			<?php
-		}
-		if ( 'right' === $settings->list_alignment ) {
-			?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-left li .uabb-info-list-connector {
-				left: 85%;
-			}
-			<?php
-		}
-	}
-	if ( 'yes' === $settings->list_connector_option && 'right' === $settings->icon_position ) {
-		if ( 'center' === $settings->list_alignment ) {
-			?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-right li .uabb-info-list-connector {
-				right: 55%;
-			}
-			<?php
-		}
-		if ( 'left' === $settings->list_alignment ) {
-			?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-info-list-wrapper.uabb-info-list-right li .uabb-info-list-connector {
-				right: 85%;
-			}
-			<?php
-		}
-	}
 }
 
 /* Assign Style to inner Items*/

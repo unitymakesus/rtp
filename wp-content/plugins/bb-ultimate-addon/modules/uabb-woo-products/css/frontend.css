@@ -206,7 +206,9 @@
     box-shadow: none;
     text-shadow: none;
 }
-
+.uabb-woo-products-grid .uabb-woocommerce ul.products li.product {
+    margin-left: 0;
+}
 .uabb-woo-products-grid .uabb-woo-product__column-1 li.product {
 	width: 100%;
 	margin-right: 0;

@@ -3,9 +3,9 @@ Contributors: tillkruess
 Donate link: https://github.com/sponsors/tillkruss
 Tags: antispam, anti spam, spam, email, e-mail, mail, spider, crawler, harvester, robots, spambot, block, obfuscate, obfuscation, encode, encoder, encoding, encrypt, encryption, protect, protection
 Requires at least: 2.0
-Tested up to: 5.4
+Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 1.0.21
+Stable tag: 1.0.22
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,6 +22,7 @@ Other content (like phone numbers) can be protected using `[encode]` shortcode:
 
 `
 [encode]+1 (555) 123-4567[/encode]
+[encode link="tel:+15551234567"]+1 (555) 123-4567[/encode]
 `
 
 = Premium Features =
@@ -74,6 +75,10 @@ You can use the "Page Scanner" found under _Settings -> Email Encoder_ to see wh
 - add "encoding" gutenberg block
 - Show premium upgrade page inside wordpress?
 - Dashboard widget with scanner results?
+
+= 1.0.22 =
+
+* Added `link` attribute to `[encode]` shortcode
 
 = 1.0.21 =
 

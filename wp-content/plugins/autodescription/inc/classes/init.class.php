@@ -101,14 +101,22 @@ class Init extends Query {
 	 * Initializes cron actions.
 	 *
 	 * @since 2.8.0
+	 * @since 4.1.2 1. Added hook for sitemap prerender.
+	 *              2. Added hook for ping retry.
 	 */
 	public function init_cron_actions() {
-		// Init post update/delete caching actions.
+		// Init post update/delete caching actions which may occur during cronjobs.
 		$this->init_post_cache_actions();
 
 		// Ping searchengines.
-		if ( $this->get_option( 'ping_use_cron' ) )
+		if ( $this->get_option( 'ping_use_cron' ) ) {
+			if ( $this->get_option( 'sitemaps_output' ) && $this->get_option( 'ping_use_cron_prerender' ) ) {
+				\add_action( 'tsf_sitemap_cron_hook_before', [ new Builders\Sitemap_Base, 'prerender_sitemap' ] );
+			}
+
 			\add_action( 'tsf_sitemap_cron_hook', Bridges\Ping::class . '::ping_search_engines' );
+			\add_action( 'tsf_sitemap_cron_hook_retry', Bridges\Ping::class . '::retry_ping_search_engines' );
+		}
 	}
 
 	/**
@@ -230,6 +238,9 @@ class Init extends Query {
 			// We can use action `set_404` when we support WP 5.5+...?
 			\add_action( 'template_redirect', [ $this, '_init_sitemap' ], 1 );
 			\add_filter( 'wp_sitemaps_enabled', '__return_false' );
+		} else {
+			// Augment Core sitemaps. Can't hook into `wp_sitemaps_init` as we're augmenting the providers before that.
+			$this->_init_core_sitemap();
 		}
 
 		// Initialize 301 redirects.
@@ -531,7 +542,14 @@ class Init extends Query {
 			$url = $this->get_term_meta_item( 'redirect' ) ?: '';
 		}
 
-		$url and $this->do_redirect( $url );
+		if ( $url ) {
+			/**
+			 * @since 4.1.2
+			 * @param string $url The URL we're redirecting to.
+			 */
+			\do_action( 'the_seo_framework_before_redirect', $url );
+			$this->do_redirect( $url );
+		}
 	}
 
 	/**
@@ -594,6 +612,20 @@ class Init extends Query {
 	}
 
 	/**
+	 * Prepares core sitemap output.
+	 *
+	 * @since 4.1.2
+	 * @access private
+	 */
+	public function _init_core_sitemap() {
+		// It's not a bridge, don't treat it like one: Submit hooks here. Clean me up?
+		$builder_class = Builders\CoreSitemaps\Main::class;
+
+		\add_filter( 'wp_sitemaps_add_provider', "{$builder_class}::_filter_add_provider", 9, 2 );
+		\add_filter( 'wp_sitemaps_max_urls', "{$builder_class}::_filter_max_urls", 9 );
+	}
+
+	/**
 	 * Prepares feed modifications.
 	 *
 	 * @since 4.1.0
@@ -620,6 +652,7 @@ class Init extends Query {
 	 *                3. No longer shortcircuits on non-public sites.
 	 *                4. Now marked as private. Will be renamed to `_robots_txt()` in the future.
 	 * @since 4.1.0 Now adds the WordPress Core sitemap URL.
+	 * @since 4.1.2 Now only adds the WP Core sitemap URL when the provider tells us it's enabled.
 	 * @uses robots_txt filter located at WP core
 	 * @access private
 	 * @TODO extrapolate the contents without a warning to get_robots_txt(). Forward filter to it.
@@ -679,10 +712,10 @@ class Init extends Query {
 					}
 				}
 				$output .= "\r\n";
-			} elseif ( $this->get_option( 'sitemaps_robots' ) && ! $this->detect_sitemap_plugin() ) {
-				if ( \function_exists( '\\wp_sitemaps_get_server' ) ) {
+			} elseif ( $this->get_option( 'sitemaps_robots' ) && ! $this->detect_sitemap_plugin() ) { // detect_sitemap_plugin() temp backward compat.
+				if ( $this->use_core_sitemaps() ) {
 					$wp_sitemaps_server = \wp_sitemaps_get_server();
-					if ( $wp_sitemaps_server && method_exists( $wp_sitemaps_server, 'add_robots' ) ) {
+					if ( method_exists( $wp_sitemaps_server, 'add_robots' ) ) {
 						// This method augments the output--it doesn't overwrite it.
 						$output = \wp_sitemaps_get_server()->add_robots( $output, $public );
 					}

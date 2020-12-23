@@ -8,6 +8,7 @@ $alt      = $module->get_alt();
 $attrs    = $module->get_attributes();
 $filetype = pathinfo( $src, PATHINFO_EXTENSION );
 $rel      = $module->get_rel();
+$caption  = $module->get_caption();
 
 ?>
 <div class="fl-photo<?php echo ( ! empty( $settings->crop ) ) ? ' fl-photo-crop-' . $settings->crop : ''; ?> fl-photo-align-<?php echo $settings->align; ?>"<?php FLBuilder::print_schema( ' itemscope itemtype="https://schema.org/ImageObject"' ); ?>>
@@ -19,11 +20,11 @@ $rel      = $module->get_rel();
 		<?php if ( ! empty( $link ) ) : ?>
 		</a>
 		<?php endif; ?>
-		<?php if ( $photo && ! empty( $photo->caption ) && 'hover' == $settings->show_caption ) : ?>
-		<div class="fl-photo-caption fl-photo-caption-hover" itemprop="caption"><?php echo $photo->caption; ?></div>
+		<?php if ( 'hover' === $settings->show_caption ) : ?>
+		<div class="fl-photo-caption fl-photo-caption-hover" itemprop="caption"><?php echo $caption; ?></div>
 		<?php endif; ?>
 	</div>
-	<?php if ( $photo && ! empty( $photo->caption ) && 'below' == $settings->show_caption ) : ?>
-	<div class="fl-photo-caption fl-photo-caption-below" itemprop="caption"><?php echo $photo->caption; ?></div>
+	<?php if ( 'below' === $settings->show_caption ) : ?>
+	<div class="fl-photo-caption fl-photo-caption-below" itemprop="caption"><?php echo $caption; ?></div>
 	<?php endif; ?>
 </div>

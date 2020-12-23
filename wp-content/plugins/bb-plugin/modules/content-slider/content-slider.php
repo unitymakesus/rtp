@@ -171,7 +171,7 @@ class FLContentSliderModule extends FLBuilderModule {
 
 			if ( ! empty( $src ) ) {
 				echo '<div class="fl-slide-mobile-photo">';
-				printf( '<img %s class="fl-slide-mobile-photo-img wp-image-%s" src="%s" alt="" />', FLBuilderUtils::img_lazyload( 'false' ), $id, $src, esc_attr( $alt ) );
+				printf( '<img %s class="fl-slide-mobile-photo-img wp-image-%s" src="%s" alt="%s" />', FLBuilderUtils::img_lazyload( 'false' ), $id, $src, esc_attr( $alt ) );
 				echo '</div>';
 			}
 		} elseif ( 'video' == $slide->content_layout && ! empty( $slide->fg_video ) ) {
@@ -193,7 +193,7 @@ class FLContentSliderModule extends FLBuilderModule {
 
 			if ( ! empty( $src ) ) {
 				echo '<div class="fl-slide-mobile-photo">';
-				printf( '<img %s class="fl-slide-mobile-photo-img wp-image-%s" src="%s" alt="" />', FLBuilderUtils::img_lazyload( 'false' ), $id, $src, esc_attr( $alt ) );
+				printf( '<img %s class="fl-slide-mobile-photo-img wp-image-%s" src="%s" alt="%s" />', FLBuilderUtils::img_lazyload( 'false' ), $id, $src, esc_attr( $alt ) );
 				echo '</div>';
 			}
 		}

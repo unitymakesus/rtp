@@ -72,7 +72,10 @@ switch ( $instance ) :
 				</div>
 				<div class="tsf-flex-setting-input tsf-flex">
 					<div>
-						<?php echo $this->get_generated_seo_bar( $_generator_args ); ?>
+						<?php
+						// phpcs:ignore, WordPress.Security.EscapeOutput -- get_generated_seo_bar() escapes.
+						echo $this->get_generated_seo_bar( $_generator_args );
+						?>
 					</div>
 				</div>
 			</div>
@@ -334,6 +337,11 @@ switch ( $instance ) :
 									1  => $_s['force_off'],
 								],
 								'default' => $this->get_post_meta_item( $_s['option'] ),
+								'data'    => [
+									'defaultUnprotected' => $_s['_default'],
+									/* translators: %s = default option value */
+									'defaultI18n'        => __( 'Default (%s)', 'autodescription' ),
+								],
 							] );
 							// phpcs:enable, WordPress.Security.EscapeOutput
 						?>
@@ -499,7 +507,12 @@ switch ( $instance ) :
 				</div>
 			</div>
 			<div class="tsf-flex-setting-input tsf-flex">
-				<textarea class="large-text" name="autodescription[_twitter_description]" id="autodescription_twitter_description" placeholder="<?php echo esc_attr( $social_placeholders['description']['twitter'] ); ?>" rows="3" cols="4" autocomplete=off><?php echo $this->esc_attr_preserve_amp( $this->get_post_meta_item( '_twitter_description' ) ); ?></textarea>
+				<textarea class="large-text" name="autodescription[_twitter_description]" id="autodescription_twitter_description" placeholder="<?php echo esc_attr( $social_placeholders['description']['twitter'] ); ?>" rows="3" cols="4" autocomplete=off>
+					<?php
+					// Textareas don't require sanitization in HTML5... other than removing the closing </textarea> tag...?
+					echo $this->esc_attr_preserve_amp( $this->get_post_meta_item( '_twitter_description' ) );
+					?>
+				</textarea>
 			</div>
 		</div>
 		<?php

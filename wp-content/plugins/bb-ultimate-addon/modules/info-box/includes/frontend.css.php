@@ -288,6 +288,7 @@ if ( 'none' !== $settings->image_type ) {
 
 			/* Icon Basics */
 			'icon'                    => $settings->icon,
+			'icon'                    => ( isset( $settings->icon ) && '' !== $settings->icon ) ? $settings->icon : '',
 			'icon_size'               => $settings->icon_size,
 			'icon_align'              => '',
 
@@ -482,12 +483,13 @@ if ( 'none' !== $settings->image_type ) {
 	<?php
 }
 if ( isset( $settings->enable_box_shadow ) && 'yes' === $settings->enable_box_shadow ) {
+	$box_shadow_color = ( false === strpos( $settings->info_shadow_color, 'rgb' ) ) ? '#' . $settings->info_shadow_color : $settings->info_shadow_color;
 	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-infobox {
-		-webkit-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
-		-moz-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
-		-o-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
-		box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $settings->info_shadow_color ); ?>;
+		-webkit-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		-moz-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		-o-box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
+		box-shadow: <?php echo esc_attr( $settings->info_shadow_color_hor ); ?>px <?php echo esc_attr( $settings->info_shadow_color_ver ); ?>px <?php echo esc_attr( $settings->info_shadow_color_blur ); ?>px <?php echo esc_attr( $settings->info_shadow_color_spr ); ?>px <?php echo esc_attr( $box_shadow_color ); ?>;
 		}
 	<?php
 }
