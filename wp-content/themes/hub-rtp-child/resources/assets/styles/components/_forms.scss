@@ -18,7 +18,7 @@
     }
 
     &.active .gfield_label {
-      top: -1rem;
+      top: -0.875rem;
       left: 0;
       font-size: 0.85rem;
       color: inherit;
@@ -31,7 +31,10 @@
     }
 
     padding-left: 0;
-    padding-right: 16px !important;
+
+    @media screen and (min-width: 641px) {
+      padding-right: 16px !important;
+    }
 
     &:not(:last-of-type) {
       margin-bottom: 1.5rem;
@@ -80,7 +83,7 @@
   }
 
   .gfield_error {
-    padding-top: 1.25rem !important;
+    padding: 0;
   }
 
   div.ginput_container {
@@ -334,4 +337,14 @@
       }
     }
   }
+}
+
+.gform_ajax_spinner {
+  margin-left: 20px;
+  border: 4px solid transparentize($color-purple-hub, 0.7);
+  border-left: 4px solid $color-purple-hub;
+  animation: loading-spin 0.75s infinite linear;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
