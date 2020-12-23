@@ -25,9 +25,9 @@ $i = 1;
                             $orig_id = get_post_meta($id, 'dt_original_post_id', true);
                             if (!empty($site_id)) {
                                 // If this is a syndicated post, switch to original site to get featured image
-                                switch_to_blog($site_id);
-                                $module->featuredImage($orig_id);
-                                restore_current_blog();
+                                // switch_to_blog($site_id);
+                                // $module->featuredImage($orig_id);
+                                // restore_current_blog();
                             } else {
                                 // Just get the featured image from this site
                                 $module->featuredImage($id);

@@ -30,11 +30,26 @@ mix.sass(`${src}/styles/hub-rtp-blog-feed.scss`, `${dist}/styles`, {
 mix.sass(`${src}/styles/hub-rtp-carousel.scss`, `${dist}/styles`, {
   implementation: require('node-sass'),
 });
+mix.sass(`${src}/styles/hub-rtp-contact-card.scss`, `${dist}/styles`, {
+  implementation: require('node-sass'),
+});
+mix.sass(`${src}/styles/hub-rtp-figure-card.scss`, `${dist}/styles`, {
+  implementation: require('node-sass'),
+});
+mix.sass(`${src}/styles/hub-rtp-lifestyle-cards.scss`, `${dist}/styles`, {
+  implementation: require('node-sass'),
+});
 
 /**
  * JS.
  */
 mix.js(`${src}/scripts/hub-rtp-carousel.js`, `${dist}/scripts`);
+mix.js(`${src}/scripts/hub-rtp-lifestyle-cards.js`, `${dist}/scripts`);
+
+/**
+ * Images.
+ */
+mix.copy(`${src}/images`, `${dist}/images`);
 
 /**
  * Externally-loaded libraries.

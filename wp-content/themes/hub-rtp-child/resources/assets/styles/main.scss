@@ -28,6 +28,10 @@
 @import "~materialize-css/sass/components/forms/forms";
 // @import "~materialize-css/sass/components/preloader";
 @import "~modaal/dist/css/modaal.scss";
+@import "~tippy.js/dist/tippy.css";
+@import "~tippy.js/dist/svg-arrow.css";
+@import "~tippy.js/dist/border.css";
+@import "~tippy.js/animations/scale-subtle.css";
 
 /** Import theme styles */
 @import "common/functions";
@@ -35,6 +39,7 @@
 @import "common/a11y";
 @import "common/global";
 @import "common/typography";
+@import "common/animations";
 @import "components/accordions";
 @import "components/announcements";
 @import "components/beaverbuilder";
@@ -43,10 +48,12 @@
 @import "components/forms";
 @import "components/hero";
 @import "components/icons";
+@import "components/map";
 @import "components/media";
 @import "components/pagination";
 @import "components/people";
 @import "components/search";
+@import "components/tippy";
 @import "components/unity";
 @import "layouts/header";
 @import "layouts/navbar";

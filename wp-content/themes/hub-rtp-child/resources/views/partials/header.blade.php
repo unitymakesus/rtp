@@ -26,7 +26,7 @@
   </section>
 
   <nav class="nav-primary" role="navigation">
-    <div class="navbar flex flex-center container-wide">
+    <div class="navbar flex flex-center space-between container-wide">
       <a class="logo" href="{{ home_url('/') }}" rel="home">
         @if (has_custom_logo())
           @php
