@@ -47,6 +47,11 @@
     border-top: 2px solid $color-grey-light;
     padding-top: 0.875rem;
     margin-top: 0.875rem;
+
+    & > span {
+      display: inline-block;
+      flex-basis: 50%;
+    }
   }
 
   &__legend-filter {

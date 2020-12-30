@@ -10,12 +10,12 @@
     </ul>
     <div class="hub-office-map__legend-filters">
       <h2 class="screen-reader-text">{{ __('Highlight Properties By Development Phase', 'sage') }}</h2>
-      {{-- <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="1" aria-checked="true">{{ __('Phase 1', 'sage') }}</button>
-      <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="2" aria-checked="false">{{ __('Phase 2', 'sage') }}</button> --}}
-      <button type="button" class="hub-office-map__legend-filter" data-phase-target="1" aria-pressed="false" aria-label="Phase 1">
-        <span>{{ __('Phase 1', 'sage') }}</span>
-        <span>{{ __('Phase 2', 'sage') }}</span>
-      </button>
+      <span>
+        <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="1" aria-checked="true">{{ __('Phase 1', 'sage') }}</button>
+      </span>
+      <span>
+        <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="2" aria-checked="true">{{ __('Phase 2', 'sage') }}</button>
+      </span>
     </div>
   </div>
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 905" role="img" aria-labelledby="mapdesc">
@@ -26,10 +26,10 @@
         <g class="property" data-hub-property="greenspace" data-type="greenspace" data-phase="1">
           <path d="M621.937,249h0l-9.186-4.594L584.273,233.38l-16.854-2.757H539.258l-39.5-18.376-18.373-11.026L465.764,190.2l-9.186-11.026-14.7-10.107-22.048-9.188-27.56-6.431-21.129-9.188-2.757,1.838-11.023-6.432-15.618-10.107L338.07,126.8l2.756-1.838,22.967-15.62,8.267-7.35.919,2.757,12.862,6.431,3.675-1.838,4.593,2.757,5.512,5.513,6.431,5.513h3.675l6.43,4.595,11.024,4.594,22.048,5.513,41.34,19.3,7.349,6.431,30.316,14.7,6.431,6.431,54.2-3.676,4.593-8.269,30.317-19.295,4.593-7.351,11.024,1.838,20.211,9.188,21.129,11.026,25.722,21.425V200.3l-31.234,20.214-13.78-6.431-14.7,9.6v8.772L621.938,249Zm512.617-.919-88.192-15.62v-3.675l18.374-28.484,7.349-26.645-82.68-26.645-11.024,13.782-1.837,8.269L837.825,129.553l-2.757,2.757c.195.275,19.577,27.586,20.2,27.586.01,0,.015-.007.015-.022,0-.03.018-.045.054-.045,1,0,15.782,11.939,16.411,12.447l54.273,16.083-27.56,23.889-1.838,8.269H875.49l-26.641,1.838-23.886-1.838-15.617-2.756-79.006-35.834-6.43,1.838-31.235-24.809-13.78-7.35-26.641-12.864-1.838-3.675-1.837-1.838,1.837-2.757L661.44,122.2l23.885,11.945,12.862,9.188,7.349,7.35,3.675,5.513,62.469-19.3,6.431-6.432.919-9.188,4.594-2.757.919-6.431,4.593-3.676,2.757-53.291L906.725,91.882l73.494,24.809,77.168,24.808L1186,176.414l-45.015,69.83-6.43,1.838h0ZM186.49,187.439H171.821l-15.647-2.757L117.59,166.307,2.756,85.641,0,82.694l2.756-6.431,45.933-19.3,56.957-39.509L166.279,0l70.737,6.431,105.647,23.89.918,4.594L329.8,43.185l8.268,35.833,26.642,5.513L346.338,101.07l-45.015,28.483-76.249,38.591-32.154,14.7-6.43,4.594Z" transform="translate(0 113.712)"/>
         </g>
-        <g class="property" data-hub-property="high_rise_office_phase_2" data-type="workspace" data-phase="2" disabled>
+        <g class="property" data-hub-property="high_rise_office_phase_2" data-type="workspace" data-phase="2">
           <path d="M3.67,100.723l9.175-3.663L0,21.976,62.388,0,88.078,4.578,101.84,9.157,110.1,72.337,165.146,93.4l1.835,11.9,19.267,8.241L189,152l-59.636-23.807L115.6,134.6v7.325l-7.34,3.663Z" transform="translate(397 0.712)"/>
         </g>
-        <g class="property" data-hub-property="high_rise_office_2" data-type="workspace" data-phase="2" disabled>
+        <g class="property" data-hub-property="high_rise_office_2" data-type="workspace" data-phase="2">
           <path d="M25.684,17.315l-9.173,4.556V24.7l-4.586.89.917,2.661L0,32.806,5.5,41.4v3.714L1.835,47.387,5.5,52.855l2.752,1.823-.917,2.734L3.669,59.234l5.5,5.468.136,3.705L5.5,70.56l7.338,11.8,14.394,3.3L64.211,104.8,97.233,113l16.511-8.2V97.944L122,93.863l-1.835-33.718-2.752-30.984-11.008-5.468L46.782,0,33.023,6.379v7.29Z" transform="translate(479 129.712)"/>
         </g>
         <g class="property" data-hub-property="high_rise_office_1" data-type="workspace" data-phase="1">
@@ -47,7 +47,7 @@
         <g class="property" data-hub-property="mid_rise_office" data-type="workspace" data-phase="1">
           <path d="M7.337,23.85,5.5,32.105,0,65.128,123.817,122l17.426-16.511,11.006-42.2L155,40.361,71.538,6.421,34.852,0Z" transform="translate(890 301.712)"/>
         </g>
-        <g class="property" data-hub-property="residential_phase_2" data-type="apartments" data-phase="2" disabled>
+        <g class="property" data-hub-property="residential_phase_2" data-type="apartments" data-phase="2">
           <path d="M2.751,8.284,12.84,54.307l.917,4.6L0,67.193l8.254,35.9,19.667,4.084L43.107,96.648l4.115,21.17-5.032,2.761V126.1l.917,2.761,12.84,6.443,3.669-1.841,4.586,2.761,5.5,5.523,6.42,5.523h3.669l6.42,4.6,11.006,4.6L119.231,162V151.55l4.586-2.436L121.162,126.1l9.074-3.682L73.373,94.807l43.107-19.33L155,92.966l-3.669-5.523,3.669-2.3V81.391L121.982,65.352,118.314,39.58,97.219,31.3,71.538,43.261,66.953,18.653,24.763,0Z" transform="translate(329 89.712)"/>
         </g>
         <g class="property" data-hub-property="residential_phase_1" data-type="apartments" data-phase="1">

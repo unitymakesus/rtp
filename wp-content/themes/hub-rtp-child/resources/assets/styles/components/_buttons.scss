@@ -181,7 +181,7 @@ a.btn-alt:hover {
     z-index: 1;
   }
 
-  &[aria-pressed="true"]::after {
+  &[aria-checked="true"]::after {
     background-color: $color-slate-dark;
     right: 4px;
   }

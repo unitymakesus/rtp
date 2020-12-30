@@ -7,25 +7,19 @@ export default {
     /**
      * Toggle Phase 1 and 2 (highlights properties on the map).
      */
-    const phaseBtn = document.querySelector('.hub-office-map__legend-filter');
-    phaseBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      // Update aria-pressed for toggle switch.
-      let pressed = phaseBtn.getAttribute('aria-pressed') === 'true';
-      phaseBtn.setAttribute('aria-pressed', String(!pressed));
+    const phaseBtns = document.querySelectorAll('.hub-office-map__legend-filter');
+    phaseBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Update aria-checked for toggle switch.
+        let checked = btn.getAttribute('aria-checked') === 'true';
+        btn.setAttribute('aria-checked', String(!checked));
 
-      // Update aria-label for toggle switch.
-      if (pressed == true) {
-        phaseBtn.setAttribute('data-phase', '1');
-        phaseBtn.setAttribute('aria-label', 'Phase 1');
-      } else {
-        phaseBtn.setAttribute('data-phase', '2');
-        phaseBtn.setAttribute('aria-label', 'Phase 2');
-      }
-
-      // Disable or enable properties.
-      document.querySelectorAll('g.property').forEach((el) => {
-        el.toggleAttribute('disabled');
+        // Highlight or unhighlight properties.
+        const { phaseTarget } = btn.dataset;
+        document.querySelectorAll(`g[data-phase="${phaseTarget}"]`).forEach((el) => {
+          el.toggleAttribute('disabled');
+        });
       });
     });
 
