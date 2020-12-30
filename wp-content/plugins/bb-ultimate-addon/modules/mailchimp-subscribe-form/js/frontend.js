@@ -69,6 +69,7 @@
 				lname        		= currentForm.find( 'input[name=uabb-subscribe-form-lname]' ),
 				email       		= currentForm.find( 'input[name=uabb-subscribe-form-email]' ),
 				termsCheckbox   	= currentForm.find( 'input[name=uabb-terms-checkbox]'),
+				_nonce              = currentForm.find( '.uabb-form-wrap' ).data('nonce'),
 				re          		= /\S+@\S+\.\S+/,
 				valid       		= true;
 
@@ -109,6 +110,7 @@
 				
 					ajaxData = {
 					action  			: 'uabb_subscribe_form_submit',
+					security            : _nonce,
 					lname    			: lname.val(),
 					fname    			: fname.val(),
 					email   			: email.val(),
@@ -128,7 +130,7 @@
 		_submitFormComplete: function( response , button )
 		{
 
-			var data        = JSON.parse( response ),
+			var data        = response,
 				buttonText  = button.data( 'original-text' ),
 				form        = button.closest( '.uabb-subscribe-form' );
 			if ( data.error ) {

@@ -1,3 +1,17 @@
+[hidden] {
+  display: none;
+}
+
+// Used for accessible link wrapper. Requires a relative parent.
+.a11y-link-wrap::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  content: '';
+}
+
 :focus {
   outline: $color-blue-unc auto 5px;
 }

@@ -1,46 +1,44 @@
+<?php
+global $post;
+$label_hidden_class = isset( $settings->placeholder_labels ) && 'placeholder' === $settings->placeholder_labels ? ' class="fl-contact-form-label-hidden"' : '';
+$show_placeholder   = isset( $settings->placeholder_labels ) && ( 'placeholder' === $settings->placeholder_labels || 'both' === $settings->placeholder_labels ) ? true : false;
+
+?>
 <form class="fl-contact-form" <?php if ( isset( $module->template_id ) ) { echo 'data-template-id="' . $module->template_id . '" data-template-node-id="' . $module->template_node_id . '"';} ?>><?php // @codingStandardsIgnoreLine ?>
-
-	<?php global $post; ?>
 	<input type="hidden" name="fl-layout-id" value="<?php echo $post->ID; ?>" />
-
 	<?php if ( 'show' == $settings->name_toggle ) : ?>
 	<div class="fl-input-group fl-name">
-		<label for="fl-name"><?php _ex( 'Name', 'Contact form field label.', 'fl-builder' ); ?></label>
-		<span class="fl-contact-error"><?php _e( 'Please enter your name.', 'fl-builder' ); ?></span>
-		<input type="text" id="fl-name" name="fl-name" value="" placeholder="<?php echo esc_attr( $settings->name_placeholder ); ?>" />
+		<label for="fl-name"<?php echo $label_hidden_class; ?>><?php echo esc_attr( $settings->name_placeholder ); ?></label>
+		<span class="fl-contact-error" id="name-error"><?php _e( 'Please enter your name.', 'fl-builder' ); ?></span>
+		<input type="text" id="fl-name" name="fl-name" aria-describedby="name-error" value="" placeholder="<?php echo $show_placeholder ? esc_attr( $settings->name_placeholder ) : ''; ?>" />
 	</div>
 	<?php endif; ?>
-
 	<?php if ( 'show' == $settings->subject_toggle ) : ?>
 	<div class="fl-input-group fl-subject">
-		<label for="fl-subject"><?php _e( 'Subject', 'fl-builder' ); ?></label>
-		<span class="fl-contact-error"><?php _e( 'Please enter a subject.', 'fl-builder' ); ?></span>
-		<input type="text" id="fl-subject" name="fl-subject" value="" placeholder="<?php echo esc_attr( $settings->subject_placeholder ); ?>" />
+		<label for="fl-subject"<?php echo $label_hidden_class; ?>><?php echo esc_attr( $settings->subject_placeholder ); ?></label>
+		<span class="fl-contact-error" id="subject-error"><?php _e( 'Please enter a subject.', 'fl-builder' ); ?></span>
+		<input type="text" id="fl-subject" aria-describedby="subject-error" name="fl-subject" value="" placeholder="<?php echo $show_placeholder ? esc_attr( $settings->subject_placeholder ) : ''; ?>" />
 	</div>
 	<?php endif; ?>
-
 	<?php if ( 'show' == $settings->email_toggle ) : ?>
 	<div class="fl-input-group fl-email">
-		<label for="fl-email"><?php _e( 'Email', 'fl-builder' ); ?></label>
-		<span class="fl-contact-error"><?php _e( 'Please enter a valid email.', 'fl-builder' ); ?></span>
-		<input type="email" id="fl-email" name="fl-email" value="" placeholder="<?php echo esc_attr( $settings->email_placeholder ); ?>" />
+		<label for="fl-email"<?php echo $label_hidden_class; ?>><?php echo esc_attr( $settings->email_placeholder ); ?></label>
+		<span class="fl-contact-error" id="email-error"><?php _e( 'Please enter a valid email.', 'fl-builder' ); ?></span>
+		<input type="email" id="fl-email" aria-describedby="email-error" name="fl-email" value="" placeholder="<?php echo $show_placeholder ? esc_attr( $settings->email_placeholder ) : ''; ?>" />
 	</div>
 	<?php endif; ?>
-
 	<?php if ( 'show' == $settings->phone_toggle ) : ?>
 	<div class="fl-input-group fl-phone">
-		<label for="fl-phone"><?php _e( 'Phone', 'fl-builder' ); ?></label>
-		<span class="fl-contact-error"><?php _e( 'Please enter a valid phone number.', 'fl-builder' ); ?></span>
-		<input type="tel" id="fl-phone" name="fl-phone" value="" placeholder="<?php echo esc_attr( $settings->phone_placeholder ); ?>" />
+		<label for="fl-phone"<?php echo $label_hidden_class; ?>><?php echo esc_attr( $settings->phone_placeholder ); ?></label>
+		<span class="fl-contact-error" id="phone-error"><?php _e( 'Please enter a valid phone number.', 'fl-builder' ); ?></span>
+		<input type="tel" id="fl-phone" aria-describedby="phone-error" name="fl-phone" value="" placeholder="<?php echo $show_placeholder ? esc_attr( $settings->phone_placeholder ) : ''; ?>" />
 	</div>
 	<?php endif; ?>
-
 	<div class="fl-input-group fl-message">
-		<label for="fl-message"><?php _e( 'Your Message', 'fl-builder' ); ?></label>
-		<span class="fl-contact-error"><?php _e( 'Please enter a message.', 'fl-builder' ); ?></span>
-		<textarea id="fl-message" name="fl-message" placeholder="<?php echo esc_attr( $settings->message_placeholder ); ?>"></textarea>
+		<label for="fl-message"<?php echo $label_hidden_class; ?>><?php echo esc_attr( $settings->message_placeholder ); ?></label>
+		<span class="fl-contact-error" id="message-error"><?php _e( 'Please enter a message.', 'fl-builder' ); ?></span>
+		<textarea id="fl-message" name="fl-message" aria-describedby="message-error" placeholder="<?php echo $show_placeholder ? esc_attr( $settings->message_placeholder ) : ''; ?>"></textarea>
 	</div>
-
 	<?php if ( 'show' == $settings->terms_checkbox ) : ?>
 		<div class="fl-input-group fl-terms-checkbox">
 			<?php if ( isset( $settings->terms_text ) && ! empty( $settings->terms_text ) ) : ?>

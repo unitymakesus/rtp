@@ -1,0 +1,50 @@
+[hidden] {
+  display: none;
+}
+
+:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5);
+}
+
+// Used for accessible link wrapper. Requires a relative parent.
+.a11y-link-wrap {
+  &::after {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    content: '';
+    z-index: 11;
+  }
+
+  &:focus {
+    box-shadow: none;
+
+    &::after {
+      box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5);
+    }
+  }
+}
+
+.screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+  position: absolute !important;
+  white-space: nowrap;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+
+  &:focus {
+    clip: auto;
+    clip-path: none;
+    display: block;
+    height: auto;
+    left: 5px;
+    top: 5px;
+    width: auto;
+    z-index: 100000; /* Above WP toolbar. */
+  }
+}

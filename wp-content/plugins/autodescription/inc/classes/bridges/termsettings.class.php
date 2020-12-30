@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Bridges;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Prepares the Term Settings view interface.
@@ -34,7 +34,6 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @final Can't be extended.
  */
 final class TermSettings {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * Prepares the setting fields.
@@ -56,7 +55,7 @@ final class TermSettings {
 	 * @param \WP_Term $term     Current taxonomy term object.
 	 * @param string   $taxonomy Current taxonomy slug.
 	 */
-	public static function _output_setting_fields( $term, $taxonomy ) {
+	public static function _output_setting_fields( $term, $taxonomy ) { // phpcs:ignore,VariableAnalysis
 		/**
 		 * @since 2.9.0
 		 */

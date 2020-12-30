@@ -17,11 +17,122 @@ final class FLBuilderAdminPosts {
 		/* Actions */
 		add_action( 'current_screen', __CLASS__ . '::init_rendering' );
 
+		if ( get_transient( 'fl_debug_mode' ) || ( defined( 'FL_ENABLE_META_CSS_EDIT' ) && FL_ENABLE_META_CSS_EDIT ) ) {
+			add_action( 'add_meta_boxes', array( __CLASS__, 'add_meta_box' ) );
+			add_action( 'save_post', array( __CLASS__, 'save_meta' ) );
+		}
+
 		/* Filters */
 		add_filter( 'redirect_post_location', __CLASS__ . '::redirect_post_location' );
 		add_filter( 'page_row_actions', __CLASS__ . '::render_row_actions_link' );
 		add_filter( 'post_row_actions', __CLASS__ . '::render_row_actions_link' );
 		add_action( 'pre_get_posts', __CLASS__ . '::sort_builder_enabled' );
+	}
+
+	/**
+	 * @since 2.4
+	 */
+	public static function add_meta_box( $post_type ) {
+		// Limit meta box to certain post types.
+		$post_types = array( 'post', 'page' );
+
+		if ( in_array( $post_type, FLBuilderModel::get_post_types() ) ) {
+				add_meta_box(
+					'fl_css_js',
+					__( 'Builder CSS/JS', 'fl-builder' ),
+					array( __CLASS__, 'render_meta_box_content' ),
+					$post_type,
+					'advanced',
+					'high'
+				);
+		}
+	}
+
+	/**
+	 * @since 2.4
+	 * @param WP_Post $post The post object.
+	 */
+	public static function render_meta_box_content( $post ) {
+
+		// Add an nonce field so we can check for it later.
+		wp_nonce_field( 'fl_css_js', 'fl_css_js_nonce' );
+
+		// Use get_post_meta to retrieve an existing value from the database.
+		$data = get_post_meta( $post->ID, '_fl_builder_data_settings', true );
+
+		if ( ! isset( $data->css ) ) {
+			$css = '';
+		} else {
+			$css = $data->css;
+		}
+		if ( ! isset( $data->js ) ) {
+			$js = '';
+		} else {
+			$js = $data->js;
+		}
+		?>
+			<label for="fl_css">
+					<?php _e( 'CSS', 'fl-builder' ); ?>
+			</label><br />
+			<textarea style="width:100%" rows=10 id="fl_css" name="fl_css" value="<?php echo esc_attr( $css ); ?>"><?php echo esc_attr( $css ); ?></textarea><br />
+
+			<label for="fl_js">
+					<?php _e( 'JS', 'fl-builder' ); ?>
+			</label><br />
+			<textarea style="width:100%" rows=10 id="fl_js" name="fl_js" value="<?php echo esc_attr( $js ); ?>"><?php echo esc_attr( $js ); ?></textarea>
+			<?php
+	}
+
+	/**
+ * Save the meta when the post is saved.
+ *
+ * @param int $post_id The ID of the post being saved.
+ */
+	public static function save_meta( $post_id ) {
+
+		// Check if our nonce is set.
+		if ( ! isset( $_POST['fl_css_js_nonce'] ) ) {
+				return $post_id;
+		}
+
+		$nonce = $_POST['fl_css_js_nonce'];
+
+		// Verify that the nonce is valid.
+		if ( ! wp_verify_nonce( $nonce, 'fl_css_js' ) ) {
+				return $post_id;
+		}
+
+		/*
+		 * If this is an autosave, our form has not been submitted,
+		 * so we don't want to do anything.
+		 */
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return $post_id;
+		}
+
+		// Check the user's permissions.
+		if ( 'page' == $_POST['post_type'] ) {
+			if ( ! current_user_can( 'edit_page', $post_id ) ) {
+					return $post_id;
+			}
+		} else {
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+					return $post_id;
+			}
+		}
+
+		$data = get_post_meta( $post_id, '_fl_builder_data_settings', true );
+
+		if ( ! is_object( $data ) ) {
+			$data = new StdClass;
+		}
+		$data->css = $_POST['fl_css'];
+		$data->js  = $_POST['fl_js'];
+
+		// Update the meta field.
+		update_post_meta( $post_id, '_fl_builder_data_settings', $data );
+		update_post_meta( $post_id, '_fl_builder_draft_settings', $data );
+
 	}
 
 	/**
@@ -92,6 +203,10 @@ final class FLBuilderAdminPosts {
 
 		if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) ) {
 
+			/**
+			 * Enable/disable builder edit UI buttons
+			 * @see fl_builder_render_admin_edit_ui
+			 */
 			$render_ui  = apply_filters( 'fl_builder_render_admin_edit_ui', true );
 			$post_type  = self::get_post_type();
 			$post_types = FLBuilderModel::get_post_types();
@@ -123,6 +238,7 @@ final class FLBuilderAdminPosts {
 				$args    = array(
 					'post_type'      => $post_type,
 					'posts_per_page' => -1,
+					'fields'         => 'ids',
 					'meta_query'     => array(
 						array(
 							'key'     => '_fl_builder_enabled',
@@ -137,7 +253,7 @@ final class FLBuilderAdminPosts {
 				wp_localize_script( 'fl-builder-admin-posts-list',
 					'fl_builder_enabled_count',
 					array(
-						'count'   => $count,
+						'count'   => number_format_i18n( $count ),
 						'brand'   => FLBuilderModel::get_branding(),
 						'clicked' => $clicked,
 						'type'    => $post_type,
@@ -220,6 +336,10 @@ final class FLBuilderAdminPosts {
 
 		if ( 'trash' != $post->post_status && current_user_can( 'edit_post', $post->ID ) && wp_check_post_lock( $post->ID ) === false ) {
 
+			/**
+			 * Is post editable from admin post list
+			 * @see fl_builder_is_post_editable
+			 */
 			$is_post_editable = (bool) apply_filters( 'fl_builder_is_post_editable', true, $post );
 			$user_access      = FLBuilderUserAccess::current_user_can( 'builder_access' );
 			$post_types       = FLBuilderModel::get_post_types();

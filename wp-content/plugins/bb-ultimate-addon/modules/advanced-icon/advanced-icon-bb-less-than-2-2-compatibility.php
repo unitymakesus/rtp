@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBAdvancedIconModule', array(
+	'UABBAdvancedIconModule',
+	array(
 		'advimgicons' => array(
 			'title'    => __( 'Image / Icon', 'uabb' ),
 			'sections' => array(
@@ -257,7 +258,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_advicon_group_form', array(
+	'uabb_advicon_group_form',
+	array(
 		'title' => __( 'Add Icon', 'uabb' ),
 		'tabs'  => array(
 			'form_general' => array( // Tab.

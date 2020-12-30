@@ -5,7 +5,7 @@
 	$autoplay      = ! empty( $settings->speed ) ? $settings->speed * 1000 : '1000';
 	$speed         = ! empty( $settings->transition_duration ) ? $settings->transition_duration * 1000 : '1000';
 	$slide_width   = ! empty( $settings->slide_width ) ? $settings->slide_width : 300;
-	$space_between = isset( $settings->space_between ) ? $settings->space_between : 30;
+	$space_between = isset( $settings->space_between ) && '' !== $settings->space_between ? $settings->space_between : 30;
 
 ?>
 

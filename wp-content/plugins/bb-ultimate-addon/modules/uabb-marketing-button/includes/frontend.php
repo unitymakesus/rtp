@@ -5,4 +5,4 @@
  *  @package UABB Button Module
  */
 
-echo $module->render_button();
+echo $module->render_button(); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

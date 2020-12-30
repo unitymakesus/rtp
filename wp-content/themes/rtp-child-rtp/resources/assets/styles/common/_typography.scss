@@ -1,14 +1,19 @@
 h2 {
-  @include rtp-gradient;
-
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 42px;
   display: inline-block;
   font-weight: 600;
 
-  .history & {
-    -webkit-text-fill-color: initial;
+  // Only clip text if supported.
+  @supports (-webkit-background-clip: text) {
+    &:not(.heading-reset) {
+      @include rtp-gradient;
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      .history & {
+        -webkit-text-fill-color: initial;
+      }
+    }
   }
 }
 

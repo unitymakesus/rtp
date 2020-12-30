@@ -184,7 +184,7 @@ final class FLBuilderServiceMailrelay extends FLBuilderService {
 		);
 
 		foreach ( $groups as $group ) {
-			$options[ $group['id'] ] = $group['name'];
+			$options[ $group['id'] ] = esc_attr( $group['name'] );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

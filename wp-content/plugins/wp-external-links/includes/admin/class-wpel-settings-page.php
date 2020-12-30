@@ -84,8 +84,26 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
             $this->current_tab = key( $this->tabs );
         }
 
+        add_filter('plugin_action_links_' . plugin_basename(TEST_WPEL_PLUGIN_FILE), array($this, 'plugin_action_links'));
         add_filter('install_plugins_table_api_args_featured', array($this, 'featured_plugins_tab'));
     }
+
+    /**
+     * Add "Configure Settings" action link to plugins table, left part
+     *
+     * @param array  $links  Initial list of links.
+     *
+     * @return array
+     */
+    function plugin_action_links($links)
+    {
+      $settings_link = '<a href="' . admin_url('admin.php?page=wpel-settings-page') . '" title="Open WP External Links Settings">Configure Settings</a>';
+
+      array_unshift($links, $settings_link);
+
+      return $links;
+    }
+
 
     /**
     * Helper function for adding plugins to featured list
@@ -107,9 +125,10 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
     {
         remove_filter('plugins_api_result', array($this, 'plugins_api_result'), 10, 3);
 
-        $res = self::add_plugin_featured('wp-reset', $res);
         $res = self::add_plugin_featured('wp-force-ssl', $res);
+        $res = self::add_plugin_featured('sticky-menu-or-anything-on-scroll', $res);
         $res = self::add_plugin_featured('eps-301-redirects', $res);
+        $res = self::add_plugin_featured('simple-author-box', $res);
 
         return $res;
     } // plugins_api_result
@@ -179,7 +198,7 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
             }
         } else if ( isset( $this->tabs[ $type ][ 'fields' ] ) ) {
             $option_values = $this->tabs[ $type ][ 'fields' ]->get_option_values();
-            return $option_values[ $key ];
+            return @$option_values[ $key ];
         }
 
         trigger_error( 'Option value "'. $key .'" cannot be found.' );
@@ -247,8 +266,8 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
             wp_enqueue_style( 'font-awesome' );
             wp_enqueue_style( 'wpel-admin-style' );
             wp_enqueue_script( 'wpel-admin-script' );
-        } 
-        
+        }
+
         wp_enqueue_style( 'wpel-admin-global-style' );
     }
 

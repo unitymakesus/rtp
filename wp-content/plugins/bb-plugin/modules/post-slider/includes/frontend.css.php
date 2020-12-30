@@ -9,6 +9,13 @@
 
 ?>
 
+<?php if ( ! empty( $settings->text_color ) ) : ?>
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-feed-meta *,
+	.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-feed-content * {
+			color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
+	}
+<?php endif; ?>
+
 <?php if ( $global_settings->responsive_enabled ) : ?>
 
 	<?php if ( isset( $settings->image_type ) && 'background' == $settings->image_type ) : ?>
@@ -17,9 +24,6 @@
 			position: relative;
 			z-index: 10;
 			padding: <?php echo $padding; ?>px;
-		<?php if ( ! empty( $settings->text_color ) ) : ?>
-			color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-		<?php endif; ?>
 		<?php if ( ! empty( $settings->text_bg_color ) ) : ?>
 			background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 		<?php endif; ?>
@@ -35,9 +39,6 @@
 	<?php elseif ( isset( $settings->image_type ) && 'thumb' == $settings->image_type ) : ?>
 
 		.fl-node-<?php echo $id; ?> .fl-post-slider-thumb{
-		<?php if ( ! empty( $settings->text_color ) ) : ?>
-			color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-		<?php endif; ?>
 		<?php if ( ! empty( $settings->text_bg_color ) ) : ?>
 			background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 		<?php endif; ?>
@@ -58,9 +59,6 @@
 
 	.fl-node-<?php echo $id; ?> .fl-post-slider-no-thumb{
 		padding: <?php echo $padding; ?>px;
-	<?php if ( ! empty( $settings->text_color ) ) : ?>
-		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-	<?php endif; ?>
 	<?php if ( ! empty( $settings->text_bg_color ) ) : ?>
 		background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 	<?php endif; ?>
@@ -166,9 +164,6 @@
 			<?php endif; ?>
 				height: <?php echo $text_bg_height; ?>;
 				padding: <?php echo $padding; ?>px;
-			<?php if ( ! empty( $settings->text_color ) ) : ?>
-				color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-			<?php endif; ?>
 			<?php $module->render_slider_gradient_bg(); ?>
 		}
 
@@ -206,9 +201,6 @@
 				bottom: 0;
 			<?php endif; ?>
 				padding: <?php echo $padding; ?>px;
-			<?php if ( ! empty( $settings->text_color ) ) : ?>
-				color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-			<?php endif; ?>
 			<?php $module->render_slider_gradient_bg(); ?>
 		}
 
@@ -220,9 +212,6 @@
 			min-height: <?php echo $settings->height; ?>px;
 			padding: <?php echo $padding; ?>px;
 			overflow: hidden;
-			<?php if ( ! empty( $settings->text_color ) ) : ?>
-				color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-			<?php endif; ?>
 			<?php if ( ! empty( $settings->text_bg_color ) ) : ?>
 				background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 			<?php endif; ?>
@@ -256,9 +245,6 @@
 
 	.fl-node-<?php echo $id; ?> .fl-post-slider-no-thumb{
 		padding: <?php echo $padding; ?>px;
-	<?php if ( ! empty( $settings->text_color ) ) : ?>
-		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_color ); ?>;
-	<?php endif; ?>
 	<?php if ( ! empty( $settings->text_bg_color ) ) : ?>
 		background-color: <?php echo FLBuilderColor::hex_or_rgb( $settings->text_bg_color ); ?>;
 	<?php endif; ?>
@@ -267,13 +253,17 @@
 
 
 <?php if ( ! empty( $settings->link_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-slider-content a{
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-title a,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-feed-meta a,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-feed-meta-content a {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_color ); ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->link_hover_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-slider-content a:hover{
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-title a:hover,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-feed-meta a:hover,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-slider-post .fl-post-slider-content .fl-post-slider-feed-meta-content a:hover {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_hover_color ); ?>;
 }
 <?php endif; ?>

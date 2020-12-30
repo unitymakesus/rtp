@@ -116,6 +116,19 @@
 					</tr>
 					<tr valign="top">
 						<th scope="row">
+							<label for="link-excerpt">
+							<?php _e( "Link Whole Excerpt:", 'advanced-excerpt' ); ?>
+							</label>
+						</th>
+						<td>
+							<label for="link-excerpt">
+							<input name="link_excerpt" type="checkbox" id="link-excerpt" value="on" <?php echo ( 1 == $link_excerpt ) ? 'checked="checked"' : ''; ?> />
+							<?php _e( "Makes the whole excerpt be a link to the post. If this is enabled it's advised to turn on the Strip Tags option.", 'advanced-excerpt' ); ?>
+							</label>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">
 							<label for="no-shortcode">
 							<?php _e( "Strip Shortcodes:", 'advanced-excerpt' ); ?>
 							</label>

@@ -13,56 +13,64 @@ if ( ! defined( 'WPINC' ) ) {
 
 ?>
 
-<div class="sui-dialog wp-smush-progress-dialog" aria-hidden="true" id="wp-smush-progress-dialog">
-	<div class="sui-dialog-overlay sui-fade-in" tabindex="0"></div>
-	<div class="sui-dialog-content sui-bounce-in" role="dialog">
-		<div class="sui-box" role="document">
+<div class="sui-modal sui-modal-lg">
+	<div
+			role="dialog"
+			id="wp-smush-progress-dialog"
+			class="sui-modal-content wp-smush-progress-dialog"
+			aria-modal="true"
+			aria-labelledby="progress-dialog-title"
+			aria-describedby="progress-dialog-description"
+	>
+		<div class="sui-box">
 			<div class="sui-box-header">
-				<h3 class="sui-box-title"><?php esc_html_e( 'Choose Directory', 'wp-smushit' ); ?></h3>
-				<div class="sui-actions-right">
-					<button class="sui-dialog-close" aria-label="<?php esc_attr_e( 'Close', 'wp-smushit' ); ?>" data-a11y-dialog-hide></button>
-				</div>
+				<h3 class="sui-box-title" id="progress-dialog-title">
+					<?php esc_html_e( 'Choose Directory', 'wp-smushit' ); ?>
+				</h3>
+				<button class="sui-button-icon sui-button-float--right" data-modal-close="" id="dialog-close-div">
+					<i class="sui-icon-close sui-md" aria-hidden="true"></i>
+					<span class="sui-screen-reader-text"><?php esc_html_e( 'Close', 'wp-smushit' ); ?></span>
+				</button>
 			</div>
 
 			<div class="sui-box-body">
-				<p>
-					<?php
-					esc_html_e(
-						'Bulk smushing is in progress, you need to leave this tab open until the process completes.',
-						'wp-smushit'
-					);
-					?>
+				<p id="progress-dialog-description">
+					<?php esc_html_e( 'Bulk smushing is in progress, you need to leave this tab open until the process completes.', 'wp-smushit' ); ?>
 				</p>
 
-				<div class="sui-notice sui-hidden">
-					<p>
-						<?php
-						$upgrade_url = add_query_arg(
-							array(
-								'utm_source'   => 'smush',
-								'utm_medium'   => 'plugin',
-								'utm_campaign' => 'smush_bulksmush_limit_reached_notice',
-							),
-							esc_url( 'https://premium.wpmudev.org/project/wp-smush-pro/' )
-						);
+				<div class="sui-notice sui-notice-warning sui-hidden">
+					<div class="sui-notice-content">
+						<div class="sui-notice-message">
+							<i class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></i>
+							<p>
+								<?php
+								$upgrade_url = add_query_arg(
+									array(
+										'utm_source'   => 'smush',
+										'utm_medium'   => 'plugin',
+										'utm_campaign' => 'smush_bulksmush_limit_reached_notice',
+									),
+									esc_url( 'https://premium.wpmudev.org/project/wp-smush-pro/' )
+								);
 
-						printf(
-							/* translators: %s1$d - bulk smush limit, %2$s - upgrade link, %3$s - </a>, %4$s - <strong>, $5$s - </strong> */
-							esc_html__( 'The free version of Smush allows you to compress %1$d images at a time. You can easily click %4$sResume%5$s to optimize another %1$d images, or %2$sUpgrade to Pro%3$s to compress unlimited images at once.', 'wp-smushit' ),
-							absint( Core::$max_free_bulk ),
-							'<a href="' . esc_url( $upgrade_url ) . '" target="_blank">',
-							'</a>',
-							'<strong>',
-							'</strong>'
-						)
-						?>
-					</p>
-
-					<div class="sui-notice-buttons">
-						<a class="sui-button wp-smush-resume-scan">
-							<i class="sui-icon-play" aria-hidden="true"></i>
-							<?php esc_html_e( 'Resume', 'wp-smushit' ); ?>
-						</a>
+								printf(
+									/* translators: %s1$d - bulk smush limit, %2$s - upgrade link, %3$s - </a>, %4$s - <strong>, $5$s - </strong> */
+									esc_html__( 'The free version of Smush allows you to compress %1$d images at a time. You can easily click %4$sResume%5$s to optimize another %1$d images, or %2$sUpgrade to Pro%3$s to compress unlimited images at once.', 'wp-smushit' ),
+									absint( Core::$max_free_bulk ),
+									'<a href="' . esc_url( $upgrade_url ) . '" target="_blank">',
+									'</a>',
+									'<strong>',
+									'</strong>'
+								)
+								?>
+							</p>
+							<p>
+								<a class="sui-button wp-smush-resume-scan">
+									<i class="sui-icon-play" aria-hidden="true"></i>
+									<?php esc_html_e( 'Resume', 'wp-smushit' ); ?>
+								</a>
+							</p>
+						</div>
 					</div>
 				</div>
 
@@ -90,19 +98,15 @@ if ( ! defined( 'WPINC' ) ) {
 				</div>
 			</div>
 
-			<div class="sui-box-footer">
-				<div class="sui-actions-right">
-					<span class="add-dir-loader"></span>
-					<button class="sui-modal-close sui-button wp-smush-cancel-dir" data-a11y-dialog-hide>
-						<?php esc_html_e( 'CANCEL', 'wp-smushit' ); ?>
-					</button>
-				</div>
+			<div class="sui-box-footer sui-content-right">
+				<span class="add-dir-loader"></span>
+				<button class="sui-modal-close sui-button wp-smush-cancel-dir" data-modal-close="">
+					<?php esc_html_e( 'CANCEL', 'wp-smushit' ); ?>
+				</button>
 
-				<div class="sui-actions-right sui-hidden">
-					<button class="sui-button wp-smush-resume-scan">
-						<?php esc_html_e( 'RESUME', 'wp-smushit' ); ?>
-					</button>
-				</div>
+				<button class="sui-button wp-smush-resume-scan sui-hidden">
+					<?php esc_html_e( 'RESUME', 'wp-smushit' ); ?>
+				</button>
 			</div>
 		</div>
 	</div>

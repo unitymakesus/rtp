@@ -20,19 +20,22 @@ if ( $total <= 1 ) {
 ?>
 <nav class="uabb-woocommerce-pagination">
 	<?php
-		echo paginate_links(
-			apply_filters(
-				'uabb_woocommerce_pagination_args', array( // WPCS: XSS ok.
-					'base'      => $base,
-					'format'    => $format,
-					'add_args'  => false,
-					'current'   => max( 1, $current ),
-					'total'     => $total,
-					'prev_text' => '&larr;',
-					'next_text' => '&rarr;',
-					'type'      => 'list',
-					'end_size'  => 3,
-					'mid_size'  => 3,
+		echo wp_kses_post(
+			paginate_links(
+				apply_filters(
+					'uabb_woocommerce_pagination_args',
+					array( // WPCS: XSS ok.
+						'base'      => $base,
+						'format'    => $format,
+						'add_args'  => false,
+						'current'   => max( 1, $current ),
+						'total'     => $total,
+						'prev_text' => '&larr;',
+						'next_text' => '&rarr;',
+						'type'      => 'list',
+						'end_size'  => 3,
+						'mid_size'  => 3,
+					)
 				)
 			)
 		);

@@ -1,0 +1,287 @@
+
+.page-header {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 0;
+  background-color: $color-slate-boxyard;
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  margin-bottom: 3rem;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    background-color: transparentize($color-slate-boxyard, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    content: '';
+  }
+
+  h1 {
+    position: relative;
+    border: 6px solid $color-slate-boxyard;
+    background-color: $color-white;
+    padding: 20px;
+    text-align: left;
+    max-width: 600px;
+    width: 100%;
+    z-index: 10;
+  }
+}
+
+.page-title {
+  .border-card {
+    margin-bottom: 3rem;
+    border-width: 4px;
+  }
+
+  h1 {
+    line-height: 1;
+    margin: 0;
+  }
+}
+
+.page {
+  .main {
+    margin-bottom: 0;
+  }
+}
+
+.badges {
+  img {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+  }
+}
+
+// Boxyard
+.boxes {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .month {
+    position: absolute;
+    top: 0.1rem;
+    left: 0.5rem;
+    color: $color-white;
+    font-weight: bold;
+  }
+
+  .day {
+    position: relative;
+    top: 0.5rem;
+    margin-left: 1rem;
+    font-size: 10rem;
+    line-height: 1;
+    color: $color-red-boxyard;
+    font-weight: bold;
+
+    @media #{$large-and-up} {
+      font-size: 12vw;
+    }
+  }
+}
+
+.box-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100px;
+  z-index: 10;
+
+  .box {
+    position: relative;
+    display: block;
+    background-color: $color-red-boxyard;
+    width: 33.3333333%;
+    height: 0;
+    margin: -1px;
+    padding-bottom: 32.75%;
+  }
+}
+
+.box-3,
+.box-5,
+.box-7 {
+  opacity: 0 !important;
+}
+
+body.home #content,
+body.page-template-template-vendors #content {
+  background-image: image('bg-steel.png');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+body.page-template-template-full-no-title #content,
+body.single-vendor #content {
+  background-image: image('bg-steel-fade.png');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+}
+
+.mix-blend-mode {
+  position: relative;
+  color: $color-white;
+
+  .fl-row-content,
+  .row {
+    position: relative;
+    z-index: 1;
+  }
+
+  .fl-accordion {
+    background-color: $color-white;
+    color: $color-slate-boxyard;
+  }
+
+  &::after,
+  &.fl-row::after {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparentize($color-slate-boxyard, 0.15);
+    mix-blend-mode: multiply;
+    content: '';
+  }
+
+  &--red::after {
+    background-color: transparentize($color-red-boxyard, 0.15);
+  }
+
+  &--rust::after {
+    background-color: transparentize($color-rust-boxyard, 0.15);
+  }
+
+  &--gray::after {
+    background-color: transparentize($color-slate-light-boxyard, 0.15);
+  }
+}
+
+.sbi {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 52px;
+    height: 52px;
+    background-repeat: no-repeat;
+    background-size: 32px;
+    background-position: center;
+    background-image: image('socialicons/instagram.svg');
+    background-color: $color-grey-light;
+    padding: 1rem;
+    content: '';
+    pointer-events: none;
+    z-index: 10;
+  }
+}
+
+.boxyard-line-art-wrap {
+  position: relative;
+  z-index: -1;
+}
+
+.boxyard-line-art {
+  display: block;
+  width: 75vw;
+  margin: 0 auto;
+
+  path {
+    stroke-width: 3px;
+    fill: none;
+  }
+
+  @media #{$medium-and-up} {
+    position: absolute;
+    top: -20vw;
+    left: -20vw;
+    width: 50vw;
+
+    path {
+      stroke-width: 1px;
+    }
+  }
+
+  .in-viewport & {
+    .a {
+      stroke: $color-white;
+      animation: animate-svg-stroke 1s linear;
+      animation-fill-mode: forwards;
+    }
+
+    .b {
+      stroke: $color-white;
+      animation: animate-svg-stroke 4s linear;
+      animation-fill-mode: forwards;
+    }
+
+    .c {
+      stroke: $color-white;
+      animation: animate-svg-stroke 10s linear;
+      animation-fill-mode: forwards;
+    }
+
+    .d {
+      stroke: $color-white;
+      animation: animate-svg-stroke 3s linear;
+      animation-fill-mode: forwards;
+    }
+
+    .e {
+      stroke: $color-white;
+      animation: animate-svg-stroke 0.5s linear;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+// .single .page-header {
+//   position: relative;
+//   min-height: 300px;
+
+//   h1 {
+//     position: relative;
+//     z-index: 10;
+//   }
+// }
+
+// .single .page-header .texture {
+//   overflow: hidden;
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 34.5%;
+//   right: 0;
+//   z-index: 0;
+
+//   img {
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     width: 100%;
+//     min-height: 100%;
+//     object-fit: cover;
+//     transform: translate3d(-50%, -50%, 0);
+//     z-index: 1;
+//   }
+// }

@@ -122,7 +122,7 @@ class Red_Htaccess {
 
 	private function add_server( $item, $match ) {
 		$match->url = $match->url_from;
-		$this->items[] = sprintf( 'RewriteCond %%{HTTP_HOST} ^%s$ [NC]', preg_quote( $match->server ) );
+		$this->items[] = sprintf( 'RewriteCond %%{HTTP_HOST} ^%s$ [NC]', preg_quote( wp_parse_url( $match->server, PHP_URL_HOST ), '/' ) );
 		$this->add_url( $item, $match );
 	}
 
@@ -225,19 +225,19 @@ class Red_Htaccess {
 			return '';
 		}
 
-		$text[] = '# Created by Redirection';
-		$text[] = '# ' . date( 'r' );
-		$text[] = '# Redirection ' . trim( $version['Version'] ) . ' - https://redirection.me';
-		$text[] = '';
-
-		// mod_rewrite section
-		$text[] = '<IfModule mod_rewrite.c>';
+		$text = [
+			'# Created by Redirection',
+			'# ' . date( 'r' ),
+			'# Redirection ' . trim( $version['Version'] ) . ' - https://redirection.me',
+			'',
+			'<IfModule mod_rewrite.c>',
+		];
 
 		// Add http => https option
 		$options = red_get_options();
 		if ( $options['https'] ) {
 			$text[] = 'RewriteCond %{HTTPS} off';
-			$text[] = 'RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI}';
+			$text[] = 'RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]';
 		}
 
 		// Add redirects

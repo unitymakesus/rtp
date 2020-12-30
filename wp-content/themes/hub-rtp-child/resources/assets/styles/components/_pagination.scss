@@ -1,0 +1,84 @@
+.pagination {
+  background: none;
+  text-align: center;
+  margin-bottom: 4em;
+
+  @extend .z-depth-0;
+
+  ul li {
+    padding: 0;
+    height: auto;
+
+    &::before {
+      display: none;
+    }
+
+    &.gap {
+      &.before::before {
+        display: inline-block;
+        position: relative;
+        content: '\2026';
+        color: $color-black;
+        margin-right: 6px;
+        left: 0;
+      }
+
+      &.after::after {
+        display: inline-block;
+        position: relative;
+        content: '\2026';
+        color: $color-black;
+        margin-right: 6px;
+        left: 0;
+      }
+    }
+  }
+
+  .page-numbers, .facetwp-page {
+    color: $secondary-color;
+    display: inline-block;
+    min-width: 40px;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 1em;
+    font-weight: normal;
+    text-decoration: none;
+    transition: all 0.2s;
+
+    &:hover, &:focus {
+      color: $secondary-color;
+      background: none;
+
+      @extend .z-depth-2;
+    }
+
+    &.active, &.current {
+      background: $secondary-color;
+      color: $color-white;
+
+      @extend .z-depth-0;
+    }
+
+    &.dots {
+      &:hover, &:focus {
+        @extend .z-depth-0;
+      }
+    }
+
+    html[data-contrast="true"] & {
+      background: $color-black;
+      border-color: $color-white;
+
+      &:hover, &:focus {
+        background: $color-white;
+        color: $color-black;
+      }
+
+      &.active, &.current {
+        background: $color-grey-dark;
+        color: $color-white;
+      }
+    }
+  }
+}

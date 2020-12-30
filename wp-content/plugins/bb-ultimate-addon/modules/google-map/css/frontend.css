@@ -1,0 +1,4 @@
+/* Chrome 84+ InfoWindow close fix */
+#uabb-google-map {
+	overflow-anchor: none;
+}

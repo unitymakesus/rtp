@@ -119,15 +119,30 @@ class FLCalloutModule extends FLBuilderModule {
 	public function render_title() {
 		echo '<' . $this->settings->title_tag . ' class="fl-callout-title">';
 
+		if ( 'icon' === $this->settings->image_type ) {
+			if ( ! empty( $this->settings->link ) ) {
+				echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-title-link fl-callout-title-text">';
+			}
+		}
+
 		$this->render_image( 'left-title' );
 
 		echo '<span' . ( empty( $this->settings->link ) ? ' class="fl-callout-title-text"' : '' ) . '>';
 
-		if ( ! empty( $this->settings->link ) ) {
-			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-title-link fl-callout-title-text">';
+		if ( ! empty( $this->settings->link ) && 'icon' !== $this->settings->image_type ) {
+				$nofollow = '';
+
+			if ( 'yes' == $this->settings->link_nofollow ) {
+				$nofollow = 'rel="nofollow"';
+			}
+			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" ' . $nofollow . ' class="fl-callout-title-link fl-callout-title-text">';
 		}
 
 		echo $this->settings->title;
+
+		if ( 'right-title' === $this->settings->icon_position ) {
+			$this->render_image( 'right-title' );
+		}
 
 		if ( ! empty( $this->settings->link ) ) {
 			echo '</a>';
@@ -135,7 +150,9 @@ class FLCalloutModule extends FLBuilderModule {
 
 		echo '</span>';
 
-		$this->render_image( 'right-title' );
+		if ( 'right-title' !== $this->settings->icon_position ) {
+			$this->render_image( 'right-title' );
+		}
 
 		echo '</' . $this->settings->title_tag . '>';
 	}
@@ -154,7 +171,13 @@ class FLCalloutModule extends FLBuilderModule {
 	 */
 	public function render_link() {
 		if ( 'link' == $this->settings->cta_type ) {
-			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-cta-link">' . $this->settings->cta_text . '</a>';
+			$nofollow = '';
+
+			if ( 'yes' == $this->settings->link_nofollow ) {
+				$nofollow = 'rel="nofollow"';
+			}
+
+			echo '<a href="' . $this->settings->link . '" ' . $nofollow . ' target="' . $this->settings->link_target . '" class="fl-callout-cta-link">' . $this->settings->cta_text . '</a>';
 		}
 	}
 
@@ -201,14 +224,19 @@ class FLCalloutModule extends FLBuilderModule {
 	 */
 	public function get_icon_settings() {
 		$settings = array(
+			'id'              => $this->node,
 			'align'           => '',
 			'exclude_wrapper' => true,
 			'icon'            => $this->settings->icon,
-			'link'            => $this->settings->link,
-			'link_target'     => $this->settings->link_target,
 			'text'            => '',
 			'three_d'         => $this->settings->icon_3d,
+			'sr_text'         => $this->settings->sr_text,
+			'link'            => $this->settings->link,
 		);
+
+		if ( isset( $this->settings->icon_position ) && ( 'left-title' === $this->settings->icon_position || 'right-title' === $this->settings->icon_position ) ) {
+			unset( $settings['link'] );
+		}
 
 		foreach ( $this->settings as $key => $value ) {
 			if ( strstr( $key, 'icon_' ) ) {
@@ -552,6 +580,11 @@ FLBuilder::register_module('FLCalloutModule', array(
 						'type'  => 'icon',
 						'label' => __( 'Icon', 'fl-builder' ),
 					),
+					'sr_text'       => array(
+						'type'    => 'text',
+						'label'   => __( 'Screen Reader Text', 'fl-builder' ),
+						'default' => '',
+					),
 					'icon_position' => array(
 						'type'    => 'select',
 						'label'   => __( 'Position', 'fl-builder' ),
@@ -570,6 +603,32 @@ FLBuilder::register_module('FLCalloutModule', array(
 			'icon_colors'    => array(
 				'title'  => __( 'Icon Colors', 'fl-builder' ),
 				'fields' => array(
+					'icon_duo_color1'     => array(
+						'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'icon_duo_color2'     => array(
+						'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:after',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
 					'icon_color'          => array(
 						'type'        => 'color',
 						'connections' => array( 'color' ),
@@ -745,6 +804,32 @@ FLBuilder::register_module('FLCalloutModule', array(
 						'show_remove' => true,
 						'show'        => array(
 							'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+						),
+					),
+					'btn_duo_color1'     => array(
+						'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-button i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'btn_duo_color2'     => array(
+						'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-button i.fad:after',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'btn_icon_position'  => array(

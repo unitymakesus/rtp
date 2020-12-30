@@ -23,9 +23,12 @@ class Divi extends Integration {
 	 */
 	public function init() {
 		add_filter( 'et_fb_load_raw_post_content', function ( $content ) {
-			$content = apply_filters( 'as3cf_filter_post_local_to_s3', $content ); // Backwards compatibility
-
 			return apply_filters( 'as3cf_filter_post_local_to_provider', $content );
+		} );
+
+		// Before attachment lookup via GUID, revert remote URL to local URL.
+		add_filter( 'et_get_attachment_id_by_url_guid', function ( $url ) {
+			return apply_filters( 'as3cf_filter_post_provider_to_local', $url );
 		} );
 
 		// Global Modules reset their filtered background image URLs, so let's fix that.
@@ -36,6 +39,22 @@ class Divi extends Integration {
 		// The Divi Page Builder Gallery uses a non-standard and inherently anti-filter method of getting its editor thumbnails.
 		if ( $this->doing_fetch_attachments() ) {
 			add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
+		}
+
+		// The Divi Theme Builder may need to refresh its cached CSS if media URLs possibly changed.
+		if ( function_exists( 'et_core_page_resource_auto_clear' ) ) {
+			add_action( 'as3cf_copy_buckets_cancelled', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_copy_buckets_completed', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_download_and_remover_cancelled', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_download_and_remover_completed', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_move_objects_cancelled', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_move_objects_completed', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_move_private_objects_cancelled', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_move_private_objects_completed', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_move_public_objects_cancelled', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_move_public_objects_completed', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_uploader_cancelled', 'et_core_page_resource_auto_clear' );
+			add_action( 'as3cf_uploader_completed', 'et_core_page_resource_auto_clear' );
 		}
 	}
 
@@ -90,8 +109,7 @@ class Divi extends Integration {
 					$content_field = 'guid';
 				}
 
-				$content                 = apply_filters( 'as3cf_filter_post_local_to_s3', $posts->{$content_field} ); // Backwards compatibility
-				$posts->{$content_field} = apply_filters( 'as3cf_filter_post_local_to_provider', $content );
+				$posts->{$content_field} = apply_filters( 'as3cf_filter_post_local_to_provider', $posts->{$content_field} );
 			}
 		}
 

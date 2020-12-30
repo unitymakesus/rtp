@@ -39,7 +39,7 @@ if ( ! class_exists( 'UABB_Gradient' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		function __construct() {
+		public function __construct() {
 			add_action( 'fl_builder_control_uabb-gradient', array( $this, 'uabb_gradient' ), 1, 4 );
 			add_action( 'fl_builder_custom_fields', array( $this, 'ui_fields' ), 10, 1 );
 		}
@@ -49,7 +49,7 @@ if ( ! class_exists( 'UABB_Gradient' ) ) {
 		 * @since x.x.x
 		 * @param array $fields gets the fields for the gradient.
 		 */
-		function ui_fields( $fields ) {
+		public function ui_fields( $fields ) {
 			$fields['uabb-gradient'] = BB_ULTIMATE_ADDON_DIR . 'fields/uabb-gradient/ui-field-uabb-gradient.php';
 
 			return $fields;
@@ -64,13 +64,13 @@ if ( ! class_exists( 'UABB_Gradient' ) ) {
 		 * @param array  $field gets an array of field values.
 		 * @param object $settings gets the object of respective fields.
 		 */
-		function uabb_gradient( $name, $value, $field, $settings ) {
+		public function uabb_gradient( $name, $value, $field, $settings ) {
 
 			$name_new = 'uabb_' . $name;
 			$value    = (array) $value;
-			$preview  = json_encode( array( 'type' => 'refresh' ) );
+			$preview  = wp_json_encode( array( 'type' => 'refresh' ) );
 
-			$default   = ( isset( $field['default'] ) && '' != $field['default'] ) ? $field['default'] : '';
+			$default   = ( isset( $field['default'] ) && '' !== $field['default'] ) ? $field['default'] : '';
 			$direction = array(
 				'left_right' => 'Left to Right',
 				'right_left' => 'Right to Left',
@@ -89,7 +89,7 @@ if ( ! class_exists( 'UABB_Gradient' ) ) {
 			$html           .= '<div class="fl-color-picker">';
 			$html           .= '<div class="fl-color-picker-color' . $color_one_class . '"></div>';
 			$html           .= '<div class="fl-color-picker-clear"><div class="fl-color-picker-icon-remove"></div></div>';
-			$html           .= '<input name="' . $name . '[][color_one]' . '" type="hidden" value="' . $value['color_one'] . '" class="fl-color-picker-value" />';
+			$html           .= '<input name="' . $name . '[][color_one] " type="hidden" value="' . $value['color_one'] . '" class="fl-color-picker-value" />';
 			$html           .= '</div>';
 			$html           .= '</div>';
 
@@ -100,17 +100,17 @@ if ( ! class_exists( 'UABB_Gradient' ) ) {
 			$html           .= '<div class="fl-color-picker">';
 			$html           .= '<div class="fl-color-picker-color' . $color_two_class . '"></div>';
 			$html           .= '<div class="fl-color-picker-clear"><div class="fl-color-picker-icon-remove"></div></div>';
-			$html           .= '<input name="' . $name . '[][color_two]' . '" type="hidden" value="' . $value['color_two'] . '" class="fl-color-picker-value" />';
+			$html           .= '<input name="' . $name . '[][color_two] " type="hidden" value="' . $value['color_two'] . '" class="fl-color-picker-value" />';
 			$html           .= '</div>';
 			$html           .= '</div>';
 
 			/* Direction */
 			$html .= '<div class="uabb-gradient-item uabb-gradient-direction fl-field" data-type="select" data-preview=\'' . $preview . '\'>';
 			$html .= '<label for="uabb-gradient-direction" class="uabb-gradient-label">Direction</label>';
-			$html .= '<select name="' . $name . '[][direction]' . '" class="uabb-gradient-direction-select">';
+			$html .= '<select name="' . $name . '[][direction] " class="uabb-gradient-direction-select">';
 			foreach ( $direction as $direction_key => $direction_value ) {
 				$selected = '';
-				if ( $value['direction'] == $direction_key ) {
+				if ( $value['direction'] === $direction_key ) {
 					$selected = 'selected="selected"';
 				}
 				$html .= '<option value="' . $direction_key . '" ' . $selected . '>' . $direction_value . '</option>';
@@ -122,12 +122,12 @@ if ( ! class_exists( 'UABB_Gradient' ) ) {
 			$angle = ( isset( $value['angle'] ) ) ? $value['angle'] : '';
 			$html .= '<div class="uabb-gradient-item uabb-gradient-angle fl-field" data-type="text" data-preview=\'' . $preview . '\' >';
 			$html .= '<label for="uabb-gradient-angle" class="uabb-gradient-label">Angle</label>';
-			$html .= '<input type="text" class="uabb-gradient-angle-input" name="' . $name . '[][angle]' . '" maxlength="3" size="6" value="' . $angle . '" />';
+			$html .= '<input type="text" class="uabb-gradient-angle-input" name="' . $name . '[][angle] " maxlength="3" size="6" value="' . $angle . '" />';
 			$html .= '<span class="fl-field-description">deg</span>';
 			$html .= '</div>';
 			$html .= '</div>';
 
-			echo $html;
+			echo $html; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 	new UABB_Gradient();

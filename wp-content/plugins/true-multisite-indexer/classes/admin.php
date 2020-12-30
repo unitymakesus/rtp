@@ -294,7 +294,7 @@ if ( !class_exists( 'multisiteindexerAdmin' ) ) {
 					} else {
 						delete_site_option( '_misha_true-multisite-indexer_license_key' );
 					}
-					
+
 					delete_site_transient( 'misha_upgrade_mul470e2_9t8t' );
 					wp_safe_redirect( add_query_arg( array( 'saved' => 1 ), wp_get_referer() ) );
 					exit;
@@ -359,7 +359,7 @@ if ( !class_exists( 'multisiteindexerAdmin' ) ) {
 							<?php
 								$indexingtypes = get_blog_option( $id, 'postindexer_posttypes', $this->global_post_types );
 								// was: $post_types = get_post_types( '' , 'objects' );
-								if( $post_types = $this->model->get_active_post_types() ) :
+								if( $post_types = $this->model->get_active_post_types( $id ) ) :
 							?>
 							<fieldset>
 								<?php

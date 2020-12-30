@@ -85,9 +85,10 @@ abstract class GFFeedAddOn extends GFAddOn {
 		add_filter( 'gform_entry_post_save', array( $this, 'maybe_process_feed' ), 10, 2 );
 		add_action( 'gform_after_delete_form', array( $this, 'delete_feeds' ) );
 
-		// Register GFFrontendFeeds
-		if( $this->_supports_frontend_feeds && ! has_action( 'gform_register_init_scripts', array( __class__, 'register_frontend_feeds_init_script' ) ) ) {
-			add_action( 'gform_register_init_scripts', array( __class__, 'register_frontend_feeds_init_script' ) );
+		// Register GFFrontendFeeds.
+		if ( $this->_supports_frontend_feeds && ! has_action( 'gform_register_init_scripts', array( __class__, 'register_frontend_feeds_init_script' ) ) ) {
+			// Use priority 20 so other add-ons that support frontend feeds can all load their scripts first.
+			add_action( 'gform_register_init_scripts', array( __class__, 'register_frontend_feeds_init_script' ), 20 );
 		}
 
 	}
@@ -736,7 +737,7 @@ abstract class GFFeedAddOn extends GFAddOn {
 
 			$feed = $this->_single_submission_feed;
 
-		} elseif ( $entry['id'] ) {
+		} elseif ( ! empty( $entry['id'] ) ) {
 
 			$feeds = $this->get_feeds_by_entry( $entry['id'] );
 
@@ -905,6 +906,17 @@ abstract class GFFeedAddOn extends GFAddOn {
 
 	public function delete_feed( $id ) {
 		global $wpdb;
+
+		/**
+		 * Allows custom actions to be performed just before a feed is deleted from the database.
+		 *
+		 * @since 2.4.21
+		 *
+		 * @param int         $id   The ID of the feed being deleted.
+		 * @param GFFeedAddOn $this The current instance of the add-on for which the feed is being deleted.
+		 */
+		do_action( 'gform_pre_delete_feed', $id, $this );
+		do_action( "gform_{$this->get_short_slug()}_pre_delete_feed", $id, $this );
 
 		$wpdb->delete( "{$wpdb->prefix}gf_addon_feed", array( 'id' => $id ), array( '%d' ) );
 	}
@@ -1131,7 +1143,7 @@ abstract class GFFeedAddOn extends GFAddOn {
 		echo $title;
 
 		$feed = $this->get_feed( $feed_id );
-		$this->set_settings( $feed['meta'] );
+		$this->set_settings( rgar( $feed, 'meta' ) );
 
 		GFCommon::display_admin_message();
 
@@ -1249,9 +1261,9 @@ abstract class GFFeedAddOn extends GFAddOn {
 			return $feed_id;
 		}
 
-		// store a copy of the previous settings for cases where action would only happen if value has changed
+		// store a copy of the previous settings for cases where action would only happen if value has changed.
 		$feed = $this->get_feed( $feed_id );
-		$this->set_previous_settings( $feed['meta'] );
+		$this->set_previous_settings( rgar( $feed, 'meta' ) );
 
 		$settings = $this->get_posted_settings();
 		$sections = $this->get_feed_settings_fields();
@@ -1962,11 +1974,16 @@ abstract class GFFeedAddOn extends GFAddOn {
 	 *
 	 * @since 2.4
 	 *
-	 * @param array $form The current Form Object
+	 * @param array $form The current Form Object.
 	 *
 	 * @return bool Returns true if one ore more feeds were registered, false if no feeds were registered
 	 */
 	public function register_frontend_feeds( $form ) {
+
+		// Don't register frontend feeds if $form ID is empty.
+		if ( empty( $form['id'] ) ) {
+			return false;
+		}
 
 		if ( ! isset( self::$_frontend_feeds[ $form['id'] ] ) ) {
 			self::$_frontend_feeds[ $form['id'] ] = array();

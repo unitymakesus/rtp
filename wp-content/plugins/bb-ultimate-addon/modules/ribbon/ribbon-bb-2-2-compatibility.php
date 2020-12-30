@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'RibbonModule', array(
+	'RibbonModule',
+	array(
 		'general'    => array( // Tab.
 			'title'    => __( 'Layout', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

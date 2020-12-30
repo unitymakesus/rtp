@@ -19,7 +19,7 @@ $atts          = $args[2]; // Shortcode attributes.
 	<div class="give-donor give-card">
 		<div class="give-donor__header">
 			<?php
-			if( true === $atts['show_avatar'] ) {
+			if ( true === $atts['show_avatar'] ) {
 
 				// Get anonymous donor image.
 				$anonymous_donor_img = sprintf(
@@ -53,7 +53,13 @@ $atts          = $args[2]; // Shortcode attributes.
 							? __( 'Anonymous', 'give' )
 							: trim( $donation['_give_donor_billing_first_name'] . ' ' . $donation['_give_donor_billing_last_name'] );
 						?>
-						<?php esc_html_e( $donor_name ); ?>
+						<?php echo esc_html( $donor_name ); ?>
+					</h3>
+				<?php endif; ?>
+
+				<?php if ( true === $atts['show_company_name'] && isset( $donation['_give_donation_company'] ) ) : ?>
+					<h3 class="give-donor__name">
+						<?php echo esc_html( $donation['_give_donation_company'] ); ?>
 					</h3>
 				<?php endif; ?>
 
@@ -65,7 +71,7 @@ $atts          = $args[2]; // Shortcode attributes.
 
 				<?php if ( true === $atts['show_time'] ) : ?>
 					<span class="give-donor__timestamp">
-						<?php echo esc_html( give_get_formatted_date( $donation[ 'donation_date' ], give_date_format(), 'Y-m-d H:i:s' ) ); ?>
+						<?php echo esc_html( give_get_formatted_date( $donation['donation_date'], give_date_format(), 'Y-m-d H:i:s', true ) ); ?>
 					</span>
 				<?php endif; ?>
 			</div>

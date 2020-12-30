@@ -201,7 +201,7 @@ final class FLBuilderServiceInfusionsoft extends FLBuilderService {
 				continue;
 			}
 
-			$options[ $list['Id'] ] = $list['GroupName'];
+			$options[ $list['Id'] ] = esc_attr( $list['GroupName'] );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

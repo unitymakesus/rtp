@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Bridges;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Prepares the Post Settings meta box interface.
@@ -36,12 +36,13 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @final Can't be extended.
  */
 final class PostSettings {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * Registers the meta box for the Post edit screens.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.5 Now registers custom postbox classes.
+	 * @access private
 	 *
 	 * @param string $post_type The current Post Type.
 	 */
@@ -84,7 +85,12 @@ final class PostSettings {
 			$title = sprintf( \esc_html__( '%s SEO Settings', 'autodescription' ), $label );
 		}
 
-		\add_meta_box( 'tsf-inpost-box', $title, __CLASS__ . '::_meta_box', $post_type, $context, $priority, [] );
+		$box_id = 'tsf-inpost-box';
+		// Implies `\get_current_screen()->id`. Is always 'post'.
+		$screen_id = 'post';
+
+		\add_meta_box( $box_id, $title, __CLASS__ . '::_meta_box', $post_type, $context, $priority, [] );
+		\add_filter( "postbox_classes_{$screen_id}_{$box_id}", __CLASS__ . '::_add_postbox_class' );
 	}
 
 	/**
@@ -105,7 +111,7 @@ final class PostSettings {
 	 * }
 	 * @param bool   $use_tabs Whether to output tabs, only works when $tabs count is greater than 1.
 	 */
-	public static function _flex_nav_tab_wrapper( $id, $tabs = [], $use_tabs = true ) {
+	public static function _flex_nav_tab_wrapper( $id, $tabs = [], $use_tabs = true ) { // phpcs:ignore,VariableAnalysis
 		\the_seo_framework()->get_view( 'edit/wrap-nav', get_defined_vars() );
 		\the_seo_framework()->get_view( 'edit/wrap-content', get_defined_vars() );
 	}
@@ -134,6 +140,24 @@ final class PostSettings {
 		 * @since 2.9.0
 		 */
 		\do_action( 'the_seo_framework_pro_page_inpost_box' );
+	}
+
+	/**
+	 * Adds a Gutenberg/Block-editor box class.
+	 *
+	 * @since 4.0.5
+	 * @access private
+	 *
+	 * @param array $classes The registered postbox classes.
+	 * @return array
+	 */
+	public static function _add_postbox_class( $classes = [] ) {
+
+		if ( \the_seo_framework()->is_gutenberg_page() ) {
+			$classes[] = 'tsf-is-block-editor';
+		}
+
+		return $classes;
 	}
 
 	/**

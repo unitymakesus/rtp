@@ -146,6 +146,8 @@ class vcMishaMiltisitePosts extends WPBakeryShortCode {
 			$args['post_type'] = explode(',',$atts['post_type']);
 		}
 
+		$args = apply_filters( 'multisite_indexer_vc_element_args', $args, $atts );
+
 		// just remind you, Network_Query is the part of this plugin https://rudrastyh.com/plugins/get-posts-from-all-blogs-in-multisite-network
 		$q = new Network_Query( $args );
 

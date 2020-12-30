@@ -128,9 +128,17 @@ add_action('widgets_init', function () {
  		'menu_slug' 	=> 'schedule-settings',
  		'capability'	=> 'manage_options',
  		'redirect'		=> false
- 	));
-}
+  ));
 
+  acf_add_options_page(array(
+    'page_title' => 'Site Announcements',
+    'menu_title' => 'Site Announcements',
+    'menu_slug'  => 'site-announcement-settings',
+    'capability' => 'manage_options',
+    'redirect'   => false,
+    'icon_url'   => 'dashicons-megaphone',
+  ));
+}
 
 /**
  * Frontier 800 schedule shortcode
@@ -170,6 +178,9 @@ function get_day_status($test) {
   $exceptions = get_field('closed_days', 'option');
   $closed = false;
 
+  $today = strtotime(current_time('Y-m-d'));
+  $dayofweek = date('N', $today);
+
   // Is it a holiday?
   foreach($exceptions as $exception) {
     $date = strtotime($exception['date']);
@@ -196,28 +207,30 @@ function get_day_status($test) {
 /**
  * Event Space Features Shortcode
  */
- add_shortcode('event-space', function($atts) {
-   $features = shortcode_atts( array(
-		'wifi' => '',
-    'whiteboard' => '',
-    'tv' => '',
-    'hdmi' => '',
-    'screen' => '',
-    'projector' => '',
-		'microphone' => '',
-		'podium' => '',
-		'sofa' => '',
-    'layouts' => '',
-    'seats' => ''
-	), $atts );
+add_shortcode('event-space', function ($atts) {
+    $features = shortcode_atts(array(
+        'wifi'               => '',
+        'whiteboard'         => '',
+        'tv'                 => '',
+        'hdmi'               => '',
+        'screen'             => '',
+        'projector'          => '',
+        'microphone'         => '',
+        'podium'             => '',
+        'sofa'               => '',
+        'layouts'            => '',
+        'seats'              => '',
+        'video-conferencing' => '',
+        'sound'              => '',
+    ), $atts);
 
-  ob_start();
+    ob_start();
 
-  foreach ($features as $icon => $feature) {
-    if (!empty($feature)) {
-      echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+    foreach ($features as $icon => $feature) {
+        if (!empty($feature)) {
+            echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+        }
     }
-  }
 
-  return ob_get_clean();
- });
+    return ob_get_clean();
+});

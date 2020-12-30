@@ -19,7 +19,7 @@ class WPML_UABB_Pricelist extends WPML_Beaver_Builder_Module_With_Items {
 	 * @param object $settings an object to get values of Price List.
 	 */
 	public function &get_items( $settings ) {
-		return $settings->add_list_item;
+		return $settings->add_price_list_item;
 	}
 
 	/**

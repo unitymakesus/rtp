@@ -24,11 +24,11 @@ class UABB_Global_Styling {
 	 *
 	 * @since x.x.x
 	 */
-	function add_options() {
+	public function add_options() {
 
 		$global_options = UABB_Init::$uabb_options['uabb_global_settings'];
 
-		if ( ! isset( $global_options ) || '' == $global_options || ! is_array( $global_options ) ) {
+		if ( ! isset( $global_options ) || '' === $global_options || ! is_array( $global_options ) ) {
 
 			$default = array(
 				'enable_global'          => 'yes',
@@ -64,7 +64,7 @@ class UABB_Global_Styling {
 	 *
 	 * @since x.x.x
 	 */
-	static public function init_actions() {
+	public static function init_actions() {
 		FLBuilderAJAX::add_action( 'render_uabb_global_settings', 'UABB_Global_Styling::render_uabb_global_settings' );
 		FLBuilderAJAX::add_action( 'save_uabb_global_settings', 'UABB_Global_Styling::save_uabb_global_settings', array( 'settings' ) );
 	}
@@ -74,7 +74,7 @@ class UABB_Global_Styling {
 	 *
 	 * @since x.x.x
 	 */
-	static public function render_uabb_global_settings() {
+	public static function render_uabb_global_settings() {
 
 		$settings = self::get_uabb_global_settings();
 		$form     = FLBuilderModel::$settings_forms['uabb-global'];
@@ -85,7 +85,8 @@ class UABB_Global_Styling {
 				'title'     => $form['title'],
 				'tabs'      => $form['tabs'],
 				'resizable' => true,
-			), $settings
+			),
+			$settings
 		);
 	}
 
@@ -94,7 +95,7 @@ class UABB_Global_Styling {
 	 *
 	 * @since x.x.x
 	 */
-	static public function get_uabb_global_settings() {
+	public static function get_uabb_global_settings() {
 		$settings = UABB_Init::$uabb_options['uabb_global_settings'];
 
 		$defaults = FLBuilderModel::get_settings_form_defaults( 'uabb-global' );
@@ -112,7 +113,7 @@ class UABB_Global_Styling {
 	 * @since x.x.x
 	 * @param array $settings gets a array of old and new settings values.
 	 */
-	static public function save_uabb_global_settings( $settings = array() ) {
+	public static function save_uabb_global_settings( $settings = array() ) {
 		$old_settings = self::get_uabb_global_settings();
 		$new_settings = (object) array_merge( (array) $old_settings, (array) $settings );
 

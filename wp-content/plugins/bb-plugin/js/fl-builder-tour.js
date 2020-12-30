@@ -92,28 +92,28 @@
 					},
 					{
 						animation   : false,
-						element     : '.fl-row:first-of-type',
+						element     : '.fl-row.fl-builder-tour-demo-content',
 						placement   : 'top',
 						title       : FLBuilderStrings.tourEditContentTitle,
 						content     : FLBuilderStrings.tourEditContent,
 						onShow      : function() {
 							FLBuilderTour._dimSection( '.fl-builder-bar' );
 							FLBuilder._closePanel();
-							$( '.fl-row' ).eq( 0 ).trigger( 'mouseenter' );
-							$( '.fl-module' ).eq( 0 ).trigger( 'mouseenter' );
+							$( '.fl-row.fl-builder-tour-demo-content' ).trigger( 'mouseenter' );
+							$( '.fl-row.fl-builder-tour-demo-content .fl-module' ).eq( 0 ).trigger( 'mouseenter' );
 						}
 					},
 					{
 						animation   : false,
-						element     : '.fl-row:first-of-type .fl-module-overlay .fl-block-overlay-actions',
+						element     : '.fl-row.fl-builder-tour-demo-content .fl-module-overlay .fl-block-overlay-actions',
 						placement   : 'top',
 						title       : FLBuilderStrings.tourEditContentTitle,
 						content     : FLBuilderStrings.tourEditContent2,
 						onShow      : function() {
 							FLBuilderTour._dimSection( '.fl-builder-bar' );
 							FLBuilder._closePanel();
-							$( '.fl-row' ).eq( 0 ).trigger( 'mouseenter' );
-							$( '.fl-module' ).eq( 0 ).trigger( 'mouseenter' );
+							$( '.fl-row.fl-builder-tour-demo-content' ).trigger( 'mouseenter' );
+							$( '.fl-row.fl-builder-tour-demo-content .fl-module' ).eq( 0 ).trigger( 'mouseenter' );
 						}
 					},
 					{
@@ -130,17 +130,7 @@
 					},
 					{
 						animation   : false,
-						element     : '.fl-builder-templates-button',
-						placement   : 'bottom',
-						title       : FLBuilderStrings.tourTemplatesButtonTitle,
-						content     : FLBuilderStrings.tourTemplatesButton,
-						onShow      : function() {
-							FLBuilderTour._dimSection( 'body' );
-						}
-					},
-					{
-						animation   : false,
-						element     : '.fl-builder-tools-button',
+						element     : '.fl-builder-bar-title',
 						placement   : 'bottom',
 						title       : FLBuilderStrings.tourToolsButtonTitle,
 						content     : FLBuilderStrings.tourToolsButton,
@@ -170,10 +160,7 @@
 			};
 
 			// Remove the first step if no templates.
-			if( FLBuilderConfig.lite ) {
-				config.steps.shift();
-			}
-			else if ( 'disabled' == FLBuilderConfig.enabledTemplates ) {
+			if ( 'disabled' == FLBuilderConfig.enabledTemplates ) {
 				config.steps.shift();
 			}
 			else if ( 'fl-builder-template' == FLBuilderConfig.postType ) {
@@ -196,10 +183,14 @@
 
 			body.append( '<div class="fl-builder-tour-mask"></div>' );
 
-			if ( 0 === $( '.fl-row' ).length && 'module' != FLBuilderConfig.userTemplateType ) {
-				$( '.fl-builder-content' ).append( '<div class="fl-builder-tour-demo-content fl-row fl-row-fixed-width fl-row-bg-none"> <div class="fl-row-content-wrap"> <div class="fl-row-content fl-row-fixed-width fl-node-content"> <div class="fl-col-group"> <div class="fl-col" style="width:100%"> <div class="fl-col-content fl-node-content"> <div class="fl-module fl-module-rich-text" data-type="rich-text" data-name="Text Editor"> <div class="fl-module-content fl-node-content"> <div class="fl-rich-text"> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pellentesque ut lorem non cursus. Sed mauris nunc, porttitor iaculis lorem a, sollicitudin lacinia sapien. Proin euismod orci lacus, et sollicitudin leo posuere ac. In hac habitasse platea dictumst. Maecenas elit magna, consequat in turpis suscipit, ultrices rhoncus arcu. Phasellus finibus sapien nec elit tempus venenatis. Maecenas tincidunt sapien non libero maximus, in aliquam felis tincidunt. Mauris mollis ultricies facilisis. Duis condimentum dignissim tortor sit amet facilisis. Aenean gravida lacus eu risus molestie egestas. Donec ut dolor dictum, fringilla metus malesuada, viverra nunc. Maecenas ut purus ac justo aliquet lacinia. Cras vestibulum elementum tincidunt. Maecenas mattis tortor neque, consectetur dignissim neque tempor nec.</p></div> </div> </div> </div> </div> </div> </div> </div> </div>' );
-				FLBuilder._setupEmptyLayout();
-				FLBuilder._highlightEmptyCols();
+			if ( 'module' != FLBuilderConfig.userTemplateType ) {
+				if ( 0 === $( '.fl-row' ).length ) {
+					$( '.fl-builder-content' ).append( '<div class="fl-builder-tour-demo-content fl-builder-tour-placeholder-content fl-row fl-row-full-width fl-row-bg-none"> <div class="fl-row-content-wrap"> <div class="fl-row-content fl-row-fixed-width fl-node-content"> <div class="fl-col-group"> <div class="fl-col" style="width: 100%;"> <div class="fl-col-content fl-node-content"> <div class="fl-module fl-module-rich-text" data-type="rich-text" data-name="Text Editor"> <div class="fl-module-content fl-node-content"> <div class="fl-rich-text"> <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus pellentesque ut lorem non cursus. Sed mauris nunc, porttitor iaculis lorem a, sollicitudin lacinia sapien. Proin euismod orci lacus, et sollicitudin leo posuere ac. In hac habitasse platea dictumst. Maecenas elit magna, consequat in turpis suscipit, ultrices rhoncus arcu. Phasellus finibus sapien nec elit tempus venenatis. Maecenas tincidunt sapien non libero maximus, in aliquam felis tincidunt. Mauris mollis ultricies facilisis. Duis condimentum dignissim tortor sit amet facilisis. Aenean gravida lacus eu risus molestie egestas. Donec ut dolor dictum, fringilla metus malesuada, viverra nunc. Maecenas ut purus ac justo aliquet lacinia. Cras vestibulum elementum tincidunt. Maecenas mattis tortor neque, consectetur dignissim neque tempor nec.</p> </div> </div> </div> </div> </div> </div> </div> </div></div>' );
+					FLBuilder._setupEmptyLayout();
+					FLBuilder._highlightEmptyCols();
+				} else {
+					$( '.fl-row' ).eq( 0 ).addClass( 'fl-builder-tour-demo-content' );
+				}
 			}
 		},
 
@@ -241,7 +232,8 @@
 			$( 'body' ).off( 'fl-builder.template-selector-loaded' );
 			$( '.fl-builder-tour-mask' ).remove();
 			$( '.fl-builder-tour-dimmed' ).remove();
-			$( '.fl-builder-tour-demo-content' ).remove();
+			$( '.fl-builder-tour-placeholder-content' ).remove();
+			$( '.fl-builder-tour-demo-content' ).removeClass( 'fl-builder-tour-demo-content' );
 
 			FLBuilder._setupEmptyLayout();
 			FLBuilder._highlightEmptyCols();

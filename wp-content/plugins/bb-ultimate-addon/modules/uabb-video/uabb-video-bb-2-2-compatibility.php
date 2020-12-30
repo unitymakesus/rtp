@@ -870,6 +870,65 @@ FLBuilder::register_module(
 				),
 			),
 		),
+		'structured_data'  => array(
+			'title'    => __( 'Structured Data', 'uabb' ),
+			'sections' => array(
+				'video_info' => array(
+					'title'  => '',
+					'fields' => array(
+						'schema_enabled'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Structured Data?', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'video_title', 'video_desc', 'video_thumbnail', 'video_upload_date' ),
+								),
+							),
+						),
+						'video_title'       => array(
+							'type'        => 'text',
+							'label'       => __( 'Video Title', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'string' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'video_desc'        => array(
+							'type'        => 'text',
+							'label'       => __( 'Video Description', 'uabb' ),
+							'default'     => '',
+							'connections' => array( 'string' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'video_thumbnail'   => array(
+							'type'        => 'photo',
+							'label'       => __( 'Video Thumbnail', 'uabb' ),
+							'show_remove' => true,
+							'connections' => array( 'photo' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'video_upload_date' => array(
+							'type'        => 'date',
+							'label'       => __( 'Upload Date', 'uabb' ),
+							'connections' => array( 'string' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+					),
+				),
+			),
+		),
 		'uabb_docs'        => array(
 			'title'    => __( 'Docs', 'uabb' ),
 			'sections' => array(
@@ -878,7 +937,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/video-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=video-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 

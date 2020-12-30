@@ -130,7 +130,7 @@ class FLContentSliderModule extends FLBuilderModule {
 				echo '<a href="' . $slide->link . '" target="' . $slide->link_target . '">';
 			}
 
-			echo '<img class="fl-slide-photo-img wp-image-' . $slide->fg_photo . '" src="' . $slide->fg_photo_src . '" alt="' . esc_attr( $alt ) . '" />';
+			printf( '<img %s class="fl-slide-photo-img wp-image-%s" src="%s" alt="%s" />', FLBuilderUtils::img_lazyload( 'false' ), $slide->fg_photo, $slide->fg_photo_src, esc_attr( $alt ) );
 
 			if ( ! empty( $slide->link ) ) {
 				echo '</a>';
@@ -171,7 +171,7 @@ class FLContentSliderModule extends FLBuilderModule {
 
 			if ( ! empty( $src ) ) {
 				echo '<div class="fl-slide-mobile-photo">';
-				echo '<img class="fl-slide-mobile-photo-img wp-image-' . $id . '" src="' . $src . '" alt="' . esc_attr( $alt ) . '" />';
+				printf( '<img %s class="fl-slide-mobile-photo-img wp-image-%s" src="%s" alt="%s" />', FLBuilderUtils::img_lazyload( 'false' ), $id, $src, esc_attr( $alt ) );
 				echo '</div>';
 			}
 		} elseif ( 'video' == $slide->content_layout && ! empty( $slide->fg_video ) ) {
@@ -193,7 +193,7 @@ class FLContentSliderModule extends FLBuilderModule {
 
 			if ( ! empty( $src ) ) {
 				echo '<div class="fl-slide-mobile-photo">';
-				echo '<img class="fl-slide-mobile-photo-img wp-image-' . $id . '" src="' . $src . '" alt="' . esc_attr( $alt ) . '" />';
+				printf( '<img %s class="fl-slide-mobile-photo-img wp-image-%s" src="%s" alt="%s" />', FLBuilderUtils::img_lazyload( 'false' ), $id, $src, esc_attr( $alt ) );
 				echo '</div>';
 			}
 		}
@@ -338,6 +338,7 @@ FLBuilder::register_module('FLContentSliderModule', array(
 							'max'  => 10,
 							'step' => .5,
 						),
+						'help'     => __( 'Delay should be greater than the Transition Speed.', 'fl-builder' ),
 					),
 					'transition' => array(
 						'type'    => 'select',
@@ -358,6 +359,7 @@ FLBuilder::register_module('FLContentSliderModule', array(
 							'max'  => 10,
 							'step' => .5,
 						),
+						'help'     => __( 'Transition Speed should be less than the Delay value.', 'fl-builder' ),
 					),
 					'play_pause' => array(
 						'type'    => 'select',
@@ -761,6 +763,32 @@ FLBuilder::register_settings_form('content_slider_slide', array(
 							'show_remove' => true,
 							'show'        => array(
 								'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+							),
+						),
+						'btn_duo_color1'     => array(
+							'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => 'i.fl-button-icon.fad:before',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+						'btn_duo_color2'     => array(
+							'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => 'i.fl-button-icon.fad:after',
+								'property'  => 'color',
+								'important' => true,
 							),
 						),
 						'btn_icon_position'  => array(

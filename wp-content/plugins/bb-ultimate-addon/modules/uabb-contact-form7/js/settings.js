@@ -20,6 +20,8 @@
 			hover_attribute.on( 'change', $.proxy( this._btn_styleChanged, this ) );
             //content_type.on('change', $.proxy( this._contentTypeChange, this ) );
             this._contentTypeChange();
+
+            form.find("#fl-field-cf_form_raw_nonce").hide();
 			
 		},
 
@@ -82,11 +84,16 @@
             });
         },
         _getTemplates: function( callback ) {
-
+            var form = $('.fl-builder-settings');
+            nonce = form.find( '#fl-field-cf7_form_raw .uabb-module-raw' ).data( 'uabb-module-nonce' );
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=cf_form_raw_nonce]').val();
+            }
             $.post(
                 ajaxurl,
                 {
                     action: 'uabb_get_saved_cf7',
+                    nonce:nonce,
                 },
                 function( response ) {
                     callback(response);
@@ -109,7 +116,7 @@
             select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
 
             this._getTemplates( function(data) {
-                var response = JSON.parse( data );
+                var response = data;
 
                 if ( response.success ) {
 

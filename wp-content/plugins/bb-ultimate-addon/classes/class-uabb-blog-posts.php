@@ -20,7 +20,7 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 		 * @since 1.4.7
 		 * @return void
 		 */
-		static public function init() {
+		public static function init() {
 			// If themer active.
 			if ( defined( 'FL_THEME_BUILDER_DIR' ) ) {
 				add_filter( 'fl_builder_register_settings_form', __CLASS__ . '::blog_posts_settings', 10, 2 );
@@ -32,7 +32,7 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 		 *
 		 * @since 1.14.4
 		 */
-		static public function render_default_html() {
+		public static function render_default_html() {
 
 			return '[wpbb-if post:featured_image]
 					<div class="uabb-post-thumbnail uabb-blog-post-section">
@@ -63,8 +63,9 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 		 * @param string $slug Gets the slug.
 		 * @return array
 		 */
-		static public function blog_posts_settings( $form, $slug ) {
-			if ( 'blog-posts' != $slug ) {
+		public static function blog_posts_settings( $form, $slug ) {
+
+			if ( 'blog-posts' !== $slug ) {
 				return $form;
 			}
 			$form['general']['sections']['general']['fields']['post_layout'] = array(
@@ -96,7 +97,8 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 			);
 
 			FLBuilder::register_settings_form(
-				'uabb_custom_post_layout', array(
+				'uabb_custom_post_layout',
+				array(
 					'title' => __( 'Custom Post Layout', 'uabb' ),
 					'tabs'  => array(
 						'html' => array(
@@ -155,7 +157,7 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 		 * @param array  $nodes gets the nodes array values.
 		 * @return string
 		 */
-		static public function blog_posts_css( $css, $nodes ) {
+		public static function blog_posts_css( $css, $nodes ) {
 			if ( ! class_exists( 'lessc' ) && file_exists( FL_THEME_BUILDER_DIR . 'classes/class-lessc.php' ) ) {
 				require_once FL_THEME_BUILDER_DIR . 'classes/class-lessc.php';
 			}
@@ -166,14 +168,14 @@ if ( ! class_exists( 'UABB_Blog_Posts' ) ) {
 
 					if ( ! is_object( $module ) ) {
 						continue;
-					} elseif ( 'blog-posts' != $module->settings->type ) {
+					} elseif ( 'blog-posts' !== $module->settings->type ) {
 						continue;
-					} elseif ( 'custom' != $module->settings->post_layout ) {
+					} elseif ( 'custom' !== $module->settings->post_layout ) {
 						continue;
 					}
 
 					try {
-						$less    = new lessc;
+						$less    = new lessc();
 						$custom  = '.fl-node-' . $module->node . ' { ';
 						$custom .= $module->settings->uabb_custom_post_layout->css;
 						$custom .= ' }';

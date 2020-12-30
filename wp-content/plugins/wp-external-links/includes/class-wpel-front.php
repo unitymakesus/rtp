@@ -59,15 +59,17 @@ final class WPEL_Front extends WPRun_Base_1x0x0
             }
         }
     }
-
+    
+    
     /**
      * Turn off output buffer for REST API calls
      * @param type $wp_rest_server
      */
     protected function action_rest_api_init()
     {
-        ob_end_clean();
+        ob_end_flush();
     }
+
 
     /**
      * Get option value
@@ -125,7 +127,7 @@ final class WPEL_Front extends WPRun_Base_1x0x0
          */
         $content = apply_filters( '_wpel_before_filter', $content );
 
-        $regexp_link = '/<a[^A-Za-z](.*?)>(.*?)<\/a[\s+]*>/is';
+        $regexp_link = '/<a[^A-Za-z>](.*?)>(.*?)<\/a[\s+]*>/is';
 
         $content = preg_replace_callback( $regexp_link, $this->get_callback( 'match_link' ), $content );
 
@@ -148,6 +150,10 @@ final class WPEL_Front extends WPRun_Base_1x0x0
         $original_link = $matches[ 0 ];
         $atts = $matches[ 1 ];
         $label = $matches[ 2 ];
+
+        if(strpos($atts,'href') === false){
+            return $original_link;
+        }
 
         $created_link = $this->get_created_link( $label, $atts );
 
@@ -271,12 +277,12 @@ final class WPEL_Front extends WPRun_Base_1x0x0
         }
 
         // add "sponsored"
-        if ( $this->opt( 'rel_sponsored', $type ) ) {
+        if ( 'external-links' === $type && $this->opt( 'rel_sponsored', $type ) ) {
             $link->add_to_attr( 'rel', 'sponsored' );
         }
 
         // add "ugc"
-        if ( $this->opt( 'rel_ugc', $type ) ) {
+        if ( 'external-links' === $type && $this->opt( 'rel_ugc', $type ) ) {
             $link->add_to_attr( 'rel', 'ugc' );
         }
 

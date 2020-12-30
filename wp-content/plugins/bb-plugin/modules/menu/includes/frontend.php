@@ -43,10 +43,13 @@ if ( $module->is_responsive_menu_flyout() ) {
 			'walker'       => new FL_Menu_Module_Walker(),
 			'item_spacing' => 'discard',
 		);
+		do_action( 'fl_builder_menu_module_before_render', $defaults, $settings );
+
 		add_filter( 'wp_nav_menu_objects', 'FLMenuModule::sort_nav_objects', 10, 2 );
 		wp_nav_menu( $defaults );
 		remove_filter( 'wp_nav_menu_objects', 'FLMenuModule::sort_nav_objects' );
 
+		do_action( 'fl_builder_menu_module_after_render', $defaults, $settings );
 		echo '</nav>';
 	}
 	?>

@@ -1,5 +1,5 @@
-<?php $post_id = get_the_id(); ?>
-<div class="fl-post-slider-post fl-post-slider-<?php echo $module->get_slider_class( $post_id ) ?><?php if ( isset( $settings->show_thumb ) && 'show' == $settings->show_thumb ) { echo ' fl-post-slider-has-image';} ?> swiper-slide"<?php FLBuilder::print_schema( ' itemscope="itemscope" itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?>><?php // @codingStandardsIgnoreLine ?>
+<?php $post_id = get_the_ID(); ?>
+<div <?php $module->render_post_class(); ?> <?php FLBuilder::print_schema( ' itemscope="itemscope" itemtype="' . FLPostGridModule::schema_itemtype() . '"' ); ?> > <?php // @codingStandardsIgnoreLine ?>
 	<?php
 
 		FLPostGridModule::schema_meta();

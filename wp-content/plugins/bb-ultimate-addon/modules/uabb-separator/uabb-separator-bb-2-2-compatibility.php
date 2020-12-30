@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBSeparatorModule', array(
+	'UABBSeparatorModule',
+	array(
 		'general' => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -63,16 +64,17 @@ FLBuilder::register_module(
 							),
 						),
 						'alignment' => array(
-							'type'    => 'align',
-							'label'   => __( 'Alignment', 'uabb' ),
-							'default' => 'center',
-							'preview' => array(
+							'type'       => 'align',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'default'    => 'center',
+							'responsive' => 'true',
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-separator-parent',
 								'property'  => 'text-align',
 								'important' => true,
 							),
-							'help'    => __( 'Align the border.', 'uabb' ),
+							'help'       => __( 'Align the border.', 'uabb' ),
 						),
 						'style'     => array(
 							'type'    => 'select',

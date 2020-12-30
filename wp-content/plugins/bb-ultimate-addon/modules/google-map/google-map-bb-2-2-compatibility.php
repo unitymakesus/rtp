@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'GoogleMapModule', array(
+	'GoogleMapModule',
+	array(
 		'multiple_addresses' => array( // Tab.
 			'title'       => __( 'Addresses', 'uabb' ), // Tab title.
 			'description' => $notice,
@@ -256,7 +257,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/how-to-create-google-api-key-in-uabb-google-map-element/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=google-map-module" target="_blank" rel="noopener"> How to create Google API key in Google Maps module? </a> </li>
 
@@ -274,7 +275,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'uabb_google_map_addresses', array(
+	'uabb_google_map_addresses',
+	array(
 		'title' => __( 'Add Address', 'uabb' ),
 		'tabs'  => array(
 			'general'     => array(

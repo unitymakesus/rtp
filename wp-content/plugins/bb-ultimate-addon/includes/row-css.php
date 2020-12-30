@@ -35,18 +35,11 @@ function uabb_row_particle_css( $css, $nodes, $global_settings ) {
 	foreach ( $nodes['rows'] as $row ) {
 		ob_start();
 		if ( 'yes' === $row->settings->enable_particles && ! FLBuilderModel::is_builder_active() ) {
-		?>
-			.fl-node-<?php echo $row->node; ?> .fl-row-content,
-			.fl-node-<?php echo $row->node; ?> .fl-row-content * {
-				z-index: 2;
-			}
-			.fl-row-content-wrap .uabb-row-particles-background {
-				z-index: 1;
-			}
-			.fl-node-<?php echo $row->node; ?> .fl-row-content {
+			?>
+			.fl-node-<?php echo esc_attr( $row->node ); ?> .fl-row-content {
 				position: inherit;
 			}
-		<?php
+			<?php
 		}
 		$css .= ob_get_clean();
 	}
@@ -63,10 +56,10 @@ function uabb_row_particle_css( $css, $nodes, $global_settings ) {
 function uabb_row_gradient_css( $css, $nodes, $global_settings ) {
 	foreach ( $nodes['rows'] as $row ) {
 
-		$row->settings->uabb_row_linear_gradient_primary_loc   = ( isset( $row->settings->uabb_row_linear_gradient_primary_loc ) && '' != $row->settings->uabb_row_linear_gradient_primary_loc ) ? $row->settings->uabb_row_linear_gradient_primary_loc : 0;
-		$row->settings->uabb_row_linear_gradient_secondary_loc = ( isset( $row->settings->uabb_row_linear_gradient_secondary_loc ) && '' != $row->settings->uabb_row_linear_gradient_secondary_loc ) ? $row->settings->uabb_row_linear_gradient_secondary_loc : 100;
-		$row->settings->uabb_row_radial_gradient_primary_loc   = ( isset( $row->settings->uabb_row_radial_gradient_primary_loc ) && '' != $row->settings->uabb_row_radial_gradient_primary_loc ) ? $row->settings->uabb_row_radial_gradient_primary_loc : 0;
-		$row->settings->uabb_row_radial_gradient_secondary_loc = ( isset( $row->settings->uabb_row_radial_gradient_secondary_loc ) && '' != $row->settings->uabb_row_radial_gradient_secondary_loc ) ? $row->settings->uabb_row_radial_gradient_secondary_loc : 100;
+		$row->settings->uabb_row_linear_gradient_primary_loc   = ( isset( $row->settings->uabb_row_linear_gradient_primary_loc ) && '' !== $row->settings->uabb_row_linear_gradient_primary_loc ) ? $row->settings->uabb_row_linear_gradient_primary_loc : 0;
+		$row->settings->uabb_row_linear_gradient_secondary_loc = ( isset( $row->settings->uabb_row_linear_gradient_secondary_loc ) && '' !== $row->settings->uabb_row_linear_gradient_secondary_loc ) ? $row->settings->uabb_row_linear_gradient_secondary_loc : 100;
+		$row->settings->uabb_row_radial_gradient_primary_loc   = ( isset( $row->settings->uabb_row_radial_gradient_primary_loc ) && '' !== $row->settings->uabb_row_radial_gradient_primary_loc ) ? $row->settings->uabb_row_radial_gradient_primary_loc : 0;
+		$row->settings->uabb_row_radial_gradient_secondary_loc = ( isset( $row->settings->uabb_row_radial_gradient_secondary_loc ) && '' !== $row->settings->uabb_row_radial_gradient_secondary_loc ) ? $row->settings->uabb_row_radial_gradient_secondary_loc : 100;
 
 		ob_start();
 
@@ -101,40 +94,40 @@ function uabb_row_gradient_css( $css, $nodes, $global_settings ) {
 				break;
 		}
 
-		if ( 'no' == $row->settings->uabb_row_linear_advance_options ) {
+		if ( 'no' === $row->settings->uabb_row_linear_advance_options ) {
 			$row->settings->uabb_row_linear_gradient_primary_loc   = '0';
 			$row->settings->uabb_row_linear_gradient_secondary_loc = '100';
 		}
-		if ( 'no' == $row->settings->uabb_row_radial_advance_options ) {
+		if ( 'no' === $row->settings->uabb_row_radial_advance_options ) {
 			$row->settings->uabb_row_radial_gradient_primary_loc   = '0';
 			$row->settings->uabb_row_radial_gradient_secondary_loc = '100';
 		}
 
-		if ( '' == $row->settings->uabb_row_linear_direction ) {
+		if ( '' === $row->settings->uabb_row_linear_direction ) {
 			$row->settings->uabb_row_linear_direction = '0';
 		}
 
-		if ( isset( $row->settings->bg_type ) && 'uabb_gradient' == $row->settings->bg_type ) {
+		if ( isset( $row->settings->bg_type ) && 'uabb_gradient' === $row->settings->bg_type ) {
 			?>
 
-			<?php if ( 'linear' == $row->settings->uabb_row_gradient_type ) { ?>
-					.fl-node-<?php echo $row->node; ?> > .fl-row-content-wrap {
-						background-color: #<?php echo $row->settings->uabb_row_gradient_primary_color; ?>;
-						background-image: -webkit-linear-gradient( <?php echo $row->settings->uabb_row_linear_direction . 'deg'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_secondary_loc . '%'; ?>);
-						background-image: -moz-linear-gradient( <?php echo $row->settings->uabb_row_linear_direction . 'deg'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_secondary_loc . '%'; ?>);
-						background-image: -o-linear-gradient( <?php echo $row->settings->uabb_row_linear_direction . 'deg'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_secondary_loc . '%'; ?>);
-						background-image: -ms-linear-gradient( <?php echo $row->settings->uabb_row_linear_direction . 'deg'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_secondary_loc . '%'; ?>);
-						background-image: linear-gradient( <?php echo $row->settings->uabb_row_linear_direction . 'deg'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_linear_gradient_secondary_loc . '%'; ?>);
+			<?php if ( 'linear' === $row->settings->uabb_row_gradient_type ) { ?>
+					.fl-node-<?php echo esc_attr( $row->node ); ?> > .fl-row-content-wrap {
+						background-color: #<?php echo esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?>;
+						background-image: -webkit-linear-gradient( <?php echo esc_attr( $row->settings->uabb_row_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_secondary_loc ) . '%'; ?>);
+						background-image: -moz-linear-gradient( <?php echo esc_attr( $row->settings->uabb_row_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_secondary_loc ) . '%'; ?>);
+						background-image: -o-linear-gradient( <?php echo esc_attr( $row->settings->uabb_row_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_secondary_loc ) . '%'; ?>);
+						background-image: -ms-linear-gradient( <?php echo esc_attr( $row->settings->uabb_row_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_secondary_loc ) . '%'; ?>);
+						background-image: linear-gradient( <?php echo esc_attr( $row->settings->uabb_row_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_linear_gradient_secondary_loc ) . '%'; ?>);
 					}
 			<?php } ?>
-			<?php if ( 'radial' == $row->settings->uabb_row_gradient_type ) { ?>
-				.fl-node-<?php echo $row->node; ?> > .fl-row-content-wrap {
-					background-color: #<?php echo $row->settings->uabb_row_gradient_primary_color; ?>;
-					background-image: -webkit-radial-gradient(<?php echo 'at ' . $row->settings->uabb_row_radial_direction; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: -moz-radial-gradient(<?php echo 'at ' . $row->settings->uabb_row_radial_direction; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: -o-radial-gradient(<?php echo 'at ' . $row->settings->uabb_row_radial_direction; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: -ms-radial-gradient(<?php echo 'at ' . $row->settings->uabb_row_radial_direction; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: radial-gradient(<?php echo 'at ' . $row->settings->uabb_row_radial_direction; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_primary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $row->settings->uabb_row_gradient_secondary_color; ?> <?php echo $row->settings->uabb_row_radial_gradient_secondary_loc . '%'; ?>);
+			<?php if ( 'radial' === $row->settings->uabb_row_gradient_type ) { ?>
+				.fl-node-<?php echo esc_attr( $row->node ); ?> > .fl-row-content-wrap {
+					background-color: #<?php echo esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?>;
+					background-image: -webkit-radial-gradient(<?php echo 'at ' . esc_attr( $row->settings->uabb_row_radial_direction ); ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -moz-radial-gradient(<?php echo 'at ' . esc_attr( $row->settings->uabb_row_radial_direction ); ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -o-radial-gradient(<?php echo 'at ' . esc_attr( $row->settings->uabb_row_radial_direction ); ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -ms-radial-gradient(<?php echo 'at ' . esc_attr( $row->settings->uabb_row_radial_direction ); ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: radial-gradient(<?php echo 'at ' . esc_attr( $row->settings->uabb_row_radial_direction ); ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_primary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $row->settings->uabb_row_gradient_secondary_color ); ?> <?php echo esc_attr( $row->settings->uabb_row_radial_gradient_secondary_loc ) . '%'; ?>);
 				}
 			<?php } ?>
 

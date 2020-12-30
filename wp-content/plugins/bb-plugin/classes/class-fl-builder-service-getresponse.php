@@ -150,7 +150,7 @@ final class FLBuilderServiceGetResponse extends FLBuilderService {
 
 		foreach ( $lists as $id => $data ) {
 			// @codingStandardsIgnoreLine
-			$options[ $data->campaignId ] = $data->name;
+			$options[ $data->campaignId ] = esc_attr( $data->name );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

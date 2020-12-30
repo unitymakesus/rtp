@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBDualButtonModule', array(
+	'UABBDualButtonModule',
+	array(
 		'dual_button'            => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -165,8 +166,9 @@ FLBuilder::register_module(
 						'dual_button_style'          => array(
 							'type'    => 'select',
 							'label'   => __( 'Button Style', 'uabb' ),
-							'default' => 'gradient',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
@@ -174,14 +176,55 @@ FLBuilder::register_module(
 							'toggle'  => array(
 								'transparent' => array(
 									'sections' => array( 'dual_border_section' ),
-									'fields'   => array( 'transparent_button_options' ),
+									'fields'   => array( 'transparent_button_options', 'dual_button_radius' ),
 								),
 								'flat'        => array(
-									'fields' => array( 'flat_button_options', '_btn_one_back_color', '_btn_two_back_color' ),
+									'fields' => array( 'flat_button_options', '_btn_one_back_color', '_btn_two_back_color', 'dual_button_radius' ),
 								),
 								'gradient'    => array(
-									'fields' => array( '_btn_one_back_color', '_btn_two_back_color' ),
+									'fields' => array( '_btn_one_back_color', '_btn_two_back_color', 'dual_button_radius' ),
 								),
+								'default'     => array(
+									'fields' => array( 'button_padding_dimension', 'button_border', '_btn_one_back_color', '_btn_two_back_color', 'border_hover_color' ),
+								),
+							),
+						),
+						'button_padding_dimension'   => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-btn.uabb-btn-one,.uabb-btn.uabb-btn-two',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'button_border'              => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-btn.uabb-btn-one,.uabb-btn.uabb-btn-two',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'         => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'transparent_button_options' => array(
@@ -330,6 +373,18 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
+						'btn_one_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-btn.uabb-btn-one',
+								'property' => 'border',
+								'unit'     => 'px',
+							),
+						),
 					),
 				),
 
@@ -444,6 +499,18 @@ FLBuilder::register_module(
 							'label'       => __( 'Background Hover Color', 'uabb' ),
 							'preview'     => array(
 								'type' => 'none',
+							),
+						),
+						'btn_two_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-btn.uabb-btn-two',
+								'property' => 'border',
+								'unit'     => 'px',
 							),
 						),
 					),

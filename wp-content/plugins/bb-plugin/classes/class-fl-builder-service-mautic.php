@@ -150,7 +150,7 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 			'class'     => 'fl-builder-service-connect-input',
 			'type'      => 'text',
 			'label'     => __( 'Mautic Password', 'fl-builder' ),
-			'help'      => __( 'Password associated with the username. Make this a Long passPhrase.', 'fl-builder' ),
+			'help'      => __( 'Password associated with the username. Make this a Long Passphrase.', 'fl-builder' ),
 			'preview'   => array(
 				'type' => 'none',
 			),
@@ -210,7 +210,7 @@ final class FLBuilderServiceMautic extends FLBuilderService {
 		);
 
 		foreach ( $lists as $list ) {
-			$options[ $list['id'] ] = $list['name'];
+			$options[ $list['id'] ] = esc_attr( $list['name'] );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

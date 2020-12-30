@@ -4,7 +4,7 @@
  * Plugin URI: http://www.yikesinc.com
  * Description: Custom drag & drop taxonomy ordering.
  * Author: YIKES, Inc.
- * Version: 2.1.0
+ * Version: 2.3.2
  * Author URI: http://www.yikesinc.com
  * Text Domain: simple-taxonomy-ordering
  * Domain Path: /languages
@@ -66,7 +66,7 @@ if ( ! class_exists( 'Yikes_Custom_Taxonomy_Order' ) ) {
 		 */
 		private function define_constants() {
 			if ( ! defined( 'YIKES_STO_VERSION' ) ) {
-				define( 'YIKES_STO_VERSION', '2.1.0' );
+				define( 'YIKES_STO_VERSION', '2.3.2' );
 			}
 
 			if ( ! defined( 'YIKES_STO_PATH' ) ) {
@@ -127,7 +127,7 @@ if ( ! class_exists( 'Yikes_Custom_Taxonomy_Order' ) ) {
 		 * Order the taxonomies on the front end.
 		 */
 		public function front_end_order_terms() {
-			if ( ! is_admin() ) {
+			if ( ! is_admin() && apply_filters( 'yikes_simple_taxonomy_ordering_front_end_order_terms', true ) ) {
 				add_filter( 'terms_clauses', array( $this, 'set_tax_order' ), 10, 3 );
 			}
 		}
@@ -244,6 +244,9 @@ if ( ! class_exists( 'Yikes_Custom_Taxonomy_Order' ) ) {
 
 				update_term_meta( $order_data['term_id'], 'tax_position', ( (int) $order_data['order'] + (int) $base_index ) );
 			}
+
+			do_action( 'yikes_sto_taxonomy_order_updated', $taxonomy_ordering_data, $base_index );
+
 			wp_send_json_success();
 		}
 
@@ -259,15 +262,22 @@ if ( ! class_exists( 'Yikes_Custom_Taxonomy_Order' ) ) {
 		}
 
 		/**
-		 * Check if ordering has been enabled for this taxonomy.
+		 * Is Taxonomy Ordering Enabled.
 		 *
-		 * @param string $tax_slug A taxonomy's slug.
-		 *
-		 * @return bool True if ordering is enabled.
+		 * @param string $tax_slug the taxnomies slug.
 		 */
 		public function is_taxonomy_ordering_enabled( $tax_slug ) {
-			$option = array_flip( get_option( YIKES_STO_OPTION_NAME, array( 'enabled_taxonomies' => array() ) )['enabled_taxonomies'] );
-			return isset( $option[ $tax_slug ] );
+			$option_default = array( 'enabled_taxonomies' => array() );
+			$option         = get_option( YIKES_STO_OPTION_NAME, $option_default );
+
+			if ( isset( $option['enabled_taxonomies'] ) ) {
+				$option = array_flip( $option['enabled_taxonomies'] );
+
+				return isset( $option[ $tax_slug ] );
+			}
+
+			// Return false if the option doesn't exist.
+			return false;
 		}
 
 		/**

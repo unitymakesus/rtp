@@ -27,6 +27,8 @@
 			
 			$( this._useCustomStyle, this );
             this._contentTypeChange();
+
+            form.find("#fl-field-gf_form_raw_nonce").hide();
 		},
 
 		_useCustomStyle: function()
@@ -102,11 +104,18 @@
             });
         },
         _getTemplates: function( callback ) {
+            var form = $('.fl-builder-settings');
+            nonce = form.find( '#fl-field-gf_form_raw .uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=gf_form_raw_nonce]').val();
+            }
 
             $.post(
                 ajaxurl,
                 {
                     action: 'uabb_get_saved_gravity',
+                    nonce:nonce,
                 },
                 function( response ) {
                     callback(response);
@@ -129,7 +138,7 @@
             select.find( 'option[value="' + value + '"]').attr('selected', 'selected');
 
             this._getTemplates( function(data) {
-                var response = JSON.parse( data );
+                var response = data;
 
                 if ( response.success ) {
 

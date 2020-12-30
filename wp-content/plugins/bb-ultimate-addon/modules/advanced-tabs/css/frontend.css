@@ -343,3 +343,48 @@ div.uabb-tabs > nav {
 .uabb-module-content .uabb-text-editor.uabb-tabs-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b):not(i) {
     font-weight: inherit;
 }
+
+/* Accesibility support */
+
+.uabb-tab-link:focus {
+    border: 1px solid;
+    border-radius: 0.5px;
+}
+
+/*****************************/
+/* Vertical tab layout */
+/*****************************/
+
+.uabb-tabs-layout-vertical .uabb-tabs-nav {
+    float: left;
+    width: 30%;
+}
+.uabb-tabs-layout-vertical .uabb-tabs-nav ul li {
+    width: 100%;
+}
+.uabb-tabs-layout-vertical .uabb-tabs-nav .uabb-tab-link {
+    border: 1px solid transparent;
+    border-right: none;
+}
+.uabb-tabs-layout-vertical .uabb-tab-current .uabb-tab-link {
+    border-width: 1px;
+    border-style: solid;
+    border-right: none !important;
+}
+.uabb-tabs-layout-vertical .uabb-tab-current .uabb-tab-link:after {
+    content: '';
+    background: inherit;
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -1px;
+}
+.uabb-tabs-layout-vertical .uabb-content-wrap {
+    float: left;
+    width: 70%;
+}
+
+.uabb-tabs.uabb-tabs-layout-vertical.uabb-tabs-style-linebox > nav ul li {
+    margin: 0 0.5em 0.5em 0;
+}

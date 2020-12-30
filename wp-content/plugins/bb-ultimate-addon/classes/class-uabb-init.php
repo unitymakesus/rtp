@@ -49,7 +49,19 @@ class UABB_Init {
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_uabb_admin_notice_js' ) );
 
-			add_action( 'wp_ajax_dismissed_notice_handler', array( $this, 'load_uabb_ajax_notice_handler' ) );
+			if ( current_user_can( 'manage_options' ) ) {
+
+				add_action( 'wp_ajax_dismissed_notice_handler', array( $this, 'load_uabb_ajax_notice_handler' ) );
+
+				add_action( 'wp_ajax_dismissed_login_notice_handler', array( $this, 'load_uabb_ajax_login_notice_handler' ) );
+
+				add_action( 'wp_ajax_uabb_batch_dismiss_notice', array( $this, 'uabb_batch_dismiss_notice_handler' ) );
+
+				add_action( 'wp_ajax_uabb_batch_dismiss_complete_notice', array( $this, 'uabb_batch_dismiss_complete_notice' ) );
+
+			}
+
+			add_filter( 'fl_builder_style_fields', array( $this, 'uabb_copy_style_fields' ) );
 
 		} else {
 
@@ -68,27 +80,90 @@ class UABB_Init {
 	 *
 	 * @since 1.13.0
 	 */
-	function load_uabb_admin_notice_js() {
-		wp_register_script( 'uabb-admin-notice-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin-notice.js', false, BB_ULTIMATE_ADDON_VER );
+	public function load_uabb_admin_notice_js() {
+		wp_register_script( 'uabb-admin-notice-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-admin-notice.js', false, BB_ULTIMATE_ADDON_VER, true );
 	}
+	/**
+	 * AJAX handler to store the state of dismissible notices.
+	 *
+	 * @since 1.25.0
+	 */
+	public function uabb_batch_dismiss_complete_notice() {
 
+		check_ajax_referer( 'uabb-batch-complete-nonce', 'batch_complete_nonce' );
+
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+
+		// Store it in the options table.
+		update_option( 'uabb_batch_notice_complete_dismissed', $dismissed );
+
+		wp_send_json_success();
+	}
+	/**
+	 * AJAX handler to store the state of dismissible notices.
+	 *
+	 * @since 1.25.0
+	 */
+	public function uabb_batch_dismiss_notice_handler() {
+
+		check_ajax_referer( 'uabb-batch-process-nonce', 'batch_process_nonce' );
+
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+
+		// Store it in the options table.
+		update_option( 'uabb_batch_notice_dismissed', $dismissed );
+
+		wp_send_json_success();
+	}
+	/**
+	 * Function that return the UABB Style Fields
+	 *
+	 * @param array $style_fields gets the array for the form defaults.
+	 *
+	 * @since 1.25.0
+	 */
+	public function uabb_copy_style_fields( $style_fields ) {
+
+		$uabb_style_fields = array( 'form', 'uabb-gradient' );
+
+		return array_merge( $style_fields, $uabb_style_fields );
+	}
 	/**
 	 * AJAX handler to store the state of dismissible notices.
 	 *
 	 * @since 1.13.0
 	 */
-	function load_uabb_ajax_notice_handler() {
+	public function load_uabb_ajax_notice_handler() {
 		// Request the dismissed value.
-		$dismissed = $_REQUEST['dismissed'];
+		check_ajax_referer( 'uabb-admin-nonce', 'dismiss_nonce' );
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+
 		// Store it in the options table.
 		update_option( 'dismiss-admin-notice', $dismissed );
 	}
+	/**
+	 * AJAX handler to store the state of dismissible notices.
+	 *
+	 * @since 1.24.2
+	 */
+	public function load_uabb_ajax_login_notice_handler() {
+
+		check_ajax_referer( 'uabb-admin-nonce', 'dismiss_login_nonce' );
+		// Request the dismissed value.
+		$dismissed = sanitize_text_field( $_REQUEST['dismissed'] );
+		// Store it in the options table.
+		update_option( 'dismiss-admin-login-notice', $dismissed );
+	}
+
 	/**
 	 * Function that includes necessary files
 	 *
 	 * @since x.x.x
 	 */
-	function includes() {
+	public function includes() {
 
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-update.php';
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/class-uabb-compatibility.php';
@@ -124,6 +199,23 @@ class UABB_Init {
 		require_once BB_ULTIMATE_ADDON_DIR . 'classes/batch-process/class-uabb-batch-process.php';
 		require_once BB_ULTIMATE_ADDON_DIR . 'lib/notices/class-astra-notices.php';
 
+		if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
+			require_once BB_ULTIMATE_ADDON_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
+
+			$bsf_analytics = BSF_Analytics_Loader::get_instance();
+
+			$bsf_analytics->set_entity(
+				array(
+					'bsf' => array(
+						'product_name'    => 'Ultimate Addons for Beaver Builder',
+						'path'            => BB_ULTIMATE_ADDON_DIR . 'admin/bsf-analytics',
+						'author'          => 'Brainstorm Force',
+						'time_to_display' => '+24 hours',
+					),
+				)
+			);
+		}
+
 		// Load the appropriate text-domain.
 		$this->load_plugin_textdomain();
 
@@ -133,7 +225,7 @@ class UABB_Init {
 	 *   For Performance.
 	 *   Set UABB static object to store data from database.
 	 */
-	static function set_uabb_options() {
+	public static function set_uabb_options() {
 		self::$uabb_options = array(
 			'fl_builder_uabb'          => FLBuilderModel::get_admin_settings_option( '_fl_builder_uabb', true ),
 			'fl_builder_uabb_branding' => FLBuilderModel::get_admin_settings_option( '_fl_builder_uabb_branding', false ),
@@ -150,9 +242,9 @@ class UABB_Init {
 	 * @param array  $defaults gets the array for the form defaults.
 	 * @param string $form_type gets an array to check the form type.
 	 */
-	function uabb_global_settings_form_defaults( $defaults, $form_type ) {
+	public function uabb_global_settings_form_defaults( $defaults, $form_type ) {
 
-		if ( ( ! apply_filters( 'uabb_global_support', true ) || class_exists( 'FLCustomizer' ) || function_exists( 'generate_customize_register' ) ) && 'uabb-global' == $form_type ) {
+		if ( ( ! apply_filters( 'uabb_global_support', true ) || class_exists( 'FLCustomizer' ) || function_exists( 'generate_customize_register' ) ) && 'uabb-global' === $form_type ) {
 
 			$defaults->enable_global = 'no';
 
@@ -166,7 +258,7 @@ class UABB_Init {
 	 *
 	 * @since x.x.x
 	 */
-	function init() {
+	public function init() {
 
 		if ( apply_filters( 'uabb_global_support_form', true ) && class_exists( 'FLBuilderAJAX' ) ) {
 			require_once BB_ULTIMATE_ADDON_DIR . 'classes/uabb-global-settings.php';
@@ -179,13 +271,13 @@ class UABB_Init {
 		if ( class_exists( 'FLCustomizer' ) ) {
 			$uabb_global_style = UABB_Global_Styling::get_uabb_global_settings();
 
-			if ( ( isset( $uabb_global_style->enable_global ) && ( 'no' == $uabb_global_style->enable_global ) ) ) {
+			if ( ( isset( $uabb_global_style->enable_global ) && ( 'no' === $uabb_global_style->enable_global ) ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/uabb-bbtheme-global-integration.php';
 			}
 		} elseif ( function_exists( 'generate_customize_register' ) ) {
 			$uabb_global_style = UABB_Global_Styling::get_uabb_global_settings();
 
-			if ( ( isset( $uabb_global_style->enable_global ) && ( 'no' == $uabb_global_style->enable_global ) ) ) {
+			if ( ( isset( $uabb_global_style->enable_global ) && ( 'no' === $uabb_global_style->enable_global ) ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/uabb-generatepress-global-integration.php';
 			}
 		}
@@ -219,7 +311,7 @@ class UABB_Init {
 	 * @since x.x.x
 	 */
 	public function uabb_customizer_save() {
-		if ( isset( UABB_Init::$uabb_options['uabb_global_settings']['enable_global'] ) && ( 'no' == UABB_Init::$uabb_options['uabb_global_settings']['enable_global'] ) ) {
+		if ( isset( self::$uabb_options['uabb_global_settings']['enable_global'] ) && ( 'no' === self::$uabb_options['uabb_global_settings']['enable_global'] ) ) {
 			if ( class_exists( 'FLCustomizer' ) ) {
 				new UABB_BBThemeGlobalIntegration();
 			}
@@ -232,7 +324,7 @@ class UABB_Init {
 	 *
 	 * @since 1.4.6
 	 */
-	function load_plugin_textdomain() {
+	public function load_plugin_textdomain() {
 		// Traditional WordPress plugin locale filter.
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'uabb' );
 
@@ -257,28 +349,19 @@ class UABB_Init {
 	 *
 	 * @since x.x.x
 	 */
-	function load_scripts() {
-
-		$uabb_localize = apply_filters(
-			'uabb_js_localize',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-			)
-		);
-
-		wp_localize_script( 'jquery', 'uabb', $uabb_localize );
+	public function load_scripts() {
 
 		if ( FLBuilderModel::is_builder_active() ) {
 
-			wp_enqueue_style( 'uabb-builder-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-builder.css', array() );
-			wp_enqueue_script( 'uabb-builder-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-builder.js', array( 'jquery' ), '', true );
+			wp_enqueue_style( 'uabb-builder-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-builder.css', array(), BB_ULTIMATE_ADDON_VER );
+			wp_enqueue_script( 'uabb-builder-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-builder.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
 
-			$uabb_options = UABB_Init::$uabb_options['fl_builder_uabb'];
+			$uabb_options = self::$uabb_options['fl_builder_uabb'];
 
 			if ( is_array( $uabb_options ) ) {
 				if ( array_key_exists( 'load_panels', $uabb_options ) ) {
-					if ( 1 == $uabb_options['load_panels'] ) {
-						wp_enqueue_style( 'uabb-builder-css111', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-ui.css', array() );
+					if ( 1 === $uabb_options['load_panels'] ) {
+						wp_enqueue_style( 'uabb-builder-css111', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-ui.css', array(), BB_ULTIMATE_ADDON_VER );
 					}
 				}
 			}
@@ -289,7 +372,7 @@ class UABB_Init {
 
 				$uabb = UABB_Global_Styling::get_uabb_global_settings();
 
-				if ( isset( $uabb->enable_global ) && ( 'no' == $uabb->enable_global ) ) {
+				if ( isset( $uabb->enable_global ) && ( 'no' === $uabb->enable_global ) ) {
 					wp_localize_script( 'uabb-builder-js', 'uabb_presets', array( 'show_presets' => true ) );
 				}
 			}
@@ -297,7 +380,7 @@ class UABB_Init {
 
 		/* RTL Support */
 		if ( is_rtl() ) {
-			wp_enqueue_style( 'uabb-rtl-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-rtl.css', array() );
+			wp_enqueue_style( 'uabb-rtl-css', BB_ULTIMATE_ADDON_URL . 'assets/css/uabb-rtl.css', array(), BB_ULTIMATE_ADDON_VER );
 		}
 
 	}
@@ -312,7 +395,7 @@ class UABB_Init {
 		$name          = 'Ultimate Addons For Beaver Builder';
 		$branding_name = get_option( '_fl_builder_uabb_branding' );
 
-		if ( is_array( $branding_name ) && array_key_exists( 'uabb-plugin-name', $branding_name ) && '' != $branding_name['uabb-plugin-name'] ) {
+		if ( is_array( $branding_name ) && array_key_exists( 'uabb-plugin-name', $branding_name ) && '' !== $branding_name['uabb-plugin-name'] ) {
 			$name = $branding_name['uabb-plugin-name'];
 		}
 
@@ -324,7 +407,7 @@ class UABB_Init {
 	 *
 	 * @since x.x.x
 	 */
-	function admin_notices() {
+	public function admin_notices() {
 
 		if ( file_exists( plugin_dir_path( 'bb-plugin-agency/fl-builder.php' ) )
 			|| file_exists( plugin_dir_path( 'beaver-builder-lite-version/fl-builder.php' ) ) ) {
@@ -337,7 +420,7 @@ class UABB_Init {
 		$name = self::get_branding_name();
 
 		echo '<div class="notice notice-error">';
-		echo '<p>The <strong>' . $name . '</strong> ' . __( 'plugin requires', 'uabb' ) . " <strong><a href='" . $url . "'>Beaver Builder</strong></a>" . __( ' plugin installed & activated.', 'uabb' ) . '</p>';
+		echo '<p>The <strong>' . esc_html( $name ) . '</strong> ' . esc_html__( 'plugin requires', 'uabb' ) . " <strong><a href='" . esc_url( $url ) . "'>Beaver Builder</strong></a>" . esc_html__( ' plugin installed & activated.', 'uabb' ) . '</p>';
 		echo '</div>';
 	}
 
@@ -346,16 +429,28 @@ class UABB_Init {
 	 *
 	 * @since 1.11.0
 	 */
-	function update_bb_notice() {
+	public function update_bb_notice() {
 
-		$name                = self::get_branding_name();
-		$bb_stable_version   = '2.0.7';
-		$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
-		$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
-		$is_dismissed        = get_option( 'dismiss-admin-notice', false );
+		$name                            = self::get_branding_name();
+		$bb_stable_version               = '2.0.7';
+		$branding_name                   = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
+		$branding_short_name             = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
+		$is_dismissed                    = get_option( 'dismiss-admin-notice', false );
+		$is_dismissed_login              = get_option( 'dismiss-admin-login-notice', false );
+		$uabb_social_facebook_app_id     = '';
+		$uabb_social_facebook_app_secret = '';
+		$admin_link                      = admin_url( 'options-general.php?page=uabb-builder-settings#uabb-social' );
+
+		$uabb_setting_options = self::$uabb_options['fl_builder_uabb'];
+
+		if ( is_array( $uabb_setting_options ) ) {
+
+			$uabb_social_facebook_app_id     = ( array_key_exists( 'uabb-social-facebook-app-id', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-id'] : '';
+			$uabb_social_facebook_app_secret = ( array_key_exists( 'uabb-social-facebook-app-secret', $uabb_setting_options ) ) ? $uabb_setting_options['uabb-social-facebook-app-secret'] : '';
+		}
 
 		// Added in version 1.12.1 to enqueue admin notice scripts in admin area.
-		if ( version_compare( $bb_stable_version, FL_BUILDER_VERSION, '>' ) ) {
+		if ( version_compare( $bb_stable_version, FL_BUILDER_VERSION, '>' ) || ( isset( $uabb_social_facebook_app_id ) && ! empty( $uabb_social_facebook_app_id ) && empty( $uabb_social_facebook_app_secret ) ) ) {
 			wp_enqueue_script( 'uabb-admin-notice-js' );
 		}
 
@@ -364,16 +459,43 @@ class UABB_Init {
 			if ( version_compare( $bb_stable_version, FL_BUILDER_VERSION, '>' ) ) {
 				// Added in version 1.12.1 to verify if Branding name is added.
 				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
-					echo '<div class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
-					echo sprintf( '<p> The <strong>%1$s</strong> plugin requires minimum %2$s version of the Beaver Builder plugin. Refer following <a href="https://www.ultimatebeaver.com/docs/fix-for-php-fatal-error-after-updating-uabb/" target="_blank"> link</a> on how to resolve this issue.</p>', $name, $bb_stable_version );
+
+					echo '<div data-nonce="' . esc_attr( wp_create_nonce( 'uabb-admin-nonce' ) ) . '" class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
+					echo sprintf( '<p> The <strong>%1$s</strong> plugin requires minimum %2$s version of the Beaver Builder plugin. Refer following <a href="https://www.ultimatebeaver.com/docs/fix-for-php-fatal-error-after-updating-uabb/" target="_blank"> link</a> on how to resolve this issue.</p>', esc_attr( $name ), esc_attr( $bb_stable_version ) );
 					echo '</div>';
 				} else {
-					echo '<div class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
-					echo sprintf( '<p> The <strong>%1$s</strong> plugin requires minimum %2$s version of the Beaver Builder plugin.</p>', $name, $bb_stable_version );
+					echo '<div data-nonce="' . esc_attr( wp_create_nonce( 'uabb-admin-nonce' ) ) . '" class="notice notice-error notice-warn uabb-admin-dismiss-notice is-dismissible">';
+					echo sprintf( '<p> The <strong>%1$s</strong> plugin requires minimum %2$s version of the Beaver Builder plugin.</p>', esc_attr( $name ), esc_attr( $bb_stable_version ) );
+					echo '</div>';
+
+				}
+			}
+		}
+		if ( false === $is_dismissed_login ) {
+			if ( isset( $uabb_social_facebook_app_id ) && ! empty( $uabb_social_facebook_app_id ) && empty( $uabb_social_facebook_app_secret ) ) {
+				// Added in version 1.12.1 to verify if Branding name is added.
+				if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
+					echo '<div data-nonce="' . esc_attr( wp_create_nonce( 'uabb-admin-nonce' ) ) . '" class="notice notice-error notice-warn uabb-admin-login-dismiss-notice is-dismissible">';
+					echo sprintf(
+						'<p> With new <strong>%1$s </strong>version 1.24.2 it is mandatory to add a Facebook App Secret Key <a href="%2$s">here</a> for the Login Form widget. This is to ensure extra security for the widget. <br><br>
+In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ',
+						esc_attr( $name ),
+						esc_url( $admin_link )
+					);
+					echo '</div>';
+				} else {
+					echo '<div data-nonce="' . esc_attr( wp_create_nonce( 'uabb-admin-nonce' ) ) . '" class="notice notice-error notice-warn uabb-admin-login-dismiss-notice is-dismissible">';
+					echo sprintf(
+						'<p> With new <strong>%1$s </strong>version 1.24.2 it is mandatory to add a Facebook App Secret Key <a href="%2$s">here</a> for the Login Form widget. This is to ensure extra security for the widget. <br><br>
+In case your existing login form is not displaying Facebook login option, adding the App Secret Key will fix it.  ',
+						esc_attr( $branding_name ),
+						esc_url( $admin_link )
+					);
 					echo '</div>';
 				}
 			}
 		}
+
 	}
 
 	/**
@@ -381,12 +503,12 @@ class UABB_Init {
 	 *
 	 * @since x.x.x
 	 */
-	function uabb_beta_updates_check() {
-		$uabb = UABB_Init::$uabb_options['fl_builder_uabb'];
+	public function uabb_beta_updates_check() {
+		$uabb = self::$uabb_options['fl_builder_uabb'];
 
 		$beta_enable = isset( $uabb['uabb-enable-beta-updates'] ) ? $uabb['uabb-enable-beta-updates'] : false;
 
-		if ( true == $beta_enable ) {
+		if ( true === $beta_enable ) {
 			return true;
 		}
 
@@ -398,7 +520,7 @@ class UABB_Init {
 	 *
 	 * @since x.x.x
 	 */
-	function load_modules() {
+	public function load_modules() {
 
 		$enable_modules = BB_Ultimate_Addon_Helper::get_builder_uabb_modules();
 
@@ -409,7 +531,7 @@ class UABB_Init {
 
 		foreach ( $enable_modules as $file => $name ) {
 
-			if ( 'false' == $name ) {
+			if ( 'false' === $name ) {
 				continue;
 			}
 
@@ -449,7 +571,7 @@ class UABB_Init {
 	public function uabb_render_scripts() {
 		$branding      = BB_Ultimate_Addon_Helper::get_builder_uabb_branding();
 		$branding_name = 'UABB';
-		if ( is_array( $branding ) && array_key_exists( 'uabb-plugin-short-name', $branding ) && '' != $branding['uabb-plugin-short-name'] ) {
+		if ( is_array( $branding ) && array_key_exists( 'uabb-plugin-short-name', $branding ) && '' !== $branding['uabb-plugin-short-name'] ) {
 			$branding_name = $branding['uabb-plugin-short-name'];
 		}
 
@@ -489,7 +611,7 @@ class UABB_Init {
 				form[class*="fl-builder-spacer-gap"] .fl-lightbox-header h1:before,
 				form[class*="fl-builder-team"] .fl-lightbox-header h1:before,
 				form[class*="fl-builder-uabb-"] .fl-lightbox-header h1:before {
-					content: "<?php echo $branding_name; ?> ";
+					content: "<?php echo esc_attr( $branding_name ); ?> " !important;
 					position: relative;
 					display: inline-block;
 					margin-right: 5px;
@@ -508,5 +630,3 @@ function init_uabb() {
 }
 
 add_action( 'plugins_loaded', 'init_uabb' );
-
-

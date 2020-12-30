@@ -5,6 +5,7 @@
  * @since 3.2.0
  * @package WP_Smush
  *
+ * @var array $cpts      Custom post types.
  * @var array $settings  Lazy loading settings.
  */
 
@@ -20,12 +21,17 @@ wp_enqueue_style( 'wp-color-picker' );
 
 <p>
 	<?php
-	esc_html_e( 'This feature defers the loading of below the fold imagery until the page has loaded. This reduces load on your server and speeds up the page load time.', 'wp-smushit' );
+	esc_html_e( 'This feature stops offscreen images from loading until a visitor scrolls to them. Make your page load faster, use less bandwidth and fix the “defer offscreen images” recommendation from a Google PageSpeed test.', 'wp-smushit' );
 	?>
 </p>
 
-<div class="sui-notice sui-notice-info smush-notice-sm">
-	<p><?php esc_html_e( 'Lazy loading is active.', 'wp-smushit' ); ?></p>
+<div class="sui-notice sui-notice-success">
+	<div class="sui-notice-content">
+		<div class="sui-notice-message">
+			<i class="sui-notice-icon sui-icon-check-tick sui-md" aria-hidden="true"></i>
+			<p><?php esc_html_e( 'Lazy loading is active.', 'wp-smushit' ); ?></p>
+		</div>
+	</div>
 </div>
 
 <form id="wp-smush-settings-form" method="post">
@@ -67,6 +73,12 @@ wp_enqueue_style( 'wp-color-picker' );
 				<input type="checkbox" name="format[svg]" id="format-svg" <?php checked( $settings['format']['svg'] ); ?> />
 				<span aria-hidden="true"></span>
 				<span><?php esc_html_e( '.svg', 'wp-smushit' ); ?></span>
+			</label>
+			<label for="format-iframe" class="sui-checkbox sui-checkbox-stacked">
+				<input type='hidden' value='0' name='format[iframe]' />
+				<input type="checkbox" name="format[iframe]" id="format-iframe" <?php checked( ! isset( $settings['format']['iframe'] ) || $settings['format']['iframe'] ); ?> />
+				<span aria-hidden="true"></span>
+				<span><?php esc_html_e( 'iframe', 'wp-smushit' ); ?></span>
 			</label>
 		</div>
 	</div>
@@ -137,8 +149,8 @@ wp_enqueue_style( 'wp-color-picker' );
 						<input type="radio" name="animation[selected]" value="placeholder" id="animation-placeholder" <?php checked( $settings['animation']['selected'], 'placeholder' ); ?> />
 						<?php esc_html_e( 'Placeholder', 'wp-smushit' ); ?>
 					</label>
-					<label for="animation-disabled" class="sui-tab-item <?php echo ! $settings['animation']['selected'] ? 'active' : ''; ?>">
-						<input type="radio" name="animation[selected]" value="0" id="animation-disabled" <?php checked( $settings['animation']['selected'], false ); ?> />
+					<label for="animation-disabled" class="sui-tab-item <?php echo 'none' === $settings['animation']['selected'] ? 'active' : ''; ?>">
+						<input type="radio" name="animation[selected]" value="none" id="animation-disabled" <?php checked( $settings['animation']['selected'], 'none' ); ?> />
 						<?php esc_html_e( 'None', 'wp-smushit' ); ?>
 					</label>
 				</div><!-- end data-tabs -->
@@ -286,7 +298,12 @@ wp_enqueue_style( 'wp-color-picker' );
 					</div>
 
 					<div class="sui-notice <?php echo ! $settings['animation']['selected'] ? 'active' : ''; ?>">
-						<p><?php esc_html_e( 'Images will flash into view as soon as they are ready to display.', 'wp-smushit' ); ?></p>
+						<div class="sui-notice-content">
+							<div class="sui-notice-message">
+								<i class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></i>
+								<p><?php esc_html_e( 'Images will flash into view as soon as they are ready to display.', 'wp-smushit' ); ?></p>
+							</div>
+						</div>
 					</div>
 				</div><!-- end data-panes -->
 			</div><!-- end .sui-tabs -->
@@ -394,6 +411,20 @@ wp_enqueue_style( 'wp-color-picker' );
 							</label>
 						</td>
 					</tr>
+					<?php foreach ( $cpts  as $custom_post_type ) : ?>
+						<tr>
+							<td><strong><?php echo esc_html( $custom_post_type->label ); ?></strong></td>
+							<td><?php echo esc_html( $custom_post_type->name ); ?></td>
+							<td>
+								<label class="sui-toggle" for="include-<?php echo esc_attr( $custom_post_type->name ); ?>">
+									<input type='hidden' value='0' name='include[<?php echo esc_attr( $custom_post_type->name ); ?>]' />
+									<input type="checkbox" name="include[<?php echo esc_attr( $custom_post_type->name ); ?>]" id="include-<?php echo esc_attr( $custom_post_type->name ); ?>"
+										<?php checked( ! isset( $settings['include'][ $custom_post_type->name ] ) || $settings['include'][ $custom_post_type->name ] ); ?> />
+									<span class="sui-toggle-slider"></span>
+								</label>
+							</td>
+						</tr>
+					<?php endforeach; ?>
 					</tbody>
 				</table>
 			</div>
@@ -479,13 +510,98 @@ wp_enqueue_style( 'wp-color-picker' );
 
 					<div data-panes>
 						<div class="sui-notice active">
-							<p><?php esc_html_e( 'Your theme must be using the wp_footer() function.', 'wp-smushit' ); ?></p>
+							<div class="sui-notice-content">
+								<div class="sui-notice-message">
+									<i class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></i>
+									<p><?php esc_html_e( 'Your theme must be using the wp_footer() function.', 'wp-smushit' ); ?></p>
+								</div>
+							</div>
 						</div>
 						<div class="sui-notice">
-							<p><?php esc_html_e( 'Your theme must be using the wp_header() function.', 'wp-smushit' ); ?></p>
+							<div class="sui-notice-content">
+								<div class="sui-notice-message">
+									<i class="sui-notice-icon sui-icon-info sui-md" aria-hidden="true"></i>
+									<p><?php esc_html_e( 'Your theme must be using the wp_head() function.', 'wp-smushit' ); ?></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="sui-box-settings-row">
+		<div class="sui-box-settings-col-1">
+			<span class="sui-settings-label">
+				<?php esc_html_e( 'Native lazy load', 'wp-smushit' ); ?>
+			</span>
+			<span class="sui-description">
+				<?php esc_html_e( 'Enable support for native browser lazy loading.', 'wp-smushit' ); ?>
+			</span>
+		</div>
+		<div class="sui-box-settings-col-2">
+			<div class="sui-form-field">
+				<label for="native" class="sui-toggle">
+					<input
+						type="checkbox"
+						id="native"
+						name="native"
+						aria-labelledby="native-label"
+						aria-describedby="native-description"
+						<?php checked( isset( $settings['native'] ) && $settings['native'] ); ?>
+					/>
+					<span class="sui-toggle-slider" aria-hidden="true"></span>
+					<span id="native-label" class="sui-toggle-label">
+						<?php esc_html_e( 'Enable native lazy loading', 'wp-smushit' ); ?>
+					</span>
+					<span id="native-description" class="sui-description">
+						<?php
+						printf(
+							/* translators: %1$s - opening a tag, %2$s - closing a tag */
+							esc_html__( 'In some cases can cause the "Defer offscreen images" Google PageSpeed audit to fail. See browser compatibility %1$shere%2$s.', 'wp-smushit' ),
+							'<a href="https://caniuse.com/#feat=loading-lazy-attr" target="_blank">',
+							'</a>'
+						);
+						?>
+					</span>
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="sui-box-settings-row">
+		<div class="sui-box-settings-col-1">
+			<span class="sui-settings-label">
+				<?php esc_html_e( 'Disable Noscript', 'wp-smushit' ); ?>
+			</span>
+			<span class="sui-description">
+				<?php esc_html_e( 'Disable NoScript while lazy loading is enabled.', 'wp-smushit' ); ?>
+			</span>
+		</div>
+
+		<div class="sui-box-settings-col-2">
+			<div class="sui-form-field">
+				<label for="noscript" class="sui-toggle">
+					<input
+						type="checkbox"
+						id="noscript"
+						name="noscript"
+						aria-labelledby="noscript-label"
+						aria-describedby="noscript-description"
+						<?php checked( isset( $settings['noscript'] ) && $settings['noscript'] ); ?>
+					/>
+					<span class="sui-toggle-slider" aria-hidden="true"></span>
+					<span id="noscript-label" class="sui-toggle-label">
+						<?php esc_html_e( 'Disable Noscript', 'wp-smushit' ); ?>
+					</span>
+					<span id="noscript-description" class="sui-description">
+						<?php
+							/* translators: %1$s - opening a tag, %2$s - closing a tag */
+							esc_html_e( 'Sometimes W3C HTML5 Validation may give error due to No Script.', 'wp-smushit' );
+						?>
+					</span>
+				</label>
 			</div>
 		</div>
 	</div>
@@ -506,8 +622,11 @@ wp_enqueue_style( 'wp-color-picker' );
 		</div>
 		<div class="sui-box-settings-col-2">
 			<button class="sui-button sui-button-ghost" id="smush-cancel-lazyload">
-				<i class="sui-icon-power-on-off" aria-hidden="true"></i>
-				<?php esc_html_e( 'Deactivate', 'wp-smushit' ); ?>
+				<span class="sui-loading-text">
+					<i class="sui-icon-power-on-off" aria-hidden="true"></i>
+					<?php esc_html_e( 'Deactivate', 'wp-smushit' ); ?>
+				</span>
+				<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
 			</button>
 		</div>
 	</div>

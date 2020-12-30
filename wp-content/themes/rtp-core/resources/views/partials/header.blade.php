@@ -1,21 +1,21 @@
 <header class="banner header-inline" role="banner">
+  @include ('partials.announcements.global-site-announcement')
   <section class="topbar-wrapper">
     <div class="topbar container-wide">
       @if (has_nav_menu('top_bar'))
         <div class="topbar-menu-wrapper flex flex-center space-between">
           <div class="topnav-wrapper flex flex-center space-between">
-            <img class="rtp-logo" src="@asset('images/rtp-triangle.svg')" alt="RTP Logo" />
-
+            <img class="rtp-logo" src="@asset('images/rtp-triangle.svg')" alt="Research Triangle Park" />
             <div class="menu-trigger-wrapper hide-on-large-only">
-              <input type="checkbox" name="topbar-menu-trigger" id="topbar-menu-trigger" value="true" />
-              <label for="topbar-menu-trigger"><i class="material-icons topbar-icon" aria-label="Show navigation menu">add</i></label>
+              <button class="btn-topnav-toggle" id="topbar-menu-trigger" aria-label="Show RTP subsite menu" aria-expanded="false" aria-controls="menu-global">
+                <i class="material-icons" aria-hidden="true">add</i>
+              </button>
             </div>
             <div class="topbar-menu flex flex-center space-between">
               {!! wp_nav_menu(['theme_location' => 'top_bar', 'container' => FALSE, 'menu_class' => 'flex flex-center space-around']) !!}
             </div>
           </div>
-
-          @php get_search_form() @endphp
+          @include('partials.searchform')
         </div>
       @endif
     </div>
@@ -40,8 +40,9 @@
       </a>
       @if (has_nav_menu('primary_navigation'))
         <div class="menu-trigger-wrapper hide-on-large-only">
-          <input type="checkbox" name="menu-trigger" id="menu-trigger" value="true" />
-          <label for="menu-trigger"><i class="material-icons" aria-label="Show navigation menu">menu</i></label>
+          <button class="btn-menu-toggle" id="menu-trigger" aria-label="Show navigation menu" aria-expanded="false" aria-controls="menu-main-menu">
+            <i class="material-icons" aria-hidden="true">menu</i>
+          </button>
         </div>
         <div class="navbar-menu flex flex-center space-between">
           {!! wp_nav_menu(['theme_location' => 'primary_navigation', 'container' => FALSE, 'menu_class' => 'flex flex-center space-between']) !!}
@@ -49,11 +50,5 @@
       @endif
     </div>
   </nav>
+  @include ('partials.announcements.local-site-announcement')
 </header>
-{{-- @if ( !is_front_page() && function_exists( 'breadcrumb_trail' ) )
-  <div class="breadcrumbs">
-    <div class="container">
-      @php breadcrumb_trail() @endphp
-    </div>
-  </div>
-@endif --}}

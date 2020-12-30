@@ -183,7 +183,7 @@ final class FLBuilderServiceMailChimp extends FLBuilderService {
 
 		if ( is_array( $lists ) && count( $lists ) > 0 ) {
 			foreach ( $lists as $list ) {
-				$options[ $list['id'] ] = $list['name'];
+				$options[ $list['id'] ] = esc_attr( $list['name'] );
 			}
 		}
 

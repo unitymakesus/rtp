@@ -3,7 +3,7 @@
 Plugin Name: Email Address Encoder
 Plugin URI: https://encoder.till.im/
 Description: A lightweight plugin that protects email addresses from email-harvesting robots by encoding them into decimal and hexadecimal entities.
-Version: 1.0.19
+Version: 1.0.22
 Author: Till Krüss
 Author URI: https://till.im/
 Text Domain: email-address-encoder
@@ -60,12 +60,14 @@ register_activation_hook( __FILE__, 'eae_activation_hook' );
 
 /**
  * Register filters to encode plain email addresses in posts, pages, excerpts,
- * comments and text widgets.
+ * comments, text widgets and nav menus.
  */
 if ( get_option( 'eae_search_in', 'filters' ) !== 'void' ) {
     foreach ( array( 'the_content', 'the_excerpt', 'widget_text', 'comment_text', 'comment_excerpt' ) as $filter ) {
         add_filter( $filter, 'eae_encode_emails', EAE_FILTER_PRIORITY );
     }
+
+    add_filter( 'walker_nav_menu_start_el', 'eae_encode_emails', EAE_FILTER_PRIORITY );
 }
 
 /**
@@ -93,8 +95,20 @@ function eae_register_shortcode() {
  * @return string Encoded given text
  */
 function eae_shortcode( $attributes, $content = '' ) {
+    $atts = shortcode_atts( array(
+        'link' => null,
+    ), $attributes, 'encode' );
+
     // override encoding function with the 'eae_method' filter
     $method = apply_filters( 'eae_method', 'eae_encode_str' );
+
+    if ( ! empty( $atts[ 'link' ] ) ) {
+        return sprintf(
+            '<a href="%s">%s</a>',
+            esc_attr( $method( $atts[ 'link' ] ) ),
+            $method( $content )
+        );
+    }
 
     return $method( $content );
 }

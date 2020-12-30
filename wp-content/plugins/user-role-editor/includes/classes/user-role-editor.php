@@ -40,23 +40,22 @@ class User_Role_Editor {
     
     
     /**
-     * Private clone method to prevent cloning of the instance of the *Singleton* 
+     * Prevent cloning of a *Singleton* instance 
      *
      * @return void
      */
-    private function __clone() {
-        
+    public function __clone() {
+        throw new \Exception('Do not clone a singleton instance.');
     }
     // end of __clone()
     
     /**
-     * Private unserialize method to prevent unserializing of the *Singleton*
-     * instance.
+     * Prevent unserializing of a *Singleton* instance.
      *
      * @return void
      */
-    private function __wakeup() {
-        
+    public function __wakeup() {
+        throw new \Exception('Do not unserialize a singleton instance.');
     }
     // end of __wakeup()
 
@@ -81,12 +80,12 @@ class User_Role_Editor {
         }
         $this->ure_hook_suffixes = array($this->settings_hook_suffix, $this->main_page_hook_suffix);
         
-        // activation action
-        register_activation_hook(URE_PLUGIN_FULL_PATH, array($this, 'setup'));
+        // Activation action
+        register_activation_hook( URE_PLUGIN_FULL_PATH, array($this, 'setup') );
 
-        // deactivation action
-        register_deactivation_hook(URE_PLUGIN_FULL_PATH, array($this, 'cleanup'));
-        		
+        // Deactivation action
+        register_deactivation_hook( URE_PLUGIN_FULL_PATH, array($this, 'cleanup') );
+                        		
         // Who can use this plugin
         $this->key_capability = URE_Own_Capabilities::get_key_capability();
                 
@@ -181,9 +180,11 @@ class User_Role_Editor {
         if ($multisite) {
             $allow_edit_users_to_not_super_admin = $this->lib->get_option('allow_edit_users_to_not_super_admin', 0);
             if ($allow_edit_users_to_not_super_admin) {
-                add_filter('map_meta_cap', array($this, 'restore_users_edit_caps'), 1, 4);
+                // Make this as late as possible, to overwrite settings made by other plugins, like WooCommerce
+                add_filter('map_meta_cap', array($this, 'restore_users_edit_caps'), 99, 4);
                 remove_all_filters('enable_edit_any_user_configuration');
                 add_filter('enable_edit_any_user_configuration', '__return_true');
+                // make this as early as you can, to not provide superadmin privilege when it's not needed
                 add_action('admin_head', array($this, 'edit_user_permission_check'), 1);
                 if ($pagenow == 'user-new.php') {
                     add_filter('site_option_site_admins', array($this, 'allow_add_user_as_superadmin'));
@@ -886,11 +887,20 @@ class User_Role_Editor {
     
     
     // execute on plugin deactivation
-    function cleanup() {
+    public function cleanup() {
 		
     }
     // end of setup()
+   
+    
+    // excute on plugin uninstall via WordPress->Plugins->Delete
+    public static function uninstall() {
+
+        $uninstall = new URE_Uninstall;
+        $uninstall->act();
         
+    }
+    // end of uninstall()
  
 }
 // end of User_Role_Editor

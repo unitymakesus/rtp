@@ -237,7 +237,7 @@ final class FLBuilderServiceIContactPro extends FLBuilderService {
 		);
 
 		foreach ( $lists as $id => $list ) {
-			$options[ $list->listId ] = $list->name; // @codingStandardsIgnoreLine
+			$options[ $list->listId ] = esc_attr( $list->name ); // @codingStandardsIgnoreLine
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

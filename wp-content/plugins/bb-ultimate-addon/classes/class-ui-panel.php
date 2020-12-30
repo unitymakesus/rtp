@@ -68,7 +68,7 @@ class UABB_UI_Panels {
 	 *
 	 *  @since x.x.x
 	 */
-	function toggle_uabb_ui() {
+	public function toggle_uabb_ui() {
 
 		// Added ui panel.
 		add_action( 'wp_footer', array( $this, 'render_ui' ), 9 );
@@ -102,7 +102,7 @@ class UABB_UI_Panels {
 	 *  @param array $template_data Gets the tags for the Template Data.
 	 *  @param array $template Gets the author for the Template Data.
 	 */
-	function uabb_fl_builder_template_selector_data( $template_data, $template ) {
+	public function uabb_fl_builder_template_selector_data( $template_data, $template ) {
 		$template_data['tags']   = isset( $template->tags ) ? $template->tags : array();
 		$template_data['author'] = isset( $template->author ) ? $template->author : '';
 		return $template_data;
@@ -114,7 +114,7 @@ class UABB_UI_Panels {
 	 * @since x.x.x
 	 * @param string $url Returns the URL of the Affiliate URL.
 	 */
-	function uabb_affiliate_url( $url ) {
+	public function uabb_affiliate_url( $url ) {
 
 		$url = 'https://www.wpbeaverbuilder.com/?fla=713';
 		return $url;
@@ -126,7 +126,7 @@ class UABB_UI_Panels {
 	 * @since x.x.x
 	 * @param string $key_shortcuts Returns the Key shortcut for showUABBGlobalSettings.
 	 */
-	function tools_key_shortcuts( $key_shortcuts ) {
+	public function tools_key_shortcuts( $key_shortcuts ) {
 
 		$key_shortcuts['showUABBGlobalSettings'] = 'b';
 
@@ -139,7 +139,7 @@ class UABB_UI_Panels {
 	 * @since x.x.x
 	 * @param array $views Returns the Global Settings attribute.
 	 */
-	function tools_menu_button( $views ) {
+	public function tools_menu_button( $views ) {
 
 		if ( apply_filters( 'uabb_global_support_form', true ) ) {
 			$views['main']['items'][66] = array(
@@ -154,8 +154,8 @@ class UABB_UI_Panels {
 		}
 		$uabb = BB_Ultimate_Addon_Helper::get_builder_uabb_branding();
 		if ( is_array( $uabb ) ) {
-			$uabb_knowledge_base_url  = ( array_key_exists( 'uabb-knowledge-base-url', $uabb ) && '' != $uabb['uabb-knowledge-base-url'] ) ? $uabb['uabb-knowledge-base-url'] : 'https://www.ultimatebeaver.com/docs/?utm_source=uabb-pro-dashboard&utm_medium=editor&utm_campaign=knowledge-base-help-link';
-			$uabb_contact_support_url = ( array_key_exists( 'uabb-contact-support-url', $uabb ) && '' != $uabb['uabb-contact-support-url'] ) ? $uabb['uabb-contact-support-url'] : 'https://www.ultimatebeaver.com/contact/?utm_source=uabb-pro-dashboard&utm_medium=editor&utm_campaign=contact-help-link';
+			$uabb_knowledge_base_url  = ( array_key_exists( 'uabb-knowledge-base-url', $uabb ) && '' !== $uabb['uabb-knowledge-base-url'] ) ? $uabb['uabb-knowledge-base-url'] : 'https://www.ultimatebeaver.com/docs/?utm_source=uabb-pro-dashboard&utm_medium=editor&utm_campaign=knowledge-base-help-link';
+			$uabb_contact_support_url = ( array_key_exists( 'uabb-contact-support-url', $uabb ) && '' !== $uabb['uabb-contact-support-url'] ) ? $uabb['uabb-contact-support-url'] : 'https://www.ultimatebeaver.com/contact/?utm_source=uabb-pro-dashboard&utm_medium=editor&utm_campaign=contact-help-link';
 		} else {
 			$uabb_knowledge_base_url  = 'https://www.ultimatebeaver.com/docs/?utm_source=uabb-pro-dashboard&utm_medium=editor&utm_campaign=knowledge-base-help-link';
 			$uabb_contact_support_url = 'https://www.ultimatebeaver.com/contact/?utm_source=uabb-pro-dashboard&utm_medium=editor&utm_campaign=contact-help-link';
@@ -164,7 +164,7 @@ class UABB_UI_Panels {
 		$enable_kb     = isset( $uabb['uabb-enable-knowledge-base'] ) ? $uabb['uabb-enable-knowledge-base'] : true;
 		$enble_support = isset( $uabb['uabb-enable-contact-support'] ) ? $uabb['uabb-enable-contact-support'] : true;
 
-		if ( false != $enable_kb ) {
+		if ( false !== $enable_kb ) {
 			$views['help']['items'][41] = array(
 				'label' => sprintf( /* translators: %s: search term */
 					esc_attr__( '%s - Knowledge Base', 'uabb' ),
@@ -175,7 +175,7 @@ class UABB_UI_Panels {
 			);
 		}
 
-		if ( false != $enble_support ) {
+		if ( false !== $enble_support ) {
 			$views['help']['items'][42] = array(
 				'label' => sprintf( /* translators: %s: search term */
 					esc_attr__( '%s - Contact Support', 'uabb' ),
@@ -195,7 +195,7 @@ class UABB_UI_Panels {
 	 * @since x.x.x
 	 * @param string $url Gets the registration Page URL.
 	 */
-	function uabb_bsf_registration_page_url( $url ) {
+	public function uabb_bsf_registration_page_url( $url ) {
 
 		if ( is_multisite() && FL_BUILDER_LITE === false ) {
 			return network_admin_url( '/settings.php?page=uabb-builder-multisite-settings#uabb-license' );
@@ -212,12 +212,12 @@ class UABB_UI_Panels {
 	 * @param string $license_status_class Gets the license status class.
 	 * @param string $license_status Gets the license status.
 	 */
-	function uabb_bsf_license_form_heading( $form_heading, $license_status_class, $license_status ) {
+	public function uabb_bsf_license_form_heading( $form_heading, $license_status_class, $license_status ) {
 
 		$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
 		$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 
-		if ( 'bsf-license-not-active-uabb' == $license_status_class ) {
+		if ( 'bsf-license-not-active-uabb' === $license_status_class ) {
 			if ( empty( $branding_name ) && empty( $branding_short_name ) ) {
 				$license_string = '<a href="https://store.brainstormforce.com/licenses/?utm_source=uabb-pro-dashboard&utm_medium=license-screen&utm_campaign=get-license" target="_blank" rel="noopener">license key</a>';
 			} else {
@@ -234,7 +234,7 @@ class UABB_UI_Panels {
 	 *
 	 * @param array $products Gets an array of Products.
 	 */
-	function uabb_skip_brainstorm_menu( $products ) {
+	public function uabb_skip_brainstorm_menu( $products ) {
 
 		if ( function_exists( 'bsf_extract_product_id' ) ) {
 			$priduct_id = bsf_extract_product_id( BB_ULTIMATE_ADDON_DIR );
@@ -252,8 +252,8 @@ class UABB_UI_Panels {
 	 * @param array  $nodes Gets the nodes of the layout builder.
 	 * @param object $global_settings Gets the object for the Layout builder.
 	 */
-	function fl_uabb_render_js( $js, $nodes, $global_settings ) {
-		$temp = file_get_contents( BB_ULTIMATE_ADDON_DIR . 'assets/js/uabb-frontend.js' ) . $js;
+	public function fl_uabb_render_js( $js, $nodes, $global_settings ) {
+		$temp = file_get_contents( BB_ULTIMATE_ADDON_DIR . 'assets/js/uabb-frontend.js' ) . $js; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$js   = $temp;
 		return $js;
 	}
@@ -266,10 +266,10 @@ class UABB_UI_Panels {
 	 * @param array  $nodes Gets the nodes of the layout builder.
 	 * @param object $global_settings Gets the object for the Layout builder.
 	 */
-	function fl_uabb_render_css( $css, $nodes, $global_settings ) {
+	public function fl_uabb_render_css( $css, $nodes, $global_settings ) {
 
-		$css .= file_get_contents( BB_ULTIMATE_ADDON_DIR . 'assets/css/uabb-frontend.css' );
-		$css .= include( BB_ULTIMATE_ADDON_DIR . 'assets/dynamic-css/uabb-theme-dynamic-css.php' );
+		$css .= file_get_contents( BB_ULTIMATE_ADDON_DIR . 'assets/css/uabb-frontend.css' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$css .= include BB_ULTIMATE_ADDON_DIR . 'assets/dynamic-css/uabb-theme-dynamic-css.php';
 
 		return $css;
 	}
@@ -279,7 +279,7 @@ class UABB_UI_Panels {
 	 *
 	 * @since x.x.x
 	 */
-	function config() {
+	public function config() {
 
 		$is_templates_exist = BB_Ultimate_Addon_Helper::is_templates_exist();
 		if ( $is_templates_exist ) {
@@ -291,7 +291,7 @@ class UABB_UI_Panels {
 
 			// Load UI Panel if option exist.
 			if ( array_key_exists( 'load_panels', $uabb ) ) {
-				if ( 1 == $uabb['load_panels'] ) {
+				if ( 1 === $uabb['load_panels'] ) {
 					$this->toggle_uabb_ui();
 				}
 			}
@@ -307,7 +307,7 @@ class UABB_UI_Panels {
 	 *
 	 * @since 1.2.0.2
 	 */
-	function load_templates() {
+	public function load_templates() {
 
 		if ( ! method_exists( 'FLBuilder', 'register_templates' ) ) {
 			return;
@@ -318,7 +318,7 @@ class UABB_UI_Panels {
 		if ( is_array( $templates ) && count( $templates ) > 0 ) {
 			foreach ( $templates as $type => $type_templates ) {
 
-				if ( 'sections' == $type ) {
+				if ( 'sections' === $type ) {
 					$group = UABB_PREFIX;
 				} else {
 					$group = 'Template Cloud';
@@ -332,7 +332,7 @@ class UABB_UI_Panels {
 						 *  Check [status] & [dat_url_local] exist
 						 */
 						if (
-							isset( $template_data['status'] ) && true == $template_data['status'] &&
+							isset( $template_data['status'] ) && true === (bool) $template_data['status'] &&
 							isset( $template_data['dat_url_local'] ) && ! empty( $template_data['dat_url_local'] )
 						) {
 							FLBuilder::register_templates(
@@ -353,11 +353,11 @@ class UABB_UI_Panels {
 	 *
 	 * @since x.x.x
 	 */
-	function uabb_panel_before_row_layouts() {
+	public function uabb_panel_before_row_layouts() {
 		?>
 			<!-- Search Module -->
 			<div id="fl-builder-blocks-rows" class="fl-builder-blocks-section">
-				<input type="text" id="module_search" placeholder="<?php _e( 'Search Module...', 'uabb' ); ?>" style="width: 100%;">
+				<input type="text" id="module_search" placeholder="<?php esc_attr_e( 'Search Module...', 'uabb' ); ?>" style="width: 100%;">
 				<div class="filter-count"></div>
 			</div><!-- Search Module -->
 		<?php
@@ -371,7 +371,7 @@ class UABB_UI_Panels {
 	 * @param array $templates Gets the array of UABB templates.
 	 * @param var   $status Checks for the status of UABB templates.
 	 */
-	static public function uabb_templates_data( $templates, $status = 'exclude' ) {
+	public static function uabb_templates_data( $templates, $status = 'exclude' ) {
 
 		if ( isset( $templates['categorized'] ) && count( $templates['categorized'] ) > 0 ) {
 
@@ -380,15 +380,15 @@ class UABB_UI_Panels {
 				foreach ( $cat['templates'] as $cat_id => $cat_data ) {
 
 					// Return all templates 'excluding' UABB templates.
-					if ( 'exclude' == $status ) {
-						if ( ( isset( $cat_data['author'] ) && 'brainstormforce' == $cat_data['author'] )
+					if ( 'exclude' === $status ) {
+						if ( ( isset( $cat_data['author'] ) && 'brainstormforce' === $cat_data['author'] )
 						) {
 							unset( $templates['categorized'][ $ind ]['templates'][ $cat_id ] );
 						}
 
 						// Return ONLY UABB templates.
 					} else {
-						if ( ( isset( $cat_data['author'] ) && 'brainstormforce' != $cat_data['author'] )
+						if ( ( isset( $cat_data['author'] ) && 'brainstormforce' !== $cat_data['author'] )
 						) {
 							unset( $templates['categorized'][ $ind ]['templates'][ $cat_id ] );
 						}
@@ -413,7 +413,7 @@ class UABB_UI_Panels {
 	 * @since 1.0
 	 * @param array $buttons Gets the buttons array for UI panel.
 	 */
-	function builder_ui_bar_buttons( $buttons ) {
+	public function builder_ui_bar_buttons( $buttons ) {
 
 		if ( is_callable( 'FLBuilderUserAccess::current_user_can' ) ) {
 			$simple_ui = ! FLBuilderUserAccess::current_user_can( 'unrestricted_editing' );
@@ -449,7 +449,7 @@ class UABB_UI_Panels {
 	 *
 	 * @since 1.0
 	 */
-	function render_ui() {
+	public function render_ui() {
 
 		global $wp_the_query;
 
@@ -490,17 +490,17 @@ class UABB_UI_Panels {
 	 *
 	 * @since x.x.x
 	 */
-	function render_live_preview() {
+	public function render_live_preview() {
 		if ( FLBuilderModel::is_builder_active() ) {
 			/* Live Preview */
 			$uabb = BB_Ultimate_Addon_Helper::get_builder_uabb();
 
-			if ( is_array( $uabb ) && array_key_exists( 'uabb-live-preview', $uabb ) && 1 == $uabb['uabb-live-preview'] ) {
+			if ( is_array( $uabb ) && array_key_exists( 'uabb-live-preview', $uabb ) && 1 === $uabb['uabb-live-preview'] ) {
 
 				/* Live Preview HTML */
 				$live_preview = '<span class="uabb-live-preview-button fl-builder-button-primary fl-builder-button" >Live Preview</span>';
 
-				echo $live_preview;
+				echo wp_kses_post( $live_preview );
 			}
 		}
 	}
@@ -508,9 +508,9 @@ class UABB_UI_Panels {
 	/**
 	 * Enqueue Panel CSS and JS
 	 */
-	function uabb_panel_css_js() {
+	public function uabb_panel_css_js() {
 		if ( FLBuilderModel::is_builder_active() ) {
-			wp_enqueue_script( 'uabb-panel-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-panel.js', array( 'jquery' ), '', true );
+			wp_enqueue_script( 'uabb-panel-js', BB_ULTIMATE_ADDON_URL . 'assets/js/uabb-panel.js', array( 'jquery' ), BB_ULTIMATE_ADDON_VER, true );
 		}
 	}
 

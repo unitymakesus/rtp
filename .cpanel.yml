@@ -1,5 +1,5 @@
 ---
 deployment:
  tasks:
-  - export DEPLOYPATH=/home/rtfannualreport/public_html/
+  - export DEPLOYPATH=/home/rtp/public_html/
   - /bin/cp -R * $DEPLOYPATH

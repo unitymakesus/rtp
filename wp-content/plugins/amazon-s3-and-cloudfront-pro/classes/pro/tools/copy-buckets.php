@@ -69,7 +69,7 @@ class Copy_Buckets extends Background_Tool {
 		if (
 			! empty( $_GET['action'] ) &&
 			'copy-buckets' === $_GET['action'] &&
-			! $this->as3cf->get_provider()->needs_access_keys() &&
+			! $this->as3cf->get_storage_provider()->needs_access_keys() &&
 			$this->as3cf->get_setting( 'bucket' ) &&
 			! empty( $_POST['copy-buckets'] )
 		) {
@@ -83,12 +83,17 @@ class Copy_Buckets extends Background_Tool {
 	 * Should the Copy Buckets prompt be the next action?
 	 *
 	 * @param string $action
-	 * @param string $key
+	 * @param array  $changed_keys
 	 *
 	 * @return string
 	 */
-	public function action_for_changed_settings_key( $action, $key ) {
-		if ( empty( $action ) && in_array( $key, array( 'bucket', 'region' ) ) && $this->count_offloaded_media_files() ) {
+	public function action_for_changed_settings_key( $action, $changed_keys ) {
+		// If no previous step, or this step already processed, shortcut out.
+		if ( empty( $_GET['action'] ) || 'copy-buckets' === $_GET['action'] || ( ! empty( $_GET['prev_action'] ) && 'copy-buckets' === $_GET['prev_action'] ) ) {
+			return $action;
+		}
+
+		if ( empty( $action ) && ! empty( array_intersect( $changed_keys, array( 'bucket', 'region' ) ) ) && $this->count_offloaded_media_files() ) {
 
 			// Even if bucket has been changed and we have offloaded media, we can only copy between buckets in same provider.
 			if ( empty( $_GET['orig_provider'] ) || $this->as3cf->get_setting( 'provider', false ) === $_GET['orig_provider'] ) {
@@ -118,6 +123,8 @@ class Copy_Buckets extends Background_Tool {
 	 * Load assets.
 	 */
 	public function load_assets() {
+		parent::load_assets();
+
 		$this->as3cf->enqueue_script( 'as3cf-pro-copy-buckets-script', 'assets/js/pro/tools/copy-buckets', array(
 			'jquery',
 			'wp-util',
@@ -128,7 +135,9 @@ class Copy_Buckets extends Background_Tool {
 	 * Render modal in footer.
 	 */
 	public function render_modal() {
-		$this->as3cf->render_view( 'modals/copy-buckets' );
+		if ( ! empty( $_GET['action'] ) && 'copy-buckets' === $_GET['action'] ) {
+			$this->as3cf->render_view( 'modals/copy-buckets' );
+		}
 	}
 
 	/**

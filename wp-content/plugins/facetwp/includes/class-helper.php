@@ -31,11 +31,12 @@ final class FacetWP_Helper
      * Get the current page URI
      */
     function get_uri() {
-        $uri = $_SERVER['REQUEST_URI'];
-        if ( false !== ( $pos = strpos( $uri, '?' ) ) ) {
-            $uri = substr( $uri, 0, $pos );
+        if ( isset( FWP()->facet->http_params ) ) {
+            return FWP()->facet->http_params['uri'];
         }
-        return trim( $uri, '/' );
+
+        $uri = parse_url( $_SERVER['REQUEST_URI'] );
+        return trim( $uri['path'], '/' );
     }
 
 
@@ -89,8 +90,7 @@ final class FacetWP_Helper
             'settings' => [
                 'thousands_separator' => ',',
                 'decimal_separator' => '.',
-                'loading_animation' => 'fade',
-                'prefix' => 'fwp_'
+                'prefix' => '_'
             ]
         ];
 
@@ -296,28 +296,30 @@ final class FacetWP_Helper
      * to move the children directly below their parents
      */
     function sort_taxonomy_values( $values = [], $orderby = 'count' ) {
+        $final = [];
+        $cache = [];
 
         // Create an "order" sort value based on the top-level items
-        $cache = [];
         foreach ( $values as $key => $val ) {
             if ( 0 == $val['depth'] ) {
+                $val['order'] = $key;
                 $cache[ $val['term_id'] ] = $key;
-                $values[ $key ]['order'] = $key;
+                $final[] = $val;
             }
-            else {
-                $new_order = $cache[ $val['parent_id'] ] . ".$key"; // dot-separated hierarchy string
-                $cache[ $val['term_id'] ] = $new_order;
-                $values[ $key ]['order'] = $new_order;
+            elseif ( isset( $cache[ $val['parent_id'] ] ) ) { // skip orphans
+                $val['order'] = $cache[ $val['parent_id'] ] . ".$key"; // dot-separated hierarchy string
+                $cache[ $val['term_id'] ] = $val['order'];
+                $final[] = $val;
             }
         }
 
         // Sort the array based on the new "order" element
-        // Since this is a dot-separated hierarchy string, treat it like version_compare
-        usort( $values, function( $a, $b ) {
+        // Since this is a dot-separated hierarchy string, use version_compare
+        usort( $final, function( $a, $b ) {
             return version_compare( $a['order'], $b['order'] );
         });
 
-        return $values;
+        return $final;
     }
 
 
@@ -337,14 +339,8 @@ final class FacetWP_Helper
             }
         }
         else {
-            if ( $wpdb->dbh ) {
-                if ( $wpdb->use_mysqli ) {
-                    $output = mysqli_real_escape_string( $wpdb->dbh, $input );
-                }
-                else {
-                    // Fallback for old PHP versions
-                    $output = mysql_real_escape_string( $input, $wpdb->dbh );
-                }
+            if ( $wpdb->dbh && $wpdb->use_mysqli ) {
+                $output = mysqli_real_escape_string( $wpdb->dbh, $input );
             }
             else {
                 $output = addslashes( $input );
@@ -432,67 +428,68 @@ final class FacetWP_Helper
      * @return array
      * @since 2.2.1
      */
-    function get_data_sources() {
-
-        // Return cached sources
-        if ( ! empty( $this->data_sources ) ) {
-            return $this->data_sources;
-        }
-
+    function get_data_sources( $context = 'default' ) {
         global $wpdb;
 
-        // Get excluded meta keys
-        $excluded_fields = apply_filters( 'facetwp_excluded_custom_fields', [
-            '_edit_last',
-            '_edit_lock',
-        ] );
+        // Cached?
+        if ( ! empty( $this->data_sources ) ) {
+            $sources = $this->data_sources;
+        }
+        else {
 
-        // Get taxonomies
-        $taxonomies = get_taxonomies( [], 'object' );
-
-        // Get custom fields
-        $meta_keys = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} ORDER BY meta_key" );
-        $custom_fields = array_diff( $meta_keys, $excluded_fields );
-
-        $sources = [
-            'posts' => [
-                'label' => __( 'Posts', 'fwp' ),
-                'choices' => [
-                    'post_type'         => __( 'Post Type', 'fwp' ),
-                    'post_date'         => __( 'Post Date', 'fwp' ),
-                    'post_modified'     => __( 'Post Modified', 'fwp' ),
-                    'post_title'        => __( 'Post Title', 'fwp' ),
-                    'post_author'       => __( 'Post Author', 'fwp' )
+            // Get excluded meta keys
+            $excluded_fields = apply_filters( 'facetwp_excluded_custom_fields', [
+                '_edit_last',
+                '_edit_lock',
+            ] );
+    
+            // Get taxonomies
+            $taxonomies = get_taxonomies( [], 'object' );
+    
+            // Get custom fields
+            $meta_keys = $wpdb->get_col( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} ORDER BY meta_key" );
+            $custom_fields = array_diff( $meta_keys, $excluded_fields );
+    
+            $sources = [
+                'posts' => [
+                    'label' => __( 'Posts', 'fwp' ),
+                    'choices' => [
+                        'post_type'         => __( 'Post Type', 'fwp' ),
+                        'post_date'         => __( 'Post Date', 'fwp' ),
+                        'post_modified'     => __( 'Post Modified', 'fwp' ),
+                        'post_title'        => __( 'Post Title', 'fwp' ),
+                        'post_author'       => __( 'Post Author', 'fwp' )
+                    ],
+                    'weight' => 10
                 ],
-                'weight' => 10
-            ],
-            'taxonomies' => [
-                'label' => __( 'Taxonomies', 'fwp' ),
-                'choices' => [],
-                'weight' => 20
-            ],
-            'custom_fields' => [
-                'label' => __( 'Custom Fields', 'fwp' ),
-                'choices' => [],
-                'weight' => 30
-            ]
-        ];
-
-        foreach ( $taxonomies as $tax ) {
-            $sources['taxonomies']['choices'][ 'tax/' . $tax->name ] = $tax->labels->name;
-        }
-
-        foreach ( $custom_fields as $cf ) {
-            if ( 0 !== strpos( $cf, '_oembed_' ) ) {
-                $sources['custom_fields']['choices'][ 'cf/' . $cf ] = $cf;
+                'taxonomies' => [
+                    'label' => __( 'Taxonomies', 'fwp' ),
+                    'choices' => [],
+                    'weight' => 20
+                ],
+                'custom_fields' => [
+                    'label' => __( 'Custom Fields', 'fwp' ),
+                    'choices' => [],
+                    'weight' => 30
+                ]
+            ];
+    
+            foreach ( $taxonomies as $tax ) {
+                $sources['taxonomies']['choices'][ 'tax/' . $tax->name ] = $tax->labels->name;
             }
+    
+            foreach ( $custom_fields as $cf ) {
+                if ( 0 !== strpos( $cf, '_oembed_' ) ) {
+                    $sources['custom_fields']['choices'][ 'cf/' . $cf ] = $cf;
+                }
+            }
+
+            $this->data_sources = $sources;
         }
 
-        $sources = apply_filters( 'facetwp_facet_sources', $sources );
+        $sources = apply_filters( 'facetwp_facet_sources', $sources, $context );
 
         uasort( $sources, [ $this, 'sort_by_weight' ] );
-
-        $this->data_sources = $sources;
 
         return $sources;
     }
@@ -539,7 +536,7 @@ final class FacetWP_Helper
     function get_license_key() {
         $license_key = defined( 'FACETWP_LICENSE_KEY' ) ? FACETWP_LICENSE_KEY : get_option( 'facetwp_license' );
         $license_key = apply_filters( 'facetwp_license_key', $license_key );
-        return sanitize_text_field( trim( $license_key ) );
+        return sanitize_key( trim( $license_key ) );
     }
 
 
@@ -548,13 +545,23 @@ final class FacetWP_Helper
      * @since 3.3.0
      */
     function is_license_active() {
+        return ( 'success' == $this->get_license_meta( 'status' ) );
+    }
+
+
+    /**
+     * Get a license meta value
+     * Possible keys: status, message, expiration, payment_id, price_id
+     * @since 3.5.3
+     */
+    function get_license_meta( $key = 'status' ) {
         $activation = get_option( 'facetwp_activation' );
 
         if ( ! empty( $activation ) ) {
-            $activation = json_decode( $activation );
+            $data = json_decode( $activation, true );
 
-            if ( isset( $activation->status ) && 'success' == $activation->status ) {
-                return true;
+            if ( isset( $data[ $key ] ) ) {
+                return $data[ $key ];
             }
         }
 

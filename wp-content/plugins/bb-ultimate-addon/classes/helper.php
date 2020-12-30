@@ -22,7 +22,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 		 * @param  array $font An array with font-family and weight.
 		 * @return void
 		 */
-		static public function uabb_font_css( $font ) {
+		public static function uabb_font_css( $font ) {
 			$css = '';
 
 			if ( array_key_exists( $font['family'], FLBuilderFontFamilies::$system ) ) {
@@ -31,13 +31,13 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 				$css .= 'font-family: ' . $font['family'] . ';';
 			}
 
-			if ( 'regular' == $font['weight'] ) {
+			if ( 'regular' === $font['weight'] ) {
 				$css .= 'font-weight: normal;';
 			} else {
 				$css .= 'font-weight: ' . $font['weight'] . ';';
 			}
 
-			echo $css;
+			echo esc_attr( $css );
 		}
 
 		/**
@@ -49,10 +49,10 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 		 * @param  var $opacity    Opacity of HEX color.
 		 * @since 1.0
 		 */
-		static public function uabb_get_color( $hex, $opacity ) {
+		public static function uabb_get_color( $hex, $opacity ) {
 			$rgba = $hex;
-			if ( '' != $opacity ) {
-				if ( strlen( $hex ) == 3 ) {
+			if ( '' !== $opacity ) {
+				if ( strlen( $hex ) === 3 ) {
 					$r = hexdec( substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) );
 					$g = hexdec( substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) );
 					$b = hexdec( substr( $hex, 2, 1 ) . substr( $hex, 2, 1 ) );
@@ -77,7 +77,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 		 * @param  array $is_array Gets an array of the value.
 		 * @since   1.0
 		 */
-		static public function uabb_hex2rgba( $color, $opacity = false, $is_array = false ) {
+		public static function uabb_hex2rgba( $color, $opacity = false, $is_array = false ) {
 
 			$default = $color;
 
@@ -87,14 +87,14 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 			}
 
 			// Sanitize $color if "#" is provided.
-			if ( '#' == $color[0] ) {
+			if ( '#' === $color[0] ) {
 				$color = substr( $color, 1 );
 			}
 
 			// Check if color has 6 or 3 characters and get values.
-			if ( strlen( $color ) == 6 ) {
+			if ( strlen( $color ) === 6 ) {
 					$hex = array( $color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5] );
-			} elseif ( strlen( $color ) == 3 ) {
+			} elseif ( strlen( $color ) === 3 ) {
 					$hex = array( $color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2] );
 			} else {
 					return $default;
@@ -129,15 +129,15 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 		 * @param   var    $opc        gets the opacity of the colorpicker.
 		 * @since   1.0
 		 */
-		static public function uabb_colorpicker( $settings, $name = '', $opc = false ) {
+		public static function uabb_colorpicker( $settings, $name = '', $opc = false ) {
 
 			$hex_color = '';
 			$opacity   = '';
 			$hex_color = $settings->$name;
 
-			if ( '' != $hex_color && 'r' != $hex_color[0] && 'R' != $hex_color[0] ) {
+			if ( '' !== $hex_color && 'r' !== $hex_color[0] && 'R' !== $hex_color[0] ) {
 
-				if ( true == $opc && isset( $settings->{ $name . '_opc' } ) ) {
+				if ( true === $opc && isset( $settings->{ $name . '_opc' } ) ) {
 					if ( '' !== $settings->{ $name . '_opc' } ) {
 						$opacity = $settings->{ $name . '_opc' };
 						$rgba    = self::uabb_hex2rgba( $hex_color, $opacity / 100 );
@@ -145,7 +145,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 					}
 				}
 
-				if ( '#' != $hex_color[0] ) {
+				if ( '#' !== $hex_color[0] ) {
 
 					return '#' . $hex_color;
 				}
@@ -161,7 +161,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 		 * @param   array $gradient  returns array of gradient.
 		 * @since   1.0
 		 */
-		static public function uabb_gradient_css( $gradient ) {
+		public static function uabb_gradient_css( $gradient ) {
 			$gradient['angle'] = ( isset( $gradient['angle'] ) ) ? $gradient['angle'] : '';
 			$gradient_angle    = intval( $gradient['angle'] );
 			$direction         = $gradient['direction'];
@@ -170,7 +170,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 			$angle             = 0;
 			$css               = '';
 
-			if ( 'custom' != $direction ) {
+			if ( 'custom' !== $direction ) {
 				switch ( $direction ) {
 					case 'left_right':
 						$gradient_angle = 0;
@@ -189,17 +189,17 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 				}
 			}
 
-			if ( isset( $gradient['color_one'] ) && '' != $gradient['color_one'] ) {
+			if ( isset( $gradient['color_one'] ) && '' !== $gradient['color_one'] ) {
 				$color1 = self::uabb_hex2rgba( $gradient['color_one'] );
 			}
 
-			if ( isset( $gradient['color_two'] ) && '' != $gradient['color_two'] ) {
+			if ( isset( $gradient['color_two'] ) && '' !== $gradient['color_two'] ) {
 				$color2 = self::uabb_hex2rgba( $gradient['color_two'] );
 			}
 
 			$angle = abs( $gradient_angle - 450 ) % 360;
 
-			if ( '' != $color1 && '' != $color2 ) {
+			if ( '' !== $color1 && '' !== $color2 ) {
 
 				$css .= 'background: -webkit-linear-gradient(' . $gradient_angle . 'deg, ' . $color1 . ' 0%, ' . $color2 . ' 100%);';
 				$css .= 'background: -o-linear-gradient(' . $gradient_angle . 'deg, ' . $color1 . ' 0%, ' . $color2 . ' 100%);';
@@ -207,7 +207,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 				$css .= 'background: -moz-linear-gradient(' . $gradient_angle . 'deg, ' . $color1 . ' 0%, ' . $color2 . ' 100%);';
 				$css .= 'background: linear-gradient(' . $angle . 'deg, ' . $color1 . ' 0%, ' . $color2 . ' 100%);';
 			}
-			echo $css;
+			echo esc_attr( $css );
 		}
 
 		/**
@@ -219,7 +219,7 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 		 * @param string $media  returns media.
 		 * @since   1.0
 		 */
-		static public function uabb_dimention_css( $settings, $name, $property = 'padding', $media = 'desktop' ) {
+		public static function uabb_dimention_css( $settings, $name, $property = 'padding', $media = 'desktop' ) {
 
 			$css    = '';
 			$device = '';
@@ -233,23 +233,22 @@ if ( ! class_exists( 'UABB_Helper' ) ) {
 			if ( 'padding' === $property || 'margin' === $property ) {
 
 				if ( '' !== $settings->{ $name . '_top' } ) {
-					$css .= $property . '-top:' . $settings->{ $name . '_top' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_top' . $device } ) ? $property . '-top:' . $settings->{ $name . '_top' . $device } . 'px;' : '';
 				}
 
 				if ( '' !== $settings->{ $name . '_right' } ) {
-					$css .= $property . '-right:' . $settings->{ $name . '_right' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_right' . $device } ) ? $property . '-right:' . $settings->{ $name . '_right' . $device } . 'px;' : '';
 				}
 
 				if ( '' !== $settings->{ $name . '_bottom' } ) {
-					$css .= $property . '-bottom:' . $settings->{ $name . '_bottom' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_bottom' . $device } ) ? $property . '-bottom:' . $settings->{ $name . '_bottom' . $device } . 'px;' : '';
 				}
 
 				if ( '' !== $settings->{ $name . '_left' } ) {
-					$css .= $property . '-left:' . $settings->{ $name . '_left' . $device } . 'px;';
+					$css .= isset( $settings->{ $name . '_left' . $device } ) ? $property . '-left:' . $settings->{ $name . '_left' . $device } . 'px;' : '';
 				}
 			}
-
-			echo $css;
+			return $css;
 		}
 	}
 }

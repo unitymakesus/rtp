@@ -2333,7 +2333,7 @@
 				val = ''
 
 			// If the selected font is a Google Font, build the font stylesheet
-			if( fontGroup == 'Google' ){
+			if( fontGroup == 'Google' || fontGroup == 'Recently Used' ){
 				this._buildFontStylesheet( uniqueID, font.val(), weight.val() );
 			}
 
@@ -2948,7 +2948,9 @@
 			if ( 'function' === typeof formatValue ) {
 				value = formatValue( value );
 			}
-			element[0].setAttribute( attrName, value );
+			for (i = 0; i < element.length; i++) {
+				element[i].setAttribute( attrName, value );
+			}
 		},
 
 		/**

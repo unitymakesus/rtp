@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBPriceList', array(
+	'UABBPriceList',
+	array(
 		'price_list_item'           => array(
 			'title'    => __( 'List Item', 'uabb' ),
 			'sections' => array(
@@ -146,9 +147,21 @@ FLBuilder::register_module(
 							'label'   => __( 'Connector Line Style', 'uabb' ),
 							'default' => 'dotted',
 							'options' => array(
+								'none'   => __( 'None', 'uabb' ),
 								'solid'  => __( 'Solid', 'uabb' ),
 								'dashed' => __( 'Dashed', 'uabb' ),
 								'dotted' => __( 'Dotted', 'uabb' ),
+							),
+							'toggle'  => array(
+								'solid'  => array(
+									'fields' => array( 'price_list_connector_width', 'price_list_connector_color', 'price_list_connector_hover_color' ),
+								),
+								'dashed' => array(
+									'fields' => array( 'price_list_connector_width', 'price_list_connector_color', 'price_list_connector_hover_color' ),
+								),
+								'dotted' => array(
+									'fields' => array( 'price_list_connector_width', 'price_list_connector_color', 'price_list_connector_hover_color' ),
+								),
 							),
 							'preview' => array(
 								'type'      => 'css',
@@ -559,7 +572,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/price-list/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=price-list-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 
@@ -578,7 +591,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'price_list_item_form', array(
+	'price_list_item_form',
+	array(
 		'title' => __( 'Add List Item', 'uabb' ),
 		'tabs'  => array(
 			'price_list_item_general' => array(

@@ -11,7 +11,7 @@
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -150,7 +150,9 @@ window.tsfGBC = function( $ ) {
 	 * @param {String} type
 	 * @return {undefined}
 	 */
-	const triggerUpdate = ( type ) => {
+	const triggerUpdate = type => {
+		// Unfortunately, we rely on jQuery here. We can't move away from this, since the data sent is definitely used by other plugins.
+		// TODO send deprecation notice ($._data( document, 'events' ), should we?), and implement alternative via event.detail.
 		$( document ).trigger( 'tsf-updated-gutenberg-' + type, [ getData( type ) ] );
 	}
 
@@ -255,10 +257,10 @@ window.tsfGBC = function( $ ) {
 
 			switch ( savedType ) {
 				case 'preview':
-					$( document ).trigger( 'tsf-gutenberg-onpreview' );
+					document.dispatchEvent( new CustomEvent( 'tsf-gutenberg-onpreview' ) );
 					break;
 				case 'autosave':
-					$( document ).trigger( 'tsf-gutenberg-onautosave' );
+					document.dispatchEvent( new CustomEvent( 'tsf-gutenberg-onautosave' ) );
 					break;
 				case 'save':
 					triggerOnSaveEvent = true;
@@ -266,10 +268,18 @@ window.tsfGBC = function( $ ) {
 			}
 
 			if ( triggerOnSaveEvent ) {
-				$( document ).trigger( 'tsf-gutenberg-onsave' );
+				document.dispatchEvent( new CustomEvent( 'tsf-gutenberg-onsave' ) )
+					&& document.dispatchEvent( new CustomEvent( 'tsf-gutenberg-onsave-completed' ) );
 			}
 
-			$( document ).trigger( 'tsf-gutenberg-saved-document', { savedType } );
+			document.dispatchEvent(
+				new CustomEvent(
+					'tsf-gutenberg-saved-document',
+					{
+						detail: { savedType }
+					}
+				)
+			);
 			savedType = '';
 		}
 	}
@@ -297,12 +307,12 @@ window.tsfGBC = function( $ ) {
 		if ( editPost.isEditorSidebarOpened() ) {
 			if ( ! lastSidebarState.opened ) {
 				lastSidebarState.opened = true;
-				$( document ).trigger( 'tsf-gutenberg-sidebar-opened' );
+				document.dispatchEvent( new CustomEvent( 'tsf-gutenberg-sidebar-opened' ) );
 			}
 		} else {
 			if ( lastSidebarState.opened ) {
 				lastSidebarState.opened = false;
-				$( document ).trigger( 'tsf-gutenberg-sidebar-closed' );
+				document.dispatchEvent( new CustomEvent( 'tsf-gutenberg-sidebar-closed' ) );
 			}
 		}
 	}
@@ -333,7 +343,7 @@ window.tsfGBC = function( $ ) {
 			triggerUpdate( 'excerpt' );
 			triggerUpdate( 'visibility' );
 
-			$( document ).trigger( 'tsf-subscribed-to-gutenberg' );
+			document.dispatchEvent( new CustomEvent( 'tsf-subscribed-to-gutenberg' ) );
 		} );
 	}
 
@@ -349,7 +359,7 @@ window.tsfGBC = function( $ ) {
 		 * @return {undefined}
 		 */
 		load: () => {
-			$( document.body ).on( 'tsf-onload', _initCompat );
+			document.body.addEventListener( 'tsf-onload', _initCompat );
 		},
 	}, {
 		triggerUpdate,
@@ -357,4 +367,4 @@ window.tsfGBC = function( $ ) {
 		l10n
 	} );
 }( jQuery );
-jQuery( window.tsfGBC.load );
+window.tsfGBC.load();

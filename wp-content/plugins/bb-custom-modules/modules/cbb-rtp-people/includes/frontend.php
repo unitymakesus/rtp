@@ -13,8 +13,6 @@
     ?>
     <div class="flex-item">
       <article class="figure-card figure-card-people">
-        <a tabindex="-1" aria-hidden="true" class="mega-link" href="<?php echo get_permalink(); ?>"></a>
-
         <div class="figure-card-img">
           <?php
           $siteID = get_post_meta($id, 'dt_original_blog_id', true);
@@ -33,7 +31,7 @@
         </div>
 
         <div class="card" itemprop="description">
-          <h3 class="card-title" itemprop="name"><a href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
+          <h3 class="card-title" itemprop="name"><a class="a11y-link-wrap" href="<?php echo get_permalink(); ?>"><?php echo get_the_title(); ?></a></h3>
           <h4 class="card-subtitle"><?php echo get_field('job_title'); ?></h4>
         </div>
       </article>

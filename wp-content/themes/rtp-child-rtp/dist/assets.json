@@ -2,6 +2,19 @@
   "images/404.jpg": "images/404_88bac83e.jpg",
   "images/arrow-right.svg": "images/arrow-right_48bd625e.svg",
   "images/boxyard-rtp-map.png": "images/boxyard-rtp-map_c8a63222.png",
+  "images/featureicons/icon-hdmi.svg": "images/featureicons/icon-hdmi_7a4d5c6e.svg",
+  "images/featureicons/icon-layouts.svg": "images/featureicons/icon-layouts_0b3acc29.svg",
+  "images/featureicons/icon-microphone.svg": "images/featureicons/icon-microphone_7d0faeff.svg",
+  "images/featureicons/icon-podium.svg": "images/featureicons/icon-podium_74d730f9.svg",
+  "images/featureicons/icon-projector.svg": "images/featureicons/icon-projector_ab74828e.svg",
+  "images/featureicons/icon-screen.svg": "images/featureicons/icon-screen_442efb4c.svg",
+  "images/featureicons/icon-seats.svg": "images/featureicons/icon-seats_1242ad4f.svg",
+  "images/featureicons/icon-sofa.svg": "images/featureicons/icon-sofa_529dddc1.svg",
+  "images/featureicons/icon-sound.svg": "images/featureicons/icon-sound_156ea91c.svg",
+  "images/featureicons/icon-tv.svg": "images/featureicons/icon-tv_ec41a70e.svg",
+  "images/featureicons/icon-video-conferencing.svg": "images/featureicons/icon-video-conferencing_e41e10ac.svg",
+  "images/featureicons/icon-whiteboard.svg": "images/featureicons/icon-whiteboard_8bb3f466.svg",
+  "images/featureicons/icon-wifi.svg": "images/featureicons/icon-wifi_40d5dd8f.svg",
   "images/icon-contrast-inverse.svg": "images/icon-contrast-inverse_bd9a44c8.svg",
   "images/icon-contrast.svg": "images/icon-contrast_e8cb0e0d.svg",
   "images/icon-mail.svg": "images/icon-mail_e6f05929.svg",
@@ -29,6 +42,6 @@
   "images/socialicons/youtube-light.svg": "images/socialicons/youtube-light_4e282f49.svg",
   "images/socialicons/youtube.svg": "images/socialicons/youtube_50223a90.svg",
   "images/texture-single-header.png": "images/texture-single-header_4836270e.png",
-  "styles/main.css": "styles/main_cb080de6.css",
-  "scripts/main.js": "scripts/main_cb080de6.js"
+  "styles/main.css": "styles/main_a62d37d0.css",
+  "scripts/main.js": "scripts/main_a62d37d0.js"
 }

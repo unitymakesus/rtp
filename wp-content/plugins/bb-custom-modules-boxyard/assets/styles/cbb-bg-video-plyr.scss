@@ -1,0 +1,94 @@
+@import "~plyr/src/sass/plyr";
+
+.cbb-plyr-video {
+  .video-background {
+    position: relative;
+    background-color: gray;
+  }
+
+  .video-content {
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    top: 0;
+    color: white;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    padding-right: 75px;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .video-background .plyr__controls {
+    background: none;
+    z-index: 15;
+
+    // To Do: figure out to not hide controls after video begins playing instead of these overrides.
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+
+    > .plyr__control {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  // Plyr specific overrides.
+  .plyr__poster {
+    background-size: cover;
+  }
+
+  video {
+    object-fit: cover;
+  }
+
+  .plyr--video .plyr__controls {
+    background: none;
+    z-index: 10;
+  }
+
+  .plyr--video .plyr__video-wrapper {
+    margin: -2px;
+  }
+
+  .plyr--video .plyr__control {
+    background-color: #0094C9;
+
+    &:hover,
+    &:focus {
+      background-color: darken(#0094C9, 10);
+    }
+  }
+
+  .plyr__controls .plyr__controls__item:first-child {
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .cbb-plyr-video {
+    .video-content {
+      display: block;
+      top: 50%;
+      height: auto;
+      padding: 0;
+      transform: translateY(-50%);
+
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+    .video-content-pad {
+      padding: 3rem;
+    }
+
+    .video-foreground::before {
+      background-color: transparent;
+    }
+  }
+}

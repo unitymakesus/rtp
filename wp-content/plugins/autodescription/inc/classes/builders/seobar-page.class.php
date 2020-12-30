@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Builders;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Builders;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Generates the SEO Bar for posts.
@@ -51,6 +51,7 @@ final class SeoBar_Page extends SeoBar {
 	 * @abstract
 	 */
 	protected function prime_cache() {
+		// phpcs:disable, PEAR.Functions.FunctionCallSignature.Indent -- False negative.
 		static::get_cache( 'general/i18n/inputguidelines' )
 			or static::set_cache(
 				'general/i18n/inputguidelines',
@@ -75,6 +76,7 @@ final class SeoBar_Page extends SeoBar {
 					],
 				]
 			);
+		// phpcs:enable, PEAR.Functions.FunctionCallSignature.Indent -- False negative.
 	}
 
 	/**
@@ -101,7 +103,8 @@ final class SeoBar_Page extends SeoBar {
 						'noarchive' => false,
 					],
 					static::$tsf->robots_meta( [
-						'id' => static::$query['id'],
+						'id'       => static::$query['id'],
+						'taxonomy' => '',
 					] )
 				),
 			],
@@ -124,6 +127,7 @@ final class SeoBar_Page extends SeoBar {
 	 * Runs title tests.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.5 Added syntax test.
 	 *
 	 * @return array $item : {
 	 *    string  $symbol : The displayed symbol that identifies your bar.
@@ -148,19 +152,25 @@ final class SeoBar_Page extends SeoBar {
 				],
 				'assess'   => [
 					'empty'      => \__( 'No title could be fetched.', 'autodescription' ),
-					'untitled'   => \__( 'No title could be fetched, "Untitled" is used instead.', 'autodescription' ), // TODO use [params][untitled]?
+					'untitled'   => sprintf(
+						/* translators: %s = "Untitled" */
+						\__( 'No title could be fetched, "%s" is used instead.', 'autodescription' ),
+						static::$tsf->get_static_untitled_title()
+					),
 					'protected'  => \__( 'A page protection state is added which increases the length.', 'autodescription' ),
 					'branding'   => [
-						'not'       => \__( "It's not branded. Search engines may ignore your title.", 'autodescription' ),
+						'not'       => \__( "It's not branded. Search engines may ignore your title. Consider adding back the site title.", 'autodescription' ),
 						'manual'    => \__( "It's manually branded.", 'autodescription' ),
 						'automatic' => \__( "It's automatically branded.", 'autodescription' ),
 					],
-					'duplicated' => \__( 'The blog name is found multiple times.', 'autodescription' ),
+					'duplicated' => \__( 'The site title is found multiple times.', 'autodescription' ),
+					'syntax'     => \__( "Markup syntax was found that isn't transformed. Consider rewriting the custom title.", 'autodescription' ),
 				],
 				'reason'   => [
 					'incomplete' => \__( 'Incomplete.', 'autodescription' ),
 					'duplicated' => \__( 'The branding is duplicated.', 'autodescription' ),
 					'notbranded' => \__( 'Not branded.', 'autodescription' ),
+					'syntax'     => \__( 'Found markup syntax.', 'autodescription' ),
 				],
 				'defaults' => [
 					'generated' => [
@@ -169,7 +179,7 @@ final class SeoBar_Page extends SeoBar {
 						'status' => \The_SEO_Framework\Interpreters\SeoBar::STATE_GOOD,
 						'reason' => \__( 'Automatically generated.', 'autodescription' ),
 						'assess' => [
-							'base' => \__( "It's built using the page title.", 'autodescription' ),
+							'base' => \__( "It's built from the page title.", 'autodescription' ),
 						],
 					],
 					'custom'    => [
@@ -186,14 +196,15 @@ final class SeoBar_Page extends SeoBar {
 		);
 
 		$title_args = [
-			'id' => static::$query['id'],
+			'id'       => static::$query['id'],
+			'taxonomy' => '',
 		];
 
 		// TODO instead of getting values from the options API, why don't we store the parameters and allow them to be modified?
-		// This way, we can implement AJAX SEO bar items...
+		// This way, we can implement real-time live-edit AJAX SEO bar items...
 		$title_part = static::$tsf->get_filtered_raw_custom_field_title( $title_args, false );
 
-		if ( strlen( $title_part ) ) {
+		if ( \strlen( $title_part ) ) {
 			$item = $cache['defaults']['custom'];
 
 			if ( $this->query_cache['states']['ishome'] ) {
@@ -204,12 +215,21 @@ final class SeoBar_Page extends SeoBar {
 					$item['assess']['homepage'] = \__( 'The title inputted at the Edit Page screen is used.', 'autodescription' );
 				}
 			}
+
+			if ( static::$tsf->has_yoast_syntax( $title_part ) ) {
+				$item['status']           = \The_SEO_Framework\Interpreters\SeoBar::STATE_BAD;
+				$item['reason']           = $cache['reason']['syntax'];
+				$item['assess']['syntax'] = $cache['assess']['syntax'];
+
+				// Further assessments must be made later. Halt assertion here to prevent confusion.
+				return $item;
+			}
 		} else {
 			$item = $cache['defaults']['generated'];
 
 			if ( $this->query_cache['states']['ishome'] ) {
 				// Don't use cache here, only one page can have this state.
-				$item['assess']['base'] = \__( 'The title is built from the blog name.', 'autodescription' );
+				$item['assess']['base'] = \__( "It's built using the site title.", 'autodescription' );
 			}
 
 			$title_part = static::$tsf->get_filtered_raw_generated_title( $title_args, false );
@@ -247,29 +267,32 @@ final class SeoBar_Page extends SeoBar {
 
 			// Absence assertion is done after this.
 			if ( $title === $_title_before ) {
+				// Title didn't change, so no automatic branding was added.
 				$item['assess']['branding'] = $cache['assess']['branding']['manual'];
 			} else {
-				// This is true unless it's the home page and the user passed the blog name exactly.
+				// This is true unless it's the home page and the user passed the site title exactly.
 				$item['assess']['branding'] = $cache['assess']['branding']['automatic'];
 			}
 		} else {
 			// Absence assertion is done after this.
 			if ( $this->query_cache['states']['ishome'] ) {
-				// This is true unless it's the home page and the user passed the blog name exactly.
+				// This is true unless it's the home page and the user passed the site title exactly.
 				$item['assess']['branding'] = $cache['assess']['branding']['automatic'];
 			} else {
 				$item['assess']['branding'] = $cache['assess']['branding']['manual'];
 			}
 		}
 
+		// phpcs:disable, PEAR.Functions.FunctionCallSignature.Indent
 		$brand_count =
-			strlen( $cache['params']['blogname_quoted'] )
+			\strlen( $cache['params']['blogname_quoted'] )
 			? preg_match_all(
 				"/{$cache['params']['blogname_quoted']}/ui",
 				$title,
 				$matches
 			)
 			: 0;
+		// phpcs:enable, PEAR.Functions.FunctionCallSignature.Indent
 
 		if ( ! $brand_count ) {
 			// Override branding state.
@@ -326,9 +349,10 @@ final class SeoBar_Page extends SeoBar {
 	}
 
 	/**
-	 * Runs title tests.
+	 * Runs description tests.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.5 Added syntax test.
 	 * @see test_title() for return value.
 	 *
 	 * @return array $item
@@ -350,16 +374,18 @@ final class SeoBar_Page extends SeoBar {
 				],
 				'assess'   => [
 					'empty'     => \__( 'There is no usable content, so no description could be generated.', 'autodescription' ),
-					'builder'   => \__( 'A foreign page builder is used, so no description is generated.', 'autodescription' ),
+					'builder'   => \__( 'A page builder is used that renders content dynamically, so no description can be generated for performance and privacy reasons. Consider providing a custom description.', 'autodescription' ),
 					'protected' => \__( 'The page is protected, so no description is generated.', 'autodescription' ),
-					'excerpt'   => \__( "It's built using the excerpt field.", 'autodescription' ),
+					'excerpt'   => \__( "It's built from the page excerpt field.", 'autodescription' ),
 					/* translators: %s = list of duplicated words */
 					'dupes'     => \__( 'Found duplicated words: %s', 'autodescription' ),
+					'syntax'    => \__( "Markup syntax was found that isn't transformed. Consider rewriting the custom description.", 'autodescription' ),
 				],
 				'reason'   => [
 					'empty'         => \__( 'Empty.', 'autodescription' ),
 					'founddupe'     => \__( 'Found duplicated words.', 'autodescription' ),
 					'foundmanydupe' => \__( 'Found too many duplicated words.', 'autodescription' ),
+					'syntax'        => \__( 'Found markup syntax.', 'autodescription' ),
 				],
 				'defaults' => [
 					'generated'   => [
@@ -368,7 +394,7 @@ final class SeoBar_Page extends SeoBar {
 						'status' => \The_SEO_Framework\Interpreters\SeoBar::STATE_GOOD,
 						'reason' => \__( 'Automatically generated.', 'autodescription' ),
 						'assess' => [
-							'base' => \__( "It's built using the page content.", 'autodescription' ),
+							'base' => \__( "It's built from the page content.", 'autodescription' ),
 						],
 					],
 					'emptynoauto' => [
@@ -384,9 +410,9 @@ final class SeoBar_Page extends SeoBar {
 						'symbol' => \_x( 'D', 'Description', 'autodescription' ),
 						'title'  => \__( 'Description', 'autodescription' ),
 						'status' => \The_SEO_Framework\Interpreters\SeoBar::STATE_GOOD,
-						'reason' => \__( 'Obtained from page SEO meta input.', 'autodescription' ),
+						'reason' => \__( 'Obtained from the page SEO meta input.', 'autodescription' ),
 						'assess' => [
-							'base' => \__( "It's built from page SEO meta input.", 'autodescription' ),
+							'base' => \__( "It's built from the page SEO meta input.", 'autodescription' ),
 						],
 					],
 				],
@@ -394,14 +420,15 @@ final class SeoBar_Page extends SeoBar {
 		);
 
 		$desc_args = [
-			'id' => static::$query['id'],
+			'id'       => static::$query['id'],
+			'taxonomy' => '',
 		];
 
 		// TODO instead of getting values from the options API, why don't we store the parameters and allow them to be modified?
-		// This way, we can implement AJAX SEO bar items...
+		// This way, we can implement real-time live-edit AJAX SEO bar items...
 		$desc = static::$tsf->get_description_from_custom_field( $desc_args, false );
 
-		if ( strlen( $desc ) ) {
+		if ( \strlen( $desc ) ) {
 			$item = $cache['defaults']['custom'];
 
 			if ( $this->query_cache['states']['ishome'] ) {
@@ -411,6 +438,15 @@ final class SeoBar_Page extends SeoBar {
 				} else {
 					$item['assess']['homepage'] = \__( 'The description inputted at the Edit Page screen is used.', 'autodescription' );
 				}
+			}
+
+			if ( static::$tsf->has_yoast_syntax( $desc ) ) {
+				$item['status']           = \The_SEO_Framework\Interpreters\SeoBar::STATE_BAD;
+				$item['reason']           = $cache['reason']['syntax'];
+				$item['assess']['syntax'] = $cache['assess']['syntax'];
+
+				// Further assessments must be made later. Halt assertion here to prevent confusion.
+				return $item;
 			}
 		} elseif ( ! static::$tsf->is_auto_description_enabled( $desc_args ) ) {
 			$item = $cache['defaults']['emptynoauto'];
@@ -422,19 +458,21 @@ final class SeoBar_Page extends SeoBar {
 
 			$desc = static::$tsf->get_generated_description( $desc_args, false );
 
-			if ( ! strlen( $desc ) ) {
-				$item['status'] = \The_SEO_Framework\Interpreters\SeoBar::STATE_UNKNOWN;
+			if ( ! \strlen( $desc ) ) {
 				$item['reason'] = $cache['reason']['empty'];
 
 				// This is now inaccurate, purge it.
 				// TODO consider alternative? "It TRIED to build it from...."?
 				unset( $item['assess']['base'] );
 
-				if ( static::$tsf->uses_page_builder( static::$query['id'] ) ) {
+				if ( static::$tsf->uses_non_html_page_builder( static::$query['id'] ) ) {
+					$item['status']          = \The_SEO_Framework\Interpreters\SeoBar::STATE_UNKNOWN;
 					$item['assess']['empty'] = $cache['assess']['builder'];
 				} elseif ( static::$tsf->is_protected( static::$query['id'] ) ) {
+					$item['status']          = \The_SEO_Framework\Interpreters\SeoBar::STATE_UNKNOWN;
 					$item['assess']['empty'] = $cache['assess']['protected'];
 				} else {
+					$item['status']          = \The_SEO_Framework\Interpreters\SeoBar::STATE_UNDEFINED;
 					$item['assess']['empty'] = $cache['assess']['empty'];
 				}
 
@@ -469,7 +507,7 @@ final class SeoBar_Page extends SeoBar {
 			$max = max( $duplicated_words );
 			$max = reset( $max );
 
-			if ( $max > 3 || count( $duplicated_words ) > 1 ) {
+			if ( $max > 3 || \count( $duplicated_words ) > 1 ) {
 				// This must be resolved.
 				$item['reason'] = $cache['reason']['foundmanydupe'];
 				$item['status'] = \The_SEO_Framework\Interpreters\SeoBar::STATE_BAD;
@@ -521,7 +559,7 @@ final class SeoBar_Page extends SeoBar {
 	}
 
 	/**
-	 * Runs description tests.
+	 * Runs indexing tests.
 	 *
 	 * @since 4.0.0
 	 * @see test_title() for return value.
@@ -633,7 +671,7 @@ final class SeoBar_Page extends SeoBar {
 			}
 		}
 
-		if ( isset( $robots_global['posttype']['noindex'][ static::$query['post_type'] ] ) ) {
+		if ( ! empty( $robots_global['posttype']['noindex'][ static::$query['post_type'] ] ) ) {
 			// Status is already set.
 			$item['assess']['posttype'] = $cache['assess']['posttype'];
 		}
@@ -775,7 +813,7 @@ final class SeoBar_Page extends SeoBar {
 			}
 		}
 
-		if ( isset( $robots_global['posttype']['nofollow'][ static::$query['post_type'] ] ) ) {
+		if ( ! empty( $robots_global['posttype']['nofollow'][ static::$query['post_type'] ] ) ) {
 			// Status is already set.
 			$item['assess']['posttype'] = $cache['assess']['posttype'];
 		}
@@ -906,7 +944,7 @@ final class SeoBar_Page extends SeoBar {
 			}
 		}
 
-		if ( isset( $robots_global['posttype']['noarchive'][ static::$query['post_type'] ] ) ) {
+		if ( ! empty( $robots_global['posttype']['noarchive'][ static::$query['post_type'] ] ) ) {
 			// Status is already set.
 			$item['assess']['posttype'] = $cache['assess']['posttype'];
 		}

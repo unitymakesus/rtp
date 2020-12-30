@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBTeamModule', array(
+	'UABBTeamModule',
+	array(
 		'imageicon'            => array(
 			'title'    => __( 'Image', 'uabb' ),
 			'sections' => array(
@@ -356,16 +357,17 @@ FLBuilder::register_module(
 							'units'       => array( '%' ),
 						),
 						'separator_alignment'     => array(
-							'type'    => 'select',
-							'label'   => __( 'Alignment', 'uabb' ),
-							'default' => 'inherit',
-							'options' => array(
+							'type'       => 'select',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'default'    => 'inherit',
+							'responsive' => 'true',
+							'options'    => array(
 								'inherit' => __( 'Default', 'uabb' ),
 								'center'  => __( 'Center', 'uabb' ),
 								'left'    => __( 'Left', 'uabb' ),
 								'right'   => __( 'Right', 'uabb' ),
 							),
-							'preview' => array(
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-separator-parent',
 								'property'  => 'text-align',
@@ -828,7 +830,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_social_icon_form', array(
+	'uabb_social_icon_form',
+	array(
 		'title' => __( 'Add Icon', 'uabb' ),
 		'tabs'  => array(
 			'general' => array( // Tab.

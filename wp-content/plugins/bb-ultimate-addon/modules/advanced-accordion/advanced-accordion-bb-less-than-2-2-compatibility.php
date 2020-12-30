@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBAdvancedAccordionModule', array(
+	'UABBAdvancedAccordionModule',
+	array(
 		'items'             => array(
 			'title'    => __( 'Items', 'uabb' ),
 			'sections' => array(
@@ -758,7 +759,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_advAccordion_items_form', array(
+	'uabb_advAccordion_items_form',
+	array(
 		'title' => __( 'Add Item', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(
@@ -835,6 +837,10 @@ FLBuilder::register_settings_form(
 								'type'  => 'textarea',
 								'label' => __( 'Embed Code / URL', 'uabb' ),
 								'rows'  => 6,
+							),
+							'ct_raw_nonce'      => array(
+								'type'    => 'text',
+								'default' => wp_create_nonce( 'uabb-module-nonce' ),
 							),
 							'ct_saved_rows'     => array(
 								'type'    => 'select',

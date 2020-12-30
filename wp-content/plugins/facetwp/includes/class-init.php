@@ -25,6 +25,7 @@ class FacetWP_Init
             'api/refresh',
             'class-helper',
             'class-ajax',
+            'class-request',
             'class-renderer',
             'class-diff',
             'class-indexer',
@@ -42,14 +43,15 @@ class FacetWP_Init
 
         new FacetWP_Upgrade();
         new FacetWP_Overrides();
-        new FacetWP_API_Fetch();
 
+        FWP()->api          = new FacetWP_API_Fetch();
         FWP()->helper       = new FacetWP_Helper();
         FWP()->facet        = new FacetWP_Renderer();
         FWP()->diff         = new FacetWP_Diff();
         FWP()->indexer      = new FacetWP_Indexer();
         FWP()->display      = new FacetWP_Display();
         FWP()->builder      = new FacetWP_Builder();
+        FWP()->request      = new FacetWP_Request();
         FWP()->ajax         = new FacetWP_Ajax();
 
         // integrations
@@ -60,10 +62,6 @@ class FacetWP_Init
 
         // update checks
         include( FACETWP_DIR . '/includes/class-updater.php' );
-
-        if ( FWP()->helper->is_license_active() ) {
-            include( FACETWP_DIR . '/includes/libraries/github-updater.php' );
-        }
 
         // hooks
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );

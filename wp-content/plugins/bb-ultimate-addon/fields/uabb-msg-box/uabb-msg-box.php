@@ -17,7 +17,7 @@ if ( ! class_exists( 'UABB_MSG_Field' ) ) {
 		 *
 		 * @since x.x.x
 		 */
-		function __construct() {
+		public function __construct() {
 			add_action( 'fl_builder_control_uabb-msgbox', array( $this, 'uabb_msgbox' ), 1, 4 );
 				add_action( 'fl_builder_custom_fields', array( $this, 'ui_fields' ), 10, 1 );
 		}
@@ -27,7 +27,7 @@ if ( ! class_exists( 'UABB_MSG_Field' ) ) {
 		 * @since x.x.x
 		 * @param array $fields gets an array of fields.
 		 */
-		function ui_fields( $fields ) {
+		public function ui_fields( $fields ) {
 			$fields['uabb-msgbox'] = BB_ULTIMATE_ADDON_DIR . 'fields/uabb-msg-box/ui-field-uabb-msgbox.php';
 
 			return $fields;
@@ -41,7 +41,7 @@ if ( ! class_exists( 'UABB_MSG_Field' ) ) {
 		 * @param array  $field an array of field values.
 		 * @param object $settings an object to get various settings.
 		 */
-		function uabb_msgbox( $name, $value, $field, $settings ) {
+		public function uabb_msgbox( $name, $value, $field, $settings ) {
 
 			$msg_type      = isset( $field['msg_type'] ) ? $field['msg_type'] : 'info';
 			$custom_class  = isset( $field['class'] ) ? $field['class'] : '';
@@ -49,7 +49,7 @@ if ( ! class_exists( 'UABB_MSG_Field' ) ) {
 			$msg_content   = '';
 
 			if ( isset( $field['content'] ) ) {
-				if ( '' != $field['content'] ) {
+				if ( '' !== $field['content'] ) {
 
 					switch ( $msg_type ) {
 						case 'info':
@@ -72,7 +72,7 @@ if ( ! class_exists( 'UABB_MSG_Field' ) ) {
 					$output .= $msg_content;
 					$output .= '</div>';
 
-					echo $output;
+					echo esc_attr( $output );
 				}
 			}
 		}

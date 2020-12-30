@@ -74,14 +74,20 @@ class SB_Instagram_Display_Elements
 			$optimum_res = 'full';
 			$settings['imageres'] = 'full';
 		} else {
-			if ( $settings['imageres'] !== 'thumb' && ! empty( $resized_images ) ) {
+			if ( ! empty( $resized_images ) ) {
 				$resolution = $settings['imageres'];
 				$post_id = SB_Instagram_Parse::get_post_id( $post );
 				if ( isset( $resized_images[ $post_id ] )
 				     && $resized_images[ $post_id ]['id'] !== 'error'
 				     && $resized_images[ $post_id ]['id'] !== 'pending'
 				     && $resized_images[ $post_id ]['id'] !== 'video' ) {
-					if ( $resolution === 'medium' ) {
+					if ( $resolution === 'thumb' ) {
+						if ( isset( $resized_images[ $post_id ]['sizes']['low'] ) ) {
+							$suffix = 'low';
+						} elseif ( isset( $resized_images[ $post_id ]['sizes']['full'] ) ) {
+							$suffix = 'full';
+						}
+					} elseif ( $resolution === 'medium' ) {
 						if ( isset( $resized_images[ $post_id ]['sizes']['low'] ) ) {
 							$suffix = 'low';
 						} elseif ( isset( $resized_images[ $post_id ]['sizes']['full'] ) ) {
@@ -127,26 +133,58 @@ class SB_Instagram_Display_Elements
 			     && $resized_images[ $post_id ]['id'] !== 'error' ) {
 				$media_url = sbi_get_resized_uploads_url() . $resized_images[ $post_id ]['id'] . 'full.jpg';
 			} else {
-				$permalink = SB_Instagram_Parse::get_permalink( $post );
-				if ( substr_count( $permalink, '/' ) > 5 ) {
-					$permalink_array = explode( '/', $permalink );
-					$perm_id = $permalink_array[ count( $permalink_array ) - 2 ];
-					$permalink = 'https://www.instagram.com/p/' . $perm_id . '/';
+				if ( SB_Instagram_GDPR_Integrations::doing_gdpr( $settings ) ) {
+					return trailingslashit( SBI_PLUGIN_URL ) . 'img/thumb-placeholder.png';
 				}
+				$media_type = $post['media_type'];
+				if ( $media_type === 'CAROUSEL_ALBUM'
+				     || $media_type === 'VIDEO'
+				     || $media_type === 'OEMBED' ) {
+					if ( isset( $post['thumbnail_url'] ) ) {
+						return $post['thumbnail_url'];
+					} elseif ( $media_type === 'CAROUSEL_ALBUM' && isset( $post['media_url'] ) ) {
+						return $post['media_url'];
+					} elseif ( isset( $post['children'] ) ) {
+						$i = 0;
+						$full_size = '';
+						foreach ( $post['children']['data'] as $carousel_item ) {
+							if ( $carousel_item['media_type'] === 'IMAGE' && empty( $full_size ) ) {
+								if ( isset( $carousel_item['media_url'] ) ) {
+									$full_size = $carousel_item['media_url'];
+								}
+							} elseif ( $carousel_item['media_type'] === 'VIDEO' && empty( $full_size ) ) {
+								if ( isset( $carousel_item['thumbnail_url'] ) ) {
+									$full_size = $carousel_item['thumbnail_url'];
+								}
+							}
 
-				if ( ($post['media_type'] === 'CAROUSEL_ALBUM' || $post['media_type'] === 'VIDEO') && ($optimum_res === 'lightbox' || $optimum_res === 'full')) {
-					$media_url = $permalink . 'media?size=l';
-				} else {
-					switch ($optimum_res) {
-						case 'thumb' :
-							$media_url = $permalink . 'media?size=t';
-							break;
-						case 'medium' :
-							$media_url = $permalink . 'media?size=m';
-							break;
-						default :
-							$media_url = $post['media_url'];
+							$i++;
+						}
+						return $full_size;
+					} else {
+						if ( ! class_exists( 'SB_Instagram_Single' ) ) {
+							return trailingslashit( SBI_PLUGIN_URL ) . 'img/thumb-placeholder.png';
+						}
+						//attempt to get
+						$permalink = SB_Instagram_Parse::fix_permalink( SB_Instagram_Parse::get_permalink( $post ) );
+						$single = new SB_Instagram_Single( $permalink );
+						$single->init();
+						$post = $single->get_post();
+
+						if ( isset( $post['thumbnail_url'] ) ) {
+							return $post['thumbnail_url'];
+						} elseif ( isset( $post['media_url'] ) && strpos( $post['media_url'], '.mp4' ) === false ) {
+							return $post['media_url'];
+						}
+
+						return trailingslashit( SBI_PLUGIN_URL ) . 'img/thumb-placeholder.png';
 					}
+				} else {
+					if ( isset( $post['media_url'] ) ) {
+						return $post['media_url'];
+					}
+
+					return trailingslashit( SBI_PLUGIN_URL ) . 'img/thumb-placeholder.png';
 				}
 			}
 
@@ -324,7 +362,7 @@ class SB_Instagram_Display_Elements
 	protected static function get_basic_icons( $type, $icon_type ) {
 		if ( $type === 'carousel' ) {
 			if ( $icon_type === 'svg' ) {
-				return '<svg class="svg-inline--fa fa-clone fa-w-16 sbi_lightbox_carousel_icon" aria-hidden="true" data-fa-proƒcessed="" data-prefix="far" data-icon="clone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+				return '<svg class="svg-inline--fa fa-clone fa-w-16 sbi_lightbox_carousel_icon" aria-hidden="true" aria-label="Clone" data-fa-proƒcessed="" data-prefix="far" data-icon="clone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 	                <path fill="currentColor" d="M464 0H144c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h320c26.51 0 48-21.49 48-48v-48h48c26.51 0 48-21.49 48-48V48c0-26.51-21.49-48-48-48zM362 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h42v224c0 26.51 21.49 48 48 48h224v42a6 6 0 0 1-6 6zm96-96H150a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h308a6 6 0 0 1 6 6v308a6 6 0 0 1-6 6z"></path>
 	            </svg>';
 			} else {
@@ -333,13 +371,13 @@ class SB_Instagram_Display_Elements
 
 		} elseif ( $type === 'video' ) {
 			if ( $icon_type === 'svg' ) {
-				return '<svg style="color: rgba(255,255,255,1)" class="svg-inline--fa fa-play fa-w-14 sbi_playbtn" aria-hidden="true" data-fa-processed="" data-prefix="fa" data-icon="play" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>';
+				return '<svg style="color: rgba(255,255,255,1)" class="svg-inline--fa fa-play fa-w-14 sbi_playbtn" aria-label="Play" aria-hidden="true" data-fa-processed="" data-prefix="fa" data-icon="play" role="presentation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M424.4 214.7L72.4 6.6C43.8-10.3 0 6.1 0 47.9V464c0 37.5 40.7 60.1 72.4 41.3l352-208c31.4-18.5 31.5-64.1 0-82.6z"></path></svg>';
 			} else {
 				return '<i class="fa fa-play sbi_playbtn" aria-hidden="true"></i>';
 			}
 		} elseif ( $type === 'instagram' ) {
 			if ( $icon_type === 'svg' ) {
-				return '<svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" data-fa-processed="" data-prefix="fab" data-icon="instagram" role="img" viewBox="0 0 448 512">
+				return '<svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" data-fa-processed="" aria-label="Instagram" data-prefix="fab" data-icon="instagram" role="img" viewBox="0 0 448 512">
 	                <path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
 	            </svg>';
 			} else {
@@ -347,7 +385,7 @@ class SB_Instagram_Display_Elements
 			}
 		} elseif ( $type === 'newlogo' ) {
 			if ( $icon_type === 'svg' ) {
-				return '<svg class="sbi_new_logo fa-instagram fa-w-14" aria-hidden="true" data-fa-processed="" data-prefix="fab" data-icon="instagram" role="img" viewBox="0 0 448 512">
+				return '<svg class="sbi_new_logo fa-instagram fa-w-14" aria-hidden="true" data-fa-processed="" aria-label="Instagram" data-prefix="fab" data-icon="instagram" role="img" viewBox="0 0 448 512">
 	                <path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path>
 	            </svg>';
 			} else {

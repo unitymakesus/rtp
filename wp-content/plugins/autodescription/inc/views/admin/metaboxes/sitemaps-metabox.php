@@ -4,13 +4,14 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-use The_SEO_Framework\Bridges\SeoSettings;
-
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
-
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
 // phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+use The_SEO_Framework\Bridges\SeoSettings;
+
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_sitemaps_metabox', $instance );
 
 switch ( $instance ) :
@@ -55,23 +56,34 @@ switch ( $instance ) :
 		break;
 
 	case 'the_seo_framework_sitemaps_metabox_general':
-		$sitemap_url        = \The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url();
+		$sitemap_url        = The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url();
 		$has_sitemap_plugin = $this->detect_sitemap_plugin();
+		$use_core_sitemaps  = $this->use_core_sitemaps();
 		$sitemap_detected   = $this->has_sitemap_xml();
 
 		?>
 		<h4><?php esc_html_e( 'Sitemap Integration Settings', 'autodescription' ); ?></h4>
 		<?php
-		$this->description( __( 'The sitemap is an XML file that lists indexable pages of your website along with optional metadata. This helps search engines find new and updated content more quickly.', 'autodescription' ) );
+		$this->description( __( 'The sitemap is an XML file that lists indexable pages of your website along with optional metadata. It helps search engines find new and updated content quickly.', 'autodescription' ) );
 
-		$this->description( __( 'The sitemap does not contribute to ranking, only indexing. Therefore, it is perfectly fine not having every indexable page in the sitemap.', 'autodescription' ) );
+		$this->description_noesc(
+			$this->convert_markdown(
+				sprintf(
+					/* translators: %s = Learn more URL. Markdown! */
+					esc_html__( 'The sitemap does not contribute to ranking; [it can only help with indexing](%s). Search engines process smaller, less complicated sitemaps quicker, which shortens the time required for indexing pages.', 'autodescription' ),
+					'https://kb.theseoframework.com/?p=119'
+				),
+				[ 'a' ],
+				[ 'a_internal' => false ]
+			)
+		);
 
 		if ( $has_sitemap_plugin ) :
+			echo '<hr>';
 			$this->attention_description( __( 'Note: Another active sitemap plugin has been detected. This means that the sitemap functionality has been superseded and these settings have no effect.', 'autodescription' ) );
-			echo '<hr>';
 		elseif ( $sitemap_detected ) :
-			$this->attention_description( __( 'Note: A sitemap has been detected in the root folder of your website. This means that these settings have no effect.', 'autodescription' ) );
 			echo '<hr>';
+			$this->attention_description( __( 'Note: A sitemap has been detected in the root folder of your website. This means that these settings have no effect.', 'autodescription' ) );
 		endif;
 		?>
 		<hr>
@@ -79,25 +91,44 @@ switch ( $instance ) :
 		<h4><?php esc_html_e( 'Sitemap Output', 'autodescription' ); ?></h4>
 		<?php
 
-		//* Echo checkbox.
+		// Echo checkbox.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'sitemaps_output',
-				__( 'Output sitemap?', 'autodescription' ),
+				esc_html__( 'Output optimized sitemap?', 'autodescription' )
+					. ' ' . $this->make_info(
+						__( 'This sitemap is processed quicker by search engines.', 'autodescription' ),
+						'',
+						false
+					),
 				'',
-				true
+				false
 			),
 			true
 		);
 
-		if ( ! $has_sitemap_plugin && ( $this->get_option( 'sitemaps_output' ) || ( $sitemap_detected && $this->pretty_permalinks ) ) ) {
-			$this->description_noesc(
-				sprintf(
-					'<a href="%s" target=_blank rel=noopener>%s</a>',
-					esc_url( \The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url(), [ 'https', 'http' ] ),
-					esc_html__( 'View the base sitemap.', 'autodescription' )
-				)
-			);
+		if ( ! $has_sitemap_plugin && ! $sitemap_detected ) {
+			if ( $this->get_option( 'sitemaps_output' ) ) {
+				$this->description_noesc(
+					sprintf(
+						'<a href="%s" target=_blank rel=noopener>%s</a>',
+						esc_url( The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url(), [ 'https', 'http' ] ),
+						esc_html__( 'View the base sitemap.', 'autodescription' )
+					)
+				);
+				// TODO In settings generator (TSF 5.0): Overwite this section for Polylang/WPML and output each sitemap language link respectively.
+				// TODO Also add a link telling where why it may not work consistently ('try opening in another browser, incognito, etc.')
+			} elseif ( $use_core_sitemaps ) {
+				$_index_url = get_sitemap_url( 'index' );
+				if ( $_index_url )
+					$this->description_noesc(
+						sprintf(
+							'<a href="%s" target=_blank rel=noopener>%s</a>',
+							esc_url( $_index_url, [ 'https', 'http' ] ),
+							esc_html__( 'View the sitemap index.', 'autodescription' )
+						)
+					);
+			}
 		}
 
 		?>
@@ -109,9 +140,9 @@ switch ( $instance ) :
 			</label>
 		</p>
 		<?php
-		$this->description( __( 'The sitemap is generated with two queries: Hierarchical and non-hierarchical post types. This setting affects how many posts are requested from the database per query. The homepage and blog page are included separately.', 'autodescription' ) );
+		$this->description( __( 'This setting affects how many pages are requested from the database per query.', 'autodescription' ) );
 
-		if ( \has_filter( 'the_seo_framework_sitemap_post_limit' ) ) :
+		if ( has_filter( 'the_seo_framework_sitemap_post_limit' ) ) :
 			?>
 			<input type=hidden name="<?php $this->field_name( 'sitemap_query_limit' ); ?>" value="<?php echo absint( $this->get_sitemap_post_limit() ); ?>">
 			<p>
@@ -181,7 +212,7 @@ switch ( $instance ) :
 				$this->make_checkbox(
 					'sitemaps_robots',
 					esc_html__( 'Add sitemap location to robots.txt?', 'autodescription' ),
-					esc_html__( 'This only works when the sitemap is active.', 'autodescription' ),
+					'',
 					false
 				),
 				true
@@ -207,7 +238,7 @@ switch ( $instance ) :
 		<?php
 		$this->description( __( 'The modified time suggests to search engines where to look for content changes first.', 'autodescription' ) );
 
-		//* Echo checkbox.
+		// Echo checkbox.
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'sitemaps_modified',
@@ -222,27 +253,29 @@ switch ( $instance ) :
 			true
 		);
 
-		?>
-		<hr>
+		if ( $this->get_option( 'sitemaps_priority' ) ) :
+			?>
+			<hr>
 
-		<h4><?php esc_html_e( 'Priority Settings', 'autodescription' ); ?></h4>
-		<?php
-		$this->description( __( 'The priority index suggests to search engines which pages are deemed more important. It has no known impact on the SEO value and it is generally ignored.', 'autodescription' ) );
+			<h4><?php esc_html_e( 'Priority Settings', 'autodescription' ); ?></h4>
+			<?php
+			$this->description( __( 'The priority index suggests to search engines which pages are deemed more important. It has no known impact on the SEO value and it is generally ignored.', 'autodescription' ) );
 
-		//* Echo checkbox.
-		$this->wrap_fields(
-			$this->make_checkbox(
-				'sitemaps_priority',
-				$this->convert_markdown(
-					/* translators: the backticks are Markdown! Preserve them as-is! */
-					esc_html__( 'Add `<priority>` to the sitemap?', 'autodescription' ),
-					[ 'code' ]
+			// Echo checkbox.
+			$this->wrap_fields(
+				$this->make_checkbox(
+					'sitemaps_priority',
+					$this->convert_markdown(
+						/* translators: the backticks are Markdown! Preserve them as-is! */
+						esc_html__( 'Add `<priority>` to the optimized sitemap?', 'autodescription' ),
+						[ 'code' ]
+					),
+					'',
+					false
 				),
-				'',
-				false
-			),
-			true
-		);
+				true
+			);
+		endif; // endif get_option( 'sitemaps_priority' );
 		break;
 
 	case 'the_seo_framework_sitemaps_metabox_notify':
@@ -253,17 +286,30 @@ switch ( $instance ) :
 		$this->description( __( 'By default this will happen at most once an hour.', 'autodescription' ) );
 
 		$this->wrap_fields(
-			$this->make_checkbox(
-				'ping_use_cron',
-				esc_html__( 'Use cron for pinging?', 'autodescription' )
-					. ' ' . $this->make_info(
-						__( 'This speeds up post and term saving processes, by offsetting pinging to a later time.', 'autodescription' ),
-						'',
-						false
-					),
-				'',
-				false
-			),
+			[
+				$this->make_checkbox(
+					'ping_use_cron',
+					esc_html__( 'Use cron for pinging?', 'autodescription' )
+						. ' ' . $this->make_info(
+							__( 'This speeds up post and term saving processes, by offsetting pinging to a later time.', 'autodescription' ),
+							'',
+							false
+						),
+					'',
+					false
+				),
+				$this->make_checkbox(
+					'ping_use_cron_prerender',
+					esc_html__( 'Prerender optimized sitemap before pinging via cron?', 'autodescription' )
+						. ' ' . $this->make_info(
+							__( 'This mitigates timeouts some search engines may experience when waiting for the sitemap to render. Transient caching for the sitemap must be enabled for this to work.', 'autodescription' ),
+							'',
+							false
+						),
+					esc_html__( 'Only enable prerendering when generating the sitemap takes over 60 seconds.', 'autodescription' ),
+					false
+				),
+			],
 			true
 		);
 
@@ -286,26 +332,26 @@ switch ( $instance ) :
 			$ping_checkbox .= $this->make_checkbox( $option, $ping_label, '', true );
 		}
 
-		//* Echo checkbox.
+		// Echo checkbox.
 		$this->wrap_fields( $ping_checkbox, true );
 		break;
 
 	case 'the_seo_framework_sitemaps_metabox_style':
 		?>
-		<h4><?php esc_html_e( 'Sitemap Styling Settings', 'autodescription' ); ?></h4>
+		<h4><?php esc_html_e( 'Optimized Sitemap Styling Settings', 'autodescription' ); ?></h4>
 		<?php
-		$this->description( __( 'You can style the sitemap to give it a more personal look for your visitors. Search engines do not use these styles.', 'autodescription' ) );
-		$this->description( __( 'Note: Changes may not appear to have effect directly because the stylesheet is cached in the browser for 30 minutes.', 'autodescription' ) );
+		$this->description( __( 'You can style the optimized sitemap to give it a more personal look for your visitors. Search engines do not use these styles.', 'autodescription' ) );
+		$this->description( __( 'Note: Changes may not appear to have an effect directly because the stylesheet is cached in the browser for 30 minutes.', 'autodescription' ) );
 		?>
 		<hr>
 
-		<h4><?php esc_html_e( 'Enable styling', 'autodescription' ); ?></h4>
+		<h4><?php esc_html_e( 'Enable Styling', 'autodescription' ); ?></h4>
 		<?php
 
 		$this->wrap_fields(
 			$this->make_checkbox(
 				'sitemap_styles',
-				esc_html__( 'Style Sitemap?', 'autodescription' ) . ' ' . $this->make_info( __( 'This makes the sitemap more readable for humans.', 'autodescription' ), '', false ),
+				esc_html__( 'Style sitemap?', 'autodescription' ) . ' ' . $this->make_info( __( 'This makes the sitemap more readable for humans.', 'autodescription' ), '', false ),
 				'',
 				false
 			),
@@ -314,19 +360,7 @@ switch ( $instance ) :
 
 		?>
 		<hr>
-
-		<h4><?php esc_html_e( 'Style configuration', 'autodescription' ); ?></h4>
 		<?php
-
-		$this->wrap_fields(
-			$this->make_checkbox(
-				'sitemap_logo',
-				esc_html__( 'Add site logo?', 'autodescription' ) . ' ' . $this->make_info( __( 'The logo is set in Customizer.', 'autodescription' ), '', false ),
-				'',
-				false
-			),
-			true
-		);
 
 		$current_colors = $this->get_sitemap_colors();
 		$default_colors = $this->get_sitemap_colors( true );
@@ -334,7 +368,7 @@ switch ( $instance ) :
 		?>
 		<p>
 			<label for="<?php $this->field_id( 'sitemap_color_main' ); ?>">
-				<strong><?php esc_html_e( 'Sitemap header background color', 'autodescription' ); ?></strong>
+				<strong><?php esc_html_e( 'Sitemap Header Background Color', 'autodescription' ); ?></strong>
 			</label>
 		</p>
 		<p>
@@ -343,11 +377,49 @@ switch ( $instance ) :
 
 		<p>
 			<label for="<?php $this->field_id( 'sitemap_color_accent' ); ?>">
-				<strong><?php esc_html_e( 'Sitemap title and lines color', 'autodescription' ); ?></strong>
+				<strong><?php esc_html_e( 'Sitemap Title and Lines Color', 'autodescription' ); ?></strong>
 			</label>
 		</p>
 		<p>
 			<input type="text" name="<?php $this->field_name( 'sitemap_color_accent' ); ?>" class="tsf-color-picker" id="<?php $this->field_id( 'sitemap_color_accent' ); ?>" placeholder="<?php echo esc_attr( $default_colors['accent'] ); ?>" value="<?php echo esc_attr( $current_colors['accent'] ); ?>" data-tsf-default-color="<?php echo esc_attr( $default_colors['accent'] ); ?>" />
+		</p>
+
+		<hr>
+
+		<h4><?php esc_html_e( 'Header Title Logo', 'autodescription' ); ?></h4>
+		<?php
+
+		$this->wrap_fields(
+			$this->make_checkbox(
+				'sitemap_logo',
+				__( 'Show logo next to sitemap header title?', 'autodescription' ),
+				'',
+				true
+			),
+			true
+		);
+
+		$ph_id  = get_theme_mod( 'custom_logo' ) ?: 0;
+		$ph_src = $ph_id ? wp_get_attachment_image_src( $ph_id, [ 29, 29 ] ) : [];
+
+		$logo_placeholder = ! empty( $ph_src[0] ) ? $ph_src[0] : '';
+		?>
+
+		<p>
+			<label for="sitemap_logo-url">
+				<strong><?php esc_html_e( 'Logo URL', 'autodescription' ); ?></strong>
+			</label>
+		</p>
+		<p>
+			<span class="hide-if-tsf-js attention"><?php esc_html_e( 'Setting a logo requires JavaScript.', 'autodescription' ); ?></span>
+			<input class="large-text" type="url" readonly="readonly" data-readonly="1" name="<?php $this->field_name( 'sitemap_logo_url' ); ?>" id="sitemap_logo-url" placeholder="<?php echo esc_url( $logo_placeholder ); ?>" value="<?php echo esc_url( $this->get_option( 'sitemap_logo_url' ) ); ?>" />
+			<input type="hidden" name="<?php $this->field_name( 'sitemap_logo_id' ); ?>" id="sitemap_logo-id" value="<?php echo absint( $this->get_option( 'sitemap_logo_id' ) ); ?>" />
+		</p>
+		<p class="hide-if-no-tsf-js">
+			<?php
+			// phpcs:ignore, WordPress.Security.EscapeOutput.OutputNotEscaped -- already escaped.
+			echo $this->get_logo_uploader_form( 'sitemap_logo' );
+			?>
 		</p>
 		<?php
 		break;

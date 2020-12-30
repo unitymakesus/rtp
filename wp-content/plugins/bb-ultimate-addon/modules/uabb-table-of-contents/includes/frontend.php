@@ -16,10 +16,10 @@
 	<div class="uabb-toc-container">
 	<?php $module->render_separator( 'top' ); ?>
 	<div class ="uabb-heading-block">
-		<span class="uabb-toc-heading"><?php echo $settings->heading_title; ?></span>
+		<span class="uabb-toc-heading"><?php echo $settings->heading_title; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	<div id="uabb-toc-toggle" class="uabb-toggle-toc" >
 		<span class="uabb-icon">
-			<i class="<?php echo $settings->icon; ?>"></i>
+			<i class="<?php echo esc_attr( $settings->icon ); ?>"></i>
 		</span>
 	</div>
 </div>
@@ -36,12 +36,12 @@
 		<?php } else { ?>
 			<ul id="uabb-toc-wrapper" class="toc-lists toc_none_bullet" ></ul>
 			<?php
-}
+		}
 		?>
 		</div>
 	</div>
 	<div class="uabb-toc-empty-note">
-		<span><?php echo __( 'Add a header to begin generating the table of contents', 'uabb' ); ?></span>
+		<span><?php esc_attr_e( 'Add a header to begin generating the table of contents', 'uabb' ); ?></span>
 	</div>
 	<?php $module->render_separator( 'bottom' ); ?>
 	</div>

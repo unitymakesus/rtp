@@ -126,11 +126,11 @@ add_shortcode('directory-search-filter', function($atts) {
   ?>
   <form class="directory-search-filter" action="/directory-map/"  method="get">
     <div class="row">
-      <div class="col s6">
+      <div class="col s12 m6">
         <label for="fwp_search_directory">Search</label>
       	<input type="search" placeholder="Keywords" value="" name="fwp_search_directory" id="fwp_search_directory" aria-label="Keyword">
       </div>
-      <div class="col s6">
+      <div class="col s12 m6">
         <div class="filter-selects">
           <div class="label">Filter</div>
           <div class="dropdown">
@@ -211,4 +211,49 @@ add_shortcode('annual-report-boxyard', function($atts) {
   </section>
   <?php
   return ob_get_clean();
+});
+
+/**
+ * Register options page
+ */
+if( function_exists('acf_add_options_page') ) {
+  acf_add_options_page(array(
+    'page_title' => 'Site Announcements',
+    'menu_title' => 'Site Announcements',
+    'menu_slug'  => 'site-announcement-settings',
+    'capability' => 'manage_options',
+    'redirect'   => false,
+    'icon_url'   => 'dashicons-megaphone',
+  ));
+}
+
+/**
+ * Event Space Features Shortcode
+ */
+add_shortcode('event-space', function ($atts) {
+    $features = shortcode_atts(array(
+        'wifi'               => '',
+        'whiteboard'         => '',
+        'tv'                 => '',
+        'hdmi'               => '',
+        'screen'             => '',
+        'projector'          => '',
+        'microphone'         => '',
+        'podium'             => '',
+        'sofa'               => '',
+        'layouts'            => '',
+        'seats'              => '',
+        'video-conferencing' => '',
+        'sound'              => '',
+    ), $atts);
+
+    ob_start();
+
+    foreach ($features as $icon => $feature) {
+        if (!empty($feature)) {
+            echo '<span class="event-space-feature feature-icon-'.$icon.'">'.$feature.'</span>';
+        }
+    }
+
+    return ob_get_clean();
 });

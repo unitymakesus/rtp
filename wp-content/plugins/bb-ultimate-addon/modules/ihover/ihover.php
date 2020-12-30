@@ -10,7 +10,7 @@
  *
  * @class iHoverModule
  */
-class iHoverModule extends FLBuilderModule {
+class iHoverModule extends FLBuilderModule { // @codingStandardsIgnoreLine.
 
 	/**
 	 * Constructor function that constructs default values for the iHover Module
@@ -43,11 +43,11 @@ class iHoverModule extends FLBuilderModule {
 	 * @return object
 	 */
 	public function filter_settings( $settings, $helper ) {
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
@@ -57,7 +57,7 @@ class iHoverModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->title_typography_font_family ) ) {
 				if ( isset( $settings->title_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->title_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_typography_font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 
@@ -137,7 +137,7 @@ class iHoverModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->desc_typography_font_family ) ) {
 				if ( isset( $settings->desc_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->desc_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->desc_typography_font_family['weight'] ) {
 						$settings->desc_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_typography_font_family['weight'];
@@ -156,7 +156,7 @@ class iHoverModule extends FLBuilderModule {
 					'length' => $settings->desc_typography_font_size_unit,
 					'unit'   => 'px',
 				);
-				unset($settings->desc_typography_font_size_unit );
+				unset( $settings->desc_typography_font_size_unit );
 			}
 			if ( isset( $settings->desc_typography_font_size_unit_medium ) ) {
 
@@ -220,7 +220,7 @@ class iHoverModule extends FLBuilderModule {
 						$item->border_style_param['style'] = $item->border_style;
 						unset( $item->border_style );
 					}
-					$item->border_style_param['color'] = ( '' == $item->border_color ) ? 'EFEFEF' : UABB_Helper::uabb_colorpicker( $item, 'border_color', true );
+					$item->border_style_param['color'] = ( '' === $item->border_color ) ? 'EFEFEF' : UABB_Helper::uabb_colorpicker( $item, 'border_color', true );
 					if ( isset( $item->border_size ) ) {
 						$item->border_style_param['width'] = array(
 							'top'    => $item->border_size,
@@ -232,14 +232,13 @@ class iHoverModule extends FLBuilderModule {
 					}
 					unset( $item->border_color );
 				}
-
 			}
 
 			if ( isset( $settings->align ) ) {
 				$settings->align_param = $settings->align;
 				unset( $settings->align );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
@@ -249,7 +248,7 @@ class iHoverModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->title_typography_font_family ) ) {
 				if ( isset( $settings->title_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->title_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_typography_font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 
@@ -281,7 +280,7 @@ class iHoverModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->title_typography_line_height['desktop'] ) && isset( $settings->title_typography_font_size['desktop'] ) && 0 != $settings->title_typography_font_size['desktop'] ) {
+			if ( isset( $settings->title_typography_line_height['desktop'] ) && isset( $settings->title_typography_font_size['desktop'] ) && 0 !== $settings->title_typography_font_size['desktop'] ) {
 				if ( is_numeric( $settings->title_typography_line_height['desktop'] ) && is_numeric( $settings->title_typography_font_size['desktop'] ) ) {
 					$settings->title_font_typo['line_height'] = array(
 						'length' => round( $settings->title_typography_line_height['desktop'] / $settings->title_typography_font_size['desktop'], 2 ),
@@ -289,7 +288,7 @@ class iHoverModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_typography_line_height['medium'] ) && isset( $settings->title_typography_font_size['medium'] ) && 0 != $settings->title_typography_font_size['medium'] ) {
+			if ( isset( $settings->title_typography_line_height['medium'] ) && isset( $settings->title_typography_font_size['medium'] ) && 0 !== $settings->title_typography_font_size['medium'] ) {
 				if ( is_numeric( $settings->title_typography_line_height['medium'] ) && is_numeric( $settings->title_typography_font_size['medium'] ) ) {
 					$settings->title_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->title_typography_line_height['medium'] / $settings->title_typography_font_size['medium'], 2 ),
@@ -297,7 +296,7 @@ class iHoverModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_typography_line_height['small'] ) && isset( $settings->title_typography_font_size['small'] ) && 0 != $settings->title_typography_font_size['small'] ) {
+			if ( isset( $settings->title_typography_line_height['small'] ) && isset( $settings->title_typography_font_size['small'] ) && 0 !== $settings->title_typography_font_size['small'] ) {
 				if ( is_numeric( $settings->title_typography_line_height['small'] ) && is_numeric( $settings->title_typography_font_size['small'] ) ) {
 					$settings->title_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->title_typography_line_height['small'] / $settings->title_typography_font_size['small'], 2 ),
@@ -313,7 +312,7 @@ class iHoverModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->desc_typography_font_family ) ) {
 				if ( isset( $settings->desc_typography_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->desc_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->desc_typography_font_family['weight'] ) {
 						$settings->desc_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desc_font_typo['font_weight'] = $settings->desc_typography_font_family['weight'];
@@ -344,7 +343,7 @@ class iHoverModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->desc_typography_line_height['desktop'] ) && isset( $settings->desc_typography_font_size['desktop'] ) && 0 != $settings->desc_typography_font_size['desktop'] ) {
+			if ( isset( $settings->desc_typography_line_height['desktop'] ) && isset( $settings->desc_typography_font_size['desktop'] ) && 0 !== $settings->desc_typography_font_size['desktop'] ) {
 				if ( is_numeric( $settings->desc_typography_line_height['desktop'] ) && is_numeric( $settings->desc_typography_font_size['desktop'] ) ) {
 					$settings->desc_font_typo['line_height'] = array(
 						'length' => round( $settings->desc_typography_line_height['desktop'] / $settings->desc_typography_font_size['desktop'], 2 ),
@@ -352,7 +351,7 @@ class iHoverModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desc_typography_line_height['medium'] ) && isset( $settings->desc_typography_font_size['medium'] ) && 0 != $settings->desc_typography_font_size['medium'] ) {
+			if ( isset( $settings->desc_typography_line_height['medium'] ) && isset( $settings->desc_typography_font_size['medium'] ) && 0 !== $settings->desc_typography_font_size['medium'] ) {
 				if ( is_numeric( $settings->desc_typography_line_height['medium'] ) && is_numeric( $settings->desc_typography_font_size['medium'] ) ) {
 					$settings->desc_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->desc_typography_line_height['medium'] / $settings->desc_typography_font_size['medium'], 2 ),
@@ -360,7 +359,7 @@ class iHoverModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desc_typography_line_height['small'] ) && isset( $settings->desc_typography_font_size['small'] ) && 0 != $settings->desc_typography_font_size['small'] ) {
+			if ( isset( $settings->desc_typography_line_height['small'] ) && isset( $settings->desc_typography_font_size['small'] ) && 0 !== $settings->desc_typography_font_size['small'] ) {
 				if ( is_numeric( $settings->desc_typography_line_height['small'] ) && is_numeric( $settings->desc_typography_font_size['small'] ) ) {
 					$settings->desc_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->desc_typography_line_height['small'] / $settings->desc_typography_font_size['small'], 2 ),
@@ -377,7 +376,7 @@ class iHoverModule extends FLBuilderModule {
 						$item->border_style_param['style'] = $item->border_style;
 						unset( $item->border_style );
 					}
-					$item->border_style_param['color'] = ( '' == $item->border_color ) ? 'EFEFEF' : UABB_Helper::uabb_colorpicker( $item, 'border_color', true );
+					$item->border_style_param['color'] = ( '' === $item->border_color ) ? 'EFEFEF' : UABB_Helper::uabb_colorpicker( $item, 'border_color', true );
 					if ( isset( $item->border_size ) ) {
 						$item->border_style_param['width'] = array(
 							'top'    => $item->border_size,
@@ -389,7 +388,6 @@ class iHoverModule extends FLBuilderModule {
 					}
 					unset( $item->border_color );
 				}
-
 			}
 
 			if ( isset( $settings->content_padding ) ) {
@@ -409,7 +407,8 @@ class iHoverModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->content_padding_dimension_top = (int) $output[ $i ][1];
@@ -438,40 +437,40 @@ class iHoverModule extends FLBuilderModule {
 				unset( $settings->align );
 			}
 			if ( isset( $settings->title_typography_font_size['desktop'] ) ) {
-				unset( $settings->title_typography_font_size['desktop'] );	
+				unset( $settings->title_typography_font_size['desktop'] );
 			}
-			if ( isset( $settings->title_typography_font_size['medium']) ) {
-				unset( $settings->title_typography_font_size['medium'] );	
+			if ( isset( $settings->title_typography_font_size['medium'] ) ) {
+				unset( $settings->title_typography_font_size['medium'] );
 			}
-			if ( isset( $settings->title_typography_font_size['small']) ) {
-				unset( $settings->title_typography_font_size['small'] );	
+			if ( isset( $settings->title_typography_font_size['small'] ) ) {
+				unset( $settings->title_typography_font_size['small'] );
 			}
-			if ( isset( $settings->title_typography_line_height['desktop']) ) {
+			if ( isset( $settings->title_typography_line_height['desktop'] ) ) {
 				unset( $settings->title_typography_line_height['desktop'] );
 			}
 			if ( isset( $settings->title_typography_line_height['medium'] ) ) {
-				unset( $settings->title_typography_line_height['medium'] );	
+				unset( $settings->title_typography_line_height['medium'] );
 			}
 			if ( isset( $settings->title_typography_line_height['small'] ) ) {
-				unset( $settings->title_typography_line_height['small'] );	
+				unset( $settings->title_typography_line_height['small'] );
 			}
 			if ( isset( $settings->desc_typography_font_size['desktop'] ) ) {
-				unset( $settings->desc_typography_font_size['desktop'] );	
+				unset( $settings->desc_typography_font_size['desktop'] );
 			}
-			if ( isset( $settings->desc_typography_font_size['medium']) ) {
-				unset( $settings->desc_typography_font_size['medium'] );	
+			if ( isset( $settings->desc_typography_font_size['medium'] ) ) {
+				unset( $settings->desc_typography_font_size['medium'] );
 			}
-			if ( isset( $settings->desc_typography_font_size['small']) ) {
-				unset( $settings->desc_typography_font_size['small'] );	
+			if ( isset( $settings->desc_typography_font_size['small'] ) ) {
+				unset( $settings->desc_typography_font_size['small'] );
 			}
-			if ( isset( $settings->desc_typography_line_height['desktop']) ) {
+			if ( isset( $settings->desc_typography_line_height['desktop'] ) ) {
 				unset( $settings->desc_typography_line_height['desktop'] );
 			}
 			if ( isset( $settings->desc_typography_line_height['medium'] ) ) {
-				unset( $settings->desc_typography_line_height['medium'] );	
+				unset( $settings->desc_typography_line_height['medium'] );
 			}
 			if ( isset( $settings->desc_typography_line_height['small'] ) ) {
-				unset( $settings->desc_typography_line_height['small'] );	
+				unset( $settings->desc_typography_line_height['small'] );
 			}
 		}
 		return $settings;
@@ -484,21 +483,10 @@ class iHoverModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/ihover/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/ihover/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/ihover/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/ihover/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 
@@ -512,7 +500,7 @@ class iHoverModule extends FLBuilderModule {
 		if ( isset( $this->settings->ihover_item[ $i ]->photo_src ) ) {
 			$photo_data = FLBuilderPhoto::get_attachment_data( $this->settings->ihover_item[ $i ]->photo );
 			$alt        = ( isset( $photo_data->alt ) ) ? $photo_data->alt : '';
-			echo '<img src="' . $this->settings->ihover_item[ $i ]->photo_src . '" alt="' . $alt . '" class="uabb-ih-image">';
+			echo '<img src="' . esc_attr( $this->settings->ihover_item[ $i ]->photo_src ) . '" alt="' . esc_attr( $alt ) . '" class="uabb-ih-image">';
 		}
 	}
 }
@@ -523,7 +511,7 @@ class iHoverModule extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/ihover/ihover-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/ihover/ihover-bb-less-than-2-2-compatibility.php';

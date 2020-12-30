@@ -47,6 +47,13 @@ body h6.fl-callout-title {
 	padding: 10px 0 0 0;
 }
 
+/* CTA Link
+---------------------------------------------------*/
+
+.fl-callout-cta-link {
+	display: block;
+}
+
 /* Icons
 ---------------------------------------------------*/
 
@@ -94,6 +101,11 @@ body h6.fl-callout-title {
 	vertical-align: top;
 	padding-left: 15px;
 }
+
+.fl-callout-icon-right-title .fl-callout-title-link .fl-icon,
+.fl-callout-icon-right-title .fl-callout-title-text .fl-icon {
+	display: inline-block;
+}
 .fl-callout-icon-left .fl-callout-content,
 .fl-callout-icon-right .fl-callout-content,
 .fl-callout-icon-left-text .fl-callout-text-wrap,
@@ -122,7 +134,7 @@ body h6.fl-callout-title {
 /* Left */
 .fl-callout-photo-left {
 	display: table;
-	table-layout: fixed; 
+	table-layout: fixed;
 	width: 100%;
 }
 .fl-callout-photo-left .fl-callout-photo,

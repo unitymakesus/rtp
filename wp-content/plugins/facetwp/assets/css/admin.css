@@ -252,8 +252,9 @@ a:hover {
 }
 
 .facetwp-region input[type='text'],
+.facetwp-region input[type='number'],
 .facetwp-region select {
-    width: 200px;
+    width: 220px;
 }
 
 .facet-fields input.facet-step,
@@ -268,17 +269,20 @@ a:hover {
 
 .facetwp-region textarea {
     width: 100%;
-    height: 160px;
+    height: 320px;
     font-family: monospace;
     white-space: pre;
     overflow: auto;
 }
 
+.facetwp-region textarea.facet-modifier-values {
+    width: 360px;
+    height: 120px;
+}
+
 .facetwp-region .item-name {
-    border: none;
-    box-shadow: none;
-    margin: 0;
-    color: #50b7ff;
+    display: inline-block;
+    margin: 0 18px 0 6px;
 }
 
 .table-row {
@@ -296,23 +300,6 @@ a:hover {
 
 .visible {
     display: initial;
-}
-
-.facetwp-region .icon-question {
-    display: inline-block;
-    margin-left: 4px;
-    border: 1px solid #ddd;
-    border-radius: 50%;
-    cursor: pointer;
-    line-height: 1;
-    width: 12px;
-    height: 12px;
-    font-size: 11px;
-    text-align: center;
-}
-
-.facetwp-region .icon-question:before {
-    content: none;
 }
 
 .facetwp-region .side-link {
@@ -384,11 +371,6 @@ a:hover {
 
 .facetwp-region .fs-open .fs-arrow {
     transform: rotate(-180deg);
-}
-
-input.multiselect__input {
-    line-height: initial;
-    min-height: initial;
 }
 
 /* Data Source dropdown */
@@ -505,7 +487,9 @@ input.multiselect__input {
 /* Tooltips */
 
 .facetwp-tooltip {
-    display: inline;
+    display: inline-block;
+    border-bottom: 1px dashed #ddd;
+    cursor: help;
 }
 
 .facetwp-tooltip-content {
@@ -529,23 +513,11 @@ input.multiselect__input {
     max-width: 400px;
 }
 
-#powerTip:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: -10px;
-    border-bottom: 5px solid transparent;
-    border-top: 5px solid transparent;
-    margin-top: -5px;
-    border-right: 10px solid #333;
-    border-right: 10px solid rgba(0, 0, 0, 0.8);
-}
-
 /* Edit screens */
 
 .facetwp-row {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 220px 1fr;
     padding-bottom: 20px;
 }
 
@@ -578,7 +550,7 @@ input.multiselect__input {
     width: 100px;
 }
 
-.qb-wrap .qb-posts-per-page {
+.qb-wrap input.qb-posts-per-page {
     width: 60px;
 }
 
@@ -597,10 +569,35 @@ input.multiselect__input {
     vertical-align: middle;
 }
 
-.qb-wrap .multiselect {
+.qb-wrap .v-select {
     display: inline-block;
     vertical-align: middle;
-    max-width: 300px;
+    min-width: 160px;
+    max-width: 360px;
+}
+
+.qb-wrap .v-select.vs--unsearchable {
+    vertical-align: top;
+}
+
+.qb-wrap .v-select .vs__search {
+    background: none;
+    box-shadow: none;
+    border: none;
+    height: 20px;
+    min-height: auto;
+}
+
+.qb-wrap .v-select .vs__dropdown-toggle {
+    border-color: #7e8993;
+}
+
+.qb-wrap .v-select .vs__selected {
+    height: 20px;
+}
+
+.qb-wrap .v-select .vs__actions {
+    display: none;
 }
 
 /* Boolean toggle */
@@ -699,6 +696,10 @@ input.multiselect__input {
 .builder-canvas {
     position: relative;
     outline: 1px solid #000;
+}
+
+.builder-settings-wrap h3:first-child {
+    margin-top: 0;
 }
 
 .builder-edge {
@@ -864,7 +865,7 @@ input.multiselect__input {
 
 .popover {
     position: absolute;
-    width: 200px;
+    width: 220px;
     top: 20px;
     left: 20px;
     background-color: #fff;
@@ -877,7 +878,7 @@ input.multiselect__input {
 }
 
 .popover-search input[type='text'] {
-    width: 200px;
+    width: 220px;
     box-shadow: none;
     outline-style: none;
     border-color: transparent;
@@ -886,7 +887,7 @@ input.multiselect__input {
 }
 
 .popover-choices {
-    max-height: 200px;
+    max-height: 220px;
     padding: 4px 0;
     overflow: scroll;
 }
@@ -965,16 +966,17 @@ input.multiselect__input {
 
 .color-wrap .color-preview {
     position: absolute;
-    top: 2px;
+    top: 1px;
     left: 2px;
-    height: 21px;
-    width: 21px;
+    height: 28px;
+    width: 28px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
     z-index: 1;
 }
 
 .color-wrap input.color-input {
-    width: 120px;
-    padding-left: 30px;
+    padding-left: 36px;
 }
 
 @media (min-width: 783px) {
@@ -983,4 +985,38 @@ input.multiselect__input {
         z-index: 100;
         top: 32px;
     }
+}
+
+/* FontAwesome */
+
+svg:not(:root).svg-inline--fa {
+    overflow: visible;
+}
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -.125em;
+}
+.svg-inline--fa.fa-w-10 {
+    width: .625em;
+}
+.svg-inline--fa.fa-w-11 {
+    width: .6875em;
+}
+.svg-inline--fa.fa-w-12 {
+    width: .75em;
+}
+.svg-inline--fa.fa-w-14 {
+    width: .875em;
+}
+.svg-inline--fa.fa-w-16 {
+    width: 1em;
+}
+.svg-inline--fa.fa-w-18 {
+    width: 1.125em;
+}
+.svg-inline--fa.fa-w-20 {
+    width: 1.25em;
 }

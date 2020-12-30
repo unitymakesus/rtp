@@ -14,22 +14,44 @@ class FLBuilderImporter extends WP_Import {
 	 * @return array
 	 */
 	function parse( $file ) {
-		$data = file_get_contents( $file );
-		$bad  = preg_match( '#[^\x00-\x7F]#', $data );
 
-		/**
-		 * If XML parser is not available or there are illegal chars in the file
-		 * fallback to regex parser and attempt to fix.
-		 */
-		if ( extension_loaded( 'xml' ) && ! $bad ) {
-			$parser = new FLBuilderImportParserXML();
-			return $parser->parse( $file );
+		if ( extension_loaded( 'xml' ) ) {
+			$parser = new FLBuilderImportParserXML;
+			$result = $parser->parse( $file );
+
+				// If SimpleXML succeeds or this is an invalid WXR file then return the results
+			if ( ! is_wp_error( $result ) ) {
+				return $result;
+			}
 		} else {
-			$parser = new FLBuilderImportParserRegex();
-			return $parser->parse( $file );
+			$result = new WP_Error( 'no_xml', __( 'The xml PHP extension is not installed.', 'fl-builder' ) );
 		}
+
+		// We have a malformed XML file, so display the error and fallthrough to regex
+		if ( is_wp_error( $result ) ) {
+			echo '<pre>';
+			if ( 'XML_parse_error' == $result->get_error_code() ) {
+				$error = $result->get_error_data();
+				echo $error[0] . ':' . $error[1] . ' ' . esc_html( $error[2] );
+			} else {
+				echo $result->get_error_message();
+			}
+			echo '</pre>';
+		}
+
+			$data = file_get_contents( $file );
+			$bad  = preg_match( '#[^\x00-\x7F]#', $data );
+		if ( $bad ) {
+				echo __( 'Some bad characters were found in the xml file', 'fl-builder' );
+		}
+			echo '</pre>';
+			echo '<p><strong>' . __( 'There was an error when reading this WXR file', 'fl-builder' ) . '</strong><br />';
+			echo '<p>' . __( 'Details are shown above. The importer will now try again with a different parser...', 'fl-builder' ) . '</p>';
+		$parser = new FLBuilderImportParserRegex();
+		return $parser->parse( $file );
 	}
 }
+
 
 class FLBuilderImportParserXML extends WXR_Parser_XML {
 
@@ -58,8 +80,16 @@ class FLBuilderImportParserXML extends WXR_Parser_XML {
 			case 'wp:postmeta':
 				if ( ! empty( $this->sub_data ) ) {
 					if ( stristr( $this->sub_data['key'], '_fl_builder_' ) ) {
-						$this->set_pcre_limit( apply_filters( 'fl_builder_importer_pcre', '23001337' ) );
-						$data = FLBuilderImporterDataFix::run( $this->sub_data['value'] );
+						FLBuilderImporterDataFix::set_pcre_limit( apply_filters( 'fl_builder_importer_pcre', '23001337' ) );
+						if ( '_fl_builder_data_settings' == $this->sub_data['key'] || '_fl_builder_draft_settings' == $this->sub_data['key'] ) {
+							$data = FLBuilderImporterDataFix::run( $this->sub_data['value'], false );
+						} else {
+							$data = FLBuilderImporterDataFix::run( $this->sub_data['value'], true );
+							if ( ! $data && ( $data != $this->sub_data['value'] ) ) {
+								$data = $this->sub_data['value'];
+							}
+						}
+
 						if ( is_object( $data ) || is_array( $data ) ) {
 							$data = serialize( $data );
 						}
@@ -101,13 +131,8 @@ class FLBuilderImportParserXML extends WXR_Parser_XML {
 					$this->in_tag                = false;
 				}
 		}
-		$this->cdata = false;
-	}
-
-	function set_pcre_limit( $value ) {
-
-		@ini_set( 'pcre.backtrack_limit', $value ); // @codingStandardsIgnoreLine
-		@ini_set( 'pcre.recursion_limit', $value ); // @codingStandardsIgnoreLine
+		$this->cdata         = false;
+		$this->base_blog_url = '';
 	}
 }
 
@@ -183,7 +208,7 @@ class FLBuilderImportParserRegex extends WXR_Parser_Regex {
 				if ( false !== strpos( $importline, '</item>' ) ) {
 					$in_post = false;
 
-					$this->set_pcre_limit( apply_filters( 'fl_builder_importer_pcre', '23001337' ) );
+					FLBuilderImporterDataFix::set_pcre_limit( apply_filters( 'fl_builder_importer_pcre', '23001337' ) );
 					$this->posts[] = $this->process_post( $post );
 					continue;
 				}
@@ -201,7 +226,12 @@ class FLBuilderImportParserRegex extends WXR_Parser_Regex {
 				}
 				foreach ( $post['postmeta'] as $postmeta_index => $postmeta ) {
 					if ( stristr( $postmeta['key'], '_fl_builder_' ) ) {
-						$data = FLBuilderImporterDataFix::run( $postmeta['value'] );
+
+						if ( '_fl_builder_data_settings' == $postmeta['key'] || '_fl_builder_draft_settings' == $postmeta['key'] ) {
+							$data = FLBuilderImporterDataFix::run( $postmeta['value'], false );
+						} else {
+							$data = FLBuilderImporterDataFix::run( $postmeta['value'], true );
+						}
 						if ( is_object( $data ) || is_array( $data ) ) {
 							$data = serialize( $data );
 						}
@@ -225,18 +255,6 @@ class FLBuilderImportParserRegex extends WXR_Parser_Regex {
 			'version'    => $wxr_version,
 		);
 	}
-
-
-	/**
-	 * Try increasing PCRE limit to avoid failing of importing huge postmeta data.
-	 *
-	 * @since 1.10.9
-	 * @param string $value
-	 */
-	function set_pcre_limit( $value ) {
-		@ini_set( 'pcre.backtrack_limit', $value ); // @codingStandardsIgnoreLine
-		@ini_set( 'pcre.recursion_limit', $value ); // @codingStandardsIgnoreLine
-	}
 }
 
 /**
@@ -252,7 +270,7 @@ final class FLBuilderImporterDataFix {
 	 * @since 1.8
 	 * @return string
 	 */
-	static public function run( $data ) {
+	static public function run( $data, $linebreaks = true ) {
 		// return if empty
 		if ( empty( $data ) ) {
 			return $data;
@@ -266,10 +284,20 @@ final class FLBuilderImporterDataFix {
 			return $data;
 		}
 
-		$data = preg_replace_callback('!s:(\d+):"(.*?)";!', function( $m ) {
-			return 's:' . strlen( $m[2] ) . ':"' . $m[2] . '";';
-		}, self::sanitize_from_word( $data ) );
-
+		if ( $linebreaks ) {
+			$data = preg_replace_callback('!([a-z-_0-9]+)";s:(\d+):"(.*?)";!', function( $m ) {
+				// new replace logic.
+				if ( 'css' === $m[1] || 'js' === $m[1] || 'html' === $m[1] ) {
+					$m[3] = str_replace( '<br data-fl-fixed=true />', "\n", $m[3] );
+				}
+				$m[3] = str_replace( '<br data-fl-fixed=true />', '<br />', $m[3] );
+				return $m[1] . '";s:' . strlen( $m[3] ) . ':"' . $m[3] . '";';
+			}, self::sanitize_from_word( $data, $linebreaks ) );
+		} else {
+			$data = preg_replace_callback('!s:(\d+):"(.*?)";!', function( $m ) {
+				return 's:' . strlen( $m[2] ) . ':"' . $m[2] . '";';
+			}, self::sanitize_from_word( $data, $linebreaks ) );
+		}
 		$data = maybe_unserialize( $data );
 
 		// return if maybe_unserialize() returns an object or array, this is good.
@@ -283,18 +311,22 @@ final class FLBuilderImporterDataFix {
 	/**
 	 * Remove quotes etc pasted from a certain word processor.
 	 */
-	public static function sanitize_from_word( $content ) {
+	public static function sanitize_from_word( $content, $linebreaks ) {
 		// Convert microsoft special characters
 		$replace = array(
-			'‘'  => "\'",
-			'’'  => "\'",
-			'”'  => '\"',
-			'“'  => '\"',
+			'‘'  => "'",
+			'’'  => "'",
+			'”'  => '"',
+			'“'  => '"',
 			'–'  => '-',
 			'—'  => '-',
 			'…'  => '&#8230;',
-			"\n" => '<br />',
+			"\n" => '<br data-fl-fixed=true />',
 		);
+
+		if ( ! $linebreaks ) {
+			unset( $replace["\n"] );
+		}
 
 		foreach ( $replace as $k => $v ) {
 			$content = str_replace( $k, $v, $content );
@@ -348,5 +380,16 @@ final class FLBuilderImporterDataFix {
 	 */
 	static private function unescape_quotes( $value ) {
 		return str_replace( '\"', '"', $value );
+	}
+
+	/**
+	 * Try increasing PCRE limit to avoid failing of importing huge postmeta data.
+	 *
+	 * @since 1.10.9
+	 * @param string $value
+	 */
+	static public function set_pcre_limit( $value ) {
+		@ini_set( 'pcre.backtrack_limit', $value ); // @codingStandardsIgnoreLine
+		@ini_set( 'pcre.recursion_limit', $value ); // @codingStandardsIgnoreLine
 	}
 }

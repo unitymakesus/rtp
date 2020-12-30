@@ -10,14 +10,17 @@
 		{
 			var form    	= $('.fl-builder-settings'),
 				icon_style = form.find('select[name=show_icon]'),
+				layout  = form.find('select[name=tab_layout]'),
 				style 	= form.find('select[name=style]'),
 				tab_style = form.find('select[name=tab_style]');
 
-
 			this._styleChanged();
 			this._equalWidthOption();
+
+			layout.on('change', $.proxy( this._styleChanged, this ) ) ;
 			style.on('change', $.proxy( this._styleChanged, this ) ) ;
 
+			layout.on('change', $.proxy( this._equalWidthOption, this ) ) ;
 			tab_style.on('change', $.proxy( this._equalWidthOption, this ) ) ;
 
 			this._iconStyleChanged();
@@ -28,10 +31,22 @@
 		
 		_styleChanged: function() {
 			var form		= $('.fl-builder-settings'),
+				layout  = form.find('select[name=tab_layout]').val(),
 				style 	= form.find('select[name=style]').val(),
 				tab_style 	= form.find('select[name=tab_style]').val();
 
+			if( layout == 'vertical' && style == 'simple' ) {
+				form.find('#fl-field-tab_border').show();
+			} else {
+				form.find('#fl-field-tab_border').hide();
+			}
 			
+			if( layout == 'vertical' ) {
+				form.find('#fl-builder-settings-section-label_border').show();
+			} else {
+				form.find('#fl-builder-settings-section-label_border').hide();
+			}
+
 			if( style != 'linebox' && style != 'iconfall' ){
 				form.find('#fl-field-tab_style').show();
 				if( tab_style == 'inline'  ){
@@ -132,12 +147,13 @@
 
 		_equalWidthOption: function() {
 			var form		= $('.fl-builder-settings'),
+				/* Tab Layout */
+				layout 	= form.find('select[name=tab_layout]').val(),
 				/* Overall Style */
 				style 	= form.find('select[name=style]').val(),
 				/* Individul Tab Style */
 				tab_style = form.find('select[name=tab_style]').val();
-
- 
+				
 				if ( style == 'simple' || style == 'bar' || style == 'topline' || style == 'linebox' ) {
 					if ( style != 'linebox' && tab_style == 'full' ) {
 						form.find('#fl-field-tab_style_width').show();
@@ -151,10 +167,18 @@
 				}else {
 					form.find('#fl-field-tab_style_width').hide();
 				}
+				if( layout == 'vertical' ) {
+ 					form.find('#fl-field-tab_style').hide();
+ 					form.find('#fl-field-tab_style_width').hide();
+ 				}
 		},
 		_contentTypeChange: function(e)
 		{
 			var type = $(e.target).val();
+
+			var form = $('.fl-builder-settings');
+
+			form.find("#fl-field-ct_raw_nonce").hide();
 
 			if ( 'saved_modules' === type ) {
 				this._setTemplates('saved_modules');
@@ -183,12 +207,19 @@
 				type = 'layout';
 			}
 			var self = this;
+			var form = $('.fl-builder-settings');
+			nonce = form.find( '.uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+			if ( 'undefined' === typeof nonce ) {
+				nonce     = form.find('input[name=ct_raw_nonce]').val();
+			}
 
 			$.post(
 				ajaxurl,
 				{
 					action: 'uabb_get_saved_templates',
-					type: type
+					type: type,
+					nonce: nonce,
 				},
 				function( response ) {
 					callback(response);
@@ -216,7 +247,7 @@
 			}
 
 			this._getTemplates(type, function(data) {
-				var response = JSON.parse( data );
+				var response = data;
 
 				if ( response.success ) {
 					self._templates[type] = response.data;

@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBBusinessHours', array(
+	'UABBBusinessHours',
+	array(
 		'business-hours-info'       => array(
 			'title'    => __( 'Content', 'uabb' ),
 			'sections' => array(
@@ -535,7 +536,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_business_hours_form', array(
+	'uabb_business_hours_form',
+	array(
 		'title' => __( 'Add Hours Data', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

@@ -1,29 +1,46 @@
-/* line 1, stdin */
+/** Colors */
+
+/** Buttons */
+
+/** Navigation */
+
+/** Footer */
+
+/** Box Model  */
+
+/** Modified Breakpoints */
+
+/** Flow Text  */
+
+/** Gradients */
+
+/* line 3, stdin */
 
 .flex-grid {
   margin: 0 -10px;
 }
 
-/* line 4, stdin */
+/* line 6, stdin */
 
 .flex-grid .flex-item {
+  width: 100%;
   margin-bottom: 20px;
 }
 
-/* line 7, stdin */
+/* line 10, stdin */
 
 .flex-grid .flex-item .figure-card {
   position: relative;
   height: 100%;
 }
 
-/* line 11, stdin */
+/* line 14, stdin */
 
 .flex-grid .flex-item .figure-card .card {
-  height: calc(100% - 235px);
+  background: #FFF;
 }
 
-/* line 15, stdin */
+/* line 18, stdin */
 
 .flex-grid .flex-item .figure-card .card-inner {
   display: -webkit-box;
@@ -36,30 +53,38 @@
   height: 100%;
 }
 
-/* line 20, stdin */
+/* line 23, stdin */
 
 .flex-grid .flex-item .figure-card .card-inner .card-cta {
   margin-top: auto;
 }
 
-/* line 25, stdin */
+/* line 28, stdin */
 
 .flex-grid .flex-item .figure-card .pattern-background {
   bottom: 0;
 }
 
-/* line 30, stdin */
+/* line 33, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .card {
   height: 100%;
   margin: 0 30px 50px 0;
 }
 
-/* line 35, stdin */
+/* line 38, stdin */
 
 .flex-grid .flex-item .figure-card.no-image .pattern-background {
   left: 30px;
   bottom: -30px;
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 47, stdin */
+
+  .flex-grid .figure-card .card {
+    height: calc(100% - 235px);
+  }
 }
 
 

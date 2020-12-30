@@ -4,7 +4,7 @@
     <div class="container">
       <div class="entry-title-container">
         <h1 class="entry-title" itemprop="name">{!! get_the_title() !!}</h1>
-        <h2 class="job-title" itemprop="jobTitle">{{ get_field('job_title') }}</h2>
+        <h2 class="job-title heading-reset" itemprop="jobTitle">{{ get_field('job_title') }}</h2>
       </div>
     </div>
   </header>
@@ -32,7 +32,10 @@
                   $phone_raw = preg_replace('/[\.-]/m', '', $phone);
                 @endphp
                 <div class="contact">
-                  <span class="icon">@svg('icon-phone')</span>
+                  <span class="icon">
+                    <span class="screen-reader-text">Phone Number:</span>
+                    @svg('icon-phone')
+                  </span>
                   <a itemprop="telephone" target="_blank" rel="noopener" href="tel:+1{{ $phone_raw }}">{{ $phone }}</a>
                 </div>
               @endif

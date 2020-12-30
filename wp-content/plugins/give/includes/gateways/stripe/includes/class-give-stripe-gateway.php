@@ -11,6 +11,8 @@
  */
 
 // Exit, if accessed directly.
+use Give\ValueObjects\Money;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -45,15 +47,6 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		public $api_version = '2019-05-16';
 
 		/**
-		 * Secret API Key.
-		 *
-		 * @access private
-		 *
-		 * @var string
-		 */
-		private $secret_key = '';
-
-		/**
 		 * Payment Intent.
 		 *
 		 * @since  2.5.0
@@ -74,6 +67,16 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		public $payment_method;
 
 		/**
+		 * Error Messages.
+		 *
+		 * @since  2.7.0
+		 * @access public
+		 *
+		 * @var array $errorMessages List of error messages.
+		 */
+		public $errorMessages = [];
+
+		/**
 		 * Give_Stripe_Gateway constructor.
 		 *
 		 * @since  2.5.0
@@ -83,9 +86,6 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		 */
 		public function __construct() {
 
-			// Set secret key received from Stripe.
-			$this->secret_key = give_stripe_get_secret_key();
-
 			// Set API Version.
 			$this->set_api_version();
 
@@ -93,8 +93,60 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 			$this->payment_intent = new Give_Stripe_Payment_Intent();
 			$this->payment_method = new Give_Stripe_Payment_Method();
 
-			add_action( "give_gateway_{$this->id}", array( $this, 'process_payment' ) );
+			add_action( "give_gateway_{$this->id}", [ $this, 'process_payment' ] );
 
+		}
+
+		/**
+		 * This function is used to determine whether to show the payment fields or not.
+		 *
+		 * @since  2.7.0
+		 * @access public
+		 *
+		 * @return bool
+		 */
+		public function canShowFields() {
+
+			$status       = true;
+			$isConfigured = Give\Helpers\Gateways\Stripe::isAccountConfigured();
+			$isTestMode   = give_is_test_mode();
+			$isSslActive  = is_ssl();
+
+			if ( ! $isConfigured && ! $isSslActive && ! $isTestMode ) {
+				// Account not configured, No SSL scenario.
+				Give_Notices::print_frontend_notice(
+					sprintf(
+						'<strong>%1$s</strong> %2$s',
+						esc_html__( 'Notice:', 'give' ),
+						$this->errorMessages['accountNotConfiguredNoSsl']
+					)
+				);
+				$status = false;
+
+			} elseif ( ! $isConfigured ) {
+				// Account not configured scenario.
+				Give_Notices::print_frontend_notice(
+					sprintf(
+						'<strong>%1$s</strong> %2$s',
+						esc_html__( 'Notice:', 'give' ),
+						$this->errorMessages['accountNotConfigured']
+					)
+				);
+				$status = false;
+
+			} elseif ( ! $isTestMode && ! $isSslActive ) {
+				// Account configured, No SSL scenario.
+				Give_Notices::print_frontend_notice(
+					sprintf(
+						'<strong>%1$s</strong> %2$s',
+						esc_html__( 'Notice:', 'give' ),
+						$this->errorMessages['accountConfiguredNoSsl']
+					)
+				);
+				$status = false;
+			}
+
+			return $status;
 		}
 
 		/**
@@ -161,7 +213,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		 *
 		 * @return \Stripe\Token
 		 */
-		public function get_token_details( $id, $args = array() ) {
+		public function get_token_details( $id, $args = [] ) {
 
 			// Set Application Info.
 			give_stripe_set_app_info();
@@ -287,13 +339,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 
 			$card_exists = false;
 			$all_sources = $stripe_customer->sources->all();
-
-			if ( give_stripe_is_checkout_enabled() && 'stripe' === $this->id ) {
-				$card = $this->get_token_details( $id );
-			} else {
-				$card = $this->get_source_details( $id );
-			}
-
+			$card        = $this->get_source_details( $id );
 			$source_list = wp_list_pluck( $all_sources->data, 'id' );
 
 			// Check whether the source is already attached to customer or not.
@@ -306,9 +352,11 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 				try {
 
 					// Attach Source to existing Customer.
-					$card = $stripe_customer->sources->create( array(
-						'source' => $id,
-					) );
+					$card = $stripe_customer->sources->create(
+						[
+							'source' => $id,
+						]
+					);
 
 				} catch ( \Stripe\Error\Base $e ) {
 
@@ -389,7 +437,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		 */
 		public function log_error( $exception ) {
 
-			$log_message = __( 'The Stripe payment gateway returned an error while processing the donation.', 'give' ) . '<br><br>';
+			$log_message       = __( 'The Stripe payment gateway returned an error while processing the donation.', 'give' ) . '<br><br>';
 			$exception_message = $exception->getMessage();
 
 			// Bad Request of some sort.
@@ -435,13 +483,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		 * @return mixed
 		 */
 		public function format_amount( $amount ) {
-
-			// Get the donation amount.
-			if ( give_stripe_is_zero_decimal_currency() ) {
-				return $amount;
-			} else {
-				return $amount * 100;
-			}
+			return Money::of( $amount, give_get_currency() )->getMinorAmount();
 		}
 
 		/**
@@ -490,15 +532,16 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		/**
 		 * This function will prepare metadata to send to Stripe.
 		 *
-		 * @param int $donation_id Donation ID.
+		 * @param int   $donation_id   Donation ID.
+		 * @param array $donation_data Donation Data.
 		 *
 		 * @since  2.5.0
 		 * @access public
 		 *
 		 * @return array
 		 */
-		public function prepare_metadata( $donation_id = 0 ) {
-			return give_stripe_prepare_metadata( $donation_id );
+		public function prepare_metadata( $donation_id, $donation_data = [] ) {
+			return give_stripe_prepare_metadata( $donation_id, $donation_data );
 		}
 
 		/**
@@ -566,7 +609,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		 *
 		 * @since  1.6
 		 * @access public
-	 	 *
+		 *
 		 * @return bool|\Stripe\Source
 		 */
 		public function create_3d_secure_source( $donation_id, $source_id ) {
@@ -575,24 +618,24 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 			$donation_amount = give_donation_amount( $donation_id );
 
 			// Prepare basic source args.
-			$source_args = array(
+			$source_args = [
 				'amount'               => $this->format_amount( $donation_amount ),
 				'currency'             => give_get_currency( $form_id ),
 				'type'                 => 'three_d_secure',
-				'three_d_secure'       => array(
-					'card'     => $source_id,
-				),
+				'three_d_secure'       => [
+					'card' => $source_id,
+				],
 				'statement_descriptor' => give_stripe_get_statement_descriptor(),
-				'redirect'             => array(
+				'redirect'             => [
 					'return_url' => add_query_arg(
-						array(
+						[
 							'give-listener' => 'stripe_three_d_secure',
 							'donation_id'   => $donation_id,
-						),
+						],
 						give_get_success_page_uri()
 					),
-				),
-			);
+				],
+			];
 
 			$source = $this->prepare_source( $source_args );
 
@@ -615,7 +658,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 		 * @since  1.6
 		 * @access public
 		 *
-	 	 * @return bool
+		 * @return bool
 		 */
 		public function is_3d_secure_required( $source_object ) {
 
@@ -654,7 +697,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 			// Process the charge.
 			$amount = $this->format_amount( $donation_data['price'] );
 
-			$charge_args = array(
+			$charge_args = [
 				'amount'               => $amount,
 				'currency'             => give_get_currency( $form_id ),
 				'customer'             => $stripe_customer_id,
@@ -662,7 +705,7 @@ if ( ! class_exists( 'Give_Stripe_Gateway' ) ) {
 				'statement_descriptor' => give_stripe_get_statement_descriptor( $donation_data ),
 				'metadata'             => $this->prepare_metadata( $donation_id ),
 				'source'               => $source_id,
-			);
+			];
 
 			// Create charge with general gateway fn.
 			$charge = $this->create_charge( $donation_id, $charge_args );

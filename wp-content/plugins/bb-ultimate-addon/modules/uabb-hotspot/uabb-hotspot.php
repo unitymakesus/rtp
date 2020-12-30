@@ -51,11 +51,11 @@ class UABBHotspot extends FLBuilderModule {
 	 * @return object
 	 */
 	public function filter_settings( $settings, $helper ) {
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			$count_marker = count( $settings->hotspot_marker );
 
@@ -99,7 +99,7 @@ class UABBHotspot extends FLBuilderModule {
 					}
 					if ( isset( $settings->hotspot_marker[ $i ]->text_typography_font_family->weight ) ) {
 
-						if ( 'regular' == $settings->hotspot_marker[ $i ]->text_typography_font_family->weight ) {
+						if ( 'regular' === $settings->hotspot_marker[ $i ]->text_typography_font_family->weight ) {
 							$settings->hotspot_marker[ $i ]->text_font_typo->font_weight = 'normal';
 						} else {
 							$settings->hotspot_marker[ $i ]->text_font_typo->font_weight = $settings->hotspot_marker[ $i ]->text_typography_font_family->weight;
@@ -180,7 +180,7 @@ class UABBHotspot extends FLBuilderModule {
 					}
 					if ( isset( $settings->hotspot_marker[ $i ]->tooltip_font_family->weight ) ) {
 
-						if ( 'regular' == $settings->hotspot_marker[ $i ]->tooltip_font_family->weight ) {
+						if ( 'regular' === $settings->hotspot_marker[ $i ]->tooltip_font_family->weight ) {
 							$settings->hotspot_marker[ $i ]->tooltip_font_typo->font_weight = 'normal';
 						} else {
 							$settings->hotspot_marker[ $i ]->tooltip_font_typo->font_weight = $settings->hotspot_marker[ $i ]->tooltip_font_family->weight;
@@ -223,7 +223,7 @@ class UABBHotspot extends FLBuilderModule {
 					unset( $settings->hotspot_marker[ $i ]->tooltip_letter_spacing );
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			$count_marker = count( $settings->hotspot_marker );
 
@@ -243,7 +243,7 @@ class UABBHotspot extends FLBuilderModule {
 					}
 					if ( isset( $settings->hotspot_marker[ $i ]->text_typography_font_family->weight ) ) {
 
-						if ( 'regular' == $settings->hotspot_marker[ $i ]->text_typography_font_family->weight ) {
+						if ( 'regular' === $settings->hotspot_marker[ $i ]->text_typography_font_family->weight ) {
 							$settings->hotspot_marker[ $i ]->text_font_typo->font_weight = 'normal';
 						} else {
 							$settings->hotspot_marker[ $i ]->text_font_typo->font_weight = $settings->hotspot_marker[ $i ]->text_typography_font_family->weight;
@@ -270,7 +270,7 @@ class UABBHotspot extends FLBuilderModule {
 						'unit'   => 'px',
 					);
 				}
-				if ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height->desktop ) && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size->desktop ) && 0 != $settings->hotspot_marker[ $i ]->text_typography_font_size->desktop ) {
+				if ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height->desktop ) && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size->desktop ) && 0 !== $settings->hotspot_marker[ $i ]->text_typography_font_size->desktop ) {
 					if ( is_numeric( $settings->hotspot_marker[ $i ]->text_typography_line_height->desktop ) && is_numeric( $settings->hotspot_marker[ $i ]->text_typography_font_size->desktop ) ) {
 						$settings->hotspot_marker[ $i ]->text_font_typo->line_height = (object) array(
 							'length' => round( $settings->hotspot_marker[ $i ]->text_typography_line_height->desktop / $settings->hotspot_marker[ $i ]->text_typography_font_size->desktop ),
@@ -278,7 +278,7 @@ class UABBHotspot extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height->medium ) && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size->medium ) && 0 != $settings->hotspot_marker[ $i ]->text_typography_font_size->medium ) {
+				if ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height->medium ) && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size->medium ) && 0 !== $settings->hotspot_marker[ $i ]->text_typography_font_size->medium ) {
 					if ( is_numeric( $settings->hotspot_marker[ $i ]->text_typography_line_height->medium ) && is_numeric( $settings->hotspot_marker[ $i ]->text_typography_font_size->medium ) ) {
 						$settings->hotspot_marker[ $i ]->text_font_typo_medium->line_height = (object) array(
 							'length' => round( $settings->hotspot_marker[ $i ]->text_typography_line_height->medium / $settings->hotspot_marker[ $i ]->text_typography_font_size->medium ),
@@ -286,7 +286,7 @@ class UABBHotspot extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height->small ) && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size->small ) && 0 != $settings->hotspot_marker[ $i ]->text_typography_font_size->small ) {
+				if ( isset( $settings->hotspot_marker[ $i ]->text_typography_line_height->small ) && isset( $settings->hotspot_marker[ $i ]->text_typography_font_size->small ) && 0 !== $settings->hotspot_marker[ $i ]->text_typography_font_size->small ) {
 					if ( is_numeric( $settings->hotspot_marker[ $i ]->text_typography_line_height->small ) && is_numeric( $settings->hotspot_marker[ $i ]->text_typography_font_size->small ) ) {
 						$settings->hotspot_marker[ $i ]->text_font_typo_responsive->line_height = (object) array(
 							'length' => round( $settings->hotspot_marker[ $i ]->text_typography_line_height->small / $settings->hotspot_marker[ $i ]->text_typography_font_size->small ),
@@ -309,7 +309,7 @@ class UABBHotspot extends FLBuilderModule {
 					}
 					if ( isset( $settings->hotspot_marker[ $i ]->tooltip_font_family->weight ) ) {
 
-						if ( 'regular' == $settings->hotspot_marker[ $i ]->tooltip_font_family->weight ) {
+						if ( 'regular' === $settings->hotspot_marker[ $i ]->tooltip_font_family->weight ) {
 							$settings->hotspot_marker[ $i ]->tooltip_font_typo->font_weight = 'normal';
 						} else {
 							$settings->hotspot_marker[ $i ]->tooltip_font_typo->font_weight = $settings->hotspot_marker[ $i ]->tooltip_font_family->weight;
@@ -335,7 +335,7 @@ class UABBHotspot extends FLBuilderModule {
 						'unit'   => 'px',
 					);
 				}
-				if ( isset( $settings->hotspot_marker[ $i ]->tooltip_line_height->desktop ) && isset( $settings->hotspot_marker[ $i ]->tooltip_font_size->desktop ) && 0 != $settings->hotspot_marker[ $i ]->tooltip_font_size->desktop ) {
+				if ( isset( $settings->hotspot_marker[ $i ]->tooltip_line_height->desktop ) && isset( $settings->hotspot_marker[ $i ]->tooltip_font_size->desktop ) && 0 !== $settings->hotspot_marker[ $i ]->tooltip_font_size->desktop ) {
 					if ( is_numeric( $settings->hotspot_marker[ $i ]->tooltip_line_height->desktop ) && is_numeric( $settings->hotspot_marker[ $i ]->tooltip_font_size->desktop ) ) {
 						$settings->hotspot_marker[ $i ]->tooltip_font_typo->line_height = (object) array(
 							'length' => round( $settings->hotspot_marker[ $i ]->tooltip_line_height->desktop / $settings->hotspot_marker[ $i ]->tooltip_font_size->desktop ),
@@ -343,7 +343,7 @@ class UABBHotspot extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->hotspot_marker[ $i ]->tooltip_line_height->medium ) && isset( $settings->hotspot_marker[ $i ]->tooltip_font_size->medium ) && 0 != $settings->hotspot_marker[ $i ]->tooltip_font_size->medium ) {
+				if ( isset( $settings->hotspot_marker[ $i ]->tooltip_line_height->medium ) && isset( $settings->hotspot_marker[ $i ]->tooltip_font_size->medium ) && 0 !== $settings->hotspot_marker[ $i ]->tooltip_font_size->medium ) {
 					if ( is_numeric( $settings->hotspot_marker[ $i ]->tooltip_line_height->medium ) && is_numeric( $settings->hotspot_marker[ $i ]->tooltip_font_size->medium ) ) {
 						$settings->hotspot_marker[ $i ]->tooltip_font_typo_medium->line_height = (object) array(
 							'length' => round( $settings->hotspot_marker[ $i ]->tooltip_line_height->medium / $settings->hotspot_marker[ $i ]->tooltip_font_size->medium ),
@@ -351,7 +351,7 @@ class UABBHotspot extends FLBuilderModule {
 						);
 					}
 				}
-				if ( isset( $settings->hotspot_marker[ $i ]->tooltip_line_height->small ) && isset( $settings->hotspot_marker[ $i ]->tooltip_font_size->small ) && 0 != $settings->hotspot_marker[ $i ]->tooltip_font_size->small ) {
+				if ( isset( $settings->hotspot_marker[ $i ]->tooltip_line_height->small ) && isset( $settings->hotspot_marker[ $i ]->tooltip_font_size->small ) && 0 !== $settings->hotspot_marker[ $i ]->tooltip_font_size->small ) {
 					if ( is_numeric( $settings->hotspot_marker[ $i ]->tooltip_line_height->small ) && is_numeric( $settings->hotspot_marker[ $i ]->tooltip_font_size->small ) ) {
 						$settings->hotspot_marker[ $i ]->tooltip_font_typo_responsive->line_height = (object) array(
 							'length' => round( $settings->hotspot_marker[ $i ]->tooltip_line_height->small / $settings->hotspot_marker[ $i ]->tooltip_font_size->small ),
@@ -377,7 +377,8 @@ class UABBHotspot extends FLBuilderModule {
 					$settings->hotspot_marker[ $i ]->tooltip_padding_dimension_left   = '';
 					$settings->hotspot_marker[ $i ]->tooltip_padding_dimension_right  = '';
 
-					for ( $j = 0; $j < count( $output ); $j++ ) {
+					$count = count( $output );
+					for ( $j = 0; $j < $count; $j++ ) {
 
 						switch ( $output[ $j ][0] ) {
 							case 'padding-top':
@@ -420,7 +421,8 @@ class UABBHotspot extends FLBuilderModule {
 					$settings->hotspot_marker[ $i ]->text_typography_padding_dimension_left   = '';
 					$settings->hotspot_marker[ $i ]->text_typography_padding_dimension_right  = '';
 
-					for ( $j = 0; $j < count( $output ); $j++ ) {
+					$count = count( $output );
+					for ( $j = 0; $j < $count; $j++ ) {
 
 						switch ( $output[ $j ][0] ) {
 							case 'padding-top':
@@ -493,21 +495,10 @@ class UABBHotspot extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 	/**
 	 * Function that renders the button for the button
@@ -515,7 +506,7 @@ class UABBHotspot extends FLBuilderModule {
 	 * @method render_button
 	 */
 	public function render_button() {
-		if ( '' != $this->settings->button ) {
+		if ( '' !== $this->settings->button ) {
 			FLBuilder::render_module_html( 'uabb-button', $this->settings->button );
 		}
 	}
@@ -534,16 +525,16 @@ class UABBHotspot extends FLBuilderModule {
 		<div class="uabb-hspot-sonar">
 			<svg class="uabb-sonar" viewBox="-25 -25 50 50">
 				<g>
-					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo $color; ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
+					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo esc_attr( $color ); ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
 				</g>
 				<g>
-					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo $color; ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
+					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo esc_attr( $color ); ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
 				</g>
 				<g>
-					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo $color; ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
+					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo esc_attr( $color ); ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
 				</g>
 				<g>
-					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo $color; ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
+					<circle cx="0" cy="0" r="8px" fill="none" stroke="<?php echo esc_attr( $color ); ?>" stroke-opacity="0.5" stroke-width="1" vector-effect="non-scaling-stroke"></circle>
 				</g>
 			</svg>
 		</div>
@@ -559,7 +550,7 @@ class UABBHotspot extends FLBuilderModule {
 	 */
 	public function render_image_icon( $i ) {
 
-		if ( 'text' != $this->settings->hotspot_marker[ $i ]->hotspot_marker_type ) {
+		if ( 'text' !== $this->settings->hotspot_marker[ $i ]->hotspot_marker_type ) {
 			$img_icon_array = array(
 				/* General Section */
 				'image_type'            => $this->settings->hotspot_marker[ $i ]->hotspot_marker_type,
@@ -593,11 +584,11 @@ class UABBHotspot extends FLBuilderModule {
 			);
 			echo '<div class="uabb-hotspot-wrap">';
 			FLBuilder::render_module_html( 'image-icon', $img_icon_array );
-			echo ( 'yes' == $this->settings->hotspot_marker[ $i ]->show_animation ) ? $this->render_animation( $this->settings->hotspot_marker[ $i ] ) : '';
-			echo ( 'always' == $this->settings->hotspot_marker[ $i ]->show_animation ) ? $this->render_animation( $this->settings->hotspot_marker[ $i ] ) : '';
+			echo ( 'yes' === $this->settings->hotspot_marker[ $i ]->show_animation ) ? wp_kses_post( $this->render_animation( $this->settings->hotspot_marker[ $i ] ) ) : '';
+			echo ( 'always' === $this->settings->hotspot_marker[ $i ]->show_animation ) ? wp_kses_post( $this->render_animation( $this->settings->hotspot_marker[ $i ] ) ) : '';
 			echo '</div>';
 		} else {
-			echo '<div class="uabb-hotspot-text uabb-hotspot-wrap uabb-text-editor">' . $this->settings->hotspot_marker[ $i ]->marker_text . '</div>';
+			echo '<div class="uabb-hotspot-text uabb-hotspot-wrap uabb-text-editor">' . $this->settings->hotspot_marker[ $i ]->marker_text . '</div>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 
 	}
@@ -639,15 +630,14 @@ class UABBHotspot extends FLBuilderModule {
 	public function get_image_details() {
 
 		$photo = $this->get_image_data();
-
 		if ( ! empty( $photo->alt ) ) {
-			return htmlspecialchars( $photo->alt );
+			return esc_html( $photo->alt );
 		} elseif ( ! empty( $photo->description ) ) {
-			return htmlspecialchars( $photo->description );
+			return esc_html( $photo->description );
 		} elseif ( ! empty( $photo->caption ) ) {
-			return htmlspecialchars( $photo->caption );
+			return esc_html( $photo->caption );
 		} elseif ( ! empty( $photo->title ) ) {
-			return htmlspecialchars( $photo->title );
+			return esc_html( $photo->title );
 		}
 	}
 }
@@ -657,7 +647,7 @@ class UABBHotspot extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/uabb-hotspot-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-hotspot/uabb-hotspot-bb-less-than-2-2-compatibility.php';

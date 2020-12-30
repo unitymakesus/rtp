@@ -295,7 +295,7 @@ FLBuilder::register_module('FLContactFormModule', array(
 			'general' => array(
 				'title'  => '',
 				'fields' => array(
-					'mailto_email' => array(
+					'mailto_email'  => array(
 						'type'        => 'text',
 						'label'       => __( 'Send To Email', 'fl-builder' ),
 						'default'     => '',
@@ -305,6 +305,10 @@ FLBuilder::register_module('FLContactFormModule', array(
 							'type' => 'none',
 						),
 						'connections' => array( 'custom_field' ),
+					),
+					'email_explain' => array(
+						'type'    => 'raw',
+						'content' => sprintf( '<p class="fl-builder-settings-tab-description">%s&nbsp;<a target="_blank" href="https://docs.wpbeaverbuilder.com/beaver-builder/how-to-tips/use-smtp-to-send-form-notifications">%s</a></p>', __( 'Note: Please read the following info on email deliverability for this module.', 'fl-builder' ), __( 'Link to Doc', 'fl-builder' ) ),
 					),
 				),
 			),
@@ -401,6 +405,21 @@ FLBuilder::register_module('FLContactFormModule', array(
 						'type'    => 'text',
 						'label'   => __( 'Your Message Placeholder', 'fl-builder' ),
 						'default' => __( 'Your message', 'fl-builder' ),
+					),
+					'placeholder_labels'  => array(
+						'type'    => 'select',
+						'label'   => __( 'Show labels/placeholders', 'fl-builder' ),
+						'default' => 'placeholder',
+						'options' => array(
+							'placeholder' => __( 'Show Placeholders Only', 'fl-builder' ),
+							'labels'      => __( 'Show Labels Only', 'fl-builder' ),
+							'both'        => __( 'Show Both', 'fl-builder' ),
+						),
+						'toggle'  => array(
+							'show' => array(
+								'fields' => array( 'terms_checkbox_text', 'terms_text' ),
+							),
+						),
 					),
 					'terms_checkbox'      => array(
 						'type'    => 'select',
@@ -506,6 +525,32 @@ FLBuilder::register_module('FLContactFormModule', array(
 						'show_remove' => true,
 						'show'        => array(
 							'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+						),
+					),
+					'btn_duo_color1'     => array(
+						'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '#5b5b5b',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => 'i.fl-button-icon.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'btn_duo_color2'     => array(
+						'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '#757575',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => 'i.fl-button-icon.fad:after',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'btn_icon_position'  => array(

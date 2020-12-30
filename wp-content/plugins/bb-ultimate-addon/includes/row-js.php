@@ -33,6 +33,7 @@ function uabb_row_particle_render_js() {
  * @param object $global_settings an object to get various settings.
  */
 function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings ) {
+
 	$branding_name       = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-name' );
 	$branding_short_name = BB_Ultimate_Addon_Helper::get_builder_uabb_branding( 'uabb-plugin-short-name' );
 	$branding            = '';
@@ -41,71 +42,38 @@ function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings
 	} else {
 		$branding = 'yes';
 	}
+	if ( FLBuilderModel::is_builder_active() ) {
+		ob_start();
+		?>
+		;(function($){
+			$( document ).on( 'change', 'select[name=uabb_row_particles_style]', function() {
+				_hideFields();
+			});
+			$( document ).on( 'change', 'select[name=enable_particles]', function() {
+				_hideFields();
+			});
+			$( document ).on( 'change', 'select[name=uabb_row_particles_settings]', function() {
+				_hideFields();
+			});
 
-	ob_start();
-	?>
-	;(function($){
-		$( document ).on( 'change', 'select[name=uabb_row_particles_style]', function() {
-			_hideFields();
-		});
-		$( document ).on( 'change', 'select[name=enable_particles]', function() {
-			_hideFields();
-		});
-		$( document ).on( 'change', 'select[name=uabb_row_particles_settings]', function() {
-			_hideFields();
-		});
+			$( document ).on( 'init', '.fl-builder-settings', function() {
+				_hideFields();
+			});
+			function _hideFields() { 
 
-		$( document ).on( 'init', '.fl-builder-settings', function() {
-			_hideFields();
-		});
-		function _hideFields() { 
+				var form = $('.fl-builder-settings');
 
-			var form = $('.fl-builder-settings');
+				var branding = '<?php echo esc_attr( $branding ); ?>';
 
-			var branding = '<?php echo $branding; ?>';
+				if ( form.length > 0 ) {
 
-			if ( form.length > 0 ) {
+					enable_particle = form.find( 'select[name=enable_particles]' ).val();
 
-				enable_particle = form.find( 'select[name=enable_particles]' ).val();
+					if ( 'no' === enable_particle ) {
 
-				if ( 'no' === enable_particle ) {
-
-					form.find('#fl-field-uabb_particles_direction').hide();
-					form.find('#fl-field-uabb_particles_custom_code').hide();
-					form.find('#fl-field-uabb_row_particles_style').hide();
-					form.find('#fl-field-uabb_row_particles_color').hide();
-					form.find('#fl-field-uabb_row_particles_color_opacity').hide();
-					form.find('#fl-field-uabb_row_particles_settings').hide();
-					form.find('#fl-field-uabb_row_particles_interactive_settings').hide();
-					form.find('#fl-field-uabb_row_particles_size').hide();
-					form.find('#fl-field-uabb_row_particles_speed').hide();
-					form.find('#fl-field-uabb_row_number_particles').hide();
-
-				} else {
-					if ( 'snow' === form.find('select[name=uabb_row_particles_style]').val() ) {
-						form.find('#fl-field-uabb_row_particles_style').show();
-						form.find('#fl-field-uabb_row_particles_color').show();
-						form.find('#fl-field-uabb_row_particles_color_opacity').show();
-						form.find('#fl-field-uabb_row_particles_settings').show();
-						form.find('#fl-field-uabb_particles_direction').show();
-						form.find('#fl-field-uabb_particles_custom_code').hide();
-						if (  'yes' === form.find('select[name=uabb_row_particles_settings]').val() ) {
-							form.find('#fl-field-uabb_row_particles_size').show();
-							form.find('#fl-field-uabb_row_particles_speed').show();
-							form.find('#fl-field-uabb_row_number_particles').show();
-							form.find('#fl-field-uabb_row_particles_interactive_settings').show();
-						} else {
-							form.find('#fl-field-uabb_row_particles_size').hide();
-							form.find('#fl-field-uabb_row_particles_speed').hide();
-							form.find('#fl-field-uabb_row_particles_interactive_settings').hide();
-							form.find('#fl-field-uabb_row_number_particles').hide();
-						}
-					}
-					if ( 'custom' === form.find('select[name=uabb_row_particles_style]').val() ) {
-
-						form.find('#fl-field-uabb_particles_custom_code').show();
 						form.find('#fl-field-uabb_particles_direction').hide();
-						form.find('#fl-field-uabb_row_particles_style').show();
+						form.find('#fl-field-uabb_particles_custom_code').hide();
+						form.find('#fl-field-uabb_row_particles_style').hide();
 						form.find('#fl-field-uabb_row_particles_color').hide();
 						form.find('#fl-field-uabb_row_particles_color_opacity').hide();
 						form.find('#fl-field-uabb_row_particles_settings').hide();
@@ -113,62 +81,96 @@ function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings
 						form.find('#fl-field-uabb_row_particles_size').hide();
 						form.find('#fl-field-uabb_row_particles_speed').hide();
 						form.find('#fl-field-uabb_row_number_particles').hide();
-					}
-					if ( 'nasa' === form.find('select[name=uabb_row_particles_style]').val() || 'default' === form.find('select[name=uabb_row_particles_style]').val() ) {
-						form.find('#fl-field-uabb_row_particles_style').show();
-						form.find('#fl-field-uabb_row_particles_color').show();
-						form.find('#fl-field-uabb_row_particles_color_opacity').show();
-						form.find('#fl-field-uabb_row_particles_settings').show();
-						form.find('#fl-field-uabb_row_particles_interactive_settings').show();
-						form.find('#fl-field-uabb_particles_custom_code').hide();
-						form.find('#fl-field-uabb_particles_direction').hide();
 
-						if (  'yes' === form.find('select[name=uabb_row_particles_settings]').val() ) {
-							form.find('#fl-field-uabb_row_particles_size').show();
-							form.find('#fl-field-uabb_row_particles_speed').show();
-							form.find('#fl-field-uabb_row_number_particles').show();
-							form.find('#fl-field-uabb_row_particles_interactive_settings').show();
-						} else {
+					} else {
+						if ( 'snow' === form.find('select[name=uabb_row_particles_style]').val() ) {
+							form.find('#fl-field-uabb_row_particles_style').show();
+							form.find('#fl-field-uabb_row_particles_color').show();
+							form.find('#fl-field-uabb_row_particles_color_opacity').show();
+							form.find('#fl-field-uabb_row_particles_settings').show();
+							form.find('#fl-field-uabb_particles_direction').show();
+							form.find('#fl-field-uabb_particles_custom_code').hide();
+							if (  'yes' === form.find('select[name=uabb_row_particles_settings]').val() ) {
+								form.find('#fl-field-uabb_row_particles_size').show();
+								form.find('#fl-field-uabb_row_particles_speed').show();
+								form.find('#fl-field-uabb_row_number_particles').show();
+								form.find('#fl-field-uabb_row_particles_interactive_settings').show();
+							} else {
+								form.find('#fl-field-uabb_row_particles_size').hide();
+								form.find('#fl-field-uabb_row_particles_speed').hide();
+								form.find('#fl-field-uabb_row_particles_interactive_settings').hide();
+								form.find('#fl-field-uabb_row_number_particles').hide();
+							}
+						}
+						if ( 'custom' === form.find('select[name=uabb_row_particles_style]').val() ) {
+
+							form.find('#fl-field-uabb_particles_custom_code').show();
+							form.find('#fl-field-uabb_particles_direction').hide();
+							form.find('#fl-field-uabb_row_particles_style').show();
+							form.find('#fl-field-uabb_row_particles_color').hide();
+							form.find('#fl-field-uabb_row_particles_color_opacity').hide();
+							form.find('#fl-field-uabb_row_particles_settings').hide();
+							form.find('#fl-field-uabb_row_particles_interactive_settings').hide();
 							form.find('#fl-field-uabb_row_particles_size').hide();
 							form.find('#fl-field-uabb_row_particles_speed').hide();
 							form.find('#fl-field-uabb_row_number_particles').hide();
-							form.find('#fl-field-uabb_row_particles_interactive_settings').hide();
 						}
-					}
-					if ( 'custom' === form.find('select[name=uabb_row_particles_style]').val() ) {
+						if ( 'nasa' === form.find('select[name=uabb_row_particles_style]').val() || 'default' === form.find('select[name=uabb_row_particles_style]').val() ) {
+							form.find('#fl-field-uabb_row_particles_style').show();
+							form.find('#fl-field-uabb_row_particles_color').show();
+							form.find('#fl-field-uabb_row_particles_color_opacity').show();
+							form.find('#fl-field-uabb_row_particles_settings').show();
+							form.find('#fl-field-uabb_row_particles_interactive_settings').show();
+							form.find('#fl-field-uabb_particles_custom_code').hide();
+							form.find('#fl-field-uabb_particles_direction').hide();
 
-						style_selector = form.find( '#fl-field-uabb_row_particles_style' );
+							if (  'yes' === form.find('select[name=uabb_row_particles_settings]').val() ) {
+								form.find('#fl-field-uabb_row_particles_size').show();
+								form.find('#fl-field-uabb_row_particles_speed').show();
+								form.find('#fl-field-uabb_row_number_particles').show();
+								form.find('#fl-field-uabb_row_particles_interactive_settings').show();
+							} else {
+								form.find('#fl-field-uabb_row_particles_size').hide();
+								form.find('#fl-field-uabb_row_particles_speed').hide();
+								form.find('#fl-field-uabb_row_number_particles').hide();
+								form.find('#fl-field-uabb_row_particles_interactive_settings').hide();
+							}
+						}
+						if ( 'custom' === form.find('select[name=uabb_row_particles_style]').val() ) {
 
-						wrapper =	style_selector.find( '.fl-field-control-wrapper' );
+							style_selector = form.find( '#fl-field-uabb_row_particles_style' );
 
-						if ( wrapper.find( '.fl-field-description' ).length === 0 ) {
+							wrapper =	style_selector.find( '.fl-field-control-wrapper' );
 
-							if ( 'no' === branding ) {
+							if ( wrapper.find( '.fl-field-description' ).length === 0 ) {
 
-								style_selector.find( '.fl-field-control-wrapper' ).append( '<span class="fl-field-description uabb-particle-docs-list"><div class="uabb-docs-particle"> Add custom JSON for the Particles Background below. To generate a completely customized background style follow steps below - </div><div class="uabb-docs-particle">1. Visit a link <a class="uabb-docs-particle-link" href="https://vincentgarreau.com/particles.js/" target="_blank"> here </a> and choose required attributes for particles</div><div class="uabb-docs-particle">2. Once a custom style is created, download JSON from "Download current config (json)" link</div><div class="uabb-docs-particle">3. Copy JSON code from the above file and paste it below</div><div class="uabb-docs-particle">To know more about creating a custom style, refer to a document <a class="uabb-docs-particle-link" href="https://www.ultimatebeaver.com/docs/custom-particle-backgrounds/?utm_source=uabb-pro-backend&utm_medium=row-editor-screen&utm_campaign=particle-backgrounds-row" target="_blank" rel="noopener"> here. </a></div></span>' );
+								if ( 'no' === branding ) {
+
+									style_selector.find( '.fl-field-control-wrapper' ).append( '<span class="fl-field-description uabb-particle-docs-list"><div class="uabb-docs-particle"> <?php esc_html_e( 'Add custom JSON for the Particles Background below. To generate a completely customized background style follow steps below -', 'uabb' ); ?> </div><div class="uabb-docs-particle"><?php echo( sprintf( /* translators: %s: custom JS link */ wp_kses_post( __( '1. Visit a link %1$s here %2$s and choose required attributes for particles', 'uabb' ) ), '<a class="uabb-docs-particle-link" href="https://vincentgarreau.com/particles.js/" target="_blank">', '</a>' ) ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '2. Once a custom style is created, download JSON from "Download current config (json)" link', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '3. Copy JSON code from the above file and paste it below', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php echo ( sprintf( /* translators: %s: doc link */ wp_kses_post( __( 'To know more about creating a custom style, refer to a document %1$s here. %2$s', 'uabb' ) ), '<a class="uabb-docs-particle-link" href="https://www.ultimatebeaver.com/docs/custom-particle-backgrounds/?utm_source=uabb-pro-backend&utm_medium=row-editor-screen&utm_campaign=particle-backgrounds-row" target="_blank" rel="noopener">', '</a>' ) ); ?></div></span>' );
+
+								} else {
+
+									style_selector.find( '.fl-field-control-wrapper' ).append( '<span class="fl-field-description uabb-particle-docs-list"><div class="uabb-docs-particle"> <?php esc_html_e( 'Add custom JSON for the Particles Background below. To generate a completely customized background style follow steps below -', 'uabb' ); ?> </div><div class="uabb-docs-particle"><?php esc_html_e( '1. Visit a link', 'uabb' ); ?> <a class="uabb-docs-particle-link" href="https://vincentgarreau.com/particles.js/" target="_blank"> <<?php esc_html_e( 'here', 'uabb' ); ?> </a> <?php esc_html_e( 'and choose required attributes for particles', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '2. Once a custom style is created, download JSON from "Download current config (json)" link', 'uabb' ); ?></div><div class="uabb-docs-particle"><?php esc_html_e( '3. Copy JSON code from the above file and paste it below', 'uabb' ); ?></div></span>' );
+								}
 
 							} else {
-
-								style_selector.find( '.fl-field-control-wrapper' ).append( '<span class="fl-field-description uabb-particle-docs-list"><div class="uabb-docs-particle"> Add custom JSON for the Particles Background below. To generate a completely customized background style follow steps below - </div><div class="uabb-docs-particle">1. Visit a link <a class="uabb-docs-particle-link" href="https://vincentgarreau.com/particles.js/" target="_blank"> here </a> and choose required attributes for particles</div><div class="uabb-docs-particle">2. Once a custom style is created, download JSON from "Download current config (json)" link</div><div class="uabb-docs-particle">3. Copy JSON code from the above file and paste it below</div></span>' );
+								wrapper.find( '.fl-field-description' ).show();
 							}
-
 						} else {
-							wrapper.find( '.fl-field-description' ).show();
+
+							style_selector = form.find( '#fl-field-uabb_row_particles_style' );
+
+							wrapper =	style_selector.find( '.fl-field-control-wrapper' );
+
+							wrapper.find( '.fl-field-description' ).hide();
 						}
-					} else {
-
-						style_selector = form.find( '#fl-field-uabb_row_particles_style' );
-
-						wrapper =	style_selector.find( '.fl-field-control-wrapper' );
-
-						wrapper.find( '.fl-field-description' ).hide();
 					}
 				}
 			}
-		}
-	})(jQuery);
-	<?php
-	$js .= ob_get_clean();
+		})(jQuery);
+		<?php
+		$js .= ob_get_clean();
+	}
 	return $js;
 }
 /**
@@ -180,6 +182,24 @@ function uabb_particle_row_settings_dependency_js( $js, $nodes, $global_settings
  * @param object $global_settings an object to get various settings.
  */
 function uabb_row_dependency_js( $js, $nodes, $global_settings ) {
+
+	$flag = false;
+
+	foreach ( $nodes['rows'] as $row ) {
+
+		if ( 'uabb_gradient' === $row->settings->bg_type ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $js;
+	}
+
 	ob_start();
 	?>
 		;(function($){
@@ -242,27 +262,46 @@ function uabb_row_dependency_js( $js, $nodes, $global_settings ) {
  * @param object $global_settings an object to get various settings.
  */
 function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
+
+	$flag = false;
+
+	foreach ( $nodes['rows'] as $row ) {
+
+		if ( 'yes' === $row->settings->enable_particles ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $js;
+	}
+
 	ob_start();
 	?>
 	;(function($) {
-				var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
+
+				var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
 				window.particle_js_loaded = 0;
 
-				$.cachedScript = function( url, options ) {
+				jQuery.cachedScript = function( url, options ) {
 
 					// Allow user to set any option except for dataType, cache, and url.
-					options = $.extend( options || {}, {
+					options = jQuery.extend( options || {}, {
 						dataType: "script",
 						cache: true,
 						url: url
 					});
 					// Return the jqXHR object so we can chain callbacks.
-					return $.ajax( options );
+					return jQuery.ajax( options );
 				};
 
-				if ( $( '.uabb-row-particles-background' ).length ) {
+				if (  jQuery( '.uabb-row-particles-background' ).length ) {
 
-					$.cachedScript( url ).done( function( script, textStatus ) {					
+					jQuery.cachedScript( url ).done( function( script, textStatus ) {
 						window.particle_js_loaded = 1;
 						init_particles_row_background_script();
 
@@ -272,9 +311,15 @@ function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
 
 				<?php
 				foreach ( $nodes['rows'] as $row ) {
+
+					if ( 'no' === $row->settings->enable_particles ) {
+
+						continue;
+					}
+
 					$json_particles_custom = wp_strip_all_tags( $row->settings->uabb_particles_custom_code );
 					?>
-					row_id = '<?php echo $row->node; ?>';
+					row_id = '<?php echo esc_attr( $row->node ); ?>';
 
 					nodeclass = '.fl-node-' + row_id;
 
@@ -301,7 +346,7 @@ function uabb_particle_row_dependency_js( $js, $nodes, $global_settings ) {
 							<?php
 							if ( '' !== $json_particles_custom ) {
 								?>
-								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; ?> );
+								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
 								<?php
 							}
 							?>

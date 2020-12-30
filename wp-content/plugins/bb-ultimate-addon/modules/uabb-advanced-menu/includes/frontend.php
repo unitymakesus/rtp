@@ -7,8 +7,8 @@
 
 ?>
 <?php
-if ( 'always' == $settings->creative_menu_mobile_breakpoint ) {
-	if ( 'default' == $settings->creative_mobile_menu_type || 'below-row' == $settings->creative_mobile_menu_type ) {
+if ( 'always' === $settings->creative_menu_mobile_breakpoint ) {
+	if ( 'default' === $settings->creative_mobile_menu_type || 'below-row' === $settings->creative_mobile_menu_type ) {
 		?>
 		<div class="uabb-creative-menu
 		<?php
@@ -18,12 +18,12 @@ if ( 'always' == $settings->creative_menu_mobile_breakpoint ) {
 		uabb-menu-default">
 			<?php $module->get_toggle_button(); ?>
 				<div class="uabb-clear"></div>
-				<?php echo $module->get_menu( $settings, $module ); ?>
+				<?php echo wp_kses_post( $module->get_menu( $settings, $module ) ); ?>
 		</div>
 	<?php } else { ?>
 		<?php
-		echo $module->get_responsive_media( $settings, $module );
-}
+		echo $module->get_responsive_media( $settings, $module ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
 } else {
 	?>
 	<div class="uabb-creative-menu
@@ -34,9 +34,9 @@ if ( 'always' == $settings->creative_menu_mobile_breakpoint ) {
 	uabb-menu-default">
 		<?php $module->get_toggle_button(); ?>
 			<div class="uabb-clear"></div>
-			<?php echo $module->get_menu( $settings, $module ); ?>
+			<?php echo wp_kses_post( $module->get_menu( $settings, $module ) ); ?>
 	</div>
 
 	<?php
-	echo $module->get_responsive_media( $settings, $module );
+	echo $module->get_responsive_media( $settings, $module ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }

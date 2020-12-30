@@ -45,11 +45,11 @@ class UABBGravityFormModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Border style, color, and width.
 			if ( isset( $settings->input_border_color ) ) {
@@ -185,7 +185,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->form_title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->form_title_font_family['weight'] ) {
+					if ( 'regular' === $settings->form_title_font_family['weight'] ) {
 						$settings->form_title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_title_font_typo['font_weight'] = $settings->form_title_font_family['weight'];
@@ -266,7 +266,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->form_desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->form_desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->form_desc_font_family['weight'] ) {
 						$settings->form_desc_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_desc_font_typo['font_weight'] = $settings->form_desc_font_family['weight'];
@@ -347,7 +347,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->label_font_family['weight'] ) {
+					if ( 'regular' === $settings->label_font_family['weight'] ) {
 						$settings->form_label_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_label_font_typo['font_weight'] = $settings->label_font_family['weight'];
@@ -427,7 +427,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->form_input_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_input_typo['font_weight'] = $settings->font_family['weight'];
@@ -472,7 +472,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->label_font_family['weight'] ) {
+					if ( 'regular' === $settings->label_font_family['weight'] ) {
 						$settings->form_input_desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_input_desc_typo['font_weight'] = $settings->label_font_family['weight'];
@@ -560,7 +560,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->radio_checkbox_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->radio_checkbox_font_family['weight'] ) {
+					if ( 'regular' === $settings->radio_checkbox_font_family['weight'] ) {
 						$settings->radio_input_typo['font_weight'] = 'normal';
 					} else {
 						$settings->radio_input_typo['font_weight'] = $settings->radio_checkbox_font_family['weight'];
@@ -620,7 +620,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->btn_font_family['weight'] ) {
+					if ( 'regular' === $settings->btn_font_family['weight'] ) {
 						$settings->button_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_font_typo['font_weight'] = $settings->btn_font_family['weight'];
@@ -685,7 +685,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				);
 				unset( $settings->btn_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 			// Handle color opacity.
 			$helper->handle_opacity_inputs( $settings, 'btn_background_hover_color_opc', 'btn_background_hover_color' );
 			$helper->handle_opacity_inputs( $settings, 'btn_background_color_opc', 'btn_background_color' );
@@ -766,7 +766,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->btn_font_family['weight'] ) {
+					if ( 'regular' === $settings->btn_font_family['weight'] ) {
 						$settings->button_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_font_typo['font_weight'] = $settings->btn_font_family['weight'];
@@ -793,7 +793,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->btn_line_height['desktop'] ) && isset( $settings->btn_font_size['desktop'] ) && 0 != $settings->btn_font_size['desktop'] && ! isset( $settings->btn_line_height_unit ) ) {
+			if ( isset( $settings->btn_line_height['desktop'] ) && isset( $settings->btn_font_size['desktop'] ) && 0 !== $settings->btn_font_size['desktop'] && ! isset( $settings->btn_line_height_unit ) ) {
 				if ( is_numeric( $settings->btn_line_height['desktop'] ) && is_numeric( $settings->btn_font_size['desktop'] ) ) {
 					$settings->button_font_typo['line_height'] = array(
 						'length' => round( $settings->btn_line_height['desktop'] / $settings->btn_font_size['desktop'], 2 ),
@@ -801,7 +801,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_line_height['medium'] ) && isset( $settings->btn_font_size['medium'] ) && 0 != $settings->btn_font_size['medium'] && ! isset( $settings->btn_line_height_unit_medium ) ) {
+			if ( isset( $settings->btn_line_height['medium'] ) && isset( $settings->btn_font_size['medium'] ) && 0 !== $settings->btn_font_size['medium'] && ! isset( $settings->btn_line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->btn_line_height['medium'] ) && is_numeric( $settings->btn_font_size['medium'] ) ) {
 					$settings->button_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->btn_line_height['medium'] / $settings->btn_font_size['medium'], 2 ),
@@ -809,7 +809,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_line_height['small'] ) && isset( $settings->btn_font_size['small'] ) && 0 != $settings->btn_font_size['small'] && ! isset( $settings->btn_line_height_unit_responsive ) ) {
+			if ( isset( $settings->btn_line_height['small'] ) && isset( $settings->btn_font_size['small'] ) && 0 !== $settings->btn_font_size['small'] && ! isset( $settings->btn_line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->btn_line_height['small'] ) && is_numeric( $settings->btn_font_size['small'] ) ) {
 					$settings->button_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->btn_line_height['small'] / $settings->btn_font_size['small'], 2 ),
@@ -855,7 +855,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->form_title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->form_title_font_family['weight'] ) {
+					if ( 'regular' === $settings->form_title_font_family['weight'] ) {
 						$settings->form_title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_title_font_typo['font_weight'] = $settings->form_title_font_family['weight'];
@@ -882,7 +882,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->form_title_line_height['desktop'] ) && isset( $settings->form_title_font_size['desktop'] ) && 0 != $settings->form_title_font_size['desktop'] && ! isset( $settings->form_title_line_height_unit ) ) {
+			if ( isset( $settings->form_title_line_height['desktop'] ) && isset( $settings->form_title_font_size['desktop'] ) && 0 !== $settings->form_title_font_size['desktop'] && ! isset( $settings->form_title_line_height_unit ) ) {
 				if ( is_numeric( $settings->form_title_line_height['desktop'] ) && is_numeric( $settings->form_title_font_size['desktop'] ) ) {
 					$settings->form_title_font_typo['line_height'] = array(
 						'length' => round( $settings->form_title_line_height['desktop'] / $settings->form_title_font_size['desktop'], 2 ),
@@ -890,7 +890,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->form_title_line_height['medium'] ) && isset( $settings->form_title_font_size['medium'] ) && 0 != $settings->form_title_font_size['medium'] && ! isset( $settings->form_title_line_height_unit_medium ) ) {
+			if ( isset( $settings->form_title_line_height['medium'] ) && isset( $settings->form_title_font_size['medium'] ) && 0 !== $settings->form_title_font_size['medium'] && ! isset( $settings->form_title_line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->form_title_line_height['medium'] ) && is_numeric( $settings->form_title_font_size['medium'] ) ) {
 					$settings->form_title_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->form_title_line_height['medium'] / $settings->form_title_font_size['medium'], 2 ),
@@ -898,7 +898,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->form_title_line_height['small'] ) && isset( $settings->form_title_font_size['small'] ) && 0 != $settings->form_title_font_size['small'] && ! isset( $settings->form_title_line_height_unit_responsive ) ) {
+			if ( isset( $settings->form_title_line_height['small'] ) && isset( $settings->form_title_font_size['small'] ) && 0 !== $settings->form_title_font_size['small'] && ! isset( $settings->form_title_line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->form_title_line_height['small'] ) && is_numeric( $settings->form_title_font_size['small'] ) ) {
 					$settings->form_title_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->form_title_line_height['small'] / $settings->form_title_font_size['small'], 2 ),
@@ -940,7 +940,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->form_desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->form_desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->form_desc_font_family['weight'] ) {
 						$settings->form_desc_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_desc_font_typo['font_weight'] = $settings->form_desc_font_family['weight'];
@@ -967,7 +967,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->form_desc_line_height['desktop'] ) && isset( $settings->form_desc_font_size['desktop'] ) && 0 != $settings->form_desc_font_size['desktop'] && ! isset( $settings->form_desc_line_height_unit ) ) {
+			if ( isset( $settings->form_desc_line_height['desktop'] ) && isset( $settings->form_desc_font_size['desktop'] ) && 0 !== $settings->form_desc_font_size['desktop'] && ! isset( $settings->form_desc_line_height_unit ) ) {
 				if ( is_numeric( $settings->form_desc_line_height['desktop'] ) && is_numeric( $settings->form_desc_font_size['desktop'] ) ) {
 					$settings->form_desc_font_typo['line_height'] = array(
 						'length' => round( $settings->form_desc_line_height['desktop'] / $settings->form_desc_font_size['desktop'], 2 ),
@@ -975,7 +975,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->form_desc_line_height['medium'] ) && isset( $settings->form_desc_font_size['medium'] ) && 0 != $settings->form_desc_font_size['medium'] && ! isset( $settings->form_desc_line_height_unit_medium ) ) {
+			if ( isset( $settings->form_desc_line_height['medium'] ) && isset( $settings->form_desc_font_size['medium'] ) && 0 !== $settings->form_desc_font_size['medium'] && ! isset( $settings->form_desc_line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->form_desc_line_height['medium'] ) && is_numeric( $settings->form_desc_font_size['medium'] ) ) {
 					$settings->form_desc_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->form_desc_line_height['medium'] / $settings->form_desc_font_size['medium'], 2 ),
@@ -983,7 +983,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->form_desc_line_height['small'] ) && isset( $settings->form_desc_font_size['small'] ) && 0 != $settings->form_desc_font_size['small'] && ! isset( $settings->form_desc_line_height_unit_responsive ) ) {
+			if ( isset( $settings->form_desc_line_height['small'] ) && isset( $settings->form_desc_font_size['small'] ) && 0 !== $settings->form_desc_font_size['small'] && ! isset( $settings->form_desc_line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->form_desc_line_height['small'] ) && is_numeric( $settings->form_desc_font_size['small'] ) ) {
 					$settings->form_desc_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->form_desc_line_height['small'] / $settings->form_desc_font_size['small'], 2 ),
@@ -1024,7 +1024,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->label_font_family['weight'] ) {
+					if ( 'regular' === $settings->label_font_family['weight'] ) {
 						$settings->form_label_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_label_font_typo['font_weight'] = $settings->label_font_family['weight'];
@@ -1050,7 +1050,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->label_line_height['desktop'] ) && isset( $settings->label_font_size['desktop'] ) && 0 != $settings->label_font_size['desktop'] && ! isset( $settings->label_line_height_unit ) ) {
+			if ( isset( $settings->label_line_height['desktop'] ) && isset( $settings->label_font_size['desktop'] ) && 0 !== $settings->label_font_size['desktop'] && ! isset( $settings->label_line_height_unit ) ) {
 				if ( is_numeric( $settings->label_line_height['desktop'] ) && is_numeric( $settings->label_font_size['desktop'] ) ) {
 					$settings->form_label_font_typo['line_height'] = array(
 						'length' => round( $settings->label_line_height['desktop'] / $settings->label_font_size['desktop'], 2 ),
@@ -1058,7 +1058,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->label_line_height['medium'] ) && isset( $settings->label_font_size['medium'] ) && 0 != $settings->label_font_size['medium'] && ! isset( $settings->label_line_height_unit_medium ) ) {
+			if ( isset( $settings->label_line_height['medium'] ) && isset( $settings->label_font_size['medium'] ) && 0 !== $settings->label_font_size['medium'] && ! isset( $settings->label_line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->label_line_height['medium'] ) && is_numeric( $settings->label_font_size['medium'] ) ) {
 					$settings->form_label_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->label_line_height['medium'] / $settings->label_font_size['medium'], 2 ),
@@ -1066,7 +1066,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->label_line_height['small'] ) && isset( $settings->label_font_size['small'] ) && 0 != $settings->label_font_size['small'] && ! isset( $settings->label_line_height_unit_responsive ) ) {
+			if ( isset( $settings->label_line_height['small'] ) && isset( $settings->label_font_size['small'] ) && 0 !== $settings->label_font_size['small'] && ! isset( $settings->label_line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->label_line_height['small'] ) && is_numeric( $settings->label_font_size['small'] ) ) {
 					$settings->form_label_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->label_line_height['small'] / $settings->label_font_size['small'], 2 ),
@@ -1108,7 +1108,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->form_input_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_input_typo['font_weight'] = $settings->font_family['weight'];
@@ -1160,7 +1160,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->radio_checkbox_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->radio_checkbox_font_family['weight'] ) {
+					if ( 'regular' === $settings->radio_checkbox_font_family['weight'] ) {
 						$settings->radio_input_typo['font_weight'] = 'normal';
 					} else {
 						$settings->radio_input_typo['font_weight'] = $settings->radio_checkbox_font_family['weight'];
@@ -1210,7 +1210,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->label_font_family['weight'] ) {
+					if ( 'regular' === $settings->label_font_family['weight'] ) {
 						$settings->form_input_desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->form_input_desc_typo['font_weight'] = $settings->label_font_family['weight'];
@@ -1252,7 +1252,8 @@ class UABBGravityFormModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->form_spacing_dimension_top = (int) $output[ $i ][1];
@@ -1294,7 +1295,8 @@ class UABBGravityFormModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->input_padding_dimension_top = (int) $output[ $i ][1];
@@ -1342,7 +1344,8 @@ class UABBGravityFormModule extends FLBuilderModule {
 						$new      = explode( ':', $val );
 						$output[] = $new;
 					}
-					for ( $i = 0; $i < count( $output ); $i++ ) {
+					$count = count( $output );
+					for ( $i = 0; $i < $count; $i++ ) {
 						switch ( $output[ $i ][0] ) {
 							case 'padding-top':
 								$input_border_width_dimension_top = (int) $output[ $i ][1];
@@ -1414,7 +1417,8 @@ class UABBGravityFormModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->validation_spacing_dimension_top = (int) $output[ $i ][1];
@@ -1449,7 +1453,7 @@ class UABBGravityFormModule extends FLBuilderModule {
 	 * @param string $name gets an string.
 	 * @param object $settings gets the settings for the module.
 	 */
-	function uabb_gravity_form_render_settings_field( $field, $name, $settings ) {
+	public function uabb_gravity_form_render_settings_field( $field, $name, $settings ) {
 
 		if ( isset( $settings->form_tab_index_option ) && $settings->form_tab_index_option > '1' ) {
 			$settings->mul_form_option = 'true';
@@ -1466,7 +1470,7 @@ require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-gravity-form/includes/gf-func
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-gravity-form/uabb-gravity-form-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-gravity-form/uabb-gravity-form-bb-less-than-2-2-compatibility.php';

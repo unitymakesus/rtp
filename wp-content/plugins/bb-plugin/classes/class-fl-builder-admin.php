@@ -99,6 +99,10 @@ final class FLBuilderAdmin {
 	 * @return string
 	 */
 	static public function admin_settings_capability() {
+		/**
+		 * Default admin settings capability ( manage_options )
+		 * @see fl_builder_admin_settings_capability
+		 */
 		return apply_filters( 'fl_builder_admin_settings_capability', 'manage_options' );
 	}
 
@@ -132,6 +136,17 @@ final class FLBuilderAdmin {
 			}
 		}
 
+		//Check for one.com htaccess file in uploads that breaks everything.
+		$upload_dir = wp_upload_dir();
+		$file       = trailingslashit( $upload_dir['basedir'] ) . '.htaccess';
+		if ( file_exists( $file ) ) {
+			$htaccess = file_get_contents( $file );
+			if ( false !== strpos( $htaccess, 'Block javascript except for visualcomposer (VC) plugin' ) ) {
+				FLBuilderAdminSettings::add_error(
+				/* translators: %s formatted .htaccess */
+				sprintf( __( 'Install Error! You appear to have a %s file in your uploads folder that will block all javascript files resulting in 403 errors. If you did not add this file please consult your host.', 'fl-builder' ), '<code>.htaccess</code>' ) );
+			}
+		}
 	}
 
 	/**
@@ -192,6 +207,10 @@ final class FLBuilderAdmin {
 			$message = __( 'Beaver Builder activated! <a%s>Click here</a> to get started.', 'fl-builder' );
 		}
 
+		/**
+		 * Url to redirect to on activation
+		 * @see fl_builder_activate_redirect_url
+		 */
 		$url = apply_filters( 'fl_builder_activate_redirect_url', admin_url( '/options-general.php?page=fl-builder-settings' . $hash ) );
 
 		echo '<div class="updated" style="background: #d3ebc1;">';
@@ -269,6 +288,36 @@ final class FLBuilderAdmin {
 			$link_txt = __( 'See our Knowledge Base for more info.', 'fl-builder' );
 			printf( '<div class="curl-alert"><p>%s</p><p><a target="_blank" href="%s">%s</a></p></div>', $text, $link, $link_txt );
 		}
+	}
+
+	static public function render_form_lite() {
+
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$plugin_slug       = 'bb-plugin/fl-builder.php';
+		$installed_plugins = get_plugins();
+		$installed         = array_key_exists( $plugin_slug, $installed_plugins ) || in_array( $plugin_slug, $installed_plugins, true );
+		$plugins_link      = sprintf( "<a href='%s'>%s</a>", admin_url( 'plugins.php' ), __( 'Plugins Page', 'fl-builder' ) );
+		$docs_link         = sprintf( "<a target='_blank' href='%s'>%s</a>", 'https://docs.wpbeaverbuilder.com/beaver-builder/getting-started/install-beaver-builder', __( 'Documentation', 'fl-builder' ) );
+		?>
+		<div id="fl-upgrade-lite-form" class="fl-upgrade-page-content">
+
+			<h3 class="fl-settings-form-header"><?php _e( 'Beaver Builder (Lite version)', 'fl-builder' ); ?></h3>
+			<?php if ( $installed ) : ?>
+				<p><?php _e( "We have detected that a premium version of Beaver Builder plugin is installed but not activated, so you're still using the free version of Beaver Builder.", 'fl-builder' ); ?></p>
+				<?php // translators: %s: Link to plugins page ?>
+				<p><?php printf( __( 'You can activate the premium version on the %s.', 'fl-builder' ), $plugins_link ); ?></p>
+				<?php // translators: %s: Link to docs page ?>
+				<p><?php printf( __( 'For detailed instructions to activate and license the premium version, see the %s.', 'fl-builder' ), $docs_link ); ?></p>
+
+			<?php else : ?>
+			<p><?php _e( 'You currently have the free Beaver Builder plugin activated, no license is required.', 'fl-builder' ); ?></p>
+				<?php // translators: %s: Link to docs page ?>
+			<p><?php printf( __( 'If you have purchased a premium version of Beaver Builder, see our %s for step-by-step upgrade instructions.', 'fl-builder' ), $docs_link ); ?></p>
+		<?php endif; ?>
+		</div>
+			<?php
 	}
 
 	/**

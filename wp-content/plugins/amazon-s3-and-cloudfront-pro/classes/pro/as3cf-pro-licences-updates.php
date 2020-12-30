@@ -280,6 +280,11 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 	 * @param bool $skip_transient
 	 */
 	public function licence_issue_notice( $dashboard = false, $skip_transient = false ) {
+		// Only check license on primary site of multisite to reduce API calls etc.
+		if ( ! is_main_site() ) {
+			return;
+		}
+
 		if ( ! $this->as3cf->is_plugin_setup() ) {
 			// Don't show the notice if basic plugin requirements are not met.
 			return;
@@ -301,11 +306,11 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 
 		$media_limit_check = $this->check_licence_media_limit( $skip_transient );
 
-		if ( self::MEDIA_USAGE_REACHED <= $media_limit_check['status']['code'] ) {
+		if ( isset( $media_limit_check['status']['code'] ) && self::MEDIA_USAGE_REACHED <= $media_limit_check['status']['code'] ) {
 			$this->display_over_limit_licence_notice( $args );
 		} else if ( ! empty( $licence_check['errors']['subscription_expired'] ) ) {
 			$this->display_expired_licence_notice( $args );
-		} else if ( self::MEDIA_USAGE_APPROACHING === $media_limit_check['status']['code'] ) {
+		} else if ( isset( $media_limit_check['status']['code'] ) && self::MEDIA_USAGE_APPROACHING === $media_limit_check['status']['code'] ) {
 			$this->display_near_limit_licence_notice( $args );
 		} else if ( ! isset( $licence_check['errors'] ) ) {
 			$this->clear_licence_issue();
@@ -551,6 +556,22 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 	public function check_licence_media_limit( $skip_transient = false, $force = false ) {
 		$media_limit_check = get_site_transient( $this->plugin->prefix . '_licence_media_check' );
 
+		if ( ! $this->is_valid_licence() ) {
+			return $media_limit_check;
+		}
+
+		if (
+			! $force && ! empty( $media_limit_check ) &&
+			(
+				( isset( $media_limit_check['limit'] ) && 0 == $media_limit_check['limit'] ) ||
+				( isset( $media_limit_check['counts_towards_limit'] ) && empty( $media_limit_check['counts_towards_limit'] ) ) ||
+				( isset( $media_limit_check['status']['code'] ) && self::MEDIA_USAGE_APPROACHING > $media_limit_check['status']['code'] )
+			)
+		) {
+			// We're in no rush.
+			$skip_transient = false;
+		}
+
 		if ( $skip_transient || false === $media_limit_check || isset( $media_limit_check['errors'] ) ) {
 
 			if ( ! ( $licence_key = $this->get_licence_key() ) ) {
@@ -565,7 +586,7 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 				'library_total' => $media_counts['offloaded'],
 			);
 
-			$provider = $this->as3cf->get_provider();
+			$provider = $this->as3cf->get_storage_provider();
 
 			if ( ! empty( $provider ) && ! empty( $provider->get_provider_key_name() ) ) {
 				$args['provider'] = $provider->get_provider_key_name();
@@ -580,7 +601,7 @@ class AS3CF_Pro_Licences_Updates extends Delicious_Brains_API_Licences {
 				return array();
 			}
 
-			set_site_transient( $this->plugin->prefix . '_licence_media_check', $media_limit_check, MINUTE_IN_SECONDS * 10 );
+			set_site_transient( $this->plugin->prefix . '_licence_media_check', $media_limit_check );
 		}
 
 		return $media_limit_check;

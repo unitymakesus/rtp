@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Bridges;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Prepares the SEO Settings page interface.
@@ -36,7 +36,6 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @final Can't be extended.
  */
 final class SeoSettings {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * Registers meta boxes on the Site SEO Settings page.
@@ -51,7 +50,7 @@ final class SeoSettings {
 		 * Set any to false if you wish the meta box to be removed.
 		 *
 		 * @since 2.2.4
-		 * @since 2.8.0: Added `the_seo_framework_general_metabox` filter.
+		 * @since 2.8.0 Added `the_seo_framework_general_metabox` filter.
 		 */
 		$general     = (bool) \apply_filters( 'the_seo_framework_general_metabox', true );
 		$title       = (bool) \apply_filters( 'the_seo_framework_title_metabox', true );
@@ -66,7 +65,7 @@ final class SeoSettings {
 
 		$settings_page_hook = \the_seo_framework()->seo_settings_page_hook;
 
-		//* General Meta Box
+		// General Meta Box
 		if ( $general )
 			\add_meta_box(
 				'autodescription-general-settings',
@@ -77,7 +76,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Title Meta Box
+		// Title Meta Box
 		if ( $title )
 			\add_meta_box(
 				'autodescription-title-settings',
@@ -88,7 +87,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Description Meta Box
+		// Description Meta Box
 		if ( $description )
 			\add_meta_box(
 				'autodescription-description-settings',
@@ -99,7 +98,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Homepage Meta Box
+		// Homepage Meta Box
 		if ( $home )
 			\add_meta_box(
 				'autodescription-homepage-settings',
@@ -110,7 +109,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Social Meta Box
+		// Social Meta Box
 		if ( $social )
 			\add_meta_box(
 				'autodescription-social-settings',
@@ -121,7 +120,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Schema Meta Box
+		// Schema Meta Box
 		if ( $schema )
 			\add_meta_box(
 				'autodescription-schema-settings',
@@ -132,7 +131,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Robots Meta Box
+		// Robots Meta Box
 		if ( $robots )
 			\add_meta_box(
 				'autodescription-robots-settings',
@@ -143,7 +142,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Webmaster Meta Box
+		// Webmaster Meta Box
 		if ( $webmaster )
 			\add_meta_box(
 				'autodescription-webmaster-settings',
@@ -154,7 +153,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Sitemaps Meta Box
+		// Sitemaps Meta Box
 		if ( $sitemap )
 			\add_meta_box(
 				'autodescription-sitemap-settings',
@@ -165,7 +164,7 @@ final class SeoSettings {
 				[]
 			);
 
-		//* Feed Meta Box
+		// Feed Meta Box
 		if ( $feed )
 			\add_meta_box(
 				'autodescription-feed-settings',
@@ -190,12 +189,13 @@ final class SeoSettings {
 	 *       string   name     : Tab name.
 	 *       callable callback : Output function.
 	 *       string   dashicon : The dashicon to use.
-	 *       mixed    args     : Optional callback function args.
+	 *       mixed    args     : Optional callback function args. These arguments
+	 *                           will be extracted to variables in scope of the view.
 	 *    }
 	 * }
 	 * @param bool   $use_tabs Whether to output tabs, only works when $tabs count is greater than 1.
 	 */
-	public static function _nav_tab_wrapper( $id, $tabs = [], $use_tabs = true ) {
+	public static function _nav_tab_wrapper( $id, $tabs = [], $use_tabs = true ) { // phpcs:ignore,VariableAnalysis
 		\the_seo_framework()->get_view( 'admin/wrap-nav', get_defined_vars() );
 		\the_seo_framework()->get_view( 'admin/wrap-content', get_defined_vars() );
 	}
@@ -305,14 +305,14 @@ final class SeoSettings {
 	}
 
 	/**
-	 * Outputs General Settings meta box post types tab.
+	 * Outputs General Settings meta box exclusions tab.
 	 *
-	 * @since 4.0.0
+	 * @since 4.1.0
 	 * @access private
 	 * @see static::general_metabox() : Callback for General Settings box.
 	 */
-	public static function _general_metabox_posttypes_tab() {
-		\the_seo_framework()->get_view( 'admin/metaboxes/general-metabox', [], 'posttypes' );
+	public static function _general_metabox_exclusions_tab() {
+		\the_seo_framework()->get_view( 'admin/metaboxes/general-metabox', [], 'exclusions' );
 	}
 
 	/**
@@ -354,13 +354,10 @@ final class SeoSettings {
 	 * @access private
 	 * @see static::title_metabox() : Callback for Title Settings box.
 	 *
-	 * @param array $examples : array {
-	 *   'left'  => Left Example
-	 *   'right' => Right Example
-	 * }
+	 * @param array $args The variables to pass to the metabox tab.
 	 */
-	public static function _title_metabox_additions_tab( $examples = [] ) {
-		\the_seo_framework()->get_view( 'admin/metaboxes/title-metabox', get_defined_vars(), 'additions' );
+	public static function _title_metabox_additions_tab( $args ) {
+		\the_seo_framework()->get_view( 'admin/metaboxes/title-metabox', $args, 'additions' );
 	}
 
 	/**
@@ -370,14 +367,10 @@ final class SeoSettings {
 	 * @access private
 	 * @see static::title_metabox() : Callback for Title Settings box.
 	 *
-	 * @param array $additions : array {
-	 *   'left'  => Left Example Addtitions
-	 *   'right' => Right Example Additions
-	 * }
-	 * @param bool  $showleft The example location.
+	 * @param array $args The variables to pass to the metabox tab.
 	 */
-	public static function _title_metabox_prefixes_tab( $additions = [], $showleft = false ) {
-		\the_seo_framework()->get_view( 'admin/metaboxes/title-metabox', get_defined_vars(), 'prefixes' );
+	public static function _title_metabox_prefixes_tab( $args ) {
+		\the_seo_framework()->get_view( 'admin/metaboxes/title-metabox', $args, 'prefixes' );
 	}
 
 	/**
@@ -440,16 +433,10 @@ final class SeoSettings {
 	 * @access private
 	 * @see static::robots_metabox() Callback for Robots Settings box.
 	 *
-	 * @param array $types      The non-default robots exclusion types (date, author, etc.).
-	 * @param array $post_types The post types.
-	 * @param array $robots The robots option values : {
-	 *   'value' string The robots option value.
-	 *   'name' string The robots name.
-	 *   'desc' string Explains what the robots type does.
-	 * }
+	 * @param array $args The variables to pass to the metabox tab.
 	 */
-	public static function _robots_metabox_no_tab( $types, $post_types, $robots ) {
-		\the_seo_framework()->get_view( 'admin/metaboxes/robots-metabox', get_defined_vars(), 'no' );
+	public static function _robots_metabox_no_tab( $args ) {
+		\the_seo_framework()->get_view( 'admin/metaboxes/robots-metabox', $args, 'no' );
 	}
 
 	/**
@@ -569,6 +556,17 @@ final class SeoSettings {
 	 */
 	public static function _social_metabox_twitter_tab() {
 		\the_seo_framework()->get_view( 'admin/metaboxes/social-metabox', [], 'twitter' );
+	}
+
+	/**
+	 * Social Metabox oEmbed Tab output.
+	 *
+	 * @since 4.0.5
+	 * @access private
+	 * @see static::social_metabox() Callback for Social Settings box.
+	 */
+	public static function _social_metabox_oembed_tab() {
+		\the_seo_framework()->get_view( 'admin/metaboxes/social-metabox', [], 'oembed' );
 	}
 
 	/**

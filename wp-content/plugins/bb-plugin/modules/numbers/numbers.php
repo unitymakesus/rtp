@@ -233,7 +233,7 @@ FLBuilder::register_module('FLNumbersModule', array(
 						'show_reset'  => true,
 						'preview'     => array(
 							'type'     => 'css',
-							'selector' => '.fl-number-before-text, .fl-number-after-text',
+							'selector' => '.fl-number .fl-number-text .fl-number-before-text, .fl-number .fl-number-text .fl-number-after-text',
 							'property' => 'color',
 						),
 					),
@@ -245,7 +245,7 @@ FLBuilder::register_module('FLNumbersModule', array(
 						'show_reset'  => true,
 						'preview'     => array(
 							'type'     => 'css',
-							'selector' => '.fl-number-string',
+							'selector' => '.fl-number .fl-number-text .fl-number-string, .fl-number .fl-number-text .fl-number-string span',
 							'property' => 'color',
 						),
 					),

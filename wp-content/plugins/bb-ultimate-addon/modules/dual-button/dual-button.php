@@ -41,11 +41,11 @@ class UABBDualButtonModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle opacity field.
 			$helper->handle_opacity_inputs( $settings, '_btn_one_back_color_opc', '_btn_one_back_color' );
@@ -62,7 +62,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->_btn_one_font_family ) ) {
 				if ( isset( $settings->_btn_one_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->_btn_one_font_family['weight'] ) {
+					if ( 'regular' === $settings->_btn_one_font_family['weight'] ) {
 						$settings->_btn_one_typo['font_weight'] = 'normal';
 					} else {
 						$settings->_btn_one_typo['font_weight'] = $settings->_btn_one_font_family['weight'];
@@ -137,7 +137,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->_btn_two_font_family ) ) {
 				if ( isset( $settings->_btn_two_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->_btn_two_font_family['weight'] ) {
+					if ( 'regular' === $settings->_btn_two_font_family['weight'] ) {
 						$settings->_btn_two_typo['font_weight'] = 'normal';
 					} else {
 						$settings->_btn_two_typo['font_weight'] = $settings->_btn_two_font_family['weight'];
@@ -217,7 +217,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->_divider_font_family ) ) {
 				if ( isset( $settings->_divider_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->_divider_font_family['weight'] ) {
+					if ( 'regular' === $settings->_divider_font_family['weight'] ) {
 						$settings->_divider_typo['font_weight'] = 'normal';
 					} else {
 						$settings->_divider_typo['font_weight'] = $settings->_divider_font_family['weight'];
@@ -264,16 +264,16 @@ class UABBDualButtonModule extends FLBuilderModule {
 				unset( $settings->_divider_letter_spacing );
 			}
 			if ( isset( $settings->button_two_link_nofollow ) ) {
-				if ( '1' == $settings->button_two_link_nofollow || 'yes' == $settings->button_two_link_nofollow ) {
+				if ( '1' === $settings->button_two_link_nofollow || 'yes' === $settings->button_two_link_nofollow ) {
 					$settings->button_two_link_nofollow = 'yes';
 				}
 			}
 			if ( isset( $settings->button_one_link_nofollow ) ) {
-				if ( '1' == $settings->button_one_link_nofollow || 'yes' == $settings->button_one_link_nofollow ) {
+				if ( '1' === $settings->button_one_link_nofollow || 'yes' === $settings->button_one_link_nofollow ) {
 					$settings->button_one_link_nofollow = 'yes';
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle opacity field.
 			$helper->handle_opacity_inputs( $settings, '_btn_one_back_color_opc', '_btn_one_back_color' );
@@ -290,7 +290,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->_btn_one_font_family ) ) {
 				if ( isset( $settings->_btn_one_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->_btn_one_font_family['weight'] ) {
+					if ( 'regular' === $settings->_btn_one_font_family['weight'] ) {
 						$settings->_btn_one_typo['font_weight'] = 'normal';
 					} else {
 						$settings->_btn_one_typo['font_weight'] = $settings->_btn_one_font_family['weight'];
@@ -321,7 +321,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->_btn_one_line_height['small'] ) && isset( $settings->_btn_one_font_size['small'] ) && 0 != $settings->_btn_one_font_size['small'] ) {
+			if ( isset( $settings->_btn_one_line_height['small'] ) && isset( $settings->_btn_one_font_size['small'] ) && 0 !== $settings->_btn_one_font_size['small'] ) {
 				if ( is_numeric( $settings->_btn_one_line_height['small'] ) && is_numeric( $settings->_btn_one_font_size['small'] ) ) {
 					$settings->_btn_one_typo_responsive['line_height'] = array(
 						'length' => round( $settings->_btn_one_line_height['small'] / $settings->_btn_one_font_size['small'], 2 ),
@@ -329,7 +329,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->_btn_one_line_height['medium'] ) && isset( $settings->_btn_one_font_size['medium'] ) && 0 != $settings->_btn_one_font_size['medium'] ) {
+			if ( isset( $settings->_btn_one_line_height['medium'] ) && isset( $settings->_btn_one_font_size['medium'] ) && 0 !== $settings->_btn_one_font_size['medium'] ) {
 				if ( is_numeric( $settings->_btn_one_line_height['medium'] ) && is_numeric( $settings->_btn_one_font_size['medium'] ) ) {
 					$settings->_btn_one_typo_medium['line_height'] = array(
 						'length' => round( $settings->_btn_one_line_height['medium'] / $settings->_btn_one_font_size['medium'], 2 ),
@@ -337,7 +337,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->_btn_one_line_height['desktop'] ) && isset( $settings->_btn_one_font_size['desktop'] ) && 0 != $settings->_btn_one_font_size['desktop'] ) {
+			if ( isset( $settings->_btn_one_line_height['desktop'] ) && isset( $settings->_btn_one_font_size['desktop'] ) && 0 !== $settings->_btn_one_font_size['desktop'] ) {
 				if ( is_numeric( $settings->_btn_one_line_height['desktop'] ) && is_numeric( $settings->_btn_one_font_size['desktop'] ) ) {
 					$settings->_btn_one_typo['line_height'] = array(
 						'length' => round( $settings->_btn_one_line_height['desktop'] / $settings->_btn_one_font_size['desktop'], 2 ),
@@ -355,7 +355,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->_btn_two_font_family ) ) {
 				if ( isset( $settings->_btn_two_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->_btn_two_font_family['weight'] ) {
+					if ( 'regular' === $settings->_btn_two_font_family['weight'] ) {
 						$settings->_btn_two_typo['font_weight'] = 'normal';
 					} else {
 						$settings->_btn_two_typo['font_weight'] = $settings->_btn_two_font_family['weight'];
@@ -387,7 +387,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->_btn_two_line_height['small'] ) && isset( $settings->_btn_two_font_size['small'] ) && 0 != $settings->_btn_two_font_size['small'] ) {
+			if ( isset( $settings->_btn_two_line_height['small'] ) && isset( $settings->_btn_two_font_size['small'] ) && 0 !== $settings->_btn_two_font_size['small'] ) {
 				if ( is_numeric( $settings->_btn_two_line_height['small'] ) && is_numeric( $settings->_btn_two_font_size['small'] ) ) {
 					$settings->_btn_two_typo['line_height'] = array(
 						'length' => round( $settings->_btn_two_line_height['small'] / $settings->_btn_two_font_size['small'], 2 ),
@@ -395,7 +395,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->_btn_two_line_height['medium'] ) && isset( $settings->_btn_two_font_size['medium'] ) && 0 != $settings->_btn_two_font_size['medium'] ) {
+			if ( isset( $settings->_btn_two_line_height['medium'] ) && isset( $settings->_btn_two_font_size['medium'] ) && 0 !== $settings->_btn_two_font_size['medium'] ) {
 				if ( is_numeric( $settings->_btn_two_line_height['medium'] ) && is_numeric( $settings->_btn_two_font_size['medium'] ) ) {
 					$settings->_btn_two_typo_medium['line_height'] = array(
 						'length' => round( $settings->_btn_two_line_height['medium'] / $settings->_btn_two_font_size['medium'], 2 ),
@@ -403,7 +403,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->_btn_two_line_height['desktop'] ) && isset( $settings->_btn_two_font_size['desktop'] ) && 0 != $settings->_btn_two_font_size['desktop'] ) {
+			if ( isset( $settings->_btn_two_line_height['desktop'] ) && isset( $settings->_btn_two_font_size['desktop'] ) && 0 !== $settings->_btn_two_font_size['desktop'] ) {
 				if ( is_numeric( $settings->_btn_two_line_height['desktop'] ) && is_numeric( $settings->_btn_two_font_size['desktop'] ) ) {
 					$settings->_btn_two_typo['line_height'] = array(
 						'length' => round( $settings->_btn_two_line_height['desktop'] / $settings->_btn_two_font_size['desktop'], 2 ),
@@ -421,7 +421,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->_divider_font_family ) ) {
 				if ( isset( $settings->_divider_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->_divider_font_family['weight'] ) {
+					if ( 'regular' === $settings->_divider_font_family['weight'] ) {
 						$settings->_divider_typo['font_weight'] = 'normal';
 					} else {
 						$settings->_divider_typo['font_weight'] = $settings->_divider_font_family['weight'];
@@ -506,12 +506,12 @@ class UABBDualButtonModule extends FLBuilderModule {
 	 *
 	 * @param array $image_icon_arr gets an array for the own icon.
 	 */
-	function render_own_imgicon( $image_icon_arr ) {
+	public function render_own_imgicon( $image_icon_arr ) {
 		$image_icon_arr = (object) $image_icon_arr;
 		$output         = '';
-		if ( 'none' != $image_icon_arr->image_type ) {
+		if ( 'none' !== $image_icon_arr->image_type ) {
 			$output = '<div class="uabb-imgicon-wrap">';
-			if ( 'icon' == $image_icon_arr->image_type ) {
+			if ( 'icon' === $image_icon_arr->image_type ) {
 				$output .= '<span class="uabb-icon-wrap">';
 				$output .= '<span class="uabb-icon">';
 				$output .= '<i class="' . $image_icon_arr->icon . '"></i>';
@@ -519,7 +519,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 				$output .= '</span>';
 			} // Icon Html End.
 
-			if ( 'photo' == $image_icon_arr->image_type ) { // Photo Html.
+			if ( 'photo' === $image_icon_arr->image_type ) { // Photo Html.
 				$src     = isset( $image_icon_arr->photo_src ) ? $image_icon_arr->photo_src : '';
 				$output .= '<div class="uabb-image-simple">';
 				$output .= '<div class="uabb-image-content">';
@@ -529,7 +529,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 
 			} // Photo Html End.
 			$output .= '</div>'; /* End Module Wrap */
-			echo $output;
+			echo wp_kses_post( $output );
 		}
 	}
 
@@ -538,7 +538,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 	 *
 	 * @param array $image_icon_arr gets an array for the Image icon.
 	 */
-	function render_image_icon( $image_icon_arr ) {
+	public function render_image_icon( $image_icon_arr ) {
 		$image_icon_arr  = (object) $image_icon_arr;
 		$imageicon_array = array(
 
@@ -582,7 +582,7 @@ class UABBDualButtonModule extends FLBuilderModule {
 	 * @param int   $id gets an integer for the id.
 	 * @param array $image_icon_arr gets an array for the Image icon's CSS.
 	 */
-	function render_image_icon_css( $id, $image_icon_arr ) {
+	public function render_image_icon_css( $id, $image_icon_arr ) {
 		$image_icon_arr  = (object) $image_icon_arr;
 		$imageicon_array = array(
 
@@ -642,7 +642,7 @@ class UABBDualButtonModule extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/dual-button/dual-button-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/dual-button/dual-button-bb-less-than-2-2-compatibility.php';

@@ -1,0 +1,52 @@
+.tippy-box {
+  border-radius: 0;
+  box-shadow: $box-shadow;
+
+  a {
+    color: inherit;
+  }
+
+  &[data-theme~='hub-blue'] {
+    background-color: $color-blue-hub;
+    color: $color-white;
+
+    a {
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+
+    > .tippy-svg-arrow > svg {
+      fill: $color-blue-hub;
+    }
+  }
+}
+
+.tippy-content {
+  padding: 1.5rem;
+  text-align: center;
+  font-weight: 300;
+  font-size: 0.9rem;
+
+  > * {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.map-tooltip {
+  &__heading {
+    @extend .h3;
+
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  &__text {
+    margin-top: 1rem;
+  }
+}

@@ -38,21 +38,10 @@ class UABBTeamModule extends FLBuilderModule {
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/team/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/team/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/team/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/team/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -65,14 +54,14 @@ class UABBTeamModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( isset( $settings->custom_link_nofollow ) ) {
-				if ( '1' == $settings->custom_link_nofollow || 'yes' == $settings->custom_link_nofollow ) {
+				if ( '1' === $settings->custom_link_nofollow || 'yes' === $settings->custom_link_nofollow ) {
 					$settings->custom_link_nofollow = 'yes';
 				}
 			}
@@ -96,7 +85,7 @@ class UABBTeamModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->name_typo['font_weight'] = 'normal';
 					} else {
 						$settings->name_typo['font_weight'] = $settings->font_family['weight'];
@@ -177,7 +166,7 @@ class UABBTeamModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->desg_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->desg_font_family['weight'] ) {
+					if ( 'regular' === $settings->desg_font_family['weight'] ) {
 						$settings->desg_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desg_typo['font_weight'] = $settings->desg_font_family['weight'];
@@ -258,7 +247,7 @@ class UABBTeamModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->desc_font_family['weight'] ) {
 						$settings->desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desc_typo['font_weight'] = $settings->desc_font_family['weight'];
@@ -322,10 +311,10 @@ class UABBTeamModule extends FLBuilderModule {
 				);
 				unset( $settings->desc_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( isset( $settings->custom_link_nofollow ) ) {
-				if ( '1' == $settings->custom_link_nofollow || 'yes' == $settings->custom_link_nofollow ) {
+				if ( '1' === $settings->custom_link_nofollow || 'yes' === $settings->custom_link_nofollow ) {
 					$settings->custom_link_nofollow = 'yes';
 				}
 			}
@@ -349,7 +338,7 @@ class UABBTeamModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->name_typo['font_weight'] = 'normal';
 					} else {
 						$settings->name_typo['font_weight'] = $settings->font_family['weight'];
@@ -376,7 +365,7 @@ class UABBTeamModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->name_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -384,7 +373,7 @@ class UABBTeamModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->name_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -392,7 +381,7 @@ class UABBTeamModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->name_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -417,7 +406,7 @@ class UABBTeamModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->desg_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->desg_font_family['weight'] ) {
+					if ( 'regular' === $settings->desg_font_family['weight'] ) {
 						$settings->desg_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desg_typo['font_weight'] = $settings->desg_font_family['weight'];
@@ -444,7 +433,7 @@ class UABBTeamModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->desg_line_height['desktop'] ) && isset( $settings->desg_font_size['desktop'] ) && 0 != $settings->desg_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
+			if ( isset( $settings->desg_line_height['desktop'] ) && isset( $settings->desg_font_size['desktop'] ) && 0 !== $settings->desg_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
 				if ( is_numeric( $settings->desg_line_height['desktop'] ) && is_numeric( $settings->desg_font_size['desktop'] ) ) {
 					$settings->desg_typo['line_height'] = array(
 						'length' => round( $settings->desg_line_height['desktop'] / $settings->desg_font_size['desktop'], 2 ),
@@ -452,7 +441,7 @@ class UABBTeamModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desg_line_height['medium'] ) && isset( $settings->desg_font_size['medium'] ) && 0 != $settings->desg_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
+			if ( isset( $settings->desg_line_height['medium'] ) && isset( $settings->desg_font_size['medium'] ) && 0 !== $settings->desg_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->desg_line_height['medium'] ) && is_numeric( $settings->desg_font_size['medium'] ) ) {
 					$settings->desg_typo_medium['line_height'] = array(
 						'length' => round( $settings->desg_line_height['medium'] / $settings->desg_font_size['medium'], 2 ),
@@ -460,7 +449,7 @@ class UABBTeamModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desg_line_height['small'] ) && isset( $settings->desg_font_size['small'] ) && 0 != $settings->desg_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->desg_line_height['small'] ) && isset( $settings->desg_font_size['small'] ) && 0 !== $settings->desg_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->desg_line_height['small'] ) && is_numeric( $settings->desg_font_size['small'] ) ) {
 					$settings->desg_typo_responsive['line_height'] = array(
 						'length' => round( $settings->desg_line_height['small'] / $settings->desg_font_size['small'], 2 ),
@@ -485,7 +474,7 @@ class UABBTeamModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->desc_font_family['weight'] ) {
 						$settings->desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desc_typo['font_weight'] = $settings->desc_font_family['weight'];
@@ -512,7 +501,7 @@ class UABBTeamModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->desc_line_height['desktop'] ) && isset( $settings->desc_font_size['desktop'] ) && 0 != $settings->desc_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
+			if ( isset( $settings->desc_line_height['desktop'] ) && isset( $settings->desc_font_size['desktop'] ) && 0 !== $settings->desc_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
 				if ( is_numeric( $settings->desc_line_height['desktop'] ) && is_numeric( $settings->desc_font_size['desktop'] ) ) {
 					$settings->desc_typo['line_height'] = array(
 						'length' => round( $settings->desc_line_height['desktop'] / $settings->desc_font_size['desktop'], 2 ),
@@ -520,7 +509,7 @@ class UABBTeamModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desc_line_height['medium'] ) && isset( $settings->desc_font_size['medium'] ) && 0 != $settings->desc_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
+			if ( isset( $settings->desc_line_height['medium'] ) && isset( $settings->desc_font_size['medium'] ) && 0 !== $settings->desc_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->desc_line_height['medium'] ) && is_numeric( $settings->desc_font_size['medium'] ) ) {
 					$settings->desc_typo_medium['line_height'] = array(
 						'length' => round( $settings->desc_line_height['medium'] / $settings->desc_font_size['medium'], 2 ),
@@ -528,7 +517,7 @@ class UABBTeamModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->desc_line_height['small'] ) && isset( $settings->desc_font_size['small'] ) && 0 != $settings->desc_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->desc_line_height['small'] ) && isset( $settings->desc_font_size['small'] ) && 0 !== $settings->desc_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->desc_line_height['small'] ) && is_numeric( $settings->desc_font_size['small'] ) ) {
 					$settings->desc_typo_responsive['line_height'] = array(
 						'length' => round( $settings->desc_line_height['small'] / $settings->desc_font_size['small'], 2 ),
@@ -551,7 +540,8 @@ class UABBTeamModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
@@ -593,7 +583,8 @@ class UABBTeamModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 
 						case 'padding-top':
@@ -688,7 +679,7 @@ class UABBTeamModule extends FLBuilderModule {
 	 * @method render_image
 	 */
 	public function render_image() {
-		if ( isset( $this->settings->photo_src ) && '' != $this->settings->photo_src || isset( $this->settings->photo_url ) && '' != $this->settings->photo_url ) {
+		if ( isset( $this->settings->photo_src ) && '' !== $this->settings->photo_src || isset( $this->settings->photo_url ) && '' !== $this->settings->photo_url ) {
 			/* Render Team Member Image */
 			$imageicon_array = array(
 
@@ -724,9 +715,9 @@ class UABBTeamModule extends FLBuilderModule {
 			);
 
 			/* Render HTML Function */
-			echo ( isset( $this->settings->enable_custom_link ) && 'no' != $this->settings->enable_custom_link ) ? '<a href="' . $this->settings->custom_link . '" target ="' . $this->settings->custom_link_target . '">' : '';
+			echo ( isset( $this->settings->enable_custom_link ) && 'no' !== $this->settings->enable_custom_link ) ? '<a href="' . $this->settings->custom_link . '" target ="' . esc_attr( $this->settings->custom_link_target ) . '">' : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			FLBuilder::render_module_html( 'image-icon', $imageicon_array );
-			echo ( isset( $this->settings->enable_custom_link ) && '' != $this->settings->enable_custom_link ) ? '</a>' : '';
+			echo ( isset( $this->settings->enable_custom_link ) && '' !== $this->settings->enable_custom_link ) ? '</a>' : '';
 		}
 	}
 
@@ -739,10 +730,10 @@ class UABBTeamModule extends FLBuilderModule {
 		if ( ! empty( $this->settings->name ) ) {
 			$output  = '<div class="uabb-team-name" >';
 			$output .= '<' . $this->settings->tag_selection . ' class="uabb-team-name-text">';
-			$output .= ( isset( $this->settings->enable_custom_link ) && 'no' != $this->settings->enable_custom_link ) ? '<a href="' . $this->settings->custom_link . '" target ="' . $this->settings->custom_link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->custom_link_target, $this->settings->custom_link_nofollow, 0 ) . '>' . $this->settings->name . '</a>' : $this->settings->name;
+			$output .= ( isset( $this->settings->enable_custom_link ) && 'no' !== $this->settings->enable_custom_link ) ? '<a href="' . $this->settings->custom_link . '" target ="' . $this->settings->custom_link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->custom_link_target, $this->settings->custom_link_nofollow, 0 ) . '>' . $this->settings->name . '</a>' : $this->settings->name;
 			$output .= '</' . $this->settings->tag_selection . '>';
 			$output .= '</div>';
-			echo $output;
+			echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -756,7 +747,7 @@ class UABBTeamModule extends FLBuilderModule {
 			$output  = '<div class="uabb-team-desgn">';
 			$output .= '<span class="uabb-team-desgn-text">' . $this->settings->designation . '</span>';
 			$output .= '</div>';
-			echo $output;
+			echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -770,7 +761,7 @@ class UABBTeamModule extends FLBuilderModule {
 			$output  = '<div class="uabb-team-desc">';
 			$output .= '<span class="uabb-team-desc-text">' . $this->settings->description . '</span>';
 			$output .= '</div>';
-			echo $output;
+			echo $output; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -780,7 +771,7 @@ class UABBTeamModule extends FLBuilderModule {
 	 * @method render_social_icons
 	 */
 	public function render_social_icons() {
-		if ( 'yes' == $this->settings->enable_social_icons ) {
+		if ( 'yes' === $this->settings->enable_social_icons ) {
 			$icon_count = 1;
 			foreach ( $this->settings->icons as $icon ) {
 
@@ -800,7 +791,7 @@ class UABBTeamModule extends FLBuilderModule {
 					continue;
 				}
 				$icon->link_target = ( isset( $icon->link_target ) ) ? $icon->link_target : '_blank';
-				echo '<a class="uabb-team-icon-link uabb-team-icon-' . $icon_count . '" href="' . $icon->link . '" target="' . $icon->link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $icon->link_target, $icon->link_nofollow, 0 ) . '>';
+				echo '<a class="uabb-team-icon-link uabb-team-icon-' . esc_attr( $icon_count ) . '" href="' . $icon->link . '" target="' . esc_attr( $icon->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $icon->link_target, $icon->link_nofollow, 0 ) ) . '>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				$imageicon_array = array(
 
 					/* General Section */
@@ -853,7 +844,7 @@ class UABBTeamModule extends FLBuilderModule {
 				);
 				FLBuilder::render_module_html( 'image-icon', $imageicon_array );
 				echo '</a>';
-				$icon_count = $icon_count + 1;
+				$icon_count++;
 			}
 		}
 	}
@@ -866,7 +857,7 @@ class UABBTeamModule extends FLBuilderModule {
 	 */
 	public function render_separator( $pos ) {
 
-		if ( 'block' == $this->settings->enable_separator && ( $pos == $this->settings->separator_pos ) ) {
+		if ( 'block' === $this->settings->enable_separator && ( $pos === $this->settings->separator_pos ) ) {
 			$separator_settings = array(
 				'color'     => $this->settings->separator_color,
 				'height'    => $this->settings->separator_height,
@@ -887,7 +878,7 @@ class UABBTeamModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/team/team-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/team/team-bb-less-than-2-2-compatibility.php';

@@ -42,7 +42,7 @@ final class FLBuilderRevisions {
 		$revisions    = wp_get_post_revisions( $post_id, array(
 			'numberposts' => apply_filters( 'fl_builder_revisions_number', 25 ),
 		) );
-		$current_time = current_time( 'timestamp' );
+		$current_time = time();
 		$config       = array(
 			'posts'   => array(),
 			'authors' => array(),
@@ -73,7 +73,7 @@ final class FLBuilderRevisions {
 					'id'     => $revision->ID,
 					'author' => $revision->post_author,
 					'date'   => array(
-						'published' => date( 'F j', $timestamp ),
+						'published' => gmdate( 'F j', $timestamp ),
 						'diff'      => human_time_diff( $timestamp, $current_time ),
 					),
 				);

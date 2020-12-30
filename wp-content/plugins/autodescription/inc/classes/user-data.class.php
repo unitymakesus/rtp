@@ -6,11 +6,11 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -38,6 +38,8 @@ class User_Data extends Term_Data {
 	 * Returns default user meta.
 	 *
 	 * @since 3.0.0
+	 * @TODO add filter as with get_term_meta_defaults() and get_post_meta_defaults()
+	 *       (also define unfiltered values via a different function)
 	 *
 	 * @return array The default user meta index and values.
 	 */
@@ -51,11 +53,11 @@ class User_Data extends Term_Data {
 
 	/**
 	 * Returns the current post author ID.
+	 * Memoizes the return value for the current request.
 	 *
 	 * @since 3.0.0
-	 * @since 3.2.2: 1. Now no longer returns the latest post author ID on home-as-blog pages.
-	 *               2. Now always returns an integer.
-	 * @staticvar $cache
+	 * @since 3.2.2 : 1. Now no longer returns the latest post author ID on home-as-blog pages.
+	 *                2. Now always returns an integer.
 	 *
 	 * @return int Post author ID on success, 0 on failure.
 	 */
@@ -96,27 +98,28 @@ class User_Data extends Term_Data {
 
 	/**
 	 * Fetches The SEO Framework usermeta.
+	 * Memoizes the return value, can be bypassed.
 	 *
 	 * @since 2.7.0
 	 * @since 2.8.0 Always returns array, even if no value is assigned.
-	 * @staticvar array $usermeta_cache
+	 * @TODO update to return default values as with `get_post_meta` and `get_term_meta`
 	 *
 	 * @param int    $user_id   The user ID.
 	 * @param string $key       The user metadata key. Leave empty to fetch all data.
-	 * @param bool   $use_cache Whether to store and use options from cache.
+	 * @param bool   $use_cache Whether to store and use options from cache, or bypass it.
 	 * @return array The user SEO meta data.
 	 */
 	public function get_user_meta( $user_id, $key = THE_SEO_FRAMEWORK_USER_OPTIONS, $use_cache = true ) {
 
 		if ( false === $use_cache )
-			return ( $meta = \get_user_meta( $user_id, $key, true ) ) && is_array( $meta ) ? $meta : [];
+			return ( $meta = \get_user_meta( $user_id, $key, true ) ) && \is_array( $meta ) ? $meta : [];
 
 		static $usermeta_cache = [];
 
 		if ( isset( $usermeta_cache[ $user_id ][ $key ] ) )
 			return $usermeta_cache[ $user_id ][ $key ];
 
-		return $usermeta_cache[ $user_id ][ $key ] = ( $meta = \get_user_meta( $user_id, $key, true ) ) && is_array( $meta ) ? $meta : [];
+		return $usermeta_cache[ $user_id ][ $key ] = ( $meta = \get_user_meta( $user_id, $key, true ) ) && \is_array( $meta ) ? $meta : [];
 	}
 
 	/**
@@ -152,7 +155,7 @@ class User_Data extends Term_Data {
 
 	/**
 	 * Fetches user SEO user meta data by name.
-	 * Caches all meta data per $user_id.
+	 * Memoizes all meta data per $user_id.
 	 *
 	 * If no $user_id is supplied, it will fetch the current logged in user ID.
 	 *
@@ -160,15 +163,13 @@ class User_Data extends Term_Data {
 	 * @since 3.0.0 1. Default is no longer cached.
 	 *              2. Now always fallbacks to $default.
 	 *              3. Added not-found cache.
-	 * @staticvar array $options_cache
-	 * @staticvar array $notfound_cache
 	 *
 	 * @param int    $user_id The user ID. When empty, it will try to fetch the current user.
 	 * @param string $option  The option name.
 	 * @param mixed  $default The default value to return when the data doesn't exist.
 	 * @return mixed The metadata value.
 	 */
-	public function get_user_option( $user_id = 0, $option, $default = null ) {
+	public function get_user_option( $user_id = 0, $option = '', $default = null ) {
 
 		if ( ! $option )
 			return $default;
@@ -209,7 +210,7 @@ class User_Data extends Term_Data {
 	 * @param mixed  $value   The escaped option value.
 	 * @return bool True on success. False on failure.
 	 */
-	public function update_user_option( $user_id = 0, $option, $value ) {
+	public function update_user_option( $user_id = 0, $option = '', $value = '' ) {
 
 		if ( ! $option )
 			return false;
@@ -225,7 +226,7 @@ class User_Data extends Term_Data {
 		/**
 		 * @since 2.8.0 initializes new array on empty values.
 		 */
-		is_array( $meta ) or $meta = [];
+		\is_array( $meta ) or $meta = [];
 
 		$meta[ $option ] = $value;
 

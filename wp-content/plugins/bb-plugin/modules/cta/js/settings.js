@@ -5,10 +5,24 @@
 		init: function() {
 			var form = $( '.fl-builder-settings' ),
 				layout = form.find( 'select[name=layout]' ),
-				buttonBgColor = form.find( 'input[name=btn_bg_color]' );
-
+				buttonBgColor = form.find( 'input[name=btn_bg_color]' ),
+				icon = form.find( 'input[name=btn_icon]' )
+			icon.on( 'change', this._flipSettings );
 			layout.on( 'change', this._layoutChange );
 			buttonBgColor.on( 'change', this._previewButtonBackground );
+			this._flipSettings()
+		},
+
+		_flipSettings: function() {
+			var form  = $( '.fl-builder-settings' ),
+					icon = form.find( 'input[name=btn_icon]' );
+			if ( -1 !== icon.val().indexOf( 'fad fa') ) {
+				$('#fl-field-btn_duo_color1').show();
+				$('#fl-field-btn_duo_color2').show();
+			} else {
+				$('#fl-field-btn_duo_color1').hide();
+				$('#fl-field-btn_duo_color2').hide();
+			}
 		},
 
 		_layoutChange: function() {

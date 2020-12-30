@@ -151,7 +151,7 @@ final class FLBuilderServiceConstantContact extends FLBuilderService {
 		);
 
 		foreach ( $lists as $list ) {
-			$options[ $list->id ] = $list->name;
+			$options[ $list->id ] = esc_attr( $list->name );
 		}
 
 		FLBuilder::render_settings_field( 'list_id', array(

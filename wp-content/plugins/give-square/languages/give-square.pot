@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Give Square
+# Copyright (C) 2020 Give Square
 # This file is distributed under the same license as the Give Square package.
 msgid ""
 msgstr ""
@@ -54,11 +54,11 @@ msgstr ""
 msgid "Square Gateway"
 msgstr ""
 
-#: includes/actions.php:87, includes/class-give-square-gateway.php:282
+#: includes/actions.php:115, includes/class-give-square-gateway.php:282, includes/admin/admin-actions.php:585
 msgid "Square Error"
 msgstr ""
 
-#: includes/actions.php:88
+#: includes/actions.php:116
 msgid "Unable to renew the access token. Please reconnect with your Square account."
 msgstr ""
 
@@ -85,8 +85,8 @@ msgid "Please enter a name of your credit card account holder."
 msgstr ""
 
 #. translators: 1. Give Donation Form Title.
-#: includes/class-give-square-gateway.php:190
-msgid "Donation: %1$s"
+#: includes/class-give-square-gateway.php:192
+msgid "Donation to \"%1$s\""
 msgstr ""
 
 #: includes/class-give-square-gateway.php:227
@@ -151,161 +151,179 @@ msgstr ""
 msgid "Credit Card Info"
 msgstr ""
 
-#: includes/helpers.php:61
-msgid "Give's Square documentation."
+#: includes/helpers.php:59
+msgid "Test Mode"
 msgstr ""
 
-#: includes/helpers.php:69
+#: includes/helpers.php:59
+msgid "Live Mode"
+msgstr ""
+
+#: includes/helpers.php:62
+msgid "Square documentation."
+msgstr ""
+
+#: includes/helpers.php:70
 msgid "This page requires a valid SSL certificate for secure donations. Please try accessing this page with HTTPS in order to load Credit Card fields."
 msgstr ""
 
-#: includes/helpers.php:76
+#: includes/helpers.php:77
 msgid "This is a secure SSL encrypted payment."
 msgstr ""
 
-#: includes/helpers.php:83, includes/scripts.php:40
+#: includes/helpers.php:84, includes/scripts.php:42
 msgid "Card Number"
 msgstr ""
 
-#: includes/helpers.php:86
+#: includes/helpers.php:87
 msgid "The (typically) 16 digits on the front of your credit card."
 msgstr ""
 
-#: includes/helpers.php:96
+#: includes/helpers.php:97
 msgid "CVC"
 msgstr ""
 
-#: includes/helpers.php:99
+#: includes/helpers.php:100
 msgid "The 3 digit (back) or 4 digit (front) value on your card."
 msgstr ""
 
-#: includes/helpers.php:110, includes/helpers.php:122
+#: includes/helpers.php:111, includes/helpers.php:123
 msgid "Cardholder Name"
 msgstr ""
 
-#: includes/helpers.php:113
+#: includes/helpers.php:114
 msgid "The name of the credit card account holder."
 msgstr ""
 
-#: includes/helpers.php:134
+#: includes/helpers.php:135
 msgid "Expiration"
 msgstr ""
 
-#: includes/helpers.php:137
+#: includes/helpers.php:138
 msgid "The date your credit card expires, typically on the front of the card."
 msgstr ""
 
-#: includes/helpers.php:149, includes/helpers.php:391, includes/helpers.php:405
+#: includes/helpers.php:150, includes/helpers.php:392, includes/helpers.php:406
 msgid "Zip / Postal Code"
 msgstr ""
 
-#: includes/helpers.php:151, includes/helpers.php:395
+#: includes/helpers.php:152, includes/helpers.php:396
 msgid "The ZIP Code or postal code for your billing address."
 msgstr ""
 
-#: includes/helpers.php:212
+#: includes/helpers.php:213
 msgid "Billing Details"
 msgstr ""
 
-#: includes/helpers.php:250
+#: includes/helpers.php:251
 msgid "State"
 msgstr ""
 
-#: includes/helpers.php:268
+#: includes/helpers.php:269
 msgid "Country"
 msgstr ""
 
-#: includes/helpers.php:273
+#: includes/helpers.php:274
 msgid "The country for your billing address."
 msgstr ""
 
-#: includes/helpers.php:293
+#: includes/helpers.php:294
 msgid "Address 1"
 msgstr ""
 
-#: includes/helpers.php:299
+#: includes/helpers.php:300
 msgid "The primary billing address for your credit card."
 msgstr ""
 
-#: includes/helpers.php:308
+#: includes/helpers.php:309
 msgid "Address line 1"
 msgstr ""
 
-#: includes/helpers.php:316
+#: includes/helpers.php:317
 msgid "Address 2"
 msgstr ""
 
-#: includes/helpers.php:320
+#: includes/helpers.php:321
 msgid "(optional) The suite, apartment number, post office box (etc) associated with your billing address."
 msgstr ""
 
-#: includes/helpers.php:329
+#: includes/helpers.php:330
 msgid "Address line 2"
 msgstr ""
 
-#: includes/helpers.php:337, includes/helpers.php:349
+#: includes/helpers.php:338, includes/helpers.php:350
 msgid "City"
 msgstr ""
 
-#: includes/helpers.php:341
+#: includes/helpers.php:342
 msgid "The city for your billing address."
 msgstr ""
 
-#: includes/helpers.php:365
+#: includes/helpers.php:366
 msgid "The state, province, or county for your billing address."
 msgstr ""
 
-#: includes/helpers.php:463
+#: includes/helpers.php:464
 msgid "Invalid Donation Amount. Please try again"
 msgstr ""
 
-#: includes/helpers.php:571
-msgid "Select a Location"
-msgstr ""
-
-#: includes/helpers.php:599
+#: includes/helpers.php:641, includes/helpers.php:734
 msgid "Square Location Error"
 msgstr ""
 
 #. translators: 1. Exception Message.
-#: includes/helpers.php:602
+#. translators: 1. Exception Message.
+#: includes/helpers.php:644, includes/helpers.php:707
 msgid "Unable to fetch locations from Square Payment Gateway. Details: %1$s"
 msgstr ""
 
-#: includes/helpers.php:663
-msgid "Connect your site with Square's easy onboarding process."
+#: includes/helpers.php:668
+msgid "Select a Location"
 msgstr ""
 
-#: includes/helpers.php:665
+#. translators: 1. Exception Message.
+#. translators: 1. Exception Message.
+#: includes/helpers.php:718, includes/helpers.php:727
+msgid "Unable to fetch locations from Square Payment Gateway due to revoked access. Details: %1$s"
+msgstr ""
+
+#: includes/helpers.php:827
+msgid "Connect to Square Account"
+msgstr ""
+
+#: includes/helpers.php:828
+msgid "Connect to Square Sandbox Account"
+msgstr ""
+
+#: includes/helpers.php:830
+msgid "Connect your site with Square account for easy onboarding."
+msgstr ""
+
+#: includes/helpers.php:831
+msgid "Connect your site with Square Sandbox account for easy onboarding."
+msgstr ""
+
+#: includes/helpers.php:842
 msgid "Square Payment Gateway."
 msgstr ""
 
-#: includes/helpers.php:666
-msgid "Connect to Square"
-msgstr ""
-
-#: includes/scripts.php:41
+#: includes/scripts.php:43
 msgid "Security Code"
 msgstr ""
 
-#: includes/scripts.php:42
+#: includes/scripts.php:44
 msgid "MM/YY"
 msgstr ""
 
-#: includes/scripts.php:43
+#: includes/scripts.php:45
 msgid "Postal Code"
 msgstr ""
 
-#: includes/scripts.php:44
+#: includes/scripts.php:46
 msgid "The browser you are using is not supported. Please try another browser."
 msgstr ""
 
-#. translators: %s Square Merchant ID
-#: includes/scripts.php:96
-msgid "Are you sure you want to disconnect Give from Square? If disconnected, this website and any others sharing the same Square account (%s) that are connected to Give will need to reconnect in order to process payments."
-msgstr ""
-
-#: includes/scripts.php:104
+#: includes/scripts.php:99
 msgid "Confirm Disconnect?"
 msgstr ""
 
@@ -332,143 +350,206 @@ msgstr ""
 
 #. translators: 1. Connect Bold Text
 #: includes/admin/activation.php:159
-msgid "Give - Square is almost ready. Please"
+msgid "Square Connection Successful:"
 msgstr ""
 
-#: includes/admin/activation.php:161
-msgid "set your business location."
+#: includes/admin/activation.php:160
+msgid "You're almost ready to start accepting donations. Please"
 msgstr ""
 
-#: includes/admin/admin-actions.php:36
-msgid "Note:"
+#: includes/admin/activation.php:162
+msgid "set your Square location"
 msgstr ""
 
-#: includes/admin/admin-actions.php:37
-msgid "Test donations do not appear in the Square Dashboard."
+#: includes/admin/activation.php:163
+msgid "to finish the connection process."
 msgstr ""
 
-#: includes/admin/admin-actions.php:39
-msgid "Click here"
-msgstr ""
-
-#: includes/admin/admin-actions.php:40
-msgid "for more information on Square's sandbox limitations."
-msgstr ""
-
-#: includes/admin/admin-actions.php:50
-msgid "Square Connect"
-msgstr ""
-
-#: includes/admin/admin-actions.php:58
-msgid "Location"
-msgstr ""
-
-#: includes/admin/admin-actions.php:59
-msgid "Select the location you wish to link to this site. You must have <a href=\"https://squareup.com/dashboard/locations\" target=\"_blank\">locations</a> set in Square and approved."
-msgstr ""
-
-#: includes/admin/admin-actions.php:69
-msgid "Live Application ID"
-msgstr ""
-
-#: includes/admin/admin-actions.php:70
-msgid "Enter your live application id, found in your Square Account Settings."
-msgstr ""
-
-#: includes/admin/admin-actions.php:77
-msgid "Live Access Token"
-msgstr ""
-
-#: includes/admin/admin-actions.php:78
-msgid "Enter your live access token, found in your Square Account Settings."
-msgstr ""
-
-#: includes/admin/admin-actions.php:85
-msgid "Live Location ID"
-msgstr ""
-
-#: includes/admin/admin-actions.php:86
-msgid "Enter your live location id, found in your Square Account Settings."
-msgstr ""
-
-#: includes/admin/admin-actions.php:93
-msgid "SandBox Application ID"
-msgstr ""
-
-#: includes/admin/admin-actions.php:94
-msgid "Enter your sandbox application id, found in your Square Account Settings."
-msgstr ""
-
-#: includes/admin/admin-actions.php:101
-msgid "SandBox Access Token"
-msgstr ""
-
-#: includes/admin/admin-actions.php:102, includes/admin/admin-actions.php:110
-msgid "Enter your sandbox access token, found in your Square Account Settings."
-msgstr ""
-
-#: includes/admin/admin-actions.php:109
-msgid "SandBox Location ID"
-msgstr ""
-
-#: includes/admin/admin-actions.php:119
-msgid "Collect Billing Details"
-msgstr ""
-
-#: includes/admin/admin-actions.php:120
-msgid "This option will enable the billing details section for Square which requires the donor's address to complete the donation. These fields are not required by Square to process the transaction, but you may have the need to collect the data."
-msgstr ""
-
-#: includes/admin/admin-actions.php:125
-msgid "Give Square Settings Docs Link"
-msgstr ""
-
-#: includes/admin/admin-actions.php:128
-msgid "Square Payment Gateway"
-msgstr ""
-
-#: includes/admin/admin-actions.php:165
+#: includes/admin/admin-actions.php:41
 msgid "Square Connection"
 msgstr ""
 
-#: includes/admin/admin-actions.php:174
-msgid "Connect with Square to start receiving donations through card payments."
+#: includes/admin/admin-actions.php:42
+msgid "Connect with Square account to start receiving donations through card payments."
 msgstr ""
 
-#: includes/admin/admin-actions.php:180
+#. translators: 1. Connect Bold Text
+#: includes/admin/admin-actions.php:55
+msgid "No Location Set"
+msgstr ""
+
+#: includes/admin/admin-actions.php:56
+msgid "Set a location above to start accepting donations. You must have <a href=\"https://squareup.com/dashboard/locations\" target=\"_blank\">locations</a> set in Square and approved to accept credit cards."
+msgstr ""
+
+#: includes/admin/admin-actions.php:59
+msgid "The Square location displayed above is set to accept donations through this website. To change the location select from the choices in the dropdown above."
+msgstr ""
+
+#: includes/admin/admin-actions.php:63
+msgid "Location"
+msgstr ""
+
+#: includes/admin/admin-actions.php:73
+msgid "Renew Token"
+msgstr ""
+
+#: includes/admin/admin-actions.php:74, includes/admin/admin-actions.php:102
+msgid "Clicking the button will renew the Square token when the renew token cron is not working properly."
+msgstr ""
+
+#: includes/admin/admin-actions.php:82
+msgid "Square Connection - Sandbox"
+msgstr ""
+
+#: includes/admin/admin-actions.php:83
+msgid "Connect with Square Sandbox account to start receiving donations through card payments."
+msgstr ""
+
+#: includes/admin/admin-actions.php:91
+msgid "Location - Sandbox"
+msgstr ""
+
+#: includes/admin/admin-actions.php:92
+msgid "Select the location you wish to link to this site. You must have <a href=\"https://squareupsandbox.com/dashboard/locations\" target=\"_blank\">locations</a> set in Square Sandbox account."
+msgstr ""
+
+#: includes/admin/admin-actions.php:101
+msgid "Renew Token - Sandbox"
+msgstr ""
+
+#: includes/admin/admin-actions.php:112
+msgid "Live Application ID"
+msgstr ""
+
+#: includes/admin/admin-actions.php:113
+msgid "Enter your live application id, found in your Square Account Settings."
+msgstr ""
+
+#: includes/admin/admin-actions.php:120
+msgid "Live Access Token"
+msgstr ""
+
+#: includes/admin/admin-actions.php:121
+msgid "Enter your live access token, found in your Square Account Settings."
+msgstr ""
+
+#: includes/admin/admin-actions.php:128
+msgid "Live Location ID"
+msgstr ""
+
+#: includes/admin/admin-actions.php:129
+msgid "Enter your live location id, found in your Square Account Settings."
+msgstr ""
+
+#: includes/admin/admin-actions.php:136
+msgid "SandBox Application ID"
+msgstr ""
+
+#: includes/admin/admin-actions.php:137
+msgid "Enter your sandbox application id, found in your Square Account Settings."
+msgstr ""
+
+#: includes/admin/admin-actions.php:144
+msgid "SandBox Access Token"
+msgstr ""
+
+#: includes/admin/admin-actions.php:145, includes/admin/admin-actions.php:153
+msgid "Enter your sandbox access token, found in your Square Account Settings."
+msgstr ""
+
+#: includes/admin/admin-actions.php:152
+msgid "SandBox Location ID"
+msgstr ""
+
+#: includes/admin/admin-actions.php:162
+msgid "Collect Billing Details"
+msgstr ""
+
+#: includes/admin/admin-actions.php:163
+msgid "This option will enable the billing details section for Square which requires the donor's address to complete the donation. These fields are not required by Square to process the transaction, but you may have the need to collect the data."
+msgstr ""
+
+#: includes/admin/admin-actions.php:168
+msgid "Give Square Settings Docs Link"
+msgstr ""
+
+#: includes/admin/admin-actions.php:171
+msgid "Square Payment Gateway"
+msgstr ""
+
+#: includes/admin/admin-actions.php:206
 msgid "Disconnect from Square"
 msgstr ""
 
-#: includes/admin/admin-actions.php:237
+#: includes/admin/admin-actions.php:207
+msgid "Disconnect from Square Sandbox"
+msgstr ""
+
+#. translators: %s Square Merchant ID
+#: includes/admin/admin-actions.php:217
+msgid "Are you sure you want to disconnect GiveWP from Square? If disconnected, this website and any others sharing the same Square account (%1$s) that are connected to the Square GiveWP App will need to reconnect in order to process donation payments."
+msgstr ""
+
+#: includes/admin/admin-actions.php:306
 msgid "Refresh"
 msgstr ""
 
-#: includes/admin/admin-actions.php:424
+#: includes/admin/admin-actions.php:440
+msgid "Unable to obtain token from Square to connect using oAuth API."
+msgstr ""
+
+#: includes/admin/admin-actions.php:451
+msgid "Unable to revoke token of a merchant from Square to disconnect using oAuth API."
+msgstr ""
+
+#: includes/admin/admin-actions.php:462
+msgid "<strong>Token Renewed Successfully:</strong> The Square access token has been successfully refreshed."
+msgstr ""
+
+#: includes/admin/admin-actions.php:473
+msgid "Unable to renew token of a merchant from Square using oAuth API."
+msgstr ""
+
+#: includes/admin/admin-actions.php:558
 msgid "Refund from GiveWP Admin on %s"
 msgstr ""
 
+#. translators: 1. Refund ID
+#: includes/admin/admin-actions.php:576
+msgid "Payment refunded in Square: %s"
+msgstr ""
+
 #. translators: 1. Error Message, 2. Exception Message, 3. Code Text, 4. Code Message.
-#: includes/admin/admin-actions.php:451
+#: includes/admin/admin-actions.php:589
 msgid "The Square payment gateway returned an error while refunding a donation. Message:"
 msgstr ""
 
-#: includes/admin/admin-actions.php:453
+#: includes/admin/admin-actions.php:591
 msgid "Code:"
 msgstr ""
 
-#: includes/admin/admin-actions.php:485
+#: includes/admin/admin-actions.php:623
 msgid "Refund Charge in Square?"
 msgstr ""
 
-#: includes/admin/admin-actions.php:552
-msgid "The connected Square account does not contain any locations that have credit card processing enabled, so the locations list is empty."
+#: includes/admin/admin-actions.php:690
+msgid "<strong>No Eligible Square Locations Found:</strong> The connected Square account does not contain any locations that have credit card processing enabled. Please configure a location that has credit card processing enabled and set it within the <a href=\"%1$s\">gateway's settings screen</a>."
 msgstr ""
 
-#: includes/admin/admin-filters.php:27
-msgid "Square Settings"
+#: includes/admin/admin-actions.php:765
+msgid "Square Token Renewal Date"
 msgstr ""
 
-#: includes/admin/admin-filters.php:44
+#: includes/admin/admin-actions.php:772
+msgid "Displays when the last Square refresh token renewal was triggered."
+msgstr ""
+
+#: includes/admin/admin-actions.php:813
+msgid "Renew Token Refresh Date: %1$s"
+msgstr ""
+
+#: includes/admin/admin-filters.php:27, includes/admin/admin-filters.php:44
 msgid "Square"
 msgstr ""
 
@@ -476,30 +557,34 @@ msgstr ""
 msgid "Square API Keys"
 msgstr ""
 
-#: includes/admin/admin-filters.php:85
-msgid "Enable if you would like to use your own API keys instead of Square Connect via OAuth API."
+#: includes/admin/admin-filters.php:86
+msgid "<div style=\"padding: 8px 10px; background:#FFF; margin: 8px 0 0; border-radius: 4px;\"><strong>Square API keys enabled:</strong> Please enter your API keys on the payment gateways settings screen. <a href=\"%1$s\">Click here</a> to configure your API keys.</div>"
 msgstr ""
 
-#: includes/admin/admin-filters.php:90
+#: includes/admin/admin-filters.php:88
+msgid "Enable if you would like to use your own API keys instead of Square Connect via oAuth API."
+msgstr ""
+
+#: includes/admin/admin-filters.php:93
 msgid "Enabled"
 msgstr ""
 
-#: includes/admin/admin-filters.php:91
+#: includes/admin/admin-filters.php:94
 msgid "Disabled"
 msgstr ""
 
-#: includes/admin/admin-filters.php:95
+#: includes/admin/admin-filters.php:98
 msgid "Square Styles"
 msgstr ""
 
-#: includes/admin/admin-filters.php:98
+#: includes/admin/admin-filters.php:101
 msgid "Edit the properties above to match the look and feel of your WordPress theme. These styles will be applied to Square Credit Card fields including Card Number, CVC and Expiration. Any valid CSS property can be defined, however, it must be formatted as JSON, not CSS. For more information on Styling Square CC fields please see this "
 msgstr ""
 
-#: includes/admin/admin-filters.php:100
+#: includes/admin/admin-filters.php:103
 msgid "article"
 msgstr ""
 
-#: includes/admin/admin-filters.php:135
+#: includes/admin/admin-filters.php:139
 msgid "Monthly"
 msgstr ""

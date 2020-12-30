@@ -9,8 +9,19 @@
 	border-top-right-radius: 0;
 }
 <?php endif; ?>
-<?php
+<?php if ( $settings->duo_color1 && ( false !== strpos( $settings->label_icon, 'fad fa' ) || false !== strpos( $settings->label_active_icon, 'fad fa' ) ) ) : ?>
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-accordion-button-icon.fad:before {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color1 ); ?>;
+}
+<?php endif; ?>
 
+<?php if ( $settings->duo_color2 && ( false !== strpos( $settings->label_icon, 'fad fa' ) || false !== strpos( $settings->label_active_icon, 'fad fa' ) ) ) : ?>
+.fl-node-<?php echo $id; ?> .fl-module-content .fl-accordion-button-icon.fad:after {
+	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color2 ); ?>;
+	opacity: 1;
+}
+<?php endif; ?>
+<?php
 // Item Spacing
 FLBuilderCSS::responsive_rule( array(
 	'settings'     => $settings,
@@ -29,7 +40,7 @@ FLBuilderCSS::border_field_rule( array(
 
 // Label BG Colors
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-accordion-button",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-accordion-button",
 	'props'    => array(
 		'background-color' => $settings->label_bg_color,
 	),
@@ -37,7 +48,7 @@ FLBuilderCSS::rule( array(
 
 // Label Text Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-accordion-button-label",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-accordion-button-label, .fl-builder-content .fl-node-$id .fl-accordion-button-label:hover, .fl-builder-content .fl-node-$id .fl-accordion-button .fl-accordion-button-icon",
 	'props'    => array(
 		'color' => $settings->label_text_color,
 	),
@@ -47,8 +58,7 @@ FLBuilderCSS::rule( array(
 FLBuilderCSS::rule( array(
 	'selector' => ".fl-node-$id .fl-accordion-button-icon",
 	'props'    => array(
-		'background-color' => $settings->label_bg_color,
-		'color'            => $settings->label_text_color,
+		'color' => $settings->label_text_color,
 	),
 ) );
 
@@ -72,12 +82,19 @@ FLBuilderCSS::typography_field_rule( array(
 	'settings'     => $settings,
 ) );
 
-// Content Colors
+// Content Text Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-accordion-content",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-accordion .fl-accordion-content *",
+	'props'    => array(
+		'color' => $settings->content_text_color,
+	),
+) );
+
+// Content BG Color
+FLBuilderCSS::rule( array(
+	'selector' => ".fl-builder-content .fl-node-$id .fl-accordion .fl-accordion-content",
 	'props'    => array(
 		'background-color' => $settings->content_bg_color,
-		'color'            => $settings->content_text_color,
 	),
 ) );
 

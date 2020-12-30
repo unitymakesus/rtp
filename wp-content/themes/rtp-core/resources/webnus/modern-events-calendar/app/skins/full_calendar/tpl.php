@@ -69,7 +69,7 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
                 </div>
               <?php endif; ?>
               <?php if($sf_text_search_status): ?>
-                <div class="col m6 align-right">
+                <div class="col s12 m6 align-right">
                   <span class="label">&nbsp;</span>
                   <?php echo $this->sf_search_field('text_search', $sf_text_search); ?>
                 </div>
@@ -77,7 +77,7 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
             </div>
 
             <div class="row">
-              <div class="col m6">
+              <div class="col s12 m6">
                 <span class="label">View by</span>
                 <div class="mec-totalcal-view">
                   <?php if($this->yearly): ?><span class="mec-totalcal-yearlyview<?php if($this->default_view == 'yearly') echo ' mec-totalcalview-selected'; ?>" data-skin="yearly"><?php _e('Year', 'mec'); ?></span><?php endif; ?>
@@ -87,7 +87,7 @@ $event_colorskin = (isset($styling['mec_colorskin'] ) || isset($styling['color']
                   <?php if($this->list): ?><span class="mec-totalcal-listview<?php if($this->default_view == 'list') echo ' mec-totalcalview-selected'; ?>" data-skin="list"><?php _e('List', 'mec'); ?></span><?php endif; ?>
                 </div>
               </div>
-              <div class="col m6">
+              <div class="col s12 m6">
                 <span class="label">Filter view</span>
                 <div class="filter-selects row">
                   <?php if($sf_category_status): $sf_columns -= 2; ?>

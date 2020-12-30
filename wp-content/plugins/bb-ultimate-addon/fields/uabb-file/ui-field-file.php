@@ -28,7 +28,7 @@ if ( ! data.value || ! file ) {
 
 #>
 <div class="fl-file-field fl-builder-custom-field{{className}}">
-	<a class="fl-file-select" href="javascript:void(0);" onclick="return false;"><?php _e( 'Select File', 'uabb' ); ?></a>
+	<a class="fl-file-select" href="javascript:void(0);" onclick="return false;"><?php esc_attr_e( 'Select File', 'uabb' ); ?></a>
 	<div class="fl-file-preview">
 		<# if ( data.value && file ) { #>
 		<div class="fl-file-preview-img">
@@ -40,9 +40,9 @@ if ( ! data.value || ! file ) {
 		<span class="fl-file-preview-filename"></span>
 		<# } #>
 		<br />
-		<a class="fl-file-replace" href="javascript:void(0);" onclick="return false;"><?php _e( 'Replace File', 'uabb' ); ?></a>
+		<a class="fl-file-replace" href="javascript:void(0);" onclick="return false;"><?php esc_attr_e( 'Replace File', 'uabb' ); ?></a>
 		<# if ( data.field.show_remove ) { #>
-		<a class="fl-file-remove" href="javascript:void(0);" onclick="return false;"><?php _e( 'Remove File', 'uabb' ); ?></a>
+		<a class="fl-file-remove" href="javascript:void(0);" onclick="return false;"><?php esc_attr_e( 'Remove File', 'uabb' ); ?></a>
 		<# } #>
 		<div class="fl-clear"></div>
 	</div>

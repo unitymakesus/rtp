@@ -1,4 +1,5 @@
 .banner {
+  position: relative;
   background: $color-white;
   z-index: 100;
 
@@ -60,12 +61,6 @@
       font-size: 0.9em;
       max-width: 200px;
       text-align: center;
-
-      // @for $n from 1 through length($themes-list) {
-      //   [data-color="#{nth($themes-list, $n)}"] & {
-      //     color: nth($color-1-list, $n);
-      //   }
-      // }
     }
 
     @media #{$medium-and-down} {
@@ -133,6 +128,16 @@
       }
     }
   }
+
+  @media #{$medium-and-up} {
+    .announcement--notice {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      max-width: 500px;
+      text-align: right;
+    }
+  }
 }
 
 nav {
@@ -182,18 +187,31 @@ nav {
     }
 
     &.menu-item-has-children {
-      a {
-        cursor: default;
+      > a {
+        position: relative;
 
-        @media #{$medium-and-down} {
-          cursor: pointer;
+        &::after {
+          display: inline-block;
+          margin-left: 0.5em;
+          vertical-align: 0.255em;
+          border-style: solid;
+          border-width: 0;
+          border-top-width: 2px;
+          border-left-width: 2px;
+          height: 7px;
+          width: 7px;
+          transform: rotate(225deg);
+          transform-origin: center;
+          content: '';
         }
       }
 
+      a {
+        cursor: default;
+      }
+
       .sub-menu {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
+        display: none;
 
         @media #{$large-and-up} {
           margin-top: 10px;
@@ -203,7 +221,7 @@ nav {
           float: none;
           line-height: 0;
 
-          &:hover, &:focus, &:hover {
+          &:hover, &:focus {
             background: #F5F5F5;
           }
         }
@@ -225,52 +243,37 @@ nav {
             height: 20px;
             background-size: contain;
             background-repeat: no-repeat;
-            transition: all 0.2s;
+            transition: all 0.2s ease-in-out;
           }
 
-          &:hover, &:focus, &:hover {
+          &:hover, &:focus {
             background: transparent;
 
             &::after {
               right: 10px;
-              opacity: 100;
+              opacity: 1;
             }
           }
         }
 
         @media #{$large-and-up} {
-          max-height: 300em;
           flex-direction: column;
           position: absolute;
           z-index: 10;
           background: $color-white;
-          transition: max-height 0.3s ease;
-          height: 0;
-          overflow: hidden;
           min-width: 200px;
           box-shadow: 0 5px 35px rgba(0, 0, 0, 0.2);
         }
       }
 
-      &:hover, &:focus, &.hover a {
-        // background: $color-grey-light;
+      &.open {
+        > a::after {
+          transform: rotate(45deg);
+        }
 
         .sub-menu {
-          height: auto;
+          display: block;
         }
-      }
-    }
-
-    &.current-page-ancestor, &.current-menu-item, &.active {
-      // background: $color-teal;
-    }
-
-    &:hover, &:focus, &.hover {
-      // background: $color-teal;
-
-      & > a {
-        // color: $color-white;
-        // text-decoration: underline;
       }
     }
 
@@ -293,14 +296,11 @@ nav {
     }
   }
   @media #{$medium-and-down} {
+    display: none;
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
     width: 100%;
-    transition: max-height 0.3s ease;
-    height: auto;
-    max-height: 0;
-    overflow: hidden;
 
     ul {
       flex-direction: column;
@@ -315,15 +315,15 @@ nav {
         width: 100%;
       }
 
-      &.hover {
+      &.open {
         .sub-menu {
-          max-height: 100em;
+          display: block;
         }
       }
     }
 
     .mobilenav-active & {
-      max-height: 100em;
+      display: block;
     }
   }
 

@@ -8,14 +8,34 @@
 
 		init: function()
 		{
-			var form            = $('.fl-builder-settings'),
-				labelSize       = form.find('select[name=label_size]'),
-				itemSpacing     = form.find('input[name=item_spacing]');
+			var form      = $('.fl-builder-settings'),
+				labelSize   = form.find('select[name=label_size]'),
+				itemSpacing = form.find('input[name=item_spacing]'),
+				icon1        = form.find( 'input[name=label_active_icon]' ),
+				icon2        = form.find( 'input[name=label_icon]' );
 
+			this._flipSettings();
+
+			icon1.on( 'change', this._flipSettings );
+			icon2.on( 'change', this._flipSettings );
 			labelSize.on('change', this._previewLabelSize);
 			itemSpacing.on('input', this._previewItemSpacing);
 
 			this._previewContent();
+		},
+
+		_flipSettings: function() {
+			var form  = $( '.fl-builder-settings' ),
+					icon1 = form.find( 'input[name=label_icon]' ),
+					icon2 = form.find( 'input[name=label_active_icon]' );
+
+			if ( -1 !== icon1.val().indexOf( 'fad fa') || -1 !== icon2.val().indexOf( 'fad fa') ) {
+				$('#fl-field-duo_color1').show();
+				$('#fl-field-duo_color2').show();
+			} else {
+				$('#fl-field-duo_color1').hide();
+				$('#fl-field-duo_color2').hide();
+			}
 		},
 
 		_previewContent: function()

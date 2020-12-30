@@ -14,7 +14,7 @@
 		// Get the service type.
 		$service_type = null;
 
-		if ( isset( $section['services'] ) && 'all' != $section['services'] ) {
+		if ( isset( $section['services'] ) && 'all' !== $section['services'] ) {
 			$service_type = $section['services'];
 		}
 
@@ -36,7 +36,8 @@
 
 		// Render the service select.
 		FLBuilder::render_settings_field(
-			'service', array(
+			'service',
+			array(
 				'row_class' => 'fl-builder-service-select-row',
 				'class'     => 'fl-builder-service-select',
 				'type'      => 'select',
@@ -46,7 +47,8 @@
 				'preview'   => array(
 					'type' => 'none',
 				),
-			), $settings
+			),
+			$settings
 		);
 
 		?>

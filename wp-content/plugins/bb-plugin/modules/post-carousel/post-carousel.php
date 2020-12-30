@@ -115,7 +115,7 @@ class FLPostCarouselModule extends FLBuilderModule {
 				'photo_src'    => $src,
 				'photo_source' => 'library',
 				'attributes'   => array(
-					'data-no-lazy' => 1,
+					'loading' => 'false',
 				),
 			);
 
@@ -129,6 +129,24 @@ class FLPostCarouselModule extends FLBuilderModule {
 
 		}
 
+	}
+
+	/**
+	 * Renders the CSS class for each post item.
+	 *
+	 * @since 2.4
+	 * @return void
+	 */
+	public function render_post_class( $layout ) {
+		$settings     = $this->settings;
+		$no_thumbnail = ! has_post_thumbnail( get_the_ID() );
+		$classes      = array( 'fl-post-carousel-post' );
+
+		if ( 'gallery' === $layout && $no_thumbnail ) {
+			$classes[] = 'fl-post-no-thumb';
+		}
+
+		post_class( apply_filters( 'fl_builder_post_carousel_classes', $classes, $settings ) );
 	}
 
 }
@@ -409,14 +427,14 @@ FLBuilder::register_module('FLPostCarouselModule', array(
 						'default' => 'default',
 						'options' => array(
 							'default' => __( 'Default', 'fl-builder' ),
-							'M j, Y'  => date( 'M j, Y' ),
-							'F j, Y'  => date( 'F j, Y' ),
-							'm/d/Y'   => date( 'm/d/Y' ),
-							'm-d-Y'   => date( 'm-d-Y' ),
-							'd M Y'   => date( 'd M Y' ),
-							'd F Y'   => date( 'd F Y' ),
-							'Y-m-d'   => date( 'Y-m-d' ),
-							'Y/m/d'   => date( 'Y/m/d' ),
+							'M j, Y'  => gmdate( 'M j, Y' ),
+							'F j, Y'  => gmdate( 'F j, Y' ),
+							'm/d/Y'   => gmdate( 'm/d/Y' ),
+							'm-d-Y'   => gmdate( 'm-d-Y' ),
+							'd M Y'   => gmdate( 'd M Y' ),
+							'd F Y'   => gmdate( 'd F Y' ),
+							'Y-m-d'   => gmdate( 'Y-m-d' ),
+							'Y/m/d'   => gmdate( 'Y/m/d' ),
 						),
 					),
 				),
@@ -506,6 +524,30 @@ FLBuilder::register_module('FLPostCarouselModule', array(
 						'label'       => __( 'Post Icon Color', 'fl-builder' ),
 						'show_reset'  => true,
 						'show_alpha'  => true,
+					),
+					'duo_color1'       => array(
+						'label'      => __( 'DuoTone Icon Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-carousel-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color2'       => array(
+						'label'      => __( 'DuoTone Icon Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-carousel-icon i.fad:after',
+							'property'  => 'color',
+							'important' => true,
+						),
 					),
 				),
 			),

@@ -16,13 +16,17 @@ FLBuilder::register_module(
 				'select_form'  => array( // Section.
 					'title'  => '', // Section Title.
 					'fields' => array( // Section Fields.
-						'wp_form_id' => array(
+						'wp_form_id'        => array(
 							'type'        => 'select',
 							'label'       => __( 'Select Form', 'uabb' ),
 							'default'     => uabb_wpf_get_form_id(),
 							'options'     => array(),
 							'connections' => array( 'string' ),
 							'help'        => __( 'Choose a form that you wish to style', 'uabb' ),
+						),
+						'wp_form_raw_nonce' => array(
+							'type'    => 'text',
+							'default' => wp_create_nonce( 'uabb-wpf-nonce' ),
 						),
 					),
 				),
@@ -548,8 +552,9 @@ FLBuilder::register_module(
 						'btn_style' => array(
 							'type'             => 'select',
 							'label'            => __( 'Style', 'uabb' ),
-							'default'          => 'flat',
+							'default'          => 'default',
 							'options'          => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
@@ -563,6 +568,9 @@ FLBuilder::register_module(
 								),
 								'gradient'    => array(
 									'fields' => array( 'btn_gradient' ),
+								),
+								'default'     => array(
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_padding', 'button_border_style', 'button_border_width', 'button_border_radius', 'button_border_color', 'border_hover_color' ),
 								),
 							),
 							'btn_border_width' => array(
@@ -735,6 +743,85 @@ FLBuilder::register_module(
 									'custom' => array(
 										'fields' => array( 'btn_align', 'btn_mob_align', 'btn_custom_width', 'btn_custom_height', 'btn_padding_top_bottom' ),
 									),
+								),
+							),
+							'btn_padding'            => array(
+								'type'        => 'dimension',
+								'label'       => __( 'Padding', 'uabb' ),
+								'responsive'  => true,
+								'description' => 'px',
+								'preview'     => array(
+									'type'     => 'css',
+									'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+									'property' => 'padding',
+									'unit'     => 'px',
+								),
+							),
+							'button_border_style'    => array(
+								'type'    => 'select',
+								'label'   => __( 'Bottom Border Type', 'uabb' ),
+								'default' => 'none',
+								'options' => array(
+									'none'   => __( 'None', 'uabb' ),
+									'solid'  => __( 'Solid', 'uabb' ),
+									'dashed' => __( 'Dashed', 'uabb' ),
+									'dotted' => __( 'Dotted', 'uabb' ),
+									'double' => __( 'Double', 'uabb' ),
+								),
+								'preview' => array(
+									'type'     => 'css',
+									'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+									'property' => 'border-style',
+								),
+							),
+							'button_border_width'    => array(
+								'type'        => 'unit',
+								'label'       => __( 'Border Width', 'uabb' ),
+								'placeholder' => '1',
+								'description' => 'px',
+								'maxlength'   => '2',
+								'size'        => '6',
+								'preview'     => array(
+									'type'     => 'css',
+									'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+									'property' => 'border-width',
+									'unit'     => 'px',
+								),
+							),
+							'button_border_radius'   => array(
+								'type'        => 'unit',
+								'label'       => __( 'Border Radius', 'uabb' ),
+								'placeholder' => '1',
+								'description' => 'px',
+								'maxlength'   => '2',
+								'size'        => '6',
+								'preview'     => array(
+									'type'     => 'css',
+									'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+									'property' => 'border-radius',
+									'unit'     => 'px',
+								),
+							),
+							'button_border_color'    => array(
+								'type'       => 'color',
+								'label'      => __( 'Border Color', 'uabb' ),
+								'default'    => '',
+								'show_reset' => true,
+								'preview'    => array(
+									'type'     => 'css',
+									'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+									'property' => 'border-color',
+								),
+							),
+							'border_hover_color'     => array(
+								'type'       => 'color',
+								'label'      => __( 'Border Color', 'uabb' ),
+								'default'    => '',
+								'show_reset' => true,
+								'preview'    => array(
+									'type'     => 'css',
+									'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+									'property' => 'border-color',
 								),
 							),
 							'btn_custom_width'       => array(

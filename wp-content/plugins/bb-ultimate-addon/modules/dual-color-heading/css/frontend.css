@@ -1,0 +1,56 @@
+.uabb-heading-layout-inline .uabb-first-heading-text,
+.uabb-heading-layout-inline .uabb-second-heading-text,
+.uabb-heading-layout-inline .uabb-after-heading-text {
+    display: inline-block;
+}
+
+.uabb-heading-layout-block .uabb-first-heading-text,
+.uabb-heading-layout-block .uabb-second-heading-text,
+.uabb-heading-layout-block .uabb-after-heading-text {
+    display: block;
+}
+.uabb-module-content.uabb-dual-color-heading {
+    position: relative;
+}
+.uabb-bg-heading-wrap {
+    z-index: 2;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.uabb-bg-heading-wrap::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 0;
+    display: block;
+    color: rgba(0, 0, 0, 0.09);
+    content: attr(data-background-text);
+    font-size: 100px;
+    line-height: 1;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.uabb-module-content.uabb-dual-color-heading.uabb-heading-align-left .uabb-bg-heading-wrap {
+    text-align: left;
+}
+.uabb-module-content.uabb-dual-color-heading.uabb-heading-align-center .uabb-bg-heading-wrap {
+    text-align: center;
+}
+.uabb-module-content.uabb-dual-color-heading.uabb-heading-align-right .uabb-bg-heading-wrap {
+    text-align: right;
+}
+.uabb-module-content.uabb-dual-color-heading.uabb-heading-align-center .uabb-bg-heading-wrap:before {
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+.uabb-module-content.uabb-dual-color-heading.uabb-heading-align-right .uabb-bg-heading-wrap:before {
+    right: 0;
+    left: auto;
+}

@@ -130,9 +130,9 @@ final class FLBuilderWPBlocksLayout {
 		$post_id = FLBuilderModel::get_post_id();
 		$post    = get_post( $post_id );
 
-		$block  = '<!-- wp:fl-builder/layout -->';
+		$block  = "<!-- wp:fl-builder/layout -->\n";
 		$block .= self::remove_broken_p_tags( $content );
-		$block .= '<!-- /wp:fl-builder/layout -->';
+		$block .= "\n<!-- /wp:fl-builder/layout -->";
 
 		return $block;
 	}
@@ -161,9 +161,24 @@ final class FLBuilderWPBlocksLayout {
 	 * @return string
 	 */
 	static public function remove_broken_p_tags( $content ) {
+		// Convert microsoft special characters
+		$replace = array(
+			'‘' => "'",
+			'’' => "'",
+			'”' => '"',
+			'“' => '"',
+			'–' => '-',
+			'—' => '-',
+			'…' => '&#8230;',
+		);
+		$content = preg_replace( '@<p.*?></p>@', '', $content );
 		$content = preg_replace( '/<p>(.*)<\/p>/i', '<fl-p-placeholder>$1</fl-p-placeholder>', $content );
 		$content = preg_replace( '/<\/?p[^>]*\>/i', '', $content );
 		$content = preg_replace( '/fl-p-placeholder/i', 'p', $content );
+		foreach ( $replace as $k => $v ) {
+			$content = str_replace( $k, $v, $content );
+		}
+		$content = force_balance_tags( $content );
 		return $content;
 	}
 }

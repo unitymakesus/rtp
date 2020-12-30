@@ -12,8 +12,7 @@ use C_Gallery_Storage;
 use C_Image;
 use Mixin;
 use nggdb;
-use Smush\WP_Smush;
-use stdClass;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -26,10 +25,10 @@ class Thumbs extends Mixin {
 	/**
 	 * Overrides the NextGen Gallery function, to smush the dynamic images and thumbnails created by gallery
 	 *
-	 * @param C_Image|int|stdClass $image
-	 * @param                      $size
-	 * @param null                 $params
-	 * @param bool|false           $skip_defaults
+	 * @param int|object|C_Image $image          Image object.
+	 * @param string             $size           Size.
+	 * @param array|null         $params         Optional. Parameters array.
+	 * @param bool               $skip_defaults  Optional. Skip defaults.
 	 *
 	 * @return bool|object
 	 */
@@ -67,9 +66,9 @@ class Thumbs extends Mixin {
 						$stats = $image->meta_data['wp_smush'];
 					} else {
 						// Initialize stats array.
-						$stats                = array(
+						$stats = array(
 							'stats' => array_merge(
-								$smush->_get_size_signature(),
+								$smush->get_size_signature(),
 								array(
 									'api_version' => - 1,
 									'lossy'       => - 1,
@@ -78,13 +77,14 @@ class Thumbs extends Mixin {
 							),
 							'sizes' => array(),
 						);
+
 						$stats['bytes']       = $response['data']->bytes_saved;
 						$stats['percent']     = $response['data']->compression;
 						$stats['size_after']  = $response['data']->after_size;
 						$stats['size_before'] = $response['data']->before_size;
 						$stats['time']        = $response['data']->time;
 					}
-					$stats['sizes'][ $size ] = (object) $smush->_array_fill_placeholders( $smush->_get_size_signature(), (array) $response['data'] );
+					$stats['sizes'][ $size ] = (object) $smush->array_fill_placeholders( $smush->get_size_signature(), (array) $response['data'] );
 
 					if ( isset( $image->metadata ) ) {
 						$image->meta_data['wp_smush'] = $stats;

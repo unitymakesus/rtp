@@ -37,8 +37,8 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
      *
      * @var array
      */
-    protected $sequences = array(
-        array(
+    protected $sequences = [
+        [
             '->',
             'trans',
             '(',
@@ -47,32 +47,14 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
             self::METHOD_ARGUMENTS_TOKEN,
             ',',
             self::DOMAIN_TOKEN,
-        ),
-        array(
-            '->',
-            'transChoice',
-            '(',
-            self::MESSAGE_TOKEN,
-            ',',
-            self::METHOD_ARGUMENTS_TOKEN,
-            ',',
-            self::METHOD_ARGUMENTS_TOKEN,
-            ',',
-            self::DOMAIN_TOKEN,
-        ),
-        array(
+        ],
+        [
             '->',
             'trans',
             '(',
             self::MESSAGE_TOKEN,
-        ),
-        array(
-            '->',
-            'transChoice',
-            '(',
-            self::MESSAGE_TOKEN,
-        ),
-    );
+        ],
+    ];
 
     /**
      * {@inheritdoc}
@@ -81,19 +63,16 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     {
         $files = $this->extractFiles($resource);
         foreach ($files as $file) {
-            $this->parseTokens(token_get_all(file_get_contents($file)), $catalog);
+            $this->parseTokens(token_get_all(file_get_contents($file)), $catalog, $file);
 
-            if (\PHP_VERSION_ID >= 70000) {
-                // PHP 7 memory manager will not release after token_get_all(), see https://bugs.php.net/70098
-                gc_mem_caches();
-            }
+            gc_mem_caches();
         }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setPrefix($prefix)
+    public function setPrefix(string $prefix)
     {
         $this->prefix = $prefix;
     }
@@ -103,7 +82,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
      *
      * @param mixed $token
      *
-     * @return string
+     * @return string|null
      */
     protected function normalizeToken($token)
     {
@@ -121,7 +100,7 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     {
         for (; $tokenIterator->valid(); $tokenIterator->next()) {
             $t = $tokenIterator->current();
-            if (T_WHITESPACE !== $t[0]) {
+            if (\T_WHITESPACE !== $t[0]) {
                 break;
             }
         }
@@ -156,30 +135,40 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     {
         $message = '';
         $docToken = '';
+        $docPart = '';
 
         for (; $tokenIterator->valid(); $tokenIterator->next()) {
             $t = $tokenIterator->current();
+            if ('.' === $t) {
+                // Concatenate with next token
+                continue;
+            }
             if (!isset($t[1])) {
                 break;
             }
 
             switch ($t[0]) {
-                case T_START_HEREDOC:
+                case \T_START_HEREDOC:
                     $docToken = $t[1];
                     break;
-                case T_ENCAPSED_AND_WHITESPACE:
-                case T_CONSTANT_ENCAPSED_STRING:
-                    $message .= $t[1];
+                case \T_ENCAPSED_AND_WHITESPACE:
+                case \T_CONSTANT_ENCAPSED_STRING:
+                    if ('' === $docToken) {
+                        $message .= PhpStringTokenParser::parse($t[1]);
+                    } else {
+                        $docPart = $t[1];
+                    }
                     break;
-                case T_END_HEREDOC:
-                    return PhpStringTokenParser::parseDocString($docToken, $message);
+                case \T_END_HEREDOC:
+                    $message .= PhpStringTokenParser::parseDocString($docToken, $docPart);
+                    $docToken = '';
+                    $docPart = '';
+                    break;
+                case \T_WHITESPACE:
+                    break;
                 default:
                     break 2;
             }
-        }
-
-        if ($message) {
-            $message = PhpStringTokenParser::parse($message);
         }
 
         return $message;
@@ -187,11 +176,8 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
 
     /**
      * Extracts trans message from PHP tokens.
-     *
-     * @param array            $tokens
-     * @param MessageCatalogue $catalog
      */
-    protected function parseTokens($tokens, MessageCatalogue $catalog)
+    protected function parseTokens(array $tokens, MessageCatalogue $catalog, string $filename)
     {
         $tokenIterator = new \ArrayIterator($tokens);
 
@@ -210,13 +196,16 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
                     } elseif (self::MESSAGE_TOKEN === $item) {
                         $message = $this->getValue($tokenIterator);
 
-                        if (count($sequence) === ($sequenceKey + 1)) {
+                        if (\count($sequence) === ($sequenceKey + 1)) {
                             break;
                         }
                     } elseif (self::METHOD_ARGUMENTS_TOKEN === $item) {
                         $this->skipMethodArgument($tokenIterator);
                     } elseif (self::DOMAIN_TOKEN === $item) {
-                        $domain = $this->getValue($tokenIterator);
+                        $domainToken = $this->getValue($tokenIterator);
+                        if ('' !== $domainToken) {
+                            $domain = $domainToken;
+                        }
 
                         break;
                     } else {
@@ -226,6 +215,10 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
 
                 if ($message) {
                     $catalog->set($message, $this->prefix.$message, $domain);
+                    $metadata = $catalog->getMetadata($message, $domain) ?? [];
+                    $normalizedFilename = preg_replace('{[\\\\/]+}', '/', $filename);
+                    $metadata['sources'][] = $normalizedFilename.':'.$tokens[$key][2];
+                    $catalog->setMetadata($message, $metadata, $domain);
                     break;
                 }
             }
@@ -233,21 +226,17 @@ class PhpExtractor extends AbstractFileExtractor implements ExtractorInterface
     }
 
     /**
-     * @param string $file
-     *
      * @return bool
      *
      * @throws \InvalidArgumentException
      */
-    protected function canBeExtracted($file)
+    protected function canBeExtracted(string $file)
     {
-        return $this->isFile($file) && 'php' === pathinfo($file, PATHINFO_EXTENSION);
+        return $this->isFile($file) && 'php' === pathinfo($file, \PATHINFO_EXTENSION);
     }
 
     /**
-     * @param string|array $directory
-     *
-     * @return array
+     * {@inheritdoc}
      */
     protected function extractFromDirectory($directory)
     {

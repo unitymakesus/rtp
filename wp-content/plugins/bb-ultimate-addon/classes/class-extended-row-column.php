@@ -26,7 +26,7 @@ class UABB_Extend_RowColumn {
 		$enable_row_separator = true;
 
 		if ( ! empty( $uabb_options ) && array_key_exists( 'uabb-row-separator', $uabb_options ) ) {
-			if ( 1 == $uabb_options['uabb-row-separator'] ) {
+			if ( 1 === (int) $uabb_options['uabb-row-separator'] ) {
 				$enable_row_separator = true;
 			} else {
 				$enable_row_separator = false;
@@ -57,7 +57,7 @@ class UABB_Extend_RowColumn {
 	 * @param string $nodes gets the nodes for the settings.
 	 * @param object $global_settings gets the global settings.
 	 */
-	function uabb_extended_setting_css( $css, $nodes, $global_settings ) {
+	public function uabb_extended_setting_css( $css, $nodes, $global_settings ) {
 
 		ob_start();
 		include BB_ULTIMATE_ADDON_DIR . 'assets/dynamic-css/uabb-extended-setting-css.php';
@@ -71,7 +71,7 @@ class UABB_Extend_RowColumn {
 	 * @since x.x.x
 	 * @param object $content gets the content for the Row Separator.
 	 */
-	function uabb_responsive_div_html( $content ) {
+	public function uabb_responsive_div_html( $content ) {
 		echo '<div class="uabb-js-breakpoint" style="display: none;"></div>';
 	}
 
@@ -82,8 +82,8 @@ class UABB_Extend_RowColumn {
 	 * @param string $form gets the form for the Row Separator.
 	 * @param string $id gets the row's name.
 	 */
-	function row_settings( $form, $id ) {
-		if ( 'row' == $id ) {
+	public function row_settings( $form, $id ) {
+		if ( 'row' === $id ) {
 
 			$top_sep_option = apply_filters(
 				'uabb_row_separator_top_options',
@@ -476,9 +476,9 @@ class UABB_Extend_RowColumn {
 	 * @param string $form gets the form class for the Row Separator.
 	 * @param string $id gets the column's name.
 	 */
-	function column_settings( $form, $id ) {
+	public function column_settings( $form, $id ) {
 
-		if ( 'col' == $id ) {
+		if ( 'col' === $id ) {
 			$column_form = array(
 				'tabs' => array(
 					'style' => array(
@@ -535,12 +535,12 @@ class UABB_Extend_RowColumn {
 	 * @param string $class gets the class for the Row Separator.
 	 * @param object $row_object gets the row's settings.
 	 */
-	function row_class( $class, $row_object ) {
+	public function row_class( $class, $row_object ) {
 		$row = $row_object->settings;
-		if ( 'none' != $row->separator_shape ) {
+		if ( 'none' !== $row->separator_shape ) {
 			$class = $class . ' uabb-top-row uabb-' . $row->separator_shape;
 		}
-		if ( 'none' != $row->bot_separator_shape ) {
+		if ( 'none' !== $row->bot_separator_shape ) {
 			$class = $class . ' uabb-bottom-row uabb-' . $row->bot_separator_shape;
 		}
 		return $class;
@@ -552,9 +552,9 @@ class UABB_Extend_RowColumn {
 	 * @since x.x.x
 	 * @param object $row_object gets the row's settings.
 	 */
-	function row_top_html( $row_object ) {
+	public function row_top_html( $row_object ) {
 		$row = $row_object->settings;
-		if ( ( isset( $row->separator_position ) && ( 'top' == $row->separator_position || 'top_bottom' == $row->separator_position ) ) || 'none' != $row->separator_shape ) {
+		if ( ( isset( $row->separator_position ) && ( 'top' === $row->separator_position || 'top_bottom' === $row->separator_position ) ) || 'none' !== $row->separator_shape ) {
 			$row->separator_flag = 'top';
 			include BB_ULTIMATE_ADDON_DIR . 'classes/class-extended-row-html.php';
 		}
@@ -566,9 +566,9 @@ class UABB_Extend_RowColumn {
 	 * @since x.x.x
 	 * @param object $row_object gets the row's settings.
 	 */
-	function row_bottom_html( $row_object ) {
+	public function row_bottom_html( $row_object ) {
 		$row = $row_object->settings;
-		if ( ( isset( $row->separator_position ) && ( 'bottom' == $row->separator_position || 'top_bottom' == $row->separator_position ) ) || 'none' != $row->bot_separator_shape ) {
+		if ( ( isset( $row->separator_position ) && ( 'bottom' === $row->separator_position || 'top_bottom' === $row->separator_position ) ) || 'none' !== $row->bot_separator_shape ) {
 			$row->separator_flag = 'bottom';
 			include BB_ULTIMATE_ADDON_DIR . 'classes/class-extended-row-html.php';
 		}
@@ -577,4 +577,3 @@ class UABB_Extend_RowColumn {
 
 $uabb_extend_rowcolumn = new UABB_Extend_RowColumn();
 $uabb_extend_rowcolumn->init();
-

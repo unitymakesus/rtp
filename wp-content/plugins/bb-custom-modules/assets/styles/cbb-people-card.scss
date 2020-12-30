@@ -1,3 +1,5 @@
+@import "../global/variables.scss";
+
 .flex-grid .flex-item {
   .figure-card.figure-card-people {
     position: relative;
@@ -5,7 +7,7 @@
     padding-bottom: 100%;
     overflow: hidden;
 
-    a.mega-link:hover ~ .figure-card-img, &:focus-within .figure-card-img {
+    &:focus-within .figure-card-img {
       img {
         transform: scale(1.03);
       }
@@ -32,6 +34,7 @@
       padding: 10px;
       height: auto;
       margin: 0;
+      background: $color-white;
     }
 
     .card-title {

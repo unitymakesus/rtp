@@ -686,14 +686,19 @@ FLBuilder::register_module(
 						),
 						'show_caption'                   => array(
 							'type'    => 'select',
-							'label'   => __( 'Show Caption on Hover', 'uabb' ),
+							'label'   => __( 'Show Caption', 'uabb' ),
 							'default' => 'no',
 							'options' => array(
-								'yes' => __( 'Yes', 'uabb' ),
-								'no'  => __( 'No', 'uabb' ),
+								'no'     => __( 'No', 'uabb' ),
+								'yes'    => __( 'On Hover', 'uabb' ),
+								'always' => __( 'Always', 'uabb' ),
 							),
 							'toggle'  => array(
-								'yes' => array(
+								'yes'    => array(
+									'fields'   => array( 'caption_color', 'caption_font', 'caption_font_size_unit', 'caption_line_height_unit', 'caption_letter_spacing', 'caption_transform' ),
+									'sections' => array( 'section_typography_caption' ),
+								),
+								'always' => array(
 									'fields'   => array( 'caption_color', 'caption_font', 'caption_font_size_unit', 'caption_line_height_unit', 'caption_letter_spacing', 'caption_transform' ),
 									'sections' => array( 'section_typography_caption' ),
 								),
@@ -934,7 +939,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/video-gallery-module//?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=video-gallery-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 
@@ -1023,7 +1028,7 @@ FLBuilder::register_settings_form(
 								'type'        => 'text',
 								'label'       => __( 'Caption', 'uabb' ),
 								'default'     => 'First Video',
-								'help'        => __( 'This title will be visible on hover.', 'uabb' ),
+								'help'        => __( 'This title will be for the Videos.', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'tags'               => array(

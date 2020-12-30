@@ -49,7 +49,7 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'menu'                 => array(
-									'fields'   => array( 'wp_menu', 'close_on_link' ),
+									'fields'   => array( 'wp_menu', 'close_on_link', 'submenu_toggle' ),
 									'sections' => array( 'section_menu_style', 'menu_typography' ),
 								),
 								'content'              => array(
@@ -68,11 +68,46 @@ FLBuilder::register_module(
 							),
 						),
 						'wp_menu'            => UABBOffCanvasModule::render_menus(),
+						'submenu_toggle'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Submenu Toggle', 'uabb' ),
+							'default' => 'none',
+							'options' => array(
+								'arrows' => __( 'Arrows', 'uabb' ),
+								'plus'   => __( 'Plus Sign', 'uabb' ),
+								'none'   => __( 'None', 'uabb' ),
+							),
+							'toggle'  => array(
+								'arrows' => array(
+									'fields' => array( 'collapse_inactive' ),
+								),
+								'plus'   => array(
+									'fields' => array( 'collapse_inactive' ),
+								),
+							),
+						),
+						'collapse_inactive'  => array(
+							'type'    => 'select',
+							'label'   => __( 'Collapse Inactive', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'help'    => __( 'Choosing yes will keep only one item open at a time. Choosing no will allow multiple items to be open at the same time.', 'uabb' ),
+							'preview' => array(
+								'type' => 'none',
+							),
+						),
 						'ct_content'         => array(
 							'type'        => 'editor',
 							'label'       => '',
 							'default'     => 'Dignissim molestiae ipsam minima sunt, reiciendis aliqua consectetur! Qui euismod, ipsa. Illum cumque? Dis. Nisl erat temporibus? Nascetur arcu rerum donec, nonummy proin eveniet exercitationem! Nam, senectus, nihil! Interdum? Quasi ut quidem, urna suscipit tristique nunc, iaculis fermentum deleniti. Amet consectetuer nulla. Ducimus hic. Turpis dolores occaecat necessitatibus aute aliquam? Eveniet ultricies dictumst aliquet accusamus, officiis morbi sapien occaecati cras, aperiam vestibulum, officiis qui quidem minim scelerisque explicabo, mi inceptos pulvinar quo diamlorem phasellus ut fugit perferendis dui nesciunt nobis, venenatis egestas aliquet cubilia! Fringilla, a aliqua veritatis aliquid cubilia sed, natus? Venenatis asperiores, sapiente error erat do auctor mollitia.',
 							'connections' => array( 'string', 'html' ),
+						),
+						'ct_raw'             => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . wp_create_nonce( 'uabb-module-nonce' ) . '></div>',
 						),
 						'ct_saved_rows'      => array(
 							'type'    => 'select',
@@ -467,7 +502,7 @@ FLBuilder::register_module(
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
-								'selector' => '.uabb-offcanvas-photo-wrap .uabb-offcanvas-photo',
+								'selector' => '.uabb-offcanvas-photo-wrap .uabb-offcanvas-photo-content',
 								'property' => 'Background',
 							),
 						),
@@ -498,7 +533,7 @@ FLBuilder::register_module(
 							),
 							'preview'    => array(
 								'type'     => 'css',
-								'selector' => '.uabb-offcanvas-photo-wrap',
+								'selector' => '.uabb-offcanvas-photo-wrap .uabb-offcanvas-photo-content',
 								'property' => 'padding',
 								'unit'     => 'px',
 							),
@@ -564,9 +599,10 @@ FLBuilder::register_module(
 						'btn_style'                      => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'class'   => 'creative_button_styles',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
@@ -702,7 +738,7 @@ FLBuilder::register_module(
 				'btn-structure'    => array(
 					'title'  => __( 'Button Structure', 'uabb' ),
 					'fields' => array(
-						'btn_width'              => array(
+						'btn_width'                => array(
 							'type'    => 'select',
 							'label'   => __( 'Width', 'uabb' ),
 							'default' => 'auto',
@@ -723,7 +759,45 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'btn_custom_width'       => array(
+						'button_padding_dimension' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-creative-button-wrap a',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'button_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-creative-button-wrap a',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'       => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'btn_custom_width'         => array(
 							'type'      => 'unit',
 							'label'     => __( 'Custom Width', 'uabb' ),
 							'default'   => '200',
@@ -744,7 +818,7 @@ FLBuilder::register_module(
 								'unit'     => 'px',
 							),
 						),
-						'btn_custom_height'      => array(
+						'btn_custom_height'        => array(
 							'type'      => 'unit',
 							'label'     => __( 'Custom Height', 'uabb' ),
 							'default'   => '45',
@@ -765,7 +839,7 @@ FLBuilder::register_module(
 								'unit'     => 'px',
 							),
 						),
-						'btn_padding_top_bottom' => array(
+						'btn_padding_top_bottom'   => array(
 							'type'        => 'unit',
 							'label'       => __( 'Padding Top/Bottom', 'uabb' ),
 							'placeholder' => '0',
@@ -795,7 +869,7 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'btn_padding_left_right' => array(
+						'btn_padding_left_right'   => array(
 							'type'        => 'unit',
 							'label'       => __( 'Padding Left/Right', 'uabb' ),
 							'placeholder' => '0',
@@ -825,7 +899,7 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'btn_border_radius'      => array(
+						'btn_border_radius'        => array(
 							'type'      => 'unit',
 							'label'     => __( 'Round Corners', 'uabb' ),
 							'maxlength' => '3',
@@ -845,7 +919,7 @@ FLBuilder::register_module(
 								'unit'     => 'px',
 							),
 						),
-						'btn_align'              => array(
+						'btn_align'                => array(
 							'type'    => 'align',
 							'label'   => __( 'Alignment', 'uabb' ),
 							'default' => 'left',
@@ -855,7 +929,7 @@ FLBuilder::register_module(
 								'property' => 'text-align',
 							),
 						),
-						'btn_mob_align'          => array(
+						'btn_mob_align'            => array(
 							'type'    => 'align',
 							'label'   => __( 'Mobile Alignment', 'uabb' ),
 							'default' => 'center',
@@ -1111,7 +1185,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/off-canvas-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=off-canvas-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/design-off-canvas-menu-for-beaver-builder/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=off-canvas-module" target="_blank" rel="noopener"> How to Design an Off-Canvas menu for Beaver Builder? ( Learn in 3 Easy Steps! ) </a> </li>

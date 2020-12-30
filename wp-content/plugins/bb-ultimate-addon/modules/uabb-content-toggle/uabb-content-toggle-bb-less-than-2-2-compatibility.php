@@ -7,8 +7,11 @@
  *  @package UABB Content Toggle Module
  */
 
+$nonce = wp_create_nonce( 'uabb-module-nonce' );
+
 FLBuilder::register_module(
-	'UABBContentToggleModule', array(
+	'UABBContentToggleModule',
+	array(
 		'general_content1' => array(
 			'title'    => __( 'Content 1', 'uabb' ),
 			'sections' => array(
@@ -68,6 +71,10 @@ FLBuilder::register_module(
 							),
 							'wpautop'     => false,
 							'connections' => array( 'string', 'html' ),
+						),
+						'ct_raw_nonce'         => array(
+							'type'    => 'text',
+							'default' => $nonce,
 						),
 						'cont1_saved_rows'     => array(
 							'type'    => 'select',
@@ -147,6 +154,10 @@ FLBuilder::register_module(
 							),
 							'wpautop'     => false,
 							'connections' => array( 'string', 'html' ),
+						),
+						'ct2_raw_nonce'        => array(
+							'type'    => 'text',
+							'default' => $nonce,
 						),
 						'cont2_saved_rows'     => array(
 							'type'    => 'select',

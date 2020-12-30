@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBBeforeaftersliderModule', array(
+	'UABBBeforeaftersliderModule',
+	array(
 		'general' => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

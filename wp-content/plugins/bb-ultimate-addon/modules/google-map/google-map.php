@@ -46,7 +46,7 @@ class GoogleMapModule extends FLBuilderModule {
 
 		$url          = 'https://maps.googleapis.com/maps/api/js';
 		$this->notice = __( 'Notice', 'uabb' );
-		if ( false != $google_api_key ) {
+		if ( false !== $google_api_key ) {
 			$arr_params   = array(
 				'key' => $google_api_key,
 			);
@@ -62,7 +62,7 @@ class GoogleMapModule extends FLBuilderModule {
 	 * @param array  $name an array to get the names of the settings field.
 	 * @param object $settings an object to get various settings.
 	 */
-	function uabb_google_map_settings_field( $field, $name, $settings ) {
+	public function uabb_google_map_settings_field( $field, $name, $settings ) {
 
 		if ( isset( $settings->map_lattitude ) && isset( $settings->map_longitude ) ) {
 
@@ -81,31 +81,31 @@ class GoogleMapModule extends FLBuilderModule {
 				);
 			}
 
-			if ( '' == $settings->uabb_gmap_addresses[0]->map_lattitude && '' == $settings->uabb_gmap_addresses[0]->map_longitude ) {
+			if ( '' === $settings->uabb_gmap_addresses[0]->map_lattitude && '' === $settings->uabb_gmap_addresses[0]->map_longitude ) {
 				if ( isset( $settings->marker_point ) ) {
-					$settings->uabb_gmap_addresses[0]->marker_point = ( '' != $settings->marker_point ) ? $settings->marker_point : 'default';
+					$settings->uabb_gmap_addresses[0]->marker_point = ( '' !== $settings->marker_point ) ? $settings->marker_point : 'default';
 				}
 
 				if ( isset( $settings->open_marker ) ) {
-					$settings->uabb_gmap_addresses[0]->open_marker = ( '' != $settings->open_marker ) ? $settings->open_marker : 'no';
+					$settings->uabb_gmap_addresses[0]->open_marker = ( '' !== $settings->open_marker ) ? $settings->open_marker : 'no';
 				}
 
 				if ( isset( $settings->marker_img_src ) ) {
-					$settings->uabb_gmap_addresses[0]->marker_img     = ( '' != $settings->marker_img ) ? $settings->marker_img : '';
-					$settings->uabb_gmap_addresses[0]->marker_img_src = ( '' != $settings->marker_img_src ) ? $settings->marker_img_src : '';
+					$settings->uabb_gmap_addresses[0]->marker_img     = ( '' !== $settings->marker_img ) ? $settings->marker_img : '';
+					$settings->uabb_gmap_addresses[0]->marker_img_src = ( '' !== $settings->marker_img_src ) ? $settings->marker_img_src : '';
 				}
 			}
-			if ( '' == $settings->uabb_gmap_addresses[0]->map_lattitude ) {
-				$settings->uabb_gmap_addresses[0]->map_lattitude = ( '' != $settings->map_lattitude ) ? $settings->map_lattitude : 40.76142;
+			if ( '' === $settings->uabb_gmap_addresses[0]->map_lattitude ) {
+				$settings->uabb_gmap_addresses[0]->map_lattitude = ( '' !== $settings->map_lattitude ) ? $settings->map_lattitude : 40.76142;
 			}
 
-			if ( '' == $settings->uabb_gmap_addresses[0]->map_longitude ) {
-				$settings->uabb_gmap_addresses[0]->map_longitude = ( '' != $settings->map_longitude ) ? $settings->map_longitude : -73.97712;
+			if ( '' === $settings->uabb_gmap_addresses[0]->map_longitude ) {
+				$settings->uabb_gmap_addresses[0]->map_longitude = ( '' !== $settings->map_longitude ) ? $settings->map_longitude : -73.97712;
 			}
 
 			if ( isset( $settings->info_window_text ) ) {
-				if ( '' == $settings->uabb_gmap_addresses[0]->info_window_text ) {
-					$settings->uabb_gmap_addresses[0]->info_window_text = ( '' != $settings->info_window_text ) ? $settings->info_window_text : '';
+				if ( '' === $settings->uabb_gmap_addresses[0]->info_window_text ) {
+					$settings->uabb_gmap_addresses[0]->info_window_text = ( '' !== $settings->info_window_text ) ? $settings->info_window_text : '';
 				}
 			}
 		}
@@ -120,7 +120,9 @@ $style1 = 'line-height: 1.45em; color: #a94442;';
 $style2 = 'font-weight:bold;color: #a94442;';
 $notice = sprintf( /* translators: %1$s: search term, %2$s: search term, %3$s: search term */
 	__( '<span style="%1$s">To display customized Google Map without an issue, you need to configure Google Map API key in <span style="%2$s">General Settings</span>. Please configure API key from <a href="%3$s" class="uabb-google-map-notice" target="_blank" rel="noopener">here</a></span>.', 'uabb' ),
-	$style1, $style2, admin_url( 'options-general.php?page=uabb-builder-settings#uabb' )
+	$style1,
+	$style2,
+	admin_url( 'options-general.php?page=uabb-builder-settings#uabb' )
 );
 
 
@@ -129,9 +131,10 @@ $uabb_setting_options = UABB_Init::$uabb_options['fl_builder_uabb'];
 if ( isset( $uabb_setting_options['uabb-google-map-api'] ) && ! empty( $uabb_setting_options['uabb-google-map-api'] ) ) {
 	$google_api_key = $uabb_setting_options['uabb-google-map-api'];
 }
-if ( '' != $google_api_key ) {
+if ( '' !== $google_api_key ) {
 	$notice = sprintf( /* translators: %1$s: search term */
-		__( '<span style="%1$s">Facing issues while using Google Map module. Please refer your browser for any console error related to Google Map and the following article for <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/error-messages"> troubleshooting steps </a></span>', 'uabb' ), $style1
+		__( '<span style="%1$s">Facing issues while using Google Map module. Please refer your browser for any console error related to Google Map and the following article for <a target="_blank" href="https://developers.google.com/maps/documentation/javascript/error-messages"> troubleshooting steps </a></span>', 'uabb' ),
+		$style1
 	);
 }
 
@@ -141,7 +144,7 @@ if ( '' != $google_api_key ) {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/google-map/google-map-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/google-map/google-map-bb-less-than-2-2-compatibility.php';

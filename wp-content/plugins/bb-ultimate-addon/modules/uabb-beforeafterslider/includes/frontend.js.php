@@ -12,10 +12,10 @@
 	var document_width, document_height;
 
 	var args = {
-			id : '<?php echo $id; ?>',
-			before_after_orientation : '<?php echo $settings->before_after_orientation; ?>',
-			initial_offset : '<?php echo $settings->initial_offset; ?>',
-			move_on_hover : '<?php echo $settings->move_on_hover; ?>',
+			id : '<?php echo esc_attr( $id ); ?>',
+			before_after_orientation : '<?php echo esc_attr( $settings->before_after_orientation ); ?>',
+			initial_offset : '<?php echo esc_attr( $settings->initial_offset ); ?>',
+			move_on_hover : '<?php echo esc_attr( $settings->move_on_hover ); ?>',
 		};
 
 
@@ -31,7 +31,7 @@
 		UABBTrigger.addHook( 'uabb-accordion-click', function( argument, selector ) {
 			var child_id = jQuery( selector + ' .fl-module-uabb-beforeafterslider' ).data('node');
 
-			if( child_id != '' ) {
+			if( child_id !== '' ) {
 
 				jQuery(window).trigger('resize');
 			}
@@ -42,7 +42,7 @@
 
 			var child_id = jQuery( selector + ' .fl-module-uabb-beforeafterslider' ).data('node');
 
-			if( '' != child_id ) {
+			if( '' !== child_id ) {
 
 				jQuery(window).trigger('resize');
 			}
@@ -53,7 +53,7 @@
 
 			var child_id = jQuery( selector + ' .fl-module-uabb-beforeafterslider' ).data('node');
 
-			if( '' != child_id ) {
+			if( '' !== child_id ) {
 
 				jQuery(window).trigger('resize');
 			}
@@ -74,21 +74,21 @@
 
 	jQuery(window).resize(function(){
 
-		if( document_width != jQuery( document ).width() || document_height != jQuery( document ).height() ) {
+		if( document_width !== jQuery( document ).width() || document_height !== jQuery( document ).height() ) {
 
 			document_width = jQuery( document ).width();
 			document_height = jQuery( document ).height();
 
-			jQuery( ".baslider-<?php echo $id; ?>" ).css( 'width', '' );
-			jQuery( ".baslider-<?php echo $id; ?>" ).css( 'height', '' );
+			jQuery( ".baslider-<?php echo esc_attr( $id ); ?>" ).css( 'width', '' );
+			jQuery( ".baslider-<?php echo esc_attr( $id ); ?>" ).css( 'height', '' );
 
 			max = -1;
-			jQuery( ".baslider-<?php echo $id; ?> img" ).each(function() {
+			jQuery( ".baslider-<?php echo esc_attr( $id ); ?> img" ).each(function() {
 				if( max < jQuery(this).width() ) {
 					max = jQuery(this).width();
 				}
 			});
-			jQuery( ".baslider-<?php echo $id; ?>" ).css( 'width', max + 'px' );
+			jQuery( ".baslider-<?php echo esc_attr( $id ); ?>" ).css( 'width', max + 'px' );
 		}
 
 	});

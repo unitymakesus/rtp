@@ -135,12 +135,13 @@ class FLSlideshowModule extends FLBuilderModule {
 
 			foreach ( $photos as $photo ) {
 				$caption   = str_replace( array( "\r", "\n" ), '', nl2br( htmlspecialchars( $photo->caption ) ) );
+				$alt       = empty( $photo->alt ) ? '' : esc_attr( $photo->alt );
 				$urls      = '{' . "\n";
 				$urls .= 'thumbURL: "' . $photo->thumbURL . '",'; // @codingStandardsIgnoreLine
 				$urls .= 'largeURL: "' . $photo->largeURL . '",'; // @codingStandardsIgnoreLine
 				$urls .= 'x3largeURL: "' . $photo->x3largeURL . '",'; // @codingStandardsIgnoreLine
 				$urls     .= 'caption: "' . $caption . '",';
-				$urls     .= 'alt: "' . esc_attr( $photo->alt ) . '"';
+				$urls     .= 'alt: "' . $alt . '",';
 				$urls     .= '}';
 				$objects[] = $urls;
 			}

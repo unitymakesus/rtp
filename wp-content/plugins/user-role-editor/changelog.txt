@@ -1,5 +1,51 @@
 CHANGES LOG (full version).
 ===========================
+= [4.57.1] 10.12.2020 =
+* Fix: Nextgen Gallery's user capabilities were not shown as granted after current role change via roles selection dropdown list.
+* Fix: PHP Warning:  The magic method __wakeup() must have public visibility. __wakeup() method was defined as private as a part of the Singleton design partern. Method was redefined as public but with exception inside to prevent its usage.
+* Update: jQuery [MultiSelect](http://multiple-select.wenzhixin.net.cn/) plugin  was updated to version 1.5.2
+
+= [4.57] 09.11.2020 =
+* Update: Marked as compatible with WordPress 5.6.
+* Update: " jQuery( document ).ready( handler ) " was replaced globally with " jQuery( handler ) " for compatibility with [jQuery 3.0](https://api.jquery.com/ready/) and WordPress 5.6.
+* Update: jQuery UI CSS was updated to version 1.12.1
+* Fix: "Grant Roles" button produced JavaScript error, if single user without any role granted (None) was selected.
+
+= [4.56.1] 05.09.2020 =
+* New: WordPress multisite: Main site: Users->User Role Editor->Apply to All->Update: 'ure_after_network_roles_update' action hook was added. It is executed after all roles were replicated from the main site to the all other subsites of the network.
+* Fix: "Granted Only" filter did not work.
+* Fix: Warning was fixed: wp-content/plugins/user-role-editor/js/ure.js: jQuery.fn.attr('checked') might use property instead of attribute.
+
+= [4.56] 09.08.2020 =
+* New: User capabilities 'install_languages', 'resume_plugins', 'resume_themes', 'view_site_health_checks' were added to the list of supported WordPress built-in user capabilities.
+* Update: Single site WordPress installation: URE automatically grants all existing user capabilities to WordPress built-in 'administrator' role before opening its page "Users->User Role Editor". 
+* Fix: Extra slash was removed between URE_PLUGIN_URL and the image resource when outputting URE_PLUGIN_URL .'/images/ajax-loader.gif' at 'Users->User Role Editor' page.
+* Info: Marked as compatible with WordPress 5.5.
+
+= [4.55.1] 06.06.2020 =
+* Security fix: User with 'edit_users' capability could assign to another user a role not included into the editable roles list. This fix is required to install ASAP for all sites which have user(s) with 'edit_users' capability granted not via 'administrator' role.
+* Update: URE_Uninstall class properties were made 'protected' to be accessible in URE_Uninstall_Pro class included into the Pro version.
+
+= [4.55] 03.06.2020 =
+* Update: User Role Editor uninstallation was refactored. It fully removes the ('ure_%') user capabilities from the user roles data.
+
+= [4.54] 02.05.2020 =
+New: Quick filter hides capabilities, which do not contain search string
+Update: CSS enhancement: When site has many custom post types capabilities list section maximal height is limited by real height of the left side (capabilities groups) section, not by 720px as earlier.
+
+= [4.53.1] 22.03.2020 =
+* New: "Hide Pro banner" checkbox works via AJAX without full page refresh.
+* Fix: Undefined variable: $message at wp-content/plugins/user-role-editor/includes/classes/editor.php:898
+* Update: Few English grammar enhancements.
+
+= [4.53] 01.02.2020 =
+* Update: "Add role", "Delete role", "Rename role", "Add capability", "Delete capability" do not reload full page on completion, but use AJAX for data exchange with server and refresh parts of the page via JavaScript.
+* Update: Multisite: "Allow non super administrators to create, edit, and delete users" option: priority for 'map_meta_cap' filter priority was raised from 1 to 99, in order make possible to overwrite changes made by other plugins, like WooCommerce.
+* Fix: Some English grammar mistakes.
+
+= [4.52.2] 26.12.2019 =
+* Fix: Custom capabilities for custom post types was not created by URE automatically since version 4.52.1.
+* Fix: 'administrator' role protection did not show to power users roles with 'administrator' word inside, like 'shop_administrator', etc.
 
 = [4.52.1] 11.11.2019 =
 * Update: URE requires PHP version 5.6.

@@ -4,9 +4,12 @@
  * @subpackage The_SEO_Framework\Admin\Settings
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and $_this = the_seo_framework_class() and $this instanceof $_this or die;
+// phpcs:disable, VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable -- includes.
+// phpcs:disable, WordPress.WP.GlobalVariablesOverride -- This isn't the global scope.
 
-//* Fetch the required instance within this file.
+defined( 'THE_SEO_FRAMEWORK_PRESENT' ) and the_seo_framework()->_verify_include_secret( $_secret ) or die;
+
+// Fetch the required instance within this file.
 $instance = $this->get_view_instance( 'the_seo_framework_feed_metabox', $instance );
 
 switch ( $instance ) :
@@ -28,15 +31,19 @@ switch ( $instance ) :
 		$source_the_feed_label  = esc_html__( 'Add link to source below the feed entry content?', 'autodescription' );
 		$source_the_feed_label .= ' ' . $this->make_info( __( 'This link will not be followed by search engines.', 'autodescription' ), '', false );
 
+		$index_the_feed_label  = esc_html__( 'Allow indexing of feeds?', 'autodescription' );
+		$index_the_feed_label .= ' ' . $this->make_info( __( 'If this site publishes podcasts, enable this option. Otherwise, leave it disabled. Indexing feeds can cause search engines to crawl and index new pages slower; however, some podcast services require feeds to be indexable.', 'autodescription' ), '', false );
+
 		$this->wrap_fields(
 			[
 				$this->make_checkbox( 'excerpt_the_feed', $excerpt_the_feed_label, '', false ),
 				$this->make_checkbox( 'source_the_feed', $source_the_feed_label, '', false ),
+				$this->make_checkbox( 'index_the_feed', $index_the_feed_label, '', false ),
 			],
 			true
 		);
 
-		if ( $this->rss_uses_excerpt() ) {
+		if ( get_option( 'rss_use_excerpt' ) ) {
 			$this->description_noesc(
 				$this->convert_markdown(
 					sprintf(

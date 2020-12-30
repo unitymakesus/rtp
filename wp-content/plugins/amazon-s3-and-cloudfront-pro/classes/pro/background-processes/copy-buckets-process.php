@@ -33,7 +33,7 @@ class Copy_Buckets_Process extends Background_Tool_Process {
 		foreach ( $attachments as $attachment_id ) {
 			$as3cf_item = Media_Library_Item::get_by_source_id( $attachment_id );
 
-			if ( $bucket === $as3cf_item->bucket() ) {
+			if ( $as3cf_item->bucket() === $bucket ) {
 				continue;
 			}
 
@@ -83,14 +83,29 @@ class Copy_Buckets_Process extends Background_Tool_Process {
 			$as3cf_item = Media_Library_Item::get_by_source_id( $attachment_id );
 
 			foreach ( $attachment_keys as $key ) {
-				$args    = array(
+
+				$args = array(
 					'Bucket'     => $bucket,
 					'Key'        => $key,
 					'CopySource' => urlencode( "{$as3cf_item->bucket()}/{$key}" ),
-					'ACL'        => $this->determine_key_acl( $attachment_id, $key ),
 				);
-				$size    = AS3CF_Utils::get_intermediate_size_from_filename( $attachment_id, wp_basename( $key ) );
-				$items[] = apply_filters( 'as3cf_object_meta', $args, $attachment_id, $size, true );
+
+				$size = AS3CF_Utils::get_intermediate_size_from_filename( $attachment_id, wp_basename( $key ) );
+				$acl  = $this->as3cf->get_acl_for_intermediate_size( $attachment_id, $size, $bucket, $as3cf_item );
+
+				// Only set ACL if actually required, some storage provider and bucket settings disable changing ACL.
+				if ( ! empty( $acl ) ) {
+					$args['ACL'] = $acl;
+				}
+
+				$args = apply_filters( 'as3cf_object_meta', $args, $attachment_id, $size, true );
+
+				// Protect against filter use and only set ACL if actually required, some storage provider and bucket settings disable changing ACL.
+				if ( isset( $args['ACL'] ) && empty( $acl ) ) {
+					unset( $args['ACL'] );
+				}
+
+				$items[] = $args;
 			}
 		}
 
@@ -114,21 +129,6 @@ class Copy_Buckets_Process extends Background_Tool_Process {
 		}
 
 		$this->update_attachment_provider_info( $keys, $bucket, $region );
-	}
-
-	/**
-	 * Determine ACL for key.
-	 *
-	 * @param int    $attachment_id
-	 * @param string $key
-	 *
-	 * @return string
-	 */
-	protected function determine_key_acl( $attachment_id, $key ) {
-		$filename = wp_basename( $key );
-		$size     = AS3CF_Utils::get_intermediate_size_from_filename( $attachment_id, $filename );
-
-		return $this->as3cf->get_acl_for_intermediate_size( $attachment_id, $size );
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Copy_Buckets_Process extends Background_Tool_Process {
 				$as3cf_item->source_id(),
 				$as3cf_item->source_path(),
 				wp_basename( $as3cf_item->original_source_path() ),
-				$as3cf_item->private_sizes(),
+				$as3cf_item->extra_info(),
 				$as3cf_item->id()
 			);
 

@@ -244,12 +244,8 @@ class Meta_Slider extends Integration {
 	 * @throws Exception
 	 */
 	private function upload_attachment_backup_sizes( $object_id, Media_Library_Item $item, $data ) {
-		$region = $item->region();
-		$prefix = trailingslashit( dirname( $item->path() ) );
-
+		$region          = $item->region();
 		$provider_client = $this->as3cf->get_provider_client( $region, true );
-
-		$acl = $item->is_private() ? $this->as3cf->get_provider()->get_private_acl() : $this->as3cf->get_provider()->get_default_acl();
 
 		foreach ( $data as $file ) {
 			if ( ! isset( $file['path'] ) ) {
@@ -262,14 +258,26 @@ class Meta_Slider extends Integration {
 
 			$args = array(
 				'Bucket'       => $item->bucket(),
-				'Key'          => $prefix . $file['file'],
-				'ACL'          => $acl,
+				'Key'          => $item->key( wp_basename( $file['file'] ) ),
 				'SourceFile'   => $file['path'],
 				'CacheControl' => 'max-age=31536000',
 				'Expires'      => date( 'D, d M Y H:i:s O', time() + 31536000 ),
 			);
+
 			$size = AS3CF_Utils::get_intermediate_size_from_filename( $object_id, wp_basename( $file['file'] ) );
+			$acl  = $this->as3cf->get_acl_for_intermediate_size( $object_id, $size, $item->bucket(), $item );
+
+			// Only set ACL if actually required, some storage provider and bucket settings disable changing ACL.
+			if ( ! empty( $acl ) ) {
+				$args['ACL'] = $acl;
+			}
+
 			$args = apply_filters( 'as3cf_object_meta', $args, $object_id, $size, false );
+
+			// Protect against filter use and only set ACL if actually required, some storage provider and bucket settings disable changing ACL.
+			if ( ! empty( $args['ACL'] ) && empty( $acl ) ) {
+				unset( $args['ACL'] );
+			}
 
 			try {
 				$provider_client->upload_object( $args );

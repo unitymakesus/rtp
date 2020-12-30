@@ -33,7 +33,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 		public static function get_instance() {
 
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -55,7 +55,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 		 */
 		public function import_single_post( $post_id = 0 ) {
 
-			error_log( 'Start Processing Post .. ' . $post_id );
+			error_log( 'Start Processing Post .. ' . $post_id ); // @codingStandardsIgnoreLine.
 
 			$data = get_post_meta( $post_id, '_fl_builder_data', true );
 
@@ -65,13 +65,15 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 
 				$after_hot_links_count = $this->check_hot_links( $data, 'after' );
 
-				error_log( 'After Hot link count.....' );
+				error_log( 'After Hot link count.....' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
-				error_log( print_r( $after_hot_links_count, true ) );
+				$hot_link_count = print_r( $after_hot_links_count, true ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+
+				error_log( $hot_link_count ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 				$this->failds_hot_links_posts( $after_hot_links_count, $post_id );
 
-				error_log( 'Processing Completed Post... ' . $post_id );
+				error_log( 'Processing Completed Post... ' . $post_id ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 				// Update page builder data.
 				update_post_meta( $post_id, '_fl_builder_data', $data );
@@ -83,7 +85,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 				update_post_meta( $post_id, 'uabb_batch_complete_time', date( 'Y-m-d H:i:s' ) );
 
 			} else {
-				error_log( '(✕) Not have "Beaver Builder" Data. Post meta _fl_builder_data is empty!' );
+				error_log( '(✕) Not have "Beaver Builder" Data. Post meta _fl_builder_data is empty!' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 		/**
@@ -111,11 +113,9 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 
 				$faild_posts_id = get_option( 'uabb_batch_processing_faild_posts_id', array() );
 
-				if ( ! empty( $faild_posts_id ) && in_array( $post_id, $faild_posts_id ) ) {  // @codingStandardsIgnoreLine.
+				if ( ! empty( $faild_posts_id ) && in_array( $post_id, $faild_posts_id ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 
-					//$key = array_keys( $faild_posts_id, $post_id );  // @codingStandardsIgnoreLine.
-
-					foreach ( array_keys( $faild_posts_id, $post_id ) as $key ) {  // @codingStandardsIgnoreLine.
+					foreach ( array_keys( $faild_posts_id, $post_id ) as $key ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 						unset( $faild_posts_id[ $key ] );
 					}
 					update_option( 'uabb_batch_processing_faild_posts_id', $faild_posts_id );
@@ -157,7 +157,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 
 					if ( true === $hot_link ) {
 
-						$hot_link_count = $hot_link_count + 1;
+						$hot_link_count++;
 					}
 				}
 			}
@@ -994,7 +994,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 
 			if ( ! empty( $data->icon ) ) {
 
-				$url = parse_url( $data->icon );
+				$url = wp_parse_url( $data->icon );
 
 				unset( $url['scheme'] );
 
@@ -1009,7 +1009,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 			}
 			if ( ! empty( $data->image->src ) ) {
 
-				$url = parse_url( $data->image->src );
+				$url = wp_parse_url( $data->image->src );
 
 				unset( $url['scheme'] );
 
@@ -1021,7 +1021,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 			}
 			if ( ! empty( $data->thumb->src ) ) {
 
-				$url = parse_url( $data->thumb->src );
+				$url = wp_parse_url( $data->thumb->src );
 
 				unset( $url['scheme'] );
 
@@ -1051,7 +1051,7 @@ if ( ! class_exists( 'UABB_Importer_Beaver_Builder' ) ) :
 				}
 				if ( ! empty( $data->icon ) ) {
 
-					$url = parse_url( $data->icon );
+					$url = wp_parse_url( $data->icon );
 
 					unset( $url['scheme'] );
 

@@ -14,6 +14,8 @@ var UABBWooAddToCart;
 		this.nodeClass		= '.fl-node-' + settings.id;
 		this.nodeScope		= $( '.fl-node-' + settings.id );
 		this.cart_redirect	= settings.cart_redirect;
+		this.is_cart	    = settings.is_cart;
+		this.cart_url	    = settings.cart_url;
 
 		// initialize 
 		this._addToCart();
@@ -32,6 +34,8 @@ var UABBWooAddToCart;
 		 */
 		_addToCart: function() {
 			
+			var uabb_cart_url = this.cart_url;
+
 			if ( 'yes' === this.cart_redirect ) {
 				$('body').off('added_to_cart.uabb_cart' ).on( 'added_to_cart.uabb_cart', function(e, fragments, cart_hash, btn){
 					
@@ -42,9 +46,9 @@ var UABBWooAddToCart;
 							
 							setTimeout(function() {
 								// View cart text.
-								if ( ! uabb_cart.is_cart && btn.hasClass( 'added' ) ) {
+								if ( ! this.is_cart && btn.hasClass( 'added' ) ) {
 									//console.log( btn.hasClass('uabb-redirect') );
-									window.location = uabb_cart.cart_url;
+									window.location = uabb_cart_url;
 								}
 							}, 200);
 						}

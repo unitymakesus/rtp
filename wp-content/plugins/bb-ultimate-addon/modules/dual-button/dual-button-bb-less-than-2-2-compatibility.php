@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBDualButtonModule', array(
+	'UABBDualButtonModule',
+	array(
 		'dual_button'            => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

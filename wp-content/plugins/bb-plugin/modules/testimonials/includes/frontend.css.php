@@ -1,7 +1,7 @@
 <?php
 
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-testimonial",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-testimonials .fl-testimonial, .fl-builder-content .fl-node-$id .fl-testimonials .fl-testimonial *",
 	'props'    => array(
 		'color' => $settings->text_color,
 	),
@@ -10,7 +10,7 @@ FLBuilderCSS::rule( array(
 FLBuilderCSS::typography_field_rule( array(
 	'settings'     => $settings,
 	'setting_name' => 'text_typography',
-	'selector'     => ".fl-node-$id .fl-testimonial",
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-testimonials .fl-testimonial",
 ) );
 
 ?>

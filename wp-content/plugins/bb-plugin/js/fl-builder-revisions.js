@@ -76,7 +76,7 @@
 				}
 			}
 
-			FLBuilder.triggerHook( 'renderRevisionsPanel' );
+			FLBuilder.MainMenu.renderPanel( 'revisions' )
 		},
 
 		/**

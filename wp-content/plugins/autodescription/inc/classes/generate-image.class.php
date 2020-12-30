@@ -6,11 +6,11 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -37,9 +37,12 @@ class Generate_Image extends Generate_Url {
 	/**
 	 * Returns the image details from cache.
 	 * Only to be used within the loop, uses default parameters, inlucing the 'social' context.
+	 * Memoizes the return value.
 	 *
 	 * @since 4.0.0
-	 * @staticvar array $cache
+	 * @since 4.1.2 Added a $single parameter, which helps reduce processing power required.
+	 *              This parameter might get deprecated when we start supporting PHP 7.1+ only.
+	 * TODO yield from and memoize deeper? Iterators calling this method currently do not affect the generators.
 	 *
 	 * @return array The image details array, sequential: int => {
 	 *    string url:    The image URL,
@@ -49,15 +52,16 @@ class Generate_Image extends Generate_Url {
 	 *    string alt:    The image alt tag,
 	 * }
 	 */
-	public function get_image_details_from_cache() {
-		static $cache;
-		return isset( $cache ) ? $cache : $cache = $this->get_image_details();
+	public function get_image_details_from_cache( $single = false ) {
+		static $cache = [];
+		return isset( $cache[ $single ] ) ? $cache[ $single ] : $cache[ $single ] = $this->get_image_details( null, $single );
 	}
 
 	/**
 	 * Returns image details.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.5 The output is now filterable.
 	 *
 	 * @param array|null $args    The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                            Leave null to autodetermine query.
@@ -87,7 +91,31 @@ class Generate_Image extends Generate_Url {
 			);
 		}
 
-		return $clean ? $this->s_image_details( $details ) : $details;
+		/**
+		 * @since 4.0.5
+		 * @param array      $details The image details array, sequential: int => {
+		 *    string url:    The image URL,
+		 *    int    id:     The image ID,
+		 *    int    width:  The image width in pixels,
+		 *    int    height: The image height in pixels,
+		 *    string alt:    The image alt tag,
+		 * }
+		 * @param array|null $args    The query arguments. Accepts 'id' and 'taxonomy'.
+		 *                            Is null when query is autodetermined.
+		 * @param bool       $single  Whether to fetch one image, or multiple.
+		 * @param string     $context The filter context. Default 'social'.
+		 * @param bool       $clean   Whether to clean the image, like stripping duplicates and erroneous items.
+		 */
+		return \apply_filters_ref_array(
+			'the_seo_framework_image_details',
+			[
+				$clean ? $this->s_image_details( $details ) : $details,
+				$args,
+				$single,
+				$context,
+				$clean,
+			]
+		);
 	}
 
 	/**
@@ -275,6 +303,7 @@ class Generate_Image extends Generate_Url {
 	 * Returns image generation parameters.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.1 Now only the 'social' context will fetch images from the content.
 	 *
 	 * @param array|null $args    The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                            Leave null to autodetermine query.
@@ -285,7 +314,7 @@ class Generate_Image extends Generate_Url {
 	 *    boolean multi:    Whether multiple images may be returned,
 	 *    array   cbs:      An array of image generation callbacks, in order of most important to least.
 	 *                      When 'multi' (or $single input) parameter is "false", it will use the first found.
-	 *    array   fallback: An array of image generaiton callbacks, in order of most important to least,
+	 *    array   fallback: An array of image generation callbacks, in order of most important to least,
 	 *                      Only one image is obtained from the fallback, and only if the regular cbs don't
 	 *                      return any image.
 	 * }
@@ -306,8 +335,10 @@ class Generate_Image extends Generate_Url {
 				} else {
 					$cbs = [
 						'featured' => "$builder::get_featured_image_details",
-						'content'  => "$builder::get_content_image_details",
 					];
+					if ( 'social' === $context ) {
+						$cbs['content'] = "$builder::get_content_image_details";
+					}
 				}
 			} elseif ( $this->is_term_meta_capable() ) {
 				$cbs = [];
@@ -325,8 +356,10 @@ class Generate_Image extends Generate_Url {
 				} else {
 					$cbs = [
 						'featured' => "$builder::get_featured_image_details",
-						'content'  => "$builder::get_content_image_details",
 					];
+					if ( 'social' === $context ) {
+						$cbs['content'] = "$builder::get_content_image_details";
+					}
 				}
 			}
 		}
@@ -346,7 +379,7 @@ class Generate_Image extends Generate_Url {
 		 * @since 4.0.0
 		 * @param array      $params  : [
 		 *    string  size:     The image size to use.
-		 *    boolean multi:    Whether to allow multiple images to be returned.
+		 *    boolean multi:    Whether to allow multiple images to be returned. This may be overwritten by generators to 'false'.
 		 *    array   cbs:      The callbacks to parse. Ideally be generators, so we can halt remotely.
 		 *    array   fallback: The callbacks to parse. Ideally be generators, so we can halt remotely.
 		 * ];
@@ -392,7 +425,6 @@ class Generate_Image extends Generate_Url {
 		$params = $this->get_image_generation_params( $args, $context );
 		$single = $single || ! $params['multi'];
 
-		// TODO s_image_details() here? The cbs may be discarded, and then we won't obtain any fallbacks...
 		$details = $this->process_image_cbs( $params['cbs'], $args, $params['size'], $single )
 				?: $this->process_image_cbs( $params['fallback'], $args, $params['size'], true );
 
@@ -407,7 +439,7 @@ class Generate_Image extends Generate_Url {
 	 * @param array      $cbs    The callbacks to parse. Ideally be generators, so we can halt early.
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 *                           Leave null to autodetermine query.
-	 * @param sring      $size   The image size to use.
+	 * @param string     $size   The image size to use.
 	 * @param bool       $single Whether to fetch one image, or multiple.
 	 * @return array The image details array, sequential: int => {
 	 *    string url:    The image URL,
@@ -423,7 +455,8 @@ class Generate_Image extends Generate_Url {
 		$i     = 0;
 
 		foreach ( $cbs as $cb ) {
-			foreach ( call_user_func_array( $cb, [ $args, $size ] ) as $details ) {
+			// This is one of the slowest calls in this plugin on PHP 5.6. However, PHP 7.0 optimized cuf(a). Neglegible.
+			foreach ( \call_user_func_array( $cb, [ $args, $size ] ) as $details ) {
 				if ( $details['url'] && $this->s_url_query( $details['url'] ) ) {
 					$items[ $i++ ] = $this->merge_extra_image_details( $details, $size );
 					if ( $single ) break 2;
@@ -525,7 +558,7 @@ class Generate_Image extends Generate_Url {
 
 		// Imply there's a correct ID set. When there's not, the loop won't run.
 		$meta  = \wp_get_attachment_metadata( $id );
-		$sizes = ! empty( $meta['sizes'] ) && is_array( $meta['sizes'] ) ? $meta['sizes'] : [];
+		$sizes = ! empty( $meta['sizes'] ) && \is_array( $meta['sizes'] ) ? $meta['sizes'] : [];
 
 		// law = largest accepted width.
 		$law  = 0;

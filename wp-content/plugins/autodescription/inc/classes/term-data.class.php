@@ -6,11 +6,11 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -77,10 +77,10 @@ class Term_Data extends Post_Data {
 
 	/**
 	 * Returns and caches term meta for the current query.
+	 * Memoizes the return value for the current request.
 	 *
 	 * @since 3.0.0
 	 * @since 4.0.1 Now uses the filterable `get_the_real_ID()`
-	 * @staticvar array $cache
 	 *
 	 * @return array The current term meta.
 	 */
@@ -102,6 +102,8 @@ class Term_Data extends Post_Data {
 
 	/**
 	 * Returns term meta data from ID.
+	 * Memoizes the return value for the current request.
+	 *
 	 * Returns Genesis 2.3.0+ data if no term meta data is set via compat module.
 	 *
 	 * @since 2.7.0
@@ -110,7 +112,6 @@ class Term_Data extends Post_Data {
 	 * @since 3.1.0 Deprecated filter.
 	 * @since 4.0.0 1. Removed deprecated filter.
 	 *              2. Now fills in defaults.
-	 * @staticvar array $cache
 	 *
 	 * @param int  $term_id The Term ID.
 	 * @param bool $use_cache Whether to use caching.
@@ -139,7 +140,7 @@ class Term_Data extends Post_Data {
 		static $has_deprecated_filter = null;
 		if ( null === $has_deprecated_filter && \has_filter( 'the_seo_framework_current_term_meta' ) ) {
 			$has_deprecated_filter = true;
-			$this->_deprecated_filter( 'the_seo_framework_current_term_meta', '4.0.0', 'get_term_metadata' );
+			$this->_deprecated_filter( 'the_seo_framework_current_term_meta', '4.0.0', 'the_seo_framework_term_meta' );
 		}
 
 		if ( $has_deprecated_filter && $meta ) {
@@ -166,7 +167,21 @@ class Term_Data extends Post_Data {
 			);
 		}
 
-		return $cache[ $term_id ] = array_merge( $defaults, $meta );
+		/**
+		 * @since 4.0.5
+		 * @note Do not delete/unset/add indexes! It'll cause errors.
+		 * @param array $meta    The current term meta.
+		 * @param int   $term_id The term ID.
+		 */
+		$meta = \apply_filters_ref_array(
+			'the_seo_framework_term_meta',
+			[
+				array_merge( $defaults, $meta ),
+				$term_id,
+			]
+		);
+
+		return $cache[ $term_id ] = $meta;
 	}
 
 	/**
@@ -227,15 +242,15 @@ class Term_Data extends Post_Data {
 	 * Sanitizes and saves term meta data when a term is altered.
 	 *
 	 * @since 2.7.0
-	 * @since 4.0.0: 1. Renamed from `update_term_meta`
-	 *               2. noindex, nofollow, noarchive are now converted to qubits.
-	 *               3. Added new keys to sanitize.
-	 *               4. Now marked as private.
-	 *               5. Added more sanity protection.
-	 *               6. No longer runs when no `autodescription-meta` POST data is sent.
-	 *               7. Now uses the current term meta to set new values.
-	 *               8. No longer deletes meta from abstracting plugins on save when they're deactivated.
-	 *               9. Now allows updating during `WP_AJAX`.
+	 * @since 4.0.0 : 1. Renamed from `update_term_meta`
+	 *                2. noindex, nofollow, noarchive are now converted to qubits.
+	 *                3. Added new keys to sanitize.
+	 *                4. Now marked as private.
+	 *                5. Added more sanity protection.
+	 *                6. No longer runs when no `autodescription-meta` POST data is sent.
+	 *                7. Now uses the current term meta to set new values.
+	 *                8. No longer deletes meta from abstracting plugins on save when they're deactivated.
+	 *                9. Now allows updating during `WP_AJAX`.
 	 * @securitycheck 3.0.0 OK.
 	 * @access private
 	 *         Use $this->save_term_meta() instead.
@@ -260,8 +275,8 @@ class Term_Data extends Post_Data {
 	 * Overwrites all of the term meta on term-edit.
 	 *
 	 * @since 4.0.0
-	 * @since 4.0.2 1: Now tests for valid term ID in the term object.
-	 *              2: Now continues using the filtered term object.
+	 * @since 4.0.2 : 1. Now tests for valid term ID in the term object.
+	 *                2. Now continues using the filtered term object.
 	 *
 	 * @param int    $term_id  Term ID.
 	 * @param int    $tt_id    Term taxonomy ID.
@@ -275,14 +290,15 @@ class Term_Data extends Post_Data {
 		// We could test for is_wp_error( $term ), but this is more to the point.
 		if ( empty( $term->term_id ) ) return;
 
-		//* Check again against ambiguous injection...
+		// Check again against ambiguous injection...
 		// Note, however: function wp_update_term() already performs all these checks for us before firing this callback's action.
 		if ( ! \current_user_can( 'edit_term', $term->term_id ) ) return;
 		if ( ! isset( $_POST['_wpnonce'] ) ) return;
-		if ( ! \wp_verify_nonce( \stripslashes_from_strings_only( $_POST['_wpnonce'] ), 'update-tag_' . $term->term_id ) ) return;
+		if ( ! \wp_verify_nonce( $_POST['_wpnonce'], 'update-tag_' . $term->term_id ) ) return;
 
 		$data = (array) $_POST['autodescription-meta'];
 
+		// Trim, sanitize, and save the metadata.
 		$this->save_term_meta( $term->term_id, $tt_id, $taxonomy, $data );
 	}
 
@@ -290,8 +306,8 @@ class Term_Data extends Post_Data {
 	 * Overwrites a part of the term meta on quick-edit.
 	 *
 	 * @since 4.0.0
-	 * @since 4.0.2 1: Now tests for valid term ID in the term object.
-	 *              2: Now continues using the filtered term object.
+	 * @since 4.0.2 : 1. Now tests for valid term ID in the term object.
+	 *                2. Now continues using the filtered term object.
 	 *
 	 * @param int    $term_id  Term ID.
 	 * @param int    $tt_id    Term taxonomy ID.
@@ -305,7 +321,7 @@ class Term_Data extends Post_Data {
 		// We could test for is_wp_error( $term ), but this is more to the point.
 		if ( empty( $term->term_id ) ) return;
 
-		//* Check again against ambiguous injection...
+		// Check again against ambiguous injection...
 		// Note, however: function wp_ajax_inline_save_tax() already performs all these checks for us before firing this callback's action.
 		if ( ! \current_user_can( 'edit_term', $term->term_id ) ) return;
 		if ( ! \check_ajax_referer( 'taxinlineeditnonce', '_inline_edit', false ) ) return;
@@ -317,6 +333,7 @@ class Term_Data extends Post_Data {
 			(array) $_POST['autodescription-quick']
 		);
 
+		// Trim, sanitize, and save the metadata.
 		$this->save_term_meta( $term->term_id, $tt_id, $taxonomy, $data );
 	}
 
@@ -327,8 +344,8 @@ class Term_Data extends Post_Data {
 	 * as it reprocesses all term meta.
 	 *
 	 * @since 4.0.0
-	 * @since 4.0.2 1: Now tests for valid term ID in the term object.
-	 *              2: Now continues using the filtered term object.
+	 * @since 4.0.2 : 1. Now tests for valid term ID in the term object.
+	 *                2. Now continues using the filtered term object.
 	 * @uses $this->save_term_meta() to process all data.
 	 *
 	 * @param string $item     The item to update.
@@ -354,8 +371,8 @@ class Term_Data extends Post_Data {
 	 * Updates term meta from input.
 	 *
 	 * @since 4.0.0
-	 * @since 4.0.2 1: Now tests for valid term ID in the term object.
-	 *              2: Now continues using the filtered term object.
+	 * @since 4.0.2 : 1. Now tests for valid term ID in the term object.
+	 *                2. Now continues using the filtered term object.
 	 *
 	 * @param int    $term_id  Term ID.
 	 * @param int    $tt_id    Term Taxonomy ID.
@@ -389,6 +406,7 @@ class Term_Data extends Post_Data {
 			]
 		);
 
+		// Do we want to cycle through the data, so we store only the non-defaults? @see save_post_meta()
 		\update_term_meta( $term->term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS, $data );
 	}
 
@@ -418,20 +436,48 @@ class Term_Data extends Post_Data {
 	 */
 	public function delete_term_meta( $term_id ) {
 
-		//* If this results in an empty data string, all data has already been removed by WP core.
+		// If this results in an empty data string, all data has already been removed by WP core.
 		$data = \get_term_meta( $term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS, true );
 
-		if ( is_array( $data ) ) {
+		if ( \is_array( $data ) ) {
 			foreach ( $this->get_term_meta_defaults( $term_id ) as $key => $value ) {
 				unset( $data[ $key ] );
 			}
 		}
 
+		// Only delete when no values are left, because someone else might've filtered it.
 		if ( empty( $data ) ) {
 			\delete_term_meta( $term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS );
 		} else {
 			\update_term_meta( $term_id, THE_SEO_FRAMEWORK_TERM_OPTIONS, $data );
 		}
+	}
+
+	/**
+	 * Fetch latest public category ID.
+	 * Memoizes the return value.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return int Latest Category ID.
+	 */
+	public function get_latest_category_id() {
+
+		static $cat_id = null;
+
+		if ( null !== $cat_id )
+			return $cat_id;
+
+		$cats = \get_terms( [
+			'taxonomy'   => 'category',
+			'fields'     => 'ids',
+			'hide_empty' => false,
+			'orderby'    => 'term_id',
+			'order'      => 'DESC',
+			'number'     => 1,
+		] );
+
+		return $cat_id = reset( $cats );
 	}
 
 	/**
@@ -457,6 +503,8 @@ class Term_Data extends Post_Data {
 	 * Returns hierarchical taxonomies for post type.
 	 *
 	 * @since 3.0.0
+	 * @since 4.0.5 The `$post_type` fallback now uses a real query ID, instead of `$GLOBALS['post']`.
+	 * @since 4.1.0 Now filters taxonomies more graciously--expecting broken taxonomies returned in the filter.
 	 *
 	 * @param string $get       Whether to get the names or objects.
 	 * @param string $post_type The post type. Will default to current post type.
@@ -464,8 +512,7 @@ class Term_Data extends Post_Data {
 	 */
 	public function get_hierarchical_taxonomies_as( $get = 'objects', $post_type = '' ) {
 
-		if ( ! $post_type )
-			$post_type = \get_post_type( $this->get_the_real_ID() );
+		$post_type = $post_type ?: $this->get_post_type_real_ID();
 
 		if ( ! $post_type )
 			return [];
@@ -474,7 +521,7 @@ class Term_Data extends Post_Data {
 		$taxonomies = array_filter(
 			$taxonomies,
 			function( $t ) {
-				return $t->hierarchical;
+				return ! empty( $t->hierarchical );
 			}
 		);
 

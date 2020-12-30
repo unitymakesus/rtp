@@ -1,0 +1,12 @@
+// Utility mixin from Compass
+@mixin filter-gradient($start-color, $end-color, $orientation: vertical) {
+  $gradient-type: if($orientation == vertical, 0, 1);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=#{$gradient-type}, startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}');
+}
+@mixin triangle($direction, $color) {
+  background-image: -o-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: -moz-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: -ms-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+}

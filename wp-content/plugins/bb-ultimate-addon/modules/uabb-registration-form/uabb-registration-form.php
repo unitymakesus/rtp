@@ -17,7 +17,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 	 * @since 1.22.0
 	 * @var $email_content
 	 */
-	static $email_content = array();
+	public static $email_content = array();
 
 	/**
 	 * Constructor function that constructs default values for the Button Module
@@ -43,7 +43,6 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		add_action( 'wp_ajax_uabb_registration_form', array( $this, 'register_user' ) );
 		add_action( 'wp_ajax_nopriv_uabb_registration_form', array( $this, 'register_user' ) );
 		add_filter( 'wp_new_user_notification_email', array( $this, 'uabb_custom_wp_new_user_notification_email' ), 10, 3 );
-		add_filter( 'script_loader_tag', array( $this, 'uabb_rf_add_async_attribute' ), 10, 2 );
 	}
 	/**
 	 * Function that enqueue's the scripts
@@ -53,7 +52,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 	 */
 	public function enqueue_scripts() {
 		$settings = $this->settings;
-		if ( isset( $settings->uabb_recaptcha_toggle ) && 'show' == $settings->uabb_recaptcha_toggle ) {
+		if ( isset( $settings->uabb_recaptcha_toggle ) && 'show' === $settings->uabb_recaptcha_toggle ) {
 
 			$site_lang = substr( get_locale(), 0, 2 );
 			$post_id   = FLBuilderModel::get_post_id();
@@ -69,21 +68,6 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		if ( isset( $settings->check_password_strength ) && 'yes' === $settings->check_password_strength ) {
 			$this->add_js( 'password-strength-meter' );
 		}
-	}
-	/**
-	 * Function that adds async attribute
-	 *
-	 * @since 1.22.0
-	 * @method  uabb_add_async_attribute for the enqueued `uabb-g-recaptcha` script
-	 * @param string $tag    Script tag.
-	 * @param string $handle Registered script handle.
-	 */
-	public function uabb_rf_add_async_attribute( $tag, $handle ) {
-		if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
-			return $tag;
-		}
-
-		return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
 	}
 	/**
 	 * Function that adds async attribute
@@ -139,7 +123,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 	 * @since 1.22.0
 	 * @method register_user
 	 */
-	static public function register_user() {
+	public static function register_user() {
 
 		check_ajax_referer( 'uabb-rf-nonce', 'security' );
 
@@ -147,6 +131,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		$error              = array();
 		$error_flag         = '';
 		$password_generated = '';
+		$allow_register     = get_option( 'users_can_register' );
 
 			$node_id          = isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : false;
 			$template_id      = isset( $_POST['template_id'] ) ? sanitize_text_field( $_POST['template_id'] ) : false;
@@ -166,7 +151,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 			}
 		}
 
-		if ( isset( $_POST['data'] ) ) {
+		if ( isset( $_POST['data'] ) && '1' === $allow_register ) {
 
 			$data = $_POST['data'];
 
@@ -176,7 +161,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 				$recaptcha_secret = $settings->uabb_v3_recaptcha_secret_key;
 
-				$client_ip = UABBRegistrationFormModule::get_client_ip();
+				$client_ip = self::get_client_ip();
 
 				if ( 0 > $settings->uabb_v3_recaptcha_score || 1 < $settings->uabb_v3_recaptcha_score ) {
 					$recaptcha_score = 0.5;
@@ -249,7 +234,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 			if ( empty( $data['user_login'] ) ) {
 
-				$data['user_login'] = $this->uabb_create_username( $data['user_email'], '' );
+				$data['user_login'] = self::uabb_create_username( $data['user_email'], '' ); // phpcs:ignore PHPCompatibility.Variables.ForbiddenThisUseContexts.OutsideObjectContext
 
 			} elseif ( ! validate_username( $data['user_login'] ) ) {
 				$error['user_login'] = __( 'This username is invalid because it uses illegal characters. Please enter a valid username.', 'uabb' );
@@ -260,7 +245,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 
 				$error_flag = true;
 
-			} elseif ( in_array( strtolower( $data['user_login'] ), array_map( 'strtolower', $illegal_register ) ) ) {
+			} elseif ( in_array( strtolower( $data['user_login'] ), array_map( 'strtolower', $illegal_register ) ) ) { // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 
 				$error['user_login'] = __( 'Sorry, that username is not allowed.', 'uabb' );
 				$error_flag          = true;
@@ -273,6 +258,8 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 			$first_name = ( isset( $data['first_name'] ) && ! empty( $data['first_name'] ) ) ? sanitize_user( $data['first_name'], true ) : '';
 
 			$last_name = ( isset( $data['last_name'] ) && ! empty( $data['last_name'] ) ) ? sanitize_user( $data['last_name'], true ) : '';
+
+			$phone = ( isset( $data['phone'] ) && ! empty( $data['phone'] ) ) ? sanitize_user( $data['phone'], true ) : '';
 
 			if ( true === $error_flag ) {
 
@@ -291,7 +278,8 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 						'user_email'      => isset( $user_email ) ? $user_email : '',
 						'first_name'      => isset( $first_name ) ? $first_name : '',
 						'last_name'       => isset( $last_name ) ? $last_name : '',
-						'user_registered' => date( 'Y-m-d H:i:s' ),
+						'phone'           => isset( $phone ) ? $phone : '',
+						'user_registered' => gmdate( 'Y-m-d H:i:s' ),
 						'role'            => $user_role,
 					)
 				);
@@ -353,7 +341,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 					$response['error'] = wp_send_json_error();
 				}
 			}
-			echo wp_send_json( $response );
+			echo wp_kses_post( wp_send_json( $response ) );
 		} else {
 			wp_die();
 		}
@@ -381,21 +369,24 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		$label = ( 'yes' === $this->settings->enabled_label ) ? $label : '';
 
 		?>
-		<div class="uabb-input-group uabb-<?php echo $field_name; ?> uabb-rf-column-desktop_<?php echo $field_width['desktop']; ?> uabb-rf-column-medium_<?php echo $field_width['medium']; ?> uabb-rf-column-responsive_<?php echo $field_width['responsive']; ?> <?php echo $required_class; ?>" >
+		<div class="uabb-input-group uabb-<?php echo esc_attr( $field_name ); ?> uabb-rf-column-desktop_<?php echo esc_attr( $field_width['desktop'] ); ?> uabb-rf-column-medium_<?php echo esc_attr( $field_width['medium'] ); ?> uabb-rf-column-responsive_<?php echo esc_attr( $field_width['responsive'] ); ?> <?php echo esc_attr( $required_class ); ?>" >
 			<?php if ( '' !== $label ) { ?>
-				<label for="uabb-name" class="uabb-label-mark"> <?php echo $label; ?></label>
+				<label for="uabb-name" class="uabb-label-mark"> <?php echo $label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 			<?php } ?>
 			<div class="uabb-form-outter">
-				<input type="<?php echo $type; ?>" name="uabb_<?php echo $field_name; ?>" value="" class="uabb-registration-form-requried-<?php echo $error_class; ?>" placeholder="<?php echo $placeholder; ?>">
+				<input type="<?php echo esc_attr( $type ); ?>" aria-label="<?php echo esc_attr( $field_name ); ?>" name="uabb_<?php echo esc_attr( $field_name ); ?>" value="" class="uabb-registration-form-requried-<?php echo esc_attr( $error_class ); ?>" placeholder="<?php echo esc_attr( $placeholder ); ?>">
 				<?php if ( 'email' === $type ) { ?>
 					<div class="uabb-registration_form-error-message uabb-registration_form-error-message-required"><span class="uabb-registration-form-invalid-field"></div>
 				<?php } else { ?>
 					<div class="uabb-registration_form-error-message uabb-registration_form-error-message-required"></div>
 				<?php } ?>
-				<?php if ( 'password' === $type && 'confirm_password' !== $field_name ) { ?>
+				<?php if ( 'password' === $type && 'confirm_pass' !== $field_name ) { ?>
 					<div class="uabb-registration-form-pass-verify"></div>
-				<?php } ?>	
-			</div>	
+				<?php } ?>
+				<?php if ( 'password' === $type && 'confirm_pass' === $field_name ) { ?>
+					<div class="uabb-registration-form-pass-match"></div>
+				<?php } ?>
+			</div>
 		</div>
 		<?php
 	}
@@ -462,6 +453,14 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 					);
 					$this->create_field( $item->field_type, 'text', $item->field_label, $item->field_required, $field_width, $item->field_placeholder );
 					break;
+				case 'phone':
+					$field_width = array(
+						'desktop'    => $item->field_width,
+						'medium'     => $item->field_width_medium,
+						'responsive' => $item->field_width_responsive,
+					);
+					$this->create_field( $item->field_type, 'tel', $item->field_label, $item->field_required, $field_width, $item->field_placeholder );
+					break;
 				default:
 					break;
 
@@ -503,7 +502,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 			$username_parts[] = sanitize_user( $email_username, true );
 		}
 
-		$username = mb_strtolower( implode( '', $username_parts ) );
+		$username = mb_strtolower( implode( '', $username_parts ), 'UTF-8' );
 
 		if ( $suffix ) {
 			$username .= $suffix;
@@ -534,8 +533,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		}
 
 		if ( ! isset( $wp_roles ) ) {
-
-			$wp_roles = get_editable_roles();
+			$wp_roles = get_editable_roles(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
 
 		$roles      = isset( $wp_roles->roles ) ? $wp_roles->roles : array();
@@ -555,7 +553,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 	 * @since 1.22.0
 	 * @access public
 	 */
-	static public function default_email_template() {
+	public static function default_email_template() {
 		$host = 'localhost';
 		if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 			$host = $_SERVER['HTTP_HOST'];
@@ -564,7 +562,7 @@ class UABBRegistrationFormModule extends FLBuilderModule {
 		$current_url = 'http://' . $host . strtok( $_SERVER['REQUEST_URI'], '?' );
 
 		$default_template_reg = sprintf(
-			/* translators: %1$s: search term, translators: %2$s: search term */ __(
+			/* translators: %1$s: search term, translators: %2$s: search term */            __(
 				'Dear User,
 
 You have successfully created your "%1$s" account. Thank you for registering with us!
@@ -593,7 +591,7 @@ You have received a new submission from %1$s
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::Check_BB_Version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-registration-form/uabb-registration-form-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-registration-form/uabb-registration-form-bb-less-than-2-2-compatibility.php';

@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBSocialShare', array(
+	'UABBSocialShare',
+	array(
 		'social_shares' => array( // Tab.
 			'title'    => __( 'Social Share', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -173,7 +174,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'uabb_social_share_form', array(
+	'uabb_social_share_form',
+	array(
 		'title' => __( 'Add Social Icon/Image', 'uabb' ),
 		'tabs'  => array(
 			'form_general' => array(

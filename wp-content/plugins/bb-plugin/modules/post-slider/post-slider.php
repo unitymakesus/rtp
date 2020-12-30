@@ -69,7 +69,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		$thumb_id = get_post_thumbnail_id( $id );
 		$size     = isset( $this->settings->thumb_size ) ? $this->settings->thumb_size : 'medium';
 		$img      = wp_get_attachment_image_src( $thumb_id, $size );
-		return $img[0];
+		return is_array( $img ) ? $img[0] : '';
 	}
 
 	/**
@@ -109,7 +109,7 @@ class FLPostSliderModule extends FLBuilderModule {
 			$this->post_slides = array();
 
 			// check if we have selected posts
-			if ( empty( $this->settings->posts_post ) ) {
+			if ( ! isset( $this->settings->posts_post_matching ) || 1 !== $this->settings->posts_post_matching ) {
 
 				// get the current query object
 				$query = $this->get_query();
@@ -197,6 +197,9 @@ class FLPostSliderModule extends FLBuilderModule {
 					'photo'        => $photo_data,
 					'photo_src'    => $src,
 					'photo_source' => 'library',
+					'attributes'   => array(
+						'loading' => 'false',
+					),
 				);
 
 				// render image
@@ -245,6 +248,9 @@ class FLPostSliderModule extends FLBuilderModule {
 					'photo'        => $photo_data,
 					'photo_src'    => $src,
 					'photo_source' => 'library',
+					'attributes'   => array(
+						'loading' => 'false',
+					),
 				);
 
 				// render image
@@ -311,6 +317,27 @@ class FLPostSliderModule extends FLBuilderModule {
 		}
 	}
 
+	/**
+	 * Renders the CSS class for each post item.
+	 *
+	 * @since 2.4
+	 * @return void
+	 */
+	public function render_post_class() {
+		$settings = $this->settings;
+		$classes  = array();
+
+		$classes[] = 'fl-post-slider-post';
+		$classes[] = 'fl-post-slider-' . $this->get_slider_class( get_the_ID() );
+
+		if ( isset( $settings->show_thumb ) && 'show' === $settings->show_thumb ) {
+			$classes[] = 'fl-post-slider-has-image';
+		}
+
+		$classes[] = 'swiper-slide';
+
+		post_class( apply_filters( 'fl_builder_post_slider_classes', $classes, $settings ) );
+	}
 
 	/**
 	 * Render the css code for background with gradients.
@@ -354,7 +381,7 @@ class FLPostSliderModule extends FLBuilderModule {
 			}
 
 			// build csss gradient code
-			$bg  = 'background: #' . $this->settings->text_bg_color . ';';
+			$bg  = 'background-color: ' . FLBuilderColor::hex_or_rgb( $color_start ) . ';';
 			$bg .= 'background: -ms-linear-gradient(' . $direction . ', ' . $color_start . ' 0%, ' . $color_end . ' 100%);';
 			$bg .= 'background: -moz-linear-gradient(' . $direction . ', ' . $color_start . ' 0%, ' . $color_end . ' 100%);';
 			$bg .= 'background: -o-linear-gradient(' . $direction . ', ' . $color_start . ' 0%, ' . $color_end . ' 100%);';
@@ -365,7 +392,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		} else {
 
 			// if gradient isn't selected, set the background with default values
-			$bg = 'background-color: ' . $color_start . ';';
+			$bg = 'background-color: ' . FLBuilderColor::hex_or_rgb( $color_start ) . ';';
 		}
 
 		echo $bg;
@@ -574,14 +601,14 @@ FLBuilder::register_module('FLPostSliderModule', array(
 						'default' => 'default',
 						'options' => array(
 							'default' => __( 'Default', 'fl-builder' ),
-							'M j, Y'  => date( 'M j, Y' ),
-							'F j, Y'  => date( 'F j, Y' ),
-							'm/d/Y'   => date( 'm/d/Y' ),
-							'm-d-Y'   => date( 'm-d-Y' ),
-							'd M Y'   => date( 'd M Y' ),
-							'd F Y'   => date( 'd F Y' ),
-							'Y-m-d'   => date( 'Y-m-d' ),
-							'Y/m/d'   => date( 'Y/m/d' ),
+							'M j, Y'  => gmdate( 'M j, Y' ),
+							'F j, Y'  => gmdate( 'F j, Y' ),
+							'm/d/Y'   => gmdate( 'm/d/Y' ),
+							'm-d-Y'   => gmdate( 'm-d-Y' ),
+							'd M Y'   => gmdate( 'd M Y' ),
+							'd F Y'   => gmdate( 'd F Y' ),
+							'Y-m-d'   => gmdate( 'Y-m-d' ),
+							'Y/m/d'   => gmdate( 'Y/m/d' ),
 						),
 					),
 					'show_comments' => array(
@@ -745,8 +772,9 @@ FLBuilder::register_module('FLPostSliderModule', array(
 							'type'  => 'css',
 							'rules' => array(
 								array(
-									'selector' => '.fl-post-slider-background .fl-post-slider-content, .fl-post-slider-thumb, .fl-post-slider-no-thumb',
-									'property' => 'color',
+									'selector'  => '.fl-module-content .fl-post-slider .fl-post-slider-post .fl-post-slider-content, .fl-module-content .fl-post-slider .fl-post-slider-post .fl-post-slider-content *',
+									'property'  => 'color',
+									'important' => true,
 								),
 							),
 						),
@@ -762,8 +790,9 @@ FLBuilder::register_module('FLPostSliderModule', array(
 							'type'  => 'css',
 							'rules' => array(
 								array(
-									'selector' => '.fl-post-slider-content a',
-									'property' => 'color',
+									'selector'  => '.fl-module-content .fl-post-slider .fl-post-slider-post .fl-post-slider-content a',
+									'property'  => 'color',
+									'important' => true,
 								),
 							),
 						),

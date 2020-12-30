@@ -1,0 +1,23 @@
+.announcement {
+  &--notice {
+    background-color: $color-mint-a11y;
+  }
+
+  &__headcount {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  &__headcount-num {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 3rem;
+    margin-left: 0.5rem;
+    line-height: 1;
+  }
+}

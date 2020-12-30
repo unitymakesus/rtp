@@ -273,3 +273,45 @@
         display: block;
     }
 }
+/** Pagination **/
+.uabb-gallery-pagination .uabb-gallery-load-more {
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	-webkit-transition: 0.2s all ease-in-out;
+	-moz-transition: 0.2s all ease-in-out;
+	transition: 0.2s all ease-in-out;
+}
+.uabb-gallery-loader {
+	text-align: center;
+}
+.uabb-gallery-pagination .uabb-gallery-load-more.disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+.uabb-gallery-pagination a,
+.uabb-gallery-pagination a:visited {
+	text-decoration: none;
+}
+.uabb-form-loader {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-left: 1em;
+    color: inherit;
+    vertical-align: middle;
+    pointer-events: none;
+    border: .2em solid currentcolor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    animation: 1s uabb-loader linear infinite;
+    position: relative;
+}
+@keyframes uabb-loader {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

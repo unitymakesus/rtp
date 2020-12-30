@@ -195,6 +195,11 @@ html:not(.fl-responsive-preview-enabled) .fl-builder-content-editing .fl-col-gro
 	display: inline-block;
 	margin-right: 8px;
 }
+.fl-responsive-preview-message .size {
+	position: absolute;
+	right: 30px;
+	font-size: 16px;
+}
 .fl-responsive-preview-message .fl-builder-button {
     display: inline-block;
     margin-left: 2px;
@@ -261,9 +266,12 @@ body button[class*="fl-builder"]:focus {
 	text-indent: 0;
 	text-shadow: none;
 	text-transform: none;
+	letter-spacing: normal;
 }
 
-.fl-builder-button {
+button.fl-builder-button,
+a.fl-builder-button,
+*.fl-builder-button {
 	-webkit-appearance: none;
 	align-items: center;
 	background: #e7ebef;
@@ -315,9 +323,6 @@ button.fl-builder-button:focus {
 	background: #E4E7EA;
 	border:2px solid #00A0D0 !important;
 }
-.fl-builder-bar .fl-builder-button {
-	height: auto;
-}
 .fl-builder-button-primary,
 body.fl-builder--layout-has-drafted-changes .fl-builder-done-button {
 	background: #00A0D2;
@@ -361,19 +366,23 @@ body.fl-builder--layout-has-drafted-changes .fl-builder-done-button:active {
 .fl-builder-publish-button {
 	line-height: 45px !important;
 }
-.fl-builder-content-panel-button,
-.fl-builder-content-panel-button:hover {
+button.fl-builder-content-panel-button,
+button.fl-builder-content-panel-button:hover {
 	fill: #00A0D2 !important;
 	font-size: 30px !important;
-	padding-bottom: 4px;
+	padding: 2px 4px !important;
 }
 /* Silent buttons have the same dimensions but no background or "button" look. */
 .fl-builder-button-silent,
 .fl-builder-button-silent:hover {
-	padding:0 12px;
+	min-width: 40px;
+	padding:0 4px !important;
 	background:none !important;
 	border:2px solid transparent !important;
 	box-shadow:none !important;
+	display: inline-flex;
+	flex-direction: row;
+	justify-content: center;
 }
 
 .fl-builder-done-button,
@@ -387,6 +396,14 @@ body.fl-builder--layout-has-drafted-changes .fl-builder-done-button:active {
 	padding: 11px 12px;
 	vertical-align: middle;
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+}
+
+.fl-builder-button svg {
+	max-width: none;
+}
+/* Prevent buttons in settings panels or media panel inside the UI from being affected */
+.fl-builder-settings-fields button, .fl-builder-edit .media-modal-content button {
+	letter-spacing: normal;
 }
 /* @endgroup Buttons */
 
@@ -470,6 +487,7 @@ body .fl-builder-bar .fl-builder-bar-content {
 	transition-property: background-color, opacity, transform;
 	transition-duration: .35s;
 	pointer-events: auto;
+	letter-spacing: normal;
 }
 body .fl-builder-bar .fl-builder-bar-content.is-muted {
 	pointer-events: none;
@@ -676,6 +694,7 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	padding: 4px;
 }
 .fl-builder-bar .fl-builder-button {
+	height: auto;
 	margin: 0 0 0 4px;
 }
 /* Actually the first button, but it's the last because it's inside a row-reverse container */
@@ -687,19 +706,10 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 .fl-builder-bar .fl-builder-content-panel-button {
 	align-items: baseline !important;
-	padding-top:1px;
 	font-weight: 400;
 }
-.fl-builder-content-panel-button svg {
-	transition-property: transform;
-	transition-duration: .25s;
-	transform: rotate(0deg) scale(1);
-	transform-origin: center;
-}
-.fl-builder-content-panel-is-showing .fl-builder-content-panel-button svg {
-	transform: rotate(135deg) scale(1.1) translate(.5px, -.5px);
-}
 .fl-builder--saving-indicator {
+	flex: 0 1 auto;
 	cursor: pointer;
 	display: flex;
 	align-self: center;
@@ -709,7 +719,6 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	color: #676f7a;
 	align-items: center;
 	line-height: 1.2;
-	min-width: 180px;
 	justify-content: flex-end;
 }
 .fl-builder--saving-indicator:hover {
@@ -721,9 +730,9 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 
 /* Buy/Upgrade button */
-.fl-builder-buy-button,
-.fl-builder-upgrade-button,
-.fl-builder-feedback-button {
+.fl-builder-button.fl-builder-buy-button,
+.fl-builder-button.fl-builder-upgrade-button,
+.fl-builder-button.fl-builder-feedback-button {
 	background: #F7A407;
 	color: #fff !important;
 	text-decoration: none;
@@ -736,8 +745,11 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 .fl-builder-buy-button:hover,
 .fl-builder-upgrade-button:hover,
-.fl-builder-feedback-button:hover {
-	background: #EE8E0D;
+.fl-builder-feedback-button:hover,
+.fl-builder-buy-button:focus,
+.fl-builder-upgrade-button:focus,
+.fl-builder-feedback-button:focus {
+	background: #EE8E0D !important;
 	color: #fff !important;
 }
 
@@ -823,6 +835,12 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	}
 }
 
+.fl-notifications-panel .fl-builder-ui-post .wp-block-image,
+.fl-notifications-panel .fl-builder-ui-post .wp-block-image figure {
+	margin-top: 10px!important;
+	margin-bottom: 10px!important;
+}
+
 .fl-builder--preview-actions {
 	display:none;
 	position: fixed;
@@ -856,6 +874,13 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 .fl-builder--preview-actions .device-icons i {
 	margin: 0 6px;
+}
+
+.fl-builder--preview-actions .size {
+	position: absolute;
+	left: 5px;
+	top: 40px;
+	font-size: 16px;
 }
 /* @endgroup Toolbar */
 
@@ -1003,7 +1028,7 @@ body .fl-theme-builder-preview-select-item-child:hover {
 	bottom: 2px;
 	padding: 5px;
 	border: 2px solid transparent;
-	background: transparent;
+	background: transparent !important;
 	width: 36px;
 	height: 36px;
 	border-radius: 4px;
@@ -1098,6 +1123,19 @@ body .fl-theme-builder-preview-select-item-child:hover {
 }
 
 /* @endgroup Pinned UI */
+
+.fl-builder-content-panel-button svg {
+    transition-property: transform;
+    transition-duration: .25s;
+    transform: rotate(0deg) scale(1);
+    transform-origin: center;
+}
+.fl-builder-content-panel-is-showing .fl-builder-content-panel-button svg {
+    transform: rotate(135deg) scale(1.1) translate(.5px, -.5px);
+}
+.fl-builder--content-library-panel .fl-builder--panel-arrow svg {
+    vertical-align: inherit;
+}
 
 /* @group Content Panel
 ------------------------------------------------------ */
@@ -1402,6 +1440,10 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	position: relative;
 	height:47px;
 }
+.fl-builder-block-disabled,
+.fl-builder-block-disabled .fl-builder-block-content {
+	cursor: pointer !important;
+}
 .fl-builder-block.fl-builder-block-col-group {
 	height:84px;
 }
@@ -1490,7 +1532,10 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 .fl-builder-block-saved-column.fl-builder-block-global .fl-builder-block-title,
 .fl-builder-block-saved-column:hover .fl-builder-block-title,
 .fl-builder-block-saved-row.fl-builder-block-global .fl-builder-block-title,
-.fl-builder-block-saved-row:hover .fl-builder-block-title {
+.fl-builder-block-saved-row:hover .fl-builder-block-title,
+.fl-builder-touch .fl-builder-block-saved-module .fl-builder-block-title,
+.fl-builder-touch .fl-builder-block-saved-column .fl-builder-block-title,
+.fl-builder-touch .fl-builder-block-saved-row .fl-builder-block-title  {
 	margin-right: 70px;
 }
 
@@ -1556,40 +1601,55 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	display: none !important;
 }
 
-/* Lite version modules CTA */
-.fl-builder-modules-cta a {
-    color: #999 !important;
-    display: block !important;
-    font-size: 12px !important;
-    font-style: italic !important;
-    padding: 15px 20px !important;
-    line-height: 16px !important;
+/* Lite Version CTAs
+------------------------------------------------------ */
+
+/* Pro Modules List */
+#fl-builder-blocks-pro {
+	border-bottom: 4px solid #e7ebef;
+	position: relative;
 }
-.fl-builder-modules-cta a:hover {
-    background: #e5e5e5 !important;
-    color: #666 !important;
-	text-decoration: none !important;
+#fl-builder-blocks-pro.fl-builder-blocks-section .fl-builder-block {
+	cursor: pointer !important;
+	padding-right: 50px;
 }
-.fl-builder-modules-cta a:focus {
-	text-decoration: none !important;
+#fl-builder-blocks-pro .fl-builder-block:hover .fl-builder-block-content {
+	cursor: pointer !important;
+	padding-right: 60px;
 }
-.fl-builder-modules-cta .fa {
-	float: right !important;
-	font-size: 14px !important;
-	margin: 3px 0px 0 9px !important;
+.fl-builder-blocks-pro-closed {
+	height: 240px;
+	overflow: hidden;
+}
+.fl-builder-blocks-pro-overlay {
+	background: linear-gradient(to top,  rgba(245, 247, 249, 1) 0%,rgba(255,255,255,0) 100%);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+.fl-builder-blocks-pro-open .fl-builder-blocks-pro-overlay {
+	display: none;
+}
+.fl-builder-blocks-pro-expand.fl-builder-button {
+	display: inline-block !important;
+	font-size: 12px !important;
+    margin-bottom: 10px !important;
+	opacity: 0.4;
+	width: 100% !important;
+}
+.fl-builder-blocks-pro-expand:hover {
+	opacity: 1;
+}
+.fl-builder-blocks-pro-expand-rotate svg {
+	transform: rotate(180deg);
 }
 
-.fl-builder--panel-message {
-	text-align: center;
-	padding:40px 20px;
-	font-size: 16px;
-}
-.fl-builder--panel-message .fl-builder-button {
-	display: inline-block;
-	padding:10px;
-}
+/* Panel CTAs */
 .fl-builder--panel-cta {
-	padding: 20px 30px;
+	margin: 0 20px 20px 20px !important;
+	padding: 10px 30px 30px;
 	font-size:16px;
 	text-align: center;
 }
@@ -1599,6 +1659,110 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 }
 .fl-builder--panel-cta a:hover {
 	text-decoration: none;
+}
+.fl-builder--panel-cta img {
+	display: block;
+    max-width: 70px;
+    margin: 0 auto 20px;
+	position: relative;
+	right: 8px;
+}
+.fl-builder--panel-cta button {
+	display: inline;
+	margin-top: 25px;
+}
+
+/* Panel Messages */
+.fl-builder--panel-message {
+	text-align: center;
+	padding:40px 20px;
+	font-size: 16px;
+}
+.fl-builder--panel-message .fl-builder-button {
+	display: inline-block;
+	padding:10px;
+}
+
+/* Pro Badges */
+.fl-builder-pro-badge {
+	background: rgba(0,0,0,0.4);
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	padding: 2px 4px;
+}
+.fl-builder--menu-item .fl-builder-pro-badge {
+	margin-left: 10px;
+}
+.fl-builder-block-module .fl-builder-pro-badge {
+	padding: 2px;
+	position: absolute;
+	right: 20px;
+}
+.fl-builder-block-module:hover .fl-builder-pro-badge {
+	background: #F7A407;
+}
+.fl-builder--template-thumbnail .fl-builder-pro-badge {
+	background: #F7A407;
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	z-index: 1;
+}
+.fl-builder-block-row-template .fl-builder-pro-badge {
+	position: absolute;
+	top: auto;
+	bottom: 10px;
+    right: 10px;
+}
+
+/* Lite Version Tools Menu */
+.fl-builder-lite .fl-builder--menu-item[data-event="saveTemplate"],
+.fl-builder-lite .fl-builder--menu-item[data-event="launchThemerLayouts"] {
+	opacity: 0.5
+}
+
+/* Pro Version Lightbox
+------------------------------------------------------ */
+
+.fl-builder-pro-lightbox .fl-lightbox {
+	max-width: 450px;
+	padding: 30px;
+	text-align: center;
+}
+.fl-builder-pro-lightbox .dashicons-no {
+	cursor: pointer;
+	position: absolute;
+    right: 10px;
+    top: 14px;
+    font-size: 20px;
+    opacity: 0.3;
+}
+.fl-builder-pro-lightbox .dashicons-no:hover {
+    opacity: 1;
+}
+.fl-pro-message-badge {
+    margin-bottom: 15px;
+}
+.fl-pro-message-badge span {
+	background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+	font-size: 10px !important;
+	font-weight: bold;
+    padding: 2px 4px;
+}
+.fl-pro-message-title {
+	font-size: 20px !important;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+.fl-pro-message-content {
+	font-size: 16px !important;
+	line-height: 24px !important;
+	margin-bottom: 20px;
+}
+.fl-pro-message-button button {
+	display: inline;
 }
 
 /* Builder Panel Templates
@@ -1645,6 +1809,7 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	font-size: 13px;
 	transform-origin: center;
 	opacity: 1;
+	position: relative;
 }
 .fl-builder--template-thumbnail {
 	background-size: cover;
@@ -1655,6 +1820,7 @@ body.fl-builder-draggable-is-dragging .fl-builder--panel-arrow {
 	transform-origin: bottom;
 	transition-property: transform, box-shadow;
 	transition-duration: .15s;
+	position: relative;
 }
 .fl-builder--template-collection-item[data-id="0"] .fl-builder--template-thumbnail {
 	border-color: #e4e7ea;
@@ -1718,6 +1884,9 @@ span.fl-builder-block-no-node-templates:hover {
 	right: 0;
 	top: 0;
 }
+.fl-builder-blocks-section-content .fl-builder-node-template-actions a:hover {
+	text-decoration: none;
+}
 .fl-builder-blocks-section-content .fl-builder-node-template-edit,
 .fl-builder-blocks-section-content .fl-builder-node-template-delete {
 	display: inline;
@@ -1733,13 +1902,15 @@ span.fl-builder-block-no-node-templates:hover {
 }
 .fl-builder-blocks-section-content .fl-builder-node-template-edit i,
 .fl-builder-blocks-section-content .fl-builder-node-template-delete i {
+	color: #676F7A;
 	margin: 0;
 }
 .fl-builder-blocks-section-content .fl-builder-node-template-edit:hover i,
 .fl-builder-blocks-section-content .fl-builder-node-template-delete:hover i {
 	color: #444444;
 }
-.fl-builder-blocks-node-template .fl-builder-block:hover .fl-builder-node-template-actions {
+.fl-builder-blocks-node-template .fl-builder-block:hover .fl-builder-node-template-actions,
+.fl-builder-touch .fl-builder-blocks-section-content .fl-builder-node-template-actions {
 	display: block;
 }
 .ui-sortable-helper .fl-builder-node-template-edit,
@@ -1817,6 +1988,7 @@ span.fl-builder-block-no-node-templates:hover {
 }
 .fl-builder--panel-view.is-showing {
 	display: block;
+	letter-spacing: normal;
 }
 
 .fl-builder--content-library-panel.ui-draggable-dragging {
@@ -1861,7 +2033,7 @@ span.fl-builder-block-no-node-templates:hover {
 	margin: 0 !important;
 	padding:0 !important;
 	color: #6D6D6D;
-    background: none;
+    background: none !important;
 	border: 2px solid transparent;
 	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.12) !important;
 	border-radius: 4px;
@@ -1871,7 +2043,7 @@ span.fl-builder-block-no-node-templates:hover {
 .fl-builder--selector-display-label:hover {
 	top:0;
 	color: inherit;
-	background: none;
+	background: none !important;
 	border: 2px solid transparent;
 	border-radius: 4px;
 }
@@ -1891,7 +2063,7 @@ span.fl-builder-block-no-node-templates:hover {
 }
 .fl-builder--group-label {
 	color: inherit;
-	flex: 0 0 0%;
+	flex: 0 0 auto;
 	padding: 4px 10px;
 	padding-right: 12px;
 	background: #e7ebef;
@@ -1949,6 +2121,7 @@ span.fl-builder-block-no-node-templates:hover {
 }
 button.fl-builder-button.fl-builder-bar-title-caret {
 	margin:4px;
+	padding: 0 12px !important;
 }
 button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	background-color: #e6eaed !important;
@@ -2032,6 +2205,12 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 .fl-builder--menu hr {
 	margin:4px 30px;
 }
+.fl-builder--menu hr::before,
+.fl-builder--menu hr::after {
+	display: none !important;
+	content: none !important;
+	height:auto;
+}
 .fl-builder--menu .fl-builder-video-wrap iframe {
 	display: block;
 	margin:4px 0;
@@ -2072,7 +2251,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 .fl-builder-bar .fl-builder-button-group > .fl-builder-button {
 	border-radius: 0;
 	margin-left: 0px;
-	flex-basis: 100%;
+	flex: 1 0 auto;
 	text-align: center;
 	justify-content: space-around;
 }
@@ -2137,7 +2316,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	line-height: 40px !important;
 	overflow: hidden;
 	padding: 0 20px;
-	position: fixed !important;
+	position: absolute !important;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 180px !important;
@@ -2487,11 +2666,14 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 }
 .fl-block-has-rules {
 	color: #00A0D2 !important;
-    cursor: pointer;
+	cursor: pointer;
 	padding: 7px;
-    position: absolute;
-    right: 0;
-    top: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+.fl-block-has-rules.logic {
+	color: red !important;
 }
 .fl-block-overlay-title {
 	color: #fff !important;
@@ -2502,6 +2684,17 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	line-height: 29px;
 	margin-right: 2px;
 	padding: 0 12px 0 8px;
+}
+
+/* Larger overlays for touch. */
+.fl-builder-touch .fl-block-overlay-actions {
+	height: 32px;
+}
+.fl-builder-touch .fl-block-overlay-actions i {
+	font-size: 20px !important;
+	height: 32px !important;
+	line-height: 32px !important;
+	width: 38px !important;
 }
 
 /* Row Overlays */
@@ -2725,6 +2918,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	padding: 6px 0;
 	position: absolute;
 	text-align: left;
+	letter-spacing: normal;
 	top: 100%;
 	width: 165px;
 	z-index: 100008;
@@ -2844,6 +3038,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	flex-direction: column;
 	padding: 25px;
 	text-align: center;
+	letter-spacing: normal;
 }
 .fl-builder-actions-title {
 	color: #333 !important;
@@ -2881,6 +3076,7 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	color: #333 !important;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 	font-size: 16px !important;
+	letter-spacing: normal;
 	line-height: 24px;
 	padding: 30px;
 }
@@ -3148,26 +3344,6 @@ button.fl-builder-button.fl-builder-bar-title-caret:focus {
 	z-index: -1;
 	min-height: 80vh;
 }
-
-/* Lite version templates CTA */
-.fl-builder-templates-cta {
-	margin-bottom: 20px;
-}
-.fl-builder-templates-cta p {
-	display: inline-block !important;
-	width: 75% !important;
-	font-size: 14px !important;
-	line-height: 1.5 !important;
-	margin-bottom: 0 !important;
-}
-.fl-builder-templates-cta .fl-builder-upgrade-button {
-	font-size: 13px !important;
-	line-height: 13px !important;
-	position: relative;
-	top: 8px;
-	left: 15px;
-	padding: 1px 12px;
-}
 /* @endgroup Template Selector */
 
 /* @group User Template Editing
@@ -3187,6 +3363,7 @@ form.fl-builder-settings {
 	padding: 0;
 	display: flex;
 	flex-direction: column;
+	letter-spacing: normal;
 }
 .fl-builder-settings-message {
 	font-size: 15px !important;
@@ -3229,7 +3406,7 @@ form.fl-builder-settings {
 	margin: 10px 12px 10px 10px !important;
 	width: calc(100% - 40px);
 }
-.fl-lightbox-width-slim .fl-form-table th {
+.fl-lightbox-width-slim.fl-lightbox .fl-form-table th {
 	display: block;
 	position: relative;
 	padding: 10px 0 0 12px !important;
@@ -3633,19 +3810,21 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 /* Settings Tables
 ------------------------------------------------------ */
 
-.fl-form-table  {
+.fl-lightbox .fl-form-table  {
+	display: table;
 	background: none transparent;
 	border: none;
+	overflow: inherit;
 	width: calc(100% - 35px); /* extra 25px for field connections toggle) */
 }
-.fl-form-table tbody {
+.fl-lightbox .fl-form-table tbody {
 	border: none;
 }
-.fl-form-table tr,
+.fl-lightbox .fl-form-table tr,
 .fl-form-table tr:nth-child(even) {
 	background: transparent;
 }
-.fl-form-table th {
+.fl-lightbox .fl-form-table th {
 	border: none !important;
 	font-weight: normal !important;
 	padding: 10px 15px 10px 10px !important;
@@ -3655,21 +3834,21 @@ body .fl-lightbox-has-tab-overflow .fl-builder-settings-tabs-more {
 	width: 200px !important;
 	background:transparent !important;
 }
-.fl-form-table td:first-child {
+.fl-lightbox .fl-form-table td:first-child {
 	padding-left:30px !important;
 }
-.fl-form-table th label {
+.fl-lightbox .fl-form-table th label {
 	color: #333;
 	width: auto;
 	max-width: 100%;
 }
-.fl-form-table th label i {
+.fl-lightbox .fl-form-table th label i {
 	color: #808080;
 }
-.fl-form-table th label i:hover {
+.fl-lightbox .fl-form-table th label i:hover {
 	color: #555555;
 }
-.fl-form-table td {
+.fl-lightbox .fl-form-table td {
 	background: transparent !important;
 	border: none !important;
 	font-weight: normal !important;
@@ -4228,7 +4407,7 @@ select.fl-field-unit-select {
 div.fl-field-unit-select {
 	background-color: #E7EBEF !important;
 	padding: 9px 7px !important;
-	width: 100%;
+	flex: 1 0 auto;
 }
 
 /* Field Slider Popups */
@@ -4427,7 +4606,7 @@ input[type=number].fl-field-popup-slider-focus {
 	float: none;
 }
 .fl-typography-field-transform .fl-button-group-field-option {
-	width: 100%;
+	width: auto;
     padding: 0 7px;
 }
 .fl-typography-field .fl-shadow-field {
@@ -4457,12 +4636,13 @@ input[type=number].fl-field-popup-slider-focus {
 .fl-button-group-field-option {
 	cursor: pointer;
 	display: flex;
+	flex: 1 1 auto;
 	align-items: center;
 	justify-content: center;
 	padding: 0 5px;
 	border-radius:0px;
 	border: 2px solid transparent;
-	background: transparent;
+	background: transparent !important;
 }
 .fl-button-group-field-option:hover {
 	top:0;
@@ -4485,7 +4665,7 @@ input[type=number].fl-field-popup-slider-focus {
 	border-bottom-right-radius: 3px;
 }
 .fl-button-group-field-option[data-selected="1"] {
-	background-color: #fff;
+	background-color: #fff !important;
 	color: #000000;
 }
 .fl-button-group-field-option i {
@@ -4634,6 +4814,9 @@ input[type=number].fl-field-popup-slider-focus {
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 }
+.fl-builder-edit .media-modal-content {
+	letter-spacing: normal;
+}
 .fl-builder-edit .media-modal-content h1 {
 	font-family: inherit;
 }
@@ -4656,8 +4839,11 @@ input[type=number].fl-field-popup-slider-focus {
 .fl-builder-edit .media-frame.hide-menu {
 	visibility: visible;
 }
-.fl-builder-edit .media-router button {
-	color:inherit;
+.fl-builder-edit .media-modal .media-frame-router .media-router * {
+    color: #808080;
+}
+.fl-builder-edit .media-modal .media-frame-content * {
+    color: #808080;
 }
 span.select2-container.select2-container--open {
     z-index: 9999999;
@@ -5171,6 +5357,9 @@ ul.as-list {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+ul.as-list span.type {
+	float: right;
+}
 li.as-result-item, li.as-message {
 	border: none;
 }
@@ -5270,8 +5459,18 @@ li.as-result-item em {
 #tiptip_content {
 	background: #333;
 	box-shadow: none;
+	letter-spacing: normal;
 }
 /* @endgroup Settings Lightboxes */
+
+/* @group Row Settings
+------------------------------------------------------ */
+
+.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_right"],
+.fl-builder-row-settings .fl-field-responsive-setting input[name="bg_position_custom_left"] {
+	display: none !important;
+}
+/* @endgroup Row Settings */
 
 /* @group Help */
 /* Getting Started Video
@@ -5590,6 +5789,9 @@ body > .fl-builder-tour-dimmed {
 	top:0;
 	background: #E5EAED !important;
 }
+.fl-builder--main-menu-panel-view-title button {
+	float: right;
+}
 .fl-builder--menu-item:before {
 	display:block;
 	content: "";
@@ -5709,6 +5911,37 @@ body > .fl-builder-tour-dimmed {
 
 /* @endgroup Revisions */
 
+/* @group History
+------------------------------------------------------ */
+
+.fl-builder--main-menu-panel-view[data-name="history"] .fl-builder--menu-item,
+.fl-builder--main-menu-panel-view[data-name="history"] .fl-builder--menu-item:focus {
+	border: none !important;
+	padding: 0;
+    margin-bottom: 2px;
+}
+.fl-history-list-item {
+	border: 1px solid transparent;
+    border-radius: 4px;
+	padding: 10px 12px 12px;
+}
+.fl-history-list-item i.fa-check-circle {
+	display: none;
+}
+.fl-history-list-item[data-current="1"] {
+	border-color: #D3DADF;
+	display: flex;
+    align-items: center;
+}
+.fl-history-list-item[data-current="1"] .fl-history-list-item-label {
+	width: 100%;
+}
+.fl-history-list-item[data-current="1"] i.fa-check-circle {
+	display: block;
+}
+
+/* @endgroup History */
+
 /* @group Modules
 ------------------------------------------------------ */
 
@@ -5721,6 +5954,26 @@ body > .fl-builder-tour-dimmed {
 	white-space: nowrap;
 }
 /* @endgroup Modules */
+
+/* @group Module Export/Import
+------------------------------------------------------ */
+
+.module-import-wrap {
+	display: flex;
+}
+.module-import-input {
+	width: 100% !important;
+}
+.module-import-apply {
+	height: 35px;
+    margin: 1px 1px 1px 5px;
+}
+.module-import-error {
+	color: red !important;
+	display: none;
+    padding: 5px 12px;
+}
+/* @endgroup Module Export/Import */
 
 /* @group Misc
 ------------------------------------------------------ */
@@ -5989,4 +6242,66 @@ Rules to ensure compatibility with v2.0.
 	color: black;
 	background: #eef2f5;
 	border: 2px solid #eef2f5;
+}
+
+/* -- select2 -- */
+.fl-lightbox .select2-container--default .selection .select2-selection--single {
+	border-color: transparent !important;
+	border-style: solid !important;
+	border-width: 2px !important;
+	border-radius: 4px !important;
+	height: 36px !important;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+ 	font-size: 13px !important;
+ 	line-height: 15px !important;
+	outline: none;
+}
+
+.select2-dropdown {
+	border-color: transparent !important;
+	border-style: solid !important;
+	border-radius: 4px !important;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.12);
+}
+
+.fl-lightbox .select2-selection--single .select2-selection__rendered {
+	line-height: 32px !important;
+	font-size: 13px;
+}
+.fl-lightbox .select2-selection--single .select2-selection__arrow {
+	height: 32px;
+}
+.fl-builder-ui-skin--light .fl-lightbox .select2-selection__rendered {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-dropdown {
+    color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field::placeholder {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field::-webkit-input-placeholder {
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field::-moz-placeholder{
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field:-ms-input-placeholder{
+	color: #808080 !important;
+}
+.fl-builder-ui-skin--light .select2-search__field:-moz-placeholder {
+	color: #808080 !important;
+}
+
+.fl-diff td.diff-addedline,
+.fl-diff td.diff-context,
+.fl-diff td.diff-deletedline span {
+	display: none;
+}
+
+.fl-diff table.diff {
+	width: 100%;
 }

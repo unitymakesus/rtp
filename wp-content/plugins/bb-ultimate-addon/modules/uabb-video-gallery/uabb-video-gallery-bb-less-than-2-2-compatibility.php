@@ -1202,7 +1202,7 @@ FLBuilder::register_settings_form(
 								'type'        => 'text',
 								'label'       => __( 'Caption', 'uabb' ),
 								'default'     => 'First Video',
-								'help'        => __( 'This title will be visible on hover.', 'uabb' ),
+								'help'        => __( 'This title will be for the Videos.', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'tags'               => array(

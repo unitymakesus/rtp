@@ -8,7 +8,8 @@
 				attachment 	= form.find( 'select[name=photo_src]' ),
 				url 		= form.find( 'input[name=photo_url]' ),
 				showCaption = form.find( 'select[name=show_caption]' ),
-				caption 	= form.find( 'input[name=caption]' );
+				caption 	= form.find( 'input[name=caption]' ),
+				crop 		= form.find( 'select[name=crop]' );
 
 			this._sourceChanged();
 
@@ -19,12 +20,16 @@
 			url.on( 'keyup', this._previewImage );
 			showCaption.on( 'change', this._previewCaption );
 			caption.on( 'keyup', this._previewCaption );
+			crop.on( 'change', this._cropChanged );
 		},
 
 		_sourceChanged: function() {
 			var form     = $( '.fl-builder-settings' ),
 				source 	 = form.find( 'select[name=photo_source]' ).val(),
-				linkType = form.find( 'select[name=link_type]' );
+				linkType = form.find( 'select[name=link_type]' ),
+				crop = form.find( 'select[name=crop]' ),
+				attachment 	= form.find( 'select[name=photo_src]' ),
+				url 		= form.find( 'input[name=photo_url]' );
 
 			linkType.find( 'option[value=page]' ).remove();
 
@@ -89,7 +94,19 @@
 			}
 
 			container.html( caption );
-		}
+		},
+
+		_cropChanged: function() {
+			var form = $( '.fl-builder-settings' ),
+				crop = form.find( 'select[name=crop]' ),
+				radius = form.find( '.fl-border-field-radius' );
+
+			if ( 'circle' === crop.val() ) {
+				radius.hide();
+			} else {
+				radius.show();
+			}
+		},
 	} );
 
 } )( jQuery );

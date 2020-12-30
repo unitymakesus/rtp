@@ -4,35 +4,32 @@
 .figure-card {
   position: relative;
 
-  a.mega-link:hover ~ .card, &:focus-within .card {
-    box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+  &:focus-within .card {
+    a {
+      outline: 0;
+    }
 
     .card-cta {
-      a {
-        .text {
-          text-decoration: underline !important;
-        }
+      .text {
+        text-decoration: underline !important;
+      }
 
-        .arrow {
-          transform: translate3d(10px, 0, 0);
-        }
+      .arrow {
+        transform: translate3d(10px, 0, 0);
       }
     }
   }
 
-  a.mega-link:focus {
-    outline: none !important;
-  }
-
   .card {
-    background: $color-white;
+    background: transparentize($color-white, 0.1);
     padding: 24px 24px 4px;
     position: relative;
-    transition: box-shadow 0.3s;
+    transition: all 0.3s ease-in-out;
     box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
     z-index: 2;
 
-    &:hover, &:focus, &:active {
+    &:hover, &:focus-within, &:active {
+      background: $color-white;
       box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
     }
 
@@ -127,6 +124,11 @@
         align-self: center;
         transition: transform 0.3s ease;
 
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+
         path {
           fill: $color-black;
           transition: fill 0.3s ease;
@@ -174,14 +176,6 @@
         }
       }
     }
-
-    a.mega-link {
-      &:hover, &:focus, &:active {
-        & + .card .card-cta a {
-          color: $color-slate;
-        }
-      }
-    }
   }
 
   &.badge-hub, &.badge-hub-rtp {
@@ -196,14 +190,6 @@
 
         .arrow path {
           fill: $color-unc;
-        }
-      }
-    }
-
-    a.mega-link {
-      &:hover, &:focus, &:active {
-        & + .card .card-cta a {
-          color: $color-unc;
         }
       }
     }
@@ -224,14 +210,6 @@
         }
       }
     }
-
-    a.mega-link {
-      &:hover, &:focus, &:active {
-        & + .card .card-cta a {
-          color: $color-boxyard;
-        }
-      }
-    }
   }
 
   &.badge-frontier, &.badge-frontier-rtp {
@@ -249,14 +227,6 @@
         }
       }
     }
-
-    a.mega-link {
-      &:hover, &:focus, &:active {
-        & + .card .card-cta a {
-          color: $color-mint-a11y;
-        }
-      }
-    }
   }
 
   &.badge-stem, &.badge-stem-rtp {
@@ -271,14 +241,6 @@
 
         .arrow path {
           fill: $color-purple;
-        }
-      }
-    }
-
-    a.mega-link {
-      &:hover, &:focus, &:active {
-        & + .card .card-cta a {
-          color: $color-purple;
         }
       }
     }
@@ -300,17 +262,13 @@
       @include rtp-gradient;
     }
 
-    a.mega-link {
-      top: 235px;
-    }
-
     .pattern-background {
       bottom: 0;
     }
 
     @media only screen and (min-width: 768px) {
       .card {
-        margin: -65px 30px 0;
+        margin: -65px 15px 0;
         z-index: 2;
       }
 
@@ -325,13 +283,6 @@
     .figure-card-img {
       width: 100%;
       line-height: 0;
-    }
-
-    a.mega-link {
-      right: 30px;
-      left: auto;
-      width: 50%;
-      z-index: 5;
     }
 
     &.figure-align-right {
@@ -370,7 +321,7 @@
       }
 
       &.figure-align-right {
-        .card, a.mega-link {
+        .card {
           left: 30px;
           right: auto;
         }

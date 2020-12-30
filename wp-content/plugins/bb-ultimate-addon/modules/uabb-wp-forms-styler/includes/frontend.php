@@ -14,12 +14,12 @@
 	} elseif ( 'custom' === $settings->wp_custom_desc ) {
 		if ( $settings->wp_form_title ) {
 			?>
-			<<?php echo $settings->wp_form_title_tag_selection; ?> class="uabb-wpf-form-title"><?php echo $settings->wp_form_title; ?></<?php echo $settings->wp_form_title_tag_selection; ?>>
+			<<?php echo esc_attr( $settings->wp_form_title_tag_selection ); ?> class="uabb-wpf-form-title"><?php echo $settings->wp_form_title; ?></<?php echo esc_attr( $settings->wp_form_title_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 		<?php } ?>
 		<?php if ( $settings->wp_form_desc ) { ?>
-			<p class="uabb-wpf-form-desc"><?php echo $settings->wp_form_desc; ?></p>
+			<p class="uabb-wpf-form-desc"><?php echo $settings->wp_form_desc; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 			<?php
-}
+		}
 	}
 
 	if ( $settings->wp_form_id ) {

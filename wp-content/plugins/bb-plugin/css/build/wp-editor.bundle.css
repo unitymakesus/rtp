@@ -35,6 +35,7 @@
  */
 .fl-builder-layout-loading-view .spinner {
   float: left; }
+
 /**
  * This should be removed when the API supports proper click
  * events on more menu items.
@@ -46,3 +47,4 @@
   bottom: 0;
   left: 0;
   z-index: 1; }
+

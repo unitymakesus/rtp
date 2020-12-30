@@ -41,7 +41,7 @@ class UABBCtaModule extends FLBuilderModule {
 	public function get_classname() {
 		$classname = 'uabb-cta-wrap uabb-cta-' . $this->settings->layout;
 
-		if ( 'stacked' == $this->settings->layout ) {
+		if ( 'stacked' === $this->settings->layout ) {
 			$classname .= ' uabb-cta-' . $this->settings->alignment;
 		}
 
@@ -58,11 +58,11 @@ class UABBCtaModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
 
@@ -85,7 +85,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->title_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_font_family['weight'] ) {
 						$settings->title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_font_family['weight'];
@@ -163,7 +163,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->subhead_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->subhead_font_family['weight'] ) {
+					if ( 'regular' === $settings->subhead_font_family['weight'] ) {
 						$settings->subhead_typo['font_weight'] = 'normal';
 					} else {
 						$settings->subhead_typo['font_weight'] = $settings->subhead_font_family['weight'];
@@ -245,7 +245,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->btn_font_family['weight'] ) {
+					if ( 'regular' === $settings->btn_font_family['weight'] ) {
 						$settings->btn_typo['font_weight'] = 'normal';
 					} else {
 						$settings->btn_typo['font_weight'] = $settings->btn_font_family['weight'];
@@ -309,16 +309,16 @@ class UABBCtaModule extends FLBuilderModule {
 				unset( $settings->btn_letter_spacing );
 			}
 			if ( isset( $settings->btn_link_nofollow ) ) {
-				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+				if ( '1' === $settings->btn_link_nofollow || 'yes' === $settings->btn_link_nofollow ) {
 					$settings->btn_link_nofollow = 'yes';
 				}
 			}
 			if ( isset( $settings->btn_link_nofollow ) ) {
-				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+				if ( '1' === $settings->btn_link_nofollow || 'yes' === $settings->btn_link_nofollow ) {
 					$settings->btn_link_nofollow = 'yes';
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			$helper->handle_opacity_inputs( $settings, 'bg_color_opc', 'bg_color' );
 
@@ -341,7 +341,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->title_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_font_family['weight'] ) {
 						$settings->title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_typo['font_weight'] = $settings->title_font_family['weight'];
@@ -368,7 +368,7 @@ class UABBCtaModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->title_line_height['small'] ) && isset( $settings->title_font_size['small'] ) && 0 != $settings->title_font_size['small'] ) {
+			if ( isset( $settings->title_line_height['small'] ) && isset( $settings->title_font_size['small'] ) && 0 !== $settings->title_font_size['small'] ) {
 				if ( is_numeric( $settings->title_line_height['small'] ) && is_numeric( $settings->title_font_size['small'] ) ) {
 					$settings->title_typo_responsive['line_height'] = array(
 						'length' => round( $settings->title_line_height['small'] / $settings->title_font_size['small'], 2 ),
@@ -376,7 +376,7 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_line_height['medium'] ) && isset( $settings->title_font_size['medium'] ) && 0 != $settings->title_font_size['medium'] ) {
+			if ( isset( $settings->title_line_height['medium'] ) && isset( $settings->title_font_size['medium'] ) && 0 !== $settings->title_font_size['medium'] ) {
 				if ( is_numeric( $settings->title_line_height['medium'] ) && is_numeric( $settings->title_font_size['medium'] ) ) {
 					$settings->title_typo_medium['line_height'] = array(
 						'length' => round( $settings->title_line_height['medium'] / $settings->title_font_size['medium'], 2 ),
@@ -384,7 +384,7 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_line_height['desktop'] ) && isset( $settings->title_font_size['desktop'] ) && 0 != $settings->title_font_size['desktop'] ) {
+			if ( isset( $settings->title_line_height['desktop'] ) && isset( $settings->title_font_size['desktop'] ) && 0 !== $settings->title_font_size['desktop'] ) {
 				if ( is_numeric( $settings->title_line_height['desktop'] ) && is_numeric( $settings->title_font_size['desktop'] ) ) {
 					$settings->title_typo['line_height'] = array(
 						'length' => round( $settings->title_line_height['desktop'] / $settings->title_font_size['desktop'], 2 ),
@@ -409,7 +409,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->subhead_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->subhead_font_family['weight'] ) {
+					if ( 'regular' === $settings->subhead_font_family['weight'] ) {
 						$settings->subhead_typo['font_weight'] = 'normal';
 					} else {
 						$settings->subhead_typo['font_weight'] = $settings->subhead_font_family['weight'];
@@ -436,7 +436,7 @@ class UABBCtaModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->subhead_line_height['small'] ) && isset( $settings->subhead_font_size['small'] ) && 0 != $settings->subhead_font_size['small'] ) {
+			if ( isset( $settings->subhead_line_height['small'] ) && isset( $settings->subhead_font_size['small'] ) && 0 !== $settings->subhead_font_size['small'] ) {
 				if ( is_numeric( $settings->subhead_line_height['small'] ) && is_numeric( $settings->subhead_font_size['small'] ) ) {
 					$settings->subhead_typo['line_height'] = array(
 						'length' => round( $settings->subhead_line_height['small'] / $settings->subhead_font_size['small'], 2 ),
@@ -444,7 +444,7 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->subhead_line_height['medium'] ) && isset( $settings->subhead_font_size['medium'] ) && 0 != $settings->subhead_font_size['medium'] ) {
+			if ( isset( $settings->subhead_line_height['medium'] ) && isset( $settings->subhead_font_size['medium'] ) && 0 !== $settings->subhead_font_size['medium'] ) {
 				if ( is_numeric( $settings->subhead_line_height['medium'] ) && is_numeric( $settings->subhead_font_size['medium'] ) ) {
 					$settings->subhead_typo_medium['line_height'] = array(
 						'length' => round( $settings->subhead_line_height['medium'] / $settings->subhead_font_size['medium'], 2 ),
@@ -452,7 +452,7 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->subhead_line_height['desktop'] ) && isset( $settings->subhead_font_size['desktop'] ) && 0 != $settings->subhead_font_size['desktop'] ) {
+			if ( isset( $settings->subhead_line_height['desktop'] ) && isset( $settings->subhead_font_size['desktop'] ) && 0 !== $settings->subhead_font_size['desktop'] ) {
 				if ( is_numeric( $settings->subhead_line_height['desktop'] ) && is_numeric( $settings->subhead_font_size['desktop'] ) ) {
 					$settings->subhead_typo['line_height'] = array(
 						'length' => round( $settings->subhead_line_height['desktop'] / $settings->subhead_font_size['desktop'], 2 ),
@@ -476,7 +476,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->btn_font_family['weight'] ) {
+					if ( 'regular' === $settings->btn_font_family['weight'] ) {
 						$settings->btn_typo['font_weight'] = 'normal';
 					} else {
 						$settings->btn_typo['font_weight'] = $settings->btn_font_family['weight'];
@@ -502,7 +502,7 @@ class UABBCtaModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->btn_line_height['small'] ) && isset( $settings->btn_font_size['small'] ) && 0 != $settings->btn_font_size['small'] ) {
+			if ( isset( $settings->btn_line_height['small'] ) && isset( $settings->btn_font_size['small'] ) && 0 !== $settings->btn_font_size['small'] ) {
 				if ( is_numeric( $settings->btn_line_height['small'] ) && is_numeric( $settings->btn_font_size['small'] ) ) {
 					$settings->btn_typo_responsive['line_height'] = array(
 						'length' => round( $settings->btn_line_height['small'] / $settings->btn_font_size['small'], 2 ),
@@ -510,7 +510,7 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_line_height['medium'] ) && isset( $settings->btn_font_size['medium'] ) && 0 != $settings->btn_font_size['medium'] ) {
+			if ( isset( $settings->btn_line_height['medium'] ) && isset( $settings->btn_font_size['medium'] ) && 0 !== $settings->btn_font_size['medium'] ) {
 				if ( is_numeric( $settings->btn_line_height['medium'] ) && is_numeric( $settings->btn_font_size['medium'] ) ) {
 					$settings->btn_typo_medium['line_height'] = array(
 						'length' => round( $settings->btn_line_height['medium'] / $settings->btn_font_size['medium'], 2 ),
@@ -518,7 +518,7 @@ class UABBCtaModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_line_height['desktop'] ) && isset( $settings->btn_font_size['desktop'] ) && 0 != $settings->btn_font_size['desktop'] ) {
+			if ( isset( $settings->btn_line_height['desktop'] ) && isset( $settings->btn_font_size['desktop'] ) && 0 !== $settings->btn_font_size['desktop'] ) {
 				if ( is_numeric( $settings->btn_line_height['desktop'] ) && is_numeric( $settings->btn_font_size['desktop'] ) ) {
 					$settings->btn_typo['line_height'] = array(
 						'length' => round( $settings->btn_line_height['desktop'] / $settings->btn_font_size['desktop'], 2 ),
@@ -527,7 +527,7 @@ class UABBCtaModule extends FLBuilderModule {
 				}
 			}
 			if ( isset( $settings->btn_link_nofollow ) ) {
-				if ( '1' == $settings->btn_link_nofollow || 'yes' == $settings->btn_link_nofollow ) {
+				if ( '1' === $settings->btn_link_nofollow || 'yes' === $settings->btn_link_nofollow ) {
 					$settings->btn_link_nofollow = 'yes';
 				}
 			}
@@ -588,13 +588,13 @@ class UABBCtaModule extends FLBuilderModule {
 	 */
 	public function render_button() {
 
-		$version_bb_check = UABB_Compatibility::check_bb_version();
+		$version_bb_check = UABB_Compatibility::$version_bb_check;
 
 		if ( $version_bb_check ) {
 
 			$link_nofollow = '';
 
-			$link_nofollow = ( 'yes' == $this->settings->btn_link_nofollow && isset( $this->settings->btn_link_nofollow ) ) ? '1' : '';
+			$link_nofollow = ( 'yes' === $this->settings->btn_link_nofollow && isset( $this->settings->btn_link_nofollow ) ) ? '1' : '';
 
 			$btn_adv_typo = '';
 
@@ -609,46 +609,60 @@ class UABBCtaModule extends FLBuilderModule {
 			$btn_settings = array(
 
 				/* General Section */
-				'text'                       => $this->settings->btn_text,
+				'text'                                     => $this->settings->btn_text,
 
 				/* Link Section */
-				'link'                       => $this->settings->btn_link,
-				'link_target'                => $this->settings->btn_link_target,
-				'link_nofollow'              => $link_nofollow,
+				'link'                                     => $this->settings->btn_link,
+				'link_target'                              => $this->settings->btn_link_target,
+				'link_nofollow'                            => $link_nofollow,
 
 				/* Style Section */
-				'style'                      => $this->settings->btn_style,
-				'border_size'                => $this->settings->btn_border_size,
-				'transparent_button_options' => $this->settings->btn_transparent_button_options,
-				'threed_button_options'      => $this->settings->btn_threed_button_options,
-				'flat_button_options'        => $this->settings->btn_flat_button_options,
+				'style'                                    => $this->settings->btn_style,
+				'border_size'                              => $this->settings->btn_border_size,
+				'transparent_button_options'               => $this->settings->btn_transparent_button_options,
+				'threed_button_options'                    => $this->settings->btn_threed_button_options,
+				'flat_button_options'                      => $this->settings->btn_flat_button_options,
 
 				/* Colors */
-				'bg_color'                   => $this->settings->btn_bg_color,
-				'bg_hover_color'             => $this->settings->btn_bg_hover_color,
-				'text_color'                 => $this->settings->btn_text_color,
-				'text_hover_color'           => $this->settings->btn_text_hover_color,
+				'bg_color'                                 => $this->settings->btn_bg_color,
+				'bg_hover_color'                           => $this->settings->btn_bg_hover_color,
+				'text_color'                               => $this->settings->btn_text_color,
+				'text_hover_color'                         => $this->settings->btn_text_hover_color,
 
 				/* Icon */
-				'icon'                       => $this->settings->btn_icon,
-				'icon_position'              => $this->settings->btn_icon_position,
+				'icon'                                     => $this->settings->btn_icon,
+				'icon_position'                            => $this->settings->btn_icon_position,
 
 				/* Structure */
-				'width'                      => $this->settings->btn_width,
-				'custom_width'               => $this->settings->btn_custom_width,
-				'custom_height'              => $this->settings->btn_custom_height,
-				'padding_top_bottom'         => $this->settings->btn_padding_top_bottom,
-				'padding_left_right'         => $this->settings->btn_padding_left_right,
-				'border_radius'              => $this->settings->btn_border_radius,
-				'align'                      => '',
-				'mob_align'                  => '',
+				'width'                                    => $this->settings->btn_width,
+				'custom_width'                             => $this->settings->btn_custom_width,
+				'custom_height'                            => $this->settings->btn_custom_height,
+				'padding_top_bottom'                       => $this->settings->btn_padding_top_bottom,
+				'padding_left_right'                       => $this->settings->btn_padding_left_right,
+				'border_radius'                            => $this->settings->btn_border_radius,
+				'align'                                    => '',
+				'mob_align'                                => '',
 
 				/* Typography */
-				'font_size'                  => ( isset( $this->settings->btn_font_size ) ) ? $this->settings->btn_font_size : '',
-				'line_height'                => ( isset( $this->settings->btn_line_height ) ) ? $this->settings->btn_line_height : '',
-				'button_typo'                => ( isset( $this->settings->btn_typo ) ) ? $this->settings->btn_typo : '',
-				'button_typo_medium'         => ( isset( $this->settings->btn_typo_medium ) ) ? $this->settings->btn_typo_medium : '',
-				'button_typo_responsive'     => ( isset( $this->settings->btn_typo_responsive ) ) ? $this->settings->btn_typo_responsive : '',
+				'font_size'                                => ( isset( $this->settings->btn_font_size ) ) ? $this->settings->btn_font_size : '',
+				'line_height'                              => ( isset( $this->settings->btn_line_height ) ) ? $this->settings->btn_line_height : '',
+				'button_typo'                              => ( isset( $this->settings->btn_typo ) ) ? $this->settings->btn_typo : '',
+				'button_typo_medium'                       => ( isset( $this->settings->btn_typo_medium ) ) ? $this->settings->btn_typo_medium : '',
+				'button_typo_responsive'                   => ( isset( $this->settings->btn_typo_responsive ) ) ? $this->settings->btn_typo_responsive : '',
+				'button_padding_dimension_top'             => ( isset( $this->settings->button_padding_dimension_top ) ) ? $this->settings->button_padding_dimension_top : '',
+				'button_padding_dimension_left'            => ( isset( $this->settings->button_padding_dimension_left ) ) ? $this->settings->button_padding_dimension_left : '',
+				'button_padding_dimension_bottom'          => ( isset( $this->settings->button_padding_dimension_bottom ) ) ? $this->settings->button_padding_dimension_bottom : '',
+				'button_padding_dimension_right'           => ( isset( $this->settings->button_padding_dimension_right ) ) ? $this->settings->button_padding_dimension_right : '',
+				'button_padding_dimension_top_medium'      => ( isset( $this->settings->button_padding_dimension_top_medium ) ) ? $this->settings->button_padding_dimension_top_medium : '',
+				'button_padding_dimension_left_medium'     => ( isset( $this->settings->button_padding_dimension_left_medium ) ) ? $this->settings->button_padding_dimension_left_medium : '',
+				'button_padding_dimension_bottom_medium'   => ( isset( $this->settings->button_padding_dimension_bottom_medium ) ) ? $this->settings->button_padding_dimension_bottom_medium : '',
+				'button_padding_dimension_right_medium'    => ( isset( $this->settings->button_padding_dimension_right_medium ) ) ? $this->settings->button_padding_dimension_right_medium : '',
+				'button_padding_dimension_top_responsive'  => ( isset( $this->settings->button_padding_dimension_top_responsive ) ) ? $this->settings->button_padding_dimension_top_responsive : '',
+				'button_padding_dimension_left_responsive' => ( isset( $this->settings->button_padding_dimension_left_responsive ) ) ? $this->settings->button_padding_dimension_left_responsive : '',
+				'button_padding_dimension_bottom_responsive' => ( isset( $this->settings->button_padding_dimension_bottom_responsive ) ) ? $this->settings->button_padding_dimension_bottom_responsive : '',
+				'button_padding_dimension_right_responsive' => ( isset( $this->settings->button_padding_dimension_right_responsive ) ) ? $this->settings->button_padding_dimension_right_responsive : '',
+				'button_border'                            => ( isset( $this->settings->button_border ) ) ? $this->settings->button_border : '',
+				'border_hover_color'                       => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 
 			);
 
@@ -657,52 +671,70 @@ class UABBCtaModule extends FLBuilderModule {
 			$btn_settings = array(
 
 				/* General Section */
-				'text'                        => $this->settings->btn_text,
+				'text'                                     => $this->settings->btn_text,
 
 				/* Link Section */
-				'link'                        => $this->settings->btn_link,
-				'link_target'                 => $this->settings->btn_link_target,
-				'link_nofollow'               => $this->settings->btn_link_nofollow,
+				'link'                                     => $this->settings->btn_link,
+				'link_target'                              => $this->settings->btn_link_target,
+				'link_nofollow'                            => $this->settings->btn_link_nofollow,
 
 				/* Style Section */
-				'style'                       => $this->settings->btn_style,
-				'border_size'                 => $this->settings->btn_border_size,
-				'transparent_button_options'  => $this->settings->btn_transparent_button_options,
-				'threed_button_options'       => $this->settings->btn_threed_button_options,
-				'flat_button_options'         => $this->settings->btn_flat_button_options,
+				'style'                                    => $this->settings->btn_style,
+				'border_size'                              => $this->settings->btn_border_size,
+				'transparent_button_options'               => $this->settings->btn_transparent_button_options,
+				'threed_button_options'                    => $this->settings->btn_threed_button_options,
+				'flat_button_options'                      => $this->settings->btn_flat_button_options,
 
 				/* Colors */
-				'bg_color'                    => $this->settings->btn_bg_color,
-				'bg_hover_color'              => $this->settings->btn_bg_hover_color,
-				'text_color'                  => $this->settings->btn_text_color,
-				'text_hover_color'            => $this->settings->btn_text_hover_color,
+				'bg_color'                                 => $this->settings->btn_bg_color,
+				'bg_hover_color'                           => $this->settings->btn_bg_hover_color,
+				'text_color'                               => $this->settings->btn_text_color,
+				'text_hover_color'                         => $this->settings->btn_text_hover_color,
 
 				/* Icon */
-				'icon'                        => $this->settings->btn_icon,
-				'icon_position'               => $this->settings->btn_icon_position,
+				'icon'                                     => $this->settings->btn_icon,
+				'icon_position'                            => $this->settings->btn_icon_position,
 
 				/* Structure */
-				'width'                       => $this->settings->btn_width,
-				'custom_width'                => $this->settings->btn_custom_width,
-				'custom_height'               => $this->settings->btn_custom_height,
-				'padding_top_bottom'          => $this->settings->btn_padding_top_bottom,
-				'padding_left_right'          => $this->settings->btn_padding_left_right,
-				'border_radius'               => $this->settings->btn_border_radius,
-				'align'                       => '',
-				'mob_align'                   => '',
+				'width'                                    => $this->settings->btn_width,
+				'custom_width'                             => $this->settings->btn_custom_width,
+				'custom_height'                            => $this->settings->btn_custom_height,
+				'padding_top_bottom'                       => $this->settings->btn_padding_top_bottom,
+				'padding_left_right'                       => $this->settings->btn_padding_left_right,
+				'border_radius'                            => $this->settings->btn_border_radius,
+				'align'                                    => '',
+				'mob_align'                                => '',
 
 				/* Typography */
-				'font_size'                   => ( isset( $this->settings->btn_font_size ) ) ? $this->settings->btn_font_size : '',
-				'line_height'                 => ( isset( $this->settings->btn_line_height ) ) ? $this->settings->btn_line_height : '',
-				'font_size_unit'              => $this->settings->btn_font_size_unit,
-				'line_height_unit'            => $this->settings->btn_line_height_unit,
-				'font_size_unit_medium'       => $this->settings->btn_font_size_unit_medium,
-				'line_height_unit_medium'     => $this->settings->btn_line_height_unit_medium,
-				'font_size_unit_responsive'   => $this->settings->btn_font_size_unit_responsive,
-				'line_height_unit_responsive' => $this->settings->btn_line_height_unit_responsive,
-				'font_family'                 => $this->settings->btn_font_family,
-				'transform'                   => $this->settings->btn_transform,
-				'letter_spacing'              => $this->settings->btn_letter_spacing,
+				'font_size'                                => ( isset( $this->settings->btn_font_size ) ) ? $this->settings->btn_font_size : '',
+				'line_height'                              => ( isset( $this->settings->btn_line_height ) ) ? $this->settings->btn_line_height : '',
+				'font_size_unit'                           => $this->settings->btn_font_size_unit,
+				'line_height_unit'                         => $this->settings->btn_line_height_unit,
+				'font_size_unit_medium'                    => $this->settings->btn_font_size_unit_medium,
+				'line_height_unit_medium'                  => $this->settings->btn_line_height_unit_medium,
+				'font_size_unit_responsive'                => $this->settings->btn_font_size_unit_responsive,
+				'line_height_unit_responsive'              => $this->settings->btn_line_height_unit_responsive,
+				'font_family'                              => $this->settings->btn_font_family,
+				'transform'                                => $this->settings->btn_transform,
+				'letter_spacing'                           => $this->settings->btn_letter_spacing,
+				'button_padding_dimension_top'             => ( isset( $this->settings->button_padding_dimension_top ) ) ? $this->settings->button_padding_dimension_top : '',
+				'button_padding_dimension_left'            => ( isset( $this->settings->button_padding_dimension_left ) ) ? $this->settings->button_padding_dimension_left : '',
+				'button_padding_dimension_bottom'          => ( isset( $this->settings->button_padding_dimension_bottom ) ) ? $this->settings->button_padding_dimension_bottom : '',
+				'button_padding_dimension_right'           => ( isset( $this->settings->button_padding_dimension_right ) ) ? $this->settings->button_padding_dimension_right : '',
+				'button_padding_dimension_top_medium'      => ( isset( $this->settings->button_padding_dimension_top_medium ) ) ? $this->settings->button_padding_dimension_top_medium : '',
+				'button_padding_dimension_left_medium'     => ( isset( $this->settings->button_padding_dimension_left_medium ) ) ? $this->settings->button_padding_dimension_left_medium : '',
+				'button_padding_dimension_bottom_medium'   => ( isset( $this->settings->button_padding_dimension_bottom_medium ) ) ? $this->settings->button_padding_dimension_bottom_medium : '',
+				'button_padding_dimension_right_medium'    => ( isset( $this->settings->button_padding_dimension_right_medium ) ) ? $this->settings->button_padding_dimension_right_medium : '',
+				'button_padding_dimension_top_responsive'  => ( isset( $this->settings->button_padding_dimension_top_responsive ) ) ? $this->settings->button_padding_dimension_top_responsive : '',
+				'button_padding_dimension_left_responsive' => ( isset( $this->settings->button_padding_dimension_left_responsive ) ) ? $this->settings->button_padding_dimension_left_responsive : '',
+				'button_padding_dimension_bottom_responsive' => ( isset( $this->settings->button_padding_dimension_bottom_responsive ) ) ? $this->settings->button_padding_dimension_bottom_responsive : '',
+				'button_padding_dimension_right_responsive' => ( isset( $this->settings->button_padding_dimension_right_responsive ) ) ? $this->settings->button_padding_dimension_right_responsive : '',
+				'button_border_style'                      => ( isset( $this->settings->button_border_style ) ) ? $this->settings->button_border_style : '',
+				'button_border_width'                      => ( isset( $this->settings->button_border_width ) ) ? $this->settings->button_border_width : '',
+				'button_border_radius'                     => ( isset( $this->settings->button_border_radius ) ) ? $this->settings->button_border_radius : '',
+				'button_border_color'                      => ( isset( $this->settings->button_border_color ) ) ? $this->settings->button_border_color : '',
+
+				'border_hover_color'                       => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 			);
 		}
 
@@ -715,7 +747,7 @@ class UABBCtaModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-call-to-action/uabb-call-to-action-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-call-to-action/uabb-call-to-action-bb-less-than-2-2-compatibility.php';

@@ -497,7 +497,8 @@ class FLBuilderMailChimp
 			)
 		);
 
-		if ( $results[ 'total_items' ] > 0 ) {
+		// if ( $results[ 'total_items' ] > 0 ) {
+        if ( !empty( $results[ 'total_items' ] ) &&  $results[ 'total_items' ] > 0 ) {
 			foreach ( $results[ 'categories' ] as $category ) {
 				$subgroups = $this->get(
 					'lists/' . $list_id . '/interest-categories/' . $category[ 'id' ] . '/interests',

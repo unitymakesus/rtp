@@ -39,23 +39,13 @@ function uabb_column_particle_css( $css, $nodes, $global_settings ) {
 	foreach ( $nodes['columns'] as $column ) {
 		ob_start();
 		if ( isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) { ?>
-			.fl-node-<?php echo $column->node; ?> .fl-col-content {
+			.fl-node-<?php echo esc_attr( $column->node ); ?> .fl-col-content {
 				position: relative;
 			}
-			.fl-node-<?php echo $column->node; ?> .fl-module {
+			.fl-node-<?php echo esc_attr( $column->node ); ?> .fl-module {
 				position: inherit;
 			}
-			<?php if ( ! FLBuilderModel::is_builder_active() ) { ?>
-				.fl-node-<?php echo $column->node; ?> .fl-module,
-				.fl-node-<?php echo $column->node; ?> .fl-module * {
-					z-index: 2;
-				}
-				.fl-col .uabb-col-particles-background {
-					z-index: 1;
-				}
-
-			<?php } ?>
-		<?php
+			<?php
 		}
 		$css .= ob_get_clean();
 	}
@@ -72,12 +62,34 @@ function uabb_column_particle_css( $css, $nodes, $global_settings ) {
  */
 function uabb_column_gradient_css( $css, $nodes, $global_settings ) {
 
+	$flag = false;
+
 	foreach ( $nodes['columns'] as $column ) {
 
-		$column->settings->uabb_col_linear_gradient_primary_loc   = ( isset( $column->settings->uabb_col_linear_gradient_primary_loc ) && '' != $column->settings->uabb_col_linear_gradient_primary_loc ) ? $column->settings->uabb_col_linear_gradient_primary_loc : 0;
-		$column->settings->uabb_col_linear_gradient_secondary_loc = ( isset( $column->settings->uabb_col_linear_gradient_secondary_loc ) && '' != $column->settings->uabb_col_linear_gradient_secondary_loc ) ? $column->settings->uabb_col_linear_gradient_secondary_loc : 100;
-		$column->settings->uabb_col_radial_gradient_primary_loc   = ( isset( $column->settings->uabb_col_radial_gradient_primary_loc ) && '' != $column->settings->uabb_col_radial_gradient_primary_loc ) ? $column->settings->uabb_col_radial_gradient_primary_loc : 0;
-		$column->settings->uabb_col_radial_gradient_secondary_loc = ( isset( $column->settings->uabb_col_radial_gradient_secondary_loc ) && '' != $column->settings->uabb_col_radial_gradient_secondary_loc ) ? $column->settings->uabb_col_radial_gradient_secondary_loc : 100;
+		if ( 'uabb_gradient' === $column->settings->bg_type ) {
+
+			$flag = true;
+
+			break;
+		}
+	}
+
+	if ( false === $flag ) {
+
+		return $css;
+	}
+
+	foreach ( $nodes['columns'] as $column ) {
+
+		if ( 'uabb_gradient' !== $column->settings->bg_type ) {
+
+			continue;
+		}
+
+		$column->settings->uabb_col_linear_gradient_primary_loc   = ( isset( $column->settings->uabb_col_linear_gradient_primary_loc ) && '' !== $column->settings->uabb_col_linear_gradient_primary_loc ) ? $column->settings->uabb_col_linear_gradient_primary_loc : 0;
+		$column->settings->uabb_col_linear_gradient_secondary_loc = ( isset( $column->settings->uabb_col_linear_gradient_secondary_loc ) && '' !== $column->settings->uabb_col_linear_gradient_secondary_loc ) ? $column->settings->uabb_col_linear_gradient_secondary_loc : 100;
+		$column->settings->uabb_col_radial_gradient_primary_loc   = ( isset( $column->settings->uabb_col_radial_gradient_primary_loc ) && '' !== $column->settings->uabb_col_radial_gradient_primary_loc ) ? $column->settings->uabb_col_radial_gradient_primary_loc : 0;
+		$column->settings->uabb_col_radial_gradient_secondary_loc = ( isset( $column->settings->uabb_col_radial_gradient_secondary_loc ) && '' !== $column->settings->uabb_col_radial_gradient_secondary_loc ) ? $column->settings->uabb_col_radial_gradient_secondary_loc : 100;
 		ob_start();
 
 		if ( isset( $column->settings->uabb_col_radial_direction ) ) {
@@ -111,40 +123,39 @@ function uabb_column_gradient_css( $css, $nodes, $global_settings ) {
 				break;
 		}
 
-		if ( 'no' == $column->settings->uabb_col_linear_advance_options ) {
+		if ( 'no' === $column->settings->uabb_col_linear_advance_options ) {
 			$column->settings->uabb_col_linear_gradient_primary_loc   = '0';
 			$column->settings->uabb_col_linear_gradient_secondary_loc = '100';
 		}
-		if ( 'no' == $column->settings->uabb_col_radial_advance_options ) {
+		if ( 'no' === $column->settings->uabb_col_radial_advance_options ) {
 			$column->settings->uabb_col_radial_gradient_primary_loc   = '0';
 			$column->settings->uabb_col_radial_gradient_secondary_loc = '100';
 		}
-
-		if ( '' == $column->settings->uabb_col_linear_direction ) {
+		if ( '' === $column->settings->uabb_col_linear_direction ) {
 			$column->settings->uabb_col_linear_direction = '0';
 		}
 
-		if ( isset( $column->settings->bg_type ) && 'uabb_gradient' == $column->settings->bg_type ) {
+		if ( isset( $column->settings->bg_type ) && 'uabb_gradient' === $column->settings->bg_type ) {
 			?>
 
-			<?php if ( 'linear' == $column->settings->uabb_col_gradient_type ) { ?>
-				.fl-node-<?php echo $column->node; ?> > .fl-col-content {
-					background-color: #<?php echo $column->settings->uabb_col_gradient_primary_color; ?>;
-					background-image: -webkit-linear-gradient(<?php echo $column->settings->uabb_col_linear_direction . 'deg'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_secondary_loc . '%'; ?>);
-					background-image: -moz-linear-gradient(<?php echo $column->settings->uabb_col_linear_direction . 'deg'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_secondary_loc . '%'; ?>);
-					background-image: -o-linear-gradient(<?php echo $column->settings->uabb_col_linear_direction . 'deg'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_secondary_loc . '%'; ?>);
-					background-image: -ms-linear-gradient(<?php echo $column->settings->uabb_col_linear_direction . 'deg'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_secondary_loc . '%'; ?>);
-					background-image: linear-gradient(<?php echo $column->settings->uabb_col_linear_direction . 'deg'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_linear_gradient_secondary_loc . '%'; ?>);
+			<?php if ( 'linear' === $column->settings->uabb_col_gradient_type ) { ?>
+				.fl-node-<?php echo esc_attr( $column->node ); ?> > .fl-col-content {
+					background-color: #<?php echo esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?>;
+					background-image: -webkit-linear-gradient(<?php echo esc_attr( $column->settings->uabb_col_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -moz-linear-gradient(<?php echo esc_attr( $column->settings->uabb_col_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -o-linear-gradient(<?php echo esc_attr( $column->settings->uabb_col_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -ms-linear-gradient(<?php echo esc_attr( $column->settings->uabb_col_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_secondary_loc ) . '%'; ?>);
+					background-image: linear-gradient(<?php echo esc_attr( $column->settings->uabb_col_linear_direction ) . 'deg'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_linear_gradient_secondary_loc ) . '%'; ?>);
 				}
 			<?php } ?>
-			<?php if ( 'radial' == $column->settings->uabb_col_gradient_type ) { ?>
-				.fl-node-<?php echo $column->node; ?> > .fl-col-content {
-					background-color: #<?php echo $column->settings->uabb_col_gradient_primary_color; ?>;
-					background-image: -webkit-radial-gradient(<?php echo 'at ' . $column->settings->uabb_col_radial_direction; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: -moz-radial-gradient(<?php echo 'at ' . $column->settings->uabb_col_radial_direction; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: -o-radial-gradient(<?php echo 'at ' . $column->settings->uabb_col_radial_direction; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: -ms-radial-gradient(<?php echo 'at ' . $column->settings->uabb_col_radial_direction; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_secondary_loc . '%'; ?>);
-					background-image: radial-gradient(<?php echo 'at ' . $column->settings->uabb_col_radial_direction; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_primary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_primary_loc . '%'; ?>, <?php echo '#' . $column->settings->uabb_col_gradient_secondary_color; ?> <?php echo $column->settings->uabb_col_radial_gradient_secondary_loc . '%'; ?>);
+			<?php if ( 'radial' === $column->settings->uabb_col_gradient_type ) { ?>
+				.fl-node-<?php echo esc_attr( $column->node ); ?> > .fl-col-content {
+					background-color: #<?php echo esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?>;
+					background-image: -webkit-radial-gradient(<?php echo 'at ' . esc_attr( $column->settings->uabb_col_radial_direction ); ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -moz-radial-gradient(<?php echo 'at ' . esc_attr( $column->settings->uabb_col_radial_direction ); ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -o-radial-gradient(<?php echo 'at ' . esc_attr( $column->settings->uabb_col_radial_direction ); ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: -ms-radial-gradient(<?php echo 'at ' . esc_attr( $column->settings->uabb_col_radial_direction ); ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_secondary_loc ) . '%'; ?>);
+					background-image: radial-gradient(<?php echo 'at ' . esc_attr( $column->settings->uabb_col_radial_direction ); ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_primary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_primary_loc ) . '%'; ?>, <?php echo '#' . esc_attr( $column->settings->uabb_col_gradient_secondary_color ); ?> <?php echo esc_attr( $column->settings->uabb_col_radial_gradient_secondary_loc ) . '%'; ?>);
 				}
 			<?php } ?>
 		<?php } ?>
@@ -164,54 +175,55 @@ function uabb_column_gradient_css( $css, $nodes, $global_settings ) {
  * @param object $global_settings an object to get various settings.
  */
 function uabb_column_shadow_css( $css, $nodes, $global_settings ) {
-	$version_bb_check = UABB_Compatibility::check_bb_version();
+
+	$version_bb_check = UABB_Compatibility::$version_bb_check;
 	if ( $version_bb_check ) {
 		foreach ( $nodes['columns'] as $column ) {
 			ob_start();
 			?>
 				<?php if ( isset( $column->settings->border['shadow']['color'] ) && empty( $column->settings->border['shadow']['color'] ) ) { ?>
 
-					<?php if ( 'yes' == $column->settings->col_drop_shadow ) { ?>
-						.fl-node-<?php echo $column->node; ?> > .fl-col-content.fl-node-content {
-							-webkit-box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-							-moz-box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-							-o-box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-							box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-							<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' == $column->settings->col_hover_shadow ) { ?>
-								-webkit-transition: -webkit-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -webkit-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-								-moz-transition: -moz-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -moz-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-								transition: box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
+					<?php if ( 'yes' === $column->settings->col_drop_shadow ) { ?>
+						.fl-node-<?php echo esc_attr( $column->node ); ?> > .fl-col-content.fl-node-content {
+							-webkit-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+							-moz-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+							-o-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+							box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+							<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' === $column->settings->col_hover_shadow ) { ?>
+								-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+								-moz-transition: -moz-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+								transition: box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
 								will-change: box-shadow;
 							<?php } ?>
 						}
 					<?php } ?>
 
-					<?php if ( 'yes' == $column->settings->col_hover_shadow ) { ?>
-						.fl-node-<?php echo $column->node; ?> > .fl-col-content.fl-node-content:hover {
-							-webkit-box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-							-moz-box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-							-o-box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-							box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-							<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' == $column->settings->col_hover_shadow ) { ?>
-								-webkit-transition: -webkit-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -webkit-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-								-moz-transition: -moz-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -moz-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-								transition: box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
+					<?php if ( 'yes' === $column->settings->col_hover_shadow ) { ?>
+						.fl-node-<?php echo esc_attr( $column->node ); ?> > .fl-col-content.fl-node-content:hover {
+							-webkit-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+							-moz-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+							-o-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+							box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+							<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' === $column->settings->col_hover_shadow ) { ?>
+								-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+								-moz-transition: -moz-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+								transition: box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
 								will-change: box-shadow;
 							<?php } ?>
 						}
 					<?php } ?>
 
-					<?php if ( 'yes' == $column->settings->col_responsive_shadow && 'yes' == $column->settings->col_drop_shadow ) { ?>
-						@media only screen and (max-width: <?php echo $global_settings->medium_breakpoint; ?>px) {
-							.fl-node-<?php echo $column->node; ?> .fl-col-content.fl-node-content {
+					<?php if ( 'yes' === $column->settings->col_responsive_shadow && 'yes' === $column->settings->col_drop_shadow ) { ?>
+						@media only screen and (max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px) {
+							.fl-node-<?php echo esc_attr( $column->node ); ?> .fl-col-content.fl-node-content {
 								box-shadow: none;
 							}
 						}
 					<?php } ?>
 
-					<?php if ( 'no' == $column->settings->col_responsive_shadow && 'yes' == $column->settings->col_small_shadow && 'yes' == $column->settings->col_drop_shadow ) { ?>
-						@media only screen and (max-width: <?php echo $global_settings->responsive_breakpoint; ?>px) {
-							.fl-node-<?php echo $column->node; ?> .fl-col-content.fl-node-content {
+					<?php if ( 'no' === $column->settings->col_responsive_shadow && 'yes' === $column->settings->col_small_shadow && 'yes' === $column->settings->col_drop_shadow ) { ?>
+						@media only screen and (max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px) {
+							.fl-node-<?php echo esc_attr( $column->node ); ?> .fl-col-content.fl-node-content {
 								box-shadow: none;
 							}
 						}
@@ -225,47 +237,47 @@ function uabb_column_shadow_css( $css, $nodes, $global_settings ) {
 
 			ob_start();
 			?>
-			<?php if ( 'yes' == $column->settings->col_drop_shadow ) { ?>
-				.fl-node-<?php echo $column->node; ?> > .fl-col-content.fl-node-content {
-					-webkit-box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-					-moz-box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-					-o-box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>;
-					box-shadow: <?php echo $column->settings->col_shadow_color_hor; ?>px <?php echo $column->settings->col_shadow_color_ver; ?>px <?php echo $column->settings->col_shadow_color_blur; ?>px <?php echo $column->settings->col_shadow_color_spr; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color; ?>; 
-					<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' == $column->settings->col_hover_shadow ) { ?>                   
-						-webkit-transition: -webkit-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -webkit-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-						-moz-transition: -moz-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -moz-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-						transition: box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
+			<?php if ( 'yes' === $column->settings->col_drop_shadow ) { ?>
+				.fl-node-<?php echo esc_attr( $column->node ); ?> > .fl-col-content.fl-node-content {
+					-webkit-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+					-moz-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+					-o-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+					box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color : $column->settings->col_shadow_color ); ?>;
+					<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' === $column->settings->col_hover_shadow ) { ?>
+						-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+						-moz-transition: -moz-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+						transition: box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
 						will-change: box-shadow;
 					<?php } ?>
 				}
 			<?php } ?>
 
-			<?php if ( 'yes' == $column->settings->col_hover_shadow ) { ?>
-				.fl-node-<?php echo $column->node; ?> > .fl-col-content.fl-node-content:hover {
-					-webkit-box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-					-moz-box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-					-o-box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;
-					box-shadow: <?php echo $column->settings->col_shadow_color_hor_hover; ?>px <?php echo $column->settings->col_shadow_color_ver_hover; ?>px <?php echo $column->settings->col_shadow_color_blur_hover; ?>px <?php echo $column->settings->col_shadow_color_spr_hover; ?>px <?php echo ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover; ?>;                    
-					<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' == $column->settings->col_hover_shadow ) { ?>                   
-						-webkit-transition: -webkit-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -webkit-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-						-moz-transition: -moz-box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, -moz-transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
-						transition: box-shadow <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out, transform <?php echo $column->settings->col_shadow_hover_transition; ?>ms ease-in-out;
+			<?php if ( 'yes' === $column->settings->col_hover_shadow ) { ?>
+				.fl-node-<?php echo esc_attr( $column->node ); ?> > .fl-col-content.fl-node-content:hover {
+					-webkit-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+					-moz-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+					-o-box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+					box-shadow: <?php echo esc_attr( $column->settings->col_shadow_color_hor_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_ver_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_blur_hover ); ?>px <?php echo esc_attr( $column->settings->col_shadow_color_spr_hover ); ?>px <?php echo esc_attr( ( false === strpos( $column->settings->col_shadow_color_hover, 'rgb' ) ) ? '#' . $column->settings->col_shadow_color_hover : $column->settings->col_shadow_color_hover ); ?>;
+					<?php if ( isset( $column->settings->col_shadow_hover_transition ) && 'yes' === $column->settings->col_hover_shadow ) { ?>
+						-webkit-transition: -webkit-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -webkit-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+						-moz-transition: -moz-box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, -moz-transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
+						transition: box-shadow <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out, transform <?php echo esc_attr( $column->settings->col_shadow_hover_transition ); ?>ms ease-in-out;
 						will-change: box-shadow;
 					<?php } ?>
 				}
 			<?php } ?>
 
-			<?php if ( 'yes' == $column->settings->col_responsive_shadow && 'yes' == $column->settings->col_drop_shadow ) { ?>
-				@media only screen and (max-width: <?php echo $global_settings->medium_breakpoint; ?>px) {
-					.fl-node-<?php echo $column->node; ?> .fl-col-content.fl-node-content {
+			<?php if ( 'yes' === $column->settings->col_responsive_shadow && 'yes' === $column->settings->col_drop_shadow ) { ?>
+				@media only screen and (max-width: <?php echo esc_attr( $global_settings->medium_breakpoint ); ?>px) {
+					.fl-node-<?php echo esc_attr( $column->node ); ?> .fl-col-content.fl-node-content {
 						box-shadow: none;
 					}
 				}
 			<?php } ?>
 
-			<?php if ( 'no' == $column->settings->col_responsive_shadow && 'yes' == $column->settings->col_small_shadow && 'yes' == $column->settings->col_drop_shadow ) { ?>
-				@media only screen and (max-width: <?php echo $global_settings->responsive_breakpoint; ?>px) {
-					.fl-node-<?php echo $column->node; ?> .fl-col-content.fl-node-content {
+			<?php if ( 'no' === $column->settings->col_responsive_shadow && 'yes' === $column->settings->col_small_shadow && 'yes' === $column->settings->col_drop_shadow ) { ?>
+				@media only screen and (max-width: <?php echo esc_attr( $global_settings->responsive_breakpoint ); ?>px) {
+					.fl-node-<?php echo esc_attr( $column->node ); ?> .fl-col-content.fl-node-content {
 						box-shadow: none;
 					}
 				}

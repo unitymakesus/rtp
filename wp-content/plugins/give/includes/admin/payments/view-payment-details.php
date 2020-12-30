@@ -16,7 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! current_user_can( 'view_give_payments' ) ) {
 	wp_die(
-		__( 'Sorry, you are not allowed to access this page.', 'give' ), __( 'Error', 'give' ), array(
+		__( 'Sorry, you are not allowed to access this page.', 'give' ),
+		__( 'Error', 'give' ),
+		array(
 			'response' => 403,
 		)
 	);
@@ -64,20 +66,22 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 	<h1 id="transaction-details-heading" class="wp-heading-inline">
 		<?php
 		printf(
-		/* translators: %s: donation number */
+			/* translators: %s: donation number */
 			esc_html__( 'Donation %s', 'give' ),
 			$number
 		);
 		if ( $payment_mode == 'test' ) {
-			echo Give()->tooltips->render_span(array(
-				'label' => __( 'This donation was made in test mode.', 'give' ),
-				'tag_content' => __( 'Test Donation', 'give' ),
-				'position'=> 'right',
-				'attributes' => array(
-					'id' => 'test-payment-label',
-					'class' => 'give-item-label give-item-label-orange'
+			echo Give()->tooltips->render_span(
+				array(
+					'label'       => __( 'This donation was made in test mode.', 'give' ),
+					'tag_content' => __( 'Test Donation', 'give' ),
+					'position'    => 'right',
+					'attributes'  => array(
+						'id'    => 'test-payment-label',
+						'class' => 'give-item-label give-item-label-orange',
+					),
 				)
-			));
+			);
 		}
 		?>
 	</h1>
@@ -138,8 +142,10 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 													array(
 														'give-action' => 'delete_payment',
 														'purchase_id' => $payment_id,
-													), $base_url
-												), 'give_donation_nonce'
+													),
+													$base_url
+												),
+												'give_donation_nonce'
 											),
 											sprintf( __( 'Delete Donation %s', 'give' ), $payment_id )
 										);
@@ -325,10 +331,11 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 										// Display the transaction ID present.
 										// The transaction ID is the charge ID from the gateway.
 										// For instance, stripe "ch_BzvwYCchqOy5Nt".
-										if ( $transaction_id != $payment_id ) : ?>
+										if ( $transaction_id != $payment_id ) :
+											?>
 											<div class="give-order-tx-id give-admin-box-inside">
 												<p>
-													<strong><?php _e( 'Transaction ID:', 'give' ); ?> <span class="give-tooltip give-icon give-icon-question"  data-tooltip="<?php echo sprintf( esc_attr__( 'The transaction ID within %s.', 'give' ), $gateway); ?>"></span></strong>&nbsp;
+													<strong><?php _e( 'Transaction ID:', 'give' ); ?> <span class="give-tooltip give-icon give-icon-question"  data-tooltip="<?php echo sprintf( esc_attr__( 'The transaction ID within %s.', 'give' ), $gateway ); ?>"></span></strong>&nbsp;
 													<?php echo apply_filters( "give_payment_details_transaction_id-{$gateway}", $transaction_id, $payment_id ); ?>
 												</p>
 											</div>
@@ -468,7 +475,7 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 												<?php echo give_donation_amount( $payment, true ); ?>
 											</p>
 
-											<?php if ( give_is_anonymous_donation_field_enabled( $payment->form_id ) ):  ?>
+											<?php if ( give_is_anonymous_donation_field_enabled( $payment->form_id ) ) : ?>
 												<div>
 													<strong><?php esc_html_e( 'Anonymous Donation:', 'give' ); ?></strong>
 													<ul class="give-radio-inline">
@@ -478,7 +485,7 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 																	name="give_anonymous_donation"
 																	value="1"
 																	type="radio"
-																	<?php checked( 1, absint( give_get_meta( $payment_id, '_give_anonymous_donation', true ) ) ) ?>
+																	<?php checked( 1, absint( give_get_meta( $payment_id, '_give_anonymous_donation', true ) ) ); ?>
 																><?php _e( 'Yes', 'give' ); ?>
 															</label>
 														</li>
@@ -488,7 +495,7 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 																	name="give_anonymous_donation"
 																	value="0"
 																	type="radio"
-																	<?php checked( 0, absint( give_get_meta( $payment_id, '_give_anonymous_donation', true ) ) ) ?>
+																	<?php checked( 0, absint( give_get_meta( $payment_id, '_give_anonymous_donation', true ) ) ); ?>
 																><?php _e( 'No', 'give' ); ?>
 															</label>
 														</li>
@@ -587,7 +594,7 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 											</p>
 											<p>
 												<strong><?php esc_html_e( 'Donor Since:', 'give' ); ?></strong><br>
-												<?php echo date_i18n( give_date_format(), strtotime( $donor->date_created ) ) ?>
+												<?php echo date_i18n( give_date_format(), strtotime( $donor->date_created ) ); ?>
 											</p>
 										</div>
 										<div class="column">
@@ -599,12 +606,17 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 
 												// Check whether the donor name and WP_User name is same or not.
 												if ( $donor_billing_name !== $donor_name ) {
-													echo sprintf(
-														'%1$s (<a href="%2$s" target="_blank">%3$s</a>)',
-														esc_html( $donor_billing_name ),
-														esc_url( admin_url( "edit.php?post_type=give_forms&page=give-donors&view=overview&id={$donor_id}" ) ),
-														esc_html( $donor_name )
-													);
+													// Donors can be deleted by the user, but we can show the donor billing name from donation details.
+													if ( empty( $donor_name ) ) {
+														echo esc_html( $donor_billing_name );
+													} else {
+														echo sprintf(
+															'%1$s (<a href="%2$s" target="_blank">%3$s</a>)',
+															esc_html( $donor_billing_name ),
+															esc_url( admin_url( "edit.php?post_type=give_forms&page=give-donors&view=overview&id={$donor_id}" ) ),
+															esc_html( $donor_name )
+														);
+													}
 												} else {
 													echo esc_html( $donor_name );
 												}
@@ -614,7 +626,7 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 												<strong><?php esc_html_e( 'Donor Email:', 'give' ); ?></strong><br>
 												<?php
 												// Show Donor donation email first and Primary email on parenthesis if not match both email.
-												echo hash_equals( $donor->email, $payment->email )
+												echo ( empty( $donor->email ) || hash_equals( $donor->email, $payment->email ) )
 													? $payment->email
 													: sprintf(
 														'%1$s (<a href="%2$s" target="_blank">%3$s</a>)',
@@ -638,12 +650,14 @@ $base_url       = admin_url( 'edit.php?post_type=give_forms&page=give-payment-hi
 												?>
 											</p>
 											<p>
-												<?php if ( ! empty( $company_name ) ) {
+												<?php
+												if ( ! empty( $company_name ) ) {
 													?>
 													<strong><?php esc_html_e( 'Company Name:', 'give' ); ?></strong><br>
 													<?php
 													echo $company_name;
-												} ?>
+												}
+												?>
 											</p>
 										</div>
 									</div>

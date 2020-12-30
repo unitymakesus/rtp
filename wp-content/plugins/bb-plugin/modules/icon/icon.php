@@ -12,7 +12,7 @@ class FLIconModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'            => __( 'Icon', 'fl-builder' ),
 			'description'     => __( 'Display an icon and optional title.', 'fl-builder' ),
-			'category'        => __( 'Media', 'fl-builder' ),
+			'category'        => true === FL_BUILDER_LITE ? __( 'Basic', 'fl-builder' ) : __( 'Media', 'fl-builder' ),
 			'editor_export'   => false,
 			'partial_refresh' => true,
 			'icon'            => 'star-filled.svg',
@@ -67,19 +67,25 @@ FLBuilder::register_module('FLIconModule', array(
 			'general' => array( // Section
 				'title'  => '', // Section Title
 				'fields' => array( // Section Fields
-					'icon' => array(
+					'icon'    => array(
 						'type'    => 'icon',
 						'label'   => __( 'Icon', 'fl-builder' ),
 						'preview' => array(
 							'type' => 'none',
 						),
 					),
-					'link' => array(
+
+					'link'    => array(
 						'type'          => 'link',
 						'label'         => __( 'Link', 'fl-builder' ),
 						'show_target'   => true,
 						'show_nofollow' => true,
 						'connections'   => array( 'url' ),
+					),
+					'sr_text' => array(
+						'type'    => 'text',
+						'label'   => __( 'Screen Reader Text', 'fl-builder' ),
+						'default' => '',
 					),
 				),
 			),
@@ -161,6 +167,32 @@ FLBuilder::register_module('FLIconModule', array(
 							'important' => true,
 						),
 					),
+					'duo_color1'     => array(
+						'label'      => __( 'DuoTone Icon Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color2'     => array(
+						'label'      => __( 'DuoTone Icon Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-icon i.fad:after',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
 					'bg_color'       => array(
 						'type'        => 'color',
 						'connections' => array( 'color' ),
@@ -212,9 +244,10 @@ FLBuilder::register_module('FLIconModule', array(
 						'show_reset'  => true,
 						'show_alpha'  => true,
 						'preview'     => array(
-							'type'     => 'css',
-							'selector' => '.fl-icon-text, .fl-icon-text-link',
-							'property' => 'color',
+							'type'      => 'css',
+							'selector'  => '.fl-icon-wrap .fl-icon-text, .fl-icon-wrap .fl-icon-text *, .fl-icon-wrap .fl-icon-text-link',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 					'text_typography' => array(

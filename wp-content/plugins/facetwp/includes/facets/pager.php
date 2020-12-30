@@ -21,16 +21,22 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
         $method = 'render_' . $pager_type;
         if ( method_exists( $this, $method ) ) {
-            return $this->$method( $facet );
+            $output = $this->$method( $facet );
+
+            if ( 'numbers' == $pager_type ) {
+                $output = '<div class="facetwp-pager">' . $output . '</div>';
+            }
+
+            return $output;
         }
     }
 
 
     function render_numbers( $facet ) {
         $inner_size = (int) $facet['inner_size'];
-        $dots_label = $facet['dots_label'];
-        $prev_label = $facet['prev_label'];
-        $next_label = $facet['next_label'];
+        $dots_label = facetwp_i18n( $facet['dots_label'] );
+        $prev_label = facetwp_i18n( $facet['prev_label'] );
+        $next_label = facetwp_i18n( $facet['next_label'] );
 
         $output = '';
         $page = $this->pager_args['page'];
@@ -71,8 +77,6 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
             }
         }
 
-        $output = '<div class="facetwp-pager">' . $output . '</div>';
-
         return $output;
     }
 
@@ -95,15 +99,15 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
 
     function render_counts( $facet ) {
-        $text_singular = $facet['count_text_singular'];
-        $text_plural = $facet['count_text_plural'];
-        $text_none = $facet['count_text_none'];
+        $text_singular = facetwp_i18n( $facet['count_text_singular'] );
+        $text_plural = facetwp_i18n( $facet['count_text_plural'] );
+        $text_none = facetwp_i18n( $facet['count_text_none'] );
 
         $page = $this->pager_args['page'];
         $per_page = $this->pager_args['per_page'];
         $total_rows = $this->pager_args['total_rows'];
 
-        if ( $per_page < $total_rows ) {
+        if ( 1 < $total_rows ) {
             $lower = ( 1 + ( ( $page - 1 ) * $per_page ) );
             $upper = ( $page * $per_page );
             $upper = ( $total_rows < $upper ) ? $total_rows : $upper;
@@ -122,8 +126,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
 
     function render_load_more( $facet ) {
-        $text = $facet['load_more_text'];
-        $loading_text = $facet['loading_text'];
+        $text = facetwp_i18n( $facet['load_more_text'] );
+        $loading_text = facetwp_i18n( $facet['loading_text'] );
 
         $output = '<button class="facetwp-load-more" data-loading="' . esc_attr( $loading_text ) . '">' . esc_attr( $text ) . '</button>';
         return $output;
@@ -131,10 +135,11 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
 
     function render_per_page( $facet ) {
-        $options = $facet['per_page_options'];
-        $options = explode( ',', str_replace( ' ', '', $options ) );
+        $label = facetwp_i18n( $facet['default_label'] );
+        $options = explode( ',', str_replace( ' ', '', $facet['per_page_options'] ) );
 
         $output = '<select class="facetwp-per-page-select">';
+        $output .= '<option value="">' . $label . '</option>';
 
         foreach ( $options as $option ) {
             $output .= '<option value="' . $option . '">' . $option . '</option>';
@@ -142,6 +147,14 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
 
         $output .= '</select>';
         return $output;
+    }
+
+
+    /**
+     * Filter the query based on selected values
+     */
+    function filter_posts( $params ) {
+        return 'continue';
     }
 
 
@@ -175,9 +188,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'numbers'">
             <div>
-                <?php _e('Inner size', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Inner size', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Number of pages to show on each side of the current page', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -185,9 +197,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'numbers'">
             <div>
-                <?php _e('Dots label', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Dots label', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'The filler between the inner and outer pages', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -195,9 +206,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'numbers'">
             <div>
-                <?php _e('Prev button label', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Prev button label', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Leave blank to hide', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -205,9 +215,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'numbers'">
             <div>
-                <?php _e('Next button label', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Next button label', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Leave blank to hide', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -215,9 +224,8 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'counts'">
             <div>
-                <?php _e('Count text (plural)', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Count text (plural)', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Available tags: [lower], [upper], and [total]', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -240,10 +248,13 @@ class FacetWP_Facet_Pager extends FacetWP_Facet
             <div><input type="text" class="facet-loading-text" value="Loading..." /></div>
         </div>
         <div class="facetwp-row" v-show="facet.pager_type == 'per_page'">
+            <div><?php _e('Default label', 'fwp'); ?>:</div>
+            <div><input type="text" class="facet-default-label" value="Per page" /></div>
+        </div>
+        <div class="facetwp-row" v-show="facet.pager_type == 'per_page'">
             <div>
-                <?php _e('Per page options', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Per page options', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'A comma-separated list of choices', 'fwp' ); ?></div>
                 </div>
             </div>

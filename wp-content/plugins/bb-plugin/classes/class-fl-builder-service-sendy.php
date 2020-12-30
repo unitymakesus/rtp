@@ -191,11 +191,18 @@ final class FLBuilderServiceSendy extends FLBuilderService {
 				'list_id'          => $account_data['list_id'],
 			) );
 
+			$args = array(
+				'name'    => $name,
+				'email'   => $email,
+				'api_key' => $account_data['api_key'],
+			);
+
+			if ( isset( $settings->terms_checkbox ) && 'show' === $settings->terms_checkbox ) {
+				$args['gdpr'] = 'true';
+			}
+
 			// Send request for list ID validation
-			$get_api_response = $api->subscribe( array(
-				'name'  => $name,
-				'email' => $email,
-			) );
+			$get_api_response = $api->subscribe( $args );
 
 			if ( false === $get_api_response['status'] ) {
 				/* translators: %s: error */

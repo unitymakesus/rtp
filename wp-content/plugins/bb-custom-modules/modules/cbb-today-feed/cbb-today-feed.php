@@ -97,6 +97,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 
 			// Start searching today
 			$today = strtotime(current_time('Y-m-d'));
+			$end = '';
 
 			// Search til the end of today!
 			if(date('H:i:s', $today) == '00:00:00') $end .= ' 23:59:59';
@@ -149,6 +150,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 		global $wpdb;
 		$dates = array();
 
+		$site = get_current_blog_id();
 		$prefix = $wpdb->get_blog_prefix($site);
 
 		// Get matching dates for any events in the database
@@ -156,7 +158,7 @@ class CbbTodayFeedModule extends FLBuilderModule {
 						WHERE (`tstart`>=%d AND `tend`<=%d) OR (`tstart`<=%d AND `tend`>=%d) OR (`tstart`<=%d AND `tend`>=%d)
 						AND 1=1 ORDER BY `tstart` ASC";
 
-		$query = $wpdb->prepare($sql, $seconds_start, $seconds_end, $seconds_end, $seconds_end, $seconds_start, $seconds_start, $order);
+		$query = $wpdb->prepare($sql, $seconds_start, $seconds_end, $seconds_end, $seconds_end, $seconds_start, $seconds_start);
 		$mec_dates = $wpdb->get_results($query);
 
 		// Create array of dates with post IDs to query
@@ -191,11 +193,21 @@ class CbbTodayFeedModule extends FLBuilderModule {
 		$events = array();
 
 		$query_args = array(
-			'post_type' => 'mec-events',
-			'orderby' => 'meta_value',
-			'order' => 'ASC',
-			'posts_per_page' => '-1',
-			'meta_key' => 'mec_start_date',
+			'post_type'      => 'mec-events',
+			'posts_per_page' => '3',
+			'meta_query'     => [
+				'relation'   => 'AND',
+				'query_date' => [
+					'key' => 'mec_start_date',
+				],
+				'query_seconds' => [
+					'key' => 'mec_start_day_seconds',
+				]
+			],
+			'orderby' => [
+				'query_date'    => 'ASC',
+				'query_seconds' => 'ASC',
+			],
 		);
 
 		foreach ($dates as $date=>$IDs) {

@@ -1,0 +1,30 @@
+.cbb-today-feed-item {
+  position: relative;
+  max-width: $medium-screen;
+  width: 100%;
+  margin: 0 auto 1rem auto;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: $color-white;
+    color: $color-slate-boxyard;
+    border: 8px solid $color-red-boxyard;
+    padding: 2rem;
+    width: 100%;
+
+    a::before {
+      position: relative;
+      top: 12px;
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      background-image: image('icon-info.svg');
+      background-size: 32px;
+      background-position: center;
+      content: '';
+      margin-right: 0.5rem;
+    }
+  }
+}

@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBPricingTableModule', array(
+	'UABBPricingTableModule',
+	array(
 		'columns'        => array(
 			'title'    => __( 'Price Boxes', 'uabb' ),
 			'sections' => array(
@@ -63,6 +64,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Box Background Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'help'        => __( 'Use this color only when you want same color for all Price Boxes and for unique color add in individual Price Box Items', 'uabb' ),
 						),
@@ -120,8 +122,18 @@ FLBuilder::register_module(
 					),
 				),
 				'general'          => array(
-					'title'  => __( 'General', 'uabb' ),
-					'fields' => array(
+					'collapsed' => true,
+					'title'     => __( 'General', 'uabb' ),
+					'fields'    => array(
+						'price_position'        => array(
+							'type'    => 'select',
+							'label'   => __( 'Price Position', 'uabb' ),
+							'default' => 'above',
+							'options' => array(
+								'above' => __( 'Above Features List', 'uabb' ),
+								'below' => __( 'Below Features List', 'uabb' ),
+							),
+						),
 						'highlight'             => array(
 							'type'    => 'select',
 							'label'   => __( 'Highlight', 'uabb' ),
@@ -146,6 +158,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Highlight Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'help'        => __( 'Use this color only when you want same color for Highlighted area and for unique color use Price Box Items.', 'uabb' ),
 						),
@@ -223,6 +236,7 @@ FLBuilder::register_module(
 							'label'       => __( 'Box Border Color', 'uabb' ),
 							'default'     => '',
 							'show_reset'  => true,
+							'show_alpha'  => true,
 							'connections' => array( 'color' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -276,8 +290,9 @@ FLBuilder::register_module(
 					),
 				),
 				'button_structure' => array(
-					'title'  => __( 'Button Structure', 'uabb' ),
-					'fields' => array(
+					'collapsed' => true,
+					'title'     => __( 'Button Structure', 'uabb' ),
+					'fields'    => array(
 						'btn_margin_top'    => array(
 							'type'        => 'unit',
 							'label'       => __( 'Margin Top', 'uabb' ),
@@ -316,6 +331,96 @@ FLBuilder::register_module(
 								'selector' => '.uabb-pricing-table .uabb-creative-button-wrap',
 								'property' => 'margin-bottom',
 								'unit'     => 'px',
+							),
+						),
+					),
+				),
+				'icon_style'       => array(
+					'collapsed' => true,
+					'title'     => __( 'Feature List Icon Style', 'uabb' ),
+					'fields'    => array(
+						'list_icon_size'    => array(
+							'type'    => 'unit',
+							'label'   => __( 'Icon / Image Size', 'uabb' ),
+							'slider'  => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'units'   => array( 'px' ),
+							'size'    => '8',
+							'default' => '20',
+						),
+						'list_icon_spacing' => array(
+							'type'    => 'unit',
+							'label'   => __( 'Icon Spacing', 'uabb' ),
+							'slider'  => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'units'   => array( 'px' ),
+							'size'    => '8',
+							'default' => '5',
+						),
+						'icon_hover_color'  => array(
+							'type'        => 'color',
+							'label'       => __( 'Icon Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+					),
+				),
+				'title_icon_style' => array(
+					'collapsed' => true,
+					'title'     => __( 'Title Icon Style', 'uabb' ),
+					'fields'    => array(
+						'title_icon_size'        => array(
+							'type'    => 'unit',
+							'label'   => __( 'Icon / Image Size', 'uabb' ),
+							'slider'  => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'units'   => array( 'px' ),
+							'size'    => '8',
+							'default' => '40',
+						),
+						'title_icon_spacing'     => array(
+							'type'    => 'unit',
+							'label'   => __( 'Icon Spacing', 'uabb' ),
+							'slider'  => array(
+								'px' => array(
+									'min'  => 0,
+									'max'  => 1000,
+									'step' => 10,
+								),
+							),
+							'units'   => array( 'px' ),
+							'size'    => '8',
+							'default' => '10',
+						),
+						'title_icon_hover_color' => array(
+							'type'        => 'color',
+							'label'       => __( 'Icon Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 					),
@@ -423,13 +528,14 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'pricing_table_column_form', array(
+	'pricing_table_column_form',
+	array(
 		'title' => __( 'Add Price Box', 'uabb' ),
 		'tabs'  => array(
-			'general'    => array(
+			'general'           => array(
 				'title'    => __( 'General', 'uabb' ),
 				'sections' => array(
-					'feature'         => array(
+					'feature'            => array(
 						'title'  => '',
 						'fields' => array(
 							'set_featured'  => array(
@@ -460,31 +566,61 @@ FLBuilder::register_settings_form(
 							),
 						),
 					),
-					'title'           => array(
+					'title'              => array(
 						'title'  => __( 'Title', 'uabb' ),
 						'fields' => array(
-							'title'    => array(
+							'title'             => array(
 								'type'        => 'text',
 								'label'       => __( 'Title Text', 'uabb' ),
 								'default'     => __( 'Consultation Pack', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
-							'price'    => array(
+							'price'             => array(
 								'type'        => 'text',
 								'label'       => __( 'Price Value', 'uabb' ),
 								'default'     => __( '$99', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
-							'duration' => array(
+							'set_sale_price'    => array(
+								'type'    => 'select',
+								'label'   => __( 'Offering Discount?', 'uabb' ),
+								'default' => 'no',
+								'help'    => __( 'Enable to display the Offering discount price', 'uabb' ),
+								'options' => array(
+									'yes' => __( 'Yes', 'uabb' ),
+									'no'  => __( 'No', 'uabb' ),
+								),
+								'toggle'  => array(
+									'yes' => array(
+										'fields' => array( 'original_price', 'original_price_color' ),
+									),
+								),
+							),
+							'original_price'    => array(
+								'type'        => 'text',
+								'label'       => __( 'Original Price', 'uabb' ),
+								'default'     => __( '$149', 'uabb' ),
+								'connections' => array( 'string', 'html' ),
+							),
+							'duration'          => array(
 								'type'        => 'text',
 								'label'       => __( 'Duration', 'uabb' ),
 								'default'     => __( '/ Hour', 'uabb' ),
 								'placeholder' => __( '/ Hour', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
+							'duration_position' => array(
+								'type'    => 'select',
+								'label'   => __( 'Duration Position', 'uabb' ),
+								'default' => 'beside',
+								'options' => array(
+									'below'  => __( 'Below', 'uabb' ),
+									'beside' => __( 'Beside', 'uabb' ),
+								),
+							),
 						),
 					),
-					'price-box'       => array(
+					'price-box'          => array(
 						'title'  => __( 'Price Box', 'uabb' ),
 						'fields' => array(
 							'title_typography_color'    => array(
@@ -493,6 +629,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'price_typography_color'    => array(
 								'type'        => 'color',
@@ -500,6 +637,14 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
+							),
+							'original_price_color'      => array(
+								'type'        => 'color',
+								'label'       => __( 'Original Price Color', 'uabb' ),
+								'connections' => array( 'color' ),
+								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'duration_typography_color' => array(
 								'type'        => 'color',
@@ -507,6 +652,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'highlight_color'           => array(
 								'type'        => 'color',
@@ -543,6 +689,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 								'help'        => __( 'Select the background for specific Price Box. Keep default for global background color.', 'uabb' ),
 							),
 							'foreground_opc'            => array(
@@ -562,10 +709,10 @@ FLBuilder::register_settings_form(
 							),
 						),
 					),
-					'features'        => array(
+					'features'           => array(
 						'title'  => __( 'List of Properties', 'uabb' ),
 						'fields' => array(
-							'features'       => array(
+							'features'          => array(
 								'type'        => 'text',
 								'label'       => '',
 								'default'     => __( 'Feature 1', 'uabb' ),
@@ -573,17 +720,46 @@ FLBuilder::register_settings_form(
 								'multiple'    => true,
 								'connections' => array( 'string', 'html' ),
 							),
-							'features_color' => array(
+							'features_color'    => array(
 								'type'        => 'color',
 								'label'       => __( 'List Color', 'uabb' ),
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 								'help'        => __( 'Define properties color', 'uabb' ),
+							),
+							'list_box_padding'  => array(
+								'type'       => 'dimension',
+								'label'      => __( 'Box Padding', 'uabb' ),
+								'slider'     => true,
+								'units'      => array( 'px' ),
+								'responsive' => true,
+								'preview'    => array(
+									'type'      => 'css',
+									'selector'  => '.uabb-creative-button-wrap a',
+									'property'  => 'padding',
+									'unit'      => 'px',
+									'important' => true,
+								),
+							),
+							'list_item_padding' => array(
+								'type'       => 'dimension',
+								'label'      => __( 'Item Padding', 'uabb' ),
+								'slider'     => true,
+								'units'      => array( 'px' ),
+								'responsive' => true,
+								'preview'    => array(
+									'type'      => 'css',
+									'selector'  => '.uabb-creative-button-wrap a',
+									'property'  => 'padding',
+									'unit'      => 'px',
+									'important' => true,
+								),
 							),
 						),
 					),
-					'even_properties' => array(
+					'even_properties'    => array(
 						'title'  => __( 'Even Properties', 'uabb' ),
 						'fields' => array(
 							'even_properties_bg'     => array(
@@ -591,6 +767,7 @@ FLBuilder::register_settings_form(
 								'label'       => __( 'Background Color', 'uabb' ),
 								'default'     => 'ffffff',
 								'show_reset'  => true,
+								'show_alpha'  => true,
 								'connections' => array( 'color' ),
 								'help'        => __( 'Choose even properties background color', 'uabb' ),
 							),
@@ -611,9 +788,370 @@ FLBuilder::register_settings_form(
 							),
 						),
 					),
+					'ribbon_section'     => array(
+						'title'  => __( 'Ribbon', 'uabb' ),
+						'fields' => array(
+							'ribbon_style'             => array(
+								'type'    => 'select',
+								'label'   => __( 'Style', 'uabb' ),
+								'default' => 'none',
+								'options' => array(
+									'corner'   => __( 'Corner Ribbon', 'uabb' ),
+									'circular' => __( 'Circular Ribbon', 'uabb' ),
+									'flag'     => __( 'Flag Ribbon', 'uabb' ),
+									'none'     => __( 'None', 'uabb' ),
+								),
+								'toggle'  => array(
+									'corner'   => array(
+										'fields'   => array( 'ribbon_title', 'horizontal_pos', 'ribbon_distance', 'ribbon_bg_color', 'ribbon_text_color', 'ribbon_box_shadow' ),
+										'sections' => array( 'ribbon_typography' ),
+										'tabs'     => array( 'typography' ),
+									),
+									'circular' => array(
+										'fields'   => array( 'ribbon_title', 'horizontal_pos', 'ribbon_size', 'ribbon_bg_color', 'ribbon_text_color', 'ribbon_box_shadow' ),
+										'sections' => array( 'ribbon_typography' ),
+										'tabs'     => array( 'typography' ),
+									),
+									'flag'     => array(
+										'fields'   => array( 'ribbon_title', 'ribbon_top_distance', 'ribbon_bg_color', 'ribbon_text_color', 'ribbon_box_shadow', 'ribbon_padding' ),
+										'sections' => array( 'ribbon_typography' ),
+										'tabs'     => array( 'typography' ),
+									),
+								),
+							),
+							'ribbon_title'             => array(
+								'type'        => 'text',
+								'label'       => __( 'Title', 'uabb' ),
+								'default'     => __( 'New', 'uabb' ),
+								'connections' => array( 'string', 'html' ),
+							),
+							'horizontal_pos'           => array(
+								'type'    => 'select',
+								'label'   => __( 'Horizontal Position', 'uabb' ),
+								'default' => 'right',
+								'options' => array(
+									'left'  => __( 'Left', 'uabb' ),
+									'right' => __( 'Right', 'uabb' ),
+								),
+							),
+							'ribbon_distance'          => array(
+								'type'      => 'unit',
+								'label'     => __( 'Distance', 'uabb' ),
+								'default'   => '35',
+								'units'     => array( 'px' ),
+								'maxlength' => '3',
+								'size'      => '5',
+								'slider'    => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 1000,
+										'step' => 10,
+									),
+								),
+							),
+							'ribbon_size'              => array(
+								'type'      => 'unit',
+								'label'     => __( 'Size', 'uabb' ),
+								'default'   => '4',
+								'units'     => array( 'em' ),
+								'maxlength' => '3',
+								'size'      => '5',
+								'slider'    => array(
+									'px' => array(
+										'min'  => 1,
+										'max'  => 20,
+										'step' => 0.1,
+									),
+								),
+							),
+							'ribbon_top_distance'      => array(
+								'type'      => 'unit',
+								'label'     => __( 'Top Distance', 'uabb' ),
+								'default'   => '',
+								'units'     => array( '%' ),
+								'maxlength' => '3',
+								'size'      => '5',
+								'slider'    => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 10,
+									),
+								),
+							),
+							'ribbon_bg_color'          => array(
+								'type'        => 'color',
+								'label'       => __( 'Background Color', 'uabb' ),
+								'connections' => array( 'color' ),
+								'show_reset'  => true,
+								'show_alpha'  => true,
+							),
+							'ribbon_text_color'        => array(
+								'type'        => 'color',
+								'label'       => __( 'Text Color', 'uabb' ),
+								'connections' => array( 'color' ),
+								'show_reset'  => true,
+								'show_alpha'  => true,
+							),
+							'ribbon_padding'           => array(
+								'type'       => 'dimension',
+								'label'      => __( 'Padding', 'uabb' ),
+								'slider'     => true,
+								'units'      => array( 'px' ),
+								'responsive' => true,
+							),
+							'ribbon_box_shadow'        => array(
+								'type'    => 'select',
+								'label'   => __( 'Enable Box Shadow', 'uabb' ),
+								'default' => 'no',
+								'options' => array(
+									'yes' => __( 'Yes', 'uabb' ),
+									'no'  => __( 'No', 'uabb' ),
+								),
+								'toggle'  => array(
+									'yes' => array(
+										'fields' => array( 'ribbon_shadow_color_hor', 'ribbon_shadow_color_ver', 'ribbon_shadow_color_blur', 'ribbon_shadow_color_spr', 'ribbon_shadow_color' ),
+									),
+								),
+							),
+							'ribbon_shadow_color_hor'  => array(
+								'type'   => 'unit',
+								'label'  => __( 'Horizontal Length', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'ribbon_shadow_color_ver'  => array(
+								'type'   => 'unit',
+								'label'  => __( 'Vertical Length', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'ribbon_shadow_color_blur' => array(
+								'type'   => 'unit',
+								'label'  => __( 'Blur Radius', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'ribbon_shadow_color_spr'  => array(
+								'type'   => 'unit',
+								'label'  => __( 'Spread Radius', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'ribbon_shadow_color'      => array(
+								'type'       => 'color',
+								'label'      => __( 'Shadow Color', 'uabb' ),
+								'default'    => 'rgba(168,168,168,0.5)',
+								'show_reset' => true,
+								'show_alpha' => true,
+							),
+						),
+					),
+					'box_shadow_section' => array(
+						'title'  => __( 'Box Shadow', 'uabb' ),
+						'fields' => array(
+							'price_box_shadow'      => array(
+								'type'    => 'select',
+								'label'   => __( 'Enable Box Shadow for Price Box', 'uabb' ),
+								'default' => 'no',
+								'options' => array(
+									'yes' => __( 'Yes', 'uabb' ),
+									'no'  => __( 'No', 'uabb' ),
+								),
+								'toggle'  => array(
+									'yes' => array(
+										'fields' => array( 'box_shadow_color_hor', 'box_shadow_color_ver', 'box_shadow_color_blur', 'box_shadow_color_spr', 'box_shadow_color' ),
+									),
+								),
+							),
+							'box_shadow_color_hor'  => array(
+								'type'   => 'unit',
+								'label'  => __( 'Horizontal Length', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'box_shadow_color_ver'  => array(
+								'type'   => 'unit',
+								'label'  => __( 'Vertical Length', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'box_shadow_color_blur' => array(
+								'type'   => 'unit',
+								'label'  => __( 'Blur Radius', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'box_shadow_color_spr'  => array(
+								'type'   => 'unit',
+								'label'  => __( 'Spread Radius', 'uabb' ),
+								'size'   => '5',
+								'units'  => array( 'px' ),
+								'slider' => array(
+									'px' => array(
+										'min'  => 0,
+										'max'  => 100,
+										'step' => 1,
+									),
+								),
+							),
+							'box_shadow_color'      => array(
+								'type'       => 'color',
+								'label'      => __( 'Shadow Color', 'uabb' ),
+								'default'    => 'rgba(168,168,168,0.5)',
+								'show_reset' => true,
+								'show_alpha' => true,
+							),
+						),
+					),
 				),
 			),
-			'button'     => array(
+			'feature_list_icon' => array(
+				'title'    => __( 'Icon', 'uabb' ),
+				'sections' => array(
+					'title'            => array(
+						'title'  => __( 'Feature List icon', 'uabb' ),
+						'fields' => array(
+							'image_type' => array(
+								'type'    => 'select',
+								'label'   => __( 'Enable Icon', 'uabb' ),
+								'default' => 'none',
+								'options' => array(
+									'none' => __( 'No', 'uabb' ), // Removed args 'Image type.',.
+									'icon' => __( 'Yes', 'uabb' ),
+								),
+								'toggle'  => array(
+									'icon' => array(
+										'sections' => array( 'icon_basic', 'icon_style' ),
+									),
+								),
+							),
+						),
+					),
+					/* Icon Basic Setting */
+					'icon_basic'       => array( // Section.
+						'title'  => __( 'Feature List icon Settings', 'uabb' ), // Section Title.
+						'fields' => array( // Section Fields.
+							'icon'            => array(
+								'type'        => 'icon',
+								'label'       => __( 'Icon', 'uabb' ),
+								'show_remove' => true,
+							),
+							'list_icon_color' => array(
+								'type'        => 'color',
+								'show_alpha'  => true,
+								'label'       => __( 'Icon Color', 'uabb' ),
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+							),
+							'icon_position'   => array(
+								'type'    => 'select',
+								'label'   => __( 'Icon Position', 'uabb' ),
+								'default' => 'before',
+								'options' => array(
+									'before' => __( 'Before Text', 'uabb' ),
+									'after'  => __( 'After Text', 'uabb' ),
+								),
+							),
+						),
+					),
+					'title_icon'       => array( // Section.
+						'title'  => __( 'Title Icon', 'uabb' ), // Section Title.
+						'fields' => array( // Section Fields.
+							'title_icon_setting' => array(
+								'type'    => 'select',
+								'label'   => __( 'Enable Title Icon', 'uabb' ),
+								'default' => 'none',
+								'options' => array(
+									'none' => __( 'No', 'uabb' ), // Removed args 'Image type.',.
+									'icon' => __( 'Yes', 'uabb' ),
+								),
+								'toggle'  => array(
+									'icon' => array(
+										'sections' => array( 'title_icon_basic', 'title_icon_style' ),
+									),
+								),
+							),
+						),
+					),
+					'title_icon_basic' => array( // Section.
+						'title'  => __( 'Title Icon Settings', 'uabb' ), // Section Title.
+						'fields' => array( // Section Fields.
+							'title_icon'          => array(
+								'type'        => 'icon',
+								'label'       => __( 'Icon', 'uabb' ),
+								'show_remove' => true,
+							),
+							'title_icon_color'    => array(
+								'type'        => 'color',
+								'show_alpha'  => true,
+								'label'       => __( 'Icon Color', 'uabb' ),
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+							),
+							'title_icon_position' => array(
+								'type'    => 'select',
+								'label'   => __( 'Icon Position', 'uabb' ),
+								'default' => 'inline',
+								'options' => array(
+									'inline'  => __( 'Inline', 'uabb' ),
+									'stacked' => __( 'Stacked', 'uabb' ),
+								),
+							),
+						),
+					),
+				),
+			),
+			'button'            => array(
 				'title'    => __( 'Button', 'uabb' ),
 				'sections' => array(
 					'general'           => array(
@@ -668,13 +1206,31 @@ FLBuilder::register_settings_form(
 							'btn_style'                 => array(
 								'type'    => 'select',
 								'label'   => __( 'Style', 'uabb' ),
-								'default' => 'flat',
+								'default' => 'default',
 								'class'   => 'creative_button_styles',
 								'options' => array(
+									'default'     => __( 'Default', 'uabb' ),
 									'flat'        => __( 'Flat', 'uabb' ),
 									'gradient'    => __( 'Gradient', 'uabb' ),
 									'transparent' => __( 'Transparent', 'uabb' ),
 									'threed'      => __( '3D', 'uabb' ),
+								),
+								'toggle'  => array(
+									'default'     => array(
+										'fields' => array( 'button_padding_dimension', 'button_border', 'border_hover_color' ),
+									),
+									'gradient'    => array(
+										'fields' => array( 'btn_width', 'btn_border_radius' ),
+									),
+									'transparent' => array(
+										'fields' => array( 'btn_width', 'btn_border_radius' ),
+									),
+									'threed'      => array(
+										'fields' => array( 'btn_width', 'btn_border_radius' ),
+									),
+									'flat'        => array(
+										'fields' => array( 'btn_width', 'btn_border_radius' ),
+									),
 								),
 							),
 							'btn_border_size'           => array(
@@ -763,12 +1319,14 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'btn_text_hover_color'   => array(
 								'type'        => 'color',
 								'label'       => __( 'Text Hover Color', 'uabb' ),
 								'default'     => '',
 								'show_reset'  => true,
+								'show_alpha'  => true,
 								'connections' => array( 'color' ),
 								'preview'     => array(
 									'type' => 'none',
@@ -780,6 +1338,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'btn_bg_color_opc'       => array(
 								'type'      => 'unit',
@@ -803,6 +1362,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 								'preview'     => array(
 									'type' => 'none',
 								),
@@ -837,7 +1397,7 @@ FLBuilder::register_settings_form(
 					'btn-structure'     => array(
 						'title'  => __( 'Structure', 'uabb' ),
 						'fields' => array(
-							'btn_width'              => array(
+							'btn_width'                => array(
 								'type'    => 'select',
 								'label'   => __( 'Width', 'uabb' ),
 								'default' => 'auto',
@@ -858,7 +1418,45 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'btn_custom_width'       => array(
+							'button_padding_dimension' => array(
+								'type'       => 'dimension',
+								'label'      => __( 'Padding', 'uabb' ),
+								'slider'     => true,
+								'units'      => array( 'px' ),
+								'responsive' => true,
+								'preview'    => array(
+									'type'      => 'css',
+									'selector'  => '.uabb-creative-button-wrap a',
+									'property'  => 'padding',
+									'unit'      => 'px',
+									'important' => true,
+								),
+							),
+							'button_border'            => array(
+								'type'    => 'border',
+								'label'   => __( 'Border', 'uabb' ),
+								'slider'  => true,
+								'units'   => array( 'px' ),
+								'preview' => array(
+									'type'      => 'css',
+									'selector'  => '.uabb-creative-button-wrap a',
+									'property'  => 'border',
+									'unit'      => 'px',
+									'important' => true,
+								),
+							),
+							'border_hover_color'       => array(
+								'type'        => 'color',
+								'label'       => __( 'Border Hover Color', 'uabb' ),
+								'default'     => '',
+								'show_reset'  => true,
+								'connections' => array( 'color' ),
+								'show_alpha'  => true,
+								'preview'     => array(
+									'type' => 'none',
+								),
+							),
+							'btn_custom_width'         => array(
 								'type'      => 'unit',
 								'label'     => __( 'Custom Width', 'uabb' ),
 								'default'   => '200',
@@ -873,7 +1471,7 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'btn_custom_height'      => array(
+							'btn_custom_height'        => array(
 								'type'      => 'unit',
 								'label'     => __( 'Custom Height', 'uabb' ),
 								'default'   => '45',
@@ -888,7 +1486,7 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'btn_padding_top_bottom' => array(
+							'btn_padding_top_bottom'   => array(
 								'type'        => 'unit',
 								'label'       => __( 'Padding Top/Bottom', 'uabb' ),
 								'placeholder' => '0',
@@ -903,7 +1501,7 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'btn_padding_left_right' => array(
+							'btn_padding_left_right'   => array(
 								'type'        => 'unit',
 								'label'       => __( 'Padding Left/Right', 'uabb' ),
 								'placeholder' => '0',
@@ -918,7 +1516,7 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'btn_border_radius'      => array(
+							'btn_border_radius'        => array(
 								'type'      => 'unit',
 								'label'     => __( 'Round Corners', 'uabb' ),
 								'maxlength' => '3',
@@ -932,7 +1530,7 @@ FLBuilder::register_settings_form(
 									),
 								),
 							),
-							'btn_custom_class'       => array(
+							'btn_custom_class'         => array(
 								'type'        => 'text',
 								'label'       => __( 'Custom Class', 'uabb' ),
 								'default'     => '',
@@ -960,7 +1558,7 @@ FLBuilder::register_settings_form(
 					),
 				),
 			),
-			'typography' => array(
+			'typography'        => array(
 				'title'    => __( 'Typography', 'uabb' ),
 				'sections' => array(
 					'featured_text_typography' => array(
@@ -994,6 +1592,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'featured_f_background_color' => array(
 								'type'        => 'color',
@@ -1001,6 +1600,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'featured_f_background_color_opc' => array(
 								'type'      => 'unit',
@@ -1019,6 +1619,16 @@ FLBuilder::register_settings_form(
 							),
 						),
 					),
+					'ribbon_typography'        => array(
+						'title'  => __( 'Ribbon Settings', 'uabb' ),
+						'fields' => array(
+							'ribbon_typo' => array(
+								'type'       => 'typography',
+								'label'      => __( 'Typography', 'uabb' ),
+								'responsive' => true,
+							),
+						),
+					),
 				),
 			),
 		),
@@ -1027,7 +1637,8 @@ FLBuilder::register_settings_form(
 
 
 FLBuilder::register_settings_form(
-	'legend_column_form', array(
+	'legend_column_form',
+	array(
 		'title' => __( 'Add Legend Box', 'uabb' ),
 		'tabs'  => array(
 			'general'    => array(
@@ -1047,6 +1658,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 							'foreground_opc' => array(
 								'type'      => 'unit',
@@ -1085,6 +1697,7 @@ FLBuilder::register_settings_form(
 								'label'       => __( 'Background Color', 'uabb' ),
 								'default'     => 'ffffff',
 								'show_reset'  => true,
+								'show_alpha'  => true,
 								'connections' => array( 'color' ),
 								'help'        => __( 'Choose even properties background color', 'uabb' ),
 							),
@@ -1124,6 +1737,7 @@ FLBuilder::register_settings_form(
 								'default'     => '',
 								'connections' => array( 'color' ),
 								'show_reset'  => true,
+								'show_alpha'  => true,
 							),
 						),
 					),

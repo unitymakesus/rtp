@@ -17,7 +17,7 @@ if ( ! class_exists( 'UABB_File' ) ) {
 		 *
 		 * @since 1.12.0
 		 */
-		function __construct() {
+		public function __construct() {
 
 			add_action( 'fl_builder_control_uabb-file', array( $this, 'uabb_file' ), 1, 4 );
 			add_action( 'fl_builder_custom_fields', array( $this, 'ui_fields' ), 10, 1 );
@@ -29,7 +29,7 @@ if ( ! class_exists( 'UABB_File' ) ) {
 		 * @since 1.12.0
 		 * @param array $fields gets an array of fields.
 		 */
-		function ui_fields( $fields ) {
+		public function ui_fields( $fields ) {
 			$fields['uabb-file'] = BB_ULTIMATE_ADDON_DIR . 'fields/uabb-file/ui-field-file.php';
 
 			return $fields;
@@ -44,7 +44,7 @@ if ( ! class_exists( 'UABB_File' ) ) {
 		 * @param array  $field gets an array of field values.
 		 * @param object $settings gets the object of respective fields.
 		 */
-		function uabb_file( $name, $value, $field, $settings ) {
+		public function uabb_file( $name, $value, $field, $settings ) {
 
 			$name_new = 'uabb-' . $name;
 
@@ -57,25 +57,25 @@ if ( ! class_exists( 'UABB_File' ) ) {
 			if ( empty( $custom_class ) ) {
 				echo ' fl-file-empty';
 			} if ( isset( $field['class'] ) ) {
-				echo ' ' . $field['class'];}
+				echo ' ' . esc_attr( $field['class'] );}
 			?>
 			">
-				<a class="fl-file-select" href="javascript:void(0);" onclick="return false;"><?php _e( 'Select File', 'uabb' ); ?></a>
+				<a class="fl-file-select" href="javascript:void(0);" onclick="return false;"><?php esc_attr_e( 'Select File', 'uabb' ); ?></a>
 				<div class="fl-file-preview">
 					<?php if ( ! empty( $value ) && $file ) : ?>
 					<div class="fl-file-preview-img">
 					</div>
-					<span class="fl-file-preview-filename"><?php echo $file->filename; ?></span>
+					<span class="fl-file-preview-filename"><?php echo esc_attr( $file->filename ); ?></span>
 					<?php else : ?>
 					<div class="fl-file-preview-img">
 					</div>
 					<span class="fl-file-preview-filename"></span>
 					<?php endif; ?>
 					<br />
-					<a class="fl-file-replace" href="javascript:void(0);" onclick="return false;"><?php _e( 'Replace File', 'uabb' ); ?></a>
+					<a class="fl-file-replace" href="javascript:void(0);" onclick="return false;"><?php esc_attr_e( 'Replace File', 'uabb' ); ?></a>
 					<div class="fl-clear"></div>
 				</div>
-				<input name="<?php echo $name; ?>" type="hidden" value='<?php echo $value; ?>' />
+				<input name="<?php echo esc_attr( $name ); ?>" type="hidden" value='<?php echo esc_attr( $value ); ?>' />
 			</div> 
 			<?php
 		}

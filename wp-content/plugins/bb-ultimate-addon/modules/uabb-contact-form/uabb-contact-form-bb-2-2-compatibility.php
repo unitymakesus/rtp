@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBContactFormModule', array(
+	'UABBContactFormModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
@@ -841,6 +842,19 @@ FLBuilder::register_module(
 							'label'       => __( 'Icon', 'uabb' ),
 							'show_remove' => true,
 						),
+						'btn_icon_color'      => array(
+							'type'        => 'color',
+							'label'       => __( 'Icon Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-contact-form-button .uabb-contact-form-submit .uabb-contact-form-submit-button-icon',
+								'property' => 'color',
+							),
+						),
 						'btn_icon_position'   => array(
 							'type'    => 'select',
 							'label'   => __( 'Icon Position', 'uabb' ),
@@ -866,8 +880,9 @@ FLBuilder::register_module(
 						'btn_style'        => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
@@ -875,7 +890,19 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'transparent' => array(
-									'fields' => array( 'btn_border_width', 'hover_attribute' ),
+									'fields' => array( 'btn_border_width', 'hover_attribute', 'btn_radius' ),
+								),
+								'flat'        => array(
+									'fields' => array( 'btn_radius' ),
+								),
+								'3d'          => array(
+									'fields' => array( 'btn_radius' ),
+								),
+								'gradient'    => array(
+									'fields' => array( 'btn_radius' ),
+								),
+								'default'     => array(
+									'fields' => array( 'button_border', 'border_hover_color' ),
 								),
 							),
 						),
@@ -978,6 +1005,30 @@ FLBuilder::register_module(
 								'property'  => 'border-radius',
 								'unit'      => 'px',
 								'important' => true,
+							),
+						),
+						'button_border'          => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-contact-form .uabb-contact-form-submit',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'     => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'btn_vertical_padding'   => array(
@@ -1330,7 +1381,7 @@ FLBuilder::register_module(
 				'recaptcha_general' => array(
 					'title'  => '',
 					'fields' => array(
-						'uabb_recaptcha_toggle'     => array(
+						'uabb_recaptcha_toggle'        => array(
 							'type'    => 'select',
 							'label'   => 'reCAPTCHA Field',
 							'default' => 'hide',
@@ -1342,13 +1393,47 @@ FLBuilder::register_module(
 							'preview' => array(
 								'type' => 'none',
 							),
-							'toggle'  => array(
-								'show' => array(
-									'fields' => array( 'uabb_recaptcha_theme', 'uabb_recaptcha_site_key', 'uabb_recaptcha_secret_key' ),
-								),
+						),
+						'uabb_recaptcha_version'       => array(
+							'type'    => 'select',
+							'label'   => __( 'reCAPTCHA Version', 'uabb' ),
+							'default' => 'v2',
+							'options' => array(
+								'v2' => __( 'v2', 'uabb' ),
+								'v3' => __( 'v3', 'uabb' ),
 							),
 						),
-						'uabb_recaptcha_site_key'   => array(
+						'uabb_badge_position'          => array(
+							'type'    => 'select',
+							'label'   => __( 'Badge Position', 'uabb' ),
+							'options' => array(
+								'bottomright' => __( 'Bottom Right', 'uabb' ),
+								'bottomleft'  => __( 'Bottom Left', 'uabb' ),
+								'inline'      => __( 'Inline', 'uabb' ),
+							),
+						),
+						'uabb_v3_recaptcha_site_key'   => array(
+							'type'        => 'text',
+							'label'       => __( 'Site Key', 'uabb' ),
+							'connections' => array( 'string', 'html' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'uabb_v3_recaptcha_secret_key' => array(
+							'type'        => 'text',
+							'label'       => __( 'Secret Key', 'uabb' ),
+							'connections' => array( 'string', 'html' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'uabb_v3_recaptcha_score'      => array(
+							'type'    => 'unit',
+							'label'   => __( 'reCAPTCHA Score', 'uabb' ),
+							'default' => '0.5',
+						),
+						'uabb_recaptcha_site_key'      => array(
 							'type'    => 'text',
 							'label'   => __( 'Site Key', 'uabb' ),
 							'default' => '',
@@ -1356,7 +1441,7 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
-						'uabb_recaptcha_secret_key' => array(
+						'uabb_recaptcha_secret_key'    => array(
 							'type'    => 'text',
 							'label'   => __( 'Secret Key', 'uabb' ),
 							'default' => '',
@@ -1364,7 +1449,7 @@ FLBuilder::register_module(
 								'type' => 'none',
 							),
 						),
-						'uabb_recaptcha_theme'      => array(
+						'uabb_recaptcha_theme'         => array(
 							'type'    => 'select',
 							'label'   => __( 'Theme', 'uabb' ),
 							'default' => 'light',
@@ -1386,7 +1471,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/design-email-template-to-receive-user-information-within-mail/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=contact-form-module" target="_blank" rel="noopener"> How to Design the Email Template to Receive User Information within the email? </a> </li>
 

@@ -46,11 +46,11 @@ class UABBNumbersModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Compatibility for Number Typography.
 			if ( ! isset( $settings->num_typo ) || ! is_array( $settings->num_typo ) ) {
@@ -68,7 +68,7 @@ class UABBNumbersModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->num_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->num_font_family['weight'] ) {
+					if ( 'regular' === $settings->num_font_family['weight'] ) {
 						$settings->num_typo['font_weight'] = 'normal';
 					} else {
 						$settings->num_typo['font_weight'] = $settings->num_font_family['weight'];
@@ -143,7 +143,7 @@ class UABBNumbersModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->ba_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->ba_font_family['weight'] ) {
+					if ( 'regular' === $settings->ba_font_family['weight'] ) {
 						$settings->ba_typo['font_weight'] = 'normal';
 					} else {
 						$settings->ba_typo['font_weight'] = $settings->ba_font_family['weight'];
@@ -208,7 +208,7 @@ class UABBNumbersModule extends FLBuilderModule {
 				);
 				unset( $settings->ba_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( ! isset( $settings->num_typo ) || ! is_array( $settings->num_typo ) ) {
 
@@ -225,7 +225,7 @@ class UABBNumbersModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->num_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->num_font_family['weight'] ) {
+					if ( 'regular' === $settings->num_font_family['weight'] ) {
 						$settings->num_typo['font_weight'] = 'normal';
 					} else {
 						$settings->num_typo['font_weight'] = $settings->num_font_family['weight'];
@@ -252,7 +252,7 @@ class UABBNumbersModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->num_line_height['desktop'] ) && isset( $settings->num_font_size['desktop'] ) && 0 != $settings->num_font_size['desktop'] && ! isset( $settings->num_typo['line_height'] ) ) {
+			if ( isset( $settings->num_line_height['desktop'] ) && isset( $settings->num_font_size['desktop'] ) && 0 !== $settings->num_font_size['desktop'] && ! isset( $settings->num_typo['line_height'] ) ) {
 
 				if ( is_numeric( $settings->num_line_height['desktop'] ) && is_numeric( $settings->num_font_size['desktop'] ) ) {
 					$settings->num_typo['line_height'] = array(
@@ -261,7 +261,7 @@ class UABBNumbersModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->num_line_height['medium'] ) && isset( $settings->num_font_size['medium'] ) && 0 != $settings->num_font_size['medium'] && ! isset( $settings->num_typo_medium['line_height'] ) ) {
+			if ( isset( $settings->num_line_height['medium'] ) && isset( $settings->num_font_size['medium'] ) && 0 !== $settings->num_font_size['medium'] && ! isset( $settings->num_typo_medium['line_height'] ) ) {
 				if ( is_numeric( $settings->num_line_height['medium'] ) && is_numeric( $settings->num_font_size['medium'] ) ) {
 					$settings->num_typo_medium['line_height'] = array(
 						'length' => round( $settings->num_line_height['medium'] / $settings->num_font_size['medium'], 2 ),
@@ -269,7 +269,7 @@ class UABBNumbersModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->num_line_height['small'] ) && isset( $settings->num_font_size['small'] ) && 0 != $settings->num_font_size['small'] && ! isset( $settings->num_typo_responsive['line_height'] ) ) {
+			if ( isset( $settings->num_line_height['small'] ) && isset( $settings->num_font_size['small'] ) && 0 !== $settings->num_font_size['small'] && ! isset( $settings->num_typo_responsive['line_height'] ) ) {
 				if ( is_numeric( $settings->num_line_height['small'] ) && is_numeric( $settings->num_font_size['small'] ) ) {
 					$settings->num_typo_responsive['line_height'] = array(
 						'length' => round( $settings->num_line_height['small'] / $settings->num_font_size['small'], 2 ),
@@ -294,7 +294,7 @@ class UABBNumbersModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->ba_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->ba_font_family['weight'] ) {
+					if ( 'regular' === $settings->ba_font_family['weight'] ) {
 						$settings->ba_typo['font_weight'] = 'normal';
 					} else {
 						$settings->ba_typo['font_weight'] = $settings->ba_font_family['weight'];
@@ -321,7 +321,7 @@ class UABBNumbersModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->ba_line_height['desktop'] ) && isset( $settings->ba_font_size['desktop'] ) && 0 != $settings->ba_font_size['desktop'] && ! isset( $settings->ba_line_height_unit ) ) {
+			if ( isset( $settings->ba_line_height['desktop'] ) && isset( $settings->ba_font_size['desktop'] ) && 0 !== $settings->ba_font_size['desktop'] && ! isset( $settings->ba_line_height_unit ) ) {
 				if ( is_numeric( $settings->ba_line_height['desktop'] ) && is_numeric( $settings->ba_font_size['desktop'] ) ) {
 					$settings->ba_typo['line_height'] = array(
 						'length' => round( $settings->ba_line_height['desktop'] / $settings->ba_font_size['desktop'], 2 ),
@@ -329,7 +329,7 @@ class UABBNumbersModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->ba_line_height['medium'] ) && isset( $settings->ba_font_size['medium'] ) && 0 != $settings->ba_font_size['medium'] && ! isset( $settings->ba_line_height_unit_medium ) ) {
+			if ( isset( $settings->ba_line_height['medium'] ) && isset( $settings->ba_font_size['medium'] ) && 0 !== $settings->ba_font_size['medium'] && ! isset( $settings->ba_line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->ba_line_height['medium'] ) && is_numeric( $settings->ba_font_size['medium'] ) ) {
 					$settings->ba_typo_medium['line_height'] = array(
 						'length' => round( $settings->ba_line_height['medium'] / $settings->ba_font_size['medium'], 2 ),
@@ -337,7 +337,7 @@ class UABBNumbersModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->ba_line_height['small'] ) && isset( $settings->ba_font_size['small'] ) && 0 != $settings->ba_font_size['small'] && ! isset( $settings->ba_line_height_unit_responsive ) ) {
+			if ( isset( $settings->ba_line_height['small'] ) && isset( $settings->ba_font_size['small'] ) && 0 !== $settings->ba_font_size['small'] && ! isset( $settings->ba_line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->ba_line_height['small'] ) && is_numeric( $settings->ba_font_size['small'] ) ) {
 					$settings->ba_typo_responsive['line_height'] = array(
 						'length' => round( $settings->ba_line_height['small'] / $settings->ba_font_size['small'], 2 ),
@@ -417,13 +417,13 @@ class UABBNumbersModule extends FLBuilderModule {
 		$number = 0;
 		$layout = $this->settings->layout ? $this->settings->layout : 'default';
 		$type   = $this->settings->number_type ? $this->settings->number_type : 'percent';
-		$prefix = 'percent' == $type ? '' : $this->settings->number_prefix;
-		$suffix = 'percent' == $type ? '%' : $this->settings->number_suffix;
-		$tag    = ( 'default' != $this->settings->num_tag_selection ) ? $this->settings->num_tag_selection : 'div';
+		$prefix = 'percent' === $type ? '' : $this->settings->number_prefix;
+		$suffix = 'percent' === $type ? '%' : $this->settings->number_suffix;
+		$tag    = ( 'default' !== $this->settings->num_tag_selection ) ? $this->settings->num_tag_selection : 'div';
 
 		$html = '<' . $tag . ' class="uabb-number-string">' . $prefix . '<span class="uabb-number-int">' . number_format( $number ) . '</span>' . $suffix . '</' . $tag . '>';
 
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -436,7 +436,8 @@ class UABBNumbersModule extends FLBuilderModule {
 		if ( ! empty( $this->settings->before_number_text ) ) {
 			$html .= '<span class="uabb-number-before-text">' . $this->settings->before_number_text . '</span>';
 		}
-		echo $html;
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -446,7 +447,7 @@ class UABBNumbersModule extends FLBuilderModule {
 	 */
 	public function render_before_counter_text() {
 		$html = '';
-		if ( '' != $this->settings->before_counter_text ) {
+		if ( '' !== $this->settings->before_counter_text ) {
 			$html .= '<span class="uabb-counter-before-text">' . $this->settings->before_counter_text . '</span>';
 		}
 		return $html;
@@ -462,7 +463,8 @@ class UABBNumbersModule extends FLBuilderModule {
 		if ( ! empty( $this->settings->after_number_text ) ) {
 			$html .= '<span class="uabb-number-after-text">' . $this->settings->after_number_text . '</span>';
 		}
-		echo $html;
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -472,7 +474,7 @@ class UABBNumbersModule extends FLBuilderModule {
 	 */
 	public function render_after_counter_text() {
 		$html = '';
-		if ( '' != $this->settings->after_counter_text ) {
+		if ( '' !== $this->settings->after_counter_text ) {
 			$html .= '<span class="uabb-counter-after-text">' . $this->settings->after_counter_text . '</span>';
 		}
 		return $html;
@@ -499,7 +501,7 @@ class UABBNumbersModule extends FLBuilderModule {
 		</svg>';
 		$html .= '</div>';
 
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -527,7 +529,8 @@ class UABBNumbersModule extends FLBuilderModule {
 		/* After Text */
 		$html .= $this->render_after_counter_text();
 		$html .= '</div>';
-		echo $html;
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -537,7 +540,7 @@ class UABBNumbersModule extends FLBuilderModule {
 	 */
 	public function render_separator() {
 
-		if ( 'yes' == $this->settings->show_separator ) {
+		if ( 'yes' === $this->settings->show_separator ) {
 			$separator_settings = array(
 				'color'     => $this->settings->separator_color,
 				'height'    => $this->settings->separator_height,
@@ -559,18 +562,18 @@ class UABBNumbersModule extends FLBuilderModule {
 	 * @param string $position gets the position of the image.
 	 */
 	public function render_image( $position ) {
-		if ( 'none' != $this->settings->image_type ) {
+		if ( 'none' !== $this->settings->image_type ) {
 
 			/* Get setting pos according to image type */
 			$set_pos = '';
-			if ( 'circle' == $this->settings->layout ) {
+			if ( 'circle' === $this->settings->layout ) {
 				$set_pos = $this->settings->circle_position;
-			} elseif ( 'default' == $this->settings->layout ) {
+			} elseif ( 'default' === $this->settings->layout ) {
 				$set_pos = $this->settings->img_icon_position;
 			}
 
 			/* Render Image / icon */
-			if ( $position == $set_pos ) {
+			if ( $position === $set_pos ) {
 				$imageicon_array = array(
 
 					/* General Section */
@@ -618,7 +621,7 @@ class UABBNumbersModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-numbers/uabb-numbers-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-numbers/uabb-numbers-bb-less-than-2-2-compatibility.php';

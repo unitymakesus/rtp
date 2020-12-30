@@ -4,12 +4,22 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit839052a724b0b847e05c635c214ca221
+class ComposerStaticInit28fc8d323ad65b9a2dbd5e985a2658a0
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
             'Stripe\\' => 7,
+            'Sample\\' => 7,
+        ),
+        'P' => 
+        array (
+            'PayPalHttp\\' => 11,
+            'PayPalCheckoutSdk\\' => 18,
+        ),
+        'G' => 
+        array (
+            'Give\\' => 5,
         ),
         'C' => 
         array (
@@ -22,6 +32,22 @@ class ComposerStaticInit839052a724b0b847e05c635c214ca221
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
+        'Sample\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/samples',
+        ),
+        'PayPalHttp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypalhttp/lib/PayPalHttp',
+        ),
+        'PayPalCheckoutSdk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk',
+        ),
+        'Give\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Composer\\Installers\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
@@ -29,6 +55,7 @@ class ComposerStaticInit839052a724b0b847e05c635c214ca221
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
         'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
         'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
@@ -48,9 +75,9 @@ class ComposerStaticInit839052a724b0b847e05c635c214ca221
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit839052a724b0b847e05c635c214ca221::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit839052a724b0b847e05c635c214ca221::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit839052a724b0b847e05c635c214ca221::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit28fc8d323ad65b9a2dbd5e985a2658a0::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit28fc8d323ad65b9a2dbd5e985a2658a0::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit28fc8d323ad65b9a2dbd5e985a2658a0::$classMap;
 
         }, null, ClassLoader::class);
     }

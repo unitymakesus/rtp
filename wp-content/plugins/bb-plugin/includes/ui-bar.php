@@ -33,11 +33,13 @@ $cancel      = apply_filters( 'fl_builder_ui_bar_cancel', __( 'Cancel', 'fl-buil
 	</div>
 </div>
 <div class="fl-builder--preview-actions">
+	<span class="size"></span>
 	<span class="title-accessory device-icons">
 		<i class="dashicons dashicons-smartphone" data-mode="responsive"></i>
 		<i class="dashicons dashicons-tablet" data-mode="medium"></i>
 		<i class="dashicons dashicons-desktop" data-mode="default"></i>
 	</span>
+
 	<button class="fl-builder-button fl-builder-button-primary end-preview-btn"><?php _e( 'Continue Editing', 'fl-builder' ); ?></button>
 </div>
 <div class="fl-builder--revision-actions">

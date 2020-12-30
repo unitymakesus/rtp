@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBIconListModule', array(
+	'UABBIconListModule',
+	array(
 		'columns' => array(
 			'title'    => __( 'List Element', 'uabb' ),
 			'sections' => array(
@@ -647,7 +648,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'list-icon_list_item_form', array(
+	'list-icon_list_item_form',
+	array(
 		'title' => __( 'Add List Item', 'uabb' ),
 		'tabs'  => array(
 			'general' => array( // Tab.

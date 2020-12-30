@@ -9,7 +9,10 @@
 				text = form.find( '[data-name="text"] textarea.wp-editor-area' ),
 				editorId = text.attr( 'id' );
 
+			this._flipSettings();
+
 			icon.on( 'change', this._previewIcon );
+			icon.on( 'change', this._flipSettings );
 			size.on( 'input', this._previewSize );
 			text.on( 'keyup', this._previewText );
 
@@ -26,6 +29,22 @@
 				icon = form.find( 'input[name=icon]' );
 
 			ele.attr( 'class', icon.val() );
+		},
+
+		_flipSettings: function() {
+			var form  = $( '.fl-builder-settings' ),
+					icon = form.find( 'input[name=icon]' );
+			if ( -1 !== icon.val().indexOf( 'fad fa') ) {
+				$('#fl-field-duo_color1').show();
+				$('#fl-field-duo_color2').show();
+				$('#fl-field-color').hide();
+				$('#fl-field-hover_color').hide()
+			} else {
+				$('#fl-field-duo_color1').hide();
+				$('#fl-field-duo_color2').hide();
+				$('#fl-field-color').show();
+				$('#fl-field-hover_color').show()
+			}
 		},
 
 		_previewSize: function() {

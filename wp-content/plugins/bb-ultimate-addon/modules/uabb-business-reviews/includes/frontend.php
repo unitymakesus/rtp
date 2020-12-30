@@ -5,6 +5,6 @@
  *  @package UABB Business Review file Frontend.php file
  */
 
-echo $module->render();
+echo wp_kses_post( $module->render() );
 
 

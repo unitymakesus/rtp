@@ -6,7 +6,7 @@
  */
 
 $align = '';
-if ( ! UABB_Compatibility::check_bb_version() ) {
+if ( ! UABB_Compatibility::$version_bb_check ) {
 	if ( isset( $settings->align ) ) {
 		$align = $settings->align;
 	}
@@ -16,12 +16,13 @@ if ( ! UABB_Compatibility::check_bb_version() ) {
 	}
 }
 ?>
-<?php $height_width = ( 'custom' == $settings->height_width_options ) ? $settings->height_width : '250'; ?>
+<?php $height_width = ( 'custom' === $settings->height_width_options ) ? $settings->height_width : '250'; ?>
 <div class="uabb-module-content uabb-ih-container">
-	<ul data-height="<?php echo $height_width; ?>" data-width="<?php echo $height_width; ?>" data-shape="<?php echo $settings->shape; ?>" class="uabb-ih-list uabb-align-<?php echo $align; ?>">
+	<ul data-height="<?php echo esc_attr( $height_width ); ?>" data-width="<?php echo esc_attr( $height_width ); ?>" data-shape="<?php echo esc_attr( $settings->shape ); ?>" class="uabb-ih-list uabb-align-<?php echo esc_attr( $align ); ?>">
 								<?php
 								if ( count( $settings->ihover_item ) > 0 ) {
-									for ( $i = 0; $i < count( $settings->ihover_item ); $i++ ) {
+									$count = count( $settings->ihover_item );
+									for ( $i = 0; $i < $count; $i++ ) {
 										if ( is_object( $settings->ihover_item[ $i ] ) ) {
 											$advanced_effect  = '';
 											$hidden_box_class = '';
@@ -60,28 +61,28 @@ if ( ! UABB_Compatibility::check_bb_version() ) {
 											}
 
 											?>
-		<li class="uabb-ih-list-item uabb-ih-item-<?php echo $i; ?>">
+		<li class="uabb-ih-list-item uabb-ih-item-<?php echo esc_attr( $i ); ?>">
 											<?php
-											if ( 'link' == $settings->ihover_item[ $i ]->on_click ) {
+											if ( 'link' === $settings->ihover_item[ $i ]->on_click ) {
 												?>
-			<a target="<?php echo $settings->ihover_item[ $i ]->link_target; ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->ihover_item[ $i ]->link_target, 0, 1 ); ?> href="<?php echo $settings->ihover_item[ $i ]->link_url; ?>" class="uabb-ih-link">
+			<a target="<?php echo esc_attr( $settings->ihover_item[ $i ]->link_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $settings->ihover_item[ $i ]->link_target, 0, 1 ); ?> href="<?php echo $settings->ihover_item[ $i ]->link_url; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" class="uabb-ih-link">
 												<?php
 											}
 											?>
-			<div class="uabb-ih-item uabb-ih-<?php echo $settings->ihover_item[ $i ]->effect; ?> uabb-ih-<?php echo $advanced_effect; ?>  uabb-ih-<?php echo $settings->shape; ?>" >
+			<div class="uabb-ih-item uabb-ih-<?php echo esc_attr( $settings->ihover_item[ $i ]->effect ); ?> uabb-ih-<?php echo esc_attr( $advanced_effect ); ?>  uabb-ih-<?php echo esc_attr( $settings->shape ); ?>" >
 				<div class="uabb-ih-image-block">
 					<div class="uabb-ih-wrapper"></div>
-											<?php echo $module->render_image( $i ); ?>
+											<?php echo wp_kses_post( $module->render_image( $i ) ); ?>
 				</div>
-											<?php echo ( 'effect8' == $settings->ihover_item[ $i ]->effect ) ? '<div class="uabb-info-container">' : ''; ?>
-				<div class="uabb-ih-info <?php echo $hidden_box_class; ?>">
+											<?php echo ( 'effect8' === $settings->ihover_item[ $i ]->effect ) ? '<div class="uabb-info-container">' : ''; ?>
+				<div class="uabb-ih-info <?php echo esc_attr( $hidden_box_class ); ?>">
 					<div class="uabb-ih-info-back">
 						<div class="uabb-ih-content">
 							<div style="" class="uabb-ih-heading-block">
 											<?php
-											if ( '' != $settings->ihover_item[ $i ]->title ) {
+											if ( '' !== $settings->ihover_item[ $i ]->title ) {
 												?>
-								<<?php echo $settings->title_typography_tag_selection; ?> class="uabb-ih-heading"><?php echo $settings->ihover_item[ $i ]->title; ?></<?php echo $settings->title_typography_tag_selection; ?>>
+								<<?php echo esc_attr( $settings->title_typography_tag_selection ); ?> class="uabb-ih-heading"><?php echo $settings->ihover_item[ $i ]->title; ?></<?php echo esc_attr( $settings->title_typography_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 												<?php
 											}
 											?>
@@ -90,15 +91,16 @@ if ( ! UABB_Compatibility::check_bb_version() ) {
 								<span class="uabb-ih-line"></span>
 							</div>
 							<div class="uabb-ih-description-block">
-								<div class="uabb-ih-description uabb-text-editor"><?php echo $settings->ihover_item[ $i ]->description; ?></div>
+								<div class="uabb-ih-description uabb-text-editor">
+											<?php echo $settings->ihover_item[ $i ]->description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 							</div>
 						</div>
 					</div>
 				</div>
-											<?php echo ( 'effect8' == $settings->ihover_item[ $i ]->effect ) ? '</div>' : ''; ?>
+											<?php echo ( 'effect8' === $settings->ihover_item[ $i ]->effect ) ? '</div>' : ''; ?>
 			</div>
 											<?php
-											if ( 'link' == $settings->ihover_item[ $i ]->on_click ) {
+											if ( 'link' === $settings->ihover_item[ $i ]->on_click ) {
 												?>
 			</a>
 												<?php

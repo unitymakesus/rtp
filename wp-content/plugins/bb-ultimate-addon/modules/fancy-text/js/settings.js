@@ -21,11 +21,22 @@
 				show_cursor 		= form.find('select[name=show_cursor]').val(),
 				i 					= 0;
 				
-			if(effect_type == 'slide_up') {
+			if(effect_type === 'slide_up') {
 				for(i in show_cursor_data) {
 					FLBuilder._settingsSelectToggle(show_cursor_data[i].fields, 'hide', '#fl-field-');
 				}
 			}
+			if( effect_type !== 'type' ) {
+				form.find('#fl-field-cursor_text').hide();
+				form.find('#fl-field-cursor_blink').hide();
+			}
+			
+			if( effect_type === 'type' || effect_type === 'slide_up'  ) {
+				form.find('#fl-field-animation_delay').hide();		
+			} else {
+				form.find('#fl-field-animation_delay').show();
+			}
+
 		},
 	});
 

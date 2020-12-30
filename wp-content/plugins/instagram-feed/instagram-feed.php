@@ -3,13 +3,13 @@
 Plugin Name: Smash Balloon Instagram Feed
 Plugin URI: https://smashballoon.com/instagram-feed
 Description: Display beautifully clean, customizable, and responsive Instagram feeds.
-Version: 2.1.4
+Version: 2.6.2
 Author: Smash Balloon
 Author URI: https://smashballoon.com/
 License: GPLv2 or later
 Text Domain: instagram-feed
 
-Copyright 2019  Smash Balloon LLC (email : hey@smashballoon.com)
+Copyright 2020  Smash Balloon LLC (email : hey@smashballoon.com)
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
@@ -23,11 +23,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if ( ! defined( 'SBIVER' ) ) {
-	define( 'SBIVER', '2.1.4' );
+	define( 'SBIVER', '2.6.2' );
 }
 // Db version.
 if ( ! defined( 'SBI_DBVERSION' ) ) {
-	define( 'SBI_DBVERSION', '1.3' );
+	define( 'SBI_DBVERSION', '1.7' );
 }
 
 // Upload folder name for local image files for posts
@@ -41,6 +41,12 @@ if ( ! defined( 'SBI_INSTAGRAM_POSTS_TYPE' ) ) {
 // Name of the database table that contains feed ids and the ids of posts
 if ( ! defined( 'SBI_INSTAGRAM_FEEDS_POSTS' ) ) {
 	define( 'SBI_INSTAGRAM_FEEDS_POSTS', 'sbi_instagram_feeds_posts' );
+}
+if ( ! defined( 'SBI_REFRESH_THRESHOLD_OFFSET' ) ) {
+	define( 'SBI_REFRESH_THRESHOLD_OFFSET', 40 * 86400 );
+}
+if ( ! defined( 'SBI_MINIMUM_INTERVAL' ) ) {
+	define( 'SBI_MINIMUM_INTERVAL', 600 );
 }
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -91,16 +97,55 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-cron-updater.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-display-elements.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-feed.php';
+		include_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-gdpr-integrations.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-oembed.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-parse.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-post-set.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-posts-manager.php';
 		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-settings.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-single.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-token-refresher.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/blocks/class-sbi-blocks.php';
+		require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-tracking.php';
+
+		$sbi_blocks = new SB_Instagram_Blocks();
+
+		if ( $sbi_blocks->allow_load() ) {
+			$sbi_blocks->load();
+		}
 
 		if ( is_admin() ) {
 			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/actions.php';
 			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/main.php';
+			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-about.php';
+
+			if ( version_compare( PHP_VERSION,  '5.3.0' ) >= 0
+				 && version_compare( get_bloginfo( 'version' ), '4.6' , '>=' ) ) {
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-notifications.php';
+				$sbi_notifications = new SBI_Notifications();
+				$sbi_notifications->init();
+
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-new-user.php';
+				$sbi_newuser = new SBI_New_User();
+				$sbi_newuser->init();
+
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/addon-functions.php';
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/PluginSilentUpgrader.php';
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/PluginSilentUpgraderSkin.php';
+				require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-install-skin.php';
+			}
+
+			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/admin/class-sbi-sitehealth.php';
+
+			$sbi_sitehealth = new SB_Instagram_SiteHealth();
+
+			if ( $sbi_sitehealth->allow_load() ) {
+				$sbi_sitehealth->load();
+			}
+
 		}
+		include_once trailingslashit( SBI_PLUGIN_DIR ) . 'widget.php';
 
 		global $sb_instagram_posts_manager;
 		$sb_instagram_posts_manager = new SB_Instagram_Posts_Manager();
@@ -122,6 +167,10 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			'interval' => 30 * 60,
 			'display'  => __( 'Every 30 minutes' )
 		);
+		$schedules['sbiweekly'] = array(
+			'interval' => 3600 * 24 * 7,
+			'display'  => __( 'Weekly' )
+		);
 
 		return $schedules;
 	}
@@ -138,13 +187,17 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 	 */
 	function sb_instagram_activate( $network_wide ) {
 		//Clear page caching plugins and autoptomize
-		if ( is_callable( 'sb_instagram_clear_page_caches' ) ) {
-			sb_instagram_clear_page_caches();
-		}
+		require_once trailingslashit( plugin_dir_path( __FILE__ ) ) . 'inc/if-functions.php';
 
 		//Run cron twice daily when plugin is first activated for new users
 		if ( ! wp_next_scheduled( 'sb_instagram_cron_job' ) ) {
 			wp_schedule_event( time(), 'twicedaily', 'sb_instagram_cron_job' );
+		}
+		if ( ! wp_next_scheduled( 'sb_instagram_twicedaily' ) ) {
+			wp_schedule_event( time(), 'twicedaily', 'sb_instagram_twicedaily' );
+		}
+		if ( ! wp_next_scheduled( 'sb_instagram_feed_issue_email' ) ) {
+			sbi_schedule_report_email();
 		}
 
 		$sbi_settings = get_option( 'sb_instagram_settings', array() );
@@ -208,6 +261,25 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 		global $wp_roles;
 		$wp_roles->add_cap( 'administrator', 'manage_instagram_feed_options' );
+
+		// set usage tracking to false if fresh install.
+		$usage_tracking = sbi_get_option( 'sbi_usage_tracking', false );
+
+		if ( ! is_array( $usage_tracking ) ) {
+			$usage_tracking = array(
+				'enabled' => false,
+				'last_send' => 0
+			);
+
+			sbi_update_option( 'sbi_usage_tracking', $usage_tracking, false );
+		}
+		if ( ! wp_next_scheduled( 'sbi_notification_update' ) ) {
+			$timestamp = strtotime( 'next monday' );
+			$timestamp = $timestamp + (3600 * 24 * 7);
+			$six_am_local = $timestamp + sbi_get_utc_offset() + (6*60*60);
+
+			wp_schedule_event( $six_am_local, 'sbiweekly', 'sbi_notification_update' );
+		}
 	}
 
 	register_activation_hook( __FILE__, 'sb_instagram_activate' );
@@ -218,8 +290,10 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 	 * @since  1.0
 	 */
 	function sb_instagram_deactivate() {
+		wp_clear_scheduled_hook( 'sb_instagram_twicedaily' );
 		wp_clear_scheduled_hook( 'sb_instagram_cron_job' );
-		wp_clear_scheduled_hook( 'sbi_feed_update' );
+		wp_clear_scheduled_hook( 'sb_instagram_feed_issue_email' );
+		wp_clear_scheduled_hook( 'sbi_notification_update' );
 	}
 
 	register_deactivation_hook( __FILE__, 'sb_instagram_deactivate' );
@@ -420,10 +494,6 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 				update_option( 'sbi_statuses', $sbi_statuses_option, false );
 
-				if ( is_callable( 'sb_instagram_clear_page_caches' ) ) {
-					sb_instagram_clear_page_caches();
-				}
-
 			}
 
 			update_option( 'sbi_db_version', SBI_DBVERSION );
@@ -434,6 +504,60 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 
 			update_option( 'sbi_db_version', SBI_DBVERSION );
 		}
+
+		if ( (float) $db_ver < 1.4 ) {
+			if ( ! wp_next_scheduled( 'sb_instagram_twicedaily' ) ) {
+				wp_schedule_event( time(), 'twicedaily', 'sb_instagram_twicedaily' );
+			}
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
+		if ( (float) $db_ver < 1.5 ) {
+			if ( ! wp_next_scheduled( 'sb_instagram_feed_issue_email' ) ) {
+				$timestamp = strtotime( 'next monday' );
+				$timestamp = $timestamp + (3600 * 24 * 7);
+				$six_am_local = $timestamp + sbi_get_utc_offset() + (6*60*60);
+
+				wp_schedule_event( $six_am_local, 'sbiweekly', 'sb_instagram_feed_issue_email' );
+			}
+
+			delete_option( 'sb_instagram_errors' );
+
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
+		if ( (float) $db_ver < 1.6 ) {
+			if ( ! wp_next_scheduled( 'sbi_notification_update' ) ) {
+				$timestamp = strtotime( 'next monday' );
+				$timestamp = $timestamp + (3600 * 24 * 7);
+				$six_am_local = $timestamp + sbi_get_utc_offset() + (6*60*60);
+
+				wp_schedule_event( $six_am_local, 'sbiweekly', 'sbi_notification_update' );
+			}
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
+		if ( (float) $db_ver < 1.7 ) {
+			include_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-gdpr-integrations.php';
+			$sbi_options = get_option( 'sb_instagram_settings', array() );
+			$disable_resizing = isset( $sbi_options['sb_instagram_disable_resize'] ) ? $sbi_options['sb_instagram_disable_resize'] === 'on' || $sbi_options['sb_instagram_disable_resize'] === true : false;
+
+			$sbi_statuses_option = get_option( 'sbi_statuses', array() );
+
+			if ( $disable_resizing || ! SB_Instagram_GDPR_Integrations::gdpr_tests_successful( true ) ) {
+				$sbi_statuses_option['gdpr']['from_update_success'] = false;
+			} else {
+				$sbi_statuses_option['gdpr']['from_update_success'] = true;
+			}
+
+			update_option( 'sbi_statuses', $sbi_statuses_option );
+
+			update_option( 'sbi_db_version', SBI_DBVERSION );
+		}
+
 
 	}
 
@@ -472,25 +596,25 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . "options";
 		$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%!sbi\_%')
+	        DELETE
+	        FROM $table_name
+	        WHERE `option_name` LIKE ('%!sbi\_%')
         " );
 		$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
+	        DELETE
+	        FROM $table_name
+	        WHERE `option_name` LIKE ('%\_transient\_&sbi\_%')
         " );
 		$wpdb->query( "
-        DELETE
-        FROM $table_name
-        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
+	        DELETE
+	        FROM $table_name
+	        WHERE `option_name` LIKE ('%\_transient\_timeout\_&sbi\_%')
         " );
 		$wpdb->query( "
-    DELETE
-    FROM $table_name
-    WHERE `option_name` LIKE ('%sb_wlupdated_%')
-    " );
+		    DELETE
+		    FROM $table_name
+		    WHERE `option_name` LIKE ('%sb_wlupdated_%')
+	    " );
 
 		//image resizing
 		$upload                 = wp_upload_dir();
@@ -522,12 +646,20 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 			        FROM $table_name
 			        WHERE `option_name` LIKE ('%\_transient\_timeout\_\$sbi\_%')
 			        " );
-		delete_option( 'sbi_hashtag_ids' );
-		delete_option( 'sb_instagram_errors' );
+		delete_option( 'sbi_usage_tracking_config' );
+		delete_option( 'sbi_usage_tracking' );
+		delete_option( 'sbi_notifications' );
+		delete_option( 'sbi_newuser_notifications' );
+		delete_option( 'sbi_oembed_token' );
+		delete_option( 'sbi_rating_notice' );
+		delete_option( 'sbi_refresh_report' );
+		delete_option( 'sbi_single_cache' );
+
 
 		global $wp_roles;
 		$wp_roles->remove_cap( 'administrator', 'manage_instagram_feed_options' );
-
+		wp_clear_scheduled_hook( 'sbi_feed_update' );
+		wp_clear_scheduled_hook( 'sbi_usage_tracking_cron' );
 	}
 
 	register_uninstall_hook( __FILE__, 'sb_instagram_uninstall' );
@@ -584,4 +716,35 @@ if ( function_exists( 'sb_instagram_feed_init' ) ) {
 	}
 
 	add_action( 'plugins_loaded', 'sbi_text_domain' );
+
+	function sbi_do_token_refreshes() {
+		$options                        = get_option( 'sb_instagram_settings', array() );
+		$connected_accounts = isset( $options['connected_accounts'] ) ? $options['connected_accounts'] : array();
+
+		if ( is_array( $connected_accounts ) && ! empty( $connected_accounts ) ) {
+			require_once trailingslashit( SBI_PLUGIN_DIR ) . 'inc/class-sb-instagram-token-refresher.php';
+
+			$report = array(
+				'notes' => array(
+					'time_ran' => date( 'Y-m-d H:i:s' )
+				)
+			);
+			foreach ( $connected_accounts as $connected_account ) {
+				$is_basic = (isset( $connected_account['type'] ) && $connected_account['type'] === 'basic');
+
+				if ( $is_basic ) {
+					$refresher = new SB_Instagram_Token_Refresher( $connected_account );
+					if ( $refresher->should_attempt_refresh() ) {
+						$refresher->attempt_token_refresh();
+					}
+
+					$report[ $connected_account['user_id'] ] = $refresher->get_report();
+				}
+			}
+
+			update_option( 'sbi_refresh_report', $report, false );
+		}
+
+	}
+	add_action( 'sb_instagram_twicedaily', 'sbi_do_token_refreshes' );
 }

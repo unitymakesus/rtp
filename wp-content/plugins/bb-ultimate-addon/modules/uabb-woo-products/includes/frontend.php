@@ -7,9 +7,9 @@
 
 ?>
 
-<div class="uabb-woo-products uabb-woo-products-<?php echo $settings->layout; ?> uabb-woo-products-<?php echo $settings->skin; ?>">
+<div class="uabb-woo-products uabb-woo-products-<?php echo esc_attr( $settings->layout ); ?> uabb-woo-products-<?php echo esc_attr( $settings->skin ); ?>" data-nonce=<?php echo wp_kses_post( wp_create_nonce( 'uabb-woo-nonce' ) ); ?> >
 	<div class="uabb-woocommerce">
-		<div class="uabb-woo-products-inner <?php echo $module->get_inner_classes(); ?>">
+		<div class="uabb-woo-products-inner <?php echo wp_kses_post( $module->get_inner_classes() ); ?>">
 		<?php
 			$module->render_query();
 

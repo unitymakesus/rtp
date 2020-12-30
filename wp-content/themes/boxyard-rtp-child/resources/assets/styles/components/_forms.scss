@@ -1,0 +1,436 @@
+label {
+  color: $color-slate-boxyard;
+}
+
+// Styling select element.
+// https://www.filamentgroup.com/lab/select-css.html
+.custom-select {
+  display: inline-block;
+  border: 2px solid $color-slate-boxyard;
+  border-radius: 0;
+  width: 100%;
+  height: 44px;
+  font-family: $primary-font;
+  margin: 0;
+  padding-right: 2rem;
+  box-sizing: border-box;
+  appearance: none;
+  background-color: $color-white;
+  color: $color-slate-boxyard;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23003B4A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat, repeat;
+  background-position: right 0.7em top 50%, 0 0;
+  background-size: 0.65em auto, 100%;
+  cursor: pointer;
+}
+
+select {
+  @extend .custom-select;
+}
+
+.wp-core-ui {
+  [type="checkbox"]:not(:checked),
+  [type="checkbox"]:checked {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  select {
+    display: inline-block;
+
+    &#media-attachment-date-filters {
+      width: auto;
+    }
+  }
+}
+
+.gform_wrapper .gform_body {
+  .gsection {
+    border-bottom: 0;
+  }
+
+  .gsection_title {
+    text-transform: uppercase;
+  }
+
+  .gsection_title,
+  .gfield_label {
+    font-weight: bold;
+    color: $color-slate-boxyard;
+  }
+
+  .gfield {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-bottom: 1rem;
+
+    &::before {
+      display: none !important;
+    }
+
+    &_required {
+      color: $error-color;
+      margin-left: 0;
+    }
+  }
+
+  .gfield--label-swap {
+    margin-top: 0;
+
+    .gfield_label {
+      position: relative;
+      top: 2.75rem;
+      left: 0.5rem;
+      width: auto;
+      height: auto;
+      color: $color-slate-boxyard;
+      transition: 0.3s all ease-in-out;
+    }
+
+    &.gfield_error .gfield_label,
+    &.active .gfield_label {
+      top: 0;
+      font-size: 0.85rem;
+    }
+  }
+
+  input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]) {
+    padding: 0.25rem;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"] {
+    border: 2px solid $color-slate-boxyard;
+    background-color: $color-white;
+    color: $color-slate-boxyard;
+    width: 100%;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5) !important;
+      border-bottom: 2px solid $color-slate-boxyard !important;
+    }
+
+    &::placeholder {
+      color: $color-grey-dark;
+      transition: color 0.3s ease;
+    }
+  }
+
+  textarea {
+    border: 2px solid $color-slate-boxyard;
+  }
+
+  .ginput_container_checkbox,
+  .ginput_container_radio {
+    margin-top: 0 !important;
+  }
+
+  .gfield_radio,
+  .gfield_checkbox {
+    margin-bottom: 0 !important;
+
+    li {
+      margin-bottom: 0.5rem !important;
+
+      &::before {
+        display: none;
+      }
+
+      label {
+        overflow: visible;
+        white-space: pre-wrap !important;
+      }
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      + label {
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding-left: 45px;
+        cursor: pointer;
+        min-height: 38px;
+        height: auto;
+        font-size: 1rem;
+        font-weight: normal;
+        transition: 0.3s ease;
+        user-select: none;
+
+        &::before,
+        &::after {
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 4px;
+          width: 32px;
+          height: 32px;
+          z-index: 0;
+          transition: 0.28s ease;
+          border-radius: 50%;
+          border: 2px solid $color-grey-dark;
+          content: '';
+        }
+      }
+
+      &:not(:checked):focus {
+        + label {
+          &::before {
+            border-color: $color-slate-boxyard;
+          }
+        }
+      }
+    }
+
+    input[type="radio"] {
+      &:not(:checked) {
+        + label {
+          &::after {
+            transform: scale(0);
+          }
+        }
+      }
+
+      &:checked {
+        + label {
+          font-weight: normal;
+
+          &::before {
+            border: 2px solid $color-slate-boxyard;
+          }
+
+          &::after {
+            border: $color-slate-boxyard;
+            background-color: $color-slate-boxyard;
+            transform: scale(0.5);
+          }
+        }
+      }
+    }
+
+    input[type="checkbox"] {
+      + label {
+        &::after {
+          margin: 0;
+          border: 0;
+          border-radius: 0;
+          opacity: 0;
+          width: 36px;
+          height: 36px;
+          background-color: $color-slate-boxyard;
+          z-index: -1;
+        }
+
+        &::before {
+          width: 34px;
+          height: 34px;
+          border-radius: 1px;
+          margin: 3px 0 0 0;
+        }
+      }
+
+      &:checked {
+        + label {
+          font-weight: normal;
+
+          &::before {
+            top: 2px;
+            left: 4px;
+            width: 12px;
+            height: 22px;
+            border-top: 2px solid transparent;
+            border-left: 2px solid transparent;
+            border-right-color: $color-white;
+            border-bottom-color: $color-white;
+            transform: rotate(40deg);
+            backface-visibility: hidden;
+            transform-origin: 100% 100%;
+          }
+
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .validation_error {
+    background-color: #790000;
+    color: $color-white;
+    margin-bottom: 0;
+  }
+
+  ol.validation_list {
+    background-color: #FCEEED;
+    color: #790000;
+    margin: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    a:hover,
+    a:focus {
+      color: #790000;
+    }
+  }
+
+  .gfield_error input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=button]):not([type=image]):not([type=file]),
+  .gfield_error textarea {
+    border-width: 2px;
+  }
+}
+
+.gform_wrapper {
+  .gform_button {
+    @extend .btn-primary;
+
+    height: 44px;
+  }
+}
+
+.footer-signup {
+  padding: 4rem 0;
+  color: $color-white;
+}
+
+@media #{$medium-and-up} {
+  .footer-signup .gf_simple_horizontal_wrapper {
+    margin-top: 2rem;
+  }
+}
+
+.footer-signup .gf_simple_horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100% !important;
+  margin: 0;
+
+  .gform_body {
+    margin-top: 2rem;
+    flex-grow: 1;
+  }
+
+  input[type="email"] {
+    height: 44px;
+    background-color: $color-white;
+    border: 1px solid $color-white;
+    margin-bottom: 0;
+
+    &:focus {
+      border-bottom: 0 !important;
+    }
+  }
+
+  .gfield--label-swap {
+    position: relative;
+    margin-top: 0;
+
+    .gfield_label {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.5rem;
+      width: auto;
+      height: auto;
+      color: $color-slate-boxyard;
+      font-weight: normal;
+      transition: 0.3s all ease-in-out;
+    }
+
+    &.active .gfield_label {
+      top: -1.25rem;
+      font-size: 0.85rem;
+      color: $color-white;
+    }
+  }
+
+  .gfield_required {
+    display: none;
+  }
+
+  .gform_button {
+    background-color: transparent;
+    color: $color-white;
+    border: 1px solid $color-white;
+    line-height: 1;
+    box-shadow: none;
+    font-weight: normal;
+    margin-right: 0;
+    padding: 12px 2rem;
+    transition: all 0.3s ease-in-out;
+
+    &:hover,
+    &:focus {
+      background-color: $color-red-boxyard;
+      border-color: $color-red-boxyard;
+      color: $color-white;
+    }
+  }
+
+  #error {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 100%;
+  }
+}
+
+// MEC Form
+#mec_fes_form,
+.mec-fes-form-top-actions {
+  max-width: 100%;
+}
+
+.mec-fes-form {
+  padding: 0;
+  background-color: transparent;
+  color: $color-black;
+
+  .mec-meta-box-fields {
+    border-color: $color-slate-boxyard;
+    border-radius: 0;
+  }
+
+  .mec-meta-box-fields h4 {
+    background-color: $color-slate-boxyard;
+    color: $color-white;
+    border-radius: 0;
+  }
+
+  select,
+  textarea {
+    border-color: $color-slate-boxyard;
+    box-shadow: none;
+  }
+
+  textarea {
+    max-width: 768px;
+  }
+
+  button[type=submit].mec-fes-sub-button {
+    @extend .btn-primary;
+
+    width: auto;
+    margin: 0 auto;
+    box-shadow: none;
+    border-radius: 0;
+
+    &:hover,
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.gform_ajax_spinner {
+  margin-left: 20px;
+  border: 4px solid transparentize($color-red-boxyard, 0.7);
+  border-left: 4px solid $color-red-boxyard;
+  animation: loading-spin 0.75s infinite linear;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}

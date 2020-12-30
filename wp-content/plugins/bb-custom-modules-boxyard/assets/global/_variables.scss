@@ -1,0 +1,176 @@
+/** Colors */
+// Neutrals
+$color-black:                 #000;
+$color-slate-dark:            #1F2A3A;
+$color-slate:                 #333F48;
+$color-grey-dark:             #7C878E;
+$color-grey-medium:           #A2AAAD;
+$color-grey-light:            #C7C9C7;
+$color-white:                 #FFF;
+
+// Master Brand
+$color-unc:                   #4B9CD3;
+$color-duke:                  #012169;
+$color-state:                 #C00;
+
+// Accents
+$color-nccu:                  #82052A;
+$color-orange:                #FC4C02;
+$color-purple:                #654EA3;
+
+// Frontier
+$color-mint:                  #47D7AC;
+$color-mint-a11y:             #2FA787;
+
+// Boxyard
+$color-boxyard:               #E63C2F;
+
+$primary-color:               $color-slate;
+$secondary-color:             $color-black;
+$success-color:               $color-mint;
+$error-color:                 $color-state;
+$link-color:                  $color-unc;
+$opacity-list: 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100;
+
+/** Buttons */
+// Shared styles
+// $button-background-focus: lighten($color-purple, 10%);
+// $button-font-size: 1.2rem;
+// $button-height: 50px;
+// $button-padding: 0 1rem;
+// $button-radius: 0;
+//
+// // Raised buttons
+// $button-raised-background: $color-purple;
+
+/** Navigation */
+$navbar-height: auto;
+$navbar-height-mobile: auto;
+
+/** Footer */
+$footer-font-color: $color-white;
+// $footer-bg-color: $color-teal;
+$footer-copyright-font-color: $color-white;
+// $footer-copyright-bg-color: $color-purple-dark;
+
+/** Box Model  */
+$spacer: 2rem;
+
+/** Modified Breakpoints */
+$xsmall-screen: 600px;
+$xsmall-screen-up: 601px;
+$small-screen-up: 769px;
+$medium-screen-up: 993px;
+$large-screen-up: 1201px;
+$small-screen: 768px;
+$medium-screen: 992px;
+$large-screen: 1200px;
+
+$small-and-up: "only screen and (min-width : #{$xsmall-screen-up})";
+$xsmall-and-down: "only screen and (max-width : #{$xsmall-screen})";
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})";
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})";
+$extra-large-and-up: "only screen and (min-width : #{$large-screen-up})";
+$small-and-down: "only screen and (max-width : #{$small-screen})";
+$medium-and-down: "only screen and (max-width : #{$medium-screen})";
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})";
+
+/** Flow Text  */
+$range : $large-screen - $medium-screen;
+$intervals: 18;
+$interval-size: $range / $intervals;
+
+/** Gradients */
+// Utility mixin from Compass
+@mixin filter-gradient($start-color, $end-color, $orientation: vertical) {
+  $gradient-type: if($orientation == vertical, 0, 1);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=#{$gradient-type}, startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}');
+}
+@mixin rtp-gradient {
+  @include filter-gradient($color-unc, $color-state);
+
+  background-image: -o-linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
+  background-image: -moz-linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
+  background-image: -ms-linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
+  background-image: linear-gradient(90deg, $color-unc 0%, $color-duke 33%, $color-nccu 66%, $color-state 99%);
+}
+@mixin rtp-gradient-trans {
+  @include filter-gradient($color-unc, $color-state);
+
+  background-image: -o-linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
+  background-image: -moz-linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
+  background-image: -ms-linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
+  background-image: linear-gradient(90deg, rgba($color-unc, 0.7) 0%, rgba($color-duke, 0.7) 33%, rgba($color-nccu, 0.7) 66%, rgba($color-state, 0.7) 99%);
+}
+@mixin unc-duke-gradient {
+  @include filter-gradient($color-unc, $color-duke);
+
+  background-image: -o-linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
+  background-image: -moz-linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
+  background-image: -ms-linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
+  background-image: linear-gradient(90deg, $color-unc 0%, $color-duke 100%);
+}
+@mixin triangle($direction, $color) {
+  background-image: -o-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: -moz-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: -ms-linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+  background-image: linear-gradient(to #{$direction}, transparent 0%, transparent 50%, #{$color} 50%);
+}
+
+// Rem-calc function from Zurb
+$rem-base: 18px;
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+@function convert-to-rem($value, $base-value: $rem-base) {
+  $value: strip-unit($value) / strip-unit($base-value) * 1rem;
+
+  @return $value;
+}
+@function rem-calc($values, $base-value: $rem-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-rem(nth($values, 1), $base-value); }
+
+  $remValues: ();
+
+  @for $i from 1 through $max {
+    $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+  }
+
+  @return $remValues;
+}
+
+// em-calc function modified from rem-calc
+$em-base: 18px;
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+@function convert-to-em($value, $base-value: $em-base) {
+  $value: strip-unit($value) / strip-unit($base-value) * 1em;
+
+  @return $value;
+}
+@function em-calc($values, $base-value: $em-base) {
+  $max: length($values);
+
+  @if $max == 1 { @return convert-to-em(nth($values, 1), $base-value); }
+
+  $emValues: ();
+
+  @for $i from 1 through $max {
+    $emValues: append($emValues, convert-to-em(nth($values, $i), $base-value));
+  }
+
+  @return $emValues;
+}
+
+$asset-base-path: '../images' !default;
+
+// Image relative URL builder
+@function image($file) {
+  @return url($asset-base-path + '/' + $file);
+}

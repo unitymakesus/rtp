@@ -40,7 +40,7 @@ if ( ! class_exists( 'UABB_Import_Image' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -132,7 +132,8 @@ if ( ! class_exists( 'UABB_Import_Image' ) ) :
 							WHERE meta_key = '_wp_attached_file'
 							AND meta_value LIKE %s
 						",
-						'%/' . $filename . '%' ) // @codingStandardsIgnoreLine.
+						'%/' . $filename . '%'
+					)
 				);
 			}
 
@@ -170,20 +171,20 @@ if ( ! class_exists( 'UABB_Import_Image' ) ) :
 
 			if ( is_wp_error( $response ) ) {
 				/* translators: %1$s is error message and %2$s is image URL */
-				error_log( sprintf( __( 'Failed ! WP error - %1$s - %2$s', 'uabb' ), $response->get_error_message(), $attachment['url'] ) );
+				error_log( sprintf( __( 'Failed ! WP error - %1$s - %2$s', 'uabb' ), $response->get_error_message(), $attachment['url'] ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 				return $attachment;
 
 			} elseif ( 200 !== $response_code ) {
 				/* translators: %1$s is  response code and %2$s is image URL */
-				error_log( sprintf( __( 'Failed ! Invalid Response Code - %1$s ! Expected Response Code 200 - %2$s', 'uabb' ), $response_code, $attachment['url'] ) );
+				error_log( sprintf( __( 'Failed ! Invalid Response Code - %1$s ! Expected Response Code 200 - %2$s', 'uabb' ), $response_code, $attachment['url'] ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 				return $attachment;
 
 			} elseif ( empty( $file_content ) ) {
 
 				/* translators: %1$s is image URL */
-				error_log( sprintf( __( 'Failed ! Empty Image Content - %1$s', 'uabb' ), $attachment['url'] ) );
+				error_log( sprintf( __( 'Failed ! Empty Image Content - %1$s', 'uabb' ), $attachment['url'] ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 
 				return $attachment;
 			}

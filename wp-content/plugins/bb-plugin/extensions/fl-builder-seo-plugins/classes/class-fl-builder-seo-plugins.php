@@ -95,9 +95,9 @@ class FLBuilderSeoPlugins {
 		add_action( 'admin_enqueue_scripts', array( $this, 'dequeue_layout_scripts' ), 10000 );
 
 		if ( 'yoast' === $plugin ) {
-			$deps = array( 'yoast-seo-post-scraper' );
+			$deps = array();
 		} else {
-			$deps = array( 'rank-math-post-metabox' );
+			$deps = array( 'wp-hooks', 'rank-math-analyzer' );
 		}
 
 		$data = $this->content_data();

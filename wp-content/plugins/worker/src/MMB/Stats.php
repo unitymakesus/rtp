@@ -269,6 +269,64 @@ class MMB_Stats extends MMB_Core
         return null;
     }
 
+    private function get_expired_transients(array $transientsData)
+    {
+        $expiredTransients = 0;
+        foreach ($transientsData as $transient) {
+            $expiredTransients += $this->get_expired_transients_size($transient['name'], $transient['suffix'], $transient['timeout'], $transient['mask'], $transient['limit']);
+        }
+        return $expiredTransients;
+    }
+
+    private function get_expired_transients_size($name, $suffix, $timeout, $mask, $limit)
+    {
+        /** @var wpdb $wpdb */
+        global $wpdb;
+
+        $prefix = $wpdb->prefix;
+
+        $timeoutName  = $name.$suffix;
+        $subStrLength = strlen($timeoutName) + 1;
+
+        $escapedTimeoutName = str_replace('_', '\_', $timeoutName);
+
+        $selectTimeOutedTransients = <<<SQL
+SELECT SUBSTR(option_name, {$subStrLength}) AS transient_name FROM {$prefix}options WHERE option_name LIKE '{$escapedTimeoutName}{$mask}' AND option_value < {$timeout} LIMIT {$limit}
+SQL;
+
+        $transientsToDelete  = $wpdb->get_col($selectTimeOutedTransients);
+        $timeoutsToDelete    = array();
+        $transientsTotalSize = 0;
+
+        if (count($transientsToDelete) === 0) {
+            return $transientsTotalSize;
+        }
+
+        foreach ($transientsToDelete as &$transient) {
+            $timeoutsToDelete[] = "'".$timeoutName.$transient."'";
+            $transient          = "'".$name.$transient."'";
+        }
+
+        $transientSizeClause = implode(',', $transientsToDelete);
+
+        $transientsSizeQuery = <<<SQL
+SELECT SUM(LENGTH(option_value)) as valueSize, SUM(LENGTH(option_name)) as nameSize  FROM {$prefix}options WHERE option_name IN ({$transientSizeClause})
+SQL;
+        $transientsSize      = $wpdb->get_results($transientsSizeQuery);
+        $transientsTotalSize += ((int)$transientsSize[0]->nameSize);
+        $transientsTotalSize += ((int)$transientsSize[0]->valueSize);
+
+        $transientSizeClause = implode(',', $timeoutsToDelete);
+        $transientsSizeQuery = <<<SQL
+SELECT SUM(LENGTH(option_value)) as valueSize, SUM(LENGTH(option_name)) as nameSize FROM {$prefix}options WHERE option_name IN ({$transientSizeClause})
+SQL;
+        $timeoutsSize        = $wpdb->get_results($transientsSizeQuery);
+        $transientsTotalSize += ((int)$timeoutsSize[0]->valueSize);
+        $transientsTotalSize += ((int)$timeoutsSize[0]->nameSize);
+
+        return $transientsTotalSize;
+    }
+
     public function get_stats(array $params)
     {
         $revisionLimit = (int)str_replace('r_', '', (string)$this->stats_arg($params, 'revisions', 'num_to_keep'));
@@ -284,6 +342,8 @@ class MMB_Stats extends MMB_Core
         if (!$postLimit) {
             $postLimit = 5;
         }
+        $transientsParams = (array)$this->stats_arg($params, 'transients', 'expire_data');
+
         unset($params);
         $save = array('plugins' => array('cleanup' => array('revisions' => array('num_to_keep' => $revisionLimit))));
         // These options are only used for the revision cleanup action.
@@ -310,6 +370,7 @@ class MMB_Stats extends MMB_Core
             'site_statistics'         => $this->get_site_statistics(),
             'num_revisions'           => mmb_num_revisions($revisionLimit),
             'overhead'                => mmb_handle_overhead(false),
+            'expired_transients'      => $this->get_expired_transients($transientsParams),
             'num_spam_comments'       => mmb_num_spam_comments(),
         );
 
@@ -333,6 +394,8 @@ class MMB_Stats extends MMB_Core
 
         mwp_logger()->debug('Finished encrypting cookies...');
 
+        $absPath = trailingslashit(ABSPATH); // This will prevent 2 backslash when WP in root
+
         $stats['admin_usernames'] = $this->getUserList();
         $stats['site_title']      = get_bloginfo('name');
         $stats['site_tagline']    = get_bloginfo('description');
@@ -344,33 +407,49 @@ class MMB_Stats extends MMB_Core
         $stats['db_name']         = $this->get_active_db();
         $stats['db_prefix']       = $wpdb->prefix;
         $stats['content_path']    = WP_CONTENT_DIR;
-        $stats['absolute_path']   = ABSPATH;
+        $stats['absolute_path']   = $absPath;
         $stats['worker_path']     = $mmb_plugin_dir;
         $stats['site_home']       = get_option('home');
 
         $fs = new Symfony_Filesystem_Filesystem();
         if (defined('WP_CONTENT_DIR')) {
             $contentDir = WP_CONTENT_DIR;
+            // This will prevent 2 backslash when WP in root
+            if (substr($contentDir, 0, 2) === '//') {
+                $contentDir            = substr(WP_CONTENT_DIR, 1);
+                $stats['content_path'] = $contentDir;
+            }
+
             if (substr($contentDir, 0, 1) != '/' && strpos($contentDir, ABSPATH) === false) {
                 $contentDir = ABSPATH.$contentDir;
             }
-            $stats['content_relative_path'] = $fs->makePathRelative($contentDir, ABSPATH);
+            $stats['content_relative_path'] = $fs->makePathRelative($contentDir, $absPath);
         }
 
         if (defined('WP_PLUGIN_DIR')) {
             $pluginDir = WP_PLUGIN_DIR;
+            // This will prevent 2 backslash when WP in root
+            if (substr($pluginDir, 0, 2) === '//') {
+                $pluginDir = substr(WP_PLUGIN_DIR, 1);
+            }
+
             if (substr($pluginDir, 0, 1) != '/' && strpos($pluginDir, ABSPATH) === false) {
                 $pluginDir = ABSPATH.$pluginDir;
             }
-            $stats['plugin_relative_path'] = $fs->makePathRelative($pluginDir, ABSPATH);
+            $stats['plugin_relative_path'] = $fs->makePathRelative($pluginDir, $absPath);
         }
 
         if (defined('WPMU_PLUGIN_DIR')) {
             $muPluginDir = WPMU_PLUGIN_DIR;
+            // This will prevent 2 backslash when WP in root
+            if (substr($muPluginDir, 0, 2) === '//') {
+                $muPluginDir = substr(WPMU_PLUGIN_DIR, 1);
+            }
+
             if (substr($muPluginDir, 0, 1) != '/' && strpos($muPluginDir, ABSPATH) === false) {
                 $muPluginDir = ABSPATH.$muPluginDir;
             }
-            $stats['mu_plugin_relative_path'] = $fs->makePathRelative($muPluginDir, ABSPATH);
+            $stats['mu_plugin_relative_path'] = $fs->makePathRelative($muPluginDir, $absPath);
         }
 
         $uploadDirArray = wp_upload_dir();
@@ -378,7 +457,7 @@ class MMB_Stats extends MMB_Core
             $uploadDir = $uploadDirArray['basedir'];
         }
 
-        $stats['uploads_relative_path'] = $fs->makePathRelative($uploadDir, ABSPATH);
+        $stats['uploads_relative_path'] = $fs->makePathRelative($uploadDir, $absPath);
 
         $stats['writable']  = $this->is_server_writable();
         $stats['fs_method'] = !$this->check_if_pantheon() ? get_filesystem_method() : '';

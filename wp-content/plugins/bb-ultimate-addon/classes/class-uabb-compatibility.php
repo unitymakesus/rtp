@@ -29,7 +29,7 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 		 * @since 1.14.0
 		 * @var $version_bb_check
 		 */
-		static public $version_bb_check;
+		public static $version_bb_check;
 
 		/**
 		 * Holds uabb migration status.
@@ -37,7 +37,7 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 		 * @since 1.14.0
 		 * @var $uabb_migration
 		 */
-		static public $uabb_migration;
+		public static $uabb_migration;
 
 		/**
 		 * Holds BB new page status.
@@ -45,26 +45,36 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 		 * @since 1.14.0
 		 * @var $stable_version_new_page
 		 */
-		static public $stable_version_new_page;
+		public static $stable_version_new_page;
 
 		/**
 		 * Initiator
 		 */
-		static public function get_instance() {
+		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
 				self::$instance = new self();
 			}
 			return self::$instance;
 		}
-
 		/**
-		 * Check the BB's New version.
+		 * Constructor
+		 */
+		public function __construct() {
+
+			add_action( 'init', array( $this, 'uabb_compatibility_init' ) );
+		}
+		/**
+		 * Adding the UABB Compatibility.
 		 *
 		 * @since 1.14.0
-		 * @return bool self::$version_bb_check
 		 */
-		static public function check_bb_version() {
+		public function uabb_compatibility_init() {
 
+			/**
+			 * Check the BB's New version.
+			 *
+			 * @since 1.14.0
+			 */
 			if ( null === self::$version_bb_check ) {
 
 				$bb_builder_version = substr_replace( FL_BUILDER_VERSION, '', strpos( FL_BUILDER_VERSION, '-' ) );
@@ -76,17 +86,11 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 				}
 			}
 
-			return self::$version_bb_check;
-		}
-
-		/**
-		 * Check if the page is created before UABB version 1.6.9 and is successfully migrated in between version 1.7.0 - version 1.13.2
-		 *
-		 * @since 1.3.0
-		 * @return string self::$uabb_migration
-		 */
-		static public function check_old_page_migration() {
-
+			/**
+			 * Check if the page is created before UABB version 1.6.9 and is successfully migrated in between version 1.7.0 - version 1.13.2
+			 *
+			 * @since 1.3.0
+			 */
 			if ( null === self::$uabb_migration ) {
 
 				$post_id = get_the_ID();
@@ -94,16 +98,11 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 				self::$uabb_migration = get_post_meta( $post_id, '_uabb_converted', true );
 			}
 
-			return self::$uabb_migration;
-		}
-
-		/**
-		 * Check if the page is created in between UABB version 1.7.0 - version 1.13.2
-		 *
-		 * @since 1.14.0
-		 * @return bool self::$stable_version_new_page
-		 */
-		static public function check_stable_version_new_page() {
+			/**
+			 * Check if the page is created in between UABB version 1.7.0 - version 1.13.2
+			 *
+			 * @since 1.14.0
+			 */
 
 			if ( null === self::$stable_version_new_page ) {
 
@@ -113,11 +112,8 @@ if ( ! class_exists( 'UABB_Compatibility' ) ) {
 
 				if ( '' !== self::$stable_version_new_page ) {
 					self::$stable_version_new_page = 'yes';
-					return self::$stable_version_new_page;
 				}
 			}
-
-			return self::$stable_version_new_page;
 		}
 	}
 }

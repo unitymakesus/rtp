@@ -98,7 +98,7 @@ class FacetWP_Renderer
         // Get the template from $helper->settings
         if ( 'wp' == $params['template'] ) {
             $this->template = [ 'name' => 'wp' ];
-            $query_args = isset( FWP()->ajax->query_vars ) ? FWP()->ajax->query_vars : [];
+            $query_args = isset( FWP()->request->query_vars ) ? FWP()->request->query_vars : [];
         }
         else {
             $this->template = FWP()->helper->get_template_by_name( $params['template'] );
@@ -124,16 +124,19 @@ class FacetWP_Renderer
             // Pagination
             $this->query_args['paged'] = empty( $params['paged'] ) ? 1 : (int) $params['paged'];
 
-            // Narrow the posts based on the selected facets
-            $post_ids = $this->get_filtered_post_ids();
-
             // Preserve SQL_CALC_FOUND_ROWS
             unset( $this->query_args['no_found_rows'] );
 
+            // Narrow posts based on facet selections
+            $post_ids = $this->get_filtered_post_ids();
+
             // Update the SQL query
             if ( ! empty( $post_ids ) ) {
-                $this->query_args['post__in'] = $post_ids;
-                $this->where_clause = "AND post_id IN (" . implode( ',', $post_ids ) . ")";
+                if ( FWP()->is_filtered ) {
+                    $this->query_args['post__in'] = $post_ids;
+                }
+
+                $this->where_clause = ' AND post_id IN (' . implode( ',', $post_ids ) . ')';
             }
 
             // Sort handler
@@ -149,7 +152,8 @@ class FacetWP_Renderer
 
             // Sort the results by relevancy
             $use_relevancy = apply_filters( 'facetwp_use_search_relevancy', true, $this );
-            if ( $this->is_search && $use_relevancy && 'default' == $sort_value && empty( $this->http_params['get']['orderby'] ) ) {
+            $is_default_sort = ( 'default' == $sort_value && empty( $this->http_params['get']['orderby'] ) );
+            if ( $this->is_search && $use_relevancy && $is_default_sort && FWP()->is_filtered ) {
                 $this->query_args['orderby'] = 'post__in';
             }
 
@@ -170,25 +174,7 @@ class FacetWP_Renderer
 
         // Debug
         if ( 'on' == FWP()->helper->get_setting( 'debug_mode', 'off' ) ) {
-            $debug = [
-                'query_args'    => $this->query_args,
-                'sql'           => $this->query->request,
-                'facets'        => $this->facets,
-                'template'      => $this->template,
-            ];
-
-            // Reduce debug payload
-            if ( ! empty( $this->query_args['post__in'] ) ) {
-                $debug['query_args']['post__in_count'] = count( $this->query_args['post__in'] );
-                $debug['query_args']['post__in'] = array_slice( $this->query_args['post__in'], 0, 10 );
-
-                $debug['sql'] = preg_replace_callback( '/posts.ID IN \((.*?)\)/s', function( $matches ) {
-                    $count = substr_count( $matches[1], ',' ) + 1;
-                    return "posts.ID IN (<$count IDs>)";
-                }, $debug['sql'] );
-
-                $output['settings']['debug'] = $debug;
-            }
+            $output['settings']['debug'] = $this->get_debug_info();
         }
 
         // Generate the template HTML
@@ -261,7 +247,9 @@ class FacetWP_Renderer
             }
 
             // Get facet labels
-            $output['settings']['labels'][ $facet_name ] = facetwp_i18n( $the_facet['label'] );
+            if ( 0 == $params['soft_refresh'] ) {
+                $output['settings']['labels'][ $facet_name ] = facetwp_i18n( $the_facet['label'] );
+            }
 
             // Load all facets on back / forward button press (first_load = true)
             if ( ! $first_load ) {
@@ -345,7 +333,7 @@ class FacetWP_Renderer
             $main_query = $GLOBALS['wp_the_query'];
 
             // Initial pageload
-            if ( $main_query->is_archive ) {
+            if ( $main_query->is_archive || $main_query->is_search ) {
                 if ( $main_query->is_category ) {
                     $defaults['cat'] = $main_query->get( 'cat' );
                 }
@@ -355,6 +343,9 @@ class FacetWP_Renderer
                 elseif ( $main_query->is_tax ) {
                     $defaults['taxonomy'] = $main_query->get( 'taxonomy' );
                     $defaults['term'] = $main_query->get( 'term' );
+                }
+                elseif ( $main_query->is_search ) {
+                    $defaults['s'] = $main_query->get( 's' );
                 }
 
                 $this->archive_args = $defaults;
@@ -401,14 +392,14 @@ class FacetWP_Renderer
             'cache_results' => false,
             'no_found_rows' => true,
             'nopaging' => true, // prevent "offset" issues
+            'facetwp' => false,
             'fields' => 'ids',
         ] );
 
         $query = new WP_Query( $args );
-        $post_ids = (array) $query->posts;
 
         // Allow hooks to modify the default post IDs
-        $post_ids = apply_filters( 'facetwp_pre_filtered_post_ids', $post_ids, $this );
+        $post_ids = apply_filters( 'facetwp_pre_filtered_post_ids', $query->posts, $this );
 
         // Store the unfiltered post IDs
         FWP()->unfiltered_post_ids = $post_ids;
@@ -476,15 +467,16 @@ class FacetWP_Renderer
             $post_ids = $intersected_ids;
         }
 
+        $post_ids = apply_filters( 'facetwp_filtered_post_ids', array_values( $post_ids ), $this );
+
+        // Store the filtered post IDs
+        FWP()->filtered_post_ids = $post_ids;
+
+        // Set a flag for whether filtering is applied
+        FWP()->is_filtered = ( FWP()->filtered_post_ids !== FWP()->unfiltered_post_ids );
+
         // Return a zero array if no matches
-        if ( empty( $post_ids ) ) {
-            $post_ids = [ 0 ];
-        }
-
-        // Reset any array keys
-        $post_ids = array_values( $post_ids );
-
-        return apply_filters( 'facetwp_filtered_post_ids', $post_ids, $this );
+        return empty( $post_ids ) ? [ 0 ] : $post_ids;
     }
 
 
@@ -637,62 +629,17 @@ class FacetWP_Renderer
      * @return string
      */
     function paginate( $params = [] ) {
-        $defaults = [
-            'page' => 1,
-            'per_page' => 10,
-            'total_rows' => 1,
-        ];
-        $params = array_merge( $defaults, $params );
+        $pager_class = FWP()->helper->facet_types['pager'];
+        $pager_class->pager_args = $params;
 
-        $output = '';
-        $page = (int) $params['page'];
-        $per_page = (int) $params['per_page'];
-        $total_rows = (int) $params['total_rows'];
-        $total_pages = (int) $params['total_pages'];
+        $output = $pager_class->render_numbers([
+            'inner_size' => 2,
+            'dots_label' => '…',
+            'prev_label' => '&lt;&lt;',
+            'next_label' => '&gt;&gt;',
+        ]);
 
-        // Only show pagination when > 1 page
-        if ( 1 < $total_pages ) {
-
-            $text_page      = __( 'Page', 'fwp-front' );
-            $text_of        = __( 'of', 'fwp-front' );
-
-            // "Page 5 of 150"
-            $output .= '<span class="facetwp-pager-label">' . "$text_page $page $text_of $total_pages</span>";
-
-            if ( 3 < $page ) {
-                $output .= '<a class="facetwp-page first-page" data-page="1">&lt;&lt;</a>';
-            }
-            if ( 1 < ( $page - 10 ) ) {
-                $output .= '<a class="facetwp-page" data-page="' . ($page - 10) . '">' . ($page - 10) . '</a>';
-            }
-            for ( $i = 2; $i > 0; $i-- ) {
-                if ( 0 < ( $page - $i ) ) {
-                    $output .= '<a class="facetwp-page" data-page="' . ($page - $i) . '">' . ($page - $i) . '</a>';
-                }
-            }
-
-            // Current page
-            $output .= '<a class="facetwp-page active" data-page="' . $page . '">' . $page . '</a>';
-
-            for ( $i = 1; $i <= 2; $i++ ) {
-                if ( $total_pages >= ( $page + $i ) ) {
-                    $output .= '<a class="facetwp-page" data-page="' . ($page + $i) . '">' . ($page + $i) . '</a>';
-                }
-            }
-            if ( $total_pages > ( $page + 10 ) ) {
-                $output .= '<a class="facetwp-page" data-page="' . ($page + 10) . '">' . ($page + 10) . '</a>';
-            }
-            if ( $total_pages > ( $page + 2 ) ) {
-                $output .= '<a class="facetwp-page last-page" data-page="' . $total_pages . '">&gt;&gt;</a>';
-            }
-        }
-
-        return apply_filters( 'facetwp_pager_html', $output, [
-            'page' => $page,
-            'per_page' => $per_page,
-            'total_rows' => $total_rows,
-            'total_pages' => $total_pages,
-        ] );
+        return apply_filters( 'facetwp_pager_html', $output, $params );
     }
 
 
@@ -701,17 +648,99 @@ class FacetWP_Renderer
      * @return string
      */
     function get_per_page_box() {
+        $pager_class = FWP()->helper->facet_types['pager'];
+
         $options = apply_filters( 'facetwp_per_page_options', [ 10, 25, 50, 100 ] );
 
-        $output = '<select class="facetwp-per-page-select">';
-        $output .= '<option value="">' . __( 'Per page', 'fwp-front' ) . '</option>';
-        foreach ( $options as $option ) {
-            $output .= '<option value="' . $option . '">' . $option . '</option>';
-        }
-        $output .= '</select>';
+        $output = $pager_class->render_per_page([
+            'default_label' => __( 'Per page', 'fwp-front' ),
+            'per_page_options' => implode( ',', $options )
+        ]);
 
         return apply_filters( 'facetwp_per_page_html', $output, [
-            'options' => $options,
+            'options' => $options
         ] );
+    }
+
+
+    /**
+     * Get debug info for the browser console
+     * @since 3.5.7
+     */
+    function get_debug_info() {
+        $last_indexed = get_option( 'facetwp_last_indexed' );
+        $last_indexed = $last_indexed ? human_time_diff( $last_indexed ) . ' ago' : 'never';
+
+        $debug = [
+            'query_args'    => $this->query_args,
+            'sql'           => $this->query->request,
+            'facets'        => $this->facets,
+            'template'      => $this->template,
+            'last_indexed'  => $last_indexed,
+            'row_counts'    => FWP()->helper->get_row_counts(),
+            'hooks_used'    => $this->get_hooks_used()
+        ];
+
+        // Reduce debug payload
+        if ( ! empty( $this->query_args['post__in'] ) ) {
+            $debug['query_args']['post__in_count'] = count( $this->query_args['post__in'] );
+            $debug['query_args']['post__in'] = array_slice( $this->query_args['post__in'], 0, 10 );
+
+            $debug['sql'] = preg_replace_callback( '/posts.ID IN \((.*?)\)/s', function( $matches ) {
+                $count = substr_count( $matches[1], ',' ) + 1;
+                return ( $count <= 10 ) ? $matches[0] : "posts.ID IN (<$count IDs>)";
+            }, $debug['sql'] );
+        }
+
+        return $debug;
+    }
+
+
+    /**
+     * Display the location of relevant hooks (for Debug Mode)
+     * @since 3.5.7
+     */
+    function get_hooks_used() {
+        $relevant_hooks = [];
+
+        foreach ( $GLOBALS['wp_filter'] as $tag => $hook_data ) {
+            if ( 0 === strpos( $tag, 'facetwp' ) || 'pre_get_posts' == $tag ) {
+                foreach ( $hook_data->callbacks as $callbacks ) {
+                    foreach ( $callbacks as $cb ) {
+                        if ( is_string( $cb['function'] ) && false !== strpos( $cb['function'], '::' ) ) {
+                            $cb['function'] = explode( '::', $cb['function'] );
+                        }
+
+                        if ( is_array( $cb['function'] ) ) {
+                            $class = is_object( $cb['function'][0] ) ? get_class( $cb['function'][0] ) : $cb['function'][0];
+                            $ref = new ReflectionMethod( $class, $cb['function'][1] );
+                        }
+                        elseif ( is_object( $cb['function'] ) ) {
+                            if ( is_a( $cb['function'], 'Closure' ) ) {
+                                $ref = new ReflectionFunction( $cb['function'] );
+                            }
+                            else {
+                                $class = get_class( $cb['function'] );
+                                $ref = new ReflectionMethod( $class, '__invoke' );
+                            }
+                        }
+                        else {
+                            $ref = new ReflectionFunction( $cb['function'] );
+                        }
+
+                        $filename = str_replace( ABSPATH, '', $ref->getFileName() );
+
+                        // ignore built-in hooks
+                        if ( false === strpos( $filename, 'plugins/facetwp' ) ) {
+                            if ( false !== strpos( $filename, 'wp-content' ) ) {
+                                $relevant_hooks[ $tag ][] = $filename . ':' . $ref->getStartLine();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $relevant_hooks;
     }
 }

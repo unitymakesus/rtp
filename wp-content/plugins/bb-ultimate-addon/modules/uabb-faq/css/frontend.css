@@ -1,0 +1,133 @@
+.uabb-faq__layout-accordion .uabb-faq-questions {
+    cursor: pointer;
+    display: table;
+    padding: 15px;
+    -webkit-transition: all 15ms linear;
+            transition: all 15ms linear;
+}
+.uabb-faq-item .uabb-faq-questions {
+    padding: 15px;
+}
+.uabb-faq-item {
+    margin-bottom: 10px;
+}
+.uabb-faq-question-label {
+    display: table-cell;
+    width: 100%;
+    vertical-align: middle;
+}
+.uabb-faq-icon-wrap {
+    display: table-cell;
+    line-height: 1em;
+    opacity: .7;
+    vertical-align: middle;
+}
+.uabb-faq-button-icon {
+    text-align: center;
+    display: block;
+}
+.uabb-faq-after-text .uabb-faq-question-label {
+    padding-right: 20px;
+}
+.uabb-faq-before-text .uabb-faq-question-label {
+    padding-left: 20px;
+}
+.uabb-faq__layout-accordion .uabb-faq-content {
+    display: none;
+}
+.uabb-faq-item .uabb-faq-content {
+    padding: 20px;
+}
+.uabb-faq-content p:last-of-type {
+    margin: 0;
+}
+.uabb-faq-open-icon {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.uabb-faq-wrap.uabb-faq__layout-grid {
+    display: -ms-flexbox;
+    -js-display: flex;
+    display: -webkit-box;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.uabb__faq-layout-grid .uabb-faq-equal-yes .uabb-faq-item-wrap {
+    height:100%;
+}
+.uabb__faq-layout-grid .uabb-faq-equal-yes .uabb-faq-content {
+    height:100%;
+}
+.uabb-faq__column-1 .uabb-faq-item {
+    width: 100%;
+}
+.uabb-faq__column-2 .uabb-faq-item {
+    width: 50%;
+}
+.uabb-faq__column-3 .uabb-faq-item {
+    width: 33.33%;
+}
+.uabb-faq__column-4 .uabb-faq-item {
+    width: 25%;
+}
+.uabb-faq__column-5 .uabb-faq-item {
+    width: 20%;
+}
+.uabb-faq__column-6 .uabb-faq-item {
+    width: 16.66%;
+}
+.uabb-faq-item {
+    position: relative;
+    overflow: hidden;
+}
+/* Accesibility support */
+.uabb-faq-question-label:focus,
+.uabb-faq-question-label:active,
+.uabb-faq-questions-button:focus,
+.uabb-faq-questions-button:active,
+.uabb-faq-icon-wrap:focus,
+.uabb-faq-icon-wrap:active {
+      outline: thin dotted;
+}
+@media (max-width: 992px) {
+    .uabb-faq__column-medium-1 .uabb-faq-item {
+        width: 100%;
+    }
+    .uabb-faq__column-medium-2 .uabb-faq-item {
+        width: 50%;
+    }
+    .uabb-faq__column-medium-3 .uabb-faq-item {
+        width: 33.33%;
+    }
+    .uabb-faq__column-medium-4 .uabb-faq-item {
+        width: 25%;
+    }
+    .uabb-faq__column-medium-5 .uabb-faq-item {
+        width: 20%;
+    }
+    .uabb-faq__column-medium-6 .uabb-faq-item {
+        width: 16.66%;
+    }
+}
+@media (max-width: 768px) {
+    .uabb-faq__column-responsive-1 .uabb-faq-item {
+        width: 100%;
+    }
+    .uabb-faq__column-responsive-2 .uabb-faq-item {
+        width: 50%;
+    }
+    .uabb-faq__column-responsive-3 .uabb-faq-item {
+        width: 33.33%;
+    }
+    .uabb-faq__column-responsive-4 .uabb-faq-item {
+        width: 25%;
+    }
+    .uabb-faq__column-responsive-5 .uabb-faq-item {
+        width: 20%;
+    }
+    .uabb-faq__column-responsive-6 .uabb-faq-item {
+        width: 16.66%;
+    }
+}

@@ -30,4 +30,26 @@ class App extends Controller
         }
         return get_the_title();
     }
+
+    public static function globalSiteAnnouncement() {
+        $announcement = '';
+
+        switch_to_blog(1);
+        if (get_field('global_site_announcement_enable', 'option')) {
+            $announcement = get_field('global_site_announcement', 'option');
+        }
+        restore_current_blog();
+
+        return $announcement;
+    }
+
+    public static function localSiteAnnouncement() {
+        $announcement = '';
+
+        if (get_field('local_site_announcement_enable', 'option')) {
+            $announcement = get_field('local_site_announcement', 'option');
+        }
+
+        return $announcement;
+    }
 }

@@ -22,7 +22,7 @@ if ( ! function_exists( 'uabb_gf_function' ) ) {
 
 			$id = 0;
 
-			$forms = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // @codingStandardsIgnoreLine.
+			$forms = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 			foreach ( $forms as $form ) {
 				$field_options[ $form->id ] = $form->title;
@@ -50,7 +50,7 @@ if ( ! function_exists( 'uabb_gf_get_form_id' ) ) {
 		if ( class_exists( 'GFForms' ) ) {
 			$form_table_name = GFFormsModel::get_form_table_name();
 			$id              = 0;
-			$forms           = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // @codingStandardsIgnoreLine.
+			$forms           = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 			foreach ( $forms as $form ) {
 				return $form->id;

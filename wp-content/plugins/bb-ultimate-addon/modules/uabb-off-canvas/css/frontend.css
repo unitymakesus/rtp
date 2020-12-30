@@ -104,6 +104,9 @@
 .uabb-off-canvas-show + .uabb-offcanvas-close {
 	visibility: visible;
 }
+.uabb-off-canvas-show {
+	scrollbar-width: none; /* Firefox scrollbar fix */
+}
 .uabb-offcanvas-close-icon-wrapper  {
 	position: absolute;
     top: 0;
@@ -178,5 +181,8 @@
     position: relative;
     max-width: 100%;
     overflow: hidden;
+    width: 100%;
 }
-
+.uabb-offcanvas-photo-content {
+	display: inline-block;
+}

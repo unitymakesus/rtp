@@ -1,3 +1,4 @@
+
 (function($){
 
     var styleToggleClass = '';
@@ -38,6 +39,9 @@
             this._contentTypeTwoChange();
 
             this._hideDocs();
+
+            form.find("#fl-field-ct_raw_nonce").hide();
+            form.find("#fl-field-ct2_raw_nonce").hide();
 
             var toggle_settings = $('.fl-builder-uabb-content-toggle-settings').find('.fl-builder-settings-tabs a');
             toggle_settings.on('click', this._contentTabsClick);
@@ -258,12 +262,19 @@
                 type = 'layout';
             }
             var self = this;
+            var form = $('.fl-builder-settings');
+            nonce = form.find( '#fl-field-ct_raw .uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=ct_raw_nonce]').val();
+            }
 
             $.post(
                 ajaxurl,
                 {
                     action: 'uabb_get_saved_templates',
-                    type: type
+                    type: type,
+                    nonce:nonce,                    
                 },
                 function( response ) {
                     callback(response);
@@ -289,7 +300,7 @@
             }
 
             this._getTemplates(type, function(data) {
-                var response = JSON.parse( data );
+                var response = data;
 
                 if ( response.success ) {
                     self._templates[type] = response.data;
@@ -333,12 +344,19 @@
                 type = 'layout';
             }
             var self = this;
+            var form = $('.fl-builder-settings');
+            nonce = form.find( '#fl-field-ct_raw_one .uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+            if ( 'undefined' === typeof nonce ) {
+                nonce     = form.find('input[name=ct2_raw_nonce]').val();
+            }
 
             $.post(
                 ajaxurl,
                 {
                     action: 'uabb_get_saved_templates',
-                    type: type
+                    type: type,
+                    nonce: nonce,
                 },
                 function( response ) {
                     callback(response);
@@ -364,7 +382,7 @@
             }
 
             this._getTwoTemplates(type, function(data) {
-                var response = JSON.parse( data );
+                var response = data;
 
                 if ( response.success ) {
                     self._templates[type] = response.data;

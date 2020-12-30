@@ -11,17 +11,18 @@
  */
 function give_cmb2_get_post_options( $query_args, $force = false ) {
 
-	$post_options = array( '' => '' ); // Blank option
+	$post_options = [ '' => '' ]; // Blank option
 
 	if ( ( ! isset( $_GET['page'] ) || 'give-settings' != $_GET['page'] ) && ! $force ) {
 		return $post_options;
 	}
 
 	$args = wp_parse_args(
-		$query_args, array(
+		$query_args,
+		[
 			'post_type'   => 'page',
 			'numberposts' => 10,
-		)
+		]
 	);
 
 	$posts = get_posts( $args );
@@ -52,12 +53,12 @@ function give_cmb2_get_post_options( $query_args, $force = false ) {
 function give_get_featured_image_sizes() {
 	global $_wp_additional_image_sizes;
 
-	$sizes            = array();
+	$sizes            = [];
 	$get_sizes        = get_intermediate_image_sizes();
-	$core_image_sizes = array( 'thumbnail', 'medium', 'medium_large', 'large' );
+	$core_image_sizes = [ 'thumbnail', 'medium', 'medium_large', 'large' ];
 
 	// This will help us to filter special characters from a string
-	$filter_slug_items = array( '_', '-' );
+	$filter_slug_items = [ '_', '-' ];
 
 	foreach ( $get_sizes as $_size ) {
 
@@ -95,7 +96,7 @@ function give_get_featured_image_sizes() {
  *
  * @return string $string
  */
-function give_slug_to_title( $string, $filters = array() ) {
+function give_slug_to_title( $string, $filters = [] ) {
 
 	foreach ( $filters as $filter_item ) {
 		$string = str_replace( $filter_item, ' ', $string );
@@ -135,7 +136,7 @@ function give_api_callback() {
 	<span class="give-metabox-description api-description">
 		<?php
 		echo sprintf(
-		/* translators: 1: http://docs.givewp.com/api 2: http://docs.givewp.com/addon-zapier */
+			/* translators: 1: http://docs.givewp.com/api 2: http://docs.givewp.com/addon-zapier */
 			__( 'You can create API keys for individual users within their profile edit screen. API keys allow users to use the <a href="%1$s" target="_blank">GiveWP REST API</a> to retrieve donation data in JSON or XML for external applications or devices, such as <a href="%2$s" target="_blank">Zapier</a>.', 'give' ),
 			esc_url( 'http://docs.givewp.com/api' ),
 			esc_url( 'http://docs.givewp.com/addon-zapier' )
@@ -162,12 +163,15 @@ function give_api_callback() {
  *
  * @return string
  * @since 2.5.0
- *
  */
 function give_hide_char( $str, $show_char_count, $replace = '*' ) {
 	return str_repeat(
 		$replace,
-		strlen( $str ) - $show_char_count ) . substr( $str, - $show_char_count, $show_char_count
+		strlen( $str ) - $show_char_count
+	) . substr(
+		$str,
+		- $show_char_count,
+		$show_char_count
 	);
 }
 
@@ -179,7 +183,6 @@ function give_hide_char( $str, $show_char_count, $replace = '*' ) {
  *
  * @return string
  * @since 2.5.0
- *
  */
 function give_get_format_md( $readme ) {
 	$readme = preg_replace( '/`(.*?)`/', '<code>\\1</code>', $readme );
@@ -220,9 +223,9 @@ function give_add_ons_feed( $feed_type = '', $echo = true ) {
 		}
 
 		if ( function_exists( 'vip_safe_wp_remote_get' ) ) {
-			$feed = vip_safe_wp_remote_get( $feed_url, false, 3, 1, 20, array( 'sslverify' => false ) );
+			$feed = vip_safe_wp_remote_get( $feed_url, false, 3, 1, 20, [ 'sslverify' => false ] );
 		} else {
-			$feed = wp_remote_get( $feed_url, array( 'sslverify' => false ) );
+			$feed = wp_remote_get( $feed_url, [ 'sslverify' => false ] );
 		}
 
 		if ( ! is_wp_error( $feed ) ) {
@@ -245,24 +248,4 @@ function give_add_ons_feed( $feed_type = '', $echo = true ) {
 	}
 
 	return $cache;
-}
-
-
-/**
- * Get list of premium add-ons
- *
- * @return array
- * @since 2.5.0
- */
-function give_get_premium_add_ons() {
-	$list = wp_extract_urls( give_add_ons_feed( 'addons-directory', false ) );
-	$list = array_values( array_filter( $list, function ( $url ) {
-		return false !== strpos( $url, 'givewp.com/addons' );
-	} ) );
-
-	return array_map( function ( $url ) {
-		$path = wp_parse_url( untrailingslashit( $url ) )['path'];
-
-		return str_replace( '/addons/', '', $path );
-	}, $list );
 }

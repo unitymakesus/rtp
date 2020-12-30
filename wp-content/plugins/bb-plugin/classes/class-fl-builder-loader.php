@@ -26,7 +26,9 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			$plugin_dirname = basename( dirname( dirname( __FILE__ ) ) );
 
 			if ( $lite_active && $plugin_dirname != $lite_dirname ) {
-				deactivate_plugins( array( $lite_dirname . '/fl-builder.php' ), false, is_network_admin() );
+				add_action( 'admin_init', function() {
+					deactivate_plugins( array( 'beaver-builder-lite-version/fl-builder.php' ), false, is_network_admin() );
+				});
 				return;
 			} elseif ( class_exists( 'FLBuilder' ) ) {
 				add_action( 'admin_notices', __CLASS__ . '::double_install_admin_notice' );
@@ -46,7 +48,7 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 		 * @return void
 		 */
 		static private function define_constants() {
-			define( 'FL_BUILDER_VERSION', '2.2.6.3' );
+			define( 'FL_BUILDER_VERSION', '2.4.1.3' );
 			define( 'FL_BUILDER_FILE', trailingslashit( dirname( dirname( __FILE__ ) ) ) . 'fl-builder.php' );
 			define( 'FL_BUILDER_DIR', plugin_dir_path( FL_BUILDER_FILE ) );
 			define( 'FL_BUILDER_URL', plugins_url( '/', FL_BUILDER_FILE ) );
@@ -54,6 +56,7 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			define( 'FL_BUILDER_SUPPORT_URL', 'https://www.wpbeaverbuilder.com/support/' ); // Deprecated, do not use.
 			define( 'FL_BUILDER_UPGRADE_URL', 'https://www.wpbeaverbuilder.com/' ); // Deprecated, do not use.
 			define( 'FL_BUILDER_STORE_URL', 'https://www.wpbeaverbuilder.com/' );
+			define( 'FL_BUILDER_DEMO_DOMAIN', 'demos.wpbeaverbuilder.com' );
 			define( 'FL_BUILDER_DEMO_URL', 'http://demos.wpbeaverbuilder.com' );
 			define( 'FL_BUILDER_OLD_DEMO_URL', 'http://demos.fastlinemedia.com' );
 			define( 'FL_BUILDER_DEMO_CACHE_URL', 'http://demos.wpbeaverbuilder.com/wp-content/uploads/bb-plugin/cache/' );
@@ -83,6 +86,7 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-export.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-extensions.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-fonts.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-history-manager.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-debug.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-usage.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-icons.php';
@@ -105,8 +109,10 @@ if ( ! class_exists( 'FLBuilderLoader' ) ) {
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-user-settings.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-utils.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-wpml.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-seo.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-privacy.php';
 			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-settings-presets.php';
+			require_once FL_BUILDER_DIR . 'classes/class-fl-builder-compatibility.php';
 
 			/* WP CLI Commands */
 			if ( defined( 'WP_CLI' ) ) {

@@ -22,6 +22,9 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
         $facet_parent_id = 0;
         $output = [];
 
+        $label_any = empty( $facet['label_any'] ) ? __( 'Any', 'fwp-front' ) : $facet['label_any'];
+        $label_any = facetwp_i18n( $label_any );
+
         // Orderby
         $orderby = $this->get_orderby( $facet );
 
@@ -64,7 +67,7 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 
             $output[] = [
                 'facet_value'           => '',
-                'facet_display_value'   => __( 'Any', 'fwp-front' ),
+                'facet_display_value'   => $label_any,
                 'depth'                 => 0,
                 'counter'               => 1,
             ];
@@ -109,7 +112,7 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
         $selected_values = (array) $params['selected_values'];
 
         $output = '';
-        $num_visible = ctype_digit( $facet['count'] ) ? $facet['count'] : 10;
+        $num_visible = $this->get_limit( $facet );
         $num = 0;
 
         if ( ! empty( $values ) ) {
@@ -182,28 +185,9 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
      * Output admin settings HTML
      */
     function settings_html() {
-?>
-        <div class="facetwp-row">
-            <div><?php _e( 'Sort by', 'fwp' ); ?>:</div>
-            <div>
-                <select class="facet-orderby">
-                    <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
-                    <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
-                    <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
-                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
-                </select>
-            </div>
-        </div>
-        <div class="facetwp-row">
-            <div>
-                <?php _e( 'Count', 'fwp' ); ?>:
-                <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
-                    <div class="facetwp-tooltip-content"><?php _e( 'The maximum number of facet choices to show', 'fwp' ); ?></div>
-                </div>
-            </div>
-            <div><input type="text" class="facet-count" value="10" /></div>
-        </div>
-<?php
+        $this->render_setting( 'label_any' );
+        $this->render_setting( 'modifiers' );
+        $this->render_setting( 'orderby' );
+        $this->render_setting( 'count' );
     }
 }

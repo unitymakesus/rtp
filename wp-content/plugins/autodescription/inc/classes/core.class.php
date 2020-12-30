@@ -6,11 +6,11 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -33,7 +33,6 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @since 2.8.0
  */
 class Core {
-	use Traits\Enclose_Core_Final;
 
 	/**
 	 * Tells if this plugin is loaded.
@@ -70,7 +69,7 @@ class Core {
 		 */
 		$this->_inaccessible_p_or_m( 'the_seo_framework()->' . $name, 'unknown' );
 
-		//* Invoke default behavior: Write variable if it's not protected.
+		// Invoke default behavior: Write variable if it's not protected.
 		if ( ! isset( $this->$name ) )
 			$this->$name = $value;
 	}
@@ -104,14 +103,14 @@ class Core {
 
 		static $depr_class = null;
 
-		if ( is_null( $depr_class ) )
+		if ( \is_null( $depr_class ) )
 			$depr_class = new Deprecated;
 
-		if ( is_callable( [ $depr_class, $name ] ) ) {
-			return call_user_func_array( [ $depr_class, $name ], $arguments );
+		if ( \is_callable( [ $depr_class, $name ] ) ) {
+			return \call_user_func_array( [ $depr_class, $name ], $arguments );
 		}
 
-		\the_seo_framework()->_inaccessible_p_or_m( 'the_seo_framework()->' . $name . '()' );
+		$this->_inaccessible_p_or_m( 'the_seo_framework()->' . $name . '()' );
 	}
 
 	/**
@@ -136,6 +135,30 @@ class Core {
 	}
 
 	/**
+	 * Includes compatibility files, only once per request.
+	 *
+	 * @since 2.8.0
+	 * @access private
+	 *
+	 * @param string $what The vendor/plugin/theme name for the compatibilty.
+	 * @param string $type The compatibility type. Be it 'plugin' or 'theme'.
+	 * @return bool True on success, false on failure. Files are expected not to return any values.
+	 */
+	public function _include_compat( $what, $type = 'plugin' ) {
+
+		static $included = [];
+
+		if ( ! isset( $included[ $what ][ $type ] ) ) {
+			// phpcs:ignore, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- forwarded to include...
+			$_secret = $this->create_view_secret( uniqid( '', true ) );
+
+			$included[ $what ][ $type ] = (bool) require THE_SEO_FRAMEWORK_DIR_PATH_COMPAT . $type . '-' . $what . '.php';
+		}
+
+		return $included[ $what ][ $type ];
+	}
+
+	/**
 	 * Fetches files based on input to reduce memory overhead.
 	 * Passes on input vars.
 	 *
@@ -154,7 +177,41 @@ class Core {
 		foreach ( $__args as $__k => $__v ) $$__k = $__v;
 		unset( $__k, $__v, $__args );
 
+		// phpcs:ignore, VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable -- forwarded to include...
+		$_secret = $this->create_view_secret( uniqid( '', true ) );
+
 		include $this->get_view_location( $view );
+	}
+
+	/**
+	 * Stores and returns view secret.
+	 *
+	 * This is not cryptographically secure, but it's enough to fend others off including our files where they shouldn't.
+	 * Our view-files have a certain expectation of inputs to meet. If they don't meet that, we could expose our users to security issues.
+	 * We could not measure any meaningful performance impact by using this (0.02% of 54x get_view() runtime).
+	 *
+	 * @since 4.1.1
+	 *
+	 * @param string|null $value The secret.
+	 * @return string|null The stored secret.
+	 */
+	protected function create_view_secret( $value = null ) {
+		static $secret;
+		// TODO PHP7+ `$secret = $value ?? $secret;`
+		return $secret = isset( $value ) ? $value : $secret;
+	}
+
+	/**
+	 * Verifies view secret.
+	 *
+	 * @since 4.1.1
+	 * @access private
+	 *
+	 * @param string $value The secret.
+	 * @return bool
+	 */
+	public function _verify_include_secret( $value ) {
+		return isset( $value ) && $this->create_view_secret() === $value;
 	}
 
 	/**
@@ -195,7 +252,7 @@ class Core {
 	 */
 	public function proportionate_dimensions( $i, $r1, $r2 ) {
 
-		//* Get aspect ratio.
+		// Get aspect ratio.
 		$ar = $r1 / $r2;
 		$i  = $i / $ar;
 
@@ -213,21 +270,25 @@ class Core {
 	 */
 	public function _add_plugin_action_links( $links = [] ) {
 
-		if ( $this->load_options )
+		$tsf_links = [];
+
+		if ( $this->load_options ) {
 			$tsf_links['settings'] = sprintf(
 				'<a href="%s">%s</a>',
 				\esc_url( \admin_url( 'admin.php?page=' . $this->seo_settings_page_slug ) ),
 				\esc_html__( 'Settings', 'autodescription' )
 			);
+		}
 
-		$tsf_links['about'] = sprintf(
-			'<a href="https://theseoframework.com/about-us/" rel="noreferrer noopener nofollow" target="_blank">%s</a>',
-			\esc_html_x( 'About', 'About us', 'autodescription' )
-		);
-		$tsf_links['tsfem'] = sprintf(
+		$tsf_links['tsfem']   = sprintf(
 			'<a href="%s" rel="noreferrer noopener" target="_blank">%s</a>',
 			'https://theseoframework.com/extensions/',
 			\esc_html_x( 'Extensions', 'Plugin extensions', 'autodescription' )
+		);
+		$tsf_links['pricing'] = sprintf(
+			'<a href="%s" rel="noreferrer noopener" target="_blank">%s</a>',
+			'https://theseoframework.com/pricing/',
+			\esc_html_x( 'Pricing', 'Plugin pricing', 'autodescription' )
 		);
 
 		return array_merge( $tsf_links, $links );
@@ -256,25 +317,32 @@ class Core {
 		return array_merge(
 			$plugin_meta,
 			[
-				'docs' => vsprintf(
+				'support' => vsprintf(
+					'<a href="%s" rel="noreferrer noopener nofollow" target="_blank">%s</a>',
+					[
+						'https://tsf.fyi/support',
+						\esc_html__( 'Get support', 'autodescription' ),
+					]
+				),
+				'docs'    => vsprintf(
 					'<a href="%s" rel="noreferrer noopener nofollow" target="_blank">%s</a>',
 					[
 						'https://tsf.fyi/docs',
 						\esc_html__( 'View documentation', 'autodescription' ),
 					]
 				),
-				'API'  => vsprintf(
+				'API'     => vsprintf(
 					'<a href="%s" rel="noreferrer noopener nofollow" target="_blank">%s</a>',
 					[
 						'https://tsf.fyi/docs/api',
 						\esc_html__( 'View API docs', 'autodescription' ),
 					]
 				),
-				'EM'   => vsprintf(
+				'EM'      => vsprintf(
 					'<a href="%s" rel="noreferrer noopener nofollow" target="_blank">%s</a>',
 					[
 						'https://tsf.fyi/extension-manager',
-						$_get_em ? \esc_html_x( 'Get the Extension Manager', 'Extension Manager is a product name; do not translate it.', 'autodescription' ) : 'Extension Manager',
+						$_get_em ? \esc_html_x( 'Get Extension Manager', 'Extension Manager is a product name; do not translate it.', 'autodescription' ) : 'Extension Manager',
 					]
 				),
 			]
@@ -285,8 +353,9 @@ class Core {
 	 * Returns an array of hierarchical post types.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now gets hierarchical post types that don't support rewrite, as well.
 	 *
-	 * @return array The public hierarchical post types with rewrite.
+	 * @return array The public hierarchical post types.
 	 */
 	public function get_hierarchical_post_types() {
 		static $types;
@@ -294,7 +363,6 @@ class Core {
 			[
 				'hierarchical' => true,
 				'public'       => true,
-				'rewrite'      => true,
 			],
 			'names'
 		);
@@ -304,8 +372,9 @@ class Core {
 	 * Returns an array of nonhierarchical post types.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now gets non-hierarchical post types that don't support rewrite, as well.
 	 *
-	 * @return array The public nonhierarchical post types with rewrite.
+	 * @return array The public nonhierarchical post types.
 	 */
 	public function get_nonhierarchical_post_types() {
 		static $types;
@@ -313,7 +382,6 @@ class Core {
 			[
 				'hierarchical' => false,
 				'public'       => true,
-				'rewrite'      => true,
 			],
 			'names'
 		);
@@ -321,31 +389,29 @@ class Core {
 
 	/**
 	 * Whether to allow external redirect through the 301 redirect option.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.6.0
-	 * @staticvar bool $allowed
 	 *
 	 * @return bool Whether external redirect is allowed.
 	 */
 	public function allow_external_redirect() {
 
-		static $allowed = null;
-
-		if ( isset( $allowed ) )
-			return $allowed;
+		static $cache = null;
 
 		/**
 		 * @since 2.1.0
 		 * @param bool $allowed Whether external redirect is allowed.
 		 */
-		return $allowed = (bool) \apply_filters( 'the_seo_framework_allow_external_redirect', true );
+		return isset( $cache ) ? $cache : $cache = (bool) \apply_filters( 'the_seo_framework_allow_external_redirect', true );
 	}
 
 	/**
 	 * Checks if blog is public through WordPress core settings.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.6.0
-	 * @staticvar bool $cache
+	 * @since 4.0.5 Can now test for non-sanitized 'blog_public' option states.
 	 *
 	 * @return bool True is blog is public.
 	 */
@@ -353,13 +419,7 @@ class Core {
 
 		static $cache = null;
 
-		if ( isset( $cache ) )
-			return $cache;
-
-		if ( '1' === \get_option( 'blog_public' ) )
-			return $cache = true;
-
-		return $cache = false;
+		return isset( $cache ) ? $cache : $cache = (bool) \get_option( 'blog_public' );
 	}
 
 	/**
@@ -374,7 +434,7 @@ class Core {
 	 */
 	public function current_blog_is_spam_or_deleted() {
 
-		if ( ! function_exists( '\\get_site' ) || ! \is_multisite() )
+		if ( ! \function_exists( '\\get_site' ) || ! \is_multisite() )
 			return false;
 
 		$site = \get_site();
@@ -389,15 +449,18 @@ class Core {
 	 * Returns the minimum role required to adjust settings.
 	 *
 	 * @since 3.0.0
+	 * @since 4.1.0 Now uses the constant `THE_SEO_FRAMEWORK_SETTINGS_CAP` as a default return value.
+	 * @todo deprecate, use constant instead.
 	 *
 	 * @return string The minimum required capability for SEO Settings.
 	 */
 	public function get_settings_capability() {
 		/**
 		 * @since 2.6.0
+		 * @todo deprecate, use constant instead.
 		 * @param string $capability The user capability required to adjust settings.
 		 */
-		return (string) \apply_filters( 'the_seo_framework_settings_capability', 'manage_options' );
+		return (string) \apply_filters( 'the_seo_framework_settings_capability', THE_SEO_FRAMEWORK_SETTINGS_CAP );
 	}
 
 	/**
@@ -422,7 +485,7 @@ class Core {
 	public function seo_settings_page_url() {
 
 		if ( $this->load_options ) {
-			//* Options are allowed to be loaded.
+			// Options are allowed to be loaded.
 
 			$url = html_entity_decode( \menu_page_url( $this->seo_settings_page_slug, false ) );
 
@@ -478,8 +541,8 @@ class Core {
 	 *
 	 * NOTE: Always call reset_timezone() ASAP. Don't let changes linger, as they can be destructive.
 	 *
-	 * This exists because WordPress' current_time() adds discrepancies between UTC and GMT.
-	 * This is also far more accurate than WordPress' tiny time table.
+	 * This exists because WordPress's current_time() adds discrepancies between UTC and GMT.
+	 * This is also far more accurate than WordPress's tiny time table.
 	 *
 	 * @TODO Note that WordPress 5.3 no longer requires this, and that we should rely on wp_date() instead.
 	 *       So, we should remove this dependency ASAP.
@@ -497,20 +560,19 @@ class Core {
 
 		static $old_tz = null;
 
-		// phpcs:ignore, WordPress.WP.TimezoneChange
 		$old_tz = $old_tz ?: date_default_timezone_get() ?: 'UTC';
 
 		if ( $reset ) {
 			$_revert_tz = $old_tz;
 			$old_tz     = null;
-			// phpcs:ignore, WordPress.WP.TimezoneChange
+			// phpcs:ignore, WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
 			return date_default_timezone_set( $_revert_tz );
 		}
 
 		if ( empty( $tzstring ) )
 			$tzstring = $this->get_timezone_string( true ) ?: $old_tz;
 
-		// phpcs:ignore, WordPress.WP.TimezoneChange
+		// phpcs:ignore, WordPress.DateTime.RestrictedFunctions.timezone_change_date_default_timezone_set
 		return date_default_timezone_set( $tzstring );
 	}
 
@@ -574,12 +636,13 @@ class Core {
 	 *
 	 * @param string $string The string to test and maybe trim
 	 * @param int    $over   The character limit. Must be over 0 to have effect.
-	 *                       If 1 is given, the returned string length will be 3.
-	 *                       If 2 is given, the returned string will only consist of the hellip.
+	 *                       Bug: If 1 is given, the returned string length will be 3.
+	 *                       Bug: If 2 is given, the returned string will only consist of the hellip.
 	 * @return string
 	 */
 	public function hellip_if_over( $string, $over = 0 ) {
-		if ( $over > 0 && strlen( $string ) > $over ) {
+
+		if ( $over > 0 && \strlen( $string ) > $over ) {
 			$string = substr( $string, 0, abs( $over - 2 ) ) . ' &hellip;';
 		}
 
@@ -598,9 +661,8 @@ class Core {
 	 *              This does mean that the functionality is crippled when the PHP
 	 *              installation isn't unicode compatible; this is unlikely.
 	 * @since 4.0.0 1. Now expects PCRE UTF-8 encoding support.
-	 *              2. Moved filter outside of this function.
+	 *              2. Moved input-parameter alterting filters outside of this function.
 	 *              3. Short length now works as intended, instead of comparing as less, it compares as less or equal to.
-	 * @staticvar bool   $use_mb Determines whether we can use mb_* functions.
 	 *
 	 * @param string $string Required. The string to count words in.
 	 * @param int    $dupe_count Minimum amount of words to encounter in the string.
@@ -620,8 +682,9 @@ class Core {
 
 		static $use_mb;
 
-		isset( $use_mb ) or $use_mb = extension_loaded( 'mbstring' );
+		isset( $use_mb ) or ( $use_mb = \extension_loaded( 'mbstring' ) );
 
+		// TODO does this test well for "we're"? We haven't had any reports, though.
 		$word_list = preg_split(
 			'/[^\p{L}\p{M}\p{N}\p{Pc}\p{Cc}]+/mu',
 			$use_mb ? mb_strtolower( $string ) : strtolower( $string ),
@@ -631,7 +694,7 @@ class Core {
 
 		$words_too_many = [];
 
-		if ( count( $word_list ) ) :
+		if ( \count( $word_list ) ) :
 			$words = [];
 			foreach ( $word_list as $wli ) {
 				//= { $words[ int Offset ] => string Word }
@@ -644,7 +707,7 @@ class Core {
 			$word_keys = array_flip( array_reverse( $words, true ) );
 
 			foreach ( $word_count as $word => $count ) {
-				if ( ( $use_mb ? mb_strlen( $word ) : strlen( $word ) ) <= $short_length ) {
+				if ( ( $use_mb ? mb_strlen( $word ) : \strlen( $word ) ) <= $short_length ) {
 					$run = $count >= $dupe_short;
 				} else {
 					$run = $count >= $dupe_count;
@@ -654,12 +717,12 @@ class Core {
 					//! Don't use mb_* here. preg_split's offset is in bytes, NOT multibytes.
 					$args = [
 						'pos' => $word_keys[ $word ],
-						'len' => strlen( $word ),
+						'len' => \strlen( $word ),
 					];
 
 					$first_encountered_word = substr( $string, $args['pos'], $args['len'] );
 
-					//* Found words that are used too frequently.
+					// Found words that are used too frequently.
 					$words_too_many[] = [ $first_encountered_word => $count ];
 				}
 			}
@@ -674,7 +737,7 @@ class Core {
 	 * @since 2.8.0
 	 * @since 2.9.0 Now adds a little more relative softness based on rel_lum.
 	 * @since 2.9.2 (Typo): Renamed from 'get_relatitve_fontcolor' to 'get_relative_fontcolor'.
-	 * @since 3.0.4 : Now uses WCAG's relative luminance formula
+	 * @since 3.0.4 Now uses WCAG's relative luminance formula
 	 * @link https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast
 	 * @link https://www.w3.org/WAI/GL/wiki/Relative_luminance
 	 *
@@ -685,13 +748,13 @@ class Core {
 
 		$hex = ltrim( $hex, '#' );
 
-		//* #rgb = #rrggbb
-		if ( 3 === strlen( $hex ) )
+		// #rgb = #rrggbb
+		if ( 3 === \strlen( $hex ) )
 			$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
 
 		$hex = str_split( $hex, 2 );
 
-		//* Convert to numerical values.
+		// Convert to usable numerics.
 		$r = hexdec( $hex[0] );
 		$g = hexdec( $hex[1] );
 		$b = hexdec( $hex[2] );
@@ -708,7 +771,7 @@ class Core {
 			return $lum;
 		};
 
-		//* Use sRGB for relative luminance.
+		// Use sRGB for relative luminance.
 		$sr = 0.2126 * $get_relative_luminance( $r );
 		$sg = 0.7152 * $get_relative_luminance( $g );
 		$sb = 0.0722 * $get_relative_luminance( $b );
@@ -717,18 +780,18 @@ class Core {
 
 		//= Invert colors if they hit luminance boundaries.
 		if ( $rel_lum < 0.5 ) {
-			//* Build dark greyscale.
+			// Build dark greyscale.
 			$gr = 255 - ( $r * 0.2989 / 8 ) * $rel_lum;
 			$gg = 255 - ( $g * 0.5870 / 8 ) * $rel_lum;
 			$gb = 255 - ( $b * 0.1140 / 8 ) * $rel_lum;
 		} else {
-			//* Build light greyscale.
+			// Build light greyscale.
 			$gr = ( $r * 0.2989 / 8 ) * $rel_lum;
 			$gg = ( $g * 0.5870 / 8 ) * $rel_lum;
 			$gb = ( $b * 0.1140 / 8 ) * $rel_lum;
 		}
 
-		//* Build RGB hex.
+		// Build RGB hex.
 		$retr = str_pad( dechex( round( $gr ) ), 2, '0', STR_PAD_LEFT );
 		$retg = str_pad( dechex( round( $gg ) ), 2, '0', STR_PAD_LEFT );
 		$retb = str_pad( dechex( round( $gb ) ), 2, '0', STR_PAD_LEFT );
@@ -740,6 +803,7 @@ class Core {
 	 * Returns sitemap color scheme.
 	 *
 	 * @since 2.8.0
+	 * @since 4.0.5 Changed default colors to be more in line with WordPress.
 	 *
 	 * @param bool $get_defaults Whether to get the default colors.
 	 * @return array The sitemap colors.
@@ -748,8 +812,8 @@ class Core {
 
 		if ( $get_defaults ) {
 			$colors = [
-				'main'   => '#333',
-				'accent' => '#00cd98',
+				'main'   => '#222222',
+				'accent' => '#00a0d2',
 			];
 		} else {
 			$main   = $this->s_color_hex( $this->get_option( 'sitemap_color_main' ) );
@@ -790,14 +854,13 @@ class Core {
 	 */
 	public function convert_markdown( $text, $convert = [], $args = [] ) {
 
-		preprocess : {
-			$text = str_replace( "\r\n", "\n", $text );
-			$text = str_replace( "\t", ' ', $text );
-			$text = trim( $text );
-		}
+		// preprocess
+		$text = str_replace( "\r\n", "\n", $text );
+		$text = str_replace( "\t", ' ', $text );
+		$text = trim( $text );
 
 		// You need 3 chars to make a markdown: *m*
-		if ( strlen( $text ) < 3 )
+		if ( \strlen( $text ) < 3 )
 			return '';
 
 		// Merge defaults with $args.
@@ -821,7 +884,7 @@ class Core {
 
 		$md_types = empty( $convert ) ? $conversions : array_intersect( $conversions, $convert );
 
-		if ( 2 === count( array_intersect( $md_types, [ 'em', 'strong' ] ) ) ) :
+		if ( 2 === \count( array_intersect( $md_types, [ 'em', 'strong' ] ) ) ) :
 			$count = preg_match_all( '/(?:\*{3})([^\*{\3}]+)(?:\*{3})/', $text, $matches, PREG_PATTERN_ORDER );
 			for ( $i = 0; $i < $count; $i++ ) {
 				$text = str_replace(
@@ -876,9 +939,11 @@ class Core {
 				case 'h3':
 				case 'h2':
 				case 'h1':
-					$amount = filter_var( $type, FILTER_SANITIZE_NUMBER_INT );
-					//* Considers word non-boundary. @TODO consider removing this?
-					$expression = sprintf( '/(?:\={%1$s})\B([^\={\%1$s}]+)\B(?:\={%1$s})/', $amount );
+					// Considers word non-boundary. @TODO consider removing this?
+					$expression = sprintf(
+						'/(?:\={%1$d})\B([^\={\%1$s}]+)\B(?:\={%1$d})/',
+						filter_var( $type, FILTER_SANITIZE_NUMBER_INT )
+					);
 
 					$count = preg_match_all( $expression, $text, $matches, PREG_PATTERN_ORDER );
 

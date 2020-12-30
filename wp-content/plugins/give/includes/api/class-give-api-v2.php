@@ -41,7 +41,7 @@ class Give_API_V2 {
 	 *
 	 * @var Give_API_V2
 	 */
-	static private $instance;
+	private static $instance;
 
 	/**
 	 * Singleton pattern.
@@ -79,35 +79,51 @@ class Give_API_V2 {
 	 */
 	private function init() {
 		// Setup hooks.
-		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'localize_script' ), 999 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'localize_script' ), 999 );
+		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
+		add_action( 'wp_enqueue_scripts', [ $this, 'localize_script' ], 999 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'localize_script' ], 999 );
 	}
 
 
 	/**
 	 * Register API routes
 	 * Note: only for internal purpose.
+	 *
 	 * @todo   : prevent cross domain api request
 	 *
 	 * @since  2.1
 	 * @access private
 	 */
 	public function register_routes() {
-		register_rest_route( $this->rest_base, '/form/(?P<id>[\d]+)', array(
-			'methods'  => 'GET',
-			'callback' => array( $this, 'get_forms_data' ),
-		) );
+		register_rest_route(
+			$this->rest_base,
+			'/form/(?P<id>[\d]+)',
+			[
+				'methods'             => 'GET',
+				'callback'            => [ $this, 'get_forms_data' ],
+				'permission_callback' => '__return_true',
+			]
+		);
 
-		register_rest_route( $this->rest_base, '/form-grid', array(
-			'methods'  => 'GET',
-			'callback' => array( $this, 'get_donation_grid' ),
-		) );
+		register_rest_route(
+			$this->rest_base,
+			'/form-grid',
+			[
+				'methods'             => 'GET',
+				'callback'            => [ $this, 'get_donation_grid' ],
+				'permission_callback' => '__return_true',
+			]
+		);
 
-		register_rest_route( $this->rest_base, '/donor-wall', array(
-			'methods'  => 'GET',
-			'callback' => array( $this, 'get_donor_wall' ),
-		) );
+		register_rest_route(
+			$this->rest_base,
+			'/donor-wall',
+			[
+				'methods'             => 'GET',
+				'callback'            => [ $this, 'get_donor_wall' ],
+				'permission_callback' => '__return_true',
+			]
+		);
 	}
 
 	/**
@@ -117,10 +133,10 @@ class Give_API_V2 {
 	 * @access public
 	 */
 	public function localize_script() {
-		$data = array(
-			'root' => esc_url_raw( Give_API_V2::get_rest_api() ),
-			'rest_base' => $this->rest_base
-		);
+		$data = [
+			'root'      => esc_url_raw( self::get_rest_api() ),
+			'rest_base' => $this->rest_base,
+		];
 
 		if ( is_admin() ) {
 			wp_localize_script( 'give-admin-scripts', 'giveApiSettings', $data );
@@ -142,7 +158,7 @@ class Give_API_V2 {
 
 		// Bailout
 		if ( ! isset( $parameters['id'] ) || empty( $parameters['id'] ) ) {
-			return array( 'error' => 'no_parameter_given' );
+			return [ 'error' => 'no_parameter_given' ];
 		}
 
 		return give_form_shortcode( $parameters );

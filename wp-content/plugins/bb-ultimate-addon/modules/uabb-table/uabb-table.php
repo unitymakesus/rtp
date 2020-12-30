@@ -31,6 +31,8 @@ class UABBTable extends FLBuilderModule {
 			)
 		);
 
+		$this->add_css( 'font-awesome-5' );
+
 		add_filter( 'wp_handle_upload_prefilter', array( $this, 'uabb_csv_file_handle' ), 10, 1 );
 	}
 	/**
@@ -46,7 +48,7 @@ class UABBTable extends FLBuilderModule {
 			return $file;
 		} else {
 			if ( 'async-upload' === get_current_screen()->base ) {
-				$type = isset( $_POST['uabb_upload_type'] ) ? $_POST['uabb_upload_type'] : false;
+				$type = isset( $_POST['uabb_upload_type'] ) ? $_POST['uabb_upload_type'] : false; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 				$ext = pathinfo( $file['name'], PATHINFO_EXTENSION );
 
@@ -71,21 +73,10 @@ class UABBTable extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -98,18 +89,18 @@ class UABBTable extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Headings link settings.
 			foreach ( $settings->thead_row as $heading ) {
 
 				if ( isset( $heading->head_link_nofollow ) ) {
 
-					if ( '1' == $heading->head_link_nofollow || 'yes' == $heading->head_link_nofollow ) {
+					if ( '1' === $heading->head_link_nofollow || 'yes' === $heading->head_link_nofollow ) {
 						$heading->head_link_nofollow = 'yes';
 					}
 				}
@@ -119,7 +110,7 @@ class UABBTable extends FLBuilderModule {
 			foreach ( $settings->tbody_row as $content ) {
 
 				if ( isset( $content->body_link_nofollow ) ) {
-					if ( '1' == $content->body_link_nofollow || 'yes' == $content->body_link_nofollow ) {
+					if ( '1' === $content->body_link_nofollow || 'yes' === $content->body_link_nofollow ) {
 						$content->body_link_nofollow = 'yes';
 					}
 				}
@@ -141,7 +132,7 @@ class UABBTable extends FLBuilderModule {
 				}
 				if ( isset( $settings->heading_typography_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->heading_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->heading_typography_font_family['weight'] ) {
 						$settings->heading_typo['font_weight'] = 'normal';
 					} else {
 						$settings->heading_typo['font_weight'] = $settings->heading_typography_font_family['weight'];
@@ -228,7 +219,7 @@ class UABBTable extends FLBuilderModule {
 				}
 				if ( isset( $settings->content_typography_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->content_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->content_typography_font_family['weight'] ) {
 						$settings->content_typo['font_weight'] = 'normal';
 					} else {
 						$settings->content_typo['font_weight'] = $settings->content_typography_font_family['weight'];
@@ -315,7 +306,7 @@ class UABBTable extends FLBuilderModule {
 				}
 				if ( isset( $settings->filter_typography_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->filter_typography_font_family['weight'] ) {
+					if ( 'regular' === $settings->filter_typography_font_family['weight'] ) {
 						$settings->filter_typo['font_weight'] = 'normal';
 					} else {
 						$settings->filter_typo['font_weight'] = $settings->filter_typography_font_family['weight'];
@@ -418,7 +409,7 @@ class UABBTable extends FLBuilderModule {
 		// Check if file is writable, then open it in 'read only' mode.
 		if ( is_readable( $file ) ) {
 
-			$_file = fopen( $file, 'r' );
+			$_file = fopen( $file, 'r' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fopen
 
 			if ( ! $_file ) {
 
@@ -434,7 +425,7 @@ class UABBTable extends FLBuilderModule {
 			// Get first row in CSV, which is of course the headers.
 			$header = fgetcsv( $_file );
 
-			while ( $row = fgetcsv( $_file ) ) {
+			while ( $row = fgetcsv( $_file ) ) { // @codingStandardsIgnoreLine.
 
 				foreach ( $header as $i => $key ) {
 					$file_data[ $key ] = $row[ $i ];
@@ -443,7 +434,7 @@ class UABBTable extends FLBuilderModule {
 				$data[] = $file_data;
 			}
 
-			fclose( $_file );
+			fclose( $_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_read_fclose
 
 		} else {
 
@@ -473,18 +464,18 @@ class UABBTable extends FLBuilderModule {
 
 		<?php foreach ( $rows as $row_key => $row ) { ?>
 			<tr>
-				<?php $total_rows = $total_rows + 1; ?>
+				<?php $total_rows++; ?>
 			</tr>
 		<?php } ?>
 
 		<div class="table-data">
 			<?php if ( 'yes' === $this->settings->show_entries ) : ?>
 				<div class="entries-wrapper">
-					<label class="lbl-entries"><?php echo $this->settings->show_entries_label; ?> </label>
+					<label class="lbl-entries"><?php echo $this->settings->show_entries_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </label>
 					<select class="select-filter">
-						<option class="filter-entry"><?php echo $this->settings->show_entries_all_label; ?></option>
+						<option class="filter-entry"><?php echo $this->settings->show_entries_all_label;  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></option>
 						<?php for ( $cnt = 1; $cnt < $total_rows; $cnt++ ) { ?>
-							<option class="filter-entry"> <?php echo $cnt; ?> </option>
+							<option class="filter-entry"> <?php echo $cnt; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </option>
 						<?php } ?>
 					</select>
 				</div>
@@ -492,7 +483,7 @@ class UABBTable extends FLBuilderModule {
 
 			<?php if ( 'yes' === $this->settings->show_search ) : ?>
 				<div class="search-wrapper">
-					<input class="search-input" type="text" placeholder="<?php echo $this->settings->search_label; ?>" name="toSearch" id="searchHere"/>
+					<input class="search-input" type="text" placeholder="<?php echo $this->settings->search_label; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" name="toSearch" id="searchHere"/>
 				</div>
 			<?php endif ?>
 		</div>
@@ -509,8 +500,8 @@ class UABBTable extends FLBuilderModule {
 									<?php
 									foreach ( $header_val as $hkey => $head ) {
 										?>
-										<th class="table-header-th table-heading-<?php echo $hkey; ?>">
-											<label class="th-style"> <?php echo $head; ?> </label>
+										<th class="table-header-th table-heading-<?php echo esc_attr( $hkey ); ?>">
+											<label class="th-style"> <?php echo $head; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </label>
 											<?php if ( 'yes' === $this->settings->show_sort ) { ?>
 													<i class="uabb-sort-icon fa fa-sort"> </i>
 												<?php } ?>
@@ -530,7 +521,7 @@ class UABBTable extends FLBuilderModule {
 									<tr class="tbody-row">
 										<?php foreach ( $row as $bkey => $col ) { ?>
 											<td class="table-body-td">
-												<span class="content-text"> <?php echo $col; ?> </span>
+												<span class="content-text"> <?php echo $col; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> </span>
 											</td>
 											<?php
 												$cell_counter++;
@@ -563,7 +554,7 @@ class UABBTable extends FLBuilderModule {
 	 */
 	public function render() {
 		$output = $this->parse_csv_file();
-		echo $output;
+		echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -704,9 +695,8 @@ class UABBTable extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/uabb-table-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-table/uabb-table-bb-less-than-2-2-compatibility.php';
 }
-

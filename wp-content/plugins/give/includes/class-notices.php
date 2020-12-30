@@ -22,11 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Give_Notices {
 	/**
 	 * List of notices
+	 *
 	 * @var array
 	 * @since  1.8.9
 	 * @access private
 	 */
-	private static $notices = array();
+	private static $notices = [];
 
 
 	/**
@@ -53,22 +54,22 @@ class Give_Notices {
 	 * @since 1.8.9
 	 */
 	public function __construct() {
-		add_action( 'admin_notices', array( $this, 'render_admin_notices' ), 999 );
-		add_action( 'admin_footer', array( $this, '__reveal_notices' ) );
-		add_action( 'give_dismiss_notices', array( $this, 'dismiss_notices' ) );
+		add_action( 'admin_notices', [ $this, 'render_admin_notices' ], 999 );
+		add_action( 'admin_footer', [ $this, '__reveal_notices' ] );
+		add_action( 'give_dismiss_notices', [ $this, 'dismiss_notices' ] );
 
-		add_action( 'give_frontend_notices', array( $this, 'render_frontend_notices' ), 999 );
-		add_action( 'give_pre_form_output', array( $this, 'render_frontend_form_notices' ), 10, 1 );
-		add_action( 'give_ajax_donation_errors', array( $this, 'render_frontend_notices' ) );
+		add_action( 'give_frontend_notices', [ $this, 'render_frontend_notices' ], 999 );
+		add_action( 'give_pre_form_output', [ $this, 'render_frontend_form_notices' ], 10, 1 );
+		add_action( 'give_ajax_donation_errors', [ $this, 'render_frontend_notices' ] );
 
 		/**
 		 * Backward compatibility for deprecated params.
 		 *
 		 * @since 1.8.14
 		 */
-		add_filter( 'give_register_notice_args', array( $this, 'bc_deprecated_params' ) );
-		add_filter( 'give_frontend_errors_args', array( $this, 'bc_deprecated_params' ) );
-		add_filter( 'give_frontend_notice_args', array( $this, 'bc_deprecated_params' ) );
+		add_filter( 'give_register_notice_args', [ $this, 'bc_deprecated_params' ] );
+		add_filter( 'give_frontend_errors_args', [ $this, 'bc_deprecated_params' ] );
+		add_filter( 'give_frontend_notice_args', [ $this, 'bc_deprecated_params' ] );
 	}
 
 	/**
@@ -117,7 +118,7 @@ class Give_Notices {
 
 		$notice_args = wp_parse_args(
 			$notice_args,
-			array(
+			[
 				'id'                    => '',
 				'description'           => '',
 
@@ -151,8 +152,7 @@ class Give_Notices {
 				// Only set it when custom is defined.
 				'dismiss_interval_time' => null,
 
-
-			)
+			]
 		);
 
 		/**
@@ -165,23 +165,26 @@ class Give_Notices {
 		// Set extra dismiss links if any.
 		if ( false !== strpos( $notice_args['description'], 'data-dismiss-interval' ) ) {
 
-			preg_match_all( "/data-([^\"]*)=\"([^\"]*)\"/", $notice_args['description'], $extra_notice_dismiss_link );
+			preg_match_all( '/data-([^"]*)="([^"]*)"/', $notice_args['description'], $extra_notice_dismiss_link );
 
 			if ( ! empty( $extra_notice_dismiss_link ) ) {
 				$extra_notice_dismiss_links = array_chunk( current( $extra_notice_dismiss_link ), 3 );
 				foreach ( $extra_notice_dismiss_links as $extra_notice_dismiss_link ) {
 					// Create array og key ==> value by parsing query string created after renaming data attributes.
-					$data_attribute_query_str = str_replace( array( 'data-', '-', '"' ), array(
-						'',
-						'_',
-						'',
-					), implode( '&', $extra_notice_dismiss_link ) );
+					$data_attribute_query_str = str_replace(
+						[ 'data-', '-', '"' ],
+						[
+							'',
+							'_',
+							'',
+						],
+						implode( '&', $extra_notice_dismiss_link )
+					);
 
 					$notice_args['extra_links'][] = wp_parse_args( $data_attribute_query_str );
 				}
 			}
 		}
-
 
 		self::$notices[ $notice_args['id'] ] = $notice_args;
 
@@ -202,7 +205,6 @@ class Give_Notices {
 	 * Display notice.
 	 *
 	 * @since 1.8.9
-	 *
 	 */
 	public function render_admin_notices() {
 		/* @var WP_Screen $wp_screen */
@@ -239,9 +241,8 @@ class Give_Notices {
 				continue;
 			}
 
-
 			// Render custom html.
-			if( ! empty( $notice['description_html'] ) ) {
+			if ( ! empty( $notice['description_html'] ) ) {
 				$output .= "{$notice['description_html']} \n";
 				continue;
 			}
@@ -259,7 +260,7 @@ class Give_Notices {
 			$css_id = ( false === strpos( $notice['id'], 'give' ) ? "give-{$notice['id']}" : $notice['id'] );
 
 			$css_class = 'give-notice notice ' . ( empty( $notice['dismissible'] ) ? 'non' : 'is' ) . "-dismissible {$notice['type']} notice-{$notice['type']}";
-			$output    .= sprintf(
+			$output   .= sprintf(
 				'<div id="%1$s" class="%2$s" data-dismissible="%3$s" data-dismissible-type="%4$s" data-dismiss-interval="%5$s" data-notice-id="%6$s" data-security="%7$s" data-dismiss-interval-time="%8$s" style="display: none">' . " \n",
 				$css_id,
 				$css_class,
@@ -321,9 +322,9 @@ class Give_Notices {
 		$display_option = give_get_meta( $form_id, '_give_payment_display', true );
 
 		if ( 'modal' === $display_option ) {
-			add_action( 'give_payment_mode_top', array( $this, 'render_frontend_notices' ) );
+			add_action( 'give_payment_mode_top', [ $this, 'render_frontend_notices' ] );
 		} else {
-			add_action( 'give_pre_form', array( $this, 'render_frontend_notices' ), 11 );
+			add_action( 'give_pre_form', [ $this, 'render_frontend_notices' ], 11 );
 		}
 	}
 
@@ -414,21 +415,15 @@ class Give_Notices {
 	 *
 	 * @since 2.3.0
 	 */
-	public function __reveal_notices(){
+	public function __reveal_notices() {
 		?>
 		<script>
 			jQuery(document).ready(function($){
 				// Fix notice appearance issue.
-				window.setTimeout(
-					function(){
-						var give_notices = $('.give-notice');
-
-						if( give_notices.length ) {
-							give_notices.slideDown();
-						}
-					},
-					1000
-				);
+				var give_notices = $('.give-notice');
+				if( give_notices.length ) {
+					give_notices.show();
+				}
 			});
 		</script>
 		<?php
@@ -516,12 +511,12 @@ class Give_Notices {
 	public function get_dismiss_link( $notice_args ) {
 		$notice_args = wp_parse_args(
 			$notice_args,
-			array(
+			[
 				'title'                 => __( 'Click here', 'give' ),
 				'dismissible_type'      => '',
 				'dismiss_interval'      => '',
 				'dismiss_interval_time' => null,
-			)
+			]
 		);
 
 		return sprintf(
@@ -593,13 +588,13 @@ class Give_Notices {
 		 *
 		 * @since 1.8.14
 		 */
-		$default_notice_args = array(
+		$default_notice_args = [
 			'dismissible'      => true,
 			'dismiss_interval' => 5000,
-		);
+		];
 
 		// Note: we will remove give_errors class in future.
-		$classes = apply_filters( 'give_error_class', array( 'give_notices', 'give_errors' ) );
+		$classes = apply_filters( 'give_error_class', [ 'give_notices', 'give_errors' ] );
 
 		echo sprintf( '<div class="%s">', implode( ' ', $classes ) );
 
@@ -607,10 +602,10 @@ class Give_Notices {
 		foreach ( $errors as $error_id => $error ) {
 			// Backward compatibility v<1.8.11
 			if ( is_string( $error ) ) {
-				$error = array(
+				$error = [
 					'message'     => $error,
-					'notice_args' => array(),
-				);
+					'notice_args' => [],
+				];
 			}
 
 			$notice_args = wp_parse_args( $error['notice_args'], $default_notice_args );
@@ -651,7 +646,7 @@ class Give_Notices {
 	 *
 	 * @return  string
 	 */
-	public static function print_frontend_notice( $message, $echo = true, $notice_type = 'warning', $notice_args = array() ) {
+	public static function print_frontend_notice( $message, $echo = true, $notice_type = 'warning', $notice_args = [] ) {
 		if ( empty( $message ) ) {
 			return '';
 		}
@@ -661,11 +656,11 @@ class Give_Notices {
 		 *
 		 * @since 1.8.14
 		 */
-		$default_notice_args = array(
+		$default_notice_args = [
 			'dismissible'      => false,
 			'dismiss_type'     => 'auto',
 			'dismiss_interval' => 5000,
-		);
+		];
 
 		$notice_args = wp_parse_args( $notice_args, $default_notice_args );
 
@@ -683,7 +678,6 @@ class Give_Notices {
 			sprintf(
 				'<img class="notice-dismiss give-notice-close" src="%s" />',
 				esc_url( GIVE_PLUGIN_URL . 'assets/dist/images/close.svg' )
-
 			) :
 			'';
 
@@ -701,7 +695,6 @@ class Give_Notices {
 			give_clean( $notice_args['dismiss_type'] ),
 			$message,
 			$close_icon
-
 		);
 
 		if ( ! $echo ) {
@@ -724,23 +717,23 @@ class Give_Notices {
 	 *
 	 * @return string
 	 */
-	public function print_admin_notices( $notice_args = array() ) {
+	public function print_admin_notices( $notice_args = [] ) {
 		// Bailout.
 		if ( empty( $notice_args['description'] ) ) {
 			return '';
 		}
 
-		$defaults    = array(
+		$defaults    = [
 			'id'          => '',
 			'echo'        => true,
 			'notice_type' => 'warning',
 			'dismissible' => true,
-		);
+		];
 		$notice_args = wp_parse_args( $notice_args, $defaults );
 
-		$output    = '';
-		$css_id    = ! empty( $notice_args['id'] ) ? $notice_args['id'] : uniqid( 'give-inline-notice-' );
-		$css_class = "notice-{$notice_args['notice_type']} give-notice notice inline";
+		$output     = '';
+		$css_id     = ! empty( $notice_args['id'] ) ? $notice_args['id'] : uniqid( 'give-inline-notice-' );
+		$css_class  = "notice-{$notice_args['notice_type']} give-notice notice inline";
 		$css_class .= ( $notice_args['dismissible'] ) ? ' is-dismissible' : '';
 		$output    .= sprintf(
 			'<div id="%1$s" class="%2$s"><p>%3$s</p></div>',

@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'BlogPostsModule', array(
+	'BlogPostsModule',
+	array(
 		'general'          => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -162,6 +163,21 @@ FLBuilder::register_module(
 								'no'  => __( 'No', 'uabb' ),
 							),
 						),
+						'enable_dots'                => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Dots', 'uabb' ),
+							'help'    => __( 'Enable Dots for the navigation', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields' => array( 'post_dots_size', 'post_dots_color' ),
+								),
+							),
+						),
 						'arrow_position'             => array(
 							'type'    => 'select',
 							'label'   => __( 'Arrow Position', 'uabb' ),
@@ -240,6 +256,50 @@ FLBuilder::register_module(
 							'size'        => '8',
 							'max_length'  => '3',
 						),
+						'post_dots_size'             => array(
+							'type'    => 'unit',
+							'label'   => __( 'Dots Size', 'uabb' ),
+							'units'   => array( 'px' ),
+							'slider'  => true,
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts .slick-dots li button:before',
+								'property' => 'font-size',
+								'unit'     => 'px',
+							),
+						),
+						'post_dots_color'            => array(
+							'type'        => 'color',
+							'label'       => __( 'Dots Color', 'uabb' ),
+							'show_alpha'  => 'true',
+							'show_reset'  => 'true',
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts ul.slick-dots li button:before, .uabb-blog-post ul.slick-dots li.slick-active button:before',
+								'property' => 'color',
+							),
+						),
+					),
+				),
+				'uabb_message'    => array(
+					'title'  => __( 'Message', 'uabb' ),
+					'fields' => array(
+						'no_results_message' => array(
+							'type'    => 'text',
+							'label'   => __( 'No Results Message', 'uabb' ),
+							'default' => __( "Sorry, we couldn't find any posts. Please try a different search.", 'uabb' ),
+						),
+						'show_search'        => array(
+							'type'    => 'select',
+							'label'   => __( 'Show Search', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'1' => __( 'Show', 'uabb' ),
+								'0' => __( 'Hide', 'uabb' ),
+							),
+							'help'    => __( 'Shows the search form if no posts are found.', 'uabb' ),
+						),
 					),
 				),
 			),
@@ -270,7 +330,8 @@ FLBuilder::register_module(
 							'default' => 'medium',
 							'help'    => __( 'Select featured image size. *For custom size - please clear page builder cache to take changes in effect.', 'uabb' ),
 							'options' => apply_filters(
-								'uabb_blog_posts_featured_image_sizes', array(
+								'uabb_blog_posts_featured_image_sizes',
+								array(
 									'full'      => __( 'Full', 'uabb' ),
 									'large'     => __( 'Large', 'uabb' ),
 									'medium'    => __( 'Medium', 'uabb' ),
@@ -530,9 +591,10 @@ FLBuilder::register_module(
 						'btn_style'                      => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'class'   => 'creative_button_styles',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
@@ -674,7 +736,7 @@ FLBuilder::register_module(
 				'btn-structure'    => array(
 					'title'  => __( 'Structure', 'uabb' ),
 					'fields' => array(
-						'btn_width'              => array(
+						'btn_width'                => array(
 							'type'    => 'select',
 							'label'   => __( 'Width', 'uabb' ),
 							'default' => 'auto',
@@ -695,7 +757,84 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'btn_custom_width'       => array(
+						'button_padding_dimension' => array(
+							'type'        => 'dimension',
+							'label'       => __( 'Padding', 'uabb' ),
+							'description' => 'px',
+							'responsive'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-creative-button-wrap a',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'button_border_style'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Bottom Border Type', 'uabb' ),
+							'default' => 'none',
+							'options' => array(
+								'none'   => __( 'None', 'uabb' ),
+								'solid'  => __( 'Solid', 'uabb' ),
+								'dashed' => __( 'Dashed', 'uabb' ),
+								'dotted' => __( 'Dotted', 'uabb' ),
+								'double' => __( 'Double', 'uabb' ),
+							),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-button-wrap a',
+								'property' => 'border-style',
+							),
+						),
+						'button_border_width'      => array(
+							'type'        => 'unit',
+							'label'       => __( 'Border Width', 'uabb' ),
+							'placeholder' => '1',
+							'description' => 'px',
+							'maxlength'   => '2',
+							'size'        => '6',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-button-wrap a',
+								'property' => 'border-width',
+								'unit'     => 'px',
+							),
+						),
+						'button_border_radius'     => array(
+							'type'        => 'unit',
+							'label'       => __( 'Border Radius', 'uabb' ),
+							'placeholder' => '1',
+							'description' => 'px',
+							'maxlength'   => '2',
+							'size'        => '6',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-button-wrap a',
+								'property' => 'border-radius',
+								'unit'     => 'px',
+							),
+						),
+						'button_border_color'      => array(
+							'type'       => 'color',
+							'label'      => __( 'Border Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-button-wrap a',
+								'property' => 'border-color',
+							),
+						),
+						'border_hover_color'       => array(
+							'type'       => 'color',
+							'label'      => __( 'Border Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+						),
+						'btn_custom_width'         => array(
 							'type'        => 'unit',
 							'label'       => __( 'Custom Width', 'uabb' ),
 							'default'     => '200',
@@ -703,7 +842,7 @@ FLBuilder::register_module(
 							'size'        => '4',
 							'description' => 'px',
 						),
-						'btn_custom_height'      => array(
+						'btn_custom_height'        => array(
 							'type'        => 'unit',
 							'label'       => __( 'Custom Height', 'uabb' ),
 							'default'     => '45',
@@ -711,7 +850,7 @@ FLBuilder::register_module(
 							'size'        => '4',
 							'description' => 'px',
 						),
-						'btn_padding_top_bottom' => array(
+						'btn_padding_top_bottom'   => array(
 							'type'        => 'unit',
 							'label'       => __( 'Padding Top/Bottom', 'uabb' ),
 							'placeholder' => '0',
@@ -719,7 +858,7 @@ FLBuilder::register_module(
 							'size'        => '4',
 							'description' => 'px',
 						),
-						'btn_padding_left_right' => array(
+						'btn_padding_left_right'   => array(
 							'type'        => 'unit',
 							'label'       => __( 'Padding Left/Right', 'uabb' ),
 							'placeholder' => '0',
@@ -727,7 +866,7 @@ FLBuilder::register_module(
 							'size'        => '4',
 							'description' => 'px',
 						),
-						'btn_border_radius'      => array(
+						'btn_border_radius'        => array(
 							'type'        => 'unit',
 							'label'       => __( 'Round Corners', 'uabb' ),
 							'maxlength'   => '3',
@@ -979,6 +1118,62 @@ FLBuilder::register_module(
 							'maxlength'   => '3',
 							'size'        => '5',
 						),
+						'content_border_type'          => array(
+							'type'    => 'select',
+							'label'   => __( 'Border Type', 'uabb' ),
+							'default' => 'none',
+							'help'    => __( 'The type of border to use. Double borders must have a width of at least 3px to render properly.', 'uabb' ),
+							'options' => array(
+								'none'   => __( 'None', 'uabb' ),
+								'solid'  => __( 'Solid', 'uabb' ),
+								'dashed' => __( 'Dashed', 'uabb' ),
+								'dotted' => __( 'Dotted', 'uabb' ),
+								'double' => __( 'Double', 'uabb' ),
+							),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts-shadow',
+								'property' => 'border-style',
+							),
+						),
+						'conetnt_border_width'         => array(
+							'type'        => 'unit',
+							'label'       => __( 'Border Width', 'uabb' ),
+							'description' => 'px',
+							'maxlength'   => '2',
+							'size'        => '6',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts-shadow',
+								'property' => 'border-width',
+								'unit'     => 'px',
+							),
+						),
+						'content_border_radius'        => array(
+							'type'        => 'unit',
+							'label'       => __( 'Border Radius', 'uabb' ),
+							'description' => 'px',
+							'maxlength'   => '3',
+							'size'        => '5',
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts-shadow',
+								'property' => 'border-radius',
+								'unit'     => 'px',
+							),
+						),
+						'content_border_color'         => array(
+							'type'       => 'color',
+							'label'      => __( 'Border Color', 'uabb' ),
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-blog-posts-shadow',
+								'property' => 'border-color',
+							),
+						),
 
 					),
 				),
@@ -1030,21 +1225,6 @@ FLBuilder::register_module(
 							'label'       => __( 'Posts Per Page', 'uabb' ),
 							'placeholder' => '10',
 							'size'        => '8',
-						),
-						'no_results_message'   => array(
-							'type'    => 'text',
-							'label'   => __( 'No Results Message', 'uabb' ),
-							'default' => __( "Sorry, we couldn't find any posts. Please try a different search.", 'uabb' ),
-						),
-						'show_search'          => array(
-							'type'    => 'select',
-							'label'   => __( 'Show Search', 'uabb' ),
-							'default' => '1',
-							'options' => array(
-								'1' => __( 'Show', 'uabb' ),
-								'0' => __( 'Hide', 'uabb' ),
-							),
-							'help'    => __( 'Shows the search form if no posts are found.', 'uabb' ),
 						),
 					),
 				),

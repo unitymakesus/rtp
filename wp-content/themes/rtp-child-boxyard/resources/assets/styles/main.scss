@@ -3,6 +3,7 @@
 
 // Import child theme overrides into this file
 @import "common/typography";
+@import "components/announcements";
 @import "components/buttons";
 @import "components/bbmodules";
 @import "components/forms";
@@ -10,3 +11,4 @@
 @import "layouts/header";
 @import "layouts/home";
 @import "layouts/single";
+@import "layouts/calendar";

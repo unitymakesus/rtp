@@ -13,6 +13,8 @@ window.FWP = window.FWP || {};
         'is_reset': false,
         'is_refresh': false,
         'is_bfcache': false,
+        'is_hash_click': false,
+        'is_load_more': false,
         'auto_refresh': true,
         'soft_refresh': false,
         'frozen_facets':{},
@@ -30,21 +32,27 @@ window.FWP = window.FWP || {};
         }
     }
 
-    // Safari popstate fix
-    $(window).on('load', function() {
+    window.addEventListener('load', function() {
         setTimeout(function() {
-            $(window).on('popstate', function() {
+            window.addEventListener('popstate', function() {
 
                 // Detect browser "back-foward" cache
                 if (FWP.is_bfcache) {
                     FWP.loaded = false;
                 }
 
-                if ((FWP.loaded || FWP.is_bfcache) && ! FWP.is_refresh) {
+                if ((FWP.loaded || FWP.is_bfcache) && ! FWP.is_refresh && ! FWP.is_hash_click) {
                     FWP.is_popstate = true;
                     FWP.refresh();
                     FWP.is_popstate = false;
                 }
+
+                FWP.is_hash_click = false;
+            });
+
+            // Prevent hash clicks from triggering a refresh
+            $(document).on('click', 'a[href^="#"]', function() {
+                FWP.is_hash_click = true;
             });
         }, 0);
     });
@@ -144,7 +152,7 @@ window.FWP = window.FWP || {};
         $(document).trigger('facetwp-refresh');
 
         // Trigger window.onpopstate
-        if (FWP.loaded && ! FWP.is_popstate) {
+        if (FWP.loaded && ! FWP.is_popstate && ! FWP.is_load_more) {
             FWP.set_hash();
         }
 
@@ -186,20 +194,11 @@ window.FWP = window.FWP || {};
             FWP.hooks.doAction('facetwp/refresh/' + facet_type, $this, facet_name);
 
             // Support custom loader
-            var do_loader = true;
-            if (FWP.loaded) {
-                if (FWP.soft_refresh || isset(FWP.frozen_facets[facet_name])) {
-                    do_loader = false;
-                }
-            }
-
-            if (do_loader) {
-                FWP.loading_handler({
-                    'element': $this,
-                    'facet_name': facet_name,
-                    'facet_type': facet_type
-                });
-            }
+            FWP.loading_handler({
+                'element': $this,
+                'facet_name': facet_name,
+                'facet_type': facet_type
+            });
         });
 
         // Add pagination to the URL hash
@@ -220,24 +219,29 @@ window.FWP = window.FWP || {};
 
 
     FWP.loading_handler = function(args) {
-        if ('fade' == FWP_JSON.loading_animation) {
-            if (! FWP.loaded) {
-                var $el = args.element;
-                $(document).on('facetwp-refresh', function() {
-                    $el.prepend('<div class="facetwp-overlay">');
-                    $el.find('.facetwp-overlay').css({
-                        width: $el.width(),
-                        height: $el.height()
-                    });
-                });
+        if (! FWP.loaded) {
+            var $el = args.element;
+            $(document).on('facetwp-refresh', function() {
 
-                $(document).on('facetwp-loaded', function() {
-                    $el.find('.facetwp-overlay').remove();
+                if ('fselect' == $el.data('type')) {
+                    var height = $el.find('.fs-label-wrap').outerHeight() + $el.find('.fs-dropdown').outerHeight() + 5;
+                }
+                else {
+                    var height = $el.height();
+                }
+
+                $el.addClass('is-loading');
+                $el.prepend('<div class="facetwp-overlay">');
+                $el.find('.facetwp-overlay').css({
+                    width: $el.width(),
+                    height: height
                 });
-            }
-        }
-        else if ('' == FWP_JSON.loading_animation) {
-            args.element.html('<div class="facetwp-loading"></div>');
+            });
+
+            $(document).on('facetwp-loaded', function() {
+                $el.removeClass('is-loading');
+                $el.find('.facetwp-overlay').remove();
+            });
         }
     }
 
@@ -285,7 +289,10 @@ window.FWP = window.FWP || {};
         FWP_HTTP.get = {};
         window.location.search.replace('?', '').split('&').forEach(function(el) {
             var item = el.split('=');
-            FWP_HTTP.get[item[0]] = item[1];
+
+            if ('' != item[0]) {
+                FWP_HTTP.get[item[0]] = item[1];
+            }
         });
     }
 

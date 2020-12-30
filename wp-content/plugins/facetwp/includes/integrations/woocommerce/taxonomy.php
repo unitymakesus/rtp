@@ -26,7 +26,7 @@ class FacetWP_Integration_WooCommerce_Taxonomy
      * @since 3.3.10
      */
     function adjust_term_counts( $terms, $taxonomy, $query_vars ) {
-        if ( FWP()->ajax->is_refresh || ! empty( FWP()->ajax->url_vars ) ) {
+        if ( FWP()->request->is_refresh || ! empty( FWP()->request->url_vars ) ) {
             if ( 'product_cat' == reset( $taxonomy ) ) {
                 global $wpdb, $wp_query;
         

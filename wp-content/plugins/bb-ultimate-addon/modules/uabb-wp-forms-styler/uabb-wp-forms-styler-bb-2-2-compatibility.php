@@ -17,12 +17,16 @@ FLBuilder::register_module(
 				'select_form'  => array( // Section.
 					'title'  => '', // Section Title.
 					'fields' => array( // Section Fields.
-						'wp_form_id' => array(
+						'wp_form_id'  => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Form', 'uabb' ),
 							'default' => uabb_wpf_get_form_id(),
 							'options' => array(),
 							'help'    => __( 'Choose a form that you wish to style', 'uabb' ),
+						),
+						'wp_form_raw' => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . wp_create_nonce( 'uabb-wpf-nonce' ) . '></div>',
 						),
 					),
 				),
@@ -522,21 +526,25 @@ FLBuilder::register_module(
 						'btn_style'        => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
 							),
 							'toggle'  => array(
 								'flat'        => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'transparent' => array(
-									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'gradient'    => array(
-									'fields' => array( 'btn_gradient' ),
+									'fields' => array( 'btn_gradient', 'btn_width', 'btn_border_radius' ),
+								),
+								'default'     => array(
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_padding', 'button_border', 'border_hover_color', 'btn_background_color' ),
 								),
 							),
 						),
@@ -587,7 +595,7 @@ FLBuilder::register_module(
 						'btn_background_color'       => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -595,7 +603,7 @@ FLBuilder::register_module(
 						'btn_background_hover_color' => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Hover Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -641,6 +649,30 @@ FLBuilder::register_module(
 								'selector' => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
 								'property' => 'padding',
 								'unit'     => 'px',
+							),
+						),
+						'button_border'          => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-wpf-styler .wpforms-form button[type=submit], .uabb-wpf-styler .wpforms-form .wpforms-page-button',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'     => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
 							),
 						),
 						'btn_custom_width'       => array(
@@ -1100,7 +1132,7 @@ The default heading will inherit tag from WPForms plugin itself
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/wpforms-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=wp-form-styler" target="_blank" rel="noopener"> How to Set Fields in wpf Styler Module? </a> </li>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/unable-to-see-wpforms-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=wp-form-styler" target="_blank" rel="noopener"> Unable to see the WPForms Styler Module in UABB? </a> </li>

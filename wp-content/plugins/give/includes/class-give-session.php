@@ -2,11 +2,11 @@
 /**
  * Session
  *
- * @package     Give
+ * @since       1.0
  * @subpackage  Classes/Give_Session
  * @copyright   Copyright (c) 2016, GiveWP
  * @license     https://opensource.org/licenses/gpl-license GNU Public License
- * @since       1.0
+ * @package     Give
  */
 
 // Exit if accessed directly.
@@ -25,7 +25,7 @@ class Give_Session {
 	 * @access private
 	 * @var Give_Session
 	 */
-	static private $instance;
+	private static $instance;
 
 	/**
 	 * Holds our session data
@@ -35,7 +35,7 @@ class Give_Session {
 	 *
 	 * @var    array
 	 */
-	private $session = array();
+	private $session = [];
 
 	/**
 	 * Holds our session data
@@ -177,17 +177,18 @@ class Give_Session {
 			$this->generate_donor_id();
 		}
 
-		add_action( 'give_process_donation_after_validation', array( $this, 'maybe_start_session' ) );
+		add_action( 'give_process_donation_after_validation', [ $this, 'maybe_start_session' ] );
+		add_action( 'wp_login', [ $this, 'startSessionWhenLoginAsWPUser' ], 10, 2 );
 
-		add_action( 'shutdown', array( $this, 'save_data' ), 20 );
-		add_action( 'wp_logout', array( $this, 'destroy_session' ) );
+		add_action( 'shutdown', [ $this, 'save_data' ], 20 );
+		add_action( 'wp_logout', [ $this, 'destroy_session' ] );
 
 		if ( ! is_user_logged_in() ) {
-			add_filter( 'nonce_user_logged_out', array( $this, '__nonce_user_logged_out' ) );
+			add_filter( 'nonce_user_logged_out', [ $this, '__nonce_user_logged_out' ] );
 		}
 
 		// Remove old sessions.
-		Give_Cron::add_daily_event( array( $this, '__cleanup_sessions' ) );
+		Give_Cron::add_daily_event( [ $this, '__cleanup_sessions' ] );
 	}
 
 	/**
@@ -199,7 +200,7 @@ class Give_Session {
 	 * @return array
 	 */
 	public function get_session_data() {
-		return $this->has_session() ? (array) Give()->session_db->get_session( $this->donor_id, array() ) : array();
+		return $this->has_session() ? (array) Give()->session_db->get_session( $this->donor_id, [] ) : [];
 	}
 
 
@@ -212,7 +213,7 @@ class Give_Session {
 	 * @return array
 	 */
 	public function get_session_cookie() {
-		$session      = array();
+		$session      = [];
 		$cookie_value = isset( $_COOKIE[ $this->cookie_name ] ) ? give_clean( $_COOKIE[ $this->cookie_name ] ) : $this->__handle_ajax_cookie(); // @codingStandardsIgnoreLine.
 
 		if ( empty( $cookie_value ) || ! is_string( $cookie_value ) ) {
@@ -224,6 +225,8 @@ class Give_Session {
 		if ( empty( $donor_id ) ) {
 			return $session;
 		}
+
+		require_once ABSPATH . WPINC . '/pluggable.php';
 
 		// Validate hash.
 		$to_hash = $donor_id . '|' . $session_expiration;
@@ -240,7 +243,7 @@ class Give_Session {
 		 */
 		$cookie_data = apply_filters(
 			'give_get_session_cookie',
-			array( $donor_id, $session_expiration, $session_expiring, $cookie_hash )
+			[ $donor_id, $session_expiration, $session_expiring, $cookie_hash ]
 		);
 
 		return $cookie_data;
@@ -255,7 +258,7 @@ class Give_Session {
 	 *
 	 * @return array|bool|string
 	 */
-	private function __handle_ajax_cookie(){
+	private function __handle_ajax_cookie() {
 		$cookie = false;
 
 		// @see https://github.com/impress-org/give/issues/3705
@@ -265,7 +268,7 @@ class Give_Session {
 			&& isset( $_GET['action'] )
 			&& 'get_receipt' === $_GET['action']
 		) {
-			$cookie = isset( $_GET[$this->cookie_name] ) ? give_clean( $_GET[$this->cookie_name] ) : false;
+			$cookie = isset( $_GET[ $this->cookie_name ] ) ? give_clean( $_GET[ $this->cookie_name ] ) : false;
 		}
 
 		return $cookie;
@@ -301,7 +304,7 @@ class Give_Session {
 		 * @param string $cookie_name Cookie name.
 		 * @param string $cookie_type Cookie type session or nonce.
 		 */
-		$this->cookie_name       = apply_filters(
+		$this->cookie_name = apply_filters(
 			'give_session_cookie',
 			'wp-give_session_' . COOKIEHASH, // Cookie name.
 			'session' // Cookie type.
@@ -322,7 +325,7 @@ class Give_Session {
 	 * @since  1.0
 	 * @access public
 	 *
-	 * @param string $key     Session key.
+	 * @param string $key Session key.
 	 * @param mixed  $default default value.
 	 *
 	 * @return string|array      Session variable.
@@ -339,8 +342,8 @@ class Give_Session {
 	 * @since  1.0
 	 * @access public
 	 *
-	 * @param  string $key   Session key.
-	 * @param  mixed  $value Session variable.
+	 * @param string $key Session key.
+	 * @param mixed  $value Session variable.
 	 *
 	 * @return string        Session variable.
 	 */
@@ -406,7 +409,7 @@ class Give_Session {
 	 * @return string|bool Formatted expiration date string.
 	 */
 	public function get_session_expiration() {
-		return $this->has_session() ? $this->session_expiration :false;
+		return $this->has_session() ? $this->session_expiration : false;
 	}
 
 	/**
@@ -426,6 +429,23 @@ class Give_Session {
 			&& ! $this->has_cookie
 		) {
 			$this->set_session_cookies( true );
+		}
+	}
+
+	/**
+	 * Setup donor session when authorized by WP user credentials
+	 *
+	 * @since 2.7.0
+	 *
+	 * @param WP_User $wpUser
+	 * @param string  $wpUserLogin
+	 */
+	public function startSessionWhenLoginAsWPUser( $wpUserLogin, $wpUser ) {
+		$donor = Give()->donors->get_donor_by( 'user_id', $wpUser->ID );
+
+		// Setup session only if donor exist for specific WP user.
+		if ( $donor ) {
+			$this->maybe_start_session();
 		}
 	}
 
@@ -457,16 +477,16 @@ class Give_Session {
 
 			Give()->session_db->__replace(
 				Give()->session_db->table_name,
-				array(
+				[
 					'session_key'    => $this->donor_id,
 					'session_value'  => maybe_serialize( $this->session ),
 					'session_expiry' => $this->session_expiration,
-				),
-				array(
+				],
+				[
 					'%s',
 					'%s',
 					'%d',
-				)
+				]
 			);
 
 			$this->session_data_changed = false;
@@ -485,7 +505,7 @@ class Give_Session {
 
 		Give()->session_db->delete_session( $this->donor_id );
 
-		$this->session              = array();
+		$this->session              = [];
 		$this->session_data_changed = false;
 
 		$this->generate_donor_id();
@@ -499,7 +519,7 @@ class Give_Session {
 	 *
 	 * @return bool
 	 */
-	public function is_delete_nonce_cookie(){
+	public function is_delete_nonce_cookie() {
 		$value = false;
 
 		if ( Give()->session->has_session() ) {
@@ -569,10 +589,10 @@ class Give_Session {
 	 * Retrieve session ID.
 	 *
 	 * @since      1.0
+	 * @return string Session ID.
 	 * @deprecated 2.2.0
 	 * @access     public
 	 *
-	 * @return string Session ID.
 	 */
 	public function get_id() {
 		return $this->get_cookie_name( 'session' );
@@ -585,10 +605,10 @@ class Give_Session {
 	 * (set_expiration_variant_time used in WP_Session).
 	 *
 	 * @since      1.0
+	 * @return int
 	 * @deprecated 2.2.0
 	 * @access     public
 	 *
-	 * @return int
 	 */
 	public function set_expiration_variant_time() {
 
@@ -602,14 +622,14 @@ class Give_Session {
 	 *
 	 * @since      1.0
 	 * @access     public
+	 * @return bool $ret True if we are using PHP sessions, false otherwise.
 	 * @deprecated 2.2.0
 	 *
-	 * @return bool $ret True if we are using PHP sessions, false otherwise.
 	 */
 	public function use_php_sessions() {
 		$ret = false;
 
-		give_doing_it_wrong( __FUNCTION__, __( 'We are using database session logic instead of PHP session', 'give' ), '2.2.0' );
+		give_doing_it_wrong( __FUNCTION__, __( 'We are using database session logic instead of PHP session since GiveWP 2.2.0', 'give' ) );
 
 		return (bool) apply_filters( 'give_use_php_sessions', $ret );
 	}
@@ -621,21 +641,21 @@ class Give_Session {
 	 *
 	 * @since      1.4
 	 * @access     public
+	 * @return bool
 	 * @deprecated 2.2.0
 	 *
-	 * @return bool
 	 */
 	public function should_start_session() {
 
 		$start_session = true;
 
-		give_doing_it_wrong( __FUNCTION__, __( 'We are using database session logic instead of PHP session', 'give' ), '2.2.0' );
-
+		give_doing_it_wrong( __FUNCTION__, __( 'We are using database session logic instead of PHP session since GiveWP 2.2.0', 'give' ) );
 
 		if ( ! empty( $_SERVER['REQUEST_URI'] ) ) {  // @codingStandardsIgnoreLine
 
 			$blacklist = apply_filters(
-				'give_session_start_uri_blacklist', array(
+				'give_session_start_uri_blacklist',
+				[
 					'feed',
 					'feed',
 					'feed/rss',
@@ -643,7 +663,7 @@ class Give_Session {
 					'feed/rdf',
 					'feed/atom',
 					'comments/feed/',
-				)
+				]
 			);
 			$uri       = ltrim( $_SERVER['REQUEST_URI'], '/' ); // // @codingStandardsIgnoreLine
 			$uri       = untrailingslashit( $uri );

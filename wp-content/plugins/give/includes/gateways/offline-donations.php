@@ -33,9 +33,9 @@ function give_offline_payment_cc_form( $form_id ) {
 	 */
 	do_action( 'give_before_offline_info_fields', $form_id );
 	?>
-    <fieldset id="give_offline_payment_info">
+	<fieldset class="no-fields" id="give_offline_payment_info">
 		<?php echo stripslashes( $offline_instructions ); ?>
-    </fieldset>
+	</fieldset>
 	<?php
 	/**
 	 * Fires after the offline info fields.
@@ -57,13 +57,13 @@ add_action( 'give_offline_cc_form', 'give_offline_payment_cc_form' );
  * @param $form_id
  */
 function give_offline_billing_fields( $form_id ) {
-	//Enable Default CC fields (billing info)
+	// Enable Default CC fields (billing info)
 	$post_offline_cc_fields        = give_get_meta( $form_id, '_give_offline_donation_enable_billing_fields_single', true );
 	$post_offline_customize_option = give_get_meta( $form_id, '_give_customize_offline_donations', true, 'global' );
 
 	$global_offline_cc_fields = give_get_option( 'give_offline_donation_enable_billing_fields' );
 
-	//Output CC Address fields if global option is on and user hasn't elected to customize this form's offline donation options
+	// Output CC Address fields if global option is on and user hasn't elected to customize this form's offline donation options
 	if (
 		( give_is_setting_enabled( $post_offline_customize_option, 'global' ) && give_is_setting_enabled( $global_offline_cc_fields ) )
 		|| ( give_is_setting_enabled( $post_offline_customize_option, 'enabled' ) && give_is_setting_enabled( $post_offline_cc_fields ) )
@@ -100,7 +100,6 @@ function give_offline_process_payment( $purchase_data ) {
 		'gateway'         => 'offline',
 	);
 
-
 	// record the pending payment
 	$payment = give_insert_payment( $payment_data );
 
@@ -131,7 +130,7 @@ function give_offline_send_donor_instructions( $payment_id = 0 ) {
 	$payment_data                      = give_get_payment_meta( $payment_id );
 	$post_offline_customization_option = give_get_meta( $payment_data['form_id'], '_give_customize_offline_donations', true );
 
-	//Customize email content depending on whether the single form has been customized
+	// Customize email content depending on whether the single form has been customized
 	$email_content = give_get_option( 'global_offline_donation_email' );
 
 	if ( give_is_setting_enabled( $post_offline_customization_option, 'enabled' ) ) {
@@ -193,7 +192,6 @@ function give_offline_send_donor_instructions( $payment_id = 0 ) {
  * @param int $payment_id
  *
  * @return void
- *
  */
 function give_offline_send_admin_notice( $payment_id = 0 ) {
 
@@ -214,19 +212,18 @@ function give_offline_send_admin_notice( $payment_id = 0 ) {
 
 	$admin_subject = apply_filters( 'give_offline_admin_donation_notification_subject', __( 'New Pending Donation', 'give' ), $payment_id );
 
-	$admin_message = __( 'Dear Admin,', 'give' ) . "\n\n";
-	$admin_message .= sprintf(__( 'A new offline donation has been made on your website for %s.', 'give' ), $amount) . "\n\n";
+	$admin_message  = __( 'Dear Admin,', 'give' ) . "\n\n";
+	$admin_message .= sprintf( __( 'A new offline donation has been made on your website for %s.', 'give' ), $amount ) . "\n\n";
 	$admin_message .= __( 'The donation is in a pending status and is awaiting payment. Donation instructions have been emailed to the donor. Once you receive payment, be sure to mark the donation as complete using the link below.', 'give' ) . "\n\n";
-
 
 	$admin_message .= '<strong>' . __( 'Donor:', 'give' ) . '</strong> {fullname}' . "\n";
 	$admin_message .= '<strong>' . __( 'Amount:', 'give' ) . '</strong> {amount}' . "\n\n";
 
 	$admin_message .= sprintf(
-		                  '<a href="%1$s">%2$s</a>',
-		                  admin_url( 'edit.php?post_type=give_forms&page=give-payment-history&view=view-payment-details&id=' . $payment_id ),
-		                  __( 'View Donation Details &raquo;', 'give' )
-	                  ) . "\n\n";
+		'<a href="%1$s">%2$s</a>',
+		admin_url( 'edit.php?post_type=give_forms&page=give-payment-history&view=view-payment-details&id=' . $payment_id ),
+		__( 'View Donation Details &raquo;', 'give' )
+	) . "\n\n";
 
 	$admin_message = apply_filters( 'give_offline_admin_donation_notification', $admin_message, $payment_id );
 	$admin_message = give_do_email_tags( $admin_message, $payment_id );
@@ -234,7 +231,7 @@ function give_offline_send_admin_notice( $payment_id = 0 ) {
 	$attachments   = apply_filters( 'give_offline_admin_donation_notification_attachments', array(), $payment_id );
 	$admin_headers = apply_filters( 'give_offline_admin_donation_notification_headers', array(), $payment_id );
 
-	//Send Email
+	// Send Email
 	$emails = Give()->emails;
 	$emails->__set( 'heading', __( 'New Offline Donation', 'give' ) );
 
@@ -261,18 +258,18 @@ function give_offline_add_settings( $settings ) {
 		return $settings;
 	}
 
-	//Vars
+	// Vars
 	$prefix = '_give_';
 
 	$is_gateway_active = give_is_gateway_active( 'offline' );
 
-	//this gateway isn't active
+	// this gateway isn't active
 	if ( ! $is_gateway_active ) {
-		//return settings and bounce
+		// return settings and bounce
 		return $settings;
 	}
 
-	//Fields
+	// Fields
 	$check_settings = array(
 
 		array(
@@ -281,7 +278,9 @@ function give_offline_add_settings( $settings ) {
 			'id'      => $prefix . 'customize_offline_donations',
 			'type'    => 'radio_inline',
 			'default' => 'global',
-			'options' => apply_filters( 'give_forms_content_options_select', array(
+			'options' => apply_filters(
+				'give_forms_content_options_select',
+				array(
 					'global'   => __( 'Global Option', 'give' ),
 					'enabled'  => __( 'Customize', 'give' ),
 					'disabled' => __( 'Disable', 'give' ),
@@ -309,7 +308,7 @@ function give_offline_add_settings( $settings ) {
 			'row_classes' => 'give-subfield give-hidden',
 			'options'     => array(
 				'textarea_rows' => 6,
-			)
+			),
 		),
 		array(
 			'name'  => 'offline_docs',
@@ -333,22 +332,24 @@ add_filter( 'give_forms_offline_donations_metabox_fields', 'give_offline_add_set
  * @return string
  */
 function give_get_default_offline_donation_content() {
-	$default_text = '<p>' . __( 'In order to make an offline donation we ask that you please follow these instructions', 'give' ) . ': </p>';
+	$default_text  = '<p>' . __( 'To make an offline donation toward this cause, follow these steps:', 'give' ) . ': </p>';
 	$default_text .= '<ol>';
 	$default_text .= '<li>';
 	$default_text .= sprintf(
-	/* translators: %s: site name */
-		__( 'Make a check payable to "{sitename}"', 'give' ) );
+		/* translators: %s: site name */
+		__( 'Write a check payable to "{sitename}"', 'give' )
+	);
 	$default_text .= '</li>';
 	$default_text .= '<li>';
 	$default_text .= sprintf(
-	/* translators: %s: site name */
-		__( 'On the memo line of the check, please indicate that the donation is for "{sitename}"', 'give' ) );
+		/* translators: %s: site name */
+		__( 'On the memo line of the check, indicate that the donation is for "{sitename}"', 'give' )
+	);
 	$default_text .= '</li>';
-	$default_text .= '<li>' . __( 'Please mail your check to:', 'give' ) . '</li>';
+	$default_text .= '<li>' . __( 'Mail your check to:', 'give' ) . '</li>';
 	$default_text .= '</ol>';
 	$default_text .= '{offline_mailing_address}<br>';
-	$default_text .= '<p>' . __( 'All contributions will be gratefully acknowledged and are tax deductible.', 'give' ) . '</p>';
+	$default_text .= '<p>' . __( 'Your tax-deductible donation is greatly appreciated!', 'give' ) . '</p>';
 
 	return apply_filters( 'give_default_offline_donation_content', $default_text );
 
@@ -362,25 +363,25 @@ function give_get_default_offline_donation_content() {
  * @return string
  */
 function give_get_default_offline_donation_email_content() {
-	$default_text = '<p>' . __( 'Dear {name},', 'give' ) . '</p>';
-	$default_text .= '<p>' . __( 'Thank you for your offline donation request! Your generosity is greatly appreciated. In order to make an offline donation we ask that you please follow these instructions:', 'give' ) . '</p>';
+	$default_text  = '<p>' . __( 'Hi {name},', 'give' ) . '</p>';
+	$default_text .= '<p>' . __( 'Thank you for letting us know that you\'re mailing a check! Your generosity is greatly appreciated. Here are those steps again:', 'give' ) . '</p>';
 	$default_text .= '<ol>';
 	$default_text .= '<li>';
 	$default_text .= sprintf(
-	/* translators: %s: site name */
-		__( 'Make a check payable to "{sitename}"', 'give' )
+		/* translators: %s: site name */
+		__( 'Write a check payable to "{sitename}"', 'give' )
 	);
 	$default_text .= '</li>';
 	$default_text .= '<li>';
 	$default_text .= sprintf(
-		__( 'On the memo line of the check, please indicate that the donation is for "{sitename}"', 'give' )
+		__( 'On the memo line of the check, indicate that the donation is for "{form_title}"', 'give' )
 	);
 	$default_text .= '</li>';
-	$default_text .= '<li>' . __( 'Please mail your check to:', 'give' ) . '</li>';
+	$default_text .= '<li>' . __( 'Mail your check to:', 'give' ) . '</li>';
 	$default_text .= '</ol>';
 	$default_text .= '{offline_mailing_address}<br>';
-	$default_text .= '<p>' . __( 'Once your donation has been received we will mark it as complete and you will receive an email receipt for your records. Please contact us with any questions you may have!', 'give' ) . '</p>';
-	$default_text .= '<p>' . __( 'Sincerely,', 'give' ) . '</p>';
+	$default_text .= '<p>' . __( 'Once we receive the check, we will mark it as complete in our system, which will generate an email receipt for your records. Please contact us with any questions you may have!', 'give' ) . '</p>';
+	$default_text .= '<p>' . __( 'Thanks in advance!', 'give' ) . '</p>';
 	$default_text .= '<p>{sitename}</p>';
 
 	return apply_filters( 'give_default_offline_donation_content', $default_text );
@@ -432,7 +433,6 @@ function give_get_offline_payment_instruction( $form_id, $wpautop = false ) {
 	 * Filter the offline instruction content
 	 *
 	 * @since 2.2.0
-	 *
 	 */
 	$formmated_offline_instructions = apply_filters(
 		'give_the_offline_instructions_content',
@@ -451,7 +451,7 @@ function give_get_offline_payment_instruction( $form_id, $wpautop = false ) {
  *
  * @since  1.8
  *
- * @param  array $gateway_list
+ * @param  array   $gateway_list
  * @param        $form_id
  *
  * @return array

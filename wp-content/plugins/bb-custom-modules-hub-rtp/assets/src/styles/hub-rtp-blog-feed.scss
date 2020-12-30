@@ -1,0 +1,443 @@
+// Master Brand
+$color-unc:                   #4B9CD3;
+$color-duke:                  #012169;
+$color-state:                 #C00;
+
+// Accents
+$color-nccu:                  #82052A;
+$color-orange:                #FC4C02;
+$color-purple:                #654EA3;
+
+// Frontier
+$color-mint:                  #47D7AC;
+$color-mint-a11y:             #2FA787;
+
+// Boxyard
+$color-boxyard:               #E63C2F;
+
+.cbb-blog-feed {
+  position: relative;
+
+  h2 {
+    font-size: 2.25rem;
+    font-weight: 300;
+
+    @media only screen and (min-width: 768px) {
+      font-size: 2.5rem;
+    }
+
+    @media only screen and (min-width: 992px) {
+      font-size: 4rem;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    padding: 4rem;
+
+    &::before,
+    &::after {
+      position: absolute;
+      border-style: solid;
+      border-width: 0;
+      border-color: #E15554;
+      width: 200px;
+      height: 200px;
+      content: '';
+    }
+
+    &::before {
+      top: 0;
+      left: 0;
+      border-top-width: 16px;
+      border-left-width: 16px;
+    }
+
+    &::after {
+      bottom: 0;
+      right: 0;
+      border-bottom-width: 16px;
+      border-right-width: 16px;
+    }
+  }
+
+  &__grid {
+    margin-top: 2rem;
+
+    @media only screen and (min-width: 992px) {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(2, minmax(0px, auto));
+      grid-row-gap: 5rem;
+      grid-column-gap: 3rem;
+    }
+  }
+
+  &__grid-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__grid-item--1 {
+    grid-area: 1 / 1 / 2 / 4;
+
+    @media only screen and (min-width: 992px) {
+      img {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card {
+        margin-left: 75px !important;
+        margin-right: 75px !important;
+      }
+    }
+  }
+
+  &__grid-item--2 {
+    grid-area: 1 / 4 / 2 / 6;
+    align-self: flex-end;
+
+    .figure-card {
+      position: relative;
+    }
+
+    @media only screen and (min-width: 992px) {
+      .card {
+        margin-top: -40px !important;
+      }
+
+      .figure-card {
+        top: 40px;
+      }
+    }
+
+    .card-excerpt {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative;
+      z-index: 1;
+      background: #FFF;
+    }
+  }
+
+  &__grid-item--3 {
+    grid-area: 2 / 1 / 3 / 3;
+
+    .figure-card {
+      position: relative;
+      height: 100%;
+    }
+
+    @media only screen and (min-width: 992px) {
+      .card {
+        margin-top: -40px !important;
+      }
+
+      .figure-card {
+        top: -20px;
+      }
+    }
+
+    .card-excerpt {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative;
+      z-index: 1;
+      background: #FFF;
+    }
+  }
+
+  &__grid-item--4 {
+    grid-area: 2 / 3 / 3 / 6;
+
+    @media only screen and (min-width: 992px) {
+      img {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .card {
+        margin-left: 75px !important;
+        margin-right: 75px !important;
+      }
+    }
+  }
+}
+
+.fl-module-content .figure-card {
+  &:focus-within .card {
+    a {
+      outline: 0;
+    }
+
+    .card-cta {
+      .text {
+        text-decoration: underline !important;
+      }
+
+      .arrow {
+        transform: translate3d(10px, 0, 0);
+      }
+    }
+  }
+
+  .card {
+    position: relative;
+    background: #FFF;
+    padding: 24px 24px 4px;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 3px 3px 9px -2px rgba(0, 0, 0, 0.5);
+    margin: 30px;
+    z-index: 2;
+
+    @media only screen and (max-width: 991px) {
+      top: -80px;
+      margin-bottom: -20px;
+    }
+
+    &:hover, &:focus-within, &:active {
+      background: #FFF;
+      box-shadow: 3px 3px 18px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .meta {
+      position: absolute;
+      right: 24px;
+      top: 38px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+  }
+
+  .card-badge {
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    font-weight: bold;
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 30px;
+    height: 30px;
+    text-transform: uppercase;
+
+    span {
+      position: absolute;
+      display: block;
+      font-size: 0.8em;
+      font-weight: 400;
+      left: 9px;
+      top: 7px;
+      white-space: nowrap;
+    }
+  }
+  .card-excerpt {
+    margin: 0 16px 20px;
+    font-weight: 300;
+  }
+
+  .card-title {
+    margin: 40px 16px 20px;
+
+    a {
+      text-decoration: none !important;
+      color: #000;
+      font-weight: 600;
+
+      &:hover, &:focus, &:active {
+        text-decoration: underline !important;
+      }
+    }
+  }
+
+  .card-content {
+    margin: 0 16px 20px;
+    font-weight: 300;
+  }
+
+  .card-cta {
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 4px;
+    padding: 5px;
+    margin: 0 16px;
+
+    a {
+      display: flex;
+      color: #5955A4;
+      text-align: right;
+      width: 100%;
+      height: auto;
+      font-weight: 400 !important;
+      font-size: 0.9em;
+      line-height: 1.5;
+      padding: 0.75rem 0;
+      text-transform: uppercase;
+      text-decoration: none !important;
+      transition: color 0.3s ease;
+      vertical-align: middle;
+
+      span {
+        vertical-align: middle;
+      }
+
+      .text {
+        flex-grow: 1;
+      }
+
+      .arrow {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-left: 0.5rem;
+        flex-shrink: 0;
+        align-self: center;
+        transition: transform 0.3s ease;
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+
+        path {
+          fill: #5955A4;
+          transition: fill 0.3s ease;
+        }
+      }
+
+      &:hover, &:focus, &:active {
+        .text {
+          text-decoration: underline !important;
+        }
+
+        .arrow {
+          transform: translate3d(10px, 0, 0);
+        }
+      }
+    }
+  }
+
+  .pattern-background {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  @media only screen and (min-width: 992px) {
+    .pattern-background {
+      display: inline-block;
+    }
+  }
+
+  &.badge-rtp {
+    .card-badge, .card-cta {
+      border-color: #000;
+      color: #000;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: #000;
+
+        .arrow path {
+          fill: #000;
+        }
+      }
+    }
+  }
+
+  &.badge-hub, &.badge-hub-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-purple;
+      color: $color-purple;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-purple;
+
+        .arrow path {
+          fill: $color-purple;
+        }
+      }
+    }
+  }
+
+  &.badge-boxyard, &.badge-boxyard-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-boxyard;
+      color: $color-boxyard;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-boxyard;
+
+        .arrow path {
+          fill: $color-boxyard;
+        }
+      }
+    }
+  }
+
+  &.badge-frontier, &.badge-frontier-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-mint;
+      color: $color-mint;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-mint-a11y;
+
+        .arrow path {
+          fill: $color-mint;
+        }
+      }
+    }
+  }
+
+  &.badge-stem, &.badge-stem-rtp {
+    .card-badge, .card-cta {
+      border-color: $color-purple;
+      color: $color-purple;
+    }
+
+    .card-cta a {
+      &:hover, &:focus, &:active {
+        color: $color-purple;
+
+        .arrow path {
+          fill: $color-purple;
+        }
+      }
+    }
+  }
+}

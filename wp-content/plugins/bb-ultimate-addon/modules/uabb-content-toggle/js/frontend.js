@@ -21,12 +21,12 @@
 		{	
 			this._contentToggleHandler();
 
-			var hashval = window.location.hash,
-				id = hashval.split( '#' ).pop();
+
+			id = window.location.hash.substring(1);
 
 			if ( id === 'content-1' || id === 'content-2' ) {
 
-				this._openOnLink();
+				this._openOnLink( id );
 			}
 		},
 
@@ -71,7 +71,7 @@
 			}
 
 			var rbs_switch      = nodeClass.find( current_class );
-				if( rbs_switch.is( ':checked' ) ) {
+				if( rbs_switch.hasClass( 'checked' ) ) {
 					if( content1 === 'content' ) {
 						rbs_section_1.hide();
 					}
@@ -118,27 +118,25 @@
 				if( content2 !== 'content_head2' ) {
                 	$( node +' .uabb-rbs-section-2' ).toggle();
 				}
-
-	        	if( $( this ).parent().find( '.uabb-checkbox-clickable' )[0].hasAttribute('checked') ) {
-	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).removeAttr( 'checked' );
+				if( $( this ).parent().find( '.uabb-checkbox-clickable' ).hasClass('checked') ) {
+	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).removeClass( 'checked' );
 	        	} else {
-	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).attr( 'checked', 'checked' );
+	        		$( this ).parent().find( '.uabb-checkbox-clickable' ).addClass( 'checked' );
 	        	}
 
 	        	$(window).resize();
 		    });
 		},
-		_openOnLink: function(){
+		_openOnLink: function( id ) {
 
 			var nodeClass  		= jQuery(this.nodeClass);
 			var node_id 		= nodeClass.data( 'node' );
 			var node          	= '.fl-node-' + node_id;
 			var node_toggle     = '#uabb-toggle-init' + ' ' + node;
-			var hashval = window.location.hash,
-				id = hashval.split( '#' ).pop();
+
 
 			$( 'html, body' ).animate( {
-		        scrollTop: $( '#uabb-toggle-init' ).find( ' .fl-module-uabb-content-toggle' ).offset().top
+		        scrollTop: $( '#uabb-toggle-init' ).find( '.fl-module-uabb-content-toggle' ).offset().top
 		    }, 500 );
 
 			if( id === 'content-1' ) {
@@ -147,15 +145,16 @@
 				$( node_toggle +' .uabb-rbs-content-2' ).hide();
 				$( node_toggle +' .uabb-rbs-section-1' ).show();
 				$( node_toggle +' .uabb-rbs-section-2' ).hide();
-				$( node_toggle + ' .uabb-checkbox-clickable' ).removeAttr( 'checked' );
+				$( node_toggle + ' .uabb-checkbox-clickable' ).removeClass( 'checked' );
 
 			} else {
 				$( node_toggle +' .uabb-rbs-content-2' ).show();
 				$( node_toggle +' .uabb-rbs-content-1' ).hide();
 				$( node_toggle +' .uabb-rbs-section-2' ).show();
 				$( node_toggle +' .uabb-rbs-section-1' ).hide();
-				$( node_toggle + ' .uabb-checkbox-clickable' ).attr( 'checked', 'checked' );
+				$( node_toggle + ' .uabb-checkbox-clickable' ).addClass( 'checked' );
 			}
+
 		},	
 	};
 	

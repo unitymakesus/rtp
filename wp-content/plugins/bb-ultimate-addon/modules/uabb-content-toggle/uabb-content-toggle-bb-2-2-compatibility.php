@@ -8,8 +8,11 @@
  *  @package UABB Content Toggle Module
  */
 
+$nonce = wp_create_nonce( 'uabb-module-nonce' );
+
 FLBuilder::register_module(
-	'UABBContentToggleModule', array(
+	'UABBContentToggleModule',
+	array(
 		'general_content1' => array(
 			'title'    => __( 'Content 1', 'uabb' ),
 			'sections' => array(
@@ -71,6 +74,10 @@ FLBuilder::register_module(
 							),
 							'wpautop'     => false,
 							'connections' => array( 'string', 'html' ),
+						),
+						'ct_raw'               => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . $nonce . '></div>',
 						),
 						'cont1_saved_rows'     => array(
 							'type'    => 'select',
@@ -152,6 +159,10 @@ FLBuilder::register_module(
 							),
 							'wpautop'     => false,
 							'connections' => array( 'string', 'html' ),
+						),
+						'ct_raw_one'           => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . $nonce . '></div>',
 						),
 						'cont2_saved_rows'     => array(
 							'type'    => 'select',
@@ -643,7 +654,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/open-content-toggle-specific-section-from-remote-link/?utm_source=Uabb-Pro-Backend&utm_medium=Module-Editor-Screen&utm_campaign=Content-Toggle-module" target="_blank" rel="noopener"> How to Open a Specific Section of Content Toggle from a Remote Link? </a> </li>
 

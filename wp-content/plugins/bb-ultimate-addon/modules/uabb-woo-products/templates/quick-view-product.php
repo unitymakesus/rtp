@@ -8,7 +8,7 @@
 while ( have_posts() ) :
 	the_post();
 
-	$post_id = get_the_ID();
+	$post_id = get_the_ID(); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 	if ( ! $post_id || ! in_array( get_post_type( $post_id ), array( 'product', 'product_variation' ), true ) ) {
 		return $classes;
@@ -64,7 +64,7 @@ while ( have_posts() ) :
 	}
 	?>
 <div class="uabb-woo-product">
-	<div id="product-<?php echo $post_id; ?>" class="<?php echo implode( ' ', $classes ); ?>">
+	<div id="product-<?php echo esc_attr( $post_id ); ?>" class="<?php echo wp_kses_post( implode( ' ', $classes ) ); ?>">
 		<?php do_action( 'uabb_woo_quick_view_product_image' ); ?>
 		<div class="summary entry-summary">
 			<div class="summary-content">

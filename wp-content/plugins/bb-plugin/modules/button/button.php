@@ -250,6 +250,7 @@ FLBuilder::register_module('FLButtonModule', array(
 						'placeholder'   => __( 'http://www.example.com', 'fl-builder' ),
 						'show_target'   => true,
 						'show_nofollow' => true,
+						'show_download' => true,
 						'preview'       => array(
 							'type' => 'none',
 						),
@@ -413,6 +414,37 @@ FLBuilder::register_module('FLButtonModule', array(
 						'preview'    => array(
 							'type'     => 'css',
 							'selector' => 'a.fl-button',
+						),
+					),
+				),
+			),
+			'icons'  => array(
+				'title'  => __( 'Icon', 'fl-builder' ),
+				'fields' => array(
+					'duo_color1' => array(
+						'label'      => __( 'DuoTone Icon Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => 'i.fl-button-icon.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color2' => array(
+						'label'      => __( 'DuoTone Icon Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'show_alpha' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => 'i.fl-button-icon.fad:after',
+							'property'  => 'color',
+							'important' => true,
 						),
 					),
 				),

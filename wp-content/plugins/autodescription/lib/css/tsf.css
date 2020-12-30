@@ -63,7 +63,8 @@ body.rtl .tsf-notice.tsf-show-icon p:before {
 	content: "\f147";
 }
 
-a.tsf-dismiss {
+/* Specific because common.css overrides via `.updated a` */
+.tsf-notice .tsf-dismiss {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -76,13 +77,25 @@ a.tsf-dismiss {
 	text-decoration: none;
 }
 
-body.rtl a.tsf-dismiss {
+body.rtl .tsf-notice .tsf-dismiss {
 	right: initial;
 	left: 0;
 }
 
-a.tsf-dismiss:before {
+.tsf-dismiss:hover {
+	color: #c00;
+}
+
+.tsf-dismiss:focus {
+	outline: none;
+	box-shadow:
+		0 0 0 1px #5b9dd9,
+		0 0 2px 1px rgba(30, 140, 190, 0.8);
+}
+
+.tsf-dismiss:before {
 	background: 0 0;
+	color: currentColor;
 	content: "\f153";
 	display: block;
 	font: 400 16px/20px dashicons;
@@ -94,29 +107,24 @@ a.tsf-dismiss:before {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-a.tsf-dismiss:hover {
-	color: #c00;
-}
-
 .tsf-seo-bar-item {
 	text-decoration: none;
 	font-size: 13px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
+	-ms-user-select: none; /* Remove me 2022 */
 	user-select: none;
 }
 
-#tsf-title-wrap {
+.tsf-title-wrap {
 	position: relative;
 	display: block;
 	padding: 0;
 	height: auto;
 	width: auto;
-	overflow: hidden;
 }
 
-#tsf-title-offset {
+.tsf-title-offset {
 	visibility: hidden;
 	height: 0;
 	display: inline-block;
@@ -126,18 +134,18 @@ a.tsf-dismiss:hover {
 	white-space: pre;
 }
 
-body.rtl #sf-title-offset {
+body.rtl .tsf-title-offset {
 	left: initial;
 	right: 0;
 }
 
-#tsf-title-placeholder,
-#tsf-title-placeholder-prefix {
+.tsf-title-placeholder-additions,
+.tsf-title-placeholder-prefix {
 	position: absolute;
 	color: #777;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
+	-ms-user-select: none; /* Remove me 2022 */
 	user-select: none;
 	box-sizing: content-box;
 	top: 0;
@@ -148,13 +156,13 @@ body.rtl #sf-title-offset {
 	will-change: left, right;
 }
 
-body.rtl #tsf-title-placeholder,
-body.rtl #tsf-title-placeholder-prefix {
+body.rtl .tsf-title-placeholder-additions,
+body.rtl .tsf-title-placeholder-prefix {
 	left: initial;
 	right: 0;
 }
 
-#tsf-title-placeholder {
+.tsf-title-placeholder-additions {
 	display: none;
 }
 
@@ -215,13 +223,8 @@ body.no-js .tsf-seo-bar-item {
 	background-color: #007bd2;
 }
 
-/* # End tooltips */
-
-/* Mobile support */
-/* Needs more refining.... e.g. iPhone 6 = good, iPhone 6+ = offscreen */
-.tsf-seo-bar-wrap.column-tsf-seo-bar-temp {
-	overflow: initial !important;
-	min-width: 160px;
+.tsf-seo-bar-undefined {
+	background-color: #767676;
 }
 
 /* Taxonomies overflow fix */
@@ -350,9 +353,6 @@ body.rtl .tsf-counter .tsf-aja {
 .tsf-ajax.tsf-loading:before {
 	content: "\f463";
 	color: #007bd2;
-	-webkit-animation: tsf-spin 1.5s linear infinite;
-	-moz-animation: tsf-spin 1.5s linear infinite;
-	-o-animation: tsf-spin 1.5s linear infinite;
 	animation: tsf-spin 1.5s linear infinite;
 }
 
@@ -364,6 +364,11 @@ body.rtl .tsf-counter .tsf-aja {
 .tsf-ajax.tsf-success:before {
 	content: "\f147";
 	color: #0cc34b;
+}
+
+.tsf-ajax.tsf-unknown:after {
+	content: "\f223";
+	color: #057c99;
 }
 
 .tsf-set-image-button.button,
@@ -387,6 +392,13 @@ body.rtl .tsf-remove-image-button.button {
 .tsf-metaboxes input[type="text"]::-webkit-input-placeholder,
 .tsf-metaboxes textarea::-webkit-input-placeholder {
 	transition: color 0.33s ease-in, text-shadow 0.33s ease-in;
+}
+
+/* Doesn't fire appropriate events, also seems deprecated. Hide it. */
+#tsf-inpost-box input[type="text"]::-ms-clear,
+.tsf-metaboxes input[type="text"]::-ms-clear,
+.tsf-quick-edit-columns input[type="text"]::-ms-clear {
+	display: none;
 }
 
 #tsf-inpost-box input[type="text"]::-moz-placeholder,
@@ -425,15 +437,6 @@ body.rtl .tsf-remove-image-button.button {
 .tsf-metaboxes textarea:focus:-ms-input-placeholder {
 	color: transparent;
 	text-shadow: 0 0 1px rgba(114, 119, 124, 0.75);
-}
-
-@-webkit-keyframes tsf-spin {
-	0% {
-		-webkit-transform: rotate( 0deg );
-	}
-	100% {
-		-webkit-transform: rotate( 360deg );
-	}
 }
 
 @keyframes tsf-spin {

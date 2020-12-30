@@ -12,12 +12,19 @@ class FacetWP_Indexer
     /* (int) Number of posts to index before updating progress */
     public $chunk_size = 10;
 
+    /* (string) Whether a temporary table is active */
+    public $table;
+
     /* (array) Facet properties for the value being indexed */
     public $facet;
+
+    /* (array) Value modifiers set via the admin UI */
+    public $modifiers;
 
 
     function __construct() {
         if ( apply_filters( 'facetwp_indexer_is_enabled', true ) ) {
+            $this->set_table_prop();
             $this->run_hooks();
             $this->run_cron();
         }
@@ -79,7 +86,7 @@ class FacetWP_Indexer
     function delete_post( $post_id ) {
         global $wpdb;
 
-        $wpdb->query( "DELETE FROM {$wpdb->prefix}facetwp_index WHERE post_id = $post_id" );
+        $wpdb->query( "DELETE FROM {$this->table} WHERE post_id = $post_id" );
     }
 
 
@@ -96,10 +103,10 @@ class FacetWP_Indexer
 
         if ( ! empty( $matches ) ) {
             $facet_names = wp_list_pluck( $matches, 'name' );
-            $facet_names = implode( "','", array_map( 'esc_sql', $facet_names ) );
+            $facet_names = implode( "','", esc_sql( $facet_names ) );
 
             $wpdb->query( $wpdb->prepare( "
-                UPDATE {$wpdb->prefix}facetwp_index
+                UPDATE {$this->table}
                 SET facet_value = %s, facet_display_value = %s
                 WHERE facet_name IN ('$facet_names') AND term_id = %d",
                 $slug, $term->name, $term_id
@@ -119,10 +126,10 @@ class FacetWP_Indexer
 
         if ( ! empty( $matches ) ) {
             $facet_names = wp_list_pluck( $matches, 'name' );
-            $facet_names = implode( "','", array_map( 'esc_sql', $facet_names ) );
+            $facet_names = implode( "','", esc_sql( $facet_names ) );
 
             $wpdb->query( "
-                DELETE FROM {$wpdb->prefix}facetwp_index
+                DELETE FROM {$this->table}
                 WHERE facet_name IN ('$facet_names') AND term_id = $term_id"
             );
         }
@@ -158,14 +165,13 @@ class FacetWP_Indexer
     function index( $post_id = false ) {
         global $wpdb;
 
+        $this->index_all = ( false === $post_id );
+
         // Index everything
-        if ( false === $post_id ) {
+        if ( $this->index_all ) {
 
             // Store the pre-index settings (see FacetWP_Diff)
             update_option( 'facetwp_settings_last_index', get_option( 'facetwp_settings' ), 'no' );
-
-            // Index all flag
-            $this->index_all = true;
 
             // Bypass the PHP timeout
             ini_set( 'max_execution_time', 0 );
@@ -180,8 +186,8 @@ class FacetWP_Indexer
                 }
             }
             else {
-                // Clear table values
-                $wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}facetwp_index" );
+                // Create temp table
+                $this->manage_temp_table( 'create' );
             }
 
             $args = [
@@ -205,7 +211,7 @@ class FacetWP_Indexer
             ];
 
             // Clear table values
-            $wpdb->query( "DELETE FROM {$wpdb->prefix}facetwp_index WHERE post_id = $post_id" );
+            $wpdb->query( "DELETE FROM {$this->table} WHERE post_id = $post_id" );
         }
         // Exit
         else {
@@ -230,6 +236,7 @@ class FacetWP_Indexer
             // Store post IDs
             if ( $this->index_all ) {
                 update_option( 'facetwp_indexing', json_encode( $post_ids ) );
+                $this->set_table_prop();
             }
         }
 
@@ -238,6 +245,9 @@ class FacetWP_Indexer
 
         // Get all facet sources
         $facets = FWP()->helper->get_facets();
+
+        // Populate an array of facet value modifiers
+        $this->modifiers = $this->get_value_modifiers( $facets );
 
         foreach ( $post_ids as $counter => $post_id ) {
 
@@ -262,6 +272,7 @@ class FacetWP_Indexer
                     if ( 'yes' === get_option( 'facetwp_indexing_cancelled', 'no' ) ) {
                         update_option( 'facetwp_transients', '' );
                         update_option( 'facetwp_indexing', '' );
+                        $this->manage_temp_table( 'delete' );
                         exit;
                     }
 
@@ -277,7 +288,7 @@ class FacetWP_Indexer
 
             // If the indexer stalled, start from the last valid chunk
             if ( 0 < $offset && ( $counter - $offset < $this->chunk_size ) ) {
-                $wpdb->query( "DELETE FROM {$wpdb->prefix}facetwp_index WHERE post_id = $post_id" );
+                $wpdb->query( "DELETE FROM {$this->table} WHERE post_id = $post_id" );
             }
 
             // Force WPML to change the language
@@ -340,6 +351,10 @@ class FacetWP_Indexer
             update_option( 'facetwp_last_indexed', time(), 'no' );
             update_option( 'facetwp_transients', '', 'no' );
             update_option( 'facetwp_indexing', '', 'no' );
+
+            $this->manage_temp_table( 'replace' );
+            $this->manage_temp_table( 'delete' );
+            $this->set_table_prop();
         }
 
         do_action( 'facetwp_indexer_complete' );
@@ -491,18 +506,30 @@ class FacetWP_Indexer
     function insert( $params ) {
         global $wpdb;
 
-        // Only accept scalar values
         $value = $params['facet_value'];
+        $display_value = $params['facet_display_value'];
+
+        // Only accept scalar values
         if ( '' === $value || ! is_scalar( $value ) ) {
             return;
         }
 
-        $wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->prefix}facetwp_index
+        // Apply UI-based modifiers
+        if ( isset( $this->modifiers[ $params['facet_name'] ] ) ) {
+            $mod = $this->modifiers[ $params['facet_name' ] ];
+            $is_match = in_array( $display_value, $mod['values'] );
+
+            if ( ( 'exclude' == $mod['type'] && $is_match ) || ( 'include' == $mod['type'] && ! $is_match ) ) {
+                return;
+            }
+        }
+
+        $wpdb->query( $wpdb->prepare( "INSERT INTO {$this->table}
             (post_id, facet_name, facet_value, facet_display_value, term_id, parent_id, depth, variation_id) VALUES (%d, %s, %s, %s, %d, %d, %d, %d)",
             $params['post_id'],
             $params['facet_name'],
             FWP()->helper->safe_value( $value ),
-            $params['facet_display_value'],
+            $display_value,
             $params['term_id'],
             $params['parent_id'],
             $params['depth'],
@@ -567,5 +594,62 @@ class FacetWP_Indexer
         }
 
         return false;
+    }
+
+
+    /**
+     * Determine whether a temp index table is in use
+     * @since 3.5
+     */
+    function set_table_prop() {
+        global $wpdb;
+
+        $table = ( '' == get_option( 'facetwp_indexing', '' ) ) ? 'index' : 'temp';
+        $this->table = $wpdb->prefix . 'facetwp_' . $table;
+    }
+
+
+    /**
+     * Index table management
+     * @since 3.5
+     */
+    function manage_temp_table( $action = 'create' ) {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'facetwp_index';
+        $temp_table = $wpdb->prefix . 'facetwp_temp';
+
+        if ( 'create' == $action ) {
+            $wpdb->query( "CREATE TABLE $temp_table LIKE $table" );
+        }
+        elseif ( 'replace' == $action ) {
+            $wpdb->query( "TRUNCATE TABLE $table" );
+            $wpdb->query( "INSERT INTO $table SELECT * FROM $temp_table" );
+        }
+        elseif ( 'delete' == $action ) {
+            $wpdb->query( "DROP TABLE IF EXISTS $temp_table" );
+        }
+    }
+
+
+    /**
+     * Populate an array of facet value modifiers (defined in the admin UI)
+     * @since 3.5.6
+     */
+    function get_value_modifiers( $facets ) {
+        $output = [];
+
+        foreach ( $facets as $facet ) {
+            $name = $facet['name'];
+            $type = empty( $facet['modifier_type'] ) ? 'off' : $facet['modifier_type'];
+
+            if ( 'include' == $type || 'exclude' == $type ) {
+                $values = preg_split( '/\r\n|\r|\n/', trim( $facet['modifier_values'] ) );
+                $values = array_map( 'trim', $values );
+                $output[ $name ] = [ 'type' => $type, 'values' => $values ];
+            }
+        }
+
+        return $output;
     }
 }

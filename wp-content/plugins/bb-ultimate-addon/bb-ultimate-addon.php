@@ -3,7 +3,7 @@
  * Plugin Name: Ultimate Addons for Beaver Builder
  * Plugin URI: http://www.ultimatebeaver.com/
  * Description: Ultimate Addons is a premium extension for Beaver Builder that adds 55+ modules, 250+ templates and works on top of any Beaver Builder Package. (Free, Standard, Pro & Agency) You can use it with any WordPress theme.
- * Version: 1.24.1
+ * Version: 1.28.10
  * Author: Brainstorm Force
  * Author URI: http://www.brainstormforce.com
  * Text Domain: uabb
@@ -27,7 +27,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 		 *
 		 * @since 1.0
 		 */
-		function __construct() {
+		public function __construct() {
 
 			$this->define_constant();
 			register_activation_hook( __FILE__, array( $this, 'activation_reset' ) );
@@ -37,9 +37,9 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 		/**
 		 * Function which defines the constand for UABB plugin
 		 */
-		function define_constant() {
+		public function define_constant() {
 
-			define( 'BB_ULTIMATE_ADDON_VER', '1.24.1' );
+			define( 'BB_ULTIMATE_ADDON_VER', '1.28.10' );
 			define( 'BB_ULTIMATE_ADDON_DIR', plugin_dir_path( __FILE__ ) );
 			define( 'BB_ULTIMATE_ADDON_URL', plugins_url( '/', __FILE__ ) );
 			define( 'BSF_REMOVE_UABB_FROM_REGISTRATION_LISTING', true );
@@ -50,11 +50,11 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 		 *
 		 * @Since 1.4.0
 		 */
-		function activation_reset() {
+		public function activation_reset() {
 
 			$no_memory = $this->check_memory_limit();
 
-			if ( true == $no_memory && ! defined( 'WP_CLI' ) ) {
+			if ( true === $no_memory && ! defined( 'WP_CLI' ) ) {
 
 				$msg  = __( 'Unfortunately, plugin could not be activated as the memory allocated by your host has almost exhausted. UABB plugin recommends that your site should have 15M PHP memory remaining. ', 'uabb' );
 				$msg .= '<br/><br/>' . __( 'Please check ', 'uabb' ) . '<a target="_blank" rel="noopener" href="https://www.ultimatebeaver.com/docs/increase-memory-limit-site/">' . __( 'this article', 'uabb' ) . '</a> ';
@@ -62,7 +62,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 				$msg .= '<br/><br/><a class="button button-primary" href="' . network_admin_url( 'plugins.php' ) . '">' . __( 'Return to Plugins Page', 'uabb' ) . '</a>';
 
 				deactivate_plugins( plugin_basename( __FILE__ ) );
-				wp_die( $msg );
+				wp_die( wp_kses_post( $msg ) );
 			}
 
 			delete_option( 'uabb_hide_branding' );
@@ -76,7 +76,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon' ) ) {
 		 *
 		 * @Since 1.4.0
 		 */
-		function check_memory_limit() {
+		public function check_memory_limit() {
 
 			$memory_limit  = ini_get( 'memory_limit' );      // Total Memory.
 			$peak_memory   = memory_get_peak_usage( true );  // Available Memory.
@@ -122,7 +122,7 @@ $bsf_core_version_file = realpath( dirname( __FILE__ ) . '/admin/bsf-core/versio
 if ( is_file( $bsf_core_version_file ) ) {
 	global $bsf_core_version, $bsf_core_path;
 	$bsf_core_dir = realpath( dirname( __FILE__ ) . '/admin/bsf-core/' );
-	$version      = file_get_contents( $bsf_core_version_file );
+	$version      = file_get_contents( $bsf_core_version_file );// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	if ( version_compare( $version, $bsf_core_version, '>' ) ) {
 		$bsf_core_version = $version;
 		$bsf_core_path    = $bsf_core_dir;

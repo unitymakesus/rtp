@@ -24,6 +24,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 
 	/**
 	 * Our export type. Used for export-type specific filters/actions
+	 *
 	 * @var string
 	 * @since 1.5
 	 */
@@ -31,6 +32,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 
 	/**
 	 * Allows for a non-form batch processing to be run.
+	 *
 	 * @since  1.5
 	 * @var boolean
 	 */
@@ -38,6 +40,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 
 	/**
 	 * Sets the number of items to pull on each step
+	 *
 	 * @since  1.5
 	 * @var integer
 	 */
@@ -72,13 +75,16 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 			$this->store_data( 'give_temp_recount_earnings', $total );
 		}
 
-		$accepted_statuses = apply_filters( 'give_recount_accepted_statuses', array( 'publish' ) );
+		$accepted_statuses = apply_filters( 'give_recount_accepted_statuses', [ 'publish' ] );
 
-		$args = apply_filters( 'give_recount_earnings_args', array(
-			'number' => $this->per_step,
-			'page'   => $this->step,
-			'status' => $accepted_statuses,
-		) );
+		$args = apply_filters(
+			'give_recount_earnings_args',
+			[
+				'number' => $this->per_step,
+				'page'   => $this->step,
+				'status' => $accepted_statuses,
+			]
+		);
 
 		$payments = give_get_payments( $args );
 
@@ -95,10 +101,14 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 				 */
 				$donation_amount = apply_filters(
 					'give_donation_amount',
-					give_format_amount( $payment_amount, array( 'donation_id' => $payment->ID ) ),
+					give_format_amount( $payment_amount, [ 'donation_id' => $payment->ID ] ),
 					$payment->total,
 					$payment->ID,
-					array( 'type' => 'stats', 'currency' => false, 'amount' => false )
+					[
+						'type'     => 'stats',
+						'currency' => false,
+						'amount'   => false,
+					]
 				);
 
 				$total += (float) give_maybe_sanitize_amount( $donation_amount );
@@ -133,7 +143,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 		$total = $this->get_stored_data( 'give_recount_earnings_total' );
 
 		if ( false === $total ) {
-			$args = apply_filters( 'give_recount_earnings_total_args', array() );
+			$args = apply_filters( 'give_recount_earnings_total_args', [] );
 
 			$counts = give_count_payments( $args );
 			$total  = absint( $counts->publish );
@@ -174,7 +184,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 	public function process_step() {
 
 		if ( ! $this->can_export() ) {
-			wp_die( esc_html__( 'You do not have permission to recount stats.', 'give' ), esc_html__( 'Error', 'give' ), array( 'response' => 403 ) );
+			wp_die( esc_html__( 'You do not have permission to recount stats.', 'give' ), esc_html__( 'Error', 'give' ), [ 'response' => 403 ] );
 		}
 
 		$had_data = $this->get_data();
@@ -187,7 +197,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 			$this->delete_data( 'give_recount_earnings_total' );
 			$this->delete_data( 'give_temp_recount_earnings' );
 			$this->done    = true;
-			$this->message = esc_html__( 'Income stats have been successfully recounted.', 'give' );
+			$this->message = esc_html__( 'Revenue stats have been successfully recounted.', 'give' );
 
 			return false;
 		}
@@ -246,7 +256,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 	 * @since  1.5
 	 *
 	 * @param  string $key The option_name
-	 * @param  mixed $value The value to store
+	 * @param  mixed  $value The value to store
 	 *
 	 * @return void
 	 */
@@ -255,17 +265,17 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 
 		$value = is_array( $value ) ? wp_json_encode( $value ) : esc_attr( $value );
 
-		$data = array(
+		$data = [
 			'option_name'  => $key,
 			'option_value' => $value,
 			'autoload'     => 'no',
-		);
+		];
 
-		$formats = array(
+		$formats = [
 			'%s',
 			'%s',
 			'%s',
-		);
+		];
 
 		$wpdb->replace( $wpdb->options, $data, $formats );
 	}
@@ -281,7 +291,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 	 */
 	private function delete_data( $key ) {
 		global $wpdb;
-		$wpdb->delete( $wpdb->options, array( 'option_name' => $key ) );
+		$wpdb->delete( $wpdb->options, [ 'option_name' => $key ] );
 	}
 
 	/**
@@ -289,7 +299,7 @@ class Give_Tools_Recount_Income extends Give_Batch_Export {
 	 *
 	 * @since 2.3.0
 	 *
-	 * @param array $request
+	 * @param array             $request
 	 * @param Give_Batch_Export $export
 	 */
 	public function unset_properties( $request, $export ) {

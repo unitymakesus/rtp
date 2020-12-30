@@ -2,16 +2,18 @@
 
 	<?php if ( 'show' == $settings->show_name ) : ?>
 	<div class="fl-form-field">
-		<input type="text" name="fl-subscribe-form-name" placeholder="<?php echo esc_attr( $settings->name_field_text ); ?>" aria-label="name" />
-		<div class="fl-form-error-message"><?php _e( 'Please enter your name.', 'fl-builder' ); ?></div>
+		<label for="fl-subscribe-form-name" class="hidden"><?php echo esc_attr( $settings->name_field_text ); ?></label>
+		<input type="text" aria-describedby="name-error" name="fl-subscribe-form-name" placeholder="<?php echo esc_attr( $settings->name_field_text ); ?>" id="fl-subscribe-form-name" />
+		<div class="fl-form-error-message" id="name-error"><?php _e( 'Please enter your name.', 'fl-builder' ); ?></div>
 	</div>
 	<?php endif; ?>
 
 	<div class="fl-form-field">
-		<input type="email" name="fl-subscribe-form-email" placeholder="<?php echo esc_attr( $settings->email_field_text ); ?>" aria-label="email address" />
-		<div class="fl-form-error-message"><?php _e( 'Please enter a valid email address.', 'fl-builder' ); ?></div>
+		<label for="fl-subscribe-form-email" class="hidden"><?php echo esc_attr( $settings->email_field_text ); ?></label>
+		<input type="email" aria-describedby="email-error" name="fl-subscribe-form-email" placeholder="<?php echo esc_attr( $settings->email_field_text ); ?>" id="fl-subscribe-form-email" />
+		<div class="fl-form-error-message" id="email-error"><?php _e( 'Please enter a valid email address.', 'fl-builder' ); ?></div>
 	</div>
-	
+
 	<?php if ( 'stacked' == $settings->layout ) : ?>
 		<?php if ( 'show' == $settings->terms_checkbox ) : ?>
 			<div class="fl-form-field fl-terms-checkbox">
@@ -61,7 +63,7 @@
 	<?php endif; ?>
 
 	<div class="fl-form-success-message"><?php echo $settings->success_message; ?></div>
-	
+
 	<div class="fl-form-error-message"><?php _e( 'Something went wrong. Please check your entries and try again.', 'fl-builder' ); ?></div>
 
 </div>

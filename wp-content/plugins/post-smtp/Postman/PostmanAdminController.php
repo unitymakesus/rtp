@@ -55,10 +55,6 @@ if ( ! class_exists( 'PostmanAdminController' ) ) {
 		const MULTISITE_SECTION = 'postman_multisite_section';
 		const ADVANCED_OPTIONS = 'postman_advanced_options';
 		const ADVANCED_SECTION = 'postman_advanced_section';
-		const NOTIFICATIONS_OPTIONS = 'postman_notifications_options';
-		const NOTIFICATIONS_SECTION = 'postman_notifications_section';
-		const NOTIFICATIONS_PUSHOVER_CRED = 'postman_pushover_cred';
-		const NOTIFICATIONS_SLACK_CRED = 'postman_slack_cred';
 		const EMAIL_VALIDATION_SECTION = 'postman_email_validation_section';
 		const EMAIL_VALIDATION_OPTIONS = 'postman_email_validation_options';
 
@@ -305,7 +301,7 @@ if ( ! class_exists( 'PostmanAdminController' ) ) {
 			// only administrators should be able to trigger this
 			if ( PostmanUtils::isAdmin() ) {
 				$mylinks = array(
-                        sprintf( '<a href="%s" target="_blank" class="postman_settings">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=yehuda@myinbox.in&item_name=Donation+for+PostSMTP', __( 'Donate', 'post-smtp' ) ),
+                        sprintf( '<a href="%s" target="_blank" class="postman_settings">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=yehudahas@gmail.com&item_name=Donation+for+PostSMTP', __( 'Donate', 'post-smtp' ) ),
 						sprintf( '<a href="%s" class="postman_settings">%s</a>', PostmanUtils::getSettingsPageUrl(), __( 'Settings', 'post-smtp' ) ),
 						sprintf( '<a href="%s" class="postman_settings">%s</a>', 'https://postmansmtp.com', __( 'Visit us', 'post-smtp' ) ),
 				);

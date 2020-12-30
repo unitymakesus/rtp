@@ -1,0 +1,188 @@
+.btn {
+  border: 0;
+  border-radius: 6px;
+  padding: 0 3rem;
+  width: auto;
+  background-color: $color-purple-hub;
+  color: $color-white;
+  text-decoration: none;
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    background-color: $color-purple-hub-interact;
+    text-decoration: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5);
+  }
+
+  &:active {
+    background-color: $color-purple-hub-active;
+  }
+}
+
+.btn-alt {
+  border: 0;
+  border-radius: 0;
+  padding: 0.6rem 3rem;
+  width: 100%;
+  background-color: $color-blue-duke;
+  color: $color-white;
+  text-decoration: none;
+  box-shadow: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 4px;
+  transition: background-color 0.3s ease-in-out;
+
+  @media screen and (min-width: 641px) {
+    width: calc(100% - 16px);
+  }
+
+  &:hover,
+  &:focus {
+    background-color: lighten($color-blue-duke, 10%);
+    text-decoration: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem transparentize($color-blue-unc, 0.5);
+  }
+
+  &:active {
+    background-color: darken($color-blue-duke, 5%);
+  }
+}
+
+button:hover,
+a.btn:hover,
+a.btn-alt:hover {
+  cursor: pointer;
+}
+
+// Menu toggles
+.btn-menu-toggle,
+.btn-topnav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+
+  > i {
+    font-size: inherit;
+  }
+}
+
+.btn-menu-toggle {
+  padding: 0.6rem 0.75rem;
+  color: black;
+  border-color: rgba($color-black, 0.75);
+}
+
+.btn-topnav-toggle {
+  padding: 0.6rem 0.75rem;
+  margin: 6px 0.5rem 6px 0;
+  color: $color-white;
+  border-color: rgba($color-white, 0.75);
+}
+
+.btn-pause-play {
+  display: none;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  color: $color-white;
+  background-color: $color-purple-hub;
+  text-decoration: none;
+  border-radius: 0;
+  border: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 44px;
+  height: 44px;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NzcuODg2IDQ3Ny44ODYiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik00NzYuMDkxIDIzMS4zMzJhMTcuMDY4IDE3LjA2OCAwIDAwLTcuNjYyLTcuNjYyTDI0LjY5NSAxLjgwNEMxNi4yNjQtMi40MSA2LjAxMyAxLjAxIDEuOCA5LjQ0MkExNy4wNjggMTcuMDY4IDAgMDAwIDE3LjA3OXY0NDMuNzMzYy0uMDA0IDkuNDI2IDcuNjMzIDE3LjA3IDE3LjA1OSAxNy4wNzVhMTcuMDY4IDE3LjA2OCAwIDAwNy42MzctMS44TDQ2OC40MjkgMjU0LjIyYzguNDM2LTQuMjA1IDExLjg2Ni0xNC40NTIgNy42NjItMjIuODg4eiIvPjwvc3ZnPg==');
+  background-size: 22px 22px;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 100;
+
+  &:active {
+    background-color: $color-purple-hub-active;
+  }
+
+  // Display on larger screens only (video is disabled on mobile).
+  @media #{$medium-and-up} {
+    display: inline-block;
+  }
+
+  &.playing {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NzcuODY3IDQ3Ny44NjciPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0xODcuNzMzIDBINTEuMmMtOS40MjYgMC0xNy4wNjcgNy42NDEtMTcuMDY3IDE3LjA2N1Y0NjAuOGMwIDkuNDI2IDcuNjQxIDE3LjA2NyAxNy4wNjcgMTcuMDY3aDEzNi41MzNjOS40MjYgMCAxNy4wNjctNy42NDEgMTcuMDY3LTE3LjA2N1YxNy4wNjdDMjA0LjggNy42NDEgMTk3LjE1OSAwIDE4Ny43MzMgMHpNNDI2LjY2NyAwSDI5MC4xMzNjLTkuNDI2IDAtMTcuMDY3IDcuNjQxLTE3LjA2NyAxNy4wNjdWNDYwLjhjMCA5LjQyNiA3LjY0MSAxNy4wNjcgMTcuMDY3IDE3LjA2N2gxMzYuNTMzYzkuNDI2IDAgMTcuMDY3LTcuNjQxIDE3LjA2Ny0xNy4wNjdWMTcuMDY3QzQ0My43MzMgNy42NDEgNDM2LjA5MiAwIDQyNi42NjcgMHoiLz48L3N2Zz4=');
+  }
+}
+
+.btn-filter {
+  position: relative;
+  background: none;
+  appearance: none;
+  border: 0;
+  padding: 0 56px 0 0;
+
+  &:focus {
+    background-color: transparent;
+    box-shadow: none;
+    text-decoration: underline;
+
+    &::before {
+      border-color: $color-blue-unc;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    right: 0;
+    width: 48px;
+    height: 24px;
+    background-color: $color-white;
+    border: 2px solid $color-grey-medium;
+    transform: translateY(-50%);
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    right: calc(4px + 22px);
+    width: 18px;
+    height: 16px;
+    background-color: $color-grey-medium;
+    transform: translateY(-50%);
+    transition: all 0.15s ease-in-out;
+    content: '';
+    z-index: 1;
+  }
+
+  &[aria-pressed="true"]::after {
+    background-color: $color-slate-dark;
+    right: 4px;
+  }
+}

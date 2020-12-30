@@ -9,7 +9,7 @@
 
         Vue.config.devtools = true;
 
-        Vue.component('multiselect', VueMultiselect.default);
+        Vue.component('v-select', VueSelect.VueSelect);
 
         Vue.filter('i18n', str => FWP.__(str));
 
@@ -64,7 +64,7 @@
                     let settings = {
                         num_columns: {
                             type: 'number',
-                            title: FWP.__('Results per row'),
+                            title: FWP.__('Grid columns '),
                             defaultValue: 1
                         },
                         grid_gap: {
@@ -411,17 +411,15 @@
 
                 <div>
                     {{ 'Fetch' | i18n }}
-                    <multiselect
+                    <v-select
                         v-model="query_obj.post_type"
+                        :options="FWP.query_data.post_types"
                         :multiple="true"
                         :searchable="false"
-                        :options="$root.query_data.post_types"
                         :close-on-select="false"
-                        :show-labels="false"
-                        label="label"
-                        track-by="value"
                         placeholder="All post types">
-                    </multiselect>
+                    </v-select>
+
                     {{ 'and show' | i18n }}
                     <input type="number" v-model.number="query_obj.posts_per_page" class="qb-posts-per-page" />
                     {{ 'per page' | i18n }}
@@ -445,7 +443,7 @@
                             <option value="post__in">post__in</option>
                         </optgroup>
                         <optgroup label="Custom Fields">
-                            <option v-for="(label, name) in $root.data_sources.custom_fields.choices" :value="name">{{ label }}</option>
+                            <option v-for="(label, name) in FWP.data_sources.custom_fields.choices" :value="name">{{ label }}</option>
                         </optgroup>
                     </fselect>
                     <select v-model="row.type" v-show="row.key.substr(0, 3) == 'cf/'" class="qb-type">
@@ -456,9 +454,7 @@
                         <option value="ASC">ASC</option>
                         <option value="DESC">DESC</option>
                     </select>
-                    <span @click="deleteSortCriteria(index)" class="qb-remove">
-                        <i class="fas fa-minus-circle"></i>
-                    </span>
+                    <span @click="deleteSortCriteria(index)" class="qb-remove" v-html="FWP.svg['minus-circle']"></span>
                 </div>
 
                 <div class="qb-condition"
@@ -468,7 +464,7 @@
 
                 <div v-for="(row, index) in query_obj.filters" class="qb-condition">
                     <fselect :row="row">
-                        <optgroup v-for="data in $root.query_data.filter_by" :label="data.label">
+                        <optgroup v-for="data in FWP.query_data.filter_by" :label="data.label">
                             <option v-for="(label, name) in data.choices" :value="name" v-html="label"></option>
                         </optgroup>
                     </fselect>
@@ -476,6 +472,7 @@
                     <select v-model="row.type" v-show="row.key.substr(0, 3) == 'cf/'" class="qb-type">
                         <option value="CHAR">TEXT</option>
                         <option value="NUMERIC">NUMERIC</option>
+                        <option value="DATE">DATE</option>
                     </select>
 
                     <select v-model="row.compare" class="qb-compare">
@@ -491,21 +488,17 @@
                         <option v-if="showCompare('NOT EXISTS', row)" value="NOT EXISTS">NOT EXISTS</option>
                     </select>
 
-                    <multiselect
+                    <v-select
                         v-model="row.value"
                         v-show="row.compare != 'EXISTS' && row.compare != 'NOT EXISTS'"
-                        v-on:tag="addTag($event, row.value)"
+                        :options="[]"
                         :multiple="true"
                         :taggable="true"
-                        :show-labels="false"
-                        :options="[]"
-                        :closeOnSelect="false"
-                        :placeholder="getPlaceholder(row)"
-                        tag-placeholder="Hit Enter">
-                    </multiselect>
-                    <span @click="deleteFilterCriteria(index)" class="qb-remove">
-                        <i class="fas fa-minus-circle"></i>
-                    </span>
+                        :close-on-select="false"
+                        :placeholder="getPlaceholder(row)">
+                    </v-select>
+
+                    <span @click="deleteFilterCriteria(index)" class="qb-remove" v-html="FWP.svg['minus-circle']"></span>
                 </div>
 
                 <div class="qb-add">
@@ -521,19 +514,24 @@
                 getPlaceholder({key}) {
                     return ('tax/' == key.substr(0, 4)) ? FWP.__('Enter term slugs') : FWP.__('Enter values');
                 },
-                showCompare(option, {key}) {
+                showCompare(option, {key, type}) {
                     if ('tax/' == key.substr(0, 4)) {
                         if (!['IN', 'NOT IN', 'EXISTS', 'NOT EXISTS'].includes(option)) {
                             return false;
                         }
                     }
-                    if (['ID', 'post_author', 'post_status', 'post_name'].includes(key)) {
+                    else if (['ID', 'post_author', 'post_status', 'post_name'].includes(key)) {
                         if (option != 'IN' && option != 'NOT IN') {
                             return false;
                         }
                     }
-                    if ('post_date' == key || 'post_modified' == key) {
+                    else if ('DATE' == type || 'post_date' == key || 'post_modified' == key) {
                         if (!['>', '>=', '<', '<='].includes(option)) {
+                            return false;
+                        }
+                    }
+                    else if ('CHAR' == type) {
+                        if (['>', '>=', '<', '<='].includes(option)) {
                             return false;
                         }
                     }
@@ -618,7 +616,7 @@
                     </div>
                     <div class="builder-intro">
                         In the above canvas, build the layout for an individual result.<br><br>
-                        Then in <strong>Layout</strong>, choose the number of results per row.
+                        Then in <strong>Layout</strong>, choose the number of grid columns.
                     </div>
                 </div>
                 <builder-settings :layout="layout"></builder-settings>
@@ -717,7 +715,7 @@
                     <span class="color-preview"></span>
                     <input type="text" class="color-input" v-model="settings[name]" />
                 </div>
-                <button class="color-clear">{{ 'Clear' | i18n }}</button>
+                <span class="color-clear">X</span>
             </div>`,
             mounted() {
                 let self = this;
@@ -845,11 +843,11 @@
             props: ['settings', 'name', 'meta'],
             template: `
             <div class="text-style-icons">
-                <span @click="toggleChoice('align', 'left')" :class="{ active: isActive('align', 'left') }"><i class="fas fa-align-left"></i></span>
-                <span @click="toggleChoice('align', 'center')" :class="{ active: isActive('align', 'center') }"><i class="fas fa-align-center"></i></span>
-                <span @click="toggleChoice('align', 'right')" :class="{ active: isActive('align', 'right') }"><i class="fas fa-align-right"></i></span>
-                <span @click="toggleChoice('bold')" :class="{ active: isActive('bold') }"><i class="fas fa-bold"></i></span>
-                <span @click="toggleChoice('italic')" :class="{ active: isActive('italic') }"><i class="fas fa-italic"></i></span>
+                <span @click="toggleChoice('align', 'left')" :class="{ active: isActive('align', 'left') }" v-html="FWP.svg['align-left']"></span>
+                <span @click="toggleChoice('align', 'center')" :class="{ active: isActive('align', 'center') }" v-html="FWP.svg['align-center']"></span>
+                <span @click="toggleChoice('align', 'right')" :class="{ active: isActive('align', 'right') }" v-html="FWP.svg['align-right']"></span>
+                <span @click="toggleChoice('bold')" :class="{ active: isActive('bold') }" v-html="FWP.svg['bold']"></span>
+                <span @click="toggleChoice('italic')" :class="{ active: isActive('italic') }" v-html="FWP.svg['italic']"></span>
             </div>
             `,
             methods: {
@@ -953,7 +951,7 @@
                 });
 
                 this.$root.$on('edit-item', ({source, settings}) => {
-                    self.title = self.$root.layout_data[source];
+                    self.title = FWP.layout_data[source];
                     self.type = 'item';
                     self.settings = self.mergeSettings(settings, self.type, source);
                     self.source = source;
@@ -972,10 +970,10 @@
             template: `
             <div class="builder-row">
                 <div class="builder-row-actions" :class="classIsChild">
-                    <span @click="editRow" title="Edit row"><i class="fas fa-cog"></i></span>
-                    <span @click="addCol" title="Add columm"><i class="fas fa-columns"></i></span>
-                    <span @click="addRow" title="Add row"><i class="fas fa-plus"></i></span>
-                    <span @click="deleteRow" title="Delete row"><i class="fas fa-times"></i></span>
+                    <span @click="editRow" title="Edit row" v-html="FWP.svg['cog']"></span>
+                    <span @click="addCol" title="Add columm" v-html="FWP.svg['columns']"></span>
+                    <span @click="addRow" title="Add row" v-html="FWP.svg['plus']"></span>
+                    <span @click="deleteRow" title="Delete row" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-row-inner" :style="{ gridTemplateColumns: row.settings.grid_template_columns }">
                     <builder-col
@@ -1045,8 +1043,8 @@
                 <col-resizer :cols="cols" :index="index" v-show="index < (cols.length - 1)"></col-resizer>
                 <popover :col="col" v-if="adding_item" v-on-clickaway="away"></popover>
                 <div class="builder-col-actions">
-                    <span @click="editCol" title="Edit columm"><i class="fas fa-cog"></i></span>
-                    <span @click="deleteCol" title="Delete column"><i class="fas fa-times"></i></span>
+                    <span @click="editCol" title="Edit columm" v-html="FWP.svg['cog']"></span>
+                    <span @click="deleteCol" title="Delete column" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-col-inner" :class="[ !col.items.length ? 'empty-col' : '' ]">
                     <draggable v-model="col.items" handle=".item-drag" group="drag-across-columns" class="draggable">
@@ -1176,11 +1174,11 @@
             template: `
             <div class="builder-item">
                     <div class="builder-item-actions">
-                    <span @click="deleteItem" title="Delete item"><i class="fas fa-times"></i></span>
+                    <span @click="deleteItem" title="Delete item" v-html="FWP.svg['times']"></span>
                 </div>
                 <div class="builder-item-inner" @click="editItem" :class="[ item.settings.is_hidden ? 'is-hidden' : '' ]">
-                    <span class="item-drag" v-html="$root.layout_data[item.source]"></span>
-                    <span v-if="item.settings.is_hidden"><i class="fas fa-eye-slash"></i></span>
+                    <span class="item-drag" v-html="FWP.layout_data[item.source]"></span>
+                    <span v-if="item.settings.is_hidden" v-html="FWP.svg['eye-slash']"></span>
                 </div>
             </div>
             `,
@@ -1218,7 +1216,7 @@
                 <div class="popover-choices">
                     <div
                         @click="saveItem(source)"
-                        v-for="(label, source) in $root.layout_data"
+                        v-for="(label, source) in FWP.layout_data"
                         v-show="isMatch(label)"
                         v-html="label">
                     </div>
@@ -1271,9 +1269,9 @@
                     @click="$root.editItem('facet', facet)"
                 >
                     <div class="card-drag">&#9776;</div>
-                    <div class="card-label" :title="facet.name">
-                        {{ facet.label }}
-                        <span v-if="facet._code">&nbsp; <i class="fas fa-lock"></i></span>
+                    <div class="card-label">
+                        <span class="label-text" :title="facet.name">{{ facet.label }}</span>
+                        <span v-if="facet._code" v-html="FWP.svg['lock']"></span>
                     </div>
                     <div class="card-delete" @click.stop="$root.deleteItem('facet', index)"></div>
                     <div class="card-type">{{ facet.type }}</div>
@@ -1305,9 +1303,9 @@
                     @click="$root.editItem('template', template)"
                 >
                     <div class="card-drag">&#9776;</div>
-                    <div class="card-label" :title="template.name">
-                        {{ template.label }}
-                        <span v-if="template._code">&nbsp;<i class="fas fa-lock"></i></span>
+                    <div class="card-label">
+                        <span class="label-text" :title="template.name">{{ template.label }}</span>
+                        <span v-if="template._code" v-html="FWP.svg['lock']"></span>
                     </div>
                     <div class="card-delete" @click.stop="$root.deleteItem('template', index)"></div>
                     <div class="card-display-mode">{{ getDisplayMode(index) }}</div>
@@ -1348,10 +1346,8 @@
                 this.facet = this.$root.editing;
             },
             methods: {
-                reservedName() {
-                    if ('pager' == this.facet.name) {
-                        this.facet.name += '_';
-                    }
+                setName(e) {
+                    this.facet.name = this.$root.sanitizeName(e.target.innerHTML);
                 },
                 unlock() {
                     Vue.delete(this.facet, '_code');
@@ -1361,7 +1357,7 @@
             <div>
                 <div class="item-locked" v-if="facet._code">
                     This facet is registered in code. Click to allow edits:
-                    <span @click="unlock"><i class="fas fa-lock-open"></i></span>
+                    <span @click="unlock" v-html="FWP.svg['lock-open']"></span>
                 </div>
                 <div class="facetwp-content" :class="[ 'type-' + facet.type, { locked: facet._code } ]">
                     <div class="facetwp-row">
@@ -1373,13 +1369,10 @@
                                 @focus="$root.isNameEditable(facet)"
                                 @keyup="$root.maybeEditName(facet)"
                             />
-                            &nbsp; &nbsp; {{ 'Name' | i18n }}:
-                            <input
-                                type="text"
-                                class="item-name"
-                                v-model="facet.name"
-                                @change="reservedName"
-                            />
+                            <code class="item-name" contenteditable v-text="facet.name" @blur="setName" @keydown.enter.prevent autocorrect="off"></code>
+                            <span class="facetwp-btn" @click="$root.copyToClipboard(facet.name, 'facet', $event)">
+                                {{ 'Copy shortcode' | i18n }}
+                            </span>
                         </div>
                     </div>
                     <div class="facetwp-row">
@@ -1388,22 +1381,14 @@
                             <facet-types
                                 :facet="facet"
                                 :selected="facet.type"
-                                :types="$root.facet_types">
+                                :types="FWP.facet_types">
                             </facet-types>
-                            &nbsp; &nbsp;
-                            <span class="facetwp-btn" @click="$root.copyToClipboard(facet.name, $event)">
-                                {{ 'Copy shortcode' | i18n }}
-                            </span>
                         </div>
                     </div>
                     <div class="facetwp-row field-data-source">
                         <div>{{ 'Data source' | i18n }}:</div>
                         <div>
-                            <data-sources
-                                :facet="facet"
-                                :selected="facet.source"
-                                :sources="$root.data_sources">
-                            </data-sources>
+                            <data-sources :facet="facet"></data-sources>
                         </div>
                     </div>
                     <hr />
@@ -1448,6 +1433,9 @@
                 }
             },
             methods: {
+                setName(e) {
+                    this.template.name = this.$root.sanitizeName(e.target.innerHTML);
+                },
                 isMode(mode) {
                     return this.template.modes[this.tab] === mode;
                 },
@@ -1463,7 +1451,7 @@
             <div>
                 <div class="item-locked" v-if="template._code">
                     This template is registered in code. Click to allow edits:
-                    <span @click="unlock"><i class="fas fa-lock-open"></i></span>
+                    <span @click="unlock" v-html="FWP.svg['lock-open']"></span>
                 </div>
                 <div class="facetwp-content" :class="{ locked: template._code }">
                     <div class="table-row">
@@ -1473,12 +1461,10 @@
                             @focus="$root.isNameEditable(template)"
                             @keyup="$root.maybeEditName(template)"
                         />
-                        &nbsp; &nbsp; Name:
-                        <input
-                            type="text"
-                            class="item-name"
-                            v-model="template.name"
-                        />
+                        <code class="item-name" contenteditable v-text="template.name" @blur="setName" @keydown.enter.prevent autocorrect="off"></code>
+                        <span class="facetwp-btn" @click="$root.copyToClipboard(template.name, 'template', $event)">
+                            {{ 'Copy shortcode' | i18n }}
+                        </span>
                     </div>
 
                     <div @click="switchMode()" v-show="isMode('visual')" class="side-link">{{ 'Switch to advanced mode' | i18n }}</div>
@@ -1537,14 +1523,14 @@
             },
             template: `
             <div class="facet-fields">
-                <component :is="dynComponent" v-bind="$props"></component>
+                <component :is="dynComponent" :facet="facet"></component>
             </div>
             `,
             computed: {
 
-                tableToDivs() {
+                settingsHtml() {
                     const self = this;
-                    let html = this.$root.clone[this.facet.type];
+                    let html = FWP.clone[this.facet.type];
                     let custom_settings = ['_code'];
 
                     // Backwards compatibility
@@ -1605,8 +1591,8 @@
                 // use a dynamic component so the data bindings (e.g. v-model) get compiled
                 dynComponent() {
                     return {
-                        template: '<div>' + this.tableToDivs + '</div>',
-                        props: this.$options.props
+                        template: '<div>' + this.settingsHtml + '</div>',
+                        props: ['facet']
                     }
                 }
             },
@@ -1616,17 +1602,18 @@
             watch: {
                 'facet.type': function(val) {
                     if ('search' == val || 'pager' == val) {
-                        this.facet.source = '';
+                        Vue.set(this.facet, 'source', '');
                     }
+                    Vue.set(this.facet, 'source_other', '');
                 },
                 'facet.ghosts': function(val) {
                     if ('no' == val) {
-                        this.facet.preserve_ghosts = 'no';
+                        Vue.set(this.facet, 'preserve_ghosts', 'no');
                     }
                 },
                 'facet.hierarchical': function(val) {
                     if ('no' == val) {
-                        this.facet.show_expanded = 'no';
+                        Vue.set(this.facet, 'show_expanded', 'no');
                     }
                 }
             }
@@ -1635,18 +1622,16 @@
         Vue.component('data-sources', {
             props: {
                 facet: Object,
-                selected: String,
-                sources: Object,
                 settingName: {
                     type: String,
                     default: 'source'
                 }
             },
             template: `
-            <select :id="rand" v-model="dataSourcesModel">
+            <select :id="rand">
                 <option v-if="settingName != 'source'" value="">{{ 'None' | i18n }}</option>
-                <optgroup v-for="optgroup in sources" :label="optgroup.label">
-                    <option v-for="(label, key) in optgroup.choices" :value="key" :selected="selected == key">{{ label }}</option>
+                <optgroup v-for="optgroup in FWP.data_sources" :label="optgroup.label">
+                    <option v-for="(label, key) in optgroup.choices" :value="key" :selected="facet[settingName] == key">{{ label }}</option>
                 </optgroup>
             </select>
             `,
@@ -1655,19 +1640,8 @@
 
                     // only update this current instance
                     if (0 < $($wrap).find('#' + this.rand).length) {
-                        this.facet[this.settingName] = this.$el.value;
+                        Vue.set(this.facet, this.settingName, this.$el.value);
                     }
-                }
-            },
-            computed: {
-                dataSourcesModel() {
-
-                    // create the setting if needed
-                    if ('undefined' === typeof this.facet[this.settingName]) {
-                        Vue.set(this.facet, this.settingName, '');
-                    }
-
-                    return this.facet[this.settingName];
                 }
             },
             created() {
@@ -1693,12 +1667,6 @@
                 editing_facet: false,
                 editing_template: false,
                 row_counts: {},
-                facet_types: FWP.facet_types,
-                data_sources: FWP.data_sources,
-                layout_data: FWP.layout_data,
-                query_data: FWP.query_data,
-                support_html: FWP.support_html,
-                clone: FWP.clone,
                 active_tab: 'facets',
                 active_subnav: 'general',
                 is_support_loaded: false,
@@ -1731,6 +1699,7 @@
                 editItem(type, data) {
                     this['editing_' + type] = true;
                     this.editing = data;
+                    window.scrollTo(0, 0);
                 },
                 doneEditing() {
                     this.editing_template = false;
@@ -1769,7 +1738,7 @@
                         method: 'POST',
                         dataType: 'json',
                         data: {
-                            action: 'facetwp_save',
+                            action: 'facetwp_save_settings',
                             nonce: FWP.nonce,
                             data: JSON.stringify(data)
                         }
@@ -1888,7 +1857,7 @@
                         json = "<?php\nreturn " + json + ';';
                         json = json.replace(/[\{]/g, '[');
                         json = json.replace(/[\}]/g, ']');
-                        json = json.replace(/:/g, ' =>');
+                        json = json.replace(/":/g, '" =>');
                         template.query = json;
                     }, 'json');
                 },
@@ -1901,14 +1870,14 @@
                 purgeIndexTable() {
                     this.getInfo('purge_index_table', 'Purging');
                 },
-                copyToClipboard(name, {target}) {
+                copyToClipboard(name, type, {target}) {
                     const $this = $(target);
                     const $el = $('.facetwp-clipboard');
                     const orig_text = $this.text();
 
                     try {
                         $el.removeClass('hidden');
-                        $el.val('[facetwp facet="' + name + '"]');
+                        $el.val('[facetwp ' + type + '="' + name + '"]');
                         $el.select();
                         document.execCommand('copy');
                         $el.addClass('hidden');
@@ -1937,13 +1906,16 @@
                 },
                 maybeEditName(item) {
                     if (this.is_name_editable) {
-                        let val = $.trim(item.label).toLowerCase();
-                        val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
-                        val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
-                        val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
-                        val = ('pager' == val) ? val + '_' : val; // reserved
-                        item.name = val;
+                        item.name = this.sanitizeName(item.label);
                     }
+                },
+                sanitizeName(name) {
+                    let val = $.trim(name).toLowerCase();
+                    val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
+                    val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
+                    val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
+                    val = ('pager' == val) ? val + '_' : val; // reserved
+                    return val;
                 },
                 documentClick({target}) {
                     let el = target;
@@ -2013,6 +1985,15 @@
                 $(this).powerTip({
                     placement: 'e',
                     mouseOnToPopup: true
+                });
+                $.powerTip.show(this);
+            }
+        });
+
+        $(document).on('mouseover', '.card-label .label-text', function() {
+            if ('undefined' === typeof $(this).data('powertip')) {
+                $(this).powerTip({
+                    placement: 'e'
                 });
                 $.powerTip.show(this);
             }

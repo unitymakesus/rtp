@@ -42,7 +42,7 @@
 		</tr>
 	</tbody>
 	<# } else { #>
-	<tr id="fl-field-{{data.name}}" class="fl-field{{data.rowClass}}" data-type="{{data.field.type}}" data-preview='{{{data.preview}}}' data-connections="{{{connections}}}">
+	<tr id="fl-field-{{data.name}}" class="fl-field{{data.rowClass}}" data-type="{{data.field.type}}" data-is-style="{{data.field.is_style}}" data-preview='{{{data.preview}}}' data-connections="{{{connections}}}">
 		<# var field = FLBuilderSettingsForms.renderField( data ); #>
 		{{{field}}}
 	</tr>

@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function give_form_columns( $give_form_columns ) {
 
 	// Standard columns
-	$give_form_columns = array(
+	$give_form_columns = [
 		'cb'            => '<input type="checkbox"/>',
 		'title'         => __( 'Name', 'give' ),
 		'form_category' => __( 'Categories', 'give' ),
@@ -38,10 +38,10 @@ function give_form_columns( $give_form_columns ) {
 		'price'         => __( 'Amount', 'give' ),
 		'goal'          => __( 'Goal', 'give' ),
 		'donations'     => __( 'Donations', 'give' ),
-		'earnings'      => __( 'Income', 'give' ),
+		'earnings'      => __( 'Revenue', 'give' ),
 		'shortcode'     => __( 'Shortcode', 'give' ),
 		'date'          => __( 'Date', 'give' ),
-	);
+	];
 
 	// Does the user want categories / tags?
 	if ( ! give_is_setting_enabled( give_get_option( 'categories', 'disabled' ) ) ) {
@@ -116,7 +116,7 @@ function give_render_form_columns( $column_name, $post_id ) {
 					printf(
 						'<a href="%1$s">%2$s</a>',
 						esc_url( admin_url( 'edit.php?post_type=give_forms&page=give-reports&tab=forms&form-id=' . $post_id ) ),
-						give_currency_filter( give_format_amount( give_get_form_earnings_stats( $post_id ), array( 'sanitize' => false ) ) )
+						give_currency_filter( give_format_amount( give_get_form_earnings_stats( $post_id ), [ 'sanitize' => false ] ) )
 					);
 				} else {
 					echo '-';
@@ -125,7 +125,14 @@ function give_render_form_columns( $column_name, $post_id ) {
 			case 'shortcode':
 				$shortcode = sprintf( '[give_form id="%s"]', absint( $post_id ) );
 				printf(
-					'<button type="button" class="button hint-tooltip hint--top js-give-shortcode-button" aria-label="%1$s" data-give-shortcode="%2$s"><span class="dashicons dashicons-admin-page"></span> %3$s</button>',
+					'<button
+							type="button"
+							class="button hint-tooltip hint--top js-give-shortcode-button"
+							aria-label="%1$s"
+							data-give-shortcode="%2$s">
+						<span class="dashicons dashicons-admin-page"></span>
+						<span class="give-button-text"> %3$s</span>
+					</button>',
 					esc_attr( $shortcode ),
 					esc_attr( $shortcode ),
 					esc_html__( 'Copy Shortcode', 'give' )
@@ -178,10 +185,10 @@ function give_sort_forms( $vars ) {
 		case 'sales':
 			$vars = array_merge(
 				$vars,
-				array(
+				[
 					'meta_key' => '_give_form_sales',
 					'orderby'  => 'meta_value_num',
-				)
+				]
 			);
 			break;
 
@@ -189,10 +196,10 @@ function give_sort_forms( $vars ) {
 		case 'earnings':
 			$vars = array_merge(
 				$vars,
-				array(
+				[
 					'meta_key' => '_give_form_earnings',
 					'orderby'  => 'meta_value_num',
-				)
+				]
 			);
 			break;
 
@@ -201,17 +208,17 @@ function give_sort_forms( $vars ) {
 			$multi_level_meta_key = ( 'asc' === $vars['order'] ) ? '_give_levels_minimum_amount' : '_give_levels_maximum_amount';
 
 			$vars['orderby']    = 'meta_value_num';
-			$vars['meta_query'] = array(
+			$vars['meta_query'] = [
 				'relation' => 'OR',
-				array(
+				[
 					'key'  => $multi_level_meta_key,
 					'type' => 'NUMERIC',
-				),
-				array(
+				],
+				[
 					'key'  => '_give_set_price',
 					'type' => 'NUMERIC',
-				),
-			);
+				],
+			];
 
 			break;
 
@@ -223,10 +230,10 @@ function give_sort_forms( $vars ) {
 
 			$vars = array_merge(
 				$vars,
-				array(
+				[
 					'meta_key' => $meta_key,
 					'orderby'  => 'meta_value_num',
-				)
+				]
 			);
 			break;
 
@@ -234,10 +241,10 @@ function give_sort_forms( $vars ) {
 		case 'donations':
 			$vars = array_merge(
 				$vars,
-				array(
+				[
 					'meta_key' => '_give_form_sales',
 					'orderby'  => 'meta_value_num',
-				)
+				]
 			);
 			break;
 	}// End switch().
@@ -263,16 +270,18 @@ function give_filter_forms( $vars ) {
 			$author_id = $_REQUEST['author'];
 			if ( (int) $author_id !== get_current_user_id() ) {
 				wp_die(
-					esc_html__( 'You do not have permission to view this data.', 'give' ), esc_html__( 'Error', 'give' ), array(
+					esc_html__( 'You do not have permission to view this data.', 'give' ),
+					esc_html__( 'Error', 'give' ),
+					[
 						'response' => 403,
-					)
+					]
 				);
 			}
 			$vars = array_merge(
 				$vars,
-				array(
+				[
 					'author' => get_current_user_id(),
-				)
+				]
 			);
 
 		}
@@ -312,7 +321,7 @@ function give_remove_month_filter( $dates ) {
 	global $typenow;
 
 	if ( $typenow == 'give_forms' ) {
-		$dates = array();
+		$dates = [];
 	}
 
 	return $dates;
@@ -374,51 +383,51 @@ function give_form_search_query_filter( $wp ) {
 	) {
 
 		$wp->query_vars['date_query'] =
-			array(
+			[
 				'after'     => ! empty( $_GET['start-date'] ) ? date( 'Y-m-d', strtotime( give_clean( $_GET['start-date'] ) ) ) : false,
 				'before'    => ! empty( $_GET['end-date'] ) ? date( 'Y-m-d 23:59:59 ', strtotime( give_clean( $_GET['end-date'] ) ) ) : false,
 				'inclusive' => true,
-			);
+			];
 		switch ( $_GET['give-forms-goal-filter'] ) {
 			case 'goal_in_progress':
 				$wp->query_vars['meta_query'] =
-					array(
+					[
 						'relation' => 'AND',
-						array(
+						[
 							'key'     => '_give_form_goal_progress',
-							'value'   => array( 1, 99 ),
+							'value'   => [ 1, 99 ],
 							'compare' => 'BETWEEN',
 							'type'    => 'NUMERIC',
-						),
-					);
+						],
+					];
 
 				break;
 			case 'goal_achieved':
 				$wp->query_vars['meta_query'] =
-					array(
+					[
 						'relation' => 'AND',
-						array(
+						[
 							'key'     => '_give_form_goal_progress',
 							'value'   => 100,
 							'compare' => '>=',
 							'type'    => 'NUMERIC',
-						),
-					);
+						],
+					];
 				break;
 			case 'goal_not_set':
 				$wp->query_vars['meta_query'] =
-					array(
+					[
 						'relation' => 'OR',
-						array(
+						[
 							'key'     => '_give_goal_option',
 							'value'   => 'disabled',
 							'compare' => '=',
-						),
-						array(
+						],
+						[
 							'key'     => '_give_goal_option',
 							'compare' => 'NOT EXISTS',
-						),
-					);
+						],
+					];
 				break;
 		}
 	}
@@ -485,9 +494,13 @@ function give_forms_advanced_filter( $which ) {
 			<input type="text" id="give-forms-search-input" placeholder="<?php _e( 'Form Name or ID', 'give' ); ?>" name="s" value="<?php echo $search; ?>">
 			<?php
 			submit_button(
-				__( 'Search', 'give' ), 'button', false, false, array(
+				__( 'Search', 'give' ),
+				'button',
+				false,
+				false,
+				[
 					'ID' => 'form-search-submit',
-				)
+				]
 			);
 			?>
 		</div>
@@ -496,10 +509,10 @@ function give_forms_advanced_filter( $which ) {
 				<label for="start-date"
 					   class="give-start-date-label"><?php _e( 'Start Date', 'give' ); ?></label>
 				<input type="text"
-				       id="start-date"
-				       name="start-date"
-				       class="give_datepicker"
-				       autocomplete="off"
+					   id="start-date"
+					   name="start-date"
+					   class="give_datepicker"
+					   autocomplete="off"
 					   value="<?php echo $start_date ? date_i18n( give_date_format(), $start_date ) : ''; ?>"
 					   data-standard-date="<?php echo $start_date ? date( 'Y-m-d', $start_date ) : $start_date; ?>"
 					   placeholder="<?php _e( 'Start Date', 'give' ); ?>"
@@ -508,12 +521,12 @@ function give_forms_advanced_filter( $which ) {
 			<div class="give-filter give-filter-half">
 				<label for="end-date" class="give-end-date-label"><?php _e( 'End Date', 'give' ); ?></label>
 				<input type="text"
-				       id="end-date"
-				       name="end-date"
-				       class="give_datepicker"
-				       autocomplete="off"
-				       value="<?php echo $end_date ? date_i18n( give_date_format(), $end_date ) : ''; ?>"
-				       data-standard-date="<?php echo $end_date ? date( 'Y-m-d', $end_date ) : $end_date; ?>"
+					   id="end-date"
+					   name="end-date"
+					   class="give_datepicker"
+					   autocomplete="off"
+					   value="<?php echo $end_date ? date_i18n( give_date_format(), $end_date ) : ''; ?>"
+					   data-standard-date="<?php echo $end_date ? date( 'Y-m-d', $end_date ) : $end_date; ?>"
 					   placeholder="<?php _e( 'End Date', 'give' ); ?>"
 				/>
 			</div>
@@ -522,28 +535,28 @@ function give_forms_advanced_filter( $which ) {
 			<label for="give-donation-forms-filter"
 				   class="give-donation-forms-filter-label"><?php _e( 'Goal', 'give' ); ?></label>
 			<select id="give-forms-goal-filter" name="give-forms-goal-filter" class="give-forms-goal-filter">
-				<option value="any_goal_status" 
+				<option value="any_goal_status"
 				<?php
 				if ( 'any_goal_status' === $give_forms_goal_filter ) {
 					echo 'selected';
 				}
 				?>
 				><?php _e( 'Any Goal Status', 'give' ); ?></option>
-				<option value="goal_achieved" 
+				<option value="goal_achieved"
 				<?php
 				if ( 'goal_achieved' === $give_forms_goal_filter ) {
 					echo 'selected';
 				}
 				?>
 				><?php _e( 'Goal Achieved', 'give' ); ?></option>
-				<option value="goal_in_progress" 
+				<option value="goal_in_progress"
 				<?php
 				if ( 'goal_in_progress' === $give_forms_goal_filter ) {
 					echo 'selected';
 				}
 				?>
 				><?php _e( 'Goal In Progress', 'give' ); ?></option>
-				<option value="goal_not_set" 
+				<option value="goal_not_set"
 				<?php
 				if ( 'goal_not_set' === $give_forms_goal_filter ) {
 					echo 'selected';

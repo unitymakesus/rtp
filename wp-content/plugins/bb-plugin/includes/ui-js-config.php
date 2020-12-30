@@ -25,7 +25,7 @@ echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filt
 	'nestedColumns'              => ( ! defined( 'FL_BUILDER_NESTED_COLUMNS' ) || FL_BUILDER_NESTED_COLUMNS ),
 	'newUser'                    => FLBuilderModel::is_new_user(),
 	'pluginUrl'                  => FL_BUILDER_URL,
-	'relativePluginUrl'          => str_ireplace( home_url(), '', FL_BUILDER_URL ),
+	'relativePluginUrl'          => FLBuilderModel::get_relative_plugin_url(),
 	'postId'                     => $post_id,
 	'postStatus'                 => get_post_status(),
 	'postType'                   => get_post_type(),
@@ -43,6 +43,7 @@ echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filt
 	'brandingIcon'               => FLBuilderModel::get_branding_icon(),
 	'url'                        => get_permalink(),
 	'editUrl'                    => add_query_arg( 'fl_builder', '', get_permalink() ),
+	'shortlink'                  => add_query_arg( 'fl_builder', '', FLBuilderUtils::get_safe_url() ),
 	'previewUrl'                 => add_query_arg( 'fl_builder_preview', '', get_permalink() ),
 	'layoutHasDraftedChanges'    => FLBuilderModel::layout_has_drafted_changes(),
 	'panelData'                  => FLBuilderUIContentPanel::get_panel_data(),
@@ -64,6 +65,17 @@ echo 'FLBuilderConfig              = ' . FLBuilderUtils::json_encode( apply_filt
 	'presets'                    => FLBuilderSettingsPresets::get_presets(),
 	'FontWeights'                => FLBuilderFonts::get_font_weight_strings(),
 	'statsEnabled'               => get_site_option( 'fl_builder_usage_enabled', false ),
+	'rememberTab'                => apply_filters( 'fl_remember_settings_tabs_enabled', true ),
+	'select2Enabled'             => apply_filters( 'fl_select2_enabled', true ),
+	'uploadTypes'                => apply_filters( 'fl_media_modal_types', array(
+		'image' => 'image',
+		'video' => 'video',
+	) ),
+	'themerLayoutsUrl'           => admin_url( '/edit.php?post_type=fl-theme-layout' ),
+	'userCaps'                   => array(
+		'unfiltered_html'        => current_user_can( 'unfiltered_html' ),
+		'global_unfiltered_html' => defined( 'DISALLOW_UNFILTERED_HTML' ) && DISALLOW_UNFILTERED_HTML ? true : false,
+	),
 ) ) ) . ';';
 
 /**
@@ -89,8 +101,10 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	'colorPresets'                   => esc_attr__( 'Color Presets', 'fl-builder' ),
 	'colorPicker'                    => esc_attr__( 'Color Picker', 'fl-builder' ),
 	'codeError'                      => esc_attr__( 'This code has errors. We recommend you fix them before saving.', 'fl-builder' ),
+	'codeerrorhtml'                  => esc_attr__( 'You cannot add <script> or <iframe> tag here.', 'fl-builder' ),
 	'codeErrorFix'                   => esc_attr__( 'Fix Errors', 'fl-builder' ),
 	'codeErrorIgnore'                => esc_attr__( 'Save With Errors', 'fl-builder' ),
+	'codeErrorDetected'              => esc_html__( 'We detected a possible issue here:', 'fl-builder' ),
 	'column'                         => esc_attr__( 'Column', 'fl-builder' ),
 	'contentSliderSelectLayout'      => esc_attr__( 'Please select either a background layout or content layout before submitting.', 'fl-builder' ),
 	'contentSliderTransitionWarn'    => esc_attr__( 'Transition value should be lower than Delay value.', 'fl-builder' ),
@@ -127,6 +141,7 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	'large'                          => esc_attr__( 'Large', 'fl-builder' ),
 	'manageTemplates'                => esc_attr__( 'Manage Templates', 'fl-builder' ),
 	'medium'                         => esc_attr__( 'Medium', 'fl-builder' ),
+	'mobile'                         => esc_attr__( 'Small', 'fl-builder' ),
 	'module'                         => esc_attr__( 'Module', 'fl-builder' ),
 	'moduleTemplateSaved'            => esc_attr__( 'Module Saved!', 'fl-builder' ),
 	'move'                           => esc_attr__( 'Move', 'fl-builder' ),
@@ -146,6 +161,7 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	/* translators: %d: number of selected (plural) */
 	'photosSelectedNum'              => esc_attr__( '%d Photos Selected', 'fl-builder' ),
 	'placeholder'                    => esc_attr__( 'Paste color here...', 'fl-builder' ),
+	'placeholderSelect2'             => esc_attr__( 'Pick a font...', 'fl-builder' ),
 	'pleaseWait'                     => esc_attr__( 'Please Wait...', 'fl-builder' ),
 	/* translators: %s: preset color code */
 	'presetAdded'                    => esc_attr_x( '%s added to presets!', '%s is the preset hex color code.', 'fl-builder' ),
@@ -209,8 +225,18 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 	'visitForums'                    => esc_attr__( 'Contact Support', 'fl-builder' ),
 	'watchHelpVideo'                 => esc_attr__( 'Watch the Video', 'fl-builder' ),
 	'welcomeMessage'                 => esc_attr__( 'Welcome! It looks like this might be your first time using the builder. Would you like to take a tour?', 'fl-builder' ),
+	'widget'                         => esc_attr__( 'Widget', 'fl-builder' ),
+	'widgetsCategoryTitle'           => esc_attr__( 'WordPress Widgets', 'fl-builder' ),
 	'uncategorized'                  => esc_attr__( 'Uncategorized', 'fl-builder' ),
 	'yesPlease'                      => esc_attr__( 'Yes Please!', 'fl-builder' ),
+	'noScriptWarn'                   => array(
+		'heading' => esc_attr__( 'Settings could not be saved.', 'fl-builder' ),
+		// translators: %s : User Role
+		'message' => sprintf( esc_attr__( 'These settings contain sensitive code that is not allowed for your user role (%s).', 'fl-builder' ), FLBuilderUtils::get_current_user_role() ),
+		'global'  => esc_attr__( 'These settings contain sensitive code that is not allowed as DISALLOW_UNFILTERED_HTML has been set globally via wp-config.', 'fl-builder' ),
+		// translators: %s : Link to Docs
+		'footer'  => sprintf( esc_attr__( 'See [%s] for more information.', 'fl-builder' ), '<a target="_blank" href="https://docs.wpbeaverbuilder.com/beaver-builder/troubleshooting/common-issues/error-settings-not-saved">link</a>' ),
+	),
 	'savedStatus'                    => array(
 		'saving'               => esc_attr__( 'Saving...', 'fl-builder' ),
 		'savingTooltip'        => esc_attr__( 'The layout is currently being saved', 'fl-builder' ),
@@ -225,9 +251,7 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 		'publishingTooltip'    => esc_attr__( 'Changes being published', 'fl-builder' ),
 		'nothingToSave'        => esc_attr__( 'No new changes to save', 'fl-builder' ),
 		'hasAlreadySaved'      => esc_attr__( 'Your changes are saved', 'fl-builder' ),
-
 	),
-	'widgetsCategoryTitle'           => esc_attr__( 'WordPress Widgets', 'fl-builder' ),
 	'typeLabels'                     => array(
 		'template' => esc_attr__( 'Template', 'fl-builder' ),
 		'module'   => esc_attr__( 'Module', 'fl-builder' ),
@@ -247,6 +271,11 @@ echo 'FLBuilderStrings             = ' . FLBuilderUtils::json_encode( apply_filt
 		'title'   => esc_attr__( 'Notifications', 'fl-builder' ),
 		'loading' => esc_attr__( 'Loading...', 'fl-builder' ),
 		'none'    => esc_attr__( 'No Notifications.', 'fl-builder' ),
+	),
+	'module_import'                  => array(
+		'copied' => esc_attr__( 'Copied!', 'fl-builder' ),
+		'error'  => esc_attr__( 'Import Error!', 'fl-builder' ),
+		'type'   => esc_attr__( 'Missing header or wrong module type!', 'fl-builder' ),
 	),
 ) ) ) . ';';
 

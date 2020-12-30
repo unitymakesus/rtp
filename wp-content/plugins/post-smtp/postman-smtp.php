@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Plugin Name: Post SMTP
  * Plugin URI: https://wordpress.org/plugins/post-smtp/
  * Description: Email not reliable? Post SMTP is the first and only WordPress SMTP plugin to implement OAuth 2.0 for Gmail, Hotmail and Yahoo Mail. Setup is a breeze with the Configuration Wizard and integrated Port Tester. Enjoy worry-free delivery even if your password changes!
- * Version: 2.0.6
+ * Version: 2.0.16
  * Author: Yehuda Hassine
  * Text Domain: post-smtp
  * Author URI: https://postmansmtp.com
@@ -26,15 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 // filter print_postman_status: apply this filter to print the human-readable plugin state
 // filter postman_module: implement this filter and return the instance of the module
 // filter postman_register_modules: apply this filter to register the module
-// TODO v1.7
-// -- Postmark API http://plugins.svn.wordpress.org/postmark-approved-wordpress-plugin/trunk/postmark.php
-// -- Amazon SES API http://docs.aws.amazon.com/ses/latest/DeveloperGuide/send-email-api.html
-// TODO v2.0
-// -- PHP7 compatibility
-// -- class autoloading
-// -- Add dismiss option for "unconfigured message" .. for multisites
-// -- customize sent-mail icon WordPress dashboard
-// -- multiple mailbox support
 
 
 /**
@@ -44,10 +35,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'POST_SMTP_BASE', __FILE__ );
 define( 'POST_SMTP_PATH', __DIR__ );
 define( 'POST_SMTP_URL', plugins_url('', POST_SMTP_BASE ) );
-define( 'POST_SMTP_VER', '2.0.6' );
+define( 'POST_SMTP_VER', '2.0.16' );
 define( 'POST_SMTP_SHOW_RELEASE_MESSAGE', true );
-define( 'POST_SMTP_RELEASE_MESSAGE', 'If you see the implode error please read' );
-define( 'POST_SMTP_RELEASE_URL', 'https://postmansmtp.com/post-smtp-2-0-6-bug-fixes/' );
+define( 'POST_SMTP_RELEASE_MESSAGE', "I have released a new Google Analytics AIO plugin, if you liked it please leave a review." );
+define( 'POST_SMTP_RELEASE_URL', 'https://wordpress.org/plugins/metrics-query/' );
 
 $postman_smtp_exist = in_array( 'postman-smtp/postman-smtp.php', (array) get_option( 'active_plugins', array() ) );
 $required_php_version = version_compare( PHP_VERSION, '5.6.0', '<' );
@@ -142,3 +133,4 @@ function post_setupPostman() {
 	$kevinCostner = new Postman( __FILE__, POST_SMTP_VER );
 	do_action( 'post_smtp_init');
 }
+

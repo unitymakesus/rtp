@@ -33,6 +33,19 @@
 		}
 	<?php endif; ?>
 
+	<?php if ( $settings->duo_color1 && false !== strpos( $settings->icon, 'fad fa' ) ) : ?>
+	.fl-node-<?php echo $id; ?> .fl-post-gallery .fl-gallery-icon i.fad:before {
+		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color1 ); ?>;
+	}
+	<?php endif; ?>
+
+	<?php if ( $settings->duo_color2 && false !== strpos( $settings->icon, 'fad fa' ) ) : ?>
+	.fl-node-<?php echo $id; ?> .fl-post-gallery .fl-gallery-icon i.fad::after {
+		color: <?php echo FLBuilderColor::hex_or_rgb( $settings->duo_color2 ); ?>;
+		opacity: 1;
+	}
+	<?php endif; ?>
+
 <?php endif; ?>
 
 <?php if ( isset( $settings->hover_transition ) && 'fade' != $settings->hover_transition ) : ?>

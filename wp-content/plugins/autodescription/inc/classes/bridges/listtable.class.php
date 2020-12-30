@@ -7,7 +7,7 @@ namespace The_SEO_Framework\Bridges;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -22,7 +22,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Prepares the list table action sequence.
@@ -41,7 +41,6 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @abstract
  */
 abstract class ListTable {
-	use \The_SEO_Framework\Traits\Enclose_Core_Final;
 
 	/**
 	 * @since 4.0.0
@@ -69,10 +68,10 @@ abstract class ListTable {
 	 */
 	public function __construct() {
 
-		//* Initialize columns.
+		// Initialize columns.
 		\add_action( 'current_screen', [ $this, '_prepare_columns' ] );
 
-		//* Ajax handlers for columns.
+		// Ajax handlers for columns.
 		\add_action( 'wp_ajax_add-tag', [ $this, '_prepare_columns_wp_ajax_add_tag' ], -1 );
 		\add_action( 'wp_ajax_inline-save', [ $this, '_prepare_columns_wp_ajax_inline_save' ], -1 );
 		\add_action( 'wp_ajax_inline-save-tax', [ $this, '_prepare_columns_wp_ajax_inline_save_tax' ], -1 );
@@ -225,7 +224,7 @@ abstract class ListTable {
 			\add_filter( 'manage_' . $taxonomy . '_custom_column', [ $this, '_output_column_contents_for_term' ], 1, 3 );
 
 		if ( $screen_id ) {
-			//* Everything but inline-save-tax action.
+			// Everything but inline-save-tax action.
 			\add_filter( 'manage_' . $screen_id . '_columns', [ $this, '_add_column' ], 10, 1 );
 
 			/**
@@ -247,6 +246,23 @@ abstract class ListTable {
 	}
 
 	/**
+	 * Returns a JS script that triggers list updates.
+	 * This is a necessity as WordPress doesn't trigger actions on update.
+	 *
+	 * TODO bind to WordPress's function instead? Didn't we already do that?!
+	 * See: `tsfLe._hijackListeners()`; Although, that doesn't cover "adding" new items.
+	 *
+	 * @since 4.0.5
+	 * @NOTE: Do not bind to `tsfLeDispatchUpdate`, it's a private action.
+	 *        Bind to `tsfLeUpdated` instead, which is debounced and should only run once.
+	 *
+	 * @return string The triggering script.
+	 */
+	protected function get_ajax_dispatch_updated_event() {
+		return "<script>'use strict';(()=>document.dispatchEvent(new Event('tsfLeDispatchUpdate')))();</script>";
+	}
+
+	/**
 	 * Add column on edit(-tags).php
 	 *
 	 * @since 4.0.0
@@ -259,7 +275,7 @@ abstract class ListTable {
 	abstract public function _add_column( $columns );
 
 	/**
-	 * Outputs the SEO Bar for posts and pages.
+	 * Outputs the contents for a column on post overview screens.
 	 *
 	 * @since 4.0.0
 	 * @access private
@@ -276,7 +292,7 @@ abstract class ListTable {
 	 * @since 4.0.0
 	 * @access private
 	 * @abstract
-	 * @NOTE Unlike _output_seo_bar_for_column(), this is a filter callback.
+	 * @NOTE Unlike _output_column_contents_for_post(), this is a filter callback.
 	 *       Because of this, the first parameter is a useless string, which must be extended.
 	 *       Discrepancy: https://core.trac.wordpress.org/ticket/33521
 	 *       With this, the proper function name should be "_get..." or "_add...", but not "_output.."

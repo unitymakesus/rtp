@@ -19,7 +19,7 @@ class UABB_Template_Ajax {
 	 * @since 1.16.1
 	 * @return void
 	 */
-	static public function init() {
+	public static function init() {
 		add_action( 'wp_ajax_uabb_get_saved_templates', __CLASS__ . '::get_saved_templates' );
 		add_action( 'wp_ajax_nopriv_uabb_get_saved_templates', __CLASS__ . '::get_saved_templates' );
 
@@ -31,64 +31,70 @@ class UABB_Template_Ajax {
 
 		add_action( 'wp_ajax_uabb_get_saved_wpform', __CLASS__ . '::uabb_get_saved_wpform' );
 		add_action( 'wp_ajax_nopriv_uabb_get_saved_wpform', __CLASS__ . '::uabb_get_saved_wpform' );
+
+		add_action( 'wp_ajax_uabb_get_saved_caf', __CLASS__ . '::uabb_get_saved_caf' );
 	}
 	/**
 	 * Get saved templates.
 	 *
 	 * @since 1.16.1
 	 */
-	static public function get_saved_templates() {
-		$response = array(
-			'success' => false,
-			'data'    => array(),
-		);
+	public static function get_saved_templates() {
 
-		$args = array(
-			'post_type'      => 'fl-builder-template',
-			'orderby'        => 'title',
-			'order'          => 'ASC',
-			'posts_per_page' => '-1',
-		);
+		check_ajax_referer( 'uabb-module-nonce', 'nonce' );
 
-		if ( isset( $_POST['type'] ) && ! empty( $_POST['type'] ) ) {
-			$args['tax_query'] = array(
-				array(
-					'taxonomy' => 'fl-builder-template-type',
-					'field'    => 'slug',
-					'terms'    => $_POST['type'],
-				),
+			$response = array(
+				'success' => false,
+				'data'    => array(),
 			);
-		}
 
-		$posts = get_posts( $args );
+			$args = array(
+				'post_type'      => 'fl-builder-template',
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'posts_per_page' => '-1',
+			);
 
-		$options = '';
-
-		if ( count( $posts ) ) {
-			foreach ( $posts as $post ) {
-				$options .= '<option value="' . $post->ID . '">' . $post->post_title . '</option>';
+			if ( isset( $_POST['type'] ) && ! empty( $_POST['type'] ) ) {
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'fl-builder-template-type',
+						'field'    => 'slug',
+						'terms'    => $_POST['type'],
+					),
+				);
 			}
 
-			$response = array(
-				'success' => true,
-				'data'    => $options,
-			);
-		} else {
-			$response = array(
-				'success' => true,
-				'data'    => '<option value="" disabled>' . __( 'No templates found!', 'uabb' ) . '</option>',
-			);
-		}
+			$posts = get_posts( $args );
 
-		echo json_encode( $response );
-		die;
+			$options = '';
+
+			if ( count( $posts ) ) {
+				foreach ( $posts as $post ) {
+					$options .= '<option value="' . $post->ID . '">' . $post->post_title . '</option>';
+				}
+
+				$response = array(
+					'success' => true,
+					'data'    => $options,
+				);
+			} else {
+				$response = array(
+					'success' => true,
+					'data'    => '<option value="" disabled>' . __( 'No templates found!', 'uabb' ) . '</option>',
+				);
+			}
+
+			wp_send_json( $response );
 	}
 	/**
 	 * Get saved CF7 Form.
 	 *
 	 * @since 1.23.0
 	 */
-	static public function uabb_get_saved_cf7() {
+	public static function uabb_get_saved_cf7() {
+
+		check_ajax_referer( 'uabb-cf7-nonce', 'nonce' );
 
 		$field_options = array();
 
@@ -116,8 +122,7 @@ class UABB_Template_Ajax {
 					'data'    => '<option value="" disabled>' . __( 'You have not added any Contact Form 7 yet.', 'uabb' ) . '</option>',
 				);
 			}
-			echo json_encode( $response );
-			die;
+			wp_send_json( $response );
 		}
 	}
 	/**
@@ -125,7 +130,9 @@ class UABB_Template_Ajax {
 	 *
 	 * @since 1.23.0
 	 */
-	static public function uabb_get_saved_gravity() {
+	public static function uabb_get_saved_gravity() {
+
+		check_ajax_referer( 'uabb-gf-nonce', 'nonce' );
 
 		$field_options = array();
 
@@ -139,7 +146,7 @@ class UABB_Template_Ajax {
 
 			$id = 0;
 
-			$forms = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object ); // @codingStandardsIgnoreLine.
+			$forms = $wpdb->get_results( $wpdb->prepare( 'SELECT id, title FROM ' . $form_table_name . ' WHERE id != %d', $id ), object );// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			if ( count( $forms ) ) {
 
 				foreach ( $forms as $form ) {
@@ -158,8 +165,7 @@ class UABB_Template_Ajax {
 					'data'    => '<option value="" disabled>' . __( 'You have not added any Gravity Forms yet.', 'uabb' ) . '</option>',
 				);
 			}
-			echo json_encode( $response );
-			die;
+			wp_send_json( $response );
 		}
 	}
 	/**
@@ -167,7 +173,9 @@ class UABB_Template_Ajax {
 	 *
 	 * @since 1.23.0
 	 */
-	static public function uabb_get_saved_wpform() {
+	public static function uabb_get_saved_wpform() {
+
+		check_ajax_referer( 'uabb-wpf-nonce', 'nonce' );
 
 		$field_options = array();
 
@@ -197,9 +205,51 @@ class UABB_Template_Ajax {
 					'data'    => '<option value="" disabled>' . __( 'You have not added any WPForms yet.', 'uabb' ) . '</option>',
 				);
 			}
-			echo json_encode( $response );
-			die;
+			wp_send_json( $response );
 		}
 	}
+	/**
+	 * Get saved Caldera Form.
+	 *
+	 * @since 1.26.0
+	 */
+	public static function uabb_get_saved_caf() {
+
+		check_ajax_referer( 'uabb-caf-nonce', 'nonce' );
+		$options = array();
+
+		if ( class_exists( 'Caldera_Forms_Forms' ) ) {
+
+			$forms         = \Caldera_Forms_Forms::get_forms( true );
+			$options['0']  = 'Select';
+			$field_options = '';
+			if ( ! empty( $forms ) ) {
+				foreach ( $forms as $form ) {
+					if ( is_array( $form ) && ! empty( $form['ID'] ) && ! empty( $form['name'] ) ) {
+						$options[ $form['ID'] ] = $form['name'];
+					}
+				}
+			}
+			if ( count( $options ) ) {
+
+				foreach ( $options as $form_id => $form_name ) {
+
+					$field_options .= '<option value="' . $form_id . '">' . $form_name . '</option>';
+				}
+				$response = array(
+					'success' => true,
+					'data'    => $field_options,
+				);
+			} else {
+
+				$response = array(
+					'success' => true,
+					'data'    => '<option value="" disabled>' . __( 'You have not added any Caldera Forms yet.', 'uabb' ) . '</option>',
+				);
+			}
+			wp_send_json( $response );
+		}
+	}
+
 }
 UABB_Template_Ajax::init();

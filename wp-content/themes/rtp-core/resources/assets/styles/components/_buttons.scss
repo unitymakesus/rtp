@@ -61,3 +61,38 @@ input[type="submit"] {
     }
   }
 }
+
+// Menu toggles
+.btn-menu-toggle,
+.btn-topnav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 1.25rem;
+  margin-right: 0.5rem;
+  background-color: transparent;
+
+  > i {
+    font-size: inherit;
+  }
+
+  &:focus {
+    background-color: transparent;
+    box-shadow: 0 0 0 3px rgba($color-blue-unc, 0.75);
+  }
+}
+
+.btn-menu-toggle {
+  padding: 0.6rem 0.75rem;
+  color: black;
+  border-color: rgba(0, 0, 0, 0.75);
+}
+
+.btn-topnav-toggle {
+  padding: 0.6rem 0.75rem;
+  margin: 6px 0.5rem 6px 0;
+  color: $color-white;
+  border-color: rgba(255, 255, 255, 0.75);
+}

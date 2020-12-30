@@ -1,0 +1,40 @@
+.landing-graphic-pin {
+  text-transform: uppercase;
+  font-weight: bold;
+  position: relative;
+  width: 100%;
+  height: calc(90vh - 200px);
+  min-height: 504px;
+  z-index: 1;
+}
+
+#svg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -49%, 0);
+  z-index: 1;
+  max-width: 90%;
+  width: 1260px;
+}
+
+.landing-graphic-swipe {
+  position: relative;
+  z-index: 2;
+
+  img {
+    max-width: 100%;
+  }
+
+  .home-banner-wrapper {
+    opacity: 0;
+    max-height: 0;
+    top: 0;
+    bottom: auto;
+
+    &.open {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+}

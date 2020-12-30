@@ -19,7 +19,7 @@ class UABBDualColorModule extends FLBuilderModule {
 	public function __construct() {
 		parent::__construct(
 			array(
-				'name'            => __( 'Dual Color Heading', 'uabb' ),
+				'name'            => __( 'Dual Color Headings', 'uabb' ),
 				'description'     => __( 'A totally awesome module!', 'uabb' ),
 				'category'        => BB_Ultimate_Addon_Helper::module_cat( BB_Ultimate_Addon_Helper::$creative_modules ),
 				'group'           => UABB_CAT,
@@ -43,11 +43,11 @@ class UABBDualColorModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( ! isset( $settings->dual_typo ) || ! is_array( $settings->dual_typo ) ) {
 
@@ -57,7 +57,7 @@ class UABBDualColorModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->dual_font_family ) ) {
 				if ( isset( $settings->dual_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->dual_font_family['weight'] ) {
+					if ( 'regular' === $settings->dual_font_family['weight'] ) {
 						$settings->dual_typo['font_weight'] = 'normal';
 					} else {
 						$settings->dual_typo['font_weight'] = $settings->dual_font_family['weight'];
@@ -128,7 +128,7 @@ class UABBDualColorModule extends FLBuilderModule {
 				$settings->dual_typo['text_align'] = $settings->dual_color_alignment;
 				unset( $settings->dual_color_alignment );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 			if ( ! isset( $settings->dual_typo ) || ! is_array( $settings->dual_typo ) ) {
 
 				$settings->dual_typo            = array();
@@ -137,7 +137,7 @@ class UABBDualColorModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->dual_font_family ) ) {
 				if ( isset( $settings->dual_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->dual_font_family['weight'] ) {
+					if ( 'regular' === $settings->dual_font_family['weight'] ) {
 						$settings->dual_typo['font_weight'] = 'normal';
 					} else {
 						$settings->dual_typo['font_weight'] = $settings->dual_font_family['weight'];
@@ -167,7 +167,7 @@ class UABBDualColorModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->dual_line_height['desktop'] ) && isset( $settings->dual_font_size['desktop'] ) && 0 != $settings->dual_font_size['desktop'] ) {
+			if ( isset( $settings->dual_line_height['desktop'] ) && isset( $settings->dual_font_size['desktop'] ) && 0 !== $settings->dual_font_size['desktop'] ) {
 				if ( is_numeric( $settings->dual_line_height['desktop'] ) && is_numeric( $settings->dual_font_size['desktop'] ) ) {
 					$settings->dual_typo['line_height'] = array(
 						'length' => round( $settings->dual_line_height['desktop'] / $settings->dual_font_size['desktop'], 2 ),
@@ -175,7 +175,7 @@ class UABBDualColorModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->dual_line_height['medium'] ) && isset( $settings->dual_font_size['medium'] ) && 0 != $settings->dual_font_size['medium'] ) {
+			if ( isset( $settings->dual_line_height['medium'] ) && isset( $settings->dual_font_size['medium'] ) && 0 !== $settings->dual_font_size['medium'] ) {
 				if ( is_numeric( $settings->dual_line_height['medium'] ) && is_numeric( $settings->dual_font_size['medium'] ) ) {
 					$settings->dual_typo_medium['line_height'] = array(
 						'length' => round( $settings->dual_line_height['medium'] / $settings->dual_font_size['medium'], 2 ),
@@ -183,7 +183,7 @@ class UABBDualColorModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->dual_line_height['small'] ) && isset( $settings->dual_font_size['small'] ) && 0 != $settings->dual_font_size['small'] ) {
+			if ( isset( $settings->dual_line_height['small'] ) && isset( $settings->dual_font_size['small'] ) && 0 !== $settings->dual_font_size['small'] ) {
 				if ( is_numeric( $settings->dual_line_height['small'] ) && is_numeric( $settings->dual_font_size['small'] ) ) {
 					$settings->dual_typo_responsive['line_height'] = array(
 						'length' => round( $settings->dual_line_height['small'] / $settings->dual_font_size['small'], 2 ),
@@ -223,7 +223,7 @@ class UABBDualColorModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/dual-color-heading/dual-color-heading-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/dual-color-heading/dual-color-heading-bb-less-than-2-2-compatibility.php';

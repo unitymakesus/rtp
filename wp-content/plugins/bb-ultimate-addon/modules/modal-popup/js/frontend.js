@@ -64,7 +64,7 @@ jQuery(document).ready(function( $ ) {
 			 */ 
 
 			_initModalPopup: function() {
-					//console.log( this.modal_content );
+
 				$this = this;
 				$node_module = $( '.fl-node-'+$this.node );
 				$popup_id = $( '.uamodal-'+$this.node );
@@ -190,6 +190,7 @@ jQuery(document).ready(function( $ ) {
 						$(document).on('keyup.uabb-modal',function(e) {
 							if (e.keyCode == 27) { 
 								current_this.modal_popup.removeClass( 'uabb-show' );
+								$('html').removeClass('uabb-html-modal');
 								current_this._stopVideo();
 								$(document).unbind('keyup.uabb-modal');
 								if ( cookies_status == 1 ) {
@@ -209,6 +210,7 @@ jQuery(document).ready(function( $ ) {
 
 						this.overlay.on( 'click', function( ev ) {
 							current_this.modal_popup.removeClass( 'uabb-show' );
+							$('html').removeClass('uabb-html-modal');
 							current_this._stopVideo();
 							if ( cookies_status == 1 ) {
 								Cookies.set( cookies_name, 'true', { expires: cookies_days });
@@ -287,7 +289,7 @@ jQuery(document).ready(function( $ ) {
 				    trigger_args = '.uamodal-' + this.node + ' .uabb-modal-content-data';
 
 				if ( active_popup.find( '.uabb-content' ).outerHeight() > $(window).height() ) {
-					$('html').addClass('uabb-html-modal');
+					$('html').addClass('uabb-html-modal');					
 					active_popup.find('.uabb-modal').addClass('uabb-modal-scroll');
 				}
 
@@ -365,7 +367,7 @@ jQuery(document).ready(function( $ ) {
 				    active_popup = $('.uamodal-' + this.node );
 				if (  active_popup.find('.uabb-modal').hasClass('uabb-show') ) {
 					if ( active_popup.find( '.uabb-content' ).outerHeight() > $(window).height() ) {
-						$('html').addClass('uabb-html-modal');
+						$('html').addClass('uabb-html-modal');						
 						active_popup.find('.uabb-modal').addClass('uabb-modal-scroll');
 					}else{
 						$('html').removeClass('uabb-html-modal');
@@ -376,7 +378,6 @@ jQuery(document).ready(function( $ ) {
 			_videoAutoplay: function() {
 				var active_modal = $('.fl-node-' + this.node ),
 				    active_popup = $('.uamodal-' + this.node );
-
 
 				if ( this.video_autoplay === 'yes' && ( this.modal_content === 'youtube' || this.modal_content === 'vimeo' ) ) {
 

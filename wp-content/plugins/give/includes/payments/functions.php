@@ -199,10 +199,12 @@ function give_insert_payment( $payment_data = array() ) {
 	// Setup donor id.
 	$payment_data['user_info']['donor_id'] = $payment->donor_id;
 
-	// Set donation id to purchase session.
-	$purchase_session = Give()->session->get( 'give_purchase' );
-	$purchase_session['donation_id'] = $payment->ID;
-	Give()->session->set( 'give_purchase', $purchase_session );
+	// Set donation id to purchase session only donor session for donation exist.
+	$purchase_session = (array) Give()->session->get( 'give_purchase' );
+	if ( $purchase_session && array_key_exists( 'purchase_key', $purchase_session ) ) {
+		$purchase_session['donation_id'] = $payment->ID;
+		Give()->session->set( 'give_purchase', $purchase_session );
+	}
 
 	/**
 	 * Fires while inserting payments.
@@ -314,7 +316,8 @@ function give_delete_donation( $payment_id = 0, $update_donor = true ) {
 
 	// Only undo donations that aren't these statuses.
 	$dont_undo_statuses = apply_filters(
-		'give_undo_donation_statuses', array(
+		'give_undo_donation_statuses',
+		array(
 			'pending',
 			'cancelled',
 		)
@@ -493,7 +496,7 @@ function give_get_payment_status( $payment_id, $return_label = false ) {
 
 	if ( ! is_numeric( $payment_id ) ) {
 		if (
-			$payment_id instanceof  Give_Payment
+			$payment_id instanceof Give_Payment
 			|| $payment_id instanceof WP_Post
 		) {
 			$payment_id = $payment_id->ID;
@@ -772,7 +775,8 @@ function give_get_total_earnings( $recalculate = false ) {
 		$total = (float) 0;
 
 		$args = apply_filters(
-			'give_get_total_earnings_args', array(
+			'give_get_total_earnings_args',
+			array(
 				'offset' => 0,
 				'number' => - 1,
 				'status' => array( 'publish' ),
@@ -976,7 +980,7 @@ function give_is_guest_payment( $payment_id ) {
  */
 function give_get_payment_user_id( $payment_id ) {
 	global $wpdb;
-	$paymentmeta_table = Give()->payment_meta->table_name;
+	$paymentmeta_table        = Give()->payment_meta->table_name;
 	$donationmeta_primary_key = Give()->payment_meta->get_meta_type() . '_id';
 
 	return (int) $wpdb->get_var(
@@ -1371,7 +1375,7 @@ function give_get_purchase_id_by_transaction_id( $key ) {
  * @return array $notes Donation Notes
  */
 function give_get_payment_notes( $payment_id = 0, $search = '' ) {
-	return Give_Comment::get( $payment_id,'payment', array(), $search );
+	return Give_Comment::get( $payment_id, 'payment', array(), $search );
 }
 
 
@@ -1418,7 +1422,7 @@ function give_get_payment_note_html( $note, $payment_id = 0 ) {
 	if ( is_numeric( $note ) ) {
 		if ( ! give_has_upgrade_completed( 'v230_move_donor_note' ) ) {
 			$note = get_comment( $note );
-		} else{
+		} else {
 			$note = Give()->comment->db->get( $note );
 		}
 	}
@@ -1439,7 +1443,8 @@ function give_get_payment_note_html( $note, $payment_id = 0 ) {
 				'note_id'     => $note->comment_ID,
 				'payment_id'  => $payment_id,
 			)
-		), 'give_delete_payment_note_' . $note->comment_ID
+		),
+		'give_delete_payment_note_' . $note->comment_ID
 	);
 
 	$note_html  = '<div class="give-payment-note" id="give-payment-note-' . $note->comment_ID . '">';
@@ -1520,7 +1525,8 @@ function give_get_donation_form_title( $donation_id, $args = array() ) {
 			$form_title,
 			$only_level,
 			$separator,
-		), false
+		),
+		false
 	);
 
 	$form_title_html = Give_Cache::get_db_query( $cache_key );
@@ -1677,7 +1683,8 @@ function give_get_form_variable_price_dropdown( $args = array(), $echo = false )
 
 	// Update options.
 	$args = array_merge(
-		$args, array(
+		$args,
+		array(
 			'options' => $variable_price_options,
 		)
 	);
@@ -1785,7 +1792,8 @@ function give_is_donation_completed( $donation_id ) {
 	 * @param int $donation_id
 	 */
 	return apply_filters(
-		'give_is_donation_completed', (bool) $wpdb->get_var(
+		'give_is_donation_completed',
+		(bool) $wpdb->get_var(
 			$wpdb->prepare(
 				"
 				SELECT meta_value
@@ -1802,7 +1810,8 @@ function give_is_donation_completed( $donation_id ) {
 				$donation_id,
 				'_give_completed_date'
 			)
-		), $donation_id
+		),
+		$donation_id
 	);
 }
 
@@ -1817,7 +1826,7 @@ function give_is_donation_completed( $donation_id ) {
 function give_is_anonymous_donation( $donation_id ) {
 	$value = false;
 
-	if( (int) give_get_meta( $donation_id, '_give_anonymous_donation', true ) ){
+	if ( (int) give_get_meta( $donation_id, '_give_anonymous_donation', true ) ) {
 		$value = true;
 	}
 

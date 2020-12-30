@@ -13,7 +13,7 @@
 namespace Smush\Core\Integrations;
 
 use Smush\Core\Modules\Smush;
-use Smush\WP_Smush;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -30,17 +30,37 @@ class Common {
 	 * Common constructor.
 	 */
 	public function __construct() {
-		// AJAX Thumbnail Rebuild integration.
-		add_filter( 'wp_smush_media_image', array( $this, 'skip_images' ), 10, 2 );
+		if ( is_admin() ) {
+			// AJAX Thumbnail Rebuild integration.
+			add_filter( 'wp_smush_media_image', array( $this, 'skip_images' ), 10, 2 );
 
-		// Optimise WP retina 2x images.
-		add_action( 'wr2x_retina_file_added', array( $this, 'smush_retina_image' ), 20, 3 );
+			// Optimise WP retina 2x images.
+			add_action( 'wr2x_retina_file_added', array( $this, 'smush_retina_image' ), 20, 3 );
 
-		// WPML integration.
-		add_action( 'wp_smush_image_optimised', array( $this, 'wpml_update_duplicate_meta' ), 10, 3 );
+			// WPML integration.
+			add_action( 'wp_smush_image_optimised', array( $this, 'wpml_update_duplicate_meta' ), 10, 3 );
 
-		// Remove any pre_get_posts_filters added by WP Media Folder plugin.
-		add_action( 'wp_smush_remove_filters', array( $this, 'remove_filters' ) );
+			// Remove any pre_get_posts_filters added by WP Media Folder plugin.
+			add_action( 'wp_smush_remove_filters', array( $this, 'remove_filters' ) );
+		}
+
+		// ReCaptcha lazy load.
+		add_filter( 'smush_skip_iframe_from_lazy_load', array( $this, 'exclude_recaptcha_iframe' ), 10, 2 );
+
+		// Compatibility modules for lazy loading.
+		add_filter( 'smush_skip_image_from_lazy_load', array( $this, 'lazy_load_compat' ), 10, 3 );
+
+		// Soliloquy slider CDN support.
+		add_filter( 'soliloquy_image_src', array( $this, 'soliloquy_image_src' ) );
+
+		// Translate Press integration.
+		add_filter( 'smush_skip_image_from_lazy_load', array( $this, 'trp_translation_editor' ) );
+
+		// Jetpack CDN compatibility.
+		add_filter( 'smush_cdn_skip_image', array( $this, 'jetpack_cdn_compat' ), 10, 2 );
+
+		// WP Maintenance Plugin integration.
+		add_action( 'template_redirect', array( $this, 'wp_maintenance_mode' ) );
 	}
 
 	/**
@@ -188,7 +208,7 @@ class Common {
 				// if stats for a particular size doesn't exists.
 				if ( empty( $stats['sizes'][ $image_size ] ) ) {
 					// Update size wise details.
-					$stats['sizes'][ $image_size ] = (object) $smush->_array_fill_placeholders( $smush->_get_size_signature(), (array) $data );
+					$stats['sizes'][ $image_size ] = (object) $smush->array_fill_placeholders( $smush->get_size_signature(), (array) $data );
 				} else {
 					// Update compression percent and bytes saved for each size.
 					$stats['sizes'][ $image_size ]->bytes   = $stats['sizes'][ $image_size ]->bytes + $data->bytes_saved;
@@ -199,7 +219,7 @@ class Common {
 			// Create new stats.
 			$stats = array(
 				'stats' => array_merge(
-					$smush->_get_size_signature(),
+					$smush->get_size_signature(),
 					array(
 						'api_version' => - 1,
 						'lossy'       => - 1,
@@ -213,11 +233,11 @@ class Common {
 			$stats['stats']['keep_exif']   = ! empty( $data->keep_exif ) ? $data->keep_exif : 0;
 
 			// Update size wise details.
-			$stats['sizes'][ $image_size ] = (object) $smush->_array_fill_placeholders( $smush->_get_size_signature(), (array) $data );
+			$stats['sizes'][ $image_size ] = (object) $smush->array_fill_placeholders( $smush->get_size_signature(), (array) $data );
 		}
 
 		// Calculate the total compression.
-		$stats = $smush->total_compression( $stats );
+		$stats = WP_Smush::get_instance()->core()->total_compression( $stats );
 
 		update_post_meta( $id, Smush::$smushed_meta_key, $stats );
 	}
@@ -237,7 +257,7 @@ class Common {
 	 *
 	 * @since 3.0
 	 *
-	 * @param int    $id   Attachment ID.
+	 * @param int   $id    Attachment ID.
 	 * @param array $stats Smushed stats.
 	 * @param array $meta  New meta data.
 	 */
@@ -304,4 +324,166 @@ class Common {
 
 		return true;
 	}
+
+	/**
+	 * Skip ReCaptcha iframes from lazy loading.
+	 *
+	 * @since 3.4.2
+	 *
+	 * @param bool   $skip  Should skip? Default: false.
+	 * @param string $src   Iframe url.
+	 *
+	 * @return bool
+	 */
+	public function exclude_recaptcha_iframe( $skip, $src ) {
+		return false !== strpos( $src, 'recaptcha/api' );
+	}
+
+	/**************************************
+	 *
+	 * Soliloquy slider
+	 *
+	 * @since 3.6.2
+	 */
+
+	/**
+	 * Replace slider image links with CDN links.
+	 *
+	 * @param string $src  Image source.
+	 *
+	 * @return string
+	 */
+	public function soliloquy_image_src( $src ) {
+		$cdn = WP_Smush::get_instance()->core()->mod->cdn;
+
+		if ( ! $cdn->get_status() || empty( $src ) ) {
+			return $src;
+		}
+
+		if ( $cdn->is_supported_path( $src ) ) {
+			return $cdn->generate_cdn_url( $src );
+		}
+
+		return $src;
+	}
+
+	/**************************************
+	 *
+	 * Translate Press
+	 *
+	 * @since 3.6.3
+	 */
+
+	/**
+	 * Disables "Lazy Load" on Translate Press translate editor
+	 *
+	 * @param bool $skip  Should skip? Default: false.
+	 *
+	 * @return bool
+	 */
+	public function trp_translation_editor( $skip ) {
+		if ( ! class_exists( '\TRP_Translate_Press' ) || ! isset( $_GET['trp-edit-translation'] ) ) {
+			return $skip;
+		}
+
+		return true;
+	}
+
+	/**************************************
+	 *
+	 * Jetpack
+	 *
+	 * @since 3.7.1
+	 */
+
+	/**
+	 * Skips the url from the srcset from our CDN when it's already served by Jetpack's CDN.
+	 *
+	 * @since 3.7.1
+	 *
+	 * @param bool   $skip  Should skip? Default: false.
+	 * @param string $url Source.
+	 *
+	 * @return bool
+	 */
+	public function jetpack_cdn_compat( $skip, $url ) {
+		if ( ! class_exists( '\Jetpack' ) ) {
+			return $skip;
+		}
+
+		if ( method_exists( '\Jetpack', 'is_module_active' ) && ! \Jetpack::is_module_active( 'photon' ) ) {
+			return $skip;
+		}
+
+		$parsed_url = wp_parse_url( $url );
+
+		// The image already comes from Jetpack's CDN.
+		if ( preg_match( '#^i[\d]{1}.wp.com$#i', $parsed_url['host'] ) ) {
+			return true;
+		}
+		return $skip;
+	}
+
+
+	/**************************************
+	 *
+	 * WP Maintenance Plugin
+	 *
+	 * @since 3.8.0
+	 */
+
+	/**
+	 * Disable page parsing when "Maintenance" is enabled
+	 *
+	 * @since 3.8.0
+	 */
+	public function wp_maintenance_mode() {
+		if ( ! class_exists( '\MTNC' ) ) {
+			return;
+		}
+
+		global $mt_options;
+
+		if ( ! is_user_logged_in() && ! empty( $mt_options['state'] ) ) {
+			add_filter( 'wp_smush_should_skip_parse', '__return_true' );
+		}
+	}
+
+	/**************************************
+	 *
+	 * Various modules
+	 *
+	 * @since 3.5
+	 */
+
+	/**
+	 * Lazy loading compatibility checks.
+	 *
+	 * @since 3.5.0
+	 *
+	 * @param bool   $skip   Should skip? Default: false.
+	 * @param string $src    Image url.
+	 * @param string $image  Image.
+	 *
+	 * @return bool
+	 */
+	public function lazy_load_compat( $skip, $src, $image ) {
+		// Avoid conflicts if attributes are set (another plugin, for example).
+		if ( false !== strpos( $image, 'data-src' ) ) {
+			return true;
+		}
+
+		// Compatibility with Essential Grid lazy loading.
+		if ( false !== strpos( $image, 'data-lazysrc' ) ) {
+			return true;
+		}
+
+		// Compatibility with JetPack lazy loading.
+		if ( false !== strpos( $image, 'jetpack-lazy-image' ) ) {
+			return true;
+		}
+
+		return $skip;
+	}
+
 }

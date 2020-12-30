@@ -9,20 +9,25 @@
  */
 
 FLBuilder::register_module(
-	'UABBContactForm7Module', array(
+	'UABBContactForm7Module',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
 				'form_section' => array(
 					'fields' => array(
-						'form_id'    => array(
+						'form_id'      => array(
 							'type'    => 'select',
 							'label'   => __( 'Select Form', 'uabb' ),
 							'default' => uabb_cf7_get_form_id(),
 							'options' => array(),
 							'help'    => __( 'Choose the form that you want for this page for styling', 'uabb' ),
 						),
-						'form_title' => array(
+						'cf7_form_raw' => array(
+							'type'    => 'raw',
+							'content' => '<div class="uabb-module-raw" data-uabb-module-nonce=' . wp_create_nonce( 'uabb-cf7-nonce' ) . '></div>',
+						),
+						'form_title'   => array(
 							'type'    => 'text',
 							'label'   => __( 'Form Title', 'uabb' ),
 							'default' => '',
@@ -32,7 +37,7 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'form_desc'  => array(
+						'form_desc'    => array(
 							'type'    => 'textarea',
 							'label'   => __( 'Form Description', 'uabb' ),
 							'default' => '',
@@ -283,14 +288,14 @@ FLBuilder::register_module(
 							'type'       => 'border',
 							'label'      => __( 'Border', 'uabb' ),
 							'responsive' => true,
-							'default'	 => array(
-								'style'		=> 'solid',
-								'color'		=> 'cccccc',
-								'width'		=> array(
-									'top' 	 => '1',
-									'right'	 => '1',
+							'default'    => array(
+								'style' => 'solid',
+								'color' => 'cccccc',
+								'width' => array(
+									'top'    => '1',
+									'right'  => '1',
 									'bottom' => '1',
-									'left'	 => '1',
+									'left'   => '1',
 								),
 							),
 							'preview'    => array(
@@ -456,8 +461,9 @@ FLBuilder::register_module(
 						'btn_style'        => array(
 							'type'    => 'select',
 							'label'   => __( 'Style', 'uabb' ),
-							'default' => 'flat',
+							'default' => 'default',
 							'options' => array(
+								'default'     => __( 'Default', 'uabb' ),
 								'flat'        => __( 'Flat', 'uabb' ),
 								'transparent' => __( 'Transparent', 'uabb' ),
 								'gradient'    => __( 'Gradient', 'uabb' ),
@@ -465,16 +471,19 @@ FLBuilder::register_module(
 							),
 							'toggle'  => array(
 								'flat'        => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'transparent' => array(
-									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_border_width', 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'gradient'    => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
 								),
 								'3d'          => array(
-									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color' ),
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'btn_width', 'btn_border_radius' ),
+								),
+								'default'     => array(
+									'fields' => array( 'btn_background_hover_color', 'btn_text_hover_color', 'button_padding_dimension', 'button_border', 'border_hover_color' ),
 								),
 							),
 						),
@@ -519,7 +528,7 @@ FLBuilder::register_module(
 						'btn_background_color'       => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -533,7 +542,7 @@ FLBuilder::register_module(
 						'btn_background_hover_color' => array(
 							'type'        => 'color',
 							'label'       => __( 'Background Hover Color', 'uabb' ),
-							'default'     => '0085ba',
+							'default'     => '',
 							'connections' => array( 'color' ),
 							'show_alpha'  => true,
 							'show_reset'  => true,
@@ -571,7 +580,7 @@ FLBuilder::register_module(
 				'btn-structure'     => array(
 					'title'  => __( 'Button Structure', 'uabb' ),
 					'fields' => array(
-						'btn_width'              => array(
+						'btn_width'                => array(
 							'type'    => 'select',
 							'label'   => __( 'Width', 'uabb' ),
 							'default' => 'auto',
@@ -592,7 +601,45 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'btn_custom_width'       => array(
+						'button_padding_dimension' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-cf7-style input[type=submit]',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'button_border'            => array(
+							'type'    => 'border',
+							'label'   => __( 'Border', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-cf7-style input[type=submit]',
+								'property'  => 'border',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'border_hover_color'       => array(
+							'type'        => 'color',
+							'label'       => __( 'Border Hover Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'connections' => array( 'color' ),
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+						'btn_custom_width'         => array(
 							'type'    => 'unit',
 							'label'   => __( 'Custom Width', 'uabb' ),
 							'default' => '200',
@@ -606,7 +653,7 @@ FLBuilder::register_module(
 								'unit'      => 'px',
 							),
 						),
-						'btn_custom_height'      => array(
+						'btn_custom_height'        => array(
 							'type'    => 'unit',
 							'label'   => __( 'Custom Height', 'uabb' ),
 							'default' => '45',
@@ -620,7 +667,7 @@ FLBuilder::register_module(
 								'unit'      => 'px',
 							),
 						),
-						'btn_padding_top_bottom' => array(
+						'btn_padding_top_bottom'   => array(
 							'type'        => 'unit',
 							'label'       => __( 'Padding Top/Bottom', 'uabb' ),
 							'placeholder' => uabb_theme_button_vertical_padding( '' ),
@@ -644,7 +691,7 @@ FLBuilder::register_module(
 								),
 							),
 						),
-						'btn_border_radius'      => array(
+						'btn_border_radius'        => array(
 							'type'    => 'unit',
 							'label'   => __( 'Round Corners', 'uabb' ),
 							'slider'  => true,
@@ -657,7 +704,7 @@ FLBuilder::register_module(
 								'unit'      => 'px',
 							),
 						),
-						'btn_align'              => array(
+						'btn_align'                => array(
 							'type'    => 'align',
 							'label'   => __( 'Alignment', 'uabb' ),
 							'default' => 'left',
@@ -668,7 +715,7 @@ FLBuilder::register_module(
 								'selector'  => '.uabb-cf7-style input[type=submit]',
 							),
 						),
-						'btn_margin_top'         => array(
+						'btn_margin_top'           => array(
 							'type'    => 'unit',
 							'label'   => __( 'Margin Top', 'uabb' ),
 							'slider'  => true,
@@ -681,7 +728,7 @@ FLBuilder::register_module(
 								'unit'      => 'px',
 							),
 						),
-						'btn_margin_bottom'      => array(
+						'btn_margin_bottom'        => array(
 							'type'        => 'unit',
 							'label'       => __( 'Margin Bottom', 'uabb' ),
 							'placeholder' => '',
@@ -1041,7 +1088,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/set-multiple-column-fields-in-cf7-styler-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=cf7-styler-module" target="_blank" rel="noopener"> How to Set Multiple Column Fields in CF7 Styler Module? </a> </li>
 

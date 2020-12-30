@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'CreativeLink', array(
+	'CreativeLink',
+	array(
 		'general'    => array( // Tab.
 			'title'    => __( 'Title', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -383,7 +384,8 @@ FLBuilder::register_module(
 );
 
 FLBuilder::register_settings_form(
-	'screens_form', array(
+	'screens_form',
+	array(
 		'title' => __( 'Title', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

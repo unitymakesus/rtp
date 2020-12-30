@@ -19,7 +19,7 @@ if(! /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navig
 else
 	var is_touch_device = true;
 
-<?php if ( 'style1' == $settings->slide_type ) { ?>
+<?php if ( 'style1' === $settings->slide_type ) { ?>
 var isMobile = {
 	Android: function() {
 		return navigator.userAgent.match(/Android/i);
@@ -41,8 +41,8 @@ var isMobile = {
 	}
 };
 var device = isMobile.any();
-if( device == null ) {
-	jQuery('.fl-node-<?php echo $id; ?>').find('.uabb-slide-box-wrap').hover( function() {
+if( device === null ) {
+	jQuery('.fl-node-<?php echo esc_attr( $id ); ?>').find('.uabb-slide-box-wrap').hover( function() {
 		_hideAll_SlideBox('');
 
 		var style1 = jQuery(this).find('.uabb-style1');
@@ -65,8 +65,8 @@ if( device == null ) {
 		style1.removeClass('open-slidedown');
 	});
 }
-else if( device != null ) {
-	jQuery('.fl-node-<?php echo $id; ?>').find('.uabb-slide-box-wrap').click( function(e) {
+else if( device !== null ) {
+	jQuery('.fl-node-<?php echo esc_attr( $id ); ?>').find('.uabb-slide-box-wrap').click( function(e) {
 
 		var style1 = jQuery(this).find('.uabb-style1');
 		$this = jQuery(this);
@@ -88,14 +88,14 @@ else if( device != null ) {
 
 
 <?php } else { ?>
-jQuery('.fl-node-<?php echo $id; ?>').on( 'click' , '.uabb-slide-face', function(e){
+jQuery('.fl-node-<?php echo esc_attr( $id ); ?>').on( 'click' , '.uabb-slide-face', function(e){
 	var self = jQuery(this),
 		slide_type = self.closest('.uabb-slide-type').data('style'),
 		style2 = self.closest('.uabb-style2'),
 		style3 = self.closest('.uabb-style3');
 	if( slide_type = 'style2' ) {
 		if( ! jQuery(e.target).hasClass('uabb-slide-down') && ! jQuery(e.target).closest('.uabb-slide-down' ).length ) {
-			var dropdown_icon = style2.find('.uabb-slide-dropdown .fa'),
+			var dropdown_icon = style2.find('.uabb-slide-dropdown .fas'),
 				slidebox_wrap = style2.closest('.uabb-slide-box-wrap');
 
 			if( style2.hasClass('open-slidedown') ){
@@ -118,7 +118,7 @@ jQuery('.fl-node-<?php echo $id; ?>').on( 'click' , '.uabb-slide-face', function
 	if( slide_type = 'style3' ) {
 		if( ! jQuery(e.target).hasClass('uabb-slide-down') && ! jQuery(e.target).closest('.uabb-slide-down' ).length ) {
 
-			var dropdown_icon = style3.find('.uabb-slide-dropdown .fa'),
+			var dropdown_icon = style3.find('.uabb-slide-dropdown .fas'),
 				slidebox_wrap = style3.closest('.uabb-slide-box-wrap');
 
 			if( style3.hasClass('open-slidedown') ) {

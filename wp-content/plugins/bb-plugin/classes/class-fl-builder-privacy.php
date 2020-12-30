@@ -19,7 +19,7 @@ final class FLBuilderPrivacy {
 
 	static public function register_exporter( $exporters ) {
 		$exporters[] = array(
-			'exporter_friendly_name' => __( 'Beaver Builder Plugin' ),
+			'exporter_friendly_name' => __( 'Beaver Builder Plugin', 'fl-builder' ),
 			'callback'               => array( 'FLBuilderPrivacy', 'exporter' ),
 		);
 		return $exporters;
@@ -87,7 +87,7 @@ final class FLBuilderPrivacy {
 	}
 
 	static public function register_policy() {
-		wp_add_privacy_policy_content( 'Beaver Builder', __( '<p>In terms of GDPR, Beaver Builder products do not collect any personal information from your users. However some modules such as videos and maps might need you to update your privacy policy accordingly.</p>', 'fl-builder' ) );
+		wp_add_privacy_policy_content( 'Beaver Builder', sprintf( '<p>%s</p>', __( 'In terms of GDPR, Beaver Builder products do not collect any personal information from your users. However some modules such as videos and maps might need you to update your privacy policy accordingly.', 'fl-builder' ) ) );
 	}
 }
 FLBuilderPrivacy::init();

@@ -135,9 +135,15 @@ class MWP_EventListener_PublicRequest_AutomaticLogin implements Symfony_EventDis
 
         if ($isServiceSigned && !empty($newComm)) {
             $communicationKey = mwp_get_communication_key($request->query['site_id']);
-            $publicKey        = $this->configuration->getLivePublicKey($request->query['service_key']);
-            $message          = $communicationKey.$where.$messageId;
-            $signed           = base64_decode($request->query['service_sign']);
+
+            if (empty($communicationKey)) {
+                $this->context->wpDie(esc_html__("Invalid site connection specified. Please try again, or, if this keeps happening, contact support.", 'worker'), '', 200);
+                return;
+            }
+
+            $publicKey = $this->configuration->getLivePublicKey($request->query['service_key']);
+            $message   = $communicationKey.$where.$messageId;
+            $signed    = base64_decode($request->query['service_sign']);
         } else {
             $publicKey = $this->configuration->getPublicKey();
             $message   = $where.$messageId;

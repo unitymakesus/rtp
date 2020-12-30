@@ -14,6 +14,5 @@
 	<p class="actions select">
 		<button type="submit" name="copy-buckets" value="1" class="button button-primary right"><?php _e( 'Yes', 'amazon-s3-and-cloudfront' ); ?></button>
 		<button type="submit" name="copy-buckets" value="0" class="button right"><?php _e( 'No', 'amazon-s3-and-cloudfront' ); ?></button>
-		<span class="spinner right"></span>
 	</p>
 </div>

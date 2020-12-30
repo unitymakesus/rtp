@@ -17,7 +17,7 @@ use Exception;
 use Imagick;
 use ImagickPixel;
 use Smush\Core\Helper;
-use Smush\WP_Smush;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -142,13 +142,11 @@ class Png2jpg extends Abstract_Module {
 	 * @return bool Whether to convert the PNG or not
 	 */
 	private function should_convert( $id, $file ) {
-		$should_convert = false;
-
 		// Get the Transparency conversion settings.
 		$convert_png = $this->settings->get( 'png_to_jpg' );
 
 		if ( ! $convert_png ) {
-			return $should_convert;
+			return false;
 		}
 
 		// Whether to convert transparent images or not.
@@ -161,10 +159,10 @@ class Png2jpg extends Abstract_Module {
 
 		// If we are suppose to convert transparent images, skip is transparent check.
 		if ( $convert_transparent || ! $this->is_transparent ) {
-			$should_convert = true;
+			return true;
 		}
 
-		return $should_convert;
+		return false;
 	}
 
 	/**
@@ -487,6 +485,9 @@ class Png2jpg extends Abstract_Module {
 
 			WP_Smush::get_instance()->core()->mod->backup->add_to_image_backup_sizes( $id, $o_file, 'smush_png_path' );
 
+			// Remove webp images created from the png version, if any.
+			WP_Smush::get_instance()->core()->mod->webp->delete_images( $id, true, $o_file );
+
 			/**
 			 * Do action, if the PNG to JPG conversion was successful
 			 */
@@ -620,12 +621,11 @@ class Png2jpg extends Abstract_Module {
 		$editor = wp_get_image_editor( $file );
 
 		if ( ! is_wp_error( $editor ) ) {
-
 			$quality = $editor->get_quality();
 		}
 
-		// Choose the default quaity if we didn't get it.
-		if ( ! $quality || $quality < 1 || $quality > 100 ) {
+		// Choose the default quality if we didn't get it.
+		if ( ! isset( $quality ) || $quality < 1 || $quality > 100 ) {
 			// The default quality.
 			$quality = 82;
 		}

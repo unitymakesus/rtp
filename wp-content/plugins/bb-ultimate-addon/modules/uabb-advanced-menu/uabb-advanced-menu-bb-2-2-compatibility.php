@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBCreativeMenu', array(
+	'UABBCreativeMenu',
+	array(
 		'general'    => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -354,14 +355,14 @@ FLBuilder::register_module(
 							'type'       => 'border',
 							'label'      => __( 'Border', 'uabb' ),
 							'responsive' => true,
-							'default'	 => array(
-								'style'		=> 'solid',
-								'color'		=> '000000',
-								'width'		=> array(
-									'top'	 => '1',
-									'right'	 => '1',
+							'default'    => array(
+								'style' => 'solid',
+								'color' => '000000',
+								'width' => array(
+									'top'    => '1',
+									'right'  => '1',
 									'bottom' => '1',
-									'left'	 => '1',
+									'left'   => '1',
 								),
 							),
 							'preview'    => array(
@@ -494,12 +495,25 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'creative_menu_navigation_alignment' => array(
-							'type'    => 'align',
-							'label'   => __( 'Navigation Alignment', 'uabb' ),
-							'default' => 'center',
+						'hamburger_icon_size'              => array(
+							'type'       => 'unit',
+							'label'      => __( 'Hamburger Icon Size', 'uabb' ),
+							'slider'     => true,
 							'responsive' => true,
-							'preview' => array(
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-creative-menu-mobile-toggle.hamburger',
+								'property' => 'font-size',
+								'unit'     => 'px',
+							),
+						),
+						'creative_menu_navigation_alignment' => array(
+							'type'       => 'align',
+							'label'      => __( 'Navigation Alignment', 'uabb' ),
+							'default'    => 'center',
+							'responsive' => true,
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-creative-menu-mobile-toggle-container, .uabb-creative-menu-mobile-toggle-container > .uabb-creative-menu-mobile-toggle.text',
 								'property'  => 'text-align',
@@ -522,6 +536,9 @@ FLBuilder::register_module(
 								'below-row'   => __( 'Below Row', 'uabb' ),
 							),
 							'toggle'  => array(
+								'default'     => array(
+									'fields' => array( 'collapse_menu' ),
+								),
 								'off-canvas'  => array(
 									'fields'   => array( 'creative_menu_responsive_link_color', 'creative_menu_responsive_link_hover_color', 'creative_menu_responsive_link_border_color', 'creative_menu_offcanvas_direction', 'creative_menu_animation_speed', 'creative_menu_responsive_overlay_bg_color', 'creative_menu_responsive_overlay_padding_dimension', 'creative_menu_close_icon_size', 'creative_menu_close_icon_color', 'creative_menu_responsive_overlay_color', 'creative_menu_off_canvas_shadow', 'creative_menu_responsive_toggle' ),
 									'sections' => array( 'creative_menu_responsive_close_style' ),
@@ -530,6 +547,15 @@ FLBuilder::register_module(
 									'fields'   => array( 'creative_menu_responsive_link_color', 'creative_menu_responsive_link_hover_color', 'creative_menu_responsive_link_border_color', 'creative_menu_full_screen_effects', 'creative_menu_animation_speed', 'creative_menu_responsive_overlay_bg_color', 'creative_menu_close_icon_size', 'creative_menu_close_icon_color', 'creative_menu_responsive_toggle' ),
 									'sections' => array( 'creative_menu_responsive_close_style' ),
 								),
+							),
+						),
+						'collapse_menu'                   => array(
+							'type'    => 'select',
+							'label'   => __( 'Collapse Menu', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
 							),
 						),
 						'creative_menu_full_screen_effects' => array(
@@ -828,7 +854,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/overlay-effect-advanced-menu/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=advanced-menu-module" target="_blank" rel="noopener"> Overlay Effect in Advanced Menu </a> </li>
 

@@ -157,3 +157,13 @@
 .uabb-module-content .uabb-text-editor.uabb-accordion-desc *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6):not(strong):not(b):not(i) {
     font-weight: inherit;
 }
+
+/* Accesibility support */
+.uabb-adv-accordion-button-label:focus,
+.uabb-adv-accordion-button-label:active,
+.uabb-adv-accordion-button:focus,
+.uabb-adv-accordion-button:active,
+.uabb-adv-accordion-icon-wrap:focus,
+.uabb-adv-accordion-icon-wrap:active {
+      outline: thin dotted;
+}

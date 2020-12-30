@@ -7,9 +7,9 @@
 
 ?>
 
-<div class="uabb-woo-categories uabb-woo-categories-<?php echo $settings->layout; ?>">
+<div class="uabb-woo-categories uabb-woo-categories-<?php echo esc_attr( $settings->layout ); ?>">
 	<div class="uabb-woocommerce">
-		<div class="uabb-woo-categories-inner <?php echo $module->get_inner_classes(); ?>">
+		<div class="uabb-woo-categories-inner <?php echo wp_kses_post( $module->get_inner_classes() ); ?>">
 		<?php
 			$module->query_product_categories();
 		?>

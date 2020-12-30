@@ -24,7 +24,7 @@ foreach ( $settings->list_items as $item ) {
 			<?php $module->render_image(); ?><!-- Inline Block Space Fix
 		--><div class="uabb-list-icon-text">
 				<?php if ( isset( $item->title ) ) : ?>
-					<<?php echo $settings->typography_tag_selection; ?> class="uabb-list-icon-text-heading"><?php echo $item->title; ?></<?php echo $settings->typography_tag_selection; ?>>
+					<<?php echo esc_attr( $settings->typography_tag_selection ); ?> class="uabb-list-icon-text-heading"><?php echo $item->title; ?></<?php echo esc_attr( $settings->typography_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 				<?php endif; ?>
 			</div>
 		</div>

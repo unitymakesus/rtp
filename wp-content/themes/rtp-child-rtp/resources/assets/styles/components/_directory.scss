@@ -23,6 +23,7 @@
 
   .caret {
     fill: $color-white;
+    pointer-events: none;
     z-index: 1;
   }
 
@@ -110,9 +111,40 @@
   }
 }
 
+.directory-listing {
+  .facetwp-facet {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .facetwp-search-wrap {
+    display: block;
+    margin-bottom: 0;
+
+    .facetwp-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 5px;
+    }
+  }
+
+  // Map itself is display: none on these screens.
+  @media (max-width: 960px) {
+    .key {
+      display: none;
+    }
+  }
+}
+
 .filter-selects {
-  height: 3rem;
-  margin-bottom: 40px;
+  margin-bottom: 2rem;
+
+  &::after {
+    display: block;
+    clear: both;
+    content: '';
+  }
 
   .facet-label {
     @extend .screen-reader-text;
@@ -120,6 +152,13 @@
 
   .facetwp-type-dropdown {
     @include select_dropdown;
+
+    width: 100%;
+
+    @media #{$small-and-up} {
+      width: 33.333%;
+      margin-right: 0;
+    }
   }
 }
 

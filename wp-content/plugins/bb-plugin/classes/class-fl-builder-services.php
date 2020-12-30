@@ -70,6 +70,12 @@ final class FLBuilderServices {
 			'name'  => 'GoDaddy Email Marketing',
 			'class' => 'FLBuilderServiceGoDaddyEmailMarketing',
 		),
+
+		'groundhogg'              => array(
+			'type'  => 'autoresponder',
+			'name'  => 'Groundhogg',
+			'class' => 'FLBuilderServiceGroundhogg',
+		),
 		'hatchbuck'               => array(
 			'type'  => 'autoresponder',
 			'name'  => 'Hatchbuck',
@@ -104,6 +110,11 @@ final class FLBuilderServices {
 			'type'  => 'autoresponder',
 			'name'  => 'MailerLite',
 			'class' => 'FLBuilderServiceMailerLite',
+		),
+		'mailjet'                 => array(
+			'type'  => 'autoresponder',
+			'name'  => 'Mailjet',
+			'class' => 'FLBuilderServiceMailjet',
 		),
 		'mailpoet'                => array(
 			'type'  => 'autoresponder',

@@ -32,20 +32,20 @@ class Give_Square_Gateway {
 	/**
 	 * Transactions Instance
 	 *
-	 * @var \SquareConnect\Api\TransactionsApi
+	 * @var \SquareConnect\Api\PaymentsApi
 	 *
 	 * @since 1.0.0
 	 */
-	private $transaction_api;
+	private $payments_api;
 
 	/**
 	 * Charge Request Instance
 	 *
-	 * @var \SquareConnect\Model\ChargeRequest
+	 * @var \SquareConnect\Model\CreatePaymentRequest
 	 *
 	 * @since 1.0.0
 	 */
-	private $charge_request;
+	private $payment_request;
 
 	/**
 	 * Customer object.
@@ -63,10 +63,10 @@ class Give_Square_Gateway {
 	public function __construct() {
 
 		// Set the Access Token prior to any API calls.
-		\SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken( give_square_get_access_token() );
+		$api_client = give_square_setup_api_config();
 
-		$this->transaction_api = new SquareConnect\Api\TransactionsApi();
-		$this->charge_request  = new SquareConnect\Model\ChargeRequest();
+		$this->payments_api    = new SquareConnect\Api\PaymentsApi( $api_client );
+		$this->payment_request = new SquareConnect\Model\CreatePaymentRequest();
 		$this->customer        = new Give_Square_Customer();
 
 		add_action( 'give_gateway_square', array( $this, 'process_donation' ) );
@@ -178,36 +178,36 @@ class Give_Square_Gateway {
 			give_insert_payment_note( $donation_id, "Idempotency Key: {$idempotency_key}" );
 
 			// Prepare charge request using the donation form values.
-			$this->charge_request
-				->setCardNonce( $posted_data['post_data']['card_nonce'] )
+			$this->payment_request
+				->setSourceId( $posted_data['post_data']['card_nonce'] )
 				->setIdempotencyKey( $idempotency_key )
 				->setAmountMoney( $amount )
 				->setCustomerId( $customer_id )
 				->setBuyerEmailAddress( $donation_data['user_email'] )
+				->setAutocomplete( true )
+				->setLocationId( $location_id )
 				->setNote(
 					sprintf(
 						/* translators: 1. Give Donation Form Title. */
-						__( 'Donation: %1$s', 'give-square' ),
-						mb_strlen( $donation_data['give_form_title'] ) > 47 ? mb_substr( $donation_data['give_form_title'], 0, 47 ) . '...' : $donation_data['give_form_title']
+						__( 'Donation to "%1$s"', 'give-square' ),
+						mb_strlen( $donation_data['give_form_title'] ) > 42 ? mb_substr( $donation_data['give_form_title'], 0, 42 ) . '...' : $donation_data['give_form_title']
 					)
 				);
+
+			// If billing address is enabled, then attach it to payment request.
+			if ( give_is_setting_enabled( give_get_option( 'give_square_collect_billing_details', false ) ) ) {
+				$this->payment_request->setBillingAddress( give_square_prepare_billing_address( $posted_data ) );
+			}
 
 			try {
 
 				// Process the donation through the Square API.
-				$donation = $this->transaction_api->charge( $location_id, $this->charge_request );
+				$donation = $this->payments_api->createPayment( $this->payment_request );
 
 				// Save Transaction ID to Donation.
-				$transaction_id = $donation->getTransaction()->getId();
+				$transaction_id = $donation->getPayment()->getId();;
 				give_set_payment_transaction_id( $donation_id, $transaction_id );
 				give_insert_payment_note( $donation_id, "Transaction ID: {$transaction_id}" );
-
-				// Set Tender ID for refunds
-				$tenders = $donation->getTransaction()->getTenders();
-				if ( isset( $tenders[0] ) ) {
-					give_update_meta( $donation_id, '_give_square_donation_tender_id', $tenders[0]->getId() );
-					give_insert_payment_note( $donation_id, "Tender ID: {$tenders[0]->getId()}" );
-				}
 
 				if ( ! empty( $transaction_id ) ) {
 

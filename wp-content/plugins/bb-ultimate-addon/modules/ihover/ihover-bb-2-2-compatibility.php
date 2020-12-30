@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'iHoverModule', array(
+	'iHoverModule',
+	array(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array(
@@ -368,7 +369,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/will-find-responsive-option-ihover-module/?utm_source=Uabb-Pro-Backend&utm_medium=Module-Editor-Screen&utm_campaign=iHover-module" target="_blank" rel="noopener"> Where will I find the responsive option for the iHover module? </a> </li>
 
@@ -387,7 +388,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'ihover_item_form', array(
+	'ihover_item_form',
+	array(
 		'title' => __( 'Add iHover Item', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

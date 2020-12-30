@@ -50,16 +50,10 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-categories/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-categories/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-categories/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-categories/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			return file_get_contents( $path );
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -72,11 +66,11 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Categories typography settings.
 			if ( ! isset( $settings->category_typo ) || ! is_array( $settings->category_typo ) ) {
@@ -94,7 +88,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->content_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->content_font['weight'] ) {
+					if ( 'regular' === $settings->content_font['weight'] ) {
 						$settings->category_typo['font_weight'] = 'normal';
 					} else {
 						$settings->category_typo['font_weight'] = $settings->content_font['weight'];
@@ -177,7 +171,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->desc_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->desc_font['weight'] ) {
+					if ( 'regular' === $settings->desc_font['weight'] ) {
 						$settings->description_typo['font_weight'] = 'normal';
 					} else {
 						$settings->description_typo['font_weight'] = $settings->desc_font['weight'];
@@ -353,7 +347,8 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 
 		if ( '' !== $atts['parent'] ) {
 			$product_categories = wp_list_filter(
-				$product_categories, array(
+				$product_categories,
+				array(
 					'parent' => $atts['parent'],
 				)
 			);
@@ -426,7 +421,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 		remove_action( 'woocommerce_shop_loop_subcategory_title', array( $this, 'template_loop_category_title' ), 10 );
 		add_action( 'woocommerce_shop_loop_subcategory_title', 'woocommerce_template_loop_category_title', 10 );
 
-		echo $inner_content;
+		echo $inner_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -434,10 +429,10 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 	 *
 	 * @param object $category Category object.
 	 */
-	function template_loop_category_link_open( $category ) {
+	public function template_loop_category_link_open( $category ) {
 		$link = apply_filters( 'uabb_woo_category_link', esc_url( get_term_link( $category, 'product_cat' ) ) );
 
-		echo '<a href="' . $link . '">';
+		echo '<a href="' . esc_url( $link ) . '">';
 	}
 
 	/**
@@ -469,7 +464,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 		if ( $category && ! empty( $category->description ) ) {
 
 			echo '<div class="uabb-product-cat-desc">';
-				echo '<div class="uabb-term-description">' . wc_format_content( $category->description ) . '</div>'; // WPCS: XSS ok.
+				echo '<div class="uabb-term-description">' . wc_format_content( $category->description ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 		}
 	}
@@ -494,7 +489,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
 		}
 		$output .= '</div>';
 
-		echo $output;
+		echo wp_kses_post( $output );
 	}
 }
 
@@ -504,7 +499,7 @@ class UABBWooCategoriesModule extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-categories/uabb-woo-categories-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-categories/uabb-woo-categories-bb-less-than-2-2-compatibility.php';

@@ -33,11 +33,9 @@ final class FLBuilderUserTemplatesAdminAdd {
 		$action  = __( 'Add', 'fl-builder' );
 
 		if ( 'fl-builder-add-new' == $page ) {
-
-			wp_enqueue_style( 'jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), $version );
-			wp_enqueue_script( 'jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), $version, true );
+			wp_enqueue_style( 'fl-jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), $version );
+			wp_enqueue_script( 'fl-jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), $version, true );
 			wp_enqueue_script( 'jquery-validate', FL_BUILDER_URL . 'js/jquery.validate.min.js', array(), $version, true );
-
 			wp_enqueue_style( $slug . 'add', $url . 'css/' . $slug . 'add.css', array(), $version );
 			wp_enqueue_script( $slug . 'add', $url . 'js/' . $slug . 'add.js', array(), $version, true );
 

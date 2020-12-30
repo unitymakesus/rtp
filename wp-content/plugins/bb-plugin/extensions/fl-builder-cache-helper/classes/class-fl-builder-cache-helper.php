@@ -12,7 +12,6 @@ class Plugin {
 		'fl_builder_cache_cleared',
 		'fl_builder_after_save_layout',
 		'fl_builder_after_save_user_template',
-		'upgrader_process_complete',
 	);
 
 	function __construct() {

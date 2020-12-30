@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function give_square_register_sections( $sections ) {
 
-	$sections['square-settings'] = __( 'Square Settings', 'give-square' );
+	$sections['square-settings'] = __( 'Square', 'give-square' );
 
 	return $sections;
 }
@@ -82,7 +82,10 @@ function give_square_register_advanced_settings( $settings ) {
 				),
 				array(
 					'name'    => __( 'Square API Keys', 'give-square' ),
-					'desc'    => __( 'Enable if you would like to use your own API keys instead of Square Connect via OAuth API.', 'give-square' ),
+					'desc'    => give_square_is_manual_api_keys_enabled() ? sprintf(
+						__( '<div style="padding: 8px 10px; background:#FFF; margin: 8px 0 0; border-radius: 4px;"><strong>Square API keys enabled:</strong> Please enter your API keys on the payment gateways settings screen. <a href="%1$s">Click here</a> to configure your API keys.</div>', 'give-square' ),
+						esc_url_raw( admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=square-settings' )
+					) : __( 'Enable if you would like to use your own API keys instead of Square Connect via oAuth API.', 'give-square' ),
 					'id'      => 'square_api_keys',
 					'type'    => 'radio_inline',
 					'default' => 'disabled',
@@ -107,8 +110,9 @@ function give_square_register_advanced_settings( $settings ) {
 				array(
 					'id'   => 'give_title_square_advanced',
 					'type' => 'sectionend',
-				),
+				)
 			);
+
 			break;
 	} // End switch().
 

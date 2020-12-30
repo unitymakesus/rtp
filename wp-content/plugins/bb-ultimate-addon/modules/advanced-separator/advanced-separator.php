@@ -39,11 +39,11 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 	 * @method render_image
 	 */
 	public function render_image() {
-		if ( 'line_image' == $this->settings->separator || 'line_icon' == $this->settings->separator ) {
+		if ( 'line_image' === $this->settings->separator || 'line_icon' === $this->settings->separator ) {
 			$imageicon_array = array(
 
 				/* General Section */
-				'image_type'            => ( 'line_image' == $this->settings->separator ) ? 'photo' : ( ( 'line_icon' == $this->settings->separator ) ? 'icon' : '' ),
+				'image_type'            => ( 'line_image' === $this->settings->separator ) ? 'photo' : ( ( 'line_icon' === $this->settings->separator ) ? 'icon' : '' ),
 
 				/* Icon Basics */
 				'icon'                  => $this->settings->icon,
@@ -73,11 +73,11 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 				'img_bg_border_radius'  => $this->settings->img_bg_border_radius,
 			);
 			/* Render HTML Function */
-			if ( 'line_image' == $this->settings->separator ) {
+			if ( 'line_image' === $this->settings->separator ) {
 				echo '<div class="uabb-image-outter-wrap">';
 			}
 			FLBuilder::render_module_html( 'image-icon', $imageicon_array );
-			if ( 'line_image' == $this->settings->separator ) {
+			if ( 'line_image' === $this->settings->separator ) {
 				echo '</div>';
 			}
 		}
@@ -93,11 +93,11 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( ! isset( $settings->text_font_typo ) || ! is_array( $settings->text_font_typo ) ) {
 
@@ -108,7 +108,7 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 
 			if ( isset( $settings->text_font_family ) ) {
 				if ( isset( $settings->text_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->text_font_family['weight'] ) {
+					if ( 'regular' === $settings->text_font_family['weight'] ) {
 						$settings->text_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->text_font_typo['font_weight'] = $settings->text_font_family['weight'];
@@ -174,7 +174,7 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 				);
 				unset( $settings->text_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( ! isset( $settings->text_font_typo ) || ! is_array( $settings->text_font_typo ) ) {
 
@@ -185,7 +185,7 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 			if ( isset( $settings->text_font_family ) ) {
 
 				if ( isset( $settings->text_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->text_font_family['weight'] ) {
+					if ( 'regular' === $settings->text_font_family['weight'] ) {
 						$settings->text_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->text_font_typo['font_weight'] = $settings->text_font_family['weight'];
@@ -216,7 +216,7 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->text_line_height['small'] ) && isset( $settings->text_font_size['small'] ) && 0 != $settings->text_font_size['small'] ) {
+			if ( isset( $settings->text_line_height['small'] ) && isset( $settings->text_font_size['small'] ) && 0 !== $settings->text_font_size['small'] ) {
 				if ( is_numeric( $settings->text_line_height['small'] ) && is_numeric( $settings->text_font_size['small'] ) ) {
 					$settings->text_font_typo['line_height'] = array(
 						'length' => round( $settings->text_line_height['small'] / $settings->text_font_size['small'], 2 ),
@@ -224,7 +224,7 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->text_line_height['medium'] ) && isset( $settings->text_font_size['medium'] ) && 0 != $settings->text_font_size['medium'] ) {
+			if ( isset( $settings->text_line_height['medium'] ) && isset( $settings->text_font_size['medium'] ) && 0 !== $settings->text_font_size['medium'] ) {
 				if ( is_numeric( $settings->text_line_height['medium'] ) && is_numeric( $settings->text_font_size['medium'] ) ) {
 					$settings->text_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->text_line_height['medium'] / $settings->text_font_size['medium'], 2 ),
@@ -232,7 +232,7 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->text_line_height['desktop'] ) && isset( $settings->text_font_size['desktop'] ) && 0 != $settings->text_font_size['desktop'] ) {
+			if ( isset( $settings->text_line_height['desktop'] ) && isset( $settings->text_font_size['desktop'] ) && 0 !== $settings->text_font_size['desktop'] ) {
 				if ( is_numeric( $settings->text_line_height['desktop'] ) && is_numeric( $settings->text_font_size['desktop'] ) ) {
 					$settings->text_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->text_line_height['desktop'] / $settings->text_font_size['desktop'], 2 ),
@@ -269,9 +269,8 @@ class AdvancedSeparatorModule extends FLBuilderModule {
 * And accordingly render the required form settings file.
 */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/advanced-separator/advanced-separator-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/advanced-separator/advanced-separator-bb-less-than-2-2-compatibility.php';
 }
-

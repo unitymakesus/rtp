@@ -6,13 +6,11 @@ class FacetWP_Integration_ACF
     public $fields = [];
     public $parent_type_lookup = [];
     public $repeater_row;
-    public $acf_version;
 
 
     function __construct() {
-        $this->acf_version = acf()->settings['version'];
-
         add_filter( 'facetwp_facet_sources', [ $this, 'facet_sources' ] );
+        add_filter( 'facetwp_facet_orderby', [ $this, 'facet_orderby' ], 10, 2 );
         add_filter( 'facetwp_indexer_query_args', [ $this, 'lookup_acf_fields' ] );
         add_filter( 'facetwp_indexer_post_facet', [ $this, 'index_acf_values' ], 1, 2 );
         add_filter( 'facetwp_acf_display_value', [ $this, 'index_source_other' ], 1, 2 );
@@ -47,6 +45,28 @@ class FacetWP_Integration_ACF
 
 
     /**
+     * If the facet "Sort by" value is "Term order", then preserve
+     * the custom order of certain ACF fields (checkboxes, radio, etc.)
+     */
+    function facet_orderby( $orderby, $facet ) {
+        if ( isset( $facet['source'] ) && isset( $facet['orderby'] ) ) {
+            if ( 0 === strpos( $facet['source'], 'acf/' ) && 'term_order' == $facet['orderby'] ) {
+                $source_parts = explode( '/', $facet['source'] );
+                $field_id = array_pop( $source_parts );
+                $field_object = get_field_object( $field_id );
+                if ( ! empty( $field_object['choices'] ) ) {
+                    $choices = $field_object['choices'];
+                    $choices = implode( "','", esc_sql( $choices ) );
+                    $orderby = "FIELD(f.facet_display_value, '$choices')";
+                }
+            }
+        }
+
+        return $orderby;
+    }
+
+
+    /**
      * Index ACF field data
      */
     function index_acf_values( $return, $params ) {
@@ -69,7 +89,7 @@ class FacetWP_Integration_ACF
                 $value = $this->process_field_value( $value, $hierarchy, $parent_field_key );
 
                 // get the sub-field properties
-                $sub_field = $this->get_field_object( $hierarchy[0], $object_id );
+                $sub_field = get_field_object( $hierarchy[0], $object_id, false, false );
 
                 foreach ( $value as $key => $val ) {
                     $this->repeater_row = $key;
@@ -80,7 +100,7 @@ class FacetWP_Integration_ACF
             else {
 
                 // get the field properties
-                $field = $this->get_field_object( $hierarchy[0], $object_id );
+                $field = get_field_object( $hierarchy[0], $object_id, false, false );
 
                 // index values
                 $rows = $this->get_values_to_index( $value, $field, $defaults );
@@ -107,27 +127,29 @@ class FacetWP_Integration_ACF
      * Grab all ACF fields
      */
     function get_fields() {
-        if ( version_compare( $this->acf_version, '5.0', '>=' ) ) {
-            $fields = $this->get_acf_fields_v5();
-        }
-        else {
-            $fields = $this->get_acf_fields_v4();
+
+        add_action( 'pre_get_posts', [ $this, 'disable_wpml' ] );
+        $field_groups = acf_get_field_groups();
+        remove_action( 'pre_get_posts', [ $this, 'disable_wpml' ] );
+
+        foreach ( $field_groups as $field_group ) {
+            $fields = acf_get_fields( $field_group );
+
+            if ( ! empty( $fields ) ) {
+                $this->flatten_fields( $fields, $field_group );
+            }
         }
 
-        return $fields;
+        return $this->fields;
     }
 
 
     /**
-     * get_field_object() changed in ACF5
+     * We need to get field groups in ALL languages
      */
-    function get_field_object( $selector, $post_id ) {
-        if ( version_compare( $this->acf_version, '5.0', '>=' ) ) {
-            return get_field_object( $selector, $post_id, false, false );
-        }
-        else {
-            return get_field_object( $selector, $post_id, [ 'load_value' => false ] );
-        }
+    function disable_wpml( $query ) {
+        $query->set( 'suppress_filters', true );
+        $query->set( 'lang', '' );
     }
 
 
@@ -336,14 +358,6 @@ class FacetWP_Integration_ACF
 
 
     /**
-     * We need to get field groups in ALL languages
-     */
-    function disable_wpml( $query ) {
-        $query->set( 'suppress_filters', true );
-    }
-
-
-    /**
      * Format dates in YYYY-MM-DD
      */
     function format_date( $str ) {
@@ -352,48 +366,6 @@ class FacetWP_Integration_ACF
         }
 
         return $str;
-    }
-
-
-    /**
-     * Get field settings (ACF5)
-     * @return array
-     */
-    function get_acf_fields_v5() {
-
-        add_action( 'pre_get_posts', [ $this, 'disable_wpml' ] );
-        $field_groups = acf_get_field_groups();
-        remove_action( 'pre_get_posts', [ $this, 'disable_wpml' ] );
-
-        foreach ( $field_groups as $field_group ) {
-            $fields = acf_get_fields( $field_group );
-
-            if ( ! empty( $fields ) ) {
-                $this->flatten_fields( $fields, $field_group );
-            }
-        }
-
-        return $this->fields;
-    }
-
-
-    /**
-     * Get field settings (ACF4)
-     * @return array
-     */
-    function get_acf_fields_v4() {
-
-        include_once( dirname( __FILE__ ) . '/acf-field-group.php' );
-        $class = new facetwp_acf_field_group();
-
-        $field_groups = $class->get_field_groups( [] );
-
-        foreach ( $field_groups as $field_group ) {
-            $fields = $class->get_fields( [], $field_group['id'] );
-            $this->flatten_fields( $fields, $field_group );
-        }
-
-        return $this->fields;
     }
 
 
@@ -463,7 +435,7 @@ class FacetWP_Integration_ACF
         $object_id = apply_filters( 'facetwp_acf_object_id', $post->ID );
 
         // get the field properties
-        $field = $this->get_field_object( $hierarchy[0], $object_id );
+        $field = get_field_object( $hierarchy[0], $object_id, false, false );
 
         $type = $field['type'];
         $format = isset( $field['return_format'] ) ? $field['return_format'] : '';
@@ -536,6 +508,6 @@ class FacetWP_Integration_ACF
 }
 
 
-if ( function_exists( 'acf' ) ) {
+if ( function_exists( 'acf' ) && version_compare( acf()->settings['version'], '5.0', '>=' ) ) {
     FWP()->acf = new FacetWP_Integration_ACF();
 }

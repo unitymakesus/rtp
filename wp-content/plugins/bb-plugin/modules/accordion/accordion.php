@@ -225,6 +225,30 @@ FLBuilder::register_module('FLAccordionModule', array(
 						'label'   => __( 'Active Icon', 'fl-builder' ),
 						'default' => 'fas fa-minus',
 					),
+					'duo_color1'          => array(
+						'label'      => __( 'DuoTone Icon Primary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-accordion-button-icon i.fad:before',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
+					'duo_color2'          => array(
+						'label'      => __( 'DuoTone Icon Secondary Color', 'fl-builder' ),
+						'type'       => 'color',
+						'default'    => '',
+						'show_reset' => true,
+						'preview'    => array(
+							'type'      => 'css',
+							'selector'  => '.fl-accordion-button-icon i.fad:after',
+							'property'  => 'color',
+							'important' => true,
+						),
+					),
 				),
 			),
 			'content' => array(

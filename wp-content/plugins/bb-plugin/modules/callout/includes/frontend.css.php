@@ -45,7 +45,8 @@ FLBuilderCSS::dimension_field_rule( array(
 
 // Title Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-callout-title, .fl-node-$id .fl-callout-title-text, .fl-node-$id .fl-callout-title-text:hover",
+	// 'selector' => ".fl-node-$id .fl-callout-title, .fl-node-$id .fl-callout-title-text, .fl-node-$id .fl-callout-title-text:hover",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-callout-content .fl-callout-title, .fl-builder-content .fl-node-$id .fl-callout-content .fl-callout-title-text, .fl-builder-content .fl-node-$id .fl-callout-content .fl-callout-title-text:hover",
 	'props'    => array(
 		'color' => $settings->title_color,
 	),
@@ -60,7 +61,8 @@ FLBuilderCSS::typography_field_rule( array(
 
 // Content Color
 FLBuilderCSS::rule( array(
-	'selector' => ".fl-node-$id .fl-callout-text, .fl-node-$id .fl-callout-cta-link",
+	//	'selector' => ".fl-node-$id .fl-callout-text, .fl-node-$id .fl-callout-cta-link",
+	'selector' => ".fl-builder-content .fl-node-$id .fl-callout-content .fl-callout-text *, .fl-builder-content .fl-node-$id .fl-callout-content .fl-callout-cta-link",
 	'props'    => array(
 		'color' => $settings->content_color,
 	),

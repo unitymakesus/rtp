@@ -274,3 +274,17 @@ function rtp_give_square_credit_card_form( $form_id, $args, $echo = true ) {
 
 	return $form;
 }
+
+/**
+ * Register options page
+ */
+if( function_exists('acf_add_options_page') ) {
+  acf_add_options_page(array(
+    'page_title' => 'Site Announcements',
+    'menu_title' => 'Site Announcements',
+    'menu_slug'  => 'site-announcement-settings',
+    'capability' => 'manage_options',
+    'redirect'   => false,
+    'icon_url'   => 'dashicons-megaphone',
+  ));
+}

@@ -8,6 +8,8 @@
  * @license    https://opensource.org/licenses/gpl-license GNU Public License
  */
 
+use Give\Helpers\Gateways\Stripe;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -37,95 +39,100 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 
 			$this->id = 'stripe';
 
+			// Setup Error Messages.
+			$this->errorMessages['accountConfiguredNoSsl']    = esc_html__( 'Credit Card fields are disabled because your site is not running securely over HTTPS.', 'give' );
+			$this->errorMessages['accountNotConfiguredNoSsl'] = esc_html__( 'Credit Card fields are disabled because Stripe is not connected and your site is not running securely over HTTPS.', 'give' );
+			$this->errorMessages['accountNotConfigured']      = esc_html__( 'Credit Card fields are disabled. Please connect and configure your Stripe account to accept donations.', 'give' );
+
+			add_action( 'give_stripe_cc_form', [ $this, 'addCreditCardForm' ], 10, 3 );
+
 			parent::__construct();
 		}
 
+
 		/**
-		 * Check for the Stripe Source.
+		 * Stripe uses it's own credit card form because the card details are tokenized.
 		 *
-		 * @param array $donation_data List of Donation Data.
+		 * We don't want the name attributes to be present on the fields in order to
+		 * prevent them from getting posted to the server.
 		 *
-		 * @since 2.0.6
+		 * @param int  $form_id Donation Form ID.
+		 * @param int  $args    Donation Form Arguments.
+		 * @param bool $echo    Status to display or not.
 		 *
-		 * @return string
+		 * @access public
+		 * @since  1.0
+		 *
+		 * @return string $form
 		 */
-		public function check_for_source( $donation_data ) {
+		public function addCreditCardForm( $form_id, $args, $echo = true ) {
 
-			$source_id          = $donation_data['post_data']['give_stripe_payment_method'];
-			$stripe_js_fallback = give_get_option( 'stripe_js_fallback' );
+			ob_start();
+			$idPrefix = ! empty( $args['id_prefix'] ) ? $args['id_prefix'] : '';
 
-			if ( ! isset( $source_id ) ) {
+			do_action( 'give_before_cc_fields', $form_id ); ?>
 
-				// check for fallback mode.
-				if ( ! empty( $stripe_js_fallback ) ) {
+			<fieldset id="give_cc_fields" class="give-do-validate">
+				<legend>
+					<?php esc_attr_e( 'Credit Card Info', 'give' ); ?>
+				</legend>
 
-					$card_data = $this->prepare_card_data( $donation_data );
-
-					// Set Application Info.
-					give_stripe_set_app_info();
-
-					try {
-
-						$source = \Stripe\Source::create( array(
-							'card' => $card_data,
-						) );
-						$source_id = $source->id;
-
-					} catch ( \Stripe\Error\Base $e ) {
-						$this->log_error( $e );
-
-					} catch ( Exception $e ) {
-
-						give_record_gateway_error(
-							__( 'Stripe Error', 'give' ),
-							sprintf(
-								/* translators: %s Exception Message Body */
-								__( 'The Stripe Gateway returned an error while creating the customer payment source. Details: %s', 'give' ),
-								$e->getMessage()
-							)
-						);
-						give_set_error( 'stripe_error', __( 'An occurred while processing the donation with the gateway. Please try your donation again.', 'give' ) );
-						give_send_back_to_checkout( "?payment-mode={$this->id}&form_id={$donation_data['post_data']['give-form-id']}" );
-					}
-				} elseif ( ! $this->is_stripe_popup_enabled() ) {
-
-					// No Stripe source and fallback mode is disabled.
-					give_set_error( 'no_token', __( 'Missing Stripe Source. Please contact support.', 'give' ) );
-					give_record_gateway_error( __( 'Missing Stripe Source', 'give' ), __( 'A Stripe token failed to be generated. Please check Stripe logs for more information.', 'give' ) );
-
+				<?php
+				if ( is_ssl() ) {
+					?>
+					<div id="give_secure_site_wrapper">
+						<span class="give-icon padlock"></span>
+						<span>
+					<?php esc_attr_e( 'This is a secure SSL encrypted payment.', 'give' ); ?>
+				</span>
+					</div>
+					<?php
 				}
-			} // End if().
 
-			return $source_id;
+				if ( $this->canShowFields() ) {
+					// Show Credit Card Fields.
+					echo Stripe::showCreditCardFields( $idPrefix );
 
-		}
+					/**
+					 * This action hook is used to display content after the Credit Card expiration field.
+					 *
+					 * Note: Kept this hook as it is.
+					 *
+					 * @since 2.5.0
+					 *
+					 * @param int   $form_id Donation Form ID.
+					 * @param array $args    List of additional arguments.
+					 */
+					do_action( 'give_after_cc_expiration', $form_id, $args );
 
-		/**
-		 * Process the POST Data for the Credit Card Form, if a source was not supplied.
-		 *
-		 * @since 2.5.0
-		 *
-		 * @param array $donation_data List of donation data.
-		 *
-		 * @return array The credit card data from the $_POST
-		 */
-		public function prepare_card_data( $donation_data ) {
+					/**
+					 * This action hook is used to display content after the Credit Card expiration field.
+					 *
+					 * @since 2.5.0
+					 *
+					 * @param int   $form_id Donation Form ID.
+					 * @param array $args    List of additional arguments.
+					 */
+					do_action( 'give_stripe_after_cc_expiration', $form_id, $args );
+				}
+				?>
+			</fieldset>
+			<?php
+			// Remove Address Fields if user has option enabled.
+			$billing_fields_enabled = give_get_option( 'stripe_collect_billing' );
+			if ( ! $billing_fields_enabled ) {
+				remove_action( 'give_after_cc_fields', 'give_default_cc_address_fields' );
+			}
 
-			$card_data = array(
-				'number'          => $donation_data['card_info']['card_number'],
-				'name'            => $donation_data['card_info']['card_name'],
-				'exp_month'       => $donation_data['card_info']['card_exp_month'],
-				'exp_year'        => $donation_data['card_info']['card_exp_year'],
-				'cvc'             => $donation_data['card_info']['card_cvc'],
-				'address_line1'   => $donation_data['card_info']['card_address'],
-				'address_line2'   => $donation_data['card_info']['card_address_2'],
-				'address_city'    => $donation_data['card_info']['card_city'],
-				'address_zip'     => $donation_data['card_info']['card_zip'],
-				'address_state'   => $donation_data['card_info']['card_state'],
-				'address_country' => $donation_data['card_info']['card_country'],
-			);
+			do_action( 'give_after_cc_fields', $form_id, $args );
 
-			return $card_data;
+			$form = ob_get_clean();
+
+			if ( false !== $echo ) {
+				echo $form;
+			}
+
+			return $form;
 		}
 
 		/**
@@ -150,7 +157,17 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 
 			$payment_method_id = ! empty( $donation_data['post_data']['give_stripe_payment_method'] )
 				? $donation_data['post_data']['give_stripe_payment_method']
-				: $this->check_for_source( $donation_data );
+				: false;
+
+			// Send donor back to checkout page, if no payment method id exists.
+			if ( empty( $payment_method_id ) ) {
+				give_record_gateway_error(
+					__( 'Stripe Payment Method Error', 'give' ),
+					__( 'The payment method failed to generate during a donation. This is usually caused by a JavaScript error on the page preventing Stripe’s JavaScript from running correctly. Reach out to GiveWP support for assistance.', 'give' )
+				);
+				give_set_error( 'no-payment-method-id', __( 'Unable to generate Payment Method ID. Please contact a site administrator for assistance.', 'give' ) );
+				give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
+			}
 
 			// Any errors?
 			$errors = give_get_errors();
@@ -176,7 +193,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					$payment_method_id = $payment_method->id;
 
 					// Setup the payment details.
-					$payment_data = array(
+					$payment_data = [
 						'price'           => $donation_data['price'],
 						'give_form_title' => $donation_data['post_data']['give-form-title'],
 						'give_form_id'    => $form_id,
@@ -188,7 +205,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 						'user_info'       => $donation_data['user_info'],
 						'status'          => 'pending',
 						'gateway'         => $this->id,
-					);
+					];
 
 					// Record the pending payment in Give.
 					$donation_id = give_insert_payment( $payment_data );
@@ -232,18 +249,18 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					 */
 					$intent_args = apply_filters(
 						'give_stripe_create_intent_args',
-						array(
+						[
 							'amount'               => $this->format_amount( $donation_data['price'] ),
 							'currency'             => give_get_currency( $form_id ),
 							'payment_method_types' => [ 'card' ],
 							'statement_descriptor' => give_stripe_get_statement_descriptor(),
 							'description'          => give_payment_gateway_donation_summary( $donation_data ),
-							'metadata'             => $this->prepare_metadata( $donation_id ),
+							'metadata'             => $this->prepare_metadata( $donation_id, $donation_data ),
 							'customer'             => $stripe_customer_id,
 							'payment_method'       => $payment_method_id,
 							'confirm'              => true,
 							'return_url'           => give_get_success_page_uri(),
-						)
+						]
 					);
 
 					// Send Stripe Receipt emails when enabled.
@@ -264,22 +281,25 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					// Process additional steps for SCA or 3D secure.
 					give_stripe_process_additional_authentication( $donation_id, $intent );
 
-					// Send them to success page.
-					give_send_to_success_page();
-
-
+					if ( ! empty( $intent->status ) && 'succeeded' === $intent->status ) {
+						// Process to success page, only if intent is successful.
+						give_send_to_success_page();
+					} else {
+						// Show error message instead of confirmation page.
+						give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
+					}
 				} else {
 
 					// No customer, failed.
 					give_record_gateway_error(
-						__( 'Stripe Customer Creation Failed', 'give' ),
+						esc_html__( 'Stripe Customer Creation Failed', 'give' ),
 						sprintf(
 							/* translators: %s Donation Data */
-							__( 'Customer creation failed while processing the donation. Details: %s', 'give' ),
+							esc_html__( 'Unable to get Stripe Customer ID while processing donation. Details: %s', 'give' ),
 							wp_json_encode( $donation_data )
 						)
 					);
-					give_set_error( 'stripe_error', __( 'The Stripe Gateway returned an error while processing the donation.', 'give' ) );
+					give_set_error( 'stripe_error', esc_html__( 'The Stripe Gateway returned an error while processing the donation.', 'give' ) );
 					give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
 
 				} // End if().

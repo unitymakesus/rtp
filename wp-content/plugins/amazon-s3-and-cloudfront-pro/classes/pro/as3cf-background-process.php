@@ -119,6 +119,7 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 		delete_site_option( $this->get_status_key() );
 
 		$this->cancelled();
+		do_action( $this->identifier . '_cancelled' );
 	}
 
 	/**
@@ -188,6 +189,7 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 		$this->schedule_cron_healthcheck();
 		$this->dispatch();
 		$this->resumed();
+		do_action( $this->identifier . '_resumed' );
 	}
 
 	/**
@@ -247,6 +249,7 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 			$this->clear_cron_healthcheck();
 
 			$this->paused();
+			do_action( $this->identifier . '_paused' );
 
 			wp_die();
 		}
@@ -506,6 +509,7 @@ abstract class AS3CF_Background_Process extends AS3CF_Async_Request {
 		$this->clear_cron_healthcheck();
 
 		$this->completed();
+		do_action( $this->identifier . '_completed' );
 	}
 
 	/**

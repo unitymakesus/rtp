@@ -64,18 +64,23 @@ FLBuilder::register_module('FLIconGroupModule', array(
 						'label'    => __( 'Spacing', 'fl-builder' ),
 						'default'  => '10',
 						'sanitize' => 'absint',
-						'units'    => array( 'px' ),
+						'units'    => array( 'px', 'pt', '%' ),
 						'slider'   => true,
 						'preview'  => array(
-							'type' => 'none',
+							'type'     => 'css',
+							'selector' => '{node} .fl-icon + .fl-icon',
+							'property' => 'margin-left',
 						),
 					),
 					'align'   => array(
-						'type'    => 'align',
-						'label'   => __( 'Alignment', 'fl-builder' ),
-						'default' => 'center',
-						'preview' => array(
-							'type' => 'none',
+						'type'       => 'align',
+						'label'      => __( 'Alignment', 'fl-builder' ),
+						'default'    => 'center',
+						'responsive' => true,
+						'preview'    => array(
+							'type'     => 'css',
+							'selector' => '.fl-icon-group',
+							'property' => 'text-align',
 						),
 					),
 				),
@@ -153,15 +158,20 @@ FLBuilder::register_settings_form('icon_group_form', array(
 				'general' => array( // Section
 					'title'  => '', // Section Title
 					'fields' => array( // Section Fields
-						'icon' => array(
+						'icon'    => array(
 							'type'  => 'icon',
 							'label' => __( 'Icon', 'fl-builder' ),
 						),
-						'link' => array(
+						'link'    => array(
 							'type'          => 'link',
 							'label'         => __( 'Link', 'fl-builder' ),
 							'show_target'   => true,
 							'show_nofollow' => true,
+						),
+						'sr_text' => array(
+							'type'    => 'text',
+							'label'   => __( 'Screen Reader Text', 'fl-builder' ),
+							'default' => '',
 						),
 					),
 				),
@@ -173,6 +183,26 @@ FLBuilder::register_settings_form('icon_group_form', array(
 				'colors' => array( // Section
 					'title'  => __( 'Colors', 'fl-builder' ), // Section Title
 					'fields' => array( // Section Fields
+						'duo_color1'     => array(
+							'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_alpha' => true,
+							'show_reset' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
+						'duo_color2'     => array(
+							'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_alpha' => true,
+							'show_reset' => true,
+							'preview'    => array(
+								'type' => 'none',
+							),
+						),
 						'color'          => array(
 							'type'        => 'color',
 							'connections' => array( 'color' ),

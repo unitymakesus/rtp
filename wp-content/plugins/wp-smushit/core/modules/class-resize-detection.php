@@ -39,7 +39,7 @@ class Resize_Detection extends Abstract_Module {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_resize_assets' ) );
 
 		// Set a flag to media library images.
-		add_action( 'smush_cdn_image_tag', array( $this, 'skip_image_resize_detection' ) );
+		add_filter( 'smush_cdn_image_tag', array( $this, 'skip_image_resize_detection' ) );
 
 		// Generate markup for the template engine.
 		add_action( 'wp_footer', array( $this, 'generate_markup' ) );
@@ -131,7 +131,11 @@ class Resize_Detection extends Abstract_Module {
 			<div id="smush-image-bar-items-smaller">
 				<strong><?php esc_html_e( 'Undersized', 'wp-smushit' ); ?></strong>
 			</div>
-			<p>
+
+			<div id="smush-image-bar-notice">
+				<p><?php esc_html_e( 'All images are properly sized', 'wp-smushit' ); ?></p>
+			</div>
+			<p id="smush-image-bar-notice-desc">
 				<?php esc_html_e( 'Note: It’s not always easy to make this happen, fix up what you can.', 'wp-smushit' ); ?>
 			</p>
 		</div>
@@ -158,7 +162,7 @@ class Resize_Detection extends Abstract_Module {
 			return $image;
 		}
 
-		Helpers\Parser::add_attribute( $image, 'data-resize-detection', '0' );
+		Helpers\Parser::add_attribute( $image, 'no-resize-detection' );
 
 		return $image;
 	}

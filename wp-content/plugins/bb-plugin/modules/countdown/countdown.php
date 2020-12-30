@@ -31,6 +31,17 @@ class FLCountdownModule extends FLBuilderModule {
 		// Old opacity setting.
 		$helper->handle_opacity_inputs( $settings, 'number_bg_opacity', 'number_bg_color' );
 
+		// if set convert.
+		if ( isset( $settings->day ) ) {
+
+			$date = sprintf( '%s/%s/%s', $settings->year, $settings->month, $settings->day );
+
+			$settings->ui_date = gmdate( 'Y-m-d', strtotime( $date ) );
+
+			unset( $settings->day );
+			unset( $settings->month );
+			unset( $settings->year );
+		}
 		return $settings;
 	}
 
@@ -42,17 +53,12 @@ class FLCountdownModule extends FLBuilderModule {
 	 */
 	public function get_time() {
 
-		$year  = isset( $this->settings->year ) ? str_pad( $this->settings->year, 4, '0', STR_PAD_LEFT ) : '00';
-		$month = isset( $this->settings->month ) ? str_pad( $this->settings->month, 2, '0', STR_PAD_LEFT ) : '00';
-		$day   = isset( $this->settings->day ) ? str_pad( $this->settings->day, 2, '0', STR_PAD_LEFT ) : '00';
-
-		$date = $year . '-' . $month . '-' . $day;
-
+		$date       = gmdate( 'Y-m-d', strtotime( $this->settings->ui_date ) );
 		$hours      = isset( $this->settings->time['hours'] ) ? str_pad( $this->settings->time['hours'], 2, '0', STR_PAD_LEFT ) : '00';
 		$minutes    = isset( $this->settings->time['minutes'] ) ? str_pad( $this->settings->time['minutes'], 2, '0', STR_PAD_LEFT ) : '00';
 		$day_period = isset( $this->settings->time['day_period'] ) ? $this->settings->time['day_period'] : 'AM';
-		$zone       = isset( $this->settings->time_zone ) && '' != $this->settings->time_zone ? $this->settings->time_zone : date( 'e', current_time( 'timestamp', 1 ) );
-		$time       = date( 'H:i:s', strtotime( $hours . ':' . $minutes . ':00 ' . strtoupper( $day_period ) ) );
+		$zone       = isset( $this->settings->time_zone ) && '' != $this->settings->time_zone ? $this->settings->time_zone : date( 'e', current_time( 'timestamp', 1 ) ); //phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date,WordPress.DateTime.CurrentTimeTimestamp.RequestedUTC
+		$time       = date( 'H:i:s', strtotime( $hours . ':' . $minutes . ':00 ' . strtoupper( $day_period ) ) ); //phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
 		$timestamp = $date . ' ' . $time;
 		$timezone  = new DateTimeZone( $zone );
@@ -85,7 +91,6 @@ class FLCountdownModule extends FLBuilderModule {
 		echo $html;
 	}
 
-
 }
 
 /**
@@ -98,35 +103,14 @@ FLBuilder::register_module('FLCountdownModule', array(
 			'date' => array(
 				'title'  => __( 'Date', 'fl-builder' ),
 				'fields' => array(
-					'day'   => array(
-						'type'      => 'text',
-						'label'     => __( 'Day', 'fl-builder' ),
-						'default'   => date( 'j' ),
-						'maxlength' => '2',
-						'size'      => '5',
-						'preview'   => array(
+					'ui_date' => array(
+						'type'        => 'date',
+						'label'       => __( 'Date', 'fl-builder' ),
+						'default'     => gmdate( 'Y/m/d', strtotime( '+7 days' ) ),
+						'preview'     => array(
 							'type' => 'none',
 						),
-					),
-					'month' => array(
-						'type'      => 'text',
-						'label'     => __( 'Month', 'fl-builder' ),
-						'default'   => date( 'n' ),
-						'maxlength' => '2',
-						'size'      => '5',
-						'preview'   => array(
-							'type' => 'none',
-						),
-					),
-					'year'  => array(
-						'type'      => 'text',
-						'label'     => __( 'Year', 'fl-builder' ),
-						'default'   => date( 'Y' ),
-						'maxlength' => '4',
-						'size'      => '5',
-						'preview'   => array(
-							'type' => 'none',
-						),
+						'connections' => array( 'custom_field' ),
 					),
 				),
 			),

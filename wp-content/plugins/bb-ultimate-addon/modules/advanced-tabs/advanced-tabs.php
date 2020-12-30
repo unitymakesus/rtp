@@ -44,11 +44,11 @@ class AdvancedTabsModule extends FLBuilderModule {
 	 * @return object
 	 */
 	public function filter_settings( $settings, $helper ) {
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
@@ -65,7 +65,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->title_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
@@ -147,7 +147,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->content_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->content_font_family['weight'] ) {
+					if ( 'regular' === $settings->content_font_family['weight'] ) {
 						$settings->content_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
@@ -245,7 +245,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				$settings->tab_style_align = $settings->tab_style_alignment;
 				unset( $settings->tab_style_alignment );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 			if ( ! isset( $settings->title_font_typo ) || ! is_array( $settings->title_font_typo ) ) {
 
 				$settings->title_font_typo            = array();
@@ -261,7 +261,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->title_font_family['weight'] ) {
+					if ( 'regular' === $settings->title_font_family['weight'] ) {
 						$settings->title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->title_font_typo['font_weight'] = $settings->title_font_family['weight'];
@@ -287,7 +287,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->title_line_height['desktop'] ) && isset( $settings->title_font_size['desktop'] ) && 0 != $settings->title_font_size['desktop'] ) {
+			if ( isset( $settings->title_line_height['desktop'] ) && isset( $settings->title_font_size['desktop'] ) && 0 !== $settings->title_font_size['desktop'] ) {
 				if ( is_numeric( $settings->title_line_height['desktop'] ) && is_numeric( $settings->title_font_size['desktop'] ) ) {
 					$settings->title_font_typo['line_height'] = array(
 						'length' => round( $settings->title_line_height['desktop'] / $settings->title_font_size['desktop'], 2 ),
@@ -295,7 +295,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_line_height['medium'] ) && isset( $settings->title_font_size['medium'] ) && 0 != $settings->title_font_size['medium'] ) {
+			if ( isset( $settings->title_line_height['medium'] ) && isset( $settings->title_font_size['medium'] ) && 0 !== $settings->title_font_size['medium'] ) {
 				if ( is_numeric( $settings->title_line_height['medium'] ) && is_numeric( $settings->title_font_size['medium'] ) ) {
 					$settings->title_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->title_line_height['medium'] / $settings->title_font_size['medium'], 2 ),
@@ -303,7 +303,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->title_line_height['small'] ) && isset( $settings->title_font_size['small'] ) && 0 != $settings->title_font_size['small'] ) {
+			if ( isset( $settings->title_line_height['small'] ) && isset( $settings->title_font_size['small'] ) && 0 !== $settings->title_font_size['small'] ) {
 				if ( is_numeric( $settings->title_line_height['small'] ) && is_numeric( $settings->title_font_size['small'] ) ) {
 					$settings->title_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->title_line_height['small'] / $settings->title_font_size['small'], 2 ),
@@ -326,7 +326,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->content_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->content_font_family['weight'] ) {
+					if ( 'regular' === $settings->content_font_family['weight'] ) {
 						$settings->content_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->content_font_typo['font_weight'] = $settings->content_font_family['weight'];
@@ -353,7 +353,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->content_line_height['desktop'] ) && isset( $settings->content_font_size['desktop'] ) && 0 != $settings->content_font_size['desktop'] ) {
+			if ( isset( $settings->content_line_height['desktop'] ) && isset( $settings->content_font_size['desktop'] ) && 0 !== $settings->content_font_size['desktop'] ) {
 				if ( is_numeric( $settings->content_line_height['desktop'] ) && is_numeric( $settings->content_font_size['desktop'] ) ) {
 					$settings->content_font_typo['line_height'] = array(
 						'length' => round( $settings->content_line_height['desktop'] / $settings->content_font_size['desktop'], 2 ),
@@ -361,7 +361,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->content_line_height['medium'] ) && isset( $settings->content_font_size['medium'] ) && 0 != $settings->content_font_size['medium'] ) {
+			if ( isset( $settings->content_line_height['medium'] ) && isset( $settings->content_font_size['medium'] ) && 0 !== $settings->content_font_size['medium'] ) {
 				if ( is_numeric( $settings->content_line_height['medium'] ) && is_numeric( $settings->content_font_size['medium'] ) ) {
 					$settings->content_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->content_line_height['medium'] / $settings->content_font_size['medium'], 2 ),
@@ -369,7 +369,7 @@ class AdvancedTabsModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->content_line_height['small'] ) && isset( $settings->content_font_size['small'] ) && 0 != $settings->content_font_size['small'] ) {
+			if ( isset( $settings->content_line_height['small'] ) && isset( $settings->content_font_size['small'] ) && 0 !== $settings->content_font_size['small'] ) {
 				if ( is_numeric( $settings->content_line_height['small'] ) && is_numeric( $settings->content_font_size['small'] ) ) {
 					$settings->content_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->content_line_height['small'] / $settings->content_font_size['small'], 2 ),
@@ -425,7 +425,8 @@ class AdvancedTabsModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->tab_padding_dimension_top = (int) $output[ $i ][1];
@@ -466,7 +467,8 @@ class AdvancedTabsModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->content_padding_dimension_top = (int) $output[ $i ][1];
@@ -537,19 +539,19 @@ class AdvancedTabsModule extends FLBuilderModule {
 	 * @param string $name gets an string for the module.
 	 * @param object $settings gets an object for the settings.
 	 */
-	function uabb_tab_render_settings_field( $field, $name, $settings ) {
+	public function uabb_tab_render_settings_field( $field, $name, $settings ) {
 
-		if ( isset( $field['form'] ) && 'uabb_tab_items_form' == $field['form'] ) {
+		if ( isset( $field['form'] ) && 'uabb_tab_items_form' === $field['form'] ) {
 
 			foreach ( $settings->items as $item ) {
 
-				if ( is_object( $item ) && isset( $item->content ) && '' == $item->ct_content ) {
+				if ( is_object( $item ) && isset( $item->content ) && '' === $item->ct_content ) {
 					$item->ct_content = $item->content;
 				}
 			}
 		}
 
-		if ( isset( $settings->style ) && 'underline' == $settings->style ) {
+		if ( isset( $settings->style ) && 'underline' === $settings->style ) {
 			$settings->style         = 'topline';
 			$settings->line_position = 'bottom';
 		}
@@ -564,51 +566,46 @@ class AdvancedTabsModule extends FLBuilderModule {
 	 * @method get_tab_content
 	 * @param object $settings gets an object for the settings.
 	 */
-	function get_tab_content( $settings ) {
+	public function get_tab_content( $settings ) {
 		$content_type = $settings->content_type;
 		switch ( $content_type ) {
 			case 'content':
 				global $wp_embed;
 				return wpautop( $wp_embed->autoembed( $settings->ct_content ) );
-			break;
 			case 'photo':
 				if ( isset( $settings->ct_photo_src ) ) {
 					return '<img src="' . $settings->ct_photo_src . '" />';
 				}
 				return '<img src="" />';
-			break;
 			case 'video':
 				global $wp_embed;
 				return $wp_embed->autoembed( $settings->ct_video );
-			break;
 			case 'saved_rows':
 				ob_start();
-				echo '[fl_builder_insert_layout id="' . $settings->ct_saved_rows . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->ct_saved_rows ) . '" type="fl-builder-template"]';
 				return ob_get_clean();
 			case 'saved_modules':
 				ob_start();
-				echo '[fl_builder_insert_layout id="' . $settings->ct_saved_modules . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->ct_saved_modules ) . '" type="fl-builder-template"]';
 				return ob_get_clean();
 			case 'saved_page_templates':
 				ob_start();
-				echo '[fl_builder_insert_layout id="' . $settings->ct_page_templates . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->ct_page_templates ) . '" type="fl-builder-template"]';
 				return ob_get_clean();
-			break;
 			default:
 				return;
-			break;
 		}
 	}
 }
 
-$default_breakpoint = ( trim( UABB_Model_Helper::$bb_global_settings->responsive_breakpoint ) != '' ) ? UABB_Model_Helper::$bb_global_settings->responsive_breakpoint : '';
+$default_breakpoint = ( trim( UABB_Model_Helper::$bb_global_settings->responsive_breakpoint ) !== '' ) ? UABB_Model_Helper::$bb_global_settings->responsive_breakpoint : '';
 
 /*
  * Condition to verify Beaver Builder version.
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/advanced-tabs/advanced-tabs-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/advanced-tabs/advanced-tabs-bb-less-than-2-2-compatibility.php';

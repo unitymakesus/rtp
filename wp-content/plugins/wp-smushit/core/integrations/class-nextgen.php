@@ -18,9 +18,9 @@ use Exception;
 use nggdb;
 use Smush\Core\Core;
 use Smush\Core\Helper;
-use Smush\WP_Smush;
 use stdClass;
 use WP_Error;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -74,6 +74,8 @@ class NextGen extends Abstract_Integration {
 
 		// Do not continue if not PRO member or NextGen plugin not installed.
 		if ( ! $is_pro || ! $this->enabled || ! $this->is_enabled() ) {
+			// Add Pro tag.
+			add_action( 'smush_setting_column_tag', array( $this, 'add_pro_tag' ) );
 			return;
 		}
 
@@ -96,6 +98,9 @@ class NextGen extends Abstract_Integration {
 		if ( $auto_smush ) {
 			add_action( 'ngg_added_new_image', array( $this, 'auto_smush' ) );
 		}
+
+		// Update Total Image count.
+		add_action( 'ngg_added_new_image', array( $this, 'update_stats_image_count' ), 10 );
 
 		/**
 		 * AJAX
@@ -178,7 +183,7 @@ class NextGen extends Abstract_Integration {
 
 		$atchmnt_id = (int) $_GET['attachment_id'];
 
-		$smush = $this->smush_image( $atchmnt_id, '', false, true );
+		$smush = $this->smush_image( $atchmnt_id, '', true );
 
 		if ( is_wp_error( $smush ) ) {
 			$error_message = $smush->get_error_message();
@@ -252,14 +257,17 @@ class NextGen extends Abstract_Integration {
 	 * @param string $name  Setting name.
 	 */
 	public function additional_notice( $name ) {
-		if ( 'nextgen' === $name && ! $this->enabled ) {
+		if ( $this->module === $name && ! $this->enabled ) {
 			?>
-			<div class="sui-notice sui-notice-sm">
-				<p>
-					<?php
-					esc_html_e( 'To use this feature you need to install and activate NextGen Gallery.', 'wp-smushit' );
-					?>
-				</p>
+			<div class="sui-toggle-content">
+				<div class="sui-notice">
+					<div class="sui-notice-content">
+						<div class="sui-notice-message">
+							<i class="sui-notice-icon sui-icon-info" aria-hidden="true"></i>
+							<p><?php esc_html_e( 'To use this feature you need to be using NextGen Gallery.', 'wp-smushit' ); ?></p>
+						</div>
+					</div>
+				</div>
 			</div>
 			<?php
 		}
@@ -318,12 +326,11 @@ class NextGen extends Abstract_Integration {
 	 *
 	 * @param string $pid      NextGen Gallery Image id.
 	 * @param string $image    Nextgen gallery image object.
-	 * @param bool   $echo     Whether to echo the stats or not, false for auto smush.
 	 * @param bool   $is_bulk  Whether it's called by bulk smush or not.
 	 *
 	 * @return mixed Stats / Status / Error
 	 */
-	public function smush_image( $pid = '', $image = '', $echo = true, $is_bulk = false ) {
+	public function smush_image( $pid = '', $image = '', $is_bulk = false ) {
 		// Get image, if we have image id.
 		if ( ! empty( $pid ) ) {
 			$image = $this->get_nextgen_image_from_id( $pid );
@@ -363,22 +370,7 @@ class NextGen extends Abstract_Integration {
 
 		$status = '';
 		if ( ! is_wp_error( $smush ) ) {
-			$status = $this->ng_stats->show_stats( $pid, $smush, false, true );
-		}
-
-		// If we are suppose to send the stats, not required for auto smush.
-		if ( $echo ) {
-			// Send stats.
-			if ( is_wp_error( $smush ) ) {
-				/**
-				 * Not used for bulk smush.
-				 *
-				 * @param WP_Error $smush
-				 */
-				wp_send_json_error( $smush->get_error_message() );
-			}
-
-			wp_send_json_success( $status );
+			$status = $this->ng_stats->show_stats( $pid, $smush );
 		}
 
 		if ( ! $is_bulk ) {
@@ -390,6 +382,14 @@ class NextGen extends Abstract_Integration {
 		}
 
 		return $smush;
+	}
+
+	/**
+	 * Refreshes the total image count from the stats when a new image is added to nextgen gallery
+	 * Should be called only if image count need to be updated, use total_count(), otherwise
+	 */
+	public function update_stats_image_count() {
+		NextGen\Stats::total_count( true );
 	}
 
 	/**
@@ -411,14 +411,34 @@ class NextGen extends Abstract_Integration {
 
 		// Check for media upload permission.
 		if ( ! current_user_can( 'upload_files' ) ) {
-			wp_die( __( "You don't have permission to work with uploaded files.", 'wp-smushit' ) );
+			wp_send_json_error(
+				array(
+					'error_msg' => __( "You don't have permission to work with uploaded files.", 'wp-smushit' ),
+				)
+			);
 		}
 
 		if ( empty( $pid ) ) {
-			wp_die( __( 'No attachment ID was provided.', 'wp-smushit' ) );
+			wp_send_json_error(
+				array(
+					'error_msg' => __( 'No attachment ID was provided.', 'wp-smushit' ),
+				)
+			);
 		}
 
-		$this->smush_image( $pid, '' );
+		$status = $this->smush_image( $pid );
+
+		// Send stats.
+		if ( is_wp_error( $status ) ) {
+			/**
+			 * Not used for bulk smush.
+			 *
+			 * @param WP_Error $smush
+			 */
+			wp_send_json_error( $status->get_error_message() );
+		}
+
+		wp_send_json_success( $status );
 	}
 
 	/**
@@ -431,7 +451,7 @@ class NextGen extends Abstract_Integration {
 			$this->init_modules();
 		}
 
-		$this->smush_image( '', $image, false );
+		$this->smush_image( '', $image );
 	}
 
 
@@ -445,7 +465,7 @@ class NextGen extends Abstract_Integration {
 	 * @return bool
 	 */
 	public function show_restore_option( $pid, $attachment_data ) {
-		$smush = WP_Smush::get_instance()->core()->mod->smush;
+		$backup = WP_Smush::get_instance()->core()->mod->backup;
 
 		// Registry Object for NextGen Gallery.
 		$registry = C_Component_Registry::get_instance();
@@ -463,7 +483,7 @@ class NextGen extends Abstract_Integration {
 		$attachment_file_path = $storage->get_image_abspath( $image, 'full' );
 
 		// Get the backup path.
-		$backup_path = $smush->get_image_backup_path( $attachment_file_path );
+		$backup_path = $backup->get_image_backup_path( $attachment_file_path );
 
 		// If one of the backup(Ours/NextGen) exists, show restore option.
 		if ( file_exists( $backup_path ) || file_exists( $attachment_file_path . '_backup' ) ) {
@@ -484,7 +504,7 @@ class NextGen extends Abstract_Integration {
 			$attachment_size_file_path = $storage->get_image_abspath( $image, $size );
 
 			// Get the backup path.
-			$backup_path = $smush->get_image_backup_path( $attachment_size_file_path );
+			$backup_path = $backup->get_image_backup_path( $attachment_size_file_path );
 
 			// If one of the backup(Ours/NextGen) exists, show restore option.
 			if ( file_exists( $backup_path ) || file_exists( $attachment_size_file_path . '_backup' ) ) {
@@ -521,7 +541,7 @@ class NextGen extends Abstract_Integration {
 			);
 		}
 
-		$smush = WP_Smush::get_instance()->core()->mod->smush;
+		$backup = WP_Smush::get_instance()->core()->mod->backup;
 
 		// Store the restore success/failure for all the sizes.
 		$restored = array();
@@ -546,7 +566,7 @@ class NextGen extends Abstract_Integration {
 		$attachment_file_path = $storage->get_image_abspath( $image, 'full' );
 
 		// Get the backup path.
-		$backup_path = $smush->get_image_backup_path( $attachment_file_path );
+		$backup_path = $backup->get_image_backup_path( $attachment_file_path );
 
 		// Restoring the full image.
 		// If file exists, corresponding to our backup path.
@@ -571,7 +591,7 @@ class NextGen extends Abstract_Integration {
 				$attachment_size_file_path = $storage->get_image_abspath( $image, $size );
 
 				// Get the backup path.
-				$backup_path = $smush->get_image_backup_path( $attachment_size_file_path );
+				$backup_path = $backup->get_image_backup_path( $attachment_size_file_path );
 
 				// If file exists, corresponding to our backup path.
 				if ( file_exists( $backup_path ) ) {
@@ -597,11 +617,20 @@ class NextGen extends Abstract_Integration {
 			nggdb::update_image_meta( $image->pid, $image->meta_data );
 
 			// Get the Button html without wrapper.
-			$button_html = $this->ng_admin->wp_smush_column_options( '', $image_id, false );
+			$button_html = $this->ng_admin->wp_smush_column_options( '', $image_id );
+
+			/**
+			 * Called after the image has been successfully restored
+			 *
+			 * @since 3.7.0
+			 *
+			 * @param int $image_id ID of the restored image.
+			 */
+			do_action( 'wp_smush_image_nextgen_restored', $image_id );
 
 			wp_send_json_success(
 				array(
-					'button' => $button_html,
+					'stats' => $button_html,
 				)
 			);
 		}
@@ -621,8 +650,7 @@ class NextGen extends Abstract_Integration {
 		if ( empty( $_POST['attachment_id'] ) || empty( $_POST['_nonce'] ) ) {
 			wp_send_json_error(
 				array(
-					'error'   => 'empty_fields',
-					'message' => '<div class="wp-smush-error">' . esc_html__( "We couldn't process the image, fields empty.", 'wp-smushit' ) . '</div>',
+					'error_msg' => '<div class="wp-smush-error">' . esc_html__( "We couldn't process the image, fields empty.", 'wp-smushit' ) . '</div>',
 				)
 			);
 		}
@@ -631,36 +659,50 @@ class NextGen extends Abstract_Integration {
 		if ( ! wp_verify_nonce( $_POST['_nonce'], 'wp-smush-resmush-' . $_POST['attachment_id'] ) ) {
 			wp_send_json_error(
 				array(
-					'error'   => 'empty_fields',
-					'message' => '<div class="wp-smush-error">' . esc_html__( "Image couldn't be smushed as the nonce verification failed, try reloading the page.", 'wp-smushit' ) . '</div>',
+					'error_msg' => '<div class="wp-smush-error">' . esc_html__( "Image couldn't be smushed as the nonce verification failed, try reloading the page.", 'wp-smushit' ) . '</div>',
 				)
 			);
 		}
 
-		$image_id = intval( $_POST['attachment_id'] );
-
-		$smushed = $this->smush_image( $image_id, '', false );
+		$status = $this->smush_image( (int) $_POST['attachment_id'] );
 
 		// If any of the image is restored, we count it as success.
-		if ( ! empty( $smushed ) && ! is_wp_error( $smushed ) ) {
+		if ( ! empty( $status ) && ! is_wp_error( $status ) ) {
 			// Send button content.
 			wp_send_json_success(
 				array(
-					'button' => $smushed['status'] . $smushed['stats'],
+					'stats' => $status,
 				)
 			);
-		} elseif ( is_wp_error( $smushed ) ) {
+		} elseif ( is_wp_error( $status ) ) {
 			// Send Error Message.
 			wp_send_json_error(
 				array(
-					'message' => sprintf(
+					'error_msg' => sprintf(
 						/* translators: %s: error message */
 						'<div class="wp-smush-error">' . __( 'Unable to smush image, %s', 'wp-smushit' ) . '</div>',
-						$smushed->get_error_message()
+						$status->get_error_message()
 					),
 				)
 			);
 		}
+	}
+
+	/**
+	 * Add a pro tag next to the setting title.
+	 *
+	 * @param string $setting_key  Setting key name.
+	 *
+	 * @since 3.4.0
+	 */
+	public function add_pro_tag( $setting_key ) {
+		// Return if not NextGen integration.
+		if ( $this->module !== $setting_key || WP_Smush::is_pro() ) {
+			return;
+		}
+		?>
+		<span class="sui-tag sui-tag-pro"><?php esc_html_e( 'Pro', 'wp-smushit' ); ?></span>
+		<?php
 	}
 
 	/**************************************
@@ -724,7 +766,7 @@ class NextGen extends Abstract_Integration {
 		$errors = new WP_Error();
 		$stats  = array(
 			'stats' => array_merge(
-				$smush->_get_size_signature(),
+				$smush->get_size_signature(),
 				array(
 					'api_version' => - 1,
 					'lossy'       => - 1,
@@ -810,7 +852,7 @@ class NextGen extends Abstract_Integration {
 					continue;
 				}
 
-				$stats['sizes'][ $size ] = (object) $smush->_array_fill_placeholders( $smush->_get_size_signature(), (array) $response['data'] );
+				$stats['sizes'][ $size ] = (object) $smush->array_fill_placeholders( $smush->get_size_signature(), (array) $response['data'] );
 
 				if ( empty( $stats['stats']['api_version'] ) || - 1 == $stats['stats']['api_version'] ) {
 					$stats['stats']['api_version'] = $response['data']->api_version;
@@ -853,7 +895,7 @@ class NextGen extends Abstract_Integration {
 			}
 
 			// Total Stats.
-			$stats                 = $smush->total_compression( $stats );
+			$stats                 = WP_Smush::get_instance()->core()->total_compression( $stats );
 			$stats['total_images'] = ! empty( $stats['sizes'] ) ? count( $stats['sizes'] ) : 0;
 
 			// If there was any compression and there was no error in smushing.

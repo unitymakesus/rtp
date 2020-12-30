@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Bridges;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Bridges;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Pings search engines.
@@ -34,7 +34,6 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @final Can't be extended.
  */
 final class Ping {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * The constructor, can't be initialized.
@@ -42,12 +41,56 @@ final class Ping {
 	private function __construct() { }
 
 	/**
-	 * Prepares a CRON-based ping within 30 seconds of calling this.
+	 * Prepares a cronjob-based ping within 30 seconds of calling this.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now returns whether the cron engagement was successful.
+	 * @since 4.1.2 Now registers before and after cron hooks. They should run subsequential when successful.
+	 * @see static::engage_pinging_retry_cron()
+	 *
+	 * @return bool True on success, false on failure.
 	 */
 	public static function engage_pinging_cron() {
-		\wp_schedule_single_event( time() + 30, 'tsf_sitemap_cron_hook' );
+
+		$when = time() + 28;
+
+		// Because WordPress sorts the actions, we can't be sure if they're scrambled. Therefore: skew timing.
+		// Note that when WP_CRON_LOCK_TIMEOUT expires, the subsequent actions will run, regardless if previous was successful.
+		return \wp_schedule_single_event( ++$when, 'tsf_sitemap_cron_hook_before' )
+			&& \wp_schedule_single_event( ++$when, 'tsf_sitemap_cron_hook' )
+			&& \wp_schedule_single_event( ++$when, 'tsf_sitemap_cron_hook_after' );
+	}
+
+	/**
+	 * Retries a cronjob-based ping, via another hook.
+	 *
+	 * @since 4.1.2
+	 * @uses \WP_CRON_LOCK_TIMEOUT, default 60 (seconds).
+	 *
+	 * @param array $args Optional. Array containing each separate argument to pass to the hook's callback function.
+	 * @return bool True on success, false on failure.
+	 */
+	public static function engage_pinging_retry_cron( $args = [] ) {
+
+		$when = (int) ( time() + min( \WP_CRON_LOCK_TIMEOUT, 60 ) + 1 );
+
+		return \wp_schedule_single_event( $when, 'tsf_sitemap_cron_hook_retry', [ $args ] );
+	}
+
+	/**
+	 * Retries pinging the search engines.
+	 *
+	 * @since 4.1.2
+	 * @see static::engage_pinging_retry_cron()
+	 * @uses static::ping_search_engines()
+	 *
+	 * @param array $args Array from ping hook.
+	 */
+	public static function retry_ping_search_engines( $args = [] ) {
+
+		if ( empty( $args['id'] ) || 'base' !== $args['id'] ) return;
+
+		static::ping_search_engines();
 	}
 
 	/**
@@ -61,6 +104,7 @@ final class Ping {
 	 *              2. Removed Easter egg.
 	 * @since 4.0.0 Moved to \The_SEO_Framework\Bridges\Ping
 	 * @since 4.0.2 Added action.
+	 * @since 4.1.1 Added another action.
 	 *
 	 * @return void Early if blog is not public.
 	 */
@@ -70,10 +114,21 @@ final class Ping {
 
 		if ( $tsf->get_option( 'site_noindex' ) || ! $tsf->is_blog_public() ) return;
 
+		// Check for sitemap lock. If TSF's default sitemap isn't used, this should return false.
+		if ( \The_SEO_Framework\Bridges\Sitemap::get_instance()->is_sitemap_locked() ) {
+			static::engage_pinging_retry_cron( [ 'id' => 'base' ] );
+			return;
+		}
 		$transient = $tsf->generate_cache_key( 0, '', 'ping' );
 
-		//* NOTE: Use legacy get_transient to bypass TSF's transient filters and prevent ping spam.
+		// Uses legacy get_transient to bypass TSF's transient filters and prevent ping spam.
 		if ( false === \get_transient( $transient ) ) {
+			/**
+			 * @since 4.1.1
+			 * @param string $class The current class name.
+			 */
+			\do_action( 'the_seo_framework_before_ping_search_engines', static::class );
+
 			if ( $tsf->get_option( 'ping_google' ) )
 				static::ping_google();
 
@@ -92,7 +147,7 @@ final class Ping {
 			 */
 			$expiration = (int) \apply_filters( 'the_seo_framework_sitemap_throttle_s', HOUR_IN_SECONDS );
 
-			//* @NOTE: Using legacy set_transient to bypass TSF's transient filters and prevent ping spam.
+			// Uses legacy set_transient to bypass TSF's transient filters and prevent ping spam.
 			\set_transient( $transient, 1, $expiration );
 		}
 	}
@@ -104,12 +159,20 @@ final class Ping {
 	 * @since 3.1.0 Updated ping URL. Old one still worked, too.
 	 * @since 4.0.0 Moved to \The_SEO_Framework\Bridges\Ping
 	 * @since 4.0.3 Google now redirects to HTTPS. Updated URL scheme to accomodate.
+	 * @since 4.1.2 Now fetches WP Sitemaps' index URL when it's enabled.
 	 * @link https://support.google.com/webmasters/answer/6065812?hl=en
 	 */
 	public static function ping_google() {
-		$pingurl = 'https://www.google.com/ping?sitemap=' . rawurlencode(
-			\The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url()
-		);
+
+		if ( \the_seo_framework()->use_core_sitemaps() ) {
+			$url = \get_sitemap_url( 'index' );
+		} else {
+			$url = \The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url();
+		}
+
+		if ( ! $url ) return;
+
+		$pingurl = 'https://www.google.com/ping?sitemap=' . rawurlencode( $url );
 		\wp_safe_remote_get( $pingurl, [ 'timeout' => 3 ] );
 	}
 
@@ -120,12 +183,20 @@ final class Ping {
 	 * @since 3.2.3 Updated ping URL. Old one still worked, too.
 	 * @since 4.0.0 Moved to \The_SEO_Framework\Bridges\Ping
 	 * @since 4.0.3 Bing now redirects to HTTPS. Updated URL scheme to accomodate.
+	 * @since 4.1.2 Now fetches WP Sitemaps' index URL when it's enabled.
 	 * @link https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4
 	 */
 	public static function ping_bing() {
-		$pingurl = 'https://www.bing.com/ping?sitemap=' . rawurlencode(
-			\The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url()
-		);
+
+		if ( \the_seo_framework()->use_core_sitemaps() ) {
+			$url = \get_sitemap_url( 'index' );
+		} else {
+			$url = \The_SEO_Framework\Bridges\Sitemap::get_instance()->get_expected_sitemap_endpoint_url();
+		}
+
+		if ( ! $url ) return;
+
+		$pingurl = 'https://www.bing.com/ping?sitemap=' . rawurlencode( $url );
 		\wp_safe_remote_get( $pingurl, [ 'timeout' => 3 ] );
 	}
 }

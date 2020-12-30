@@ -27,7 +27,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 * @protected
 	 * @var $_editor
 	 */
-	protected $_editor = null;
+	protected $_editor = null; // phpcs:ignore PSR2.Classes.PropertyDeclaration.Underscore
 
 	/**
 	 * Constructor function that constructs default values for the Image Separator Module
@@ -64,17 +64,17 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );
 			$helper->handle_opacity_inputs( $settings, 'img_bg_hover_color_opc', 'img_bg_hover_color' );
 
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'img_bg_color_opc', 'img_bg_color' );
@@ -132,7 +132,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 		$this->delete();
 
 		// Do a crop.
-		if ( ! empty( $this->settings->image_style ) && 'simple' != $this->settings->image_style && 'custom' != $this->settings->image_style ) {
+		if ( ! empty( $this->settings->image_style ) && 'simple' !== $this->settings->image_style && 'custom' !== $this->settings->image_style ) {
 
 			$editor = $this->_get_editor();
 
@@ -146,10 +146,10 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 			$new_height   = $size['height'];
 
 			// Get the crop ratios.
-			if ( 'circle' == $this->settings->image_style ) {
+			if ( 'circle' === $this->settings->image_style ) {
 				$ratio_1 = 1;
 				$ratio_2 = 1;
-			} elseif ( 'square' == $this->settings->image_style ) {
+			} elseif ( 'square' === $this->settings->image_style ) {
 				$ratio_1 = 1;
 				$ratio_2 = 1;
 			}
@@ -162,7 +162,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 			}
 
 			// Make sure we have enough memory to crop Removed @ini_set( 'memory_limit', '300M' );.
-			ini_set( 'memory_limit', '300M' );
+			wp_raise_memory_limit( 'memory_limit', '300M' );
 
 			// Crop the photo.
 			$editor->resize( $new_width, $new_height, true );
@@ -220,7 +220,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 
 					foreach ( $data->sizes as $key => $size ) {
 
-						if ( $size->url == $this->settings->photo_src ) {
+						if ( $size->url === $this->settings->photo_src ) {
 							$classes[] = 'size-' . $key;
 							break;
 						}
@@ -277,13 +277,13 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 		$photo = $this->get_data();
 
 		if ( ! empty( $photo->alt ) ) {
-			return htmlspecialchars( $photo->alt );
+			return esc_html( $photo->alt );
 		} elseif ( ! empty( $photo->description ) ) {
-			return htmlspecialchars( $photo->description );
+			return esc_html( $photo->description );
 		} elseif ( ! empty( $photo->caption ) ) {
-			return htmlspecialchars( $photo->caption );
+			return esc_html( $photo->caption );
 		} elseif ( ! empty( $photo->title ) ) {
-			return htmlspecialchars( $photo->title );
+			return esc_html( $photo->title );
 		}
 	}
 
@@ -293,7 +293,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 * @method _has_source
 	 * @protected
 	 */
-	protected function _has_source() {
+	protected function _has_source() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		if ( ! empty( $this->settings->photo_src ) ) {
 			return true;
 		}
@@ -307,7 +307,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 * @method _get_editor
 	 * @protected
 	 */
-	protected function _get_editor() {
+	protected function _get_editor() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		if ( $this->_has_source() && null === $this->_editor ) {
 
 			$url_path  = $this->_get_uncropped_url();
@@ -329,7 +329,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 * @method _get_cropped_path
 	 * @protected
 	 */
-	protected function _get_cropped_path() {
+	protected function _get_cropped_path() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		$crop      = empty( $this->settings->image_style ) ? 'simple' : $this->settings->image_style;
 		$url       = $this->_get_uncropped_url();
 		$cache_dir = FLBuilderModel::get_cache_dir();
@@ -364,7 +364,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 * @method _get_uncropped_url
 	 * @protected
 	 */
-	protected function _get_uncropped_url() {
+	protected function _get_uncropped_url() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		if ( ! empty( $this->settings->photo_src ) ) {
 			$url = $this->settings->photo_src;
 		} else {
@@ -380,7 +380,7 @@ class UABBImageSeparatorModule extends FLBuilderModule {
 	 * @method _get_cropped_demo_url
 	 * @protected
 	 */
-	protected function _get_cropped_demo_url() {
+	protected function _get_cropped_demo_url() { // phpcs:ignore  PSR2.Methods.MethodDeclaration.Underscore
 		$info = $this->_get_cropped_path();
 
 		return FL_BUILDER_DEMO_CACHE_URL . $info['filename'];
@@ -394,9 +394,8 @@ class UABBImageSeparatorModule extends FLBuilderModule {
  */
 
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/image-separator/image-separator-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/image-separator/image-separator-bb-less-than-2-2-compatibility.php';
 }
-

@@ -59,18 +59,21 @@ class autoptimizeMain
 
         add_action( 'autoptimize_setup_done', array( $this, 'version_upgrades_check' ) );
         add_action( 'autoptimize_setup_done', array( $this, 'check_cache_and_run' ) );
-        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_ao_extra' ) );
-        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_partners_tab' ) );
+        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_ao_extra' ), 15 );
+        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_partners_tab' ), 20 );
+        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_criticalcss' ), 11 );
+        add_action( 'autoptimize_setup_done', array( $this, 'maybe_run_notfound_fallback' ), 10 );
 
         add_action( 'init', array( $this, 'load_textdomain' ) );
-        add_action( 'admin_init', array( 'PAnD', 'init' ) );
 
-        register_activation_hook( $this->filepath, array( $this, 'on_activate' ) );
-    }
+        if ( is_multisite() && is_admin() ) {
+            // Only if multisite and if in admin we want to check if we need to save options on network level.
+            add_action( 'init', 'autoptimizeOptionWrapper::check_multisite_on_saving_options' );
+        }
 
-    public function on_activate()
-    {
+        // register uninstall & deactivation hooks.
         register_uninstall_hook( $this->filepath, 'autoptimizeMain::on_uninstall' );
+        register_deactivation_hook( $this->filepath, 'autoptimizeMain::on_deactivation' );
     }
 
     public function load_textdomain()
@@ -81,7 +84,7 @@ class autoptimizeMain
     public function setup()
     {
         // Do we gzip in php when caching or is the webserver doing it?
-        define( 'AUTOPTIMIZE_CACHE_NOGZIP', (bool) get_option( 'autoptimize_cache_nogzip' ) );
+        define( 'AUTOPTIMIZE_CACHE_NOGZIP', (bool) autoptimizeOptionWrapper::get_option( 'autoptimize_cache_nogzip' ) );
 
         // These can be overridden by specifying them in wp-config.php or such.
         if ( ! defined( 'AUTOPTIMIZE_WP_CONTENT_NAME' ) ) {
@@ -159,22 +162,24 @@ class autoptimizeMain
         if ( autoptimizeCache::cacheavail() ) {
             $conf = autoptimizeConfig::instance();
             if ( $conf->get( 'autoptimize_html' ) || $conf->get( 'autoptimize_js' ) || $conf->get( 'autoptimize_css' ) || autoptimizeImages::imgopt_active() || autoptimizeImages::should_lazyload_wrapper() ) {
-                // Hook into WordPress frontend.
-                if ( defined( 'AUTOPTIMIZE_INIT_EARLIER' ) ) {
-                    add_action(
-                        'init',
-                        array( $this, 'start_buffering' ),
-                        self::INIT_EARLIER_PRIORITY
-                    );
-                } else {
-                    if ( ! defined( 'AUTOPTIMIZE_HOOK_INTO' ) ) {
-                        define( 'AUTOPTIMIZE_HOOK_INTO', 'template_redirect' );
+                if ( ! defined( 'AUTOPTIMIZE_NOBUFFER_OPTIMIZE' ) ) {
+                    // Hook into WordPress frontend.
+                    if ( defined( 'AUTOPTIMIZE_INIT_EARLIER' ) ) {
+                        add_action(
+                            'init',
+                            array( $this, 'start_buffering' ),
+                            self::INIT_EARLIER_PRIORITY
+                        );
+                    } else {
+                        if ( ! defined( 'AUTOPTIMIZE_HOOK_INTO' ) ) {
+                            define( 'AUTOPTIMIZE_HOOK_INTO', 'template_redirect' );
+                        }
+                        add_action(
+                            constant( 'AUTOPTIMIZE_HOOK_INTO' ),
+                            array( $this, 'start_buffering' ),
+                            self::DEFAULT_HOOK_PRIORITY
+                        );
                     }
-                    add_action(
-                        constant( 'AUTOPTIMIZE_HOOK_INTO' ),
-                        array( $this, 'start_buffering' ),
-                        self::DEFAULT_HOOK_PRIORITY
-                    );
                 }
 
                 // And disable Jetpack's site accelerator if JS or CSS opt. are active.
@@ -208,6 +213,21 @@ class autoptimizeMain
         }
     }
 
+    public function maybe_run_criticalcss()
+    {
+        // Loads criticalcss if the power-up is not active and if the filter returns true.
+        if ( apply_filters( 'autoptimize_filter_criticalcss_active', true ) && ! autoptimizeUtils::is_plugin_active( 'autoptimize-criticalcss/ao_criticss_aas.php' ) ) {
+            new autoptimizeCriticalCSSBase();
+        }
+    }
+
+    public function maybe_run_notfound_fallback()
+    {
+        if ( autoptimizeCache::do_fallback() ) {
+            add_action( 'template_redirect', array( 'autoptimizeCache', 'wordpress_notfound_fallback' ) );
+        }
+    }
+
     public function hook_page_cache_purge()
     {
         // hook into a collection of page cache purge actions if filter allows.
@@ -218,10 +238,13 @@ class autoptimizeMain
                 'w3tc_flush_posts', // exits.
                 'w3tc_flush_all', // exists.
                 'ce_action_cache_cleared', // Sven confirmed this will be added.
+                'aoce_action_cache_cleared', // Some other cache enabler.
                 'comet_cache_wipe_cache', // still to be confirmed by Raam.
                 'wp_cache_cleared', // cfr. https://github.com/Automattic/wp-super-cache/pull/537.
                 'wpfc_delete_cache', // Emre confirmed this will be added this.
                 'swift_performance_after_clear_all_cache', // swift perf. yeah!
+                'wpo_cache_flush', // wp-optimize.
+                'rt_nginx_helper_after_fastcgi_purge_all', // nginx helper.
             );
             $page_cache_purge_actions = apply_filters( 'autoptimize_filter_main_pagecachepurgeactions', $page_cache_purge_actions );
             foreach ( $page_cache_purge_actions as $purge_action ) {
@@ -279,7 +302,7 @@ class autoptimizeMain
      *                          deciding once per request (for use in tests).
      * @return bool
      */
-    public function should_buffer( $doing_tests = false )
+    public static function should_buffer( $doing_tests = false )
     {
         static $do_buffering = null;
 
@@ -311,14 +334,14 @@ class autoptimizeMain
             }
 
             // If setting says not to optimize logged in user and user is logged in...
-            if ( 'on' !== get_option( 'autoptimize_optimize_logged', 'on' ) && is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
+            if ( false === $ao_noptimize && 'on' !== autoptimizeOptionWrapper::get_option( 'autoptimize_optimize_logged', 'on' ) && is_user_logged_in() && current_user_can( 'edit_posts' ) ) {
                 $ao_noptimize = true;
             }
 
             // If setting says not to optimize cart/checkout.
-            if ( 'on' !== get_option( 'autoptimize_optimize_checkout', 'on' ) ) {
+            if ( false === $ao_noptimize && 'on' !== autoptimizeOptionWrapper::get_option( 'autoptimize_optimize_checkout', 'off' ) ) {
                 // Checking for woocommerce, easy digital downloads and wp ecommerce...
-                foreach ( array( 'is_checkout', 'is_cart', 'edd_is_checkout', 'wpsc_is_cart', 'wpsc_is_checkout' ) as $func ) {
+                foreach ( array( 'is_checkout', 'is_cart', 'is_account_page', 'edd_is_checkout', 'wpsc_is_cart', 'wpsc_is_checkout' ) as $func ) {
                     if ( function_exists( $func ) && $func() ) {
                         $ao_noptimize = true;
                         break;
@@ -326,7 +349,24 @@ class autoptimizeMain
                 }
             }
 
-            // Allows blocking of autoptimization on your own terms regardless of above decisions.
+            // And make sure pagebuilder previews don't get optimized HTML/ JS/ CSS/ ...
+            if ( false === $ao_noptimize ) {
+                $_qs_pagebuilders = array( 'tve', 'elementor-preview', 'fl_builder', 'vc_action', 'et_fb', 'bt-beaverbuildertheme', 'ct_builder', 'fb-edit', 'siteorigin_panels_live_editor' );
+                foreach ( $_qs_pagebuilders as $_pagebuilder ) {
+                    if ( array_key_exists( $_pagebuilder, $_GET ) ) {
+                        $ao_noptimize = true;
+                        break;
+                    }
+                }
+            }
+
+            // Also honor PageSpeed=off parameter as used by mod_pagespeed, in use by some pagebuilders,
+            // see https://www.modpagespeed.com/doc/experiment#ModPagespeed for info on that.
+            if ( false === $ao_noptimize && array_key_exists( 'PageSpeed', $_GET ) && 'off' === $_GET['PageSpeed'] ) {
+                $ao_noptimize = true;
+            }
+
+            // And finally allows blocking of autoptimization on your own terms regardless of above decisions.
             $ao_noptimize = (bool) apply_filters( 'autoptimize_filter_noptimize', $ao_noptimize );
 
             // Check for site being previewed in the Customizer (available since WP 4.0).
@@ -342,7 +382,7 @@ class autoptimizeMain
              * while the main query hasn't been ran yet. Thats why we use
              * AUTOPTIMIZE_INIT_EARLIER in tests.
              */
-            $do_buffering = ( ! is_admin() && ! is_feed() && ! $ao_noptimize && ! $is_customize_preview );
+            $do_buffering = ( ! is_admin() && ! is_feed() && ! is_embed() && ! $ao_noptimize && ! $is_customize_preview );
         }
 
         return $do_buffering;
@@ -361,8 +401,9 @@ class autoptimizeMain
         $valid = true;
 
         $has_no_html_tag    = ( false === stripos( $content, '<html' ) );
-        $has_xsl_stylesheet = ( false !== stripos( $content, '<xsl:stylesheet' ) );
+        $has_xsl_stylesheet = ( false !== stripos( $content, '<xsl:stylesheet' ) || false !== stripos( $content, '<?xml-stylesheet' ) );
         $has_html5_doctype  = ( preg_match( '/^<!DOCTYPE.+html>/i', ltrim( $content ) ) > 0 );
+        $has_noptimize_page = ( false !== stripos( $content, '<!-- noptimize-page -->' ) );
 
         if ( $has_no_html_tag ) {
             // Can't be valid amp markup without an html tag preceding it.
@@ -372,7 +413,7 @@ class autoptimizeMain
         }
 
         // If it's not html, or if it's amp or contains xsl stylesheets we don't touch it.
-        if ( $has_no_html_tag && ! $has_html5_doctype || $is_amp_markup || $has_xsl_stylesheet ) {
+        if ( $has_no_html_tag && ! $has_html5_doctype || $is_amp_markup || $has_xsl_stylesheet || $has_noptimize_page ) {
             $valid = false;
         }
 
@@ -389,14 +430,29 @@ class autoptimizeMain
      */
     public static function is_amp_markup( $content )
     {
-        // Short-circuit when a function is available to determine whether the response is (or will be) an AMP page.
-        if ( function_exists( 'is_amp_endpoint' ) ) {
-            return is_amp_endpoint();
+        // Short-circuit if the page is already AMP from the start.
+        if (
+            preg_match(
+                sprintf(
+                    '#^(?:<!.*?>|\s+)*+<html(?=\s)[^>]*?\s(%1$s|%2$s|%3$s)(\s|=|>)#is',
+                    'amp',
+                    "\xE2\x9A\xA1", // From \AmpProject\Attribute::AMP_EMOJI.
+                    "\xE2\x9A\xA1\xEF\xB8\x8F" // From \AmpProject\Attribute::AMP_EMOJI_ALT, per https://github.com/ampproject/amphtml/issues/25990.
+                ),
+                $content
+            )
+        ) {
+            return true;
         }
 
-        $is_amp_markup = preg_match( '/<html[^>]*(?:amp|⚡)/i', $content );
+        // Or else short-circuit if the AMP plugin will be processing the output to be an AMP page.
+        if ( function_exists( 'amp_is_request' ) ) {
+            return amp_is_request(); // For AMP plugin v2.0+.
+        } elseif ( function_exists( 'is_amp_endpoint' ) ) {
+            return is_amp_endpoint(); // For older/other AMP plugins (still supported in 2.0 as an alias).
+        }
 
-        return (bool) $is_amp_markup;
+        return false;
     }
 
     /**
@@ -430,14 +486,15 @@ class autoptimizeMain
 
         $classoptions = array(
             'autoptimizeScripts' => array(
-                'aggregate'       => $conf->get( 'autoptimize_js_aggregate' ),
-                'justhead'        => $conf->get( 'autoptimize_js_justhead' ),
-                'forcehead'       => $conf->get( 'autoptimize_js_forcehead' ),
-                'trycatch'        => $conf->get( 'autoptimize_js_trycatch' ),
-                'js_exclude'      => $conf->get( 'autoptimize_js_exclude' ),
-                'cdn_url'         => $conf->get( 'autoptimize_cdn_url' ),
-                'include_inline'  => $conf->get( 'autoptimize_js_include_inline' ),
-                'minify_excluded' => $conf->get( 'autoptimize_minify_excluded' ),
+                'aggregate'           => $conf->get( 'autoptimize_js_aggregate' ),
+                'defer_not_aggregate' => $conf->get( 'autoptimize_js_defer_not_aggregate' ),
+                'justhead'            => $conf->get( 'autoptimize_js_justhead' ),
+                'forcehead'           => $conf->get( 'autoptimize_js_forcehead' ),
+                'trycatch'            => $conf->get( 'autoptimize_js_trycatch' ),
+                'js_exclude'          => $conf->get( 'autoptimize_js_exclude' ),
+                'cdn_url'             => $conf->get( 'autoptimize_cdn_url' ),
+                'include_inline'      => $conf->get( 'autoptimize_js_include_inline' ),
+                'minify_excluded'     => $conf->get( 'autoptimize_minify_excluded' ),
             ),
             'autoptimizeStyles'  => array(
                 'aggregate'       => $conf->get( 'autoptimize_css_aggregate' ),
@@ -475,6 +532,20 @@ class autoptimizeMain
         return $content;
     }
 
+    public static function autoptimize_nobuffer_optimize( $html_in ) {
+        $html_out = $html_in;
+
+        if ( apply_filters( 'autoptimize_filter_speedupper', true ) ) {
+            $ao_speedupper = new autoptimizeSpeedupper();
+        }
+
+        $self = new self( AUTOPTIMIZE_PLUGIN_VERSION, AUTOPTIMIZE_PLUGIN_FILE );
+        if ( $self->should_buffer() ) {
+            $html_out = $self->end_buffering( $html_in );
+        }
+        return $html_out;
+    }
+
     public static function on_uninstall()
     {
         autoptimizeCache::clearall();
@@ -492,8 +563,10 @@ class autoptimizeMain
             'autoptimize_css_exclude',
             'autoptimize_html',
             'autoptimize_html_keepcomments',
+            'autoptimize_enable_site_config',
             'autoptimize_js',
             'autoptimize_js_aggregate',
+            'autoptimize_js_defer_not_aggregate',
             'autoptimize_js_exclude',
             'autoptimize_js_forcehead',
             'autoptimize_js_justhead',
@@ -512,12 +585,31 @@ class autoptimizeMain
             'autoptimize_imgopt_launched',
             'autoptimize_imgopt_settings',
             'autoptimize_minify_excluded',
+            'autoptimize_cache_fallback',
+            'autoptimize_ccss_rules',
+            'autoptimize_ccss_additional',
+            'autoptimize_ccss_queue',
+            'autoptimize_ccss_viewport',
+            'autoptimize_ccss_finclude',
+            'autoptimize_ccss_rlimit',
+            'autoptimize_ccss_rtimelimit',
+            'autoptimize_ccss_noptimize',
+            'autoptimize_ccss_debug',
+            'autoptimize_ccss_key',
+            'autoptimize_ccss_keyst',
+            'autoptimize_ccss_version',
+            'autoptimize_ccss_loggedin',
+            'autoptimize_ccss_forcepath',
+            'autoptimize_ccss_deferjquery',
+            'autoptimize_ccss_domain',
+            'autoptimize_ccss_unloadccss',
         );
 
         if ( ! is_multisite() ) {
             foreach ( $delete_options as $del_opt ) {
                 delete_option( $del_opt );
             }
+            autoptimizeMain::remove_cronjobs();
         } else {
             global $wpdb;
             $blog_ids         = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
@@ -527,12 +619,43 @@ class autoptimizeMain
                 foreach ( $delete_options as $del_opt ) {
                     delete_option( $del_opt );
                 }
+                autoptimizeMain::remove_cronjobs();
             }
             switch_to_blog( $original_blog_id );
         }
 
-        if ( wp_get_schedule( 'ao_cachechecker' ) ) {
-            wp_clear_scheduled_hook( 'ao_cachechecker' );
+        // Remove AO CCSS cached files and directory.
+        $ao_ccss_dir = WP_CONTENT_DIR . '/uploads/ao_ccss/';
+        if ( file_exists( $ao_ccss_dir ) && is_dir( $ao_ccss_dir ) ) {
+            // fixme: should check for subdirs when in multisite and remove contents of those as well.
+            array_map( 'unlink', glob( $ao_ccss_dir . '*.{css,html,json,log,zip,lock}', GLOB_BRACE ) );
+            rmdir( $ao_ccss_dir );
+        }
+    }
+
+    public static function on_deactivation()
+    {
+        if ( is_multisite() && is_network_admin() ) {
+            global $wpdb;
+            $blog_ids         = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+            $original_blog_id = get_current_blog_id();
+            foreach ( $blog_ids as $blog_id ) {
+                switch_to_blog( $blog_id );
+                autoptimizeMain::remove_cronjobs();
+            }
+            switch_to_blog( $original_blog_id );
+        } else {
+            autoptimizeMain::remove_cronjobs();
+        }
+        autoptimizeCache::clearall();
+    }
+
+    public static function remove_cronjobs() {
+        // Remove scheduled events.
+        foreach ( array( 'ao_cachechecker', 'ao_ccss_queue', 'ao_ccss_maintenance' ) as $_event ) {
+            if ( wp_get_schedule( $_event ) ) {
+                wp_clear_scheduled_hook( $_event );
+            }
         }
     }
 

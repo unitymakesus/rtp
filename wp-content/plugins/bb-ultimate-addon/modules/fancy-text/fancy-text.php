@@ -43,11 +43,11 @@ class UABBFancyTextModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 			/* Backward for Static Text */
 			if ( ! isset( $settings->static_text_typo ) || ! is_array( $settings->static_text_typo ) ) {
 
@@ -57,7 +57,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->static_text_typo['font_weight'] = 'normal';
 					} else {
 						$settings->static_text_typo['font_weight'] = $settings->font_family['weight'];
@@ -132,7 +132,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->fancy_font_family ) ) {
 				if ( isset( $settings->fancy_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->fancy_font_family['weight'] ) {
+					if ( 'regular' === $settings->fancy_font_family['weight'] ) {
 						$settings->fancy_text_typo['font_weight'] = 'normal';
 					} else {
 						$settings->fancy_text_typo['font_weight'] = $settings->fancy_font_family['weight'];
@@ -201,7 +201,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 				);
 				unset( $settings->fancy_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 			/* Backward for Static Text */
 			if ( ! isset( $settings->static_text_typo ) || ! is_array( $settings->static_text_typo ) ) {
 
@@ -211,7 +211,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->font_family ) ) {
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->static_text_typo['font_weight'] = 'normal';
 					} else {
 						$settings->static_text_typo['font_weight'] = $settings->font_family['weight'];
@@ -241,7 +241,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->static_text_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -249,7 +249,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->static_text_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -257,7 +257,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->static_text_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -273,7 +273,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 			}
 			if ( isset( $settings->fancy_font_family ) ) {
 				if ( isset( $settings->fancy_font_family['weight'] ) ) {
-					if ( 'regular' == $settings->fancy_font_family['weight'] ) {
+					if ( 'regular' === $settings->fancy_font_family['weight'] ) {
 						$settings->fancy_text_typo['font_weight'] = 'normal';
 					} else {
 						$settings->fancy_text_typo['font_weight'] = $settings->fancy_font_family['weight'];
@@ -303,7 +303,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->fancy_line_height['desktop'] ) && isset( $settings->fancy_font_size['small'] ) && 0 != $settings->fancy_font_size['desktop'] ) {
+			if ( isset( $settings->fancy_line_height['desktop'] ) && isset( $settings->fancy_font_size['small'] ) && 0 !== $settings->fancy_font_size['desktop'] ) {
 				if ( is_numeric( $settings->fancy_line_height['desktop'] ) && is_numeric( $settings->fancy_font_size['desktop'] ) ) {
 					$settings->fancy_text_typo['line_height'] = array(
 						'length' => round( $settings->fancy_line_height['desktop'] / $settings->fancy_font_size['desktop'], 2 ),
@@ -311,7 +311,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->fancy_line_height['medium'] ) && isset( $settings->fancy_font_size['medium'] ) && 0 != $settings->fancy_font_size['medium'] ) {
+			if ( isset( $settings->fancy_line_height['medium'] ) && isset( $settings->fancy_font_size['medium'] ) && 0 !== $settings->fancy_font_size['medium'] ) {
 				if ( is_numeric( $settings->fancy_line_height['medium'] ) && is_numeric( $settings->fancy_font_size['medium'] ) ) {
 					$settings->fancy_text_typo_medium['line_height'] = array(
 						'length' => round( $settings->fancy_line_height['medium'] / $settings->fancy_font_size['medium'], 2 ),
@@ -319,7 +319,7 @@ class UABBFancyTextModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->fancy_line_height['small'] ) && isset( $settings->fancy_font_size['small'] ) && 0 != $settings->fancy_font_size['small'] ) {
+			if ( isset( $settings->fancy_line_height['small'] ) && isset( $settings->fancy_font_size['small'] ) && 0 !== $settings->fancy_font_size['small'] ) {
 				if ( is_numeric( $settings->fancy_line_height['small'] ) && is_numeric( $settings->fancy_font_size['small'] ) ) {
 					$settings->fancy_text_typo_responsive['line_height'] = array(
 						'length' => round( $settings->fancy_line_height['small'] / $settings->fancy_font_size['small'], 2 ),
@@ -374,10 +374,10 @@ class UABBFancyTextModule extends FLBuilderModule {
 			$this->add_js( 'typed', $this->url . 'js/typed.js', array(), '', true );
 			$this->add_js( 'vticker', $this->url . 'js/rvticker.js', array(), '', true );
 		} else {
-			if ( $this->settings && 'type' == $this->settings->effect_type ) {
+			if ( $this->settings && 'type' === $this->settings->effect_type ) {
 				$this->add_js( 'typed', $this->url . 'js/typed.js', array(), '', true );
 			}
-			if ( $this->settings && 'slide_up' == $this->settings->effect_type ) {
+			if ( $this->settings && 'slide_up' === $this->settings->effect_type ) {
 				$this->add_js( 'vticker', $this->url . 'js/rvticker.js', array(), '', true );
 			}
 		}
@@ -390,7 +390,7 @@ class UABBFancyTextModule extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/fancy-text/fancy-text-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/fancy-text/fancy-text-bb-less-than-2-2-compatibility.php';

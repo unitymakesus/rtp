@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBSpacerGap', array(
+	'UABBSpacerGap',
+	array(
 		'spacer_gap_general' => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

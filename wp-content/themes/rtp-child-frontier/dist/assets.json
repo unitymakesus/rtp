@@ -9,7 +9,9 @@
   "images/featureicons/icon-screen.svg": "images/featureicons/icon-screen_442efb4c.svg",
   "images/featureicons/icon-seats.svg": "images/featureicons/icon-seats_1242ad4f.svg",
   "images/featureicons/icon-sofa.svg": "images/featureicons/icon-sofa_529dddc1.svg",
+  "images/featureicons/icon-sound.svg": "images/featureicons/icon-sound_156ea91c.svg",
   "images/featureicons/icon-tv.svg": "images/featureicons/icon-tv_ec41a70e.svg",
+  "images/featureicons/icon-video-conferencing.svg": "images/featureicons/icon-video-conferencing_e41e10ac.svg",
   "images/featureicons/icon-whiteboard.svg": "images/featureicons/icon-whiteboard_8bb3f466.svg",
   "images/featureicons/icon-wifi.svg": "images/featureicons/icon-wifi_40d5dd8f.svg",
   "images/icon-contrast-inverse.svg": "images/icon-contrast-inverse_bd9a44c8.svg",
@@ -33,6 +35,6 @@
   "images/socialicons/youtube-light.svg": "images/socialicons/youtube-light_4e282f49.svg",
   "images/socialicons/youtube.svg": "images/socialicons/youtube_50223a90.svg",
   "images/texture-single-header.png": "images/texture-single-header_c7293dfa.png",
-  "styles/main.css": "styles/main_f08d53b6.css",
-  "scripts/main.js": "scripts/main_f08d53b6.js"
+  "styles/main.css": "styles/main_314f299c.css",
+  "scripts/main.js": "scripts/main_314f299c.js"
 }

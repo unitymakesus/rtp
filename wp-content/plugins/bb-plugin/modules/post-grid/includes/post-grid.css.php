@@ -11,14 +11,14 @@ FLBuilderCSS::border_field_rule( array(
 FLBuilderCSS::typography_field_rule( array(
 	'settings'     => $settings,
 	'setting_name' => 'title_typography',
-	'selector'     => ".fl-node-$id h2.fl-post-grid-title",
+	'selector'     => ".fl-node-$id .fl-post-grid-title",
 ) );
 
 // Info Typography
 FLBuilderCSS::typography_field_rule( array(
 	'settings'     => $settings,
 	'setting_name' => 'info_typography',
-	'selector'     => ".fl-node-$id .fl-post-grid-meta, .fl-node-$id .fl-post-grid-meta a",
+	'selector'     => ".fl-builder-content .fl-node-$id .fl-post-grid-meta, .fl-builder-content .fl-node-$id .fl-post-grid-meta a",
 ) );
 
 // Content Typography
@@ -46,14 +46,18 @@ FLBuilderCSS::typography_field_rule( array(
 }
 
 <?php if ( ! empty( $settings->title_color ) ) : ?>
-.fl-node-<?php echo $id; ?> h2.fl-post-grid-title a {
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-title a {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->title_color ); ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->info_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-grid-meta,
-.fl-node-<?php echo $id; ?> .fl-post-grid-meta a {
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-meta,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-meta span,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-meta span a, 
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-meta-terms,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-meta-terms span,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-meta-terms a {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->info_color ); ?>;
 }
 <?php endif; ?>
@@ -66,27 +70,32 @@ FLBuilderCSS::typography_field_rule( array(
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->content_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-grid-content,
-.fl-node-<?php echo $id; ?> .fl-post-grid-content p {
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-content,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-content p,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-post .fl-post-grid-content .fl-post-grid-more,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-builder-pagination ul.page-numbers li span,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-builder-pagination ul.page-numbers li a {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->content_color ); ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->content_font_size ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-grid-content,
-.fl-node-<?php echo $id; ?> .fl-post-grid-content p {
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-content,
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-content p {
 	font-size: <?php echo $settings->content_font_size . $settings->content_font_size_unit; ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->link_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-grid-content a {
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-content a,
+.fl-builder-content .fl-node-<?php echo $id; ?> .page-numbers {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_color ); ?>;
 }
 <?php endif; ?>
 
 <?php if ( ! empty( $settings->link_hover_color ) ) : ?>
-.fl-node-<?php echo $id; ?> .fl-post-grid-content a:hover {
+.fl-builder-content .fl-node-<?php echo $id; ?> .fl-post-grid-content a:hover,
+.fl-builder-content .fl-node-<?php echo $id; ?> .page-numbers:hover {
 	color: <?php echo FLBuilderColor::hex_or_rgb( $settings->link_hover_color ); ?>;
 }
 <?php endif; ?>

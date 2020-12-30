@@ -153,13 +153,24 @@ function give_square_business_location_notice() {
 		give_square_is_connected() &&
 		false === give_square_get_location_id()
 	) {
-		echo sprintf(
+		$message = sprintf(
 			/* translators: 1. Connect Bold Text */
-			'<div class="notice notice-error"><p>%1$s <a href="%2$s">%3$s</a></p></div>',
-			esc_html__( 'Give - Square is almost ready. Please', 'give-square' ),
+			'<strong>%1$s</strong> %2$s <a href="%3$s">%4$s</a> %5$s',
+			esc_html__( 'Square Connection Successful:', 'give-square' ),
+			esc_html__( 'You\'re almost ready to start accepting donations. Please', 'give-square' ),
 			esc_url_raw( admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=square-settings' ),
-			esc_html__( 'set your business location.', 'give-square' )
+			esc_html__( 'set your Square location', 'give-square' ),
+			esc_html__( 'to finish the connection process.', 'give-square' )
 		);
+
+		Give()->notices->register_notice( array(
+			'id'               => 'give-square-connect-banner',
+			'description'      => $message,
+			'type'             => 'success',
+			'dismissible_type' => 'user',
+			'dismiss_interval' => 'shortly',
+		) );
+
 	}
 }
 

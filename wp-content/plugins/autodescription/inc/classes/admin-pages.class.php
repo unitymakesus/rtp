@@ -6,11 +6,11 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -91,7 +91,7 @@ class Admin_Pages extends Profile {
 			$menu['callback']
 		);
 
-		//* Enqueue scripts
+		// Enqueue scripts
 		\add_action( 'admin_print_scripts-' . $this->seo_settings_page_hook, [ $this, '_init_admin_scripts' ], 11 );
 		\add_action( 'load-' . $this->seo_settings_page_hook, [ $this, '_register_seo_settings_meta_boxes' ] );
 	}
@@ -181,13 +181,12 @@ class Admin_Pages extends Profile {
 	 * Outputs notices on SEO setting changes.
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.5 This is no longer a static function.
 	 * @access private
 	 */
-	public static function _do_settings_page_notices() {
+	public function _do_settings_page_notices() {
 
-		$tsf = \the_seo_framework();
-
-		$notice = $tsf->get_static_cache( 'settings_notice' );
+		$notice = $this->get_static_cache( 'settings_notice' );
 
 		if ( ! $notice ) return;
 
@@ -216,20 +215,18 @@ class Admin_Pages extends Profile {
 				break;
 		}
 
-		$tsf->update_static_cache( 'settings_notice', '' );
+		$this->update_static_cache( 'settings_notice', '' );
 
-		$message and $tsf->do_dismissible_notice( $message, $type ?: 'updated' );
+		$message and $this->do_dismissible_notice( $message, $type ?: 'updated' );
 	}
 
 	/**
 	 * Initializes and outputs various notices.
 	 *
-	 * @since 2.2.2
-	 * @since 3.1.0 1. Added seo plugin check.
-	 *              2. Now marked private.
+	 * @since 4.1.0
 	 * @access private
 	 */
-	public function notices() {
+	public function _output_notices() {
 
 		if ( $this->get_static_cache( 'check_seo_plugin_conflicts' ) && \current_user_can( 'activate_plugins' ) ) {
 			$this->detect_seo_plugins()
@@ -239,6 +236,8 @@ class Admin_Pages extends Profile {
 				);
 			$this->update_static_cache( 'check_seo_plugin_conflicts', 0 );
 		}
+
+		$this->output_dismissible_persistent_notices();
 	}
 
 	/**
@@ -249,6 +248,7 @@ class Admin_Pages extends Profile {
 	 * @since 2.6.0 Refactored.
 	 * @since 3.1.0 Now prefixes the IDs.
 	 * @since 4.0.0 Deprecated third parameter, silently.
+	 * @TODO is this even used??? See inc\views\edit\seo-settings-singular.php. Deprecate me?
 	 *
 	 * @param string $id      The nav-tab ID
 	 * @param array  $tabs    The tab content {
@@ -270,8 +270,9 @@ class Admin_Pages extends Profile {
 	 * Outputs in-post flex navigational wrapper and its content.
 	 *
 	 * @since 2.9.0
-	 * @since 3.0.0: Converted to view.
-	 * @since 4.0.0: Deprecated third parameter, silently.
+	 * @since 3.0.0 Converted to view.
+	 * @since 4.0.0 Deprecated third parameter, silently.
+	 * @TODO is this even used??? See inc\views\edit\seo-settings-singular.php. Deprecate me?
 	 *
 	 * @param string $id       The nav-tab ID
 	 * @param array  $tabs     The tab content {
@@ -285,7 +286,7 @@ class Admin_Pages extends Profile {
 	 * @param null   $_depr    Deprecated.
 	 * @param bool   $use_tabs Whether to output tabs, only works when $tabs count is greater than 1.
 	 */
-	public static function inpost_flex_nav_tab_wrapper( $id, $tabs = [], $_depr = null, $use_tabs = true ) {
+	public function inpost_flex_nav_tab_wrapper( $id, $tabs = [], $_depr = null, $use_tabs = true ) {
 		Bridges\PostSettings::_flex_nav_tab_wrapper( $id, $tabs, $use_tabs );
 	}
 
@@ -355,39 +356,48 @@ class Admin_Pages extends Profile {
 	 * @since 4.0.0 Added a tabindex, so keyboard navigation is possible on the "empty" dashicon.
 	 * @since 4.0.3 1. Keyboard navigation is now supported on the dismiss icon.
 	 *              2. The info notice type is now supported.
+	 * @since 4.1.0 Now semantically wraps the content with HTML.
+	 * @since 4.1.2 1. No longer invokes the script loader during AJAX-requests.
+	 *              2. Now accepts empty messages, so that AJAX-invoked generators can grab a notice wrapper.
+	 *              3. Added the inline parameter.
+	 *              4. Now enqueues scripts in the footer, so templates won't spam the header.
+	 * @TODO deprecate -- Use the more reliable and secure persistent notices registry instead...
+	 *                    Then again, this allows for AJAX-generated notices.
+	 * @see register_dismissible_persistent_notice()
 	 *
 	 * @param string $message The notice message. Expected to be escaped if $escape is false.
-	 * @param string $type The notice type : 'updated', 'error', 'warning'. Expected to be escaped.
-	 * @param bool   $a11y Whether to add an accessibility icon.
+	 *                        When the message contains HTML, it must start with a <p> tag,
+	 *                        or it will be added for you--regardless of proper semantics.
+	 * @param string $type   The notice type : 'updated', 'error', 'warning', 'info'. Expected to be escaped.
+	 * @param bool   $icon   Whether to add an accessibility icon.
 	 * @param bool   $escape Whether to escape the whole output.
+	 * @param bool   $inline Whether WordPress should be allowed to move it.
 	 * @return string The dismissible error notice.
 	 */
-	public function generate_dismissible_notice( $message = '', $type = 'updated', $a11y = true, $escape = true ) {
+	public function generate_dismissible_notice( $message = '', $type = 'updated', $icon = true, $escape = true, $inline = false ) {
 
-		if ( empty( $message ) ) return '';
+		if ( ! \wp_doing_ajax() ) {
+			// Make sure the scripts are loaded.
+			$this->init_admin_scripts();
+			\The_SEO_Framework\Builders\Scripts::footer_enqueue();
+		}
 
-		//* Make sure the scripts are loaded.
-		$this->init_admin_scripts();
-
-		\The_SEO_Framework\Builders\Scripts::enqueue();
-
-		if ( 'warning' === $type )
-			$type = 'notice-warning';
-
-		if ( 'info' === $type )
-			$type = 'notice-info';
-
-		$a11y = $a11y ? 'tsf-show-icon' : '';
+		if ( \in_array( $type, [ 'warning', 'info' ], true ) )
+			$type = "notice-$type";
 
 		return vsprintf(
-			'<div class="notice %s tsf-notice %s"><p>%s</p>%s</div>',
+			'<div class="notice %s tsf-notice %s %s">%s%s</div>',
 			[
 				\esc_attr( $type ),
-				( $a11y ? 'tsf-show-icon' : '' ),
-				( $escape ? \esc_html( $message ) : $message ),
+				( $icon ? 'tsf-show-icon' : '' ),
+				( $inline ? 'inline' : '' ),
+				sprintf(
+					( ! $escape && 0 === strpos( $message, '<p' ) ? '%s' : '<p>%s</p>' ),
+					( $escape ? \esc_html( $message ) : $message )
+				),
 				sprintf(
 					'<a class="hide-if-no-tsf-js tsf-dismiss" href="javascript:;" title="%s"></a>',
-					\esc_attr__( 'Dismiss this notice', 'autodescription' )
+					\esc_attr__( 'Dismiss this notice', 'default' )
 				),
 			]
 		);
@@ -397,63 +407,72 @@ class Admin_Pages extends Profile {
 	 * Echos generated dismissible notice.
 	 *
 	 * @since 2.7.0
+	 * @since 4.1.2 Added the $inline parameter.
+	 * @TODO deprecate -- Use the more reliable and secure persistent notices registry instead...
+	 *                    Then again, this allows for AJAX-generated notices.
+	 * @see register_dismissible_persistent_notice()
 	 *
 	 * @param string $message The notice message. Expected to be escaped if $escape is false.
-	 * @param string $type    The notice type : 'updated', 'error', 'warning'. Expected to be escaped.
-	 * @param bool   $a11y    Whether to add an accessibility icon.
+	 * @param string $type    The notice type : 'updated', 'error', 'warning', 'info'. Expected to be escaped.
+	 * @param bool   $icon    Whether to add an accessibility icon.
 	 * @param bool   $escape  Whether to escape the whole output.
+	 * @param bool   $inline Whether WordPress should be allowed to move it.
 	 */
-	public function do_dismissible_notice( $message = '', $type = 'updated', $a11y = true, $escape = true ) {
+	public function do_dismissible_notice( $message = '', $type = 'updated', $icon = true, $escape = true, $inline = false ) {
 		// phpcs:ignore, WordPress.Security.EscapeOutput -- use $escape
-		echo $this->generate_dismissible_notice( $message, $type, (bool) $a11y, (bool) $escape );
+		echo $this->generate_dismissible_notice( $message, $type, $icon, $escape, $inline );
 	}
 
 	/**
-	 * Generates dismissible notice that stick until the user dismisses it.
-	 * Also loads scripts and styles if out of The SEO Framework's context.
+	 * Echos dismissible persistent notice to screen.
 	 *
-	 * @since 2.9.3
-	 * @see $this->do_dismissible_sticky_notice()
-	 * @uses THE_SEO_FRAMEWORK_UPDATES_CACHE
-	 * @todo make this do something.
-	 * @ignore
-	 * NOTE: This method is a placeholder.
+	 * @since 4.1.0
 	 *
-	 * @param string $message The notice message. Expected to be escaped if $escape is false.
-	 * @param string $key     The notice key. Must be unique and tied to the stored updates cache option.
-	 * @param array  $args : {
+	 * @param string $message    The notice message. Expected to be escaped if $escape is false.
+	 * @param string $key        The unique notice key used to dismiss notices.
+	 * @param array  $args       : {
 	 *    'type'   => string Optional. The notification type. Default 'updated'.
-	 *    'a11y'   => bool   Optional. Whether to enable accessibility. Default true.
+	 *    'icon'   => bool   Optional. Whether to enable accessibility. Default true.
 	 *    'escape' => bool   Optional. Whether to escape the $message. Default true.
-	 *    'color'  => string Optional. If filled in, it will output the selected color. Default ''.
-	 *    'icon'   => string Optional. If filled in, it will output the selected icon. Default ''.
 	 * }
-	 * @return string The dismissible error notice.
 	 */
-	public function generate_dismissible_sticky_notice( $message, $key, $args = [] ) { // phpcs:ignore -- unused.
-		return '';
+	protected function output_dismissible_persistent_notice( $message, $key, array $args ) { // phpcs:ignore,VariableAnalysis.CodeAnalysis
+		$this->get_view( 'notice/persistent', get_defined_vars() );
 	}
 
 	/**
-	 * Echos generated dismissible sticky notice.
+	 * Outputs registered dismissible persistent notice.
 	 *
-	 * @since 2.9.3
-	 * @uses $this->generate_dismissible_sticky_notice()
-	 * @ignore
-	 *
-	 * @param string $message The notice message. Expected to be escaped if $escape is false.
-	 * @param string $key     The notice key. Must be unique and tied to the stored updates cache option.
-	 * @param array  $args : {
-	 *    'type'   => string Optional. The notification type. Default 'updated'.
-	 *    'a11y'   => bool   Optional. Whether to enable accessibility. Default true.
-	 *    'escape' => bool   Optional. Whether to escape the $message. Default true.
-	 *    'color'  => string Optional. If filled in, it will output the selected color. Default ''.
-	 *    'icon'   => string Optional. If filled in, it will output the selected icon. Default ''.
-	 * }
+	 * @since 4.1.0
+	 * @uses $this->output_dismissible_persistent_notice()
+	 * @uses $this->count_down_persistent_notice()
+	 * @global string $page_hook
 	 */
-	public function do_dismissible_sticky_notice( $message, $key, $args = [] ) {
-		// phpcs:ignore, WordPress.Security.EscapeOutput -- use $args['escape']
-		echo $this->generate_dismissible_sticky_notice( $message, $key, $args );
+	protected function output_dismissible_persistent_notices() {
+
+		$notices        = $this->get_static_cache( 'persistent_notices', [] );
+		$current_screen = \get_current_screen();
+		$base           = isset( $current_screen->base ) ? $current_screen->base : '';
+
+		// Ideally, we don't want to output more than one on no-js. Alas, we can't anticipate the importance and order of the notices.
+		foreach ( $notices as $key => $notice ) {
+			$cond = $notice['conditions'];
+
+			if ( ! \current_user_can( $cond['capability'] ) ) continue;
+			if ( $cond['user'] && $cond['user'] !== $this->get_user_id() ) continue;
+			if ( $cond['screens'] && ! \in_array( $base, $cond['screens'], true ) ) continue;
+			if ( $cond['excl_screens'] && \in_array( $base, $cond['excl_screens'], true ) ) continue;
+
+			if ( $cond['timeout'] > -1 && $cond['timeout'] < time() ) {
+				$this->clear_persistent_notice( $key );
+				continue;
+			}
+
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- use $notice['args']['escape']
+			$this->output_dismissible_persistent_notice( $notice['message'], $key, $notice['args'] );
+
+			$this->count_down_persistent_notice( $key, $cond['count'] );
+		}
 	}
 
 	/**
@@ -576,7 +595,7 @@ class Admin_Pages extends Profile {
 	 */
 	public function wrap_fields( $input = '', $echo = false ) {
 
-		if ( is_array( $input ) )
+		if ( \is_array( $input ) )
 			$input = implode( PHP_EOL, $input );
 
 		if ( $echo ) {
@@ -591,6 +610,7 @@ class Admin_Pages extends Profile {
 	 * Makes either simple or JSON-encoded data-* attributes for HTML elements.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 No longer adds an extra space in front of the return value when no data is generated.
 	 * @internal
 	 *
 	 * @param array $data : {
@@ -626,7 +646,7 @@ class Admin_Pages extends Profile {
 			}
 		}
 
-		return ' ' . implode( ' ', $ret );
+		return $ret ? ' ' . implode( ' ', $ret ) : '';
 	}
 
 	/**
@@ -636,6 +656,8 @@ class Admin_Pages extends Profile {
 	 * @since 2.7.0 Added escape parameter. Defaults to true.
 	 * @since 3.0.3 Added $disabled parameter. Defaults to false.
 	 * @see $this->make_checkbox_array()
+	 * @todo deprecate, use make_checkbox_array() instead? (fix 49 non-descriptive instances...? Should we deprecate?)
+	 * @todo move to this system to generator instead. See https://github.com/sybrew/the-seo-framework/projects/7
 	 *
 	 * @param string $field_id    The option ID. Must be within the Autodescription settings.
 	 * @param string $label       The checkbox description label.
@@ -659,12 +681,16 @@ class Admin_Pages extends Profile {
 	 * Returns a chechbox wrapper.
 	 *
 	 * @since 3.1.0
+	 * @since 4.0.5 You can now supply an extra class for the checkbox.
+	 * @since 4.1.0 You can now supply a data field via `$args`.
 	 *
 	 * @param array $args : {
 	 *    string $id          The option name, used as field ID.
+	 *    string $class       The checkbox class.
 	 *    string $index       The option index, used when the option is an array.
 	 *    string $label       The checkbox label description, placed inline of the checkbox.
 	 *    string $description The checkbox additional description, placed underneat.
+	 *    array  $data        The checkbox field data. Sub-items are expected to be escaped if they're not an array.
 	 *    bool   $escape      Whether to enable escaping of the $label and $description.
 	 *    bool   $disabled    Whether to disable the checkbox field.
 	 *    bool   $default     Whether to display-as-default. This is autodetermined when no $index is set.
@@ -677,9 +703,11 @@ class Admin_Pages extends Profile {
 		$args = array_merge(
 			[
 				'id'          => '',
+				'class'       => '',
 				'index'       => '',
 				'label'       => '',
 				'description' => '',
+				'data'        => [],
 				'escape'      => true,
 				'disabled'    => false,
 				'default'     => false,
@@ -706,17 +734,22 @@ class Admin_Pages extends Profile {
 			$value = isset( $value[ $index ] ) ? $value[ $index ] : '';
 		}
 
-		$cb_class = '';
+		$cb_classes = [];
+
+		if ( $args['class'] ) {
+			$cb_classes[] = $args['class'];
+		}
+
 		if ( $args['disabled'] ) {
-			$cb_class = 'tsf-disabled';
+			$cb_classes[] = 'tsf-disabled';
 		} elseif ( ! $args['index'] ) {
 			// Can't fetch conditionals in index.
-			$cb_class = $this->get_is_conditional_checked( $args['id'], false );
+			$cb_classes[] = $this->get_is_conditional_checked( $args['id'], false );
 		} else {
 			if ( $args['default'] ) {
-				$cb_class = 'tsf-default-selected';
+				$cb_classes[] = 'tsf-default-selected';
 			} elseif ( $args['warned'] ) {
-				$cb_class = 'tsf-warning-selected';
+				$cb_classes[] = 'tsf-warning-selected';
 			}
 		}
 
@@ -728,13 +761,14 @@ class Admin_Pages extends Profile {
 					$field_id,
 					( $args['disabled'] ? 'class="tsf-disabled"' : '' ),
 					vsprintf(
-						'<input type=checkbox class="%s" name="%s" id="%s" value="1" %s %s /> %s',
+						'<input type=checkbox class="%s" name="%s" id="%s" value="1" %s %s %s /> %s',
 						[
-							$cb_class,
+							\esc_attr( implode( ' ', $cb_classes ) ),
 							$field_name,
 							$field_id,
 							\checked( $value, true, false ),
 							( $args['disabled'] ? 'disabled' : '' ),
+							$args['data'] ? $this->make_data_attributes( $args['data'] ) : '',
 							$args['label'],
 						]
 					),
@@ -752,6 +786,7 @@ class Admin_Pages extends Profile {
 	 * Does not support "multiple" field selections.
 	 *
 	 * @since 4.0.0
+	 * @TODO allow arrays as index, so we can support multidimensional options easily? @see is_conditional_checked
 	 *
 	 * @param array $args : {
 	 *    string     $id       The select field ID.
@@ -782,26 +817,22 @@ class Admin_Pages extends Profile {
 
 		$args = array_merge( $defaults, $args );
 
-		// The walk below destroys the option array. As such, we assigned a new value.
+		// The walk below destroys the option array. Assign it to a new var to prevent confusion later.
 		$html_options = $args['options'];
-
-		array_walk(
-			$html_options,
-			/**
-			 * @param string $name    The option name. Passed by reference, returned as the HTML option item.
-			 * @param mixed  $value
-			 * @param mixed  $default
-			 */
-			function( &$name, $value, $default ) {
-				$name = sprintf(
-					'<option value="%s"%s>%s</option>',
-					\esc_attr( $value ),
-					(string) $value === (string) $default ? ' selected' : '',
-					\esc_html( $name )
-				);
-			},
-			$args['default']
-		);
+		/**
+		 * @param string $name    The option name. Passed by reference, returned as the HTML option item.
+		 * @param mixed  $value
+		 * @param mixed  $default
+		 */
+		$create_option = function( &$name, $value, $default ) {
+			$name = sprintf(
+				'<option value="%s"%s>%s</option>',
+				\esc_attr( $value ),
+				(string) $value === (string) $default ? ' selected' : '',
+				\esc_html( $name )
+			);
+		};
+		array_walk( $html_options, $create_option, $args['default'] );
 
 		return vsprintf(
 			sprintf( '<div class="%s">%s</div>',
@@ -947,7 +978,7 @@ class Admin_Pages extends Profile {
 	 * Returns the HTML class wrap for warning/default Checkbox options.
 	 *
 	 * @since 2.6.0
-	 * @since 3.1.0 Added the $wrap parameter
+	 * @since 3.1.0 Added the $wrap parameter.
 	 *
 	 * @param string $key  The option name which returns boolean.
 	 * @param bool   $wrap Whether to wrap the class name in `class="%s"`
@@ -961,6 +992,7 @@ class Admin_Pages extends Profile {
 	 *
 	 * @since 2.3.4
 	 * @since 3.1.0 Deprecated second parameter.
+	 * @TODO allow array as $key, so we can support multidimensional options?
 	 *
 	 * @param string $key        The option name which returns boolean.
 	 * @param string $deprecated Deprecated. Used to be the settings field.
@@ -1022,6 +1054,7 @@ class Admin_Pages extends Profile {
 	 * @since 2.8.0
 	 * @since 3.1.0 No longer prepares media l10n data.
 	 * @since 4.0.0 Now adds a media preview dispenser.
+	 * @since 4.1.2 No longer adds a redundant title to the selection button.
 	 *
 	 * @param string $input_id Required. The HTML input id to pass URL into.
 	 * @return string The image uploader button.
@@ -1038,7 +1071,7 @@ class Admin_Pages extends Profile {
 				%s>%s</button>',
 			[
 				\esc_url( \get_upload_iframe_src( 'image', $this->get_the_real_ID() ) ),
-				\esc_attr_x( 'Select social image', 'Button hover', 'autodescription' ),
+				'', // redundant
 				$s_input_id,
 				$this->make_data_attributes( [
 					'inputId'   => $s_input_id,
@@ -1053,7 +1086,7 @@ class Admin_Pages extends Profile {
 			]
 		);
 
-		$content .= vsprintf(
+		$content .= sprintf(
 			'<span class="tsf-tooltip-wrap"><span id="%1$s-preview" class="tsf-image-preview tsf-tooltip-item dashicons dashicons-format-image" data-for="%1$s" tabindex=0></span></span>',
 			$s_input_id
 		);
@@ -1099,7 +1132,7 @@ class Admin_Pages extends Profile {
 			]
 		);
 
-		$content .= vsprintf(
+		$content .= sprintf(
 			'<span class="tsf-tooltip-wrap"><span id="%1$s-preview" class="tsf-image-preview tsf-tooltip-item dashicons dashicons-format-image" data-for="%1$s" tabindex=0></span></span>',
 			$s_input_id
 		);
@@ -1110,22 +1143,82 @@ class Admin_Pages extends Profile {
 	/**
 	 * Outputs floating and reference title HTML elements for JavaScript.
 	 *
+	 * Do not use. Legacy item output for backward compatibility.
+	 *
 	 * @since 3.0.4
+	 * @since 4.1.0 Now only outputs the legacy reference and noadditions reference.
+	 * @since 4.1.2 Now prevents wp-emoji.js parsing the reference.
+	 * @ignore
+	 * @todo deprecate
 	 */
 	public function output_js_title_elements() {
-		echo '<span id=tsf-title-reference style=display:none></span>';
-		echo '<span id=tsf-title-offset class=hide-if-no-tsf-js></span>';
-		echo '<span id=tsf-title-placeholder class=hide-if-no-tsf-js></span>';
-		echo '<span id=tsf-title-placeholder-prefix class=hide-if-no-tsf-js></span>';
+		echo '<span data-ignore-me=legacy id=tsf-title-reference class="tsf-title-reference wp-exclude-emoji hidden" data-do-not-use=legacy></span>';
+	}
+
+	/**
+	 * Outputs reference description HTML elements for JavaScript for a specific ID.
+	 *
+	 * @since 4.1.0
+	 * @since 4.1.2 Now prevents wp-emoji.js parsing the references and data.
+	 *
+	 * @param string $id The input ID.
+	 * @param array  $data The input data.
+	 */
+	public function output_js_title_data( $id, array $data ) {
+		printf(
+			implode(
+				'',
+				[
+					'<span id="tsf-title-reference_%1$s" class="tsf-title-reference wp-exclude-emoji hidden" data-for="%1$s"></span>',
+					'<span id="tsf-title-noadditions-reference_%1$s" class="tsf-title-noadditions-reference wp-exclude-emoji hidden" data-for="%1$s"></span>',
+					'<span id="tsf-title-offset_%1$s" class="tsf-title-offset wp-exclude-emoji hide-if-no-tsf-js" data-for="%1$s"></span>',
+					'<span id="tsf-title-placeholder-additions_%1$s" class="tsf-title-placeholder-additions wp-exclude-emoji hide-if-no-tsf-js" data-for="%1$s"></span>',
+					'<span id="tsf-title-placeholder-prefix_%1$s" class="tsf-title-placeholder-prefix wp-exclude-emoji hide-if-no-tsf-js" data-for="%1$s"></span>',
+					'<span id="tsf-title-data_%1$s" class="hidden wp-exclude-emoji" data-for="%1$s" %2$s></span>',
+				]
+			),
+			\esc_attr( $id ),
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$this->make_data_attributes( $data )
+		);
 	}
 
 	/**
 	 * Outputs reference description HTML elements for JavaScript.
 	 *
+	 * Do not use. Legacy item output for backward compatibility.
+	 *
 	 * @since 3.0.4
+	 * @since 4.1.2 Now prevents wp-emoji.js parsing the reference.
+	 * @ignore
+	 * @todo deprecate
 	 */
 	public function output_js_description_elements() {
-		echo '<span id="tsf-description-reference" style="display:none"></span>';
+		echo '<span data-ignore-me=legacy id=tsf-description-reference class="tsf-description-reference wp-exclude-emoji hidden" data-do-not-use=legacy></span>';
+	}
+
+	/**
+	 * Outputs reference description HTML elements for JavaScript for a specific ID.
+	 *
+	 * @since 4.1.0
+	 * @since 4.1.2 Now prevents wp-emoji.js parsing the references and data.
+	 *
+	 * @param string $id   The description input ID.
+	 * @param array  $data The input data.
+	 */
+	public function output_js_description_data( $id, array $data ) {
+		printf(
+			implode(
+				'',
+				[
+					'<span id="tsf-description-reference_%1$s" class="hidden wp-exclude-emoji" data-for="%1$s" ></span>',
+					'<span id="tsf-description-data_%1$s" class="hidden wp-exclude-emoji" data-for="%1$s" %2$s ></span>',
+				]
+			),
+			\esc_attr( $id ),
+			// phpcs:ignore, WordPress.Security.EscapeOutput -- make_data_attributes escapes.
+			$this->make_data_attributes( $data )
+		);
 	}
 
 	/**
@@ -1135,6 +1228,7 @@ class Admin_Pages extends Profile {
 	 * @since 3.1.0 : 1. Added an "what if you click" onhover-title.
 	 *                2. Removed second parameter's usage. For passing the expected string.
 	 *                3. The whole output is now hidden from no-js.
+	 * @since 4.1.0 No longer marks up the counter with the `description` HTML class.
 	 *
 	 * @param string $for     The input ID it's for.
 	 * @param string $depr    The initial value for no-JS. Deprecated.
@@ -1142,16 +1236,16 @@ class Admin_Pages extends Profile {
 	 */
 	public function output_character_counter_wrap( $for, $depr = '', $display = true ) {
 		vprintf(
-			'<div class="tsf-counter-wrap hide-if-no-tsf-js" %s><span class="description tsf-counter" title="%s">%s</span><span class="tsf-ajax"></span></div>',
+			'<div class="tsf-counter-wrap hide-if-no-tsf-js" %s><span class=tsf-counter title="%s">%s</span><span class=tsf-ajax></span></div>',
 			[
-				( $display ? '' : 'style="display:none;"' ),
+				( $display ? '' : 'style=display:none;' ),
 				\esc_attr__( 'Click to change the counter type', 'autodescription' ),
 				sprintf(
 					/* translators: %s = number */
-					\esc_html__( 'Characters Used: %s', 'autodescription' ),
+					\esc_html__( 'Characters: %s', 'autodescription' ),
 					sprintf(
-						'<span id="%s_chars">%s</span>',
-						\esc_attr( $for ),
+						'<span id="%s">%s</span>',
+						\esc_attr( "{$for}_chars" ),
 						0
 					)
 				),
@@ -1174,13 +1268,13 @@ class Admin_Pages extends Profile {
 			[
 				( $display ? '' : 'style="display:none;"' ),
 				sprintf(
-					'<div id="%s_pixels" class="tsf-tooltip-wrap">%s</div>',
-					\esc_attr( $for ),
+					'<div id="%s" class="tsf-tooltip-wrap">%s</div>',
+					\esc_attr( "{$for}_pixels" ),
 					'<span class="tsf-pixel-counter-bar tsf-tooltip-item" aria-label="" data-desc="" tabindex=0><span class="tsf-pixel-counter-fluid"></span></span>'
 				),
 				sprintf(
-					'<div class="tsf-pixel-shadow-wrap"><span class="tsf-pixel-counter-shadow tsf-%s-pixel-counter-shadow"></span></div>',
-					\esc_attr( $type )
+					'<div class="tsf-pixel-shadow-wrap"><span class="tsf-pixel-counter-shadow %s"></span></div>',
+					\esc_attr( "tsf-{$type}-pixel-counter-shadow" )
 				),
 			]
 		);
@@ -1191,7 +1285,10 @@ class Admin_Pages extends Profile {
 	 * This is intricated, voluminous, and convoluted; but, there's no other way :(
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now consistently applies escaping and transformation of the titles and descriptions.
+	 *              This was not a security issue, since we always escape properly at output for sanity.
 	 * @access private
+	 * @todo deprecate--let JS handle this.
 	 *
 	 * @param array  $args An array of 'id' and 'taxonomy' values.
 	 * @param string $for  The screen it's for. Accepts 'edit' and 'settings'.
@@ -1199,7 +1296,7 @@ class Admin_Pages extends Profile {
 	 */
 	public function _get_social_placeholders( array $args, $for = 'edit' ) {
 
-		$desc_from_custom_field = $this->get_description_from_custom_field( $args );
+		$desc_from_custom_field = $this->get_description_from_custom_field( $args, false );
 
 		if ( 'settings' === $for ) {
 			$pm_edit_og_title = $args['id'] ? $this->get_post_meta_item( '_open_graph_title', $args['id'] ) : '';
@@ -1213,21 +1310,21 @@ class Admin_Pages extends Profile {
 
 			//! OG title generator falls back to meta input. The description does not.
 			$og_tit_placeholder  = $pm_edit_og_title
-								?: $this->get_generated_open_graph_title( $args );
+								?: $this->get_generated_open_graph_title( $args, false );
 			$og_desc_placeholder = $pm_edit_og_desc
 								?: $desc_from_custom_field
-								?: $this->get_generated_open_graph_description( $args );
+								?: $this->get_generated_open_graph_description( $args, false );
 
 			//! TW title generator falls back to meta input. The description does not.
 			$tw_tit_placeholder  = $pm_edit_tw_title
 								?: $home_og_title
 								?: $pm_edit_og_title
-								?: $this->get_generated_twitter_title( $args );
+								?: $this->get_generated_twitter_title( $args, false );
 			$tw_desc_placeholder = $pm_edit_tw_desc
 								?: $home_og_desc
 								?: $pm_edit_og_desc
 								?: $desc_from_custom_field
-								?: $this->get_generated_twitter_description( $args );
+								?: $this->get_generated_twitter_description( $args, false );
 		} elseif ( 'edit' === $for ) {
 			if ( ! $args['taxonomy'] ) {
 				if ( $this->is_static_frontpage( $args['id'] ) ) {
@@ -1245,54 +1342,54 @@ class Admin_Pages extends Profile {
 
 					//! OG title generator falls back to meta input. The description does not.
 					$og_tit_placeholder  = $home_og_title
-										?: $this->get_generated_open_graph_title( $args );
+										?: $this->get_generated_open_graph_title( $args, false );
 					$og_desc_placeholder = $home_og_desc
 										?: $home_desc
 										?: $desc_from_custom_field
-										?: $this->get_generated_open_graph_description( $args );
+										?: $this->get_generated_open_graph_description( $args, false );
 
 					//! TW title generator falls back to meta input. The description does not.
 					$tw_tit_placeholder  = $home_tw_title
 										?: $home_og_title
 										?: $custom_og_title
-										?: $this->get_generated_twitter_title( $args );
+										?: $this->get_generated_twitter_title( $args, false );
 					$tw_desc_placeholder = $home_tw_desc
 										?: $home_og_desc
 										?: $custom_og_desc
 										?: $home_desc
 										?: $desc_from_custom_field
-										?: $this->get_generated_twitter_description( $args );
+										?: $this->get_generated_twitter_description( $args, false );
 				} else {
 					// Gets custom fields.
 					$custom_og_title = $this->get_post_meta_item( '_open_graph_title', $args['id'] );
 					$custom_og_desc  = $this->get_post_meta_item( '_open_graph_description', $args['id'] );
 
 					//! OG title generator falls back to meta input. The description does not.
-					$og_tit_placeholder  = $this->get_generated_open_graph_title( $args );
+					$og_tit_placeholder  = $this->get_generated_open_graph_title( $args, false );
 					$og_desc_placeholder = $desc_from_custom_field
-										?: $this->get_generated_open_graph_description( $args );
+										?: $this->get_generated_open_graph_description( $args, false );
 
 					//! TW title generator falls back to meta input. The description does not.
 					$tw_tit_placeholder  = $custom_og_title
-										?: $this->get_generated_twitter_title( $args );
+										?: $this->get_generated_twitter_title( $args, false );
 					$tw_desc_placeholder = $custom_og_desc
 										?: $desc_from_custom_field
-										?: $this->get_generated_twitter_description( $args );
+										?: $this->get_generated_twitter_description( $args, false );
 				}
 			} else {
 				$meta = $this->get_term_meta( $args['id'] );
 
 				//! OG title generator falls back to meta input. The description does not.
-				$og_tit_placeholder  = $this->get_generated_open_graph_title( $args );
+				$og_tit_placeholder  = $this->get_generated_open_graph_title( $args, false );
 				$og_desc_placeholder = $desc_from_custom_field
-									?: $this->get_generated_open_graph_description( $args );
+									?: $this->get_generated_open_graph_description( $args, false );
 
 				//! TW title generator falls back to meta input. The description does not.
 				$tw_tit_placeholder  = $meta['og_title']
 									?: $og_tit_placeholder;
 				$tw_desc_placeholder = $meta['og_description']
 									?: $desc_from_custom_field
-									?: $this->get_generated_twitter_description( $args );
+									?: $this->get_generated_twitter_description( $args, false );
 			}
 		} else {
 			$og_tit_placeholder  = '';
@@ -1303,12 +1400,12 @@ class Admin_Pages extends Profile {
 
 		return [
 			'title'       => [
-				'og'      => $og_tit_placeholder,
-				'twitter' => $tw_tit_placeholder,
+				'og'      => $this->escape_title( $og_tit_placeholder ?: '' ),
+				'twitter' => $this->escape_title( $tw_tit_placeholder ?: '' ),
 			],
 			'description' => [
-				'og'      => $og_desc_placeholder,
-				'twitter' => $tw_desc_placeholder,
+				'og'      => $this->escape_description( $og_desc_placeholder ?: '' ),
+				'twitter' => $this->escape_description( $tw_desc_placeholder ?: '' ),
 			],
 		];
 	}

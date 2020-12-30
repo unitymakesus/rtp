@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBSeparatorModule', array(
+	'UABBSeparatorModule',
+	array(
 		'general' => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.

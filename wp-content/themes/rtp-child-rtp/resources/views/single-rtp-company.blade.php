@@ -4,6 +4,7 @@
   @while(have_posts()) @php the_post() @endphp
 
     @php
+      $user_can_edit = false;
       // Get contact people's email addresses and save MD5 hashes into approved people array
       $contact_ppl = get_field('contact_person'); // Array
       $approved_ppl = array();

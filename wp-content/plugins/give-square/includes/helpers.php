@@ -50,15 +50,16 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
         <?php
         $application_id = give_square_get_application_id();
         if ( empty( $application_id ) ) {
-
             // Show frontend notice when Square is not configured properly.
 	        Give()->notices->print_frontend_notice(
                 sprintf(
-                    /* translators: 1. Text, 2. Link, 3. Link Text */
-             '%1$s <a href="%2$s">%3$s</a>',
-                    __( 'Square is not set up yet to accept payments. Please configure the gateway in order to accept donations. If you\'re having trouble please review', '' ),
+                    /* translators: 1. Text, 2. Text, 3. Test, 4. Link, 5. Link Text */
+             '%1$s %2$s. %3$s <a href="%4$s">%5$s</a>',
+                    __( 'Square is not set up yet to accept payments in', '' ),
+                    give_is_test_mode() ? __('Test Mode', 'give-square') : __('Live Mode', 'give-square'),
+                    __( 'Please configure the gateway in order to accept donations. If you\'re having trouble please review the', '' ),
                     esc_url( 'http://docs.givewp.com/addon-square' ),
-                    __( 'Give\'s Square documentation.', 'give-square' )
+                    __( 'Square documentation.', 'give-square' )
                 )
             );
 	        return false;
@@ -507,17 +508,24 @@ function give_square_get_application_id() {
  */
 function give_square_get_location_id() {
 
-	$location_id = give_get_option( 'give_square_live_location_id' );
+	if ( give_square_is_manual_api_keys_enabled() ) {
+		$location_id = give_get_option( 'give_square_live_location_id' );
 
-	// If Square is connected via OAuth api, the return location id from business location.
-	if ( give_square_is_connected() ) {
+		// For test mode when Square sandbox connected via manual API Keys.
+		if ( give_is_test_mode() ) {
+			$location_id = give_get_option( 'give_square_sandbox_location_id' );
+		}
+	} else {
+
 		$location_id = give_get_option( 'give_square_business_location' );
-	} elseif ( give_is_test_mode() ) {
-		$location_id = give_get_option( 'give_square_sandbox_location_id' );
+
+		// For test mode when Square Sandbox connected via OAuth.
+		if ( give_is_test_mode() && give_square_sandbox_is_connected() ) {
+			$location_id = give_get_option( 'give_square_sandbox_business_location' );
+		}
 	}
 
 	return $location_id;
-
 }
 
 /**
@@ -548,65 +556,203 @@ function give_square_send_back_to_checkout( $args = array() ) {
  * @return bool
  */
 function give_square_is_connected() {
-
 	return give_get_option( 'give_square_is_connected', false );
+}
 
+/**
+ * This function will check whether Square Sandbox account is connected or not?
+ *
+ * @since 1.0.5
+ *
+ * @return bool
+ */
+function give_square_sandbox_is_connected() {
+	return give_get_option( 'give_square_sandbox_is_connected', false );
+}
+
+/**
+ * This helper function is to get the host of Square to perform API calls.
+ *
+ * @param string $mode Mode.
+ *
+ * @since 1.0.5
+ *
+ * @return string
+ */
+function give_square_get_host( $mode = 'default' ) {
+
+	$host = 'squareup.com';
+
+	if (
+		( 'default' === $mode && give_is_test_mode() ) ||
+		'test' === $mode
+	) {
+		$host = 'squareupsandbox.com';
+	}
+
+	return $host;
+}
+
+/**
+ * This helper function is used to setup Square API configuration.
+ *
+ * @since 1.0.5
+ *
+ * @return \SquareConnect\ApiClient
+ */
+function give_square_setup_api_config() {
+
+	// Get Square host information.
+	$host = give_square_get_host();
+
+	// Get Access Token.
+	$access_token = give_square_get_access_token();
+
+	// Set the Access Token prior to any API calls.
+	$api_config = new \SquareConnect\Configuration();
+	$api_config->setHost( "https://connect.{$host}" );
+	$api_config->setAccessToken( $access_token );
+
+	// Create and return API Client object.
+	return new \SquareConnect\ApiClient( $api_config );
+
+}
+
+/**
+ * This helper function is used to fetch locations using Square Locations API.
+ *
+ * @since 1.0.5
+ *
+ * @return array|\SquareConnect\Model\Location[]
+ */
+function give_square_fetch_locations() {
+
+	$locations_list = array();
+
+	try {
+		// Set the Access Token prior to any API calls.
+		$api_client     = give_square_setup_api_config();
+
+		// Call Locations API and fetch the locations.
+		$location_api   = new \SquareConnect\Api\LocationsApi( $api_client );
+		$locations_list = $location_api->listLocations()->getLocations();
+	} catch ( Exception $e ) {
+		give_record_gateway_error(
+			__( 'Square Location Error', 'give-square' ),
+			sprintf(
+			/* translators: 1. Exception Message. */
+				__( 'Unable to fetch locations from Square Payment Gateway. Details: %1$s', 'give-square' ),
+				$e->getMessage()
+			)
+		);
+	}
+
+	return $locations_list;
 }
 
 /**
  * This function will help to get list of business locations.
  *
+ * @param string $mode Mode.
+ *
  * @since 1.0.0
  *
  * @return array
  */
-function give_square_get_business_locations() {
+function give_square_get_business_locations( $mode = 'live' ) {
+
+	$locations_list = array();
+	$cache_key      = 'live' === $mode ? 'give_cache_square_locations_list' : 'give_cache_square_sandbox_locations_list';
+
+	$locations_option = array(
+		'' => __( 'Select a Location', 'give-square' ),
+	);
 
 	// Get locations cache.
-	$locations = Give_Cache::get( 'give_cache_square_locations_list' );
+	$locations = Give_Cache::get( $cache_key );
 
-	if ( give_square_is_connected() && false === $locations ) {
-
-		$locations = array(
-			'' => __( 'Select a Location', 'give-square' ),
-		);
+	if ( false === $locations ) {
 
 		try {
+			$host = give_square_get_host( $mode );
 
 			// Set the Access Token prior to any API calls.
-			\SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken( Give_Square_Gateway::get_access_token() );
+			$api_config = new \SquareConnect\Configuration();
+			$api_config->setHost( "https://connect.{$host}" );
 
-			$location_api   = new \SquareConnect\Api\LocationsApi();
-			$locations_list = $location_api->listLocations()->getLocations();
-
-			foreach ( $locations_list as $location ) {
-
-				// Add location to list only if credit card processing is enabled and status is active.
-				if (
-					is_array( $location->getCapabilities() ) &&
-					'CREDIT_CARD_PROCESSING' === $location->getCapabilities()[0] &&
-					'ACTIVE' === $location->getStatus()
-				) {
-					$locations[ $location->getId() ] = $location->getName();
-				}
+			if (
+				'live' === $mode &&
+				give_square_is_connected()
+			) {
+				$access_token = give_square_decrypt_string( give_get_option( 'give_square_live_access_token' ) );
+				$api_config->setAccessToken( $access_token );
+			} else if (
+				'test' === $mode &&
+				give_square_sandbox_is_connected()
+			) {
+				$access_token = give_square_decrypt_string( give_get_option( 'give_square_sandbox_access_token' ) );
+				$api_config->setAccessToken( $access_token );
 			}
 
-			// Set locations cache.
-			Give_Cache::set( 'give_cache_square_locations_list', $locations );
+			// Set the Access Token prior to any API calls.
+			$api_client = new \SquareConnect\ApiClient( $api_config );
 
+			// Call Locations API and fetch the locations.
+			$location_api   = new \SquareConnect\Api\LocationsApi( $api_client );
+			$locations_list = $location_api->listLocations()->getLocations();
 		} catch ( Exception $e ) {
+
+			$message = sprintf(
+				/* translators: 1. Exception Message. */
+				__( 'Unable to fetch locations from Square Payment Gateway. Details: %1$s', 'give-square' ),
+				$e->getMessage()
+			);
+
+			// Reset oAuth button, if access revoked.
+			if ( 401 === $e->getCode() && 'live' === $mode ) {
+				give_delete_option( 'give_square_is_connected' );
+				give_delete_option( 'give_square_business_location' );
+
+				$message = sprintf(
+					/* translators: 1. Exception Message. */
+					__( 'Unable to fetch locations from Square Payment Gateway due to revoked access. Details: %1$s', 'give-square' ),
+					$e->getMessage()
+				);
+			} elseif ( 401 === $e->getCode() && 'test' === $mode ) {
+				give_delete_option( 'give_square_sandbox_is_connected' );
+				give_delete_option( 'give_square_sandbox_business_location' );
+
+				$message = sprintf(
+					/* translators: 1. Exception Message. */
+					__( 'Unable to fetch locations from Square Payment Gateway due to revoked access. Details: %1$s', 'give-square' ),
+					$e->getMessage()
+				);
+			}
+
+			// Record Gateway Error.
 			give_record_gateway_error(
 				__( 'Square Location Error', 'give-square' ),
-				sprintf(
-					/* translators: 1. Exception Message. */
-					__( 'Unable to fetch locations from Square Payment Gateway. Details: %1$s', 'give-square' ),
-					$e->getMessage()
-				)
+				$message
 			);
 		}
+
+		foreach ( $locations_list as $location ) {
+
+			// Add location to list only if credit card processing is enabled and status is active.
+			if (
+				is_array( $location->getCapabilities() ) &&
+				'CREDIT_CARD_PROCESSING' === $location->getCapabilities()[0] &&
+				'ACTIVE' === $location->getStatus()
+			) {
+				$locations[ $location->getId() ] = $location->getName();
+			}
+		}
+
+		// Set locations cache.
+		Give_Cache::set( $cache_key, $locations );
 	}
 
-	return $locations;
+	return is_array( $locations ) ? array_merge( $locations_option, $locations ) : $locations_option;
 }
 
 /**
@@ -640,30 +786,62 @@ function give_square_is_connect_notice_dismissed() {
 }
 
 /**
+ * This function return the text based on the test mode selection.
+ *
+ * @since 1.0.5
+ *
+ * @return string
+ */
+function give_square_get_test_mode_text() {
+	$mode = 'live';
+
+	if ( give_is_test_mode() ) {
+		$mode = 'test';
+	}
+
+	return $mode;
+}
+
+/**
  * This function prepares the square connect button for reusability.
+ *
+ * @param string $mode Mode.
  *
  * @since 1.0.0
  *
  * @return mixed
  */
-function give_square_connect_button() {
+function give_square_connect_button( $mode = 'live' ) {
 
 	// Prepare Square Connect URL.
 	$connect_url = add_query_arg(
 		array(
-			'action'     => 'connect',
-			'return_uri' => site_url(),
+			'action'      => 'connect',
+			'admin_email' => get_bloginfo( 'admin_email' ),
+			'return_uri'  => site_url(),
 		),
-		'https://connect.givewp.com/square/connect.php'
+		"https://connect.givewp.com/square/connect_{$mode}.php"
 	);
 
+	$btn_text       = ( 'live' === $mode ) ?
+		__( 'Connect to Square Account', 'give-square' ) :
+		__( 'Connect to Square Sandbox Account', 'give-square' );
+	$btn_hover_text = ( 'live' === $mode ) ?
+		__( 'Connect your site with Square account for easy onboarding.', 'give-square' ) :
+		__( 'Connect your site with Square Sandbox account for easy onboarding.', 'give-square' );
+	$image_url      = ( 'live' === $mode ) ?
+		esc_url_raw( GIVE_SQUARE_PLUGIN_URL . 'assets/dist/images/square.svg' ) :
+		esc_url_raw( GIVE_SQUARE_PLUGIN_URL . 'assets/dist/images/square_dark.svg' );
+	$button_class   = ( 'live' === $mode ) ? 'give-square-live-btn' : 'give-square-sandbox-btn';
+
 	$connect_button = sprintf(
-		'<a href="%1$s" id="give-square-connect-btn" class="give-square-btn" title="%2$s"><img src="%3$s" alt="%4$s" /><span>%5$s</span></a>',
+		'<a href="%1$s" id="give-square-connect-btn" class="give-square-btn %6$s" title="%2$s"><img src="%3$s" alt="%4$s" /><span>%5$s</span></a>',
 		esc_url_raw( $connect_url ),
-		__( 'Connect your site with Square\'s easy onboarding process.', 'give-square' ),
-		esc_url_raw( GIVE_SQUARE_PLUGIN_URL . 'assets/dist/images/square.svg' ),
+		$btn_hover_text,
+		$image_url,
 		__( 'Square Payment Gateway.', 'give-square' ),
-		__( 'Connect to Square', 'give-square' )
+		$btn_text,
+		$button_class
 	);
 
 	return apply_filters( 'give_square_connect_button', $connect_button );
@@ -778,7 +956,7 @@ function give_square_decrypt_string( $text ) {
 	$encryption_key = base64_decode( $key );
 
 	// To decrypt, split the encrypted data from our IV - our unique separator used was "::".
-	list( $encrypted_data, $iv ) = explode( '::', base64_decode( $text ), 2 );
+	@list( $encrypted_data, $iv ) = explode( '::', base64_decode( $text ), 2 );
 
 	return openssl_decrypt( $encrypted_data, 'aes-256-cbc', $encryption_key, 0, $iv );
 
@@ -796,9 +974,55 @@ function give_square_get_access_token() {
 	$access_token = give_square_decrypt_string( give_get_option( 'give_square_live_access_token' ) );
 
 	// If Test Mode enabled & Square OAuth API not connect, use sandbox access token.
-	if ( give_is_test_mode() && ! give_square_is_connected() ) {
+	if ( give_is_test_mode() ) {
 		$access_token = give_square_decrypt_string( give_get_option( 'give_square_sandbox_access_token' ) );
 	}
 
 	return $access_token;
+}
+
+/**
+ * This function is used to get merchant id.
+ *
+ * @param string $mode Mode.
+ *
+ * @since 1.0.5
+ *
+ * @return mixed
+ */
+function give_square_get_merchant_id( $mode = 'live' ) {
+
+	$merchant_id = give_get_option( 'give_square_live_merchant_id' );
+
+	if ( 'test' === $mode && give_square_sandbox_is_connected() ) {
+		$merchant_id = give_get_option( 'give_square_sandbox_merchant_id' );
+	}
+
+	return $merchant_id;
+}
+
+/**
+ * This function is used to prepare billing address to send to Square.
+ *
+ * @param array $posted_data List of posted data.
+ *
+ * @return \SquareConnect\Model\Address
+ * @since 1.0.5
+ *
+ */
+function give_square_prepare_billing_address( $posted_data ) {
+
+	$address = new SquareConnect\Model\Address();
+	$address->setAddressLine1( $posted_data['user_info']['address']['line1'] );
+	if ( ! empty( $posted_data['user_info']['address']['line2'] ) ) {
+		$address->setAddressLine2( $posted_data['user_info']['address']['line2'] );
+	}
+	$address->setLocality( $posted_data['user_info']['address']['state'] );
+	$address->setSublocality( $posted_data['user_info']['address']['city'] );
+	$address->setPostalCode( $posted_data['user_info']['address']['zip'] );
+	$address->setCountry( $posted_data['user_info']['address']['country'] );
+	$address->setFirstName( $posted_data['user_info']['first_name'] );
+	$address->setLastName( $posted_data['user_info']['last_name'] );
+
+	return $address;
 }

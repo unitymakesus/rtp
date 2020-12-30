@@ -36,6 +36,9 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 		$this->add_js( 'jquery-masonry' );
 		$this->add_js( 'isotope', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/jquery-masonary.js', array( 'jquery' ), '', true );
 		$this->add_js( 'imagesloaded-uabb', BB_ULTIMATE_ADDON_URL . 'assets/js/global-scripts/imagesloaded.min.js', array( 'jquery' ), '', true );
+
+		add_action( 'wp_ajax_uabb_get_photos', array( $this, 'uabb_get_photos' ) );
+		add_action( 'wp_ajax_nopriv_uabb_get_photos', array( $this, 'uabb_get_photos' ) );
 	}
 	/**
 	 * Ensure backwards compatibility with old settings.
@@ -47,11 +50,11 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'overlay_color_opc', 'overlay_color' );
@@ -69,7 +72,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->caption_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->caption_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -139,7 +142,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				);
 				unset( $settings->letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handle opacity fields.
 			$helper->handle_opacity_inputs( $settings, 'overlay_color_opc', 'overlay_color' );
@@ -158,7 +161,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					unset( $settings->font_family['family'] );
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->caption_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->caption_font_typo['font_weight'] = $settings->font_family['weight'];
@@ -184,7 +187,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->caption_font_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -192,7 +195,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->caption_font_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -200,7 +203,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->caption_font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -245,6 +248,49 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 	}
 
 	/**
+	 * Function that gets Photos
+	 *
+	 * @method uabb_get_photos
+	 */
+	public function uabb_get_photos() {
+
+		if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-photo-nonce' ) ) {
+
+			$response = array(
+				'error' => false,
+				'data'  => '',
+			);
+
+			$node_id = isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : false;
+
+			if ( $node_id ) {
+				$settings = (object) $_POST['settings'];
+
+				if ( ! isset( $this->settings ) ) {
+					$this->settings = $settings;
+				} elseif ( empty( $this->settings ) ) {
+					$this->settings = $settings;
+				}
+
+				if ( empty( $this->photos ) ) {
+					$this->get_photos();
+				}
+
+				ob_start();
+
+				foreach ( $this->photos as $photo ) {
+						$this->render_layout( $photo );
+				}
+				$response['data'] = ob_get_clean();
+			} else {
+				$response['error'] = true;
+			}
+		}
+
+			wp_send_json( $response );
+	}
+
+	/**
 	 * Function that gets the photos
 	 *
 	 * @method get_photos
@@ -252,8 +298,9 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 	public function get_photos() {
 		$default_order = $this->get_wordpress_photos();
 		$photos_id     = array();
+		$settings      = $this->settings;
 		// WordPress.
-		if ( 'random' == $this->settings->photo_order && is_array( $default_order ) ) {
+		if ( 'random' === $this->settings->photo_order && is_array( $default_order ) ) {
 
 			$keys = array_keys( $default_order );
 			shuffle( $keys );
@@ -265,7 +312,25 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 			$photos_id = $default_order;
 		}
 
-		return $photos_id;
+		$this->photos = $photos_id;
+
+		if ( isset( $this->settings->pagination ) && 'none' !== $this->settings->pagination ) {
+			if ( empty( $this->settings->images_per_page ) ) {
+				return $this->photos;
+			}
+
+			$per_page = (int) $this->settings->images_per_page;
+
+			if ( $per_page >= count( $photos_id ) ) {
+				return $this->photos;
+			}
+
+			$this->current_photos = array_slice( $this->photos, $per_page, $per_page, true );
+
+			return $this->current_photos;
+		}
+
+		return $this->photos;
 
 	}
 
@@ -331,7 +396,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 				$photo->sizes = (array) ( $photo->sizes );
 
-				if ( -1 != $id && '' != $id ) {
+				if ( -1 !== $id && '' !== $id ) {
 					if ( isset( $photo_size ) ) {
 						$temp      = wp_get_attachment_image_src( $id, $photo_size );
 						$data->src = $temp[0];
@@ -357,6 +422,107 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 		return $photos;
 	}
+
+	/**
+	 * Function that gets the Category Slug of photo
+	 *
+	 * @method get_category_slug
+	 * @param int $photo current photo id.
+	 */
+	public function get_category_slug( $photo ) {
+		$category = '';
+		if ( isset( $photo->category ) ) {
+			$category = $photo->category;
+		}
+
+		$tags = explode( ',', strtolower( $category ) );
+
+		$tags = array_map( 'trim', $tags );
+
+		$string = str_replace( ' ', '-', $tags );
+
+		$string = preg_replace( '/[^A-Za-z0-9\-]/', '', $string );
+
+		$cat_slug = implode( ' ', $string );
+		return $cat_slug;
+
+	}
+
+	/**
+	 * Function that renders layout of photo
+	 *
+	 * @method render_layout
+	 * @param int $photo current photo id.
+	 */
+	public function render_layout( $photo ) {
+		$settings = $this->settings;
+		if ( 'grid' === $settings->layout ) {
+			$item_class   = 'uabb-photo-gallery-item';
+			$layout_class = 'uabb-photo-item-grid';
+		} elseif ( 'masonary' === $settings->layout ) {
+			$item_class   = 'uabb-masonary-item';
+			$layout_class = 'uabb-photo-item';
+		}
+		$click_action_target = ( isset( $settings->click_action_target ) ) ? $settings->click_action_target : '_blank';
+		$cat_slug            = $this->get_category_slug( $photo );
+		$classes             = $item_class . ' ' . $cat_slug . ' ' . $layout_class;
+		?>
+		<div class="<?php echo esc_attr( $classes ); ?>" data-item-id="<?php echo esc_attr( $photo->id ); ?>" itemprop="associatedMedia" itemscope="itemscope" itemtype="http://schema.org/ImageObject">
+			<div class="uabb-photo-gallery-content <?php echo ( ( 'none' !== $settings->click_action ) && ! empty( $photo->link ) ) ? 'uabb-photo-gallery-link' : ''; ?>">
+
+																						<?php if ( 'none' !== $settings->click_action ) : ?>
+																							<?php
+																							$click_action_link = '#';
+																							if ( 'cta-link' === $settings->click_action ) {
+																								if ( ! empty( $photo->cta_link ) ) {
+																									$click_action_link = $photo->cta_link;
+																								} elseif ( ! empty( $photo->link ) ) {
+																									$click_action_link = $photo->link;
+																								}
+																							} elseif ( 'cta-link' !== $settings->click_action && ! empty( $photo->link ) ) {
+																								$click_action_link = $photo->link;
+																							}
+																							?>
+				<a href="<?php echo $click_action_link; ?>" target="<?php echo esc_attr( $click_action_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $click_action_target, 0, 1 ); ?> data-caption="<?php echo esc_attr( $photo->caption ); ?>" itemprop="contentUrl"><?php //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php endif; ?>
+
+				<img class="uabb-gallery-img" src="<?php echo esc_url( $photo->src ); ?>" alt="<?php echo esc_attr( $photo->alt ); ?>" title="<?php echo esc_attr( $photo->title ); ?>" itemprop="thumbnail" />
+																							<?php if ( 'none' !== $settings->hover_effects ) : ?>
+					<!-- Overlay Wrapper -->
+					<div class="uabb-background-mask <?php echo esc_attr( $settings->hover_effects ); ?>">
+						<div class="uabb-inner-mask">
+
+																									<?php if ( 'hover' === $settings->show_captions ) : ?>
+								<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-caption">
+																										<?php echo wp_kses_post( $photo->caption ); ?>
+								</<?php echo esc_attr( $settings->tag_selection ); ?>>
+							<?php endif; ?>
+
+																									<?php if ( '1' === $settings->icon && '' !== $settings->overlay_icon ) : ?>
+							<div class="uabb-overlay-icon">
+								<i class="<?php echo esc_attr( $settings->overlay_icon ); ?>" ></i>
+							</div>
+							<?php endif; ?>
+
+						</div>
+					</div> <!-- Overlay Wrapper Closed -->
+				<?php endif; ?>
+
+																							<?php if ( 'none' !== $settings->click_action ) : ?>
+				</a>
+				<?php endif; ?>
+																							<?php if ( $photo && ! empty( $photo->caption ) && 'hover' === $settings->show_captions && 'none' === $settings->hover_effects ) : ?>
+				<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-photo-gallery-caption uabb-photo-gallery-caption-hover" itemprop="caption"><?php echo wp_kses_post( $photo->caption ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
+				<?php endif; ?>
+			</div>
+																							<?php if ( $photo && ! empty( $photo->caption ) && 'below' === $settings->show_captions ) : ?>
+			<<?php echo esc_attr( $settings->tag_selection ); ?> class="uabb-photo-gallery-caption uabb-photo-gallery-caption-below" itemprop="caption"><?php echo wp_kses_post( $photo->caption ); ?></<?php echo esc_attr( $settings->tag_selection ); ?>>
+			<?php endif; ?>
+		</div>
+
+		<?php
+	}
+
 	/**
 	 * Get Filters.
 	 *
@@ -377,28 +543,28 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 
 		}
 		?>
-		<div class="uabb-photo-gallery-filters-wrap uabb-photo-gallery-stack-<?php echo $this->settings->filters_tab_heading_stack; ?>">
+		<div class="uabb-photo-gallery-filters-wrap uabb-photo-gallery-stack-<?php echo esc_attr( $this->settings->filters_tab_heading_stack ); ?>">
 			<?php if ( 'yes' === $this->settings->show_filter_title ) { ?>
 				<div class="uabb-photo-gallery-title-filters">
 					<div class="uabb-photo-gallery-title">
-						<<?php echo $this->settings->filter_title_tag; ?> class="uabb-photo-gallery-title-text"><?php echo $this->settings->filters_heading_text; ?></<?php echo $this->settings->filter_title_tag; ?>>
+						<<?php echo esc_attr( $this->settings->filter_title_tag ); ?> class="uabb-photo-gallery-title-text"><?php echo $this->settings->filters_heading_text; ?></<?php echo esc_attr( $this->settings->filter_title_tag ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 					</div>
 			<?php } ?>
 				<ul class="uabb-photo__gallery-filters" data-default="
 				<?php
-					echo ( isset( $default ) ) ? $default : '';
+					echo ( isset( $default ) ) ? $default : ''; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 				">
 					<li class="uabb-photo__gallery-filter uabb-filter__current" data-filter="*">
 					<?php
-					echo ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' );
+					echo ( '' !== $this->settings->filters_all_text ) ? $this->settings->filters_all_text : __( 'All', 'uabb' ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 					</li>
 					<?php
 					foreach ( $cat_filter as $key => $value ) {
 						?>
-						<li class="uabb-photo__gallery-filter" data-filter="<?php echo '.' . $key; ?>">
-							<?php echo $value; ?>
+						<li class="uabb-photo__gallery-filter" data-filter="<?php echo '.' . esc_attr( $key ); ?>">
+							<?php echo $value; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</li>
 					<?php } ?>
 				</ul>
@@ -439,7 +605,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
 				$cat_slug    = strtolower( str_replace( ' ', '-', $cat ) );
 				$image_cat[] = $cat_slug;
 				if ( ! empty( $cat ) ) {
-					$cat_filter[  $this->clean( $cat_slug ) ] = $cat;
+					$cat_filter[ $this->clean( $cat_slug ) ] = $cat;
 				}
 			}
 		}
@@ -472,7 +638,7 @@ class UABBPhotoGalleryModule extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/photo-gallery/photo-gallery-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/photo-gallery/photo-gallery-bb-less-than-2-2-compatibility.php';

@@ -90,13 +90,21 @@ final class FLBuilderAdminSettings {
 		// Styles
 		wp_enqueue_style( 'fl-builder-admin-settings', FL_BUILDER_URL . 'css/fl-builder-admin-settings.css', array(), FL_BUILDER_VERSION );
 		wp_enqueue_style( 'jquery-multiselect', FL_BUILDER_URL . 'css/jquery.multiselect.css', array(), FL_BUILDER_VERSION );
-		wp_enqueue_style( 'jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), FL_BUILDER_VERSION );
+		wp_enqueue_style( 'fl-jquery-tiptip', FL_BUILDER_URL . 'css/jquery.tiptip.css', array(), FL_BUILDER_VERSION );
 
+		if ( FLBuilder::fa5_pro_enabled() ) {
+			if ( '' !== get_option( '_fl_builder_kit_fa_pro' ) ) {
+				wp_enqueue_script( 'fa5-kit', get_option( '_fl_builder_kit_fa_pro' ) );
+			} else {
+				wp_register_style( 'font-awesome-5', FLBuilder::get_fa5_url() );
+				wp_enqueue_style( 'font-awesome-5' );
+			}
+		}
 		// Scripts
-		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array(), FL_BUILDER_VERSION );
+		wp_enqueue_script( 'fl-builder-admin-settings', FL_BUILDER_URL . 'js/fl-builder-admin-settings.js', array( 'fl-jquery-tiptip' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-actual', FL_BUILDER_URL . 'js/jquery.actual.min.js', array( 'jquery' ), FL_BUILDER_VERSION );
 		wp_enqueue_script( 'jquery-multiselect', FL_BUILDER_URL . 'js/jquery.multiselect.js', array( 'jquery' ), FL_BUILDER_VERSION );
-		wp_enqueue_script( 'jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );
+		wp_enqueue_script( 'fl-jquery-tiptip', FL_BUILDER_URL . 'js/jquery.tiptip.min.js', array( 'jquery' ), FL_BUILDER_VERSION, true );
 
 		// Media Uploader
 		wp_enqueue_media();
@@ -185,6 +193,10 @@ final class FLBuilderAdminSettings {
 	 * @return void
 	 */
 	static public function render_nav_items() {
+		/**
+		 * Builder admin nav items
+		 * @see fl_builder_admin_settings_nav_items
+		 */
 		$item_data = apply_filters( 'fl_builder_admin_settings_nav_items', array(
 			'welcome'     => array(
 				'title'    => __( 'Welcome', 'fl-builder' ),
@@ -193,7 +205,7 @@ final class FLBuilderAdminSettings {
 			),
 			'license'     => array(
 				'title'    => __( 'License', 'fl-builder' ),
-				'show'     => FL_BUILDER_LITE !== true && ( is_network_admin() || ! self::multisite_support() ),
+				'show'     => ( is_network_admin() || ! self::multisite_support() ),
 				'priority' => 100,
 			),
 			'upgrade'     => array(
@@ -381,6 +393,7 @@ final class FLBuilderAdminSettings {
 		self::save_user_access();
 		self::clear_cache();
 		self::debug();
+		self::global_edit();
 		self::uninstall();
 
 		/**
@@ -468,6 +481,15 @@ final class FLBuilderAdminSettings {
 			// Update the enabled sets.
 			self::update_enabled_icons( $enabled_icons );
 
+			// Enable pro?
+			$enable_fa_pro = isset( $_POST['fl-enable-fa-pro'] ) ? true : false;
+			update_option( '_fl_builder_enable_fa_pro', $enable_fa_pro );
+			do_action( 'fl_builder_fa_pro_save', $enable_fa_pro );
+			// Update KIT url
+			$kit_url = isset( $_POST['fl-fa-pro-kit'] ) ? $_POST['fl-fa-pro-kit'] : '';
+
+			update_option( '_fl_builder_kit_fa_pro', $kit_url );
+
 			// Delete a set?
 			if ( ! empty( $_POST['fl-delete-icon-set'] ) ) {
 
@@ -492,9 +514,16 @@ final class FLBuilderAdminSettings {
 			// Upload a new set?
 			if ( ! empty( $_POST['fl-new-icon-set'] ) ) {
 
-				$dir      = FLBuilderModel::get_cache_dir( 'icons' );
-				$id       = (int) $_POST['fl-new-icon-set'];
-				$path     = apply_filters( 'fl_builder_icon_set_upload_path', get_attached_file( $id ) );
+				$dir = FLBuilderModel::get_cache_dir( 'icons' );
+				$id  = (int) $_POST['fl-new-icon-set'];
+				/**
+				 * Icon upload path
+				 * @see fl_builder_icon_set_upload_path
+				 */
+				$path = apply_filters( 'fl_builder_icon_set_upload_path', get_attached_file( $id ) );
+				/**
+				 * @see fl_builder_icon_set_new_path
+				 */
 				$new_path = apply_filters( 'fl_builder_icon_set_new_path', $dir['path'] . 'icon-' . time() . '/' );
 
 				fl_builder_filesystem()->get_filesystem();
@@ -549,16 +578,20 @@ final class FLBuilderAdminSettings {
 				 */
 				do_action( 'fl_builder_after_unzip_icon_set', $new_path );
 
+				/**
+				 * @see fl_builder_icon_set_check_path
+				 */
 				$check_path = apply_filters( 'fl_builder_icon_set_check_path', $new_path );
 
 				// Check for supported sets.
 				$is_icomoon  = fl_builder_filesystem()->file_exists( $check_path . 'selection.json' );
 				$is_fontello = fl_builder_filesystem()->file_exists( $check_path . 'config.json' );
+				$is_awesome  = fl_builder_filesystem()->file_exists( $check_path . '/metadata/icons.json' );
 
 				// Show an error if we don't have a supported icon set.
-				if ( ! $is_icomoon && ! $is_fontello ) {
+				if ( ! $is_icomoon && ! $is_fontello && ! $is_awesome ) {
 					fl_builder_filesystem()->rmdir( $new_path, true );
-					self::add_error( __( 'Error! Please upload an icon set from either Icomoon or Fontello.', 'fl-builder' ) );
+					self::add_error( __( 'Error! Please upload an icon set from either Icomoon, Fontello or Font Awesome Pro Subset.', 'fl-builder' ) );
 					return;
 				}
 
@@ -570,6 +603,14 @@ final class FLBuilderAdminSettings {
 						self::add_error( __( 'Error! When downloading from Icomoon, be sure to click the Download Font button and not Generate SVG.', 'fl-builder' ) );
 						return;
 					}
+				}
+
+				// we need to patch the all.css file because _reasons_
+				if ( $is_awesome ) {
+					$search  = array( '.fa,.fas{font-family:', '.fad{', '.fal,.far{font-family' );
+					$replace = array( '.subset.fa,.subset.fas{font-family:', '.subset.fad{', '.subset.fal,.subset.far{font-family' );
+					$css     = str_replace( $search, $replace, fl_builder_filesystem()->file_get_contents( $check_path . 'css/all.min.css' ) );
+					fl_builder_filesystem()->file_put_contents( $check_path . 'css/all.min.css', $css );
 				}
 
 				// Enable the new set.
@@ -661,6 +702,28 @@ final class FLBuilderAdminSettings {
 	}
 
 	/**
+	 * Update global js/css
+	 *
+	 * @since 2.4
+	 * @access private
+	 * @return void
+	 */
+	static private function global_edit() {
+		if ( ! FLBuilderAdmin::current_user_can_access_settings() ) {
+			return;
+		} elseif ( isset( $_POST['fl-css-js-nonce'] ) && wp_verify_nonce( $_POST['fl-css-js-nonce'], 'debug' ) ) {
+			if ( get_transient( 'fl_debug_mode' ) || ( defined( 'FL_ENABLE_META_CSS_EDIT' ) && FL_ENABLE_META_CSS_EDIT ) ) {
+				$css          = $_POST['css'];
+				$js           = $_POST['js'];
+				$options      = get_option( '_fl_builder_settings' );
+				$options->css = $css;
+				$options->js  = $js;
+				update_option( '_fl_builder_settings', $options );
+			}
+		}
+	}
+
+	/**
 	 * Clears the builder cache for all sites on a network.
 	 *
 	 * @since 1.5.3
@@ -708,6 +771,10 @@ final class FLBuilderAdminSettings {
 			return;
 		} elseif ( isset( $_POST['fl-uninstall'] ) && wp_verify_nonce( $_POST['fl-uninstall'], 'uninstall' ) ) {
 
+			/**
+			 * Disable Uninstall ( default true )
+			 * @see fl_builder_uninstall
+			 */
 			$uninstall = apply_filters( 'fl_builder_uninstall', true );
 
 			if ( $uninstall ) {

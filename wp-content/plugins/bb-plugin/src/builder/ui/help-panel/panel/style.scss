@@ -1,0 +1,83 @@
+.fluid {
+
+    .fl-ui-panel-area {
+        position: fixed;
+        top:0;
+        left:0;
+        width: 100vw;
+        height: 100vh;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999999;
+    }
+
+    .fl-ui-panel {
+        position: relative;
+
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+
+        background: white;
+        color: black;
+        min-height: 40px;
+        min-width: 40px;
+        border-radius: 15px;
+        box-shadow: 0px 0px 0px 3px rgba(0,0,0, .05),
+                    0px 12px 24px rgba(0,0,0,.15);
+
+        .fl-ui-panel-topbar {
+            box-sizing: content-box;
+            display: flex;
+            flex-direction: row;
+            min-height: 40px;
+            padding: 10px;
+
+            .fl-ui-panel-title {
+                flex: 1 0 auto;
+                display: flex;
+                flex-direction: row;
+                align-items:center;
+                font-size: 16px;
+                font-weight: bold;
+                padding-left: 10px;
+            }
+            .fl-ui-panel-trailing-actions {
+                flex: 0 0 auto;
+                display: flex;
+                flex-direction: row;
+            }
+
+            .fl-ui-button {
+                background: transparent;
+                border: none;
+                top:0;
+                box-shadow: none;
+                outline: none;
+                color: inherit;
+                padding: 2px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-width: 36px;
+            }
+        }
+        .fl-ui-panel-content {
+            flex: 1 1 auto;
+            overflow: auto;
+            padding-bottom: 20px;
+        }
+    }
+}
+
+body.fl-builder-ui-skin--dark {
+    .fl-ui-root {
+        .fl-ui-panel {
+            background: #23282d;
+            color:white;
+        }
+    }
+}

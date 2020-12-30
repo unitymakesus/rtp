@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBWooProductsModule', array(
+	'UABBWooProductsModule',
+	array(
 		'general'       => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
@@ -414,11 +415,12 @@ FLBuilder::register_module(
 							'help'    => __( 'This alignment will apply on Mobile', 'uabb' ),
 						),
 						'content_around_spacing' => array(
-							'type'    => 'dimension',
-							'label'   => __( 'Spacing Around Content', 'uabb' ),
-							'slider'  => true,
-							'units'   => array( 'px' ),
-							'preview' => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Spacing Around Content', 'uabb' ),
+							'slider'     => true,
+							'units'      => array( 'px' ),
+							'responsive' => true,
+							'preview'    => array(
 								'type'      => 'css',
 								'selector'  => '.uabb-woo-products-summary-wrap',
 								'property'  => 'padding',
@@ -1152,7 +1154,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/woo-products-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=woo-products-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 

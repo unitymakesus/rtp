@@ -87,6 +87,10 @@ final class FLBuilderExport {
 	 * @return void
 	 */
 	static public function export( $args ) {
+		/**
+		 * Allowed types for export
+		 * @see fl_builder_export_allowed_post_types
+		 */
 		$allowed_types = apply_filters( 'fl_builder_export_allowed_post_types', array(
 			'fl-builder-template',
 			'fl-theme-layout',

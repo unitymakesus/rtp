@@ -8,7 +8,8 @@
  */
 
 FLBuilder::register_module(
-	'ProgressBarModule', array(
+	'ProgressBarModule',
+	array(
 		'elements'   => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -711,7 +712,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'progress_bar_horizontal_item_form', array(
+	'progress_bar_horizontal_item_form',
+	array(
 		'title' => __( 'Add Progress Bar Item', 'uabb' ),
 		'tabs'  => array(
 			'general' => array( // Tab.

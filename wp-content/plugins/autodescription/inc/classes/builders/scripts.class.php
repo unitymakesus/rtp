@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Builders;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2018 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2018 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Builders;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Sets up class loader as file is loaded.
@@ -33,6 +33,7 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @link https://bugs.php.net/bug.php?id=75771
  */
 $_load_scripts_class = function() {
+	// phpcs:ignore, TSF.Performance.Opcodes.ShouldHaveNamespaceEscape
 	new Scripts();
 };
 
@@ -52,7 +53,6 @@ $_load_scripts_class = function() {
  * @final Can't be extended.
  */
 final class Scripts {
-	use \The_SEO_Framework\Traits\Enclose_Stray_Private;
 
 	/**
 	 * Codes to maintain the internal state of the scripts. This state might not reflect
@@ -110,12 +110,12 @@ final class Scripts {
 
 	/**
 	 * The constructor. Can't be instantiated externally from this file.
+	 * Kills PHP on subsequent duplicated request. Enforces singleton.
 	 *
 	 * This probably autoloads at action "admin_enqueue_scripts", priority "0".
 	 *
 	 * @since 3.1.0
 	 * @access private
-	 * @staticvar int $count Enforces singleton.
 	 * @internal
 	 */
 	public function __construct() {
@@ -125,6 +125,7 @@ final class Scripts {
 
 		static::$instance = &$this;
 
+		// These fail when called in the body.
 		\add_filter( 'admin_body_class', [ $this, '_add_body_class' ] );
 		\add_action( 'in_admin_header', [ $this, '_print_tsfjs_script' ] );
 
@@ -151,11 +152,12 @@ final class Scripts {
 	 * Prints the TSF no-js transform script, using ES2015 (ECMA-262).
 	 *
 	 * @since 4.0.0
+	 * @since 4.0.5 Put the const assignment on front, so it's prone to fail earlier.
 	 * @access private
 	 * @internal
 	 */
 	public function _print_tsfjs_script() {
-		echo "<script>(()=>{document.body.classList.replace('tsf-no-js','tsf-js');const a=0;})()</script>";
+		echo "<script>(()=>{const a=0;document.body.classList.replace('tsf-no-js','tsf-js')})()</script>";
 	}
 
 	/**
@@ -193,6 +195,20 @@ final class Scripts {
 	public static function enqueue() {
 		static::$instance->_prepare_admin_scripts();
 		static::$instance->_output_templates();
+	}
+
+	/**
+	 * Enqueues all known registeres scripts, styles, and templates,
+	 * in the footer, right before WordPress's last script-outputting call.
+	 *
+	 * @since 4.1.2
+	 * @see ABSPATH.wp-admin/admin-footer.php
+	 */
+	public static function footer_enqueue() {
+
+		if ( \The_SEO_Framework\_has_run( __METHOD__ ) ) return;
+
+		\add_action( 'admin_footer', [ static::class, 'enqueue' ], 998 );
 	}
 
 	/**
@@ -249,11 +265,8 @@ final class Scripts {
 	public static function forward_known_script( $id, $type ) {
 		if ( ! ( static::get_status_of( $id, $type ) & static::REGISTERED ) ) {
 			foreach ( static::$scripts as $s ) {
-				if ( $s['id'] === $id ) {
-					if ( $s['type'] === $type ) {
-						static::forward_script( $s );
-					}
-				}
+				if ( $s['id'] === $id && $s['type'] === $type )
+					static::forward_script( $s );
 			}
 		}
 	}
@@ -296,7 +309,7 @@ final class Scripts {
 	}
 
 	/**
-	 * Forwards known scripts to WordPress' script handler. Also prepares l10n and templates.
+	 * Forwards known scripts to WordPress's script handler. Also prepares l10n and templates.
 	 *
 	 * @since 3.2.2
 	 * @uses static::$scripts
@@ -327,7 +340,7 @@ final class Scripts {
 	}
 
 	/**
-	 * Enqueues scripts in WordPress' script handler. Also prepares l10n and templates.
+	 * Enqueues scripts in WordPress's script handler. Also prepares l10n and templates.
 	 *
 	 * @since 3.2.2
 	 * @see $this->forward_known_scripts();
@@ -402,10 +415,9 @@ final class Scripts {
 
 	/**
 	 * Generates file URL.
+	 * Memoizes use of RTL and minification.
 	 *
 	 * @since 3.1.0
-	 * @staticvar string $min
-	 * @staticvar string $rtl
 	 *
 	 * @param array $script The script arguments.
 	 * @param array $type Either 'js' or 'css'.
@@ -450,7 +462,6 @@ final class Scripts {
 		return $out;
 	}
 
-
 	/**
 	 * Concatenates inline JS.
 	 *
@@ -473,8 +484,6 @@ final class Scripts {
 	 * Converts color CSS.
 	 *
 	 * @since 3.1.0
-	 * @staticvar array $c_ck Color keys.
-	 * @staticvar array $c_cv Color values.
 	 *
 	 * @param array $css The CSS to convert.
 	 * @return array $css
@@ -482,7 +491,7 @@ final class Scripts {
 	private function convert_color_css( array $css ) {
 
 		static $c_ck, $c_cv;
-
+		// Memoize the conversion types.
 		if ( ! isset( $c_ck, $c_cv ) ) {
 			$_scheme = \get_user_option( 'admin_color' ) ?: 'fresh';
 			$_colors = $GLOBALS['_wp_admin_css_colors'];
@@ -491,8 +500,8 @@ final class Scripts {
 
 			if (
 			   ! isset( $_colors[ $_scheme ]->colors ) // phpcs:ignore, WordPress.WhiteSpace
-			|| ! is_array( $_colors[ $_scheme ]->colors )
-			|| count( $_colors[ $_scheme ]->colors ) < 4
+			|| ! \is_array( $_colors[ $_scheme ]->colors )
+			|| \count( $_colors[ $_scheme ]->colors ) < 4
 			) {
 				$_colors = [
 					'#222',
@@ -566,6 +575,7 @@ final class Scripts {
 	 *
 	 * @since 3.1.0
 	 * @since 3.2.2 Now clears outputted templates, so to prevent duplications.
+	 * @since 4.1.2 Now clears templates right before outputting them, so to prevent a plausible infinite loop.
 	 * @see $this->forward_known_scripts()
 	 * @see $this->register_template()
 	 * @see $this->autoload_scripts()
@@ -575,15 +585,17 @@ final class Scripts {
 	public function _output_templates() {
 		foreach ( static::$templates as $id => $templates ) {
 			if ( \wp_script_is( $id, 'enqueued' ) ) { // This list retains scripts after they're outputted.
+				// Unset template before the loop, to prevent an infinite loop.
+				unset( static::$templates[ $id ] );
+
 				foreach ( $templates as $t )
 					$this->output_view( $t[0], $t[1] );
-				unset( static::$templates[ $id ] );
 			}
 		}
 	}
 
 	/**
-	 * Outputs tab view, whilst trying to prevent 3rd party interference on views.
+	 * Outputs tab view, whilst trying to prevent third-party interference on views.
 	 *
 	 * There's a secret key generated on each tab load. This key can be accessed
 	 * in the view through `$_secret`, and be sent back to this class.

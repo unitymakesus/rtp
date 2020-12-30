@@ -17,6 +17,7 @@ class RibbonModule extends FLBuilderModule {
 	 * @method __construct
 	 */
 	public function __construct() {
+
 		parent::__construct(
 			array(
 				'name'            => __( 'Ribbon', 'uabb' ),
@@ -40,21 +41,10 @@ class RibbonModule extends FLBuilderModule {
 	 * @param string $icon gets the icon for the module.
 	 */
 	public function get_icon( $icon = '' ) {
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/ribbon/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/ribbon/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/ribbon/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/ribbon/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -67,11 +57,11 @@ class RibbonModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			if ( ! isset( $settings->font_typo ) || ! is_array( $settings->font_typo ) ) {
 
@@ -88,7 +78,7 @@ class RibbonModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->text_font_family['weight'] ) {
+					if ( 'regular' === $settings->text_font_family['weight'] ) {
 						$settings->font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->font_typo['font_weight'] = $settings->text_font_family['weight'];
@@ -154,7 +144,7 @@ class RibbonModule extends FLBuilderModule {
 				);
 				unset( $settings->text_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			if ( ! isset( $settings->font_typo ) || ! is_array( $settings->font_typo ) ) {
 
@@ -171,7 +161,7 @@ class RibbonModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->text_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->text_font_family['weight'] ) {
+					if ( 'regular' === $settings->text_font_family['weight'] ) {
 						$settings->font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->font_typo['font_weight'] = $settings->text_font_family['weight'];
@@ -200,7 +190,7 @@ class RibbonModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->text_line_height['desktop'] ) && isset( $settings->text_font_size['desktop'] ) && 0 != $settings->text_font_size['desktop'] && ! isset( $settings->font_typo['line_height'] ) ) {
+			if ( isset( $settings->text_line_height['desktop'] ) && isset( $settings->text_font_size['desktop'] ) && 0 !== $settings->text_font_size['desktop'] && ! isset( $settings->font_typo['line_height'] ) ) {
 				if ( is_numeric( $settings->text_line_height['desktop'] ) && is_numeric( $settings->text_font_size['desktop'] ) ) {
 					$settings->font_typo['line_height'] = array(
 						'length' => round( $settings->text_line_height['desktop'] / $settings->text_font_size['desktop'], 2 ),
@@ -208,7 +198,7 @@ class RibbonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->text_line_height['medium'] ) && isset( $settings->text_font_size['medium'] ) && 0 != $settings->text_font_size['medium'] && ! isset( $settings->font_typo_medium['line_height'] ) ) {
+			if ( isset( $settings->text_line_height['medium'] ) && isset( $settings->text_font_size['medium'] ) && 0 !== $settings->text_font_size['medium'] && ! isset( $settings->font_typo_medium['line_height'] ) ) {
 				if ( is_numeric( $settings->text_line_height['medium'] ) && is_numeric( $settings->text_font_size['medium'] ) ) {
 					$settings->font_typo_medium['line_height'] = array(
 						'length' => round( $settings->text_line_height['medium'] / $settings->text_font_size['medium'], 2 ),
@@ -216,7 +206,7 @@ class RibbonModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->text_line_height['small'] ) && isset( $settings->text_font_size['small'] ) && 0 != $settings->text_font_size['small'] && ! isset( $settings->font_typo_responsive['line_height'] ) ) {
+			if ( isset( $settings->text_line_height['small'] ) && isset( $settings->text_font_size['small'] ) && 0 !== $settings->text_font_size['small'] && ! isset( $settings->font_typo_responsive['line_height'] ) ) {
 				if ( is_numeric( $settings->text_line_height['small'] ) && is_numeric( $settings->text_font_size['small'] ) ) {
 					$settings->font_typo_responsive['line_height'] = array(
 						'length' => round( $settings->text_line_height['small'] / $settings->text_font_size['small'], 2 ),
@@ -253,7 +243,7 @@ class RibbonModule extends FLBuilderModule {
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/ribbon/ribbon-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/ribbon/ribbon-bb-less-than-2-2-compatibility.php';

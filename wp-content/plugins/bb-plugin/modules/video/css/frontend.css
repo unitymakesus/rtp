@@ -3,7 +3,7 @@
 }
 .fl-wp-video {
 	position: relative;
-	height: 0; 
+	height: 0;
 	overflow: hidden;
 	padding: 0 0 56.25%;
 }
@@ -14,6 +14,24 @@
 	width: 100% !important;
 	height: 100% !important;
 }
+
+
+.mfp-container .fl-video-lightbox-content .wp-video {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mfp-container .fl-video-lightbox-content .fluid-width-video-wrapper iframe {
+	width: 80%;
+	height: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fl-module-video .fl-video-poster {
+	cursor: pointer;
+}
+
 .fl-wp-video .wp-video .mejs-container,
 .fl-wp-video .wp-video .mejs-inner,
 .fl-wp-video .wp-video .mejs-layers,
@@ -23,4 +41,14 @@
 .fl-wp-video .me-plugin * {
 	width: 100% !important;
 	height: 100% !important;
+}
+
+.fl-video-sticky {
+	position: fixed;
+    top: 20px;
+	z-index: 11;
+}
+
+.fl-wp-video img{
+	width: 100%;
 }

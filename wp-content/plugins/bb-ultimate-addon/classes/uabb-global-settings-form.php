@@ -11,27 +11,31 @@ $theme         = wp_get_theme();
 $theme_name    = ( $theme->name ? $theme->name : $theme->parent_theme );
 $branding_name = __( 'Ultimate Addons for Beaver Builder', 'uabb' );
 
-if ( UABB_PREFIX != '' && UABB_PREFIX != 'UABB' ) {
+if ( UABB_PREFIX !== '' && UABB_PREFIX !== 'UABB' ) {
 	$branding_name = UABB_PREFIX;
 }
-$title = __( 'Astra', 'uabb' );
+$theme_title = __( 'Astra', 'uabb' );
 
 if ( class_exists( 'Astra_Ext_White_Label_Markup' ) ) {
 	$branding = Astra_Ext_White_Label_Markup::$branding;
-	if ( '' != $branding['astra']['name'] ) {
-		$title = $branding['astra']['name'];
+	if ( ! empty( $branding['astra']['name'] ) ) {
+		$theme_title = $branding['astra']['name'];
 	}
 }
-
-if ( 'Astra' == $theme->name || 'Astra' == $theme->parent_theme || 'Beaver Builder Theme' == $theme->name || 'Beaver Builder Theme' == $theme->parent_theme || 'GeneratePress' == $theme->name || 'GeneratePress' == $theme->parent_theme ) {
+if ( 'Astra' === $theme->name || 'Astra' === $theme->parent_theme || 'Beaver Builder Theme' === $theme->name || 'Beaver Builder Theme' === $theme->parent_theme || 'GeneratePress' === $theme->name || 'GeneratePress' === $theme->parent_theme ) {
 	$notice = sprintf( /* translators: "%1$s: search term, "%2$s: search term, "%3$s: search term, "%4$s: search term*/
 		__( '<span style="%1$s"> %2$s offers extra compatibility with %3$s, GeneratePress and Beaver Builder theme and it can automatically adapt colors and other settings from the theme customizer. <br> If you would like %4$s to automatically take settings from the theme, select No. But if you would rather like to make your own global settings, select Yes. </span>', 'uabb' ),
-		$style1, $branding_name, $title, $branding_name, $theme_name
+		$style1,
+		$branding_name,
+		$theme_title,
+		$branding_name,
+		$theme_name
 	);
 }
 
 FLBuilder::register_settings_form(
-	'uabb-global', array(
+	'uabb-global',
+	array(
 		'title' => __( ' - Global Settings', 'uabb' ),
 		'tabs'  => array(
 			'general' => array(

@@ -107,18 +107,24 @@ do_action( 'fl_builder_loop_settings_before_form', $settings );
 
 		// Offset
 		FLBuilder::render_settings_field('offset', array(
-			'type'    => 'text',
-			'label'   => _x( 'Offset', 'How many posts to skip.', 'fl-builder' ),
-			'default' => '0',
-			'size'    => '4',
-			'help'    => __( 'Skip this many posts that match the specified criteria.', 'fl-builder' ),
+			'type'        => 'unit',
+			'label'       => _x( 'Offset', 'How many posts to skip.', 'fl-builder' ),
+			'default'     => '0',
+			'placeholder' => '0',
+			'sanitize'    => 'absint',
+			'slider'      => array(
+				'min'  => 0,
+				'max'  => 100,
+				'step' => 2,
+			),
+			'help'        => __( 'Skip this many posts that match the specified criteria.', 'fl-builder' ),
 		), $settings);
 
 		FLBuilder::render_settings_field('exclude_self', array(
 			'type'    => 'select',
 			'label'   => __( 'Exclude Current Post', 'fl-builder' ),
 			'default' => 'no',
-			'help'    => __( 'Exclude the current post from the query.' ),
+			'help'    => __( 'Exclude the current post from the query.', 'fl-builder' ),
 			'options' => array(
 				'yes' => __( 'Yes', 'fl-builder' ),
 				'no'  => __( 'No', 'fl-builder' ),

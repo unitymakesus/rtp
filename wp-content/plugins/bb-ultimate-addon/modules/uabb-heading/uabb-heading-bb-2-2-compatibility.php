@@ -14,7 +14,7 @@ FLBuilder::register_module(
 		'general'    => array(
 			'title'    => __( 'General', 'uabb' ),
 			'sections' => array(
-				'general'     => array(
+				'general'          => array(
 					'title'  => '',
 					'fields' => array(
 						'heading' => array(
@@ -22,9 +22,8 @@ FLBuilder::register_module(
 							'label'       => __( 'Heading', 'uabb' ),
 							'default'     => __( 'Design is a funny word', 'uabb' ),
 							'preview'     => array(
-								'type'      => 'text',
-								'selector'  => '.uabb-heading-text',
-								'important' => true,
+								'type'     => 'text',
+								'selector' => '.uabb-heading-text',
 							),
 							'connections' => array( 'string', 'html' ),
 						),
@@ -40,7 +39,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'description' => array(
+				'description'      => array(
 					'title'  => __( 'Description', 'uabb' ),
 					'fields' => array(
 						'description' => array(
@@ -52,9 +51,44 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'structure'   => array(
+				'advanced_section' => array(
+					'title'  => __( 'Advanced Option', 'uabb' ),
+					'fields' => array(
+						'background_text' => array(
+							'type'    => 'select',
+							'label'   => __( 'Background Text', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+							'toggle'  => array(
+								'yes' => array(
+									'fields'   => array( 'bg_heading_text', 'bg_text_typo' ),
+									'sections' => array( 'background_color' ),
+								),
+							),
+						),
+						'bg_heading_text' => array(
+							'type'        => 'text',
+							'label'       => __( 'Text', 'uabb' ),
+							'default'     => __( 'Background', 'uabb' ),
+							'connections' => array( 'string', 'html' ),
+						),
+					),
+				),
+				'structure'        => array(
 					'title'  => __( 'Structure', 'uabb' ),
 					'fields' => array(
+						'desc_position'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Description Position', 'uabb' ),
+							'default' => 'bottom',
+							'options' => array(
+								'top'    => __( 'Top', 'uabb' ),
+								'bottom' => __( 'Bottom', 'uabb' ),
+							),
+						),
 						'alignment'          => array(
 							'type'    => 'align',
 							'label'   => __( 'Alignment', 'uabb' ),
@@ -107,15 +141,15 @@ FLBuilder::register_module(
 								),
 								'line_icon'  => array(
 									'sections' => array( 'separator_line', 'separator_icon_basic' ),
-									'fields'   => array( 'separator_position' ),
+									'fields'   => array( 'separator_position', 'seprator_padding' ),
 								),
 								'line_image' => array(
 									'sections' => array( 'separator_line', 'separator_img_basic' ),
-									'fields'   => array( 'separator_position' ),
+									'fields'   => array( 'separator_position', 'seprator_padding' ),
 								),
 								'line_text'  => array(
 									'sections' => array( 'separator_line', 'separator_text', 'separator_text_typography' ),
-									'fields'   => array( 'separator_position' ),
+									'fields'   => array( 'separator_position', 'seprator_padding' ),
 								),
 							),
 						),
@@ -340,39 +374,31 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
+						'seprator_padding'      => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-divider-content',
+								'property'  => 'padding',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
 					),
 				),
 			),
 		),
 		'typography' => array(
-			'title'    => __( 'Typography', 'uabb' ),
+			'title'    => __( 'Style', 'uabb' ),
 			'sections' => array(
 				'heading_typo'              => array(
-					'title'  => __( 'Heading', 'uabb' ),
-					'fields' => array(
-						'tag'                   => array(
-							'type'    => 'select',
-							'label'   => __( 'HTML Tag', 'uabb' ),
-							'default' => 'h3',
-							'options' => array(
-								'h1' => 'h1',
-								'h2' => 'h2',
-								'h3' => 'h3',
-								'h4' => 'h4',
-								'h5' => 'h5',
-								'h6' => 'h6',
-							),
-						),
-						'font_typo'             => array(
-							'type'       => 'typography',
-							'label'      => __( 'Typography', 'uabb' ),
-							'responsive' => true,
-							'preview'    => array(
-								'type'      => 'css',
-								'selector'  => '.fl-module-content.fl-node-content .uabb-heading,.fl-module-content.fl-node-content .uabb-heading .uabb-heading-text',
-								'important' => true,
-							),
-						),
+					'collapsed' => true,
+					'title'     => __( 'Heading', 'uabb' ),
+					'fields'    => array(
 						'color'                 => array(
 							'type'        => 'color',
 							'connections' => array( 'color' ),
@@ -384,6 +410,118 @@ FLBuilder::register_module(
 								'type'      => 'css',
 								'property'  => 'color',
 								'selector'  => '.fl-module-content.fl-node-content .uabb-heading  .uabb-heading-text',
+								'important' => true,
+							),
+						),
+						'heading_bg_type'       => array(
+							'type'        => 'select',
+							'label'       => __( 'Background Type', 'uabb' ),
+							'default'     => 'color',
+							'connections' => array( 'color' ),
+							'options'     => array(
+								'none'     => __( 'None', 'uabb' ),
+								'color'    => __( 'Color', 'uabb' ),
+								'gradient' => __( 'Clip-Gradient', 'uabb' ),
+								'image'    => __( 'Clip-Image', 'uabb' ),
+							),
+							'toggle'      => array(
+								'color'    => array(
+									'fields' => array( 'bg_color' ),
+								),
+								'image'    => array(
+									'fields' => array( 'heading_bg_img', 'heading_bg_img_pos', 'heading_bg_img_size', 'heading_bg_img_repeat', 'bg_attachment' ),
+								),
+								'gradient' => array(
+									'fields' => array( 'heading_gradient' ),
+								),
+							),
+							'help'        => __( 'You can select one of the three background types:<br />Color: simple one color background, <br />Gradient: two color background or <br />Image: single image or pattern.', 'uabb' ),
+						),
+						'heading_gradient'      => array(
+							'type'    => 'gradient',
+							'label'   => __( 'Gradient', 'uabb' ),
+							'preview' => array(
+								'type'     => 'css',
+								'selector' => '.uabb-heading .uabb-heading-text',
+								'property' => 'background',
+							),
+						),
+						'heading_bg_img'        => array(
+							'type'        => 'photo',
+							'label'       => __( 'Photo', 'uabb' ),
+							'show_remove' => true,
+						),
+						'heading_bg_img_pos'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Background Position', 'uabb' ),
+							'default' => 'center center',
+							'options' => array(
+								'left top'      => __( 'Left Top', 'uabb' ),
+								'left center'   => __( 'Left Center', 'uabb' ),
+								'left bottom'   => __( 'Left Bottom', 'uabb' ),
+								'center top'    => __( 'Center Top', 'uabb' ),
+								'center center' => __( 'Center Center', 'uabb' ),
+								'center bottom' => __( 'Center Bottom', 'uabb' ),
+								'right top'     => __( 'Right Top', 'uabb' ),
+								'right center'  => __( 'Right Center', 'uabb' ),
+								'right bottom'  => __( 'Right Bottom', 'uabb' ),
+							),
+						),
+						'heading_bg_img_repeat' => array(
+							'type'    => 'select',
+							'label'   => __( 'Background Repeat', 'uabb' ),
+							'default' => 'repeat',
+							'options' => array(
+								'no-repeat' => __( 'No Repeat', 'uabb' ),
+								'repeat'    => __( 'Repeat All', 'uabb' ),
+								'repeat-x'  => __( 'Repeat Horizontally', 'uabb' ),
+								'repeat-y'  => __( 'Repeat Vertically', 'uabb' ),
+							),
+						),
+						'bg_attachment'         => array(
+							'type'    => 'select',
+							'label'   => __( 'Attachment', 'uabb' ),
+							'default' => 'scroll',
+							'options' => array(
+								'scroll' => __( 'Scroll', 'uabb' ),
+								'fixed'  => __( 'Fixed', 'uabb' ),
+							),
+							'help'    => __( 'Attachment will specify how the image reacts when scrolling a page. When scrolling is selected, the image will scroll with page scrolling. This is the default setting. Fixed will allow the image to scroll within the background if fill is selected in the scale setting.', 'uabb' ),
+						),
+						'heading_bg_img_size'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Background Size', 'uabb' ),
+							'default' => 'cover',
+							'options' => array(
+								'contain' => __( 'Contain', 'uabb' ),
+								'cover'   => __( 'Cover', 'uabb' ),
+								'initial' => __( 'Initial', 'uabb' ),
+								'inherit' => __( 'Inherit', 'uabb' ),
+							),
+						),
+						'bg_color'              => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Heading Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'property' => 'background',
+								'selector' => '.fl-module-content.fl-node-content .uabb-heading  .uabb-heading-text',
+							),
+						),
+						'heading_padding'       => array(
+							'type'       => 'dimension',
+							'label'      => __( 'Padding', 'uabb' ),
+							'slider'     => true,
+							'responsive' => true,
+							'units'      => array( 'px' ),
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.fl-module-content.fl-node-content .uabb-heading  .uabb-heading-text',
+								'property'  => 'padding',
+								'unit'      => 'px',
 								'important' => true,
 							),
 						),
@@ -427,48 +565,35 @@ FLBuilder::register_module(
 								'important' => true,
 							),
 						),
-						'bg_color'              => array(
-							'type'        => 'color',
-							'connections' => array( 'color' ),
-							'label'       => __( 'Heading Background Color', 'uabb' ),
-							'default'     => '',
-							'show_reset'  => true,
-							'show_alpha'  => true,
-							'preview'     => array(
-								'type'     => 'css',
-								'property' => 'background',
-								'selector' => '.fl-module-content.fl-node-content .uabb-heading  .uabb-heading-text',
+						'tag'                   => array(
+							'type'    => 'select',
+							'label'   => __( 'HTML Tag', 'uabb' ),
+							'default' => 'h3',
+							'options' => array(
+								'h1' => 'h1',
+								'h2' => 'h2',
+								'h3' => 'h3',
+								'h4' => 'h4',
+								'h5' => 'h5',
+								'h6' => 'h6',
 							),
 						),
-						'heading_padding'       => array(
-							'type'       => 'dimension',
-							'label'      => __( 'Padding', 'uabb' ),
-							'slider'     => true,
+						'font_typo'             => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
 							'responsive' => true,
-							'units'      => array( 'px' ),
 							'preview'    => array(
 								'type'      => 'css',
-								'selector'  => '.fl-module-content.fl-node-content .uabb-heading  .uabb-heading-text',
-								'property'  => 'padding',
-								'unit'      => 'px',
+								'selector'  => '.fl-module-content.fl-node-content .uabb-heading,.fl-module-content.fl-node-content .uabb-heading .uabb-heading-text',
 								'important' => true,
 							),
 						),
 					),
 				),
 				'description_typo'          => array(
-					'title'  => __( 'Description', 'uabb' ),
-					'fields' => array(
-						'desc_font_typo'     => array(
-							'type'       => 'typography',
-							'label'      => __( 'Typography', 'uabb' ),
-							'responsive' => true,
-							'preview'    => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-text-editor',
-								'important' => true,
-							),
-						),
+					'collapsed' => true,
+					'title'     => __( 'Description', 'uabb' ),
+					'fields'    => array(
 						'desc_color'         => array(
 							'type'        => 'color',
 							'connections' => array( 'color' ),
@@ -480,6 +605,16 @@ FLBuilder::register_module(
 								'type'      => 'css',
 								'property'  => 'color',
 								'selector'  => '.fl-module-content.fl-node-content .uabb-subheading, .fl-module-content.fl-node-content .uabb-subheading *',
+								'important' => true,
+							),
+						),
+						'desc_font_typo'     => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-text-editor, .uabb-text-editor p',
 								'important' => true,
 							),
 						),
@@ -525,9 +660,80 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'background_color'          => array( // Section.
+					'collapsed' => true,
+					'title'     => __( 'Background Text', 'uabb' ), // Section Title.
+					'fields'    => array( // Section Fields.
+						'bg_text_color'            => array(
+							'type'        => 'color',
+							'label'       => __( 'Background Text Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+						'head_horizental_position' => array(
+							'type'       => 'unit',
+							'label'      => __( 'Horizontal Position', 'uabb' ),
+							'responsive' => true,
+							'units'      => array(
+								'px',
+								'%',
+							),
+							'slider'     => array(
+								'px' => array(
+									'min' => -100,
+									'max' => 200,
+								),
+							),
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before',
+								'property' => 'left',
+							),
+						),
+						'head_vertical_position'   => array(
+							'type'       => 'unit',
+							'label'      => __( 'Vertical Position', 'uabb' ),
+							'responsive' => true,
+							'units'      => array(
+								'px',
+								'%',
+							),
+							'slider'     => array(
+								'px' => array(
+									'min' => -100,
+									'max' => 200,
+								),
+							),
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before',
+								'property' => 'top',
+							),
+						),
+						'bg_text_typo'             => array(
+							'type'       => 'typography',
+							'label'      => __( 'Background Text Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-module-content.uabb-heading-wrapper .uabb-background-heading-wrap::before',
+								'important' => true,
+							),
+						),
+					),
+				),
 				'separator_text_typography' => array(
-					'title'  => __( 'Separator Text Typography', 'uabb' ),
-					'fields' => array(
+					'collapsed' => true,
+					'title'     => __( 'Separator Text Typography', 'uabb' ),
+					'fields'    => array(
 						'separator_text_tag_selection' => array(
 							'type'    => 'select',
 							'label'   => __( 'Text Tag', 'uabb' ),

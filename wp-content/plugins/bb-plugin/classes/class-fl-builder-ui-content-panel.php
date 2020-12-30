@@ -284,7 +284,11 @@ class FLBuilderUIContentPanel {
 			/* Get all column groups */
 			'colGroup' => FLBuilderModel::get_column_groups(),
 
+			/* Get all templates */
 			'template' => array(),
+
+			/* Lite only: Get all pro modules */
+			'pro'      => FLBuilderModel::get_pro_modules_config(),
 		);
 
 		$static_modules   = FLBuilderModel::get_module_templates_data();

@@ -6,11 +6,11 @@
 
 namespace The_SEO_Framework;
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2015 - 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2015 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -38,19 +38,26 @@ class Generate extends User_Data {
 	 * Fixes generation arguments, to prevent ID conflicts with taxonomies.
 	 *
 	 * @since 3.1.0
+	 * @since 4.1.0 1: Improved performance by testing for null first.
+	 *              2: Improved performance by testing argument keys prior array merge.
 	 * @internal
 	 *
 	 * @param array|int|null $args The arguments, passed by reference.
 	 */
 	protected function fix_generation_args( &$args ) {
-		if ( is_array( $args ) ) {
-			$args = array_merge(
-				[
-					'id'       => 0,
-					'taxonomy' => '',
-				],
-				$args
-			);
+
+		if ( null === $args ) return;
+
+		if ( \is_array( $args ) ) {
+			if ( ! isset( $args['id'], $args['taxonomy'] ) ) {
+				$args = array_merge(
+					[
+						'id'       => 0,
+						'taxonomy' => '',
+					],
+					$args
+				);
+			}
 		} elseif ( is_numeric( $args ) ) {
 			$args = [
 				'id'       => (int) $args,
@@ -68,19 +75,20 @@ class Generate extends User_Data {
 	 * @since 2.2.4 Added robots SEO settings check.
 	 * @since 2.2.8 Added check for empty archives.
 	 * @since 2.8.0 Added check for protected/private posts.
-	 * @since 3.0.0 1: Removed noodp.
-	 *              2: Improved efficiency by grouping if statements.
-	 * @since 3.1.0 1. Simplified statements, often (not always) speeding things up.
-	 *              2. Now checks for wc_shop and blog types for pagination.
-	 *              3. Removed noydir.
-	 * @since 4.0.0 1. Now tests for qubit metadata.
-	 *              2. Added custom query support.
-	 *              3. Added two parameters.
-	 * @since 4.0.2 1. Added new copyright directive tags.
-	 *              2. Now strictly parses the validity of robots directives via a boolean check.
-	 * @since 4.0.3 1. Changed `max_snippet_length` to `max_snippet`
-	 *              2. Changed the copyright directive's spacer from `=` to `:`.
-	 * @global \WP_Query $wp_query
+	 * @since 3.0.0 : 1. Removed noodp.
+	 *                2. Improved efficiency by grouping if statements.
+	 * @since 3.1.0 : 1. Simplified statements, often (not always) speeding things up.
+	 *                2. Now checks for wc_shop and blog types for pagination.
+	 *                3. Removed noydir.
+	 * @since 4.0.0 : 1. Now tests for qubit metadata.
+	 *                2. Added custom query support.
+	 *                3. Added two parameters.
+	 * @since 4.0.2 : 1. Added new copyright directive tags.
+	 *                2. Now strictly parses the validity of robots directives via a boolean check.
+	 * @since 4.0.3 : 1. Changed `max_snippet_length` to `max_snippet`
+	 *                2. Changed the copyright directive's spacer from `=` to `:`.
+	 * @since 4.0.5 : 1. Removed copyright directive bug workaround. <https://kb.theseoframework.com/kb/why-is-max-image-preview-none-purged/>
+	 *                2. Now sets noindex and nofollow when queries are exploited (requires option enabled).
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 * @param int <bit>  $ignore The ignore level. {
@@ -97,6 +105,11 @@ class Generate extends User_Data {
 
 		if ( null === $args ) {
 			$_meta = $this->get_robots_meta_by_query( $ignore );
+
+			if ( $this->is_query_exploited() ) {
+				$_meta['noindex']  = true;
+				$_meta['nofollow'] = true;
+			}
 		} else {
 			$this->fix_generation_args( $args );
 			$_meta = $this->get_robots_meta_by_args( $args, $ignore );
@@ -120,23 +133,6 @@ class Generate extends User_Data {
 			array_intersect_key( $_meta, array_flip( [ 'max_snippet', 'max_image_preview', 'max_video_preview' ] ) )
 			as $k => $v
 		) false !== $v and $meta[ $k ] = str_replace( '_', '-', $k ) . ":$v";
-
-		/**
-		 * Drop-in Google Search bug patch.
-		 * "When you combine "max-image-preview:none" with either "nofollow" or "noarchive", the page is marked as "noindex"!"
-		 *
-		 * (It's probably defined as `<meta name=robots content=none/>` due to a regex bug at Google)
-		 *
-		 * @link <https://twitter.com/SybreWaaijer/status/1192017921553375232>
-		 * @link <https://kb.theseoframework.com/?p=82>
-		 * @since 4.0.3
-		 * @ignore Do not fix me. Do not place after the filter either; that's redundant, because there are more filters trickling down.
-		 * @TEMP
-		 */
-		if ( 'max-image-preview:none' === $meta['max_image_preview'] ) {
-			if ( $meta['nofollow'] || $meta['noarchive'] )
-				$meta['max_image_preview'] = '';
-		}
 
 		/**
 		 * Filters the front-end robots array, and strips empty indexes thereafter.
@@ -174,13 +170,18 @@ class Generate extends User_Data {
 	 * @since 4.0.0
 	 * @since 4.0.2 Added new copyright directive tags.
 	 * @since 4.0.3 Changed `max_snippet_length` to `max_snippet`
+	 * @since 4.0.5 1. The `$post_type` test now uses a real query ID, instead of `$GLOBALS['post']`;
+	 *                 mitigating issues with singular-archives pages (blog, shop, etc.).
+	 *              2. Now disregards empty blog pages for automatic `noindex`; although this protection is necessary,
+	 *                 it can not be reflected in the SEO Bar.
+	 * @since 4.1.0 Now uses the new taxonomy robots settings.
 	 * @global \WP_Query $wp_query
 	 *
 	 * @param int <bit> $ignore The ignore level. {
 	 *    0 = 0b00: Ignore nothing.
 	 *    1 = 0b01: Ignore protection. (\The_SEO_Framework\ROBOTS_IGNORE_PROTECTION)
-	 *    2 = 0b10: Ignore post/term setting. (\The_SEO_Framework\ROBOTS_IGNORE_SETTINGS)
-	 *    3 = 0b11: Ignore protection and post/term setting.
+	 *    2 = 0b10: Ignore post/term meta settings. (\The_SEO_Framework\ROBOTS_IGNORE_SETTINGS)
+	 *    3 = 0b11: Ignore protection and post/term meta setting.
 	 * }
 	 * @return array|null robots : {
 	 *    bool              'noindex'
@@ -205,7 +206,7 @@ class Generate extends User_Data {
 			$max_video_preview = $this->get_option( 'max_video_preview' );
 		}
 
-		//* Check homepage SEO settings, set noindex, nofollow and noarchive
+		// Check homepage SEO settings, set noindex, nofollow and noarchive
 		if ( $this->is_real_front_page() ) {
 			$noindex   = $noindex || $this->get_option( 'homepage_noindex' );
 			$nofollow  = $nofollow || $this->get_option( 'homepage_nofollow' );
@@ -213,20 +214,36 @@ class Generate extends User_Data {
 
 			if ( ! ( $ignore & ROBOTS_IGNORE_PROTECTION ) ) :
 				$noindex = $noindex
-						|| ( $this->get_option( 'home_paged_noindex' ) && ( $this->page() > 1 || $this->paged() > 1 ) );
+					|| ( $this->get_option( 'home_paged_noindex' ) && ( $this->page() > 1 || $this->paged() > 1 ) );
 			endif;
 		} else {
 			global $wp_query;
 
-			/**
-			 * Check for 404, or if archive is empty: set noindex for those.
-			 * Don't check this on the homepage. The homepage is sacred in this regard,
-			 * because page builders and templates can and will take over.
-			 *
-			 * Don't use empty(), null is regarded as indexable.
-			 */
-			if ( isset( $wp_query->post_count ) && ! $wp_query->post_count )
-				$noindex = true;
+			if ( $this->is_singular_archive() ) {
+				/**
+				 * Pagination overflow protection via 404 test.
+				 *
+				 * When there are no posts, the first page will NOT relay 404;
+				 * which is exactly as intended. All other pages will relay 404.
+				 *
+				 * We do not test the post_count here, because we want to have
+				 * the first page indexable via user-intend only.
+				 */
+				$noindex = $noindex || $this->is_404();
+			} else {
+				/**
+				 * Check for 404, or if archive is empty: set noindex for those.
+				 *
+				 * Don't check this on the homepage. The homepage is sacred in this regard,
+				 * because page builders and templates can and will take over.
+				 *
+				 * Don't use empty(), null is regarded as indexable.
+				 *
+				 * TODO Consider toggling this for author archives?
+				 */
+				if ( isset( $wp_query->post_count ) && ! $wp_query->post_count )
+					$noindex = true;
+			}
 
 			if (
 				! $noindex
@@ -238,16 +255,7 @@ class Generate extends User_Data {
 			}
 
 			if ( $this->is_archive() ) {
-				//* If on custom Taxonomy page, but not a category or tag, then should've received specific term SEO settings.
-				if ( $this->is_category() ) {
-					$noindex   = $noindex || $this->get_option( 'category_noindex' );
-					$nofollow  = $nofollow || $this->get_option( 'category_nofollow' );
-					$noarchive = $noarchive || $this->get_option( 'category_noarchive' );
-				} elseif ( $this->is_tag() ) {
-					$noindex   = $noindex || $this->get_option( 'tag_noindex' );
-					$nofollow  = $nofollow || $this->get_option( 'tag_nofollow' );
-					$noarchive = $noarchive || $this->get_option( 'tag_noarchive' );
-				} elseif ( $this->is_author() ) {
+				if ( $this->is_author() ) {
 					$noindex   = $noindex || $this->get_option( 'author_noindex' );
 					$nofollow  = $nofollow || $this->get_option( 'author_nofollow' );
 					$noarchive = $noarchive || $this->get_option( 'author_noarchive' );
@@ -268,13 +276,18 @@ class Generate extends User_Data {
 			// Store values from each post type bound to the taxonomy.
 			foreach ( $this->get_post_types_from_taxonomy() as $post_type ) {
 				foreach ( [ 'noindex', 'nofollow', 'noarchive' ] as $r ) {
-					// SECURITY: Put in array to circumvent GLOBALS injection.
-					$_post_type_meta[ $r ][] = $this->is_post_type_robots_set( $r, $post_type );
+					// SECURITY: Put in array to circumvent GLOBALS injection in sequenting loop.
+					$_post_type_meta[ $r ][] = $$r || $this->is_post_type_robots_set( $r, $post_type );
 				}
 			}
 			// Only enable if all post types have the value ticked.
-			foreach ( $_post_type_meta as $_type => $_values ) {
-				$$_type = $$_type || ! in_array( false, $_values, true );
+			foreach ( $_post_type_meta as $r => $_values ) {
+				$$r = $$r || ! \in_array( false, $_values, true );
+			}
+
+			$taxonomy = $this->get_current_taxonomy();
+			foreach ( [ 'noindex', 'nofollow', 'noarchive' ] as $r ) {
+				$$r = $$r || $this->is_taxonomy_robots_set( $r, $taxonomy );
 			}
 
 			if ( ! ( $ignore & ROBOTS_IGNORE_SETTINGS ) ) :
@@ -289,7 +302,7 @@ class Generate extends User_Data {
 			endif;
 		} elseif ( $this->is_singular() ) {
 
-			$post_type = \get_post_type() ?: $this->get_admin_post_type();
+			$post_type = $this->get_post_type_real_ID() ?: $this->get_admin_post_type();
 			foreach ( [ 'noindex', 'nofollow', 'noarchive' ] as $r ) {
 				$$r = $$r || $this->is_post_type_robots_set( $r, $post_type );
 			}
@@ -309,9 +322,7 @@ class Generate extends User_Data {
 
 			// Overwrite and ignore the user's settings, regardless; unless ignore is set.
 			if ( ! ( $ignore & ROBOTS_IGNORE_PROTECTION ) ) :
-				if ( $this->is_protected( $this->get_the_real_ID() ) ) {
-					$noindex = true;
-				}
+				$noindex = $noindex || $this->is_protected( $this->get_the_real_ID() );
 			endif;
 
 			/**
@@ -323,7 +334,16 @@ class Generate extends User_Data {
 			 * For reference, it fires `remove_query_arg( 'cpage', $redirect['query'] )`;
 			 */
 			if ( (int) \get_query_var( 'cpage', 0 ) > 0 ) {
-				$noindex = true;
+				/**
+				 * We do not recommend using this filter as it'll likely get those pages flagged as
+				 * duplicated by Google anyway; unless the theme strips or trims the content.
+				 *
+				 * This filter won't run when other conditions for noindex have been met.
+				 *
+				 * @since 4.0.5
+				 * @param bool $noindex Whether to enable comment pagination protection.
+				 */
+				$noindex = $noindex || \apply_filters( 'the_seo_framework_enable_noindex_comment_pagination', true );
 			}
 		}
 
@@ -338,13 +358,14 @@ class Generate extends User_Data {
 	 * @since 4.0.0
 	 * @since 4.0.2 Added new copyright directive tags.
 	 * @since 4.0.3 Changed `max_snippet_length` to `max_snippet`
+	 * @since 4.1.0 Now uses the new taxonomy robots settings.
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 * @param int <bit>  $ignore The ignore level. {
 	 *    0 = 0b00: Ignore nothing.
 	 *    1 = 0b01: Ignore protection. (\The_SEO_Framework\ROBOTS_IGNORE_PROTECTION)
-	 *    2 = 0b10: Ignore post/term setting. (\The_SEO_Framework\ROBOTS_IGNORE_SETTINGS)
-	 *    3 = 0b11: Ignore protection and post/term setting.
+	 *    2 = 0b10: Ignore post/term meta setting. (\The_SEO_Framework\ROBOTS_IGNORE_SETTINGS)
+	 *    3 = 0b11: Ignore protection and post/term meta setting.
 	 * }
 	 * @return array|null robots : {
 	 *    bool              'noindex'
@@ -369,22 +390,11 @@ class Generate extends User_Data {
 			$max_video_preview = $this->get_option( 'max_video_preview' );
 		}
 
-		if ( $args['taxonomy'] ) {
-			if ( 'category' === $args['taxonomy'] ) {
-				$noindex   = $noindex || $this->get_option( 'category_noindex' );
-				$nofollow  = $nofollow || $this->get_option( 'category_nofollow' );
-				$noarchive = $noarchive || $this->get_option( 'category_noarchive' );
-			} elseif ( 'post_tag' === $args['taxonomy'] ) {
-				$noindex   = $noindex || $this->get_option( 'tag_noindex' );
-				$nofollow  = $nofollow || $this->get_option( 'tag_nofollow' );
-				$noarchive = $noarchive || $this->get_option( 'tag_noarchive' );
-			}
-		} else {
-			if ( $this->is_real_front_page_by_id( $args['id'] ) ) {
-				$noindex   = $noindex || $this->get_option( 'homepage_noindex' );
-				$nofollow  = $nofollow || $this->get_option( 'homepage_nofollow' );
-				$noarchive = $noarchive || $this->get_option( 'homepage_noarchive' );
-			}
+		// Put outside the loop, id=0 may be used here for home-as-blog.
+		if ( ! $args['taxonomy'] && $this->is_real_front_page_by_id( $args['id'] ) ) {
+			$noindex   = $noindex || $this->get_option( 'homepage_noindex' );
+			$nofollow  = $nofollow || $this->get_option( 'homepage_nofollow' );
+			$noarchive = $noarchive || $this->get_option( 'homepage_noarchive' );
 		}
 
 		if ( $args['taxonomy'] ) {
@@ -400,12 +410,16 @@ class Generate extends User_Data {
 			foreach ( $this->get_post_types_from_taxonomy( $args['taxonomy'] ) as $post_type ) {
 				foreach ( [ 'noindex', 'nofollow', 'noarchive' ] as $r ) {
 					// SECURITY: Put in array to circumvent GLOBALS injection.
-					$_post_type_meta[ $r ][] = $this->is_post_type_robots_set( $r, $post_type );
+					$_post_type_meta[ $r ][] = $$r || $this->is_post_type_robots_set( $r, $post_type );
 				}
 			}
 			// Only enable if all post types have the value ticked.
-			foreach ( $_post_type_meta as $_type => $_values ) {
-				$$_type = $$_type || ! in_array( false, $_values, true );
+			foreach ( $_post_type_meta as $r => $_values ) {
+				$$r = $$r || ! \in_array( false, $_values, true );
+			}
+
+			foreach ( [ 'noindex', 'nofollow', 'noarchive' ] as $r ) {
+				$$r = $$r || $this->is_taxonomy_robots_set( $r, $args['taxonomy'] );
 			}
 
 			if ( ! ( $ignore & ROBOTS_IGNORE_SETTINGS ) ) :
@@ -439,9 +453,7 @@ class Generate extends User_Data {
 
 			// Overwrite and ignore the user's settings, regardless; unless ignore is set.
 			if ( ! ( $ignore & ROBOTS_IGNORE_PROTECTION ) ) :
-				if ( $this->is_protected( $args['id'] ) ) {
-					$noindex = true;
-				}
+				$noindex = $noindex || $this->is_protected( $args['id'] );
 			endif;
 		}
 
@@ -457,6 +469,7 @@ class Generate extends User_Data {
 	 * Note that the home-as-blog page can be used for this method.
 	 *
 	 * @since 4.0.0
+	 * @since 4.1.0 Now uses the new taxonomy robots settings.
 	 *
 	 * @param array|null $args   The query arguments. Accepts 'id' and 'taxonomy'.
 	 * @param int <bit>  $ignore The ignore level. {
@@ -473,19 +486,13 @@ class Generate extends User_Data {
 
 		$noindex = (bool) $this->get_option( 'site_noindex' );
 
-		if ( $args['taxonomy'] ) {
-			if ( 'category' === $args['taxonomy'] ) {
-				$noindex = $noindex || $this->get_option( 'category_noindex' );
-			} elseif ( 'post_tag' === $args['taxonomy'] ) {
-				$noindex = $noindex || $this->get_option( 'tag_noindex' );
-			}
-		} else {
-			if ( $this->is_real_front_page_by_id( $args['id'] ) ) {
-				$noindex = $noindex || $this->get_option( 'homepage_noindex' );
-			}
+		if ( ! $args['taxonomy'] && $this->is_real_front_page_by_id( $args['id'] ) ) {
+			$noindex = $noindex || $this->get_option( 'homepage_noindex' );
 		}
 
 		if ( $args['taxonomy'] ) {
+			// This block is not used internally...
+
 			$term = \get_term( $args['id'], $args['taxonomy'] );
 			/**
 			 * Check if archive is empty: set noindex for those.
@@ -497,12 +504,14 @@ class Generate extends User_Data {
 			// Store values from each post type bound to the taxonomy.
 			foreach ( $this->get_post_types_from_taxonomy( $args['taxonomy'] ) as $post_type ) {
 				// SECURITY: Put in array to circumvent GLOBALS injection.
-				$_post_type_meta['noindex'][] = $this->is_post_type_robots_set( 'noindex', $post_type );
+				$_post_type_meta['noindex'][] = $noindex || $this->is_post_type_robots_set( 'noindex', $post_type );
 			}
 			// Only enable if all post types have the value ticked.
-			foreach ( $_post_type_meta as $_type => $_values ) {
-				$$_type = $$_type || ! in_array( false, $_values, true );
+			foreach ( $_post_type_meta as $r => $_values ) {
+				$$r = $$r || ! \in_array( false, $_values, true );
 			}
+
+			$noindex = $noindex || $this->is_taxonomy_robots_set( 'noindex', $args['taxonomy'] );
 
 			if ( ! ( $ignore & ROBOTS_IGNORE_SETTINGS ) ) :
 				$term_meta = $this->get_term_meta( $args['id'] );
@@ -526,9 +535,7 @@ class Generate extends User_Data {
 
 			// Overwrite and ignore the user's settings, regardless; unless ignore is set.
 			if ( ! ( $ignore & ROBOTS_IGNORE_PROTECTION ) ) :
-				if ( $this->is_protected( $args['id'] ) ) {
-					$noindex = true;
-				}
+				$noindex = $noindex || $this->is_protected( $args['id'] );
 			endif;
 		}
 
@@ -539,16 +546,37 @@ class Generate extends User_Data {
 	 * Determines if the post type has a robots value set.
 	 *
 	 * @since 3.1.0
+	 * @since 4.0.5 The `$post_type` fallback now uses a real query ID, instead of `$GLOBALS['post']`;
+	 *              mitigating issues with singular-archives pages (blog, shop, etc.).
+	 * @since 4.1.1 Now tests for not empty, instead of isset. We no longer support PHP 5.4 since v4.0.0.
 	 *
 	 * @param string $type      Accepts 'noindex', 'nofollow', 'noarchive'.
 	 * @param string $post_type The post type, optional. Leave empty to autodetermine type.
 	 * @return bool True if noindex, nofollow, or noarchive is set; false otherwise.
 	 */
 	public function is_post_type_robots_set( $type, $post_type = '' ) {
-		return isset(
-			$this->get_option( $this->get_robots_post_type_option_id( $type ) )[
-				$post_type ?: \get_post_type() ?: $this->get_admin_post_type()
-			]
+		return ! empty(
+			$this->get_option(
+				$this->get_robots_post_type_option_id( $type )
+			)[ $post_type ?: $this->get_post_type_real_ID() ?: $this->get_admin_post_type() ]
+		);
+	}
+
+	/**
+	 * Determines if the taxonomy has a robots value set.
+	 *
+	 * @since 4.1.0
+	 * @since 4.1.1 Now tests for not empty, instead of isset. We no longer support PHP 5.4 since v4.0.0.
+	 *
+	 * @param string $type     Accepts 'noindex', 'nofollow', 'noarchive'.
+	 * @param string $taxonomy The taxonomy, optional. Leave empty to autodetermine type.
+	 * @return bool True if noindex, nofollow, or noarchive is set; false otherwise.
+	 */
+	public function is_taxonomy_robots_set( $type, $taxonomy = '' ) {
+		return ! empty(
+			$this->get_option(
+				$this->get_robots_taxonomy_option_id( $type )
+			)[ $taxonomy ?: $this->get_current_taxonomy() ]
 		);
 	}
 
@@ -556,9 +584,11 @@ class Generate extends User_Data {
 	 * Returns cached and parsed separator option.
 	 *
 	 * @since 2.3.9
-	 * @since 3.1.0 : 1. Removed caching.
-	 *                2. Removed escaping parameter.
+	 * @since 3.1.0 1. Removed caching.
+	 *              2. Removed escaping parameter.
 	 * @since 4.0.0 No longer converts the `dash` separator option.
+	 * @since 4.0.5 1. Now utilizes the predefined separator list, instead of guessing the output.
+	 *              2. The default fallback value is now a hyphen.
 	 *
 	 * @param string $type The separator type. Used to fetch option.
 	 * @return string The separator.
@@ -566,25 +596,16 @@ class Generate extends User_Data {
 	public function get_separator( $type = 'title' ) {
 
 		$sep_option = $this->get_option( $type . '_separator' );
+		$sep_list   = $this->get_separator_list();
 
-		if ( 'pipe' === $sep_option ) {
-			$sep = '|';
-		} elseif ( '' !== $sep_option ) {
-			//* Encapsulate within html entities.
-			$sep = '&' . $sep_option . ';';
-		} else {
-			//* Nothing found.
-			$sep = '|';
-		}
-
-		return $sep;
+		return isset( $sep_list[ $sep_option ] ) ? $sep_list[ $sep_option ] : '&#x2d;';
 	}
 
 	/**
-	 * Fetches blogname.
+	 * Fetches blogname (site title).
+	 * Memoizes the return value.
 	 *
 	 * @since 2.5.2
-	 * @staticvar string $blogname
 	 *
 	 * @return string $blogname The escaped and sanitized blogname.
 	 */
@@ -597,10 +618,10 @@ class Generate extends User_Data {
 
 	/**
 	 * Fetch blog description.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.5.2
 	 * @since 3.0.0 No longer returns untitled when empty, instead, it just returns an empty string.
-	 * @staticvar string $description
 	 *
 	 * @return string $blogname The escaped and sanitized blog description.
 	 */
@@ -625,7 +646,7 @@ class Generate extends User_Data {
 		if ( ! $match )
 			$match = \get_locale();
 
-		$match_len     = strlen( $match );
+		$match_len     = \strlen( $match );
 		$valid_locales = $this->fb_locales();
 
 		if ( $match_len > 5 ) {
@@ -637,7 +658,7 @@ class Generate extends User_Data {
 		if ( 5 === $match_len ) {
 			// Full locale is used.
 
-			if ( in_array( $match, $valid_locales, true ) )
+			if ( \in_array( $match, $valid_locales, true ) )
 				return $match;
 
 			// Convert to only language portion.
@@ -648,10 +669,8 @@ class Generate extends User_Data {
 		if ( 2 === $match_len ) {
 			// Only a language key is provided.
 
-			$locale_keys = (array) $this->language_keys();
-
 			// Find first matching key.
-			$key = array_search( $match, $locale_keys, true );
+			$key = array_search( $match, $this->language_keys(), true );
 
 			if ( $key ) {
 				return $valid_locales[ $key ];
@@ -671,7 +690,7 @@ class Generate extends User_Data {
 	 */
 	public function generate_og_type() {
 
-		if ( $this->is_wc_product() ) {
+		if ( $this->is_product() ) {
 			$type = 'product';
 		} elseif ( $this->is_single() && $this->get_image_from_cache() ) {
 			$type = 'article';
@@ -686,9 +705,9 @@ class Generate extends User_Data {
 
 	/**
 	 * Returns Open Graph type value.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.8.0
-	 * @staticvar string $type
 	 *
 	 * @return string
 	 */
@@ -741,8 +760,8 @@ class Generate extends User_Data {
 		$option = $this->get_option( 'twitter_card' );
 		$option = trim( \esc_attr( $option ) );
 
-		//* Option is equal to found cards. Output option.
-		if ( in_array( $option, $available_cards, true ) ) {
+		// Option is equal to found cards. Output option.
+		if ( \in_array( $option, $available_cards, true ) ) {
 			if ( 'summary_large_image' === $option ) {
 				$type = 'summary_large_image';
 			} elseif ( 'summary' === $option ) {
@@ -769,11 +788,11 @@ class Generate extends User_Data {
 
 	/**
 	 * Determines which Twitter cards can be used.
+	 * Memoizes the return value.
 	 *
 	 * @since 2.9.0
 	 * @since 4.0.0 1. Now only asserts the social titles as required.
 	 *              2. Now always returns an array, instead of a boolean (false) on failure.
-	 * @staticvar bool|array $cache
 	 *
 	 * @return array False when it shouldn't be used. Array of available cards otherwise.
 	 */
@@ -805,13 +824,15 @@ class Generate extends User_Data {
 	 * @since 2.6.0
 	 * @since 3.1.0 Is now filterable.
 	 * @since 4.0.0 Removed the dash key.
+	 * @since 4.0.5 Added back the hyphen.
 	 *
 	 * @return array Title separators.
 	 */
 	public function get_separator_list() {
 		/**
 		 * @since 3.1.0
-		 * @since 4.0.0 Removed the dash key.
+		 * @since 4.0.0 Removed the hyphen (then known as 'dash') key.
+		 * @since 4.0.5 Reintroduced hyphen.
 		 * @param array $list The separator list in { option_name > display_value } format.
 		 *                    The option name should be translatable within `&...;` tags.
 		 *                    'pipe' is excluded from this rule.
@@ -819,6 +840,7 @@ class Generate extends User_Data {
 		return (array) \apply_filters(
 			'the_seo_framework_separator_list',
 			[
+				'hyphen' => '&#x2d;',
 				'pipe'   => '|',
 				'ndash'  => '&ndash;',
 				'mdash'  => '&mdash;',

@@ -9,28 +9,28 @@
 
 <div class="uabb-gf-style <?php echo 'uabb-gf-form-style1'; ?>">
 	<?php
-		$title       = '';
+		$form_title  = ''; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$description = '';
-	if ( 'yes' == $settings->form_title_option ) {
+	if ( 'yes' === $settings->form_title_option ) {
 		if ( class_exists( 'GFAPI' ) ) {
 			$form        = GFAPI::get_form( absint( $settings->form_id ) );
-			$title       = $form['title'];
+			$form_title  = $form['title']; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$description = $form['description'];
 		}
-	} elseif ( 'no' == $settings->form_title_option ) {
-		$title       = $settings->form_title;
+	} elseif ( 'no' === $settings->form_title_option ) {
+		$form_title  = $settings->form_title; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$description = $settings->form_desc;
 	} else {
-		$title       = '';
+		$form_title  = ''; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$description = '';
 	}
-	if ( '' != $title ) {
+	if ( '' !== $form_title ) {
 		?>
-		<<?php echo $settings->form_title_tag_selection; ?> class="uabb-gf-form-title"><?php echo $title; ?></<?php echo $settings->form_title_tag_selection; ?>>
+		<<?php echo esc_attr( $settings->form_title_tag_selection ); ?> class="uabb-gf-form-title"><?php echo $form_title; ?></<?php echo esc_attr( $settings->form_title_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php } ?>
 
-	<?php if ( '' != $description ) { ?>
-		<p class="uabb-gf-form-desc"><?php echo $description; ?></p>
+	<?php if ( '' !== $description ) { ?>
+		<p class="uabb-gf-form-desc"><?php echo $description; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 	<?php } ?>
 
 	<?php

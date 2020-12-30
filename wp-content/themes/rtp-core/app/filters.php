@@ -241,7 +241,7 @@ if ( ! is_admin() ) { // Don't touch anything inside of the WordPress Dashboard,
 add_action( 'wpel_apply_settings', function () {
 
   // Exclude Beaver Builder editor pages
-  if ( strpos($_SERVER['REQUEST_URI'], '?fl_builder') !== false ) {
+  if (isset($_GET['fl_builder'])) {
     return false;
   }
 

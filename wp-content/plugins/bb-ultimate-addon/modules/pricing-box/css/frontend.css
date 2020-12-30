@@ -17,6 +17,10 @@
      height: 100%;
 }
 
+.uabb-pricing-table-title {
+    width:100%;
+}
+
 /* List Item Reset
 *================ */
 
@@ -97,6 +101,16 @@
 	z-index: 2;
 	letter-spacing: -2px;
 }
+.uabb-pricing-table .uabb-price-table-original-price {
+    margin-right: 15px;
+    text-decoration: line-through;
+    font-size: 0.5em;
+    line-height: 1;
+    font-weight: 400;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+}
 .uabb-pricing-table .uabb-pricing-table-column h2 {
 	margin: 0;
 	padding: 20px;
@@ -110,6 +124,12 @@
 	letter-spacing: 0px;
 	line-height: normal;
 	opacity: 0.85;
+}
+.uabb-pricing-table .uabb-pricing-table-duration.uabb-duration-layout-below {
+	display: block;
+}
+.uabb-pricing-table .uabb-pricing-table-duration.uabb-duration-layout-beside {
+	display: inline-block;
 }
 .uabb-pricing-table .uabb-pricing-table-features {
 	margin: 0;
@@ -129,4 +149,110 @@
 }
 .uabb-pricing-table a.uabb-button .uabb-button-text {
 	line-height: 18px;
+}
+.uabb-pricing-table .uabb-price-table-title-icon,
+.uabb-pricing-table .uabb-pricing-table-title {
+	display: inline-block;
+}
+.uabb-pricing-table .uabb-price-table-title-icon,
+.uabb-pricing-table .uabb-price-table-icon-before,
+.uabb-box-table-icon {
+	margin-right: 5px;
+}
+.uabb-pricing-table .uabb-price-table-icon-after {
+	margin-left: 5px;
+}
+
+/* CSS for Ribbon Style Corner */
+.uabb-pricing-table .uabb-ribbon-corner {
+    position: absolute;
+    top: 0;
+    left: auto;
+    right: 0;
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    width: 15em;
+    overflow: hidden;
+    height: 15em;
+}
+.uabb-pricing-table .uabb-ribbon-corner .uabb-price-box-ribbon-content {
+    text-align: center;
+    left: 0;
+    width: 150%;
+    -webkit-transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+    -ms-transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+    transform: translateY(-50%) translateX(-50%) translateX(35px) rotate(-45deg);
+    margin-top: 35px;
+    font-size: 13px;
+    line-height: 2;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: #000;
+}
+.uabb-pricing-table .uabb-ribbon-corner.uabb-ribbon-left {
+    -webkit-transform: rotate(0);
+    -ms-transform: rotate(0);
+    transform: rotate(0);
+    left: 0;
+    right: auto;
+}
+.uabb-pricing-table .uabb-ribbon-corner.uabb-ribbon-right {
+    -webkit-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    left: auto;
+    right: 0;
+}
+
+/* CSS for Ribbon Style Circular */
+.uabb-pricing-table .uabb-price-box-ribbon-content {
+    z-index: 9;
+    background: #000;
+    color: #ffffff;
+}
+.uabb-pricing-table .uabb-ribbon-circular .uabb-price-box-ribbon-content {
+    color: #fff;
+    text-align: center;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+}
+.uabb-pricing-table .uabb-ribbon-circular.uabb-ribbon-left .uabb-price-box-ribbon-content {
+    left: 0;
+    -webkit-transform: translateX(-40%)translateY(-40%);
+    -ms-transform: translateX(-40%)translateY(-40%);
+    transform: translateX(-40%)translateY(-40%);
+}
+.uabb-pricing-table .uabb-ribbon-circular.uabb-ribbon-right .uabb-price-box-ribbon-content {
+    right: 0;
+    -webkit-transform: translateX(40%)translateY(-40%);
+    -ms-transform: translateX(40%)translateY(-40%);
+    transform: translateX(40%)translateY(-40%);
+}
+
+/* CSS for Ribbon Style Flag */
+.uabb-pricing-table .uabb-ribbon-flag .uabb-price-box-ribbon-content:after,
+.uabb-pricing-table .uabb-ribbon-flag .uabb-price-box-ribbon-content:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 100%;
+    right: 0;
+    border-bottom: 8px solid transparent;
+}
+.uabb-pricing-table .uabb-ribbon-flag .uabb-price-box-ribbon-content:after {
+    border-left: 8px solid rgba(0, 0, 0, 0.2);
+}
+.uabb-pricing-table .uabb-ribbon-flag .uabb-price-box-ribbon-content {
+    text-align: center;
+    -webkit-border-radius: 4px;
+    border-radius: 4px 4px 0 4px;
+    padding: 3px 15px;
+    position: absolute;
+    top: 30%;
+    right: -8px;
 }

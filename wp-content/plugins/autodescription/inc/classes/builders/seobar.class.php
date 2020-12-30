@@ -8,7 +8,7 @@ namespace The_SEO_Framework\Builders;
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2020 Sybre Waaijer, CyberWire (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -23,7 +23,7 @@ namespace The_SEO_Framework\Builders;
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
+\defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
 
 /**
  * Generates the SEO Bar.
@@ -36,11 +36,10 @@ defined( 'THE_SEO_FRAMEWORK_PRESENT' ) or die;
  * @access private
  *      Use \The_SEO_Framework\Interpreters\SeoBar::generate_bar() instead.
  * @internal
- * @abstract: Implements test_{$*}, see property $tests and method `_run_test()` for what * may be.
+ * @abstract Implements test_{$*}, see property $tests and method `_run_test()` for what * may be.
  * @see \The_SEO_Framework\Interpreters\SeoBar
  */
 abstract class SeoBar {
-	use \The_SEO_Framework\Traits\Enclose_Core_Final;
 
 	/**
 	 * @since 4.0.0
@@ -188,7 +187,7 @@ abstract class SeoBar {
 
 		$this->prime_query_cache( $this->query_cache );
 
-		if ( in_array( 'redirect', $tests, true ) && $this->has_blocking_redirect() )
+		if ( \in_array( 'redirect', $tests, true ) && $this->has_blocking_redirect() )
 			$tests = [ 'redirect' ];
 
 		foreach ( $tests as $test )

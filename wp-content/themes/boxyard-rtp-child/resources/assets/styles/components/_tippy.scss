@@ -1,0 +1,46 @@
+.tippy-box {
+  border-radius: 0;
+  box-shadow: $box-shadow;
+
+  a {
+    color: inherit;
+  }
+
+  &[data-theme~='boxyard-slate'] {
+    background-color: $color-slate-boxyard;
+    color: $color-white;
+
+    > .tippy-svg-arrow {
+      fill: $color-slate-boxyard;
+    }
+  }
+
+  &[data-theme~='dark'] {
+    background-color: $color-black;
+    color: $color-white;
+
+    a {
+      &:hover,
+      &:focus {
+        text-decoration: underline;
+      }
+    }
+
+    > .tippy-svg-arrow {
+      fill: $color-black;
+    }
+  }
+}
+
+.tippy-content {
+  padding: 0.5rem;
+  font-size: 0.8rem;
+
+  > * {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}

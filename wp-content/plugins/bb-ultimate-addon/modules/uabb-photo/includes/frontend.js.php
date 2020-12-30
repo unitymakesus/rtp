@@ -7,9 +7,9 @@
 
 ?>
 
-<?php if ( 'lightbox' == $settings->link_type ) : ?>
+<?php if ( 'lightbox' === $settings->link_type ) : ?>
 jQuery(function() {
-	jQuery('.fl-node-<?php echo $id; ?> a').magnificPopup({
+	jQuery('.fl-node-<?php echo esc_attr( $id ); ?> a').magnificPopup({
 		type: 'image',
 		closeOnContentClick: true,
 		closeBtnInside: false
@@ -18,7 +18,7 @@ jQuery(function() {
 <?php endif; ?>
 jQuery(function($) {
 	$(function() {
-		$( '.fl-node-<?php echo $id; ?> .uabb-photo-img' )
+		$( '.fl-node-<?php echo esc_attr( $id ); ?> .uabb-photo-img' )
 			.on( 'mouseenter', function( e ) {
 				$( this ).data( 'title', $( this ).attr( 'title' ) ).removeAttr( 'title' );
 			} )

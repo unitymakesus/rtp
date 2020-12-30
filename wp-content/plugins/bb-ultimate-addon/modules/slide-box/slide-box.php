@@ -45,11 +45,11 @@ class SlideBoxModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Opacity.
 			$helper->handle_opacity_inputs( $settings, 'overlay_color_opc', 'overlay_color' );
@@ -80,7 +80,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->front_title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->front_title_font_family['weight'] ) {
+					if ( 'regular' === $settings->front_title_font_family['weight'] ) {
 						$settings->front_title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->front_title_typo['font_weight'] = $settings->front_title_font_family['weight'];
@@ -159,7 +159,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->front_desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->front_desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->front_desc_font_family['weight'] ) {
 						$settings->front_desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->front_desc_typo['font_weight'] = $settings->front_desc_font_family['weight'];
@@ -238,7 +238,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->back_title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->back_title_font_family['weight'] ) {
+					if ( 'regular' === $settings->back_title_font_family['weight'] ) {
 						$settings->back_title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->back_title_typo['font_weight'] = $settings->back_title_font_family['weight'];
@@ -317,7 +317,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->back_desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->back_desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->back_desc_font_family['weight'] ) {
 						$settings->back_desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->back_desc_typo['font_weight'] = $settings->back_desc_font_family['weight'];
@@ -396,7 +396,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->link_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->link_font_family['weight'] ) {
+					if ( 'regular' === $settings->link_font_family['weight'] ) {
 						$settings->link_typo['font_weight'] = 'normal';
 					} else {
 						$settings->link_typo['font_weight'] = $settings->link_font_family['weight'];
@@ -461,7 +461,7 @@ class SlideBoxModule extends FLBuilderModule {
 			if ( ! isset( $settings->button->button_typo ) || ! is_object( $settings->button->button_typo ) ) {
 				$settings->button->button_typo            = new stdClass();
 				$settings->button->button_typo_medium     = new stdClass();
-				$settings->button->button_typo_responsive = new stdClass;
+				$settings->button->button_typo_responsive = new stdClass();
 			}
 			if ( isset( $settings->button->font_family ) ) {
 
@@ -471,7 +471,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->button->font_family->weight ) ) {
 
-					if ( 'regular' == $settings->button->font_family->weight ) {
+					if ( 'regular' === $settings->button->font_family->weight ) {
 						$settings->button->button_typo->font_weight = 'normal';
 					} else {
 						$settings->button->button_typo->font_weight = $settings->button->font_family->weight;
@@ -534,16 +534,16 @@ class SlideBoxModule extends FLBuilderModule {
 				unset( $settings->button->letter_spacing );
 			}
 			if ( isset( $settings->button->link_nofollow ) ) {
-				if ( '1' == $settings->button->link_nofollow || 'yes' == $settings->button->link_nofollow ) {
+				if ( '1' === $settings->button->link_nofollow || 'yes' === $settings->button->link_nofollow ) {
 					$settings->button->link_nofollow = 'yes';
 				}
 			}
 			if ( isset( $settings->link_nofollow ) ) {
-				if ( '1' == $settings->link_nofollow || 'yes' == $settings->link_nofollow ) {
+				if ( '1' === $settings->link_nofollow || 'yes' === $settings->link_nofollow ) {
 					$settings->link_nofollow = 'yes';
 				}
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Opacity.
 			$helper->handle_opacity_inputs( $settings, 'overlay_color_opc', 'overlay_color' );
@@ -551,7 +551,9 @@ class SlideBoxModule extends FLBuilderModule {
 			$helper->handle_opacity_inputs( $settings, 'front_icon_border_color_opc', 'front_icon_border_color' );
 
 			$helper->handle_opacity_inputs(
-				$settings, 'front_icon_border_hover_color_opc', '
+				$settings,
+				'front_icon_border_hover_color_opc',
+				'
 				front_icon_border_hover_color'
 			);
 
@@ -576,7 +578,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->front_title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->front_title_font_family['weight'] ) {
+					if ( 'regular' === $settings->front_title_font_family['weight'] ) {
 						$settings->front_title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->front_title_typo['font_weight'] = $settings->front_title_font_family['weight'];
@@ -603,7 +605,7 @@ class SlideBoxModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->front_title_line_height['small'] ) && isset( $settings->front_title_font_size['small'] ) && 0 != $settings->front_title_font_size['small'] ) {
+			if ( isset( $settings->front_title_line_height['small'] ) && isset( $settings->front_title_font_size['small'] ) && 0 !== $settings->front_title_font_size['small'] ) {
 				if ( is_numeric( $settings->front_title_line_height['small'] ) && is_numeric( $settings->front_title_font_size['small'] ) ) {
 					$settings->front_title_typo_responsive['line_height'] = array(
 						'length' => round( $settings->front_title_line_height['small'] / $settings->front_title_font_size['small'], 2 ),
@@ -611,7 +613,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->front_title_line_height['medium'] ) && isset( $settings->front_title_font_size['medium'] ) && 0 != $settings->front_title_font_size['medium'] ) {
+			if ( isset( $settings->front_title_line_height['medium'] ) && isset( $settings->front_title_font_size['medium'] ) && 0 !== $settings->front_title_font_size['medium'] ) {
 				if ( is_numeric( $settings->front_title_line_height['medium'] ) && is_numeric( $settings->front_title_font_size['medium'] ) ) {
 					$settings->front_title_typo_medium['line_height'] = array(
 						'length' => round( $settings->front_title_line_height['medium'] / $settings->front_title_font_size['medium'], 2 ),
@@ -619,7 +621,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->front_title_line_height['desktop'] ) && isset( $settings->front_title_font_size['desktop'] ) && 0 != $settings->front_title_font_size['desktop'] ) {
+			if ( isset( $settings->front_title_line_height['desktop'] ) && isset( $settings->front_title_font_size['desktop'] ) && 0 !== $settings->front_title_font_size['desktop'] ) {
 				if ( is_numeric( $settings->front_title_line_height['desktop'] ) && is_numeric( $settings->front_title_font_size['desktop'] ) ) {
 					$settings->front_title_typo['line_height'] = array(
 						'length' => round( $settings->front_title_line_height['desktop'] / $settings->front_title_font_size['desktop'], 2 ),
@@ -644,7 +646,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->front_desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->front_desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->front_desc_font_family['weight'] ) {
 						$settings->front_desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->front_desc_typo['font_weight'] = $settings->front_desc_font_family['weight'];
@@ -672,7 +674,7 @@ class SlideBoxModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->front_desc_line_height['small'] ) && isset( $settings->front_desc_font_size['small'] ) && 0 != $settings->front_desc_font_size['small'] ) {
+			if ( isset( $settings->front_desc_line_height['small'] ) && isset( $settings->front_desc_font_size['small'] ) && 0 !== $settings->front_desc_font_size['small'] ) {
 				if ( is_numeric( $settings->front_desc_line_height['small'] ) && is_numeric( $settings->front_desc_font_size['small'] ) ) {
 					$settings->front_desc_typo_responsive['line_height'] = array(
 						'length' => round( $settings->front_desc_line_height['small'] / $settings->front_desc_font_size['small'], 2 ),
@@ -680,7 +682,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->front_desc_line_height['medium'] ) && isset( $settings->front_desc_font_size['medium'] ) && 0 != $settings->front_desc_font_size['medium'] ) {
+			if ( isset( $settings->front_desc_line_height['medium'] ) && isset( $settings->front_desc_font_size['medium'] ) && 0 !== $settings->front_desc_font_size['medium'] ) {
 				if ( is_numeric( $settings->front_desc_line_height['medium'] ) && is_numeric( $settings->front_desc_font_size['medium'] ) ) {
 					$settings->front_desc_typo_medium['line_height'] = array(
 						'length' => round( $settings->front_desc_line_height['medium'] / $settings->front_desc_font_size['medium'], 2 ),
@@ -688,7 +690,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->front_desc_line_height['desktop'] ) && isset( $settings->front_desc_font_size['desktop'] ) && 0 != $settings->front_desc_font_size['desktop'] ) {
+			if ( isset( $settings->front_desc_line_height['desktop'] ) && isset( $settings->front_desc_font_size['desktop'] ) && 0 !== $settings->front_desc_font_size['desktop'] ) {
 				if ( is_numeric( $settings->front_desc_line_height['desktop'] ) && is_numeric( $settings->front_desc_font_size['desktop'] ) ) {
 					$settings->front_desc_typo['line_height'] = array(
 						'length' => round( $settings->front_desc_line_height['desktop'] / $settings->front_desc_font_size['desktop'], 2 ),
@@ -713,7 +715,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->back_title_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->back_title_font_family['weight'] ) {
+					if ( 'regular' === $settings->back_title_font_family['weight'] ) {
 						$settings->back_title_typo['font_weight'] = 'normal';
 					} else {
 						$settings->back_title_typo['font_weight'] = $settings->back_title_font_family['weight'];
@@ -743,7 +745,7 @@ class SlideBoxModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->back_title_line_height['small'] ) && isset( $settings->back_title_font_size['small'] ) && 0 != $settings->back_title_font_size['small'] ) {
+			if ( isset( $settings->back_title_line_height['small'] ) && isset( $settings->back_title_font_size['small'] ) && 0 !== $settings->back_title_font_size['small'] ) {
 				if ( is_numeric( $settings->back_title_line_height['small'] ) && is_numeric( $settings->back_title_font_size['small'] ) ) {
 					$settings->back_title_typo_responsive['line_height'] = array(
 						'length' => round( $settings->back_title_line_height['small'] / $settings->back_title_font_size['small'], 2 ),
@@ -751,7 +753,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->back_title_line_height['medium'] ) && isset( $settings->back_title_font_size['medium'] ) && 0 != $settings->back_title_font_size['medium'] ) {
+			if ( isset( $settings->back_title_line_height['medium'] ) && isset( $settings->back_title_font_size['medium'] ) && 0 !== $settings->back_title_font_size['medium'] ) {
 				if ( is_numeric( $settings->back_title_line_height['medium'] ) && is_numeric( $settings->back_title_font_size['medium'] ) ) {
 					$settings->back_title_typo_medium['line_height'] = array(
 						'length' => round( $settings->back_title_line_height['medium'] / $settings->back_title_font_size['medium'], 2 ),
@@ -759,7 +761,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->back_title_line_height['desktop'] ) && isset( $settings->back_title_font_size['desktop'] ) && 0 != $settings->back_title_font_size['desktop'] ) {
+			if ( isset( $settings->back_title_line_height['desktop'] ) && isset( $settings->back_title_font_size['desktop'] ) && 0 !== $settings->back_title_font_size['desktop'] ) {
 				if ( is_numeric( $settings->back_title_line_height['desktop'] ) && is_numeric( $settings->back_title_font_size['desktop'] ) ) {
 					$settings->back_title_typo['line_height'] = array(
 						'length' => round( $settings->back_title_line_height['desktop'] / $settings->back_title_font_size['desktop'], 2 ),
@@ -784,7 +786,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->back_desc_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->back_desc_font_family['weight'] ) {
+					if ( 'regular' === $settings->back_desc_font_family['weight'] ) {
 						$settings->back_desc_typo['font_weight'] = 'normal';
 					} else {
 						$settings->back_desc_typo['font_weight'] = $settings->back_desc_font_family['weight'];
@@ -811,7 +813,7 @@ class SlideBoxModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->back_desc_line_height['desktop'] ) && isset( $settings->back_desc_font_size['desktop'] ) && 0 != $settings->back_desc_font_size['desktop'] ) {
+			if ( isset( $settings->back_desc_line_height['desktop'] ) && isset( $settings->back_desc_font_size['desktop'] ) && 0 !== $settings->back_desc_font_size['desktop'] ) {
 				if ( is_numeric( $settings->back_desc_line_height['desktop'] ) && is_numeric( $settings->back_desc_font_size['desktop'] ) ) {
 					$settings->back_desc_typo['line_height'] = array(
 						'length' => round( $settings->back_desc_line_height['desktop'] / $settings->back_desc_font_size['desktop'], 2 ),
@@ -819,7 +821,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->back_desc_line_height['medium'] ) && isset( $settings->back_desc_font_size['medium'] ) && 0 != $settings->back_desc_font_size['medium'] ) {
+			if ( isset( $settings->back_desc_line_height['medium'] ) && isset( $settings->back_desc_font_size['medium'] ) && 0 !== $settings->back_desc_font_size['medium'] ) {
 				if ( is_numeric( $settings->back_desc_line_height['medium'] ) && is_numeric( $settings->back_desc_font_size['medium'] ) ) {
 					$settings->back_desc_typo_medium['line_height'] = array(
 						'length' => round( $settings->back_desc_line_height['medium'] / $settings->back_desc_font_size['medium'], 2 ),
@@ -827,7 +829,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->back_desc_line_height['small'] ) && isset( $settings->back_desc_font_size['small'] ) && 0 != $settings->back_desc_font_size['small'] ) {
+			if ( isset( $settings->back_desc_line_height['small'] ) && isset( $settings->back_desc_font_size['small'] ) && 0 !== $settings->back_desc_font_size['small'] ) {
 				if ( is_numeric( $settings->back_desc_line_height['small'] ) && is_numeric( $settings->back_desc_font_size['small'] ) ) {
 					$settings->back_desc_typo_responsive['line_height'] = array(
 						'length' => round( $settings->back_desc_line_height['small'] / $settings->back_desc_font_size['small'], 2 ),
@@ -851,7 +853,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->link_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->link_font_family['weight'] ) {
+					if ( 'regular' === $settings->link_font_family['weight'] ) {
 						$settings->link_typo['font_weight'] = 'normal';
 					} else {
 						$settings->link_typo['font_weight'] = $settings->link_font_family['weight'];
@@ -879,7 +881,7 @@ class SlideBoxModule extends FLBuilderModule {
 				);
 			}
 
-			if ( isset( $settings->link_line_height['small'] ) && isset( $settings->link_font_size['small'] ) && 0 != $settings->link_font_size['small'] ) {
+			if ( isset( $settings->link_line_height['small'] ) && isset( $settings->link_font_size['small'] ) && 0 !== $settings->link_font_size['small'] ) {
 				if ( is_numeric( $settings->link_line_height['small'] ) && is_numeric( $settings->link_font_size['small'] ) ) {
 					$settings->link_typo_responsive['line_height'] = array(
 						'length' => round( $settings->link_line_height['small'] / $settings->link_font_size['small'], 2 ),
@@ -887,7 +889,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->link_line_height['medium'] ) && isset( $settings->link_font_size['medium'] ) && 0 != $settings->link_font_size['medium'] ) {
+			if ( isset( $settings->link_line_height['medium'] ) && isset( $settings->link_font_size['medium'] ) && 0 !== $settings->link_font_size['medium'] ) {
 				if ( is_numeric( $settings->link_line_height['medium'] ) && is_numeric( $settings->link_font_size['medium'] ) ) {
 					$settings->link_typo_medium['line_height'] = array(
 						'length' => round( $settings->link_line_height['medium'] / $settings->link_font_size['medium'], 2 ),
@@ -895,7 +897,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->link_line_height['desktop'] ) && isset( $settings->link_font_size['desktop'] ) && 0 != $settings->link_font_size['desktop'] ) {
+			if ( isset( $settings->link_line_height['desktop'] ) && isset( $settings->link_font_size['desktop'] ) && 0 !== $settings->link_font_size['desktop'] ) {
 				if ( is_numeric( $settings->link_line_height['desktop'] ) && is_numeric( $settings->link_font_size['desktop'] ) ) {
 					$settings->link_typo['line_height'] = array(
 						'length' => round( $settings->link_line_height['desktop'] / $settings->link_font_size['desktop'], 2 ),
@@ -915,7 +917,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->button->font_family->weight ) ) {
 
-					if ( 'regular' == $settings->button->font_family->weight ) {
+					if ( 'regular' === $settings->button->font_family->weight ) {
 						$settings->button->button_typo->font_weight = 'normal';
 					} else {
 						$settings->button->button_typo->font_weight = $settings->button->font_family->weight;
@@ -941,7 +943,7 @@ class SlideBoxModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->button->line_height->desktop ) && isset( $settings->button->font_size->desktop ) && 0 != $settings->button->font_size->desktop ) {
+			if ( isset( $settings->button->line_height->desktop ) && isset( $settings->button->font_size->desktop ) && 0 !== $settings->button->font_size->desktop ) {
 				if ( is_numeric( $settings->button->line_height->desktop ) && is_numeric( $settings->button->font_size->desktop ) ) {
 					$settings->button->button_typo->line_height = (object) array(
 						'length' => round( $settings->button->line_height->desktop / $settings->button->font_size->desktop, 2 ),
@@ -949,7 +951,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->button->line_height->medium ) && isset( $settings->button->font_size->medium ) && 0 != $settings->button->font_size->medium ) {
+			if ( isset( $settings->button->line_height->medium ) && isset( $settings->button->font_size->medium ) && 0 !== $settings->button->font_size->medium ) {
 				if ( is_numeric( $settings->button->line_height->medium ) && is_numeric( $settings->button->font_size->medium ) ) {
 					$settings->button->button_typo_medium->line_height = (object) array(
 						'length' => round( $settings->button->line_height->medium / $settings->button->font_size->medium, 2 ),
@@ -957,7 +959,7 @@ class SlideBoxModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->button->line_height->small ) && isset( $settings->button->font_size->small ) && 0 != $settings->button->font_size->small ) {
+			if ( isset( $settings->button->line_height->small ) && isset( $settings->button->font_size->small ) && 0 !== $settings->button->font_size->small ) {
 				if ( is_numeric( $settings->button->line_height->small ) && is_numeric( $settings->button->font_size->small ) ) {
 					$settings->button->button_typo_responsive->line_height = (object) array(
 						'length' => round( $settings->button->line_height->small / $settings->button->font_size->small, 2 ),
@@ -966,7 +968,7 @@ class SlideBoxModule extends FLBuilderModule {
 				}
 			}
 			if ( isset( $settings->button->link_nofollow ) ) {
-				if ( '1' == $settings->button->link_nofollow || 'yes' == $settings->button->link_nofollow ) {
+				if ( '1' === $settings->button->link_nofollow || 'yes' === $settings->button->link_nofollow ) {
 					$settings->button->link_nofollow = 'yes';
 				}
 			}
@@ -1083,8 +1085,8 @@ class SlideBoxModule extends FLBuilderModule {
 	 * @method render_link
 	 */
 	public function render_link() {
-		if ( 'link' == $this->settings->cta_type ) {
-			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" ' . BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, 0, 0 ) . ' class="uabb-callout-cta-link">' . $this->settings->cta_text . '</a>';
+		if ( 'link' === $this->settings->cta_type ) {
+			echo '<a href="' . $this->settings->link . '" target="' . esc_attr( $this->settings->link_target ) . '" ' . wp_kses_post( BB_Ultimate_Addon_Helper::get_link_rel( $this->settings->link_target, 0, 0 ) ) . ' class="uabb-callout-cta-link">' . $this->settings->cta_text . '</a>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
@@ -1094,8 +1096,8 @@ class SlideBoxModule extends FLBuilderModule {
 	 * @method render_button
 	 */
 	public function render_button() {
-		if ( 'button' == $this->settings->cta_type ) {
-			if ( '' != $this->settings->button ) {
+		if ( 'button' === $this->settings->cta_type ) {
+			if ( '' !== $this->settings->button ) {
 				FLBuilder::render_module_html( 'uabb-button', $this->settings->button );
 			}
 		}
@@ -1108,7 +1110,7 @@ class SlideBoxModule extends FLBuilderModule {
 	 * @param var $pos gets the position of the image.
 	 */
 	public function render_image( $pos ) {
-		if ( $this->settings->front_img_icon_position == $pos ) {
+		if ( $this->settings->front_img_icon_position === $pos ) {
 			$imageicon_array = array(
 
 				/* General Section */
@@ -1171,12 +1173,12 @@ class SlideBoxModule extends FLBuilderModule {
 	 * @method render_overlay_icon
 	 */
 	public function render_overlay_icon() {
-		if ( 'style1' == $this->settings->slide_type && 'yes' == $this->settings->overlay ) {
+		if ( 'style1' === $this->settings->slide_type && 'yes' === $this->settings->overlay ) {
 			/* Render HTML Function */
 			echo '<div class="uabb-slide-box-overlay">';
-			echo    '<span class="uabb-icon-wrap">
+			echo '<span class="uabb-icon-wrap">
                         <span class="uabb-icon">
-                            <i class="' . $this->settings->overlay_icon . '"></i>
+                            <i class="' . esc_attr( $this->settings->overlay_icon ) . '"></i>
                         </span>
                     </span>';
 			echo '</div>';
@@ -1190,7 +1192,7 @@ class SlideBoxModule extends FLBuilderModule {
 	 */
 	public function render_dropdown_icon() {
 
-		if ( 'style2' == $this->settings->slide_type ) {
+		if ( 'style2' === $this->settings->slide_type ) {
 
 			$icon_settings = array(
 				'bg_color' => $this->settings->dropdown_icon_bg_color,
@@ -1201,7 +1203,7 @@ class SlideBoxModule extends FLBuilderModule {
 			);
 
 			echo '<div class="uabb-slide-dropdown">';
-			echo    '<span class="uabb-icon-wrap">
+			echo '<span class="uabb-icon-wrap">
                         <span class="uabb-icon">
                             <i class="fas fa-angle-down"></i>
                         </span>
@@ -1209,7 +1211,7 @@ class SlideBoxModule extends FLBuilderModule {
 			echo '</div>';
 		}
 
-		if ( 'style3' == $this->settings->slide_type ) {
+		if ( 'style3' === $this->settings->slide_type ) {
 
 			$icon_settings = array(
 				'color' => $this->settings->dropdown_icon_color,
@@ -1219,7 +1221,7 @@ class SlideBoxModule extends FLBuilderModule {
 			);
 
 			echo '<div class="uabb-slide-dropdown">';
-			echo    '<span class="uabb-icon-wrap">
+			echo '<span class="uabb-icon-wrap">
                         <span class="uabb-icon">
                             <i class="fas fa-plus"></i>
                         </span>
@@ -1233,7 +1235,7 @@ class SlideBoxModule extends FLBuilderModule {
  * Condition to verify Beaver Builder version.
  * And accordingly render the required form settings file.
  */
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/slide-box/slide-box-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/slide-box/slide-box-bb-less-than-2-2-compatibility.php';

@@ -1,0 +1,45 @@
+.flex-grid {
+  margin: 0 -10px;
+
+  .flex-item {
+    width: 100%;
+    margin-bottom: 20px;
+
+    .figure-card {
+      position: relative;
+      height: 100%;
+
+      .card-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .card-cta {
+          margin-top: auto;
+        }
+      }
+
+      .pattern-background {
+        bottom: 0;
+      }
+
+      &.no-image {
+        .card {
+          height: 100%;
+          margin: 0 30px 50px 0;
+        }
+
+        .pattern-background {
+          left: 30px;
+          bottom: -30px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    .figure-card .card {
+      height: calc(100% - 235px);
+    }
+  }
+}

@@ -108,17 +108,14 @@ class FacetWP_Facet_Number_Range extends FacetWP_Facet
 ?>
         <div class="facetwp-row">
             <div>
-                <?php _e('Other data source', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Other data source', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Use a separate value for the upper limit?', 'fwp' ); ?></div>
                 </div>
             </div>
             <div>
                 <data-sources
                     :facet="facet"
-                    :selected="facet.source_other"
-                    :sources="$root.data_sources"
                     settingName="source_other">
                 </data-sources>
             </div>

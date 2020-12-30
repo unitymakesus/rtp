@@ -42,21 +42,10 @@ class UABBOffCanvasModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
 		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/icon/' . $icon;
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 	/**
 	 * Function that renders the menus
@@ -106,20 +95,16 @@ class UABBOffCanvasModule extends FLBuilderModule {
 			case 'content':
 				global $wp_embed;
 				return '<div class="uabb-text-editor uabb-offcanvas-text-content" >' . wpautop( $wp_embed->autoembed( $settings->ct_content ) ) . '</div>';
-			break;
 			case 'saved_rows':
 				return '[fl_builder_insert_layout id="' . $settings->ct_saved_rows . '" type="fl-builder-template"]';
 			case 'saved_modules':
 				return '[fl_builder_insert_layout id="' . $settings->ct_saved_modules . '" type="fl-builder-template"]';
 			case 'saved_page_templates':
 				return '[fl_builder_insert_layout id="' . $settings->ct_page_templates . '" type="fl-builder-template"]';
-			break;
 			case 'menu':
 				return $this->get_menu( $settings );
-			break;
 			default:
 				return;
-			break;
 		}
 	}
 	/**
@@ -157,39 +142,53 @@ class UABBOffCanvasModule extends FLBuilderModule {
 		$btn_settings = array(
 
 			/* General Section */
-			'text'                       => $this->settings->btn_text,
+			'text'                                       => $this->settings->btn_text,
 
 			/* Link Section */
-			'link'                       => 'javascript:void(0)',
-			'link_target'                => '_self',
+			'link'                                       => 'javascript:void(0)',
+			'link_target'                                => '_self',
 			/* Style Section */
-			'style'                      => $this->settings->btn_style,
-			'border_size'                => $this->settings->btn_border_size,
-			'transparent_button_options' => $this->settings->btn_transparent_button_options,
-			'threed_button_options'      => $this->settings->btn_threed_button_options,
+			'style'                                      => $this->settings->btn_style,
+			'border_size'                                => $this->settings->btn_border_size,
+			'transparent_button_options'                 => $this->settings->btn_transparent_button_options,
+			'threed_button_options'                      => $this->settings->btn_threed_button_options,
 
 			/* Colors */
-			'bg_color'                   => $this->settings->btn_bg_color,
-			'bg_hover_color'             => $this->settings->btn_bg_hover_color,
-			'text_color'                 => $this->settings->btn_text_color,
-			'text_hover_color'           => $this->settings->btn_text_hover_color,
+			'bg_color'                                   => $this->settings->btn_bg_color,
+			'bg_hover_color'                             => $this->settings->btn_bg_hover_color,
+			'text_color'                                 => $this->settings->btn_text_color,
+			'text_hover_color'                           => $this->settings->btn_text_hover_color,
 
 			/* Icon */
-			'icon'                       => $this->settings->btn_icon,
-			'icon_position'              => $this->settings->btn_icon_position,
+			'icon'                                       => $this->settings->btn_icon,
+			'icon_position'                              => $this->settings->btn_icon_position,
 
 			/* Structure */
-			'width'                      => $this->settings->btn_width,
-			'custom_width'               => $this->settings->btn_custom_width,
-			'custom_height'              => $this->settings->btn_custom_height,
-			'padding_top_bottom'         => $this->settings->btn_padding_top_bottom,
-			'padding_left_right'         => $this->settings->btn_padding_left_right,
-			'border_radius'              => $this->settings->btn_border_radius,
-			'align'                      => $this->settings->btn_align,
-			'mob_align'                  => $this->settings->btn_mob_align,
+			'width'                                      => $this->settings->btn_width,
+			'custom_width'                               => $this->settings->btn_custom_width,
+			'custom_height'                              => $this->settings->btn_custom_height,
+			'padding_top_bottom'                         => $this->settings->btn_padding_top_bottom,
+			'padding_left_right'                         => $this->settings->btn_padding_left_right,
+			'border_radius'                              => $this->settings->btn_border_radius,
+			'align'                                      => $this->settings->btn_align,
+			'mob_align'                                  => $this->settings->btn_mob_align,
 
-			'a_data'                     => 'data-modal=' . $module_id . ' ',
-			'a_class'                    => 'uabb-offcanvas-trigger',
+			'a_data'                                     => 'data-modal=' . $module_id . ' ',
+			'a_class'                                    => 'uabb-offcanvas-trigger',
+			'button_padding_dimension_top'               => ( isset( $this->settings->button_padding_dimension_top ) ) ? $this->settings->button_padding_dimension_top : '',
+			'button_padding_dimension_left'              => ( isset( $this->settings->button_padding_dimension_left ) ) ? $this->settings->button_padding_dimension_left : '',
+			'button_padding_dimension_bottom'            => ( isset( $this->settings->button_padding_dimension_bottom ) ) ? $this->settings->button_padding_dimension_bottom : '',
+			'button_padding_dimension_right'             => ( isset( $this->settings->button_padding_dimension_right ) ) ? $this->settings->button_padding_dimension_right : '',
+			'button_padding_dimension_top_medium'        => ( isset( $this->settings->button_padding_dimension_top_medium ) ) ? $this->settings->button_padding_dimension_top_medium : '',
+			'button_padding_dimension_left_medium'       => ( isset( $this->settings->button_padding_dimension_left_medium ) ) ? $this->settings->button_padding_dimension_left_medium : '',
+			'button_padding_dimension_bottom_medium'     => ( isset( $this->settings->button_padding_dimension_bottom_medium ) ) ? $this->settings->button_padding_dimension_bottom_medium : '',
+			'button_padding_dimension_right_medium'      => ( isset( $this->settings->button_padding_dimension_right_medium ) ) ? $this->settings->button_padding_dimension_right_medium : '',
+			'button_padding_dimension_top_responsive'    => ( isset( $this->settings->button_padding_dimension_top_responsive ) ) ? $this->settings->button_padding_dimension_top_responsive : '',
+			'button_padding_dimension_left_responsive'   => ( isset( $this->settings->button_padding_dimension_left_responsive ) ) ? $this->settings->button_padding_dimension_left_responsive : '',
+			'button_padding_dimension_bottom_responsive' => ( isset( $this->settings->button_padding_dimension_bottom_responsive ) ) ? $this->settings->button_padding_dimension_bottom_responsive : '',
+			'button_padding_dimension_right_responsive'  => ( isset( $this->settings->button_padding_dimension_right_responsive ) ) ? $this->settings->button_padding_dimension_right_responsive : '',
+			'button_border'                              => ( isset( $this->settings->button_border ) ) ? $this->settings->button_border : '',
+			'border_hover_color'                         => ( isset( $this->settings->border_hover_color ) ) ? $this->settings->border_hover_color : '',
 		);
 		FLBuilder::render_module_html( 'uabb-button', $btn_settings );
 	}
@@ -203,14 +202,14 @@ class UABBOffCanvasModule extends FLBuilderModule {
 
 		$offcanvas_position = isset( $this->settings->offcanvas_position ) ? 'at-' . $this->settings->offcanvas_position : '';
 		?>
-			<div class="uabb-offcanvas-<?php echo $node; ?> uabb-offcanvas-parent-wrapper">
-				<div id="offcanvas-<?php echo $node; ?>" class="uabb-offcanvas uabb-custom-offcanvas uabb-offcanvas-position-<?php echo $offcanvas_position; ?> uabb-offcanvas-type-<?php echo $this->settings->offcanvas_type; ?>">
+			<div class="uabb-offcanvas-<?php echo esc_attr( $node ); ?> uabb-offcanvas-parent-wrapper">
+				<div id="offcanvas-<?php echo esc_attr( $node ); ?>" class="uabb-offcanvas uabb-custom-offcanvas uabb-offcanvas-position-<?php echo esc_attr( $offcanvas_position ); ?> uabb-offcanvas-type-<?php echo esc_attr( $this->settings->offcanvas_type ); ?>">
 					<div class="uabb-offcanvas-content">
 						<div class="uabb-offcanvas-action-wrap">
-							<?php echo $this->render_close_icon(); ?>
+							<?php echo wp_kses_post( $this->render_close_icon() ); ?>
 						</div>
 						<div class="uabb-offcanvas-text uabb-offcanvas-content-data">
-							<?php echo $this->get_modal_content( $this->settings ); ?>
+							<?php echo $this->get_modal_content( $this->settings ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
 					</div>
 				</div>
@@ -229,11 +228,11 @@ class UABBOffCanvasModule extends FLBuilderModule {
 
 		$close_position = 'uabb-offcanvas-close-icon-position-' . $this->settings->close_inside_icon_position;
 		?>
-		<div class="uabb-offcanvas-close-icon-wrapper <?php echo $close_position; ?>">
+		<div class="uabb-offcanvas-close-icon-wrapper <?php echo esc_attr( $close_position ); ?>">
 			<span class="uabb-offcanvas-close">
 				<?php
 				if ( '' !== $this->settings->close_icon ) {
-					echo '<i class="uabb-offcanvas-close-icon ' . $this->settings->close_icon . '"></i>';
+					echo '<i class="uabb-offcanvas-close-icon ' . esc_attr( $this->settings->close_icon ) . '"></i>';
 				} else {
 					?>
 					<svg class="uabb-offcanvas-close-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
@@ -250,7 +249,7 @@ class UABBOffCanvasModule extends FLBuilderModule {
  * Condition to verify Beaver Builder version.
  * And accordingly render the required form settings file.
  */
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/uabb-off-canvas-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-off-canvas/uabb-off-canvas-bb-less-than-2-2-compatibility.php';

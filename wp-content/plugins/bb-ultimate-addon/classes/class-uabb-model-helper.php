@@ -27,10 +27,10 @@ if ( ! class_exists( 'UABB_Model_Helper' && FLBuilderModel::is_builder_active() 
 		 *
 		 * @since 1.0
 		 */
-		function __construct() {
+		public function __construct() {
 
 			// Initialize BB Global Setting static variable.
-			UABB_Model_Helper::$bb_global_settings = FLBuilderModel::get_global_settings();
+			self::$bb_global_settings = FLBuilderModel::get_global_settings();
 		}
 
 		/**
@@ -38,7 +38,7 @@ if ( ! class_exists( 'UABB_Model_Helper' && FLBuilderModel::is_builder_active() 
 		 *
 		 * @param string $type gets the type of the layout.
 		 */
-		static public function get_post_template( $type = 'layout' ) {
+		public static function get_post_template( $type = 'layout' ) {
 			$posts = get_posts(
 				array(
 					'post_type'      => 'fl-builder-template',
@@ -76,9 +76,9 @@ if ( ! class_exists( 'UABB_Model_Helper' && FLBuilderModel::is_builder_active() 
 		 * @return  $option_array
 		 * @since   1.1.0.1
 		 */
-		static public function get_saved_page_template() {
+		public static function get_saved_page_template() {
 			if ( FLBuilderModel::node_templates_enabled() ) {
-				$page_templates = UABB_Model_Helper::get_post_template( 'layout' );
+				$page_templates = self::get_post_template( 'layout' );
 				$options        = array();
 
 				if ( count( $page_templates ) ) {
@@ -98,10 +98,10 @@ if ( ! class_exists( 'UABB_Model_Helper' && FLBuilderModel::is_builder_active() 
 		 * @return  $option_array
 		 * @since   1.1.0.1
 		 */
-		static public function get_saved_row_template() {
+		public static function get_saved_row_template() {
 			if ( FLBuilderModel::node_templates_enabled() ) {
 
-				$saved_rows = UABB_Model_Helper::get_post_template( 'row' );
+				$saved_rows = self::get_post_template( 'row' );
 				$options    = array();
 				if ( count( $saved_rows ) ) {
 					foreach ( $saved_rows as $saved_row ) {
@@ -120,9 +120,9 @@ if ( ! class_exists( 'UABB_Model_Helper' && FLBuilderModel::is_builder_active() 
 		 * @return  $option_array
 		 * @since   1.1.0.1
 		 */
-		static public function get_saved_module_template() {
+		public static function get_saved_module_template() {
 			if ( FLBuilderModel::node_templates_enabled() ) {
-				$saved_modules = UABB_Model_Helper::get_post_template( 'module' );
+				$saved_modules = self::get_post_template( 'module' );
 				$options       = array();
 				if ( count( $saved_modules ) ) {
 					foreach ( $saved_modules as $saved_module ) {

@@ -42,7 +42,7 @@ require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-wp-forms-styler/includes/wp-f
  * And accordingly render the required form settings file.
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-wp-forms-styler/uabb-wp-forms-styler-bb-less-than-2-2-compatibility.php';

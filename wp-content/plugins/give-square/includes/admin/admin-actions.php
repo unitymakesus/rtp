@@ -18,9 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param array $settings List of admin settings.
  *
+ * @return array
  * @since 1.0.0
  *
- * @return array
  */
 function give_square_register_settings( $settings ) {
 
@@ -31,36 +31,79 @@ function give_square_register_settings( $settings ) {
 				array(
 					'id'   => 'give_title_square',
 					'type' => 'title',
-					'desc' => sprintf(
-						'<p style="background: #FFF; padding: 15px;border-radius: 5px;"><strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a> %5$s</p>',
-						__( 'Note:', 'give-square' ),
-						__( 'Test donations do not appear in the Square Dashboard.', 'give-square' ),
-						esc_url( 'https://docs.connect.squareup.com/testing/sandbox#sandbox-limitations' ),
-						__( 'Click here', 'give-square' ),
-						__( 'for more information on Square\'s sandbox limitations.', 'give-square' )
-					)
+					'desc' => '',
 				),
 			);
 
 			if ( ! give_square_is_manual_api_keys_enabled() ) {
 
-				$business_locations = give_square_get_business_locations();
-
 				$settings[] = array(
-					'name'          => __( 'Square Connect', 'give-square' ),
-					'desc'          => '',
+					'name'          => __( 'Square Connection', 'give-square' ),
+					'desc'          => __( 'Connect with Square account to start receiving donations through card payments.', 'give-square' ),
 					'wrapper_class' => 'give-square-connect-field',
 					'id'            => 'square-connect-field',
 					'type'          => 'square_connect',
+					'mode'          => 'live',
 				);
+
+				// Provide a dynamic description for the Live "Location" description.
+
+				if ( ! give_get_option( 'give_square_business_location' )) {
+					$location_description = sprintf(
+					/* translators: 1. Connect Bold Text */
+						'<span class="dashicons dashicons-warning" style="color:orange;position:relative;top:1px;"></span> <strong>%1$s</strong><br> %2$s',
+						esc_html__( 'No Location Set', 'give-square' ),
+						__( 'Set a location above to start accepting donations. You must have <a href="https://squareup.com/dashboard/locations" target="_blank">locations</a> set in Square and approved to accept credit cards.', 'give-square' )
+					);
+				} else {
+					$location_description = __( 'The Square location displayed above is set to accept donations through this website. To change the location select from the choices in the dropdown above.', 'give-square' );
+				}
 
 				$settings[] = array(
 					'name'          => __( 'Location', 'give-square' ),
-					'desc'          => __( 'Select the location you wish to link to this site. You must have <a href="https://squareup.com/dashboard/locations" target="_blank">locations</a> set in Square and approved.', 'give-square' ),
+					'desc'          => $location_description,
 					'id'            => 'give_square_business_location',
 					'type'          => 'location_select',
 					'wrapper_class' => give_square_is_connected() ? 'give-square-business-location-wrap' : 'give-square-business-location-wrap give-hidden',
-					'options'       => $business_locations,
+					'options'       => give_square_get_business_locations(),
+					'mode'          => 'live',
+				);
+
+				$settings[] = array(
+					'name'          => __( 'Renew Token', 'give-square' ),
+					'desc'          => __( 'Clicking the button will renew the Square token when the renew token cron is not working properly.', 'give-square' ),
+					'id'            => 'square_renew_token',
+					'type'          => 'square_renew_token',
+					'mode'          => 'live',
+					'wrapper_class' => give_square_is_connected() ? '' : 'give-hidden',
+				);
+
+				$settings[] = array(
+					'name'          => __( 'Square Connection - Sandbox', 'give-square' ),
+					'desc'          => __( 'Connect with Square Sandbox account to start receiving donations through card payments.', 'give-square' ),
+					'wrapper_class' => 'give-square-connect-sandbox-field',
+					'id'            => 'square-connect-field',
+					'type'          => 'square_connect',
+					'mode'          => 'test',
+				);
+
+				$settings[] = array(
+					'name'          => __( 'Location - Sandbox', 'give-square' ),
+					'desc'          => __( 'Select the location you wish to link to this site. You must have <a href="https://squareupsandbox.com/dashboard/locations" target="_blank">locations</a> set in Square Sandbox account.', 'give-square' ),
+					'id'            => 'give_square_sandbox_business_location',
+					'type'          => 'location_select',
+					'wrapper_class' => give_square_sandbox_is_connected() ? 'give-square-business-location-wrap' : 'give-square-business-location-wrap give-hidden',
+					'options'       => give_square_get_business_locations( 'test' ),
+					'mode'          => 'test',
+				);
+
+				$settings[] = array(
+					'name'          => __( 'Renew Token - Sandbox', 'give-square' ),
+					'desc'          => __( 'Clicking the button will renew the Square token when the renew token cron is not working properly.', 'give-square' ),
+					'id'            => 'square_renew_token',
+					'type'          => 'square_renew_token',
+					'mode'          => 'test',
+					'wrapper_class' => give_square_sandbox_is_connected() ? '' : 'give-hidden',
 				);
 
 			} else {
@@ -151,33 +194,59 @@ add_filter( 'give_get_settings_gateways', 'give_square_register_settings' );
  */
 function give_square_connect_field( $attr ) {
 
-	$connection_status_css = give_square_is_connected() ? 'give-square-connected' : 'give-square-not-connected';
-
-	$disconnect_url = sprintf(
-		'https://connect.givewp.com/square/connect.php?action=disconnect&return_uri=%1$s&merchant_id=%2$s',
+	$mode                  = esc_attr( $attr['mode'] );
+	$connect_id            = ( 'live' === $mode ) ?
+		give_get_option( 'give_square_live_connect_id' ) :
+		give_get_option( 'give_square_sandbox_connect_id' );
+	$connection_status_css = (
+		( 'live' === $mode && ! give_square_is_connected() ) ||
+		( 'test' === $mode && ! give_square_sandbox_is_connected() )
+	) ? 'give-square-not-connected' : 'give-square-connected';
+	$disconnect_text       = ( 'live' === $mode ) ?
+		__( 'Disconnect from Square', 'give-square' ) :
+		__( 'Disconnect from Square Sandbox', 'give-square' );
+	$disconnect_url        = sprintf(
+		'https://connect.givewp.com/square/connect_%3$s.php?action=disconnect&return_uri=%1$s&merchant_id=%2$s&connect_id=%4$s',
 		site_url(),
-		give_get_option( 'give_square_live_merchant_id' )
+		give_square_get_merchant_id( $mode ),
+		$mode,
+		$connect_id
+	);
+	$disconnect_popup_text = sprintf(
+	/* translators: %s Square Merchant ID */
+		__( 'Are you sure you want to disconnect GiveWP from Square? If disconnected, this website and any others sharing the same Square account (%1$s) that are connected to the Square GiveWP App will need to reconnect in order to process donation payments.', 'give-square' ),
+		give_square_get_merchant_id( $mode )
 	);
 	?>
 	<tr valign="top" <?php echo ! empty( $attr['wrapper_class'] ) ? 'class="' . esc_attr( $attr['wrapper_class'] ) . '"' : ''; ?>>
 
 		<th scope="row" class="titledesc">
-			<label for="<?php echo esc_attr( $attr['id'] ); ?>"> <?php esc_attr_e( 'Square Connection', 'give-square' ); ?></label>
+			<label for="<?php echo esc_attr( $attr['id'] ); ?>">
+				<?php echo esc_attr( $attr['name'] ); ?>
+			</label>
 		</th>
 
 		<td class="give-forminp give-forminp-api_key <?php echo $connection_status_css; ?> ">
 			<?php
-			if ( ! give_square_is_connected() ) {
-				echo give_square_connect_button();
+			if (
+				( 'live' === $mode && ! give_square_is_connected() ) ||
+				( 'test' === $mode && ! give_square_sandbox_is_connected() )
+			) {
+				echo give_square_connect_button( $mode );
 				?>
 				<p class="give-field-description">
-					<?php esc_html_e( 'Connect with Square to start receiving donations through card payments.', 'give-square' ); ?>
+					<?php echo esc_html( $attr['desc'] ); ?>
 				</p>
 				<?php
 			} else {
 				?>
-				<a href="<?php echo esc_url( $disconnect_url ); ?>" id="give-square-disconnect" class="button-primary">
-					<?php esc_html_e( 'Disconnect from Square', 'give-square' ); ?>
+				<a
+					href="<?php echo esc_url( $disconnect_url ); ?>"
+					id="give-square-disconnect"
+					class="button-primary"
+					data-disconnect-popup-text="<?php echo $disconnect_popup_text; ?>"
+				>
+					<?php echo $disconnect_text; ?>
 				</a>
 				<?php
 			}
@@ -200,7 +269,7 @@ add_action( 'give_admin_field_square_connect', 'give_square_connect_field' );
 function give_square_location_select_field( $attr ) {
 
 	$option_value = give_get_option( $attr['id'], $attr['default'] );
-	$refresh_url  = admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&give_action=square_refresh_locations';
+	$refresh_url  = admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&give_action=square_refresh_locations&mode=' . $attr['mode'];
 	?>
 	<tr valign="top" class="<?php echo esc_html( $attr['wrapper_class'] ); ?>">
 		<th scope="row" class="titledesc">
@@ -208,23 +277,23 @@ function give_square_location_select_field( $attr ) {
 		</th>
 		<td class="give-forminp give-forminp-<?php echo esc_html( $attr['type'] ); ?>">
 			<select
-					name="<?php echo esc_attr( $attr['id'] ); ?>"
-					id="<?php echo esc_attr( $attr['id'] ); ?>"
-					style="<?php echo esc_attr( $attr['css'] ); ?>"
-					class="<?php echo esc_attr( $attr['class'] ); ?>"
+				name="<?php echo esc_attr( $attr['id'] ); ?>"
+				id="<?php echo esc_attr( $attr['id'] ); ?>"
+				style="<?php echo esc_attr( $attr['css'] ); ?>"
+				class="<?php echo esc_attr( $attr['class'] ); ?>"
 			>
 				<?php
 				if ( ! empty( $attr['options'] ) ) {
 					foreach ( $attr['options'] as $key => $value ) {
 						?>
 						<option value="<?php echo esc_attr( $key ); ?>"
-													<?php
-													if ( is_array( $option_value ) ) {
-														selected( in_array( $key, $option_value, true ), true );
-													} else {
-														selected( $option_value, $key );
-													}
-						?>
+							<?php
+							if ( is_array( $option_value ) ) {
+								selected( in_array( $key, $option_value, true ), true );
+							} else {
+								selected( $option_value, $key );
+							}
+							?>
 						>
 							<?php echo esc_html( $value ); ?>
 						</option>
@@ -249,47 +318,62 @@ add_action( 'give_admin_field_location_select', 'give_square_location_select_fie
 /**
  * Store oAuth credentials.
  *
+ * @param array $args List of arguments.
+ *
  * @since 1.0.0
  *
- * @param array $args List of arguments.
  */
 function give_square_store_oauth_credentials( $args ) {
 
-	// If Square is not connected via oAuth then store the details fetched.
-	if ( ! give_square_is_connected() ) {
+	$mode = ! empty( $args['mode'] ) ? give_clean( $args['mode'] ) : false;
 
+	if ( 'test' === $mode && ! give_square_sandbox_is_connected() ) {
 		// Store for Sandbox purposes.
 		give_update_option( 'give_square_sandbox_access_token', give_square_encrypt_string( $args['access_token'] ) );
 		give_update_option( 'give_square_sandbox_application_id', $args['application_id'] );
+		give_update_option( 'give_square_sandbox_expires_at', $args['expires_at'] );
+		give_update_option( 'give_square_sandbox_merchant_id', $args['merchant_id'] );
+		give_update_option( 'give_square_sandbox_token_type', $args['token_type'] );
+		give_update_option( 'give_square_sandbox_refresh_token', $args['refresh_token'] );
+		give_update_option( 'give_square_sandbox_connect_id', $args['connect_id'] );
+		give_update_option( 'give_square_sandbox_is_connected', true );
 
+		// Update Locations.
+		give_square_get_business_locations( 'test' );
+
+	} elseif ( 'live' === $mode && ! give_square_is_connected() ) {
 		// Store for LIVE purposes.
 		give_update_option( 'give_square_live_access_token', give_square_encrypt_string( $args['access_token'] ) );
 		give_update_option( 'give_square_live_application_id', $args['application_id'] );
 		give_update_option( 'give_square_live_expires_at', $args['expires_at'] );
 		give_update_option( 'give_square_live_merchant_id', $args['merchant_id'] );
 		give_update_option( 'give_square_live_token_type', $args['token_type'] );
+		give_update_option( 'give_square_live_refresh_token', $args['refresh_token'] );
+		give_update_option( 'give_square_live_connect_id', $args['connect_id'] );
 		give_update_option( 'give_square_is_connected', true );
+
+		// Update Locations.
+		give_square_get_business_locations( 'live' );
 	}
 }
+
 add_action( 'give_square_is_connected', 'give_square_store_oauth_credentials' );
 // This action will be fire from gateway oauth. Check https://github.com/impress-org/gateway-oauth > square > connect.php for more information.
 
 /**
  * Disconnect Square oAuth.
  *
+ * @param array $args List of arguments.
+ *
  * @since 1.0.0
  *
- * @param array $args List of arguments.
  */
 function give_square_disconnect_oauth( $args = array() ) {
 
+	$mode = ! empty( $args['mode'] ) ? give_clean( $args['mode'] ) : false;
+
 	// If Square is not connected via oAuth then store the details fetched.
-	if ( give_square_is_connected() ) {
-
-		// Delete Sandbox details.
-		give_delete_option( 'give_square_sandbox_access_token' );
-		give_delete_option( 'give_square_sandbox_application_id' );
-
+	if ( give_square_is_connected() && 'live' === $mode ) {
 		// Delete LIVE details.
 		give_delete_option( 'give_square_live_access_token' );
 		give_delete_option( 'give_square_live_application_id' );
@@ -297,12 +381,33 @@ function give_square_disconnect_oauth( $args = array() ) {
 		give_delete_option( 'give_square_live_expires_at' );
 		give_delete_option( 'give_square_live_merchant_id' );
 		give_delete_option( 'give_square_live_token_type' );
+		give_delete_option( 'give_square_live_refresh_token' );
+		give_delete_option( 'give_square_live_connect_id' );
 		give_delete_option( 'give_square_is_connected' );
 
 		// Delete Locations List Cache when Square is disconnected.
 		Give_Cache::delete( 'give_cache_square_locations_list' );
 	}
+
+	// If Square Sandbox is not connected via oAuth then store the details fetched.
+	if ( give_square_sandbox_is_connected() && 'test' === $mode ) {
+		// Delete Sandbox details.
+		give_delete_option( 'give_square_sandbox_access_token' );
+		give_delete_option( 'give_square_sandbox_application_id' );
+		give_delete_option( 'give_square_sandbox_business_location' );
+		give_delete_option( 'give_square_sandbox_expires_at' );
+		give_delete_option( 'give_square_sandbox_merchant_id' );
+		give_delete_option( 'give_square_sandbox_token_type' );
+		give_delete_option( 'give_square_sandbox_refresh_token' );
+		give_delete_option( 'give_square_sandbox_connect_id' );
+		give_delete_option( 'give_square_sandbox_is_connected' );
+
+		// Delete Locations List Cache when Square is disconnected.
+		Give_Cache::delete( 'give_cache_square_sandbox_locations_list' );
+	}
+
 }
+
 add_action( 'give_square_disconnect_oauth', 'give_square_disconnect_oauth' );
 // This action will be fire from gateway oauth. Check https://github.com/impress-org/gateway-oauth > square > connect.php for more information.
 
@@ -332,7 +437,7 @@ function give_square_register_admin_notices() {
 							array(
 								'id'          => 'give-square-obtain-token-error',
 								'type'        => 'error',
-								'description' => __( 'Unable to obtain token from Square to connect using OAuth API.', 'give' ),
+								'description' => __( 'Unable to obtain token from Square to connect using oAuth API.', 'give-square' ),
 								'show'        => true,
 							)
 						);
@@ -343,7 +448,29 @@ function give_square_register_admin_notices() {
 							array(
 								'id'          => 'give-square-revoke-token-error',
 								'type'        => 'error',
-								'description' => __( 'Unable to revoke token of a merchant from Square to disconnect using OAuth API.', 'give' ),
+								'description' => __( 'Unable to revoke token of a merchant from Square to disconnect using oAuth API.', 'give-square' ),
+								'show'        => true,
+							)
+						);
+						break;
+
+					case 'square-renew-success':
+						Give()->notices->register_notice(
+							array(
+								'id'          => 'give-square-renew-success',
+								'type'        => 'success',
+								'description' => __( '<strong>Token Renewed Successfully:</strong> The Square access token has been successfully refreshed.', 'give-square' ),
+								'show'        => true,
+							)
+						);
+						break;
+
+					case 'square-renew-failure':
+						Give()->notices->register_notice(
+							array(
+								'id'          => 'give-square-renew-failure',
+								'type'        => 'error',
+								'description' => __( 'Unable to renew token of a merchant from Square using oAuth API.', 'give-square' ),
 								'show'        => true,
 							)
 						);
@@ -353,6 +480,7 @@ function give_square_register_admin_notices() {
 			}// End if().
 		} // End foreach().
 	} // End if().
+
 }
 
 add_action( 'admin_notices', 'give_square_register_admin_notices', - 1 );
@@ -360,12 +488,21 @@ add_action( 'admin_notices', 'give_square_register_admin_notices', - 1 );
 /**
  * Refresh business locations list by deleting cache.
  *
- * @since 1.0.0
+ * @param array $args List of arguments.
  *
  * @return void
+ * @since 1.0.0
+ *
  */
-function give_square_refresh_locations() {
-	Give_Cache::delete( 'give_cache_square_locations_list' );
+function give_square_refresh_locations( $args ) {
+	$mode = ! empty( $args['mode'] ) ? give_clean( $args['mode'] ) : 'live';
+
+	if ( 'live' === $mode ) {
+		Give_Cache::delete( 'give_cache_square_locations_list' );
+	} elseif ( 'test' === $mode ) {
+		Give_Cache::delete( 'give_cache_square_sandbox_locations_list' );
+	}
+
 	wp_safe_redirect( esc_url_raw( admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=square-settings' ) );
 }
 
@@ -375,13 +512,14 @@ add_action( 'give_square_refresh_locations', 'give_square_refresh_locations' );
  * Process refund in Square.
  *
  * @access public
- * @since  1.0.0
  *
  * @param string $donation_id Payment ID.
  * @param string $new_status  New Donation Status.
  * @param string $old_status  Old Donation Status.
  *
  * @return      void
+ * @since  1.0.0
+ *
  */
 function give_square_process_refund( $donation_id, $new_status, $old_status ) {
 
@@ -413,29 +551,29 @@ function give_square_process_refund( $donation_id, $new_status, $old_status ) {
 	}
 
 	// Set the Access Token prior to any API calls.
-	\SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken( give_square_get_access_token() );
+	$api_client = give_square_setup_api_config();
 
-	$location_id     = give_square_get_location_id();
-	$transaction_api = new SquareConnect\Api\TransactionsApi();
-	$data            = array(
-		'idempotency_key' => give_get_meta( $donation_id, '_give_square_donation_idempotency_key', true ),
-		'tender_id'       => give_get_meta( $donation_id, '_give_square_donation_tender_id', true ),
-		'amount_money'    => give_square_prepare_donation_amount( give_format_amount( give_donation_amount( $donation_id ) ) ),
-		'reason'          => sprintf( __( 'Refund from GiveWP Admin on %s', 'give-square' ), get_bloginfo( 'url' ) ),
-	);
+	$idempotency_key = give_get_meta( $donation_id, '_give_square_donation_idempotency_key', true );
+	$amount_money    = give_square_prepare_donation_amount( give_format_amount( give_donation_amount( $donation_id ) ) );
+	$refund_reason   = sprintf( __( 'Refund from GiveWP Admin on %s', 'give-square' ), get_bloginfo( 'url' ) );
 
-	$refund_request = new \SquareConnect\Model\CreateRefundRequest( $data ); // \SquareConnect\Model\CreateRefundRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
+	$refund_api             = new SquareConnect\Api\RefundsApi( $api_client );
+	$refund_payment_request = new \SquareConnect\Model\RefundPaymentRequest();
+	$refund_payment_request->setIdempotencyKey( $idempotency_key );
+	$refund_payment_request->setPaymentId( $transaction_id );
+	$refund_payment_request->setAmountMoney( $amount_money );
+	$refund_payment_request->setReason( $refund_reason );
 
 	try {
-		$result    = $transaction_api->createRefund( $location_id, $transaction_id, $refund_request );
+		$result    = $refund_api->refundPayment( $refund_payment_request );
 		$refund_id = $result->getRefund()->getId();
 
 		if ( $refund_id ) {
 			give_insert_payment_note(
 				$donation_id,
 				sprintf(
-					/* translators: 1. Refund ID */
-					esc_html__( 'Payment refunded in Square: %s', 'give-stripe' ),
+				/* translators: 1. Refund ID */
+					esc_html__( 'Payment refunded in Square: %s', 'give-square' ),
 					$refund_id
 				)
 			);
@@ -444,9 +582,9 @@ function give_square_process_refund( $donation_id, $new_status, $old_status ) {
 
 		// Log it with DB.
 		give_record_gateway_error(
-			__( 'Square Error', 'give-stripe' ),
+			__( 'Square Error', 'give-square' ),
 			sprintf(
-				/* translators: 1. Error Message, 2. Exception Message, 3. Code Text, 4. Code Message. */
+			/* translators: 1. Error Message, 2. Exception Message, 3. Code Text, 4. Code Message. */
 				'%1$s %2$s %3$s %4$s',
 				__( 'The Square payment gateway returned an error while refunding a donation. Message:', 'give-square' ),
 				$e->getMessage(),
@@ -465,9 +603,9 @@ add_action( 'give_update_payment_status', 'give_square_process_refund', 200, 3 )
  *
  * @param int $donation_id Donation ID.
  *
+ * @return void
  * @since 1.0.0
  *
- * @return void
  */
 function give_square_opt_square_refund( $donation_id ) {
 
@@ -495,12 +633,12 @@ add_action( 'give_view_donation_details_totals_after', 'give_square_opt_square_r
 /**
  * Given a transaction ID, generate a link to the Square transaction ID details
  *
- * @since  1.0.0
- *
  * @param string $transaction_id The Transaction ID.
- * @param int    $payment_id The payment ID for this transaction.
+ * @param int    $payment_id     The payment ID for this transaction.
  *
  * @return string                 A link to the Transaction details
+ * @since  1.0.0
+ *
  */
 function give_square_link_transaction_id( $transaction_id, $payment_id ) {
 
@@ -532,24 +670,26 @@ function give_square_link_transaction_id( $transaction_id, $payment_id ) {
 add_filter( 'give_payment_details_transaction_id-square', 'give_square_link_transaction_id', 10, 2 );
 
 /**
- * Show notice if test mode enabled
+ * Display notices for Square when necessary.
  *
  * @since 1.0.3
  */
 function give_square_admin_notices() {
-	// Show info notice to admin when test mode is enabled and admin is not square setting page.
-	if ( ! Give_Admin_Settings::is_setting_page( 'gateways', 'square-settings' ) ) {
-		return;
-	}
 
 	$business_locations = give_square_get_business_locations();
 
 	// Show error notice if business locations doesn't exists.
-	if ( is_array( $business_locations ) && count( $business_locations ) <= 1 ) {
+	if (
+		is_array( $business_locations ) &&
+		count( $business_locations ) <= 1 &&
+		! give_square_is_manual_api_keys_enabled() && give_square_is_connected()
+	) {
 		Give()->notices->register_notice(
 			array(
 				'id'          => 'give-square-credit-card-processing-not-enabled-error',
-				'description' => __( 'The connected Square account does not contain any locations that have credit card processing enabled, so the locations list is empty.', 'give-square' ),
+				'description' => sprintf( __( '<strong>No Eligible Square Locations Found:</strong> The connected Square account does not contain any locations that have credit card processing enabled. Please configure a location that has credit card processing enabled and set it within the <a href="%1$s">gateway\'s settings screen</a>.', 'give-square' ),
+					esc_url_raw( admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=square-settings' ) ),
+
 				'type'        => 'error',
 				'dismissible' => false,
 			)
@@ -570,12 +710,12 @@ add_action( 'admin_notices', 'give_square_admin_notices' );
  *
  * @return mixed
  */
-function give_square_admin_sanitize_settings( $value, $option ){
-	if( ! $value || ! Give_Admin_Settings::is_setting_page( 'gateways', 'square-settings' ) ) {
+function give_square_admin_sanitize_settings( $value, $option ) {
+	if ( ! $value || ! Give_Admin_Settings::is_setting_page( 'gateways', 'square-settings' ) ) {
 		return $value;
 	}
 
-	if(
+	if (
 		in_array( $option['id'], array( 'give_square_live_access_token', 'give_square_sandbox_access_token' ) )
 		&& $value !== give_get_option( $option['id'], '' )
 	) {
@@ -584,14 +724,15 @@ function give_square_admin_sanitize_settings( $value, $option ){
 
 	return $value;
 }
+
 add_action( 'give_admin_settings_sanitize_option', 'give_square_admin_sanitize_settings', 10, 2 );
 
 /**
  * This AJAX function ensure that the Square account is disconnected properly.
  *
+ * @return void
  * @since 1.0.4
  *
- * @return void
  */
 function give_square_disconnect_connection() {
 
@@ -610,3 +751,121 @@ function give_square_disconnect_connection() {
 }
 
 add_action( 'wp_ajax_square_disconnect_connection', 'give_square_disconnect_connection' );
+
+/**
+ * This function adds renew token notification under System Info.
+ *
+ * @param array $settings List of Give settings.
+ *
+ * @return void
+ * @since 1.0.5
+ *
+ */
+function give_square_add_renew_token_notification( $settings ) {
+	$label = __( 'Square Token Renewal Date', 'give-square' );
+	?>
+	<tr>
+		<td data-export-label="<?php echo $label; ?>">
+			<?php echo $label; ?>:
+		</td>
+		<td class="help">
+			<?php echo Give()->tooltips->render_help( __( 'Displays when the last Square refresh token renewal was triggered.', 'give-square' ) ); ?>
+		</td>
+		<td>
+			<?php
+			echo ! empty( $settings['give_square_renew_token_live_trigger_date'] ) ?
+				$settings['give_square_renew_token_live_trigger_date'] :
+				'N/A'
+			?>
+		</td>
+	</tr>
+	<?php
+}
+
+add_action( 'give_add_system_info_configuration', 'give_square_add_renew_token_notification' );
+
+/**
+ * This function will be used to display renew token field under advanced tab.
+ *
+ * @param array $attr List of attributes.
+ *
+ * @return void
+ * @since 1.0.5
+ *
+ */
+function give_square_renew_token_field( $attr ) {
+	$renew_url = admin_url() . "edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=square-settings&give_action=square_renew_token&mode={$attr['mode']}";
+	?>
+	<tr valign="top" class="<?php echo esc_html( $attr['wrapper_class'] ); ?>">
+		<th scope="row" class="titledesc">
+			<label for="<?php echo esc_attr( $attr['id'] ); ?>"><?php echo esc_attr( $attr['title'] ); ?></label>
+		</th>
+		<td class="give-forminp give-forminp-<?php echo esc_html( $attr['type'] ); ?>">
+			<a href="<?php echo esc_url_raw( $renew_url ); ?>" class="button">
+				<?php echo esc_attr( $attr['name'] ); ?>
+			</a>
+			<p>
+				<?php
+				$live_refresh_date = give_get_option( 'give_square_renew_token_live_trigger_date' );
+				$test_refresh_date = give_get_option( 'give_square_renew_token_sandbox_trigger_date' );
+
+				echo sprintf(
+					__( 'Renew Token Refresh Date: %1$s', 'give-square' ),
+					'live' === $attr['mode'] ?
+						( ! empty( $live_refresh_date ) ? $live_refresh_date : 'N/A' ) :
+						( ! empty( $test_refresh_date ) ? $test_refresh_date : 'N/A' )
+				);
+				?>
+			</p>
+			<div class="give-field-description">
+				<?php echo wp_kses_post( $attr['desc'] ); ?>
+			</div>
+		</td>
+	</tr>
+	<?php
+}
+
+add_action( 'give_admin_field_square_renew_token', 'give_square_renew_token_field' );
+
+/**
+ * This function is used to change the connection status when manual API settings changed.
+ *
+ * @param array  $update_options List of update options.
+ * @param string $option_name    Option Name.
+ * @param array  $old_options    List of old options.
+ *
+ * @return void
+ * @since 1.1.0
+ *
+ */
+function give_square_change_connection_status( $update_options, $option_name, $old_options ) {
+
+	if (
+		give_is_setting_enabled( $update_options['square_api_keys'] ) &&
+		! give_is_setting_enabled( $old_options['square_api_keys'] ) &&
+		( give_square_is_connected() || give_square_sandbox_is_connected() )
+	) {
+		// Flush out live mode oAuth settings.
+		give_delete_option( 'give_square_is_connected' );
+		give_delete_option( 'give_square_live_access_token' );
+		give_delete_option( 'give_square_live_application_id' );
+		give_delete_option( 'give_square_live_expires_at' );
+		give_delete_option( 'give_square_live_merchant_id' );
+		give_delete_option( 'give_square_live_token_type' );
+		give_delete_option( 'give_square_live_refresh_token' );
+
+		// Flush out sandbox mode oAuth settings.
+		give_delete_option( 'give_square_sandbox_is_connected' );
+		give_delete_option( 'give_square_sandbox_access_token' );
+		give_delete_option( 'give_square_sandbox_application_id' );
+		give_delete_option( 'give_square_sandbox_expires_at' );
+		give_delete_option( 'give_square_sandbox_merchant_id' );
+		give_delete_option( 'give_square_sandbox_token_type' );
+		give_delete_option( 'give_square_sandbox_refresh_token' );
+	}
+}
+
+add_action( 'give_save_settings_give_settings', 'give_square_change_connection_status', 10, 3 );
+
+
+

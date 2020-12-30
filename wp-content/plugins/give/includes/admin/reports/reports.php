@@ -39,17 +39,36 @@ function give_reports_page() {
 
 		<h2 class="nav-tab-wrapper">
 			<?php foreach ( $views as $tab => $label ) { ?>
-				<a href="<?php echo esc_url( add_query_arg( array(
-					'tab'              => $tab,
-					'settings-updated' => false,
-				), $current_page ) ); ?>" class="nav-tab <?php echo $tab === $active_tab ? esc_attr( 'nav-tab-active' ) : ''; ?>"><?php echo esc_html( $label ); ?></a>
+				<a href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'              => $tab,
+							'settings-updated' => false,
+						],
+						$current_page
+					)
+				);
+				?>
+				" class="nav-tab <?php echo $tab === $active_tab ? esc_attr( 'nav-tab-active' ) : ''; ?>"><?php echo esc_html( $label ); ?></a>
 			<?php } ?>
 			<?php if ( current_user_can( 'export_give_reports' ) ) { ?>
-				<a href="<?php echo esc_url( add_query_arg( array(
-					'tab'              => 'export',
-					'settings-updated' => false,
-				), $current_page ) ); ?>" class="nav-tab <?php echo 'export' === $active_tab ? esc_attr( 'nav-tab-active' ) : ''; ?>"><?php esc_html_e( 'Export', 'give' ); ?></a>
-			<?php }
+				<a href="
+				<?php
+				echo esc_url(
+					add_query_arg(
+						[
+							'tab'              => 'export',
+							'settings-updated' => false,
+						],
+						$current_page
+					)
+				);
+				?>
+				" class="nav-tab <?php echo 'export' === $active_tab ? esc_attr( 'nav-tab-active' ) : ''; ?>"><?php esc_html_e( 'Export', 'give' ); ?></a>
+				<?php
+			}
 			/**
 			 * Fires in the report tabs.
 			 *
@@ -99,11 +118,11 @@ function give_reports_page() {
  * @return array $views Report Views
  */
 function give_reports_default_views() {
-	$views = array(
-		'earnings' => esc_html__( 'Income', 'give' ),
+	$views = [
+		'earnings' => esc_html__( 'Revenue', 'give' ),
 		'forms'    => esc_html__( 'Forms', 'give' ),
 		'gateways' => esc_html__( 'Donation Methods', 'give' ),
-	);
+	];
 
 	$views = apply_filters( 'give_report_views', $views );
 
@@ -139,8 +158,8 @@ function give_get_reporting_view( $default = 'earnings' ) {
  */
 function give_reports_tab_reports() {
 
-	if( ! current_user_can( 'view_give_reports' ) ) {
-		wp_die( __( 'You do not have permission to access this report', 'give' ), __( 'Error', 'give' ), array( 'response' => 403 ) );
+	if ( ! current_user_can( 'view_give_reports' ) ) {
+		wp_die( __( 'You do not have permission to access this report', 'give' ), __( 'Error', 'give' ), [ 'response' => 403 ] );
 	}
 
 	$current_view = 'earnings';
@@ -285,7 +304,7 @@ add_action( 'give_reports_view_gateways', 'give_reports_gateways_table' );
 function give_reports_earnings() {
 	?>
 	<div class="tablenav top reports-table-nav">
-		<h2 class="reports-earnings-title screen-reader-text"><?php _e( 'Income Report', 'give' ); ?></h2>
+		<h2 class="reports-earnings-title screen-reader-text"><?php _e( 'Revenue Report', 'give' ); ?></h2>
 	</div>
 	<?php
 	give_reports_graph();
@@ -306,12 +325,12 @@ function give_estimated_monthly_stats() {
 
 	if ( false === $estimated ) {
 
-		$estimated = array(
+		$estimated = [
 			'earnings' => 0,
 			'sales'    => 0,
-		);
+		];
 
-		$stats = new Give_Payment_Stats;
+		$stats = new Give_Payment_Stats();
 
 		$to_date_earnings = $stats->get_earnings( 0, 'this_month' );
 		$to_date_sales    = $stats->get_sales( 0, 'this_month' );

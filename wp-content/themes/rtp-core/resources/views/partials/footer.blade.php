@@ -1,17 +1,12 @@
-@php
-  $footer_color = get_theme_mod( 'footer_color' );
-  $text_color = get_theme_mod( 'footer_text_color' );
-@endphp
 <footer class="page-footer" role="contentinfo">
   <div class="footer-social row">
     <div class="container-wide">
-      <h2>Stay connected to <?php echo get_bloginfo( 'name' ); ?></h2>
-
-      <div class="borders flex flex-wrap align-center space-between">
-        <div class="footer-social-left flex align-center col l6 m12">
+      <h2>Stay connected to {{ get_bloginfo( 'name' ) }}</h2>
+      <div class="borders row">
+        <div class="footer-social-left col m6 s12">
           @php dynamic_sidebar('footer-social-left') @endphp
         </div>
-        <div class="footer-social-right flex flex-end align-center col l6 m12">
+        <div class="footer-social-right col m6 s12">
           @php dynamic_sidebar('footer-social-right') @endphp
         </div>
       </div>

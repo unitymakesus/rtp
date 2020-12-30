@@ -313,28 +313,8 @@ class PrliLink {
 
       if(preg_match($match_str, $uri, $match_val)) {
         // Match longest slug -- this is the most common
-        $pretty_link_params = (isset($match_val[3])?$match_val[3]:'');
         if( $pretty_link_found = $this->is_pretty_link_slug( $match_val[2] ) )
           return compact('pretty_link_found');
-
-        // Trim down the matched link
-        $matched_link = preg_replace('#/[^/]*?$#','',$match_val[2],1);
-
-        // cycle through the links (maximum depth 25 folders so we don't get out
-        // of control -- that should be enough eh?) and trim the link down each time
-        for( $i=0; ($i < 25) and
-                   $matched_link and
-                   !empty($matched_link) and
-                   $matched_link != $match_val[2]; $i++ ) {
-          $new_match_str ="#^{$subdir_str}({$struct})({$matched_link})(.*?)?$#";
-
-          $pretty_link_params = (isset($match_val[3])?$match_val:'');
-          if( $pretty_link_found = $this->is_pretty_link_slug( $match_val[2] ) )
-            return compact('pretty_link_found');
-
-          // Trim down the matched link and try again
-          $matched_link = preg_replace('#/[^/]*$#','',$match_val[2],1);
-        }
       }
     }
 
@@ -481,6 +461,7 @@ class PrliLink {
       'description' => isset($values['description']) && is_string($values['description']) ? sanitize_textarea_field($values['description']) : '',
       'group_id' => isset($values['group_id']) && is_numeric($values['group_id']) ? (int) $values['group_id'] : null,
       'nofollow' => isset($values['nofollow']) ? 1 : 0,
+      'sponsored' => isset($values['sponsored']) ? 1 : 0,
       'param_forwarding' => isset($values['param_forwarding']) ? 1 : 0,
       'track_me' => isset($values['track_me']) ? 1 : 0,
       'link_cpt_id' => isset($values['link_cpt_id']) && is_numeric($values['link_cpt_id']) ? (int) $values['link_cpt_id'] : 0

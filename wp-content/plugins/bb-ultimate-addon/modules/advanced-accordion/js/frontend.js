@@ -23,7 +23,7 @@
 		{	
 			var button_level = $( this.nodeClass ).find('.uabb-adv-accordion-button').first().closest('.uabb-adv-accordion');
 
-			button_level.children('.uabb-adv-accordion-item').children('.uabb-adv-accordion-button').click( $.proxy( this._buttonClick, this ) );
+			button_level.children('.uabb-adv-accordion-item').children('.uabb-adv-accordion-button').on('click keypress', $.proxy( this._buttonClick, this ) );
 
 			this._enableFirst();
 			this._initAnchorLinks();
@@ -132,7 +132,7 @@
 		_buttonClick: function( e )
 		{
 			// initialize value of static variable
-
+			e.preventDefault();
 			var firstitem = this.settings.enable_first;
 			this._multiInstance();
 			if( firstitem != 'yes' ) {
@@ -155,7 +155,9 @@
 			
 			if(accordion.hasClass('uabb-adv-accordion-collapse')) {
 				accordion.find( '.uabb-adv-accordion-item-active' ).removeClass( 'uabb-adv-accordion-item-active' );
-				allContent.slideUp('normal');   
+				allContent.slideUp('normal');  
+				accordion.find( '.uabb-adv-accordion-button' ).attr('aria-expanded', 'false');
+				accordion.find( '.uabb-adv-accordion-content' ).attr('aria-hidden', 'true');
 				if( this.settings.icon_animation == 'none' ) {
 					allIcons.removeClass( this.open_icon );
 					allIcons.addClass( this.close_icon );
@@ -163,14 +165,17 @@
 			}
 			
 			if( content.is(':hidden') ) {
+				button.attr('aria-expanded', 'true');
+				item.find( '.uabb-adv-accordion-content' ).attr('aria-hidden', 'false');
 				item.addClass( 'uabb-adv-accordion-item-active' );
 				content.slideDown('normal', this._slideDownComplete);
 				if( this.settings.icon_animation == 'none' ) {
-					//console.log( this.open_icon );
 					icon.removeClass( this.close_icon );
 					icon.addClass( this.open_icon );
 				}
 			} else {
+				button.attr('aria-expanded', 'false');
+				item.find( '.uabb-adv-accordion-content' ).attr('aria-hidden', 'true');
 				item.removeClass( 'uabb-adv-accordion-item-active' );
 				content.slideUp('normal', this._slideUpComplete);
 				if( this.settings.icon_animation == 'none' ) {
@@ -182,6 +187,25 @@
 			var trigger_args = '.fl-node-'+ this.node + ' .uabb-adv-accordion-item-active';
 			// Trigger the Adv Tab Click trigger.
 			UABBTrigger.triggerHook( 'uabb-accordion-click', trigger_args );
+		},
+		_focusIn: function( e )
+		{
+			if ( undefined !== e.target ) {
+				var button      = $( e.target ).closest('.uabb-adv-accordion-button');
+				if ( undefined !== button ) {
+					button.attr('aria-selected', 'true');
+				}
+			}
+		},
+
+		_focusOut: function( e )
+		{
+			if ( undefined !== e.target ) {
+				var button      = $( e.target ).closest('.uabb-adv-accordion-button');
+				if ( undefined !== button ) {
+					button.attr('aria-selected', 'false');
+				}
+			}
 		},
 		
 		_slideUpComplete: function()

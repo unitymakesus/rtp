@@ -19,7 +19,7 @@ final class UABBBuilderMultisiteSettings {
 	 * @since 1.0
 	 * @return void
 	 */
-	static public function init() {
+	public static function init() {
 		add_action( 'admin_init', __CLASS__ . '::admin_init' );
 		add_action( 'network_admin_menu', __CLASS__ . '::menu' );
 	}
@@ -31,7 +31,7 @@ final class UABBBuilderMultisiteSettings {
 	 * @param string $url gets the activate redirect URL.
 	 * @return string
 	 */
-	static public function activate_redirect_url( $url ) {
+	public static function activate_redirect_url( $url ) {
 		if ( current_user_can( 'manage_network_plugins' ) ) {
 			return network_admin_url( '/settings.php?page=uabb-builder-multisite-settings#license' );
 		}
@@ -45,8 +45,9 @@ final class UABBBuilderMultisiteSettings {
 	 * @since 1.8
 	 * @return void
 	 */
-	static public function admin_init() {
-		if ( is_network_admin() && isset( $_REQUEST['page'] ) && 'uabb-builder-multisite-settings' == $_REQUEST['page'] ) {
+	public static function admin_init() {
+
+		if ( is_network_admin() && isset( $_REQUEST['page'] ) && 'uabb-builder-multisite-settings' === $_REQUEST['page'] && wp_verify_nonce( $_REQUEST['uabb_setting_nonce'], 'uabb_setting_nonce' ) ) {
 			add_action( 'admin_enqueue_scripts', 'UABBBuilderAdminSettings::styles_scripts' );
 			UABBBuilderAdminSettings::save();
 		}
@@ -58,7 +59,7 @@ final class UABBBuilderMultisiteSettings {
 	 * @since 1.0
 	 * @return void
 	 */
-	static public function menu() {
+	public static function menu() {
 		$title = UABB_PREFIX;
 		$cap   = 'manage_network_plugins';
 		$slug  = 'uabb-builder-multisite-settings';

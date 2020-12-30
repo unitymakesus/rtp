@@ -63,16 +63,24 @@ class UABBWooProductsModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/icon/' . $icon );
+		}
+		return '';
+	}
+
+	/**
+	 * Get uid for logged out user
+	 *
+	 * @param int    $uid user id.
+	 * @param string $action action.
+	 */
+	public function filter_nonce_user_logged_out( $uid = 0, $action = '' ) {
+		if ( $uid && 0 !== $uid && $action && 'add_cart_single_product_ajax' === $action ) {
+			return $uid;
 		}
 
-		if ( file_exists( $path ) ) {
-			return file_get_contents( $path );
-		} else {
-			return '';
-		}
+		return 0;
 	}
 
 	/**
@@ -91,23 +99,25 @@ class UABBWooProductsModule extends FLBuilderModule {
 
 		ob_start();
 
-		$this->settings = (object) $_POST['settings'];
+		if ( wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
+			$this->settings = (object) $_POST['settings'];
 
-		add_filter( 'fl_builder_loop_query_args', array( $this, 'loop_query_args' ), 10, 1 );
+			add_filter( 'fl_builder_loop_query_args', array( $this, 'loop_query_args' ), 10, 1 );
 
-		$this->render_query();
-		$this->render_loop_args();
-		$this->render_woo_loop_start();
+			$this->render_query();
+			$this->render_loop_args();
+			$this->render_woo_loop_start();
 			$this->render_woo_loop();
-		$this->render_woo_loop_end();
+			$this->render_woo_loop_end();
 
-		$data['html'] = ob_get_clean();
+			$data['html'] = ob_get_clean();
 
-		ob_start();
-		$this->render_pagination_structure();
-		$data['pagination'] = ob_get_clean();
+			ob_start();
+			$this->render_pagination_structure();
+			$data['pagination'] = ob_get_clean();
 
-		wp_send_json_success( $data );
+			wp_send_json_success( $data );
+		}
 	}
 
 	/**
@@ -119,11 +129,13 @@ class UABBWooProductsModule extends FLBuilderModule {
 	 */
 	public function loop_query_args( $args ) {
 
-		if ( isset( $_POST['page_number'] ) && '' != $_POST['page_number'] ) {
-			$args['paged']  = $_POST['page_number'];
-			$args['offset'] = ( ( $_POST['page_number'] - 1 ) * $this->settings->posts_per_page );
+		if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
+			if ( isset( $_POST['page_number'] ) && '' !== $_POST['page_number'] ) {
+				$args['paged']  = $_POST['page_number'];
+				$args['offset'] = ( ( $_POST['page_number'] - 1 ) * $this->settings->posts_per_page );
+			}
+			return $args;
 		}
-		return $args;
 	}
 
 	/**
@@ -159,6 +171,21 @@ class UABBWooProductsModule extends FLBuilderModule {
 						'terms'    => $product_visibility_term_ids['featured'],
 					);
 				}
+			}
+
+			$args['tax_query'][] = array(
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'exclude-from-catalog',
+				'operator' => 'NOT IN',
+			);
+
+			if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
+				$args['meta_query'][] = array(
+					'key'     => '_stock_status',
+					'value'   => 'instock',
+					'compare' => '=',
+				);
 			}
 		}
 
@@ -243,8 +270,10 @@ class UABBWooProductsModule extends FLBuilderModule {
 			'post__not_in'   => array(),
 		);
 
-		if ( isset( $_POST['page_number'] ) && '' != $_POST['page_number'] ) {
-			$query_args['paged'] = $_POST['page_number'];
+		if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
+			if ( isset( $_POST['page_number'] ) && '' !== $_POST['page_number'] ) {
+				$query_args['paged'] = $_POST['page_number'];
+			}
 		}
 
 		if ( 'grid' === $settings->layout ) {
@@ -300,8 +329,10 @@ class UABBWooProductsModule extends FLBuilderModule {
 			// Pagination.
 			if ( 0 < $settings->grid_products && '' !== $settings->pagination_type ) {
 				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-				if ( isset( $_POST['page_number'] ) && '' != $_POST['page_number'] ) {
-					$paged = $_POST['page_number'];
+				if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
+					if ( isset( $_POST['page_number'] ) && '' !== $_POST['page_number'] ) {
+						$paged = $_POST['page_number'];
+					}
 				}
 				$woocommerce_loop['paged']        = $paged;
 				$woocommerce_loop['total']        = $query->found_posts;
@@ -386,7 +417,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 	public function woo_shop_short_desc() {
 		if ( has_excerpt() ) {
 			echo '<div class="uabb-woo-products-description">';
-				echo the_excerpt();
+				echo wp_kses_post( the_excerpt() );
 			echo '</div>';
 		}
 	}
@@ -403,7 +434,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				global $product;
 				$product_categories = function_exists( 'wc_get_product_category_list' ) ? wc_get_product_category_list( get_the_ID(), ',', '', '' ) : $product->get_categories( ',', '', '' );
 
-				$product_categories = strip_tags( $product_categories );
+				$product_categories = wp_strip_all_tags( $product_categories );
 				if ( $product_categories ) {
 					list( $parent_cat ) = explode( ',', $product_categories );
 					echo esc_html( $parent_cat );
@@ -429,7 +460,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 
 			$image_size = apply_filters( 'single_product_archive_thumbnail_size', 'shop_catalog' );
 
-			echo apply_filters( 'uabb_woocommerce_product_flip_image', wp_get_attachment_image( reset( $attachment_ids ), $image_size, false, array( 'class' => 'uabb-show-on-hover' ) ) );
+			echo wp_kses_post( apply_filters( 'uabb_woocommerce_product_flip_image', wp_get_attachment_image( reset( $attachment_ids ), $image_size, false, array( 'class' => 'uabb-show-on-hover' ) ) ) );
 		}
 	}
 
@@ -453,10 +484,12 @@ class UABBWooProductsModule extends FLBuilderModule {
 			$permalink_structure = get_option( 'permalink_structure' );
 			$paged               = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : '1';
 
-			if ( isset( $_POST['page_number'] ) && '' != $_POST['page_number'] ) {
-				$paged = $_POST['page_number'];
+			if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
+				if ( isset( $_POST['page_number'] ) && '' !== $_POST['page_number'] ) {
+					$paged = $_POST['page_number'];
+				}
 			}
-			$base = html_entity_decode( get_pagenum_link() );
+			$base = wp_specialchars_decode( get_pagenum_link() );
 
 			if ( $total_pages > 1 ) {
 
@@ -556,6 +589,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 	 */
 	public function load_quick_view_product() {
 
+		check_ajax_referer( 'uabb-woo-nonce', 'security' );
 		if ( ! isset( $_REQUEST['product_id'] ) ) {
 			die();
 		}
@@ -572,7 +606,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 		// load content template.
 		include BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/templates/quick-view-product.php';
 
-		echo ob_get_clean();
+		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		die();
 	}
@@ -678,10 +712,13 @@ class UABBWooProductsModule extends FLBuilderModule {
 	 *
 	 * @return void.
 	 */
-	function add_cart_single_product_ajax() {
-		$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( $_POST['product_id'] ) : 0;
-		$variation_id = isset( $_POST['variation_id'] ) ? sanitize_text_field( $_POST['variation_id'] ) : 0;
-		$quantity     = isset( $_POST['quantity'] ) ? sanitize_text_field( $_POST['quantity'] ) : 0;
+	public function add_cart_single_product_ajax() {
+		add_filter( 'nonce_user_logged_out', array( $this, 'filter_nonce_user_logged_out' ) );
+		if ( isset( $_POST['security'] ) && wp_verify_nonce( $_POST['security'], 'uabb-woo-nonce' ) ) {
+			$product_id   = isset( $_POST['product_id'] ) ? sanitize_text_field( $_POST['product_id'] ) : 0;
+			$variation_id = isset( $_POST['variation_id'] ) ? sanitize_text_field( $_POST['variation_id'] ) : 0;
+			$quantity     = isset( $_POST['quantity'] ) ? sanitize_text_field( $_POST['quantity'] ) : 0;
+		}
 
 		if ( $variation_id ) {
 			WC()->cart->add_to_cart( $product_id, $quantity, $variation_id );
@@ -701,11 +738,11 @@ class UABBWooProductsModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// compatibility for Category.
 			if ( ! isset( $settings->woo_cat_font_typo ) || ! is_array( $settings->woo_cat_font_typo ) ) {
@@ -723,7 +760,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->cat_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->cat_font['weight'] ) {
+					if ( 'regular' === $settings->cat_font['weight'] ) {
 						$settings->woo_cat_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_cat_font_typo['font_weight'] = $settings->cat_font['weight'];
@@ -806,7 +843,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->title_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->title_font['weight'] ) {
+					if ( 'regular' === $settings->title_font['weight'] ) {
 						$settings->woo_title_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_title_font_typo['font_weight'] = $settings->title_font['weight'];
@@ -889,7 +926,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->price_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->price_font['weight'] ) {
+					if ( 'regular' === $settings->price_font['weight'] ) {
 						$settings->woo_price_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_price_font_typo['font_weight'] = $settings->price_font['weight'];
@@ -972,7 +1009,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->desc_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->desc_font['weight'] ) {
+					if ( 'regular' === $settings->desc_font['weight'] ) {
 						$settings->woo_desc_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_desc_font_typo['font_weight'] = $settings->desc_font['weight'];
@@ -1055,7 +1092,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->add_cart_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->add_cart_font['weight'] ) {
+					if ( 'regular' === $settings->add_cart_font['weight'] ) {
 						$settings->woo_cart_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_cart_font_typo['font_weight'] = $settings->add_cart_font['weight'];
@@ -1138,7 +1175,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->sale_flash_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->sale_flash_font['weight'] ) {
+					if ( 'regular' === $settings->sale_flash_font['weight'] ) {
 						$settings->woo_sale_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_sale_font_typo['font_weight'] = $settings->sale_flash_font['weight'];
@@ -1199,7 +1236,7 @@ class UABBWooProductsModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->featured_flash_font['weight'] ) ) {
 
-					if ( 'regular' == $settings->featured_flash_font['weight'] ) {
+					if ( 'regular' === $settings->featured_flash_font['weight'] ) {
 						$settings->woo_flash_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->woo_flash_font_typo['font_weight'] = $settings->featured_flash_font['weight'];
@@ -1255,7 +1292,7 @@ class UABBWooProductsModule extends FLBuilderModule {
  *
  */
 
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/uabb-woo-products-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-woo-products/uabb-woo-products-bb-less-than-2-2-compatibility.php';

@@ -20,7 +20,7 @@ if ( 'custom' === $settings->featured_flash && '' !== $settings->featured_flash_
 ?>
 <?php if ( $product->is_featured() ) : ?>
 
-	<?php echo apply_filters( 'uabb_woo_products_featured_flash', '<div class="uabb-featured-flash-wrap"><span class="uabb-featured">' . esc_html( $featured_text ) . '</span></div>', $post, $product ); ?>
+	<?php echo apply_filters( 'uabb_woo_products_featured_flash', '<div class="uabb-featured-flash-wrap"><span class="uabb-featured">' . $featured_text . '</span></div>', $post, $product ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 	<?php
 endif;

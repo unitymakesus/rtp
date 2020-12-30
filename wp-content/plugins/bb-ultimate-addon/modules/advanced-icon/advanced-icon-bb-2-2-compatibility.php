@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBAdvancedIconModule', array(
+	'UABBAdvancedIconModule',
+	array(
 		'advimgicons' => array(
 			'title'    => __( 'Image / Icon', 'uabb' ),
 			'sections' => array(
@@ -62,6 +63,7 @@ FLBuilder::register_module(
 							'placeholder' => '10',
 							'maxlength'   => '2',
 							'size'        => '4',
+							'responsive'  => true,
 							'help'        => __( 'To manage the space between Icons / Image use this option', 'uabb' ),
 							'preview'     => array(
 								'type'     => 'css',
@@ -274,7 +276,8 @@ FLBuilder::register_module(
  * Register a settings form to use in the "form" field type above.
  */
 FLBuilder::register_settings_form(
-	'uabb_advicon_group_form', array(
+	'uabb_advicon_group_form',
+	array(
 		'title' => __( 'Add Icon', 'uabb' ),
 		'tabs'  => array(
 			'form_general' => array( // Tab.

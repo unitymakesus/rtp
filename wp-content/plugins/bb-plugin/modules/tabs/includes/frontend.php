@@ -7,8 +7,15 @@
 			if ( ! is_object( $settings->items[ $i ] ) ) {
 				continue;
 			}
+
+			$tab_label_id = 'fl-tabs-' . $module->node . '-label-' . $i;
+			$id_in_label  = apply_filters( 'fl_tabs_id_in_label', false, $settings, $i );
+
+			if ( $id_in_label && ! empty( $settings->id ) ) {
+				$tab_label_id = $settings->id . '-label-' . $i;
+			}
 			?>
-			<a href="#" class="fl-tabs-label<?php if ( 0 == $i ) { echo ' fl-tab-active';} ?>" id="<?php echo 'fl-tabs-' . $module->node . '-label-' . $i; ?>" data-index="<?php echo $i; ?>" aria-selected="<?php echo ($i > 0) ? 'false' : 'true';?>" aria-controls="<?php echo 'fl-tabs-' . $module->node . '-panel-' . $i; ?>" aria-expanded="<?php echo ( $i > 0 ) ? 'false' : 'true'; ?>" role="tab" tabindex="0"><?php // @codingStandardsIgnoreLine ?>
+			<a href="#" class="fl-tabs-label<?php if ( 0 == $i ) { echo ' fl-tab-active';} ?>" id="<?php echo $tab_label_id; ?>" data-index="<?php echo $i; ?>" aria-selected="<?php echo ($i > 0) ? 'false' : 'true';?>" aria-controls="<?php echo 'fl-tabs-' . $module->node . '-panel-' . $i; ?>" aria-expanded="<?php echo ( $i > 0 ) ? 'false' : 'true'; ?>" role="tab" tabindex="0"><?php // @codingStandardsIgnoreLine ?>
 				<?php echo $settings->items[ $i ]->label; ?>
 			</a>
 		<?php endfor; ?>

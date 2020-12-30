@@ -179,6 +179,7 @@
 	flex-direction: row;
 	align-items: center;
 	line-height: 1;
+	letter-spacing: 0;
 }
 .fl-lightbox.ui-draggable .fl-lightbox-header {
 	cursor: move;

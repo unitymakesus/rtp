@@ -40,21 +40,10 @@ class UABBContentToggleModule extends FLBuilderModule {
 	 */
 	public function get_icon( $icon = '' ) {
 
-		// check if $icon is referencing an included icon.
-		if ( '' != $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-content-toggle/icon/' . $icon ) ) {
-			$path = BB_ULTIMATE_ADDON_DIR . 'modules/uabb-content-toggle/icon/' . $icon;
+		if ( '' !== $icon && file_exists( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-content-toggle/icon/' . $icon ) ) {
+			return fl_builder_filesystem()->file_get_contents( BB_ULTIMATE_ADDON_DIR . 'modules/uabb-content-toggle/icon/' . $icon );
 		}
-
-		if ( file_exists( $path ) ) {
-			$remove_icon = apply_filters( 'uabb_remove_svg_icon', false, 10, 1 );
-			if ( true === $remove_icon ) {
-				return;
-			} else {
-				return file_get_contents( $path );
-			}
-		} else {
-			return '';
-		}
+		return '';
 	}
 
 	/**
@@ -63,7 +52,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 	 * @method get_toggle_content2
 	 * @param settings $settings get the settings for the module.
 	 */
-	function get_toggle_content1( $settings ) {
+	public function get_toggle_content1( $settings ) {
 
 		$content_type = $settings->cont1_section;
 
@@ -72,19 +61,17 @@ class UABBContentToggleModule extends FLBuilderModule {
 			case 'content':
 				global $wp_embed;
 				return wpautop( $wp_embed->autoembed( $settings->content_editor ) );
-			break;
 			case 'saved_rows':
-				echo '[fl_builder_insert_layout id="' . $settings->cont1_saved_rows . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->cont1_saved_rows ) . '" type="fl-builder-template"]';
 				break;
 			case 'saved_modules':
-				echo '[fl_builder_insert_layout id="' . $settings->cont1_saved_modules . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->cont1_saved_modules ) . '" type="fl-builder-template"]';
 				break;
 			case 'saved_page_templates':
-				echo '[fl_builder_insert_layout id="' . $settings->cont1_page_templates . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->cont1_page_templates ) . '" type="fl-builder-template"]';
 				break;
 			default:
 				return;
-			break;
 		}
 	}
 	/**
@@ -93,7 +80,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 	 * @method get_toggle_content2
 	 * @param settings $settings get the settings for the module.
 	 */
-	function get_toggle_content2( $settings ) {
+	public function get_toggle_content2( $settings ) {
 
 		$content_type = $settings->cont2_section;
 
@@ -102,19 +89,17 @@ class UABBContentToggleModule extends FLBuilderModule {
 			case 'content_head2':
 				global $wp_embed;
 				return wpautop( $wp_embed->autoembed( $settings->content2_editor ) );
-			break;
 			case 'saved_rows_head2':
-				echo '[fl_builder_insert_layout id="' . $settings->cont2_saved_rows . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->cont2_saved_rows ) . '" type="fl-builder-template"]';
 				break;
 			case 'saved_modules_head2':
-				echo '[fl_builder_insert_layout id="' . $settings->cont2_saved_modules . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->cont2_saved_modules ) . '" type="fl-builder-template"]';
 				break;
 			case 'saved_page_templates_head2':
-				echo '[fl_builder_insert_layout id="' . $settings->cont2_page_templates . '" type="fl-builder-template"]';
+				echo '[fl_builder_insert_layout id="' . esc_attr( $settings->cont2_page_templates ) . '" type="fl-builder-template"]';
 				break;
 			default:
 				return;
-			break;
 		}
 	}
 
@@ -128,11 +113,11 @@ class UABBContentToggleModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handle old border settings for Content.
 			if ( isset( $settings->border_color_sec ) ) {
@@ -216,7 +201,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->head1_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->head1_font_family['weight'] ) {
+					if ( 'regular' === $settings->head1_font_family['weight'] ) {
 						$settings->head1_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->head1_font_typo['font_weight'] = $settings->head1_font_family['weight'];
@@ -295,7 +280,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->head2_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->head2_font_family['weight'] ) {
+					if ( 'regular' === $settings->head2_font_family['weight'] ) {
 						$settings->head2_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->head2_font_typo['font_weight'] = $settings->head2_font_family['weight'];
@@ -378,7 +363,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->section1_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->section1_font_family['weight'] ) {
+					if ( 'regular' === $settings->section1_font_family['weight'] ) {
 						$settings->desc1_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desc1_font_typo['font_weight'] = $settings->section1_font_family['weight'];
@@ -459,7 +444,7 @@ class UABBContentToggleModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->section2_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->section2_font_family['weight'] ) {
+					if ( 'regular' === $settings->section2_font_family['weight'] ) {
 						$settings->desc2_font_typo['font_weight'] = 'normal';
 					} else {
 						$settings->desc2_font_typo['font_weight'] = $settings->section2_font_family['weight'];
@@ -533,7 +518,7 @@ class UABBContentToggleModule extends FLBuilderModule {
  * Condition to verify Beaver Builder version.
  * And accordingly render the required form settings file.
  */
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-content-toggle/uabb-content-toggle-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-content-toggle/uabb-content-toggle-bb-less-than-2-2-compatibility.php';

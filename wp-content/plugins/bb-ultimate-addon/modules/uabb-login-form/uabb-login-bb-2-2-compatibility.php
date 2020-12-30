@@ -103,6 +103,15 @@ FLBuilder::register_module(
 							'default'     => '',
 							'connections' => array( 'url' ),
 						),
+						'eye_icon'                         => array(
+							'type'    => 'select',
+							'label'   => __( 'Enable Show Password Icon', 'uabb' ),
+							'default' => 'disable',
+							'options' => array(
+								'enable'  => __( 'Yes', 'uabb' ),
+								'disable' => __( 'No', 'uabb' ),
+							),
+						),
 						'custom_link_select'               => array(
 							'type'    => 'select',
 							'label'   => __( 'Enable Regsiter Link', 'uabb' ),
@@ -498,6 +507,20 @@ FLBuilder::register_module(
 							'show_reset'  => true,
 							'preview'     => array(
 								'type' => 'none',
+							),
+						),
+						'eye_icon_color'            => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Eye Icon Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'connections' => array( 'color' ),
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-lf-form-wrap .uabb-lf-icon',
+								'property'  => 'color',
+								'important' => true,
 							),
 						),
 					),
@@ -1183,7 +1206,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/introducing-login-form-module-for-beaver-builder/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=login-form-module" target="_blank" rel="noopener"> Getting started article </a> </li>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/create-facebook-app-id-for-login-form-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=login-form-module" target="_blank" rel="noopener"> How to Create a Facebook App ID for Login Form Module? </a> </li>

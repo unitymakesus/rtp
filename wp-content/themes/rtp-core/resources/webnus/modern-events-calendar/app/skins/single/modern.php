@@ -218,7 +218,22 @@ defined('MECEXEC') or die();
 
   <div class="mec-event-content">
     <h2 class="mec-single-title"><?php the_title(); ?></h2>
-    <div class="mec-single-event-description mec-events-content"><?php the_content(); ?><?php do_action('mec_custom_dev_content_section' , $event); ?></div>
+    <div class="mec-single-event-description mec-events-content">
+        <?php the_content(); ?>
+        <?php do_action('mec_custom_dev_content_section' , $event); ?>
+        <?php if ($eventbrite_id = get_field('eventbrite_checkout_id')) : ?>
+            <div id="eventbrite-widget-container-<?php echo $eventbrite_id; ?>"></div>
+            <script src="https://www.eventbrite.com/static/widgets/eb_widgets.js"></script>
+            <script type="text/javascript">
+                window.EBWidgets.createWidget({
+                    widgetType: 'checkout',
+                    eventId: '<?php echo $eventbrite_id; ?>',
+                    iframeContainerId: 'eventbrite-widget-container-<?php echo $eventbrite_id; ?>',
+                    iframeContainerHeight: 425,
+                });
+            </script>
+        <?php endif; ?>
+    </div>
   </div>
 
   <?php

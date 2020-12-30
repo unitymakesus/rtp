@@ -8,6 +8,15 @@
  * @package UABB Contact Form Module
  */
 
+$style1                          = '<div style="line-height: 1.5em;  padding-top:15px;">';
+$style2                          = '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;">';
+$user_role_desc                  = $style1 . __( 'The default option will assign the user role as per the WordPress backend setting.', 'uabb' ) . '</div>';
+$user_hide_form_desc             = $style1 . __( 'Enable this option if you wish to hide the form at the frontend from logged in users.', 'uabb' ) . '</div>';
+$enable_email_desc               = $style1 . __( 'On enabling this option, visit the Email tab to send a customized email to the user.', 'uabb' ) . '</div>';
+$email_content_desc              = $style2 . __( 'Here you can design the Email Content user will receive.', 'uabb' ) . '</div>';
+$register_website_recaptcha_desc = $style2 . __( 'Please register keys for your website at', 'uabb' );
+$recaptcha_link                  = ' href="https://www.google.com/recaptcha/admin" target="_blank"';
+
 FLBuilder::register_module(
 	'UABBRegistrationFormModule',
 	array(
@@ -60,7 +69,7 @@ FLBuilder::register_module(
 							'label'       => __( 'New User Role', 'uabb' ),
 							'default'     => 'default',
 							'options'     => UABBRegistrationFormModule::get_user_roles(),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> The default option will assign the user role as per the WordPress backend setting. </div>', 'uabb' ) ),
+							'description' => $user_role_desc,
 						),
 						'hide_form_logged'        => array(
 							'type'        => 'select',
@@ -75,22 +84,21 @@ FLBuilder::register_module(
 									'fields' => array( 'logged_in_text' ),
 								),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> Enable this option if you wish to hide the form at the frontend from logged in users. </div>', 'uabb' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
+							'description' => $user_hide_form_desc,
 						),
 						'logged_in_text'          => array(
 							'type'  => 'text',
 							'label' => __( 'Message For Logged In Users', 'uabb' ),
 						),
 						'login_link'              => array(
-							'type'        => 'select',
-							'label'       => __( 'Login Link', 'uabb' ),
-							'default'     => 'no',
-							'options'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Login Link', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> Add the “Login” link below the register button. </div>', 'uabb' ) ),
-							'toggle'      => array(
+							'toggle'  => array(
 								'yes' => array(
 									'fields'   => array( 'login_link_text', 'login_link_to' ),
 									'sections' => array( 'login_link_style', 'login_link_typography' ),
@@ -100,7 +108,7 @@ FLBuilder::register_module(
 						'login_link_text'         => array(
 							'type'        => 'text',
 							'label'       => __( 'Login Link Text', 'uabb' ),
-							'default'     => 'Login',
+							'default'     => 'Login |',
 							'connections' => array( 'string', 'html' ),
 						),
 						'login_link_to'           => array(
@@ -125,18 +133,19 @@ FLBuilder::register_module(
 							'connections'   => array( 'url' ),
 						),
 						'lost_your_pass'          => array(
-							'type'        => 'select',
-							'label'       => __( 'Lost Your Password Link', 'uabb' ),
-							'default'     => 'no',
-							'options'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Lost Your Password Link', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
 								'no'  => __( 'No', 'uabb' ),
 								'yes' => __( 'Yes', 'uabb' ),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> Add the “Lost Password” link below the register button. </div>', 'uabb' ) ),
-							'toggle'      => array(
+							'toggle'  => array(
 								'yes' => array(
-									'fields'   => array( 'lost_link_text', 'lost_link_to' ),
-									'sections' => array( 'login_link_style', 'lost_link_typography' ),
+									'fields' => array( 'lost_link_text', 'lost_link_to' ),
+								),
+								'no'  => array(
+									'fields' => array( 'inline_btn_login_text' ),
 								),
 							),
 						),
@@ -195,6 +204,62 @@ FLBuilder::register_module(
 								),
 							),
 						),
+						'login_text_position'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Login and Lost Your Password Text Position', 'uabb' ),
+							'default' => 'below',
+							'options' => array(
+								'above' => __( 'Above Terms and Conditions Field', 'uabb' ),
+								'below' => __( 'Below Register Button', 'uabb' ),
+							),
+						),
+						'inline_btn_login_text'   => array(
+							'type'    => 'select',
+							'label'   => __( 'Inline Register Button and Login Text', 'uabb' ),
+							'default' => 'no',
+							'options' => array(
+								'yes' => __( 'Yes', 'uabb' ),
+								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				),
+				'terms_section'        => array(
+					'title'  => __( 'Terms and Conditions Field', 'uabb' ),
+					'fields' => array(
+						'terms_checkbox'      => array(
+							'type'    => 'select',
+							'label'   => __( 'Terms and Conditions Checkbox', 'uabb' ),
+							'default' => 'hide',
+							'options' => array(
+								'show' => __( 'Show', 'uabb' ),
+								'hide' => __( 'Hide', 'uabb' ),
+							),
+							'toggle'  => array(
+								'show' => array(
+									'fields'   => array( 'terms_checkbox_text', 'terms_text' ),
+									'sections' => array( 'checkbox_typography', 'terms_typography', 'terms-checkbox-style' ),
+								),
+							),
+						),
+						'terms_checkbox_text' => array(
+							'type'    => 'text',
+							'label'   => __( 'Checkbox Text', 'uabb' ),
+							'default' => __( 'I Accept the Terms and Conditions', 'uabb' ),
+						),
+						'terms_text'          => array(
+							'type'          => 'editor',
+							'label'         => 'Terms and Conditions',
+							'default'       => __( 'Please go through the following terms and conditions carefully.', 'uabb' ),
+							'media_buttons' => false,
+							'rows'          => 8,
+							'preview'       => array(
+								'type'      => 'text',
+								'selector'  => '.uabb-registration-form .uabb-terms-text',
+								'important' => true,
+							),
+							'connections'   => array( 'string' ),
+						),
 					),
 				),
 				'after_submit_action'  => array(
@@ -232,7 +297,7 @@ FLBuilder::register_module(
 									'tabs' => array( 'template' ),
 								),
 							),
-							'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1.5em;  padding-top:15px;"> On enabling this option, visit the Email tab to send a customized email to the user. </div>', 'uabb' ) ),
+							'description' => $enable_email_desc,
 						),
 						'auto_login'               => array(
 							'type'    => 'select',
@@ -267,7 +332,7 @@ FLBuilder::register_module(
 		'style'      => array(
 			'title'    => __( 'Style', 'uabb' ),
 			'sections' => array(
-				'form-style'         => array(
+				'form-style'           => array(
 					'title'  => 'Form Style',
 					'fields' => array(
 						'form_bg_type'           => array(
@@ -362,7 +427,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'input-border-style' => array(
+				'input-border-style'   => array(
 					'title'  => __( 'Input Style', 'uabb' ),
 					'fields' => array(
 						'input_padding'             => array(
@@ -446,7 +511,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'error-style'        => array(
+				'error-style'          => array(
 					'title'  => __( 'Validation Style', 'uabb' ),
 					'fields' => array(
 						'success_msg_color'   => array(
@@ -550,8 +615,8 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'login_link_style'   => array(
-					'title'  => __( 'Login Link Style', 'uabb' ),
+				'login_link_style'     => array(
+					'title'  => __( 'Password/Login Link Style', 'uabb' ),
 					'fields' => array(
 						'login_link_color'       => array(
 							'type'       => 'color',
@@ -559,10 +624,9 @@ FLBuilder::register_module(
 							'show_reset' => true,
 							'show_alpha' => true,
 							'preview'    => array(
-								'type'      => 'css',
-								'selector'  => '.uabb-rform-exteral-link-wrap .uabb-rform-exteral-link',
-								'property'  => 'color',
-								'important' => true,
+								'type'     => 'css',
+								'selector' => '.uabb-rform-exteral-link-wrap .uabb-rform-exteral-link',
+								'property' => 'color',
 							),
 						),
 						'login_link_hover_color' => array(
@@ -576,6 +640,98 @@ FLBuilder::register_module(
 							'label'      => __( 'Link Alignment', 'uabb' ),
 							'default'    => 'center',
 							'responsive' => true,
+						),
+					),
+				),
+				'terms-checkbox-style' => array(
+					'title'  => __( 'Terms Checkbox Style', 'uabb' ),
+					'fields' => array(
+						'checkbox_size'           => array(
+							'type'    => 'unit',
+							'label'   => __( 'Size', 'uabb' ),
+							'default' => '24',
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'  => 'css',
+								'rules' => array(
+									array(
+										'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+										'property'  => 'width',
+										'unit'      => 'px',
+										'important' => true,
+									),
+									array(
+										'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+										'property'  => 'height',
+										'unit'      => 'px',
+										'important' => true,
+									),
+								),
+							),
+						),
+						'checkbox_bgcolor'        => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Background Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'background',
+								'important' => true,
+							),
+						),
+						'checkbox_selected_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Checked Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type' => 'refresh',
+							),
+						),
+						'checkbox_border_width'   => array(
+							'type'    => 'unit',
+							'label'   => __( 'Border Width', 'uabb' ),
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'border-width',
+								'unit'      => 'px',
+								'important' => true,
+							),
+						),
+						'checkbox_border_color'   => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Border Color', 'uabb' ),
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'border-color',
+								'important' => true,
+							),
+						),
+						'checkbox_border_radius'  => array(
+							'type'    => 'unit',
+							'label'   => __( 'Checkbox Round Corners', 'uabb' ),
+							'default' => '0',
+							'slider'  => true,
+							'units'   => array( 'px' ),
+							'preview' => array(
+								'type'      => 'css',
+								'selector'  => '.uabb-registration-form .uabb-input-group-wrap input[type="checkbox"] + span:before',
+								'property'  => 'border-radius',
+								'unit'      => 'px',
+								'important' => true,
+							),
 						),
 					),
 				),
@@ -757,7 +913,7 @@ FLBuilder::register_module(
 			'sections' => array(
 				'email-subject' => array(
 					'title'       => __( 'Email Subject & Message', 'uabb' ),
-					'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;"> Here you can design the Email Content user will receive. </div>', 'uabb' ) ),
+					'description' => $email_content_desc,
 					'fields'      => array(
 						'email_template'     => array(
 							'type'    => 'select',
@@ -889,6 +1045,61 @@ FLBuilder::register_module(
 						),
 					),
 				),
+
+				'terms_typography'        => array(
+					'title'  => __( 'Terms and Conditions Text', 'uabb' ),
+					'fields' => array(
+						'terms_typo'       => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-text',
+							),
+						),
+						'terms_text_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-text',
+								'property' => 'color',
+							),
+						),
+					),
+				),
+				'checkbox_typography'     => array(
+					'title'  => __( 'Checkbox Text', 'uabb' ),
+					'fields' => array(
+						'checkbox_typo'       => array(
+							'type'       => 'typography',
+							'label'      => __( 'Typography', 'uabb' ),
+							'responsive' => true,
+							'preview'    => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-label',
+							),
+						),
+						'checkbox_text_color' => array(
+							'type'        => 'color',
+							'connections' => array( 'color' ),
+							'label'       => __( 'Color', 'uabb' ),
+							'default'     => '',
+							'show_reset'  => true,
+							'show_alpha'  => true,
+							'preview'     => array(
+								'type'     => 'css',
+								'selector' => '.uabb-registration-form .uabb-terms-label',
+								'property' => 'color',
+							),
+						),
+					),
+				),
 			),
 		),
 		'reCAPTCHA'  => array(
@@ -909,7 +1120,7 @@ FLBuilder::register_module(
 				),
 				'recaptcha_general' => array(
 					'title'       => __( 'reCAPTCHA', 'uabb' ),
-					'description' => sprintf( /* translators: a%s: search term */ __( '<div style="line-height: 1em; margin-left:20px; background:#e4e7ea; padding:15px;"> Please register keys for your website at <a%s> <b>Google Admin Console </b> </a>. </div>', 'uabb' ), ' href="https://www.google.com/recaptcha/admin" target="_blank"' ),
+					'description' => sprintf( /* translators: a%s: search term */ ' %1$s <a%2$s> <b>Google Admin Console </b> </a>. </div>', $register_website_recaptcha_desc, $recaptcha_link ),
 					'fields'      => array(
 						'uabb_recaptcha_toggle'        => array(
 							'type'    => 'select',
@@ -999,7 +1210,7 @@ FLBuilder::register_module(
 					'fields' => array(
 						'uabb_helpful_information' => array(
 							'type'    => 'raw',
-							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::uabb_get_branding_for_docs() . '>
+							'content' => '<ul class="uabb-docs-list" data-branding=' . BB_Ultimate_Addon_Helper::$is_branding_enabled . '>
 
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/user-registration-form-module/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=user-registration-form-module" target="_blank" rel="noopener"> Introducing User Registration Form Module. </a> </li>
 								<li class="uabb-docs-list-item"> <i class="ua-icon ua-icon-chevron-right2"> </i> <a href="https://www.ultimatebeaver.com/docs/create-user-registration-form-using-beaver-builder/?utm_source=uabb-pro-backend&utm_medium=module-editor-screen&utm_campaign=user-registration-form-module" target="_blank" rel="noopener"> How to Create a Registration Form using Beaver Builder?</a> </li>
@@ -1039,12 +1250,12 @@ FLBuilder::register_settings_form(
 									'user_email'   => __( 'Email', 'uabb' ),
 									'first_name'   => __( 'First Name', 'uabb' ),
 									'last_name'    => __( 'Last Name', 'uabb' ),
+									'phone'        => __( 'Phone', 'uabb' ),
 								),
 							),
 							'field_label'       => array(
 								'type'        => 'text',
 								'label'       => __( 'Label', 'uabb' ),
-								'default'     => __( 'Username', 'uabb' ),
 								'connections' => array( 'string', 'html' ),
 							),
 							'field_placeholder' => array(

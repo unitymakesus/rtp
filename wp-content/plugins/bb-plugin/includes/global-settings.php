@@ -219,6 +219,16 @@ FLBuilder::register_settings_form('global', array(
 							'sanitize'    => 'absint',
 							'help'        => __( 'The browser width at which the layout will adjust for small devices such as phones.', 'fl-builder' ),
 						),
+						'responsive_preview'       => array(
+							'type'    => 'select',
+							'label'   => __( 'Use responsive settings in previews?', 'fl-builder' ),
+							'default' => '0',
+							'options' => array(
+								'0' => __( 'No', 'fl-builder' ),
+								'1' => __( 'Yes', 'fl-builder' ),
+							),
+							'help'    => __( 'Preview and responsive editing will use these values when enabled.', 'fl-builder' ),
+						),
 						'responsive_col_max_width' => array(
 							'type'    => 'select',
 							'label'   => __( 'Enable Column Max Width', 'fl-builder' ),
@@ -227,7 +237,7 @@ FLBuilder::register_settings_form('global', array(
 								'0' => __( 'No', 'fl-builder' ),
 								'1' => __( 'Yes', 'fl-builder' ),
 							),
-							'help'    => __( 'When enabled, columns assigned 50% width or less are limited to max width 400px when screen width reaches or goes below the small device breakpoint.' ),
+							'help'    => __( 'When enabled, columns assigned 50% width or less are limited to max width 400px when screen width reaches or goes below the small device breakpoint.', 'fl-builder' ),
 						),
 						'responsive_base_fontsize' => array(
 							'type'        => 'text',

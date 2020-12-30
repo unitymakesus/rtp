@@ -6,7 +6,8 @@
  */
 
 FLBuilderModel::default_settings(
-	$settings, array(
+	$settings,
+	array(
 		'post_type'          => 'post',
 		'order_by'           => 'date',
 		'order'              => 'DESC',
@@ -27,7 +28,8 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 
 	// Data Source.
 	FLBuilder::render_settings_field(
-		'data_source', array(
+		'data_source',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Source', 'uabb' ),
 			'default' => 'custom_query',
@@ -40,7 +42,8 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 					'fields' => array( 'posts_per_page' ),
 				),
 			),
-		), $settings
+		),
+		$settings
 	);
 
 	?>
@@ -52,7 +55,8 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 
 	// ACF Compatibility.
 	FLBuilder::render_settings_field(
-		'data_source_acf_relational_type', array(
+		'data_source_acf_relational_type',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Type', 'uabb' ),
 			'default' => 'relationship',
@@ -60,14 +64,17 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 				'relationship' => __( 'Relationship', 'uabb' ),
 				'user'         => __( 'User', 'uabb' ),
 			),
-		), $settings
+		),
+		$settings
 	);
 
 	FLBuilder::render_settings_field(
-		'data_source_acf_relational_key', array(
+		'data_source_acf_relational_key',
+		array(
 			'type'  => 'text',
 			'label' => __( 'Key', 'uabb' ),
-		), $settings
+		),
+		$settings
 	);
 
 	?>
@@ -75,22 +82,29 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 </div>
 <div class="fl-custom-query fl-loop-data-source" data-source="custom_query">
 <div id="fl-builder-settings-section-general" class="fl-loop-builder uabb-settings-section">
-<h3 class="fl-builder-settings-title"><span class="fl-builder-settings-title-text-wrap"><?php _e( 'Custom Query', 'uabb' ); ?></span></h3>
+<h3 class="fl-builder-settings-title"><span class="fl-builder-settings-title-text-wrap">
+<?php
+esc_attr_e( 'Custom Query', 'uabb' );
+?>
+</span></h3>
 	<table class="fl-form-table">
 	<?php
 
 	// Post type.
 	FLBuilder::render_settings_field(
-		'post_type', array(
+		'post_type',
+		array(
 			'type'  => 'post-type',
 			'label' => __( 'Post Type', 'uabb' ),
 			'help'  => __( 'Choose the post type to display in module.', 'uabb' ),
-		), $settings
+		),
+		$settings
 	);
 
 
 	FLBuilder::render_settings_field(
-		'total_posts_switch', array(
+		'total_posts_switch',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Number of Posts to Display', 'uabb' ),
 			'help'    => __( 'Choose the number of posts you want to display in module.', 'uabb' ),
@@ -107,36 +121,42 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 					'fields' => array(),
 				),
 			),
-		), $settings
+		),
+		$settings
 	);
 
 	FLBuilder::render_settings_field(
-		'total_posts', array(
+		'total_posts',
+		array(
 			'type'        => 'text',
 			'label'       => __( 'Posts Count', 'uabb' ),
 			'help'        => __( 'Enter the total number of posts you want to display in module. Scroll pagination will show all posts.', 'uabb' ),
 			'default'     => '6',
 			'size'        => '8',
 			'placeholder' => '10',
-		), $settings
+		),
+		$settings
 	);
 
 
 	// Offset.
 	FLBuilder::render_settings_field(
-		'offset', array(
+		'offset',
+		array(
 			'type'        => 'text',
 			'label'       => __( 'Offset', 'uabb' ),
 			'help'        => __( 'Enter the total number of posts you want skip.', 'uabb' ),
 			'size'        => '8',
 			'placeholder' => '0',
-		), $settings
+		),
+		$settings
 	);
 
 
 	// Order by.
 	FLBuilder::render_settings_field(
-		'order_by', array(
+		'order_by',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Sort By', 'uabb' ),
 			'help'    => __( 'Choose the parameter to sort your posts.', 'uabb' ),
@@ -161,20 +181,24 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 					'fields' => array( 'order_by_meta_key' ),
 				),
 			),
-		), $settings
+		),
+		$settings
 	);
 
 	// Meta Key.
 	FLBuilder::render_settings_field(
-		'order_by_meta_key', array(
+		'order_by_meta_key',
+		array(
 			'type'  => 'text',
 			'label' => __( 'Meta Key', 'uabb' ),
-		), $settings
+		),
+		$settings
 	);
 
 	// Order.
 	FLBuilder::render_settings_field(
-		'order', array(
+		'order',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Order', 'uabb' ),
 			'help'    => __( 'Choose the order to display your posts.', 'uabb' ),
@@ -183,11 +207,13 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 				'DESC' => __( 'Descending', 'uabb' ),
 				'ASC'  => __( 'Ascending', 'uabb' ),
 			),
-		), $settings
+		),
+		$settings
 	);
 
 	FLBuilder::render_settings_field(
-		'exclude_self', array(
+		'exclude_self',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Exclude Current Post', 'uabb' ),
 			'default' => 'no',
@@ -196,7 +222,8 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 				'yes' => __( 'Yes', 'uabb' ),
 				'no'  => __( 'No', 'uabb' ),
 			),
-		), $settings
+		),
+		$settings
 	);
 
 	?>
@@ -204,11 +231,17 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 </div>
 
 <div id="fl-builder-settings-section-masonary_filter" class="uabb-settings-section">
-	<h3 class="fl-builder-settings-title"><?php _e( 'Taxonomy Filter', 'uabb' ); ?></h3>
-	<?php foreach ( FLBuilderLoop::post_types() as $slug => $type ) : ?>
-		<table class="fl-form-table fl-loop-builder-masonary_filter fl-loop-builder-<?php echo $slug; ?>-masonary_filter"
+	<h3 class="fl-builder-settings-title">
+	<?php
+	esc_attr_e( 'Taxonomy Filter', 'uabb' );
+	?>
+	</h3>
+	<?php
+	foreach ( FLBuilderLoop::post_types() as $slug => $type ) : //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		?>
+		<table class="fl-form-table fl-loop-builder-masonary_filter fl-loop-builder-<?php echo esc_attr( $slug ); ?>-masonary_filter"
 			<?php
-			if ( $slug == $settings->post_type ) {
+			if ( $slug === $settings->post_type ) {
 				echo 'style="display:table;"';
 			}
 			?>
@@ -218,46 +251,50 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 		// Taxonomies.
 		$taxonomies       = FLBuilderLoop::taxonomies( $slug );
 		$taxonomies_array = array();
-		$toggleArray      = array();
 
 		if ( count( $taxonomies ) > 0 ) {
 			$taxonomies_array[-1] = __( 'No Filter', 'uabb' );
 		}
 
-		foreach ( $taxonomies as $tax_slug => $tax ) {
+		foreach ( $taxonomies as $tax_slug => $tax ) { //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$taxonomies_array[ $tax_slug ] = $tax->label;
 		}
-
 		if ( count( $taxonomies_array ) > 0 ) {
 			// Taxonomy Filter.
 			FLBuilder::render_settings_field(
-				'masonary_filter_' . $slug, array(
+				'masonary_filter_' . $slug,
+				array(
 					'type'    => 'select',
 					'label'   => __( 'Taxonomy Filter', 'uabb' ),
 					'help'    => __( 'Select post filter criteria to display post filter at top of the module.', 'uabb' ),
 					'options' => $taxonomies_array,
-				), $settings
+				),
+				$settings
 			);
 		}
 			FLBuilder::render_settings_field(
-				'uabb_masonary_filter_type_' . $slug, array(
+				'uabb_masonary_filter_type_' . $slug,
+				array(
 					'type'    => 'select',
 					'label'   => __( 'Select Filter Layout', 'uabb' ),
 					'options' => array(
 						'buttons'   => __( 'Button', 'uabb' ),
 						'drop-down' => __( 'Drop Down', 'uabb' ),
 					),
-				), $settings
+				),
+				$settings
 			);
 
 			FLBuilder::render_settings_field(
-				'uabb_masonary_filter_all_edit_' . $slug, array(
+				'uabb_masonary_filter_all_edit_' . $slug,
+				array(
 					'type'        => 'text',
 					'label'       => __( '"All" Filter Label', 'uabb' ),
 					'default'     => __( 'All', 'uabb' ),
 					'placeholder' => __( 'All', 'uabb' ),
 					'connections' => array( 'string' ),
-				), $settings
+				),
+				$settings
 			);
 		?>
 		</table>
@@ -265,12 +302,12 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 </div>
 
 <div id="fl-builder-settings-section-filter" class="uabb-settings-section">
-<h3 class="fl-builder-settings-title"><span class="fl-builder-settings-title-text-wrap"><?php _e( 'Filter', 'uabb' ); ?></span></h3>
+<h3 class="fl-builder-settings-title"><span class="fl-builder-settings-title-text-wrap"><?php esc_attr_e( 'Filter', 'uabb' ); ?></span></h3>
 
-	<?php foreach ( FLBuilderLoop::post_types() as $slug => $type ) : ?>
-		<table class="fl-form-table fl-loop-builder-filter fl-loop-builder-<?php echo $slug; ?>-filter"
+	<?php foreach ( FLBuilderLoop::post_types() as $slug => $type ) : //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited ?>
+		<table class="fl-form-table fl-loop-builder-filter fl-loop-builder-<?php echo esc_attr( $slug ); ?>-filter"
 			<?php
-			if ( $slug == $settings->post_type ) {
+			if ( $slug === $settings->post_type ) {
 				echo 'style="display:table;"';
 			}
 			?>
@@ -278,25 +315,28 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 		<?php
 
 		FLBuilder::render_settings_field(
-			'posts_' . $slug . '_matching', array(
+			'posts_' . $slug . '_matching',
+			array(
 				'type'    => 'select',
 				'label'   => $type->label,
 				'options' => array(
-					'1' => sprintf( /* translators: %s: search term */ __( 'Match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $type->label, $type->label ),
-					'0' => sprintf( /* translators: %s: search term */ __( 'Do not match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $type->label, $type->label ),
-
+					'1' => sprintf( /* translators: %s: search term */ __( 'Match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $type->label, $type->label ), //phpcs:ignore WordPress.WP.I18n.TooManyFunctionArgs
+					'0' => sprintf( /* translators: %s: search term */ __( 'Do not match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $type->label, $type->label ), //phpcs:ignore WordPress.WP.I18n.TooManyFunctionArgs
 				),
 				'help'    => sprintf( /* translators: %1$s: search term, translators: %2$s: search term */ __( 'Enter a comma separated list of %1$s. Only these %2$s will be shown.', 'uabb' ), $type->label, $type->label ),
-			), $settings
+			),
+			$settings
 		);
 		// Posts.
 		FLBuilder::render_settings_field(
-			'posts_' . $slug, array(
+			'posts_' . $slug,
+			array(
 				'type'   => 'suggest',
 				'action' => 'fl_as_posts',
 				'data'   => $slug,
 				'label'  => '&nbsp',
-			), $settings
+			),
+			$settings
 		);
 
 
@@ -304,28 +344,32 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 		$taxonomies       = FLBuilderLoop::taxonomies( $slug );
 		$taxonomies_array = array();
 
-		foreach ( $taxonomies as $tax_slug => $tax ) {
+		foreach ( $taxonomies as $tax_slug => $tax ) { //phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 			FLBuilder::render_settings_field(
-				'tax_' . $slug . '_' . $tax_slug . '_matching', array(
+				'tax_' . $slug . '_' . $tax_slug . '_matching',
+				array(
 					'type'    => 'select',
 					'label'   => $tax->label,
 					'help'    => sprintf( /* translators: %1$s: search term, translators: %2$s: search term */ __( 'Enter a comma separated list of %1$s. Only posts with these %2$s will be shown.', 'uabb' ), $tax->label, $tax->label ),
 					'options' => array(
-						'1' => sprintf( /* translators: %s: search term */ __( 'Match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ),
-						'0' => sprintf( /* translators: %s: search term */ __( 'Do not match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ),
-
+						'1'       => sprintf( /* translators: %s: search term */ __( 'Match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ), //phpcs:ignore WordPress.WP.I18n.TooManyFunctionArgs
+						'0'       => sprintf( /* translators: %s: search term */ __( 'Do not match these %s', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ), //phpcs:ignore WordPress.WP.I18n.TooManyFunctionArgs
+						'related' => sprintf( /* translators: %s: search term */ __( 'Match all related %s except...', '%s is an object like posts or taxonomies.', 'uabb' ), $tax->label, $tax->label ), //phpcs:ignore WordPress.WP.I18n.TooManyFunctionArgs
 					),
 					'help'    => sprintf( /* translators: %1$s: search term, translators: %2$s: search term */ __( 'Enter a comma separated list of %1$s. Only posts with these %2$s will be shown.', 'uabb' ), $tax->label, $tax->label ),
-				), $settings
+				),
+				$settings
 			);
 			FLBuilder::render_settings_field(
-				'tax_' . $slug . '_' . $tax_slug, array(
+				'tax_' . $slug . '_' . $tax_slug,
+				array(
 					'type'   => 'suggest',
 					'action' => 'fl_as_terms',
 					'data'   => $tax_slug,
 					'label'  => '&nbsp',
-				), $settings
+				),
+				$settings
 			);
 			$taxonomies_array[ $tax_slug ] = $tax->label;
 		}
@@ -338,7 +382,8 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 
 	// Author.
 	FLBuilder::render_settings_field(
-		'users_matching', array(
+		'users_matching',
+		array(
 			'type'    => 'select',
 			'label'   => __( 'Authors', 'uabb' ),
 			'help'    => __( 'Enter a comma separated list of authors usernames. Only posts with these authors will be shown.', 'uabb' ),
@@ -347,15 +392,18 @@ do_action( 'uabb_loop_settings_before_form', $settings );
 				'0' => __( 'Do not match these Authors', 'uabb' ),
 			),
 			'help'    => __( 'Enter a comma separated list of authors usernames. Only posts with these authors will be shown.', 'uabb' ),
-		), $settings
+		),
+		$settings
 	);
 
 	FLBuilder::render_settings_field(
-		'users', array(
+		'users',
+		array(
 			'type'   => 'suggest',
 			'action' => 'fl_as_users',
 			'label'  => __( '&nbsp', 'uabb' ),
-		), $settings
+		),
+		$settings
 	);
 
 	?>

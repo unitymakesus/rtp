@@ -12,7 +12,7 @@ class FLSidebarModule extends FLBuilderModule {
 		parent::__construct(array(
 			'name'            => __( 'Sidebar', 'fl-builder' ),
 			'description'     => __( 'Display a WordPress sidebar that has been registered by the current theme.', 'fl-builder' ),
-			'category'        => __( 'Layout', 'fl-builder' ),
+			'category'        => true === FL_BUILDER_LITE ? __( 'Basic', 'fl-builder' ) : __( 'Layout', 'fl-builder' ),
 			'editor_export'   => false,
 			'partial_refresh' => true,
 			'icon'            => 'layout.svg',

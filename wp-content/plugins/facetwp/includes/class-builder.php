@@ -8,6 +8,11 @@ class FacetWP_Builder
     public $custom_css;
 
 
+    function __construct() {
+        add_filter( 'facetwp_query_args', [ $this, 'hydrate_date_values' ], 999 );
+    }
+
+
     /**
      * Generate the layout HTML
      * @since 3.2.0
@@ -32,12 +37,18 @@ class FacetWP_Builder
         if ( have_posts() ) {
             while ( have_posts() ) : the_post();
 
-                // Prevent short-tags from leaking onto other posts
-                $this->data = [
+                // Default dynamic tags
+                $tags = [
                     'post:id'       => $post->ID,
                     'post:name'     => $post->post_name,
+                    'post:type'     => $post->post_type,
                     'post:url'      => get_permalink()
                 ];
+
+                $this->data = apply_filters( 'facetwp_builder_dynamic_tags', $tags, [
+                    'layout' => $layout,
+                    'post' => $post
+                ] );
 
                 $output .= '<div class="fwpl-result">';
 
@@ -128,7 +139,7 @@ class FacetWP_Builder
             $this->css[ $selector . ' button'] = $this->build_styles( $settings );
         }
         else {
-            $this->css[ $selector . ",\n" . $selector . ' a' ] = $this->build_styles( $settings );
+            $this->css[ $selector ] = $this->build_styles( $settings );
         }
 
         if ( 0 === strpos( $source, 'post_' ) || 'ID' == $source ) {
@@ -288,7 +299,9 @@ class FacetWP_Builder
         $this->data[ "$name:raw" ] = $value;
 
         // Attach the prefix / suffix to the value
-        $value = $prefix . $value . $suffix;
+        if ( '' != $value ) {
+            $value = $prefix . $value . $suffix;
+        }
 
         // Store the short-tag
         $this->data[ $name ] = $value;
@@ -410,7 +423,11 @@ class FacetWP_Builder
                 $href = get_term_link( $term_data['term_id'], $term_data['taxonomy'] );
             }
 
-            $value = '<a href="' . $href . '" target="' . $target . '">' . $value . '</a>';
+            if ( ! empty( $target ) ) {
+                $target = ' target="' . $target . '"';
+            }
+
+            $value = '<a href="' . $href . '"' . $target . '>' . $value . '</a>';
         }
 
         return $value;
@@ -499,7 +516,7 @@ class FacetWP_Builder
         $tax_query = [];
         $meta_query = [];
         $date_query = [];
-        $post_type = [];
+        $post_type = 'any';
         $post_status = [ 'publish' ];
         $post_in = [];
         $post_not_in = [];
@@ -507,12 +524,16 @@ class FacetWP_Builder
         $author_not_in = [];
         $orderby = [];
 
-        foreach ( $query_obj['post_type'] as $data ) {
-            $post_type[] = $data['value'];
+        if ( ! empty( $query_obj['post_type'] ) ) {
+            $post_type = array_column( $query_obj['post_type'], 'value' );
         }
 
-        if ( empty( $post_type ) ) {
-            $post_type = 'any';
+        if ( empty( $query_obj['filters'] ) ) {
+            $query_obj['filters'] = [];
+        }
+
+        if ( empty( $query_obj['orderby'] ) ) {
+            $query_obj['orderby'] = [];
         }
 
         foreach ( $query_obj['filters'] as $filter ) {
@@ -535,9 +556,13 @@ class FacetWP_Builder
                 $value = $exists_clause ? '' : $value[0];
             }
 
-            // Date placeholders
-            $value = str_replace( 'now', date('Y-m-d H:i:s' ), $value );
-            $value = str_replace( 'today', date( 'Y-m-d' ), $value );
+            // Support dynamic URL vars
+            $value = $this->parse_uri_tags( $value );
+
+            // Prepend with "date|" so we can populate with hydrate_date_values()
+            if ( 'DATE' == $type ) {
+                $value = 'date|' . $value;
+            }
 
             if ( 'ID' == $key ) {
                 if ( 'IN' == $compare ) {
@@ -686,7 +711,7 @@ class FacetWP_Builder
         $builder_post_types = [];
 
         $post_types = get_post_types( [ 'public' => true ], 'objects' );
-        $data_sources = FWP()->helper->get_data_sources();
+        $data_sources = FWP()->helper->get_data_sources( 'builder' );
 
         // Remove ACF choices
         unset( $data_sources['acf'] );
@@ -710,5 +735,60 @@ class FacetWP_Builder
             'post_types' => $builder_post_types,
             'filter_by' => $data_sources
         ];
+    }
+
+
+    /**
+     * Replace "date|" placeholders with actual dates
+     */
+    function hydrate_date_values( $query_args ) {
+        if ( isset( $query_args['meta_query'] ) ) {
+            foreach ( $query_args['meta_query'] as $index => $row ) {
+                if ( isset( $row['value'] ) && is_string( $row['value'] ) && 0 === strpos( $row['value'], 'date|' ) ) {
+                    $value = trim( substr( $row['value'], 5 ) );
+                    $value = date( 'Y-m-d', strtotime( $value ) );
+                    $query_args['meta_query'][ $index ]['value'] = $value;
+                }
+            }
+        }
+
+        return $query_args;
+    }
+
+
+    /**
+     * Let users pull URI or GET params into the query builder
+     * E.g. "http:uri", "http:uri:0", or "http:get:year"
+     * @since 3.6.0
+     */
+    function parse_uri_tags( $values ) {
+        $temp = (array) $values;
+
+        foreach ( $temp as $key => $value ) {
+            if ( 0 === strpos( $value, 'http:uri' ) ) {
+                $uri = FWP()->helper->get_uri();
+                $uri_parts = explode( '/', $uri );
+                $tag_parts = explode( ':', $value );
+                if ( isset( $tag_parts[2] ) ) {
+                    $index = (int) $tag_parts[2];
+                    $index = ( $index < 0 ) ? count( $uri_parts ) + $index : $index;
+                    $temp[ $key ] = isset( $uri_parts[ $index ] ) ? $uri_parts[ $index ] : '';
+                }
+                else {
+                    $temp[ $key ] = $uri;
+                }
+            }
+            elseif ( 0 === strpos( $value, 'http:get:' ) ) {
+                $tag_parts = explode( ':', $value );
+                if ( isset( $_GET[ $tag_parts[2] ] ) ) {
+                    $temp[ $key ] = $_GET[ $tag_parts[2] ];
+                }
+                else {
+                    $temp[ $key ] = '';
+                }
+            }
+        }
+
+        return is_array( $values ) ? $temp : $temp[0];
     }
 }

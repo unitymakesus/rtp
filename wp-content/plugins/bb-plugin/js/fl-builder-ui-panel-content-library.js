@@ -497,8 +497,14 @@
         onTemplateClick: function(e) {
             var $item = $(e.currentTarget),
                 id = $item.data('id'),
-                type = $item.data('type');
-            FLBuilder._requestTemplateInsert(id, type);
+                type = $item.data('type'),
+                premium = $item.data('premium');
+
+			if ( FLBuilderConfig.lite && premium ) {
+				FLBuilder._showProMessage( $item.find( '.fl-builder--template-name' ).text() );
+			} else {
+				FLBuilder._requestTemplateInsert(id, type);
+			}
         },
     });
 
@@ -874,6 +880,12 @@
             this.isShowing = true;
             $(this).trigger('onShow');
             FLBuilder.triggerHook('didShowContentPanel');
+
+            // Clear any visible registered panels
+            if ( 'Builder' in FL && 'data' in FL.Builder ) {
+                const actions = FL.Builder.data.getSystemActions()
+                actions.hideCurrentPanel()
+            }
         },
 
         /**

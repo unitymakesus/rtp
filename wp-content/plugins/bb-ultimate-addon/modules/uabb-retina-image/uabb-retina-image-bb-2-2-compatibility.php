@@ -178,7 +178,7 @@ FLBuilder::register_module(
 							'label'         => __( 'Link URL', 'uabb' ),
 							'show_target'   => true,
 							'show_nofollow' => true,
-							'connections'   => array( 'string' ),
+							'connections'   => array( 'string', 'url' ),
 							'preview'       => array(
 								'type' => 'none',
 							),

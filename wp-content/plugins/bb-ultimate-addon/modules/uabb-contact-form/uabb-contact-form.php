@@ -33,14 +33,13 @@ class UABBContactFormModule extends FLBuilderModule {
 
 		add_action( 'wp_ajax_uabb_builder_email', array( $this, 'send_mail' ) );
 		add_action( 'wp_ajax_nopriv_uabb_builder_email', array( $this, 'send_mail' ) );
-		add_filter( 'script_loader_tag', array( $this, 'uabb_add_async_attribute' ), 10, 2 );
 	}
 	/**
 	 * Function that gets mailto email
 	 *
 	 * @method mailto_email
 	 */
-	static public function mailto_email() {
+	public static function mailto_email() {
 		return self::$settings->mailto_email;
 	}
 
@@ -51,7 +50,7 @@ class UABBContactFormModule extends FLBuilderModule {
 	 */
 	public function enqueue_scripts() {
 		$settings = $this->settings;
-		if ( isset( $settings->uabb_recaptcha_toggle ) && 'show' == $settings->uabb_recaptcha_toggle && isset( $settings->uabb_recaptcha_site_key ) && ! empty( $settings->uabb_recaptcha_site_key ) ) {
+		if ( isset( $settings->uabb_recaptcha_toggle ) && 'show' === $settings->uabb_recaptcha_toggle ) {
 
 			$site_lang = substr( get_locale(), 0, 2 );
 			$post_id   = FLBuilderModel::get_post_id();
@@ -69,16 +68,28 @@ class UABBContactFormModule extends FLBuilderModule {
 	/**
 	 * Function that adds async attribute
 	 *
-	 * @method  uabb_add_async_attribute for the enqueued `uabb-g-recaptcha` script
-	 * @param string $tag    Script tag.
-	 * @param string $handle Registered script handle.
+	 * @since 1.22.0
+	 * @method  get_client_ip for the enqueued return IP
 	 */
-	public function uabb_add_async_attribute( $tag, $handle ) {
-		if ( ( 'uabb-g-recaptcha' !== $handle ) || ( 'uabb-g-recaptcha' === $handle && strpos( $tag, 'uabb-g-recaptcha-api' ) !== false ) ) {
-			return $tag;
+	public static function get_client_ip() {
+		$server_ip_keys = array(
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_X_CLUSTER_CLIENT_IP',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		);
+
+		foreach ( $server_ip_keys as $key ) {
+			if ( isset( $_SERVER[ $key ] ) && filter_var( $_SERVER[ $key ], FILTER_VALIDATE_IP ) ) {
+				return $_SERVER[ $key ];
+			}
 		}
 
-		return str_replace( ' src', ' id="uabb-g-recaptcha-api" async="async" defer="defer" src', $tag );
+		// Fallback local ip.
+		return '127.0.0.1';
 	}
 
 	/**
@@ -87,19 +98,71 @@ class UABBContactFormModule extends FLBuilderModule {
 	 * @method send_mail
 	 * @param array $params Gets the array for Params.
 	 */
-	static public function send_mail( $params = array() ) {
+	public static function send_mail( $params = array() ) {
 
 		global $uabb_contact_from_name, $uabb_contact_from_email, $uabb_filter_from_email, $uabb_filter_from_name;
 
+		check_ajax_referer( 'uabb-cf-nonce', 'security' );
 		// Get the contact form post data.
 		$node_id          = isset( $_POST['node_id'] ) ? sanitize_text_field( $_POST['node_id'] ) : false;
 		$template_id      = isset( $_POST['template_id'] ) ? sanitize_text_field( $_POST['template_id'] ) : false;
 		$template_node_id = isset( $_POST['template_node_id'] ) ? sanitize_text_field( $_POST['template_node_id'] ) : false;
-		$terms_checked    = isset( $_POST['terms_checked'] ) && 1 == $_POST['terms_checked'] ? true : false;
+		$terms_checked    = isset( $_POST['terms_checked'] ) && '1' === $_POST['terms_checked'] ? true : false;
 		$admin_email      = apply_filters( 'uabb_cf_change_admin_email', get_option( 'admin_email' ) );
 		$site_name        = get_option( 'blogname' );
 
 		$mailto = apply_filters( 'uabb_cf_change_admin_email', get_option( 'admin_email' ) );
+
+		if ( 'v3' === $settings->uabb_recaptcha_version ) {
+
+				$recaptcha_response = isset( $_POST['recaptcha_response'] ) ? sanitize_text_field( $_POST['recaptcha_response'] ) : false;
+
+				$recaptcha_secret = $settings->uabb_v3_recaptcha_secret_key;
+
+				$client_ip = self::get_client_ip();
+
+			if ( 0 > $settings->uabb_v3_recaptcha_score || 1 < $settings->uabb_v3_recaptcha_score ) {
+				$recaptcha_score = 0.5;
+			}
+				$request  = array(
+					'body' => array(
+						'secret'   => $recaptcha_secret,
+						'response' => $recaptcha_response,
+						'remoteip' => $client_ip,
+					),
+				);
+				$response = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', $request );
+
+				$response_code = wp_remote_retrieve_response_code( $response );
+
+				if ( 200 !== (int) $response_code ) {
+					/* translators: %d admin link */
+					$error['recaptcha'] = sprintf( __( 'Can not connect to the reCAPTCHA server (%d).', 'uabb' ), $response_code );
+				} else {
+					$body   = wp_remote_retrieve_body( $response );
+					$result = json_decode( $body, true );
+
+					$action = ( ( isset( $result['action'] ) && 'Form' === $result['action'] ) && ( $result['score'] > $recaptcha_score ) );
+
+					if ( ! $result['success'] ) {
+						if ( ! $action ) {
+							$message = __( 'Invalid Form - reCAPTCHA validation failed', 'uabb' );
+
+							if ( isset( $result['error-codes'] ) ) {
+								$result_errors = array_flip( $result['error-codes'] );
+
+								foreach ( $recaptcha_errors as $error_key => $error_desc ) {
+									if ( isset( $result_errors[ $error_key ] ) ) {
+										$message = $recaptcha_errors[ $error_key ];
+										break;
+									}
+								}
+							}
+							$error['recaptcha'] = $message;
+						}
+					}
+				}
+		}
 
 		if ( $node_id ) {
 			// Get the module settings.
@@ -116,7 +179,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				$mailto = $settings->mailto_email;
 			}
 
-			if ( ( isset( $settings->terms_checkbox ) && 'show' == $settings->terms_checkbox ) && ! $terms_checked ) {
+			if ( ( isset( $settings->terms_checkbox ) && 'show' === $settings->terms_checkbox ) && ! $terms_checked ) {
 				$response = array(
 					'error'   => true,
 					'message' => __( 'Terms and Conditions is required!', 'uabb' ),
@@ -125,7 +188,7 @@ class UABBContactFormModule extends FLBuilderModule {
 			}
 		}
 		$subject = $settings->email_subject;
-		if ( '' != $subject ) {
+		if ( '' !== $subject ) {
 
 			if ( isset( $_POST['name'] ) ) {
 				$subject = str_replace( '[NAME]', $_POST['name'], $subject );
@@ -185,7 +248,7 @@ class UABBContactFormModule extends FLBuilderModule {
 			wp_mail( $mailto, stripslashes( $subject ), do_shortcode( stripslashes( $template ) ), $headers );
 			die( '1' );
 		} else {
-			die( $mailto );
+			die( wp_kses_post( $mailto ) );
 		}
 	}
 	/**
@@ -194,10 +257,10 @@ class UABBContactFormModule extends FLBuilderModule {
 	 * @method mail_from
 	 * @param var $original_email_address gets the original email address.
 	 */
-	static public function mail_from( $original_email_address ) {
+	public static function mail_from( $original_email_address ) {
 		global $uabb_contact_from_email, $uabb_filter_from_email;
 
-		return ( $uabb_contact_from_email != $uabb_filter_from_email ) ? $uabb_filter_from_email : $original_email_address;
+		return ( $uabb_contact_from_email !== $uabb_filter_from_email ) ? $uabb_filter_from_email : $original_email_address;
 	}
 	/**
 	 * Function that gets from name
@@ -205,11 +268,11 @@ class UABBContactFormModule extends FLBuilderModule {
 	 * @method from_name
 	 * @param var $original_name gets the original name.
 	 */
-	static public function from_name( $original_name ) {
+	public static function from_name( $original_name ) {
 
 		global $uabb_contact_from_name, $uabb_filter_from_name;
 
-		return ( $uabb_contact_from_name != $uabb_filter_from_name ) ? $uabb_filter_from_name : $original_name;
+		return ( $uabb_contact_from_name !== $uabb_filter_from_name ) ? $uabb_filter_from_name : $original_name;
 	}
 
 	/**
@@ -222,11 +285,11 @@ class UABBContactFormModule extends FLBuilderModule {
 	 */
 	public function filter_settings( $settings, $helper ) {
 
-		$version_bb_check        = UABB_Compatibility::check_bb_version();
-		$page_migrated           = UABB_Compatibility::check_old_page_migration();
-		$stable_version_new_page = UABB_Compatibility::check_stable_version_new_page();
+		$version_bb_check        = UABB_Compatibility::$version_bb_check;
+		$page_migrated           = UABB_Compatibility::$uabb_migration;
+		$stable_version_new_page = UABB_Compatibility::$stable_version_new_page;
 
-		if ( $version_bb_check && ( 'yes' == $page_migrated || 'yes' == $stable_version_new_page ) ) {
+		if ( $version_bb_check && ( 'yes' === $page_migrated || 'yes' === $stable_version_new_page ) ) {
 
 			// Handled color opacity.
 			$helper->handle_opacity_inputs( $settings, 'btn_background_color_opc', 'btn_background_color' );
@@ -281,7 +344,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->input_typo['font_weight'] = 'normal';
 					} else {
 						$settings->input_typo['font_weight'] = $settings->font_family['weight'];
@@ -362,7 +425,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->btn_font_family['weight'] ) {
+					if ( 'regular' === $settings->btn_font_family['weight'] ) {
 						$settings->button_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_typo['font_weight'] = $settings->btn_font_family['weight'];
@@ -445,7 +508,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->label_font_family['weight'] ) {
+					if ( 'regular' === $settings->label_font_family['weight'] ) {
 						$settings->label_typo['font_weight'] = 'normal';
 					} else {
 						$settings->label_typo['font_weight'] = $settings->label_font_family['weight'];
@@ -528,7 +591,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->checkbox_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->checkbox_font_family['weight'] ) {
+					if ( 'regular' === $settings->checkbox_font_family['weight'] ) {
 						$settings->checkbox_typo['font_weight'] = 'normal';
 					} else {
 						$settings->checkbox_typo['font_weight'] = $settings->checkbox_font_family['weight'];
@@ -611,7 +674,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->terms_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->terms_font_family['weight'] ) {
+					if ( 'regular' === $settings->terms_font_family['weight'] ) {
 						$settings->terms_typo['font_weight'] = 'normal';
 					} else {
 						$settings->terms_typo['font_weight'] = $settings->terms_font_family['weight'];
@@ -677,7 +740,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				);
 				unset( $settings->terms_text_letter_spacing );
 			}
-		} elseif ( $version_bb_check && 'yes' != $page_migrated ) {
+		} elseif ( $version_bb_check && 'yes' !== $page_migrated ) {
 
 			// Handled color opacity.
 			$helper->handle_opacity_inputs( $settings, 'btn_background_color_opc', 'btn_background_color' );
@@ -732,7 +795,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->font_family['weight'] ) {
+					if ( 'regular' === $settings->font_family['weight'] ) {
 						$settings->input_typo['font_weight'] = 'normal';
 					} else {
 						$settings->input_typo['font_weight'] = $settings->font_family['weight'];
@@ -759,7 +822,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 != $settings->font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
+			if ( isset( $settings->line_height['desktop'] ) && isset( $settings->font_size['desktop'] ) && 0 !== $settings->font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
 				if ( is_numeric( $settings->line_height['desktop'] ) && is_numeric( $settings->font_size['desktop'] ) ) {
 					$settings->input_typo['line_height'] = array(
 						'length' => round( $settings->line_height['desktop'] / $settings->font_size['desktop'], 2 ),
@@ -767,7 +830,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 != $settings->font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
+			if ( isset( $settings->line_height['medium'] ) && isset( $settings->font_size['medium'] ) && 0 !== $settings->font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->line_height['medium'] ) && is_numeric( $settings->font_size['medium'] ) ) {
 					$settings->input_typo_medium['line_height'] = array(
 						'length' => round( $settings->line_height['medium'] / $settings->font_size['medium'], 2 ),
@@ -775,7 +838,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 != $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->line_height['small'] ) && isset( $settings->font_size['small'] ) && 0 !== $settings->font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->line_height['small'] ) && is_numeric( $settings->font_size['small'] ) ) {
 					$settings->input_typo_responsive['line_height'] = array(
 						'length' => round( $settings->line_height['small'] / $settings->font_size['small'], 2 ),
@@ -800,7 +863,7 @@ class UABBContactFormModule extends FLBuilderModule {
 				}
 				if ( isset( $settings->btn_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->btn_font_family['weight'] ) {
+					if ( 'regular' === $settings->btn_font_family['weight'] ) {
 						$settings->button_typo['font_weight'] = 'normal';
 					} else {
 						$settings->button_typo['font_weight'] = $settings->btn_font_family['weight'];
@@ -827,7 +890,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->btn_line_height['desktop'] ) && isset( $settings->btn_font_size['desktop'] ) && 0 != $settings->btn_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
+			if ( isset( $settings->btn_line_height['desktop'] ) && isset( $settings->btn_font_size['desktop'] ) && 0 !== $settings->btn_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
 				if ( is_numeric( $settings->btn_line_height['desktop'] ) && is_numeric( $settings->btn_font_size['desktop'] ) ) {
 					$settings->button_typo['line_height'] = array(
 						'length' => round( $settings->btn_line_height['desktop'] / $settings->btn_font_size['desktop'], 2 ),
@@ -835,7 +898,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_line_height['medium'] ) && isset( $settings->btn_font_size['medium'] ) && 0 != $settings->btn_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
+			if ( isset( $settings->btn_line_height['medium'] ) && isset( $settings->btn_font_size['medium'] ) && 0 !== $settings->btn_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->btn_line_height['medium'] ) && is_numeric( $settings->btn_font_size['medium'] ) ) {
 					$settings->button_typo_medium['line_height'] = array(
 						'length' => round( $settings->btn_line_height['medium'] / $settings->btn_font_size['medium'], 2 ),
@@ -843,7 +906,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->btn_line_height['small'] ) && isset( $settings->btn_font_size['small'] ) && 0 != $settings->btn_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->btn_line_height['small'] ) && isset( $settings->btn_font_size['small'] ) && 0 !== $settings->btn_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->btn_line_height['small'] ) && is_numeric( $settings->btn_font_size['small'] ) ) {
 					$settings->button_typo_responsive['line_height'] = array(
 						'length' => round( $settings->btn_line_height['small'] / $settings->btn_font_size['small'], 2 ),
@@ -868,7 +931,7 @@ class UABBContactFormModule extends FLBuilderModule {
 
 				if ( isset( $settings->label_font_family['weight'] ) ) {
 
-					if ( 'regular' == $settings->label_font_family['weight'] ) {
+					if ( 'regular' === $settings->label_font_family['weight'] ) {
 						$settings->label_typo['font_weight'] = 'normal';
 					} else {
 						$settings->label_typo['font_weight'] = $settings->label_font_family['weight'];
@@ -895,7 +958,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					'unit'   => 'px',
 				);
 			}
-			if ( isset( $settings->label_line_height['desktop'] ) && isset( $settings->label_font_size['desktop'] ) && 0 != $settings->label_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
+			if ( isset( $settings->label_line_height['desktop'] ) && isset( $settings->label_font_size['desktop'] ) && 0 !== $settings->label_font_size['desktop'] && ! isset( $settings->line_height_unit ) ) {
 				if ( is_numeric( $settings->label_line_height['desktop'] ) && is_numeric( $settings->label_font_size['desktop'] ) ) {
 					$settings->label_typo['line_height'] = array(
 						'length' => round( $settings->label_line_height['desktop'] / $settings->label_font_size['desktop'], 2 ),
@@ -903,7 +966,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->label_line_height['medium'] ) && isset( $settings->label_font_size['medium'] ) && 0 != $settings->label_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
+			if ( isset( $settings->label_line_height['medium'] ) && isset( $settings->label_font_size['medium'] ) && 0 !== $settings->label_font_size['medium'] && ! isset( $settings->line_height_unit_medium ) ) {
 				if ( is_numeric( $settings->label_line_height['medium'] ) && is_numeric( $settings->label_font_size['medium'] ) ) {
 					$settings->label_typo_medium['line_height'] = array(
 						'length' => round( $settings->label_line_height['medium'] / $settings->label_font_size['medium'], 2 ),
@@ -911,7 +974,7 @@ class UABBContactFormModule extends FLBuilderModule {
 					);
 				}
 			}
-			if ( isset( $settings->label_line_height['small'] ) && isset( $settings->label_font_size['small'] ) && 0 != $settings->label_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
+			if ( isset( $settings->label_line_height['small'] ) && isset( $settings->label_font_size['small'] ) && 0 !== $settings->label_font_size['small'] && ! isset( $settings->line_height_unit_responsive ) ) {
 				if ( is_numeric( $settings->label_line_height['small'] ) && is_numeric( $settings->label_font_size['small'] ) ) {
 					$settings->label_typo_responsive['line_height'] = array(
 						'length' => round( $settings->label_line_height['small'] / $settings->label_font_size['small'], 2 ),
@@ -936,7 +999,8 @@ class UABBContactFormModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->form_spacing_dimension_top = (int) $output[ $i ][1];
@@ -977,7 +1041,8 @@ class UABBContactFormModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->input_padding_dimension_top = (int) $output[ $i ][1];
@@ -1018,7 +1083,8 @@ class UABBContactFormModule extends FLBuilderModule {
 					$new      = explode( ':', $val );
 					$output[] = $new;
 				}
-				for ( $i = 0; $i < count( $output ); $i++ ) {
+				$count = count( $output );
+				for ( $i = 0; $i < $count; $i++ ) {
 					switch ( $output[ $i ][0] ) {
 						case 'padding-top':
 							$settings->validation_spacing_dimension_top = (int) $output[ $i ][1];
@@ -1113,7 +1179,7 @@ if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 $current_url = 'http://' . $host . strtok( $_SERVER['REQUEST_URI'], '?' );
 
 $default_template = sprintf(
-	/* translators: %1$s: search term, translators: %2$s: search term */ __(
+	/* translators: %1$s: search term, translators: %2$s: search term */    __(
 		'<strong>From:</strong> [NAME]
 <strong>Email:</strong> [EMAIL]
 <strong>Subject:</strong> [SUBJECT]
@@ -1123,15 +1189,18 @@ $default_template = sprintf(
 
 ----
 You have received a new submission from %1$s
-(%2$s)', 'uabb'
-	), get_bloginfo( 'name' ), $current_url
+(%2$s)',
+		'uabb'
+	),
+	get_bloginfo( 'name' ),
+	$current_url
 );
 
 /*
  * Condition to verify Beaver Builder version.
  * And accordingly render the required form settings file.
  */
-if ( UABB_Compatibility::check_bb_version() ) {
+if ( UABB_Compatibility::$version_bb_check ) {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-contact-form/uabb-contact-form-bb-2-2-compatibility.php';
 } else {
 	require_once BB_ULTIMATE_ADDON_DIR . 'modules/uabb-contact-form/uabb-contact-form-bb-less-than-2-2-compatibility.php';

@@ -21,9 +21,9 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 		 * @since 1.6.7
 		 * @return void
 		 */
-		static public function init() {
+		public static function init() {
 			add_filter( 'wpml_beaver_builder_modules_to_translate', __CLASS__ . '::wpml_uabb_modules_translate' );
-			UABB_WPML_Translatable::load_files();
+			self::load_files();
 		}
 
 		/**
@@ -31,7 +31,7 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 		 *
 		 * @since 1.6.7
 		 */
-		static public function load_files() {
+		public static function load_files() {
 
 			if ( class_exists( 'WPML_Page_Builders_Defined' ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-progress-bar.php';
@@ -50,8 +50,8 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-price-list.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-business-hours.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-pricing-box.php';
-				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-slide-box.php';
 				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-how-to.php';
+				require_once BB_ULTIMATE_ADDON_DIR . 'classes/wpml/class-wpml-uabb-faq.php';
 			}
 
 		}
@@ -62,7 +62,7 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 		 * @param array $form gets the forms array to be resolved.
 		 * @return array
 		 */
-		static public function wpml_uabb_modules_translate( $form ) {
+		public static function wpml_uabb_modules_translate( $form ) {
 
 			// Heading Module.
 			$form['uabb-heading'] = array(
@@ -328,6 +328,23 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 					array(
 						'field'       => 'form_desc',
 						'type'        => __( 'Gravity Form Description', 'uabb' ),
+						'editor_type' => 'VISUAL',
+					),
+				),
+			);
+
+			// Caldera Form Styler.
+			$form['uabb-caldera-form-styler'] = array(
+				'conditions' => array( 'type' => 'uabb-caldera-form-styler' ),
+				'fields'     => array(
+					array(
+						'field'       => 'caf_form_title',
+						'type'        => __( 'Caldera Form Title', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'caf_form_desc',
+						'type'        => __( 'Caldera Form Description', 'uabb' ),
 						'editor_type' => 'VISUAL',
 					),
 				),
@@ -752,8 +769,8 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 
 			// Slide Box Module.
 			$form['slide-box'] = array(
-				'conditions'        => array( 'type' => 'slide-box' ),
-				'fields'            => array(
+				'conditions' => array( 'type' => 'slide-box' ),
+				'fields'     => array(
 					array(
 						'field'       => 'title_front',
 						'type'        => __( 'Slide Box : Title on Front', 'uabb' ),
@@ -785,7 +802,6 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 						'editor_type' => 'LINE',
 					),
 				),
-				'integration-class' => 'WPML_UABB_Slide_Box',
 			);
 
 			// Advanced Separator Module.
@@ -877,6 +893,18 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'conditions'        => array( 'type' => 'info-list' ),
 				'fields'            => array(),
 				'integration-class' => 'WPML_UABB_Infolist',
+			);
+
+			// Image / Icon module.
+			$form['image-icon'] = array(
+				'conditions' => array( 'type' => 'image-icon' ),
+				'fields'     => array(
+					array(
+						'field'       => 'photo_url',
+						'type'        => __( 'Photo : URL', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+				),
 			);
 
 			// Photo.
@@ -1250,6 +1278,13 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'conditions'        => array( 'type' => 'uabb-how-to' ),
 				'fields'            => array(),
 				'integration-class' => 'WPML_UABB_How_To',
+			);
+
+			// UABB FAQ.
+			$form['uabb-faq'] = array(
+				'conditions'        => array( 'type' => 'uabb-faq' ),
+				'fields'            => array(),
+				'integration-class' => 'WPML_UABB_FAQ',
 			);
 
 			return $form;

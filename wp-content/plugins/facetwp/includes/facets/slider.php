@@ -127,17 +127,14 @@ class FacetWP_Facet_Slider extends FacetWP_Facet
 ?>
         <div class="facetwp-row">
             <div>
-                <?php _e('Other data source', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Other data source', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Use a separate value for the upper limit?', 'fwp' ); ?></div>
                 </div>
             </div>
             <div>
                 <data-sources
                     :facet="facet"
-                    :selected="facet.source_other"
-                    :sources="$root.data_sources"
                     settingName="source_other">
                 </data-sources>
             </div>
@@ -153,9 +150,8 @@ class FacetWP_Facet_Slider extends FacetWP_Facet
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Prefix', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Prefix', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Text that appears before each slider value', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -163,9 +159,8 @@ class FacetWP_Facet_Slider extends FacetWP_Facet
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Suffix', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Suffix', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'Text that appears after each slider value', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -173,9 +168,8 @@ class FacetWP_Facet_Slider extends FacetWP_Facet
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Format', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Format', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'The number format', 'fwp' ); ?></div>
                 </div>
             </div>
@@ -197,9 +191,8 @@ class FacetWP_Facet_Slider extends FacetWP_Facet
         </div>
         <div class="facetwp-row">
             <div>
-                <?php _e('Step', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
-                    <span class="icon-question">?</span>
+                    <?php _e('Step', 'fwp'); ?>:
                     <div class="facetwp-tooltip-content"><?php _e( 'The amount of increase between intervals', 'fwp' ); ?> (default = 1)</div>
                 </div>
             </div>

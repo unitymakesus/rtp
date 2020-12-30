@@ -9,6 +9,7 @@
         this.arrows            = settings.arrows;
         this.slidesToScroll    = settings.slidesToScroll;
         this.autoplay          = settings.autoplay;
+        this.on_pause_hover    = settings.onhover;
         this.autoplaySpeed     = settings.autoplaySpeed;
 
         this.desktop           = settings.desktop;
@@ -19,7 +20,9 @@
         this.small_breakpoint  = settings.small_breakpoint;
         this.next_arrow = settings.next_arrow;
         this.prev_arrow = settings.prev_arrow;
-
+        this.enable_fade = settings.enable_fade;
+        this.enable_dots = settings.enable_dots;
+        
         /* Execute when slick initialize */
         $( this.nodeClass ).find( '.uabb-image-carousel' ).on('init', $.proxy( this._adaptiveImageHeight, this ) );
 
@@ -49,13 +52,15 @@
                 img_carousel = node.find( '.uabb-image-carousel' );
 
             img_carousel.uabbslick({
-                dots: false,
+                dots: this.enable_dots,
+                fade: this.enable_fade,
                 infinite: this.infinite,
                 arrows: this.arrows,
                 lazyLoad: 'ondemand',
                 slidesToShow: this.desktop,
                 slidesToScroll: this.slidesToScroll,
                 autoplay: this.autoplay,
+                pauseOnHover:this.on_pause_hover,
                 autoplaySpeed: this.autoplaySpeed,
                 adaptiveHeight: true,
                 prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button"><i class=" '+ this.prev_arrow +' "></i></button>',
@@ -70,11 +75,11 @@
                     {
                         breakpoint: this.small_breakpoint,
                         settings: {
-                            slidesToShow: this.small
+                            slidesToShow: this.small,
                         }
                     }
                 ]
-            });
+                });
 
             img_carousel.on('afterChange', $.proxy( this._adaptiveImageHeight, this ) );
         },

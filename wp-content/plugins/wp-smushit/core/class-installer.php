@@ -12,7 +12,7 @@
 
 namespace Smush\Core;
 
-use Smush\WP_Smush;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -31,7 +31,11 @@ class Installer {
 	 * @since 3.1.0
 	 */
 	public static function smush_deactivated() {
-		WP_Smush::get_instance()->core()->mod->cdn->unschedule_cron();
+		if ( ! class_exists( '\\Smush\\Core\\Modules\\CDN' ) ) {
+			require_once __DIR__ . '/modules/class-cdn.php';
+		}
+
+		Modules\CDN::unschedule_cron();
 	}
 
 	/**
@@ -46,9 +50,8 @@ class Installer {
 
 		$version = get_site_option( WP_SMUSH_PREFIX . 'version' );
 
-		if ( ! class_exists( 'Settings' ) ) {
-			/* @noinspection PhpIncludeInspection */
-			require_once WP_SMUSH_DIR . 'core/class-settings.php';
+		if ( ! class_exists( '\\Smush\\Core\\Settings' ) ) {
+			require_once __DIR__ . '/class-settings.php';
 		}
 
 		Settings::get_instance()->init();
@@ -65,13 +68,8 @@ class Installer {
 				)
 			); // db call ok; no-cache ok.
 
-			if ( $results ) {
+			if ( $results || ( isset( $settings['auto'] ) && false !== $settings['auto'] ) ) {
 				update_site_option( 'wp-smush-install-type', 'existing' );
-			} else {
-				// Check for existing settings.
-				if ( false !== $settings['auto'] ) {
-					update_site_option( 'wp-smush-install-type', 'existing' );
-				}
 			}
 
 			// Create directory smush table.
@@ -100,29 +98,17 @@ class Installer {
 		}
 
 		if ( false !== $version && WP_SMUSH_VERSION !== $version ) {
-
 			if ( ! defined( 'WP_SMUSH_UPGRADING' ) ) {
 				define( 'WP_SMUSH_UPGRADING', true );
 			}
 
-			if ( version_compare( $version, '3.0', '<' ) ) {
-				self::upgrade_3_0();
+			if ( version_compare( $version, '3.7.0', '<' ) ) {
+				self::upgrade_3_7_0();
 			}
 
-			if ( version_compare( $version, '3.2.0', '<' ) ) {
-				self::upgrade_3_2_0();
-			}
-
-			if ( version_compare( $version, '3.2.2', '<' ) ) {
-				self::upgrade_3_2_2();
-			}
-
-			if ( version_compare( $version, '3.2.2.1', '<' ) ) {
-				self::upgrade_3_2_2_1();
-			}
-
-			if ( version_compare( $version, '3.3.2', '<' ) ) {
-				self::upgrade_3_3_2();
+			if ( version_compare( $version, '3.8.0', '<' ) ) {
+				// Delete the flag for hiding the BF modal because it was removed.
+				delete_site_option( WP_SMUSH_PREFIX . 'hide_blackfriday_modal' );
 			}
 
 			// Create/upgrade directory smush table.
@@ -142,9 +128,12 @@ class Installer {
 	 * @since 2.9.0
 	 */
 	public static function directory_smush_table() {
-		// Create a class object, if doesn't exists.
-		if ( ! is_object( WP_Smush::get_instance()->core()->mod->dir ) ) {
-			WP_Smush::get_instance()->core()->mod->dir = new Modules\Dir();
+		if ( ! class_exists( '\\Smush\\Core\\Modules\\Abstract_Module' ) ) {
+			require_once __DIR__ . '/modules/class-abstract-module.php';
+		}
+
+		if ( ! class_exists( '\\Smush\\Core\\Modules\\Dir' ) ) {
+			require_once __DIR__ . '/modules/class-dir.php';
 		}
 
 		// No need to continue on sub sites.
@@ -152,162 +141,33 @@ class Installer {
 			return;
 		}
 
+		// Create a class object, if doesn't exists.
+		if ( ! is_object( WP_Smush::get_instance()->core()->mod->dir ) ) {
+			WP_Smush::get_instance()->core()->mod->dir = new Modules\Dir();
+		}
+
 		// Create/upgrade directory smush table.
 		WP_Smush::get_instance()->core()->mod->dir->create_table();
-
-		// Run the directory smush table update.
-		WP_Smush::get_instance()->core()->db()->update_dir_path_hash();
 	}
 
 	/**
-	 * Update settings to new structure.
+	 * Upgrade to 3.7.0
 	 *
-	 * @since 3.0
+	 * @since 3.7.0
 	 */
-	private static function upgrade_3_0() {
-		$keys = array(
-			'networkwide',
-			'auto',
-			'lossy',
-			'strip_exif',
-			'resize',
-			'detection',
-			'original',
-			'backup',
-			'png_to_jpg',
-			'nextgen',
-			'gutenberg',
-			's3',
-		);
+	private static function upgrade_3_7_0() {
+		delete_site_option( WP_SMUSH_PREFIX . 'run_recheck' );
 
-		if ( is_multisite() && ! get_site_option( WP_SMUSH_PREFIX . 'networkwide' ) ) {
-			global $wpdb;
-
-			$offset = 0;
-			$limit  = 100;
-
-			while ( $blogs = $wpdb->get_results( "SELECT blog_id FROM {$wpdb->blogs} LIMIT $offset, $limit", ARRAY_A ) ) {
-				if ( $blogs ) {
-					foreach ( $blogs as $blog ) {
-						switch_to_blog( $blog['blog_id'] );
-
-						$settings = get_option( WP_SMUSH_PREFIX . 'last_settings', array() );
-						$settings = array_merge( Settings::get_instance()->get(), maybe_unserialize( $settings ) );
-						update_option( WP_SMUSH_PREFIX . 'settings', $settings );
-						// Remove previous data.
-						delete_option( WP_SMUSH_PREFIX . 'last_settings' );
-
-						foreach ( $keys as $key ) {
-							delete_option( WP_SMUSH_PREFIX . $key );
-						}
-					}
-					restore_current_blog();
-				}
-				$offset += $limit;
-			}
-		} else {
-			// last_settings will be an array if user had any custom settings.
-			$settings = get_site_option( WP_SMUSH_PREFIX . 'last_settings', array() );
-			if ( is_array( $settings ) ) {
-				$settings = array_merge( Settings::get_instance()->get(), $settings );
-			} else {
-				// last_settings will be a string if the Smush page hasn't been visited => get the new defaults.
-				$settings = Settings::get_instance()->get();
-			}
-
-			update_site_option( WP_SMUSH_PREFIX . 'settings', $settings );
-			// Remove previous data.
-			delete_site_option( WP_SMUSH_PREFIX . 'last_settings' );
-
-			foreach ( $keys as $key ) {
-				delete_site_option( WP_SMUSH_PREFIX . $key );
-			}
-		}
-	}
-
-	/**
-	 * Upgrade to 3.2.0.
-	 *
-	 * @since 3.2.0
-	 */
-	private static function upgrade_3_2_0() {
-		// Not used.
-		delete_option( 'smush_option' );
-	}
-
-	/**
-	 * Upgrade to 3.2.2
-	 *
-	 * @since 3.2.2
-	 */
-	private static function upgrade_3_2_2() {
-		// Show the upgrade notice for everyone.
-		delete_site_option( WP_SMUSH_PREFIX . 'hide_upgrade_notice' );
-
-		// Add new lazy-load options.
+		// Fix the "None" animation in lazy-load options.
 		$lazy = Settings::get_instance()->get_setting( WP_SMUSH_PREFIX . 'lazy_load' );
 
-		if ( ! $lazy ) {
+		if ( ! $lazy || ! isset( $lazy['animation'] ) || ! isset( $lazy['animation']['selected'] ) ) {
 			return;
 		}
 
-		$selected = 'fadein';
-		if ( $lazy['animation']['spinner'] ) {
-			$selected = 'spinner';
-		} elseif ( $lazy['animation']['disabled'] ) {
-			$selected = false;
-		}
-
-		$animation = array(
-			'selected'    => $selected,
-			'fadein'      => array(
-				'duration' => isset( $lazy['animation']['duration'] ) ? $lazy['animation']['duration'] : 400,
-				'delay'    => isset( $lazy['animation']['delay'] ) ? $lazy['animation']['delay'] : 0,
-			),
-			'spinner'     => array(
-				'selected' => 1,
-				'custom'   => array(),
-			),
-			'placeholder' => array(
-				'selected' => 1,
-				'custom'   => array(),
-				'color'    => '#F3F3F3',
-			),
-		);
-
-		$lazy['animation'] = $animation;
-
-		Settings::get_instance()->set_setting( WP_SMUSH_PREFIX . 'lazy_load', $lazy );
-	}
-
-	/**
-	 * Upgrade to 3.2.2.1
-	 *
-	 * Fix the network wide access upgrade.
-	 *
-	 * @since 3.2.2.1
-	 */
-	private static function upgrade_3_2_2_1() {
-		if ( ! is_multisite() ) {
-			return;
-		}
-
-		wp_cache_flush();
-		$network_enabled = get_site_option( WP_SMUSH_PREFIX . 'networkwide' );
-		update_site_option( WP_SMUSH_PREFIX . 'networkwide', ! ( '1' === $network_enabled ) );
-		wp_cache_flush();
-	}
-
-	/**
-	 * Show notice on upgrade.
-	 *
-	 * @since 3.3.2
-	 */
-	private static function upgrade_3_3_2() {
-		$install_type = get_site_option( 'wp-smush-install-type', false );
-		if ( 'existing' === $install_type ) {
-			set_site_transient( 'wp-smush-update-modal', true, 3600 );
+		if ( '0' === $lazy['animation']['selected'] ) {
+			$lazy['animation']['selected'] = 'none';
+			Settings::get_instance()->set_setting( WP_SMUSH_PREFIX . 'lazy_load', $lazy );
 		}
 	}
-
 }

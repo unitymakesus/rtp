@@ -41,6 +41,9 @@ abstract class Background_Tool extends Tool {
 		add_action( "wp_ajax_as3cfpro_{$this->tool_key}_cancel", array( $this, 'ajax_handle_cancel' ) );
 		add_action( "wp_ajax_as3cfpro_{$this->tool_key}_pause_resume", array( $this, 'ajax_handle_pause_resume' ) );
 
+		// Settings Tab
+		add_action( 'as3cf_pre_tab_render', array( $this, 'pre_tab_render' ) );
+
 		$this->background_process = $this->get_background_process_class();
 
 		// During an upgrade, cancel all background processes.
@@ -322,6 +325,7 @@ abstract class Background_Tool extends Tool {
 		$session = $this->create_session();
 
 		$this->background_process->push_to_queue( $session )->save()->dispatch();
+		do_action( $this->prefix . '_' . $this->tool_key . '_started' );
 	}
 
 	/**
@@ -506,6 +510,29 @@ abstract class Background_Tool extends Tool {
 		}
 
 		return $batch;
+	}
+
+	/**
+	 * Maybe add notices etc. at top of settings tab.
+	 *
+	 * @param string $tab
+	 *
+	 * @handles as3cf_pre_tab_render filter
+	 */
+	public function pre_tab_render( $tab ) {
+		if ( 'media' === $tab ) {
+			$tool_title = $this->get_title_text();
+			$tool_title = empty( $tool_title ) ? "Offloader" : $tool_title;
+
+			$lock_settings_args = array(
+				'message' => sprintf( __( '<strong>Settings Locked Temporarily</strong> &mdash; You can\'t change any of your settings until the "%s" tool has completed.', 'amazon-s3-and-cloudfront' ), $tool_title ),
+				'id'      => 'as3cf-media-settings-locked-' . $this->tool_key,
+				'inline'  => true,
+				'type'    => 'notice-warning',
+				'style'   => 'display: none',
+			);
+			$this->as3cf->render_view( 'notice', $lock_settings_args );
+		}
 	}
 
 	/**

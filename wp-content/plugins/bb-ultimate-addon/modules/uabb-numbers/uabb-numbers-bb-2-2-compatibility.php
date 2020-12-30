@@ -9,7 +9,8 @@
  */
 
 FLBuilder::register_module(
-	'UABBNumbersModule', array(
+	'UABBNumbersModule',
+	array(
 		'general'    => array( // Tab.
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
@@ -400,10 +401,11 @@ FLBuilder::register_module(
 							'description' => '%',
 						),
 						'separator_alignment' => array(
-							'type'    => 'select',
-							'label'   => __( 'Alignment', 'uabb' ),
-							'default' => 'inherit',
-							'options' => array(
+							'type'       => 'select',
+							'label'      => __( 'Alignment', 'uabb' ),
+							'default'    => 'inherit',
+							'responsive' => 'true',
+							'options'    => array(
 								'inherit' => __( 'Default', 'uabb' ),
 								'left'    => __( 'Left', 'uabb' ),
 								'right'   => __( 'Right', 'uabb' ),

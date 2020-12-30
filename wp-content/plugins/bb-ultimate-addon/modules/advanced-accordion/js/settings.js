@@ -15,6 +15,8 @@
 				flag 			= false,
 				enable_first_data = $(node + ' .uabb-adv-accordion').data('enable_first');
 
+				
+
 			if ( enable_first_data == 'no' ) {
 				contentTab.on( 'click', this._previewContentTab );
 				formButton.on( 'click', this._formButton );
@@ -84,6 +86,10 @@
 		{
 			var type = $(e.target).val();
 
+			var form = $('.fl-builder-settings');
+
+			form.find("#fl-field-ct_raw_nonce").hide();
+
 			if ( 'saved_modules' === type ) {
 				this._setTemplates('saved_modules');
 			}
@@ -112,11 +118,19 @@
 			}
 			var self = this;
 
+			var form = $('.fl-builder-settings');
+			nonce = form.find( '.uabb-module-raw' ).data( 'uabb-module-nonce' );
+
+			if ( 'undefined' === typeof nonce ) {
+				nonce     = form.find('input[name=ct_raw_nonce]').val();
+			}
+
 			$.post(
 				ajaxurl,
 				{
 					action: 'uabb_get_saved_templates',
-					type: type
+					type: type,
+					nonce: nonce,
 				},
 				function( response ) {
 					callback(response);
@@ -144,7 +158,7 @@
 			}
 
 			this._getTemplates(type, function(data) {
-				var response = JSON.parse( data );
+				var response = data;
 
 				if ( response.success ) {
 					self._templates[type] = response.data;

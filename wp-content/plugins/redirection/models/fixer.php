@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname( REDIRECTION_FILE ) . '/database/database.php';
+require_once dirname( REDIRECTION_FILE ) . '/database/database.php';
 
 class Red_Fixer {
 	public function get_json() {
@@ -12,17 +12,18 @@ class Red_Fixer {
 
 	public function get_debug() {
 		$status = new Red_Database_Status();
+		$ip = [];
+
+		foreach ( Redirection_Request::get_ip_headers() as $var ) {
+			$ip[ $var ] = isset( $_SERVER[ $var ] ) ? $_SERVER[ $var ] : false;
+		}
 
 		return [
 			'database' => [
 				'current' => $status->get_current_version(),
 				'latest' => REDIRECTION_DB_VERSION,
 			],
-			'ip_header' => [
-				'HTTP_CF_CONNECTING_IP' => isset( $_SERVER['HTTP_CF_CONNECTING_IP'] ) ? $_SERVER['HTTP_CF_CONNECTING_IP'] : false,
-				'HTTP_X_FORWARDED_FOR' => isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : false,
-				'REMOTE_ADDR' => isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : false,
-			],
+			'ip_header' => $ip,
 		];
 	}
 
@@ -136,7 +137,7 @@ class Red_Fixer {
 
 	private function fix_groups() {
 		if ( Red_Group::create( 'new group', 1 ) === false ) {
-			return new WP_Error( __( 'Unable to create group', 'redirection' ) );
+			return new WP_Error( 'Unable to create group' );
 		}
 
 		return true;

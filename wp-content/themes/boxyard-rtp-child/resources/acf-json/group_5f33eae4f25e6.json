@@ -1,0 +1,45 @@
+{
+    "key": "group_5f33eae4f25e6",
+    "title": "Event Custom Fields",
+    "fields": [
+        {
+            "key": "field_5f33eb0d44f29",
+            "label": "Eventbrite ID",
+            "name": "eventbrite_checkout_id",
+            "type": "number",
+            "instructions": "Providing the Eventbrite ID will display the checkout widget at the bottom of the event page's description \/ content.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "mec-events"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1597238109
+}

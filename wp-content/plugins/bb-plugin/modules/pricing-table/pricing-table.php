@@ -103,6 +103,7 @@ class FLPricingTableModule extends FLBuilderModule {
 	 */
 	public function render_button( $column ) {
 		$pricing_column = $this->settings->pricing_columns[ $column ];
+
 		FLBuilder::render_module_html( 'button', $this->get_button_settings( $pricing_column ) );
 	}
 }
@@ -282,6 +283,32 @@ FLBuilder::register_settings_form('pricing_column_form', array(
 							'show_remove' => true,
 							'show'        => array(
 								'fields' => array( 'btn_icon_position', 'btn_icon_animation' ),
+							),
+						),
+						'btn_duo_color1'     => array(
+							'label'      => __( 'DuoTone Primary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.fl-button-icon.fad:before',
+								'property'  => 'color',
+								'important' => true,
+							),
+						),
+						'btn_duo_color2'     => array(
+							'label'      => __( 'DuoTone Secondary Color', 'fl-builder' ),
+							'type'       => 'color',
+							'default'    => '',
+							'show_reset' => true,
+							'show_alpha' => true,
+							'preview'    => array(
+								'type'      => 'css',
+								'selector'  => '.fl-button-icon.fad:after',
+								'property'  => 'color',
+								'important' => true,
 							),
 						),
 						'btn_icon_position'  => array(

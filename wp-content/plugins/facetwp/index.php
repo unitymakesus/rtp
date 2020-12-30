@@ -2,11 +2,11 @@
 /*
 Plugin Name: FacetWP
 Description: Advanced Filtering for WordPress
-Version: 3.4.5
+Version: 3.6.6
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 
-Copyright 2019 FacetWP, LLC
+Copyright 2020 FacetWP, LLC
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -38,13 +38,13 @@ class FacetWP
     function __construct() {
 
         // php check
-        if ( version_compare( phpversion(), '5.4', '<' ) ) {
+        if ( version_compare( phpversion(), '5.6', '<' ) ) {
             add_action( 'admin_notices', array( $this, 'upgrade_notice' ) );
             return;
         }
 
         // setup variables
-        define( 'FACETWP_VERSION', '3.4.5' );
+        define( 'FACETWP_VERSION', '3.6.6' );
         define( 'FACETWP_DIR', dirname( __FILE__ ) );
         define( 'FACETWP_URL', plugins_url( '', __FILE__ ) );
         define( 'FACETWP_BASENAME', plugin_basename( __FILE__ ) );
@@ -66,11 +66,11 @@ class FacetWP
 
 
     /**
-     * Require PHP 5.4+
+     * Require PHP 5.6+
      */
     function upgrade_notice() {
         $message = __( 'FacetWP requires PHP %s or above. Please contact your host and request a PHP upgrade.', 'fwp' );
-        echo '<div class="error"><p>' . sprintf( $message, '5.4' ) . '</p></div>';
+        echo '<div class="error"><p>' . sprintf( $message, '5.6' ) . '</p></div>';
     }
 }
 

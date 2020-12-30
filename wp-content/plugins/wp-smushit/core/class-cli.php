@@ -8,9 +8,9 @@
 
 namespace Smush\Core;
 
-use Smush\WP_Smush;
 use WP_CLI;
 use WP_CLI_Command;
+use WP_Smush;
 
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -174,7 +174,7 @@ class CLI extends WP_CLI_Command {
 		// We need to initialize the database module (maybe all other modules as well?).
 		Settings::get_instance()->init();
 
-		$unsmushed_attachments = $core->db()->get_unsmushed_attachments();
+		$unsmushed_attachments = $core->get_unsmushed_attachments();
 
 		while ( $images ) {
 			$progress->tick();
@@ -222,7 +222,7 @@ class CLI extends WP_CLI_Command {
 	 * @param int    $batch  Compress only this number of images.
 	 */
 	private function smush_all( $msg, $batch = 0 ) {
-		$attachments = WP_Smush::get_instance()->core()->db()->get_unsmushed_attachments();
+		$attachments = WP_Smush::get_instance()->core()->get_unsmushed_attachments();
 
 		if ( $batch > 0 ) {
 			$attachments = array_slice( $attachments, 0, $batch );
@@ -249,7 +249,7 @@ class CLI extends WP_CLI_Command {
 	private function restore_image( $id = 0 ) {
 		$core = WP_Smush::get_instance()->core();
 
-		$attachments = ! empty( $core->smushed_attachments ) ? $core->smushed_attachments : $core->db()->smushed_count( true );
+		$attachments = ! empty( $core->smushed_attachments ) ? $core->smushed_attachments : $core->get_smushed_attachments();
 
 		if ( empty( $attachments ) ) {
 			WP_CLI::success( __( 'No images available to restore', 'wp-smushit' ) );
@@ -321,7 +321,7 @@ class CLI extends WP_CLI_Command {
 		// If we still don't have a backup path, use traditional method to get it.
 		if ( empty( $backup ) ) {
 			// Check backup for Full size.
-			$backup = WP_Smush::get_instance()->core()->mod->smush->get_image_backup_path( $file );
+			$backup = WP_Smush::get_instance()->core()->mod->backup->get_image_backup_path( $file );
 		} else {
 			// Get the full path for file backup.
 			$backup = str_replace( wp_basename( $file ), wp_basename( $backup ), $file );
@@ -339,7 +339,7 @@ class CLI extends WP_CLI_Command {
 
 			// Get the original File path and check if it exists.
 			$backup = get_post_meta( $image_id, WP_SMUSH_PREFIX . 'original_file', true );
-			$backup = WP_Smush::get_instance()->core()->mod->smush->original_file( $backup );
+			$backup = Helper::original_file( $backup );
 
 			if ( ! empty( $backup ) && is_file( $backup ) ) {
 				return true;

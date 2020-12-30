@@ -38,7 +38,7 @@ function uabb_column_register_settings() {
  */
 function uabb_column_particle( $form, $id ) {
 
-	if ( 'col' != $id ) {
+	if ( 'col' !== $id ) {
 		return $form;
 	}
 
@@ -158,7 +158,7 @@ function uabb_column_particle( $form, $id ) {
  */
 function uabb_column_gradient( $form, $id ) {
 
-	if ( 'col' != $id ) {
+	if ( 'col' !== $id ) {
 		return $form;
 	}
 
@@ -340,7 +340,7 @@ function uabb_column_gradient( $form, $id ) {
  */
 function uabb_column_shadow( $form, $id ) {
 
-	if ( 'col' != $id ) {
+	if ( 'col' !== $id ) {
 		return $form;
 	}
 
@@ -535,35 +535,36 @@ function uabb_output_before_module( $modules, $col_id ) {
 		'particles_direction'  => isset( $column->settings->uabb_particles_direction_col ) ? $column->settings->uabb_particles_direction_col : '',
 		'id'                   => isset( $column->node ) ? $column->node : '',
 	);
-	$data = json_encode( $data );
+	$data = wp_json_encode( $data );
 
 	if ( isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) { ?>
 
-		<div class="uabb-col-particles-background" id="uabb-particle-<?php echo $column->node; ?>" data-particle=<?php echo $data; ?>></div>
+		<div class="uabb-col-particles-background" id="uabb-particle-<?php echo esc_attr( $column->node ); ?>" data-particle=<?php echo esc_attr( $data ); ?>></div>
 
 	<?php } ?>
 	<?php
 	if ( FLBuilderModel::is_builder_active() && isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) {
 		?>
 		<script>
-			var url ='<?php echo BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js'; ?>';
+			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
 
 			window.particle_js_loaded = 0;
 
-			$.cachedScript = function( url, options ) {
+			jQuery.cachedScript = function( url, options ) {
 				// Allow user to set any option except for dataType, cache, and url.
-				options = $.extend( options || {}, {
+				options = jQuery.extend( options || {}, {
 					dataType: "script",
 					cache: true,
 					url: url
 				});
 
 				// Return the jqXHR object so we can chain callbacks.
-				return $.ajax( options );
+				return jQuery.ajax( options );
 			};
-			if ( $( '.uabb-col-particles-background' ).length ) {
+			if ( jQuery( '.uabb-col-particles-background' ).length ) {
 
-				$.cachedScript( url ).done( function( script, textStatus ) {					
+				jQuery.cachedScript( url ).done( function( script, textStatus ) {
+
 					window.particle_js_loaded = 1;
 					particles_col_background_script();
 
@@ -571,7 +572,7 @@ function uabb_output_before_module( $modules, $col_id ) {
 			}
 			function particles_col_background_script() {
 
-			var row_id ='<?php echo $column->node; ?>';
+			var row_id ='<?php echo esc_attr( $column->node ); ?>';
 			var nodeClass  	= jQuery( '.fl-node-' + row_id );
 			<?php $json_custom_particles = wp_strip_all_tags( $column->settings->uabb_particles_custom_code_col ); ?>
 
@@ -597,7 +598,7 @@ function uabb_output_before_module( $modules, $col_id ) {
 							<?php
 							if ( isset( $json_particles_custom ) && '' !== $json_particles_custom ) {
 								?>
-								particlesJS( 'uabb-particle-' + row_id, <?php echo $json_custom_particles; ?> );
+								particlesJS( 'uabb-particle-' + row_id, <?php echo wp_kses_post( $json_custom_particles ); ?> );
 								<?php
 							}
 							?>

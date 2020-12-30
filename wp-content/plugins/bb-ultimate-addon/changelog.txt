@@ -1,3 +1,268 @@
+Version 1.28.10 Tuesday, 15th December 2020
+- Improvement: Compatibility with PHP v8.0.
+- Improvement: Advanced Posts - Added Taxonomy Badge option.
+- Improvement: Advanced Posts - Added options to add icons for Post Meta.
+- Improvement: Advanced Posts - Added Inter Post Meta Spacing option.
+- Improvement: Advanced Posts - Added Bottom Spacing option for Taxonomy Badge, Title & Meta.
+- Improvement: Image/Icon - Added WPML support.
+- Improvement: User Registration Form - Added Phone field.
+- Improvement: User Registration Form - Added option to make Register Button and Login Link inline.
+- Improvement: User Registration Form - Added option to set Lost Your Password Text above Terms and Conditions.
+- Fixed: Google Map - Window scrolls down on close of InfoWindow on Chrome.
+- Fixed: How-to Schema - Added 'title' attributes to steps images.
+- Fixed: Price Box - Title background color width issue.
+- Fixed: Woo - Products - Grid layout issue with BB theme on archive pages.
+
+Version 1.28.9 Wednesday 4th November 2020
+- Improvement: Advanced Menu - Added Hamburger Icon Size option.
+- Improvement: Advanced Menu - Improved Accessibility for all types of menu.
+- Improvement: Heading - Added spacing option for separator
+- Improvement: Hotspot - Provided filters to change the tour navigation strings.
+- Fixed: Advanced Menu - Sub menu not displayed on Internet Explorer
+- Fixed: Advanced Tabs - Active Tab Index setting not working properly.
+- Fixed: Font Awesome 5 Pro conflict in some UABB modules.
+- Fixed: Info Box - Box Shadow not working properly
+- Fixed: Off-Canvas - Close Canvas on Menu Link conflict with sub menu.
+- Fixed: Photo Gallery - CreativeWork warning for Caption.
+- Fixed: User Registration Form - Added WordPress 5.5 password check compatibility.
+- Fixed: User Registration Form - Password not getting saved when new user is created
+- Fixed: WPForms Styler - Checked Color setting not working for Checkbox.
+
+Version 1.28.8 Friday, 16th October 2020
+- Fixed: Info List - Layout stacking issue in some cases
+- Fixed: Table - Body Cells Padding not working in Responsive Stacked layout
+
+Version 1.28.7 Wednesday, 7th October 2020
+- Improvement: Dual Button - Added border settings for each button
+- Improvement: Dual Color Heading - Added background text option
+- Improvement: Dual Color Heading - Added background fill option
+- Improvement: Dual Color Heading - Added inline and stack option for headings
+- Improvement: Dual Color Heading - Added separate typography for both headings
+- Improvement: Dual Color Heading - Option to add text after the Heading
+- Improvement: Heading - Added background text option
+- Improvement: Heading - Added fill background image and gradient option
+- Improvement: Heading - Added Description position option
+- Improvement: Info Box - Added option for Border Radius
+- Improvement: Info Box - Added Image / Icon Spacing option
+- Improvement: Price Box - Added Heading icon option
+- Improvement: Price Box - Added Featured List icon option
+- Improvement: Price Box - Added Offering Price Option
+- Improvement: Price Box - Added Ribbon option
+- Improvement: Price Box - Added Price Position option
+- Improvement: Price Box - Added Box Padding and Item Padding options for Feature List
+- Improvement: Price Box - Added Box Shadow option
+- Improvement: Info List - Added an option to align list
+- Improvement: Fancy Text - Added New animations
+- Improvement: Price List - Added none border option for Connector Line style
+- Improvement: Table - Added responsive support
+- Fixed: Advanced Posts - Posts layout issue with Grid layout
+- Fixed: Dual Button - Border Hover Color setting not working
+- Fixed: FAQ Schema - Active FAQ background color not working
+- Fixed: Heading - Alignment setting not working for Description
+- Fixed: Info Box - Border setting not working properly in some themes
+- Fixed: Table - Border is applied even if set to zero
+- Fixed: Price List - Layout issue when Image is not set
+- Fixed: Price List - Connector hover color not working
+
+Version 1.28.6 Tuesday, 15th September 2020
+- Fixed: Info Box: Resolved default padding causing layout issue.
+- Fixed: Image Carousel: Enable Arrow settings conflict in mobile devices
+- Fixed: Video Gallery: Typography settings not visible for caption when set to Always
+
+Version 1.28.5 Tuesday, 8th September 2020
+- Improvement: Info Box - Added Box Shadow settings
+- Improvement: Table of Contents - RankMath plugin compatibility added
+- Fixed: Advanced Posts - Issue with Taxonomy Filters showing empty categories
+- Fixed: Advanced Tab - Min-height issue in the content layout
+- Fixed: Content Toggle - Issue with Toggle animation not working after the first switch
+- Fixed: Woo-Products - Issue with Pagination not working
+- Fixed: Woo-Products - Issue with variable product images not reflecting in quick view
+
+Version 1.28.4 Thursday, 20th August 2020
+- Improvement: Social Share - Added new styles, floating share buttons and UI improvements
+- Improvement: Advanced Posts - Added settings to change meta separator
+- Improvement: Advanced Posts - Open filterable tab from URL
+- Improvement: FAQ - Enable multiple schema on a page
+- Improvement: Image Carousel - Added Fade effect and Dots Navigation in Carousel
+- Fixed: Advanced Posts - Categories are not fetched properly when post type is Products
+- Fixed: Advanced Posts - Equal Height Boxes option not working for Grid Layout
+- Fixed: Advanced Posts - Posts overlapping issue with Scroll Pagination for Grid Layout
+- Fixed: Font Awesome Pro not working with some modules
+- Fixed: Woo-Products - Fixed Checkout page error for logged out users
+
+Version 1.28.3 Wednesday, 12th August 2020
+- Improvement: Compatibility to WordPress 5.5
+
+Version 1.28.2 Friday, 31st July 2020
+- Fix - Gravity Forms Styler - Resolved JS error 'gform' is not defined.
+
+Version 1.28.1 Wednesday, 29th July 2020
+- Improvement: Advanced Posts - Added Taxonomy filters for grid Layout.
+- Improvement: Advanced Menu - Improved accessibility.
+- Improvement: Table - Added alignment option for each cell.
+- Fixed: Gravity Forms Styler - Added compatibility with Gravity Form v2.5.
+- Fixed: Interactive Banner 2 - Overlay Color option conflict with custom height settings.
+- Fixed: Woo-Products - Resolved issue with Draft products showing when Pagination is active.
+- Fixed: Woo-Products - Resolved issue with Out of Stock products showing when Pagination is active.
+
+Version 1.28.0 Monday, 20th July 2020
+- New: Introduced Fluent Form Styler
+- Improvement: Advanced Icons - Added responsive support for Spacing
+- Improvement: Advanced Menu - Added option to Collapse Menu for Responsive Accordion layout
+- Improvement: Photo Gallery - Added Pagination support
+- Improvement: Photo Gallery - Added Box Shadow option for Images
+- Fixed: Advanced Posts - Resolved PHP notice error with PHP version 7.4
+- Fixed: Advanced Tabs - Width issue in Responsive Accordion Mode when Tab Layout is Vertical
+- Fixed: Advanced Testimonials - Rectified the issue with filters to change next and previous arrows
+- Fixed: Business Reviews - Reload Reviews setting option not working properly
+- Fixed: Contact Form - Button background color not working when Button Style set to Default
+- Fixed: Call To Action - Hover state for button not working when Button style set to Transparent
+- Fixed: Woo-Products - Fixed the issue with Add to Cart for logged out users in Modern Skin
+
+Version 1.27.0 Wednesday, 24th June 2020
+- New: Introduced Devices module
+- Improvement: Advanced Tab - Added focus color settings
+- Improvement: Contact Form - Added reCAPTCHA v3 support
+- Improvement: Gravity Form Styler - Added style support for the labels and multi-step navigation text
+- Improvement: Off-Canvas - Added Sub Menu toggle option for Menu Content Type
+- Fixed: Advanced Menu - JS error when Custom Breakpoints field is empty
+- Fixed: Interactive Banner 2 - CSS conflict with the custom height settings
+- Fixed: Social Share - Pinterest Share not working due to use missing image
+- Fixed: Gravity Forms Styler - Hide form title & description on submit
+- Fixed: Woo-Products - Add To Cart success message not displayed in Quick View for Variable Products
+
+Version 1.26.7 Monday, 15th June 2020
+- New: Users can now share non-personal usage data to help us test and develop better products. ( <a href="https://store.brainstormforce.com/usage-tracking/?utm_source=changelog&utm_medium=changelog&utm_campaign=usage_tracking" target="_blank" rel="noopener">Know More</a> )
+- Improvement: Added font-display property for Ultimate Icons to improve PageSpeed score
+
+Version 1.26.6 Tuesday, 9th June 2020
+- Improvement: Login Form - Added loader icon for Google and Facebook login buttons.
+- Improvement: Photo Gallery - Added functionality to open a specific Filterable Tab from URL.
+- Improvement: User Registration Form - Added optional Terms and Conditions to comply with GDPR.
+- Fixed: Default Button padding issue with few themes.
+- Fixed: Dual Button - Padding setting not working when Button Style set to Default.
+- Fixed: Login Form - View password option alignment issue.
+- Fixed: User Registration Form - Allowed usage of multiple Registration Forms on the same page.
+- Fixed: Video Gallery - Videos in Filterable Tabs are not loaded when Row ID is used in the URL.
+- Fixed: Woo-Products - Grouped products not getting added to cart from quick view.
+
+Version 1.26.5 Tuesday, 12th May 2020
+- Improvement: FAQ - Added accessibility support for Accordion Layout
+- Improvement: Image Carousel - Added option to enable/disable on-hover-pause for slider
+- Improvement: Image Carousel - Added option to disable arrows on small devices
+- Improvement: Registration Form - Added Password match functionality for Confirm Password
+- Improvement: Video gallery - Added an option to display Caption Always 
+- Improvement: Woo-Products - Added Main Query option for Source
+- Fixed: Button - HTML rendering issue in the settings field
+- Fixed: Off-canvas - Off-canvas won't trigger on Firefox version less than 65
+- Fixed: Login Form - Wrong label for password input field
+- Fixed: Woo-Products - Title Hover Color not working
+- Fixed: Woo-Products - Issue with older Beaver Builder version (less than v2.2)
+
+Version 1.26.4 Tuesday, 5th May 2020
+- Security Fix: Registration Form - Allow user registration if anyone can register option is enabled from the WordPress backend
+
+Version 1.26.3 Thursday, 23rd April 2020
+- Improvement: Advanced Tabs - Added option Active Tab index for default active tab
+- Improvement: Advanced Tab - Added vertical tabs layout
+- Improvement: Button - UI & UX improvement in module
+- Improvement: Login Form - Added loader icon when user clicks login button
+- Improvement: Login Form - Added View Password option
+- Improvement: Modal Popup - Added Border setting option
+- Fixed: HTML rendering issue in settings field in some modules
+- Fixed: Retina Image - Issue with the image width
+- Fixed: Slide Box - Issue with WPML plugin with CTA Button
+
+Version 1.26.2 - Thursday, 9th April 2020
+- Improvement: Added accessibility support for modules.
+- Improvement: Hardened the security of the plugin.
+- Improvement: Particle Backgrounds - Optimised Row / Column JavaScript.
+- Fixed: Button - Button text hover color not working with Transparent style.
+- Fixed: Interactive Banner 2 - Connection field issue fixed.
+- Fixed: Price List - WPML Translation not working issue fixed.
+- Fixed: Woo-Products - Custom flash content not working for variable products.
+- Fixed: Woo-Products - UI issue with BB theme.
+
+Version 1.26.1 - Thursday, 26th March 2020
+- Improvement: Button - Added focus style effect to the background color, text color, and border-color
+- Improvement: FAQ - Added equal height setting for the grid style
+- Fixed: Advanced Posts - Post content border settings not working
+- Fixed: Contact Form - Message required field setting not working
+- Fixed: Retina Image - Issue with Beaver Themer when header set to sticky
+- Fixed: Slide box - Drop down icon doesn't change in style 2 settings
+- Fixed: Woo Products - Quick View add to cart button not working
+
+Version 1.26.0 - Wednesday, 11th March 2020
+- New: Introduced Caldera Form Styler
+- Improvement: Business Reviews - Added a filter to change the review date format
+- Improvement: Video - Added structured data support
+- Fixed: Dual Button - Button border-radius setting not working when button style set as default
+- Fixed: Dual Button - Button text-color setting not working when button-type setting set as vertical in case of the default style
+- Fixed: Dual Button - Button icon spacing not working when join button setting set as no in case of the default style
+- Fixed: HTML rendering issue in settings field in some modules
+- Fixed: Woo - Add To Cart - Resolved CSS rendering issue when button style is transparent
+- Fixed: WPForms Styler - Fixed font size not working for input fields
+
+Version 1.25.2 - Wednesday, 19th February 2020
+- Improvement: Testimonials - Added photo connection to photo field setting
+- Improvement: Simple Separator - Added responsive support for alignment setting option
+- Fixed: Advanced Posts - Scroll pagination conflict with multiple Advanced Posts on the Single page
+- Fixed: Button padding settings not working when button style set as default in some specific module
+- Fixed: Countdown - Added missing overall alignment setting field
+- Fixed: FAQ -  Resolved parsing error in the schema markup
+- Fixed: HTML rendering issue in settings field in some modules
+- Fixed: Info List - Division by zero PHP warning for image size
+- Fixed: User Registration Form - Register button typography setting not working
+- Fixed: Woo Products -  Resolved PHP notice error in Woo Products module
+
+Version 1.25.1 - Monday, 10th February 2020
+- Improvement: Hardened the security of plugin
+- Improvement: Compatibility with latest WordPress PHP_CodeSniffer rules
+
+Version 1.25.0 - Wednesday, 22th January 2020
+- Security Fix: Cross-site scripting (XSS) vulnerability.
+- New: Introduced FAQ with Schema Support
+- Improvement: Advanced Testimonials - Added position support for Star Rating
+- Improvement: Contact Form - Added Color setting option for Button Icon
+- Improvement: Improve Background Process Notice dismissing logic
+- Improvement: Re-structured and optimized the codebase to improve the security
+- Fixed: Advanced posts - Added New Message section in General Tab and shifted the No Result Message field in that section
+- Fixed: Contact Form - Resolved JavaScript undefined error when Message field is set to Hide but Required setting is set to the Yes
+- Fixed: Off-Canvas - Display On Image Alignment Settings option not working
+- Fixed: Resolved PHP error when copying the style from some specific module
+- Fixed: Table of Contents -  Contents not working with the unique special characters
+
+Version 1.24.3 - Thursday, 9th January 2020
+- Improvement: Advanced Post - Added dots support for carousel layout
+- Improvement: Advanced Posts - Added Border settings option for Post Content
+- Improvement: Testimonials - Added filter for custom Next & Previous Arrows
+- Improvement: User Registration Form - Applied translation to Client side error messages
+- Improvement: Woo-Categories - Added new option 'Menu Order' for Order By Filter Setting
+- Fixed: Info Box: Fixed image layout with custom background for images
+- Fixed: Modal Popup - Overlay scroll not working when closed with Overlay option or ESC key
+- Fixed: Marketing-button: Background Hover color setting is not working when an external link is set
+- Fixed: Off-Canvas - Double Scroll in Firefox browser when Off-Canvas is triggered
+- Fixed: Photo - Resolve PHP notice when Photo Source is set to URL
+- Fixed: Retina Image - Added URL connections to Link URL Setting
+- Fixed: Render plugin shortname prefix when the Beaver Builder editor is enabled
+- Fixed: User Registration Form - Resolved PHP warning error in User Registration Form Module
+- Fixed: Woo-Categories - Order By Description option in Filter Settings is not working
+
+Version 1.24.2 - Thursday, 26th December 2019
+- Improvement: Added Astra Theme Button compatibility from v2.2.0 for Button module
+- Improvement: Added new style type Default for Button
+- Improvement: Advanced posts - Added New Filter option "Match all related except" for Categories and Tags
+- Improvement: Business Reviews - Added a Filter to display reviews in a language other than English
+- Improvement: Login Form - Improved authentication functionality.
+- Improvement: Modal Popup - Added alt tag for images
+- Fixed: Info Box - Minimum Height Setting not working correctly for Responsive Devices
+- Fixed: Modal Popup - Title Padding Setting not working correctly for Responsive Devices
+- Fixed: Off-Canvas - Off-Canvas is getting triggered in preview mode when it is saved as global and triggered using custom Class/Id
+- Fixed: Particle Backgrounds - Resolved z-index overlapping issue with all module content
+- Fixed: Particle Backgrounds - Resolved JavaScript undefined error for Wordpress 5.3
+- Fixed: Row Separator - Resolved z-index overlapping issue with all module content
+- Fixed: Table of Contents - Smooth Scroll not working on iOS devices having version less than 13
+
 Version 1.24.1 - Wednesday, 11th December 2019
 - Security Fix: Login Form - Improved user data validation from Google and Facebook APIs before login.
 
