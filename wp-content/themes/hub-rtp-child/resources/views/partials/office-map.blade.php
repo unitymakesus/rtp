@@ -10,8 +10,12 @@
     </ul>
     <div class="hub-office-map__legend-filters">
       <h2 class="screen-reader-text">{{ __('Highlight Properties By Development Phase', 'sage') }}</h2>
-      <button type="button" class="hub-office-map__legend-filter" data-phase-target="1" aria-pressed="false">{{ __('Phase 1', 'sage') }}</button>
-      <button type="button" class="hub-office-map__legend-filter" data-phase-target="2" aria-pressed="false">{{ __('Phase 2', 'sage') }}</button>
+      {{-- <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="1" aria-checked="true">{{ __('Phase 1', 'sage') }}</button>
+      <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="2" aria-checked="false">{{ __('Phase 2', 'sage') }}</button> --}}
+      <button type="button" class="hub-office-map__legend-filter" data-phase-target="1" aria-pressed="false" aria-label="Phase 1">
+        <span>{{ __('Phase 1', 'sage') }}</span>
+        <span>{{ __('Phase 2', 'sage') }}</span>
+      </button>
     </div>
   </div>
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 905" role="img" aria-labelledby="mapdesc">

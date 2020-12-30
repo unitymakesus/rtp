@@ -5,19 +5,29 @@ import hideOnEsc from '../util/tippyjs/hideOnEsc';
 export default {
   init() {
     /**
-     * Phase 1 and 2 toggles (highlights properties on the map).
+     * Toggle Phase 1 and 2 (highlights properties on the map).
      */
-    const phaseBtns = document.querySelectorAll('.hub-office-map__legend-filter');
-    phaseBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        // Update aria-pressed.
-        let pressed = btn.getAttribute('aria-pressed') === 'true';
-        btn.setAttribute('aria-pressed', String(!pressed));
+    const phaseBtn = document.querySelector('.hub-office-map__legend-filter');
+    phaseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Update aria-pressed for toggle switch.
+      let pressed = phaseBtn.getAttribute('aria-pressed') === 'true';
+      phaseBtn.setAttribute('aria-pressed', String(!pressed));
 
-        // Highlight or unhighlight properties.
-        const { phaseTarget } = btn.dataset;
-        document.querySelectorAll(`g[data-phase="${phaseTarget}"]`).forEach((el) => {
+      // Update aria-label for toggle switch.
+      if (pressed == true) {
+        phaseBtn.setAttribute('data-phase', '1');
+        phaseBtn.setAttribute('aria-label', 'Phase 1');
+      } else {
+        phaseBtn.setAttribute('data-phase', '2');
+        phaseBtn.setAttribute('aria-label', 'Phase 2');
+      }
+
+      // Disable or enable properties.
+      document.querySelectorAll('g.property').forEach((el) => {
+        el.toggleAttribute('disabled');
+      });
+    });
           el.classList.toggle('property--is-highlighted');
         });
       });
