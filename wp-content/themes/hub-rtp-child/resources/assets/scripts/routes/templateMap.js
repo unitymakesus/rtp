@@ -28,8 +28,30 @@ export default {
         el.toggleAttribute('disabled');
       });
     });
+
+    /**
+     * Legend highlights for properties on the map.
+     */
+    const legendItems = document.querySelectorAll('.legend-item');
+    legendItems.forEach(item => {
+      const { typeTarget } = item.dataset;
+      item.addEventListener('mouseover', () => {
+        // Dim other properties
+        document.querySelector('.hub-office-map svg').classList.add('dim-properties');
+
+        // Highlight properties that match legend
+        document.querySelectorAll(`g[data-type="${typeTarget}"]`).forEach((el) => {
           el.classList.toggle('property--is-highlighted');
-        });
+        })
+      });
+      item.addEventListener('mouseout', () => {
+        // Remove dimmer
+        document.querySelector('.hub-office-map svg').classList.remove('dim-properties');
+
+        // Remove highlights
+        document.querySelectorAll(`g[data-type="${typeTarget}"]`).forEach((el) => {
+          el.classList.remove('property--is-highlighted');
+        })
       });
     });
 
@@ -45,14 +67,23 @@ export default {
           return template.innerHTML;
         }
       },
+      onShown() {
+        // Dim other properties
+        document.querySelector('.hub-office-map svg').classList.add('dim-properties');
+      },
+      onHide() {
+        // Remove dimmer
+        document.querySelector('.hub-office-map svg').classList.remove('dim-properties');
+      },
       allowHTML: true,
       animation: prefersReducedMotion() ? 'none' : 'scale-subtle',
       appendTo: document.body,
       arrow: roundArrow,
-      interactive: true,
+      duration: 300,
+      interactive: false,
       interactiveBorder: 30,
       offset: [0, -20],
-      placement: 'top-start',
+      placement: 'top',
       plugins: [hideOnEsc],
       theme: 'hub-blue',
     });

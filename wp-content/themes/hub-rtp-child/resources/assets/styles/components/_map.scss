@@ -54,6 +54,17 @@
 
     font-weight: bold;
     font-size: 0.875rem;
+    text-align: left;
+
+    span {
+      display: inline-block;
+
+      &:last-child {
+        position: absolute;
+        right: -8px;
+        transform: translateX(100%);
+      }
+    }
   }
 
   svg {
@@ -66,23 +77,33 @@
     path {
       fill: none;
       stroke: rgba(0, 0, 0, 0);
+      stroke-width: 6px;
       stroke-miterlimit: 10;
     }
 
-    .property path {
-      fill: transparent;
-      mix-blend-mode: overlay;
-      transition: fill 0.3s ease-in-out;
+    .property {
+      path {
+        cursor: pointer;
+        fill: transparent;
+        mix-blend-mode: color;
+        transition: fill 0.2s ease-in-out;
+      }
+
+      &[disabled] path {
+        fill: white;
+      }
     }
 
-    .property:hover path,
-    .property:focus path,
-    .property--is-highlighted path {
-      fill: rgba(255, 255, 255, 0.5);
-    }
+    &.dim-properties .property {
+      path {
+        fill: rgba(255, 255, 255, 0.6);
+      }
 
-    .property:hover path {
-      cursor: pointer;
+      &:not([disabled]):hover path,
+      &:not([disabled]):focus path,
+      &--is-highlighted path {
+        fill: transparent;
+      }
     }
   }
 }
@@ -90,6 +111,7 @@
 .legend-item {
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   &::before {
     position: relative;
