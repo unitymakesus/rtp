@@ -25,8 +25,8 @@ add_filter('acf/settings/load_json', function($paths) {
 add_action('acf/init', function () {
     if ( function_exists('acf_add_options_page') ) {
         acf_add_options_page([
-            'page_title' => 'Theme Options',
-            'menu_title' => 'Theme Options',
+            'page_title' => 'Hub Map Options',
+            'menu_title' => 'Hub Map Options',
             'menu_slug'  => 'theme-options-settings',
             'capability' => 'manage_options',
             'redirect'   => false,
@@ -39,7 +39,7 @@ add_action('acf/init', function () {
  * @source https://www.advancedcustomfields.com/resources/acf-prepare_field/
  */
 add_filter('acf/prepare_field/key=field_5fda5cff41ff3', function ($field) {
-    $field['readonly'] = true;
+    // $field['readonly'] = true;   // TODO: Uncomment this after making changes to the map property IDs on staging
 
     return $field;
 });
