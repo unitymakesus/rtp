@@ -5,17 +5,17 @@ import hideOnEsc from '../util/tippyjs/hideOnEsc';
 export default {
   init() {
     /**
-     * Toggle Phase 1 and 2 (highlights properties on the map).
+     * Phase 1 and 2 toggles (highlights properties on the map).
      */
     const phaseBtns = document.querySelectorAll('.hub-office-map__legend-filter');
     phaseBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        // Update aria-pressed for toggle switch.
+        // Update aria-pressed.
         let pressed = btn.getAttribute('aria-pressed') === 'true';
         btn.setAttribute('aria-pressed', String(!pressed));
 
-        // Enable or disable properties on map.
+        // Enable or disable properties.
         const { phaseTarget } = btn.dataset;
         document.querySelectorAll(`g[data-phase="${phaseTarget}"]`).forEach((el) => {
           el.toggleAttribute('disabled');
