@@ -14,6 +14,8 @@ sitemap.xml.gz
 searchreplacedb2.php
 rrrreplace/*
 
+wp-content/autoptimize_404_handler.php
+
 # pro plugins
 wp-content/plugins/modern-events-calendar/
 wp-content/plugins/mec-event-api/
