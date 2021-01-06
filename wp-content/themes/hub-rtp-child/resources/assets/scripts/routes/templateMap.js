@@ -1,4 +1,4 @@
-import tippy, { roundArrow } from 'tippy.js';
+import tippy, { followCursor, roundArrow } from 'tippy.js';
 import prefersReducedMotion from '../util/prefersReducedMotion';
 import hideOnEsc from '../util/tippyjs/hideOnEsc';
 
@@ -36,7 +36,7 @@ export default {
         // Highlight properties that match legend
         document.querySelectorAll(`g[data-type="${typeTarget}"]`).forEach((el) => {
           el.classList.toggle('property--is-highlighted');
-        })
+        });
       });
       item.addEventListener('mouseout', () => {
         // Remove dimmer
@@ -45,7 +45,7 @@ export default {
         // Remove highlights
         document.querySelectorAll(`g[data-type="${typeTarget}"]`).forEach((el) => {
           el.classList.remove('property--is-highlighted');
-        })
+        });
       });
     });
 
@@ -73,12 +73,12 @@ export default {
       animation: prefersReducedMotion() ? 'none' : 'scale-subtle',
       appendTo: document.body,
       arrow: roundArrow,
-      duration: 300,
+      duration: 150,
+      followCursor: true,
       interactive: false,
       interactiveBorder: 30,
-      offset: [0, -20],
       placement: 'top',
-      plugins: [hideOnEsc],
+      plugins: [hideOnEsc, followCursor],
       theme: 'hub-blue',
     });
   },

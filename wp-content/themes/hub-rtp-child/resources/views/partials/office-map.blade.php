@@ -1,4 +1,5 @@
 <div class="hub-office-map">
+  <a href="#map-information" class="screen-reader-text btn" id="map-jump">{{ __('View Plan Details', 'sage') }}</a>
   <div class="hub-office-map__legend">
     <h2 class="hub-office-map__legend-heading">{{ __('Check Out Our Plans', 'sage') }}</h2>
     <ul class="hub-office-map__legend-items">
@@ -11,10 +12,10 @@
     <div class="hub-office-map__legend-filters">
       <h2 class="screen-reader-text">{{ __('Highlight Properties By Development Phase', 'sage') }}</h2>
       <span>
-        <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="1" aria-checked="true">{{ __('Phase 1', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter" data-phase-target="1" aria-pressed="true">{{ __('Phase 1', 'sage') }}</button>
       </span>
       <span>
-        <button type="button" role="switch" class="hub-office-map__legend-filter" data-phase-target="2" aria-checked="true">{{ __('Phase 2', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter" data-phase-target="2" aria-pressed="true">{{ __('Phase 2', 'sage') }}</button>
       </span>
     </div>
   </div>

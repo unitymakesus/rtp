@@ -12,7 +12,7 @@
     max-width: 350px;
     background-color: $color-white;
 
-    @media #{$medium-and-up} {
+    @media #{$large-and-up} {
       display: block;
     }
   }
@@ -33,11 +33,6 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       flex-basis: 50%;
-
-      // Nudge that "Restaurants & Retail" item full width...
-      &:last-of-type {
-        flex-basis: 100%;
-      }
     }
   }
 
@@ -75,14 +70,14 @@
   svg {
     display: none;
 
-    @media #{$medium-and-up} {
+    @media #{$large-and-up} {
       display: block;
     }
 
     path {
       fill: none;
       stroke: rgba(0, 0, 0, 0);
-      stroke-width: 6px;
+      stroke-width: 2px;
       stroke-miterlimit: 10;
     }
 
@@ -91,29 +86,33 @@
         cursor: pointer;
         fill: transparent;
         mix-blend-mode: color;
-        transition: fill 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
       }
 
       &[disabled] path {
+        cursor: default;
         fill: white;
+        stroke: white;
       }
     }
 
     &.dim-properties .property {
-      path {
+      &:not([disabled]) path {
         fill: rgba(255, 255, 255, 0.6);
       }
 
       &:not([disabled]):hover path,
       &:not([disabled]):focus path,
-      &--is-highlighted path {
+      &--is-highlighted:not([disabled]) path {
         fill: transparent;
+        stroke: transparent;
       }
     }
   }
 }
 
-.legend-item {
+.legend-item,
+.legend-item-fl-heading span {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -127,30 +126,43 @@
     background-color: $color-black;
     content: '';
   }
+}
 
-  &--blue::before {
-    background-color: rgb(28, 66, 127);
-  }
+.legend-item--blue::before,
+.legend-item-fl-heading--blue span::before {
+  background-color: rgb(28, 66, 127);
+}
 
-  &--green::before {
-    background-color: rgb(155, 187, 52);
-  }
+.legend-item--green::before,
+.legend-item-fl-heading--green span::before {
+  background-color: rgb(155, 187, 52);
+}
 
-  &--purple::before {
-    background-color: rgb(170, 91, 169);
-  }
+.legend-item--purple::before,
+.legend-item-fl-heading--purple span::before {
+  background-color: rgb(170, 91, 169);
+}
 
-  &--red::before {
-    background-color: rgb(231, 21, 60);
-  }
+.legend-item--red::before,
+.legend-item-fl-heading--red span::before {
+  background-color: rgb(231, 21, 60);
+}
 
-  &--light-blue::before {
-    background-color: rgb(83, 163, 204);
-  }
+.legend-item--light-blue::before,
+.legend-item-fl-heading--light-blue span::before {
+  background-color: rgb(83, 163, 204);
 }
 
 .hub-office-map__mobile {
-  @media #{$medium-and-up} {
+  @media #{$large-and-up} {
+    display: none;
+  }
+}
+
+#map-information {
+  display: block;
+
+  @media #{$large-and-up} {
     display: none;
   }
 }
