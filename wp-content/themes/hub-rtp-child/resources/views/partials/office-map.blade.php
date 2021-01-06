@@ -76,9 +76,11 @@
           <span class="map-tooltip__sqft">
             <span class="screen-reader-text">{{ __('Rentable Square Feet: ', 'sage') }}</span>{!! $property['sqft'] !!}</span>
         @endif
-        <div class="map-tooltip__text">
-          <div>{!! $property['tooltip'] !!}</div>
-        </div>
+        @if ($property['tooltip'])
+          <div class="map-tooltip__text">
+            <div>{!! $property['tooltip'] !!}</div>
+          </div>
+        @endif
       </div>
     </div>
   @endforeach
