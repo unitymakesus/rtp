@@ -30,7 +30,7 @@
         <g class="property" data-hub-property="high_rise_office_phase_2" data-type="workspace" data-phase="2">
           <path d="M3.67,100.723l9.175-3.663L0,21.976,62.388,0,88.078,4.578,101.84,9.157,110.1,72.337,165.146,93.4l1.835,11.9,19.267,8.241L189,152l-59.636-23.807L115.6,134.6v7.325l-7.34,3.663Z" transform="translate(397 0.712)"/>
         </g>
-        <g class="property" data-hub-property="high_rise_office_2" data-type="workspace" data-phase="2">
+        <g class="property" data-hub-property="high_rise_office_2" data-type="workspace" data-phase="1">
           <path d="M25.684,17.315l-9.173,4.556V24.7l-4.586.89.917,2.661L0,32.806,5.5,41.4v3.714L1.835,47.387,5.5,52.855l2.752,1.823-.917,2.734L3.669,59.234l5.5,5.468.136,3.705L5.5,70.56l7.338,11.8,14.394,3.3L64.211,104.8,97.233,113l16.511-8.2V97.944L122,93.863l-1.835-33.718-2.752-30.984-11.008-5.468L46.782,0,33.023,6.379v7.29Z" transform="translate(479 129.712)"/>
         </g>
         <g class="property" data-hub-property="high_rise_office_1" data-type="workspace" data-phase="1">
