@@ -91,21 +91,28 @@
 
       &[disabled] path {
         cursor: default;
-        fill: white;
-        stroke: white;
+        fill: rgba(255, 255, 255, 1);
+        stroke: rgba(255, 255, 255, 1);
+      }
+
+      // Properties do not have toggle interactions via hover + click.
+      &:hover {
+        cursor: default;
       }
     }
 
     &.dim-properties .property {
       &:not([disabled]) path {
-        fill: rgba(255, 255, 255, 0.6);
+        fill: rgba(255, 255, 255, 1);
+        stroke: rgba(255, 255, 255, 1);
+        // fill: rgba(255, 255, 255, 0.6);
       }
 
       &:not([disabled]):hover path,
       &:not([disabled]):focus path,
       &--is-highlighted:not([disabled]) path {
-        fill: transparent;
-        stroke: transparent;
+        fill: rgba(255, 255, 255, 0);
+        stroke: rgba(255, 255, 255, 0);
       }
     }
   }

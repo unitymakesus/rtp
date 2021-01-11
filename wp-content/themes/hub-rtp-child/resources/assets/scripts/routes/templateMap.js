@@ -77,6 +77,7 @@ export default {
       followCursor: true,
       interactive: false,
       interactiveBorder: 30,
+      offset: [0, 64],
       placement: 'top',
       plugins: [hideOnEsc, followCursor],
       theme: 'hub-blue',
