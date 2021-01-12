@@ -5,7 +5,7 @@ Tags: seo, xml sitemap, google search, open graph, schema.org, twitter card, per
 Requires at least: 5.1.0
 Tested up to: 5.6
 Requires PHP: 5.6.0
-Stable tag: 4.1.2
+Stable tag: 4.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,7 +192,7 @@ To correctly analyze your website, it must be done from the outside. If we load 
 
 Please visit [the support forums](https://wordpress.org/support/plugin/autodescription) and kindly tell us about it.
 
-We'll try to get back to you within 72 hours. Typically, we reply within a day.
+We'll try to get back to you within a week. Typically, we reply within three days.
 
 = I am a developer; how can I help? =
 
@@ -245,6 +245,12 @@ The SEO Framework does not provide the display of breadcrumbs. This is theme-ter
 If you wish to display breadcrumbs, then your theme should provide this. Alternatively, there are [other plugins](https://wordpress.org/plugins/search/breadcrumbs/) that help you do this.
 
 == Changelog ==
+
+= 4.1.3 =
+
+Before heading into 2021, we wanted to [set free four bugs](https://theseoframework.com/?p=3660#detailed).
+
+Pro tip: If you can no longer switch TSF's settings tabs, try hitting 'CMD+SHIFT+R' (Mac) or 'CTRL+SHIFT+R' (Windows); these keyboard shortcuts will force-fetch the latest scripts from your server.
 
 = 4.1.2 =
 
