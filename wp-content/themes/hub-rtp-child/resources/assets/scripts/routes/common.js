@@ -1,4 +1,5 @@
 import initMainMenu from '../util/initMainMenu';
+import initOfficeMap from '../util/initOfficeMap';
 import gfLabelSwap from '../util/gfLabelSwap';
 
 export default {
@@ -38,5 +39,10 @@ export default {
         }
       });
     });
+
+    // Interactive Office Map
+    if (document.querySelector('.hub-office-map') !== null) {
+      initOfficeMap();
+    }
   },
 };
