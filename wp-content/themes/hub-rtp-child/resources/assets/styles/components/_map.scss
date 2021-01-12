@@ -12,7 +12,7 @@
     max-width: 350px;
     background-color: $color-white;
 
-    @media #{$medium-and-up} {
+    @media #{$large-and-up} {
       display: block;
     }
   }
@@ -33,11 +33,6 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       flex-basis: 50%;
-
-      // Nudge that "Restaurants & Retail" item full width...
-      &:last-of-type {
-        flex-basis: 100%;
-      }
     }
   }
 
@@ -47,6 +42,11 @@
     border-top: 2px solid $color-grey-light;
     padding-top: 0.875rem;
     margin-top: 0.875rem;
+
+    & > span {
+      display: inline-block;
+      flex-basis: 50%;
+    }
   }
 
   &__legend-filter {
@@ -54,42 +54,75 @@
 
     font-weight: bold;
     font-size: 0.875rem;
+    text-align: left;
+
+    span {
+      display: inline-block;
+
+      &:last-child {
+        position: absolute;
+        right: -8px;
+        transform: translateX(100%);
+      }
+    }
   }
 
   svg {
     display: none;
 
-    @media #{$medium-and-up} {
+    @media #{$large-and-up} {
       display: block;
     }
 
     path {
       fill: none;
       stroke: rgba(0, 0, 0, 0);
+      stroke-width: 2px;
       stroke-miterlimit: 10;
     }
 
-    .property path {
-      fill: transparent;
-      mix-blend-mode: overlay;
-      transition: fill 0.3s ease-in-out;
+    .property {
+      path {
+        cursor: pointer;
+        fill: transparent;
+        mix-blend-mode: color;
+        transition: all 0.2s ease-in-out;
+      }
+
+      &[disabled] path {
+        cursor: default;
+        fill: rgba(255, 255, 255, 1);
+        stroke: rgba(255, 255, 255, 1);
+      }
+
+      // Properties do not have toggle interactions via hover + click.
+      &:hover {
+        cursor: default;
+      }
     }
 
-    .property:hover path,
-    .property:focus path,
-    .property--is-highlighted path {
-      fill: rgba(255, 255, 255, 0.5);
-    }
+    &.dim-properties .property {
+      &:not([disabled]) path {
+        fill: rgba(255, 255, 255, 1);
+        stroke: rgba(255, 255, 255, 1);
+        // fill: rgba(255, 255, 255, 0.6);
+      }
 
-    .property:hover path {
-      cursor: pointer;
+      &:not([disabled]):hover path,
+      &:not([disabled]):focus path,
+      &--is-highlighted:not([disabled]) path {
+        fill: rgba(255, 255, 255, 0);
+        stroke: rgba(255, 255, 255, 0);
+      }
     }
   }
 }
 
-.legend-item {
+.legend-item,
+.legend-item-fl-heading span {
   display: flex;
   align-items: center;
+  cursor: pointer;
 
   &::before {
     position: relative;
@@ -100,30 +133,43 @@
     background-color: $color-black;
     content: '';
   }
+}
 
-  &--blue::before {
-    background-color: rgb(28, 66, 127);
-  }
+.legend-item--blue::before,
+.legend-item-fl-heading--blue span::before {
+  background-color: rgb(28, 66, 127);
+}
 
-  &--green::before {
-    background-color: rgb(155, 187, 52);
-  }
+.legend-item--green::before,
+.legend-item-fl-heading--green span::before {
+  background-color: rgb(155, 187, 52);
+}
 
-  &--purple::before {
-    background-color: rgb(170, 91, 169);
-  }
+.legend-item--purple::before,
+.legend-item-fl-heading--purple span::before {
+  background-color: rgb(170, 91, 169);
+}
 
-  &--red::before {
-    background-color: rgb(231, 21, 60);
-  }
+.legend-item--red::before,
+.legend-item-fl-heading--red span::before {
+  background-color: rgb(231, 21, 60);
+}
 
-  &--light-blue::before {
-    background-color: rgb(83, 163, 204);
-  }
+.legend-item--light-blue::before,
+.legend-item-fl-heading--light-blue span::before {
+  background-color: rgb(83, 163, 204);
 }
 
 .hub-office-map__mobile {
-  @media #{$medium-and-up} {
+  @media #{$large-and-up} {
+    display: none;
+  }
+}
+
+#map-information {
+  display: block;
+
+  @media #{$large-and-up} {
     display: none;
   }
 }

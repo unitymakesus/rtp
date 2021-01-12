@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "field_5fda5cff41ff3",
+            "collapsed": "field_5fdc070a8bc66",
             "min": 0,
             "max": 0,
             "layout": "block",
@@ -84,7 +84,7 @@
                     "name": "tooltip",
                     "type": "textarea",
                     "instructions": "",
-                    "required": 1,
+                    "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -117,5 +117,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1608256094
+    "modified": 1609975557
 }

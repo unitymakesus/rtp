@@ -6,7 +6,7 @@
     ]
   },
   "publicPath": "/wp-content/themes/hub-rtp-child",
-  "devUrl": "http://hub.rtp.test",
+  "devUrl": "http://hub-rtp.test",
   "proxyUrl": "http://localhost:3000",
   "cacheBusting": "[name]_[hash:8]",
   "watch": [

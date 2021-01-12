@@ -10,7 +10,8 @@ if (prefersReducedMotion() === true) {
 }
 
 [...document.querySelectorAll('.cbb-lifestyle__card-toggle')].forEach((toggle) => {
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
     let expanded = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!expanded));
 

@@ -1,4 +1,4 @@
-import tippy, { roundArrow } from 'tippy.js';
+import tippy, { followCursor, roundArrow } from 'tippy.js';
 import prefersReducedMotion from '../util/prefersReducedMotion';
 import hideOnEsc from '../util/tippyjs/hideOnEsc';
 
@@ -15,10 +15,36 @@ export default {
         let pressed = btn.getAttribute('aria-pressed') === 'true';
         btn.setAttribute('aria-pressed', String(!pressed));
 
-        // Highlight or unhighlight properties.
+        // Enable or disable properties.
         const { phaseTarget } = btn.dataset;
         document.querySelectorAll(`g[data-phase="${phaseTarget}"]`).forEach((el) => {
+          el.toggleAttribute('disabled');
+        });
+      });
+    });
+
+    /**
+     * Legend highlights for properties on the map.
+     */
+    const legendItems = document.querySelectorAll('.legend-item');
+    legendItems.forEach(item => {
+      const { typeTarget } = item.dataset;
+      item.addEventListener('mouseover', () => {
+        // Dim other properties
+        document.querySelector('.hub-office-map svg').classList.add('dim-properties');
+
+        // Highlight properties that match legend
+        document.querySelectorAll(`g[data-type="${typeTarget}"]`).forEach((el) => {
           el.classList.toggle('property--is-highlighted');
+        });
+      });
+      item.addEventListener('mouseout', () => {
+        // Remove dimmer
+        document.querySelector('.hub-office-map svg').classList.remove('dim-properties');
+
+        // Remove highlights
+        document.querySelectorAll(`g[data-type="${typeTarget}"]`).forEach((el) => {
+          el.classList.remove('property--is-highlighted');
         });
       });
     });
@@ -35,15 +61,25 @@ export default {
           return template.innerHTML;
         }
       },
+      onShown() {
+        // Dim other properties
+        document.querySelector('.hub-office-map svg').classList.add('dim-properties');
+      },
+      onHide() {
+        // Remove dimmer
+        document.querySelector('.hub-office-map svg').classList.remove('dim-properties');
+      },
       allowHTML: true,
       animation: prefersReducedMotion() ? 'none' : 'scale-subtle',
       appendTo: document.body,
       arrow: roundArrow,
-      interactive: true,
+      duration: 150,
+      followCursor: true,
+      interactive: false,
       interactiveBorder: 30,
-      offset: [0, -20],
-      placement: 'top-start',
-      plugins: [hideOnEsc],
+      offset: [0, 64],
+      placement: 'top',
+      plugins: [hideOnEsc, followCursor],
       theme: 'hub-blue',
     });
   },
