@@ -60,12 +60,12 @@ const initOfficeMap = () => {
   });
 
   // Toggles.
-  document.querySelectorAll('.hub-office-map__legend-filter').forEach(btn => {
+  document.querySelectorAll('.hub-office-map__legend-filter').forEach((btn) => {
     btn.addEventListener('click', (event) => {
       event.preventDefault();
       // Update aria-pressed.
-      let pressed = btn.getAttribute('aria-pressed') === 'true';
-      btn.setAttribute('aria-pressed', String(!pressed));
+      let isPressed = btn.getAttribute('aria-pressed') === 'false';
+      btn.setAttribute('aria-pressed', String(!isPressed));
 
       // Update active filters and properties with selection.
       let { typeTarget } = btn.dataset;
