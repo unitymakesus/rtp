@@ -1,4 +1,5 @@
 import initMainMenu from '../util/initMainMenu';
+import initOfficeMap from '../util/initOfficeMap';
 import gfLabelSwap from '../util/gfLabelSwap';
 
 export default {
@@ -9,6 +10,7 @@ export default {
     }
 
     initMainMenu();
+    initOfficeMap();
   },
   finalize() {
     // Gravity Forms label controls

@@ -2,14 +2,19 @@
   position: relative;
   line-height: 1;
 
+  &__graphic {
+    position: absolute;
+    z-index: -1;
+  }
+
   &__legend {
     display: none;
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.5rem;
+    right: 0.5rem;
     padding: 1rem;
     width: 100%;
-    max-width: 350px;
+    max-width: 375px;
     background-color: $color-white;
 
     @media #{$large-and-up} {
@@ -21,6 +26,8 @@
     @extend .h3;
 
     text-transform: uppercase;
+    font-size: 1.25rem;
+    padding-top: 0;
   }
 
   &__legend-items {
@@ -33,15 +40,36 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       flex-basis: 50%;
+      margin: 0.25rem 0;
+
+      &:last-of-type {
+        flex-basis: 100%;
+      }
     }
   }
 
-  &__legend-filters {
+  &__legend-phases {
     display: flex;
-    justify-content: space-between;
     border-top: 2px solid $color-grey-light;
     padding-top: 0.875rem;
     margin-top: 0.875rem;
+
+    fieldset {
+      border: 0;
+      padding: 0;
+    }
+
+    input[type="radio"] {
+      position: relative;
+      opacity: 1;
+      pointer-events: initial;
+
+      + label {
+        padding-left: 0.25rem;
+        margin-right: 1rem;
+        color: $color-black;
+      }
+    }
 
     & > span {
       display: inline-block;
@@ -65,6 +93,26 @@
         transform: translateX(100%);
       }
     }
+
+    &--blue::after {
+      color: rgb(28, 66, 127);
+    }
+
+    &--purple::after {
+      color: rgb(170, 91, 169);
+    }
+
+    &--light-blue::after {
+      color: rgb(83, 163, 204);
+    }
+
+    &--green::after {
+      color: rgb(155, 187, 52);
+    }
+
+    &--red::after {
+      color: rgb(231, 21, 60);
+    }
   }
 
   svg {
@@ -86,33 +134,25 @@
         cursor: pointer;
         fill: transparent;
         mix-blend-mode: color;
-        transition: all 0.2s ease-in-out;
+        transition: all 0.3s ease-in-out;
       }
 
       &[disabled] path {
         cursor: default;
         fill: rgba(255, 255, 255, 1);
         stroke: rgba(255, 255, 255, 1);
+
+        // Firefox mix-blend-mode bug fallback...
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1448257
+        .firefox & {
+          fill: rgba(0, 0, 0, 0.25);
+          stroke: rgba(0, 0, 0, 0.25);
+        }
       }
 
       // Properties do not have toggle interactions via hover + click.
       &:hover {
         cursor: default;
-      }
-    }
-
-    &.dim-properties .property {
-      &:not([disabled]) path {
-        fill: rgba(255, 255, 255, 1);
-        stroke: rgba(255, 255, 255, 1);
-        // fill: rgba(255, 255, 255, 0.6);
-      }
-
-      &:not([disabled]):hover path,
-      &:not([disabled]):focus path,
-      &--is-highlighted:not([disabled]) path {
-        fill: rgba(255, 255, 255, 0);
-        stroke: rgba(255, 255, 255, 0);
       }
     }
   }
