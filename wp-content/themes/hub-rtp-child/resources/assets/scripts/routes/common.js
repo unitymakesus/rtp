@@ -10,7 +10,6 @@ export default {
     }
 
     initMainMenu();
-    initOfficeMap();
   },
   finalize() {
     // Gravity Forms label controls
@@ -40,5 +39,10 @@ export default {
         }
       });
     });
+
+    // Interactive Office Map
+    if (document.querySelector('.hub-office-map') !== null) {
+      initOfficeMap();
+    }
   },
 };
