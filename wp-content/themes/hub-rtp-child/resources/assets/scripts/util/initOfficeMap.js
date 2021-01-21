@@ -64,8 +64,8 @@ const initOfficeMap = () => {
     btn.addEventListener('click', (event) => {
       event.preventDefault();
       // Update aria-pressed.
-      let isPressed = btn.getAttribute('aria-pressed') === 'false';
-      btn.setAttribute('aria-pressed', String(!isPressed));
+      let isPressed = btn.getAttribute('aria-pressed') === 'true' || false;
+      btn.setAttribute('aria-pressed', !isPressed);
 
       // Update active filters and properties with selection.
       let { typeTarget } = btn.dataset;
