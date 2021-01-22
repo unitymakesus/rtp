@@ -4,19 +4,19 @@
     <h2 class="hub-office-map__legend-heading">{{ __('Check Out Our Plans', 'sage') }}</h2>
     <ul class="hub-office-map__legend-items">
       <li>
-        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--blue" data-type-target="workspace" aria-pressed="false">{{ __('Workspace', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--blue" data-type-target="workspace" aria-pressed="false"><span>{{ __('Workspace', 'sage') }}</span></button>
       </li>
       <li>
-        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--purple" data-type-target="hotel" aria-pressed="false">{{ __('Hotel', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--purple" data-type-target="hotel" aria-pressed="false"><span>{{ __('Hotel', 'sage') }}</span></button>
       </li>
       <li>
-        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--light-blue" data-type-target="apartments" aria-pressed="false">{{ __('Apartments', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--light-blue" data-type-target="apartments" aria-pressed="false"><span>{{ __('Apartments', 'sage') }}</span></button>
       </li>
       <li>
-        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--green" data-type-target="greenspace" aria-pressed="false">{{ __('Greenspace', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--green" data-type-target="greenspace" aria-pressed="false"><span>{{ __('Greenspace', 'sage') }}</span></button>
       </li>
       <li>
-        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--red" data-type-target="retail" aria-pressed="false">{{ __('Restaurant & Retail', 'sage') }}</button>
+        <button type="button" class="hub-office-map__legend-filter hub-office-map__legend-filter--red" data-type-target="retail" aria-pressed="false"><span>{{ __('Restaurant & Retail', 'sage') }}</span></button>
       </li>
     </ul>
     <div class="hub-office-map__legend-phases">

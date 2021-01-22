@@ -84,32 +84,37 @@
     font-size: 0.875rem;
     text-align: left;
 
-    span {
-      display: inline-block;
-
-      &:last-child {
-        position: absolute;
-        right: -8px;
-        transform: translateX(100%);
+    &--blue,
+    &--purple,
+    &--light-blue,
+    &--green,
+    &--red {
+      > span {
+        color: $color-black;
       }
     }
 
+    &--blue,
     &--blue::after {
       color: rgb(28, 66, 127);
     }
 
+    &--purple,
     &--purple::after {
       color: rgb(170, 91, 169);
     }
 
+    &--light-blue,
     &--light-blue::after {
       color: rgb(83, 163, 204);
     }
 
+    &--green,
     &--green::after {
       color: rgb(155, 187, 52);
     }
 
+    &--red,
     &--red::after {
       color: rgb(231, 21, 60);
     }
