@@ -31,7 +31,7 @@
       </fieldset>
     </div>
   </div>
-  <img class="hub-office-map__graphic" src="{{ App\asset_path('images/hubmap@2x.png') }}" alt="" />
+  <img class="hub-office-map__graphic" src="{{ App\asset_path('images/hubmap@2x.jpg') }}" alt="" />
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1400 905" role="img" aria-labelledby="mapdesc">
     <desc id="mapdesc">{{ __('Map of Phase 1 & Phase 2 of Hub RTP. A high fidelity rendering of new buildings and greenspace coming to Research Triangle Park.', 'sage') }}</desc>
     <g transform="translate(-1.778 -271)">
@@ -60,6 +60,9 @@
         <g class="property" id="mid_rise_office" data-type="workspace" data-phase="1">
           <path d="M7.337,23.85,5.5,32.105,0,65.128,123.817,122l17.426-16.511,11.006-42.2L155,40.361,71.538,6.421,34.852,0Z" transform="translate(890 301.712)"/>
         </g>
+        <g class="property" id="landing_pad" data-type="workspace" data-phase="1">
+          <path fill="1A1A1A" d="M1033.5,358.8l45.8,18.5l18.4-28.5l7.4-26.6l-82.7-26.6l-11,13.8l-5.7,25.3l31.1,7.5L1033.5,358.8z" transform="translate(-32 -36)"/>
+        </g>
         <g class="property" id="residential_phase_2" data-type="apartments" data-phase="2">
           <path d="M2.751,8.284,12.84,54.307l.917,4.6L0,67.193l8.254,35.9,19.667,4.084L43.107,96.648l4.115,21.17-5.032,2.761V126.1l.917,2.761,12.84,6.443,3.669-1.841,4.586,2.761,5.5,5.523,6.42,5.523h3.669l6.42,4.6,11.006,4.6L119.231,162V151.55l4.586-2.436L121.162,126.1l9.074-3.682L73.373,94.807l43.107-19.33L155,92.966l-3.669-5.523,3.669-2.3V81.391L121.982,65.352,118.314,39.58,97.219,31.3,71.538,43.261,66.953,18.653,24.763,0Z" transform="translate(329 89.712)"/>
         </g>
@@ -75,7 +78,7 @@
     </g>
   </svg>
   <figure class="hub-office-map__mobile">
-    <img src="{{ App\asset_path('images/hubmap.png') }}" alt="{{ __('Map of Phase 1 & Phase 2 of Hub RTP. A high fidelity rendering of new buildings and greenspace of future Hub RTP development coming to Research Triangle Park.') }}" />
+    <img src="{{ App\asset_path('images/hubmap.jpg') }}" alt="{{ __('Map of Phase 1 & Phase 2 of Hub RTP. A high fidelity rendering of new buildings and greenspace of future Hub RTP development coming to Research Triangle Park.') }}" />
   </figure>
 </div>
 
