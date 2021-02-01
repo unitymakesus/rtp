@@ -127,7 +127,8 @@
       display: block;
     }
 
-    path {
+    path,
+    polygon {
       fill: none;
       stroke: rgba(0, 0, 0, 0);
       stroke-width: 2px;
@@ -135,14 +136,16 @@
     }
 
     .property {
-      path {
+      path,
+      polygon {
         cursor: pointer;
         fill: transparent;
         mix-blend-mode: color;
         transition: all 0.3s ease-in-out;
       }
 
-      &[disabled] path {
+      &[disabled] path,
+      &[disabled] polygon {
         cursor: default;
         fill: rgba(255, 255, 255, 1);
         stroke: rgba(255, 255, 255, 1);
