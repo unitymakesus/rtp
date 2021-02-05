@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use SimpleCalendar\Abstracts\Calendar;
 use SimpleCalendar\Abstracts\Feed;
 use SimpleCalendar\Feeds\Admin\Google_Admin as Admin;
+use GuzzleHttp\Client;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -366,6 +367,39 @@ class Google extends Feed {
 			$this->timezone = $calendar['timezone'];
 		}
 
+		// Custom OR search since Google API doesn't support the OR search for calendar events
+		if ( isset( $calendar['events'] ) && ! empty( $this->google_search_query ) ) {
+
+			$events = array();
+			$search_query = explode( strtolower( ' OR ' ), strtolower( $this->google_search_query ) );
+
+			foreach ( $calendar['events'] as $k => $v ) {
+
+				foreach( $v as $k2 ) {
+
+					$search_found = false;
+
+					for( $i = 0; $i < count( $search_query ); $i++ ) {
+						$title_check       = ! empty( $k2['title'] ) ? strpos( strtolower( $k2['title'] ), $search_query[ $i ] ) : false;
+						$description_check = ! empty( $k2['description'] ) ? strpos( strtolower( $k2['description'] ), $search_query[ $i ] ) : false;
+
+						if ( $title_check !== false || $description_check !== false ) {
+							$search_found = true;
+						}
+					}
+
+					if ( $search_found ) {
+						$events[ $k ] = $v;
+					}
+				}
+
+			}
+
+			if ( ! empty( $events ) ) {
+				$calendar['events'] = $events;
+			}
+		}
+
 		return isset( $calendar['events'] ) ? $calendar['events'] : array();
 	}
 
@@ -398,7 +432,7 @@ class Google extends Feed {
 			}
 
 			// Query events using search terms.
-			if ( ! empty( $this->google_search_query ) ) {
+			if ( ! empty( $this->google_search_query ) && strpos( $this->google_search_query, 'OR' ) === false ) {
 				$args['q'] = rawurlencode( $this->google_search_query );
 			}
 
@@ -473,6 +507,16 @@ class Google extends Feed {
 		$client->setScopes( $this->google_client_scopes );
 		$client->setDeveloperKey( $this->google_api_key );
 		$client->setAccessType( 'online' );
+
+		$curl_options = apply_filters( 'simcal_google_client_curl_options', array() );
+
+		if ( ! empty( $curl_options ) ) {
+			$guzzle = new Client( array(
+				'curl.options' => $curl_options,
+			) );
+
+			$client->setHttpClient( $guzzle );
+		}
 
 		return $client;
 	}
