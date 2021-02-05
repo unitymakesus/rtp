@@ -3,8 +3,11 @@
   line-height: 1;
 
   &__graphic {
-    position: absolute;
-    z-index: 1;
+    display: none;
+
+    @media #{$large-and-up} {
+      display: block;
+    }
   }
 
   &__legend {
@@ -126,6 +129,8 @@
 
     @media #{$large-and-up} {
       display: block;
+      position: absolute;
+      top: 0;
     }
 
     path,
