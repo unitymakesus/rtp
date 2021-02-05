@@ -39,7 +39,7 @@ add_action('acf/init', function () {
  * @source https://www.advancedcustomfields.com/resources/acf-prepare_field/
  */
 add_filter('acf/prepare_field/key=field_5fda5cff41ff3', function ($field) {
-    // $field['readonly'] = true;   // TODO: Uncomment this after making changes to the map property IDs on staging
+    $field['readonly'] = true;
 
     return $field;
 });
