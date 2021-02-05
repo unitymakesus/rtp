@@ -133,7 +133,7 @@ class Move_Private_Objects extends Move_Objects {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return __( 'Would you like to move your offloaded media files to paths that match the current private path settings? All existing offloaded private media URLs will be updated to reference the new paths.', 'amazon-s3-and-cloudfront' );
 	}
 

@@ -808,7 +808,7 @@ class FLBuilderUISettingsForms {
 	 * @param object $settings The settings data.
 	 * @return array
 	 */
-	static public function render_settings( $form = array(), $settings ) {
+	static public function render_settings( $form, $settings ) {
 		$defaults = array(
 			'class'    => '',
 			'attrs'    => '',
@@ -823,7 +823,7 @@ class FLBuilderUISettingsForms {
 		 * Legacy filter for the config.
 		 * @see fl_builder_settings_form_config
 		 */
-		$form = apply_filters( 'fl_builder_settings_form_config', array_merge( $defaults, $form ) );
+		$form = apply_filters( 'fl_builder_settings_form_config', array_merge( $defaults, (array) $form ) );
 
 		// Setup the class var to be safe in JS.
 		$form['className'] = $form['class'];

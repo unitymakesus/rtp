@@ -169,6 +169,9 @@ FLBuilder::register_module('FLHeadingModule', array(
 							'h5' => 'h5',
 							'h6' => 'h6',
 						),
+						'preview' => array(
+							'type' => 'none',
+						),
 					),
 					'link'    => array(
 						'type'          => 'link',

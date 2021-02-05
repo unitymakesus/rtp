@@ -858,7 +858,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 * @param string $password Password which user enter.
 		 */
 		public function handle_after_enter_password_in_password_form( $post_id, $password ) {
-			$using_recaptcha = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS );
+			$using_recaptcha = PPW_Recaptcha::get_instance()->using_recaptcha();
 			if ( $using_recaptcha && ! PPW_Recaptcha::get_instance()->is_valid_recaptcha() ) {
 				do_action( 'ppw_redirect_after_enter_password', false );
 			}

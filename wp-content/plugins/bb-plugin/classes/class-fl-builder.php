@@ -232,7 +232,7 @@ final class FLBuilder {
 		}
 
 		/**
-		 * Allow users to overide the locale.
+		 * Allow users to override the locale.
 		 * @see fl_set_ui_locale
 		 * @since 2.2.4
 		 */
@@ -269,7 +269,7 @@ final class FLBuilder {
 	 * Alias method for registering a template data file with the builder.
 	 *
 	 * @since 1.8
-	 * @param sting $path The directory path to the template data file.
+	 * @param string $path The directory path to the template data file.
 	 * @return void
 	 */
 	static public function register_templates( $path, $args = array() ) {
@@ -772,6 +772,78 @@ final class FLBuilder {
 	}
 
 	/**
+	 * Register common JS vendors
+	 * This is primarily for consistent sharing with Assistant.
+	 *
+	 * @return void
+	 */
+	static public function register_shared_vendors() {
+		global $wp_version;
+
+		$ver        = FL_BUILDER_VERSION;
+		$css_build  = plugins_url( '/css/build/', FL_BUILDER_FILE );
+		$js_vendors = plugins_url( '/js/vendors/', FL_BUILDER_FILE );
+		$js_build   = plugins_url( '/js/build/', FL_BUILDER_FILE );
+		$tag        = '.bundle.min';
+		$vendor_tag = '.min';
+
+		if ( self::is_debug() ) {
+			$tag        = '.bundle';
+			$vendor_tag = '';
+		}
+
+		// React polyfill for older versions of WordPress.
+		if ( version_compare( $wp_version, '5.2', '<=' ) ) {
+
+			// React
+			wp_deregister_script( 'react' );
+			wp_enqueue_script( 'react', "{$js_vendors}react{$vendor_tag}.js", array(), $ver, true );
+
+			// React-DOM
+			wp_deregister_script( 'react-dom' );
+			wp_enqueue_script( 'react-dom', "{$js_vendors}react-dom{$vendor_tag}.js", array(), $ver, true );
+		}
+
+		/**
+		 * Shared Vendors
+		 * These vendor bundles are special in that they attach a global reference to themselves on the FL.vendors object.
+		 */
+
+		// redux
+		wp_register_script( 'redux', "{$js_vendors}redux.min.js", array(), $ver, false );
+
+		// react-router-dom
+		wp_register_script( 'react-router-dom', "{$js_vendors}react-router-dom.min.js", array( 'react' ), $ver, false );
+
+		// framer-motion
+		wp_register_script( 'framer-motion', "{$js_build}vendor-framer-motion{$tag}.js", array( 'react', 'react-dom' ), $ver, false );
+
+		// react-laag
+		wp_register_script( 'react-laag', "{$js_build}vendor-react-laag{$tag}.js", array( 'react' ), $ver, false );
+
+		// @beaverbuilder/app-core
+		$app_core_deps = array( 'react', 'redux', 'react-router-dom', 'wp-i18n' );
+		wp_register_script( 'bb-app-core', "{$js_build}vendor-bb-app-core{$tag}.js", $app_core_deps, $ver, false );
+
+		// @beaverbuilder/icons
+		wp_register_script( 'bb-icons', "{$js_build}vendor-bb-icons{$tag}.js", array( 'react' ), $ver, false );
+
+		// @beaverbuilder/fluid
+		$fluid_deps = array(
+			'react',
+			'react-dom',
+			'redux',
+			'react-router-dom',
+			'framer-motion',
+			'react-laag',
+			'wp-i18n',
+			'bb-icons',
+		);
+		wp_register_script( 'bb-fluid', "{$js_build}vendor-bb-fluid{$tag}.js", $fluid_deps, $ver, false );
+		wp_register_style( 'bb-fluid', "{$css_build}vendor-bb-fluid{$tag}.css", array(), $ver, null );
+	}
+
+	/**
 	 * Register and enqueue the styles and scripts for the builder UI.
 	 *
 	 * @since 1.7.4
@@ -788,6 +860,9 @@ final class FLBuilder {
 			$ver     = FL_BUILDER_VERSION;
 			$css_url = plugins_url( '/css/', FL_BUILDER_FILE );
 			$js_url  = plugins_url( '/js/', FL_BUILDER_FILE );
+
+			// Register React and other vendor bundles
+			self::register_shared_vendors();
 
 			/* Frontend builder styles */
 			wp_enqueue_style( 'dashicons' );
@@ -811,10 +886,10 @@ final class FLBuilder {
 				// skins need to come after default ui styles
 				wp_enqueue_style( 'fl-builder-ui-skin-dark', $css_url . 'fl-builder-ui-skin-dark.css', array(), $ver );
 
-				wp_enqueue_style( 'fl-builder-bundle', $css_url . 'build/builder.bundle.css', array( 'fl-fluid' ), $ver );
+				wp_enqueue_style( 'fl-builder-system', $css_url . 'build/builder.bundle.css', array( 'bb-fluid' ), $ver );
 			} else {
 				wp_enqueue_style( 'fl-builder-min', $css_url . 'fl-builder.min.css', array(), $ver );
-				wp_enqueue_style( 'fl-builder-bundle', $css_url . 'build/builder.bundle.min.css', array(), $ver );
+				wp_enqueue_style( 'fl-builder-system', $css_url . 'build/builder.bundle.min.css', array( 'bb-fluid' ), $ver );
 			}
 
 			/* Custom Icons */
@@ -823,14 +898,6 @@ final class FLBuilder {
 			/* RTL Support */
 			if ( is_rtl() ) {
 				wp_enqueue_style( 'fl-builder-rtl', $css_url . 'fl-builder-rtl.css', array(), $ver );
-			}
-
-			// React polyfill for older versions of WordPress.
-			if ( version_compare( $wp_version, '5.2', '<=' ) ) {
-				wp_deregister_script( 'react' );
-				wp_deregister_script( 'react-dom' );
-				wp_enqueue_script( 'react', $js_url . 'build/react.bundle.js', array(), $ver, true );
-				wp_enqueue_script( 'react-dom', $js_url . 'build/react-dom.bundle.js', array(), $ver, true );
 			}
 
 			/* We have custom versions of these that fixes bugs. */
@@ -877,31 +944,8 @@ final class FLBuilder {
 				wp_enqueue_script( 'select2', $js_url . 'select2.min.js', array(), $ver );
 			}
 
-			// Register FLUID library - Checks if Assistant has already registered a copy.
-			if (
-				! wp_script_is( 'fl-fluid', 'enqueued' ) &&
-				! wp_script_is( 'fl-fluid', 'registered' ) &&
-				! wp_script_is( 'fl-fluid', 'to_do' ) &&
-				! wp_script_is( 'fl-fluid', 'done' )
-			) {
-
-				if ( self::is_debug() ) {
-					$fluid_js  = 'build/fluid.bundle.js';
-					$fluid_css = 'build/fluid.bundle.css';
-				} else {
-					$fluid_js  = 'build/fluid.bundle.min.js';
-					$fluid_css = 'build/fluid.bundle.min.css';
-				}
-				// if < 5.0 we get an lodash conflict and fluid will not enqueue
-				if ( version_compare( $wp_version, '5.2', '<=' ) ) {
-					wp_register_script( 'fl-fluid', $js_url . $fluid_js, array( 'react', 'react-dom' ), $ver, false );
-				} else {
-					wp_register_script( 'fl-fluid', $js_url . $fluid_js, array( 'react', 'react-dom', 'lodash' ), $ver, false );
-				}
-				wp_register_style( 'fl-fluid', $css_url . $fluid_css, array(), $ver, null );
-			}
-
 			// Enqueue individual builder scripts if WP_DEBUG is on.
+			$bundle_deps = array( 'react', 'react-dom', 'bb-app-core', 'bb-fluid' );
 			if ( self::is_debug() ) {
 
 				wp_enqueue_script( 'fl-color-picker', $js_url . 'fl-color-picker.js', array(), $ver );
@@ -917,8 +961,8 @@ final class FLBuilder {
 				wp_enqueue_script( 'fl-builder-responsive-preview', $js_url . 'fl-builder-responsive-preview.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-services', $js_url . 'fl-builder-services.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-tour', $js_url . 'fl-builder-tour.js', array(), $ver );
-				wp_enqueue_script( 'fl-builder-ui', $js_url . 'fl-builder-ui.js', array( 'fl-builder', 'mousetrap', 'fl-fluid' ), $ver );
-				wp_enqueue_script( 'fl-builder-ui-main-menu', $js_url . 'fl-builder-ui-main-menu.js', array( 'fl-builder-ui', 'fl-fluid' ), $ver );
+				wp_enqueue_script( 'fl-builder-ui', $js_url . 'fl-builder-ui.js', array( 'fl-builder', 'mousetrap' ), $ver );
+				wp_enqueue_script( 'fl-builder-ui-main-menu', $js_url . 'fl-builder-ui-main-menu.js', array( 'fl-builder-ui' ), $ver );
 				wp_enqueue_script( 'fl-builder-ui-panel-content', $js_url . 'fl-builder-ui-panel-content-library.js', array( 'fl-builder-ui' ), $ver );
 				wp_enqueue_script( 'fl-builder-ui-settings-forms', $js_url . 'fl-builder-ui-settings-forms.js', array(), $ver );
 				wp_enqueue_script( 'fl-builder-ui-settings-copy-paste', $js_url . 'fl-builder-ui-settings-copy-paste.js', array(), $ver );
@@ -927,11 +971,11 @@ final class FLBuilder {
 				wp_enqueue_script( 'fl-builder-search', $js_url . 'fl-builder-search.js', array( 'jquery' ), $ver );
 				wp_enqueue_script( 'fl-builder-save-manager', $js_url . 'fl-builder-save-manager.js', array( 'jquery' ), $ver );
 				wp_enqueue_script( 'fl-builder-history-manager', $js_url . 'fl-builder-history-manager.js', array(), $ver );
-				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.js', array( 'fl-fluid' ), $ver, true );
+				wp_enqueue_script( 'fl-builder-system', $js_url . 'build/builder.bundle.js', $bundle_deps, $ver, true );
 			} else {
 
-				wp_enqueue_script( 'fl-builder-min', $js_url . 'fl-builder.min.js', array( 'jquery', 'mousetrap', 'fl-fluid' ), $ver );
-				wp_enqueue_script( 'fl-builder-bundle', $js_url . 'build/builder.bundle.min.js', array( 'fl-fluid' ), $ver, true );
+				wp_enqueue_script( 'fl-builder-min', $js_url . 'fl-builder.min.js', array( 'jquery', 'mousetrap' ), $ver );
+				wp_enqueue_script( 'fl-builder-system', $js_url . 'build/builder.bundle.min.js', $bundle_deps, $ver, true );
 			}
 
 			/* Additional module styles and scripts */
@@ -1600,6 +1644,11 @@ final class FLBuilder {
 			),
 		) );
 
+		// Check if Assistant is at least v0.6.0
+		if ( isset( $buttons['fl-assistant'] ) && defined( 'FL_ASSISTANT_VERSION' ) ) {
+			$buttons['fl-assistant']['show'] = version_compare( FL_ASSISTANT_VERSION, '0.6', '>=' );
+		}
+
 		echo '<div class="fl-builder-bar-actions">';
 		$i = 0;
 
@@ -2042,8 +2091,8 @@ final class FLBuilder {
 	 * @param object $settings The settings data.
 	 * @return array
 	 */
-	static public function render_settings( $form = array(), $settings ) {
-		return FLBuilderUISettingsForms::render_settings( $form, $settings );
+	static public function render_settings( $form, $settings ) {
+		return FLBuilderUISettingsForms::render_settings( (array) $form, $settings );
 	}
 
 	/**
@@ -3763,8 +3812,8 @@ final class FLBuilder {
 		if ( is_multisite() && FLBuilderAdminSettings::multisite_support() ) {
 			// if switched...
 			if ( $GLOBALS['switched'] ) {
-				if ( get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_enabled_templates' ) ) {
-					// overide enabled...
+				if ( get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_enable_fa_pro' ) ) {
+					// override enabled...
 					return get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_enable_fa_pro' );
 				} else {
 					return get_option( '_fl_builder_enable_fa_pro' );
@@ -3778,6 +3827,31 @@ final class FLBuilder {
 			}
 		}
 		return FLBuilderModel::get_admin_settings_option( '_fl_builder_enable_fa_pro' );
+	}
+
+	/**
+	 * @since 2.4.2
+	 */
+	static public function fa5_kit_url() {
+
+		if ( is_multisite() && FLBuilderAdminSettings::multisite_support() ) {
+			// if switched...
+			if ( $GLOBALS['switched'] ) {
+				if ( get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_kit_fa_pro' ) ) {
+					// override enabled...
+					return get_blog_option( $GLOBALS['_wp_switched_stack'][0], '_fl_builder_kit_fa_pro' );
+				} else {
+					return get_option( '_fl_builder_kit_fa_pro' );
+				}
+			}
+
+			// were not switched...
+			if ( ! get_option( '_fl_builder_enabled_icons' ) ) {
+				$id = defined( 'BLOG_ID_CURRENT_SITE' ) ? BLOG_ID_CURRENT_SITE : 1;
+				return get_blog_option( $id, '_fl_builder_kit_fa_pro' );
+			}
+		}
+		return FLBuilderModel::get_admin_settings_option( '_fl_builder_kit_fa_pro' );
 	}
 
 	/**

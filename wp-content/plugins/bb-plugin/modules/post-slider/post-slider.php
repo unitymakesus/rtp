@@ -135,7 +135,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	/**
 	 * The uncropped url.
 	 *
-	 * Get's a post ID and returns the uncropped url for its featured image.
+	 * Gets a post ID and returns the uncropped url for its featured image.
 	 *
 	 * @param  int $id    The post ID.
 	 * @since  1.5.9
@@ -166,7 +166,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	/**
 	 * Render thumbnail image.
 	 *
-	 * Get's the post ID and renders the html markup for the featured image
+	 * Gets the post ID and renders the html markup for the featured image
 	 * in the desired cropped size.
 	 *
 	 * @param  int $id    The post ID.
@@ -178,7 +178,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		// check if image_type is set
 		if ( isset( $this->settings->image_type ) ) {
 
-			// check if the choosed image type for featured image is "thumb" or "background"
+			// check if the chosen image type for featured image is "thumb" or "background"
 			if ( 'thumb' == $this->settings->image_type ) {
 
 				// get image source and data
@@ -221,7 +221,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	/**
 	 * Render thumbnail image for mobile.
 	 *
-	 * Get's the post ID and renders the html markup for the featured image
+	 * Gets the post ID and renders the html markup for the featured image
 	 * in the desired cropped size.
 	 *
 	 * @param  int $id    The post ID.
@@ -233,7 +233,7 @@ class FLPostSliderModule extends FLBuilderModule {
 		// check if image_type is set
 		if ( isset( $this->settings->image_type ) ) {
 
-			// check if "background" is choosed as image type for featured image
+			// check if "background" is chosen as image type for featured image
 			if ( 'background' == $this->settings->image_type ) {
 
 				// get image source and data
@@ -267,7 +267,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	/**
 	 * Render slider title.
 	 *
-	 * Get's the post ID and renders the html markup for the slider title
+	 * Gets the post ID and renders the html markup for the slider title
 	 *
 	 * @param  int $id    The post ID.
 	 * @since  1.5.9
@@ -275,7 +275,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	 */
 	public function render_post_title( $id ) {
 
-		// get choosed tag, otherwise set default to h2
+		// get chosen tag, otherwise set default to h2
 		$tag = ! empty( $this->settings->title_tag ) ? $this->settings->title_tag : 'h2';
 
 		// build markup
@@ -294,7 +294,7 @@ class FLPostSliderModule extends FLBuilderModule {
 	/**
 	 * Get slider css class.
 	 *
-	 * Get's the post ID, checks if the post has a thumbnail and the image_type
+	 * Gets the post ID, checks if the post has a thumbnail and the image_type
 	 * setting, and then returns the specific slider class.
 	 *
 	 * @param  int $id    The post ID.

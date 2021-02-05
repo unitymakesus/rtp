@@ -16,7 +16,7 @@ final class FLBuilderServiceCampayn extends FLBuilderService {
 	public $id = 'campayn';
 
 	/**
-	 * The HTTP protocal
+	 * The HTTP protocol
 	 *
 	 * @since 1.5.8
 	 * @access private

@@ -123,6 +123,18 @@ class Delicious_Brains_API_Updates {
 	 * @return object
 	 */
 	function site_transient_update_plugins( $trans ) {
+		if ( ! is_object( $trans ) ) {
+			return $trans;
+		}
+
+		if ( ! isset( $trans->response ) || ! is_array( $trans->response ) ) {
+			$trans->response = array();
+		}
+
+		if ( ! isset( $trans->no_update ) || ! is_array( $trans->no_update ) ) {
+			$trans->no_update = array();
+		}
+
 		$plugin_upgrade_data = $this->get_upgrade_data();
 
 		$plugin_basename = $this->licences->plugin->get_plugin_basename( $this->licences->plugin->slug );

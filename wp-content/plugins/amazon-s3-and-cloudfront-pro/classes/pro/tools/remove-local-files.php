@@ -152,7 +152,7 @@ class Remove_Local_Files extends Background_Tool {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return __( 'You can use this tool to delete all Media Library files from your local server that have already been offloaded.', 'amazon-s3-and-cloudfront' );
 	}
 

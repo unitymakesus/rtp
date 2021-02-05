@@ -51,6 +51,7 @@ FLBuilder::register_module(
 							'placeholder' => '20',
 							'size'        => '5',
 							'units'       => array( 'px' ),
+							'responsive'  => true,
 							'slider'      => array(
 								'px' => array(
 									'min'  => 0,

@@ -32,7 +32,7 @@ if ( ( 'media_library' == $settings->audio_type ) && ( is_array( $settings->audi
 		}
 
 			echo '<meta itemprop="url" content="' . $audio_url . '" />';
-			echo '[audio src="' . $audio_url . '"' . $autoplay . $loop . ']';
+			echo '[audio src="' . preg_replace( '/\/?\?.*/', '', $audio_url ) . '"' . $autoplay . $loop . ']';
 		?>
 
 	</div>

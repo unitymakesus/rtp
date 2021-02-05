@@ -14,7 +14,7 @@ export const panels = ( state = {}, action ) => {
 	case 'REGISTER_PANEL':
 		return {
 			...state,
-			[action.handle] : action.options
+			[action.handle]: action.options
 		}
 	default:
 		return state

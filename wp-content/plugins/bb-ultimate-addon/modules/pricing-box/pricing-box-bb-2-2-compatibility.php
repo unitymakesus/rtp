@@ -549,8 +549,7 @@ FLBuilder::register_settings_form(
 								),
 								'toggle'  => array(
 									'yes' => array(
-										'fields' => array( 'featured_text' ),
-										'tabs'   => array( 'typography' ),
+										'tabs' => array( 'typography' ),
 									),
 									'no'  => array(
 										'fields'   => array(),
@@ -805,17 +804,14 @@ FLBuilder::register_settings_form(
 									'corner'   => array(
 										'fields'   => array( 'ribbon_title', 'horizontal_pos', 'ribbon_distance', 'ribbon_bg_color', 'ribbon_text_color', 'ribbon_box_shadow' ),
 										'sections' => array( 'ribbon_typography' ),
-										'tabs'     => array( 'typography' ),
 									),
 									'circular' => array(
 										'fields'   => array( 'ribbon_title', 'horizontal_pos', 'ribbon_size', 'ribbon_bg_color', 'ribbon_text_color', 'ribbon_box_shadow' ),
 										'sections' => array( 'ribbon_typography' ),
-										'tabs'     => array( 'typography' ),
 									),
 									'flag'     => array(
 										'fields'   => array( 'ribbon_title', 'ribbon_top_distance', 'ribbon_bg_color', 'ribbon_text_color', 'ribbon_box_shadow', 'ribbon_padding' ),
 										'sections' => array( 'ribbon_typography' ),
-										'tabs'     => array( 'typography' ),
 									),
 								),
 							),

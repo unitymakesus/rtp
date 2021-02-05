@@ -204,6 +204,8 @@
                 actions.setIsEditing(false)
             }
 
+			document.documentElement.classList.remove( 'fl-builder-assistant-visible' )
+
             this.reset();
             this.addShortcut('restartEditingSession', 'mod+e');
         },
@@ -218,6 +220,11 @@
                 const actions = FL.Builder.data.getSystemActions()
                 actions.setIsEditing(true)
             }
+
+			const currentPanel = FL.Builder.data.getSystemState().currentPanel
+			if ( 'assistant' === currentPanel ) {
+				document.documentElement.classList.add( 'fl-builder-assistant-visible' )
+			}
 
             this.reset();
             this.setDefaultKeyboardShortcuts();

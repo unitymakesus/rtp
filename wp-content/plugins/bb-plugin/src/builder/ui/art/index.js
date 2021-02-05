@@ -23,4 +23,3 @@ Icon.Close = () => {
 		</svg>
 	)
 }
-Icon.Close.displayName = 'Icon.Close'

@@ -5583,6 +5583,14 @@ body > .fl-builder-tour-dimmed {
 	top: -1px;
 	z-index: 1;
 }
+.fl-row-content.fl-row-full-width .fl-builder-shortcode-mask-wrap {
+	overflow: hidden;
+}
+.fl-row-content.fl-row-full-width .fl-builder-shortcode-mask {
+	left: 0px;
+	right: 0px;
+}
+
 /* @endgroup Shortcodes */
 
 /* @group Search

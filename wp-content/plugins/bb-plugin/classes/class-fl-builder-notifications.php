@@ -150,7 +150,7 @@ final class FLBuilderNotifications {
 	}
 
 	/**
-	 * Return notications from the db or fetch from remote
+	 * Return notifications from the db or fetch from remote
 	 *
 	 * @since 2.1
 	 */

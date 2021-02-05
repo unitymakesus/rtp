@@ -90,7 +90,7 @@ class FLPostCarouselModule extends FLBuilderModule {
 	/**
 	 * Render thumbnail image for mobile.
 	 *
-	 * Get's the post ID and renders the html markup for the featured image
+	 * Gets the post ID and renders the html markup for the featured image
 	 * in the desired cropped size.
 	 *
 	 * @param  int $id    The post ID.

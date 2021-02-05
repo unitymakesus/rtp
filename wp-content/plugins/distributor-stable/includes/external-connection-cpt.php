@@ -270,33 +270,36 @@ function admin_enqueue_scripts( $hook ) {
 		wp_enqueue_style( 'dt-admin-external-connection', plugins_url( '/dist/css/admin-external-connection.min.css', __DIR__ ), array(), DT_VERSION );
 		wp_enqueue_script( 'dt-admin-external-connection', plugins_url( '/dist/js/admin-external-connection.min.js', __DIR__ ), array( 'jquery', 'underscore', 'wp-a11y' ), DT_VERSION, true );
 
-		$blog_name     = get_bloginfo( 'name ' );
-		$wizard_return = get_wizard_return_data();
+		$blog_name        = get_bloginfo( 'name ' );
+		$wizard_return    = get_wizard_return_data();
+
 		wp_localize_script(
 			'dt-admin-external-connection',
 			'dt',
 			array(
-				'nonce'                     => wp_create_nonce( 'dt-verify-ext-conn' ),
-				'bad_connection'            => esc_html__( 'No connection found.', 'distributor' ),
-				'good_connection'           => esc_html__( 'Connection established.', 'distributor' ),
-				'limited_connection'        => esc_html__( 'Limited connection established.', 'distributor' ),
-				'no_push'                   => esc_html__( 'Push distribution unavailable.', 'distributor' ),
-				'pull_limited'              => esc_html__( 'Pull distribution limited to basic content, i.e. title and content body.', 'distributor' ),
-				'endpoint_suggestion'       => esc_html__( 'Did you mean: ', 'distributor' ),
-				'endpoint_checking_message' => esc_html__( 'Checking endpoint...', 'distributor' ),
-				'bad_auth'                  => esc_html__( 'Authentication failed.', 'distributor' ),
-				'change'                    => esc_html__( 'Change', 'distributor' ),
-				'cancel'                    => esc_html__( 'Cancel', 'distributor' ),
-				'invalid_url'               => esc_html__( 'Please enter a valid URL, including the HTTP(S).', 'distributor' ),
-				'norest'                    => esc_html__( 'No REST API endpoint was located for this site.', 'distributor' ),
-				'noconnection'              => esc_html__( 'Unable to connect to site.', 'distributor' ),
-				'minversion'                => esc_html__( 'Remote site requires Distributor version 1.6.0 or greater. Upgrade Distributor on the remote site to use the Authentication Wizard.', 'distributor' ),
-				'no_distributor'            => esc_html__( 'Distributor not installed on remote site.', 'distributor' ),
-				'roles_warning'             => esc_html__( 'Be careful assigning less trusted roles push privileges as they will inherit the capabilities of the user on the remote site.', 'distributor' ),
-				'admin_url'                 => admin_url(),
+				'nonce'                               => wp_create_nonce( 'dt-verify-ext-conn' ),
+				'bad_connection'                      => esc_html__( 'No connection found.', 'distributor' ),
+				'good_connection'                     => esc_html__( 'Connection established.', 'distributor' ),
+				'limited_connection'                  => esc_html__( 'Limited connection established.', 'distributor' ),
+				'no_push'                             => esc_html__( 'Push distribution unavailable.', 'distributor' ),
+				'no_permissions'                      => esc_html__( 'Authentication succeeded but your account does not have permissions to create posts on the external site.', 'distributor' ),
+				'pull_limited'                        => esc_html__( 'Pull distribution limited to basic content, i.e. title and content body.', 'distributor' ),
+				'endpoint_suggestion'                 => esc_html__( 'Did you mean: ', 'distributor' ),
+				'endpoint_checking_message'           => esc_html__( 'Checking endpoint...', 'distributor' ),
+				'bad_auth'                            => esc_html__( 'Authentication failed due to invalid credentials.', 'distributor' ),
+				'change'                              => esc_html__( 'Change', 'distributor' ),
+				'cancel'                              => esc_html__( 'Cancel', 'distributor' ),
+				'invalid_url'                         => esc_html__( 'Please enter a valid URL, including the HTTP(S).', 'distributor' ),
+				'norest'                              => esc_html__( 'No REST API endpoint was located for this site.', 'distributor' ),
+				'noconnection'                        => esc_html__( 'Unable to connect to site.', 'distributor' ),
+				'minversion'                          => esc_html__( 'Remote site requires Distributor version 1.6.0 or greater. Upgrade Distributor on the remote site to use the Authentication Wizard.', 'distributor' ),
+				'no_distributor'                      => esc_html__( 'Distributor not installed on remote site.', 'distributor' ),
+				'roles_warning'                       => esc_html__( 'Be careful assigning less trusted roles push privileges as they will inherit the capabilities of the user on the remote site.', 'distributor' ),
+				'admin_url'                           => admin_url(),
 				/* translators: %1$s: site name, %2$s: site URL */
-				'distributor_from'          => sprintf( esc_html__( 'Distributor on %1$s (%2$s)', 'distributor' ), $blog_name, esc_url( home_url() ) ),
-				'wizard_return'             => $wizard_return,
+				'distributor_from'                    => sprintf( esc_html__( 'Distributor on %1$s (%2$s)', 'distributor' ), $blog_name, esc_url( home_url() ) ),
+				'wizard_return'                       => $wizard_return,
+				'application_passwords_not_available' => __( 'Application Passwords is not available on the remote site. Please set up connection manually!', 'distributor' ),
 			)
 		);
 
@@ -444,6 +447,15 @@ function meta_box_external_connection_details( $post ) {
 		$external_connection_url = '';
 	}
 
+	$external_connection_status = get_post_meta( $post->ID, 'dt_external_connections', true );
+
+	$post_types = get_post_types(
+		array(
+			'show_in_rest' => true,
+		),
+		'objects'
+	);
+
 	$registered_external_connection_types = \Distributor\Connections::factory()->get_registered();
 
 	foreach ( $registered_external_connection_types as $slug => $class ) {
@@ -469,7 +481,7 @@ function meta_box_external_connection_details( $post ) {
 		?>
 		<div class="updated is-dismissible error">
 			<p>
-				<?php esc_html_e( 'Authorization rejected, please try again.', 'distributor' ); ?>
+		<?php esc_html_e( 'Authorization rejected, please try again.', 'distributor' ); ?>
 			</p>
 		</div>
 		<?php
@@ -516,6 +528,34 @@ function meta_box_external_connection_details( $post ) {
 		<ul class="endpoint-errors"></ul>
 	</div>
 
+	<?php if ( ! empty( $external_connection_status ) ) : ?>
+		<div class="post-types-permissions hide-until-authed">
+			<h4><?php esc_html_e( 'Post types permissions', 'distributor' ); ?></h4>
+
+			<table class="wp-list-table widefat">
+				<thead>
+					<th><?php esc_html_e( 'Post types', 'distributor' ); ?></th>
+					<th><?php esc_html_e( 'Can pull?', 'distributor' ); ?></th>
+					<th><?php esc_html_e( 'Can push?', 'distributor' ); ?></th>
+				</thead>
+				<tbody>
+					<?php foreach ( $post_types as $post_type ) : ?>
+						<?php
+						if ( 'dt_subscription' === $post_type->name ) {
+							continue;
+						}
+						?>
+						<tr>
+							<td><?php echo esc_html( $post_type->label ); ?></td>
+							<td><?php echo in_array( $post_type->name, $external_connection_status['can_get'] ) ? esc_html__( 'Yes', 'distributor' ) : esc_html__( 'No', 'distributor' ); ?></td>
+							<td><?php echo in_array( $post_type->name, $external_connection_status['can_post'] ) ? esc_html__( 'Yes', 'distributor' ) : esc_html__( 'No', 'distributor' ); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+	<?php endif; ?>
+
 	<fieldset class="dt-roles-allowed hide-until-authed">
 		<legend><?php esc_html_e( 'Roles Allowed to Push', 'distributor' ); ?></legend>
 
@@ -557,7 +597,7 @@ function meta_box_external_connection_details( $post ) {
 function dashboard() {
 	global $connection_list_table;
 
-	$_GET['post_type'] = 'dt_ext_connection';
+	$_GET['post_type']     = 'dt_ext_connection';
 	$_REQUEST['all_posts'] = true; // Default to replacite "All" tab
 
 	$connection_list_table->prepare_items();
@@ -736,14 +776,14 @@ function filter_post_updated_messages( $messages ) {
  *
  * @param string $site_url Remote site URL.
  *
- * @return false|string
+ * @return false|string|WP_Error
  */
 function get_rest_url( $site_url ) {
 
 	$source = wp_remote_get( $site_url );
 
 	if ( is_wp_error( $source ) ) {
-		return false;
+		return $source;
 	}
 
 	$dom = new \DOMDocument();
@@ -757,7 +797,7 @@ function get_rest_url( $site_url ) {
 		}
 	}
 
-	return false;
+	return new \WP_Error( 'rest_api_uri_not_found', __( 'The external site is private or not a WordPress site.', 'distributor' ) );
 }
 
 /**
@@ -776,8 +816,8 @@ function get_remote_distributor_info() {
 
 	$rest_url = get_rest_url( $_POST['url'] );
 
-	if ( ! $rest_url ) {
-		wp_send_json_error();
+	if ( is_wp_error( $rest_url ) ) {
+		wp_send_json_error( $rest_url );
 		exit;
 	}
 

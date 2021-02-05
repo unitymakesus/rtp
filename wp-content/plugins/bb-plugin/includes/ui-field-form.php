@@ -29,7 +29,7 @@
 							text = field.options[ data.value[ data.field.preview_text ] ];
 						} else if ( '' !== data.value[ data.field.preview_text ] ) {
 							var tmp = document.createElement( 'div' );
-							text = data.value[ data.field.preview_text ].replace( /&#39;/g, "'" );
+							text = data.value[ data.field.preview_text ].toString().replace( /&#39;/g, "'" );
 							tmp.innerHTML = text;
 							text = ( tmp.textContent || tmp.innerText || '' ).replace( /^(.{35}[^\s]*).*/, "$1" )  + '...';
 						}

@@ -1,4 +1,5 @@
-Builder
-==========
+# System Bundle
 
-This directory includes a library of components to be used within the builder UI.
+This bundle contains API for working with redux data stores as well as react-based UI for Beaver Builder.
+
+See `window.FL.Builder` for public API

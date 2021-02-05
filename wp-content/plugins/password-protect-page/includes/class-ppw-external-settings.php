@@ -34,6 +34,10 @@ class PPW_External_Settings {
 					'tab'      => 'recaptcha',
 					'tab_name' => 'reCAPTCHA',
 				),
+				array(
+					'tab'      => 'configuration',
+					'tab_name' => 'Configuration',
+				),
 			)
 		);
 	}

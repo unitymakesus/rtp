@@ -107,6 +107,7 @@ FLBuilderCSS::rule( array(
 	'enabled'  => 'reversed' == $settings->responsive_order && '' !== $settings->size_responsive && $responsive_enabled,
 	'props'    => array(
 		'flex-basis' => "{$settings->size_responsive}%",
+		'margin'     => '0',
 	),
 ) );
 

@@ -36,6 +36,7 @@
 			this._initUserAccessNetworkOverrides();
 			this._templatesOverrideChange();
 			this._iconPro();
+			this._alphaSettings();
 		},
 
 		/**
@@ -496,6 +497,21 @@
 			//	duo.css('color', '#0E5A71')
 			}
 
+		},
+		_alphaSettings: function() {
+			form = $('#beta-form');
+
+			form.find('.alpha-checkbox').on('click', function(){
+				console.log('checked?')
+				if ( true === $(this).prop('checked') ) {
+					if ( confirm( 'Are you sure you want to enable Alpha releases?') ) {
+						// do nothing
+					} else {
+						$(this).prop('checked',false);
+					}
+
+				}
+			})
 		}
 
 	};

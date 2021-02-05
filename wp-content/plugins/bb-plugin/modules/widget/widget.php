@@ -51,6 +51,8 @@ class FLWidgetModule extends FLBuilderModule {
 		// Delete the WordPress cache for this widget.
 		wp_cache_delete( $settings->widget, 'widget' );
 
+		$settings->widget = urlencode( $settings->widget );
+
 		// Return the settings.
 		return $settings;
 	}

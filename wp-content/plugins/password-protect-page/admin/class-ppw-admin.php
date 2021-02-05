@@ -106,6 +106,7 @@ class PPW_Admin {
 			}
 			$assert_services->load_assets_for_shortcode_page();
 			$assert_services->load_assets_for_external_page();
+			$assert_services->load_assets_for_external_configuration();
 			$assert_services->load_assets_for_shortcodes();
 			$assert_services->load_css_hide_feature_set_password_wp();
 			$assert_services->load_js_show_notice_deactivate_plugin();
@@ -453,6 +454,19 @@ class PPW_Admin {
 		<?php
 	}
 
+	public function ppw_free_render_content_external_configuration() {
+		?>
+		<div class="ppw_setting_page">
+			<?php
+			include PPW_DIR_PATH . 'includes/views/external/view-ppw-general-configuration.php';
+			if ( ! is_pro_active_and_valid_license() ) {
+				include PPW_DIR_PATH . 'includes/views/sidebar/view-ppw-sidebar.php';
+			}
+			?>
+		</div>
+		<?php
+	}
+
 	/**
 	 * Render Master Passwords tab
 	 */
@@ -528,13 +542,10 @@ class PPW_Admin {
 	 * Update settings
 	 */
 	public function ppw_free_update_external_settings() {
-		$setting_keys = array(
-			PPW_Constants::RECAPTCHA_SCORE,
-			PPW_Constants::RECAPTCHA_API_KEY,
-			PPW_Constants::RECAPTCHA_API_SECRET,
-			PPW_Constants::USING_RECAPTCHA
-		);
-		if ( ppw_free_is_setting_data_invalid( $_REQUEST, $setting_keys, false ) ) {
+		if ( ! isset( $_REQUEST['settings'] )
+		     || ! is_array( $_REQUEST['settings'] )
+		     || ppw_free_is_setting_data_invalid( $_REQUEST, array(), false )
+		) {
 			wp_send_json(
 				array(
 					'is_error' => true,
@@ -546,8 +557,34 @@ class PPW_Admin {
 			wp_die();
 		}
 
-		$data_settings = wp_unslash( $_REQUEST['settings'] );
-		update_option( PPW_Constants::EXTERNAL_OPTIONS, wp_json_encode( $data_settings ), 'no' );
+		$option = get_option( PPW_Constants::EXTERNAL_OPTIONS );
+		if ( empty( $option ) ) {
+			$option = array();
+		} else {
+			$option = (array) json_decode( $option );
+		}
+
+		$setting_keys = array(
+			PPW_Constants::RECAPTCHA_SCORE,
+			PPW_Constants::RECAPTCHA_API_KEY,
+			PPW_Constants::RECAPTCHA_V2_CHECKBOX_API_KEY,
+			PPW_Constants::RECAPTCHA_API_SECRET,
+			PPW_Constants::RECAPTCHA_V2_CHECKBOX_API_SECRET,
+			PPW_Constants::USING_RECAPTCHA,
+			PPW_Constants::RECAPTCHA_TYPE,
+		);
+		$settings     = wp_unslash( $_REQUEST['settings'] );
+		foreach ( $settings as $key => $value ) {
+			if ( in_array( $key, $setting_keys, true ) ) {
+				$option[ $key ] = $settings[ $key ];
+			}
+		}
+
+		update_option(
+			PPW_Constants::EXTERNAL_OPTIONS,
+			wp_json_encode( $option ),
+			'no'
+		);
 		wp_die( true );
 	}
 
@@ -981,5 +1018,21 @@ _end_;
 		}
 
 		return $plugin_meta;
+	}
+
+
+	/**
+	 * Render custom description below password form
+	 *
+	 * @param $password_form
+	 *
+	 * @return string
+	 */
+	public function render_custom_below_description( $password_form ) {
+		$below_desc = wp_kses_post( get_theme_mod( 'ppwp_form_instructions_below_text' ) );
+
+		$password_form .= sprintf('<div class="ppw-ppf-desc-below">%s</div>', $below_desc);
+
+		return $password_form;
 	}
 }

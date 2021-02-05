@@ -486,14 +486,14 @@ FLBuilder::register_module(
 							'default' => 'background_color',
 							'options' => array(
 								'background_color' => __( 'Background Color', 'uabb' ),
-								'border'           => __( 'Bottom Border', 'uabb' ),
+								'border'           => __( 'Border', 'uabb' ),
 							),
 							'toggle'  => array(
 								'background_color' => array(
 									'fields' => array( 'cat_filter_bg_color', 'cat_filter_bg_hover_color' ),
 								),
 								'border'           => array(
-									'fields' => array( 'cat_filter_border_type', 'cat_filter_border', 'cat_filter_border_color', 'cat_filter_border_active_type', 'cat_filter_border_active', 'cat_filter_border_color_active' ),
+									'fields' => array( 'cat_filter_border_param', 'cat_filter_border_active_param', 'cat_filter_border', 'cat_filter_border_color', 'cat_filter_border_active_type', 'cat_filter_border_active', 'cat_filter_border_color_active' ),
 								),
 							),
 						),
@@ -525,7 +525,7 @@ FLBuilder::register_module(
 						),
 						'cat_filter_border_param'        => array(
 							'type'       => 'border',
-							'label'      => __( 'Bottom Border', 'uabb' ),
+							'label'      => __( 'Filter Border', 'uabb' ),
 							'responsive' => true,
 							'default'    => array(
 								'style' => 'none',
@@ -539,12 +539,12 @@ FLBuilder::register_module(
 							),
 							'preview'    => array(
 								'type'     => 'css',
-								'selector' => '.uabb-video__gallery-filters',
+								'selector' => '.uabb-video__gallery-filter',
 							),
 						),
 						'cat_filter_border_active_param' => array(
 							'type'       => 'border',
-							'label'      => __( 'Bottom Border Active', 'uabb' ),
+							'label'      => __( 'Active Filter Border', 'uabb' ),
 							'responsive' => true,
 							'default'    => array(
 								'style' => 'none',

@@ -150,6 +150,19 @@ FLBuilder::register_module(
 						),
 					),
 				),
+				'alt'                => array(
+					'title'  => __( 'Alt Text', 'uabb' ),
+					'fields' => array(
+						'custom_alt_text' => array(
+							'type'        => 'text',
+							'label'       => __( 'Custom Alt Text', 'uabb' ),
+							'connections' => array( 'string' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
+						),
+					),
+				),
 				'link'               => array(
 					'title'  => __( 'Link', 'uabb' ),
 					'fields' => array(

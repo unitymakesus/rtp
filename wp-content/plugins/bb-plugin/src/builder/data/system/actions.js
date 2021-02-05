@@ -9,7 +9,8 @@ export const registerPanel = ( handle = 'fl/untitled', options = {} ) => {
 
 	const defaults = {
 		label: '',
-		render: () => {},
+		root: null,
+		render: () => null, /* Legacy Prop */
 		className: null,
 		routerProps: {},
 		onHistoryChanged: () => {}

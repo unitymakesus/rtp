@@ -1,10 +1,9 @@
 <?php
 
 /**
- * A module that adds a simple subscribe form to your layout
- * with third party optin integration.
+ * A module that adds a simple login form.
  *
- * @since 1.5.2
+ * @since 2.3
  */
 class FLLoginFormModule extends FLBuilderModule {
 

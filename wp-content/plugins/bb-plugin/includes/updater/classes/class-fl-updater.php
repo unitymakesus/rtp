@@ -84,7 +84,7 @@ final class FLUpdater {
 				'domain'        => FLUpdater::validate_domain( network_home_url() ),
 				'product'       => $this->settings['name'],
 				'slug'          => $this->settings['slug'],
-				'version'       => $this->settings['version'],
+				'version'       => self::verify_version( $this->settings['version'] ),
 				'php'           => phpversion(),
 			)
 		);
@@ -122,7 +122,7 @@ final class FLUpdater {
 
 				$plugin = self::get_plugin_file( $this->settings['slug'] );
 
-				if ( isset( $response->new_version ) && version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
+				if ( isset( $response->new_version ) && version_compare( $response->new_version, self::verify_version( $this->settings['version'] ), '>' ) ) {
 
 					$transient->response[ $plugin ]              = new stdClass();
 					$transient->response[ $plugin ]->slug        = $response->slug;
@@ -167,7 +167,7 @@ final class FLUpdater {
 				}
 			} elseif ( 'theme' == $this->settings['type'] ) {
 
-				if ( isset( $response->new_version ) && version_compare( $response->new_version, $this->settings['version'], '>' ) ) {
+				if ( isset( $response->new_version ) && version_compare( $response->new_version, self::verify_version( $this->settings['version'] ), '>' ) ) {
 
 					$transient->response[ $this->settings['slug'] ] = array(
 						'new_version' => $response->new_version,
@@ -197,7 +197,7 @@ final class FLUpdater {
 	}
 
 	/**
-	 * Retrives the data for the plugin info lightbox.
+	 * Retrieves the data for the plugin info lightbox.
 	 *
 	 * @since 1.0
 	 * @param bool $false
@@ -298,12 +298,14 @@ final class FLUpdater {
 
 			if ( 'plugin' == $args['type'] ) {
 				if ( file_exists( trailingslashit( WP_PLUGIN_DIR ) . $args['slug'] ) ) {
+					$args['version']                  = self::verify_version( $args['version'] );
 					self::$_products[ $args['name'] ] = $args;
 					new FLUpdater( self::$_products[ $args['name'] ] );
 				}
 			}
 			if ( 'theme' == $args['type'] ) {
 				if ( file_exists( WP_CONTENT_DIR . '/themes/' . $args['slug'] ) ) {
+					$args['version']                  = self::verify_version( $args['version'] );
 					self::$_products[ $args['name'] ] = $args;
 					new FLUpdater( self::$_products[ $args['name'] ] );
 				}
@@ -391,6 +393,9 @@ final class FLUpdater {
 				'products'      => json_encode( self::$_products ),
 			)
 		);
+		if ( isset( $response->error ) ) {
+			$license = '';
+		}
 		update_site_option( 'fl_themes_subscription_email', $license );
 		return $response;
 	}
@@ -435,6 +440,9 @@ final class FLUpdater {
 
 			} else {
 				$message = __( 'Please subscribe to enable automatic updates for this plugin.', 'fl-builder' );
+				if ( isset( $subscription->error ) && '' !== $subscription->error ) {
+					$message .= sprintf( ' The following error was encountered: %s', $subscription->error );
+				}
 			}
 		} else { // plugins.php
 
@@ -465,6 +473,16 @@ final class FLUpdater {
 				$link = sprintf( '<a href="%s" target="_blank" style="color: #fff; text-decoration: underline;">%s &raquo;</a>', $subscribe_link, __( 'Subscribe Now', 'fl-builder' ) );
 				/* translators: %s: subscribe link */
 				$text = sprintf( __( 'Please subscribe to enable automatic updates for this plugin. %s', 'fl-builder' ), $link );
+			}
+
+			if ( isset( $subscription->error ) && '' !== $subscription->error ) {
+				$support_url = FLBuilderModel::get_store_url( 'contact', array(
+					'topic'        => 'General Inquiry',
+					'utm_medium'   => 'bb-pro',
+					'utm_source'   => 'plugin-updates',
+				) );
+				$url = sprintf( '<a target="_blank" style="color: #fff; text-decoration: underline;" href="%s">%s</a>', $support_url, __( 'Contact Support for more information.', 'fl-builder' ) );
+				$text .= sprintf( '<br />The following error was encountered: %s %s', $subscription->error, $url );
 			}
 
 			$message .= '<span style="display:block;padding:10px 20px;margin:10px 0; background: #d54e21; color: #fff;">';
@@ -563,5 +581,23 @@ final class FLUpdater {
 		$pos = strpos( $url, '?' );
 		$url = ( $pos ) ? untrailingslashit( substr( $url, 0, $pos ) ) : $url;
 		return $url;
+	}
+
+	static public function verify_version( $version ) {
+
+		if ( get_option( 'fl_beta_updates', false ) ) {
+			// if version already is beta strip -beta.
+			$version  = rtrim( $version, '-beta' );
+			$version .= '-beta';
+		}
+
+		if ( get_option( 'fl_alpha_updates', false ) ) {
+			// if version already is beta strip -beta.
+			$version  = rtrim( $version, '-beta' );
+			$version  = rtrim( $version, '-alpha' );
+			$version .= '-alpha';
+		}
+
+		return $version;
 	}
 }

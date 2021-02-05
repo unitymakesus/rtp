@@ -8,10 +8,10 @@
 final class FLBuilderExtensions {
 
 	/**
-	 * Initalizes any extensions found in the extensions directory.
+	 * Initializes any extensions found in the extensions directory.
 	 *
 	 * @since 1.8
-	 * @param string $path Path to extensions to initalize.
+	 * @param string $path Path to extensions to initialize.
 	 * @return void
 	 */
 	static public function init( $path = null ) {

@@ -106,6 +106,26 @@ if ( ! class_exists( 'PPW_Asset_Services' ) ) {
 			}
 		}
 
+		public function load_assets_for_external_configuration() {
+			if ( PPW_Constants::EXTERNAL_SERVICES_PREFIX === $this->page && 'configuration' === $this->tab ) {
+				$this->load_bundle_css( PPW_VERSION );
+				$this->load_toastr_lib();
+				$this->load_shared_lib();
+
+				$module = PPW_Constants::EXTERNAL_CONFIGURATION_MODULE;
+				$this->load_select2_lib();
+				$this->load_js( $module, PPW_VERSION );
+				wp_localize_script(
+					"ppw-$module-js",
+					'ppw_external_data',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'home_url' => ppw_core_get_home_url_with_ssl(),
+					)
+				);
+			}
+		}
+
 		/**
 		 * Load assets for shortcode setting.
 		 */

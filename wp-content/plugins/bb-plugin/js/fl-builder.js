@@ -6812,9 +6812,9 @@
 							$('.fl-diff').prepend( '<p>' + FLBuilderStrings.codeErrorDetected + '</p>');
 							$('.fl-diff .diff-deletedline').each(function(){
 								if ( $(this).find('del').length < 1 ) {
-									$(this).css('background-color', 'red');
+									$(this).css('background-color', 'rgb(255, 192, 203, 0.7)').css('padding', '10px').css('border', '1px solid pink');
 								} else {
-									$(this).find('del').css('background-color', 'red');
+									$(this).find('del').css('background-color', 'rgb(255, 192, 203, 0.7)').css('border', '1px solid pink');
 								}
 							});
 							console.log( '============' );
@@ -7702,14 +7702,7 @@
 			if(typeof toggle !== 'undefined') {
 
 				toggle = FLBuilder._jsonParse(toggle);
-
-				if ( 'responsive' === FLBuilderResponsiveEditing._mode && null != selectElem.match(/_responsive$/) ) {
-					allowToggle = true;
-				} else if ( 'medium' === FLBuilderResponsiveEditing._mode && null != selectElem.match(/_medium$/) ) {
-					allowToggle = true;
-				} else if ( 'default' === FLBuilderResponsiveEditing._mode && null == selectElem.match(/_responsive$/) &&  null == selectElem.match(/_medium$/) ) {
-					allowToggle = true;
-				}
+				allowToggle = true;
 
 				for(i in toggle) {
 					if ( allowToggle ){

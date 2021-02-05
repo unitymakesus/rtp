@@ -81,8 +81,17 @@ FLBuilder::register_module(
 								'threed'      => __( '3D', 'uabb' ),
 							),
 							'toggle'  => array(
-								'default' => array(
+								'default'     => array(
 									'fields' => array( 'button_padding_dimension', 'button_border', 'border_hover_color' ),
+								),
+								'transparent' => array(
+									'fields' => array( 'border_radius' ),
+								),
+								'gradient'    => array(
+									'fields' => array( 'button_border' ),
+								),
+								'flat'        => array(
+									'fields' => array( 'border_radius' ),
 								),
 							),
 						),

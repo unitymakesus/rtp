@@ -266,29 +266,29 @@ body.fl-builder-ui-skin--dark .fl-ui-root .fl-ui-panel {
     letter-spacing: 2px;
     font-weight: normal; }
 
-.fl-builder-workspace {
+.fl-builder-workspace-panel {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 45px;
   right: 0;
   bottom: 0;
+  width: 360px;
+  pointer-events: auto;
   z-index: 999999;
-  pointer-events: none; }
-  .fl-builder-workspace .fl-builder-workspace-panel {
-    position: absolute;
-    top: 45px;
-    right: 0;
-    bottom: 0;
-    width: 360px;
-    pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    background: var(--fluid-background);
-    border-left: 2px solid var(--fluid-line-color);
-    overflow: auto; }
+  display: flex;
+  flex-direction: column;
+  background: var(--fluid-background);
+  overflow: auto; }
 
-.fl-builder-assistant-visible {
-  margin-right: 58px; }
-  .fl-builder-assistant-visible .fl-builder-ui-is-pinned-right .fl-builder--content-library-panel {
-    right: 58px; }
+/* !Assistant Styles */
+.fl-asst-pinned-right {
+  margin-right: 60px; }
+  .fl-asst-pinned-right .fl-builder-ui-is-pinned-right .fl-builder--content-library-panel {
+    right: 60px; }
 
+.fl-asst-pinned-left {
+  margin-left: 60px; }
+  .fl-asst-pinned-left .fl-builder-ui-is-pinned-left .fl-builder--content-library-panel {
+    left: 60px; }
+
+
+/*# sourceMappingURL=builder.bundle.css.map*/

@@ -18,6 +18,18 @@ $settings->bg_hover_color   = UABB_Helper::uabb_colorpicker( $settings, 'bg_hove
 $settings->text_color       = UABB_Helper::uabb_colorpicker( $settings, 'text_color' );
 $settings->text_hover_color = UABB_Helper::uabb_colorpicker( $settings, 'text_hover_color' );
 
+if ( 'gradient' === $settings->style ) {
+	if ( class_exists( 'FLBuilderCSS' ) ) {
+		// Border - Settings.
+		FLBuilderCSS::border_field_rule(
+			array(
+				'settings'     => $settings,
+				'setting_name' => 'button_border',
+				'selector'     => ".fl-node-$id .uabb-module-content.uabb-creative-button-wrap a",
+			)
+		);
+	}
+}
 // Border Size.
 if ( 'transparent' === $settings->style ) {
 	$border_size = ( '' !== trim( $settings->border_size ) ) ? $settings->border_size : '2';

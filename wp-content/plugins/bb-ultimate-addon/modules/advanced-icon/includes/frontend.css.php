@@ -31,7 +31,21 @@
 .adv-icon-right {
 	text-align: right;
 }
+<?php
 
+if ( class_exists( 'FLBuilderCSS' ) ) {
+
+	FLBuilderCSS::responsive_rule(
+		array(
+			'settings'     => $settings,
+			'setting_name' => 'size',
+			'selector'     => ".fl-node-$id .uabb-module-content.adv-icon-wrap .uabb-icon-wrap .uabb-icon i:before",
+			'prop'         => 'font-size',
+			'unit'         => 'px',
+		)
+	);
+}
+?>
 <?php
 	$version_bb_check  = UABB_Compatibility::$version_bb_check;
 	$settings->size    = ( '' !== $settings->size ) ? $settings->size : '40';

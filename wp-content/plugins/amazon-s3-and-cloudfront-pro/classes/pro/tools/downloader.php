@@ -139,7 +139,7 @@ class Downloader extends Background_Tool {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return __( 'If you\'ve ever had the "Remove Files From Server" option on, some Media Library files are likely missing on your server. You can use this tool to download any missing files back to your server.', 'amazon-s3-and-cloudfront' );
 	}
 

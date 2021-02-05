@@ -9,7 +9,6 @@ import {
 import * as actions from './actions'
 import * as reducers from './reducers'
 import * as effects from './effects'
-import * as selectors from './selectors'
 
 const key = 'fl-builder/system'
 
@@ -17,7 +16,6 @@ registerStore( key, {
 	actions,
 	reducers,
 	effects,
-	selectors,
 	state: {
 		isEditing: true,
 		currentPanel: null,

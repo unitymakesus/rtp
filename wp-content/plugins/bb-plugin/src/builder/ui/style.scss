@@ -1,0 +1,23 @@
+
+/* !Assistant Styles */
+
+.fl-builder-assistant-visible {}
+
+.fl-asst-pinned-right {
+	margin-right: 60px;
+
+	.fl-builder-ui-is-pinned-right {
+		.fl-builder--content-library-panel {
+			right: 60px;
+		}
+	}
+}
+.fl-asst-pinned-left {
+	margin-left: 60px;
+
+	.fl-builder-ui-is-pinned-left {
+		.fl-builder--content-library-panel {
+			left: 60px;
+		}
+	}
+}

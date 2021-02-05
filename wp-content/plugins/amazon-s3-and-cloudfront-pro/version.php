@@ -1,5 +1,5 @@
 <?php
-$version = '2.4.4';
+$version = '2.5.2';
 
 // We set versions for both slugs to avoid undefined index errors for free slug
 $GLOBALS['aws_meta']['amazon-s3-and-cloudfront-pro']['version'] = $version;

@@ -24,8 +24,12 @@ class FacetWP_Facet_Checkboxes extends FacetWP_Facet
         // Limit
         $limit = $this->get_limit( $facet );
 
+        // Use "OR" mode when necessary
+        $is_single = FWP()->helper->facet_is( $facet, 'multiple', 'no' );
+        $using_or = FWP()->helper->facet_is( $facet, 'operator', 'or' );
+
         // Facet in "OR" mode
-        if ( 'or' == $facet['operator'] ) {
+        if ( $is_single || $using_or ) {
             $where_clause = $this->get_where_clause( $facet );
         }
 

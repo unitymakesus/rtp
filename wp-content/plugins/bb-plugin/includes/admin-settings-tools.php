@@ -90,6 +90,37 @@
 
 	<?php endif; ?>
 
+	<hr />
+	<?php
+	$alpha       = get_option( 'fl_alpha_updates', false );
+	$beta        = get_option( 'fl_beta_updates', false );
+	$header      = __( 'Prerelease Updates', 'fl-builder' );
+	$enable_txt  = __( 'Enable', 'fl-builder' );
+	$alpha_txt   = __( 'Alpha', 'fl-builder' );
+	$beta_txt    = __( 'Beta', 'fl-builder' );
+	$updates_txt = __( 'updates', 'fl-builder' );
+	?>
+	<h3 class="fl-settings-form-header"><?php echo $header; ?></h3>
+
+	<form id="beta-form" action="<?php FLBuilderAdminSettings::render_form_action( 'tools' ); ?>" method="post">
+		<div class="fl-settings-form-content">
+			<p><?php _e( 'Enabling the prerelease channel will enable updates for all Beaver Builder products.', 'fl-builder' ); ?></p>
+			<p><input class='beta-checkbox' name='beta-checkbox' type='checkbox' value='1' <?php checked( $beta, 1 ); ?> /> <?php printf( '%s <strong>%s</strong> %s.', $enable_txt, $beta_txt, $updates_txt ); ?></p>
+			<?php if ( $beta ) : ?>
+			<p><input class='alpha-checkbox' name='alpha-checkbox' type='checkbox' value='1' <?php checked( $alpha, 1 ); ?> /> <?php printf( '%s <strong>%s</strong> %s.', $enable_txt, $alpha_txt, $updates_txt ); ?></p>
+		<?php endif; ?>
+		<p>
+		<?php // translators: %s: Link to Docs ?>
+		<?php printf( 'Please be sure to read our %s.', sprintf( "<a target='_blank' href='https://docs.wpbeaverbuilder.com/general/alpha-and-beta-releases/'>%s</a>", __( 'Prerelease Documentation', 'fl-builder' ) ) ); ?>
+		</p>
+		</div>
+		<p class="submit">
+			<input type="submit" name="update" class="button-primary" value="<?php esc_attr_e( 'Save Prerelease Settings', 'fl-builder' ); ?>" />
+			<?php wp_nonce_field( 'beta', 'fl-beta-nonce' ); ?>
+		</p>
+	</form>
+
+
 <?php
 if ( FLBuilderUsage::show_settings() ) {
 	$usage = get_site_option( 'fl_builder_usage_enabled', false );

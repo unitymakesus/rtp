@@ -18,7 +18,7 @@ class PostmanLicenseHandler {
     private $item_shortname;
     private $version;
     private $author;
-	private $api_url = 'http://localhost/psp/';
+	private $api_url = 'https://postmansmtp.com';
 
 
 	function __construct( $_file, $_item_name, $_version, $_author, $_optname = null, $_api_url = null, $_item_id = null ) {
@@ -92,7 +92,7 @@ class PostmanLicenseHandler {
 		// Display notices to admins
 		add_action( 'admin_notices', array( $this, 'notices' ) );
 
-		add_action( 'in_plugin_update_message-' . plugin_basename( $this->file ), array( $this, 'plugin_row_license_missing' ), 10, 2 );
+		//add_action( 'in_plugin_update_message-' . plugin_basename( $this->file ), array( $this, 'plugin_row_license_missing' ), 10, 2 );
 	}
 
     /**
@@ -248,9 +248,10 @@ class PostmanLicenseHandler {
 		update_option( $this->item_shortname . '_license_active', $this->license_data );
 		update_option( $this->item_shortname . '_license_key', $license );
 
-		$slug = plugin_basename($this->file);
-        PostmanLicenseManager::get_instance()->add_extension($slug);
-
+		if ( $this->license_data->success && $this->license_data->license == 'valid' ) {
+            $slug = plugin_basename($this->file);
+            PostmanLicenseManager::get_instance()->add_extension($slug);
+        }
 	}
 
 
@@ -328,15 +329,31 @@ class PostmanLicenseHandler {
 
         $license_data = $this->license_data;
 
+        if ( $license_data && isset( $license_data->expires ) ) {
+            if ( $license_data->expires == 'lifetime' ) {
+                $expires = '2500/12/12';
+            } else {
+                $expires = $license_data->expires;
+            }
+        } else {
+            return;
+        }
+
 		$datetime1 = new DateTime();
-		$datetime2 = new DateTime( $license_data->expires );
+
+		if ( is_numeric( $expires ) ) {
+            $datetime2 = new DateTime();
+            $datetime2->setTimestamp( $expires );
+        } else {
+            $datetime2 = new DateTime( $expires );
+        }
 
 		foreach ( self::DAYS_TO_ALERT as $day_to_alert ) {
 
 	        $interval = $datetime1->diff($datetime2);
 	        if( $interval->days == $day_to_alert ){
 		        add_action( 'admin_notices', function () use ( $day_to_alert, $license_data ) {
-			        echo $this->item_name . ' is about to expire in ' . $day_to_alert . ' days: ' . $license_data->expires;
+			        //echo $this->item_name . ' is about to expire in ' . $day_to_alert . ' days: ' . $license_data->expires;
 		        });
 
 		        return;
@@ -344,7 +361,7 @@ class PostmanLicenseHandler {
 
 	        if ( $interval->days == 0 ) {
 		        add_action( 'admin_notices', function () use ( $license_data ) {
-			        echo $this->item_name . ' license expire today at: ' . $license_data->expires;
+			        //echo $this->item_name . ' license expire today at: ' . $license_data->expires;
 		        });
 
 		        return;
@@ -353,7 +370,7 @@ class PostmanLicenseHandler {
 
         if ( $license_data->activations_left == 0 ) {
 	        add_action( 'admin_notices', function () use ( $license_data ) {
-		        echo $this->item_name . ' has no activations';
+		        //echo $this->item_name . ' has no activations';
 	        });
 
 	        return;

@@ -85,7 +85,6 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
         }
 
         add_filter('plugin_action_links_' . plugin_basename(TEST_WPEL_PLUGIN_FILE), array($this, 'plugin_action_links'));
-        add_filter('install_plugins_table_api_args_featured', array($this, 'featured_plugins_tab'));
     }
 
     /**
@@ -103,75 +102,6 @@ final class WPEL_Settings_Page extends WPRun_Base_1x0x0
 
       return $links;
     }
-
-
-    /**
-    * Helper function for adding plugins to featured list
-    *
-    * @return array
-    */
-    public function featured_plugins_tab($args)
-    {
-        add_filter('plugins_api_result', array($this, 'plugins_api_result'), 10, 3);
-        return $args;
-    }
-
-    /**
-    * Add plugins to featured plugins list
-    *
-    * @return object
-    */
-    function plugins_api_result($res, $action, $args)
-    {
-        remove_filter('plugins_api_result', array($this, 'plugins_api_result'), 10, 3);
-
-        $res = self::add_plugin_featured('wp-force-ssl', $res);
-        $res = self::add_plugin_featured('sticky-menu-or-anything-on-scroll', $res);
-        $res = self::add_plugin_featured('eps-301-redirects', $res);
-        $res = self::add_plugin_featured('simple-author-box', $res);
-
-        return $res;
-    } // plugins_api_result
-
-    /**
-    * Add single plugin to featured list
-    *
-    * @return object
-    */
-    public function add_plugin_featured($plugin_slug, $res)
-    {
-      // check if plugin is already on the list
-      if (!empty($res->plugins) && is_array($res->plugins)) {
-        foreach ($res->plugins as $plugin) {
-          if (is_object($plugin) && !empty($plugin->slug) && $plugin->slug == $plugin_slug) {
-            return $res;
-          }
-        } // foreach
-      }
-
-      if ($plugin_info = get_transient('wf-plugin-info-' . $plugin_slug)) {
-        array_unshift($res->plugins, $plugin_info);
-      } else {
-        $plugin_info = plugins_api('plugin_information', array(
-            'slug'   => $plugin_slug,
-            'is_ssl' => is_ssl(),
-            'fields' => array(
-            'banners'           => true,
-            'reviews'           => true,
-            'downloaded'        => true,
-            'active_installs'   => true,
-            'icons'             => true,
-            'short_description' => true,
-            )
-        ));
-        if (!is_wp_error($plugin_info)) {
-          $res->plugins = array_merge(array($plugin_info), $res->plugins);
-          set_transient('wf-plugin-info-' . $plugin_slug, $plugin_info, DAY_IN_SECONDS * 7);
-        }
-      }
-
-      return $res;
-    } // add_plugin_featured
 
     /**
      * Get option value

@@ -496,6 +496,7 @@ if ( ! class_exists( 'BB_Ultimate_Addon_Helper' ) ) {
 				$modules_array['uabb-woo-products']    = 'Woo - Products';
 				$modules_array['uabb-woo-categories']  = 'Woo - Categories';
 				$modules_array['uabb-woo-add-to-cart'] = 'Woo - Add To Cart';
+				$modules_array['uabb-woo-mini-cart']   = 'Woo - Mini Cart';
 			}
 			/* Include Caldera Forms Styler */
 			if ( class_exists( 'Caldera_Forms' ) || class_exists( 'Caldera_Forms_Forms' ) ) {

@@ -91,9 +91,10 @@ final class FLBuilderUserAccess {
 	/**
 	 * Custom sort function instead of create_function which is deprecated in php 7.2
 	 * @since 1.11
+	 * TODO when we ditch php5 we can use the spaceship here <=>
 	 */
 	private static function sort( $a, $b ) {
-		return $a['order'] > $b['order'];
+		return ( $a['order'] > $b['order'] ) ? 1 : 0;
 	}
 
 	/**

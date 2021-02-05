@@ -296,6 +296,20 @@ function ppw_core_render_login_form() {
 	}
 	$wrong_message = $wrong_password ? $wrong_password_message : '';
 
+	if ( PPW_Recaptcha::get_instance()->using_recaptcha() ) {
+		$recaptcha_type = PPW_Recaptcha::get_instance()->get_recaptcha_type();
+		switch ( $recaptcha_type ) {
+			case PPW_Recaptcha::RECAPTCHA_V2_CHECKBOX_TYPE:
+				$site_key        = PPW_Recaptcha::get_instance()->get_recaptcha_v2_api_key();
+				$recaptcha_input = '<div class="ppw-recaptcha g-recaptcha" data-sitekey="' . $site_key . '"></div>';
+				break;
+			default:
+				$recaptcha_input = '<input type="hidden" name="g-recaptcha-response" id="ppwRecaptchaResponse" />';
+		}
+	} else {
+		$recaptcha_input = '';
+	}
+
 	// Use Output Buffer Steam instead of HTML string contact because
 	// 1. When concat HTML string it will append the <p> tag (view HTML source)
 	// 2. Code cleaner and easy to maintain.
@@ -313,7 +327,7 @@ function ppw_core_render_login_form() {
 		<div class="ppw-ppf-desc"><?php echo $form_message; // phpcs:ignore ?></div>
 		<p class="ppw-ppf-field-container">
 			<?php do_action('ppwp_ppf_fields_before_password') ?>
-			<label class="ppw-pwd-label" for="<?php echo esc_attr( $label ); ?>"><?php echo esc_js( $password_label ); ?> <input placeholder="<?php echo esc_attr( $place_holder ); ?>" name="post_password" id="<?php echo esc_attr( $label ); ?>"  type="password" size="20"/></label> <input type="submit" name="Submit" value="<?php echo esc_attr( $submit_label ); ?>"/>
+			<label class="ppw-pwd-label" for="<?php echo esc_attr( $label ); ?>"><?php echo esc_js( $password_label ); ?> <input placeholder="<?php echo esc_attr( $place_holder ); ?>" name="post_password" id="<?php echo esc_attr( $label ); ?>"  type="password" size="20"/></label> <?php echo $recaptcha_input; ?><input type="submit" name="Submit" value="<?php echo esc_attr( $submit_label ); ?>"/>
 		</p><?php if ( ! empty( $show_password ) ) echo $show_password; // phpcs:ignore ?></div>
 	<?php if ( ! empty( $wrong_message ) ) echo $wrong_message; // phpcs:ignore ?>
 	<?php
@@ -361,18 +375,12 @@ function ppw_core_render_login_form() {
 	// With this filter user can choose another action URL to use PPF Form.
 	$url = apply_filters( 'ppwp_ppf_action_url', $url );
 
-	if ( ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS ) ) {
-		$recaptcha_input = '<input type="hidden" name="ppw_recaptcha_response" id="ppwRecaptchaResponse" />';
-	} else {
-		$recaptcha_input = '';
-	}
-
 	// Need to wrap the form by parent div because HTML will pre-append the </br> without parent div.
 	// TODO: move to view file.
 	ob_start();
 	?>
 	<div class="ppw-post-password-container">
-		<form action="<?php echo esc_attr( esc_url( $url ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/><?php echo $recaptcha_input; ?></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
+		<form action="<?php echo esc_attr( esc_url( $url ) ); ?>" class="ppw-post-password-form post-password-form" method="post"><?php echo $form_content; // phpcs:ignore ?><div><input type="hidden" name="post_id" value="<?php echo esc_attr( $post_id ); ?>"/></div></form><?php echo ! empty( $script ) ? $script: ''; ?>
 	</div>
 	<?php
 	$output = ob_get_clean();

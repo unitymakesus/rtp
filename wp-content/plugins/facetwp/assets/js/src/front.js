@@ -17,7 +17,7 @@ window.FWP = window.FWP || {};
         'is_load_more': false,
         'auto_refresh': true,
         'soft_refresh': false,
-        'frozen_facets':{},
+        'frozen_facets': {},
         'facet_type': {},
         'loaded': false,
         'jqXHR': false,
@@ -186,12 +186,15 @@ window.FWP = window.FWP || {};
             var $this = $(this);
             var facet_name = $this.attr('data-name');
             var facet_type = $this.attr('data-type');
+            var is_ignored = $this.hasClass('facetwp-ignore');
 
             // Store the facet type
             FWP.facet_type[facet_name] = facet_type;
 
             // Plugin hook
-            FWP.hooks.doAction('facetwp/refresh/' + facet_type, $this, facet_name);
+            if (! is_ignored) {
+                FWP.hooks.doAction('facetwp/refresh/' + facet_type, $this, facet_name);
+            }
 
             // Support custom loader
             FWP.loading_handler({
@@ -223,7 +226,7 @@ window.FWP = window.FWP || {};
             var $el = args.element;
             $(document).on('facetwp-refresh', function() {
 
-                if ('fselect' == $el.data('type')) {
+                if ('fselect' == args.facet_type) {
                     var height = $el.find('.fs-label-wrap').outerHeight() + $el.find('.fs-dropdown').outerHeight() + 5;
                 }
                 else {
@@ -595,7 +598,7 @@ window.FWP = window.FWP || {};
             FWP.hooks.addAction('facetwp/loaded', function() {
                 var selections = '';
                 $.each(FWP.facets, function(key, val) {
-                    if (val.length < 1 || ! isset(FWP.settings.labels[key])) {
+                    if (val.length < 1 || ! isset(FWP.settings.labels[key]) || 'pager' == FWP.facet_type[key]) {
                         return true; // skip this facet
                     }
 

@@ -29,11 +29,11 @@ if ( defined( 'FL_BUILDER_VERSION' ) ) {
 		>
 
 			<div class="uabb-head-wrap">
-
+			<?php if ( ! empty( $settings->heading ) ) { ?>
 				<<?php echo esc_attr( $settings->heading_tag_selection ); ?> class="uabb-sf-heading"><?php echo $settings->heading; ?></<?php echo esc_attr( $settings->heading_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-
+			<?php } if ( ! empty( $settings->subheading ) ) { ?>
 				<<?php echo esc_attr( $settings->subheading_tag_selection ); ?> class="uabb-sf-subheading"><?php echo $settings->subheading; ?></<?php echo esc_attr( $settings->subheading_tag_selection ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-
+			<?php } ?>
 			</div>
 
 			<div class="uabb-form-wrap fl-clearfix" data-nonce=<?php echo wp_kses_post( wp_create_nonce( 'uabb-sub-form-nonce' ) ); ?>>

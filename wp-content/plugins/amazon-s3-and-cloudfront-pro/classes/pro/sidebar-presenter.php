@@ -232,15 +232,18 @@ class Sidebar_Presenter {
 	 * Protected constructor to prevent creating a new instance of the
 	 * class via the `new` operator from outside of this class.
 	 */
-	protected function __construct() {}
+	protected function __construct() {
+	}
 
 	/**
 	 * As this class is a singleton it should not be clone-able.
 	 */
-	protected function __clone() {}
+	protected function __clone() {
+	}
 
 	/**
 	 * As this class is a singleton it should not be able to be unserialized.
 	 */
-	protected function __wakeup() {}
+	public function __wakeup() {
+	}
 }

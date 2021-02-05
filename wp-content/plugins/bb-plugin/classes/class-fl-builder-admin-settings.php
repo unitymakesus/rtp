@@ -394,6 +394,7 @@ final class FLBuilderAdminSettings {
 		self::clear_cache();
 		self::debug();
 		self::global_edit();
+		self::beta();
 		self::uninstall();
 
 		/**
@@ -529,7 +530,7 @@ final class FLBuilderAdminSettings {
 				fl_builder_filesystem()->get_filesystem();
 
 				/**
-				 * Before set is unziped.
+				 * Before set is unzipped.
 				 * @see fl_builder_before_unzip_icon_set
 				 */
 				do_action( 'fl_builder_before_unzip_icon_set', $id, $path, $new_path );
@@ -782,6 +783,34 @@ final class FLBuilderAdminSettings {
 			}
 		}
 	}
+
+	/**
+	 * Enable/disable beta updates
+	 *
+	 * @since 2.4
+	 * @access private
+	 * @return void
+	 */
+	static private function beta() {
+
+		if ( ! current_user_can( 'delete_users' ) ) {
+			return;
+		} elseif ( isset( $_POST['fl-beta-nonce'] ) && wp_verify_nonce( $_POST['fl-beta-nonce'], 'beta' ) ) {
+
+			if ( isset( $_POST['beta-checkbox'] ) ) {
+				update_option( 'fl_beta_updates', true );
+			} else {
+				delete_option( 'fl_beta_updates' );
+			}
+
+			if ( isset( $_POST['alpha-checkbox'] ) ) {
+				update_option( 'fl_alpha_updates', true );
+			} else {
+				delete_option( 'fl_alpha_updates' );
+			}
+		}
+	}
+
 
 	/**
 	 * @since 1.0

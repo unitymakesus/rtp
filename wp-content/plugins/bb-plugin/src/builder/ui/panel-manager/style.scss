@@ -1,0 +1,16 @@
+.fl-builder-workspace-panel {
+	position: fixed;
+	top: 45px;
+	right:0;
+	bottom:0;
+	width: 360px;
+	pointer-events: auto;
+	z-index: 999999;
+
+	// Set inner contents to flex space.
+	display: flex;
+	flex-direction: column;
+
+	background: var(--fluid-background);
+	overflow: auto;
+}

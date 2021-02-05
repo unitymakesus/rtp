@@ -13,7 +13,6 @@ const existing = api.Builder || {}
 
 const Builder = {
 	...existing,
-	ui: {},
 	data,
 	registerPanel,
 	displayPanel,
@@ -27,6 +26,6 @@ window.FL = {
 
 // Render UI
 const root = document.getElementById( 'fl-ui-root' )
-root.classList.add( 'fluid' )
+root.classList.add( 'fluid', 'fl', 'uid' )
 
 render( <UI />, root )

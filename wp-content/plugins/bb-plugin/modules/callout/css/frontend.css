@@ -170,3 +170,7 @@ body h6.fl-callout-title {
 	width: 50%;
 	vertical-align: middle;
 }
+
+.fl-module-callout .fl-module-content {
+	overflow: hidden;
+}

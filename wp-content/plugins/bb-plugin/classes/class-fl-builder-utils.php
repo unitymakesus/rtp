@@ -87,7 +87,7 @@ final class FLBuilderUtils {
 			$data = json_decode( $data );
 		}
 
-		// Decode object properies or array values.
+		// Decode object properties or array values.
 		if ( is_object( $data ) || is_array( $data ) ) {
 
 			foreach ( $data as $key => $val ) {

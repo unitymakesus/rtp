@@ -37,6 +37,113 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		}
 
 		/**
+		 * Get below text style.
+		 *
+		 * @return string
+		 */
+		public function get_below_text_style() {
+			if ( defined( 'PPW_PRO_VERSION' ) ) {
+				return '';
+			}
+
+			$desc_font_size   = get_theme_mod( 'ppwp_form_instructions_below_text_font_size' );
+			$desc_font_weight = get_theme_mod( 'ppwp_form_instructions_below_text_font_weight' );
+			$desc_color       = get_theme_mod( 'ppwp_form_instructions_below_text_color' );
+
+			$customizer_style = "
+			.ppw-ppf-desc-below {
+                font-size: " . $desc_font_size . "px!important;
+				font-weight: " . $desc_font_weight . "!important;
+				color: " . $desc_color . "!important;
+            }
+			";
+
+			return $customizer_style;
+		}
+
+		/**
+		 * Add below description customize.
+		 *
+		 * @param $wp_customize
+		 */
+		public function add_below_desc( $wp_customize ) {
+			if ( defined( 'PPW_PRO_VERSION' ) ) {
+				return;
+			}
+
+			$wp_customize->add_setting( 'ppwp_form_instructions_description_below_title' );
+
+			$wp_customize->add_control(
+				new PPW_Title_Group_Control(
+					$wp_customize,
+					'ppwp_form_instructions_description_below_title',
+					array(
+						'label'    => __( 'Description Below Form', 'password-protect-page' ),
+						'section'  => 'ppwp_form_instructions',
+						'settings' => 'ppwp_form_instructions_description_below_title',
+						'type'     => 'control_title',
+					)
+				)
+			);
+
+			/* instructions text */
+			$wp_customize->add_setting( 'ppwp_form_instructions_below_text' );
+
+			$wp_customize->add_control(
+				new PPW_Text_Editor_Custom_Control(
+					$wp_customize,
+					'ppwp_form_instructions_below_text',
+					array(
+						'label'    => __( 'Description', 'password-protect-page' ),
+						'section'  => 'ppwp_form_instructions',
+						'settings' => 'ppwp_form_instructions_below_text',
+						'type'     => 'textarea',
+					)
+				)
+			);
+
+			/* instructions font size */
+			$wp_customize->add_setting( 'ppwp_form_instructions_below_text_font_size' );
+
+			$wp_customize->add_control(
+				'ppwp_form_instructions_below_text_font_size_control',
+				array(
+					'label'       => __( 'Description Font Size', 'password-protect-page' ),
+					'description' => __( 'Font size in px', 'password-protect-page' ),
+					'section'     => 'ppwp_form_instructions',
+					'settings'    => 'ppwp_form_instructions_below_text_font_size',
+					'type'        => 'number',
+				) );
+
+			/* instructions font weight */
+			$wp_customize->add_setting( 'ppwp_form_instructions_below_text_font_weight' );
+
+			$wp_customize->add_control(
+				'ppwp_form_instructions_below_text_font_weight_control',
+				array(
+					'label'    => __( 'Description Font Weight', 'password-protect-page' ),
+					'section'  => 'ppwp_form_instructions',
+					'settings' => 'ppwp_form_instructions_below_text_font_weight',
+					'type'     => 'number',
+				) );
+
+			/* text color - form instructions */
+			$wp_customize->add_setting( 'ppwp_form_instructions_below_text_color' );
+
+			$wp_customize->add_control(
+				new \WP_Customize_Color_Control(
+					$wp_customize,
+					'ppwp_form_instructions_below_text_color_control',
+					array(
+						'label'    => __( 'Description Text Color', 'password-protect-page' ),
+						'section'  => 'ppwp_form_instructions',
+						'settings' => 'ppwp_form_instructions_below_text_color',
+					)
+				)
+			);
+		}
+
+		/**
 		 * Register customizer fields
 		 *
 		 * @param object $wp_customize customizer object.
@@ -263,6 +370,8 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 					'settings' => 'ppwp_form_instructions_text_color',
 				) )
 			);
+
+			$this->add_below_desc( $wp_customize );
 
 			// Add one more tab below "Description Text Color" control.
 			do_action( 'ppw_customize_after_text_color', $wp_customize );
@@ -569,6 +678,7 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 		 * @return void
 		 */
 		public function dynamic_styles() {
+			$below_text_styles = $this->get_below_text_style();
 			$ppw_custom_css = "
 			<style>
 			.ppw-ppf-input-container {
@@ -611,11 +721,13 @@ if ( ! class_exists( 'PPW_Customizer_Service' ) ) {
 				color: " . get_theme_mod( 'ppwp_form_button_text_hover_color', PPW_Constants::DEFAULT_BUTTON_TEXT_HOVER_COLOR ) . "!important;
 				background: " . get_theme_mod( 'ppwp_form_button_background_hover_color', PPW_Constants::DEFAULT_BUTTON_BACKGROUND_HOVER_COLOR ) . "!important;
 			}
+			{$below_text_styles}
 			</style>
 			";
 
 			// compress $ppw_custom_css.
 			$ppw_custom_css = preg_replace( "/\s{2,}/", " ", str_replace( "\n", "", str_replace( ', ', ",", $ppw_custom_css ) ) );
+
 			echo $ppw_custom_css;
 		}
 

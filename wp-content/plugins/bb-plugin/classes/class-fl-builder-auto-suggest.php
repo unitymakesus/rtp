@@ -309,7 +309,7 @@ final class FLBuilderAutoSuggest {
 			$slugs[] = esc_sql( $slug );
 		}
 
-		// we cant use an array of arrays for prepare() so use sprintf 1st.
+		// we can't use an array of arrays for prepare() so use sprintf 1st.
 		$query = sprintf( "SELECT ID, post_title, post_type FROM {$wpdb->posts}
 			WHERE post_title LIKE %%s
 			AND post_type IN ('%s')

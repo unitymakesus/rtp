@@ -280,10 +280,6 @@ class FLPostGridModule extends FLBuilderModule {
 		the_content();
 		$content = ob_get_clean();
 
-		if ( ! empty( $this->settings->content_length ) ) {
-			$content = wpautop( wp_trim_words( $content, $this->settings->content_length, '...' ) );
-		}
-
 		echo $content;
 	}
 
@@ -938,6 +934,11 @@ FLBuilder::register_module('FLPostGridModule', array(
 							'excerpt' => __( 'Excerpt', 'fl-builder' ),
 							'full'    => __( 'Full Text', 'fl-builder' ),
 						),
+						'toggle'  => array(
+							'excerpt' => array(
+								'fields' => array( 'content_length' ),
+							),
+						),
 					),
 					'content_length' => array(
 						'type'    => 'unit',
@@ -950,7 +951,6 @@ FLBuilder::register_module('FLPostGridModule', array(
 							'step' => 1,
 						),
 					),
-
 					'show_more_link' => array(
 						'type'    => 'select',
 						'label'   => __( 'More Link', 'fl-builder' ),

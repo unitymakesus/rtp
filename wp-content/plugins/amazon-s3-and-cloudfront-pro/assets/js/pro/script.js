@@ -139,7 +139,7 @@
 			.done( function( data ) {
 				if ( ! _.isEmpty( data.dbrains_api_down ) ) {
 					$support.html( data.dbrains_api_down + data.message );
-				} else if ( _.isArray( data.htmlErrors ) && data.htmlErrors.length ) {
+				} else if ( Array.isArray( data.htmlErrors ) && data.htmlErrors.length ) {
 					$support.html( data.htmlErrors.join( '' ) );
 				} else {
 					$support.html( data.message );

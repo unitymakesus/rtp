@@ -62,7 +62,7 @@ class Download_And_Remover extends Downloader {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return __( 'This tool goes through all your Media Library attachments and deletes files from the bucket. If the file doesn\'t exist on your server, it will download it before deleting.', 'amazon-s3-and-cloudfront' );
 	}
 

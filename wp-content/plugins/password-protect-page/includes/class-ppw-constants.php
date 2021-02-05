@@ -293,6 +293,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const EXTERNAL_SETTINGS_MODULE = 'external';
 
+		const EXTERNAL_CONFIGURATION_MODULE = 'external-configuration';
+
 		const MISC_SETTINGS_MODULE = 'misc';
 
 		const TROUBLESHOOT_SETTINGS_MODULE = 'troubleshooting';
@@ -336,9 +338,15 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const USING_RECAPTCHA = 'wpp_use_recaptcha';
 
+		const RECAPTCHA_TYPE = 'wpp_recaptcha_type';
+
 		const RECAPTCHA_API_KEY = 'wpp_recaptcha_api_key';
 
+		const RECAPTCHA_V2_CHECKBOX_API_KEY = 'wpp_recaptcha_v2_checkbox_api_key';
+
 		const RECAPTCHA_API_SECRET = 'wpp_recaptcha_api_secret';
+
+		const RECAPTCHA_V2_CHECKBOX_API_SECRET = 'wpp_recaptcha_v2_checkbox_api_secret';
 
 		const RECAPTCHA_SCORE = 'wpp_recaptcha_score';
 

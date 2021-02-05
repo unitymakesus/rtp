@@ -2,7 +2,7 @@
 
 /**
  * A module that adds a simple subscribe form to your layout
- * with third party optin integration.
+ * with third party opt-in integration.
  *
  * @since 1.5.2
  */
@@ -497,7 +497,7 @@ FLBuilder::register_module( 'FLSubscribeFormModule', array(
 						'responsive' => true,
 						'preview'    => array(
 							'type'     => 'css',
-							'selector' => 'a.fl-button, .fl-form-field input, .fl-form-field input[type=text]',
+							'selector' => 'a.fl-button',
 						),
 					),
 				),

@@ -34,7 +34,7 @@ if ( ! empty( $settings->link ) ) {
 		</a>
 		<?php endif; ?>
 	</span>
-	<?php if ( isset( $settings->text ) && false !== $settings->text ) : ?>
+	<?php if ( ! empty( $settings->text ) ) : ?>
 		<div id="fl-icon-text-<?php echo ( isset( $module->node ) ? $module->node : $settings->id ); ?>" class="<?php echo $text_class; ?>">
 			<?php if ( ! empty( $settings->link ) ) : ?>
 			<a href="<?php echo $settings->link; ?>" target="<?php echo $settings->link_target; ?>" class="<?php echo $text_link_class; ?>"<?php echo $module->get_rel(); ?>>

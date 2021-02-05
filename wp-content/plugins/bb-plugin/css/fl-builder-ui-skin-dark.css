@@ -249,7 +249,7 @@ body.fl-builder-ui-skin--dark .fl-builder-bar .fl-builder-bar-content,
     color: #a8b3bf;
     background-color: #1b2025;
 }
-.fl-builder-ui-skin--dark .fl-lightbox *:not(i) {
+.fl-builder-ui-skin--dark .fl-lightbox :not(i):not([class^='ace_']) {
     color: #a7b1bb !important;
 }
 .fl-builder-ui-skin--dark .fl-builder-button {

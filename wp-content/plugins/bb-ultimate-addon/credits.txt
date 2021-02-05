@@ -33,13 +33,35 @@ https://github.com/WordPress/dashicons
 
 # JS
 skip-link-focus-fix.js ( https://github.com/Automattic/Next/pull/136 )
-Slick slider ( http://kenwheeler.github.io )
+Slick Slider ( http://kenwheeler.github.io )
+Table of Contents jQuery ( https://github.com/ndabas/toc )
+Google Recaptcha ( https://github.com/google/recaptcha )
+Jquery Shuffle ( https://github.com/Vestride/Shuffle )
+Browser Detector ( https://github.com/lancedikson/bowser )
+Classe JS ( https://github.com/ded/bonzo )
+Countdown ( http://keith-wood.name/countdown.html )
+ImageLoad JS ( https://github.com/desandro/imagesloaded )
+JQuery Event More JS ( https://github.com/stephband/jquery.event.move )
+JQuery LazyLoad ( https://github.com/tuupola/lazyload )
+JS cookie ( https://github.com/js-cookie/js-cookie )
+Particle JS ( https://github.com/VincentGarreau/particles.js/ )
+Typed JS ( https://github.com/mattboldt/typed.js )
+Vitcker ( https://github.com/richhollis/vticker )
+Twenty Twenty Used for Before After Slider ( https://github.com/zurb/twentytwenty )
 
 -----
 
 # CSS
 Slick slider ( http://kenwheeler.github.io )
 Animate.css ( http://daneden.me/animate )
+
+-----
+
+# PHP
+Google Login ( https://github.com/googleapis/google-api-php-client )
+Facebook Login ( https://github.com/firebase/php-jwt )
+Backgorund Process templates ( https://github.com/deliciousbrains/wp-background-processing )
+Yelp API ( https://github.com/Yelp/yelp-fusion#code-samples )
 
 -----
 

@@ -144,7 +144,7 @@
 		 */
 		lockTab: function( tab ) {
 			$( '.as3cf-sidebar [data-tab="' + tab + '"]' )
-				.find( '.button.start' )
+				.find( 'a.start' )
 				.addClass( 'disabled' );
 		},
 
@@ -155,7 +155,7 @@
 		 */
 		unlockTab: function( tab ) {
 			$( '.as3cf-sidebar [data-tab="' + tab + '"]' )
-				.find( '.button.start' )
+				.find( 'a.start' )
 				.removeClass( 'disabled' );
 		},
 
@@ -374,25 +374,31 @@
 			}
 
 			var $element = $( event.target );
-			var $block = $element.closest( '.block' );
-			var tool = $block.attr( 'id' );
-			var busyText = as3cfpro.Sidebar.getBusyText( $element );
 
-			as3cfpro.Sidebar.busy[ tool ] = true;
+			// If the action targets a tool from another block, we can't update event target's containing block.
+			var tool = as3cfpro.Sidebar.getToolOverride( $element );
 
-			$block.find( '.button' ).addClass( 'disabled' );
+			if ( 0 === tool.length ) {
+				var $block = $element.closest( '.block' );
+				tool = $block.attr( 'id' );
+				var busyText = as3cfpro.Sidebar.getBusyText( $element );
 
-			var status = {
-				is_queued: true,
-				is_paused: false,
-				is_processing: true
-			};
+				as3cfpro.Sidebar.busy[ tool ] = true;
 
-			as3cfpro.Sidebar.updateBlockProgressContainer( $block, status );
-			as3cfpro.Sidebar.updateBlockButtons( $block, status );
+				$block.find( '.button' ).addClass( 'disabled' );
 
-			if ( busyText ) {
-				as3cfpro.Sidebar.updateBlockStatusDescription( $block, busyText );
+				var status = {
+					is_queued: true,
+					is_paused: false,
+					is_processing: true
+				};
+
+				as3cfpro.Sidebar.updateBlockProgressContainer( $block, status );
+				as3cfpro.Sidebar.updateBlockButtons( $block, status );
+
+				if ( busyText ) {
+					as3cfpro.Sidebar.updateBlockStatusDescription( $block, busyText );
+				}
 			}
 
 			if ( 'start' === event.data.action ) {
@@ -425,6 +431,21 @@
 
 			if ( null != text && text.length ) {
 				return text;
+			}
+
+			return '';
+		},
+
+		/**
+		 * Get tool override for action if set on target element.
+		 *
+		 * @returns {string}
+		 */
+		getToolOverride: function( $element ) {
+			var tool = $element.data( 'tool-override' );
+
+			if ( null != tool && tool.length ) {
+				return tool;
 			}
 
 			return '';
@@ -539,7 +560,7 @@
 		as3cfpro.Sidebar.renderPieChart();
 
 		// Listen to start
-		$( '.as3cf-sidebar' ).on( 'click', '.background-tool .button.start', {
+		$( '.as3cf-sidebar' ).on( 'click', '.background-tool .start', {
 			action: 'start'
 		}, as3cfpro.Sidebar.handleManualAction );
 

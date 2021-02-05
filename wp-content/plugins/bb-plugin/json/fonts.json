@@ -724,6 +724,11 @@
     "fallback": "sans-serif"
   }
 }, {
+  "Bodoni Moda": {
+    "variants": ["regular", "500", "600", "700", "800", "900", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
+    "fallback": "serif"
+  }
+}, {
   "Bokor": {
     "variants": ["regular"],
     "fallback": "sans-serif"
@@ -1699,6 +1704,11 @@
     "fallback": "serif"
   }
 }, {
+  "Fraunces": {
+    "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900", "100italic", "200italic", "300italic", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
+    "fallback": "serif"
+  }
+}, {
   "Freckle Face": {
     "variants": ["regular"],
     "fallback": "sans-serif"
@@ -1964,6 +1974,11 @@
     "fallback": "serif"
   }
 }, {
+  "Hachi Maru Pop": {
+    "variants": ["regular"],
+    "fallback": "cursive"
+  }
+}, {
   "Halant": {
     "variants": ["300", "regular", "500", "600", "700"],
     "fallback": "serif"
@@ -2157,6 +2172,11 @@
   "Iceland": {
     "variants": ["regular"],
     "fallback": "sans-serif"
+  }
+}, {
+  "Imbue": {
+    "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900"],
+    "fallback": "serif"
   }
 }, {
   "Imprima": {
@@ -3804,6 +3824,11 @@
     "fallback": "serif"
   }
 }, {
+  "Potta One": {
+    "variants": ["regular"],
+    "fallback": "sans-serif"
+  }
+}, {
   "Pragati Narrow": {
     "variants": ["regular", "700"],
     "fallback": "sans-serif"
@@ -4195,7 +4220,7 @@
   }
 }, {
   "Saira": {
-    "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900"],
+    "variants": ["100", "200", "300", "regular", "500", "600", "700", "800", "900", "100italic", "200italic", "300italic", "italic", "500italic", "600italic", "700italic", "800italic", "900italic"],
     "fallback": "sans-serif"
   }
 }, {
@@ -5077,6 +5102,11 @@
   "Yrsa": {
     "variants": ["300", "regular", "500", "600", "700"],
     "fallback": "serif"
+  }
+}, {
+  "Yusei Magic": {
+    "variants": ["regular"],
+    "fallback": "sans-serif"
   }
 }, {
   "ZCOOL KuaiLe": {

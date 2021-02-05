@@ -350,6 +350,10 @@
         else if (40 == e.which) { // down
             e.preventDefault();
 
+            if ($wrap.hasClass('fs-wrap')) {
+                $wrap.find('.fs-search input').focus();
+            }
+
             var $current = $wrap.find('.fs-option[data-index=' + window.fSelect.idx + ']');
             if ($current.length < 1) {
                 var $next = $wrap.find('.fs-option:not(.hidden, .disabled):first');
@@ -435,5 +439,8 @@
         window.fSelect.active_id = null;
         window.fSelect.last_choice = null;
     }
+
+    window.fSelect.openDropdown = openDropdown;
+    window.fSelect.closeDropdown = closeDropdown;
 
 })(jQuery);

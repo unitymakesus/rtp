@@ -85,7 +85,7 @@ final class FLBuilderUserTemplates {
 	}
 
 	/**
-	 * Trys to load page.php for editing a builder template.
+	 * Tries to load page.php for editing a builder template.
 	 *
 	 * @since 1.0
 	 * @param string $template The current template to be loaded.

@@ -119,26 +119,23 @@ class FLCalloutModule extends FLBuilderModule {
 	public function render_title() {
 		echo '<' . $this->settings->title_tag . ' class="fl-callout-title">';
 
-		if ( 'icon' === $this->settings->image_type ) {
-			if ( ! empty( $this->settings->link ) ) {
-				echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" class="fl-callout-title-link fl-callout-title-text">';
-			}
+		$nofollow = ( ( 'yes' === $this->settings->link_nofollow ) ? 'rel="nofollow"' : '' );
+
+		if ( ! empty( $this->settings->link ) && 'icon' === $this->settings->image_type ) {
+			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" ' . $nofollow . '  class="fl-callout-title-link fl-callout-title-text">';
 		}
 
-		$this->render_image( 'left-title' );
-
-		echo '<span' . ( empty( $this->settings->link ) ? ' class="fl-callout-title-text"' : '' ) . '>';
-
 		if ( ! empty( $this->settings->link ) && 'icon' !== $this->settings->image_type ) {
-				$nofollow = '';
-
-			if ( 'yes' == $this->settings->link_nofollow ) {
-				$nofollow = 'rel="nofollow"';
-			}
 			echo '<a href="' . $this->settings->link . '" target="' . $this->settings->link_target . '" ' . $nofollow . ' class="fl-callout-title-link fl-callout-title-text">';
 		}
 
+		if ( 'left-title' === $this->settings->icon_position ) {
+			$this->render_image( 'left-title' );
+		}
+
+		echo '<span' . ( empty( $this->settings->link ) ? ' class="fl-callout-title-text"' : '' ) . '>';
 		echo $this->settings->title;
+		echo '</span>';
 
 		if ( 'right-title' === $this->settings->icon_position ) {
 			$this->render_image( 'right-title' );
@@ -146,12 +143,6 @@ class FLCalloutModule extends FLBuilderModule {
 
 		if ( ! empty( $this->settings->link ) ) {
 			echo '</a>';
-		}
-
-		echo '</span>';
-
-		if ( 'right-title' !== $this->settings->icon_position ) {
-			$this->render_image( 'right-title' );
 		}
 
 		echo '</' . $this->settings->title_tag . '>';
@@ -577,8 +568,9 @@ FLBuilder::register_module('FLCalloutModule', array(
 				'title'  => __( 'Icon', 'fl-builder' ),
 				'fields' => array(
 					'icon'          => array(
-						'type'  => 'icon',
-						'label' => __( 'Icon', 'fl-builder' ),
+						'type'        => 'icon',
+						'label'       => __( 'Icon', 'fl-builder' ),
+						'show_remove' => true,
 					),
 					'sr_text'       => array(
 						'type'    => 'text',

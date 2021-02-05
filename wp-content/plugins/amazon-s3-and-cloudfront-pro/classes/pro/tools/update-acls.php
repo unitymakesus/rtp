@@ -196,7 +196,7 @@ class Update_ACLs extends Background_Tool {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return __( 'After disabling Block All Public Access for a bucket, you many need to update all the objects in the bucket to apply appropriate public and private ACLs so that they can be used correctly.', 'amazon-s3-and-cloudfront' );
 	}
 

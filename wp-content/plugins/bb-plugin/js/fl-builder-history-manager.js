@@ -192,7 +192,9 @@
 				} )
 			}
 
-			FLBuilder.MainMenu.renderPanel( 'history' )
+			if ( undefined !== FLBuilder.MainMenu ) {
+				FLBuilder.MainMenu.renderPanel( 'history' )
+			}
 		},
 
 		/**

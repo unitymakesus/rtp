@@ -75,7 +75,7 @@ class Uploader_Process extends Background_Tool_Process {
 
 		// Build error message
 		if ( is_wp_error( $as3cf_item ) ) {
-			if ( $this->count_errors() <= 100 ) {
+			if ( $this->count_errors() < 100 ) {
 				foreach ( $as3cf_item->get_error_messages() as $error_message ) {
 					$error_msg = sprintf( __( 'Error offloading to bucket - %s', 'amazon-s3-and-cloudfront' ), $error_message );
 					$this->record_error( $blog_id, $attachment_id, $error_msg );
@@ -111,10 +111,6 @@ class Uploader_Process extends Background_Tool_Process {
 			if ( 0 == $this->license_limit ) {
 				$this->cancel();
 
-				$account_link = sprintf( '<a href="%s" target="_blank">%s</a>', $this->as3cf->get_my_account_url(), __( 'My Account', 'amazon-s3-and-cloudfront' ) );
-				$notice_msg   = __( "<strong>WP Offload Media</strong> &mdash; You've reached your license limit so we've had to stop your offload. To offload the rest of your Media Library, please upgrade your license from %s and simply start the offload again. It will start from where it stopped.", 'amazon-s3-and-cloudfront' );
-				$error_msg    = sprintf( $notice_msg, $account_link );
-
 				$notice_id = $this->tool->get_tool_key() . '_license_limit';
 
 				$this->as3cf->notices->undismiss_notice_for_all( $notice_id );
@@ -125,7 +121,7 @@ class Uploader_Process extends Background_Tool_Process {
 					'only_show_to_user' => false,
 				);
 
-				$this->as3cf->notices->add_notice( $error_msg, $args );
+				$this->as3cf->notices->add_notice( $this->get_reached_license_limit_message(), $args );
 
 				return false;
 			} else {
@@ -135,6 +131,18 @@ class Uploader_Process extends Background_Tool_Process {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get reached license limit notice message.
+	 *
+	 * @return string
+	 */
+	protected function get_reached_license_limit_message() {
+		$account_link = sprintf( '<a href="%s" target="_blank">%s</a>', $this->as3cf->get_my_account_url(), __( 'My Account', 'amazon-s3-and-cloudfront' ) );
+		$notice_msg   = __( "<strong>WP Offload Media</strong> &mdash; You've reached your license limit so we've had to stop your offload. To offload the rest of your Media Library, please upgrade your license from %s and simply start the offload again. It will start from where it stopped.", 'amazon-s3-and-cloudfront' );
+
+		return sprintf( $notice_msg, $account_link );
 	}
 
 	/**

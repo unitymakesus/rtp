@@ -4,7 +4,7 @@ Donate link: https://passwordprotectwp.com/features/?utm_source=wp.org&utm_mediu
 Tags: password protect, password, protect page, wordpress protection, password protection
 Requires at least: 4.7
 Requires PHP: 5.6
-Tested up to: 5.5.1
+Tested up to: 5.6
 Stable tag: 5.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,10 +31,10 @@ The Lite version of Password Protect WordPress (PPWP) plugin offers the followin
 The plugin extends WordPress built-in password protection feature and allows you to set multiple passwords per Page and Post. What's more, you can protect the content with just a single click. Once protected, a random password will be automatically generated for you.
 
 = Password Protect WordPress Pages & Posts by User Roles =
-There is an option allowing you to password protect your WordPress Pages & Posts by user roles. In other words, you can set different passwords for different user roles, i.e. one for subscribers, one for editors.
+There is an option allowing you to password protect your WordPress Pages & Posts by user roles. In other words, you can set different passwords for different user roles, i.e. one for subscribers, one for editors, e.g. one for subscribers and one for editors.
 
 = Prevent Password Abuse with reCAPTCHA =
-Stop password abuse and spam by bots and automated software with Google reCAPTCHA v3. Real users will be able to access protected content with ease as usual.
+Stop password abuse and spam by bots and automated software with Google reCAPTCHA v2 or v3. Real users will be able to access protected content with ease as usual.
 
 = Unlock Password Protected Content without Page Refresh =
 [Use Ajax to display protected content](https://passwordprotectwp.com/docs/unlock-password-protected-content-without-page-refresh/) without having to reload the entire page. It will help improve user experience and avoid server caching after users enter their password.
@@ -130,12 +130,13 @@ By default, users won't have to re-enter passwords to access a protected page or
 >* Create unlimited global passwords for partial content protection shortcode
 >* Redirect to specific URLs after entering site-wide protection passwords
 >* Unlock all content at once with [Group Password Protection extension](https://passwordprotectwp.com/extensions/group-protection/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features)
+>* Use reCAPTCHA or Contact Form 7 in place of the password form with [Passwordless Authentication extension](https://passwordprotectwp.com/extensions/passwordless-authentication/)
 >* Track password usage, i.e. the time they're logged in, IP address and browser used, with Statistics extension
 >* [Password protect WordPress categories](https://passwordprotectwp.com/extensions/access-levels/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features) with different access levels
 >* Integrate with Prevent Direct Access Gold to protect files embedded in content
 >* Sell password protected content via quick access links with [WooCommerce Integration extension](https://passwordprotectwp.com/extensions/woocommerce-integration/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
 >* Protect the entire shop page, including individual products and category pages with the same passwords.
->* Require users to provide both password and username or email to unlock protected content with [Password Suite extension](https://passwordprotectwp.com/extensions/password-suite/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
+>* Import and export passwords as well as requiring users to provide both password and username or email to unlock protected content with [Password Suite extension](https://passwordprotectwp.com/extensions/password-suite/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
 >* Restrict password usage based on WordPress users or IP addresses with [Smart Restriction extension](https://passwordprotectwp.com/extensions/smart-restriction/?utm_source=wp.org&utm_medium=plugin-desc&utm_campaign=password-protect-page-lite&utm_content=pro-features).
 >* Password protect files outside Media Library
 >
@@ -256,7 +257,7 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 
 18. Control the visibility of your password protected content.
 
-19. Enable this option to show excerpt of password protected content.
+19. Enable this option to show excerpts of password protected content.
 
 20. Restore default WordPress passwords before deactivating our plugin.
 
@@ -265,6 +266,11 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 N/A
 
 == Changelog ==
+
+= 1.7.2 =
+
+* [Feature] Allow customizing description below the password form
+* [Feature] Integrate with reCAPTCHA v2
 
 = 1.7.1 =
 

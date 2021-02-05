@@ -76,6 +76,8 @@ final class FLBuilderCompatibility {
 		add_filter( 'fl_builder_loop_rewrite_rules', array( __CLASS__, 'fix_polylang_pagination_rule' ) );
 		add_filter( 'fl_builder_loop_query_args', array( __CLASS__, 'fix_tribe_events_hide_from_listings' ) );
 		add_filter( 'tribe_events_rewrite_rules_custom', array( __CLASS__, 'fix_tribe_events_pagination_rule' ), 10, 3 );
+		add_filter( 'aioseo_conflicting_shortcodes', array( __CLASS__, 'aioseo_conflicting_shortcodes' ) );
+		add_filter( 'fl_builder_responsive_ignore', array( __CLASS__, 'fix_real_media_library_lite' ) );
 	}
 
 	/**
@@ -157,12 +159,13 @@ final class FLBuilderCompatibility {
 	 * @since 2.3
 	 */
 	public static function fa_kit_support() {
-		if ( FLBuilder::fa5_pro_enabled() && '' !== get_option( '_fl_builder_kit_fa_pro' ) ) {
+		$kit_url = FLBuilder::fa5_kit_url();
+		if ( FLBuilder::fa5_pro_enabled() && '' !== $kit_url ) {
 			wp_dequeue_style( 'font-awesome' );
 			wp_dequeue_style( 'font-awesome-5' );
 			wp_deregister_style( 'font-awesome' );
 			wp_deregister_style( 'font-awesome-5' );
-			wp_enqueue_script( 'fa5-kit', get_option( '_fl_builder_kit_fa_pro' ) );
+			wp_enqueue_script( 'fa5-kit', $kit_url );
 		}
 	}
 
@@ -549,7 +552,7 @@ final class FLBuilderCompatibility {
 	/**
 	 * Disable support Buddypress pages since it's causing conflicts with `the_content` filter
 	 *
-	 * @param bool $is_editable Wether the post is editable or not
+	 * @param bool $is_editable Whether the post is editable or not
 	 * @param $post The post to check from
 	 * @return bool
 	 */
@@ -1020,6 +1023,22 @@ final class FLBuilderCompatibility {
 		if ( function_exists( 'twenty_twenty_one_add_sub_menu_toggle' ) ) {
 			add_filter( 'walker_nav_menu_start_el', 'twenty_twenty_one_add_sub_menu_toggle', 10, 4 );
 		}
+	}
+
+	/**
+	 * AIOSEO tries to render the layout shortcode too early.
+	 * @since 2.4.2
+	 */
+	public static function aioseo_conflicting_shortcodes( $shortcodes ) {
+		$shortcodes['Beaver Builder'] = '[fl_builder_insert_layout';
+		return $shortcodes;
+	}
+	/**
+	 * @since 2.4.2
+	 */
+	public static function fix_real_media_library_lite( $ignore ) {
+		$ignore[] = 'real-media-library-lite';
+		return $ignore;
 	}
 }
 FLBuilderCompatibility::init();

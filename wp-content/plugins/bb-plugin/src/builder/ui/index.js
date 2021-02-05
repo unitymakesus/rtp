@@ -2,24 +2,31 @@ import React from 'react'
 import { useSystemState } from 'data'
 import { NotificationsManager } from './notifications'
 import InlineEditor from './inline-editor'
-import { HelpPanel } from './help-panel'
+import ShortcutsPanel from './shortcuts-panel'
 import { SVGSymbols } from './art'
-import Workspace from './workspace'
-import './assistant'
+import PanelManager from './panel-manager'
+import './style.scss'
 
-const UI = () => {
-	const { isEditing } = useSystemState()
+/**
+ * Builder React-based UI Root
+ *
+ * Gets rendered onto the page and remains.
+ */
+const BeaverBuilderUI = () => {
+	const { isEditing, shouldShowShortcuts } = useSystemState()
 	return (
 		<>
 			<InlineEditor />
-			<SVGSymbols />
-			<NotificationsManager />
-			{ isEditing && <>
-				<HelpPanel />
-				<Workspace />
-			</> }
+			{ isEditing && (
+				<>
+					<SVGSymbols />
+					<NotificationsManager />
+					{ shouldShowShortcuts && <ShortcutsPanel /> }
+					<PanelManager />
+				</>
+			) }
 		</>
 	)
 }
 
-export default UI
+export default BeaverBuilderUI

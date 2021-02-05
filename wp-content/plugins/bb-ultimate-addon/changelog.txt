@@ -1,3 +1,15 @@
+Version 1.29.0 Wednesday, 20th January 2021
+- New: Introduced Woo - Mini Cart module.
+- Improvement: Advanced Icon - Added responsive support for Icon size.
+- Improvement: Photo Gallery - Added responsive support for photo spacing setting.
+- Improvement: Retina image - Added alt tag support for both images in module.
+- Fix: Button - Border settings not working as expected with all the styles.
+- Fix: Marketing Button - HTML rendering issue in the settings field.
+- Fix: Price Box - Typography settings not showing in some cases.
+- Fix: Subscription Form - Handled ADA compliance error for extra HTML.
+- Fix: Video Gallery: Filterable Tab Border settings not working as expected.
+- Fix: Video Gallery: Filterable Tab Typography not working.
+
 Version 1.28.10 Tuesday, 15th December 2020
 - Improvement: Compatibility with PHP v8.0.
 - Improvement: Advanced Posts - Added Taxonomy Badge option.

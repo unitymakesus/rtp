@@ -1,199 +1,23 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/builder/index.js");
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/art/style.scss":
-/*!************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/art/style.scss ***!
-  \************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/art/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/assistant/style.scss":
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/assistant/style.scss ***!
-  \******************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/assistant/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/help-panel/panel/style.scss":
-/*!*************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/help-panel/panel/style.scss ***!
-  \*************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/help-panel/panel/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/help-panel/style.scss":
-/*!*******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/help-panel/style.scss ***!
-  \*******************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/help-panel/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/inline-editor/style.scss":
-/*!**********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/inline-editor/style.scss ***!
-  \**********************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/inline-editor/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/notifications/style.scss":
-/*!**********************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/notifications/style.scss ***!
-  \**********************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/notifications/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/workspace/style.scss":
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3!./src/builder/ui/workspace/style.scss ***!
-  \******************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// extracted by mini-css-extract-plugin\n\n//# sourceURL=webpack:///./src/builder/ui/workspace/style.scss?./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader??ref--5-2!./node_modules/sass-loader/lib/loader.js??ref--5-3");
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/lib/addStyles.js":
-/*!****************************************************!*\
-  !*** ./node_modules/style-loader/lib/addStyles.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("/*\n\tMIT License http://www.opensource.org/licenses/mit-license.php\n\tAuthor Tobias Koppers @sokra\n*/\n\nvar stylesInDom = {};\n\nvar\tmemoize = function (fn) {\n\tvar memo;\n\n\treturn function () {\n\t\tif (typeof memo === \"undefined\") memo = fn.apply(this, arguments);\n\t\treturn memo;\n\t};\n};\n\nvar isOldIE = memoize(function () {\n\t// Test for IE <= 9 as proposed by Browserhacks\n\t// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805\n\t// Tests for existence of standard globals is to allow style-loader\n\t// to operate correctly into non-standard environments\n\t// @see https://github.com/webpack-contrib/style-loader/issues/177\n\treturn window && document && document.all && !window.atob;\n});\n\nvar getElement = (function (fn) {\n\tvar memo = {};\n\n\treturn function(selector) {\n\t\tif (typeof memo[selector] === \"undefined\") {\n\t\t\tmemo[selector] = fn.call(this, selector);\n\t\t}\n\n\t\treturn memo[selector]\n\t};\n})(function (target) {\n\treturn document.querySelector(target)\n});\n\nvar singleton = null;\nvar\tsingletonCounter = 0;\nvar\tstylesInsertedAtTop = [];\n\nvar\tfixUrls = __webpack_require__(/*! ./urls */ \"./node_modules/style-loader/lib/urls.js\");\n\nmodule.exports = function(list, options) {\n\tif (typeof DEBUG !== \"undefined\" && DEBUG) {\n\t\tif (typeof document !== \"object\") throw new Error(\"The style-loader cannot be used in a non-browser environment\");\n\t}\n\n\toptions = options || {};\n\n\toptions.attrs = typeof options.attrs === \"object\" ? options.attrs : {};\n\n\t// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>\n\t// tags it will allow on a page\n\tif (!options.singleton) options.singleton = isOldIE();\n\n\t// By default, add <style> tags to the <head> element\n\tif (!options.insertInto) options.insertInto = \"head\";\n\n\t// By default, add <style> tags to the bottom of the target\n\tif (!options.insertAt) options.insertAt = \"bottom\";\n\n\tvar styles = listToStyles(list, options);\n\n\taddStylesToDom(styles, options);\n\n\treturn function update (newList) {\n\t\tvar mayRemove = [];\n\n\t\tfor (var i = 0; i < styles.length; i++) {\n\t\t\tvar item = styles[i];\n\t\t\tvar domStyle = stylesInDom[item.id];\n\n\t\t\tdomStyle.refs--;\n\t\t\tmayRemove.push(domStyle);\n\t\t}\n\n\t\tif(newList) {\n\t\t\tvar newStyles = listToStyles(newList, options);\n\t\t\taddStylesToDom(newStyles, options);\n\t\t}\n\n\t\tfor (var i = 0; i < mayRemove.length; i++) {\n\t\t\tvar domStyle = mayRemove[i];\n\n\t\t\tif(domStyle.refs === 0) {\n\t\t\t\tfor (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();\n\n\t\t\t\tdelete stylesInDom[domStyle.id];\n\t\t\t}\n\t\t}\n\t};\n};\n\nfunction addStylesToDom (styles, options) {\n\tfor (var i = 0; i < styles.length; i++) {\n\t\tvar item = styles[i];\n\t\tvar domStyle = stylesInDom[item.id];\n\n\t\tif(domStyle) {\n\t\t\tdomStyle.refs++;\n\n\t\t\tfor(var j = 0; j < domStyle.parts.length; j++) {\n\t\t\t\tdomStyle.parts[j](item.parts[j]);\n\t\t\t}\n\n\t\t\tfor(; j < item.parts.length; j++) {\n\t\t\t\tdomStyle.parts.push(addStyle(item.parts[j], options));\n\t\t\t}\n\t\t} else {\n\t\t\tvar parts = [];\n\n\t\t\tfor(var j = 0; j < item.parts.length; j++) {\n\t\t\t\tparts.push(addStyle(item.parts[j], options));\n\t\t\t}\n\n\t\t\tstylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};\n\t\t}\n\t}\n}\n\nfunction listToStyles (list, options) {\n\tvar styles = [];\n\tvar newStyles = {};\n\n\tfor (var i = 0; i < list.length; i++) {\n\t\tvar item = list[i];\n\t\tvar id = options.base ? item[0] + options.base : item[0];\n\t\tvar css = item[1];\n\t\tvar media = item[2];\n\t\tvar sourceMap = item[3];\n\t\tvar part = {css: css, media: media, sourceMap: sourceMap};\n\n\t\tif(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});\n\t\telse newStyles[id].parts.push(part);\n\t}\n\n\treturn styles;\n}\n\nfunction insertStyleElement (options, style) {\n\tvar target = getElement(options.insertInto)\n\n\tif (!target) {\n\t\tthrow new Error(\"Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.\");\n\t}\n\n\tvar lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];\n\n\tif (options.insertAt === \"top\") {\n\t\tif (!lastStyleElementInsertedAtTop) {\n\t\t\ttarget.insertBefore(style, target.firstChild);\n\t\t} else if (lastStyleElementInsertedAtTop.nextSibling) {\n\t\t\ttarget.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);\n\t\t} else {\n\t\t\ttarget.appendChild(style);\n\t\t}\n\t\tstylesInsertedAtTop.push(style);\n\t} else if (options.insertAt === \"bottom\") {\n\t\ttarget.appendChild(style);\n\t} else {\n\t\tthrow new Error(\"Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.\");\n\t}\n}\n\nfunction removeStyleElement (style) {\n\tif (style.parentNode === null) return false;\n\tstyle.parentNode.removeChild(style);\n\n\tvar idx = stylesInsertedAtTop.indexOf(style);\n\tif(idx >= 0) {\n\t\tstylesInsertedAtTop.splice(idx, 1);\n\t}\n}\n\nfunction createStyleElement (options) {\n\tvar style = document.createElement(\"style\");\n\n\toptions.attrs.type = \"text/css\";\n\n\taddAttrs(style, options.attrs);\n\tinsertStyleElement(options, style);\n\n\treturn style;\n}\n\nfunction createLinkElement (options) {\n\tvar link = document.createElement(\"link\");\n\n\toptions.attrs.type = \"text/css\";\n\toptions.attrs.rel = \"stylesheet\";\n\n\taddAttrs(link, options.attrs);\n\tinsertStyleElement(options, link);\n\n\treturn link;\n}\n\nfunction addAttrs (el, attrs) {\n\tObject.keys(attrs).forEach(function (key) {\n\t\tel.setAttribute(key, attrs[key]);\n\t});\n}\n\nfunction addStyle (obj, options) {\n\tvar style, update, remove, result;\n\n\t// If a transform function was defined, run it on the css\n\tif (options.transform && obj.css) {\n\t    result = options.transform(obj.css);\n\n\t    if (result) {\n\t    \t// If transform returns a value, use that instead of the original css.\n\t    \t// This allows running runtime transformations on the css.\n\t    \tobj.css = result;\n\t    } else {\n\t    \t// If the transform function returns a falsy value, don't add this css.\n\t    \t// This allows conditional loading of css\n\t    \treturn function() {\n\t    \t\t// noop\n\t    \t};\n\t    }\n\t}\n\n\tif (options.singleton) {\n\t\tvar styleIndex = singletonCounter++;\n\n\t\tstyle = singleton || (singleton = createStyleElement(options));\n\n\t\tupdate = applyToSingletonTag.bind(null, style, styleIndex, false);\n\t\tremove = applyToSingletonTag.bind(null, style, styleIndex, true);\n\n\t} else if (\n\t\tobj.sourceMap &&\n\t\ttypeof URL === \"function\" &&\n\t\ttypeof URL.createObjectURL === \"function\" &&\n\t\ttypeof URL.revokeObjectURL === \"function\" &&\n\t\ttypeof Blob === \"function\" &&\n\t\ttypeof btoa === \"function\"\n\t) {\n\t\tstyle = createLinkElement(options);\n\t\tupdate = updateLink.bind(null, style, options);\n\t\tremove = function () {\n\t\t\tremoveStyleElement(style);\n\n\t\t\tif(style.href) URL.revokeObjectURL(style.href);\n\t\t};\n\t} else {\n\t\tstyle = createStyleElement(options);\n\t\tupdate = applyToTag.bind(null, style);\n\t\tremove = function () {\n\t\t\tremoveStyleElement(style);\n\t\t};\n\t}\n\n\tupdate(obj);\n\n\treturn function updateStyle (newObj) {\n\t\tif (newObj) {\n\t\t\tif (\n\t\t\t\tnewObj.css === obj.css &&\n\t\t\t\tnewObj.media === obj.media &&\n\t\t\t\tnewObj.sourceMap === obj.sourceMap\n\t\t\t) {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tupdate(obj = newObj);\n\t\t} else {\n\t\t\tremove();\n\t\t}\n\t};\n}\n\nvar replaceText = (function () {\n\tvar textStore = [];\n\n\treturn function (index, replacement) {\n\t\ttextStore[index] = replacement;\n\n\t\treturn textStore.filter(Boolean).join('\\n');\n\t};\n})();\n\nfunction applyToSingletonTag (style, index, remove, obj) {\n\tvar css = remove ? \"\" : obj.css;\n\n\tif (style.styleSheet) {\n\t\tstyle.styleSheet.cssText = replaceText(index, css);\n\t} else {\n\t\tvar cssNode = document.createTextNode(css);\n\t\tvar childNodes = style.childNodes;\n\n\t\tif (childNodes[index]) style.removeChild(childNodes[index]);\n\n\t\tif (childNodes.length) {\n\t\t\tstyle.insertBefore(cssNode, childNodes[index]);\n\t\t} else {\n\t\t\tstyle.appendChild(cssNode);\n\t\t}\n\t}\n}\n\nfunction applyToTag (style, obj) {\n\tvar css = obj.css;\n\tvar media = obj.media;\n\n\tif(media) {\n\t\tstyle.setAttribute(\"media\", media)\n\t}\n\n\tif(style.styleSheet) {\n\t\tstyle.styleSheet.cssText = css;\n\t} else {\n\t\twhile(style.firstChild) {\n\t\t\tstyle.removeChild(style.firstChild);\n\t\t}\n\n\t\tstyle.appendChild(document.createTextNode(css));\n\t}\n}\n\nfunction updateLink (link, options, obj) {\n\tvar css = obj.css;\n\tvar sourceMap = obj.sourceMap;\n\n\t/*\n\t\tIf convertToAbsoluteUrls isn't defined, but sourcemaps are enabled\n\t\tand there is no publicPath defined then lets turn convertToAbsoluteUrls\n\t\ton by default.  Otherwise default to the convertToAbsoluteUrls option\n\t\tdirectly\n\t*/\n\tvar autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;\n\n\tif (options.convertToAbsoluteUrls || autoFixUrls) {\n\t\tcss = fixUrls(css);\n\t}\n\n\tif (sourceMap) {\n\t\t// http://stackoverflow.com/a/26603875\n\t\tcss += \"\\n/*# sourceMappingURL=data:application/json;base64,\" + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + \" */\";\n\t}\n\n\tvar blob = new Blob([css], { type: \"text/css\" });\n\n\tvar oldSrc = link.href;\n\n\tlink.href = URL.createObjectURL(blob);\n\n\tif(oldSrc) URL.revokeObjectURL(oldSrc);\n}\n\n\n//# sourceURL=webpack:///./node_modules/style-loader/lib/addStyles.js?");
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/lib/urls.js":
-/*!***********************************************!*\
-  !*** ./node_modules/style-loader/lib/urls.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("\n/**\n * When source maps are enabled, `style-loader` uses a link element with a data-uri to\n * embed the css on the page. This breaks all relative urls because now they are relative to a\n * bundle instead of the current page.\n *\n * One solution is to only use full urls, but that may be impossible.\n *\n * Instead, this function \"fixes\" the relative urls to be absolute according to the current page location.\n *\n * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.\n *\n */\n\nmodule.exports = function (css) {\n  // get current location\n  var location = typeof window !== \"undefined\" && window.location;\n\n  if (!location) {\n    throw new Error(\"fixUrls requires window.location\");\n  }\n\n\t// blank or null?\n\tif (!css || typeof css !== \"string\") {\n\t  return css;\n  }\n\n  var baseUrl = location.protocol + \"//\" + location.host;\n  var currentDir = baseUrl + location.pathname.replace(/\\/[^\\/]*$/, \"/\");\n\n\t// convert each url(...)\n\t/*\n\tThis regular expression is just a way to recursively match brackets within\n\ta string.\n\n\t /url\\s*\\(  = Match on the word \"url\" with any whitespace after it and then a parens\n\t   (  = Start a capturing group\n\t     (?:  = Start a non-capturing group\n\t         [^)(]  = Match anything that isn't a parentheses\n\t         |  = OR\n\t         \\(  = Match a start parentheses\n\t             (?:  = Start another non-capturing groups\n\t                 [^)(]+  = Match anything that isn't a parentheses\n\t                 |  = OR\n\t                 \\(  = Match a start parentheses\n\t                     [^)(]*  = Match anything that isn't a parentheses\n\t                 \\)  = Match a end parentheses\n\t             )  = End Group\n              *\\) = Match anything and then a close parens\n          )  = Close non-capturing group\n          *  = Match anything\n       )  = Close capturing group\n\t \\)  = Match a close parens\n\n\t /gi  = Get all matches, not the first.  Be case insensitive.\n\t */\n\tvar fixedCss = css.replace(/url\\s*\\(((?:[^)(]|\\((?:[^)(]+|\\([^)(]*\\))*\\))*)\\)/gi, function(fullMatch, origUrl) {\n\t\t// strip quotes (if they exist)\n\t\tvar unquotedOrigUrl = origUrl\n\t\t\t.trim()\n\t\t\t.replace(/^\"(.*)\"$/, function(o, $1){ return $1; })\n\t\t\t.replace(/^'(.*)'$/, function(o, $1){ return $1; });\n\n\t\t// already a full url? no change\n\t\tif (/^(#|data:|http:\\/\\/|https:\\/\\/|file:\\/\\/\\/)/i.test(unquotedOrigUrl)) {\n\t\t  return fullMatch;\n\t\t}\n\n\t\t// convert the url to a full url\n\t\tvar newUrl;\n\n\t\tif (unquotedOrigUrl.indexOf(\"//\") === 0) {\n\t\t  \t//TODO: should we add protocol?\n\t\t\tnewUrl = unquotedOrigUrl;\n\t\t} else if (unquotedOrigUrl.indexOf(\"/\") === 0) {\n\t\t\t// path should be relative to the base url\n\t\t\tnewUrl = baseUrl + unquotedOrigUrl; // already starts with '/'\n\t\t} else {\n\t\t\t// path should be relative to current directory\n\t\t\tnewUrl = currentDir + unquotedOrigUrl.replace(/^\\.\\//, \"\"); // Strip leading './'\n\t\t}\n\n\t\t// send back the fixed url(...)\n\t\treturn \"url(\" + JSON.stringify(newUrl) + \")\";\n\t});\n\n\t// send back the fixed css\n\treturn fixedCss;\n};\n\n\n//# sourceURL=webpack:///./node_modules/style-loader/lib/urls.js?");
-
-/***/ }),
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/builder/data/index.js":
 /*!***********************************!*\
   !*** ./src/builder/data/index.js ***!
   \***********************************/
-/*! exports provided: useSystemState, getSystemStore, getSystemState, getSystemActions, getSystemSelectors */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./system */ \"./src/builder/data/system/index.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"useSystemState\", function() { return _system__WEBPACK_IMPORTED_MODULE_0__[\"useSystemState\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getSystemStore\", function() { return _system__WEBPACK_IMPORTED_MODULE_0__[\"getSystemStore\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getSystemState\", function() { return _system__WEBPACK_IMPORTED_MODULE_0__[\"getSystemState\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getSystemActions\", function() { return _system__WEBPACK_IMPORTED_MODULE_0__[\"getSystemActions\"]; });\n\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"getSystemSelectors\", function() { return _system__WEBPACK_IMPORTED_MODULE_0__[\"getSystemSelectors\"]; });\n\n\n\n//# sourceURL=webpack:///./src/builder/data/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSystemActions": () => /* reexport safe */ _system__WEBPACK_IMPORTED_MODULE_0__.getSystemActions,
+/* harmony export */   "getSystemSelectors": () => /* reexport safe */ _system__WEBPACK_IMPORTED_MODULE_0__.getSystemSelectors,
+/* harmony export */   "getSystemState": () => /* reexport safe */ _system__WEBPACK_IMPORTED_MODULE_0__.getSystemState,
+/* harmony export */   "getSystemStore": () => /* reexport safe */ _system__WEBPACK_IMPORTED_MODULE_0__.getSystemStore,
+/* harmony export */   "useSystemState": () => /* reexport safe */ _system__WEBPACK_IMPORTED_MODULE_0__.useSystemState
+/* harmony export */ });
+/* harmony import */ var _system__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./system */ "./src/builder/data/system/index.js");
+
 
 /***/ }),
 
@@ -201,11 +25,29 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sys
 /*!********************************************!*\
   !*** ./src/builder/data/registry/index.js ***!
   \********************************************/
-/*! exports provided: registerStore, useStore, getStore, getDispatch, getSelectors */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"registerStore\", function() { return registerStore; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"useStore\", function() { return useStore; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getStore\", function() { return getStore; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getDispatch\", function() { return getDispatch; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSelectors\", function() { return getSelectors; });\n/* harmony import */ var fluid_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! fluid/data */ \"fluid/data\");\n/* harmony import */ var fluid_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(fluid_data__WEBPACK_IMPORTED_MODULE_0__);\n\n\nvar _createStoreRegistry = Object(fluid_data__WEBPACK_IMPORTED_MODULE_0__[\"createStoreRegistry\"])(),\n    registerStore = _createStoreRegistry.registerStore,\n    useStore = _createStoreRegistry.useStore,\n    getStore = _createStoreRegistry.getStore,\n    getDispatch = _createStoreRegistry.getDispatch,\n    getSelectors = _createStoreRegistry.getSelectors;\n\n\n\n//# sourceURL=webpack:///./src/builder/data/registry/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "registerStore": () => /* binding */ registerStore,
+/* harmony export */   "useStore": () => /* binding */ useStore,
+/* harmony export */   "getStore": () => /* binding */ getStore,
+/* harmony export */   "getDispatch": () => /* binding */ getDispatch,
+/* harmony export */   "getSelectors": () => /* binding */ getSelectors
+/* harmony export */ });
+/* harmony import */ var _beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @beaverbuilder/app-core */ "@beaverbuilder/app-core");
+/* harmony import */ var _beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var _createStoreRegistry = (0,_beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_0__.createStoreRegistry)(),
+    registerStore = _createStoreRegistry.registerStore,
+    useStore = _createStoreRegistry.useStore,
+    getStore = _createStoreRegistry.getStore,
+    getDispatch = _createStoreRegistry.getDispatch,
+    getSelectors = _createStoreRegistry.getSelectors;
+
+
 
 /***/ }),
 
@@ -213,11 +55,85 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!********************************************!*\
   !*** ./src/builder/data/system/actions.js ***!
   \********************************************/
-/*! exports provided: setShouldShowShortcuts, registerPanel, displayPanel, togglePanel, hideCurrentPanel, setIsEditing, setColorScheme */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setShouldShowShortcuts\", function() { return setShouldShowShortcuts; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"registerPanel\", function() { return registerPanel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"displayPanel\", function() { return displayPanel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"togglePanel\", function() { return togglePanel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"hideCurrentPanel\", function() { return hideCurrentPanel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setIsEditing\", function() { return setIsEditing; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"setColorScheme\", function() { return setColorScheme; });\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nvar setShouldShowShortcuts = function setShouldShowShortcuts(value) {\n  return {\n    type: 'SET_SHOULD_SHOW_SHORTCUTS',\n    value: value\n  };\n};\nvar registerPanel = function registerPanel() {\n  var handle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'fl/untitled';\n  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n  var defaults = {\n    label: '',\n    render: function render() {},\n    className: null,\n    routerProps: {},\n    onHistoryChanged: function onHistoryChanged() {}\n  };\n  return {\n    type: 'REGISTER_PANEL',\n    handle: handle,\n    options: _objectSpread(_objectSpread({}, defaults), options)\n  };\n};\nvar displayPanel = function displayPanel() {\n  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n  return {\n    type: 'SET_CURRENT_PANEL',\n    name: name\n  };\n};\nvar togglePanel = function togglePanel() {\n  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n  return {\n    type: 'TOGGLE_PANEL',\n    name: name\n  };\n};\nvar hideCurrentPanel = function hideCurrentPanel() {\n  return {\n    type: 'HIDE_CURRENT_PANEL'\n  };\n};\nvar setIsEditing = function setIsEditing() {\n  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;\n  return {\n    type: 'SET_IS_EDITING',\n    value: value\n  };\n};\nvar setColorScheme = function setColorScheme() {\n  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'light';\n  return {\n    type: 'SET_COLOR_SCHEME',\n    value: value\n  };\n};\n\n//# sourceURL=webpack:///./src/builder/data/system/actions.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "setShouldShowShortcuts": () => /* binding */ setShouldShowShortcuts,
+/* harmony export */   "registerPanel": () => /* binding */ registerPanel,
+/* harmony export */   "displayPanel": () => /* binding */ displayPanel,
+/* harmony export */   "togglePanel": () => /* binding */ togglePanel,
+/* harmony export */   "hideCurrentPanel": () => /* binding */ hideCurrentPanel,
+/* harmony export */   "setIsEditing": () => /* binding */ setIsEditing,
+/* harmony export */   "setColorScheme": () => /* binding */ setColorScheme
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var setShouldShowShortcuts = function setShouldShowShortcuts(value) {
+  return {
+    type: 'SET_SHOULD_SHOW_SHORTCUTS',
+    value: value
+  };
+};
+var registerPanel = function registerPanel() {
+  var handle = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'fl/untitled';
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var defaults = {
+    label: '',
+    root: null,
+    render: function render() {
+      return null;
+    },
+
+    /* Legacy Prop */
+    className: null,
+    routerProps: {},
+    onHistoryChanged: function onHistoryChanged() {}
+  };
+  return {
+    type: 'REGISTER_PANEL',
+    handle: handle,
+    options: _objectSpread(_objectSpread({}, defaults), options)
+  };
+};
+var displayPanel = function displayPanel() {
+  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  return {
+    type: 'SET_CURRENT_PANEL',
+    name: name
+  };
+};
+var togglePanel = function togglePanel() {
+  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  return {
+    type: 'TOGGLE_PANEL',
+    name: name
+  };
+};
+var hideCurrentPanel = function hideCurrentPanel() {
+  return {
+    type: 'HIDE_CURRENT_PANEL'
+  };
+};
+var setIsEditing = function setIsEditing() {
+  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  return {
+    type: 'SET_IS_EDITING',
+    value: value
+  };
+};
+var setColorScheme = function setColorScheme() {
+  var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'light';
+  return {
+    type: 'SET_COLOR_SCHEME',
+    value: value
+  };
+};
 
 /***/ }),
 
@@ -225,11 +141,44 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!********************************************!*\
   !*** ./src/builder/data/system/effects.js ***!
   \********************************************/
-/*! exports provided: before, after */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"before\", function() { return before; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"after\", function() { return after; });\n/**\n * Effects that fire before an action.\n */\nvar before = {};\n/**\n * Effects that fire after an action.\n */\n\nvar after = {\n  TOGGLE_PANEL: function TOGGLE_PANEL(action, store) {\n    var _store$getState = store.getState(),\n        currentPanel = _store$getState.currentPanel;\n\n    var html = document.querySelector('html');\n\n    if (currentPanel) {\n      FLBuilder._closePanel();\n    }\n\n    if ('fl/assistant' === currentPanel) {\n      html.classList.add('fl-builder-assistant-visible');\n    } else {\n      html.classList.remove('fl-builder-assistant-visible');\n    }\n  },\n  HIDE_CURRENT_PANEL: function HIDE_CURRENT_PANEL(action, store) {\n    var html = document.querySelector('html');\n    html.classList.remove('fl-builder-assistant-visible');\n  }\n};\n\n//# sourceURL=webpack:///./src/builder/data/system/effects.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "before": () => /* binding */ before,
+/* harmony export */   "after": () => /* binding */ after
+/* harmony export */ });
+/**
+ * Effects that fire before an action.
+ */
+var before = {};
+/**
+ * Effects that fire after an action.
+ */
+
+var after = {
+  TOGGLE_PANEL: function TOGGLE_PANEL(action, store) {
+    var _store$getState = store.getState(),
+        currentPanel = _store$getState.currentPanel;
+
+    var html = document.querySelector('html');
+
+    if (currentPanel) {
+      FLBuilder._closePanel();
+    }
+
+    if ('assistant' === currentPanel) {
+      html.classList.add('fl-builder-assistant-visible');
+    } else {
+      html.classList.remove('fl-builder-assistant-visible');
+    }
+  },
+  HIDE_CURRENT_PANEL: function HIDE_CURRENT_PANEL() {
+    var html = document.querySelector('html');
+    html.classList.remove('fl-builder-assistant-visible');
+  }
+};
 
 /***/ }),
 
@@ -237,11 +186,53 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!******************************************!*\
   !*** ./src/builder/data/system/index.js ***!
   \******************************************/
-/*! exports provided: useSystemState, getSystemStore, getSystemState, getSystemActions, getSystemSelectors */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"useSystemState\", function() { return useSystemState; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSystemStore\", function() { return getSystemStore; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSystemState\", function() { return getSystemState; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSystemActions\", function() { return getSystemActions; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getSystemSelectors\", function() { return getSystemSelectors; });\n/* harmony import */ var _registry__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../registry */ \"./src/builder/data/registry/index.js\");\n/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions */ \"./src/builder/data/system/actions.js\");\n/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reducers */ \"./src/builder/data/system/reducers.js\");\n/* harmony import */ var _effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./effects */ \"./src/builder/data/system/effects.js\");\n/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./selectors */ \"./src/builder/data/system/selectors.js\");\n/* harmony import */ var _selectors__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_selectors__WEBPACK_IMPORTED_MODULE_4__);\n\n\n\n\n\nvar key = 'fl-builder/system';\nObject(_registry__WEBPACK_IMPORTED_MODULE_0__[\"registerStore\"])(key, {\n  actions: _actions__WEBPACK_IMPORTED_MODULE_1__,\n  reducers: _reducers__WEBPACK_IMPORTED_MODULE_2__,\n  effects: _effects__WEBPACK_IMPORTED_MODULE_3__,\n  selectors: _selectors__WEBPACK_IMPORTED_MODULE_4__,\n  state: {\n    isEditing: true,\n    currentPanel: null,\n    shouldShowShortcuts: false,\n    colorScheme: FLBuilderConfig.userSettings.skin,\n    panels: {}\n  }\n});\nvar useSystemState = function useSystemState() {\n  return Object(_registry__WEBPACK_IMPORTED_MODULE_0__[\"useStore\"])(key);\n};\nvar getSystemStore = function getSystemStore() {\n  return Object(_registry__WEBPACK_IMPORTED_MODULE_0__[\"getStore\"])(key);\n};\nvar getSystemState = function getSystemState() {\n  return Object(_registry__WEBPACK_IMPORTED_MODULE_0__[\"getStore\"])(key).getState();\n};\nvar getSystemActions = function getSystemActions() {\n  return Object(_registry__WEBPACK_IMPORTED_MODULE_0__[\"getDispatch\"])(key);\n};\nvar getSystemSelectors = function getSystemSelectors() {\n  return Object(_registry__WEBPACK_IMPORTED_MODULE_0__[\"getSelectors\"])(key);\n};\n\n//# sourceURL=webpack:///./src/builder/data/system/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useSystemState": () => /* binding */ useSystemState,
+/* harmony export */   "getSystemStore": () => /* binding */ getSystemStore,
+/* harmony export */   "getSystemState": () => /* binding */ getSystemState,
+/* harmony export */   "getSystemActions": () => /* binding */ getSystemActions,
+/* harmony export */   "getSystemSelectors": () => /* binding */ getSystemSelectors
+/* harmony export */ });
+/* harmony import */ var _registry__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../registry */ "./src/builder/data/registry/index.js");
+/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions */ "./src/builder/data/system/actions.js");
+/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reducers */ "./src/builder/data/system/reducers.js");
+/* harmony import */ var _effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./effects */ "./src/builder/data/system/effects.js");
+
+
+
+
+var key = 'fl-builder/system';
+(0,_registry__WEBPACK_IMPORTED_MODULE_0__.registerStore)(key, {
+  actions: _actions__WEBPACK_IMPORTED_MODULE_1__,
+  reducers: _reducers__WEBPACK_IMPORTED_MODULE_2__,
+  effects: _effects__WEBPACK_IMPORTED_MODULE_3__,
+  state: {
+    isEditing: true,
+    currentPanel: null,
+    shouldShowShortcuts: false,
+    colorScheme: FLBuilderConfig.userSettings.skin,
+    panels: {}
+  }
+});
+var useSystemState = function useSystemState() {
+  return (0,_registry__WEBPACK_IMPORTED_MODULE_0__.useStore)(key);
+};
+var getSystemStore = function getSystemStore() {
+  return (0,_registry__WEBPACK_IMPORTED_MODULE_0__.getStore)(key);
+};
+var getSystemState = function getSystemState() {
+  return (0,_registry__WEBPACK_IMPORTED_MODULE_0__.getStore)(key).getState();
+};
+var getSystemActions = function getSystemActions() {
+  return (0,_registry__WEBPACK_IMPORTED_MODULE_0__.getDispatch)(key);
+};
+var getSystemSelectors = function getSystemSelectors() {
+  return (0,_registry__WEBPACK_IMPORTED_MODULE_0__.getSelectors)(key);
+};
 
 /***/ }),
 
@@ -249,22 +240,89 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!*********************************************!*\
   !*** ./src/builder/data/system/reducers.js ***!
   \*********************************************/
-/*! exports provided: shouldShowShortcuts, panels, currentPanel, isEditing, colorScheme */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"shouldShowShortcuts\", function() { return shouldShowShortcuts; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"panels\", function() { return panels; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"currentPanel\", function() { return currentPanel; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isEditing\", function() { return isEditing; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"colorScheme\", function() { return colorScheme; });\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nvar shouldShowShortcuts = function shouldShowShortcuts() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;\n  var action = arguments.length > 1 ? arguments[1] : undefined;\n\n  switch (action.type) {\n    case 'SET_SHOULD_SHOW_SHORTCUTS':\n      return action.value ? true : false;\n\n    default:\n      return state;\n  }\n};\nvar panels = function panels() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n  var action = arguments.length > 1 ? arguments[1] : undefined;\n\n  switch (action.type) {\n    case 'REGISTER_PANEL':\n      return _objectSpread(_objectSpread({}, state), {}, _defineProperty({}, action.handle, action.options));\n\n    default:\n      return state;\n  }\n};\nvar currentPanel = function currentPanel() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n  var action = arguments.length > 1 ? arguments[1] : undefined;\n\n  switch (action.type) {\n    case 'SET_CURRENT_PANEL':\n      return action.name;\n\n    case 'HIDE_CURRENT_PANEL':\n      return null;\n\n    case 'TOGGLE_PANEL':\n      return action.name === state ? null : action.name;\n\n    default:\n      return state;\n  }\n};\nvar isEditing = function isEditing() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;\n  var action = arguments.length > 1 ? arguments[1] : undefined;\n\n  switch (action.type) {\n    case 'SET_IS_EDITING':\n      return action.value ? true : false;\n\n    default:\n      return state;\n  }\n};\nvar colorScheme = function colorScheme() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'light';\n  var action = arguments.length > 1 ? arguments[1] : undefined;\n\n  switch (action.type) {\n    case 'SET_COLOR_SCHEME':\n      return 'dark' === action.value ? 'dark' : 'light';\n\n    default:\n      return state;\n  }\n};\n\n//# sourceURL=webpack:///./src/builder/data/system/reducers.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "shouldShowShortcuts": () => /* binding */ shouldShowShortcuts,
+/* harmony export */   "panels": () => /* binding */ panels,
+/* harmony export */   "currentPanel": () => /* binding */ currentPanel,
+/* harmony export */   "isEditing": () => /* binding */ isEditing,
+/* harmony export */   "colorScheme": () => /* binding */ colorScheme
+/* harmony export */ });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-/***/ }),
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-/***/ "./src/builder/data/system/selectors.js":
-/*!**********************************************!*\
-  !*** ./src/builder/data/system/selectors.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-eval("\n\n//# sourceURL=webpack:///./src/builder/data/system/selectors.js?");
+var shouldShowShortcuts = function shouldShowShortcuts() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'SET_SHOULD_SHOW_SHORTCUTS':
+      return action.value ? true : false;
+
+    default:
+      return state;
+  }
+};
+var panels = function panels() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'REGISTER_PANEL':
+      return _objectSpread(_objectSpread({}, state), {}, _defineProperty({}, action.handle, action.options));
+
+    default:
+      return state;
+  }
+};
+var currentPanel = function currentPanel() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'SET_CURRENT_PANEL':
+      return action.name;
+
+    case 'HIDE_CURRENT_PANEL':
+      return null;
+
+    case 'TOGGLE_PANEL':
+      return action.name === state ? null : action.name;
+
+    default:
+      return state;
+  }
+};
+var isEditing = function isEditing() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'SET_IS_EDITING':
+      return action.value ? true : false;
+
+    default:
+      return state;
+  }
+};
+var colorScheme = function colorScheme() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'light';
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'SET_COLOR_SCHEME':
+      return 'dark' === action.value ? 'dark' : 'light';
+
+    default:
+      return state;
+  }
+};
 
 /***/ }),
 
@@ -272,11 +330,51 @@ eval("\n\n//# sourceURL=webpack:///./src/builder/data/system/selectors.js?");
 /*!******************************!*\
   !*** ./src/builder/index.js ***!
   \******************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ \"react-dom\");\n/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui */ \"./src/builder/ui/index.js\");\n/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data */ \"./src/builder/data/index.js\");\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n\n\n // Setup Store Registry and Initialize System Store\n\n\n\nvar _data$getSystemAction = _data__WEBPACK_IMPORTED_MODULE_3__[\"getSystemActions\"](),\n    registerPanel = _data$getSystemAction.registerPanel,\n    displayPanel = _data$getSystemAction.displayPanel,\n    togglePanel = _data$getSystemAction.togglePanel; // Setup public API - window.FL.Builder\n\n\nvar api = window.FL || {};\nvar existing = api.Builder || {};\n\nvar Builder = _objectSpread(_objectSpread({}, existing), {}, {\n  ui: {},\n  data: _data__WEBPACK_IMPORTED_MODULE_3__,\n  registerPanel: registerPanel,\n  displayPanel: displayPanel,\n  togglePanel: togglePanel\n});\n\nwindow.FL = _objectSpread(_objectSpread({}, api), {}, {\n  Builder: Builder\n}); // Render UI\n\nvar root = document.getElementById('fl-ui-root');\nroot.classList.add('fluid');\nObject(react_dom__WEBPACK_IMPORTED_MODULE_1__[\"render\"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ui__WEBPACK_IMPORTED_MODULE_2__[\"default\"], null), root);\n\n//# sourceURL=webpack:///./src/builder/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ui__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui */ "./src/builder/ui/index.js");
+/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./data */ "./src/builder/data/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+ // Setup Store Registry and Initialize System Store
+
+
+
+var _data$getSystemAction = _data__WEBPACK_IMPORTED_MODULE_3__.getSystemActions(),
+    registerPanel = _data$getSystemAction.registerPanel,
+    displayPanel = _data$getSystemAction.displayPanel,
+    togglePanel = _data$getSystemAction.togglePanel; // Setup public API - window.FL.Builder
+
+
+var api = window.FL || {};
+var existing = api.Builder || {};
+
+var Builder = _objectSpread(_objectSpread({}, existing), {}, {
+  data: _data__WEBPACK_IMPORTED_MODULE_3__,
+  registerPanel: registerPanel,
+  displayPanel: displayPanel,
+  togglePanel: togglePanel
+});
+
+window.FL = _objectSpread(_objectSpread({}, api), {}, {
+  Builder: Builder
+}); // Render UI
+
+var root = document.getElementById('fl-ui-root');
+root.classList.add('fluid', 'fl', 'uid');
+(0,react_dom__WEBPACK_IMPORTED_MODULE_1__.render)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ui__WEBPACK_IMPORTED_MODULE_2__.default, null), root);
 
 /***/ }),
 
@@ -284,91 +382,52 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 /*!*************************************!*\
   !*** ./src/builder/ui/art/index.js ***!
   \*************************************/
-/*! exports provided: SVGSymbols, Icon */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"SVGSymbols\", function() { return SVGSymbols; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Icon\", function() { return Icon; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/art/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_1__);\n\n\nvar SVGSymbols = function SVGSymbols() {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"svg\", {\n    id: \"fl-symbol-container\",\n    version: \"1.1\",\n    xmlns: \"http://www.w3.org/2000/svg\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"symbol\", {\n    id: \"fl-down-caret\",\n    viewBox: \"0 0 11 6\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"polygon\", {\n    points: \"0 0 2.05697559 0 5.49235478 3.74058411 8.93443824 0 11 0 5.5 6\"\n  })));\n};\nvar Icon = function Icon() {};\n\nIcon.Close = function () {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"svg\", {\n    width: \"14px\",\n    height: \"14px\",\n    viewBox: \"0 0 14 14\",\n    version: \"1.1\",\n    xmlns: \"http://www.w3.org/2000/svg\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"g\", {\n    stroke: \"currentColor\",\n    strokeWidth: \"2\",\n    fill: \"none\",\n    fillRule: \"evenodd\",\n    strokeLinecap: \"round\"\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"path\", {\n    d: \"M13,1 L1,13\"\n  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"path\", {\n    d: \"M1,1 L13,13\"\n  })));\n};\n\nIcon.Close.displayName = 'Icon.Close';\n\n//# sourceURL=webpack:///./src/builder/ui/art/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SVGSymbols": () => /* binding */ SVGSymbols,
+/* harmony export */   "Icon": () => /* binding */ Icon
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/art/style.scss");
 
-/***/ }),
 
-/***/ "./src/builder/ui/art/style.scss":
-/*!***************************************!*\
-  !*** ./src/builder/ui/art/style.scss ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+var SVGSymbols = function SVGSymbols() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", {
+    id: "fl-symbol-container",
+    version: "1.1",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("symbol", {
+    id: "fl-down-caret",
+    viewBox: "0 0 11 6"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("polygon", {
+    points: "0 0 2.05697559 0 5.49235478 3.74058411 8.93443824 0 11 0 5.5 6"
+  })));
+};
+var Icon = function Icon() {};
 
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader??ref--5-2!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/art/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/art/style.scss?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/assistant/index.js":
-/*!*******************************************!*\
-  !*** ./src/builder/ui/assistant/index.js ***!
-  \*******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/assistant/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_0__);\n\n\n//# sourceURL=webpack:///./src/builder/ui/assistant/index.js?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/assistant/style.scss":
-/*!*********************************************!*\
-  !*** ./src/builder/ui/assistant/style.scss ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader??ref--5-2!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/assistant/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/assistant/style.scss?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/help-panel/index.js":
-/*!********************************************!*\
-  !*** ./src/builder/ui/help-panel/index.js ***!
-  \********************************************/
-/*! exports provided: HelpPanel */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"HelpPanel\", function() { return HelpPanel; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./panel */ \"./src/builder/ui/help-panel/panel/index.js\");\n/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! data */ \"./src/builder/data/index.js\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/help-panel/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_3__);\n\n\n\n\n\nvar ShortcutList = function ShortcutList(_ref) {\n  var shortcuts = _ref.shortcuts;\n\n  if (0 === Object.keys(shortcuts).length) {\n    return null;\n  }\n\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"ul\", {\n    className: \"fl-ui-shortcut-list\"\n  }, Object.values(shortcuts).map(function (item, i) {\n    var label = item.label,\n        keyLabel = item.keyLabel;\n    var key = {\n      __html: keyLabel\n    };\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"li\", {\n      key: i\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"span\", null, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"span\", {\n      className: \"fl-ui-shortcut-item-keycode\",\n      dangerouslySetInnerHTML: key\n    }));\n  }));\n};\n\nvar HelpPanel = function HelpPanel() {\n  var _useSystemState = Object(data__WEBPACK_IMPORTED_MODULE_2__[\"useSystemState\"])(),\n      shouldShowShortcuts = _useSystemState.shouldShowShortcuts;\n\n  var _getSystemActions = Object(data__WEBPACK_IMPORTED_MODULE_2__[\"getSystemActions\"])(),\n      setShouldShowShortcuts = _getSystemActions.setShouldShowShortcuts;\n\n  var dismissPanel = function dismissPanel() {\n    return setShouldShowShortcuts(false);\n  };\n\n  if (!shouldShowShortcuts) {\n    return null;\n  }\n\n  var style = {\n    width: 360,\n    maxWidth: '95vw'\n  };\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_panel__WEBPACK_IMPORTED_MODULE_1__[\"Panel\"], {\n    title: \"Keyboard Shortcuts\",\n    onClose: dismissPanel,\n    className: \"fl-ui-help\",\n    style: style\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ShortcutList, {\n    shortcuts: FLBuilderConfig.keyboardShortcuts\n  }));\n};\n\n//# sourceURL=webpack:///./src/builder/ui/help-panel/index.js?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/help-panel/panel/index.js":
-/*!**************************************************!*\
-  !*** ./src/builder/ui/help-panel/panel/index.js ***!
-  \**************************************************/
-/*! exports provided: Panel */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Panel\", function() { return Panel; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ \"classnames\");\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _art__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../art */ \"./src/builder/ui/art/index.js\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/help-panel/panel/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_3__);\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }\n\nfunction _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }\n\n\n\n\n\nvar Panel = function Panel(_ref) {\n  var className = _ref.className,\n      children = _ref.children,\n      title = _ref.title,\n      actions = _ref.actions,\n      _ref$showCloseButton = _ref.showCloseButton,\n      showCloseButton = _ref$showCloseButton === void 0 ? true : _ref$showCloseButton,\n      _ref$onClose = _ref.onClose,\n      onClose = _ref$onClose === void 0 ? function () {} : _ref$onClose,\n      rest = _objectWithoutProperties(_ref, [\"className\", \"children\", \"title\", \"actions\", \"showCloseButton\", \"onClose\"]);\n\n  var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()({\n    'fl-ui-panel-area': true\n  }, className);\n\n  var TrailingActions = function TrailingActions() {\n    if (!actions && !showCloseButton) {\n      return null;\n    }\n\n    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-ui-panel-trailing-actions\"\n    }, actions, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"button\", {\n      onClick: onClose,\n      className: \"fl-ui-button\"\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_art__WEBPACK_IMPORTED_MODULE_2__[\"Icon\"].Close, null)));\n  };\n\n  var stopProp = function stopProp(e) {\n    return e.stopPropagation();\n  };\n\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: classes,\n    onClick: onClose\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", _extends({\n    className: \"fl-ui-panel\"\n  }, rest, {\n    onClick: stopProp\n  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"fl-ui-panel-topbar\"\n  }, title && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"fl-ui-panel-title\"\n  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TrailingActions, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: \"fl-ui-panel-content\"\n  }, children)));\n};\n\n//# sourceURL=webpack:///./src/builder/ui/help-panel/panel/index.js?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/help-panel/panel/style.scss":
-/*!****************************************************!*\
-  !*** ./src/builder/ui/help-panel/panel/style.scss ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/css-loader??ref--5-2!../../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/help-panel/panel/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/help-panel/panel/style.scss?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/help-panel/style.scss":
-/*!**********************************************!*\
-  !*** ./src/builder/ui/help-panel/style.scss ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader??ref--5-2!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/help-panel/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/help-panel/style.scss?");
+Icon.Close = function () {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("svg", {
+    width: "14px",
+    height: "14px",
+    viewBox: "0 0 14 14",
+    version: "1.1",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("g", {
+    stroke: "currentColor",
+    strokeWidth: "2",
+    fill: "none",
+    fillRule: "evenodd",
+    strokeLinecap: "round"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+    d: "M13,1 L1,13"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("path", {
+    d: "M1,1 L13,13"
+  })));
+};
 
 /***/ }),
 
@@ -376,11 +435,45 @@ eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// lo
 /*!*********************************!*\
   !*** ./src/builder/ui/index.js ***!
   \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! data */ \"./src/builder/data/index.js\");\n/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notifications */ \"./src/builder/ui/notifications/index.js\");\n/* harmony import */ var _inline_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inline-editor */ \"./src/builder/ui/inline-editor/index.js\");\n/* harmony import */ var _help_panel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./help-panel */ \"./src/builder/ui/help-panel/index.js\");\n/* harmony import */ var _art__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./art */ \"./src/builder/ui/art/index.js\");\n/* harmony import */ var _workspace__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./workspace */ \"./src/builder/ui/workspace/index.js\");\n/* harmony import */ var _assistant__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./assistant */ \"./src/builder/ui/assistant/index.js\");\n\n\n\n\n\n\n\n\n\nvar UI = function UI() {\n  var _useSystemState = Object(data__WEBPACK_IMPORTED_MODULE_1__[\"useSystemState\"])(),\n      isEditing = _useSystemState.isEditing;\n\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_inline_editor__WEBPACK_IMPORTED_MODULE_3__[\"default\"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_art__WEBPACK_IMPORTED_MODULE_5__[\"SVGSymbols\"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_notifications__WEBPACK_IMPORTED_MODULE_2__[\"NotificationsManager\"], null), isEditing && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_help_panel__WEBPACK_IMPORTED_MODULE_4__[\"HelpPanel\"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_workspace__WEBPACK_IMPORTED_MODULE_6__[\"default\"], null)));\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (UI);\n\n//# sourceURL=webpack:///./src/builder/ui/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! data */ "./src/builder/data/index.js");
+/* harmony import */ var _notifications__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./notifications */ "./src/builder/ui/notifications/index.js");
+/* harmony import */ var _inline_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./inline-editor */ "./src/builder/ui/inline-editor/index.js");
+/* harmony import */ var _shortcuts_panel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./shortcuts-panel */ "./src/builder/ui/shortcuts-panel/index.js");
+/* harmony import */ var _art__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./art */ "./src/builder/ui/art/index.js");
+/* harmony import */ var _panel_manager__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./panel-manager */ "./src/builder/ui/panel-manager/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/style.scss");
+
+
+
+
+
+
+
+
+/**
+ * Builder React-based UI Root
+ *
+ * Gets rendered onto the page and remains.
+ */
+
+var BeaverBuilderUI = function BeaverBuilderUI() {
+  var _useSystemState = (0,data__WEBPACK_IMPORTED_MODULE_1__.useSystemState)(),
+      isEditing = _useSystemState.isEditing,
+      shouldShowShortcuts = _useSystemState.shouldShowShortcuts;
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_inline_editor__WEBPACK_IMPORTED_MODULE_3__.default, null), isEditing && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_art__WEBPACK_IMPORTED_MODULE_5__.SVGSymbols, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_notifications__WEBPACK_IMPORTED_MODULE_2__.NotificationsManager, null), shouldShowShortcuts && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_shortcuts_panel__WEBPACK_IMPORTED_MODULE_4__.default, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_panel_manager__WEBPACK_IMPORTED_MODULE_6__.default, null)));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BeaverBuilderUI);
 
 /***/ }),
 
@@ -388,22 +481,539 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 /*!***********************************************!*\
   !*** ./src/builder/ui/inline-editor/index.js ***!
   \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/inline-editor/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_1__);\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function\"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }\n\nfunction _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }\n\nfunction _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }\n\nfunction _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === \"object\" || typeof call === \"function\")) { return call; } return _assertThisInitialized(self); }\n\nfunction _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return self; }\n\nfunction _isNativeReflectConstruct() { if (typeof Reflect === \"undefined\" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === \"function\") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }\n\nfunction _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }\n\n\n\n/**\n * Handles inline editing for builder layouts.\n *\n * @since 2.1\n * @class InlineEditor\n */\n\nvar InlineEditor = /*#__PURE__*/function (_Component) {\n  _inherits(InlineEditor, _Component);\n\n  var _super = _createSuper(InlineEditor);\n\n  function InlineEditor(props) {\n    var _this;\n\n    _classCallCheck(this, InlineEditor);\n\n    _this = _super.call(this, props);\n    var postId = _this.props.postId;\n    _this.layoutClass = \".fl-builder-content-\".concat(postId ? postId : FLBuilderConfig.postId);\n    return _this;\n  }\n\n  _createClass(InlineEditor, [{\n    key: \"componentDidMount\",\n    value: function componentDidMount() {\n      this.setupHooks = this.setupHooks.bind(this);\n      this.hooked = false;\n      jQuery(document).on('tinymce-editor-init', this.setupHooks);\n      this.setupHooks();\n    }\n  }, {\n    key: \"setupHooks\",\n    value: function setupHooks() {\n      if ('ontouchstart' in document) {\n        return;\n      }\n\n      if (!window.tinymce || this.hooked || !FLBuilderConfig.inlineEnabled) {\n        return;\n      }\n\n      var initEditables = this.initEditables.bind(this);\n      var refreshEditables = this.refreshEditables.bind(this); //const destroyEditables = this.destroyEditables.bind( this )\n\n      var destroyAllEditables = this.destroyAllEditables.bind(this);\n      var destroyLoadingEditables = this.destroyLoadingEditables.bind(this);\n\n      if (FLBuilder) {\n        // Init actions\n        FLBuilder.addHook('settingsConfigLoaded', initEditables);\n        FLBuilder.addHook('restartEditingSession', initEditables); // Destroy actions\n\n        FLBuilder.addHook('endEditingSession', destroyAllEditables);\n        FLBuilder.addHook('didStartNodeLoading', destroyLoadingEditables); // Refresh actions\n\n        FLBuilder.addHook('didRenderLayoutComplete', refreshEditables);\n        FLBuilder.addHook('didDeleteRow', refreshEditables);\n        FLBuilder.addHook('didDeleteColumn', refreshEditables);\n        FLBuilder.addHook('didDeleteModule', refreshEditables);\n      }\n\n      this.initEditables();\n      this.hooked = true;\n    }\n  }, {\n    key: \"initEditables\",\n    value: function initEditables() {\n      var _this2 = this;\n\n      var _FLBuilderSettingsCon = FLBuilderSettingsConfig,\n          editables = _FLBuilderSettingsCon.editables;\n      var content = jQuery(this.layoutClass);\n\n      if (content.length) {\n        for (var key in editables) {\n          var selector = \".fl-module[data-type=\\\"\".concat(key, \"\\\"]:not(.fl-editable):not(.fl-node-global)\");\n          content.find(selector).each(function (index, module) {\n            module = jQuery(module);\n            module.addClass('fl-editable');\n            module.delegate('.fl-block-overlay', 'click.fl-inline-editing-init', function (e) {\n              return _this2.initEditable(e, module);\n            });\n          });\n        }\n      }\n    }\n  }, {\n    key: \"initEditable\",\n    value: function initEditable(e, module) {\n      var _this3 = this;\n\n      var _FLBuilder = FLBuilder,\n          preview = _FLBuilder.preview; // Don't setup if we have a parent that needs to save.\n\n      if (preview) {\n        var isParent = module.parents(\".fl-node-\".concat(preview.nodeId)).length;\n\n        if (isParent && preview._settingsHaveChanged()) {\n          return;\n        }\n      }\n\n      this.setupEditable(module, function () {\n        _this3.onModuleOverlayClick(e);\n      });\n      module.undelegate('.fl-block-overlay', 'click.fl-inline-editing-init');\n    }\n  }, {\n    key: \"setupEditable\",\n    value: function setupEditable(module) {\n      var _this4 = this;\n\n      var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};\n      var nodeId = module.data('node');\n      var settings = FLBuilderSettingsConfig.nodes[nodeId];\n\n      if ('undefined' === typeof settings) {\n        return false;\n      }\n\n      var type = module.data('type');\n      var config = FLBuilderSettingsConfig.editables[type];\n      var nodeClass = \".fl-node-\".concat(nodeId, \" \");\n      var editorId = \"fl-inline-editor-\".concat(nodeId);\n      var overlay = jQuery(\"<div id=\\\"\".concat(editorId, \"\\\" class=\\\"fl-inline-editor\\\"></div>\"));\n      var form = jQuery(\".fl-builder-settings[data-node=\".concat(nodeId, \"]\"));\n      var connections = settings.connections;\n      module.append(overlay);\n      module.delegate('.fl-block-overlay', 'click', this.onModuleOverlayClick.bind(this));\n      module.on('mouseleave', this.onModuleMouseleave.bind(this));\n\n      var _loop = function _loop(key) {\n        var data = config[key];\n        var selector = FLBuilderPreview.getFormattedSelector(nodeClass, data.selector);\n        var editable = jQuery(selector);\n        var editableHTML = editable.html();\n        var connection = form.find(\"#fl-field-\".concat(key, \" .fl-field-connection-value\"));\n\n        if (!editable.length) {\n          return \"continue\";\n        } else if (connection.length && '' !== connection.val()) {\n          return \"continue\";\n        } else if (!connection.length && connections && connections[key]) {\n          return \"continue\";\n        }\n\n        if (editable.hasClass('mce-content-body')) {\n          tinymce.execCommand('mceRemoveEditor', true, editable.attr('id'));\n        } else {\n          editable.data('field', data.field);\n          editable.on('drop', _this4.onEditorDrop.bind(_this4));\n        }\n\n        tinymce.init({\n          selector: selector,\n          inline: true,\n          menubar: false,\n          paste_as_text: true,\n          relative_urls: false,\n          convert_urls: false,\n          skin: FLBuilder ? false : 'lightgray',\n          skin_url: FLBuilder ? false : \"\".concat(tinyMCEPreInit.baseURL, \"/skins/lightgray/\"),\n          theme: 'modern',\n          theme_url: \"\".concat(tinyMCEPreInit.baseURL, \"/themes/modern/\"),\n          fixed_toolbar_container: \"#\".concat(editorId),\n          plugins: _this4.getEditorPluginConfig(data.field.type),\n          toolbar: 'string' === typeof data.field.toolbar ? data.field.toolbar : _this4.getEditorToolbarConfig(data.field.type),\n          init_instance_callback: function init_instance_callback(editor) {\n            _this4.onEditorInit(editor);\n            /**\n             * TinyMCE can change the editable's HTML which changes the visual\n             * appearance. To prevent this from happening, we reinsert the original\n             * HTML after the editable has been initialized.\n             */\n\n\n            editable.html(editableHTML);\n            callback();\n          }\n        });\n      };\n\n      for (var key in config) {\n        var _ret = _loop(key);\n\n        if (_ret === \"continue\") continue;\n      }\n    }\n  }, {\n    key: \"getEditorPluginConfig\",\n    value: function getEditorPluginConfig(type) {\n      switch (type) {\n        case 'editor':\n          return 'wordpress, wplink, lists, paste';\n\n        default:\n          return 'paste';\n      }\n    }\n  }, {\n    key: \"getEditorToolbarConfig\",\n    value: function getEditorToolbarConfig(type) {\n      switch (type) {\n        case 'editor':\n          return 'bold italic strikethrough link underline | alignleft aligncenter alignright';\n\n        case 'unit':\n          return false;\n\n        default:\n          return 'bold italic strikethrough underline';\n      }\n    }\n  }, {\n    key: \"destroyEditables\",\n    value: function destroyEditables(modules) {\n      var editables = modules.find('.mce-content-body');\n      var overlays = modules.find('.fl-inline-editor');\n      var extras = jQuery('.wplink-autocomplete, .ui-helper-hidden-accessible');\n      editables.removeAttr('contenteditable');\n      modules.undelegate('.fl-block-overlay', 'click');\n      modules.off('mouseleave');\n      modules.removeClass('fl-editable');\n      overlays.remove();\n      extras.remove();\n    }\n  }, {\n    key: \"destroyAllEditables\",\n    value: function destroyAllEditables() {\n      var content = jQuery(this.layoutClass);\n      var modules = content.find('.fl-editable');\n      this.destroyEditables(modules);\n    }\n  }, {\n    key: \"destroyLoadingEditables\",\n    value: function destroyLoadingEditables(e, node) {\n      var modules = jQuery(node);\n\n      if (!modules.hasClass('fl-module')) {\n        modules = modules.find('.fl-module');\n      }\n\n      this.destroyEditables(modules);\n    }\n  }, {\n    key: \"refreshEditables\",\n    value: function refreshEditables() {\n      this.initEditables();\n      tinymce.editors.map(function (editor) {\n        if (editor.inline && !jQuery(\"#\".concat(editor.id)).length) {\n          setTimeout(function () {\n            return tinymce.execCommand('mceRemoveEditor', true, editor.id);\n          }, 1);\n        }\n      });\n    }\n  }, {\n    key: \"getEditorEventVars\",\n    value: function getEditorEventVars(target) {\n      var editable = jQuery(target).closest('.mce-content-body');\n      var editor = tinymce.get(editable.attr('id'));\n      var field = editable.data('field');\n      var module = editable.closest('.fl-module');\n      var nodeId = module.data('node');\n      return {\n        editable: editable,\n        module: module,\n        editor: editor,\n        field: field,\n        nodeId: nodeId\n      };\n    }\n  }, {\n    key: \"onEditorInit\",\n    value: function onEditorInit(editor) {\n      editor.on('change', this.onEditorChange.bind(this));\n      editor.on('keyup', this.onEditorChange.bind(this));\n      editor.on('undo', this.onEditorChange.bind(this));\n      editor.on('redo', this.onEditorChange.bind(this));\n      editor.on('focus', this.onEditorFocus.bind(this));\n      editor.on('blur', this.onEditorBlur.bind(this));\n      editor.on('mousedown', this.onEditorMousedown.bind(this));\n    }\n  }, {\n    key: \"onEditorChange\",\n    value: function onEditorChange(e) {\n      var target = e.target.bodyElement ? e.target.bodyElement : e.target;\n\n      var _this$getEditorEventV = this.getEditorEventVars(target),\n          editor = _this$getEditorEventV.editor,\n          field = _this$getEditorEventV.field,\n          nodeId = _this$getEditorEventV.nodeId;\n\n      var settings = jQuery(\".fl-builder-settings[data-node=\\\"\".concat(nodeId, \"\\\"]\"));\n      var content = editor.getContent();\n\n      if (!settings.length) {\n        return;\n      } else if ('editor' === field.type) {\n        var textarea = settings.find(\"#fl-field-\".concat(field.name, \" textarea.wp-editor-area\"));\n        var editorId = textarea.attr('id');\n\n        if (textarea.closest('.tmce-active').length) {\n          tinymce.get(editorId).setContent(content);\n        } else {\n          textarea.val(content);\n        }\n      } else {\n        var _textarea = document.createElement('textarea');\n\n        _textarea.innerHTML = content;\n        settings.find(\"[name=\\\"\".concat(field.name, \"\\\"]\")).val(_textarea.value);\n      }\n    }\n  }, {\n    key: \"onEditorFocus\",\n    value: function onEditorFocus(e) {\n      var _this$getEditorEventV2 = this.getEditorEventVars(e.target.bodyElement),\n          editable = _this$getEditorEventV2.editable,\n          editor = _this$getEditorEventV2.editor,\n          module = _this$getEditorEventV2.module,\n          field = _this$getEditorEventV2.field,\n          nodeId = _this$getEditorEventV2.nodeId;\n\n      var overlay = module.find('.fl-inline-editor');\n      var settingHTML = this.getSettingHTML(nodeId, field);\n\n      if (!this.matchHTML(editor.getContent(), settingHTML)) {\n        editable.data('original', {\n          settingHTML: settingHTML,\n          editableHTML: editable.html()\n        });\n        editable.css('min-height', editable.height());\n        editor.setContent(settingHTML);\n        editor.selection.select(editor.getBody(), true);\n        editor.selection.collapse(false);\n      }\n\n      if (editor.settings.toolbar) {\n        overlay.removeClass('fl-inline-editor-no-toolbar');\n      } else {\n        overlay.addClass('fl-inline-editor-no-toolbar');\n      }\n\n      module.addClass('fl-editable-focused');\n      this.showEditorOverlay(module);\n      this.showModuleSettings(module);\n    }\n  }, {\n    key: \"onEditorBlur\",\n    value: function onEditorBlur(e) {\n      var _this$getEditorEventV3 = this.getEditorEventVars(e.target.bodyElement),\n          editable = _this$getEditorEventV3.editable,\n          editor = _this$getEditorEventV3.editor,\n          module = _this$getEditorEventV3.module;\n\n      var overlay = module.find('.fl-inline-editor');\n      var original = editable.data('original');\n      overlay.removeClass('fl-inline-editor-no-toolbar');\n      module.removeClass('fl-editable-focused');\n\n      if (original && this.matchHTML(editor.getContent(), original.settingHTML)) {\n        editable.html(original.editableHTML);\n        editable.css('min-height', '');\n      }\n    }\n  }, {\n    key: \"onEditorMousedown\",\n    value: function onEditorMousedown(e) {\n      var _this$getEditorEventV4 = this.getEditorEventVars(e.target),\n          module = _this$getEditorEventV4.module;\n\n      this.showEditorOverlay(module);\n    }\n  }, {\n    key: \"onEditorDrop\",\n    value: function onEditorDrop(e) {\n      e.preventDefault();\n      return false;\n    }\n  }, {\n    key: \"onModuleOverlayClick\",\n    value: function onModuleOverlayClick(e) {\n      var actions = jQuery(e.target).closest('.fl-block-overlay-actions');\n      var module = jQuery(e.currentTarget).closest('.fl-module');\n      var editorId = module.find('.mce-content-body').first().attr('id');\n\n      if (actions.length || FLBuilder._colResizing) {\n        return;\n      }\n\n      if (editorId) {\n        tinymce.get(editorId).focus();\n        module.addClass('fl-editable-focused');\n      }\n    }\n  }, {\n    key: \"onModuleMouseleave\",\n    value: function onModuleMouseleave() {\n      var panels = jQuery('.mce-inline-toolbar-grp:visible, .mce-floatpanel:visible');\n\n      if (!panels.length) {\n        this.hideEditorOverlays();\n        this.showNodeOverlays();\n      }\n    }\n  }, {\n    key: \"showEditorOverlay\",\n    value: function showEditorOverlay(module) {\n      var overlay = module.find('.fl-inline-editor');\n      this.hideNodeOverlays();\n      this.hideEditorOverlays();\n      overlay.show();\n      var active = jQuery('.fl-inline-editor-active-toolbar');\n      active.removeClass('fl-inline-editor-active-toolbar');\n      var toolbar = overlay.find('> .mce-panel:visible');\n      toolbar.addClass('fl-inline-editor-active-toolbar');\n    }\n  }, {\n    key: \"hideEditorOverlays\",\n    value: function hideEditorOverlays() {\n      jQuery('.fl-inline-editor, .mce-floatpanel').hide();\n    }\n  }, {\n    key: \"showNodeOverlays\",\n    value: function showNodeOverlays() {\n      jQuery('.fl-block-overlay').show();\n    }\n  }, {\n    key: \"hideNodeOverlays\",\n    value: function hideNodeOverlays() {\n      jQuery('.fl-block-overlay').hide();\n    }\n  }, {\n    key: \"showModuleSettings\",\n    value: function showModuleSettings(module) {\n      var type = module.data('type');\n      var nodeId = module.data('node');\n      var parentId = module.closest('.fl-col').data('node');\n      var global = module.hasClass('fl-node-global');\n      var settings = jQuery(\".fl-builder-settings[data-node=\\\"\".concat(nodeId, \"\\\"]\"));\n\n      if (!settings.length) {\n        FLBuilder._showModuleSettings({\n          type: type,\n          nodeId: nodeId,\n          parentId: parentId,\n          global: global\n        });\n      }\n    }\n  }, {\n    key: \"getSettingValue\",\n    value: function getSettingValue(nodeId, name) {\n      var form = jQuery(\".fl-builder-settings[data-node=\\\"\".concat(nodeId, \"\\\"]\"));\n      var settings = {};\n\n      if (form.length) {\n        settings = FLBuilder._getSettings(form);\n      } else {\n        settings = FLBuilderSettingsConfig.nodes[nodeId];\n      }\n\n      return settings[name];\n    }\n  }, {\n    key: \"getSettingHTML\",\n    value: function getSettingHTML(nodeId, field) {\n      var html = this.getSettingValue(nodeId, field.name);\n\n      if ('editor' === field.type && '' !== html) {\n        return wp.editor.autop(html);\n      }\n\n      return html;\n    }\n  }, {\n    key: \"matchHTML\",\n    value: function matchHTML(a, b) {\n      return this.cleanHTML(a) === this.cleanHTML(b);\n    }\n  }, {\n    key: \"cleanHTML\",\n    value: function cleanHTML(html) {\n      var re = /(\\r\\n|\\n|\\r)/gm;\n      return jQuery(\"<div>\".concat(html, \"</div>\")).html().trim().replace(re, '');\n    }\n  }, {\n    key: \"render\",\n    value: function render() {\n      return null;\n    }\n  }]);\n\n  return InlineEditor;\n}(react__WEBPACK_IMPORTED_MODULE_0__[\"Component\"]);\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (InlineEditor);\n\n//# sourceURL=webpack:///./src/builder/ui/inline-editor/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/inline-editor/style.scss");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-/***/ }),
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/***/ "./src/builder/ui/inline-editor/style.scss":
-/*!*************************************************!*\
-  !*** ./src/builder/ui/inline-editor/style.scss ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader??ref--5-2!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/inline-editor/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/inline-editor/style.scss?");
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+/**
+ * Handles inline editing for builder layouts.
+ *
+ * @since 2.1
+ * @class InlineEditor
+ */
+
+var InlineEditor = /*#__PURE__*/function (_Component) {
+  _inherits(InlineEditor, _Component);
+
+  var _super = _createSuper(InlineEditor);
+
+  function InlineEditor(props) {
+    var _this;
+
+    _classCallCheck(this, InlineEditor);
+
+    _this = _super.call(this, props);
+    var postId = _this.props.postId;
+    _this.layoutClass = ".fl-builder-content-".concat(postId ? postId : FLBuilderConfig.postId);
+    return _this;
+  }
+
+  _createClass(InlineEditor, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.setupHooks = this.setupHooks.bind(this);
+      this.hooked = false;
+      jQuery(document).on('tinymce-editor-init', this.setupHooks);
+      this.setupHooks();
+    }
+  }, {
+    key: "setupHooks",
+    value: function setupHooks() {
+      if ('ontouchstart' in document) {
+        return;
+      }
+
+      if (!window.tinymce || this.hooked || !FLBuilderConfig.inlineEnabled) {
+        return;
+      }
+
+      var initEditables = this.initEditables.bind(this);
+      var refreshEditables = this.refreshEditables.bind(this); //const destroyEditables = this.destroyEditables.bind( this )
+
+      var destroyAllEditables = this.destroyAllEditables.bind(this);
+      var destroyLoadingEditables = this.destroyLoadingEditables.bind(this);
+
+      if (FLBuilder) {
+        // Init actions
+        FLBuilder.addHook('settingsConfigLoaded', initEditables);
+        FLBuilder.addHook('restartEditingSession', initEditables); // Destroy actions
+
+        FLBuilder.addHook('endEditingSession', destroyAllEditables);
+        FLBuilder.addHook('didStartNodeLoading', destroyLoadingEditables); // Refresh actions
+
+        FLBuilder.addHook('didRenderLayoutComplete', refreshEditables);
+        FLBuilder.addHook('didDeleteRow', refreshEditables);
+        FLBuilder.addHook('didDeleteColumn', refreshEditables);
+        FLBuilder.addHook('didDeleteModule', refreshEditables);
+      }
+
+      this.initEditables();
+      this.hooked = true;
+    }
+  }, {
+    key: "initEditables",
+    value: function initEditables() {
+      var _this2 = this;
+
+      var _FLBuilderSettingsCon = FLBuilderSettingsConfig,
+          editables = _FLBuilderSettingsCon.editables;
+      var content = jQuery(this.layoutClass);
+
+      if (content.length) {
+        for (var key in editables) {
+          var selector = ".fl-module[data-type=\"".concat(key, "\"]:not(.fl-editable):not(.fl-node-global)");
+          content.find(selector).each(function (index, module) {
+            module = jQuery(module);
+            module.addClass('fl-editable');
+            module.delegate('.fl-block-overlay', 'click.fl-inline-editing-init', function (e) {
+              return _this2.initEditable(e, module);
+            });
+          });
+        }
+      }
+    }
+  }, {
+    key: "initEditable",
+    value: function initEditable(e, module) {
+      var _this3 = this;
+
+      var _FLBuilder = FLBuilder,
+          preview = _FLBuilder.preview; // Don't setup if we have a parent that needs to save.
+
+      if (preview) {
+        var isParent = module.parents(".fl-node-".concat(preview.nodeId)).length;
+
+        if (isParent && preview._settingsHaveChanged()) {
+          return;
+        }
+      }
+
+      this.setupEditable(module, function () {
+        _this3.onModuleOverlayClick(e);
+      });
+      module.undelegate('.fl-block-overlay', 'click.fl-inline-editing-init');
+    }
+  }, {
+    key: "setupEditable",
+    value: function setupEditable(module) {
+      var _this4 = this;
+
+      var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      var nodeId = module.data('node');
+      var settings = FLBuilderSettingsConfig.nodes[nodeId];
+
+      if ('undefined' === typeof settings) {
+        return false;
+      }
+
+      var type = module.data('type');
+      var config = FLBuilderSettingsConfig.editables[type];
+      var nodeClass = ".fl-node-".concat(nodeId, " ");
+      var editorId = "fl-inline-editor-".concat(nodeId);
+      var overlay = jQuery("<div id=\"".concat(editorId, "\" class=\"fl-inline-editor\"></div>"));
+      var form = jQuery(".fl-builder-settings[data-node=".concat(nodeId, "]"));
+      var connections = settings.connections;
+      module.append(overlay);
+      module.delegate('.fl-block-overlay', 'click', this.onModuleOverlayClick.bind(this));
+      module.on('mouseleave', this.onModuleMouseleave.bind(this));
+
+      var _loop = function _loop(key) {
+        var data = config[key];
+        var selector = FLBuilderPreview.getFormattedSelector(nodeClass, data.selector);
+        var editable = jQuery(selector);
+        var editableHTML = editable.html();
+        var connection = form.find("#fl-field-".concat(key, " .fl-field-connection-value"));
+
+        if (!editable.length) {
+          return "continue";
+        } else if (connection.length && '' !== connection.val()) {
+          return "continue";
+        } else if (!connection.length && connections && connections[key]) {
+          return "continue";
+        }
+
+        if (editable.hasClass('mce-content-body')) {
+          tinymce.execCommand('mceRemoveEditor', true, editable.attr('id'));
+        } else {
+          editable.data('field', data.field);
+          editable.on('drop', _this4.onEditorDrop.bind(_this4));
+        }
+
+        tinymce.init({
+          selector: selector,
+          inline: true,
+          menubar: false,
+          paste_as_text: true,
+          relative_urls: false,
+          convert_urls: false,
+          skin: FLBuilder ? false : 'lightgray',
+          skin_url: FLBuilder ? false : "".concat(tinyMCEPreInit.baseURL, "/skins/lightgray/"),
+          theme: 'modern',
+          theme_url: "".concat(tinyMCEPreInit.baseURL, "/themes/modern/"),
+          fixed_toolbar_container: "#".concat(editorId),
+          plugins: _this4.getEditorPluginConfig(data.field.type),
+          toolbar: 'string' === typeof data.field.toolbar ? data.field.toolbar : _this4.getEditorToolbarConfig(data.field.type),
+          init_instance_callback: function init_instance_callback(editor) {
+            _this4.onEditorInit(editor);
+            /**
+             * TinyMCE can change the editable's HTML which changes the visual
+             * appearance. To prevent this from happening, we reinsert the original
+             * HTML after the editable has been initialized.
+             */
+
+
+            editable.html(editableHTML);
+            callback();
+          }
+        });
+      };
+
+      for (var key in config) {
+        var _ret = _loop(key);
+
+        if (_ret === "continue") continue;
+      }
+    }
+  }, {
+    key: "getEditorPluginConfig",
+    value: function getEditorPluginConfig(type) {
+      switch (type) {
+        case 'editor':
+          return 'wordpress, wplink, lists, paste';
+
+        default:
+          return 'paste';
+      }
+    }
+  }, {
+    key: "getEditorToolbarConfig",
+    value: function getEditorToolbarConfig(type) {
+      switch (type) {
+        case 'editor':
+          return 'bold italic strikethrough link underline | alignleft aligncenter alignright';
+
+        case 'unit':
+          return false;
+
+        default:
+          return 'bold italic strikethrough underline';
+      }
+    }
+  }, {
+    key: "destroyEditables",
+    value: function destroyEditables(modules) {
+      var editables = modules.find('.mce-content-body');
+      var overlays = modules.find('.fl-inline-editor');
+      var extras = jQuery('.wplink-autocomplete, .ui-helper-hidden-accessible');
+      editables.removeAttr('contenteditable');
+      modules.undelegate('.fl-block-overlay', 'click');
+      modules.off('mouseleave');
+      modules.removeClass('fl-editable');
+      overlays.remove();
+      extras.remove();
+    }
+  }, {
+    key: "destroyAllEditables",
+    value: function destroyAllEditables() {
+      var content = jQuery(this.layoutClass);
+      var modules = content.find('.fl-editable');
+      this.destroyEditables(modules);
+    }
+  }, {
+    key: "destroyLoadingEditables",
+    value: function destroyLoadingEditables(e, node) {
+      var modules = jQuery(node);
+
+      if (!modules.hasClass('fl-module')) {
+        modules = modules.find('.fl-module');
+      }
+
+      this.destroyEditables(modules);
+    }
+  }, {
+    key: "refreshEditables",
+    value: function refreshEditables() {
+      this.initEditables();
+      tinymce.editors.map(function (editor) {
+        if (editor.inline && !jQuery("#".concat(editor.id)).length) {
+          setTimeout(function () {
+            return tinymce.execCommand('mceRemoveEditor', true, editor.id);
+          }, 1);
+        }
+      });
+    }
+  }, {
+    key: "getEditorEventVars",
+    value: function getEditorEventVars(target) {
+      var editable = jQuery(target).closest('.mce-content-body');
+      var editor = tinymce.get(editable.attr('id'));
+      var field = editable.data('field');
+      var module = editable.closest('.fl-module');
+      var nodeId = module.data('node');
+      return {
+        editable: editable,
+        module: module,
+        editor: editor,
+        field: field,
+        nodeId: nodeId
+      };
+    }
+  }, {
+    key: "onEditorInit",
+    value: function onEditorInit(editor) {
+      editor.on('change', this.onEditorChange.bind(this));
+      editor.on('keyup', this.onEditorChange.bind(this));
+      editor.on('undo', this.onEditorChange.bind(this));
+      editor.on('redo', this.onEditorChange.bind(this));
+      editor.on('focus', this.onEditorFocus.bind(this));
+      editor.on('blur', this.onEditorBlur.bind(this));
+      editor.on('mousedown', this.onEditorMousedown.bind(this));
+    }
+  }, {
+    key: "onEditorChange",
+    value: function onEditorChange(e) {
+      var target = e.target.bodyElement ? e.target.bodyElement : e.target;
+
+      var _this$getEditorEventV = this.getEditorEventVars(target),
+          editor = _this$getEditorEventV.editor,
+          field = _this$getEditorEventV.field,
+          nodeId = _this$getEditorEventV.nodeId;
+
+      var settings = jQuery(".fl-builder-settings[data-node=\"".concat(nodeId, "\"]"));
+      var content = editor.getContent();
+
+      if (!settings.length) {
+        return;
+      } else if ('editor' === field.type) {
+        var textarea = settings.find("#fl-field-".concat(field.name, " textarea.wp-editor-area"));
+        var editorId = textarea.attr('id');
+
+        if (textarea.closest('.tmce-active').length) {
+          tinymce.get(editorId).setContent(content);
+        } else {
+          textarea.val(content);
+        }
+      } else {
+        var _textarea = document.createElement('textarea');
+
+        _textarea.innerHTML = content;
+        settings.find("[name=\"".concat(field.name, "\"]")).val(_textarea.value);
+      }
+    }
+  }, {
+    key: "onEditorFocus",
+    value: function onEditorFocus(e) {
+      var _this$getEditorEventV2 = this.getEditorEventVars(e.target.bodyElement),
+          editable = _this$getEditorEventV2.editable,
+          editor = _this$getEditorEventV2.editor,
+          module = _this$getEditorEventV2.module,
+          field = _this$getEditorEventV2.field,
+          nodeId = _this$getEditorEventV2.nodeId;
+
+      var overlay = module.find('.fl-inline-editor');
+      var settingHTML = this.getSettingHTML(nodeId, field);
+
+      if (!this.matchHTML(editor.getContent(), settingHTML)) {
+        editable.data('original', {
+          settingHTML: settingHTML,
+          editableHTML: editable.html()
+        });
+        editable.css('min-height', editable.height());
+        editor.setContent(settingHTML);
+        editor.selection.select(editor.getBody(), true);
+        editor.selection.collapse(false);
+      }
+
+      if (editor.settings.toolbar) {
+        overlay.removeClass('fl-inline-editor-no-toolbar');
+      } else {
+        overlay.addClass('fl-inline-editor-no-toolbar');
+      }
+
+      module.addClass('fl-editable-focused');
+      this.showEditorOverlay(module);
+      this.showModuleSettings(module);
+    }
+  }, {
+    key: "onEditorBlur",
+    value: function onEditorBlur(e) {
+      var _this$getEditorEventV3 = this.getEditorEventVars(e.target.bodyElement),
+          editable = _this$getEditorEventV3.editable,
+          editor = _this$getEditorEventV3.editor,
+          module = _this$getEditorEventV3.module;
+
+      var overlay = module.find('.fl-inline-editor');
+      var original = editable.data('original');
+      overlay.removeClass('fl-inline-editor-no-toolbar');
+      module.removeClass('fl-editable-focused');
+
+      if (original && this.matchHTML(editor.getContent(), original.settingHTML)) {
+        editable.html(original.editableHTML);
+        editable.css('min-height', '');
+      }
+    }
+  }, {
+    key: "onEditorMousedown",
+    value: function onEditorMousedown(e) {
+      var _this$getEditorEventV4 = this.getEditorEventVars(e.target),
+          module = _this$getEditorEventV4.module;
+
+      this.showEditorOverlay(module);
+    }
+  }, {
+    key: "onEditorDrop",
+    value: function onEditorDrop(e) {
+      e.preventDefault();
+      return false;
+    }
+  }, {
+    key: "onModuleOverlayClick",
+    value: function onModuleOverlayClick(e) {
+      var actions = jQuery(e.target).closest('.fl-block-overlay-actions');
+      var module = jQuery(e.currentTarget).closest('.fl-module');
+      var editorId = module.find('.mce-content-body').first().attr('id');
+
+      if (actions.length || FLBuilder._colResizing) {
+        return;
+      }
+
+      if (editorId) {
+        tinymce.get(editorId).focus();
+        module.addClass('fl-editable-focused');
+      }
+    }
+  }, {
+    key: "onModuleMouseleave",
+    value: function onModuleMouseleave() {
+      var panels = jQuery('.mce-inline-toolbar-grp:visible, .mce-floatpanel:visible');
+
+      if (!panels.length) {
+        this.hideEditorOverlays();
+        this.showNodeOverlays();
+      }
+    }
+  }, {
+    key: "showEditorOverlay",
+    value: function showEditorOverlay(module) {
+      var overlay = module.find('.fl-inline-editor');
+      this.hideNodeOverlays();
+      this.hideEditorOverlays();
+      overlay.show();
+      var active = jQuery('.fl-inline-editor-active-toolbar');
+      active.removeClass('fl-inline-editor-active-toolbar');
+      var toolbar = overlay.find('> .mce-panel:visible');
+      toolbar.addClass('fl-inline-editor-active-toolbar');
+    }
+  }, {
+    key: "hideEditorOverlays",
+    value: function hideEditorOverlays() {
+      jQuery('.fl-inline-editor, .mce-floatpanel').hide();
+    }
+  }, {
+    key: "showNodeOverlays",
+    value: function showNodeOverlays() {
+      jQuery('.fl-block-overlay').show();
+    }
+  }, {
+    key: "hideNodeOverlays",
+    value: function hideNodeOverlays() {
+      jQuery('.fl-block-overlay').hide();
+    }
+  }, {
+    key: "showModuleSettings",
+    value: function showModuleSettings(module) {
+      var type = module.data('type');
+      var nodeId = module.data('node');
+      var parentId = module.closest('.fl-col').data('node');
+      var global = module.hasClass('fl-node-global');
+      var settings = jQuery(".fl-builder-settings[data-node=\"".concat(nodeId, "\"]"));
+
+      if (!settings.length) {
+        FLBuilder._showModuleSettings({
+          type: type,
+          nodeId: nodeId,
+          parentId: parentId,
+          global: global
+        });
+      }
+    }
+  }, {
+    key: "getSettingValue",
+    value: function getSettingValue(nodeId, name) {
+      var form = jQuery(".fl-builder-settings[data-node=\"".concat(nodeId, "\"]"));
+      var settings = {};
+
+      if (form.length) {
+        settings = FLBuilder._getSettings(form);
+      } else {
+        settings = FLBuilderSettingsConfig.nodes[nodeId];
+      }
+
+      return settings[name];
+    }
+  }, {
+    key: "getSettingHTML",
+    value: function getSettingHTML(nodeId, field) {
+      var html = this.getSettingValue(nodeId, field.name);
+
+      if ('editor' === field.type && '' !== html) {
+        return wp.editor.autop(html);
+      }
+
+      return html;
+    }
+  }, {
+    key: "matchHTML",
+    value: function matchHTML(a, b) {
+      return this.cleanHTML(a) === this.cleanHTML(b);
+    }
+  }, {
+    key: "cleanHTML",
+    value: function cleanHTML(html) {
+      var re = /(\r\n|\n|\r)/gm;
+      return jQuery("<div>".concat(html, "</div>")).html().trim().replace(re, '');
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return null;
+    }
+  }]);
+
+  return InlineEditor;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InlineEditor);
 
 /***/ }),
 
@@ -411,11 +1021,567 @@ eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// lo
 /*!***********************************************!*\
   !*** ./src/builder/ui/notifications/index.js ***!
   \***********************************************/
-/*! exports provided: NotificationsManager */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"NotificationsManager\", function() { return NotificationsManager; });\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! data */ \"./src/builder/data/index.js\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/notifications/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_2__);\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function\"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }\n\nfunction _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }\n\nfunction _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }\n\nfunction _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === \"object\" || typeof call === \"function\")) { return call; } return _assertThisInitialized(self); }\n\nfunction _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return self; }\n\nfunction _isNativeReflectConstruct() { if (typeof Reflect === \"undefined\" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === \"function\") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }\n\nfunction _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }\n\n\n\n\n\nvar renderHTML = function renderHTML(rawHTML) {\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement('div', {\n    dangerouslySetInnerHTML: {\n      __html: rawHTML\n    }\n  });\n};\n\nvar lite = FLBuilderConfig.lite;\n\nvar Post = function Post(props) {\n  var html = {\n    __html: props.children\n  },\n      date = new Date(props.date).toDateString();\n  var post;\n\n  if ('string' === typeof props.url && '' !== props.url) {\n    var url = lite ? props.url + '?utm_medium=bb-lite&utm_source=builder-ui&utm_campaign=notification-center' : props.url + '?utm_medium=bb-pro&utm_source=builder-ui&utm_campaign=notification-center';\n    post = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"a\", {\n      className: \"fl-builder-ui-post\",\n      href: url,\n      target: \"_blank\",\n      rel: \"noopener noreferrer\"\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-builder-ui-post-date\"\n    }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-builder-ui-post-title\"\n    }, props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-builder-ui-post-content\",\n      dangerouslySetInnerHTML: html\n    }));\n  } else {\n    post = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"span\", {\n      className: \"fl-builder-ui-post\"\n    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-builder-ui-post-date\"\n    }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-builder-ui-post-title\"\n    }, props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n      className: \"fl-builder-ui-post-content\",\n      dangerouslySetInnerHTML: html\n    }));\n  }\n\n  return post;\n};\n/**\n * Notifications Sidebar Panel\n * Displayed when toggleNotifications hook is fired\n */\n\n\nvar NotificationsPanel = /*#__PURE__*/function (_Component) {\n  _inherits(NotificationsPanel, _Component);\n\n  var _super = _createSuper(NotificationsPanel);\n\n  function NotificationsPanel() {\n    _classCallCheck(this, NotificationsPanel);\n\n    return _super.apply(this, arguments);\n  }\n\n  _createClass(NotificationsPanel, [{\n    key: \"getPosts\",\n    value: function getPosts(posts) {\n      var view,\n          renderedPosts,\n          strings = FLBuilderStrings.notifications;\n\n      if (0 < posts.length) {\n        renderedPosts = posts.map(function (item) {\n          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Post, {\n            key: item.id,\n            title: renderHTML(item.title.rendered),\n            date: item.date,\n            url: item.meta._fl_notification[0]\n          }, item.content.rendered);\n        });\n        view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, renderedPosts);\n      } else {\n        view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n          className: \"fl-panel-no-message\"\n        }, strings.none);\n      }\n\n      return view;\n    }\n  }, {\n    key: \"componentDidMount\",\n    value: function componentDidMount() {\n      FLBuilder._initScrollbars();\n    }\n  }, {\n    key: \"componentDidUpdate\",\n    value: function componentDidUpdate() {\n      FLBuilder._initScrollbars();\n    }\n  }, {\n    key: \"render\",\n    value: function render() {\n      var content = this.getPosts(this.props.posts),\n          strings = FLBuilderStrings.notifications;\n      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"fl-notifications-panel\"\n      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"fl-panel-title\"\n      }, strings.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"fl-nanoscroller\",\n        ref: this.setupScroller\n      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n        className: \"fl-nanoscroller-content\"\n      }, content)));\n    }\n  }]);\n\n  return NotificationsPanel;\n}(react__WEBPACK_IMPORTED_MODULE_0__[\"Component\"]);\n/**\n* Non-UI Manager Object. Handles state for the notifications system\n*/\n\n\nvar NotificationsManager = /*#__PURE__*/function (_Component2) {\n  _inherits(NotificationsManager, _Component2);\n\n  var _super2 = _createSuper(NotificationsManager);\n\n  function NotificationsManager(props) {\n    var _this;\n\n    _classCallCheck(this, NotificationsManager);\n\n    _this = _super2.call(this, props);\n    var out = {};\n    var data = FLBuilderConfig.notifications.data; // make sure we have valid json.\n\n    try {\n      out = JSON.parse(data);\n    } catch (e) {\n      out = {};\n    }\n\n    _this.state = {\n      shouldShowNotifications: false,\n      posts: out\n    };\n    FLBuilder.addHook('toggleNotifications', _this.onToggleNotifications.bind(_assertThisInitialized(_this)));\n    return _this;\n  }\n\n  _createClass(NotificationsManager, [{\n    key: \"onToggleNotifications\",\n    value: function onToggleNotifications() {\n      var _getSystemActions = Object(data__WEBPACK_IMPORTED_MODULE_1__[\"getSystemActions\"])(),\n          hideCurrentPanel = _getSystemActions.hideCurrentPanel;\n\n      this.setState({\n        shouldShowNotifications: !this.state.shouldShowNotifications\n      });\n      hideCurrentPanel();\n    }\n  }, {\n    key: \"render\",\n    value: function render() {\n      var _this$state = this.state,\n          shouldShowNotifications = _this$state.shouldShowNotifications,\n          posts = _this$state.posts;\n      FLBuilder.triggerHook('notificationsLoaded');\n      return shouldShowNotifications && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NotificationsPanel, {\n        posts: posts\n      });\n    }\n  }]);\n\n  return NotificationsManager;\n}(react__WEBPACK_IMPORTED_MODULE_0__[\"Component\"]);\n\n//# sourceURL=webpack:///./src/builder/ui/notifications/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "NotificationsManager": () => /* binding */ NotificationsManager
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! data */ "./src/builder/data/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/notifications/style.scss");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var renderHTML = function renderHTML(rawHTML) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement('div', {
+    dangerouslySetInnerHTML: {
+      __html: rawHTML
+    }
+  });
+};
+
+var lite = FLBuilderConfig.lite;
+
+var Post = function Post(props) {
+  var html = {
+    __html: props.children
+  },
+      date = new Date(props.date).toDateString();
+  var post;
+
+  if ('string' === typeof props.url && '' !== props.url) {
+    var url = lite ? props.url + '?utm_medium=bb-lite&utm_source=builder-ui&utm_campaign=notification-center' : props.url + '?utm_medium=bb-pro&utm_source=builder-ui&utm_campaign=notification-center';
+    post = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("a", {
+      className: "fl-builder-ui-post",
+      href: url,
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-builder-ui-post-date"
+    }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-builder-ui-post-title"
+    }, props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-builder-ui-post-content",
+      dangerouslySetInnerHTML: html
+    }));
+  } else {
+    post = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "fl-builder-ui-post"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-builder-ui-post-date"
+    }, date), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-builder-ui-post-title"
+    }, props.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-builder-ui-post-content",
+      dangerouslySetInnerHTML: html
+    }));
+  }
+
+  return post;
+};
+/**
+ * Notifications Sidebar Panel
+ * Displayed when toggleNotifications hook is fired
+ */
+
+
+var NotificationsPanel = /*#__PURE__*/function (_Component) {
+  _inherits(NotificationsPanel, _Component);
+
+  var _super = _createSuper(NotificationsPanel);
+
+  function NotificationsPanel() {
+    _classCallCheck(this, NotificationsPanel);
+
+    return _super.apply(this, arguments);
+  }
+
+  _createClass(NotificationsPanel, [{
+    key: "getPosts",
+    value: function getPosts(posts) {
+      var view,
+          renderedPosts,
+          strings = FLBuilderStrings.notifications;
+
+      if (0 < posts.length) {
+        renderedPosts = posts.map(function (item) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Post, {
+            key: item.id,
+            title: renderHTML(item.title.rendered),
+            date: item.date,
+            url: item.meta._fl_notification[0]
+          }, item.content.rendered);
+        });
+        view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, renderedPosts);
+      } else {
+        view = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+          className: "fl-panel-no-message"
+        }, strings.none);
+      }
+
+      return view;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      FLBuilder._initScrollbars();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      FLBuilder._initScrollbars();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var content = this.getPosts(this.props.posts),
+          strings = FLBuilderStrings.notifications;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        className: "fl-notifications-panel"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        className: "fl-panel-title"
+      }, strings.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        className: "fl-nanoscroller",
+        ref: this.setupScroller
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        className: "fl-nanoscroller-content"
+      }, content)));
+    }
+  }]);
+
+  return NotificationsPanel;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+/**
+* Non-UI Manager Object. Handles state for the notifications system
+*/
+
+
+var NotificationsManager = /*#__PURE__*/function (_Component2) {
+  _inherits(NotificationsManager, _Component2);
+
+  var _super2 = _createSuper(NotificationsManager);
+
+  function NotificationsManager(props) {
+    var _this;
+
+    _classCallCheck(this, NotificationsManager);
+
+    _this = _super2.call(this, props);
+    var out = {};
+    var data = FLBuilderConfig.notifications.data; // make sure we have valid json.
+
+    try {
+      out = JSON.parse(data);
+    } catch (e) {
+      out = {};
+    }
+
+    _this.state = {
+      shouldShowNotifications: false,
+      posts: out
+    };
+    FLBuilder.addHook('toggleNotifications', _this.onToggleNotifications.bind(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(NotificationsManager, [{
+    key: "onToggleNotifications",
+    value: function onToggleNotifications() {
+      var _getSystemActions = (0,data__WEBPACK_IMPORTED_MODULE_1__.getSystemActions)(),
+          hideCurrentPanel = _getSystemActions.hideCurrentPanel;
+
+      this.setState({
+        shouldShowNotifications: !this.state.shouldShowNotifications
+      });
+      hideCurrentPanel();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$state = this.state,
+          shouldShowNotifications = _this$state.shouldShowNotifications,
+          posts = _this$state.posts;
+      FLBuilder.triggerHook('notificationsLoaded');
+      return shouldShowNotifications && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(NotificationsPanel, {
+        posts: posts
+      });
+    }
+  }]);
+
+  return NotificationsManager;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+/***/ }),
+
+/***/ "./src/builder/ui/panel-manager/frame/index.js":
+/*!*****************************************************!*\
+  !*** ./src/builder/ui/panel-manager/frame/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+var Frame = function Frame(_ref) {
+  var className = _ref.className,
+      rest = _objectWithoutProperties(_ref, ["className"]);
+
+  var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('fl-builder-workspace-panel', className);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", _extends({
+    className: classes
+  }, rest));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Frame);
+
+/***/ }),
+
+/***/ "./src/builder/ui/panel-manager/index.js":
+/*!***********************************************!*\
+  !*** ./src/builder/ui/panel-manager/index.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @beaverbuilder/app-core */ "@beaverbuilder/app-core");
+/* harmony import */ var _beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! data */ "./src/builder/data/index.js");
+/* harmony import */ var _frame__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./frame */ "./src/builder/ui/panel-manager/frame/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/panel-manager/style.scss");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+
+
+
+var handleObjectOrFunction = function handleObjectOrFunction(obj) {
+  return 'function' === typeof obj ? obj() : obj;
+};
+
+var PanelManager = function PanelManager() {
+  var _useSystemState = (0,data__WEBPACK_IMPORTED_MODULE_3__.useSystemState)(),
+      currentPanel = _useSystemState.currentPanel,
+      panels = _useSystemState.panels,
+      colorScheme = _useSystemState.colorScheme;
+
+  var panel = null;
+
+  if (currentPanel in panels) {
+    panel = panels[currentPanel];
+  } else {
+    return null;
+  }
+
+  var _panel = panel,
+      routerProps = _panel.routerProps,
+      onHistoryChanged = _panel.onHistoryChanged,
+      root = _panel.root,
+      render = _panel.render,
+      _panel$frame = _panel.frame,
+      frame = _panel$frame === void 0 ? _frame__WEBPACK_IMPORTED_MODULE_4__.default : _panel$frame,
+      panelClassName = _panel.className,
+      wrapClassName = _panel.wrapClassName;
+  var Frame = false === frame ? react__WEBPACK_IMPORTED_MODULE_0__.Fragment : frame;
+  var PanelContent = root ? root : render;
+  /* support legacy render prop */
+
+  var wrapClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()(_defineProperty({}, "fluid-color-scheme-".concat(colorScheme), colorScheme), wrapClassName);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: wrapClasses
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Frame, {
+    className: false !== frame && panelClassName
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_beaverbuilder_app_core__WEBPACK_IMPORTED_MODULE_2__.Root, {
+    routerProps: handleObjectOrFunction(routerProps),
+    onHistoryChanged: onHistoryChanged,
+    colorScheme: colorScheme
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(PanelContent, null))));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PanelManager);
+
+/***/ }),
+
+/***/ "./src/builder/ui/shortcuts-panel/index.js":
+/*!*************************************************!*\
+  !*** ./src/builder/ui/shortcuts-panel/index.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _panel__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./panel */ "./src/builder/ui/shortcuts-panel/panel/index.js");
+/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! data */ "./src/builder/data/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/shortcuts-panel/style.scss");
+
+
+
+
+
+var ShortcutsList = function ShortcutsList(_ref) {
+  var shortcuts = _ref.shortcuts;
+
+  if (0 === Object.keys(shortcuts).length) {
+    return null;
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", {
+    className: "fl-ui-shortcut-list"
+  }, Object.values(shortcuts).map(function (item, i) {
+    var label = item.label,
+        keyLabel = item.keyLabel;
+    var key = {
+      __html: keyLabel
+    };
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
+      key: i
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      className: "fl-ui-shortcut-item-keycode",
+      dangerouslySetInnerHTML: key
+    }));
+  }));
+};
+
+var ShortcutsPanel = function ShortcutsPanel() {
+  var _getSystemActions = (0,data__WEBPACK_IMPORTED_MODULE_2__.getSystemActions)(),
+      setShouldShowShortcuts = _getSystemActions.setShouldShowShortcuts;
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_panel__WEBPACK_IMPORTED_MODULE_1__.Panel, {
+    title: "Keyboard Shortcuts",
+    onClose: function onClose() {
+      return setShouldShowShortcuts(false);
+    },
+    className: "fl-ui-help",
+    style: {
+      width: 360,
+      maxWidth: '95vw'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(ShortcutsList, {
+    shortcuts: FLBuilderConfig.keyboardShortcuts
+  }));
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ShortcutsPanel);
+
+/***/ }),
+
+/***/ "./src/builder/ui/shortcuts-panel/panel/index.js":
+/*!*******************************************************!*\
+  !*** ./src/builder/ui/shortcuts-panel/panel/index.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Panel": () => /* binding */ Panel
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _art__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../art */ "./src/builder/ui/art/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./style.scss */ "./src/builder/ui/shortcuts-panel/panel/style.scss");
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+
+
+
+var Panel = function Panel(_ref) {
+  var className = _ref.className,
+      children = _ref.children,
+      title = _ref.title,
+      actions = _ref.actions,
+      _ref$showCloseButton = _ref.showCloseButton,
+      showCloseButton = _ref$showCloseButton === void 0 ? true : _ref$showCloseButton,
+      _ref$onClose = _ref.onClose,
+      onClose = _ref$onClose === void 0 ? function () {} : _ref$onClose,
+      rest = _objectWithoutProperties(_ref, ["className", "children", "title", "actions", "showCloseButton", "onClose"]);
+
+  var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()({
+    'fl-ui-panel-area': true
+  }, className);
+
+  var TrailingActions = function TrailingActions() {
+    if (!actions && !showCloseButton) {
+      return null;
+    }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      className: "fl-ui-panel-trailing-actions"
+    }, actions, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      onClick: onClose,
+      className: "fl-ui-button"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_art__WEBPACK_IMPORTED_MODULE_2__.Icon.Close, null)));
+  };
+
+  var stopProp = function stopProp(e) {
+    return e.stopPropagation();
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: classes,
+    onClick: onClose
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", _extends({
+    className: "fl-ui-panel"
+  }, rest, {
+    onClick: stopProp
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "fl-ui-panel-topbar"
+  }, title && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "fl-ui-panel-title"
+  }, title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(TrailingActions, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "fl-ui-panel-content"
+  }, children)));
+};
+
+/***/ }),
+
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/***/ ((module, exports) => {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
+/***/ "./src/builder/ui/art/style.scss":
+/*!***************************************!*\
+  !*** ./src/builder/ui/art/style.scss ***!
+  \***************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/builder/ui/inline-editor/style.scss":
+/*!*************************************************!*\
+  !*** ./src/builder/ui/inline-editor/style.scss ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
@@ -423,77 +1589,75 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /*!*************************************************!*\
   !*** ./src/builder/ui/notifications/style.scss ***!
   \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader??ref--5-2!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/notifications/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/notifications/style.scss?");
-
-/***/ }),
-
-/***/ "./src/builder/ui/workspace/index.js":
-/*!*******************************************!*\
-  !*** ./src/builder/ui/workspace/index.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ \"classnames\");\n/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! data */ \"./src/builder/data/index.js\");\n/* harmony import */ var fluid_ui__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fluid/ui */ \"fluid/ui\");\n/* harmony import */ var fluid_ui__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fluid_ui__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ \"./src/builder/ui/workspace/style.scss\");\n/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_5__);\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nfunction _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }\n\nfunction _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }\n\nfunction _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }\n\n\n\n\n\n\n\n\nvar Panel = function Panel(_ref) {\n  var children = _ref.children,\n      className = _ref.className,\n      rest = _objectWithoutProperties(_ref, [\"children\", \"className\"]);\n\n  var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()({\n    'fl-builder-workspace-panel': true\n  }, className);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", _extends({\n    className: classes\n  }, rest), children);\n};\n\nvar Workspace = function Workspace(_ref2) {\n  var className = _ref2.className;\n\n  var _useSystemState = Object(data__WEBPACK_IMPORTED_MODULE_3__[\"useSystemState\"])(),\n      currentPanel = _useSystemState.currentPanel,\n      panels = _useSystemState.panels,\n      colorScheme = _useSystemState.colorScheme;\n\n  var panel = null;\n\n  if (currentPanel in panels) {\n    panel = panels[currentPanel];\n  }\n\n  if (!panel) return null;\n  var _panel = panel,\n      routerProps = _panel.routerProps,\n      onHistoryChanged = _panel.onHistoryChanged,\n      render = _panel.render;\n  var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()(_defineProperty({\n    'fl-builder-workspace': true\n  }, \"fluid-color-scheme-\".concat(colorScheme), colorScheme), className);\n  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(\"div\", {\n    className: classes\n  }, panel && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(fluid_ui__WEBPACK_IMPORTED_MODULE_4__[\"App\"], {\n    routerProps: 'function' === typeof routerProps ? routerProps() : routerProps,\n    onHistoryChanged: onHistoryChanged,\n    colorScheme: colorScheme\n  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Panel, {\n    className: panel.className\n  }, render())));\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Workspace);\n\n//# sourceURL=webpack:///./src/builder/ui/workspace/index.js?");
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
 
 /***/ }),
 
-/***/ "./src/builder/ui/workspace/style.scss":
-/*!*********************************************!*\
-  !*** ./src/builder/ui/workspace/style.scss ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./src/builder/ui/panel-manager/style.scss":
+/*!*************************************************!*\
+  !*** ./src/builder/ui/panel-manager/style.scss ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("// style-loader: Adds some css to the DOM by adding a <style> tag\n\n// load the styles\nvar content = __webpack_require__(/*! !../../../../node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/css-loader??ref--5-2!../../../../node_modules/sass-loader/lib/loader.js??ref--5-3!./style.scss */ \"./node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/css-loader/index.js?!./node_modules/sass-loader/lib/loader.js?!./src/builder/ui/workspace/style.scss\");\nif(typeof content === 'string') content = [[module.i, content, '']];\n// Prepare cssTransformation\nvar transform;\n\nvar options = {\"sourceMap\":true}\noptions.transform = transform\n// add the styles to the DOM\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\nif(content.locals) module.exports = content.locals;\n// Hot Module Replacement\nif(false) {}\n\n//# sourceURL=webpack:///./src/builder/ui/workspace/style.scss?");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
-/***/ }),
-
-/***/ "@wordpress/i18n":
-/*!**************************!*\
-  !*** external "wp.i18n" ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("module.exports = wp.i18n;\n\n//# sourceURL=webpack:///external_%22wp.i18n%22?");
 
 /***/ }),
 
-/***/ "classnames":
-/*!********************************************!*\
-  !*** external "FL.UID.vendors.classnames" ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./src/builder/ui/shortcuts-panel/panel/style.scss":
+/*!*********************************************************!*\
+  !*** ./src/builder/ui/shortcuts-panel/panel/style.scss ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("module.exports = FL.UID.vendors.classnames;\n\n//# sourceURL=webpack:///external_%22FL.UID.vendors.classnames%22?");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
-/***/ }),
-
-/***/ "fluid/data":
-/*!******************************!*\
-  !*** external "FL.UID.data" ***!
-  \******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("module.exports = FL.UID.data;\n\n//# sourceURL=webpack:///external_%22FL.UID.data%22?");
 
 /***/ }),
 
-/***/ "fluid/ui":
-/*!****************************!*\
-  !*** external "FL.UID.ui" ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./src/builder/ui/shortcuts-panel/style.scss":
+/*!***************************************************!*\
+  !*** ./src/builder/ui/shortcuts-panel/style.scss ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("module.exports = FL.UID.ui;\n\n//# sourceURL=webpack:///external_%22FL.UID.ui%22?");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/builder/ui/style.scss":
+/*!***********************************!*\
+  !*** ./src/builder/ui/style.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "@beaverbuilder/app-core":
+/*!***************************************!*\
+  !*** external "FL.vendors.BBAppCore" ***!
+  \***************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = FL.vendors.BBAppCore;
 
 /***/ }),
 
@@ -501,10 +1665,10 @@ eval("module.exports = FL.UID.ui;\n\n//# sourceURL=webpack:///external_%22FL.UID
 /*!************************!*\
   !*** external "React" ***!
   \************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
-eval("module.exports = React;\n\n//# sourceURL=webpack:///external_%22React%22?");
+"use strict";
+module.exports = React;
 
 /***/ }),
 
@@ -512,11 +1676,84 @@ eval("module.exports = React;\n\n//# sourceURL=webpack:///external_%22React%22?"
 /*!***************************!*\
   !*** external "ReactDOM" ***!
   \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ ((module) => {
 
-eval("module.exports = ReactDOM;\n\n//# sourceURL=webpack:///external_%22ReactDOM%22?");
+"use strict";
+module.exports = ReactDOM;
 
 /***/ })
 
-/******/ });
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => module['default'] :
+/******/ 				() => module;
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	// startup
+/******/ 	// Load entry module
+/******/ 	__webpack_require__("./src/builder/index.js");
+/******/ 	// This entry module used 'exports' so it can't be inlined
+/******/ })()
+;
+//# sourceMappingURL=builder.bundle.js.map

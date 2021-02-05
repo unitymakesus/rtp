@@ -1,3 +1,13 @@
+/*!
+ * twentytwenty
+ *
+ * Licensed under MIT License 
+ * or ISC License
+ *
+ * https://github.com/zurb/twentytwenty
+ * Copyright 2018 zurb
+ */
+
 (function($){
 
   $.fn.twentytwenty = function(options) {

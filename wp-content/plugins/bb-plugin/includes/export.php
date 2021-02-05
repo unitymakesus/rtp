@@ -211,7 +211,7 @@ function fl_export_wp( $post_ids = array() ) {
 	}
 
 	/**
-	 * Ouput all navigation menu terms
+	 * Output all navigation menu terms
 	 *
 	 * @since 3.1.0
 	 */

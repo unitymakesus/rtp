@@ -9,20 +9,20 @@ export const before = {}
 export const after = {
 	TOGGLE_PANEL: ( action, store ) => {
 		const { currentPanel } = store.getState()
-		const html = document.querySelector('html')
+		const html = document.querySelector( 'html' )
 
 		if ( currentPanel ) {
 			FLBuilder._closePanel()
 		}
 
-		if ( 'fl/assistant' === currentPanel ) {
+		if ( 'assistant' === currentPanel ) {
 			html.classList.add( 'fl-builder-assistant-visible' )
 		} else {
 			html.classList.remove( 'fl-builder-assistant-visible' )
 		}
 	},
-	HIDE_CURRENT_PANEL: ( action, store ) => {
-		const html = document.querySelector('html')
+	HIDE_CURRENT_PANEL: () => {
+		const html = document.querySelector( 'html' )
 		html.classList.remove( 'fl-builder-assistant-visible' )
 	}
 }

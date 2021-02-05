@@ -145,7 +145,7 @@ class FLBuilderArt {
 
 		/**
 		 * Setup a preset to reference the shape's initial configuration later
-		 * This is so when you choose a shape, we can also setup other fields for the optimal inital appearance.
+		 * This is so when you choose a shape, we can also setup other fields for the optimal initial appearance.
 		 */
 		FLBuilderSettingsPresets::register( 'shape', array(
 			'name'     => $args['name'],
@@ -584,7 +584,11 @@ class FLBuilderArt {
 
 				$shape_name = $settings->{ $prefix . 'shape' };
 				$presets    = FLBuilderSettingsPresets::get_presets();
-				$preset     = $presets['shape'][ $shape_name ];
+				$preset     = ( isset( $presets['shape'][ $shape_name ] ) ) ? $presets['shape'][ $shape_name ] : false;
+
+				if ( ! $preset ) {
+					continue;
+				}
 
 				FLBuilderCSS::rule( array(
 					'selector' => ".fl-node-$id .fl-builder-$position-edge-layer",

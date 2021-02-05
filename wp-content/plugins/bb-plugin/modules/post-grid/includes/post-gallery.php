@@ -23,7 +23,7 @@
 		) );
 
 		/**
-		 * Either display the thumbnail if availble or show default no-image.
+		 * Either display the thumbnail if available or show default no-image.
 		 */
 		if ( '' !== $image ) {
 			echo $image;

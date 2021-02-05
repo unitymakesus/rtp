@@ -46,10 +46,8 @@
 
 			fileNamePlaceholder = fileNameInput.attr( 'placeholder' );
 			fileUrlPlaceholder = fileUrlInput.attr( 'placeholder' );
-			fileNameInput.val( '' ).attr( 'placeholder', as3cf_woo.strings.input_placeholder );
-			fileUrlInput.val( '' ).attr( 'placeholder', as3cf_woo.strings.input_placeholder );
-
-			isAmazonS3Attachment();
+			fileNameInput.val( attachment.title ).attr( 'placeholder', fileNamePlaceholder ).trigger( 'change' );
+			fileUrlInput.val( attachment.url ).attr( 'placeholder', fileUrlPlaceholder ).trigger( 'change' );
 		} );
 
 		// Ensure files are uploaded to the woocommerce_uploads directory
@@ -60,40 +58,6 @@
 		} );
 
 		fileFrame.open();
-	}
-
-	/**
-	 * Get S3 attachment info via ajax call
-	 *
-	 * @return void
-	 */
-	function isAmazonS3Attachment() {
-		wp.ajax.post( 'as3cf_woo_is_amazon_provider_attachment', {
-			_nonce: as3cf_woo.nonces.is_amazon_provider_attachment,
-			attachment_id: attachment.id
-		} ).done( _.bind( updateFileInputs, this ) );
-	}
-
-	/**
-	 * Update file inputs
-	 *
-	 * @param bool response
-	 *
-	 * @return void
-	 */
-	function updateFileInputs( response ) {
-		var output = attachment.url;
-
-		if ( response ) {
-			var shortcode = _.template( '[amazon_s3 id="<%= id %>"]' );
-
-			output = shortcode( {
-				id: attachment.id
-			} );
-		}
-
-		fileNameInput.val( attachment.title ).attr( 'placeholder', fileNamePlaceholder ).trigger( 'change' );
-		fileUrlInput.val( output ).attr( 'placeholder', fileUrlPlaceholder ).trigger( 'change' );
 	}
 
 	// Replace WooCommerce upload file click handler

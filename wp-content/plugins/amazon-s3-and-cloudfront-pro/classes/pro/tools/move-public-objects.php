@@ -131,7 +131,7 @@ class Move_Public_Objects extends Move_Objects {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return __( 'Would you like to move your offloaded media files to paths that match the current storage path settings? All existing offloaded media URLs will be updated to reference the new paths.', 'amazon-s3-and-cloudfront' );
 	}
 

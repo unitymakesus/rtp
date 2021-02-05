@@ -198,7 +198,7 @@ abstract class Background_Tool extends Tool {
 	 *
 	 * @return string
 	 */
-	public function get_more_info_text() {
+	public static function get_more_info_text() {
 		return '';
 	}
 

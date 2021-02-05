@@ -48,6 +48,7 @@ FLBuilder::register_module(
 							'type'        => 'unit',
 							'label'       => __( 'Image / Icon Size', 'uabb' ),
 							'placeholder' => '40',
+							'responsive'  => true,
 							'units'       => array( 'px' ),
 							'slider'      => array(
 								'px' => array(

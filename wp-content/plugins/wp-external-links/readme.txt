@@ -2,9 +2,9 @@
 Contributors: WebFactory
 Tags: new window, new tab, external links, nofollow, noopener, ugc, sponsored, follow, dofollow, seo, noreferrer, internal links, target, links, link, internal link, external link
 Requires at least: 4.2
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 2.47
+Stable tag: 2.48
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,8 +41,6 @@ The plugin filters the output and changes the links on the fly. The real content
 When deactivating the plugin, all contents will be the same as it was before.
 
 **Like the plugin?** [Rate it](http://wordpress.org/support/view/plugin-reviews/wp-external-links) to support the development.
-
-[](http://coderisk.com/wp/plugin/wp-external-links/RIPS-6c7cnI_6Et)
 
 == Installation ==
 
@@ -243,6 +241,11 @@ See [FAQ](https://wordpress.org/plugins/wp-external-links/faq/) for more info.
 
 
 == Changelog ==
+
+= 2.48 =
+ * 2021-01-30
+ * added flyout menu
+ * removed promo for WP 301 Redirects PRO
 
 = 2.47 =
  * 2020-10-05

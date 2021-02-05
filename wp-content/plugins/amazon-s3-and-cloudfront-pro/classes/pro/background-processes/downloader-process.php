@@ -44,7 +44,7 @@ class Downloader_Process extends Background_Tool_Process {
 		$result = $this->as3cf->download_attachment_from_provider( $attachment_id, true, true );
 
 		if ( is_wp_error( $result ) ) {
-			if ( $this->count_errors() <= 100 ) {
+			if ( $this->count_errors() < 100 ) {
 				foreach ( $result->get_error_messages() as $error_message ) {
 					$error_msg = sprintf( __( 'Error downloading to server - %s', 'amazon-s3-and-cloudfront' ), $error_message );
 					$this->record_error( $blog_id, $attachment_id, $error_msg );

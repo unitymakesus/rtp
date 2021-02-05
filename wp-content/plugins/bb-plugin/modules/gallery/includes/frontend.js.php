@@ -28,7 +28,9 @@
 							var parent,
 								item,
 								newIndex = 0,
-								newItems = [];
+								newItems = [],
+								currItem = this.currItem,
+								newCurrItemIndex = -1;
 
 							$(this.items).each(function(i, data){
 								item = $(this);
@@ -40,9 +42,17 @@
 								newIndex = $(parent).attr('id').split('-').pop();
 								newIndex = newIndex > 0 ? newIndex - 1 : 0;
 								newItems[newIndex] = this;
+
+								if ( currItem.src === this.src ){
+									newCurrItemIndex = newIndex;
+								}
 							});
 
 							this.items = newItems;
+
+							if ( newCurrItemIndex >= 0 ){
+								this.goTo( newCurrItemIndex );
+							}
 						}
 						<?php endif; ?>
 					}

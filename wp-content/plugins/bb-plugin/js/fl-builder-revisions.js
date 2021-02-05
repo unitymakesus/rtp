@@ -76,7 +76,9 @@
 				}
 			}
 
-			FLBuilder.MainMenu.renderPanel( 'revisions' )
+			if ( undefined !== FLBuilder.MainMenu ) {
+				FLBuilder.MainMenu.renderPanel( 'revisions' )
+			}
 		},
 
 		/**

@@ -70,7 +70,7 @@ if ( UABB_Compatibility::$version_bb_check ) {
 		<?php if ( ! empty( $img_link ) ) : ?>
 		<a href="<?php echo $img_link; ?>" target="<?php echo esc_attr( $link_url_target ); ?>" <?php BB_Ultimate_Addon_Helper::get_link_rel( $link_url_target, $link_url_nofollow, 1 ); //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> itemprop="url">
 		<?php endif; ?>
-		<img class="uabb-retina-img" src="<?php echo $default_img_src; ?>" itemprop="image" srcset="<?php echo $default_img_src . ' 1x,' . $retina_img_src . ' 2x'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
+		<img class="uabb-retina-img" src="<?php echo $default_img_src; ?>" <?php echo ( '' !== $settings->custom_alt_text ? 'alt="' . $settings->custom_alt_text . '"' : '' ); ?> itemprop="image" srcset="<?php echo $default_img_src . ' 1x,' . $retina_img_src . ' 2x'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"/>
 		<?php if ( ! empty( $img_link ) ) : ?>
 		</a>
 		<?php endif; ?>

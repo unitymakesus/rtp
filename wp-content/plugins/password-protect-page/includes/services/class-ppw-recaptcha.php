@@ -7,6 +7,11 @@
 class PPW_Recaptcha {
 	const TYPE_PARAM = 'ppwp_type';
 	const TYPE_VALUE = 'recaptcha';
+
+	const RECAPTCHA_V3_TYPE = 'recaptcha_v3';
+	const RECAPTCHA_V2_CHECKBOX_TYPE = 'recaptcha_v2_checkbox';
+	const RECAPTCHA_V2_INVISIBLE_TYPE = 'recaptcha_v2_invisible';
+
 	private $show_message = false;
 
 	/**
@@ -45,6 +50,8 @@ class PPW_Recaptcha {
 		add_filter( 'ppwp_customize_ppf', array( $this, 'maybe_customize_error_message' ), 25 );
 		add_filter( 'ppwp_ppf_redirect_url', array( $this, 'maybe_add_blocked_message' ), 20, 2 );
 		add_filter( 'ppwp_ppf_referrer_url', array( $this, 'maybe_remove_recaptcha_query' ), 10, 2 );
+		add_filter( 'ppwpea_recaptcha_v2_site_key', array( $this, 'get_ppwpea_recaptcha_v2_api_key' ), 10 );
+		add_filter( 'ppwpea_recaptcha_v2_secret', array( $this, 'get_ppwpea_recaptcha_v2_api_secret' ), 10 );
 	}
 
 	/**
@@ -148,13 +155,13 @@ class PPW_Recaptcha {
 	 * @return bool
 	 */
 	public function is_valid_recaptcha() {
-		if ( ! isset( $_POST['ppw_recaptcha_response'] ) ) {
+		if ( ! isset( $_POST['g-recaptcha-response'] ) ) {
 			$this->show_message = true;
 
 			return false;
 		}
 
-		$result = $this->verify_recaptcha( $_POST['ppw_recaptcha_response'] );
+		$result = $this->verify_recaptcha( $_POST['g-recaptcha-response'] );
 		if ( ! $result['success'] ) {
 			$this->show_message = true;
 
@@ -179,6 +186,133 @@ class PPW_Recaptcha {
 	}
 
 	/**
+	 * Get setting api key of recaptcha with current type.
+	 *
+	 * @param string $type Recaptcha type.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	public function get_setting_api_key( $type = '', $default = '' ) {
+		if ( empty( $type ) ) {
+			$type = $this->get_recaptcha_type();
+		}
+
+		switch ( $type ) {
+			case self::RECAPTCHA_V3_TYPE:
+				return $this->get_recaptcha_v3_api_key();
+			case self::RECAPTCHA_V2_CHECKBOX_TYPE:
+				return $this->get_recaptcha_v2_api_key();
+			default:
+				return $default;
+		}
+	}
+
+	/**
+	 * Get setting api secret of recaptcha with current type.
+	 *
+	 * @param string $type Recaptcha type.
+	 * @param string $default Default value.
+	 *
+	 * @return string
+	 */
+	public function get_setting_api_secret( $type = '', $default = '' ) {
+		if ( empty( $type ) ) {
+			$type = $this->get_recaptcha_type();
+		}
+
+		switch ( $type ) {
+			case self::RECAPTCHA_V3_TYPE:
+				return $this->get_recaptcha_v3_api_secret();
+			case self::RECAPTCHA_V2_CHECKBOX_TYPE:
+				return $this->get_recaptcha_v2_api_secret();
+			default:
+				return $default;
+		}
+	}
+
+	/**
+	 * Get recaptcha v3 API key.
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_v3_api_key() {
+		return ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_API_KEY, PPW_Constants::EXTERNAL_OPTIONS );
+	}
+
+	/**
+	 * Get recaptcha v3 API secret.
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_v3_api_secret() {
+		return ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_API_SECRET, PPW_Constants::EXTERNAL_OPTIONS );
+	}
+
+	/**
+	 * Get recaptcha v2 API key.
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_v2_api_key() {
+		return ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_V2_CHECKBOX_API_KEY, PPW_Constants::EXTERNAL_OPTIONS );
+	}
+
+	/**
+	 * Get recaptcha v2 API secret.
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_v2_api_secret() {
+		return ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_V2_CHECKBOX_API_SECRET, PPW_Constants::EXTERNAL_OPTIONS );
+	}
+
+	/**
+	 * Get recaptcha type.
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_type() {
+		$recaptcha_type = ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_TYPE, PPW_Constants::EXTERNAL_OPTIONS );
+
+		return $recaptcha_type ? $recaptcha_type : self::RECAPTCHA_V3_TYPE;
+	}
+
+	/**
+	 * Load recaptcha v2 javascript.
+	 */
+	public function load_recaptcha_v2_js() {
+		ob_start();
+		?>
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<?php
+
+		echo ob_get_clean();
+	}
+
+	/**
+	 * Load recaptcha v3 javascript.
+	 */
+	public function load_recaptcha_v3_js() {
+		$recaptcha_key = $this->get_recaptcha_v3_api_key();
+
+		ob_start();
+		?>
+		<script src="https://www.google.com/recaptcha/api.js?render=<?php echo $recaptcha_key; ?>"></script>
+		<script>
+		  grecaptcha.ready(function () {
+			grecaptcha.execute('<?php echo $recaptcha_key; ?>', {action: 'enter_password'}).then(function (token) {
+			  var recaptchaResponse = document.getElementById('ppwRecaptchaResponse');
+			  recaptchaResponse.value = token;
+			});
+		  });
+		</script>
+		<?php
+
+		echo ob_get_clean();
+	}
+
+	/**
 	 * Verify google recaptcha V3.
 	 *
 	 * @param string $recaptcha_response Recaptcha response.
@@ -188,14 +322,16 @@ class PPW_Recaptcha {
 	public function verify_recaptcha( $recaptcha_response ) {
 		$default = array(
 			'success' => false,
-			'message' => ''
+			'message' => '',
 		);
 		if ( ! $recaptcha_response ) {
 			return $default;
 		}
+		$secret = $this->get_setting_api_secret();
+		if ( ! $secret ) {
+			return $default;
+		}
 
-		$secret      = ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_API_SECRET, PPW_Constants::EXTERNAL_OPTIONS );
-		$limit_score = $this->get_limit_score();
 		$response = wp_remote_post(
 			'https://www.google.com/recaptcha/api/siteverify',
 			array(
@@ -223,12 +359,39 @@ class PPW_Recaptcha {
 		// Whether this request was a valid reCAPTCHA token for your site.
 		$success = isset( $body->success ) && $body->success;
 
-		// The score for this request (0.0 - 1.0) 1.0 is very likely a good interaction, 0.0 is very likely a bot.
-		$score = isset( $body->score ) ? (double) $body->score : 0;
+		$external = true;
+		if ( $this->get_recaptcha_type() === self::RECAPTCHA_V3_TYPE ) {
+			$limit_score = $this->get_limit_score();
 
-		$default['success'] = $success && $score > $limit_score;
+			// The score for this request (0.0 - 1.0) 1.0 is very likely a good interaction, 0.0 is very likely a bot.
+			$score    = isset( $body->score ) ? (double) $body->score : 0;
+			$external = $score > $limit_score;
+		}
+		$default['success'] = $success && $external;
 
 		return $default;
+	}
+
+	/**
+	 * Load PPWPEA api key.
+	 *
+	 * @param string $key Recaptcha API key.
+	 *
+	 * @return string
+	 */
+	public function get_ppwpea_recaptcha_v2_api_key( $key ) {
+		return $this->get_recaptcha_v2_api_key();
+	}
+
+	/**
+	 * Load PPWPEA api secret.
+	 *
+	 * @param string $secret Recaptcha API secret.
+	 *
+	 * @return string
+	 */
+	public function get_ppwpea_recaptcha_v2_api_secret( $secret ) {
+		return $this->get_recaptcha_v2_api_secret();
 	}
 
 }

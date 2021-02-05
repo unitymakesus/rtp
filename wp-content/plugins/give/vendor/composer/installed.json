@@ -232,7 +232,6 @@
                     "homepage": "https://github.com/paypal/paypalhttp_php/contributors"
                 }
             ],
-            "abandoned": true,
             "install-path": "../paypal/paypalhttp"
         },
         {

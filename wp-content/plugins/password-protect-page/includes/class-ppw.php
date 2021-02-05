@@ -307,6 +307,7 @@ class Password_Protect_Page {
 			PPW_Customizer_Upsell::get_instance();
 
 			$this->loader->add_action( 'wp_ajax_ppw_free_set_password', $plugin_admin, 'ppw_free_set_password' );
+			$this->loader->add_filter( 'ppwp_customize_password_form', $plugin_admin, 'render_custom_below_description' );
 			$this->loader->add_action( 'wp_ajax_ppw_free_update_general_settings', $plugin_admin, 'ppw_free_update_general_settings' );
 			$this->loader->add_action( 'wp_ajax_ppw_free_update_entire_site_settings', $plugin_admin, 'ppw_free_update_entire_site_settings' );
 			$this->loader->add_action( 'admin_init', $plugin_admin, 'handle_admin_init_when_pro_is_not_activate' );
@@ -356,6 +357,7 @@ class Password_Protect_Page {
 		$this->loader->add_action( 'wp_ajax_ppw_free_subscribe_request', $plugin_admin, 'handle_subscribe_request' );
 		$this->loader->add_action( 'ppw_render_pcp_content_general', $plugin_admin, 'ppw_free_render_content_pcp_general_tab', 10 );
 		$this->loader->add_action( 'ppw_render_external_content_recaptcha', $plugin_admin, 'ppw_free_render_content_external_recaptcha', 10 );
+		$this->loader->add_action( 'ppw_render_external_content_configuration', $plugin_admin, 'ppw_free_render_content_external_configuration', 10 );
 		$this->loader->add_action( 'plugin_row_meta', $plugin_admin, 'register_plugins_links', 10, 2 );
 
 		PPW_Elementor::get_instance( $this->loader );

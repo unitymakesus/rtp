@@ -1,5 +1,15 @@
 <?php
 
+
+
+
+
+
+
+
+
+
+
 namespace Composer;
 
 use Composer\Semver\VersionParser;
@@ -14,12 +24,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '2.9.5',
-    'version' => '2.9.5.0',
+    'pretty_version' => '2.9.6',
+    'version' => '2.9.6.0',
     'aliases' => 
     array (
     ),
-    'reference' => 'dd8edc5c0014caf39177d4282030057000fff4da',
+    'reference' => '69c36170dc5980da07c9ff50eeb6e5b2c931954b',
     'name' => 'impress-org/give',
   ),
   'versions' => 
@@ -35,12 +45,12 @@ private static $installed = array (
     ),
     'impress-org/give' => 
     array (
-      'pretty_version' => '2.9.5',
-      'version' => '2.9.5.0',
+      'pretty_version' => '2.9.6',
+      'version' => '2.9.6.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'dd8edc5c0014caf39177d4282030057000fff4da',
+      'reference' => '69c36170dc5980da07c9ff50eeb6e5b2c931954b',
     ),
     'paypal/paypal-checkout-sdk' => 
     array (

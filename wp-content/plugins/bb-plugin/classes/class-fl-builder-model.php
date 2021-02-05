@@ -1612,7 +1612,7 @@ final class FLBuilderModel {
 	 * @param object $data The data array to delete from.
 	 * @return void
 	 */
-	static public function delete_child_nodes_from_data( $parent = null, &$data ) {
+	static public function delete_child_nodes_from_data( $parent, &$data ) {
 		$children = self::get_nodes( null, $parent );
 
 		foreach ( $children as $child_id => $child ) {
@@ -1780,7 +1780,7 @@ final class FLBuilderModel {
 	}
 
 	/**
-	 * Copys a row and adds it to the current layout.
+	 * Copies a row and adds it to the current layout.
 	 *
 	 * @since 1.0
 	 * @param string $node_id Node ID of the row to copy.
@@ -2636,7 +2636,7 @@ final class FLBuilderModel {
 	}
 
 	/**
-	 * Copys a column and adds it to the current layout.
+	 * Copies a column and adds it to the current layout.
 	 *
 	 * @since 2.0
 	 * @param string $node_id Node ID of the column to copy.
@@ -4102,13 +4102,14 @@ final class FLBuilderModel {
 	}
 
 	/**
-	 * Add a space to self closing tags and other things if there isnt one because kses will and checks will fail.
+	 * Add a space to self closing tags and other things if there isn't one because kses will and checks will fail.
 	 * @since 2.4.2
 	 */
 	static public function fix_kses( $value ) {
 
 		// fix & -> &amp;
-		$value = preg_replace( '#(&)(?!amp;)#', '&amp;', $value );
+		$value = preg_replace( '/&([a-z0-9#]+);/i', '&$1;', $value );
+		$value = preg_replace( '#(&)(?!(.*);)#i', '&amp;', $value );
 
 		// fix <br/> -> <br />
 		$value = preg_replace( '#(<[a-z]+)(\/>)#', '$1 $2', $value );
@@ -4391,7 +4392,7 @@ final class FLBuilderModel {
 
 		if ( 'fl-builder-template' == $post->post_type ) {
 			/**
-			 * Limit the ammount of revisions for the fl-builder-template type.
+			 * Limit the amount of revisions for the fl-builder-template type.
 			 * @see fl_builder_template_revisions
 			 */
 			$num = apply_filters( 'fl_builder_template_revisions', 25 );
@@ -4619,7 +4620,7 @@ final class FLBuilderModel {
 	}
 
 	/**
-	* Remove all empty values from the settings object recursivly to save ~60% db size
+	* Remove all empty values from the settings object recursively to save ~60% db size
 	* @since 2.3
 	* @param array $haystack
 	* @param array $values
@@ -5881,17 +5882,17 @@ final class FLBuilderModel {
 				// Unset this node in the layout data.
 				unset( $layout_data[ $node_id ] );
 
-				// Find sibiling nodes to update their position.
+				// Find sibling nodes to update their position.
 				foreach ( $layout_data as $i => $n ) {
 					if ( $n->parent == $node->parent ) {
 						$siblings[ $i ] = $n;
 					}
 				}
 
-				// Sort the sibiling nodes by position.
+				// Sort the sibling nodes by position.
 				uasort( $siblings, array( 'FLBuilderModel', 'order_nodes' ) );
 
-				// Update sibiling node positions.
+				// Update sibling node positions.
 				foreach ( $siblings as $i => $n ) {
 					$layout_data[ $i ]->position = $position;
 					$position++;

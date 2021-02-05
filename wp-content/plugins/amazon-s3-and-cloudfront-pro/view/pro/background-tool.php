@@ -1,4 +1,6 @@
 <?php
+/** @var array $args */
+/** @var string $slug */
 $title              = isset( $title ) ? $title : '';
 $more_info          = isset( $more_info ) ? $more_info : '';
 $total_progress     = isset( $total_progress ) ? (int) $total_progress : 0;
@@ -13,6 +15,7 @@ $status_description = isset( $status_description ) ? $status_description : '';
 $busy_description   = isset( $busy_description ) ? $busy_description : '';
 $button             = isset( $button ) ? $button : '';
 $queue              = isset( $queue ) ? $queue : array();
+$footer_content     = isset( $footer_content ) ? $footer_content : '';
 
 $pie_title = $total_progress . '% (' . $total_on_provider . ' / ' . $total_items . ')';
 
@@ -78,6 +81,12 @@ if ( $is_queued && ! $is_cancelled && isset( $queue['processed'] ) && ! empty( $
 			   data-busy-description="<?php _e( 'Disabled during upgrade&hellip;', 'amazon-s3-and-cloudfront' ); ?>">
 				<?php _e( 'Upgrading&hellip;', 'amazon-s3-and-cloudfront' ); ?>
 			</a>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( ! empty( $footer_content ) ) : ?>
+		<div class="footer-content">
+			<?php echo htmlspecialchars_decode( $footer_content ); ?>
 		</div>
 	<?php endif; ?>
 </div><!-- /.block-scope -->

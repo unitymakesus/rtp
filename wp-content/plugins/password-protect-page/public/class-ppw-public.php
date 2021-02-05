@@ -86,25 +86,20 @@ class PPW_Public {
 	 * Add tag to head.
 	 */
 	public function add_tag_to_head() {
-		if ( ! ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS ) ) {
+		if ( ! PPW_Recaptcha::get_instance()->using_recaptcha() ) {
 			return;
 		}
 
-		$recaptcha_key = ppw_core_get_setting_type_string_by_option_name( PPW_Constants::RECAPTCHA_API_KEY, PPW_Constants::EXTERNAL_OPTIONS );
-		ob_start();
-		?>
-		<script src="https://www.google.com/recaptcha/api.js?render=<?php echo $recaptcha_key; ?>"></script>
-		<script>
-		  grecaptcha.ready(function () {
-			grecaptcha.execute('<?php echo $recaptcha_key; ?>', { action: 'enter_password' }).then(function (token) {
-			  var recaptchaResponse = document.getElementById('ppwRecaptchaResponse');
-			  recaptchaResponse.value = token;
-			});
-		  });
-		</script>
-		<?php
-
-		echo ob_get_clean();
+		$recaptcha_type = PPW_Recaptcha::get_instance()->get_recaptcha_type();
+		switch ( $recaptcha_type ) {
+			case PPW_Recaptcha::RECAPTCHA_V3_TYPE:
+				PPW_Recaptcha::get_instance()->load_recaptcha_v3_js();
+				break;
+			case PPW_Recaptcha::RECAPTCHA_V2_CHECKBOX_TYPE:
+			case PPW_Recaptcha::RECAPTCHA_V2_INVISIBLE_TYPE:
+				PPW_Recaptcha::get_instance()->load_recaptcha_v2_js();
+				break;
+		}
 	}
 
 	/**
@@ -484,7 +479,7 @@ class PPW_Public {
 		}
 
 		// Check with recaptcha if user turn on this option.
-		$using_recaptcha = ppw_core_get_setting_type_bool_by_option_name( PPW_Constants::USING_RECAPTCHA, PPW_Constants::EXTERNAL_OPTIONS );
+		$using_recaptcha = PPW_Recaptcha::get_instance()->using_recaptcha();
 		if ( $using_recaptcha && ! PPW_Recaptcha::get_instance()->is_valid_recaptcha() ) {
 			wp_send_json(
 				array(
