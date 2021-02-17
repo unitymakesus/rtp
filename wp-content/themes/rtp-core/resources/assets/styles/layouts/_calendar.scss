@@ -530,6 +530,10 @@ span.event-color {
     & > div {
       width: 20%;
 
+      @media only screen and (max-width: 960px) {
+        width: 100%;
+      }
+
       h3 {
         padding-left: 0;
       }
