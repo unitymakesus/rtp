@@ -4,7 +4,7 @@
 
   &__graphic {
     position: absolute;
-    z-index: -1;
+    z-index: 0;
   }
 
   &__legend {
@@ -16,6 +16,7 @@
     width: 100%;
     max-width: 375px;
     background-color: $color-white;
+    z-index: 1;
 
     @media #{$large-and-up} {
       display: block;
