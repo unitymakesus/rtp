@@ -58,3 +58,18 @@ add_filter('acf/fields/post_object/query/', function ($args, $field, $post_id) {
 
     return $args;
 }, 10, 3);
+
+/**
+ * Allow "unfiltered_html" for Administrators and Editors in Beaver Builder.
+ *
+ * @source https://docs.wpbeaverbuilder.com/beaver-builder/troubleshooting/common-issues/error-settings-not-saved/
+ */
+add_filter('fl_builder_ui_js_config', function ($config) {
+    $user = wp_get_current_user();
+    $role = $user->roles[0];
+    if ($role == 'administrator' || $role == 'editor') {
+        $config['userCaps']['unfiltered_html'] = true;
+    }
+
+    return $config;
+}, 10, 1);
