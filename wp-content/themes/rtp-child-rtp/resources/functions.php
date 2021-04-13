@@ -186,7 +186,7 @@ add_shortcode('courtreserve_calendar_1-3', function($atts) {
     return ob_get_clean();
 });
 
-add_shortcode('courtreserve_calendar-4-6', function($atts) {
+add_shortcode('courtreserve_calendar_4-6', function($atts) {
     ob_start();
     ?>
         <iframe id="form-iframe" src="https://app.courtreserve.com/Online/Public/EmbedCode/6862/21413" style="margin:0; width:100%; border:none; overflow:hidden;" scrolling="no" ></iframe> <script type="text/javascript"> var myEventMethod = window.addEventListener ? "addEventListener" : "attachEvent"; var myEventListener = window[myEventMethod]; var myEventMessage = myEventMethod == "attachEvent" ? "onmessage" : "message"; function onEventClick(eventId, occId) { } myEventListener(myEventMessage, function(e) { switch (e.data.action) { case "setHeight": { document.getElementById('form-iframe').height = (e.data.height) + "px"; break; } case "eventClick": { var eventId = e.data.params.eventId; var reservationId = e.data.params.reservtionId; onEventClick(eventId, reservationId); break; } } }, false); </script>
