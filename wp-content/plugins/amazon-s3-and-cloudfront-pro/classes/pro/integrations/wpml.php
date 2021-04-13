@@ -11,7 +11,7 @@ class Wpml extends Integration {
 	 *
 	 * @return bool
 	 */
-	public function is_installed() {
+	public static function is_installed() {
 		if ( class_exists( 'SitePress' ) ) {
 			return true;
 		}

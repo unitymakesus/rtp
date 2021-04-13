@@ -12,6 +12,15 @@
 	</div>
 	<?php endif; ?>
 
+	<?php
+	/**
+	 * Use this action to perform task before section loads.
+	 *
+	 * @since 2.10.0
+	 */
+	do_action( 'give_setup_page_before_sections' );
+	?>
+
 	<!-- Configuration -->
 	<?php
 		echo $this->render_template(
@@ -53,6 +62,7 @@
 					! $this->isStripeSetup() ? $this->render_template(
 						'row-item',
 						[
+							'testId'      => 'paypal',
 							'class'       => ( $this->isPayPalSetup() ) ? 'paypal setup-item-completed' : 'paypal',
 							'icon'        => ( $this->isPayPalSetup() )
 												? $this->image( 'check-circle.min.png' )
@@ -79,6 +89,7 @@
 					! $this->isPayPalSetup() ? $this->render_template(
 						'row-item',
 						[
+							'testId'      => 'stripe',
 							'class'       => ( $this->isStripeSetup() ) ? 'stripe setup-item-completed' : 'stripe',
 							'icon'        => ( $this->isStripeSetup() )
 											 ? $this->image( 'check-circle.min.png' )

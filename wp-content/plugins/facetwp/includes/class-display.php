@@ -124,6 +124,11 @@ class FacetWP_Display
             // Load required JS
             $this->assets['front.js'] = FACETWP_URL . '/assets/js/dist/front.min.js';
 
+            // Backwards compat?
+            if ( apply_filters( 'facetwp_load_deprecated', true ) ) {
+                $this->assets['front-deprecated.js'] = FACETWP_URL . '/assets/js/src/deprecated.js';
+            }
+
             // Load a11y?
             if ( apply_filters( 'facetwp_load_a11y', false ) ) {
                 $this->assets['accessibility.js'] = FACETWP_URL . '/assets/js/src/accessibility.js';

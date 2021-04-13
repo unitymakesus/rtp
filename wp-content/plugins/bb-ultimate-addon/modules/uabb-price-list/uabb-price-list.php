@@ -363,8 +363,11 @@ class UABBPriceList extends FLBuilderModule {
 					<div class="uabb-price-list-item uabb-price-list-animation-<?php echo esc_attr( $this->settings->price_list_hover_animation ); ?>">
 					<?php if ( 'none' !== $item->image_type || ! empty( $item->photo_src ) || ! empty( $item->photo_url ) ) { ?>
 						<div class="uabb-price-list-image">
-							<?php if ( 'library' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_src ) ) { ?>
-								<img src=" <?php echo esc_url( $item->photo_src ); ?>">
+							<?php
+							if ( 'library' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_src ) ) {
+								$alt = $this->get_alt( $item );
+								?>
+								<img src=" <?php echo esc_url( $item->photo_src ); ?>" alt="<?php echo esc_attr( $alt ); ?>">
 							<?php } ?>
 							<?php if ( 'url' === $item->image_type && isset( $item->photo ) && ! empty( $item->photo_url ) ) { ?>
 								<img src=" <?php echo $item->photo_url; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">
@@ -464,6 +467,25 @@ class UABBPriceList extends FLBuilderModule {
 			<?php } ?>
 		</span>
 		<?php
+	}
+
+	/**
+	 * Function that gets the alternate value of the Image
+	 *
+	 * @param integer $item current item index.
+	 * @method get_alt
+	 */
+	public function get_alt( $item ) {
+		$photo = FLBuilderPhoto::get_attachment_data( $item->photo );
+		if ( ! empty( $photo->alt ) ) {
+			return esc_html( $photo->alt );
+		} elseif ( ! empty( $photo->description ) ) {
+			return esc_html( $photo->description );
+		} elseif ( ! empty( $photo->caption ) ) {
+			return esc_html( $photo->caption );
+		} elseif ( ! empty( $photo->title ) ) {
+			return esc_html( $photo->title );
+		}
 	}
 }
 

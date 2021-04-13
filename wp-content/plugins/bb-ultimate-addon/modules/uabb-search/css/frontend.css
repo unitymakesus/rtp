@@ -1,0 +1,327 @@
+.uabb-search-form {
+	position: relative;
+}
+.uabb-search-form-wrap {
+	display: inline-flex;
+	max-width: 100%;
+	align-items: center;
+	position: relative;
+}
+.uabb-search-form-fields {
+	flex-basis: 100%;
+}
+.uabb-search-form .uabb-form-field input,
+.uabb-search-form .uabb-form-field input[type=search] {
+	height: auto;
+	width: 100%;
+}
+.uabb-search-button-expand .uabb-search-form-fields,
+.uabb-search-form-inline .uabb-search-form-fields {
+	align-items: center;
+	display: inline-flex;
+	flex-wrap: nowrap;
+	max-width: 100%;
+}
+
+/* Form layout */
+.uabb-search-form-width-full .uabb-search-form-wrap {
+	width: 100%;
+}
+.uabb-search-form-input-wrap {
+	position: relative;
+}
+
+/* Input field */
+.uabb-form-field {
+	display: flex;
+	align-items: center;
+}
+.uabb-search-form-input .uabb-form-field,
+.uabb-search-form-button .uabb-form-field,
+.uabb-search-form-inline .uabb-form-field {
+	margin: 0;
+}
+
+/* Inline Layout */
+.uabb-search-form-inline .uabb-search-form-input-wrap {
+	width: 100%;
+}
+.uabb-search-form-inline .uabb-form-field {
+	padding-right: 10px;
+}
+
+/* Button Layout - General */
+.uabb-search-button-center .uabb-search-form-fields {
+	justify-content: center;
+}
+.uabb-search-button-left .uabb-search-form-fields {
+	justify-content: flex-start;
+}
+.uabb-search-button-right .uabb-search-form-fields {
+	justify-content: flex-end;
+}
+.uabb-search-button-expand .uabb-button-wrap,
+.uabb-search-form-inline .uabb-button-wrap {
+	flex: 0 0 auto;
+}
+
+/* Button layout - Expand */
+.uabb-search-button-expand .uabb-search-form-fields {
+	align-items: center;
+	display: inline-flex;
+	flex-wrap: nowrap;
+	max-width: 100%;
+	-webkit-transition: all .4s;
+	-moz-transition: all .4s;
+	transition: all .4s;
+}
+.uabb-search-button-expand .uabb-search-form-input-wrap {
+	-webkit-transition: all .4s;
+	-moz-transition: all .4s;
+	transition: all .4s;
+	overflow: hidden;
+}
+.uabb-search-button-expand .uabb-search-form-input-wrap {
+	width: 0;
+}
+.uabb-search-expanded .uabb-search-form-input-wrap {
+	width: 100%;
+}
+.uabb-search-button-expand-right .uabb-search-form-fields {
+	flex-direction: row-reverse;
+}
+.uabb-search-button-expand-right.uabb-search-button-right .uabb-search-form-fields {
+	justify-content: flex-start;
+}
+.uabb-search-button-expand-right.uabb-search-button-left .uabb-search-form-fields {
+	justify-content: flex-end;
+}
+.uabb-search-button-expand .uabb-button {
+	outline: none;
+}
+.uabb-search-button-expand-right .uabb-form-field {
+	margin-left: 10px;
+}
+.uabb-search-button-expand-left .uabb-form-field {
+	margin-right: 10px;
+}
+.uabb-search-button-expand.uabb-search-button-center .uabb-form-field {
+	justify-content: center;
+}
+.uabb-search-button-expand.uabb-search-button-left .uabb-form-field {
+	justify-content: flex-start;
+}
+.uabb-search-button-expand.uabb-search-button-right .uabb-form-field {
+	justify-content: flex-end;
+}
+
+/* Button layout - Fullscreen */
+.uabb-search-button-fullscreen.uabb-search-button-center .uabb-search-form-wrap {
+	justify-content: center;
+}
+.uabb-search-button-fullscreen.uabb-search-button-left .uabb-search-form-wrap {
+	justify-content: flex-start;
+}
+.uabb-search-button-fullscreen.uabb-search-button-right .uabb-search-form-wrap {
+	justify-content: flex-end;
+}
+.uabb-search-button-fullscreen .uabb-search-form-fields {
+	display: contents;
+}
+.uabb-search-button-fullscreen .uabb-search-form-input-wrap {
+	display: none;
+	transform: translate(40px, 0);
+	transition: all 0.3s ease-in-out;
+	pointer-events: none;
+}
+.uabb-search-button-fullscreen.search-active .uabb-search-form-input-wrap {
+	 z-index: 9999;
+	 display: block;
+	 transform: none;
+	 pointer-events: all;
+}
+.uabb-search-button-fullscreen .uabb-search-close {
+	 position: fixed;
+	 top: 30px;
+	 right: 30px;
+	 color: #fff;
+	 cursor: pointer;
+	 font-size: 2.6em;
+	 display: none;
+	 transition: all 0.3s ease-in-out;
+}
+.uabb-search-button-fullscreen.search-active .uabb-search-close {
+	 display: block;
+	 transform: rotate(-90deg);
+}
+.uabb-search-button-fullscreen.search-active .uabb-button-wrap {
+	display: none;
+}
+.uabb-search-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	visibility: hidden;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	padding:0 15%;
+	opacity: 0;
+	background: rgba(0,0,0,0.75);
+	-webkit-transition: all 0.3s;
+	   -moz-transition: all 0.3s;
+			transition: all 0.3s;
+}
+.uabb-search-form.uabb-search-button-fullscreen .uabb-form-field input[type=search]{
+	width: 80%;
+	font-size: 40px;
+}
+
+.uabb-search-button-fullscreen input[type=search] {
+    position: fixed;
+	top: 50%;
+    left: 50%;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0);
+    font-size: 60px;
+    text-align: center;
+	border-top-width: 0;
+	border-right-width: 0;
+	border-left-width: 0;
+	border-bottom-width: 2px;
+	border-radius: 0;
+    margin: 0px auto;
+    margin-top: -51px;
+    padding-left: 30px;
+    padding-right: 30px;
+    outline: none;
+    transform: translate(-50%, -50%);
+}
+.uabb-search-button-fullscreen.search-active .uabb-search-overlay {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Stacked Layout */
+.uabb-search-form-stacked a.uabb-button.ast-button.uabb-creative-button.uabb-creative-default-btn {
+	margin-top: 12px;
+}
+
+/* AJAX Search Results */
+.uabb-search-results-content {
+	visibility: hidden;
+	opacity: 0;
+    -moz-transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    -o-transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    -webkit-transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+    transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+	-webkit-box-shadow: 0px 2px 4px -2px rgba(0,0,0,0.40);
+	-moz-box-shadow: 0px 2px 4px -2px rgba(0,0,0,0.40);
+	box-shadow: 0px 2px 4px -2px rgba(0,0,0,0.40);
+	border-radius: 4px;
+	border: 1px solid #e6e6e6;
+	overflow-y: auto;
+	background: #fff;
+	text-align: left;
+	position: absolute;
+	max-height: 0;
+	width: calc(100% - 10px);
+	z-index: 1100;
+}
+.uabb-search-results-content.uabb-search-open {
+	max-height: 400px;
+	height: auto;
+	visibility: visible;
+	opacity: 1;
+	padding: 15px;
+	margin: 5px 0;
+}
+.uabb-search-form-center.uabb-search-form-width-custom .uabb-search-results-content {
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%)
+}
+.uabb-search-form-left .uabb-search-results-content {
+	left: 0;
+}
+.uabb-search-form-right .uabb-search-results-content {
+	right: 0;
+}
+.uabb-search-post-item {
+	border-bottom: 1px solid #e6e6e6;
+	overflow: hidden;
+	padding: 10px 0;
+	cursor: pointer;
+}
+.uabb-search-post-item:last-child {
+	border-bottom: 0 none;
+}
+.uabb-search-post-image {
+	float: left;
+	position: relative;
+	margin-right: 10px;
+	width: 60px;
+}
+.uabb-search-post-image img {
+	height: auto;
+	width: 100%;
+}
+.uabb-search-post-title {
+	font-size: 15px;
+}
+
+/* Search Loader */
+.uabb-search-loader-wrap {
+	display: none;
+	line-height: 16px;
+	position: relative;
+	height: 30px;
+}
+.uabb-search-loader {
+	animation: uabb-spin 2s linear infinite;
+	z-index: 2;
+	position: absolute;
+	padding: 2px;
+	right: 10px;
+	top: 0;
+	width: 30px;
+	height: 30px;
+}
+.uabb-search-loader .path {
+	stroke: hsla(210, 77%, 75%, 1);
+    stroke-linecap: round;
+    animation: uabb-dash 1.5s ease-in-out infinite;
+}
+@keyframes uabb-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes uabb-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+/* icon */
+.uabb-search-form.uabb-search-form-input .icon {
+	position: absolute;
+	left: 5px;
+	margin:15px;
+	text-align: center;
+	color: #ccc;
+}
+.uabb-search-form.uabb-search-form-input.uabb-search-form-inline input[type=search],
+.uabb-search-form.uabb-search-form-input.uabb-search-form-stacked input[type=search] {
+	  padding-left: 50px;
+}

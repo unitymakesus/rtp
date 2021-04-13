@@ -392,7 +392,26 @@ class FLPhotoModule extends FLBuilderModule {
 
 			$file_path = trailingslashit( WP_CONTENT_DIR ) . ltrim( str_replace( basename( WP_CONTENT_DIR ), '', wp_make_link_relative( $url_path ) ), '/' );
 
-			if ( fl_builder_filesystem()->file_exists( $file_path ) ) {
+			if ( is_multisite() && ! is_subdomain_install() ) {
+				// take the original url_path and make a cleaner one, then rebuild file_path
+
+				$subsite_path          = get_blog_details()->path;
+				$url_parsed_path       = wp_parse_url( $url_path, PHP_URL_PATH );
+				$url_parsed_path_parts = explode( '/', $url_parsed_path );
+
+				if ( isset( $url_parsed_path_parts[1] ) && "/{$url_parsed_path_parts[1]}/" === $subsite_path ) {
+
+					$path_right_half  = wp_make_link_relative( $url_path );
+					$path_left_half   = str_replace( $path_right_half, '', $url_path );
+					$path_right_half2 = str_replace( $subsite_path, '', $path_right_half );
+
+					// rebuild file_path using a cleaner URL as input
+					$url_path2 = $path_left_half . '/' . $path_right_half2;
+					$file_path = trailingslashit( WP_CONTENT_DIR ) . ltrim( str_replace( basename( WP_CONTENT_DIR ), '', wp_make_link_relative( $url_path2 ) ), '/' );
+				}
+			}
+
+			if ( file_exists( $file_path ) ) {
 				$this->_editor = wp_get_image_editor( $file_path );
 			} else {
 				if ( ! is_wp_error( wp_safe_remote_head( $url_path, array( 'timeout' => 5 ) ) ) ) {

@@ -202,7 +202,12 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 				$params_in_redirect = ppw_core_get_param_in_url( $url_redirect );
 				$new_param          = empty( $params_in_redirect ) ? '?' . $params['name'] . '=' . $params['value'] : '&' . $params['name'] . '=' . $params['value'];
 
-				return $url_redirect . $new_param;
+				$new_param = apply_filters(
+					'ppwp_ppf_redirect_url_param_before_return_content',
+					$new_param
+				);
+
+				return apply_filters( 'ppwp_ppf_redirect_url_before_return_content', $url_redirect . $new_param );
 			}
 
 			if ( array_key_exists( PPW_Constants::WRONG_PASSWORD_PARAM, $params_in_referer ) && 'true' === $params_in_referer[ PPW_Constants::WRONG_PASSWORD_PARAM ] ) {
@@ -858,7 +863,7 @@ if ( ! class_exists( 'PPW_Password_Services' ) ) {
 		 * @param string $password Password which user enter.
 		 */
 		public function handle_after_enter_password_in_password_form( $post_id, $password ) {
-			$using_recaptcha = PPW_Recaptcha::get_instance()->using_recaptcha();
+			$using_recaptcha = PPW_Recaptcha::get_instance()->using_single_recaptcha();
 			if ( $using_recaptcha && ! PPW_Recaptcha::get_instance()->is_valid_recaptcha() ) {
 				do_action( 'ppw_redirect_after_enter_password', false );
 			}

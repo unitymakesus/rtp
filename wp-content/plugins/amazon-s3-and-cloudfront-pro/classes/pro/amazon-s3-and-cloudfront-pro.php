@@ -9,6 +9,7 @@ use DeliciousBrains\WP_Offload_Media\Pro\Integrations\Enable_Media_Replace;
 use DeliciousBrains\WP_Offload_Media\Pro\Integrations\Meta_Slider;
 use DeliciousBrains\WP_Offload_Media\Pro\Integrations\Woocommerce;
 use DeliciousBrains\WP_Offload_Media\Pro\Integrations\Wpml;
+use DeliciousBrains\WP_Offload_Media\Pro\Integrations\Elementor;
 use DeliciousBrains\WP_Offload_Media\Pro\Sidebar_Presenter;
 use DeliciousBrains\WP_Offload_Media\Pro\Tools\Add_Metadata;
 use DeliciousBrains\WP_Offload_Media\Pro\Tools\Analyze_And_Repair\Reverse_Add_Metadata;
@@ -22,6 +23,7 @@ use DeliciousBrains\WP_Offload_Media\Pro\Tools\Move_Public_Objects;
 use DeliciousBrains\WP_Offload_Media\Pro\Tools\Remove_Local_Files;
 use DeliciousBrains\WP_Offload_Media\Pro\Tools\Update_ACLs;
 use DeliciousBrains\WP_Offload_Media\Pro\Tools\Woocommerce_Product_Urls;
+use DeliciousBrains\WP_Offload_Media\Pro\Tools\Elementor_Analyze_And_Repair;
 use DeliciousBrains\WP_Offload_Media\Pro\Tools\Uploader;
 use DeliciousBrains\WP_Offload_Media\Pro\Upgrades\Disable_Compatibility_Plugins;
 use DeliciousBrains\WP_Offload_Media\Providers\Delivery\AWS_CloudFront;
@@ -158,6 +160,7 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 			'msl'  => new Meta_Slider( $this ),
 			'woo'  => new Woocommerce( $this ),
 			'wpml' => new Wpml( $this ),
+			'elem' => new Elementor( $this ),
 		) );
 
 		foreach ( $integrations as $integration ) {
@@ -203,6 +206,7 @@ class Amazon_S3_And_CloudFront_Pro extends Amazon_S3_And_CloudFront {
 		$this->sidebar->register_tool( new Reverse_Add_Metadata( $as3cfpro ), 'background' );
 		$this->sidebar->register_tool( new Verify_Add_Metadata( $as3cfpro ), 'background' );
 		$this->sidebar->register_tool( new Woocommerce_Product_Urls( $as3cfpro ), 'background' );
+		$this->sidebar->register_tool( new Elementor_Analyze_And_Repair( $as3cfpro ), 'background' );
 	}
 
 	/**

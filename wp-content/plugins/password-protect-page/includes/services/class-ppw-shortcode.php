@@ -60,6 +60,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 					'group'             => '',
 					'label'             => PPW_Constants::DEFAULT_SHORTCODE_LABEL,
 					'error_msg'         => PPW_Constants::DEFAULT_SHORTCODE_ERROR_MSG,
+					'loading'           => PPW_Constants::DEFAULT_SHORTCODE_LOADING,
 					'on'                => '',
 					'off'               => '',
 				)
@@ -220,7 +221,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 			}
 
 			// Unlock content by datetime.
-			$unlocked = apply_filters( 'ppw_shortcode_unlock_content', $this->is_unlock_content_by_time( $attrs ), $attrs ); 
+			$unlocked = apply_filters( 'ppw_shortcode_unlock_content', $this->is_unlock_content_by_time( $attrs ), $attrs );
 			if ( $unlocked ) {
 				return apply_filters( PPW_Constants::HOOK_SHORTCODE_RENDER_CONTENT, $content, $attrs );
 			}
@@ -446,6 +447,7 @@ if ( ! class_exists( 'PPW_Shortcode' ) ) {
 				PPW_Constants::SHORT_CODE_PASSWORD_LABEL     => _x( $this->massage_attributes( $attrs['label'] ), PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 				PPW_Constants::SHORT_CODE_FORM_ERROR_MESSAGE => '',
 				'[PPW_PAGE]'                                 => $number,
+				'[PPW_BUTTON_LOADING]'                       => esc_attr_x( $attrs['loading'], PPW_Constants::CONTEXT_PCP_PASSWORD_FORM, 'password-protect-page' ),
 			);
 			// phpcs:enable
 

@@ -11,6 +11,8 @@ class PPW_Recaptcha {
 	const RECAPTCHA_V3_TYPE = 'recaptcha_v3';
 	const RECAPTCHA_V2_CHECKBOX_TYPE = 'recaptcha_v2_checkbox';
 	const RECAPTCHA_V2_INVISIBLE_TYPE = 'recaptcha_v2_invisible';
+	const SINGLE_PASSWORD = 'single';
+	const SITEWIDE_PASSWORD = 'sitewide';
 
 	private $show_message = false;
 
@@ -52,6 +54,11 @@ class PPW_Recaptcha {
 		add_filter( 'ppwp_ppf_referrer_url', array( $this, 'maybe_remove_recaptcha_query' ), 10, 2 );
 		add_filter( 'ppwpea_recaptcha_v2_site_key', array( $this, 'get_ppwpea_recaptcha_v2_api_key' ), 10 );
 		add_filter( 'ppwpea_recaptcha_v2_secret', array( $this, 'get_ppwpea_recaptcha_v2_api_secret' ), 10 );
+		add_action( 'wp_footer', array( $this, 'load_js_in_footer' ), 10 );
+		add_action( 'ppw_custom_footer_form_entire_site', array( $this, 'maybe_load_sitewide_recaptcha_js' ), 10 );
+		add_action( 'ppw_sitewide_above_submit_button', array( $this, 'maybe_add_recaptcha_input_below_sitewide_form' ), 10 );
+		add_action( 'ppw_sitewide_custom_internal_css', array( $this, 'customize_sitewide_css' ), 10 );
+		add_filter( 'ppw_sitewide_valid_password', array( $this, 'validate_sitewide_password' ), 10 );
 	}
 
 	/**
@@ -62,7 +69,7 @@ class PPW_Recaptcha {
 	 * @return string
 	 */
 	public function maybe_remove_recaptcha_query( $referrer_url ) {
-		if ( ! $this->using_recaptcha() ) {
+		if ( ! $this->using_single_recaptcha() ) {
 			return $referrer_url;
 		}
 
@@ -86,7 +93,7 @@ class PPW_Recaptcha {
 	 * @return string
 	 */
 	public function maybe_add_blocked_message( $redirect_url, $params ) {
-		if ( ! $this->using_recaptcha() ) {
+		if ( ! $this->using_single_recaptcha() ) {
 			return $redirect_url;
 		}
 		if ( $params['is_valid'] ) {
@@ -137,7 +144,7 @@ class PPW_Recaptcha {
 	 * @return array
 	 */
 	public function maybe_customize_error_message( $params ) {
-		if ( ! $this->using_recaptcha() ) {
+		if ( ! $this->using_single_recaptcha() ) {
 			return $params;
 		}
 
@@ -278,6 +285,36 @@ class PPW_Recaptcha {
 		return $recaptcha_type ? $recaptcha_type : self::RECAPTCHA_V3_TYPE;
 	}
 
+
+	/**
+	 * Get password types selected.
+	 *
+	 * @return string[]
+	 */
+	public function get_password_types() {
+		$password_types = ppw_core_get_setting_type_array_by_option_name( PPW_Constants::RECAPTCHA_PASSWORD_TYPES, PPW_Constants::EXTERNAL_OPTIONS );
+
+		return $password_types ? $password_types : [ 'single' ];
+	}
+
+	/**
+	 * Using single recaptcha
+	 *
+	 * @return bool
+	 */
+	public function using_single_recaptcha() {
+		return $this->using_recaptcha() && in_array( self::SINGLE_PASSWORD, $this->get_password_types() );
+	}
+
+	/**
+	 * Using sitewide recaptcha
+	 *
+	 * @return bool
+	 */
+	public function using_sitewide_recaptcha() {
+		return $this->using_recaptcha() && in_array( self::SITEWIDE_PASSWORD, $this->get_password_types() );
+	}
+
 	/**
 	 * Load recaptcha v2 javascript.
 	 */
@@ -392,6 +429,128 @@ class PPW_Recaptcha {
 	 */
 	public function get_ppwpea_recaptcha_v2_api_secret( $secret ) {
 		return $this->get_recaptcha_v2_api_secret();
+	}
+
+	public function maybe_load_sitewide_recaptcha_js() {
+		if ( ! $this->using_sitewide_recaptcha() ) {
+			return;
+		}
+
+		$this->add_recaptcha_to_head();
+	}
+
+	/**
+	 * Add recaptcha to head.
+	 */
+	public function add_recaptcha_to_head() {
+		$recaptcha_type = $this->get_recaptcha_type();
+		switch ( $recaptcha_type ) {
+			case self::RECAPTCHA_V3_TYPE:
+				$this->load_recaptcha_v3_js();
+				break;
+			case self::RECAPTCHA_V2_CHECKBOX_TYPE:
+			case self::RECAPTCHA_V2_INVISIBLE_TYPE:
+				$this->load_recaptcha_v2_js();
+				break;
+		}
+	}
+
+	/**
+	 * Add recaptcha input below sitewide form.
+	 */
+	public function maybe_add_recaptcha_input_below_sitewide_form() {
+		$recaptcha_input = $this->get_recaptcha_input();
+		if ( ! empty( $recaptcha_input ) ) {
+			echo $recaptcha_input;
+		}
+	}
+
+	/**
+	 * Get recaptcha input.
+	 *
+	 * @return string
+	 */
+	public function get_recaptcha_input() {
+		switch ( $this->get_recaptcha_type() ) {
+			case PPW_Recaptcha::RECAPTCHA_V2_CHECKBOX_TYPE:
+				$site_key = $this->get_recaptcha_v2_api_key();
+
+				return '<div class="ppw-recaptcha g-recaptcha" data-sitekey="' . $site_key . '"></div>';
+			default:
+				return '<input type="hidden" name="g-recaptcha-response" id="ppwRecaptchaResponse" />';
+		}
+	}
+
+	/**
+	 * Customize sitewide css.
+	 */
+	public function customize_sitewide_css() {
+		if ( ! $this->using_sitewide_recaptcha() ) {
+			return;
+		}
+
+		?>
+		.g-recaptcha {
+			transform:scale(0.9);
+			transform-origin:0 0;
+			margin-top: 10px;
+		}
+		<?php
+	}
+
+	/**
+	 * Validate sitewide password form.
+	 *
+	 * @param $validated
+	 *
+	 * @return bool
+	 */
+	public function validate_sitewide_password( $validated ) {
+		if ( ! $validated ) {
+			return $validated;
+		}
+
+		if ( ! $this->using_sitewide_recaptcha() ) {
+			return $validated;
+		}
+
+		if ( ! $this->is_valid_recaptcha() ) {
+			add_filter( 'ppw_sitewide_error_message', array( $this, 'get_sitewide_error_message' ) );
+
+			return false;
+		}
+
+		return $validated;
+	}
+
+	/**
+	 * Get sitewide error message.
+	 *
+	 * @return string
+	 */
+	public function get_sitewide_error_message() {
+		return __( 'Google reCAPTCHA verification failed, please try again later.', 'password-protect-page' );
+	}
+
+
+	/**
+	 * Load JS in footer.
+	 */
+	public function load_js_in_footer() {
+		if ( ! $this->using_single_recaptcha() ) {
+			return;
+		}
+		$allowed = is_singular();
+		$allowed = apply_filters( 'ppw_recaptcha_allowed_to_load_script', $allowed );
+		if ( ! $allowed ) {
+			return;
+		}
+		$post_id = get_the_ID();
+		if ( ! $post_id || ! post_password_required( $post_id ) ) {
+			return;
+		}
+
+		$this->add_recaptcha_to_head();
 	}
 
 }

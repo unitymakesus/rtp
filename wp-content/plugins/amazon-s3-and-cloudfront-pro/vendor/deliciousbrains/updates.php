@@ -172,6 +172,10 @@ class Delicious_Brains_API_Updates {
 				$trans->response[ $plugin_basename ]->new_version = $latest_version;
 				$trans->response[ $plugin_basename ]->id          = '0';
 				$trans->response[ $plugin_basename ]->plugin      = $plugin_basename;
+
+				if ( isset( $upgrade_data['requires_php'] ) ) {
+					$trans->response[ $plugin_basename ]->requires_php = $upgrade_data['requires_php'];
+				}
 			}
 		}
 

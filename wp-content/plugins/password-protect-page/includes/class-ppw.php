@@ -375,11 +375,12 @@ class Password_Protect_Page {
 
 		$plugin_public = new PPW_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_head', $plugin_public, 'add_tag_to_head');
 		$this->loader->add_action( 'template_redirect', $plugin_public, 'handle_access_link', - 10 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_assets' );
 		$this->loader->add_filter( 'the_content', $plugin_public, 'ppw_the_content', 99999 );
 		$this->loader->add_filter( 'ppw_cookie_expire', $plugin_public, 'set_cookie_time', 10 );
+		$this->loader->add_filter( 'ppw_sitewide_cookie_expiration', $plugin_public, 'set_cookie_time', 10 );
+		$this->loader->add_filter( 'ppw_sitewide_form_action', $plugin_public, 'set_sitewide_form_action', 10 );
 
 		$this->loader->add_action( 'wp_ajax_nopriv_ppw_validate_password', $plugin_public, 'ppw_validate_password' );
 		$this->loader->add_action( 'wp_ajax_ppw_validate_password', $plugin_public, 'ppw_validate_password' );

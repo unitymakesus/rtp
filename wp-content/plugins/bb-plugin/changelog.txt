@@ -1,3 +1,24 @@
+<h4>2.4.2.2 - 03/01/2021</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Fixed photo cropping issue for subdomain multisite users</li>
+	<li>Fixed update issue with Godaddy booster plugin</li>
+	<li>Fixed Post Carousel blur issue with Google Chrome</li>
+	<li>Fixed issue with Google Fonts not loading when applying a template</li>
+</ul>
+
+
+<h4>2.4.2.1 - 02/11/2021</h4>
+<strong>Hot Fix</strong>
+<ul>
+	<li>Contact Form Module: Escape characters in fields</li>
+	<li>Post Module: Fix missing images in Safari 13 and below when using Load More or Scroll for pagination</li>
+	<li>Post Module: Fix blurry images in Safari when using scroll for pagination and when using some CDNs for images</li>
+	<li>When using the <code>fl_enable_shortcode_css_js</code> filter, make sure those shortcodes render in the UI/Edit Mode</li>
+	<li>Revert fix for button styling applying to inputs in the Subscribe Module</li>
+	<li>Fixed compatibility with ClassicPress</li>
+</ul>
+
 <h4>2.4.2 - 01/28/2021</h4>
 <strong>Enhancements</strong>
 <ul>

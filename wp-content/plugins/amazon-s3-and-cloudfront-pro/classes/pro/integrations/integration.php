@@ -23,7 +23,9 @@ abstract class Integration {
 	 *
 	 * @return bool
 	 */
-	abstract public function is_installed();
+	public static function is_installed() {
+		return false;
+	}
 
 	/**
 	 * Init integration.

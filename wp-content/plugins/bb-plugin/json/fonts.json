@@ -614,6 +614,11 @@
     "fallback": "sans-serif"
   }
 }, {
+  "Benne": {
+    "variants": ["regular"],
+    "fallback": "serif"
+  }
+}, {
   "Bentham": {
     "variants": ["regular"],
     "fallback": "serif"
@@ -2561,7 +2566,7 @@
 }, {
   "Laila": {
     "variants": ["300", "regular", "500", "600", "700"],
-    "fallback": "serif"
+    "fallback": "sans-serif"
   }
 }, {
   "Lakki Reddy": {

@@ -1287,6 +1287,28 @@ if ( ! class_exists( 'UABB_WPML_Translatable' ) ) {
 				'integration-class' => 'WPML_UABB_FAQ',
 			);
 
+			// Search Module.
+			$form['uabb-search'] = array(
+				'conditions' => array( 'type' => 'uabb-search' ),
+				'fields'     => array(
+					array(
+						'field'       => 'placeholder',
+						'type'        => __( 'Placeholder Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'btn_text',
+						'type'        => __( 'Button Text', 'uabb' ),
+						'editor_type' => 'LINE',
+					),
+					array(
+						'field'       => 'no_results_message',
+						'type'        => __( 'No Results Message', 'uabb' ),
+						'editor_type' => 'VISUAL',
+					),
+				),
+			);
+
 			return $form;
 		}
 	}

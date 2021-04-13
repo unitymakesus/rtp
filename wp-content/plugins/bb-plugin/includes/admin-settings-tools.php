@@ -90,7 +90,6 @@
 
 	<?php endif; ?>
 
-	<hr />
 	<?php
 	$alpha       = get_option( 'fl_alpha_updates', false );
 	$beta        = get_option( 'fl_beta_updates', false );
@@ -100,6 +99,8 @@
 	$beta_txt    = __( 'Beta', 'fl-builder' );
 	$updates_txt = __( 'updates', 'fl-builder' );
 	?>
+	<?php if ( true !== FL_BUILDER_LITE ) : ?>
+	<hr />
 	<h3 class="fl-settings-form-header"><?php echo $header; ?></h3>
 
 	<form id="beta-form" action="<?php FLBuilderAdminSettings::render_form_action( 'tools' ); ?>" method="post">
@@ -119,7 +120,7 @@
 			<?php wp_nonce_field( 'beta', 'fl-beta-nonce' ); ?>
 		</p>
 	</form>
-
+<?php endif; ?>
 
 <?php
 if ( FLBuilderUsage::show_settings() ) {

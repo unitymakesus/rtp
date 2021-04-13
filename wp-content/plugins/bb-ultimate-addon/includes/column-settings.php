@@ -546,7 +546,7 @@ function uabb_output_before_module( $modules, $col_id ) {
 	if ( FLBuilderModel::is_builder_active() && isset( $column->settings->enable_particles_col ) && 'yes' === $column->settings->enable_particles_col ) {
 		?>
 		<script>
-			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
+			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.js' ); ?>';
 
 			window.particle_js_loaded = 0;
 
@@ -598,7 +598,7 @@ function uabb_output_before_module( $modules, $col_id ) {
 							<?php
 							if ( isset( $json_particles_custom ) && '' !== $json_particles_custom ) {
 								?>
-								particlesJS( 'uabb-particle-' + row_id, <?php echo wp_kses_post( $json_custom_particles ); ?> );
+								tsParticles.load( 'uabb-particle-' + row_id, <?php echo wp_kses_post( $json_custom_particles ); ?> );
 								<?php
 							}
 							?>
@@ -784,7 +784,7 @@ function uabb_output_before_module( $modules, $col_id ) {
 								},
 								"retina_detect": true
 							}
-							particlesJS( 'uabb-particle-' + row_id, config );
+							tsParticles.load( 'uabb-particle-' + row_id, config );
 						}
 					}
 				}

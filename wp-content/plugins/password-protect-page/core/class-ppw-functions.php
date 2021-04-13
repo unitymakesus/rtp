@@ -296,16 +296,8 @@ function ppw_core_render_login_form() {
 	}
 	$wrong_message = $wrong_password ? $wrong_password_message : '';
 
-	if ( PPW_Recaptcha::get_instance()->using_recaptcha() ) {
-		$recaptcha_type = PPW_Recaptcha::get_instance()->get_recaptcha_type();
-		switch ( $recaptcha_type ) {
-			case PPW_Recaptcha::RECAPTCHA_V2_CHECKBOX_TYPE:
-				$site_key        = PPW_Recaptcha::get_instance()->get_recaptcha_v2_api_key();
-				$recaptcha_input = '<div class="ppw-recaptcha g-recaptcha" data-sitekey="' . $site_key . '"></div>';
-				break;
-			default:
-				$recaptcha_input = '<input type="hidden" name="g-recaptcha-response" id="ppwRecaptchaResponse" />';
-		}
+	if ( PPW_Recaptcha::get_instance()->using_single_recaptcha() ) {
+		$recaptcha_input = PPW_Recaptcha::get_instance()->get_recaptcha_input();
 	} else {
 		$recaptcha_input = '';
 	}
@@ -466,6 +458,8 @@ function ppw_core_get_unit_time( $password_cookie_expired ) {
 			$unit = 3600;
 		} elseif ( $time_die[1] === "days" ) {
 			$unit = 86400;
+		} elseif ( $time_die[1] === "seconds" ) {
+			$unit = 1;
 		}
 	}
 
@@ -555,6 +549,8 @@ function ppw_core_validate_cookie_expiry( $cookie_expired ) {
 			return $int_val > $max_cookie * 24;
 		case 'minutes':
 			return $int_val > $max_cookie * 24 * 60;
+		case 'seconds':
+			return $int_val > $max_cookie * 24 * 60 * 60;
 		default:
 			return true;
 	}

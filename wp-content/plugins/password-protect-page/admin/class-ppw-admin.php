@@ -482,6 +482,7 @@ class PPW_Admin {
 				'nonce'     => wp_create_nonce( 'wp_rest' ),
 				'roles'     => array_keys( get_editable_roles() ),
 				'postTypes' => $post_types_selected,
+				'pro'       => is_pro_active_and_valid_license()
 			)
 		);
 		include PPW_DIR_PATH . 'includes/views/master-passwords/view-ppw-master-passwords.php';
@@ -572,6 +573,7 @@ class PPW_Admin {
 			PPW_Constants::RECAPTCHA_V2_CHECKBOX_API_SECRET,
 			PPW_Constants::USING_RECAPTCHA,
 			PPW_Constants::RECAPTCHA_TYPE,
+			PPW_Constants::RECAPTCHA_PASSWORD_TYPES,
 		);
 		$settings     = wp_unslash( $_REQUEST['settings'] );
 		foreach ( $settings as $key => $value ) {

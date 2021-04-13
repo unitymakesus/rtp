@@ -78,14 +78,6 @@ if ( 'top' === $settings->blog_image_position ) {
 	<?php
 }
 
-if ( 'yes' === $settings->equal_height_box && 'background' === $settings->blog_image_position ) {
-	?>
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-thumbnail-position-background {
-		height: 100%;
-	}
-	<?php
-}
-
 if ( 'background' === $settings->blog_image_position ) {
 	?>
 	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-post-thumbnail:before {
@@ -810,7 +802,8 @@ if ( 'carousel' === $settings->is_carousel ) {
 	}
 	?>
 
-.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list {
+.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list,
+.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .slick-list {
 	<?php
 	if ( 1 === $settings->post_per_grid_desktop ) {
 		?>
@@ -1488,7 +1481,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .uabb-post-wrapper {
 			padding: 0;
 		}
-		.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list {
+		.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .slick-list {
 			margin: 0;
 		}
 			<?php
@@ -1500,7 +1494,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 			echo ( '' !== $settings->element_space ) ? 'padding-right: ' . esc_attr( $settings->element_space / 2 ) . 'px;' : 'padding-right: 7.5px;';
 			?>
 		}
-		.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list {
+		.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list,
+		.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .slick-list {
 			margin: 0 -<?php echo ( '' !== $settings->element_space ) ? esc_attr( $settings->element_space / 2 ) : '7.5'; ?>px;
 		}
 			<?php
@@ -1633,7 +1628,8 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 				echo ( '' !== $settings->element_space ) ? 'padding-right: ' . esc_attr( $settings->element_space / 2 ) . 'px;' : 'padding-right: 7.5px;';
 				?>
 			}
-			.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list {
+			.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .slick-list {
 				margin: 0 -<?php echo ( '' !== $settings->element_space ) ? ( esc_attr( $settings->element_space / 2 ) ) : '7.5'; ?>px;
 			}
 				<?php
@@ -1811,13 +1807,15 @@ if ( $global_settings->responsive_enabled ) { // Global Setting If started.
 			/*.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .uabb-post-wrapper {
 				padding: 0;
 			}*/
-			.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list {
+			.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .slick-list {
 				margin: 0;
 			}
 				<?php
 			} else {
 				?>
-			.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list {
+			.fl-node-<?php echo esc_attr( $id ); ?> .fl-node-content .slick-list,
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .slick-list {
 				margin: 0 -<?php echo ( '' !== $settings->element_space ) ? ( esc_attr( $settings->element_space / 2 ) ) : '7.5'; ?>px;
 			}
 			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-blog-posts .uabb-post-wrapper {

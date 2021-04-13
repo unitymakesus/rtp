@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit784b6868813ae81544221ba255ec208c
+class ComposerStaticInit0b3b7652c85346783057507fe155e1f1
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -17,9 +17,18 @@ class ComposerStaticInit784b6868813ae81544221ba255ec208c
             'PayPalHttp\\' => 11,
             'PayPalCheckoutSdk\\' => 18,
         ),
+        'M' => 
+        array (
+            'MyCLabs\\Enum\\' => 13,
+        ),
         'G' => 
         array (
             'Give\\' => 5,
+        ),
+        'F' => 
+        array (
+            'FormatObjectList\\' => 17,
+            'Faker\\' => 6,
         ),
         'C' => 
         array (
@@ -44,9 +53,21 @@ class ComposerStaticInit784b6868813ae81544221ba255ec208c
         array (
             0 => __DIR__ . '/..' . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk',
         ),
+        'MyCLabs\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/myclabs/php-enum/src',
+        ),
         'Give\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'FormatObjectList\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kjohnson/format-object-list/src',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
         ),
         'Composer\\Installers\\' => 
         array (
@@ -75,9 +96,9 @@ class ComposerStaticInit784b6868813ae81544221ba255ec208c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit784b6868813ae81544221ba255ec208c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit784b6868813ae81544221ba255ec208c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit784b6868813ae81544221ba255ec208c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit0b3b7652c85346783057507fe155e1f1::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit0b3b7652c85346783057507fe155e1f1::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit0b3b7652c85346783057507fe155e1f1::$classMap;
 
         }, null, ClassLoader::class);
     }

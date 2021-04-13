@@ -6,7 +6,7 @@
   function handleSubmitBtn(evt) {
 	evt.preventDefault();
 	$form = $(this);
-	$inputs = $form.find('input');
+	$inputs = $form.find('input, textarea');
 	var values = {};
 	var $submitBtn = {};
 	$inputs.each(function() {

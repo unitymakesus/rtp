@@ -4,7 +4,7 @@ Donate link: https://passwordprotectwp.com/features/?utm_source=wp.org&utm_mediu
 Tags: password protect, password, protect page, wordpress protection, password protection
 Requires at least: 4.7
 Requires PHP: 5.6
-Tested up to: 5.6
+Tested up to: 5.7
 Stable tag: 5.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -124,6 +124,7 @@ By default, users won't have to re-enter passwords to access a protected page or
 >* Create unlimited passwords per user role
 >* Create the same passwords for multiple user roles
 >* Bypass password protection via quick access links
+>* Customize quick access links
 >* Automatically protect all sub pages with one password
 >* Create multiple passwords for each protected category
 >* Set the same password for multiple pages
@@ -237,9 +238,9 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 
 8. This is what your post will look like after it is published. Visitors have to enter "password1" or "password2" to access the protected content.
 
-9. Type "Password Protection (PPWP)" under the search field to find our built-in element in Elementor.
+9. Type "Password Protection (PPWP)" in the search field to find our built-in element in Elementor.
 
-10. Type "Password Protect WordPress (PPWP)" under search field to find our built-in module in Beaver Builder.
+10. Type "Password Protect WordPress (PPWP)" in the search field to find our built-in module in Beaver Builder.
 
 11. These built-in modules allow you to set passwords and whitelisted roles.
 
@@ -266,6 +267,18 @@ Yes, the Pro version enables you to [automatically password protect child pages]
 N/A
 
 == Changelog ==
+
+= 1.7.4 =
+
+* [Feature] Support reCAPTCHA for sitewide protection
+* [Feature] Support session cookie for sitewide protection
+* [Improvement] Share hook to customize sitewide login form
+* [Improvement] Support AJAX to work with reCAPTCHA
+
+= 1.7.3 =
+* [Improvement] Allow setting the cookie expiration time in seconds
+* [Improvement] Allow editing Label & Error Message in Elementor Widget
+* [BugFix] Can't edit password form via WP Customizer in Firefox, Opera, Edge, Safari,...
 
 = 1.7.2 =
 

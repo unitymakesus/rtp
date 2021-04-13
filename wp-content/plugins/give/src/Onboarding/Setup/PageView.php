@@ -46,10 +46,12 @@ class PageView {
 	/**
 	 * Render templates
 	 *
-	 * @param string $template
-	 * @param array $data The key/value pairs passed as $data are extracted as variables for use within the template file.
-	 *
 	 * @since 2.8.0
+	 *
+	 * @param  string  $template
+	 * @param  array  $data  The key/value pairs passed as $data are extracted as variables for use within the template file.
+	 *
+	 * @return string
 	 */
 	public function render_template( $template, $data = [] ) {
 		ob_start();
@@ -64,7 +66,7 @@ class PageView {
 		}
 
 		// Stripe unmerged tags.
-		$output = preg_replace( '/{{\s*.*\s*}}/', '', $output );
+		$output = preg_replace( '/{{\s*\w*\s*}}/', '', $output );
 
 		return $output;
 	}

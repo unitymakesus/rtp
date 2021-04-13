@@ -2,16 +2,25 @@
 $password_cookie_expired = ppw_core_get_setting_type_string( PPW_Constants::COOKIE_EXPIRED );
 $time                    = 7;
 $units                   = 'days';
-$max                     = PPW_Constants::MAX_COOKIE_EXPIRED;
+$one_year                = 365;
+$max                     = $one_year;
 if ( ! empty( $password_cookie_expired ) ) {
 	$tmp = explode( ' ', $password_cookie_expired );
 	if ( count( $tmp ) === 2 ) {
 		$time  = (int) $tmp[0];
 		$units = $tmp[1];
-		if ( 'hours' === $units ) {
-			$max = $max * 24;
-		} elseif ( 'minutes' === $units ) {
-			$max = $max * 24 * 60;
+		switch ( $units ) {
+			case 'hours':
+				$max = $one_year * 24;
+				break;
+			case 'minutes':
+				$max = $one_year * 24 * 60;
+				break;
+			case 'seconds':
+				$max = $one_year * 24 * 60 * 60;
+				break;
+			default:
+				$max = $one_year;
 		}
 	}
 }
@@ -36,6 +45,10 @@ if ( ! empty( $password_cookie_expired ) ) {
 			<option value="minutes" <?php if ( 'minutes' === $units ) {
 				echo 'selected';
 			} ?> ><?php echo esc_html__( 'Minutes', PPW_Constants::DOMAIN ) ?>
+			</option>
+			<option value="seconds" <?php if ( 'seconds' === $units ) {
+				echo 'selected';
+			} ?> ><?php echo esc_html__( 'Seconds', PPW_Constants::DOMAIN ) ?>
 			</option>
 		</select>
 	</td>

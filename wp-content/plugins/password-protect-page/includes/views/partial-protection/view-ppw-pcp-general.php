@@ -230,6 +230,14 @@ $use_shortcode_page_builder = ppw_core_get_setting_type_bool_by_option_name( PPW
 						</tr>
 						<tr>
 							<td>
+								<code class="ppw-shortcode-attr">loading</code>
+								<p class="description">Loading text of the password form</p>
+							</td>
+							<td>Default: <code>Loading...</code></td>
+							<td>optional</td>
+						</tr>
+						<tr>
+							<td>
 								<code class="ppw-shortcode-attr">button</code>
 								<p class="description">Button text of the password form</p>
 							</td>

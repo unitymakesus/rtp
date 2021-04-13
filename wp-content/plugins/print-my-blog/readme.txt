@@ -3,7 +3,7 @@ Contributors: mnelson4
 Tags: print, PDF, backup, eBook, print button, ClassicPress
 Requires at least: 4.6
 Stable tag: trunk
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -267,6 +267,20 @@ If you'd like to add the print buttons somewhere in your theme's template files,
 `
 <?php echo do_shortcode('[pmb_print_buttons]'); ?>
 `
+= How do I change the color of the print buttons? =
+The print button's color is determined by your theme. But if you can't change the button colors using your theme's settings, you can change it with some custom CSS.
+Eg, this here's how to change the button's text color to black and background color to white:
+
+1. Go to wp-admin on your website
+2. On the left, under "Appearance", click "Customize"
+3. On the left, under Additional CSS" add the the following code:
+
+`
+div.pmb-print-this-page a{
+    color:black;
+    background-color:white;
+}
+`
 
 = How do I customize the printouts made with the Print Buttons? =
 From the Print My Blog Settings page, click "Customize Buttons". From here you can customize:
@@ -291,6 +305,8 @@ https://youtu.be/uPQ3vqm7A2g
 7. Add the Print My Blog block to add a form visitors can use to select what and how to print your blog.
 
 == Changelog ==
+= 2.9.9 March 1, 2020 =
+* [Improve NextGen gallery display](https://wordpress.org/support/topic/gallery-thumbnails-are-put-one-per-line/)
 
 = 2.9.8 December 23, 2020 =
 * Fix pmb-screen-only CSS class

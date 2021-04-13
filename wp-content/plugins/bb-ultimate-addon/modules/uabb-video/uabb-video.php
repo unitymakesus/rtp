@@ -420,29 +420,60 @@ class UABBVideo extends FLBuilderModule {
 	public function get_video_embed() {
 		$id          = $this->get_video_id();
 		$embed_param = $this->get_embed_params();
-		$src         = $this->get_url( $embed_param, $id );
 		if ( 'yes' === $this->settings->video_double_click ) {
 			$device = false;
 		} else {
 			$device = ( false !== ( stripos( $_SERVER['HTTP_USER_AGENT'], 'iPhone' ) ) ? true : false );
 		}
+		if ( 'hosted' !== $this->settings->video_type ) {
+			$src = $this->get_url( $embed_param, $id );
+		} else {
+			$src = $this->get_hosted_video_url();
+		}
 
-		if ( 'youtube' === $this->settings->video_type ) {
-			$autoplay = ( 'yes' === $this->settings->yt_autoplay ) ? '1' : '0';
-		} elseif ( 'vimeo' === $this->settings->video_type ) {
-			$autoplay = ( 'yes' === $this->settings->vimeo_autoplay ) ? '1' : '0';
-		} elseif ( 'wistia' === $this->settings->video_type ) {
-			$autoplay = ( 'yes' === $this->settings->wistia_autoplay ) ? '1' : '0';
+		switch ( $this->settings->video_type ) {
+			case 'youtube':
+				$autoplay = ( 'yes' === $this->settings->yt_autoplay ) ? '1' : '0';
+				break;
+			case 'vimeo':
+				$autoplay = ( 'yes' === $this->settings->vimeo_autoplay ) ? '1' : '0';
+				break;
+			case 'wistia':
+				$autoplay = ( 'yes' === $this->settings->wistia_autoplay ) ? '1' : '0';
+				break;
+			case 'hosted':
+				$autoplay = ( '1' === $this->settings->autoplay ) ? '1' : '0';
+				break;
+		}
+
+		if ( 'hosted' !== $this->settings->video_type ) {
+			$video_thumb = $this->get_video_thumb( $id );
+		} else {
+			if ( 'yes' === $this->settings->show_image_overlay ) {
+
+				$video_thumb = FLBuilderPhoto::get_attachment_data( $this->settings->image_overlay );
+				$video_thumb = $video_thumb->url;
+
+			} else {
+				$video_thumb = $this->get_hosted_video_url();
+
+			}
 		}
 		if ( 'default' === $this->settings->play_source ) {
-			if ( 'youtube' === $this->settings->video_type ) {
-				$html = '<svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%"><path class="uabb-youtube-icon-bg" d="m .66,37.62 c 0,0 .66,4.70 2.70,6.77 2.58,2.71 5.98,2.63 7.49,2.91 5.43,.52 23.10,.68 23.12,.68 .00,-1.3e-5 14.29,-0.02 23.81,-0.71 1.32,-0.15 4.22,-0.17 6.81,-2.89 2.03,-2.07 2.70,-6.77 2.70,-6.77 0,0 .67,-5.52 .67,-11.04 l 0,-5.17 c 0,-5.52 -0.67,-11.04 -0.67,-11.04 0,0 -0.66,-4.70 -2.70,-6.77 C 62.03,.86 59.13,.84 57.80,.69 48.28,0 34.00,0 34.00,0 33.97,0 19.69,0 10.18,.69 8.85,.84 5.95,.86 3.36,3.58 1.32,5.65 .66,10.35 .66,10.35 c 0,0 -0.55,4.50 -0.66,9.45 l 0,8.36 c .10,4.94 .66,9.45 .66,9.45 z" fill="#1f1f1e"></path><path d="m 26.96,13.67 18.37,9.62 -18.37,9.55 -0.00,-19.17 z" fill="#fff"></path><path d="M 45.02,23.46 45.32,23.28 26.96,13.67 43.32,24.34 45.02,23.46 z" fill="#ccc"></path></svg>';
-			}
-			if ( 'vimeo' === $this->settings->video_type ) {
-				$html = '<svg version="1.1" height="100%" width="100%"  viewBox="0 14.375 95 66.25"><path class="uabb-vimeo-icon-bg" d="M12.5,14.375c-6.903,0-12.5,5.597-12.5,12.5v41.25c0,6.902,5.597,12.5,12.5,12.5h70c6.903,0,12.5-5.598,12.5-12.5v-41.25c0-6.903-5.597-12.5-12.5-12.5H12.5z"/><polygon fill="#FFFFFF" points="39.992,64.299 39.992,30.701 62.075,47.5 "/></svg>';
-			}
-			if ( 'wistia' === $this->settings->video_type ) {
-				$html = '<button class="uabb-video-wistia-play w-big-play-button w-css-reset-button-important w-vulcan-v2-button"><svg x="0px" y="0px" viewBox="0 0 125 80" enable-background="new 0 0 125 80" focusable="false" alt="" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><rect fill-rule="evenodd" clip-rule="evenodd" fill="none" width="125" height="80"></rect><polygon fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" points="53,22 53,58 79,40"></polygon></svg></button>';
+
+			switch ( $this->settings->video_type ) {
+				case 'youtube':
+					$html = '<svg height="100%" version="1.1" viewBox="0 0 68 48" width="100%"><path class="uabb-youtube-icon-bg" d="m .66,37.62 c 0,0 .66,4.70 2.70,6.77 2.58,2.71 5.98,2.63 7.49,2.91 5.43,.52 23.10,.68 23.12,.68 .00,-1.3e-5 14.29,-0.02 23.81,-0.71 1.32,-0.15 4.22,-0.17 6.81,-2.89 2.03,-2.07 2.70,-6.77 2.70,-6.77 0,0 .67,-5.52 .67,-11.04 l 0,-5.17 c 0,-5.52 -0.67,-11.04 -0.67,-11.04 0,0 -0.66,-4.70 -2.70,-6.77 C 62.03,.86 59.13,.84 57.80,.69 48.28,0 34.00,0 34.00,0 33.97,0 19.69,0 10.18,.69 8.85,.84 5.95,.86 3.36,3.58 1.32,5.65 .66,10.35 .66,10.35 c 0,0 -0.55,4.50 -0.66,9.45 l 0,8.36 c .10,4.94 .66,9.45 .66,9.45 z" fill="#1f1f1e"></path><path d="m 26.96,13.67 18.37,9.62 -18.37,9.55 -0.00,-19.17 z" fill="#fff"></path><path d="M 45.02,23.46 45.32,23.28 26.96,13.67 43.32,24.34 45.02,23.46 z" fill="#ccc"></path></svg>';
+					break;
+				case 'vimeo':
+					$html = '<svg version="1.1" height="100%" width="100%"  viewBox="0 14.375 95 66.25"><path class="uabb-vimeo-icon-bg" d="M12.5,14.375c-6.903,0-12.5,5.597-12.5,12.5v41.25c0,6.902,5.597,12.5,12.5,12.5h70c6.903,0,12.5-5.598,12.5-12.5v-41.25c0-6.903-5.597-12.5-12.5-12.5H12.5z"/><polygon fill="#FFFFFF" points="39.992,64.299 39.992,30.701 62.075,47.5 "/></svg>';
+					break;
+				case 'wistia':
+					$html = '<button class="uabb-video-wistia-play w-big-play-button w-css-reset-button-important w-vulcan-v2-button"><svg x="0px" y="0px" viewBox="0 0 125 80" enable-background="new 0 0 125 80" focusable="false" alt="" style="fill: rgb(255, 255, 255); height: 100%; left: 0px; stroke-width: 0px; top: 0px; width: 100%;"><rect fill-rule="evenodd" clip-rule="evenodd" fill="none" width="125" height="80"></rect><polygon fill-rule="evenodd" clip-rule="evenodd" fill="#FFFFFF" points="53,22 53,58 79,40"></polygon></svg></button>';
+					break;
+				case 'hosted':
+					$html = '<svg version="1.1" height="100%" width="100%"  viewBox="0 14.375 95 66.25"><path class="uabb-vimeo-icon-bg" d="M12.5,14.375c-6.903,0-12.5,5.597-12.5,12.5v41.25c0,6.902,5.597,12.5,12.5,12.5h70c6.903,0,12.5-5.598,12.5-12.5v-41.25c0-6.903-5.597-12.5-12.5-12.5H12.5z"/><polygon fill="#FFFFFF" points="39.992,64.299 39.992,30.701 62.075,47.5 "/></svg>';
+					break;
 			}
 		} elseif ( 'icon' === $this->settings->play_source ) {
 			$html = '';
@@ -451,6 +482,21 @@ class UABBVideo extends FLBuilderModule {
 			$html  = '<img src="' . $thumb . '" />';
 		}
 		$schema = $this->get_structured_data();
+		if ( 'hosted' === $this->settings->video_type ) {
+
+			$video_url = $this->get_hosted_video_url();
+
+			ob_start();
+
+			$this->render_hosted_video();
+
+			$video_html = ob_get_clean();
+
+			$video_html = wp_json_encode( $video_html );
+
+			$video_html = htmlspecialchars( $video_html, ENT_QUOTES );
+
+		}
 		?>
 		<div class="uabb-video uabb-aspect-ratio-<?php echo esc_attr( $this->settings->aspect_ratio ); ?>  uabb-subscribe-responsive-<?php echo esc_attr( $this->settings->subscribe_bar_responsive ); ?> uabb-video-sticky-<?php echo esc_attr( $this->settings->sticky_alignment ); ?>" <?php echo $schema ? ' itemscope itemtype="https://schema.org/VideoObject"' : ''; ?>>
 			<?php
@@ -458,11 +504,21 @@ class UABBVideo extends FLBuilderModule {
 				echo $schema; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
-			<div class="uabb-video__outer-wrap <?php echo ( 'yes' === $this->settings->sticky_info_bar_enable ) ? 'uabb-sticky-infobar-wrap' : ''; ?>" data-autoplay="<?php echo esc_attr( $autoplay ); ?>" data-device="<?php echo esc_attr( $device ); ?> ">
+			<?php
+			if ( 'hosted' === $this->settings->video_type && 'yes' !== $this->settings->show_image_overlay ) {
+				$custom_tag = 'video';
+			} else {
+				$custom_tag = 'img';
+			}
+			?>
+			<?php if ( 'hosted' === $this->settings->video_type && empty( $video_url ) ) { ?>
+			<span class='uabb-hosted-error-message'><?php echo esc_attr__( 'Please choose a file.', 'uabb' ); ?></span>
+		<?php } else { ?> 
+			<div class="uabb-video__outer-wrap <?php echo ( 'yes' === $this->settings->sticky_info_bar_enable ) ? 'uabb-sticky-infobar-wrap' : ''; ?> <?php echo ( 'hosted' === $this->settings->video_type ) ? 'uabb-video-type-hosted' : ''; ?>" data-autoplay="<?php echo esc_attr( $autoplay ); ?>" data-device="<?php echo esc_attr( $device ); ?> " <?php echo ( 'hosted' === $this->settings->video_type ) ? 'data-html="' . esc_attr( $video_html ) . '"' : ''; ?>>
 				<?php $this->get_header_wrap( $id ); ?>
 				<div class="uabb-video-inner-wrap">
 					<div class="uabb-video__play" data-src="<?php echo esc_url( $src ); ?>">
-						<img class="uabb-video__thumb" src="<?php echo esc_url( $this->get_video_thumb( $id ) ); ?>" <?php echo esc_attr( $this->get_alt_tag() ); ?> />
+					<<?php echo esc_attr( $custom_tag ); ?> src="<?php echo wp_kses_post( $video_thumb ); ?>"></<?php echo esc_attr( $custom_tag ); ?>>
 						<div class="uabb-video__play-icon <?php echo esc_attr( ( 'icon' === $this->settings->play_source ) ? $this->settings->play_icon : '' ); ?> uabb-animation-<?php echo esc_attr( $this->settings->hover_animation ); ?>">
 							<?php echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						</div>
@@ -485,16 +541,17 @@ class UABBVideo extends FLBuilderModule {
 
 				</div>
 			</div>
-			<?php
-			if ( 'youtube' === $this->settings->video_type && 'yes' === $this->settings->yt_subscribe_enable ) {
-				$channel_name = ( '' !== $this->settings->yt_channel_name ) ? $this->settings->yt_channel_name : '';
+				<?php
+		}
+		if ( 'youtube' === $this->settings->video_type && 'yes' === $this->settings->yt_subscribe_enable ) {
+			$channel_name = ( '' !== $this->settings->yt_channel_name ) ? $this->settings->yt_channel_name : '';
 
-				$channel_id = ( '' !== $this->settings->yt_channel_id ) ? $this->settings->yt_channel_id : '';
+			$channel_id = ( '' !== $this->settings->yt_channel_id ) ? $this->settings->yt_channel_id : '';
 
-				$youtube_text = ( '' !== $this->settings->yt_subscribe_text ) ? $this->settings->yt_subscribe_text : '';
+			$youtube_text = ( '' !== $this->settings->yt_subscribe_text ) ? $this->settings->yt_subscribe_text : '';
 
-				$subscriber_count = ( 'yes' === $this->settings->show_count ) ? 'default' : 'hidden';
-				?>
+			$subscriber_count = ( 'yes' === $this->settings->show_count ) ? 'default' : 'hidden';
+			?>
 			<div class="uabb-subscribe-bar">
 				<div class="uabb-subscribe-bar-prefix"><?php echo $youtube_text; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 				<div class="uabb-subscribe-content">
@@ -508,8 +565,8 @@ class UABBVideo extends FLBuilderModule {
 				</div>
 			</div>
 				<?php
-			}
-			?>
+		}
+		?>
 		</div>
 		<?php
 	}
@@ -531,7 +588,100 @@ class UABBVideo extends FLBuilderModule {
 		if ( '' === $this->settings->vimeo_link && 'wistia' === $this->settings->video_type ) {
 			return '';
 		}
+		if ( '' === $this->settings->video && 'hosted' === $this->settings->video_type ) {
+			return '';
+		}
 		$this->get_video_embed();
+	}
+		/**
+		 * Get hosted video URL.
+		 *
+		 * @since x.x.x
+		 * @access protected
+		 */
+	private function get_hosted_video_url() {
+
+		if ( 'ext_url' === $this->settings->video_source ) {
+			$video_url = $this->settings->video_url;
+		} else {
+			$this->data = FLBuilderPhoto::get_attachment_data( $this->settings->video );
+			$video_url  = $this->data->url;
+		}
+
+		if ( empty( $video_url ) ) {
+			return '';
+		}
+		if ( $this->settings->start || $this->settings->end ) {
+			$video_url .= '#t=';
+			if ( $this->settings->start ) {
+				$video_url .= $this->settings->start;
+			}
+			if ( $this->settings->end ) {
+				$video_url .= ',' . $this->settings->end;
+			}
+		}
+
+		return $video_url;
+	}
+	/**
+	 * Get hosted video parameters.
+	 *
+	 * @since x.x.x
+	 * @access protected
+	 */
+	private function get_hosted_parameter() {
+
+		$video_params = array();
+
+		foreach ( array( 'autoplay', 'loop', 'controls' ) as $option_name ) {
+			if ( '1' === $this->settings->$option_name ) {
+				$video_params[ $option_name ] = '';
+			}
+		}
+
+		if ( '1' === $this->settings->muted ) {
+			$video_params['muted'] = 'muted';
+		}
+
+		return $video_params;
+	}
+		/**
+		 * Render hosted video.
+		 *
+		 * @since x.x.x
+		 * @access protected
+		 */
+	private function render_hosted_video() {
+		$video_url = $this->get_hosted_video_url();
+		if ( empty( $video_url ) ) {
+			return;
+		}
+
+		$video_params = $this->get_hosted_parameter();
+
+		?>
+		<video class="uabb-hosted-video" src="<?php echo esc_url( $video_url ); ?>" <?php echo esc_attr( $this->render_html_attributes( $video_params ) ); ?>></video>
+		<?php
+	}
+	/**
+	 * Render html attributes
+	 *
+	 * @param array $attributes attributes array.
+	 *
+	 * @return string
+	 */
+	public function render_html_attributes( array $attributes ) {
+		$rendered_attributes = array();
+
+		foreach ( $attributes as $attribute_key => $attribute_values ) {
+			if ( is_array( $attribute_values ) ) {
+				$attribute_values = implode( ' ', $attribute_values );
+			}
+
+			$rendered_attributes[] = sprintf( '%1$s="%2$s"', $attribute_key, esc_attr( $attribute_values ) );
+		}
+
+		return implode( ' ', $rendered_attributes );
 	}
 	/**
 	 * Get structured data - https://schema.org/VideoObject

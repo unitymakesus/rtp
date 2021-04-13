@@ -496,23 +496,6 @@ a:hover {
     display: none;
 }
 
-#powerTip a {
-    color: #ddd;
-}
-
-#powerTip {
-    cursor: default;
-    background-color: #333;
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 6px;
-    color: #fff;
-    display: none;
-    padding: 10px;
-    position: absolute;
-    z-index: 1000;
-    max-width: 400px;
-}
-
 /* Edit screens */
 
 .facetwp-row {
