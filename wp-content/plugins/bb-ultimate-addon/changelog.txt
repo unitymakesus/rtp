@@ -1,3 +1,16 @@
+Version 1.30.0 Tuesday, 23rd February 2021
+- New: Introduced Search module
+- Improvement: Particle Backgrounds - Replaced particles.js with tsParticles for better performance
+- Improvement: Price List - Added 'alt' attribute support for images
+- Improvement: Video - Added self hosted video option
+- Improvement: Video Gallery - Added Self Hosted video type
+- Fixed: Advanced Posts - Empty 'img' tag is rendered when there is no featured image
+- Fixed: Advanced Posts - Layout issue when used in the Advanced Tabs Content
+- Fixed: Photo Gallery - Resolved PHP warning error for Photo Spacing option
+- Fixed: Woo-Categories - Carousel layout issue due to conflict with Advanced Posts module
+- Fixed: Woo-Mini Cart - Cart Buttons not working properly in Modal & Off-Canvas layout
+- Fixed: Woo-Mini-Cart - Cart Container Alignment issue in Dropdown layout
+
 Version 1.29.0 Wednesday, 20th January 2021
 - New: Introduced Woo - Mini Cart module.
 - Improvement: Advanced Icon - Added responsive support for Icon size.

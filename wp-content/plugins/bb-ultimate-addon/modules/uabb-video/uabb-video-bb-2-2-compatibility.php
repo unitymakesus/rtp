@@ -14,7 +14,7 @@ FLBuilder::register_module(
 		'general'          => array(
 			'title'    => __( 'General', 'uabb' ), // Tab title.
 			'sections' => array( // Tab Sections.
-				'general'       => array( // Section.
+				'general'                => array( // Section.
 					'title'  => __( 'Video', 'uabb' ), // Section Title.
 					'fields' => array( // Section Fields.
 						'video_type'   => array(
@@ -25,6 +25,7 @@ FLBuilder::register_module(
 								'youtube' => __( 'YouTube', 'uabb' ),
 								'vimeo'   => __( 'Vimeo', 'uabb' ),
 								'wistia'  => __( 'Wistia', 'uabb' ),
+								'hosted'  => __( 'Self Hosted', 'uabb' ),
 							),
 							'toggle'  => array(
 								'youtube' => array(
@@ -39,6 +40,10 @@ FLBuilder::register_module(
 								'wistia'  => array(
 									'fields'   => array( 'wistia_link' ),
 									'sections' => array( 'wistia_option' ),
+								),
+								'hosted'  => array(
+									'sections' => array( 'video_controls_section' ),
+									'fields'   => array( 'video_source', 'autoplay', 'loop', 'end', 'start' ),
 								),
 							),
 						),
@@ -62,6 +67,37 @@ FLBuilder::register_module(
 							'default'     => '<p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2"><img src="https://embedwistia-a.akamaihd.net/deliveries/53eec5fa72737e60aa36731b57b607a7c0636f52.webp?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=54bbffe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p><p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2">Video Placeholder - Brainstorm Force - pratikc</a></p>',
 							'description' => UABBVideo::get_description( 'wistia_link' ),
 							'connections' => array( 'url' ),
+						),
+						'video_source' => array(
+							'type'    => 'select',
+							'label'   => __( 'Video Source', 'uabb' ),
+							'default' => 'library',
+							'options' => array(
+								'video'   => __( 'Media Library', 'uabb' ),
+								'ext_url' => __( 'External URL', 'uabb' ),
+							),
+							'toggle'  => array(
+								'video'   => array(
+									'fields' => array( 'video' ),
+								),
+								'ext_url' => array(
+									'fields' => array( 'video_url' ),
+								),
+							),
+						),
+						'video'        => array(
+							'type'        => 'video',
+							'label'       => __( 'Video', 'uabb' ),
+							'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'uabb' ),
+							'show_remove' => true,
+						),
+						'video_url'    => array(
+							'type'        => 'text',
+							'label'       => __( 'External URL', 'uabb' ),
+							'placeholder' => __( 'http://www.example.com/my-photo.jpg', 'uabb' ),
+							'preview'     => array(
+								'type' => 'none',
+							),
 						),
 						'start'        => array(
 							'type'    => 'unit',
@@ -92,7 +128,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'video_option'  => array(
+				'video_option'           => array(
 					'title'  => __( 'Video Options', 'uabb' ),
 					'fields' => array(
 						'yt_autoplay'       => array(
@@ -164,7 +200,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'vimeo_option'  => array(
+				'vimeo_option'           => array(
 					'title'  => __( 'Video option', 'uabb' ),
 					'fields' => array(
 						'vimeo_autoplay' => array(
@@ -232,7 +268,7 @@ FLBuilder::register_module(
 						),
 					),
 				),
-				'wistia_option' => array(
+				'wistia_option'          => array(
 					'title'  => __( 'Video Options', 'uabb' ),
 					'fields' => array(
 						'wistia_autoplay' => array(
@@ -276,6 +312,47 @@ FLBuilder::register_module(
 							'options' => array(
 								'yes' => __( 'Yes', 'uabb' ),
 								'no'  => __( 'No', 'uabb' ),
+							),
+						),
+					),
+				),
+				'video_controls_section' => array(
+					'title'  => 'Video Controls',
+					'fields' => array(
+						'autoplay' => array(
+							'type'    => 'select',
+							'label'   => __( 'Auto Play', 'uabb' ),
+							'default' => '0',
+							'options' => array(
+								'0' => __( 'No', 'uabb' ),
+								'1' => __( 'Yes', 'uabb' ),
+							),
+						),
+						'loop'     => array(
+							'type'    => 'select',
+							'label'   => __( 'Loop', 'uabb' ),
+							'default' => '0',
+							'options' => array(
+								'0' => __( 'No', 'uabb' ),
+								'1' => __( 'Yes', 'uabb' ),
+							),
+						),
+						'controls' => array(
+							'type'    => 'select',
+							'label'   => __( 'Controls', 'uabb' ),
+							'default' => '1',
+							'options' => array(
+								'1' => __( 'Show', 'uabb' ),
+								'0' => __( 'Hide', 'uabb' ),
+							),
+						),
+						'muted'    => array(
+							'type'    => 'select',
+							'label'   => __( 'Mute', 'uabb' ),
+							'default' => '0',
+							'options' => array(
+								'1' => __( 'Yes', 'uabb' ),
+								'0' => __( 'No', 'uabb' ),
 							),
 						),
 					),

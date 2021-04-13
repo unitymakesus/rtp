@@ -84,6 +84,8 @@ body.rtl .fl-post-carousel-post {
 	position: relative;
 	visibility: visible;
 	margin: 0;
+	-webkit-backface-visibility: hidden; /* Safari */
+	backface-visibility: hidden;
 }
 
 .fl-post-carousel-image img {

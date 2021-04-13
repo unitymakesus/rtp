@@ -786,6 +786,19 @@ final class FLBuilder {
 		$js_build   = plugins_url( '/js/build/', FL_BUILDER_FILE );
 		$tag        = '.bundle.min';
 		$vendor_tag = '.min';
+		// @beaverbuilder/app-core
+		$app_core_deps = array( 'react', 'redux', 'react-router-dom', 'wp-i18n' );
+		// @beaverbuilder/fluid
+		$fluid_deps = array(
+			'react',
+			'react-dom',
+			'redux',
+			'react-router-dom',
+			'framer-motion',
+			'react-laag',
+			'wp-i18n',
+			'bb-icons',
+		);
 
 		if ( self::is_debug() ) {
 			$tag        = '.bundle';
@@ -802,6 +815,22 @@ final class FLBuilder {
 			// React-DOM
 			wp_deregister_script( 'react-dom' );
 			wp_enqueue_script( 'react-dom', "{$js_vendors}react-dom{$vendor_tag}.js", array(), $ver, true );
+
+			// @beaverbuilder/app-core
+			$app_core_deps = array( 'react', 'redux', 'react-router-dom' );
+			// @beaverbuilder/fluid
+			$fluid_deps = array(
+				'react',
+				'react-dom',
+				'redux',
+				'react-router-dom',
+				'framer-motion',
+				'react-laag',
+				'bb-icons',
+			);
+			if ( ! wp_script_is( 'wp-i18n', 'registered' ) ) {
+				wp_enqueue_script( 'fl-wp-i18n', "{$js_vendors}i18n-polyfill.js" );
+			}
 		}
 
 		/**
@@ -821,24 +850,11 @@ final class FLBuilder {
 		// react-laag
 		wp_register_script( 'react-laag', "{$js_build}vendor-react-laag{$tag}.js", array( 'react' ), $ver, false );
 
-		// @beaverbuilder/app-core
-		$app_core_deps = array( 'react', 'redux', 'react-router-dom', 'wp-i18n' );
 		wp_register_script( 'bb-app-core', "{$js_build}vendor-bb-app-core{$tag}.js", $app_core_deps, $ver, false );
 
 		// @beaverbuilder/icons
 		wp_register_script( 'bb-icons', "{$js_build}vendor-bb-icons{$tag}.js", array( 'react' ), $ver, false );
 
-		// @beaverbuilder/fluid
-		$fluid_deps = array(
-			'react',
-			'react-dom',
-			'redux',
-			'react-router-dom',
-			'framer-motion',
-			'react-laag',
-			'wp-i18n',
-			'bb-icons',
-		);
 		wp_register_script( 'bb-fluid', "{$js_build}vendor-bb-fluid{$tag}.js", $fluid_deps, $ver, false );
 		wp_register_style( 'bb-fluid', "{$css_build}vendor-bb-fluid{$tag}.css", array(), $ver, null );
 	}
@@ -2817,8 +2833,8 @@ final class FLBuilder {
 		$global_settings = FLBuilderModel::get_global_settings();
 		$layout_settings = FLBuilderModel::get_layout_settings();
 
-		echo '<style id="fl-builder-global-css">' . $global_settings->css . '</style>';
-		echo '<style id="fl-builder-layout-css">' . $layout_settings->css . '</style>';
+		echo '<style id="fl-builder-global-css">' . self::maybe_do_shortcode( $global_settings->css ) . '</style>';
+		echo '<style id="fl-builder-layout-css">' . self::maybe_do_shortcode( $layout_settings->css ) . '</style>';
 	}
 
 	/**

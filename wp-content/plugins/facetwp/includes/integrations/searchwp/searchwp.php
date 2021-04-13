@@ -22,9 +22,8 @@ class FacetWP_Integration_SearchWP
      * Run and cache the \SWP_Query
      */
     function is_main_query( $is_main_query, $query ) {
-        $this->keywords = $query->get( 's' );
-
-        if ( $is_main_query && $query->is_search() && ! empty( $this->keywords ) ) {
+        if ( $is_main_query && $query->is_search() && ! empty( $query->get( 's' ) ) ) {
+            $this->keywords = $query->get( 's' );
             $this->swp_query = $this->run_query( $this->keywords );
             $query->set( 'using_searchwp', true );
             $query->set( 'searchwp', false );

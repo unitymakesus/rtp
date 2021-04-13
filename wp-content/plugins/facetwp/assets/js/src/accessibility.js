@@ -24,27 +24,27 @@
                 $(this).attr('aria-label', $(this).attr('placeholder'));
             });
 
-            if ( null != last_checked ) {
-                $('.facetwp-facet [data-value="' + last_checked + '"]').focus();
+            if (null != last_checked) {
+                $('.facetwp-facet [data-value="' + last_checked + '"]').nodes[0].focus();
                 last_checked = null;
             }
         }, 999);
     }
 
-    $(document).on('keydown', '.facetwp-checkbox, .facetwp-radio', function(e) {
+    $().on('keydown', '.facetwp-checkbox, .facetwp-radio', function(e) {
         var keyCode = e.originalEvent.keyCode;
-        if ( 32 == keyCode || 13 == keyCode ) {
+        if (32 == keyCode || 13 == keyCode) {
             last_checked = $(this).attr('data-value');
             e.preventDefault();
-            $(this).click();
+            this.click();
         }
     });
 
-    $(document).on('keydown', '.facetwp-page, .facetwp-toggle, .facetwp-selection-value', function(e) {
+    $().on('keydown', '.facetwp-page, .facetwp-toggle, .facetwp-selection-value', function(e) {
         var keyCode = e.originalEvent.keyCode;
-        if ( 32 == keyCode || 13 == keyCode ) {
+        if (32 == keyCode || 13 == keyCode) {
             e.preventDefault();
-            $(this).click();
+            this.click();
         }
     });
-})(jQuery);
+})(fUtil);

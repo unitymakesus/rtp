@@ -1905,7 +1905,7 @@ class BlogPostsModule extends FLBuilderModule {
 
 			$link = apply_filters( 'uabb_blog_posts_link', get_permalink( $obj->ID ), $obj->ID, $this->settings );
 
-			if ( 'yes' === $show_featured_image ) {
+			if ( 'yes' === $show_featured_image && has_post_thumbnail( $obj->ID ) ) {
 
 				// Get image url + alt.
 				$img_data = $this->render_image_url( $i, $obj->ID );

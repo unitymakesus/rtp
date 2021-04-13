@@ -83,26 +83,6 @@ class PPW_Public {
 	}
 
 	/**
-	 * Add tag to head.
-	 */
-	public function add_tag_to_head() {
-		if ( ! PPW_Recaptcha::get_instance()->using_recaptcha() ) {
-			return;
-		}
-
-		$recaptcha_type = PPW_Recaptcha::get_instance()->get_recaptcha_type();
-		switch ( $recaptcha_type ) {
-			case PPW_Recaptcha::RECAPTCHA_V3_TYPE:
-				PPW_Recaptcha::get_instance()->load_recaptcha_v3_js();
-				break;
-			case PPW_Recaptcha::RECAPTCHA_V2_CHECKBOX_TYPE:
-			case PPW_Recaptcha::RECAPTCHA_V2_INVISIBLE_TYPE:
-				PPW_Recaptcha::get_instance()->load_recaptcha_v2_js();
-				break;
-		}
-	}
-
-	/**
 	 * Filter before render content.
 	 *
 	 * @param string $content Content of post/page.
@@ -402,6 +382,21 @@ class PPW_Public {
 	}
 
 	/**
+	 * Set cookie time for password.
+	 *
+	 * @param string $form_action Form action URL.
+	 *
+	 * @return integer
+	 */
+	public function set_sitewide_form_action( $form_action ) {
+		if ( isset( $_GET['ppws'] ) ) {
+			$form_action = $form_action . '&ppws=' . $_GET['ppws'];
+		}
+
+		return $form_action;
+	}
+
+	/**
 	 * Handle access link with ppw_ac parameter and without encoding URL.
 	 */
 	public function handle_access_link() {
@@ -479,7 +474,7 @@ class PPW_Public {
 		}
 
 		// Check with recaptcha if user turn on this option.
-		$using_recaptcha = PPW_Recaptcha::get_instance()->using_recaptcha();
+		$using_recaptcha = PPW_Recaptcha::get_instance()->using_single_recaptcha();
 		if ( $using_recaptcha && ! PPW_Recaptcha::get_instance()->is_valid_recaptcha() ) {
 			wp_send_json(
 				array(

@@ -20,7 +20,7 @@ class Meta_Slider extends Integration {
 	 *
 	 * @return bool
 	 */
-	public function is_installed() {
+	public static function is_installed() {
 		if ( class_exists( 'MetaSliderPlugin' ) ) {
 			return true;
 		}

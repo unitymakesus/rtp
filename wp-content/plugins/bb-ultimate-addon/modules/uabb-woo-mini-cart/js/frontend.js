@@ -62,16 +62,6 @@ var UABBWooMiniCart;
 					modal_open.removeClass( 'uabb-cart-modal-wrap-close' );
 					modal_main.removeClass( 'uabb-cart-modal-close' );
 			
-					modal_open.on( 'click', function(e) {
-			
-						e.preventDefault();
-			
-						modal_open.addClass( 'uabb-cart-modal-wrap-close' );
-						modal_main.addClass( 'uabb-cart-modal-close' );
-			
-						e.stopPropagation();
-					} );
-			
 					modal_close.on( 'click', function(e) {
 			
 						e.preventDefault();
@@ -87,16 +77,7 @@ var UABBWooMiniCart;
 			
 					offcanvas_open.removeClass( 'uabb-cart-off-canvas-wrap-close' );
 					offcanvas_main.removeClass( 'uabb-cart-off-canvas-close' );
-			
-					offcanvas_open.on( 'click', function(e) {
-			
-						e.preventDefault();
-						offcanvas_open.addClass( 'uabb-cart-off-canvas-wrap-close' );
-						offcanvas_main.addClass( 'uabb-cart-off-canvas-close' );
-			
-						e.stopPropagation();
-					} );
-			
+
 					offcanvas_close.on( 'click', function(e) {
 			
 						e.preventDefault();

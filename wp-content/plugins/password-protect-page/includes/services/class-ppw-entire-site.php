@@ -57,7 +57,9 @@ if ( ! class_exists( 'PPW_Entire_Site_Services' ) ) {
 
 			$password_input = $_REQUEST['input_wp_protect_password'];
 
-			return md5( $password_input ) === $password;
+			$validated = md5( $password_input ) === $password;
+
+			return apply_filters( 'ppw_sitewide_valid_password', $validated );
 		}
 
 		/**
@@ -76,8 +78,9 @@ if ( ! class_exists( 'PPW_Entire_Site_Services' ) ) {
 				}
 			}
 
-			$hash   = hash_hmac( 'md5', PPW_Constants::ENTIRE_SITE_COOKIE_NAME, $password );
-			$cookie = $hash . '|' . $expiration;
+			$hash       = hash_hmac( 'md5', PPW_Constants::ENTIRE_SITE_COOKIE_NAME, $password );
+			$cookie     = $hash . '|' . $expiration;
+			$expiration = apply_filters( 'ppw_sitewide_cookie_expiration', $expiration, $password );
 			ppw_free_bypass_cache_with_cookie_for_pro_version( $cookie, $expiration );
 			setcookie( PPW_Constants::ENTIRE_SITE_COOKIE_NAME, $cookie, $expiration, COOKIEPATH, COOKIE_DOMAIN );
 		}

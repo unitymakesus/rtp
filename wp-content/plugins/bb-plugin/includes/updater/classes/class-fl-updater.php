@@ -477,12 +477,12 @@ final class FLUpdater {
 
 			if ( isset( $subscription->error ) && '' !== $subscription->error ) {
 				$support_url = FLBuilderModel::get_store_url( 'contact', array(
-					'topic'        => 'General Inquiry',
-					'utm_medium'   => 'bb-pro',
-					'utm_source'   => 'plugin-updates',
+					'topic'      => 'General Inquiry',
+					'utm_medium' => 'bb-pro',
+					'utm_source' => 'plugin-updates',
 				) );
-				$url = sprintf( '<a target="_blank" style="color: #fff; text-decoration: underline;" href="%s">%s</a>', $support_url, __( 'Contact Support for more information.', 'fl-builder' ) );
-				$text .= sprintf( '<br />The following error was encountered: %s %s', $subscription->error, $url );
+				$url         = sprintf( '<a target="_blank" style="color: #fff; text-decoration: underline;" href="%s">%s</a>', $support_url, __( 'Contact Support for more information.', 'fl-builder' ) );
+				$text       .= sprintf( '<br />The following error was encountered: %s %s', $subscription->error, $url );
 			}
 
 			$message .= '<span style="display:block;padding:10px 20px;margin:10px 0; background: #d54e21; color: #fff;">';

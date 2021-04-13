@@ -23,6 +23,7 @@ class FacetWP_Settings_Admin
                     ],
                     'separators' => [
                         'label' => __( 'Separators', 'fwp' ),
+                        'notes' => 'Enter the thousands and decimal separators, respectively',
                         'html' => $this->get_field_html( 'separators' )
                     ],
                     'prefix' => [
@@ -31,8 +32,17 @@ class FacetWP_Settings_Admin
                             'choices' => [ 'fwp_' => 'fwp_', '_' => '_' ]
                         ] )
                     ],
+                    'load_jquery' => [
+                        'label' => __( 'Load jQuery?', 'fwp' ),
+                        'notes' => 'FacetWP no longer requires jQuery, but enable this if you run into issues',
+                        'html' => $this->get_field_html( 'load_jquery', 'toggle', [
+                            'true_value' => 'yes',
+                            'false_value' => 'no'
+                        ] )
+                    ],
                     'debug_mode' => [
                         'label' => __( 'Debug mode', 'fwp' ),
+                        'notes' => 'After enabling, type "FWP.settings.debug" into the browser console on your front-end facet page',
                         'html' => $this->get_field_html( 'debug_mode', 'toggle', [
                             'true_value' => 'on',
                             'false_value' => 'off'

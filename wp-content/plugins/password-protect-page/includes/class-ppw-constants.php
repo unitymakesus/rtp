@@ -340,6 +340,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 
 		const RECAPTCHA_TYPE = 'wpp_recaptcha_type';
 
+		const RECAPTCHA_PASSWORD_TYPES = 'wpp_recaptcha_password_types';
+
 		const RECAPTCHA_API_KEY = 'wpp_recaptcha_api_key';
 
 		const RECAPTCHA_V2_CHECKBOX_API_KEY = 'wpp_recaptcha_v2_checkbox_api_key';
@@ -411,6 +413,8 @@ if ( ! class_exists( 'PPW_Constants' ) ) {
 		const DEFAULT_SHORTCODE_LABEL = 'Password:';
 
 		const DEFAULT_SHORTCODE_ERROR_MSG = 'Please enter the correct password!';
+
+		const DEFAULT_SHORTCODE_LOADING = 'Loading...';
 
 		const TBL_NAME = 'pda_passwords';
 

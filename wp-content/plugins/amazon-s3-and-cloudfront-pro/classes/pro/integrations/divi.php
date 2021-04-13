@@ -9,7 +9,7 @@ class Divi extends Integration {
 	 *
 	 * @return bool
 	 */
-	public function is_installed() {
+	public static function is_installed() {
 		// This integration fixes problems introduced by Divi Page Builder as used by the Divi and related themes.
 		if ( defined( 'ET_BUILDER_VERSION' ) ) {
 			return true;

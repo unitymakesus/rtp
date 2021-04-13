@@ -70,13 +70,8 @@ class FacetWP_Facet
      */
     function get_where_clause( $facet ) {
 
-        // If no results, empty the facet
-        if ( 0 === FWP()->facet->query->found_posts ) {
-            $post_ids = [];
-        }
-
         // Ignore the current facet's selections
-        elseif ( isset( FWP()->or_values ) && ( 1 < count( FWP()->or_values ) || ! isset( FWP()->or_values[ $facet['name'] ] ) ) ) {
+        if ( isset( FWP()->or_values ) && ( 1 < count( FWP()->or_values ) || ! isset( FWP()->or_values[ $facet['name'] ] ) ) ) {
             $post_ids = [];
             $or_values = FWP()->or_values; // Preserve original
             unset( $or_values[ $facet['name'] ] );
@@ -89,8 +84,6 @@ class FacetWP_Facet
 
             $post_ids = array_intersect( $post_ids, FWP()->unfiltered_post_ids );
         }
-
-        // Default
         else {
             $post_ids = FWP()->unfiltered_post_ids;
         }

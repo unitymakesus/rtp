@@ -497,7 +497,7 @@ FLBuilder::register_module( 'FLSubscribeFormModule', array(
 						'responsive' => true,
 						'preview'    => array(
 							'type'     => 'css',
-							'selector' => 'a.fl-button',
+							'selector' => 'a.fl-button, .fl-form-field input, .fl-form-field input[type=text]',
 						),
 					),
 				),

@@ -154,6 +154,10 @@
 					blog_image_position: '<?php echo esc_attr( $settings->blog_image_position ); ?>'
 				};
 				new UABBBlogPosts( child_args );
+				if( is_carousel === 'grid' ) {
+					new UABBBlogPosts( child_args );
+					jQuery( '.fl-node-' + child_id + '.uabb-blog-posts-grid').isotope('layout');
+				}
 			}
 
 		});

@@ -31,6 +31,13 @@ FLBuilderCSS::rule( array(
 	),
 ) );
 
+// Input typography
+FLBuilderCSS::typography_field_rule( array(
+	'settings'     => $settings,
+	'setting_name' => 'btn_typography',
+	'selector'     => $input_selector,
+) );
+
 // Input padding
 FLBuilderCSS::dimension_field_rule( array(
 	'settings'     => $settings,

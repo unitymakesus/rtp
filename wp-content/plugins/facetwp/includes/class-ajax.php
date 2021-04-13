@@ -4,8 +4,13 @@ class FacetWP_Ajax
 {
 
     function __construct() {
+        add_action( 'facetwp_init', [ $this, 'switchboard' ] );
+    }
 
+
+    function switchboard() {
         $valid_actions = [
+            'resume_index',
             'save_settings',
             'rebuild_index',
             'get_info',
@@ -23,16 +28,23 @@ class FacetWP_Ajax
             $is_valid = in_array( $action, $valid_actions );
         }
 
-        // Authenticated
-        if ( $is_valid && current_user_can( 'manage_options' ) ) {
-            if ( check_ajax_referer( 'fwp_admin_nonce', 'nonce', false ) ) {
-                add_action( 'wp_ajax_facetwp_' . $action, [ $this, $action ] );
+        if ( $is_valid ) {
+
+            // Non-authenticated
+            if ( in_array( $action, [ 'resume_index' ] ) ) {
+                $this->$action();
+            }
+
+            // Authenticated
+            elseif ( current_user_can( 'manage_options' ) ) {
+                if ( wp_verify_nonce( $_POST['nonce'], 'fwp_admin_nonce' ) ) {
+                    $this->$action();
+                }
             }
         }
 
-        // Non-authenticated
+        // Listen for API refresh call
         add_action( 'facetwp_refresh', [ $this, 'refresh' ] );
-        add_action( 'wp_ajax_nopriv_facetwp_resume_index', [ $this, 'resume_index' ] );
 
         // Backwards compatibility
         $this->url_vars = FWP()->request->url_vars;
@@ -44,12 +56,10 @@ class FacetWP_Ajax
      * Save admin settings
      */
     function save_settings() {
-        $settings = stripslashes( $_POST['data'] );
-        $json_test = json_decode( $settings, true );
+        $settings = $_POST['data'];
 
-        // Check for valid JSON
-        if ( isset( $json_test['settings'] ) ) {
-            update_option( 'facetwp_settings', $settings, 'no' );
+        if ( isset( $settings['settings'] ) ) {
+            update_option( 'facetwp_settings', json_encode( $settings ), 'no' );
 
             $response = [
                 'code' => 'success',
@@ -160,7 +170,7 @@ class FacetWP_Ajax
     function license() {
         $license = sanitize_key( $_POST['license'] );
 
-        $request = wp_remote_post( 'http://api.facetwp.com', [
+        $request = wp_remote_post( 'https://api.facetwp.com', [
             'body' => [
                 'action'        => 'activate',
                 'slug'          => 'facetwp',
@@ -212,7 +222,7 @@ class FacetWP_Ajax
         }
         elseif ( 'import' == $action_type ) {
             $settings = FWP()->helper->settings;
-            $import_code = json_decode( stripslashes( $_POST['import_code'] ), true );
+            $import_code = $_POST['import_code'];
             $overwrite = (int) $_POST['overwrite'];
 
             if ( empty( $import_code ) || ! is_array( $import_code ) ) {

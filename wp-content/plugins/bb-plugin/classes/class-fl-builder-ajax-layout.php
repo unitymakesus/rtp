@@ -677,6 +677,7 @@ final class FLBuilderAJAXLayout {
 		}
 
 		FLBuilderFonts::enqueue_styles();
+		FLBuilderFonts::enqueue_google_fonts();
 
 		// Start the output buffer.
 		ob_start();

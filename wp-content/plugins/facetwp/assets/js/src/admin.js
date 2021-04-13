@@ -1,8 +1,8 @@
-(($ => {
+(($) => {
 
     $(() => {
         init_vue();
-        init_jquery();
+        init_custom_js();
     });
 
     function init_vue() {
@@ -569,10 +569,10 @@
             </select>
             `,
             methods: {
-                fSelectChanged(event, $wrap) {
+                fSelectChanged(wrap) {
 
-                    // only update this current instance
-                    if (0 < $($wrap).find('#' + this.rand).length) {
+                    // only update this instance
+                    if (wrap._rel.matches('#' + this.rand)) {
                         this.row.key = this.$el.value;
                     }
                 }
@@ -583,11 +583,11 @@
                 this.rand = 'fs-' + Math.random().toString(36).substring(7);
             },
             mounted() {
-                $(this.$el).fSelect();
-                $(document).on('fs:changed', this.fSelectChanged);
+                fSelect(this.$el);
+                $().on('fs:changed', (e) => this.fSelectChanged(...e.detail));
             },
             beforeDestroy() {
-                $(document).off('fs:changed', this.fSelectChanged);
+                $().off('fs:changed', (e) => this.fSelectChanged(...e.detail));
             }
         });
 
@@ -1556,8 +1556,8 @@
                         if (is_new_type || is_new_setting) {
                             let val = $el.val();
 
-                            if ($el.is(':checkbox')) {
-                                val = $el.is(':checked') ? 'yes' : 'no';
+                            if ($el.is('[type=checkbox]')) {
+                                val = $el.nodes[0].checked ? 'yes' : 'no';
                             }
                             if ('[]' === val) {
                                 val = [];
@@ -1636,10 +1636,10 @@
             </select>
             `,
             methods: {
-                fSelectChanged(event, $wrap) {
+                fSelectChanged(wrap) {
 
-                    // only update this current instance
-                    if (0 < $($wrap).find('#' + this.rand).length) {
+                    // only update this instance
+                    if (wrap._rel.matches('#' + this.rand)) {
                         Vue.set(this.facet, this.settingName, this.$el.value);
                     }
                 }
@@ -1650,11 +1650,11 @@
                 this.rand = 'fs-' + Math.random().toString(36).substring(7);
             },
             mounted() {
-                $(this.$el).fSelect();
-                $(document).on('fs:changed', this.fSelectChanged);
+                fSelect(this.$el);
+                $().on('fs:changed', (e) => this.fSelectChanged(...e.detail));
             },
             beforeDestroy() {
-                $(document).off('fs:changed', this.fSelectChanged);
+                $().off('fs:changed', (e) => this.fSelectChanged(...e.detail));
             }
         });
 
@@ -1732,21 +1732,22 @@
                     data.templates = data.templates.filter(obj => 'undefined' === typeof obj['_code']);
 
                     // Settings save hook
-                    data = FWP.hooks.applyFilters('facetwp/save_settings', data);
+                    data = FWP.hooks.applyFilters('facetwp/save_settings', {
+                        action: 'facetwp_save_settings',
+                        nonce: FWP.nonce,
+                        data: data
+                    });
 
-                    $.ajax(ajaxurl, {
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            action: 'facetwp_save_settings',
-                            nonce: FWP.nonce,
-                            data: JSON.stringify(data)
+                    $.post(ajaxurl, data, {
+                        done: ({message, reindex}) => {
+                            $('.facetwp-response').html(message);
+                            var method = (reindex) ? 'addClass' : 'removeClass';
+                            $('.facetwp-rebuild')[method]('flux');
+                        },
+                        fail: (err) => {
+                            console.log(err);
+                            // $('.facetwp-response').html(status + ' ' + errorThrown);
                         }
-                    }).done(({message, reindex}) => {
-                        $('.facetwp-response').html(message);
-                        $('.facetwp-rebuild').toggleClass('flux', reindex);
-                    }).fail(({status}, textStatus, errorThrown) => {
-                        $('.facetwp-response').html(status + ' ' + errorThrown);
                     });
                 },
                 rebuildAction() {
@@ -1773,54 +1774,49 @@
                 cancelReindex() {
                     let self = this;
 
-                    $.ajax(ajaxurl, {
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            action: 'facetwp_get_info',
-                            type: 'cancel_reindex',
-                            nonce: FWP.nonce
+                    $.post(ajaxurl, {
+                        action: 'facetwp_get_info',
+                        type: 'cancel_reindex',
+                        nonce: FWP.nonce
+                    }, {
+                        done: ({message}) => {
+                            self.is_indexing = false;
+                            clearTimeout(self.timeout);
+                            $('.facetwp-response').html(message);
                         }
-                    }).done(({message}) => {
-                        self.is_indexing = false;
-                        clearTimeout(self.timeout);
-                        $('.facetwp-response').html(message);
-                    }).fail(({status}, textStatus, errorThrown) => {
-                        $('.facetwp-response').html(status + ' ' + errorThrown);
                     });
                 },
                 getProgress() {
                     let self = this;
+                    let isNumeric = (obj) => !Array.isArray(obj) && (obj - parseFloat(obj) + 1) >= 0;
 
-                    $.ajax(ajaxurl, {
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            action: 'facetwp_heartbeat',
-                            nonce: FWP.nonce
-                        }
-                    }).done(function(data) {
-                        if ('-1' == data.pct) {
-                            $('.facetwp-response').html(FWP.__('Indexing complete'));
-                            self.is_indexing = false;
-
-                            // Update the row counts
-                            $.each(data.rows, function(facet_name, count) {
-                                Vue.set(self.row_counts, facet_name, count);
-                            });
-                        }
-                        else if ($.isNumeric(data.pct)) {
-                            $('.facetwp-response').html(FWP.__('Indexing') + '... ' + data.pct + '%');
-                            $('.facetwp-response').addClass('visible');
-                            self.is_indexing = true;
-
-                            self.timeout = setTimeout(() => {
-                                self.getProgress();
-                            }, 5000);
-                        }
-                        else {
-                            $('.facetwp-response').html(data);
-                            self.is_indexing = false;
+                    $.post(ajaxurl, {
+                        action: 'facetwp_heartbeat',
+                        nonce: FWP.nonce
+                    }, {
+                        done: (data) => {
+                            if ('-1' == data.pct) {
+                                $('.facetwp-response').html(FWP.__('Indexing complete'));
+                                self.is_indexing = false;
+    
+                                // Update the row counts
+                                $.each(data.rows, function(count, facet_name) {
+                                    Vue.set(self.row_counts, facet_name, count);
+                                });
+                            }
+                            else if (isNumeric(data.pct)) {
+                                $('.facetwp-response').html(FWP.__('Indexing') + '... ' + data.pct + '%');
+                                $('.facetwp-response').addClass('visible');
+                                self.is_indexing = true;
+    
+                                self.timeout = setTimeout(() => {
+                                    self.getProgress();
+                                }, 5000);
+                            }
+                            else {
+                                $('.facetwp-response').html(data);
+                                self.is_indexing = false;
+                            }
                         }
                     });
                 },
@@ -1828,18 +1824,14 @@
                     $('.facetwp-response').html(FWP.__(label) + '...');
                     $('.facetwp-response').addClass('visible');
 
-                    $.ajax(ajaxurl, {
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            action: 'facetwp_get_info',
-                            type,
-                            nonce: FWP.nonce
+                    $.post(ajaxurl, {
+                        action: 'facetwp_get_info',
+                        type,
+                        nonce: FWP.nonce
+                    }, {
+                        done: ({message}) => {
+                            $('.facetwp-response').html(message);
                         }
-                    }).done(({message}) => {
-                        $('.facetwp-response').html(message);
-                    }).fail(({status}, textStatus, errorThrown) => {
-                        $('.facetwp-response').html(status + ' ' + errorThrown);
                     });
                 },
                 getQueryArgs(template) {
@@ -1852,14 +1844,16 @@
                         action: 'facetwp_get_query_args',
                         query_obj: template.query_obj,
                         nonce: FWP.nonce
-                    }, (message) => {
-                        var json = JSON.stringify(message, null, 2);
-                        json = "<?php\nreturn " + json + ';';
-                        json = json.replace(/[\{]/g, '[');
-                        json = json.replace(/[\}]/g, ']');
-                        json = json.replace(/":/g, '" =>');
-                        template.query = json;
-                    }, 'json');
+                    }, {
+                        done: (message) => {
+                            var json = JSON.stringify(message, null, 2);
+                            json = "<?php\nreturn " + json + ';';
+                            json = json.replace(/[\{]/g, '[');
+                            json = json.replace(/[\}]/g, ']');
+                            json = json.replace(/":/g, '" =>');
+                            template.query = json;
+                        }
+                    })
                 },
                 showIndexerStats() {
                     this.getInfo('indexer_stats', 'Looking');
@@ -1878,7 +1872,7 @@
                     try {
                         $el.removeClass('hidden');
                         $el.val('[facetwp ' + type + '="' + name + '"]');
-                        $el.select();
+                        $el.nodes[0].select();
                         document.execCommand('copy');
                         $el.addClass('hidden');
                         $this.text(FWP.__('Copied!'));
@@ -1893,13 +1887,16 @@
                 },
                 activate() {
                     $('.facetwp-activation-status').html(FWP.__('Activating') + '...');
+
                     $.post(ajaxurl, {
                         action: 'facetwp_license',
                         nonce: FWP.nonce,
                         license: $('.facetwp-license').val()
-                    }, ({message}) => {
-                        $('.facetwp-activation-status').html(message);
-                    }, 'json');
+                    }, {
+                        done: ({message}) => {
+                            $('.facetwp-activation-status').html(message);
+                        }
+                    })
                 },
                 isNameEditable({name}) {
                     this.is_name_editable = ('' == name || 'new_' == name.substr(0, 4));
@@ -1910,7 +1907,7 @@
                     }
                 },
                 sanitizeName(name) {
-                    let val = $.trim(name).toLowerCase();
+                    let val = name.trim().toLowerCase();
                     val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
                     val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
                     val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
@@ -1942,65 +1939,70 @@
         });
     }
 
-    function init_jquery() {
+    function init_custom_js() {
 
         // Export
-        $(document).on('click', '.export-submit', () => {
-                $('.import-code').val(FWP.__('Loading') + '...');
-                $.post(ajaxurl, {
-                    action: 'facetwp_backup',
-                    nonce: FWP.nonce,
-                    action_type: 'export',
-                    items: $('.export-items').val()
-                },
-                response => {
-                    $('.import-code').val(response);
-                });
-        });
+        $().on('click', '.export-submit', () => {
+            $('.import-code').val(FWP.__('Loading') + '...');
 
-        // Import
-        $(document).on('click', '.import-submit', () => {
-            $('.facetwp-response').addClass('visible');
-            $('.facetwp-response').html(FWP.__('Importing') + '...');
             $.post(ajaxurl, {
                 action: 'facetwp_backup',
                 nonce: FWP.nonce,
-                action_type: 'import',
-                import_code: $('.import-code').val(),
-                overwrite: $('.import-overwrite').is(':checked') ? 1 : 0
-            },
-            response => {
-                $('.facetwp-response').html(response);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1500);
-            });
+                action_type: 'export',
+                items: $('.export-items').val()
+            }, {
+                done: (resp) => {
+                    $('.import-code').val(JSON.stringify(resp));
+                }
+            })
         });
 
-        // Tooltips
-        $(document).on('mouseover', '.facetwp-tooltip', function() {
-            if ('undefined' === typeof $(this).data('powertip')) {
-                const content = $(this).find('.facetwp-tooltip-content').html();
-                $(this).data('powertip', content);
-                $(this).powerTip({
-                    placement: 'e',
-                    mouseOnToPopup: true
+        // Import
+        $().on('click', '.import-submit', () => {
+            $('.facetwp-response').addClass('visible');
+            $('.facetwp-response').html(FWP.__('Importing') + '...');
+
+            try {
+                var code = JSON.parse($('.import-code').val());
+
+                $.post(ajaxurl, {
+                    action: 'facetwp_backup',
+                    nonce: FWP.nonce,
+                    action_type: 'import',
+                    import_code: code,
+                    overwrite: $('.import-overwrite').nodes[0].checked ? 1 : 0
+                }, {
+                    dataType: 'text',
+                    done: (resp) => {
+                        $('.facetwp-response').html(resp);
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    }
                 });
-                $.powerTip.show(this);
+            }
+            catch(err) {
+                $('.facetwp-response').html('Invalid JSON');
             }
         });
 
-        $(document).on('mouseover', '.card-label .label-text', function() {
-            if ('undefined' === typeof $(this).data('powertip')) {
-                $(this).powerTip({
-                    placement: 'e'
-                });
-                $.powerTip.show(this);
+        // Initialize tooltips
+        $().on('mouseover', '.facetwp-tooltip', function() {
+            if (!this.classList.contains('.ftip-enabled')) {
+                fTip(this, {
+                    content: (node) => $(node).find('.facetwp-tooltip-content').html()
+                }).open();
+            }
+        });
+
+        $().on('mouseover', '.card-label .label-text', function() {
+            if (!this.classList.contains('.ftip-enabled')) {
+                fTip(this).open();
             }
         });
 
         // fSelect
-        $('.export-items').fSelect();
+        fSelect('.export-items');
     }
 
-}))(jQuery);
+})(fUtil);

@@ -141,18 +141,33 @@ if ( class_exists( 'FLBuilderCSS' ) ) {
 
 if ( isset( $settings->cart_btn_align ) && '' !== $settings->cart_btn_align ) {
 	?>
-	.fl-node-<?php echo esc_attr( $id ); ?> .uabb-mini-cart-btn {
 		<?php if ( 'left' === $settings->cart_btn_align ) { ?>
-			justify-content: flex-start;
-			margin: 0 auto 0 0;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-mini-cart-btn {
+				justify-content: flex-start;
+				margin: 0 auto 0 0;
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-cart-style-dropdown {
+				left: 0;
+			}
 		<?php } elseif ( 'right' === $settings->cart_btn_align ) { ?>
-			justify-content: flex-end;
-			margin: 0 0 0 auto;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-mini-cart-btn {
+				justify-content: flex-end;
+				margin: 0 0 0 auto;
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-cart-style-dropdown {
+				right: 0;
+			}
 		<?php } elseif ( 'center' === $settings->cart_btn_align ) { ?>
-			justify-content: center;
-			margin: 0 auto 0 auto;
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-mini-cart-btn {
+				justify-content: center;
+				margin: 0 auto 0 auto;
+			}
+			.fl-node-<?php echo esc_attr( $id ); ?> .uabb-cart-style-dropdown {
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
 		<?php } ?>
-	}
 	<?php
 }
 

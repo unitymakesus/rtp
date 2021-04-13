@@ -10,6 +10,9 @@ return array(
     'Sample\\' => array($vendorDir . '/paypal/paypal-checkout-sdk/samples'),
     'PayPalHttp\\' => array($vendorDir . '/paypal/paypalhttp/lib/PayPalHttp'),
     'PayPalCheckoutSdk\\' => array($vendorDir . '/paypal/paypal-checkout-sdk/lib/PayPalCheckoutSdk'),
+    'MyCLabs\\Enum\\' => array($vendorDir . '/myclabs/php-enum/src'),
     'Give\\' => array($baseDir . '/src'),
+    'FormatObjectList\\' => array($vendorDir . '/kjohnson/format-object-list/src'),
+    'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

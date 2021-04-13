@@ -159,11 +159,38 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 					],
 				],
 				[
+					'key'   => 'ppwp_label',
+					'value' => [
+						'label'       => __( 'Label', 'password-protect-page' ),
+						'type'        => \Elementor\Controls_Manager::TEXT,
+						'default'     => PPW_Constants::DEFAULT_SHORTCODE_LABEL,
+						'label_block' => true,
+					],
+				],
+				[
+					'key'   => 'ppwp_description',
+					'value' => [
+						'label'       => __( 'Description', 'password-protect-page' ),
+						'type'        => \Elementor\Controls_Manager::WYSIWYG,
+						'default'     => 'To view this protected content, enter the password below:',
+						'label_block' => true,
+					],
+				],
+				[
 					'key'   => 'ppwp_placeholder',
 					'value' => [
 						'label'       => __( 'Placeholder', 'password-protect-page' ),
 						'type'        => \Elementor\Controls_Manager::TEXT,
 						'default'     => '',
+						'label_block' => true,
+					],
+				],
+				[
+					'key'   => 'ppwp_loading',
+					'value' => [
+						'label'       => __( 'Loading', 'password-protect-page' ),
+						'type'        => \Elementor\Controls_Manager::TEXT,
+						'default'     => PPW_Constants::DEFAULT_SHORTCODE_LOADING,
 						'label_block' => true,
 					],
 				],
@@ -177,11 +204,11 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 					],
 				],
 				[
-					'key'   => 'ppwp_description',
+					'key'   => 'ppwp_error_msg',
 					'value' => [
-						'label'       => __( 'Description', 'password-protect-page' ),
-						'type'        => \Elementor\Controls_Manager::WYSIWYG,
-						'default'     => 'To view this protected content, enter the password below:',
+						'label'       => __( 'Error message', 'password-protect-page' ),
+						'type'        => \Elementor\Controls_Manager::TEXT,
+						'default'     => PPW_Constants::DEFAULT_SHORTCODE_ERROR_MSG,
 						'label_block' => true,
 					],
 				],
@@ -242,10 +269,14 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 			$cookie            = isset( $settings['ppwp_cookie'] ) ? $settings['ppwp_cookie'] : '';
 			$headline          = isset( $settings['ppwp_headline'] ) ? $settings['ppwp_headline'] : '';
 			$description       = isset( $settings['ppwp_description'] ) ? $settings['ppwp_description'] : '';
+			$label             = isset( $settings['ppwp_label'] ) ? $settings['ppwp_label'] : '';
 			$placeholder       = isset( $settings['ppwp_placeholder'] ) ? $settings['ppwp_placeholder'] : '';
 			$button            = isset( $settings['ppwp_button'] ) ? $settings['ppwp_button'] : '';
+			$error_msg         = isset( $settings['ppwp_error_msg'] ) ? $settings['ppwp_error_msg'] : '';
+			$loading           = isset( $settings['ppwp_loading'] ) ? $settings['ppwp_loading'] : '';
+
 			$shortcode         = sprintf(
-				'[ppwp id="" class="" passwords="%1$s" cookie="%2$s" download_limit="%3$s" whitelisted_roles="%4$s" headline="%5$s" description="%6$s" placeholder="%7$s" button="%8$s" ',
+				'[ppwp id="" class="" passwords="%1$s" cookie="%2$s" download_limit="%3$s" whitelisted_roles="%4$s" headline="%5$s" description="%6$s" placeholder="%7$s" button="%8$s" label="%9$s" error_msg="%10$s" loading="%11$s"',
 				$passwords,
 				$cookie,
 				$download_limit,
@@ -253,7 +284,10 @@ if ( ! class_exists( 'PPW_Shortcode_Widget' ) ) {
 				esc_html__( $headline ),
 				esc_html__( $description ),
 				esc_html__( $placeholder ),
-				esc_html__( $button )
+				esc_html__( $button ),
+				esc_html__( $label ),
+				esc_html__( $error_msg ),
+				esc_html__( $loading )
 			);
 
 			$shortcode = apply_filters( PPW_Constants::HOOK_SHORTCODE_ELEMENTOR_ATTRIBUTES, $shortcode, $settings );

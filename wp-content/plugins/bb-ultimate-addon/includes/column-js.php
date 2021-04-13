@@ -204,7 +204,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 	?>
 	;(function($) {
 
-			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.min.js' ); ?>';
+			var url ='<?php echo esc_url( BB_ULTIMATE_ADDON_URL . 'assets/js/particles.js' ); ?>';
 
 				window.particle_js_loaded = 0;
 
@@ -268,7 +268,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 								<?php
 								if ( '' !== $json_particles_custom ) {
 									?>
-									particlesJS( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
+									tsParticles.load( 'uabb-particle-' + row_id, <?php echo $json_particles_custom; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> );
 									<?php
 								}
 								?>
@@ -453,7 +453,7 @@ function uabb_particle_col_dependency_js( $js, $nodes, $global_settings ) {
 									},
 								"retina_detect": true
 								}
-								particlesJS( 'uabb-particle-' + row_id, config );
+								tsParticles.load( 'uabb-particle-' + row_id, config );
 							}
 						}
 					}

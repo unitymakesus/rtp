@@ -989,7 +989,7 @@ FLBuilder::register_settings_form(
 									'youtube' => __( 'YouTube', 'uabb' ),
 									'vimeo'   => __( 'Vimeo', 'uabb' ),
 									'wistia'  => __( 'Wistia', 'uabb' ),
-
+									'hosted'  => __( 'Self Hosted', 'uabb' ),
 								),
 								'toggle'  => array(
 									'youtube' => array(
@@ -1000,6 +1000,9 @@ FLBuilder::register_settings_form(
 									),
 									'wistia'  => array(
 										'fields' => array( 'wistia_link' ),
+									),
+									'hosted'  => array(
+										'fields' => array( 'video_source' ),
 									),
 								),
 							),
@@ -1023,6 +1026,37 @@ FLBuilder::register_settings_form(
 								'default'     => '<p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2"><img src="https://embedwistia-a.akamaihd.net/deliveries/53eec5fa72737e60aa36731b57b607a7c0636f52.webp?image_play_button_size=2x&amp;image_crop_resized=960x540&amp;image_play_button=1&amp;image_play_button_color=54bbffe0" width="400" height="225" style="width: 400px; height: 225px;"></a></p><p><a href="https://pratikc.wistia.com/medias/gyvkfithw2?wvideo=gyvkfithw2">Video Placeholder - Brainstorm Force - pratikc</a></p>',
 								'description' => UABBVideoGallery::get_description( 'wistia_link' ),
 								'connections' => array( 'url' ),
+							),
+							'video_source'       => array(
+								'type'    => 'select',
+								'label'   => __( 'Video Source', 'uabb' ),
+								'default' => 'library',
+								'options' => array(
+									'video'   => __( 'Media Library', 'uabb' ),
+									'ext_url' => __( 'External URL', 'uabb' ),
+								),
+								'toggle'  => array(
+									'video'   => array(
+										'fields' => array( 'video' ),
+									),
+									'ext_url' => array(
+										'fields' => array( 'video_url' ),
+									),
+								),
+							),
+							'video'              => array(
+								'type'        => 'video',
+								'label'       => __( 'Video', 'uabb' ),
+								'help'        => __( 'A video in the MP4 format. Most modern browsers support this format.', 'uabb' ),
+								'show_remove' => true,
+							),
+							'video_url'          => array(
+								'type'        => 'text',
+								'label'       => __( 'External URL', 'uabb' ),
+								'placeholder' => __( 'http://www.example.com/my-photo.jpg', 'uabb' ),
+								'preview'     => array(
+									'type' => 'none',
+								),
 							),
 							'title'              => array(
 								'type'        => 'text',

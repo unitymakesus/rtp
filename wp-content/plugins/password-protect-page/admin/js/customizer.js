@@ -15,7 +15,7 @@
   }
 
   // Editor control.
-  $(window).load(function () {
+  $(document).ready(function($) {
 	$('textarea.wp-editor-area').each(function () {
 	  var $this = $(this),
 		id = $this.attr('id'),

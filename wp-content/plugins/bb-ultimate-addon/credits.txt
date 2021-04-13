@@ -48,6 +48,7 @@ Particle JS ( https://github.com/VincentGarreau/particles.js/ )
 Typed JS ( https://github.com/mattboldt/typed.js )
 Vitcker ( https://github.com/richhollis/vticker )
 Twenty Twenty Used for Before After Slider ( https://github.com/zurb/twentytwenty )
+tsParticles ( https://www.github.com/matteobruni/tsparticles )
 
 -----
 

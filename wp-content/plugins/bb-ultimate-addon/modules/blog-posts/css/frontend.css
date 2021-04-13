@@ -426,7 +426,7 @@
 }
 
 
-.fl-node-content .slick-slider
+.uabb-blog-posts.slick-slider
 {
     position: relative;
 
@@ -445,7 +445,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-.fl-node-content .slick-list
+.uabb-blog-posts .slick-list
 {
     position: relative;
 
@@ -455,18 +455,18 @@
     margin: 0;
     padding: 0;
 }
-.fl-node-content .slick-list:focus
+.uabb-blog-posts .slick-list:focus
 {
     outline: none;
 }
-.fl-node-content .slick-list.dragging
+.uabb-blog-posts .slick-list.dragging
 {
     cursor: pointer;
     cursor: hand;
 }
 
-.fl-node-content .slick-slider .slick-track,
-.fl-node-content .slick-slider .slick-list
+.uabb-blog-posts.slick-slider .slick-track,
+.uabb-blog-posts.slick-slider .slick-list
 {
     -webkit-transform: translate3d(0, 0, 0);
        -moz-transform: translate3d(0, 0, 0);
@@ -475,7 +475,7 @@
             transform: translate3d(0, 0, 0);
 }
 
-.fl-node-content .slick-track
+.uabb-blog-posts .slick-track
 {
     position: relative;
     top: 0;
@@ -483,23 +483,23 @@
 
     display: block;
 }
-.fl-node-content .slick-track:before,
-.fl-node-content .slick-track:after
+.uabb-blog-posts .slick-track:before,
+.uabb-blog-posts .slick-track:after
 {
     display: table;
 
     content: '';
 }
-.fl-node-content .slick-track:after
+.uabb-blog-posts .slick-track:after
 {
     clear: both;
 }
-.fl-node-content .slick-loading .slick-track
+.uabb-blog-posts .slick-loading .slick-track
 {
     visibility: hidden;
 }
 
-.fl-node-content .slick-slide
+.uabb-blog-posts .slick-slide
 {
     display: none;
     float: left;
@@ -507,31 +507,31 @@
     height: 100%;
     min-height: 1px;
 }
-[dir='rtl'] .fl-node-content .slick-slide
+[dir='rtl'] .uabb-blog-posts .slick-slide
 {
     float: right;
 }
-.fl-node-content .slick-slide img
+.uabb-blog-posts .slick-slide img
 {
     display: block;
 }
-.fl-node-content .slick-slide.slick-loading img
+.uabb-blog-posts .slick-slide.slick-loading img
 {
     display: none;
 }
-.fl-node-content .slick-slide.dragging img
+.uabb-blog-posts .slick-slide.dragging img
 {
     pointer-events: none;
 }
-.fl-node-content .slick-initialized .slick-slide
+.uabb-blog-posts.slick-initialized .slick-slide
 {
     display: block;
 }
-.fl-node-content .slick-loading .slick-slide
+.uabb-blog-posts .slick-loading .slick-slide
 {
     visibility: hidden;
 }
-.fl-node-content .slick-vertical .slick-slide
+.uabb-blog-posts .slick-vertical .slick-slide
 {
     display: block;
 
@@ -539,14 +539,14 @@
 
     border: 1px solid transparent;
 }
-.fl-node-content .slick-arrow.slick-hidden {
+.uabb-blog-posts .slick-arrow.slick-hidden {
     display: none;
 }
 
-.fl-node-content .slick-arrow,
-.fl-node-content .slick-arrow:active,
-.fl-node-content .slick-arrow:hover,
-.fl-node-content .slick-arrow:focus {
+.uabb-blog-posts .slick-arrow,
+.uabb-blog-posts .slick-arrow:active,
+.uabb-blog-posts .slick-arrow:hover,
+.uabb-blog-posts .slick-arrow:focus {
     box-shadow: none;
 }
 

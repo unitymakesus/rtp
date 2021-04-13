@@ -21,7 +21,7 @@ class Woocommerce extends Integration {
 	 *
 	 * @return bool
 	 */
-	public function is_installed() {
+	public static function is_installed() {
 		if ( class_exists( 'WooCommerce' ) ) {
 			return true;
 		}

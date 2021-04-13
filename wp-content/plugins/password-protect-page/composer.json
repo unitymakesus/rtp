@@ -11,6 +11,6 @@
     "phpunit/phpunit": "^7"
   },
   "scripts": {
-    "reports": "phpunit --verbose --coverage-html __dev__/unit-test/reports"
+    "reports": "apt install php7.1-xdebug && phpunit --verbose --coverage-html __dev__/unit-test/reports"
   }
 }
