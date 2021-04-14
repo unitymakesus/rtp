@@ -113,7 +113,7 @@ defined('MECEXEC') or die();
       ?>
     </div>
     <div class="col-md-4">
-      <!-- <div class="mec-events-event-image"><?php echo $event->data->thumbnails['full']; ?><?php do_action('mec_custom_dev_image_section', $event); ?></div> -->
+      <div class="mec-events-event-image"><?php echo $event->data->thumbnails['full']; ?><?php do_action('mec_custom_dev_image_section', $event); ?></div>
 
       <!-- Register Booking Button -->
       <?php if($this->main->can_show_booking_module($event)): ?>
