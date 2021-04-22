@@ -173,7 +173,31 @@ defined('MECEXEC') or die();
       <?php
       $this->show_other_organizers($event); // Show Additional Organizers
     }
+    ?>
+    <?php if (have_rows('event_sponsors')) : ?>
+        <div class="mec-single-event-organizer">
+            <dt class="mec-events-single-section-title">Sponsors</dt>
+            <div class="mec-sponsors">
+            <?php while (have_rows('event_sponsors')) : the_row(); ?>
+                <?php
+                    $logo = get_sub_field('logo');
+                    $url = get_sub_field('url');
+                ?>
+                <dd class="mec-sponsor">
+                    <?php if ($url) : ?>
+                        <a href="<?php echo $url; ?>">
+                    <?php endif; ?>
+                        <img src="<?php echo $logo['sizes']['large']; ?>" alt="<?php echo esc_attr(get_sub_field('name')); ?>" />
+                    <?php if ($url) : ?>
+                        </a>
+                    <?php endif; ?>
+                </dd>
+            <?php endwhile; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
+    <?php
     // Front-End Submitter Contact Info
     ?>
     <?php if (isset($event->data->meta['fes_guest_email']) && isset($event->data->meta['fes_guest_name'])) : ?>

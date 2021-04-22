@@ -772,12 +772,40 @@ span.event-color {
       padding: 0;
     }
 
+    dt {
+      margin: 0;
+    }
+
     dd {
       padding-left: 0;
       margin-left: 0;
       margin-bottom: 0;
       color: $color-slate-dark;
       font-size: 0.9rem;
+
+      &.mec-sponsor {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &.mec-sponsor img {
+        max-width: 150px;
+        width: 100%;
+        margin-bottom: 0;
+      }
+    }
+
+    .mec-sponsors {
+      display: grid;
+      gap: 0.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+
+      a {
+        &:hover, &:focus, &:active {
+          background: transparent;
+        }
+      }
     }
 
     a {
